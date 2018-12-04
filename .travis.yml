@@ -14,3 +14,7 @@ matrix:
     - $SH "apt-get install -y python2.7 cmake g++"
     script:
     - $SH "mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version"
+  - os: osx
+    name: Mac
+    script:
+    - $SH "mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version"
