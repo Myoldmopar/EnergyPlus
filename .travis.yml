@@ -1,4 +1,6 @@
 language: cpp
+git:
+  depth: 3  # if depth=1 and have a queue of jobs, Travis won’t build commits from the queue if you push a new commit
 matrix:
   include:
   - os: linux
@@ -17,4 +19,4 @@ matrix:
   - os: osx
     name: Mac
     script:
-    - $SH "mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version"
+    - mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version
