@@ -20,3 +20,8 @@ matrix:
     name: Mac
     script:
     - mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version
+  - os: windows
+    name: Windows
+    install: choco install python3 7zip
+    script:
+    - mkdir build && cd build && cmake ..  -G "Visual Studio 15 Win64" && cmake --build . --config Release && cd .. && ./build/Products/Release/energyplus --version
