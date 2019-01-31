@@ -13,16 +13,15 @@ matrix:
     install:
     - $SH "apt-get update"
     - $SH "apt-get install -y locales && locale-gen en_US.UTF-8"
-    - $SH "apt-get install -y git python2.7 cmake g++"
+    - $SH "apt-get install -y git python2.7 cmake g++ gfortran"
     script:
-    - $SH "mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version"
+    - $SH "mkdir build && cd build && cmake .. -DBUILD_TESTING=ON -DBUILD_FORTRAN=ON && make -j 3 && cd .. && ./build/Products/energyplus --version"
   - os: osx
     name: Mac
     script:
     - mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version
-  - os: windows
-    name: Windows
-    install: choco install python3
-    script:
-    # should be able to use cmake --build . -j 2 or some other number on Travis, it was added with CMake 3.12, and Travis used choco to install cmake so it should be at at least 3.12.  If not we could update it
-    - mkdir build && cd build && cmake ..  -G "Visual Studio 15 Win64" && cmake --build . --config Release -j 2 && cd .. && ./build/Products/Release/energyplus --version
+#  - os: windows
+#    name: Windows
+#    install: choco install python3
+#    script:
+#    - mkdir build && cd build && cmake ..  -G "Visual Studio 15 Win64" && cmake --build . --config Release -j 2 && cd .. && ./build/Products/Release/energyplus --version
