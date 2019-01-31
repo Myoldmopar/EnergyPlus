@@ -13,13 +13,16 @@ matrix:
     install:
     - $SH "apt-get update"
     - $SH "apt-get install -y locales && locale-gen en_US.UTF-8"
-    - $SH "apt-get install -y git python2.7 cmake g++ gfortran"
+    - $SH "apt-get install -y git python2.7 cmake g++"
     script:
-    - $SH "mkdir build && cd build && cmake .. -DBUILD_TESTING=ON -DBUILD_FORTRAN=ON && make -j 3 && cd .. && ./build/Products/energyplus --version"
+    - $SH "mkdir build && cd build && cmake .. -DBUILD_TESTING=ON && make -j 3 && cd .. && ./build/Products/energyplus --version"
   - os: osx
     name: Mac
+    before_install:
+      brew install gcc > /dev/null
+      export FC=gfortran
     script:
-    - mkdir build && cd build && cmake .. && make -j 2 && cd .. && ./build/Products/energyplus --version
+    - mkdir build && cd build && cmake .. -DBUILD_FORTRAN=ON && make -j 3 && cd .. && ./build/Products/energyplus --version
 #  - os: windows
 #    name: Windows
 #    install: choco install python3
