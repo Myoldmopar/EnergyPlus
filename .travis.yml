@@ -19,8 +19,8 @@ matrix:
   - os: osx
     name: Mac
     before_install:
-      brew install gcc > /dev/null
-      export FC=gfortran
+    - brew install gcc > /dev/null
+    - export FC=gfortran
     script:
     - mkdir build && cd build && cmake .. -DBUILD_FORTRAN=ON && make -j 3 && cd .. && ./build/Products/energyplus --version
 #  - os: windows
