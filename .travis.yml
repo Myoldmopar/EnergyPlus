@@ -1,0 +1,30 @@
+language: cpp
+git:
+  depth: 3  # if depth=1 and have a queue of jobs, Travis won’t build commits from the queue if you push a new commit
+matrix:
+  include:
+  - os: linux
+    name: Linux
+    sudo: required
+    services: docker
+    env: SH="docker exec -t ubuntu-test bash -c"
+    before_install:
+    - docker run -d --name ubuntu-test -e LC_ALL="en_US.UTF-8" -e LANG="en_US.UTF-8" -v $(pwd):/travis -w /travis ubuntu:latest tail -f /dev/null
+    install:
+    - $SH "apt-get update"
+    - $SH "apt-get install -y locales && locale-gen en_US.UTF-8"
+    - $SH "apt-get install -y git python2.7 cmake g++"
+    script:
+    - $SH "mkdir build && cd build && cmake .. && make -j 3 && cd .. && ./build/Products/energyplus --version"
+  - os: osx
+    name: Mac
+    before_install:
+    - brew install gcc > /dev/null
+    - export FC=gfortran
+    script:
+    - mkdir build && cd build && cmake .. -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON && make -j 3 && cd .. && ./build/Products/energyplus --version
+#  - os: windows
+#    name: Windows
+#    install: choco install python3
+#    script:
+#    - mkdir build && cd build && cmake ..  -G "Visual Studio 15 Win64" && cmake --build . --config Release -j 2 && cd .. && ./build/Products/Release/energyplus --version
