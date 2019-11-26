@@ -16,4 +16,4 @@ jobs:
       - name: test_eplus
         run: ./build/Products/energyplus --version
       - name: test_readvars
-        run: ./build/Products/readvars
+        run: ./build/Products/ReadVarsESO
