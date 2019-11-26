@@ -7,9 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: apt-deps
+        run: sudo apt-get install gfortran 
       - name: configure
-        run: "mkdir build && cd build && cmake .. && cd .."
+        run: mkdir build && cd build && cmake -DBUILD_FORTRAN=ON .. && cd ..
       - name: make
-        run: "cd build && make -j 3 && cd .."
-      - name: run
-        run: "./build/Products/energyplus --version"
+        run: cd build && make -j 3 && cd ..
+      - name: test_eplus
+        run: ./build/Products/energyplus --version
+      - name: test_readvars
+        run: ./build/Products/readvars
