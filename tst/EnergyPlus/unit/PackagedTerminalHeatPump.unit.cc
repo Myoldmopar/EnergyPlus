@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -72,6 +72,7 @@
 #include <EnergyPlus/SimulationManager.hh>
 #include <EnergyPlus/SingleDuct.hh>
 #include <EnergyPlus/SizingManager.hh>
+#include <EnergyPlus/UnitarySystem.hh>
 #include <EnergyPlus/VariableSpeedCoils.hh>
 #include <EnergyPlus/ZoneAirLoopEquipmentManager.hh>
 #include <EnergyPlus/ZoneTempPredictorCorrector.hh>
@@ -108,7 +109,9 @@ using namespace ObjexxFCL;
 
 namespace EnergyPlus {
 
-TEST_F(EnergyPlusFixture, PackagedTerminalHP_VSCoils_Sizing)
+class PTHPFixture : public EnergyPlusFixture {};
+
+TEST_F(PTHPFixture, PackagedTerminalHP_VSCoils_Sizing)
 {
     std::string const idf_objects = delimited_string({
 
@@ -437,6 +440,11 @@ TEST_F(EnergyPlusFixture, PackagedTerminalHP_VSCoils_Sizing)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
+    // Test for #7053:
+    // Fake that there is at least one UnitarySystemPerformance:Multispeed object
+    UnitarySystems::DesignSpecMSHP fakeDesignSpecMSHP;
+    UnitarySystems::designSpecMSHP.push_back(fakeDesignSpecMSHP);
+
     bool ErrorsFound(false);
     GetZoneData(ErrorsFound);
     GetZoneEquipmentData();
@@ -532,6 +540,8 @@ TEST_F(EnergyPlusFixture, PackagedTerminalHP_VSCoils_Sizing)
     Real64 OnOffAirFlowRatio(1.0); // ratio of compressor ON airflow to average airflow over timestep
     Real64 ZoneLoad(0.0);          // cooling or heating needed by zone [watts]
 
+    // Also set BeginEnvrnFlag so code is tested for coil initialization and does not crash
+    DataGlobals::BeginEnvrnFlag = true;
     InitPTUnit(1, DataSizing::CurZoneEqNum, true, OnOffAirFlowRatio, ZoneLoad);
 
     // check that an intermediate speed has the correct flow ratio
@@ -558,7 +568,7 @@ TEST_F(EnergyPlusFixture, PackagedTerminalHP_VSCoils_Sizing)
     EXPECT_EQ(Fan(1).MaxAirFlowRate, max(ZoneEqSizing(1).CoolingAirVolFlow, ZoneEqSizing(1).HeatingAirVolFlow));
 }
 
-TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTAC_HeatingCoilTest)
+TEST_F(PTHPFixture, AirTerminalSingleDuctMixer_SimPTAC_HeatingCoilTest)
 {
 
     bool ErrorsFound(false);
@@ -573,7 +583,7 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTAC_HeatingCoilTest)
     int PTUnitNum(1);
 
     std::string const idf_objects = delimited_string({
-        "Version,9.0;",
+        "Version,9.2;",
 
         "Schedule:Compact,",
         "    FanAvailSched,           !- Name",
@@ -908,7 +918,7 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTAC_HeatingCoilTest)
     ASSERT_NEAR(HeatingCoils::HeatingCoil(1).HeatingCoilRate, 2217.0, 1.0);
 }
 
-TEST_F(EnergyPlusFixture, SimPTAC_SZVAVTest)
+TEST_F(PTHPFixture, SimPTAC_SZVAVTest)
 {
 
     bool ErrorsFound(false);

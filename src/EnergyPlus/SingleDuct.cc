@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -53,44 +53,44 @@
 #include <ObjexxFCL/Fmath.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <DataAirLoop.hh>
-#include <DataAirflowNetwork.hh>
-#include <DataContaminantBalance.hh>
-#include <DataConvergParams.hh>
-#include <DataDefineEquip.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataHeatBalFanSys.hh>
-#include <DataHeatBalance.hh>
-#include <DataIPShortCuts.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <DataZoneEnergyDemands.hh>
-#include <DataZoneEquipment.hh>
-#include <EMSManager.hh>
-#include <Fans.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <GeneralRoutines.hh>
-#include <GlobalNames.hh>
-#include <HVACFan.hh>
-#include <HeatingCoils.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <PlantUtilities.hh>
-#include <Psychrometrics.hh>
-#include <ReportCoilSelection.hh>
-#include <ReportSizingManager.hh>
-#include <ScheduleManager.hh>
-#include <SingleDuct.hh>
-#include <SteamCoils.hh>
-#include <UtilityRoutines.hh>
-#include <WaterCoils.hh>
-#include <ZoneAirLoopEquipmentManager.hh>
+#include <AirflowNetwork/Elements.hpp>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/DataAirLoop.hh>
+#include <EnergyPlus/DataContaminantBalance.hh>
+#include <EnergyPlus/DataConvergParams.hh>
+#include <EnergyPlus/DataDefineEquip.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataHeatBalFanSys.hh>
+#include <EnergyPlus/DataHeatBalance.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/DataZoneEnergyDemands.hh>
+#include <EnergyPlus/DataZoneEquipment.hh>
+#include <EnergyPlus/EMSManager.hh>
+#include <EnergyPlus/Fans.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GeneralRoutines.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/HVACFan.hh>
+#include <EnergyPlus/HeatingCoils.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ReportCoilSelection.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/SingleDuct.hh>
+#include <EnergyPlus/SteamCoils.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
+#include <EnergyPlus/WaterCoils.hh>
+#include <EnergyPlus/ZoneAirLoopEquipmentManager.hh>
 
 namespace EnergyPlus {
 
@@ -1972,9 +1972,6 @@ namespace SingleDuct {
         // Uses the status flags to trigger events.
 
         // Using/Aliasing
-        using DataAirflowNetwork::AirflowNetworkControlMultizone;
-        using DataAirflowNetwork::AirflowNetworkFanActivated;
-        using DataAirflowNetwork::SimulateAirflowNetwork;
         using DataDefineEquip::AirDistUnit;
         using DataGlobals::AnyPlantInModel;
         using DataPlant::PlantLoop;
@@ -2033,12 +2030,12 @@ namespace SingleDuct {
                                         Sys(SysNum).HWLoopSide,
                                         Sys(SysNum).HWBranchIndex,
                                         Sys(SysNum).HWCompIndex,
+                                        errFlag,
                                         _,
                                         _,
                                         _,
                                         _,
-                                        _,
-                                        errFlag);
+                                        _);
 
                 if (errFlag) {
                     ShowContinueError("Reference Unit=\"" + Sys(SysNum).SysName + "\", type=" + Sys(SysNum).SysType);
@@ -2211,14 +2208,16 @@ namespace SingleDuct {
         if (FirstHVACIteration) {
             // The first time through set the mass flow rate to the Max
             if ((Node(InletNode).MassFlowRate > 0.0) && (GetCurrentScheduleValue(Sys(SysNum).SchedPtr) > 0.0)) {
-                if (!(SimulateAirflowNetwork > AirflowNetworkControlMultizone && AirflowNetworkFanActivated)) {
+                if (!(AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone &&
+                      AirflowNetwork::AirflowNetworkFanActivated)) {
                     Node(InletNode).MassFlowRate = Sys(SysNum).AirMassFlowRateMax;
                 }
             } else {
                 Node(InletNode).MassFlowRate = 0.0;
             }
             if ((Node(InletNode).MassFlowRateMaxAvail > 0.0) && (GetCurrentScheduleValue(Sys(SysNum).SchedPtr) > 0.0)) {
-                if (!(SimulateAirflowNetwork > AirflowNetworkControlMultizone && AirflowNetworkFanActivated)) {
+                if (!(AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone &&
+                      AirflowNetwork::AirflowNetworkFanActivated)) {
                     if (Sys(SysNum).SysType_Num == SingleDuctConstVolNoReheat) {
                         if (Sys(SysNum).NoOAFlowInputFromUser) {
                             Node(InletNode).MassFlowRate = Sys(SysNum).AirMassFlowRateMax;
@@ -2240,7 +2239,8 @@ namespace SingleDuct {
             }
 
             if ((Node(InletNode).MassFlowRate > 0.0) && (GetCurrentScheduleValue(Sys(SysNum).SchedPtr) > 0.0)) {
-                if (!(SimulateAirflowNetwork > AirflowNetworkControlMultizone && AirflowNetworkFanActivated)) {
+                if (!(AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone &&
+                      AirflowNetwork::AirflowNetworkFanActivated)) {
                     Node(InletNode).MassFlowRateMinAvail = Sys(SysNum).AirMassFlowRateMax * Sys(SysNum).ZoneMinAirFrac;
                 }
             } else {
@@ -3162,10 +3162,6 @@ namespace SingleDuct {
         using SteamCoils::SimulateSteamCoilComponents;
         using WaterCoils::SimulateWaterCoilComponents;
         // unused   USE DataAirLoop,       ONLY: AirLoopControlInfo
-        using DataAirflowNetwork::AirflowNetworkControlMultizone;
-        using DataAirflowNetwork::AirflowNetworkFanActivated;
-        using DataAirflowNetwork::SimulateAirflowNetwork;
-        using DataAirflowNetwork::VAVTerminalRatio;
         using DataHVACGlobals::SmallLoad;
         using PlantUtilities::SetActuatedBranchFlowRate;
 
@@ -3272,8 +3268,9 @@ namespace SingleDuct {
             MassFlow = max(MassFlow, SysInlet(SysNum).AirMassFlowRateMinAvail);
             MassFlow = min(MassFlow, SysInlet(SysNum).AirMassFlowRateMaxAvail);
 
-            if (SimulateAirflowNetwork > AirflowNetworkControlMultizone && AirflowNetworkFanActivated && VAVTerminalRatio > 0.0) {
-                MassFlow *= VAVTerminalRatio;
+            if (AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone &&
+                AirflowNetwork::AirflowNetworkFanActivated && AirflowNetwork::VAVTerminalRatio > 0.0) {
+                MassFlow *= AirflowNetwork::VAVTerminalRatio;
                 if (MassFlow > Node(Sys(SysNum).InletNodeNum).MassFlowRate) {
                     MassFlow = Node(Sys(SysNum).InletNodeNum).MassFlowRate;
                 }
@@ -3306,8 +3303,9 @@ namespace SingleDuct {
             }
 
             // the AirflowNetwork model overrids the mass flow rate value
-            if (SimulateAirflowNetwork > AirflowNetworkControlMultizone && AirflowNetworkFanActivated && VAVTerminalRatio > 0.0) {
-                MassFlow *= VAVTerminalRatio;
+            if (AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone &&
+                AirflowNetwork::AirflowNetworkFanActivated && AirflowNetwork::VAVTerminalRatio > 0.0) {
+                MassFlow *= AirflowNetwork::VAVTerminalRatio;
                 if (MassFlow > Node(Sys(SysNum).InletNodeNum).MassFlowRate) {
                     MassFlow = Node(Sys(SysNum).InletNodeNum).MassFlowRate;
                 }
@@ -3407,8 +3405,9 @@ namespace SingleDuct {
             MassFlow = min(MassFlow, SysInlet(SysNum).AirMassFlowRateMaxAvail);
             MassFlow = max(MassFlow, SysInlet(SysNum).AirMassFlowRateMinAvail);
 
-            if (SimulateAirflowNetwork > AirflowNetworkControlMultizone && AirflowNetworkFanActivated && VAVTerminalRatio > 0.0) {
-                MassFlow *= VAVTerminalRatio;
+            if (AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone &&
+                AirflowNetwork::AirflowNetworkFanActivated && AirflowNetwork::VAVTerminalRatio > 0.0) {
+                MassFlow *= AirflowNetwork::VAVTerminalRatio;
                 if (MassFlow > Node(Sys(SysNum).InletNodeNum).MassFlowRate) {
                     MassFlow = Node(Sys(SysNum).InletNodeNum).MassFlowRate;
                 }
@@ -5830,7 +5829,7 @@ namespace SingleDuct {
             MixedAirMassFlowRate = Node(SysATMixer(SysNum).MixedAirOutNode).MassFlowRate;
             SecAirMassFlowRate = max(MixedAirMassFlowRate - PriMassFlowRate, 0.0);
             Node(SysATMixer(SysNum).SecInNode).MassFlowRate = SecAirMassFlowRate;
-            if (abs(PriMassFlowRate + SecAirMassFlowRate - MixedAirMassFlowRate) > SmallMassFlow) {
+            if (std::abs(PriMassFlowRate + SecAirMassFlowRate - MixedAirMassFlowRate) > SmallMassFlow) {
                 ShowSevereError("CalcATMixer: Invalid mass flow rates in AirTerminal:SingleDuct:Mixer=" + SysATMixer(SysNum).Name);
                 ShowContinueErrorTimeStamp("Primary mass flow rate=" + General::RoundSigDigits(PriMassFlowRate, 6) +
                                            "Secondary mass flow rate=" + General::RoundSigDigits(SecAirMassFlowRate, 6) +

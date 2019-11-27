@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -54,23 +54,23 @@
 #include <ObjexxFCL/numeric.hh>
 
 // EnergyPlus Headers
-#include <DataDaylighting.hh>
-#include <DataDaylightingDevices.hh>
-#include <DataGlobals.hh>
-#include <DataHeatBalance.hh>
-#include <DataIPShortCuts.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSurfaces.hh>
-#include <DataSystemVariables.hh>
-#include <DaylightingDevices.hh>
-#include <DisplayRoutines.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <HeatBalanceInternalHeatGains.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <OutputProcessor.hh>
-#include <UtilityRoutines.hh>
-#include <Vectors.hh>
+#include <EnergyPlus/DataDaylighting.hh>
+#include <EnergyPlus/DataDaylightingDevices.hh>
+#include <EnergyPlus/DataGlobals.hh>
+#include <EnergyPlus/DataHeatBalance.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSurfaces.hh>
+#include <EnergyPlus/DataSystemVariables.hh>
+#include <EnergyPlus/DaylightingDevices.hh>
+#include <EnergyPlus/DisplayRoutines.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/HeatBalanceInternalHeatGains.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
+#include <EnergyPlus/Vectors.hh>
 
 namespace EnergyPlus {
 
@@ -231,7 +231,7 @@ namespace DaylightingDevices {
 
         // DERIVED TYPE DEFINITIONS:
 
-        static gio::Fmt fmtA("(A)");
+        static ObjexxFCL::gio::Fmt fmtA("(A)");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PipeNum;   // TDD pipe object number
@@ -443,11 +443,11 @@ namespace DaylightingDevices {
 
                 // Report calculated view factor so that user knows what to make the view factor to ground
                 if (!ShelfReported) {
-                    gio::write(OutputFileInits, fmtA)
+                    ObjexxFCL::gio::write(OutputFileInits, fmtA)
                         << "! <Shelf Details>,Name,View Factor to Outside Shelf,Window Name,Window View Factor to Sky,Window View Factor to Ground";
                     ShelfReported = true;
                 }
-                gio::write(OutputFileInits, fmtA) << Shelf(ShelfNum).Name + ',' + RoundSigDigits(Shelf(ShelfNum).ViewFactor, 2) + ',' +
+                ObjexxFCL::gio::write(OutputFileInits, fmtA) << Shelf(ShelfNum).Name + ',' + RoundSigDigits(Shelf(ShelfNum).ViewFactor, 2) + ',' +
                                                          Surface(WinSurf).Name + ',' + RoundSigDigits(Surface(WinSurf).ViewFactorSky, 2) + ',' +
                                                          RoundSigDigits(Surface(WinSurf).ViewFactorGround, 2);
                 //      CALL SetupOutputVariable('View Factor To Outside Shelf []', &
@@ -573,6 +573,7 @@ namespace DaylightingDevices {
                     }
 
                     TDDPipe(PipeNum).Dome = SurfNum;
+                    SurfaceWindow(SurfNum).TDDPipeNum = PipeNum;
                 }
 
                 // Get TDD:DIFFUSER object
@@ -644,6 +645,7 @@ namespace DaylightingDevices {
                     // Window multiplier is already handled in SurfaceGeometry.cc
 
                     TDDPipe(PipeNum).Diffuser = SurfNum;
+                    SurfaceWindow(SurfNum).TDDPipeNum = PipeNum;
                 }
 
                 // Construction
@@ -1475,7 +1477,7 @@ namespace DaylightingDevices {
             QRefl = (QRadSWOutIncident(DiffSurf) - QRadSWwinAbsTot(DiffSurf)) * Surface(DiffSurf).Area - WinTransSolar(DiffSurf);
 
             // Add diffuse interior shortwave reflected from zone surfaces and from zone sources, lights, etc.
-            QRefl += QS(Surface(DiffSurf).Zone) * Surface(DiffSurf).Area * transDiff;
+            QRefl += QS(Surface(DiffSurf).SolarEnclIndex) * Surface(DiffSurf).Area * transDiff;
 
             TotTDDPipeGain = WinTransSolar(TDDPipe(PipeNum).Dome) - QRadSWOutIncident(DiffSurf) * Surface(DiffSurf).Area +
                              QRefl * (1.0 - TDDPipe(PipeNum).TransSolIso / transDiff) +

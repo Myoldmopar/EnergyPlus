@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -53,7 +53,7 @@
 // EnergyPlus Headers
 #include <EnergyPlus/DataGlobals.hh>
 #include <EnergyPlus/DataHeatBalance.hh>
-#include <HeatBalanceAirManager.hh>
+#include <EnergyPlus/HeatBalanceAirManager.hh>
 
 #include "Fixtures/EnergyPlusFixture.hh"
 
@@ -64,7 +64,6 @@ TEST_F(EnergyPlusFixture, HeatBalanceAirManager_RoomAirModelType_Test)
     // Issue User file with RoomAirSettings:AirflowNetwork is failing with fatal error #6086
 
     std::string const idf_objects = delimited_string({
-        "Version,8.6;",
         "  RoomAirModelType,",
         "  Skinny_Model,            !- Name",
         "  South Skin,              !- Zone Name",

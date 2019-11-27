@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -54,25 +54,25 @@
 #include <ObjexxFCL/gio.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataHeatBalance.hh>
-#include <DataIPShortCuts.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSurfaces.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <GlobalNames.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <PlantUtilities.hh>
-#include <Psychrometrics.hh>
-#include <SolarCollectors.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataHeatBalance.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSurfaces.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/SolarCollectors.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -960,12 +960,12 @@ namespace SolarCollectors {
                                                         Collector(CollectorNum).WLoopSideNum,
                                                         Collector(CollectorNum).WLoopBranchNum,
                                                         Collector(CollectorNum).WLoopCompNum,
+                                                        errFlag,
                                                         _,
                                                         _,
                                                         _,
                                                         _,
-                                                        _,
-                                                        errFlag);
+                                                        _);
                 if (errFlag) {
                     ShowFatalError("InitSolarCollector: Program terminated due to previous condition(s).");
                 }
@@ -1383,7 +1383,7 @@ namespace SolarCollectors {
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
-        static gio::Fmt fmtLD("*");
+        static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Real64 s;           // Intermediate variable
@@ -1406,11 +1406,11 @@ namespace SolarCollectors {
             if (IAM > 10.0) { // Greater than 10 is probably not a possibility
                 ShowSevereError("IAM Function: SolarCollectorPerformance:FlatPlate = " + Parameters(ParamNum).Name +
                                 ":  Incident Angle Modifier is out of bounds due to bad coefficients.");
-                gio::write(String, fmtLD) << Parameters(ParamNum).iam1;
+                ObjexxFCL::gio::write(String, fmtLD) << Parameters(ParamNum).iam1;
                 ShowContinueError("Coefficient 2 of Incident Angle Modifier =" + String);
-                gio::write(String, fmtLD) << Parameters(ParamNum).iam2;
+                ObjexxFCL::gio::write(String, fmtLD) << Parameters(ParamNum).iam2;
                 ShowContinueError("Coefficient 3 of Incident Angle Modifier =" + String);
-                gio::write(String, fmtLD) << IAM;
+                ObjexxFCL::gio::write(String, fmtLD) << IAM;
                 ShowContinueError("Calculated Incident Angle Modifier =" + String);
                 ShowContinueError("Expected Incident Angle Modifier should be approximately 1.5 or less.");
                 ShowFatalError("Errors in SolarCollectorPerformance:FlatPlate input.");

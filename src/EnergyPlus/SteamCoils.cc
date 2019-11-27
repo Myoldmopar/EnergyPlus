@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -53,31 +53,31 @@
 #include <ObjexxFCL/Fmath.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <DataContaminantBalance.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <Fans.hh>
-#include <FaultsManager.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <GeneralRoutines.hh>
-#include <GlobalNames.hh>
-#include <HVACFan.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <PlantUtilities.hh>
-#include <Psychrometrics.hh>
-#include <ReportCoilSelection.hh>
-#include <ReportSizingManager.hh>
-#include <ScheduleManager.hh>
-#include <SteamCoils.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/DataContaminantBalance.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/Fans.hh>
+#include <EnergyPlus/FaultsManager.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GeneralRoutines.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/HVACFan.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ReportCoilSelection.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/SteamCoils.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -138,6 +138,7 @@ namespace SteamCoils {
     Array1D_bool CoilWarningOnceFlag;
     Array1D_bool CheckEquipName;
     bool GetSteamCoilsInputFlag(true); // Flag set to make sure you get input once
+    bool MyOneTimeFlag(true);          // one time initialization flag
 
     // Subroutine Specifications for the Module
     // Driver/Manager Routines
@@ -163,6 +164,7 @@ namespace SteamCoils {
     void clear_state()
     {
         NumSteamCoils = 0;
+        MyOneTimeFlag = true;
         GetSteamCoilsInputFlag = true;
         SteamCoil.deallocate();
         MySizeFlag.deallocate();
@@ -298,8 +300,7 @@ namespace SteamCoils {
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int TotalArgs(0);         // Total number of alpha and numeric arguments (max) for a
-        //  certain object in the input file
-        bool errFlag;
+                                         //  certain object in the input file
 
         CurrentModuleObject = "Coil:Heating:Steam";
         NumStmHeat = inputProcessor->getNumObjectsFound(CurrentModuleObject);
@@ -335,10 +336,9 @@ namespace SteamCoils {
                                           cNumericFields);
             UtilityRoutines::IsNameEmpty(AlphArray(1), CurrentModuleObject, ErrorsFound);
 
-            VerifyUniqueCoilName(CurrentModuleObject, AlphArray(1), errFlag, CurrentModuleObject + " Name");
-            if (errFlag) {
-                ErrorsFound = true;
-            }
+            // ErrorsFound will be set to True if problem was found, left untouched otherwise
+            VerifyUniqueCoilName(CurrentModuleObject, AlphArray(1), ErrorsFound, CurrentModuleObject + " Name");
+
             SteamCoil(CoilNum).Name = AlphArray(1);
             SteamCoil(CoilNum).Schedule = AlphArray(2);
             if (lAlphaBlanks(2)) {
@@ -516,7 +516,6 @@ namespace SteamCoils {
         int AirOutletNode;
         Real64 SteamDensity;
         Real64 StartEnthSteam;
-        static bool MyOneTimeFlag(true);
         static Array1D_bool MyEnvrnFlag;
         static Array1D_bool MyPlantScanFlag;
         bool errFlag;
@@ -542,12 +541,12 @@ namespace SteamCoils {
                                     SteamCoil(CoilNum).LoopSide,
                                     SteamCoil(CoilNum).BranchNum,
                                     SteamCoil(CoilNum).CompNum,
+                                    errFlag,
                                     _,
                                     _,
                                     _,
                                     _,
-                                    _,
-                                    errFlag);
+                                    _);
             if (errFlag) {
                 ShowFatalError("InitSteamCoil: Program terminated for previous conditions.");
             }

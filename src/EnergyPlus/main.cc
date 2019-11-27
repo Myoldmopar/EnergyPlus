@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -45,14 +45,17 @@
 // OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <CommandLineInterface.hh>
-#include <EnergyPlusPgm.hh>
+#include <EnergyPlus/CommandLineInterface.hh>
+#include <EnergyPlus/public/EnergyPlusPgm.hh>
 using EnergyPlus::CommandLineInterface::ProcessArgs;
 
 int main(int argc, const char *argv[])
 {
-    // the following line is only needed when debugging issues related to NaN in Visual Studio. See
-    // https://github.com/NREL/EnergyPlus/wiki/Debugging-Tips unsigned int fp_control_state = _controlfp( _EM_INEXACT, _MCW_EM );
+#ifdef MSVC_DEBUG
+    // the following line enables NaN detection in Visual Studio debug builds. See
+    // https://github.com/NREL/EnergyPlus/wiki/Debugging-Tips
+    unsigned int fp_control_state = _controlfp(_EM_INEXACT, _MCW_EM);
+#endif
     ProcessArgs(argc, argv);
     EnergyPlusPgm();
 }

@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -61,21 +61,21 @@ extern "C" {
 #include <ObjexxFCL/string.functions.hh>
 
 // EnergyPlus Headers
-#include <DataEnvironment.hh>
-#include <DataIPShortCuts.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataStringGlobals.hh>
-#include <DataSystemVariables.hh>
-#include <DisplayRoutines.hh>
-#include <EMSManager.hh>
-#include <ExternalInterface.hh>
-#include <General.hh>
-#include <GlobalNames.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <OutputProcessor.hh>
-#include <RuntimeLanguageProcessor.hh>
-#include <ScheduleManager.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataStringGlobals.hh>
+#include <EnergyPlus/DataSystemVariables.hh>
+#include <EnergyPlus/DisplayRoutines.hh>
+#include <EnergyPlus/EMSManager.hh>
+#include <EnergyPlus/ExternalInterface.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/RuntimeLanguageProcessor.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -404,7 +404,7 @@ namespace ExternalInterface {
 
         {
             IOFlags flags;
-            gio::inquire(socCfgFilNam, flags);
+            ObjexxFCL::gio::inquire(socCfgFilNam, flags);
             fileExist = flags.exists();
         }
 
@@ -510,7 +510,7 @@ namespace ExternalInterface {
             // Get port number
             {
                 IOFlags flags;
-                gio::inquire(socCfgFilNam, flags);
+                ObjexxFCL::gio::inquire(socCfgFilNam, flags);
                 socFileExist = flags.exists();
             }
             if (socFileExist) {
@@ -544,7 +544,7 @@ namespace ExternalInterface {
             // Check if simCfgFilNam exists.
             {
                 IOFlags flags;
-                gio::inquire(simCfgFilNam, flags);
+                ObjexxFCL::gio::inquire(simCfgFilNam, flags);
                 simFileExist = flags.exists();
             }
             if (simFileExist) {
@@ -2283,7 +2283,7 @@ namespace ExternalInterface {
         static bool showContinuationWithoutUpdate(true);
 
         // Formats
-        static gio::Fmt Format_1000("(I2)");
+        static ObjexxFCL::gio::Fmt Format_1000("(I2)");
 
         if (firstCall) {
             DisplayString("ExternalInterface starts first data exchange.");
@@ -2337,10 +2337,10 @@ namespace ExternalInterface {
             if (haveExternalInterfaceBCVTB || (haveExternalInterfaceFMUExport && (flaRea == 0))) {
                 if (retVal != 0) {
                     continueSimulation = false;
-                    gio::write(retValCha, Format_1000) << retVal;
+                    ObjexxFCL::gio::write(retValCha, Format_1000) << retVal;
                     ShowSevereError("ExternalInterface: Socket communication received error value \"" + retValCha +
                                     "\" at time = " + TrimSigDigits(preSimTim / 3600, 2) + " hours.");
-                    gio::write(retValCha, Format_1000) << flaRea;
+                    ObjexxFCL::gio::write(retValCha, Format_1000) << flaRea;
                     ShowContinueError("ExternalInterface: Flag from server \"" + retValCha + "\".");
                     ErrorsFound = true;
                     StopExternalInterfaceIfError();
@@ -2352,7 +2352,7 @@ namespace ExternalInterface {
                 // No more values will be received in future steps
                 // Added a check since the FMUExport  is terminated with the flaRea set to 1.
                 noMoreValues = true;
-                gio::write(retValCha, Format_1000) << flaRea;
+                ObjexxFCL::gio::write(retValCha, Format_1000) << flaRea;
                 if (haveExternalInterfaceBCVTB) {
                     ShowSevereError("ExternalInterface: Received end of simulation flag at time = " + TrimSigDigits(preSimTim / 3600, 2) + " hours.");
                     StopExternalInterfaceIfError();
@@ -2411,7 +2411,7 @@ namespace ExternalInterface {
         int varType(0);                                                             // 0=not found, 1=integer, 2=real, 3=meter
         int numKeys(0);                                                             // Number of keys found
         OutputProcessor::StoreType varAvgSum(OutputProcessor::StoreType::Averaged); // Variable  is Averaged=1 or Summed=2
-        int varStepType(0);                                                         // Variable time step is Zone=1 or HVAC=2
+        OutputProcessor::TimeStepType varStepType(OutputProcessor::TimeStepType::TimeStepZone); // Variable time step is Zone=1 or HVAC=2
         OutputProcessor::Unit varUnits(OutputProcessor::Unit::None);                // Units sting, may be blank
         Array1D_int keyIndexes;                                                     // Array index for
         Array1D_string NamesOfKeys;                                                 // Specific key name

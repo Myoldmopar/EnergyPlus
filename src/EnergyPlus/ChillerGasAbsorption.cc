@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -54,30 +54,30 @@
 #include <ObjexxFCL/Fmath.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <ChillerGasAbsorption.hh>
-#include <CurveManager.hh>
-#include <DataBranchAirLoopPlant.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataIPShortCuts.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <EMSManager.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <GlobalNames.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutAirNodeManager.hh>
-#include <OutputProcessor.hh>
-#include <OutputReportPredefined.hh>
-#include <PlantUtilities.hh>
-#include <Psychrometrics.hh>
-#include <ReportSizingManager.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/ChillerGasAbsorption.hh>
+#include <EnergyPlus/CurveManager.hh>
+#include <EnergyPlus/DataBranchAirLoopPlant.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/EMSManager.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutAirNodeManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/OutputReportPredefined.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -339,6 +339,8 @@ namespace ChillerGasAbsorption {
                                           cAlphaFieldNames,
                                           cNumericFieldNames);
             UtilityRoutines::IsNameEmpty(cAlphaArgs(1), cCurrentModuleObject, Get_ErrorsFound);
+
+            // Get_ErrorsFound will be set to True if problem was found, left untouched otherwise
             VerifyUniqueChillerName(cCurrentModuleObject, cAlphaArgs(1), Get_ErrorsFound, cCurrentModuleObject + " Name");
 
             GasAbsorber(AbsorberNum).Name = cAlphaArgs(1);
@@ -838,12 +840,12 @@ namespace ChillerGasAbsorption {
                                     GasAbsorber(ChillNum).CWLoopSideNum,
                                     GasAbsorber(ChillNum).CWBranchNum,
                                     GasAbsorber(ChillNum).CWCompNum,
+                                    errFlag,
                                     GasAbsorber(ChillNum).CHWLowLimitTemp,
                                     _,
                                     _,
                                     GasAbsorber(ChillNum).ChillReturnNodeNum,
-                                    _,
-                                    errFlag);
+                                    _);
             if (errFlag) {
                 ShowFatalError("InitGasAbsorber: Program terminated due to previous condition(s).");
             }
@@ -854,12 +856,12 @@ namespace ChillerGasAbsorption {
                                     GasAbsorber(ChillNum).HWLoopSideNum,
                                     GasAbsorber(ChillNum).HWBranchNum,
                                     GasAbsorber(ChillNum).HWCompNum,
+                                    errFlag,
                                     _,
                                     _,
                                     _,
                                     GasAbsorber(ChillNum).HeatReturnNodeNum,
-                                    _,
-                                    errFlag);
+                                    _);
             if (errFlag) {
                 ShowFatalError("InitGasAbsorber: Program terminated due to previous condition(s).");
             }
@@ -871,12 +873,12 @@ namespace ChillerGasAbsorption {
                                         GasAbsorber(ChillNum).CDLoopSideNum,
                                         GasAbsorber(ChillNum).CDBranchNum,
                                         GasAbsorber(ChillNum).CDCompNum,
+                                        errFlag,
                                         _,
                                         _,
                                         _,
                                         GasAbsorber(ChillNum).CondReturnNodeNum,
-                                        _,
-                                        errFlag);
+                                        _);
                 if (errFlag) {
                     ShowFatalError("InitGasAbsorber: Program terminated due to previous condition(s).");
                 }

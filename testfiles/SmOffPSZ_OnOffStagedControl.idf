@@ -70,7 +70,7 @@
 ! Environmental Emissions:        None
 ! Utility Tariffs:                None
 
-  Version,9.0;
+  Version,9.2;
 
   Building,
     Building,                !- Name
@@ -1104,25 +1104,25 @@
   InternalMass,
     ZSF1-MASS,               !- Name
     FURNITURE,               !- Construction Name
-    ZSF1,                    !- Zone Name
+    ZSF1,                    !- Zone or ZoneList Name
     77;                      !- Surface Area {m2}
 
   InternalMass,
     ZNF1-MASS,               !- Name
     FURNITURE,               !- Construction Name
-    ZNF1,                    !- Zone Name
+    ZNF1,                    !- Zone or ZoneList Name
     77;                      !- Surface Area {m2}
 
   InternalMass,
     ZSF2-MASS,               !- Name
     FURNITURE,               !- Construction Name
-    ZSF2,                    !- Zone Name
+    ZSF2,                    !- Zone or ZoneList Name
     77;                      !- Surface Area {m2}
 
   InternalMass,
     ZNF2-MASS,               !- Name
     FURNITURE,               !- Construction Name
-    ZNF2,                    !- Zone Name
+    ZNF2,                    !- Zone or ZoneList Name
     77;                      !- Surface Area {m2}
 
   ScheduleTypeLimits,
@@ -2102,7 +2102,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZSF1DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:EquipmentList,
     ZNF1Equipment,           !- Name
@@ -2110,7 +2112,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZNF1DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:EquipmentList,
     ZSF2Equipment,           !- Name
@@ -2118,7 +2122,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZSF2DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:EquipmentList,
     ZNF2Equipment,           !- Name
@@ -2126,7 +2132,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZNF2DirectAir,           !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZSF1DirectAir,           !- Name

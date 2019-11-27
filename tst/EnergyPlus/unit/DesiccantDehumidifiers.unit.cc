@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -51,7 +51,7 @@
 #include <gtest/gtest.h>
 
 // EnergyPlus Headers
-#include <ElectricPowerServiceManager.hh>
+#include <EnergyPlus/ElectricPowerServiceManager.hh>
 #include <EnergyPlus/BranchInputManager.hh>
 #include <EnergyPlus/DataEnvironment.hh>
 #include <EnergyPlus/DataGlobals.hh>
@@ -67,7 +67,7 @@
 #include <EnergyPlus/SimulationManager.hh>
 #include <EnergyPlus/SizingManager.hh>
 #include <EnergyPlus/WaterCoils.hh>
-#include <General.hh>
+#include <EnergyPlus/General.hh>
 
 #include "Fixtures/EnergyPlusFixture.hh"
 
@@ -103,7 +103,6 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnOASystemTest)
     Real64 RegCoilCapacity(0.0);
 
     std::string const idf_objects = delimited_string({
-        "  Version,8.4;",
 
         "  Building,",
         "    Building,                !- Name",
@@ -131,7 +130,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnOASystemTest)
         "    No;                      !- Run Simulation for Weather File Run Periods",
 
         "  RunPeriod,",
-        "    ,                        !- Name",
+        "    RP1,                     !- Name",
         "    1,                       !- Begin Month",
         "    1,                       !- Begin Day of Month",
         "    ,                        !- Begin Year",
@@ -2811,7 +2810,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnOASystemTest)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     DataGlobals::DDOnlySimulation = true;
 
     SimulationManager::GetProjectData();
@@ -2866,8 +2865,6 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnPrimaryAirSystemTest)
 
     std::string const idf_objects = delimited_string({
 
-        "  Version,8.4;",
-
         "  Timestep,6;",
 
         "  Building,",
@@ -2894,7 +2891,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnPrimaryAirSystemTest)
         "    No;                      !- Run Simulation for Weather File Run Periods",
 
         "  RunPeriod,",
-        "    ,                        !- Name",
+        "    RP1,                     !- Name",
         "    1,                       !- Begin Month",
         "    1,                       !- Begin Day of Month",
         "    ,                        !- Begin Year",
@@ -3993,7 +3990,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnPrimaryAirSystemTest)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     DataGlobals::DDOnlySimulation = true;
 
     SimulationManager::GetProjectData();
@@ -4048,8 +4045,6 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_RegenAirHeaterHWCoilSizingTest)
 
     std::string const idf_objects = delimited_string({
 
-        "  Version,8.4;",
-
         "  Timestep,6;",
 
         "  Building,",
@@ -4076,7 +4071,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_RegenAirHeaterHWCoilSizingTest)
         "    No;                      !- Run Simulation for Weather File Run Periods",
 
         "  RunPeriod,",
-        "    ,                        !- Name",
+        "    RP1,                     !- Name",
         "    1,                       !- Begin Month",
         "    1,                       !- Begin Day of Month",
         "    ,                        !- Begin Year",
@@ -5413,7 +5408,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_RegenAirHeaterHWCoilSizingTest)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     DataGlobals::DDOnlySimulation = true;
 
     SimulationManager::GetProjectData();
@@ -5476,7 +5471,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_VSCoolingCoilOnPrimaryAirSystemTest)
 
     std::string const idf_objects = delimited_string({
 
-        "  Version,9.0;",
+        "  Version,9.2;",
 
         "  Timestep,6;",
 
@@ -5504,7 +5499,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_VSCoolingCoilOnPrimaryAirSystemTest)
         "    No;                      !- Run Simulation for Weather File Run Periods",
 
         "  RunPeriod,",
-        "    ,                        !- Name",
+        "    RP1,                     !- Name",
         "    1,                       !- Begin Month",
         "    1,                       !- Begin Day of Month",
         "    ,                        !- Begin Year",
@@ -6658,7 +6653,7 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_VSCoolingCoilOnPrimaryAirSystemTest)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     DataGlobals::DDOnlySimulation = true;
 
     SimulationManager::GetProjectData();

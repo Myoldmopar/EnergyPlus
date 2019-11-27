@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -52,26 +52,26 @@
 #include <ObjexxFCL/gio.hh>
 
 // EnergyPlus Headers
-#include <DataEnvironment.hh>
-#include <DataErrorTracking.hh>
-#include <DataGlobals.hh>
-#include <DataPlant.hh>
-#include <DataReportingFlags.hh>
-#include <DataSizing.hh>
-#include <DataSystemVariables.hh>
-#include <DisplayRoutines.hh>
-#include <EMSManager.hh>
-#include <ExteriorEnergyUse.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <HVACSizingSimulationManager.hh>
-#include <HeatBalanceManager.hh>
-#include <Plant/PlantManager.hh>
-#include <PlantPipingSystemsManager.hh>
-#include <SQLiteProcedures.hh>
-#include <SimulationManager.hh>
-#include <UtilityRoutines.hh>
-#include <WeatherManager.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataErrorTracking.hh>
+#include <EnergyPlus/DataGlobals.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataReportingFlags.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/DataSystemVariables.hh>
+#include <EnergyPlus/DisplayRoutines.hh>
+#include <EnergyPlus/EMSManager.hh>
+#include <EnergyPlus/ExteriorEnergyUse.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/HVACSizingSimulationManager.hh>
+#include <EnergyPlus/HeatBalanceManager.hh>
+#include <EnergyPlus/Plant/PlantManager.hh>
+#include <EnergyPlus/PlantPipingSystemsManager.hh>
+#include <EnergyPlus/SQLiteProcedures.hh>
+#include <EnergyPlus/SimulationManager.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
+#include <EnergyPlus/WeatherManager.hh>
 
 namespace EnergyPlus {
 
@@ -239,8 +239,8 @@ void ManageHVACSizingSimulation(bool &ErrorsFound)
 
     bool Available; // an environment is available to process
     int HVACSizingIterCount;
-    static gio::Fmt Format_700("('Environment:WarmupDays,',I3)");
-    static gio::Fmt fmtLD("*");
+    static ObjexxFCL::gio::Fmt Format_700("('Environment:WarmupDays,',I3)");
+    static ObjexxFCL::gio::Fmt fmtLD("*");
 
     hvacSizingSimulationManager->DetermineSizingAnalysesNeeded();
 
@@ -305,7 +305,7 @@ void ManageHVACSizingSimulation(bool &ErrorsFound)
                     if (sqlite) sqlite->sqliteBegin(); // setup for one transaction per day
                 }
                 ++DayOfSim;
-                gio::write(DayOfSimChr, fmtLD) << DayOfSim;
+                ObjexxFCL::gio::write(DayOfSimChr, fmtLD) << DayOfSim;
                 strip(DayOfSimChr);
                 if (!WarmupFlag) {
                     ++CurrentOverallSimDay;
@@ -322,7 +322,7 @@ void ManageHVACSizingSimulation(bool &ErrorsFound)
                     DisplayString("Warming up {" + cWarmupDay + '}');
                 } else if (DayOfSim == 1) {
                     DisplayString("Starting HVAC Sizing Simulation at " + CurMnDy + " for " + EnvironmentName);
-                    gio::write(OutputFileInits, Format_700) << NumOfWarmupDays;
+                    ObjexxFCL::gio::write(OutputFileInits, Format_700) << NumOfWarmupDays;
                 } else if (DisplayPerfSimulationFlag) {
                     DisplayString("Continuing Simulation at " + CurMnDy + " for " + EnvironmentName);
                     DisplayPerfSimulationFlag = false;

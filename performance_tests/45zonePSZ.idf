@@ -119,7 +119,7 @@
 ! ZONE_TERMINAL_FAN_STATIC_PRESSURE=  298.69
 ! End WebInterface Parameters
 
-  Version,9.0;
+  Version,9.2;
 
   Timestep,4;
 
@@ -131,7 +131,7 @@
     Yes;                     !- Run Simulation for Weather File Run Periods
 
   RunPeriod,
-    ,                        !- Name
+    Run Period 1,            !- Name
     1,                       !- Begin Month
     1,                       !- Begin Day of Month
     ,                        !- Begin Year
@@ -264,7 +264,7 @@
     9.69,                    !- Annual Average Outdoor Air Temperature {C}
     28.10;                   !- Maximum Difference In Monthly Average Outdoor Air Temperatures {deltaC}
 
-! CHICAGO_IL_USA Annual Heating 99.6%, MaxDB=-20.6°C
+! CHICAGO_IL_USA Annual Heating 99.6%, MaxDB=-20.6Â°C
 
   SizingPeriod:DesignDay,
     CHICAGO Ann Htg 99.6% Condns DB,  !- Name
@@ -294,7 +294,7 @@
     ,                        !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance (taud) {dimensionless}
     0.00;                    !- Sky Clearness
 
-! CHICAGO_IL_USA Annual Cooling (DB=>MWB) .4%, MaxDB=33.2°C MWB=23.8°C
+! CHICAGO_IL_USA Annual Cooling (DB=>MWB) .4%, MaxDB=33.2Â°C MWB=23.8Â°C
 
   SizingPeriod:DesignDay,
     CHICAGO Ann Clg .4% Condns DB=>MWB,  !- Name
@@ -1807,7 +1807,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_1_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_1,        !- Zone Name
+    ZN_1_FLR_1_SEC_1,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -1997,7 +1997,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_1 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_1 Direct Air,  !- Name
@@ -2184,7 +2186,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_1_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_1,        !- Zone Name
+    ZN_1_FLR_2_SEC_1,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -2374,7 +2376,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_1 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_1 Direct Air,  !- Name
@@ -2561,7 +2565,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_1_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_1,        !- Zone Name
+    ZN_1_FLR_3_SEC_1,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -2751,7 +2755,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_1 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_1 Direct Air,  !- Name
@@ -2938,7 +2944,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_2_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_2,        !- Zone Name
+    ZN_1_FLR_1_SEC_2,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -3128,7 +3134,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_2 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_2 Direct Air,  !- Name
@@ -3315,7 +3323,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_2_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_2,        !- Zone Name
+    ZN_1_FLR_2_SEC_2,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -3505,7 +3513,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_2 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_2 Direct Air,  !- Name
@@ -3692,7 +3702,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_2_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_2,        !- Zone Name
+    ZN_1_FLR_3_SEC_2,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -3882,7 +3892,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_2 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_2 Direct Air,  !- Name
@@ -4069,7 +4081,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_3_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_3,        !- Zone Name
+    ZN_1_FLR_1_SEC_3,        !- Zone or ZoneList Name
     133.1698;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -4259,7 +4271,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_3 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_3 Direct Air,  !- Name
@@ -4446,7 +4460,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_3_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_3,        !- Zone Name
+    ZN_1_FLR_2_SEC_3,        !- Zone or ZoneList Name
     133.1698;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -4636,7 +4650,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_3 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_3 Direct Air,  !- Name
@@ -4823,7 +4839,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_3_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_3,        !- Zone Name
+    ZN_1_FLR_3_SEC_3,        !- Zone or ZoneList Name
     133.1698;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -5013,7 +5029,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_3 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_3 Direct Air,  !- Name
@@ -5200,7 +5218,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_4_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_4,        !- Zone Name
+    ZN_1_FLR_1_SEC_4,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -5390,7 +5408,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_4 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_4 Direct Air,  !- Name
@@ -5577,7 +5597,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_4_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_4,        !- Zone Name
+    ZN_1_FLR_2_SEC_4,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -5767,7 +5787,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_4 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_4 Direct Air,  !- Name
@@ -5954,7 +5976,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_4_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_4,        !- Zone Name
+    ZN_1_FLR_3_SEC_4,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -6144,7 +6166,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_4 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_4 Direct Air,  !- Name
@@ -6331,7 +6355,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_5_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_5,        !- Zone Name
+    ZN_1_FLR_1_SEC_5,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -6521,7 +6545,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_5 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_5 Direct Air,  !- Name
@@ -6708,7 +6734,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_5_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_5,        !- Zone Name
+    ZN_1_FLR_2_SEC_5,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -6898,7 +6924,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_5 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_5 Direct Air,  !- Name
@@ -7085,7 +7113,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_5_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_5,        !- Zone Name
+    ZN_1_FLR_3_SEC_5,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -7275,7 +7303,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_5 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_5 Direct Air,  !- Name
@@ -7462,7 +7492,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_6_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_6,        !- Zone Name
+    ZN_1_FLR_1_SEC_6,        !- Zone or ZoneList Name
     323.8302;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -7652,7 +7682,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_6 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_6 Direct Air,  !- Name
@@ -7839,7 +7871,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_6_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_6,        !- Zone Name
+    ZN_1_FLR_2_SEC_6,        !- Zone or ZoneList Name
     323.8302;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -8029,7 +8061,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_6 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_6 Direct Air,  !- Name
@@ -8216,7 +8250,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_6_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_6,        !- Zone Name
+    ZN_1_FLR_3_SEC_6,        !- Zone or ZoneList Name
     323.8302;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -8406,7 +8440,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_6 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_6 Direct Air,  !- Name
@@ -8593,7 +8629,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_7_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_7,        !- Zone Name
+    ZN_1_FLR_1_SEC_7,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -8783,7 +8819,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_7 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_7 Direct Air,  !- Name
@@ -8970,7 +9008,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_7_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_7,        !- Zone Name
+    ZN_1_FLR_2_SEC_7,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -9160,7 +9198,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_7 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_7 Direct Air,  !- Name
@@ -9347,7 +9387,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_7_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_7,        !- Zone Name
+    ZN_1_FLR_3_SEC_7,        !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -9537,7 +9577,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_7 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_7 Direct Air,  !- Name
@@ -9724,7 +9766,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_8_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_8,        !- Zone Name
+    ZN_1_FLR_1_SEC_8,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -9914,7 +9956,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_8 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_8 Direct Air,  !- Name
@@ -10101,7 +10145,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_8_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_8,        !- Zone Name
+    ZN_1_FLR_2_SEC_8,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -10291,7 +10335,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_8 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_8 Direct Air,  !- Name
@@ -10478,7 +10524,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_8_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_8,        !- Zone Name
+    ZN_1_FLR_3_SEC_8,        !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -10668,7 +10714,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_8 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_8 Direct Air,  !- Name
@@ -10855,7 +10903,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_9_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_9,        !- Zone Name
+    ZN_1_FLR_1_SEC_9,        !- Zone or ZoneList Name
     133.1698;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -11045,7 +11093,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_9 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_9 Direct Air,  !- Name
@@ -11232,7 +11282,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_9_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_9,        !- Zone Name
+    ZN_1_FLR_2_SEC_9,        !- Zone or ZoneList Name
     133.1698;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -11422,7 +11472,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_9 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_9 Direct Air,  !- Name
@@ -11609,7 +11661,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_9_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_9,        !- Zone Name
+    ZN_1_FLR_3_SEC_9,        !- Zone or ZoneList Name
     133.1698;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -11799,7 +11851,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_9 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_9 Direct Air,  !- Name
@@ -11986,7 +12040,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_10_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_10,       !- Zone Name
+    ZN_1_FLR_1_SEC_10,       !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -12176,7 +12230,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_10 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_10 Direct Air,  !- Name
@@ -12363,7 +12419,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_10_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_10,       !- Zone Name
+    ZN_1_FLR_2_SEC_10,       !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -12553,7 +12609,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_10 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_10 Direct Air,  !- Name
@@ -12740,7 +12798,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_10_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_10,       !- Zone Name
+    ZN_1_FLR_3_SEC_10,       !- Zone or ZoneList Name
     137.1000;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -12930,7 +12988,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_10 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_10 Direct Air,  !- Name
@@ -13117,7 +13177,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_11_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_11,       !- Zone Name
+    ZN_1_FLR_1_SEC_11,       !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -13307,7 +13367,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_11 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_11 Direct Air,  !- Name
@@ -13494,7 +13556,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_11_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_11,       !- Zone Name
+    ZN_1_FLR_2_SEC_11,       !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -13684,7 +13746,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_11 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_11 Direct Air,  !- Name
@@ -13871,7 +13935,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_11_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_11,       !- Zone Name
+    ZN_1_FLR_3_SEC_11,       !- Zone or ZoneList Name
     95.3302;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -14061,7 +14125,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_11 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_11 Direct Air,  !- Name
@@ -14248,7 +14314,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_12_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_12,       !- Zone Name
+    ZN_1_FLR_1_SEC_12,       !- Zone or ZoneList Name
     323.8302;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -14438,7 +14504,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_12 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_12 Direct Air,  !- Name
@@ -14625,7 +14693,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_12_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_12,       !- Zone Name
+    ZN_1_FLR_2_SEC_12,       !- Zone or ZoneList Name
     323.8302;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -14815,7 +14883,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_12 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_12 Direct Air,  !- Name
@@ -15002,7 +15072,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_12_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_12,       !- Zone Name
+    ZN_1_FLR_3_SEC_12,       !- Zone or ZoneList Name
     323.8302;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -15192,7 +15262,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_12 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_12 Direct Air,  !- Name
@@ -15356,7 +15428,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_13_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_13,       !- Zone Name
+    ZN_1_FLR_1_SEC_13,       !- Zone or ZoneList Name
     361.6792;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -15546,7 +15618,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_13 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_13 Direct Air,  !- Name
@@ -15710,7 +15784,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_13_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_13,       !- Zone Name
+    ZN_1_FLR_2_SEC_13,       !- Zone or ZoneList Name
     361.6792;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -15900,7 +15974,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_13 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_13 Direct Air,  !- Name
@@ -16064,7 +16140,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_13_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_13,       !- Zone Name
+    ZN_1_FLR_3_SEC_13,       !- Zone or ZoneList Name
     361.6792;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -16254,7 +16330,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_13 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_13 Direct Air,  !- Name
@@ -16386,7 +16464,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_14_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_14,       !- Zone Name
+    ZN_1_FLR_1_SEC_14,       !- Zone or ZoneList Name
     32.9208;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -16576,7 +16654,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_14 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_14 Direct Air,  !- Name
@@ -16708,7 +16788,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_14_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_14,       !- Zone Name
+    ZN_1_FLR_2_SEC_14,       !- Zone or ZoneList Name
     32.9208;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -16898,7 +16978,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_14 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_14 Direct Air,  !- Name
@@ -17030,7 +17112,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_14_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_14,       !- Zone Name
+    ZN_1_FLR_3_SEC_14,       !- Zone or ZoneList Name
     32.9208;                 !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -17220,7 +17302,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_14 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_14 Direct Air,  !- Name
@@ -17384,7 +17468,7 @@
   InternalMass,
     ZN_1_FLR_1_SEC_15_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_1_SEC_15,       !- Zone Name
+    ZN_1_FLR_1_SEC_15,       !- Zone or ZoneList Name
     361.6792;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -17574,7 +17658,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_1_SEC_15 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_1_SEC_15 Direct Air,  !- Name
@@ -17738,7 +17824,7 @@
   InternalMass,
     ZN_1_FLR_2_SEC_15_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_2_SEC_15,       !- Zone Name
+    ZN_1_FLR_2_SEC_15,       !- Zone or ZoneList Name
     361.6792;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -17928,7 +18014,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_2_SEC_15 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_2_SEC_15 Direct Air,  !- Name
@@ -18092,7 +18180,7 @@
   InternalMass,
     ZN_1_FLR_3_SEC_15_InternalMass_1,  !- Name
     InteriorFurnishings,     !- Construction Name
-    ZN_1_FLR_3_SEC_15,       !- Zone Name
+    ZN_1_FLR_3_SEC_15,       !- Zone or ZoneList Name
     361.6792;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -18282,7 +18370,9 @@
     AirTerminal:SingleDuct:Uncontrolled,  !- Zone Equipment 1 Object Type
     ZN_1_FLR_3_SEC_15 Direct Air,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   AirTerminal:SingleDuct:Uncontrolled,
     ZN_1_FLR_3_SEC_15 Direct Air,  !- Name

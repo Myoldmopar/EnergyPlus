@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -55,31 +55,31 @@
 #include <ObjexxFCL/Fmath.hh>
 
 // EnergyPlus Headers
-#include <AirflowNetworkBalanceManager.hh>
-#include <CurveManager.hh>
-#include <DataAirLoop.hh>
-#include <DataAirSystems.hh>
-#include <DataAirflowNetwork.hh>
-#include <DataContaminantBalance.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataHeatBalFanSys.hh>
-#include <DataHeatBalance.hh>
-#include <DataIPShortCuts.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataZoneControls.hh>
-#include <DataZoneEquipment.hh>
-#include <General.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <Psychrometrics.hh>
-#include <ScheduleManager.hh>
-#include <SystemAvailabilityManager.hh>
-#include <ThermalComfort.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/AirflowNetworkBalanceManager.hh>
+#include <EnergyPlus/CurveManager.hh>
+#include <EnergyPlus/DataAirLoop.hh>
+#include <EnergyPlus/DataAirSystems.hh>
+#include <AirflowNetwork/Elements.hpp>
+#include <EnergyPlus/DataContaminantBalance.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataHeatBalFanSys.hh>
+#include <EnergyPlus/DataHeatBalance.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataZoneControls.hh>
+#include <EnergyPlus/DataZoneEquipment.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/SystemAvailabilityManager.hh>
+#include <EnergyPlus/ThermalComfort.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -534,7 +534,7 @@ namespace SystemAvailabilityManager {
         int ZoneListNum;
         int ZoneNumInList;
 
-        // Get the number of occurences of each type of manager and read in data
+        // Get the number of occurrences of each type of manager and read in data
         cCurrentModuleObject = "AvailabilityManager:Scheduled";
         inputProcessor->getObjectDefMaxArgs(cCurrentModuleObject, numArgs, NumAlphas, NumNumbers);
         maxNumbers = NumNumbers;
@@ -4129,9 +4129,6 @@ namespace SystemAvailabilityManager {
         using NodeInputManager::GetOnlySingleNode;
         using NodeInputManager::MarkNode;
         using namespace DataLoopNode;
-        using DataAirflowNetwork::AirflowNetworkControlSimple;
-        using DataAirflowNetwork::AirflowNetworkControlSimpleADS;
-        using DataAirflowNetwork::SimulateAirflowNetwork;
         using General::TrimSigDigits;
         using namespace DataIPShortCuts;
         using CurveManager::CurveValue;
@@ -4154,7 +4151,7 @@ namespace SystemAvailabilityManager {
         Real64 CurveMax;                // Maximum value specified in a curve
         Real64 CurveVal;                // Curve value
 
-        // Get the number of occurences of each type of System Availability Manager
+        // Get the number of occurrences of each type of System Availability Manager
         cCurrentModuleObject = "AvailabilityManager:HybridVentilation";
         NumHybridVentSysAvailMgrs = inputProcessor->getNumObjectsFound(cCurrentModuleObject);
 
@@ -4484,7 +4481,8 @@ namespace SystemAvailabilityManager {
                 }
             }
 
-            if (HybridVentSysAvailMgrData(SysAvailNum).SimpleControlTypeSchedPtr > 0 && SimulateAirflowNetwork > AirflowNetworkControlSimple) {
+            if (HybridVentSysAvailMgrData(SysAvailNum).SimpleControlTypeSchedPtr > 0 &&
+                AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlSimple) {
                 ShowSevereError(RoutineName + cCurrentModuleObject + "=\"" + HybridVentSysAvailMgrData(SysAvailNum).Name + "\"");
                 ShowContinueError("The simple airflow objects are used for natural ventilation calculation.");
                 ShowContinueError("The Airflow Network model is not allowed to perform. Please set the control type = NoMultizoneOrDistribution");
@@ -4492,10 +4490,10 @@ namespace SystemAvailabilityManager {
             }
 
             if (HybridVentSysAvailMgrData(SysAvailNum).SimpleControlTypeSchedPtr == 0) {
-                if (SimulateAirflowNetwork <= AirflowNetworkControlSimple) {
+                if (AirflowNetwork::SimulateAirflowNetwork <= AirflowNetwork::AirflowNetworkControlSimple) {
                     ShowWarningError(RoutineName + cCurrentModuleObject + "=\"" + HybridVentSysAvailMgrData(SysAvailNum).Name + "\"");
                     ShowContinueError("The Airflow Network model is not available for Hybrid Ventilation Control.");
-                } else if (SimulateAirflowNetwork == AirflowNetworkControlSimpleADS) {
+                } else if (AirflowNetwork::SimulateAirflowNetwork == AirflowNetwork::AirflowNetworkControlSimpleADS) {
                     ShowWarningError(RoutineName + cCurrentModuleObject + "=\"" + HybridVentSysAvailMgrData(SysAvailNum).Name + "\"");
                     ShowContinueError("Please check the AirflowNetwork Control field in the AirflowNetwork:SimulationControl object.");
                     ShowContinueError("The suggested choices are MultizoneWithDistribution or MultizoneWithoutDistribution.");
@@ -4882,8 +4880,6 @@ namespace SystemAvailabilityManager {
         using AirflowNetworkBalanceManager::GetZoneInfilAirChangeRate;
         using AirflowNetworkBalanceManager::ManageAirflowNetworkBalance;
         using CurveManager::CurveValue;
-        using DataAirflowNetwork::AirflowNetworkControlSimple;
-        using DataAirflowNetwork::SimulateAirflowNetwork;
         using DataContaminantBalance::ZoneAirCO2;
         using DataContaminantBalance::ZoneCO2SetPoint;
         using DataEnvironment::IsRain;
@@ -5015,7 +5011,7 @@ namespace SystemAvailabilityManager {
                     ACH = 0.0;
                     HybridVentModeOA = true;
                     if (!HybridVentSysAvailMgrData(SysAvailNum).HybridVentMgrConnectedToAirLoop) {
-                        if (SimulateAirflowNetwork <= AirflowNetworkControlSimple) {
+                        if (AirflowNetwork::SimulateAirflowNetwork <= AirflowNetwork::AirflowNetworkControlSimple) {
                             HybridVentModeOA = false;
                         }
                     }

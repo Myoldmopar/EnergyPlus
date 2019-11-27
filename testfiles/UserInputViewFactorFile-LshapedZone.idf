@@ -44,7 +44,7 @@
 !
 !
 
-  Version,9.0;
+  Version,9.2;
 
   Building,
     Urbana             Load Calc,  !- Name
@@ -176,7 +176,7 @@
 ! =========================
 
   ZoneProperty:UserViewFactors:bySurfaceName,
-    Lshaped Zone,            !- Zone Name
+    Lshaped Zone,            !- Zone or ZoneList Name
     Lshaped Zone:South Wall, !- From Surface 1
     Lshaped Zone:South Wall, !- To Surface 1
     0.000000,                !- View Factor 1
@@ -1492,7 +1492,9 @@
     ZoneHVAC:IdealLoadsAirSystem,  !- Zone Equipment 1 Object Type
     Lshaped zone-Air,        !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:EquipmentList,
     Equipment-LshapedZoneBase,  !- Name
@@ -1500,7 +1502,9 @@
     ZoneHVAC:IdealLoadsAirSystem,  !- Zone Equipment 1 Object Type
     LshapedZoneBase-Air,     !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:IdealLoadsAirSystem,
     Lshaped zone-Air,        !- Name

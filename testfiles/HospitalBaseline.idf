@@ -100,7 +100,7 @@
 ! End SimMetaData
 ! Number of Zones: 130
 
-  Version,9.0;
+  Version,9.2;
 
   Timestep,6;
 
@@ -112,7 +112,7 @@
     No;                      !- Run Simulation for Weather File Run Periods
 
   RunPeriod,
-    ,                        !- Name
+    Run Period 1,            !- Name
     1,                       !- Begin Month
     1,                       !- Begin Day of Month
     ,                        !- Begin Year
@@ -1665,7 +1665,7 @@
   InternalMass,
     Floor 1 Cafe Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Cafe,            !- Zone Name
+    Floor 1 Cafe,            !- Zone or ZoneList Name
     746.5688;                !- Surface Area {m2}
 
   People,
@@ -1826,7 +1826,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Cafe VAV Box,    !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Cafe VAV Box,    !- Name
@@ -2395,7 +2397,7 @@
   InternalMass,
     Floor 1 Clean Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Clean,           !- Zone Name
+    Floor 1 Clean,           !- Zone or ZoneList Name
     89.1869;                 !- Surface Area {m2}
 
   People,
@@ -2556,7 +2558,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Clean VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Clean VAV Box,   !- Name
@@ -2812,7 +2816,7 @@
   InternalMass,
     Floor 1 Conference Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Conference,      !- Zone Name
+    Floor 1 Conference,      !- Zone or ZoneList Name
     1142.7074;               !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -3002,7 +3006,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Conference VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Conference VAV Box,  !- Name
@@ -3242,7 +3248,7 @@
   InternalMass,
     Floor 1 Dining Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Dining,          !- Zone Name
+    Floor 1 Dining,          !- Zone or ZoneList Name
     914.1659;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -3432,7 +3438,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Dining VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Dining VAV Box,  !- Name
@@ -3672,7 +3680,7 @@
   InternalMass,
     Floor 1 Elevator Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Elevator,        !- Zone Name
+    Floor 1 Elevator,        !- Zone or ZoneList Name
     334.4509;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -3862,7 +3870,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Elevator VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Elevator VAV Box,!- Name
@@ -4102,7 +4112,7 @@
   InternalMass,
     Floor 1 Exam Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Exam,            !- Zone Name
+    Floor 1 Exam,            !- Zone or ZoneList Name
     490.5281;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -4292,7 +4302,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Exam VAV Box,    !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Exam VAV Box,    !- Name
@@ -4517,7 +4529,7 @@
   InternalMass,
     Floor 1 Food Storage Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Food Storage,    !- Zone Name
+    Floor 1 Food Storage,    !- Zone or ZoneList Name
     373.2844;                !- Surface Area {m2}
 
   People,
@@ -4735,7 +4747,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Food Storage VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Food Storage VAV Box,  !- Name
@@ -5153,7 +5167,7 @@
   InternalMass,
     Floor 1 Gas Storage Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Gas Storage,     !- Zone Name
+    Floor 1 Gas Storage,     !- Zone or ZoneList Name
     115.9430;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -5311,10 +5325,14 @@
     Floor 1 Gas Storage VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 1 Gas Storage Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Gas Storage VAV Box,  !- Name
@@ -5549,7 +5567,7 @@
   InternalMass,
     Floor 1 Imaging Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Imaging,         !- Zone Name
+    Floor 1 Imaging,         !- Zone or ZoneList Name
     282.4252;                !- Surface Area {m2}
 
   People,
@@ -5738,7 +5756,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Imaging VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Imaging VAV Box, !- Name
@@ -5963,7 +5983,7 @@
   InternalMass,
     Floor 1 Kitchen Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Kitchen,         !- Zone Name
+    Floor 1 Kitchen,         !- Zone or ZoneList Name
     373.2844;                !- Surface Area {m2}
 
   People,
@@ -6188,18 +6208,26 @@
     Floor 1 Kitchen VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 1 Kitchen Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
     2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 3 Object Type
     Floor 1 Kitchen Exhaust Fan 2,  !- Zone Equipment 3 Name
     3,                       !- Zone Equipment 3 Cooling Sequence
     3,                       !- Zone Equipment 3 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 3 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 3 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 4 Object Type
     Floor 1 Kitchen Exhaust Fan 3,  !- Zone Equipment 4 Name
     4,                       !- Zone Equipment 4 Cooling Sequence
-    4;                       !- Zone Equipment 4 Heating or No-Load Sequence
+    4,                       !- Zone Equipment 4 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 4 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 4 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Kitchen VAV Box, !- Name
@@ -6454,7 +6482,7 @@
   InternalMass,
     Floor 1 Lab 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Lab 1,           !- Zone Name
+    Floor 1 Lab 1,           !- Zone or ZoneList Name
     371.6122;                !- Surface Area {m2}
 
   People,
@@ -6643,7 +6671,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Lab 1 VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Lab 1 VAV Box,   !- Name
@@ -6883,7 +6913,7 @@
   InternalMass,
     Floor 1 Lab 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Lab 2,           !- Zone Name
+    Floor 1 Lab 2,           !- Zone or ZoneList Name
     910.4498;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -7101,7 +7131,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Lab 2 VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Lab 2 VAV Box,   !- Name
@@ -7341,7 +7373,7 @@
   InternalMass,
     Floor 1 Laundry Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Laundry,         !- Zone Name
+    Floor 1 Laundry,         !- Zone or ZoneList Name
     415.4624;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -7565,10 +7597,14 @@
     Floor 1 Laundry VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 1 Laundry Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Laundry VAV Box, !- Name
@@ -7850,7 +7886,7 @@
   InternalMass,
     Floor 1 Lobby Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Lobby,           !- Zone Name
+    Floor 1 Lobby,           !- Zone or ZoneList Name
     696.7728;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -8040,7 +8076,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Lobby VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Lobby VAV Box,   !- Name
@@ -8265,7 +8303,7 @@
   InternalMass,
     Floor 1 Lounge Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Lounge,          !- Zone Name
+    Floor 1 Lounge,          !- Zone or ZoneList Name
     237.8318;                !- Surface Area {m2}
 
   People,
@@ -8426,7 +8464,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Lounge VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Lounge VAV Box,  !- Name
@@ -8681,7 +8721,7 @@
   InternalMass,
     Floor 1 Mech 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Mech 1,          !- Zone Name
+    Floor 1 Mech 1,          !- Zone or ZoneList Name
     1505.0292;               !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -8834,7 +8874,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Mech 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Mech 1 VAV Box,  !- Name
@@ -9136,7 +9178,7 @@
   InternalMass,
     Floor 1 Mech 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Mech 2,          !- Zone Name
+    Floor 1 Mech 2,          !- Zone or ZoneList Name
     2006.7057;               !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -9289,7 +9331,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Mech 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Mech 2 VAV Box,  !- Name
@@ -9529,7 +9573,7 @@
   InternalMass,
     Floor 1 Office 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Office 1,        !- Zone Name
+    Floor 1 Office 1,        !- Zone or ZoneList Name
     1371.2489;               !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -9719,7 +9763,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Office 1 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Office 1 VAV Box,!- Name
@@ -9959,7 +10005,7 @@
   InternalMass,
     Floor 1 Office 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Office 2,        !- Zone Name
+    Floor 1 Office 2,        !- Zone or ZoneList Name
     1056.1218;               !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -10149,7 +10195,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Office 2 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Office 2 VAV Box,!- Name
@@ -10405,7 +10453,7 @@
   InternalMass,
     Floor 1 Office 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Office 3,        !- Zone Name
+    Floor 1 Office 3,        !- Zone or ZoneList Name
     3678.0314;               !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -10595,7 +10643,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Office 3 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Office 3 VAV Box,!- Name
@@ -10835,7 +10885,7 @@
   InternalMass,
     Floor 1 Office 3 Perimeter 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Office 3 Perimeter 1,  !- Zone Name
+    Floor 1 Office 3 Perimeter 1,  !- Zone or ZoneList Name
     536.5151;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -11025,7 +11075,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Office 3 Perimeter 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Office 3 Perimeter 1 VAV Box,  !- Name
@@ -11265,7 +11317,7 @@
   InternalMass,
     Floor 1 Office 3 Perimeter 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Office 3 Perimeter 2,  !- Zone Name
+    Floor 1 Office 3 Perimeter 2,  !- Zone or ZoneList Name
     340.0251;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -11455,7 +11507,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Office 3 Perimeter 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Office 3 Perimeter 2 VAV Box,  !- Name
@@ -11710,7 +11764,7 @@
   InternalMass,
     Floor 1 Office 3 Perimeter 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Office 3 Perimeter 3,  !- Zone Name
+    Floor 1 Office 3 Perimeter 3,  !- Zone or ZoneList Name
     536.5151;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -11900,7 +11954,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Office 3 Perimeter 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Office 3 Perimeter 3 VAV Box,  !- Name
@@ -12140,7 +12196,7 @@
   InternalMass,
     Floor 1 Patient Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Patient,         !- Zone Name
+    Floor 1 Patient,         !- Zone or ZoneList Name
     334.4509;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -12330,7 +12386,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Patient VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Patient VAV Box, !- Name
@@ -12555,7 +12613,7 @@
   InternalMass,
     Floor 1 Pharmacy Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Pharmacy,        !- Zone Name
+    Floor 1 Pharmacy,        !- Zone or ZoneList Name
     1114.8365;               !- Surface Area {m2}
 
   People,
@@ -12716,7 +12774,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Pharmacy VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Pharmacy VAV Box,!- Name
@@ -12941,7 +13001,7 @@
   InternalMass,
     Floor 1 Physical Therapy Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Physical Therapy,!- Zone Name
+    Floor 1 Physical Therapy,!- Zone or ZoneList Name
     914.1659;                !- Surface Area {m2}
 
   People,
@@ -13102,7 +13162,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Physical Therapy VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Physical Therapy VAV Box,  !- Name
@@ -13357,7 +13419,7 @@
   InternalMass,
     Floor 1 Receiving Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Receiving,       !- Zone Name
+    Floor 1 Receiving,       !- Zone or ZoneList Name
     415.4624;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -13510,7 +13572,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Receiving VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Receiving VAV Box,  !- Name
@@ -13750,7 +13814,7 @@
   InternalMass,
     Floor 1 Reception Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Reception,       !- Zone Name
+    Floor 1 Reception,       !- Zone or ZoneList Name
     104.0514;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -13940,7 +14004,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Reception VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Reception VAV Box,  !- Name
@@ -14165,7 +14231,7 @@
   InternalMass,
     Floor 1 Soil Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Soil,            !- Zone Name
+    Floor 1 Soil,            !- Zone or ZoneList Name
     89.1869;                 !- Surface Area {m2}
 
   People,
@@ -14303,10 +14369,14 @@
     Floor 1 Soil VAV Box,    !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 1 Soil Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Soil VAV Box,    !- Name
@@ -14541,7 +14611,7 @@
   InternalMass,
     Floor 1 Storage Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Storage,         !- Zone Name
+    Floor 1 Storage,         !- Zone or ZoneList Name
     1003.3528;               !- Surface Area {m2}
 
   Lights,
@@ -14665,7 +14735,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Storage VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Storage VAV Box, !- Name
@@ -14890,7 +14962,7 @@
   InternalMass,
     Floor 1 Waiting Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 1 Waiting,         !- Zone Name
+    Floor 1 Waiting,         !- Zone or ZoneList Name
     282.4252;                !- Surface Area {m2}
 
   People,
@@ -15051,7 +15123,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 1 Waiting VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 1 Waiting VAV Box, !- Name
@@ -15306,7 +15380,7 @@
   InternalMass,
     Floor 2 Chapel Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Chapel,          !- Zone Name
+    Floor 2 Chapel,          !- Zone or ZoneList Name
     379.0444;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -15496,7 +15570,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Chapel VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Chapel VAV Box,  !- Name
@@ -15721,7 +15797,7 @@
   InternalMass,
     Floor 2 Clean 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Clean 1,         !- Zone Name
+    Floor 2 Clean 1,         !- Zone or ZoneList Name
     89.7443;                 !- Surface Area {m2}
 
   People,
@@ -15882,7 +15958,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Clean 1 VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Clean 1 VAV Box, !- Name
@@ -16107,7 +16185,7 @@
   InternalMass,
     Floor 2 Clean 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Clean 2,         !- Zone Name
+    Floor 2 Clean 2,         !- Zone or ZoneList Name
     59.4579;                 !- Surface Area {m2}
 
   People,
@@ -16268,7 +16346,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Clean 2 VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Clean 2 VAV Box, !- Name
@@ -16524,7 +16604,7 @@
   InternalMass,
     Floor 2 Corridor Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Corridor,        !- Zone Name
+    Floor 2 Corridor,        !- Zone or ZoneList Name
     966.1916;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -16677,7 +16757,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Corridor VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Corridor VAV Box,!- Name
@@ -16917,7 +16999,7 @@
   InternalMass,
     Floor 2 Elevator Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Elevator,        !- Zone Name
+    Floor 2 Elevator,        !- Zone or ZoneList Name
     334.4509;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -17107,7 +17189,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Elevator VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Elevator VAV Box,!- Name
@@ -17362,7 +17446,7 @@
   InternalMass,
     Floor 2 Exam 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Exam 1,          !- Zone Name
+    Floor 2 Exam 1,          !- Zone or ZoneList Name
     780.3855;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -17552,7 +17636,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Exam 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Exam 1 VAV Box,  !- Name
@@ -17777,7 +17863,7 @@
   InternalMass,
     Floor 2 Exam 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Exam 2,          !- Zone Name
+    Floor 2 Exam 2,          !- Zone or ZoneList Name
     250.8382;                !- Surface Area {m2}
 
   People,
@@ -17938,7 +18024,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Exam 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Exam 2 VAV Box,  !- Name
@@ -18163,7 +18251,7 @@
   InternalMass,
     Floor 2 Exam 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Exam 3,          !- Zone Name
+    Floor 2 Exam 3,          !- Zone or ZoneList Name
     752.5146;                !- Surface Area {m2}
 
   People,
@@ -18324,7 +18412,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Exam 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Exam 3 VAV Box,  !- Name
@@ -18565,7 +18655,7 @@
   InternalMass,
     Floor 2 Exam 4 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Exam 4,          !- Zone Name
+    Floor 2 Exam 4,          !- Zone or ZoneList Name
     743.2243;                !- Surface Area {m2}
 
   People,
@@ -18726,7 +18816,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Exam 4 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Exam 4 VAV Box,  !- Name
@@ -18966,7 +19058,7 @@
   InternalMass,
     Floor 2 Gift Shop Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Gift Shop,       !- Zone Name
+    Floor 2 Gift Shop,       !- Zone or ZoneList Name
     334.4509;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -19156,7 +19248,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Gift Shop VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Gift Shop VAV Box,  !- Name
@@ -19381,7 +19475,7 @@
   InternalMass,
     Floor 2 Imaging 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Imaging 1,       !- Zone Name
+    Floor 2 Imaging 1,       !- Zone or ZoneList Name
     429.2120;                !- Surface Area {m2}
 
   People,
@@ -19570,7 +19664,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Imaging 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Imaging 1 VAV Box,  !- Name
@@ -19826,7 +19922,7 @@
   InternalMass,
     Floor 2 Imaging 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Imaging 2,       !- Zone Name
+    Floor 2 Imaging 2,       !- Zone or ZoneList Name
     631.7407;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -20044,7 +20140,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Imaging 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Imaging 2 VAV Box,  !- Name
@@ -20299,7 +20397,7 @@
   InternalMass,
     Floor 2 Imaging 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Imaging 3,       !- Zone Name
+    Floor 2 Imaging 3,       !- Zone or ZoneList Name
     743.2243;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -20517,7 +20615,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Imaging 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Imaging 3 VAV Box,  !- Name
@@ -20742,7 +20842,7 @@
   InternalMass,
     Floor 2 Lab 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Lab 1,           !- Zone Name
+    Floor 2 Lab 1,           !- Zone or ZoneList Name
     423.6379;                !- Surface Area {m2}
 
   People,
@@ -20937,7 +21037,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Lab 1 VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Lab 1 VAV Box,   !- Name
@@ -21178,7 +21280,7 @@
   InternalMass,
     Floor 2 Lab 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Lab 2,           !- Zone Name
+    Floor 2 Lab 2,           !- Zone or ZoneList Name
     631.7407;                !- Surface Area {m2}
 
   People,
@@ -21367,7 +21469,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Lab 2 VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Lab 2 VAV Box,   !- Name
@@ -21592,7 +21696,7 @@
   InternalMass,
     Floor 2 Lockers Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Lockers,         !- Zone Name
+    Floor 2 Lockers,         !- Zone or ZoneList Name
     139.3546;                !- Surface Area {m2}
 
   People,
@@ -21758,10 +21862,14 @@
     Floor 2 Lockers VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 2 Lockers Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Lockers VAV Box, !- Name
@@ -21996,7 +22104,7 @@
   InternalMass,
     Floor 2 Lounge 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Lounge 1,        !- Zone Name
+    Floor 2 Lounge 1,        !- Zone or ZoneList Name
     222.9673;                !- Surface Area {m2}
 
   People,
@@ -22157,7 +22265,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Lounge 1 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Lounge 1 VAV Box,!- Name
@@ -22412,7 +22522,7 @@
   InternalMass,
     Floor 2 Lounge 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Lounge 2,        !- Zone Name
+    Floor 2 Lounge 2,        !- Zone or ZoneList Name
     162.5803;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -22602,7 +22712,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Lounge 2 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Lounge 2 VAV Box,!- Name
@@ -22827,7 +22939,7 @@
   InternalMass,
     Floor 2 Nurse Station 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Nurse Station 1, !- Zone Name
+    Floor 2 Nurse Station 1, !- Zone or ZoneList Name
     239.6898;                !- Surface Area {m2}
 
   People,
@@ -23016,7 +23128,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Nurse Station 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Nurse Station 1 VAV Box,  !- Name
@@ -23272,7 +23386,7 @@
   InternalMass,
     Floor 2 Nurse Station 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Nurse Station 2, !- Zone Name
+    Floor 2 Nurse Station 2, !- Zone or ZoneList Name
     743.2243;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -23490,7 +23604,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Nurse Station 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Nurse Station 2 VAV Box,  !- Name
@@ -23715,7 +23831,7 @@
   InternalMass,
     Floor 2 Office 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Office 1,        !- Zone Name
+    Floor 2 Office 1,        !- Zone or ZoneList Name
     434.7862;                !- Surface Area {m2}
 
   People,
@@ -23876,7 +23992,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Office 1 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Office 1 VAV Box,!- Name
@@ -24116,7 +24234,7 @@
   InternalMass,
     Floor 2 Office 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Office 2,        !- Zone Name
+    Floor 2 Office 2,        !- Zone or ZoneList Name
     356.7477;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -24306,7 +24424,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Office 2 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Office 2 VAV Box,!- Name
@@ -24531,7 +24651,7 @@
   InternalMass,
     Floor 2 Office 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Office 3,        !- Zone Name
+    Floor 2 Office 3,        !- Zone or ZoneList Name
     557.4182;                !- Surface Area {m2}
 
   People,
@@ -24692,7 +24812,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Office 3 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Office 3 VAV Box,!- Name
@@ -24947,7 +25069,7 @@
   InternalMass,
     Floor 2 Office 4 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Office 4,        !- Zone Name
+    Floor 2 Office 4,        !- Zone or ZoneList Name
     650.3213;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -25137,7 +25259,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Office 4 VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Office 4 VAV Box,!- Name
@@ -25439,7 +25563,7 @@
   InternalMass,
     Floor 2 Operating Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Operating,       !- Zone Name
+    Floor 2 Operating,       !- Zone or ZoneList Name
     3581.5980;               !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -25663,7 +25787,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Operating VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Operating VAV Box,  !- Name
@@ -25919,7 +26045,7 @@
   InternalMass,
     Floor 2 PACU Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 PACU,            !- Zone Name
+    Floor 2 PACU,            !- Zone or ZoneList Name
     752.5146;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -26137,7 +26263,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 PACU VAV Box,    !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 PACU VAV Box,    !- Name
@@ -26377,7 +26505,7 @@
   InternalMass,
     Floor 2 Patient 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Patient 1,       !- Zone Name
+    Floor 2 Patient 1,       !- Zone or ZoneList Name
     633.2271;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -26567,7 +26695,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Patient 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Patient 1 VAV Box,  !- Name
@@ -26792,7 +26922,7 @@
   InternalMass,
     Floor 2 Patient 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Patient 2,       !- Zone Name
+    Floor 2 Patient 2,       !- Zone or ZoneList Name
     521.3719;                !- Surface Area {m2}
 
   People,
@@ -26953,7 +27083,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Patient 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Patient 2 VAV Box,  !- Name
@@ -27178,7 +27310,7 @@
   InternalMass,
     Floor 2 Procedure 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Procedure 1,     !- Zone Name
+    Floor 2 Procedure 1,     !- Zone or ZoneList Name
     468.2313;                !- Surface Area {m2}
 
   People,
@@ -27367,7 +27499,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Procedure 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Procedure 1 VAV Box,  !- Name
@@ -27592,7 +27726,7 @@
   InternalMass,
     Floor 2 Procedure 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Procedure 2,     !- Zone Name
+    Floor 2 Procedure 2,     !- Zone or ZoneList Name
     252.6963;                !- Surface Area {m2}
 
   People,
@@ -27781,7 +27915,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Procedure 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Procedure 2 VAV Box,  !- Name
@@ -28021,7 +28157,7 @@
   InternalMass,
     Floor 2 Reception Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Reception,       !- Zone Name
+    Floor 2 Reception,       !- Zone or ZoneList Name
     325.1606;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -28211,7 +28347,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Reception VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Reception VAV Box,  !- Name
@@ -28451,7 +28589,7 @@
   InternalMass,
     Floor 2 Restroom 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Restroom 1,      !- Zone Name
+    Floor 2 Restroom 1,      !- Zone or ZoneList Name
     118.9159;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -28646,10 +28784,14 @@
     Floor 2 Restroom 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 2 Restroom 1 Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Restroom 1 VAV Box,  !- Name
@@ -28899,7 +29041,7 @@
   InternalMass,
     Floor 2 Restroom 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Restroom 2,      !- Zone Name
+    Floor 2 Restroom 2,      !- Zone or ZoneList Name
     167.2255;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -29094,10 +29236,14 @@
     Floor 2 Restroom 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 2 Restroom 2 Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Restroom 2 VAV Box,  !- Name
@@ -29332,7 +29478,7 @@
   InternalMass,
     Floor 2 Soil 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Soil 1,          !- Zone Name
+    Floor 2 Soil 1,          !- Zone or ZoneList Name
     89.7443;                 !- Surface Area {m2}
 
   People,
@@ -29470,10 +29616,14 @@
     Floor 2 Soil 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 2 Soil 1 Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Soil 1 VAV Box,  !- Name
@@ -29708,7 +29858,7 @@
   InternalMass,
     Floor 2 Soil 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Soil 2,          !- Zone Name
+    Floor 2 Soil 2,          !- Zone or ZoneList Name
     59.4579;                 !- Surface Area {m2}
 
   People,
@@ -29846,10 +29996,14 @@
     Floor 2 Soil 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 2 Soil 2 Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Soil 2 VAV Box,  !- Name
@@ -30084,7 +30238,7 @@
   InternalMass,
     Floor 2 Sterilizing Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Sterilizing,     !- Zone Name
+    Floor 2 Sterilizing,     !- Zone or ZoneList Name
     252.6963;                !- Surface Area {m2}
 
   Lights,
@@ -30270,10 +30424,14 @@
     Floor 2 Sterilizing VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 2 Sterilizing Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Sterilizing VAV Box,  !- Name
@@ -30508,7 +30666,7 @@
   InternalMass,
     Floor 2 Storage 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Storage 1,       !- Zone Name
+    Floor 2 Storage 1,       !- Zone or ZoneList Name
     278.7091;                !- Surface Area {m2}
 
   Lights,
@@ -30632,7 +30790,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Storage 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Storage 1 VAV Box,  !- Name
@@ -30857,7 +31017,7 @@
   InternalMass,
     Floor 2 Storage 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Storage 2,       !- Zone Name
+    Floor 2 Storage 2,       !- Zone or ZoneList Name
     118.9159;                !- Surface Area {m2}
 
   Lights,
@@ -30981,7 +31141,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Storage 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Storage 2 VAV Box,  !- Name
@@ -31206,7 +31368,7 @@
   InternalMass,
     Floor 2 Trauma Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Trauma,          !- Zone Name
+    Floor 2 Trauma,          !- Zone or ZoneList Name
     832.4112;                !- Surface Area {m2}
 
   People,
@@ -31395,7 +31557,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Trauma VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Trauma VAV Box,  !- Name
@@ -31635,7 +31799,7 @@
   InternalMass,
     Floor 2 Triage Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Triage,          !- Zone Name
+    Floor 2 Triage,          !- Zone or ZoneList Name
     162.5803;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -31836,10 +32000,14 @@
     Floor 2 Triage VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 2 Triage Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Triage VAV Box,  !- Name
@@ -32104,7 +32272,7 @@
   InternalMass,
     Floor 2 Waiting Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 2 Waiting,         !- Zone Name
+    Floor 2 Waiting,         !- Zone or ZoneList Name
     724.6437;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -32294,7 +32462,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 2 Waiting VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 2 Waiting VAV Box, !- Name
@@ -32519,7 +32689,7 @@
   InternalMass,
     Floor 3 Clean Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Clean,           !- Zone Name
+    Floor 3 Clean,           !- Zone or ZoneList Name
     92.9030;                 !- Surface Area {m2}
 
   People,
@@ -32680,7 +32850,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Clean VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Clean VAV Box,   !- Name
@@ -32950,7 +33122,7 @@
   InternalMass,
     Floor 3 Elevator Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Elevator,        !- Zone Name
+    Floor 3 Elevator,        !- Zone or ZoneList Name
     334.4509;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -33140,7 +33312,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Elevator VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Elevator VAV Box,!- Name
@@ -33365,7 +33539,7 @@
   InternalMass,
     Floor 3 Exam Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Exam,            !- Zone Name
+    Floor 3 Exam,            !- Zone or ZoneList Name
     501.6764;                !- Surface Area {m2}
 
   People,
@@ -33526,7 +33700,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Exam VAV Box,    !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Exam VAV Box,    !- Name
@@ -33781,7 +33957,7 @@
   InternalMass,
     Floor 3 ICU Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 ICU,             !- Zone Name
+    Floor 3 ICU,             !- Zone or ZoneList Name
     390.1928;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -34005,7 +34181,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 ICU VAV Box,     !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 ICU VAV Box,     !- Name
@@ -34245,7 +34423,7 @@
   InternalMass,
     Floor 3 Nurse Station 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Nurse Station 1, !- Zone Name
+    Floor 3 Nurse Station 1, !- Zone or ZoneList Name
     558.9047;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -34463,7 +34641,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Nurse Station 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Nurse Station 1 VAV Box,  !- Name
@@ -34718,7 +34898,7 @@
   InternalMass,
     Floor 3 Nurse Station 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Nurse Station 2, !- Zone Name
+    Floor 3 Nurse Station 2, !- Zone or ZoneList Name
     445.9346;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -34936,7 +35116,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Nurse Station 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Nurse Station 2 VAV Box,  !- Name
@@ -35176,7 +35358,7 @@
   InternalMass,
     Floor 3 Nursery Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Nursery,         !- Zone Name
+    Floor 3 Nursery,         !- Zone or ZoneList Name
     183.9480;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -35366,7 +35548,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Nursery VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Nursery VAV Box, !- Name
@@ -35606,7 +35790,7 @@
   InternalMass,
     Floor 3 Office Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Office,          !- Zone Name
+    Floor 3 Office,          !- Zone or ZoneList Name
     501.6764;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -35796,7 +35980,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Office VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Office VAV Box,  !- Name
@@ -36036,7 +36222,7 @@
   InternalMass,
     Floor 3 Operating Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Operating,       !- Zone Name
+    Floor 3 Operating,       !- Zone or ZoneList Name
     334.4656;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -36254,7 +36440,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Operating VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Operating VAV Box,  !- Name
@@ -36509,7 +36697,7 @@
   InternalMass,
     Floor 3 Patient 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Patient 1,       !- Zone Name
+    Floor 3 Patient 1,       !- Zone or ZoneList Name
     929.0304;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -36699,7 +36887,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Patient 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Patient 1 VAV Box,  !- Name
@@ -36954,7 +37144,7 @@
   InternalMass,
     Floor 3 Patient 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Patient 2,       !- Zone Name
+    Floor 3 Patient 2,       !- Zone or ZoneList Name
     929.0304;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -37144,7 +37334,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Patient 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Patient 2 VAV Box,  !- Name
@@ -37415,7 +37607,7 @@
   InternalMass,
     Floor 3 Patient 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Patient 3,       !- Zone Name
+    Floor 3 Patient 3,       !- Zone or ZoneList Name
     733.9340;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -37605,7 +37797,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Patient 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Patient 3 VAV Box,  !- Name
@@ -37860,7 +38054,7 @@
   InternalMass,
     Floor 3 Patient 4 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Patient 4,       !- Zone Name
+    Floor 3 Patient 4,       !- Zone or ZoneList Name
     733.9340;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -38050,7 +38244,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Patient 4 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Patient 4 VAV Box,  !- Name
@@ -38305,7 +38501,7 @@
   InternalMass,
     Floor 3 Patient Corridor 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Patient Corridor 1,  !- Zone Name
+    Floor 3 Patient Corridor 1,  !- Zone or ZoneList Name
     621.3336;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -38458,7 +38654,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Patient Corridor 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Patient Corridor 1 VAV Box,  !- Name
@@ -38713,7 +38911,7 @@
   InternalMass,
     Floor 3 Patient Corridor 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Patient Corridor 2,  !- Zone Name
+    Floor 3 Patient Corridor 2,  !- Zone or ZoneList Name
     621.3336;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -38866,7 +39064,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Patient Corridor 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Patient Corridor 2 VAV Box,  !- Name
@@ -39106,7 +39306,7 @@
   InternalMass,
     Floor 3 Procedure Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Procedure,       !- Zone Name
+    Floor 3 Procedure,       !- Zone or ZoneList Name
     133.7804;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -39324,7 +39524,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Procedure VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Procedure VAV Box,  !- Name
@@ -39549,7 +39751,7 @@
   InternalMass,
     Floor 3 Soil Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Soil,            !- Zone Name
+    Floor 3 Soil,            !- Zone or ZoneList Name
     185.8061;                !- Surface Area {m2}
 
   People,
@@ -39687,10 +39889,14 @@
     Floor 3 Soil VAV Box,    !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 3 Soil Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Soil VAV Box,    !- Name
@@ -39940,7 +40146,7 @@
   InternalMass,
     Floor 3 Supply Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Supply,          !- Zone Name
+    Floor 3 Supply,          !- Zone or ZoneList Name
     683.7664;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -40093,7 +40299,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Supply VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Supply VAV Box,  !- Name
@@ -40333,7 +40541,7 @@
   InternalMass,
     Floor 3 Triage Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Triage,          !- Zone Name
+    Floor 3 Triage,          !- Zone or ZoneList Name
     278.7091;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -40534,10 +40742,14 @@
     Floor 3 Triage VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 3 Triage Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Triage VAV Box,  !- Name
@@ -40787,7 +40999,7 @@
   InternalMass,
     Floor 3 Waiting Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 3 Waiting,         !- Zone Name
+    Floor 3 Waiting,         !- Zone or ZoneList Name
     183.9480;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -40977,7 +41189,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 3 Waiting VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 3 Waiting VAV Box, !- Name
@@ -41202,7 +41416,7 @@
   InternalMass,
     Floor 4-6 Clean Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Clean,         !- Zone Name
+    Floor 4-6 Clean,         !- Zone or ZoneList Name
     92.9030;                 !- Surface Area {m2}
 
   People,
@@ -41363,7 +41577,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Clean VAV Box, !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Clean VAV Box, !- Name
@@ -41633,7 +41849,7 @@
   InternalMass,
     Floor 4-6 Elevator Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Elevator,      !- Zone Name
+    Floor 4-6 Elevator,      !- Zone or ZoneList Name
     334.4509;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -41823,7 +42039,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Elevator VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Elevator VAV Box,  !- Name
@@ -42063,7 +42281,7 @@
   InternalMass,
     Floor 4-6 Nurse Station Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Nurse Station, !- Zone Name
+    Floor 4-6 Nurse Station, !- Zone or ZoneList Name
     558.9047;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -42281,7 +42499,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Nurse Station VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Nurse Station VAV Box,  !- Name
@@ -42521,7 +42741,7 @@
   InternalMass,
     Floor 4-6 Office Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Office,        !- Zone Name
+    Floor 4-6 Office,        !- Zone or ZoneList Name
     278.7091;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -42711,7 +42931,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Office VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Office VAV Box,!- Name
@@ -42966,7 +43188,7 @@
   InternalMass,
     Floor 4-6 Patient 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Patient 1,     !- Zone Name
+    Floor 4-6 Patient 1,     !- Zone or ZoneList Name
     929.0304;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -43156,7 +43378,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Patient 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Patient 1 VAV Box,  !- Name
@@ -43411,7 +43635,7 @@
   InternalMass,
     Floor 4-6 Patient 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Patient 2,     !- Zone Name
+    Floor 4-6 Patient 2,     !- Zone or ZoneList Name
     929.0304;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -43601,7 +43825,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Patient 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Patient 2 VAV Box,  !- Name
@@ -43856,7 +44082,7 @@
   InternalMass,
     Floor 4-6 Patient 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Patient 3,     !- Zone Name
+    Floor 4-6 Patient 3,     !- Zone or ZoneList Name
     733.9340;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -44046,7 +44272,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Patient 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Patient 3 VAV Box,  !- Name
@@ -44301,7 +44529,7 @@
   InternalMass,
     Floor 4-6 Patient 4 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Patient 4,     !- Zone Name
+    Floor 4-6 Patient 4,     !- Zone or ZoneList Name
     733.9340;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -44491,7 +44719,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Patient 4 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Patient 4 VAV Box,  !- Name
@@ -44746,7 +44976,7 @@
   InternalMass,
     Floor 4-6 Patient Corridor 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Patient Corridor 1,  !- Zone Name
+    Floor 4-6 Patient Corridor 1,  !- Zone or ZoneList Name
     621.3336;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -44899,7 +45129,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Patient Corridor 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Patient Corridor 1 VAV Box,  !- Name
@@ -45154,7 +45386,7 @@
   InternalMass,
     Floor 4-6 Patient Corridor 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Patient Corridor 2,  !- Zone Name
+    Floor 4-6 Patient Corridor 2,  !- Zone or ZoneList Name
     621.3336;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -45307,7 +45539,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Patient Corridor 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Patient Corridor 2 VAV Box,  !- Name
@@ -45532,7 +45766,7 @@
   InternalMass,
     Floor 4-6 Soil Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Soil,          !- Zone Name
+    Floor 4-6 Soil,          !- Zone or ZoneList Name
     185.8061;                !- Surface Area {m2}
 
   People,
@@ -45670,10 +45904,14 @@
     Floor 4-6 Soil VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 4-6 Soil Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Soil VAV Box,  !- Name
@@ -45923,7 +46161,7 @@
   InternalMass,
     Floor 4-6 Supply Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 4-6 Supply,        !- Zone Name
+    Floor 4-6 Supply,        !- Zone or ZoneList Name
     683.7664;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -46076,7 +46314,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 4-6 Supply VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 4-6 Supply VAV Box,!- Name
@@ -46301,7 +46541,7 @@
   InternalMass,
     Floor 7 Clean Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Clean,           !- Zone Name
+    Floor 7 Clean,           !- Zone or ZoneList Name
     92.9030;                 !- Surface Area {m2}
 
   People,
@@ -46462,7 +46702,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Clean VAV Box,   !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Clean VAV Box,   !- Name
@@ -46732,7 +46974,7 @@
   InternalMass,
     Floor 7 Elevator Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Elevator,        !- Zone Name
+    Floor 7 Elevator,        !- Zone or ZoneList Name
     334.4509;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -46922,7 +47164,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Elevator VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Elevator VAV Box,!- Name
@@ -47162,7 +47406,7 @@
   InternalMass,
     Floor 7 Nurse Station Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Nurse Station,   !- Zone Name
+    Floor 7 Nurse Station,   !- Zone or ZoneList Name
     558.9047;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -47380,7 +47624,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Nurse Station VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Nurse Station VAV Box,  !- Name
@@ -47620,7 +47866,7 @@
   InternalMass,
     Floor 7 Office Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Office,          !- Zone Name
+    Floor 7 Office,          !- Zone or ZoneList Name
     278.7091;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -47810,7 +48056,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Office VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Office VAV Box,  !- Name
@@ -48065,7 +48313,7 @@
   InternalMass,
     Floor 7 Patient 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Patient 1,       !- Zone Name
+    Floor 7 Patient 1,       !- Zone or ZoneList Name
     929.0304;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -48255,7 +48503,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Patient 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Patient 1 VAV Box,  !- Name
@@ -48510,7 +48760,7 @@
   InternalMass,
     Floor 7 Patient 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Patient 2,       !- Zone Name
+    Floor 7 Patient 2,       !- Zone or ZoneList Name
     929.0304;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -48700,7 +48950,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Patient 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Patient 2 VAV Box,  !- Name
@@ -48955,7 +49207,7 @@
   InternalMass,
     Floor 7 Patient 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Patient 3,       !- Zone Name
+    Floor 7 Patient 3,       !- Zone or ZoneList Name
     733.9340;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -49145,7 +49397,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Patient 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Patient 3 VAV Box,  !- Name
@@ -49400,7 +49654,7 @@
   InternalMass,
     Floor 7 Patient 4 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Patient 4,       !- Zone Name
+    Floor 7 Patient 4,       !- Zone or ZoneList Name
     733.9340;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -49590,7 +49844,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Patient 4 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Patient 4 VAV Box,  !- Name
@@ -49845,7 +50101,7 @@
   InternalMass,
     Floor 7 Patient Corridor 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Patient Corridor 1,  !- Zone Name
+    Floor 7 Patient Corridor 1,  !- Zone or ZoneList Name
     621.3336;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -49998,7 +50254,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Patient Corridor 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Patient Corridor 1 VAV Box,  !- Name
@@ -50253,7 +50511,7 @@
   InternalMass,
     Floor 7 Patient Corridor 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Patient Corridor 2,  !- Zone Name
+    Floor 7 Patient Corridor 2,  !- Zone or ZoneList Name
     621.3336;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -50406,7 +50664,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Patient Corridor 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Patient Corridor 2 VAV Box,  !- Name
@@ -50631,7 +50891,7 @@
   InternalMass,
     Floor 7 Soil Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Soil,            !- Zone Name
+    Floor 7 Soil,            !- Zone or ZoneList Name
     185.8061;                !- Surface Area {m2}
 
   People,
@@ -50769,10 +51029,14 @@
     Floor 7 Soil VAV Box,    !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
     1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ,                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
     Fan:ZoneExhaust,         !- Zone Equipment 2 Object Type
     Floor 7 Soil Exhaust Fan 1,  !- Zone Equipment 2 Name
     2,                       !- Zone Equipment 2 Cooling Sequence
-    2;                       !- Zone Equipment 2 Heating or No-Load Sequence
+    2,                       !- Zone Equipment 2 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 2 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 2 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Soil VAV Box,    !- Name
@@ -51022,7 +51286,7 @@
   InternalMass,
     Floor 7 Supply Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    Floor 7 Supply,          !- Zone Name
+    Floor 7 Supply,          !- Zone or ZoneList Name
     683.7664;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -51175,7 +51439,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     Floor 7 Supply VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     Floor 7 Supply VAV Box,  !- Name
@@ -51400,7 +51666,7 @@
   InternalMass,
     MOB Floor 1 Core Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 1 Core,        !- Zone Name
+    MOB Floor 1 Core,        !- Zone or ZoneList Name
     2559.4788;               !- Surface Area {m2}
 
   People,
@@ -51561,7 +51827,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 1 Core VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 1 Core VAV Box,!- Name
@@ -51801,7 +52069,7 @@
   InternalMass,
     MOB Floor 1 Perimeter 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 1 Perimeter 1, !- Zone Name
+    MOB Floor 1 Perimeter 1, !- Zone or ZoneList Name
     425.0314;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -51991,7 +52259,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 1 Perimeter 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 1 Perimeter 1 VAV Box,  !- Name
@@ -52231,7 +52501,7 @@
   InternalMass,
     MOB Floor 1 Perimeter 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 1 Perimeter 2, !- Zone Name
+    MOB Floor 1 Perimeter 2, !- Zone or ZoneList Name
     306.5800;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -52421,7 +52691,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 1 Perimeter 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 1 Perimeter 2 VAV Box,  !- Name
@@ -52661,7 +52933,7 @@
   InternalMass,
     MOB Floor 1 Perimeter 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 1 Perimeter 3, !- Zone Name
+    MOB Floor 1 Perimeter 3, !- Zone or ZoneList Name
     425.0314;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -52851,7 +53123,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 1 Perimeter 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 1 Perimeter 3 VAV Box,  !- Name
@@ -53076,7 +53350,7 @@
   InternalMass,
     MOB Floor 2-4 Core Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 2-4 Core,      !- Zone Name
+    MOB Floor 2-4 Core,      !- Zone or ZoneList Name
     2294.7051;               !- Surface Area {m2}
 
   People,
@@ -53237,7 +53511,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 2-4 Core VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 2-4 Core VAV Box,  !- Name
@@ -53477,7 +53753,7 @@
   InternalMass,
     MOB Floor 2-4 Perimeter 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 2-4 Perimeter 1,  !- Zone Name
+    MOB Floor 2-4 Perimeter 1,  !- Zone or ZoneList Name
     404.1282;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -53667,7 +53943,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 2-4 Perimeter 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 2-4 Perimeter 1 VAV Box,  !- Name
@@ -53907,7 +54185,7 @@
   InternalMass,
     MOB Floor 2-4 Perimeter 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 2-4 Perimeter 2,  !- Zone Name
+    MOB Floor 2-4 Perimeter 2,  !- Zone or ZoneList Name
     306.5800;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -54097,7 +54375,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 2-4 Perimeter 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 2-4 Perimeter 2 VAV Box,  !- Name
@@ -54337,7 +54617,7 @@
   InternalMass,
     MOB Floor 2-4 Perimeter 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 2-4 Perimeter 3,  !- Zone Name
+    MOB Floor 2-4 Perimeter 3,  !- Zone or ZoneList Name
     404.1282;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -54527,7 +54807,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 2-4 Perimeter 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 2-4 Perimeter 3 VAV Box,  !- Name
@@ -54767,7 +55049,7 @@
   InternalMass,
     MOB Floor 2-4 Perimeter 4 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 2-4 Perimeter 4,  !- Zone Name
+    MOB Floor 2-4 Perimeter 4,  !- Zone or ZoneList Name
     306.5800;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -54957,7 +55239,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 2-4 Perimeter 4 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 2-4 Perimeter 4 VAV Box,  !- Name
@@ -55182,7 +55466,7 @@
   InternalMass,
     MOB Floor 5 Core Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 5 Core,        !- Zone Name
+    MOB Floor 5 Core,        !- Zone or ZoneList Name
     2294.7051;               !- Surface Area {m2}
 
   People,
@@ -55343,7 +55627,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 5 Core VAV Box,!- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 5 Core VAV Box,!- Name
@@ -55583,7 +55869,7 @@
   InternalMass,
     MOB Floor 5 Perimeter 1 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 5 Perimeter 1, !- Zone Name
+    MOB Floor 5 Perimeter 1, !- Zone or ZoneList Name
     404.1282;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -55773,7 +56059,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 5 Perimeter 1 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 5 Perimeter 1 VAV Box,  !- Name
@@ -56013,7 +56301,7 @@
   InternalMass,
     MOB Floor 5 Perimeter 2 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 5 Perimeter 2, !- Zone Name
+    MOB Floor 5 Perimeter 2, !- Zone or ZoneList Name
     306.5800;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -56203,7 +56491,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 5 Perimeter 2 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 5 Perimeter 2 VAV Box,  !- Name
@@ -56443,7 +56733,7 @@
   InternalMass,
     MOB Floor 5 Perimeter 3 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 5 Perimeter 3, !- Zone Name
+    MOB Floor 5 Perimeter 3, !- Zone or ZoneList Name
     404.1282;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -56633,7 +56923,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 5 Perimeter 3 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 5 Perimeter 3 VAV Box,  !- Name
@@ -56873,7 +57165,7 @@
   InternalMass,
     MOB Floor 5 Perimeter 4 Internal Mass,  !- Name
     InteriorFurnishings,     !- Construction Name
-    MOB Floor 5 Perimeter 4, !- Zone Name
+    MOB Floor 5 Perimeter 4, !- Zone or ZoneList Name
     306.5800;                !- Surface Area {m2}
 
   ZoneInfiltration:DesignFlowRate,
@@ -57085,7 +57377,9 @@
     ZoneHVAC:AirDistributionUnit,  !- Zone Equipment 1 Object Type
     MOB Floor 5 Perimeter 4 VAV Box,  !- Zone Equipment 1 Name
     1,                       !- Zone Equipment 1 Cooling Sequence
-    1;                       !- Zone Equipment 1 Heating or No-Load Sequence
+    1,                       !- Zone Equipment 1 Heating or No-Load Sequence
+    ,                        !- Zone Equipment 1 Sequential Cooling Fraction Schedule Name
+    ;                        !- Zone Equipment 1 Sequential Heating Fraction Schedule Name
 
   ZoneHVAC:AirDistributionUnit,
     MOB Floor 5 Perimeter 4 VAV Box,  !- Name

@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -53,26 +53,26 @@
 #include <ObjexxFCL/Fmath.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <DataBranchAirLoopPlant.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <EMSManager.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <OutputReportPredefined.hh>
-#include <PlantHeatExchangerFluidToFluid.hh>
-#include <PlantUtilities.hh>
-#include <ReportSizingManager.hh>
-#include <ScheduleManager.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/DataBranchAirLoopPlant.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/EMSManager.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/OutputReportPredefined.hh>
+#include <EnergyPlus/PlantHeatExchangerFluidToFluid.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -686,12 +686,12 @@ namespace PlantHeatExchangerFluidToFluid {
                                                     FluidHX(CompNum).DemandSideLoop.LoopSideNum,
                                                     FluidHX(CompNum).DemandSideLoop.BranchNum,
                                                     FluidHX(CompNum).DemandSideLoop.CompNum,
+                                                    errFlag,
                                                     _,
                                                     _,
                                                     _,
                                                     FluidHX(CompNum).DemandSideLoop.InletNodeNum,
-                                                    _,
-                                                    errFlag);
+                                                    _);
 
             if (FluidHX(CompNum).DemandSideLoop.LoopSideNum != DemandSide) { // throw error
                 ShowSevereError(RoutineName + " Invalid connections for " + ccSimPlantEquipTypes(TypeOf_FluidToFluidPlantHtExchg) + " name = \"" +
@@ -706,12 +706,12 @@ namespace PlantHeatExchangerFluidToFluid {
                                                     FluidHX(CompNum).SupplySideLoop.LoopSideNum,
                                                     FluidHX(CompNum).SupplySideLoop.BranchNum,
                                                     FluidHX(CompNum).SupplySideLoop.CompNum,
+                                                    errFlag,
                                                     _,
                                                     _,
                                                     _,
                                                     FluidHX(CompNum).SupplySideLoop.InletNodeNum,
-                                                    _,
-                                                    errFlag);
+                                                    _);
 
             if (FluidHX(CompNum).SupplySideLoop.LoopSideNum != SupplySide) { // throw error
                 ShowSevereError(RoutineName + " Invalid connections for " + ccSimPlantEquipTypes(TypeOf_FluidToFluidPlantHtExchg) + " name = \"" +
@@ -792,12 +792,12 @@ namespace PlantHeatExchangerFluidToFluid {
                                                             FluidHX(CompNum).OtherCompSupplySideLoop.LoopSideNum,
                                                             FluidHX(CompNum).OtherCompSupplySideLoop.BranchNum,
                                                             FluidHX(CompNum).OtherCompSupplySideLoop.CompNum,
+                                                            errFlag,
                                                             _,
                                                             _,
                                                             _,
                                                             FluidHX(CompNum).OtherCompSupplySideLoop.InletNodeNum,
-                                                            _,
-                                                            errFlag);
+                                                            _);
                 }
                 if (FluidHX(CompNum).OtherCompDemandSideLoop.InletNodeNum > 0) {
                     PlantUtilities::ScanPlantLoopsForObject(FluidHX(CompNum).ComponentUserName,
@@ -806,12 +806,12 @@ namespace PlantHeatExchangerFluidToFluid {
                                                             FluidHX(CompNum).OtherCompDemandSideLoop.LoopSideNum,
                                                             FluidHX(CompNum).OtherCompDemandSideLoop.BranchNum,
                                                             FluidHX(CompNum).OtherCompDemandSideLoop.CompNum,
+                                                            errFlag,
                                                             _,
                                                             _,
                                                             _,
                                                             FluidHX(CompNum).OtherCompDemandSideLoop.InletNodeNum,
-                                                            _,
-                                                            errFlag);
+                                                            _);
                 }
             }
 

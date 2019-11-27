@@ -1,6 +1,13 @@
+# Use ccache if available, has to be before "project()"
+find_program(CCACHE_PROGRAM ccache)
+if(CCACHE_PROGRAM)
+  # Support both Unix Makefiles and Ninja
+  set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
+endif()
+
 Project(EnergyPlus)
 
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5.1)
 
 if(${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION} VERSION_GREATER "3.0")
   CMAKE_POLICY(SET CMP0054 NEW) # CMake 3.1 added this policy
@@ -9,10 +16,10 @@ endif()
 set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH} )
 
 set( CMAKE_VERSION_MAJOR 9 )
-set( CMAKE_VERSION_MINOR 0 )
-set( CMAKE_VERSION_PATCH 1 )
+set( CMAKE_VERSION_MINOR 2 )
+set( CMAKE_VERSION_PATCH 0 )
 
-set( PREV_RELEASE_SHA "40101ea" )
+set( PREV_RELEASE_SHA "08d2e30" )
 
 set( ENERGYPLUS_VERSION "${CMAKE_VERSION_MAJOR}.${CMAKE_VERSION_MINOR}.${CMAKE_VERSION_PATCH}" )
 
@@ -52,8 +59,6 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     "MinSizeRel" "RelWithDebInfo")
 endif()
 
-set(CPACK_PACKAGE_CONTACT "Edwin Lee <edwin.lee@nrel.gov>")
-
 option( BUILD_PACKAGE "Build package" OFF )
 option( BUILD_TESTING "Build testing targets" OFF )
 option( BUILD_FORTRAN "Build Fortran stuff" OFF )
@@ -69,11 +74,6 @@ mark_as_advanced( ENABLE_INSTALL_REMOTE )
 
 # we are making python a required dependency, so find it here...starting off by requiring at least 2.7
 find_package(PythonInterp 2.7 REQUIRED)
-
-# then we can add python-based tests for it
-if ( BUILD_TESTING )
-  add_test( NAME VerifyIDFsInCMakeFolder COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/scripts/dev/VerifyIDFsInCMake.py" "${CMAKE_CURRENT_SOURCE_DIR}/testfiles" )
-endif()
 
 if( BUILD_TESTING )
   option( ENABLE_REGRESSION_TESTING "Enable Regression Tests" OFF )
@@ -96,10 +96,16 @@ if( ENABLE_REGRESSION_TESTING )
   string(STRIP "${REGRESSION_SCRIPT_PATH}" REG_PATH_STRIPPED)
   string(STRIP "${REGRESSION_BASELINE_PATH}" REG_BASELINE_STRIPPED)
   if (REG_PATH_STRIPPED STREQUAL "" OR REG_BASELINE_STRIPPED STREQUAL "")
-    message( "Regression testing is enabled, but no script or baseline has been provided" )
+    message(AUTHOR_WARNING "Regression testing is enabled, but no script or baseline has been provided, turning it off." )
     set( DO_REGRESSION_TESTING OFF )
   else()
-    set( DO_REGRESSION_TESTING ON )
+    if( BUILD_FORTRAN )
+      # No Problem
+      set( DO_REGRESSION_TESTING ON )
+    else()
+      message(AUTHOR_WARNING "For regression testing, you must enable BUILD_FORTRAN in order to call ReadVarEso, turning it off.")
+      set( DO_REGRESSION_TESTING OFF )
+    endif()
   endif()
 endif()
 
@@ -127,6 +133,7 @@ include(cmake/CompilerFlags.cmake)
 
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party )
+INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/btwxt/src )
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/re2 )
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/doj )
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/nlohmann )
@@ -144,7 +151,6 @@ INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/Windows-CalcEngine/src/Sing
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/Windows-CalcEngine/src/SpectralAveraging/include)
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/Windows-CalcEngine/src/Tarcog/include)
 INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/third_party/Windows-CalcEngine/src/Viewer/include)
-INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR}/src/EnergyPlus)  # so that any source can #include <ConfiguredFunctions.hh>
 
 #### Create interface for JSON for Modern C++ so we can include it in targets
 # add_library( ModernJSON INTERFACE )
@@ -155,14 +161,16 @@ set(RE2_BUILD_TESTING OFF CACHE BOOL "" FORCE)
 if( BUILD_TESTING )
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
   set(BUILD_GTEST ON CACHE BOOL "" FORCE)
-  set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
+  set(BUILD_GMOCK ON CACHE BOOL "" FORCE)
   option( TEST_ANNUAL_SIMULATION "Use annual simulations for tests instead of only design days" OFF )
   enable_testing()
   include(CTest)
+  ADD_SUBDIRECTORY(third_party/gtest)
 endif()
 
 # E+ required libraries
 ADD_SUBDIRECTORY(idd)
+
 ADD_SUBDIRECTORY(third_party/SQLite)
 ADD_SUBDIRECTORY(third_party/ObjexxFCL)
 ADD_SUBDIRECTORY(third_party/BCVTB)
@@ -171,14 +179,17 @@ ADD_SUBDIRECTORY(third_party/FMI)
 ADD_SUBDIRECTORY(third_party/zlib)
 ADD_SUBDIRECTORY(third_party/DElight)
 ADD_SUBDIRECTORY(third_party/re2)
+
 ADD_SUBDIRECTORY(scripts/dev/generate_embeddable_epJSON_schema)
 IF( NOT APPLE )
   ADD_SUBDIRECTORY(third_party/FMUParser)
 ENDIF()
 ADD_SUBDIRECTORY(third_party/Windows-CalcEngine)
-if( BUILD_TESTING )
-  ADD_SUBDIRECTORY(third_party/gtest)
-endif()
+
+# Btwxt
+INCLUDE_DIRECTORIES( ${gtest_SOURCE_DIR}/include/ SYSTEM )
+set(BUILD_BTWXT_TESTING ${BUILD_TESTING} CACHE BOOL "" FORCE)
+ADD_SUBDIRECTORY(third_party/btwxt)
 
 # Kiva
 INCLUDE(third_party/cmake/kiva.cmake)
@@ -218,15 +229,17 @@ if( BUILD_TESTING )
   endif()
 endif()
 
+ADD_SUBDIRECTORY(src/ConvertInputFormat)
+
 if( BUILD_FORTRAN )
   include(CMakeAddFortranSubdirectory)
   cmake_add_fortran_subdirectory(src/ExpandObjects PROJECT ExpandObjects NO_EXTERNAL_INSTALL )
   cmake_add_fortran_subdirectory(src/ReadVars PROJECT ReadVars NO_EXTERNAL_INSTALL )
   set(TRANSITION_EXTRA_FLAGS "-DCMAKE_VERSION_MAJOR:STRING=${CMAKE_VERSION_MAJOR}" "-DCMAKE_VERSION_MINOR:STRING=${CMAKE_VERSION_MINOR}" "-DCMAKE_VERSION_PATCH:STRING=${CMAKE_VERSION_PATCH}")
   cmake_add_fortran_subdirectory(src/Transition PROJECT Transition CMAKE_COMMAND_LINE ${TRANSITION_EXTRA_FLAGS} NO_EXTERNAL_INSTALL )
-  file( COPY "idd/V8-9-0-Energy+.idd" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" )
-  configure_file( idd/Energy+.idd.in "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/V9-0-0-Energy+.idd" )
-  file( COPY "src/Transition/SupportFiles/Report Variables 8-9-0 to 9-0-0.csv" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" )
+  file( COPY "idd/V9-1-0-Energy+.idd" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" )
+  configure_file( idd/Energy+.idd.in "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/V9-2-0-Energy+.idd" )
+  file( COPY "src/Transition/SupportFiles/Report Variables 9-1-0 to 9-2-0.csv" DESTINATION "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" )
   cmake_add_fortran_subdirectory(src/Basement PROJECT Basement NO_EXTERNAL_INSTALL )
   cmake_add_fortran_subdirectory(src/HVAC-Diagram PROJECT HVAC-Diagram NO_EXTERNAL_INSTALL )
   cmake_add_fortran_subdirectory(src/ParametricPreprocessor PROJECT ParametricPreprocessor NO_EXTERNAL_INSTALL )
@@ -237,22 +250,7 @@ if( BUILD_FORTRAN )
 endif()
 
 if( BUILD_PACKAGE )
-  set(CPACK_INSTALL_CMAKE_PROJECTS
-    "${CMAKE_BINARY_DIR};EnergyPlus;ALL;/"
-  )
-
-  if( BUILD_FORTRAN )
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/ExpandObjects/;ExpandObjects;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/ReadVars/;ReadVars;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/Transition/;Transition;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/Basement/;Basement;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/HVAC-Diagram/;HVAC-Diagram;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/ParametricPreprocessor/;ParametricPreprocessor;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/Slab/;Slab;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/ConvertESOMTR/;ConvertESOMTR;ALL;/")
-    list(APPEND CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR}/src/CalcSoilSurfTemp/;CalcSoilSurfTemp;ALL;/")
-  endif()
-
+  # We handle everything in a dedicated cmake file
   include(cmake/Install.cmake)
 endif()
 
@@ -271,14 +269,13 @@ if (BUILD_DOCS)
     # and if it doesn't, clearly state why it fails
     message( FATAL_ERROR "Expected to find xelatex at: ${XELATEX} ; check your LaTeX installation")
   endif()
-  set(TEX_INTERACTION "batchmode" CACHE STRING "Choose the interaction mode for TeX." FORCE)
+  set(TEX_INTERACTION "batchmode" CACHE STRING "Choose the interaction mode for TeX.")
   set_property(CACHE TEX_INTERACTION PROPERTY STRINGS "nonstopmode" "batchmode")
 endif()
 
 # some parameters are simply not needed for everyday building
 mark_as_advanced(CMAKE_INSTALL_PREFIX)
 mark_as_advanced(BUILD_SHARED_LIBS)
-mark_as_advanced(ENABLE_COVERAGE)
 mark_as_advanced(ENABLE_GTEST_DEBUG_MODE)
 mark_as_advanced(ENABLE_GTEST_SHUFFLE)
 mark_as_advanced(ENABLE_MEMORY_SANITIZER)
@@ -291,4 +288,12 @@ mark_as_advanced(KIVA_STATIC_LIB)
 mark_as_advanced(KIVA_TESTING)
 mark_as_advanced(RE2_BUILD_TESTING)
 mark_as_advanced(USEPCRE)
-
+mark_as_advanced(CCACHE_PROGRAM)
+mark_as_advanced(CMAKE_VERSION_BUILD)
+mark_as_advanced(ENABLE_REGRESSION_TESTING)
+mark_as_advanced(TEST_ANNUAL_SIMULATION)
+mark_as_advanced(gtest_build_samples)
+mark_as_advanced(gtest_build_tests)
+mark_as_advanced(gtest_disable_pthreads)
+mark_as_advanced(gtest_force_shared_crt)
+mark_as_advanced(gtest_hide_internal_symbols)

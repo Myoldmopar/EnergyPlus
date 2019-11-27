@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -56,17 +56,19 @@
 #include <ObjexxFCL/string.functions.hh>
 
 // EnergyPlus Headers
-#include <DataEnvironment.hh>
-#include <DataGlobals.hh>
-#include <DataHVACGlobals.hh>
-#include <DataIPShortCuts.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataRuntimeLanguage.hh>
-#include <DataStringGlobals.hh>
-#include <DataSurfaces.hh>
-#include <General.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataGlobals.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataRuntimeLanguage.hh>
+#include <EnergyPlus/DataStringGlobals.hh>
+#include <EnergyPlus/DataSurfaces.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
+// TODO: move DetermineMinuteForReporting to avoid bringing this one in
+#include <EnergyPlus/OutputProcessor.hh>
 
 #if defined(_WIN32) && _MSC_VER < 1900
 #define snprintf _snprintf
@@ -681,10 +683,6 @@ namespace General {
         int NIte;        // number of interations
         int AltIte;      // used for Alternation choice
 
-        static gio::Fmt OpticalFormat("(i3,',',f10.6,',',f10.6)"); // Format descriptor for environ stamp
-
-        static int fileNum(0);
-
         X0 = X_0;
         X1 = X_1;
         XTemp = X0;
@@ -789,13 +787,6 @@ namespace General {
 
             } // (Cont)
 
-            if (fileNum == 0) {
-                fileNum = GetNewUnitNumber();
-            }
-            if (fileNum > 0) {
-                gio::write(fileNum, OpticalFormat) << NIte << X0 << X1;
-            }
-
         } // Cont
 
         if (Conv) {
@@ -869,10 +860,6 @@ namespace General {
         bool Cont;       // flag, if true, continue searching
         int NIte;        // number of interations
 
-        static gio::Fmt OpticalFormat("(i3,',',f10.6,',',f10.6)"); // Format descriptor for environ stamp
-
-        static int fileNum(0);
-
         X0 = X_0;
         X1 = X_1;
         XTemp = X0;
@@ -942,13 +929,6 @@ namespace General {
                 } // ( Y0 < 0 )
 
             } // (Cont)
-
-            if (fileNum == 0) {
-                fileNum = GetNewUnitNumber();
-            }
-            if (fileNum > 0) {
-                gio::write(fileNum, OpticalFormat) << NIte << X0 << X1;
-            }
 
         } // Cont
 
@@ -1623,7 +1603,7 @@ namespace General {
         // FUNCTION PARAMETER DEFINITIONS:
         static std::string const NAN_string("NAN");
         static std::string const ZEROOOO("0.000000000000000000000000000");
-        static gio::Fmt fmtLD("*");
+        static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1637,7 +1617,7 @@ namespace General {
 
         std::string String; // Working string
         if (RealValue != 0.0) {
-            gio::write(String, fmtLD) << RealValue;
+            ObjexxFCL::gio::write(String, fmtLD) << RealValue;
         } else {
             String = ZEROOOO;
         }
@@ -1693,7 +1673,7 @@ namespace General {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        static gio::Fmt fmtLD("*");
+        static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1704,7 +1684,7 @@ namespace General {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         std::string String; // Working string
 
-        gio::write(String, fmtLD) << IntegerValue;
+        ObjexxFCL::gio::write(String, fmtLD) << IntegerValue;
         return stripped(String);
     }
 
@@ -1740,7 +1720,7 @@ namespace General {
         static std::string const DigitChar("01234567890");
         static std::string const NAN_string("NAN");
         static std::string const ZEROOOO("0.000000000000000000000000000");
-        static gio::Fmt fmtLD("*");
+        static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1754,7 +1734,7 @@ namespace General {
 
         std::string String; // Working string
         if (RealValue != 0.0) {
-            gio::write(String, fmtLD) << RealValue;
+            ObjexxFCL::gio::write(String, fmtLD) << RealValue;
         } else {
             String = ZEROOOO;
         }
@@ -1877,7 +1857,7 @@ namespace General {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        static gio::Fmt fmtLD("*");
+        static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1888,7 +1868,7 @@ namespace General {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         std::string String; // Working string
 
-        gio::write(String, fmtLD) << IntegerValue;
+        ObjexxFCL::gio::write(String, fmtLD) << IntegerValue;
         return stripped(String);
     }
 
@@ -2572,8 +2552,8 @@ namespace General {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        static gio::Fmt TStmpFmt("(I2.2,':',F3.0)");
-        static gio::Fmt TStmpFmti("(I2.2,':',I2.2)");
+        static ObjexxFCL::gio::Fmt TStmpFmt("(I2.2,':',F3.0)");
+        static ObjexxFCL::gio::Fmt TStmpFmti("(I2.2,':',I2.2)");
         Real64 const FracToMin(60.0);
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -2604,9 +2584,9 @@ namespace General {
             ++ActualTimeHrS;
             ActualTimeMinS = 0;
         }
-        gio::write(TimeStmpS, TStmpFmti) << ActualTimeHrS << ActualTimeMinS;
+        ObjexxFCL::gio::write(TimeStmpS, TStmpFmti) << ActualTimeHrS << ActualTimeMinS;
 
-        gio::write(TimeStmpE, TStmpFmt) << int(ActualTimeE) << (ActualTimeE - int(ActualTimeE)) * FracToMin;
+        ObjexxFCL::gio::write(TimeStmpE, TStmpFmt) << int(ActualTimeE) << (ActualTimeE - int(ActualTimeE)) * FracToMin;
         if (TimeStmpE[3] == ' ') TimeStmpE[3] = '0';
         TimeStmpE[5] = ' ';
         strip(TimeStmpE);
@@ -2990,7 +2970,7 @@ namespace General {
         Minute = mod(TmpItem, DecHr);
     }
 
-    int DetermineMinuteForReporting(int const IndexTypeKey) // kind of reporting, Zone Timestep or System
+    int DetermineMinuteForReporting(OutputProcessor::TimeStepType t_timeStepType) // kind of reporting, Zone Timestep or System
     {
 
         // FUNCTION INFORMATION:
@@ -3012,7 +2992,6 @@ namespace General {
         // Using/Aliasing
         using namespace DataPrecisionGlobals;
         using DataGlobals::CurrentTime;
-        using DataGlobals::HVACTSReporting;
         using DataGlobals::TimeStepZone;
         using DataHVACGlobals::SysTimeElapsed;
         using DataHVACGlobals::TimeStepSys;
@@ -3037,7 +3016,7 @@ namespace General {
         Real64 ActualTimeE; // End of current interval (HVAC time step)
         int ActualTimeHrS;
 
-        if (IndexTypeKey == HVACTSReporting) {
+        if (t_timeStepType == OutputProcessor::TimeStepType::TimeStepSystem) {
             ActualTimeS = CurrentTime - TimeStepZone + SysTimeElapsed;
             ActualTimeE = ActualTimeS + TimeStepSys;
             ActualTimeHrS = int(ActualTimeS);
@@ -3944,6 +3923,23 @@ namespace General {
         return results;
     }
 
+    Real64 epexp(Real64 x)
+    {
+        if (x < -70.0) {
+            return 0.0;
+        }
+        return std::exp(x);
+    }
+
+    Real64 epexp(Real64 x, Real64 defaultHigh)
+    {
+        if (x < -70.0) {
+            return 0.0;
+        } else if (x > defaultHigh) {
+            return std::exp(defaultHigh);
+        }
+        return std::exp(x);
+    }
 } // namespace General
 
 } // namespace EnergyPlus

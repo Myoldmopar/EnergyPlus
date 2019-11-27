@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -52,36 +52,36 @@
 #include <ObjexxFCL/Optional.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <CurveManager.hh>
-#include <DXCoils.hh>
-#include <DataAirSystems.hh>
-#include <DataContaminantBalance.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataHeatBalance.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <DataWater.hh>
-#include <Fans.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <GeneralRoutines.hh>
-#include <GlobalNames.hh>
-#include <HVACFan.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutAirNodeManager.hh>
-#include <OutputProcessor.hh>
-#include <OutputReportPredefined.hh>
-#include <PlantUtilities.hh>
-#include <Psychrometrics.hh>
-#include <ReportCoilSelection.hh>
-#include <ReportSizingManager.hh>
-#include <ScheduleManager.hh>
-#include <UnitarySystem.hh>
-#include <VariableSpeedCoils.hh>
-#include <WaterManager.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/CurveManager.hh>
+#include <EnergyPlus/DXCoils.hh>
+#include <EnergyPlus/DataAirSystems.hh>
+#include <EnergyPlus/DataContaminantBalance.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataHeatBalance.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/DataWater.hh>
+#include <EnergyPlus/Fans.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GeneralRoutines.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/HVACFan.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutAirNodeManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/OutputReportPredefined.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ReportCoilSelection.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/UnitarySystem.hh>
+#include <EnergyPlus/VariableSpeedCoils.hh>
+#include <EnergyPlus/WaterManager.hh>
 
 namespace EnergyPlus {
 
@@ -245,7 +245,8 @@ namespace VariableSpeedCoils {
           RatedPowerHeat(0.0), RatedCOPHeat(0.0), RatedCapCoolSens(0.0), RatedPowerCool(0.0), RatedCOPCool(0.0), AirInletNodeNum(0),
           AirOutletNodeNum(0), WaterInletNodeNum(0), WaterOutletNodeNum(0), LoopNum(0), LoopSide(0), BranchNum(0), CompNum(0),
           FindCompanionUpStreamCoil(true), IsDXCoilInZone(false), CompanionCoolingCoilNum(0), CompanionHeatingCoilNum(0), FanDelayTime(0.0),
-          MSHPDesignSpecIndex(0), MSErrIndex(MaxSpedLevels, 0), MSRatedPercentTotCap(MaxSpedLevels, 0.0), MSRatedTotCap(MaxSpedLevels, 0.0),
+          // This one calls into a std::vector, so it's 0-indexed, so we initialize it to -1
+          MSHPDesignSpecIndex(-1), MSErrIndex(MaxSpedLevels, 0), MSRatedPercentTotCap(MaxSpedLevels, 0.0), MSRatedTotCap(MaxSpedLevels, 0.0),
           MSRatedSHR(MaxSpedLevels, 0.0), MSRatedCOP(MaxSpedLevels, 0.0), MSRatedAirVolFlowPerRatedTotCap(MaxSpedLevels, 0.0),
           MSRatedAirVolFlowRate(MaxSpedLevels, 0.0), MSRatedAirMassFlowRate(MaxSpedLevels, 0.0),
           MSRatedWaterVolFlowPerRatedTotCap(MaxSpedLevels, 0.0), MSRatedWaterVolFlowRate(MaxSpedLevels, 0.0),
@@ -541,6 +542,7 @@ namespace VariableSpeedCoils {
                                           cAlphaFields,
                                           cNumericFields);
 
+            // ErrorsFound will be set to True if problem was found, left untouched otherwise
             VerifyUniqueCoilName(CurrentModuleObject, AlphArray(1), ErrorsFound, CurrentModuleObject + " Name");
 
             VarSpeedCoil(DXCoilNum).bIsDesuperheater = false;
@@ -924,6 +926,7 @@ namespace VariableSpeedCoils {
                                           lAlphaBlanks,
                                           cAlphaFields,
                                           cNumericFields);
+            // ErrorsFound will be set to True if problem was found, left untouched otherwise
             VerifyUniqueCoilName(CurrentModuleObject, AlphArray(1), ErrorsFound, CurrentModuleObject + " Name");
 
             VarSpeedCoil(DXCoilNum).bIsDesuperheater = false;
@@ -1318,6 +1321,7 @@ namespace VariableSpeedCoils {
                                           lAlphaBlanks,
                                           cAlphaFields,
                                           cNumericFields);
+            // ErrorsFound will be set to True if problem was found, left untouched otherwise
             VerifyUniqueCoilName(CurrentModuleObject, AlphArray(1), ErrorsFound, CurrentModuleObject + " Name");
 
             VarSpeedCoil(DXCoilNum).bIsDesuperheater = false;
@@ -1671,6 +1675,7 @@ namespace VariableSpeedCoils {
                                           lAlphaBlanks,
                                           cAlphaFields,
                                           cNumericFields);
+            // ErrorsFound will be set to True if problem was found, left untouched otherwise
             VerifyUniqueCoilName(CurrentModuleObject, AlphArray(1), ErrorsFound, CurrentModuleObject + " Name");
 
             VarSpeedCoil(DXCoilNum).bIsDesuperheater = false;
@@ -2003,6 +2008,7 @@ namespace VariableSpeedCoils {
                                           lAlphaBlanks,
                                           cAlphaFields,
                                           cNumericFields);
+            // ErrorsFound will be set to True if problem was found, left untouched otherwise
             VerifyUniqueCoilName(CurrentModuleObject, AlphArray(1), ErrorsFound, CurrentModuleObject + " Name");
 
             VarSpeedCoil(DXCoilNum).bIsDesuperheater = false;
@@ -3284,12 +3290,12 @@ namespace VariableSpeedCoils {
                                         VarSpeedCoil(DXCoilNum).LoopSide,
                                         VarSpeedCoil(DXCoilNum).BranchNum,
                                         VarSpeedCoil(DXCoilNum).CompNum,
+                                        errFlag,
                                         _,
                                         _,
                                         _,
                                         _,
-                                        _,
-                                        errFlag);
+                                        _);
                 if (errFlag) {
                     ShowFatalError("InitVarSpeedCoil: Program terminated for previous conditions.");
                 }
@@ -4073,6 +4079,7 @@ namespace VariableSpeedCoils {
                         SupTemp -= FanCoolLoad / (CpAir * rhoair * VolFlowRate);
                     }
                     MixWetBulb = PsyTwbFnTdbWPb(MixTemp, MixHumRat, OutBaroPress, RoutineName);
+                    // need to use OutTemp for air-cooled and RatedInletWaterTemp for water-cooled
                     TotCapTempModFac =
                         CurveValue(VarSpeedCoil(DXCoilNum).MSCCapFTemp(VarSpeedCoil(DXCoilNum).NormSpedLevel), MixWetBulb, RatedInletWaterTemp);
 
@@ -4144,6 +4151,7 @@ namespace VariableSpeedCoils {
                     }
 
                     MixWetBulb = PsyTwbFnTdbWPb(MixTemp, MixHumRat, OutBaroPress, RoutineName);
+                    // need to use OutTemp for air-cooled and RatedInletWaterTemp for water-cooled
                     TotCapTempModFac =
                         CurveValue(VarSpeedCoil(DXCoilNum).MSCCapFTemp(VarSpeedCoil(DXCoilNum).NormSpedLevel), MixWetBulb, RatedInletWaterTemp);
 
@@ -7060,6 +7068,44 @@ namespace VariableSpeedCoils {
             ShowSevereError("GetVSCoilMinOATCompressor: Invalid VS DX Coil, Type= VS DX Coil Name=\"" + CoilName + "\"");
             ErrorsFound = true;
             MinOAT = -1000.0;
+        }
+
+        return MinOAT;
+    }
+
+    Real64 GetVSCoilMinOATCompressorUsingIndex(int const CoilIndex, // index to cooling coil
+                                               bool &ErrorsFound    // set to true if problem
+    )
+    {
+
+        // FUNCTION INFORMATION:
+        //       AUTHOR         R. Raustad
+        //       DATE WRITTEN   August 2019
+
+        // PURPOSE OF THIS FUNCTION:
+        // This function looks up the the min oat for the cooling coil compressor and returns it.  If
+        // incorrect coil index is given, ErrorsFound is returned as true and value is returned
+        // as negative 1000.
+
+        // Return value
+        Real64 MinOAT; // returned min oa temperature of matched coil
+
+        // Obtains and Allocates WatertoAirHP related parameters from input file
+        if (GetCoilsInputFlag) { // First time subroutine has been entered
+            GetVarSpeedCoilInput();
+            GetCoilsInputFlag = false;
+        }
+
+        if (CoilIndex == 0) {
+
+            ShowSevereError("GetVSCoilMinOATCompressorUsingIndex: Index passed = 0");
+            ShowContinueError("... returning Min OAT as -1000.");
+            ErrorsFound = true;
+            MinOAT = -1000.0;
+
+        } else {
+
+            MinOAT = VarSpeedCoil(CoilIndex).MinOATCompressor;
         }
 
         return MinOAT;

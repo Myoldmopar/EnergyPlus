@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -56,32 +56,32 @@
 #include <ObjexxFCL/string.functions.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <DataAirLoop.hh>
-#include <DataContaminantBalance.hh>
-#include <DataConvergParams.hh>
-#include <DataDefineEquip.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataHeatBalFanSys.hh>
-#include <DataHeatBalance.hh>
-#include <DataIPShortCuts.hh>
-#include <DataLoopNode.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <DataZoneEnergyDemands.hh>
-#include <DataZoneEquipment.hh>
-#include <DualDuct.hh>
-#include <General.hh>
-#include <GeneralRoutines.hh>
-#include <GlobalNames.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <Psychrometrics.hh>
-#include <ReportSizingManager.hh>
-#include <ScheduleManager.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/DataAirLoop.hh>
+#include <EnergyPlus/DataContaminantBalance.hh>
+#include <EnergyPlus/DataConvergParams.hh>
+#include <EnergyPlus/DataDefineEquip.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataHeatBalFanSys.hh>
+#include <EnergyPlus/DataHeatBalance.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/DataZoneEnergyDemands.hh>
+#include <EnergyPlus/DataZoneEquipment.hh>
+#include <EnergyPlus/DualDuct.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GeneralRoutines.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -2160,22 +2160,22 @@ namespace DualDuct {
         std::string DamperType;
 
         // Formats
-        static gio::Fmt Format_100("('! <#Dual Duct Damper Connections>,<Number of Dual Duct Damper Connections>')");
-        static gio::Fmt Format_101("(A)");
-        static gio::Fmt Format_102("('! <Dual Duct Damper>,<Dual Duct Damper Count>,<Dual Duct Damper Name>,<Inlet Node>,','<Outlet Node>,<Inlet "
+        static ObjexxFCL::gio::Fmt Format_100("('! <#Dual Duct Damper Connections>,<Number of Dual Duct Damper Connections>')");
+        static ObjexxFCL::gio::Fmt Format_101("(A)");
+        static ObjexxFCL::gio::Fmt Format_102("('! <Dual Duct Damper>,<Dual Duct Damper Count>,<Dual Duct Damper Name>,<Inlet Node>,','<Outlet Node>,<Inlet "
                                    "Node Type>,<AirLoopHVAC Name>')");
-        static gio::Fmt fmtLD("*");
+        static ObjexxFCL::gio::Fmt fmtLD("*");
 
         if (!allocated(Damper))
             return; // Autodesk Bug: Can arrive here with Damper unallocated (SimulateDualDuct not yet called) with NumDampers either set >0 or
                     // uninitialized
 
         // Report Dual Duct Dampers to BND File
-        gio::write(OutputFileBNDetails, Format_101) << "! ===============================================================";
-        gio::write(OutputFileBNDetails, Format_100);
-        gio::write(ChrOut, fmtLD) << NumDampers * 2;
-        gio::write(OutputFileBNDetails, Format_101) << " #Dual Duct Damper Connections," + stripped(ChrOut);
-        gio::write(OutputFileBNDetails, Format_102);
+        ObjexxFCL::gio::write(OutputFileBNDetails, Format_101) << "! ===============================================================";
+        ObjexxFCL::gio::write(OutputFileBNDetails, Format_100);
+        ObjexxFCL::gio::write(ChrOut, fmtLD) << NumDampers * 2;
+        ObjexxFCL::gio::write(OutputFileBNDetails, Format_101) << " #Dual Duct Damper Connections," + stripped(ChrOut);
+        ObjexxFCL::gio::write(OutputFileBNDetails, Format_102);
 
         for (Count1 = 1; Count1 <= NumDampers; ++Count1) {
 
@@ -2213,7 +2213,7 @@ namespace DualDuct {
             }
             if (Found == 0) ChrName = "**Unknown**";
 
-            gio::write(ChrOut, fmtLD) << Count1;
+            ObjexxFCL::gio::write(ChrOut, fmtLD) << Count1;
             if (Damper(Count1).DamperType == DualDuct_ConstantVolume) {
                 DamperType = cCMO_DDConstantVolume;
             } else if (Damper(Count1).DamperType == DualDuct_VariableVolume) {
@@ -2225,18 +2225,18 @@ namespace DualDuct {
             }
 
             if ((Damper(Count1).DamperType == DualDuct_ConstantVolume) || (Damper(Count1).DamperType == DualDuct_VariableVolume)) {
-                gio::write(OutputFileBNDetails, Format_101) << " Dual Duct Damper," + stripped(ChrOut) + ',' + DamperType + ',' +
+                ObjexxFCL::gio::write(OutputFileBNDetails, Format_101) << " Dual Duct Damper," + stripped(ChrOut) + ',' + DamperType + ',' +
                                                                    Damper(Count1).DamperName + ',' + NodeID(Damper(Count1).HotAirInletNodeNum) + ',' +
                                                                    NodeID(Damper(Count1).OutletNodeNum) + ",Hot Air," + ChrName;
 
-                gio::write(OutputFileBNDetails, Format_101) << " Dual Duct Damper," + stripped(ChrOut) + ',' + DamperType + ',' +
+                ObjexxFCL::gio::write(OutputFileBNDetails, Format_101) << " Dual Duct Damper," + stripped(ChrOut) + ',' + DamperType + ',' +
                                                                    Damper(Count1).DamperName + ',' + NodeID(Damper(Count1).ColdAirInletNodeNum) +
                                                                    ',' + NodeID(Damper(Count1).OutletNodeNum) + ",Cold Air," + ChrName;
             } else if (Damper(Count1).DamperType == DualDuct_OutdoorAir) {
-                gio::write(OutputFileBNDetails, Format_101) << "Dual Duct Damper, " + stripped(ChrOut) + ',' + DamperType + ',' +
+                ObjexxFCL::gio::write(OutputFileBNDetails, Format_101) << "Dual Duct Damper, " + stripped(ChrOut) + ',' + DamperType + ',' +
                                                                    Damper(Count1).DamperName + ',' + NodeID(Damper(Count1).OAInletNodeNum) + ',' +
                                                                    NodeID(Damper(Count1).OutletNodeNum) + ",Outdoor Air," + ChrName;
-                gio::write(OutputFileBNDetails, Format_101) << "Dual Duct Damper, " + stripped(ChrOut) + ',' + DamperType + ',' +
+                ObjexxFCL::gio::write(OutputFileBNDetails, Format_101) << "Dual Duct Damper, " + stripped(ChrOut) + ',' + DamperType + ',' +
                                                                    Damper(Count1).DamperName + ',' + NodeID(Damper(Count1).RecircAirInletNodeNum) +
                                                                    ',' + NodeID(Damper(Count1).OutletNodeNum) + ",Recirculated Air," + ChrName;
             }

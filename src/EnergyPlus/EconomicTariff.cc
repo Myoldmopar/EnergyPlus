@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -56,21 +56,22 @@
 #include <ObjexxFCL/string.functions.hh>
 
 // EnergyPlus Headers
-#include <DataCostEstimate.hh>
-#include <DataEnvironment.hh>
-#include <DataGlobalConstants.hh>
-#include <DataIPShortCuts.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DisplayRoutines.hh>
-#include <EconomicTariff.hh>
-#include <General.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <OutputProcessor.hh>
-#include <OutputReportPredefined.hh>
-#include <OutputReportTabular.hh>
-#include <SQLiteProcedures.hh>
-#include <ScheduleManager.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/DataCostEstimate.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataGlobalConstants.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DisplayRoutines.hh>
+#include <EnergyPlus/EconomicTariff.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/OutputReportPredefined.hh>
+#include <EnergyPlus/OutputReportTabular.hh>
+#include <EnergyPlus/ResultsSchema.hh>
+#include <EnergyPlus/SQLiteProcedures.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -401,7 +402,7 @@ namespace EconomicTariff {
         int KeyCount;
         int TypeVar;
         OutputProcessor::StoreType AvgSumVar;
-        int StepTypeVar;
+        OutputProcessor::TimeStepType StepTypeVar;
         OutputProcessor::Unit UnitsVar(OutputProcessor::Unit::None); // Units sting, may be blank
         Array1D_string NamesOfKeys;                                  // Specific key name
         Array1D_int IndexesForKeyVar;                                // Array index
@@ -2954,7 +2955,7 @@ namespace EconomicTariff {
                             pushStack(c, noVar);
                         } else if (SELECT_CASE_var == opABSOLUTE) {
                             popStack(a, aPt);
-                            pushStack(abs(a), noVar);
+                            pushStack(ObjexxFCL::abs(a), noVar);
                         } else if (SELECT_CASE_var == opINTEGER) {
                             popStack(a, aPt);
                             pushStack(Array1D_double(Array1D_int(a)), noVar);
@@ -4302,6 +4303,10 @@ namespace EconomicTariff {
                     sqlite->createSQLiteTabularDataRecords(
                         tableBody, rowHead, columnHead, "Economics Results Summary Report", "Entire Facility", "Annual Cost");
                 }
+                if (ResultsFramework::OutputSchema->timeSeriesAndTabularEnabled()) {
+                    ResultsFramework::OutputSchema->TabularReportsCollection.addReportTable(
+                        tableBody, rowHead, columnHead, "Economics Results Summary Report", "Entire Facility", "Annual Cost");
+                }
                 columnHead.deallocate();
                 rowHead.deallocate();
                 columnWidth.deallocate();
@@ -4353,6 +4358,10 @@ namespace EconomicTariff {
                 WriteTable(tableBody, rowHead, columnHead, columnWidth);
                 if (sqlite) {
                     sqlite->createSQLiteTabularDataRecords(
+                        tableBody, rowHead, columnHead, "Economics Results Summary Report", "Entire Facility", "Tariff Summary");
+                }
+                if (ResultsFramework::OutputSchema->timeSeriesAndTabularEnabled()) {
+                    ResultsFramework::OutputSchema->TabularReportsCollection.addReportTable(
                         tableBody, rowHead, columnHead, "Economics Results Summary Report", "Entire Facility", "Tariff Summary");
                 }
                 columnHead.deallocate();
@@ -4431,6 +4440,10 @@ namespace EconomicTariff {
                     if (sqlite) {
                         sqlite->createSQLiteTabularDataRecords(
                             tableBody, rowHead, columnHead, "Tariff Report", tariff(iTariff).tariffName, "General");
+                    }
+                    if (ResultsFramework::OutputSchema->timeSeriesAndTabularEnabled()) {
+                        ResultsFramework::OutputSchema->TabularReportsCollection.addReportTable(tableBody, rowHead, columnHead, "Tariff Report",
+                                                                                                tariff(iTariff).tariffName, "General");
                     }
                     columnHead.deallocate();
                     rowHead.deallocate();
@@ -4806,6 +4819,10 @@ namespace EconomicTariff {
         WriteTable(tableBody, rowHead, columnHead, columnWidth);
         if (sqlite) {
             sqlite->createSQLiteTabularDataRecords(tableBody, rowHead, columnHead, "Tariff Report", forString, titleString);
+        }
+        if (ResultsFramework::OutputSchema->timeSeriesAndTabularEnabled()) {
+            ResultsFramework::OutputSchema->TabularReportsCollection.addReportTable(tableBody, rowHead, columnHead, "Tariff Report", forString,
+                                                                                    titleString);
         }
         columnHead.deallocate();
         rowHead.deallocate();

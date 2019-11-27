@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -53,32 +53,32 @@
 #include <ObjexxFCL/Fmath.hh>
 
 // EnergyPlus Headers
-#include <AirTerminalUnit.hh>
-#include <BranchNodeConnections.hh>
-#include <CurveManager.hh>
-#include <DataContaminantBalance.hh>
-#include <DataDefineEquip.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataIPShortCuts.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <DataZoneEnergyDemands.hh>
-#include <DataZoneEquipment.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <GeneralRoutines.hh>
-#include <HVACFourPipeBeam.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <PlantUtilities.hh>
-#include <Psychrometrics.hh>
-#include <ReportSizingManager.hh>
-#include <ScheduleManager.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/AirTerminalUnit.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/CurveManager.hh>
+#include <EnergyPlus/DataContaminantBalance.hh>
+#include <EnergyPlus/DataDefineEquip.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/DataZoneEnergyDemands.hh>
+#include <EnergyPlus/DataZoneEquipment.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GeneralRoutines.hh>
+#include <EnergyPlus/HVACFourPipeBeam.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -153,6 +153,7 @@ namespace FourPipeBeam {
             ErrorsFound = true;
         }
 
+        errFlag = false;
         GlobalNames::VerifyUniqueADUName(cCurrentModuleObject, cAlphaArgs(1), errFlag, cCurrentModuleObject + " Name");
         if (errFlag) {
             ErrorsFound = true;
@@ -422,6 +423,7 @@ namespace FourPipeBeam {
         for (aDUIndex = 1; aDUIndex <= NumAirDistUnits; ++aDUIndex) {
             if (thisBeam->airOutNodeNum == AirDistUnit(aDUIndex).OutletNodeNum) {
                 thisBeam->aDUNum = aDUIndex;
+                AirDistUnit(aDUIndex).InletNodeNum = thisBeam->airInNodeNum;
             }
         }
         // assumes if there isn't one assigned, it's an error
@@ -540,12 +542,12 @@ namespace FourPipeBeam {
                                         this->cWLocation.loopSideNum,
                                         this->cWLocation.branchNum,
                                         this->cWLocation.compNum,
+                                        errFlag,
                                         _,
                                         _,
                                         _,
                                         this->cWInNodeNum,
-                                        _,
-                                        errFlag);
+                                        _);
                 if (errFlag) {
                     ShowFatalError(routineName + " Program terminated for previous conditions.");
                 }
@@ -557,12 +559,12 @@ namespace FourPipeBeam {
                                         this->hWLocation.loopSideNum,
                                         this->hWLocation.branchNum,
                                         this->hWLocation.compNum,
+                                        errFlag,
                                         _,
                                         _,
                                         _,
                                         this->hWInNodeNum,
-                                        _,
-                                        errFlag);
+                                        _);
                 if (errFlag) {
                     ShowFatalError(routineName + " Program terminated for previous conditions.");
                 }

@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -49,7 +49,7 @@
 #include <gtest/gtest.h>
 
 // EnergyPlus Headers
-#include <DataEnvironment.hh>
+#include <EnergyPlus/DataEnvironment.hh>
 #include <EnergyPlus/DataAirLoop.hh>
 #include <EnergyPlus/DataAirSystems.hh>
 #include <EnergyPlus/DataGlobals.hh>
@@ -71,7 +71,7 @@
 #include <EnergyPlus/UtilityRoutines.hh>
 #include <EnergyPlus/WaterCoils.hh>
 #include <EnergyPlus/ZoneAirLoopEquipmentManager.hh>
-#include <General.hh>
+#include <EnergyPlus/General.hh>
 #include <ObjexxFCL/gio.hh>
 
 #include "Fixtures/EnergyPlusFixture.hh"
@@ -113,7 +113,6 @@ TEST_F(EnergyPlusFixture, TestSizingRoutineForHotWaterCoils1)
     DataEnvironment::StdRhoAir = 1.20;
 
     std::string const idf_objects = delimited_string({
-        "	Version,8.4;",
         "	Zone,",
         "	SPACE1-1, !- Name",
         "	0, !- Direction of Relative North { deg }",
@@ -352,7 +351,6 @@ TEST_F(EnergyPlusFixture, TestSizingRoutineForHotWaterCoils2)
     DataEnvironment::StdRhoAir = 1.20;
 
     std::string const idf_objects = delimited_string({
-        "	Version,8.4;",
         "	Zone,",
         "	SPACE1-1, !- Name",
         "	0, !- Direction of Relative North { deg }",
@@ -589,7 +587,6 @@ TEST_F(EnergyPlusFixture, TestSizingRoutineForHotWaterCoils3)
     DataEnvironment::StdRhoAir = 1.20;
 
     std::string const idf_objects = delimited_string({
-        "	Version,8.4;",
         "	Zone,",
         "	SPACE1-1, !- Name",
         "	0, !- Direction of Relative North { deg }",
@@ -827,7 +824,6 @@ TEST_F(EnergyPlusFixture, TestSizingRoutineForHotWaterCoils4)
     DataEnvironment::StdRhoAir = 1.20;
 
     std::string const idf_objects = delimited_string({
-        "	Version,8.4;",
         "	Zone,",
         "	SPACE1-1, !- Name",
         "	0, !- Direction of Relative North { deg }",
@@ -1064,7 +1060,6 @@ TEST_F(EnergyPlusFixture, TestSizingRoutineForHotWaterCoils5)
     DataEnvironment::StdRhoAir = 1.20;
 
     std::string const idf_objects = delimited_string({
-        "	Version,8.4;",
         "	Zone,",
         "	SPACE1-1, !- Name",
         "	0, !- Direction of Relative North { deg }",
@@ -1206,6 +1201,7 @@ TEST_F(EnergyPlusFixture, TestSizingRoutineForHotWaterCoils5)
     FinalSysSizing(CurSysNum).HeatSupTemp = 16.7;
     UnitarySysEqSizing(CurSysNum).CoolingCapacity = false;
     UnitarySysEqSizing(CurSysNum).HeatingCapacity = false;
+    DataHVACGlobals::NumPrimaryAirSys = 1;
     SizeWaterCoil(1);
     EXPECT_NEAR(WaterCoil(1).MaxWaterMassFlowRate, .258323, 0.00001);
     EXPECT_NEAR(WaterCoil(1).UACoil, 239.835, 0.01);

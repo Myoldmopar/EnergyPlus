@@ -1,7 +1,7 @@
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR} )
-
-# public API headers go in the src/EnergyPlus/public folder
-INCLUDE_DIRECTORIES( ${CMAKE_CURRENT_SOURCE_DIR}/public )
+if(WIN32)
+  configure_file( energyplus.rc.in "${CMAKE_CURRENT_BINARY_DIR}/energyplus.rc" )
+  configure_file( energyplusapi.rc.in "${CMAKE_CURRENT_BINARY_DIR}/energyplusapi.rc" )
+endif()
 
 configure_file( DataStringGlobals.in.cc "${CMAKE_CURRENT_BINARY_DIR}/DataStringGlobals.cc" )
 configure_file( ConfiguredFunctions.in.cc "${CMAKE_CURRENT_BINARY_DIR}/ConfiguredFunctions.cc" )
@@ -14,8 +14,8 @@ SET( SRC
   "${CMAKE_SOURCE_DIR}/third_party/milo/ieee754.h"
   AirflowNetworkBalanceManager.cc
   AirflowNetworkBalanceManager.hh
-  AirflowNetworkSolver.cc
-  AirflowNetworkSolver.hh
+  AirLoopHVACDOAS.cc
+  AirLoopHVACDOAS.hh
   AirTerminalUnit.hh
   BaseboardElectric.cc
   BaseboardElectric.hh
@@ -71,8 +71,6 @@ SET( SRC
   DataAirLoop.hh
   DataAirSystems.cc
   DataAirSystems.hh
-  DataAirflowNetwork.cc
-  DataAirflowNetwork.hh
   DataBSDFWindow.cc
   DataBSDFWindow.hh
   DataBranchAirLoopPlant.cc
@@ -470,6 +468,8 @@ SET( SRC
   ReportCoilSelection.hh
   ReportSizingManager.cc
   ReportSizingManager.hh
+  ResultsSchema.cc
+  ResultsSchema.hh
   ReturnAirPathManager.cc
   ReturnAirPathManager.hh
   RoomAirModelAirflowNetwork.cc
@@ -586,6 +586,9 @@ SET( SRC
   WaterToAirHeatPump.hh
   WaterToAirHeatPumpSimple.cc
   WaterToAirHeatPumpSimple.hh
+  WaterToWaterHeatPumpEIR.cc
+  WaterToWaterHeatPumpEIR.hh
+  WaterToWaterHeatPumps.hh
   WaterUse.cc
   WaterUse.hh
   WeatherManager.cc
@@ -624,6 +627,25 @@ SET( SRC
 
 CREATE_SRC_GROUPS( "${SRC}" )
 
+SET( INPUTPARSING_SRC
+  "${CMAKE_SOURCE_DIR}/third_party/milo/dtoa.h"
+  "${CMAKE_SOURCE_DIR}/third_party/milo/itoa.h"
+  "${CMAKE_SOURCE_DIR}/third_party/milo/diyfp.h"
+  "${CMAKE_SOURCE_DIR}/third_party/milo/ieee754.h"
+  "${CMAKE_CURRENT_BINARY_DIR}/DataStringGlobals.cc"
+  DataStringGlobals.hh
+  FileSystem.cc
+  FileSystem.hh
+  InputProcessing/EmbeddedEpJSONSchema.hh
+  "${CMAKE_CURRENT_BINARY_DIR}/EmbeddedEpJSONSchema.cc"
+  InputProcessing/IdfParser.cc
+  InputProcessing/IdfParser.hh
+  InputProcessing/InputValidation.cc
+  InputProcessing/InputValidation.hh
+)
+
+CREATE_SRC_GROUPS( "${INPUTPARSING_SRC}" )
+
 if (UNIX)
   ADD_DEFINITIONS("-fPIC")
 endif()
@@ -638,11 +660,24 @@ add_custom_target( GenerateEmbeddedEpJSONSchema
                    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
                    DEPENDS generate_embeddedable_epJSON_schema )
 
+add_subdirectory(AirflowNetwork)
+#message( $<TARGET_PROPERTY:airflownetworklib,INTERFACE_INCLUDE_DIRECTORIES> )
+#include_directories($<TARGET_PROPERTY:airflownetworklib,INTERFACE_INCLUDE_DIRECTORIES>)
+
+add_library( energyplusparser STATIC ${INPUTPARSING_SRC} )
+add_dependencies( energyplusparser GenerateEmbeddedEpJSONSchema )
+target_link_libraries( energyplusparser re2 )
+if(UNIX AND NOT APPLE)
+  target_link_libraries( energyplusparser dl )
+endif()
+if (WIN32)
+  target_link_libraries( energyplusparser Shlwapi )
+endif()
 
 # first we will create a static library of EnergyPlus
 # this will be linked statically to create the DLL and also the unit tests
 add_library( energypluslib STATIC ${SRC} )
-target_link_libraries( energypluslib objexx sqlite bcvtb epexpat epfmiimport re2 DElight libkiva Windows-CalcEngine)
+target_link_libraries( energypluslib objexx sqlite bcvtb epexpat epfmiimport re2 DElight libkiva btwxt Windows-CalcEngine airflownetworklib )
 add_dependencies( energypluslib GenerateEmbeddedEpJSONSchema )
 if(BUILD_GROUND_PLOT)
   set_source_files_properties(HeatBalanceKivaManager.cc PROPERTIES COMPILE_DEFINITIONS GROUND_PLOT)
@@ -656,7 +691,11 @@ if (WIN32)
 endif()
 
 # second we will create the shared library that is actually packaged with EnergyPlus
-add_library( energyplusapi SHARED  CommandLineInterface.hh CommandLineInterface.cc EnergyPlusPgm.cc public/EnergyPlusPgm.hh )
+if (APPLE OR UNIX)
+  add_library( energyplusapi SHARED CommandLineInterface.hh CommandLineInterface.cc EnergyPlusPgm.cc public/EnergyPlusPgm.hh )
+else()  # windows
+  add_library( energyplusapi SHARED CommandLineInterface.hh CommandLineInterface.cc EnergyPlusPgm.cc public/EnergyPlusPgm.hh "${CMAKE_CURRENT_BINARY_DIR}/energyplusapi.rc" )
+endif()
 target_link_libraries( energyplusapi energypluslib )
 
 set_target_properties(
@@ -670,13 +709,12 @@ install( TARGETS energyplusapi
   ARCHIVE DESTINATION ./
 )
 
-if (MINGW)
-  add_executable( energyplus main.cc  )
-  target_link_libraries( energyplus energyplusapi )
-else()
-  add_executable( energyplus main.cc  )
-  target_link_libraries( energyplus energyplusapi )
+if (APPLE OR UNIX)
+  add_executable( energyplus main.cc )
+else()  # windows
+  add_executable( energyplus main.cc "${CMAKE_CURRENT_BINARY_DIR}/energyplus.rc" )
 endif()
+target_link_libraries( energyplus energyplusapi )
 
 set_target_properties(energyplus PROPERTIES VERSION ${ENERGYPLUS_VERSION})
 set_target_properties(energyplusapi PROPERTIES VERSION ${ENERGYPLUS_VERSION})

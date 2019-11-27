@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -49,20 +49,20 @@
 #include <gtest/gtest.h>
 
 #include "Fixtures/EnergyPlusFixture.hh"
-#include <BranchInputManager.hh>
-#include <DataEnvironment.hh>
-#include <DataLoopNode.hh>
-#include <ElectricPowerServiceManager.hh>
+#include <EnergyPlus/BranchInputManager.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/ElectricPowerServiceManager.hh>
 #include <EnergyPlus/DataHVACGlobals.hh>
-#include <HeatBalanceManager.hh>
-#include <HeatPumpWaterToWaterSimple.hh>
-#include <OutputProcessor.hh>
-#include <OutputReportPredefined.hh>
-#include <Plant/PlantManager.hh>
-#include <PlantUtilities.hh>
-#include <SimulationManager.hh>
-#include <SizingManager.hh>
-#include <WeatherManager.hh>
+#include <EnergyPlus/HeatBalanceManager.hh>
+#include <EnergyPlus/HeatPumpWaterToWaterSimple.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/OutputReportPredefined.hh>
+#include <EnergyPlus/Plant/PlantManager.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/SimulationManager.hh>
+#include <EnergyPlus/SizingManager.hh>
+#include <EnergyPlus/WeatherManager.hh>
 
 namespace EnergyPlus {
 
@@ -71,8 +71,7 @@ TEST_F(EnergyPlusFixture, PlantLoopSourceSideTest)
     // this test is related to issue #4385 and #4972, test change that added plant loop interconnects
     // entire IDF file from defect file used to set up model and run it some.
     std::string const idf_objects =
-        delimited_string({"Version,8.3;",
-                          "Schedule:Constant,Radiator massflow temporary,Any value sch,1;",
+        delimited_string({"Schedule:Constant,Radiator massflow temporary,Any value sch,1;",
                           "Schedule:Constant,Radiator supply temperature temporary,Any value sch,40;",
                           "Schedule:Constant,Radiator power demand temporary,Any value sch,3000;",
 
@@ -713,7 +712,7 @@ TEST_F(EnergyPlusFixture, PlantLoopSourceSideTest)
 
     OutputReportPredefined::SetPredefinedTables();
     HeatBalanceManager::SetPreConstructionInputParameters(); // establish array bounds for constructions early
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     OutputProcessor::SetupTimePointers("Zone", DataGlobals::TimeStepZone); // Set up Time pointer for HB/Zone Simulation
     OutputProcessor::SetupTimePointers("HVAC", DataHVACGlobals::TimeStepSys);
     createFacilityElectricPowerServiceObject();
@@ -814,8 +813,7 @@ TEST_F(EnergyPlusFixture, WWHP_AutosizeTest1)
 {
     // this test is for checking autosizing of heating WWHP. derived from unit test PlantLoopSourceSideTest
     std::string const idf_objects =
-        delimited_string({"Version,8.6;",
-                          "Schedule:Constant,Radiator massflow temporary,Any value sch,1;",
+        delimited_string({"Schedule:Constant,Radiator massflow temporary,Any value sch,1;",
                           "Schedule:Constant,Radiator supply temperature temporary,Any value sch,40;",
                           "Schedule:Constant,Radiator power demand temporary,Any value sch,3000;",
 
@@ -1464,7 +1462,7 @@ TEST_F(EnergyPlusFixture, WWHP_AutosizeTest1)
 
     OutputReportPredefined::SetPredefinedTables();
     HeatBalanceManager::SetPreConstructionInputParameters(); // establish array bounds for constructions early
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     OutputProcessor::SetupTimePointers("Zone", DataGlobals::TimeStepZone); // Set up Time pointer for HB/Zone Simulation
     OutputProcessor::SetupTimePointers("HVAC", DataHVACGlobals::TimeStepSys);
     createFacilityElectricPowerServiceObject();
@@ -1491,5 +1489,18 @@ TEST_F(EnergyPlusFixture, WWHP_AutosizeTest1)
     EXPECT_NEAR(HeatPumpWaterToWaterSimple::GSHP(1).RatedSourceVolFlowHeat, 0.00025, 0.0000001);
     EXPECT_NEAR(HeatPumpWaterToWaterSimple::GSHP(1).RatedCapHeat, 7200.71, 0.1);
     EXPECT_NEAR(HeatPumpWaterToWaterSimple::GSHP(1).RatedPowerHeat, 2151.07, 0.1);
+
+    // Check that we are outputing the correct values
+    EXPECT_EQ("HeatPump:WaterToWater:EquationFit:Heating",
+              OutputReportPredefined::RetrievePreDefTableEntry(OutputReportPredefined::pdchMechType,
+                                                               HeatPumpWaterToWaterSimple::GSHP(1).Name));
+
+    EXPECT_EQ("3.35",
+              OutputReportPredefined::RetrievePreDefTableEntry(OutputReportPredefined::pdchMechNomEff,
+                                                               HeatPumpWaterToWaterSimple::GSHP(1).Name));
+
+    EXPECT_EQ("7200.71",
+              OutputReportPredefined::RetrievePreDefTableEntry(OutputReportPredefined::pdchMechNomCap,
+                                                               HeatPumpWaterToWaterSimple::GSHP(1).Name));
 }
 } // namespace EnergyPlus

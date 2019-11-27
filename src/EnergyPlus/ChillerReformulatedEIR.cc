@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -55,32 +55,32 @@
 #include <ObjexxFCL/gio.hh>
 
 // EnergyPlus Headers
-#include <BranchNodeConnections.hh>
-#include <ChillerReformulatedEIR.hh>
-#include <CurveManager.hh>
-#include <DataBranchAirLoopPlant.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataIPShortCuts.hh>
-#include <DataLoopNode.hh>
-#include <DataPlant.hh>
-#include <DataPrecisionGlobals.hh>
-#include <DataSizing.hh>
-#include <EMSManager.hh>
-#include <FaultsManager.hh>
-#include <FluidProperties.hh>
-#include <General.hh>
-#include <GlobalNames.hh>
-#include <InputProcessing/InputProcessor.hh>
-#include <NodeInputManager.hh>
-#include <OutputProcessor.hh>
-#include <OutputReportPredefined.hh>
-#include <PlantUtilities.hh>
-#include <Psychrometrics.hh>
-#include <ReportSizingManager.hh>
-#include <ScheduleManager.hh>
-#include <StandardRatings.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/BranchNodeConnections.hh>
+#include <EnergyPlus/ChillerReformulatedEIR.hh>
+#include <EnergyPlus/CurveManager.hh>
+#include <EnergyPlus/DataBranchAirLoopPlant.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataIPShortCuts.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataPlant.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/EMSManager.hh>
+#include <EnergyPlus/FaultsManager.hh>
+#include <EnergyPlus/FluidProperties.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/GlobalNames.hh>
+#include <EnergyPlus/InputProcessing/InputProcessor.hh>
+#include <EnergyPlus/NodeInputManager.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/OutputReportPredefined.hh>
+#include <EnergyPlus/PlantUtilities.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ReportSizingManager.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/StandardRatings.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -332,7 +332,6 @@ namespace ChillerReformulatedEIR {
         int NumNums;                      // Number of elements in the numeric array
         int IOStat;                       // IO Status when calling get input subroutine
         static bool ErrorsFound(false);   // True when input errors found
-        bool errFlag;                     // Error flag, used to tell if a unique chiller name has been specified
         static bool AllocatedFlag(false); // True when arrays are allocated
         std::string PartLoadCurveType;    // Part load curve type
 
@@ -367,10 +366,10 @@ namespace ChillerReformulatedEIR {
                                           cAlphaFieldNames,
                                           cNumericFieldNames);
             UtilityRoutines::IsNameEmpty(cAlphaArgs(1), cCurrentModuleObject, ErrorsFound);
-            VerifyUniqueChillerName(cCurrentModuleObject, cAlphaArgs(1), errFlag, cCurrentModuleObject + " Name");
-            if (errFlag) {
-                ErrorsFound = true;
-            }
+
+            // ErrorsFound will be set to True if problem was found, left untouched otherwise
+            VerifyUniqueChillerName(cCurrentModuleObject, cAlphaArgs(1), ErrorsFound, cCurrentModuleObject + " Name");
+
             ElecReformEIRChiller(EIRChillerNum).Name = cAlphaArgs(1);
             // Performance curves
             ElecReformEIRChiller(EIRChillerNum).ChillerCapFT = GetCurveIndex(cAlphaArgs(2));
@@ -945,12 +944,12 @@ namespace ChillerReformulatedEIR {
                                     ElecReformEIRChiller(EIRChillNum).CWLoopSideNum,
                                     ElecReformEIRChiller(EIRChillNum).CWBranchNum,
                                     ElecReformEIRChiller(EIRChillNum).CWCompNum,
+                                    errFlag,
                                     ElecReformEIRChiller(EIRChillNum).TempLowLimitEvapOut,
                                     _,
                                     _,
                                     ElecReformEIRChiller(EIRChillNum).EvapInletNodeNum,
-                                    _,
-                                    errFlag);
+                                    _);
             if (ElecReformEIRChiller(EIRChillNum).CondenserType != AirCooled) {
                 ScanPlantLoopsForObject(ElecReformEIRChiller(EIRChillNum).Name,
                                         TypeOf_Chiller_ElectricReformEIR,
@@ -958,12 +957,12 @@ namespace ChillerReformulatedEIR {
                                         ElecReformEIRChiller(EIRChillNum).CDLoopSideNum,
                                         ElecReformEIRChiller(EIRChillNum).CDBranchNum,
                                         ElecReformEIRChiller(EIRChillNum).CDCompNum,
+                                        errFlag,
                                         _,
                                         _,
                                         _,
                                         ElecReformEIRChiller(EIRChillNum).CondInletNodeNum,
-                                        _,
-                                        errFlag);
+                                        _);
                 InterConnectTwoPlantLoopSides(ElecReformEIRChiller(EIRChillNum).CWLoopNum,
                                               ElecReformEIRChiller(EIRChillNum).CWLoopSideNum,
                                               ElecReformEIRChiller(EIRChillNum).CDLoopNum,
@@ -978,12 +977,12 @@ namespace ChillerReformulatedEIR {
                                         ElecReformEIRChiller(EIRChillNum).HRLoopSideNum,
                                         ElecReformEIRChiller(EIRChillNum).HRBranchNum,
                                         ElecReformEIRChiller(EIRChillNum).HRCompNum,
+                                        errFlag,
                                         _,
                                         _,
                                         _,
                                         ElecReformEIRChiller(EIRChillNum).HeatRecInletNodeNum,
-                                        _,
-                                        errFlag);
+                                        _);
                 InterConnectTwoPlantLoopSides(ElecReformEIRChiller(EIRChillNum).CWLoopNum,
                                               ElecReformEIRChiller(EIRChillNum).CWLoopSideNum,
                                               ElecReformEIRChiller(EIRChillNum).HRLoopNum,
@@ -1274,8 +1273,8 @@ namespace ChillerReformulatedEIR {
         Real64 DesignHeatRecVolFlowRateUser(0.0); // Hardsized design heat recovery flow for reporting
 
         // Formats
-        static gio::Fmt Format_530("('Cond Temp (C) = ',11(F7.2))");
-        static gio::Fmt Format_531("('Curve Output  = ',11(F7.2))");
+        static ObjexxFCL::gio::Fmt Format_530("('Cond Temp (C) = ',11(F7.2))");
+        static ObjexxFCL::gio::Fmt Format_531("('Curve Output  = ',11(F7.2))");
 
         if (MyOneTimeFlag) {
             MyFlag.dimension(NumElecReformEIRChillers, true);
@@ -1568,6 +1567,7 @@ namespace ChillerReformulatedEIR {
 
         if (PlantFinalSizesOkayToReport) {
             if (MyFlag(EIRChillNum)) {
+                Real64 IPLV;
                 CalcChillerIPLV(ElecReformEIRChiller(EIRChillNum).Name,
                                 TypeOf_Chiller_ElectricReformEIR,
                                 ElecReformEIRChiller(EIRChillNum).RefCap,
@@ -1577,6 +1577,7 @@ namespace ChillerReformulatedEIR {
                                 ElecReformEIRChiller(EIRChillNum).ChillerEIRFT,
                                 ElecReformEIRChiller(EIRChillNum).ChillerEIRFPLR,
                                 ElecReformEIRChiller(EIRChillNum).MinUnloadRat,
+                                IPLV,
                                 ElecReformEIRChiller(EIRChillNum).EvapVolFlowRate,
                                 ElecReformEIRChiller(EIRChillNum).CDLoopNum,
                                 ElecReformEIRChiller(EIRChillNum).CompPowerToCondenserFrac);
@@ -1720,17 +1721,17 @@ namespace ChillerReformulatedEIR {
                     ShowContinueError(
                         "EIR as a function of PLR curve output at various part-load ratios and condenser water temperatures shown below:");
                     ShowContinueError("PLR           =    0.00   0.10   0.20   0.30   0.40   0.50   0.60   0.70   0.80   0.90   1.00");
-                    gio::write(StringVar, "'Cond Temp(C) = '");
+                    ObjexxFCL::gio::write(StringVar, "'Cond Temp(C) = '");
                     for (CurveValPtr = 1; CurveValPtr <= 11; ++CurveValPtr) {
-                        gio::write(StringVar, "(F7.2,$)") << CondTempArray(CurveValPtr);
+                        ObjexxFCL::gio::write(StringVar, "(F7.2,$)") << CondTempArray(CurveValPtr);
                     }
-                    gio::write(StringVar);
+                    ObjexxFCL::gio::write(StringVar);
                     ShowContinueError(StringVar);
-                    gio::write(StringVar, "'Curve Output = '");
+                    ObjexxFCL::gio::write(StringVar, "'Curve Output = '");
                     for (CurveValPtr = 1; CurveValPtr <= 11; ++CurveValPtr) {
-                        gio::write(StringVar, "(F7.2,$)") << CurveValArray(CurveValPtr);
+                        ObjexxFCL::gio::write(StringVar, "(F7.2,$)") << CurveValArray(CurveValPtr);
                     }
-                    gio::write(StringVar);
+                    ObjexxFCL::gio::write(StringVar);
                     ShowContinueError(StringVar);
                     ErrorsFound = true;
                 }
@@ -2287,7 +2288,7 @@ namespace ChillerReformulatedEIR {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
 
-        static gio::Fmt OutputFormat("(F6.2)");
+        static ObjexxFCL::gio::Fmt OutputFormat("(F6.2)");
         static std::string const RoutineName("CalcElecReformEIRChillerModel");
 
         // INTERFACE BLOCK SPECIFICATIONS

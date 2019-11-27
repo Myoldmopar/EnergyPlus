@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -54,25 +54,25 @@
 
 // EnergyPlus Headers
 #include "Fixtures/EnergyPlusFixture.hh"
-#include <DataAirLoop.hh>
-#include <DataEnvironment.hh>
-#include <DataHVACGlobals.hh>
-#include <DataHeatBalFanSys.hh>
-#include <DataHeatBalance.hh>
-#include <DataLoopNode.hh>
-#include <DataSizing.hh>
-#include <DataZoneEnergyDemands.hh>
-#include <DataZoneEquipment.hh>
-#include <Fans.hh>
-#include <General.hh>
-#include <HeatBalanceManager.hh>
-#include <HeatingCoils.hh>
-#include <OutputProcessor.hh>
-#include <PoweredInductionUnits.hh>
-#include <Psychrometrics.hh>
-#include <ScheduleManager.hh>
-#include <SimulationManager.hh>
-#include <ZoneAirLoopEquipmentManager.hh>
+#include <EnergyPlus/DataAirLoop.hh>
+#include <EnergyPlus/DataEnvironment.hh>
+#include <EnergyPlus/DataHVACGlobals.hh>
+#include <EnergyPlus/DataHeatBalFanSys.hh>
+#include <EnergyPlus/DataHeatBalance.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/DataSizing.hh>
+#include <EnergyPlus/DataZoneEnergyDemands.hh>
+#include <EnergyPlus/DataZoneEquipment.hh>
+#include <EnergyPlus/Fans.hh>
+#include <EnergyPlus/General.hh>
+#include <EnergyPlus/HeatBalanceManager.hh>
+#include <EnergyPlus/HeatingCoils.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/PoweredInductionUnits.hh>
+#include <EnergyPlus/Psychrometrics.hh>
+#include <EnergyPlus/ScheduleManager.hh>
+#include <EnergyPlus/SimulationManager.hh>
+#include <EnergyPlus/ZoneAirLoopEquipmentManager.hh>
 
 using namespace EnergyPlus;
 using namespace SimulationManager;
@@ -82,7 +82,6 @@ using DataHeatBalance::Zone;
 TEST_F(EnergyPlusFixture, ParallelPIUTest1)
 {
     std::string const idf_objects = delimited_string({
-        "Version,8.4;",
         "  Zone,",
         "    SPACE2-1;                !- Name",
         "ZoneHVAC:EquipmentConnections,",
@@ -302,7 +301,6 @@ TEST_F(EnergyPlusFixture, ParallelPIUTest1)
 TEST_F(EnergyPlusFixture, SeriesPIUTest1)
 {
     std::string const idf_objects = delimited_string({
-        "Version,8.4;",
         "  Zone,",
         "    SPACE2-1;                !- Name",
         "ZoneHVAC:EquipmentConnections,",
@@ -524,4 +522,56 @@ TEST_F(EnergyPlusFixture, SeriesPIUTest1)
     DataHeatBalFanSys::TempControlType.deallocate();
     DataZoneEnergyDemands::ZoneSysEnergyDemand.deallocate();
     DataZoneEnergyDemands::CurDeadBandOrSetback.deallocate();
+}
+
+
+// cf: https://github.com/NREL/EnergyPlus/issues/7183
+TEST_F(EnergyPlusFixture, PIUArrayOutOfBounds) {
+
+    PoweredInductionUnits::NumSeriesPIUs = 1;
+    PoweredInductionUnits::NumPIUs = 1;
+    PoweredInductionUnits::PIU.allocate(1);
+    int PIUNum = 1;
+    PoweredInductionUnits::PIU(PIUNum).Name = "Series PIU";
+    PoweredInductionUnits::PIU(PIUNum).UnitType = PoweredInductionUnits::SingleDuct_SeriesPIU_Reheat;
+    PoweredInductionUnits::PIU(PIUNum).HCoilType_Num = PoweredInductionUnits::HCoilType_Electric;
+
+    // Go into all of the autosize blocks (aside from Heating/Steam coils)
+    PoweredInductionUnits::PIU(PIUNum).MaxPriAirVolFlow = AutoSize;
+    PoweredInductionUnits::PIU(PIUNum).MaxTotAirVolFlow = AutoSize;
+    PoweredInductionUnits::PIU(PIUNum).MaxSecAirVolFlow = AutoSize;
+    PoweredInductionUnits::PIU(PIUNum).MinPriAirFlowFrac = AutoSize;
+    PoweredInductionUnits::PIU(PIUNum).FanOnFlowFrac = AutoSize;
+    PoweredInductionUnits::PIU(PIUNum).MaxVolHotWaterFlow = AutoSize;
+    PoweredInductionUnits::PIU(PIUNum).MaxVolHotSteamFlow = AutoSize;
+
+    DataSizing::CurSysNum = 0;
+    DataSizing::SysSizingRunDone = false;
+    DataSizing::ZoneSizingRunDone = true;
+
+    // Test array out of bounds error. Notice that CurZoneEqNum is 2, while CurTermUnitSizingNum is 1
+    // CurZoneEqNum = Current Zone Equipment index (0 if not simulating ZoneEq)
+    // CurTermUnitSizingNum = Current terminal unit sizing index for TermUnitSizing and TermUnitFinalZoneSizing
+    DataSizing::CurZoneEqNum = 2;
+    DataSizing::FinalZoneSizing.allocate(2);
+    DataSizing::FinalZoneSizing(CurZoneEqNum).DesCoolVolFlow = 2.0;
+    DataSizing::FinalZoneSizing(CurZoneEqNum).DesHeatVolFlow = 1.0;
+    DataSizing::FinalZoneSizing(CurZoneEqNum).DesHeatCoilInTempTU = 10.0;
+    DataSizing::FinalZoneSizing(CurZoneEqNum).ZoneTempAtHeatPeak = 21.0;
+    DataSizing::FinalZoneSizing(CurZoneEqNum).DesHeatCoilInHumRatTU = 0.006;
+    DataSizing::FinalZoneSizing(CurZoneEqNum).ZoneHumRatAtHeatPeak = 0.008;
+
+    DataSizing::CurTermUnitSizingNum = 1;
+    DataSizing::TermUnitSizing.allocate(1);
+    DataSizing::TermUnitFinalZoneSizing.allocate(1);
+    DataSizing::TermUnitSizing(CurTermUnitSizingNum).AirVolFlow = 1.0;
+    DataSizing::TermUnitSizing(CurTermUnitSizingNum).MinFlowFrac = 0.5;
+    DataSizing::TermUnitSingDuct = true;
+    DataSizing::TermUnitFinalZoneSizing(CurTermUnitSizingNum) = FinalZoneSizing(CurZoneEqNum);
+
+    // Call the sizing routine now
+    PoweredInductionUnits::SizePIU(PIUNum);
+
+    EXPECT_TRUE(compare_err_stream(""));
+
 }

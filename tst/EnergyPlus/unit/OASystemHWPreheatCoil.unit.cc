@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -60,7 +60,7 @@
 #include <EnergyPlus/Psychrometrics.hh>
 #include <EnergyPlus/SimulationManager.hh>
 #include <EnergyPlus/WaterCoils.hh>
-#include <HVACControllers.hh>
+#include <EnergyPlus/HVACControllers.hh>
 
 using namespace EnergyPlus;
 using namespace ObjexxFCL;
@@ -82,8 +82,6 @@ TEST_F(EnergyPlusFixture, OASystem_HotWaterPreheatCoilScheduledOffSim)
     int OASysNum(1);
 
     std::string const idf_objects = delimited_string({
-        "  Version, 8.6;",
-
         "  Timestep, 4;",
 
         "  SimulationControl,",
@@ -94,7 +92,7 @@ TEST_F(EnergyPlusFixture, OASystem_HotWaterPreheatCoilScheduledOffSim)
         "    No;                      !- Run Simulation for Weather File Run Periods",
 
         "  RunPeriod,",
-        "    ,                        !- Name",
+        "    RP1,                     !- Name",
         "    1,                       !- Begin Month",
         "    1,                       !- Begin Day of Month",
         "    ,                        !- Begin Year",
@@ -1041,7 +1039,7 @@ TEST_F(EnergyPlusFixture, OASystem_HotWaterPreheatCoilScheduledOffSim)
     });
     ASSERT_TRUE(process_idf(idf_objects));
 
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     SimulationManager::ManageSimulation();
 
     EXPECT_EQ(1, NumOASystems);
@@ -1069,8 +1067,6 @@ TEST_F(EnergyPlusFixture, OASystem_HotWaterPreheatCoilScheduledOnSim)
     Real64 CpAir(0.0);
 
     std::string const idf_objects = delimited_string({
-        "  Version, 8.6;",
-
         "  Timestep, 4;",
 
         "  SimulationControl,",
@@ -1081,7 +1077,7 @@ TEST_F(EnergyPlusFixture, OASystem_HotWaterPreheatCoilScheduledOnSim)
         "    No;                      !- Run Simulation for Weather File Run Periods",
 
         "  RunPeriod,",
-        "    ,                        !- Name",
+        "    RP1,                     !- Name",
         "    1,                       !- Begin Month",
         "    1,                       !- Begin Day of Month",
         "    ,                        !- Begin Year",
@@ -2021,7 +2017,7 @@ TEST_F(EnergyPlusFixture, OASystem_HotWaterPreheatCoilScheduledOnSim)
     });
     ASSERT_TRUE(process_idf(idf_objects));
 
-    OutputProcessor::TimeValue.allocate(2);
+    // OutputProcessor::TimeValue.allocate(2);
     SimulationManager::ManageSimulation();
 
     EXPECT_EQ(1, NumOASystems);

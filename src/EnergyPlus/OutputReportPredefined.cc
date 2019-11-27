@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -50,8 +50,8 @@
 #include <ObjexxFCL/gio.hh>
 
 // EnergyPlus Headers
-#include <DataPrecisionGlobals.hh>
-#include <OutputReportPredefined.hh>
+#include <EnergyPlus/DataPrecisionGlobals.hh>
+#include <EnergyPlus/OutputReportPredefined.hh>
 
 namespace EnergyPlus {
 
@@ -116,6 +116,7 @@ namespace OutputReportPredefined {
     int pdchPumpFlow;
     int pdchPumpPower;
     int pdchPumpPwrPerFlow;
+    int pdchPumpEndUse;
     int pdchMotEff;
     // Cooling coil subtable
     int pdstCoolCoil;
@@ -375,6 +376,7 @@ namespace OutputReportPredefined {
     int pdchCoilDateTimeTotIdealPeak;
     int pdchCoilDDnameAirFlowIdealPeak;
     int pdchCoilDateTimeAirFlowIdealPeak;
+    int pdchCoilPeakLoadTypeToSizeOn;
     int pdchCoilTotalCapIdealPeak;
     int pdchCoilSensCapIdealPeak;
     int pdchCoilAirMassFlowIdealPeak;
@@ -932,6 +934,7 @@ namespace OutputReportPredefined {
         pdchPumpFlow = 0;
         pdchPumpPower = 0;
         pdchPumpPwrPerFlow = 0;
+        pdchPumpEndUse = 0;
         pdchMotEff = 0;
         pdstCoolCoil = 0;
         pdchCoolCoilType = 0;
@@ -1156,6 +1159,7 @@ namespace OutputReportPredefined {
         pdchCoilDateTimeTotIdealPeak = 0;
         pdchCoilDDnameAirFlowIdealPeak = 0;
         pdchCoilDateTimeAirFlowIdealPeak = 0;
+        pdchCoilPeakLoadTypeToSizeOn = 0;
         pdchCoilTotalCapIdealPeak = 0;
         pdchCoilSensCapIdealPeak = 0;
         pdchCoilAirMassFlowIdealPeak = 0;
@@ -1782,6 +1786,8 @@ namespace OutputReportPredefined {
         pdchMechType = newPreDefColumn(pdstMech, "Type");
         pdchMechNomCap = newPreDefColumn(pdstMech, "Nominal Capacity [W]");
         pdchMechNomEff = newPreDefColumn(pdstMech, "Nominal Efficiency [W/W]");
+        // Note: We don't want any of these to convert.
+        // The Btu/W-h isn't going to convert anyways, and the W/W will convert to W/W since it has "SI" in the string as a hint
         pdchMechIPLVSI = newPreDefColumn(pdstMech, "IPLV in SI Units [W/W]");
         pdchMechIPLVIP = newPreDefColumn(pdstMech, "IPLV in IP Units [Btu/W-h]");
 
@@ -1874,7 +1880,7 @@ namespace OutputReportPredefined {
         pdchFanPwrPerFlow = newPreDefColumn(pdstFan, "Rated Power Per Max Air Flow Rate [W-s/m3]");
         pdchFanMotorIn = newPreDefColumn(pdstFan, "Motor Heat In Air Fraction");
         pdchFanEnergyIndex = newPreDefColumn(pdstFan, "Fan Energy Index");
-        pdchFanEndUse = newPreDefColumn(pdstFan, "End Use");
+        pdchFanEndUse = newPreDefColumn(pdstFan, "End Use Subcategory");
         pdchFanDesDay = newPreDefColumn(pdstFan, "Design Day Name for Fan Sizing Peak");
         pdchFanPkTime = newPreDefColumn(pdstFan, "Date/Time for Fan Sizing Peak");
 
@@ -1886,6 +1892,7 @@ namespace OutputReportPredefined {
         pdchPumpPower = newPreDefColumn(pdstPump, "Electric Power [W]");
         pdchPumpPwrPerFlow = newPreDefColumn(pdstPump, "Power Per Water Flow Rate [W-s/m3]");
         pdchMotEff = newPreDefColumn(pdstPump, "Motor Efficiency [W/W]");
+        pdchPumpEndUse = newPreDefColumn(pdstPump, "End Use Subcategory");
 
         pdstSWH = newPreDefSubTable(pdrEquip, "Service Water Heating");
         pdchSWHType = newPreDefColumn(pdstSWH, "Type");
@@ -2067,6 +2074,7 @@ namespace OutputReportPredefined {
         pdchCoilDateTimeTotIdealPeak = newPreDefColumn(pdstCoilSummaryCoilSelection, "Date/Time at Total Ideal Loads Peak");
         pdchCoilDDnameAirFlowIdealPeak = newPreDefColumn(pdstCoilSummaryCoilSelection, "Design Day Name at Air Flow Ideal Loads Peak");
         pdchCoilDateTimeAirFlowIdealPeak = newPreDefColumn(pdstCoilSummaryCoilSelection, "Date/Time at Air Flow Ideal Loads Peak");
+        pdchCoilPeakLoadTypeToSizeOn = newPreDefColumn(pdstCoilSummaryCoilSelection, "Peak Load Type to Size On");
 
         pdchCoilTotalCapIdealPeak = newPreDefColumn(pdstCoilSummaryCoilSelection, "Coil Total Capacity at Ideal Loads Peak [W]");
         pdchCoilSensCapIdealPeak = newPreDefColumn(pdstCoilSummaryCoilSelection, "Coil Sensible Capacity at Ideal Loads Peak [W]");
@@ -2621,7 +2629,7 @@ namespace OutputReportPredefined {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static gio::Fmt fmtI1("(I1)");
+        static ObjexxFCL::gio::Fmt fmtI1("(I1)");
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -2648,7 +2656,7 @@ namespace OutputReportPredefined {
             sigDigitCount = 2;
         }
         // convert the integer to a string for the number of digits
-        gio::write(digitString, fmtI1) << sigDigitCount;
+        ObjexxFCL::gio::write(digitString, fmtI1) << sigDigitCount;
         // build up the format string
         if (tableEntryReal < 1e8) { // change from 1e10 for more robust entry writing
             formatConvert = "(F12." + digitString + ')';
@@ -2657,7 +2665,7 @@ namespace OutputReportPredefined {
         }
         {
             IOFlags flags;
-            gio::write(stringEntry, formatConvert, flags) << tableEntryReal;
+            ObjexxFCL::gio::write(stringEntry, formatConvert, flags) << tableEntryReal;
             IOS = flags.ios();
         }
         if (IOS != 0) stringEntry = "  Too Big";
@@ -2733,7 +2741,7 @@ namespace OutputReportPredefined {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static gio::Fmt fmtLD("*");
+        static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -2746,7 +2754,7 @@ namespace OutputReportPredefined {
 
         incrementTableEntry();
         // convert the integer to a string
-        gio::write(stringEntry, fmtLD) << tableEntryInt;
+        ObjexxFCL::gio::write(stringEntry, fmtLD) << tableEntryInt;
         tableEntry(numTableEntry).charEntry = stringEntry;
         tableEntry(numTableEntry).objectName = objName;
         tableEntry(numTableEntry).indexColumn = columnIndex;

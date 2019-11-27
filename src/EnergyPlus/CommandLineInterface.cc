@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -52,19 +52,19 @@
 #include <ObjexxFCL/gio.hh>
 
 // Project headers
-#include <CommandLineInterface.hh>
-#include <DataGlobals.hh>
-#include <DataStringGlobals.hh>
-#include <DataSystemVariables.hh>
-#include <DisplayRoutines.hh>
-#include <EnergyPlus.hh>
-#include <FileSystem.hh>
-#include <OutputProcessor.hh>
-#include <OutputReportTabular.hh>
-#include <OutputReports.hh>
-#include <SimulationManager.hh>
-#include <SolarShading.hh>
-#include <UtilityRoutines.hh>
+#include <EnergyPlus/CommandLineInterface.hh>
+#include <EnergyPlus/DataGlobals.hh>
+#include <EnergyPlus/DataStringGlobals.hh>
+#include <EnergyPlus/DataSystemVariables.hh>
+#include <EnergyPlus/DisplayRoutines.hh>
+#include <EnergyPlus/EnergyPlus.hh>
+#include <EnergyPlus/FileSystem.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/OutputReportTabular.hh>
+#include <EnergyPlus/OutputReports.hh>
+#include <EnergyPlus/SimulationManager.hh>
+#include <EnergyPlus/SolarShading.hh>
+#include <EnergyPlus/UtilityRoutines.hh>
 
 namespace EnergyPlus {
 
@@ -150,6 +150,8 @@ namespace CommandLineInterface {
 
         opt.add("", 0, 0, 0, "Output IDF->epJSON or epJSON->IDF, dependent on input file type", "-c", "--convert");
 
+        opt.add("", 0, 0, 0, "Only convert IDF->epJSON or epJSON->IDF, dependent on input file type. No simulation", "--convert-only");
+
         opt.add("L",
                 0,
                 1,
@@ -198,6 +200,8 @@ namespace CommandLineInterface {
         AnnualSimulation = opt.isSet("-a");
 
         outputEpJSONConversion = opt.isSet("-c");
+
+        outputEpJSONConversionOnly = opt.isSet("--convert-only");
 
         // Process standard arguments
         if (opt.isSet("-h")) {
@@ -262,9 +266,19 @@ namespace CommandLineInterface {
         } else if (inputFileExt == "CBOR") {
             isEpJSON = true;
             isCBOR = true;
+            DisplayString("CBOR input format is experimental and unsupported.");
         } else if (inputFileExt == "MSGPACK") {
             isEpJSON = true;
             isMsgPack = true;
+            DisplayString("MsgPack input format is experimental and unsupported.");
+        } else if (inputFileExt == "UBJSON") {
+            isEpJSON = true;
+            isUBJSON = true;
+            DisplayString("UBJSON input format is experimental and unsupported.");
+        } else if (inputFileExt == "BSON") {
+            isEpJSON = true;
+            isBSON = true;
+            DisplayString("BSON input format is experimental and unsupported.");
         } else {
             DisplayString("ERROR: Input file must have IDF, IMF, or epJSON extension.");
             exit(EXIT_FAILURE);
@@ -375,6 +389,35 @@ namespace CommandLineInterface {
         outputEndFileName = outputFilePrefix + normalSuffix + ".end";
         outputErrFileName = outputFilePrefix + normalSuffix + ".err";
         outputEsoFileName = outputFilePrefix + normalSuffix + ".eso";
+
+        outputJsonFileName = outputFilePrefix + normalSuffix + ".json";
+        outputTSZoneJsonFileName = outputFilePrefix + normalSuffix + "_detailed_zone.json";
+        outputTSHvacJsonFileName = outputFilePrefix + normalSuffix + "_detailed_HVAC.json";
+        outputTSJsonFileName = outputFilePrefix + normalSuffix + "_timestep.json";
+        outputYRJsonFileName = outputFilePrefix + normalSuffix + "_yearly.json";
+        outputMNJsonFileName = outputFilePrefix + normalSuffix + "_monthly.json";
+        outputDYJsonFileName = outputFilePrefix + normalSuffix + "_daily.json";
+        outputHRJsonFileName = outputFilePrefix + normalSuffix + "_hourly.json";
+        outputSMJsonFileName = outputFilePrefix + normalSuffix + "_runperiod.json";
+        outputCborFileName = outputFilePrefix + normalSuffix + ".cbor";
+        outputTSZoneCborFileName = outputFilePrefix + normalSuffix + "_detailed_zone.cbor";
+        outputTSHvacCborFileName = outputFilePrefix + normalSuffix + "_detailed_HVAC.cbor";
+        outputTSCborFileName = outputFilePrefix + normalSuffix + "_timestep.cbor";
+        outputYRCborFileName = outputFilePrefix + normalSuffix + "_yearly.cbor";
+        outputMNCborFileName = outputFilePrefix + normalSuffix + "_monthly.cbor";
+        outputDYCborFileName = outputFilePrefix + normalSuffix + "_daily.cbor";
+        outputHRCborFileName = outputFilePrefix + normalSuffix + "_hourly.cbor";
+        outputSMCborFileName = outputFilePrefix + normalSuffix + "_runperiod.cbor";
+        outputMsgPackFileName = outputFilePrefix + normalSuffix + ".msgpack";
+        outputTSZoneMsgPackFileName = outputFilePrefix + normalSuffix + "_detailed_zone.msgpack";
+        outputTSHvacMsgPackFileName = outputFilePrefix + normalSuffix + "_detailed_HVAC.msgpack";
+        outputTSMsgPackFileName = outputFilePrefix + normalSuffix + "_timestep.msgpack";
+        outputYRMsgPackFileName = outputFilePrefix + normalSuffix + "_yearly.msgpack";
+        outputMNMsgPackFileName = outputFilePrefix + normalSuffix + "_monthly.msgpack";
+        outputDYMsgPackFileName = outputFilePrefix + normalSuffix + "_daily.msgpack";
+        outputHRMsgPackFileName = outputFilePrefix + normalSuffix + "_hourly.msgpack";
+        outputSMMsgPackFileName = outputFilePrefix + normalSuffix + "_runperiod.msgpack";
+
         outputMtdFileName = outputFilePrefix + normalSuffix + ".mtd";
         outputMddFileName = outputFilePrefix + normalSuffix + ".mdd";
         outputMtrFileName = outputFilePrefix + normalSuffix + ".mtr";
@@ -481,7 +524,7 @@ namespace CommandLineInterface {
         // Check for IDD and IDF files
         {
             IOFlags flags;
-            gio::inquire(EnergyPlusIniFileName, flags);
+            ObjexxFCL::gio::inquire(EnergyPlusIniFileName, flags);
             EPlusINI = flags.exists();
         }
         if (EPlusINI) {
@@ -489,7 +532,7 @@ namespace CommandLineInterface {
             {
                 IOFlags flags;
                 flags.ACTION("read");
-                gio::open(LFN, EnergyPlusIniFileName, flags);
+                ObjexxFCL::gio::open(LFN, EnergyPlusIniFileName, flags);
                 iostatus = flags.ios();
             }
             if (iostatus != 0) {
@@ -498,7 +541,7 @@ namespace CommandLineInterface {
             }
             {
                 IOFlags flags;
-                gio::inquire(LFN, flags);
+                ObjexxFCL::gio::inquire(LFN, flags);
                 CurrentWorkingFolder = flags.name();
             }
             // Relying on compiler to supply full path name here
@@ -511,7 +554,7 @@ namespace CommandLineInterface {
             //       Get directories from ini file
             ReadINIFile(LFN, "program", "dir", ProgramPath);
 
-            gio::close(LFN);
+            ObjexxFCL::gio::close(LFN);
 
             inputIddFileName = ProgramPath + "Energy+.idd";
         }
@@ -519,7 +562,7 @@ namespace CommandLineInterface {
         // Check if specified files exist
         {
             IOFlags flags;
-            gio::inquire(inputFileName, flags);
+            ObjexxFCL::gio::inquire(inputFileName, flags);
             FileExists = flags.exists();
         }
         if (!FileExists) {
@@ -531,7 +574,7 @@ namespace CommandLineInterface {
         if (opt.isSet("-w") && !DDOnlySimulation) {
             {
                 IOFlags flags;
-                gio::inquire(inputWeatherFileName, flags);
+                ObjexxFCL::gio::inquire(inputWeatherFileName, flags);
                 FileExists = flags.exists();
             }
             if (!FileExists) {
@@ -545,7 +588,7 @@ namespace CommandLineInterface {
         {
             IOFlags flags;
             flags.ACTION("write");
-            gio::open(OutputFileDebug, outputDbgFileName, flags);
+            ObjexxFCL::gio::open(OutputFileDebug, outputDbgFileName, flags);
             iostatus = flags.ios();
         }
         if (iostatus != 0) {
@@ -560,7 +603,7 @@ namespace CommandLineInterface {
             std::string epMacroPath = exeDirectory + "EPMacro" + exeExtension;
             {
                 IOFlags flags;
-                gio::inquire(epMacroPath, flags);
+                ObjexxFCL::gio::inquire(epMacroPath, flags);
                 FileExists = flags.exists();
             }
             if (!FileExists) {
@@ -583,7 +626,7 @@ namespace CommandLineInterface {
             std::string expandObjectsPath = exeDirectory + "ExpandObjects" + exeExtension;
             {
                 IOFlags flags;
-                gio::inquire(expandObjectsPath, flags);
+                ObjexxFCL::gio::inquire(expandObjectsPath, flags);
                 FileExists = flags.exists();
             }
             if (!FileExists) {
@@ -596,7 +639,7 @@ namespace CommandLineInterface {
             // check if IDD actually exists since ExpandObjects still requires it
             {
                 IOFlags flags;
-                gio::inquire(inputIddFileName, flags);
+                ObjexxFCL::gio::inquire(inputIddFileName, flags);
                 FileExists = flags.exists();
             }
             if (!FileExists) {
@@ -615,7 +658,7 @@ namespace CommandLineInterface {
             moveFile("expandedidf.err", outputExperrFileName);
             {
                 IOFlags flags;
-                gio::inquire("expanded.idf", flags);
+                ObjexxFCL::gio::inquire("expanded.idf", flags);
                 FileExists = flags.exists();
             }
             if (FileExists) {
@@ -689,7 +732,7 @@ namespace CommandLineInterface {
         bool NewHeading;
 
         // Formats
-        static gio::Fmt Format_700("(A)");
+        static ObjexxFCL::gio::Fmt Format_700("(A)");
 
         DataOut.clear();
 
@@ -698,7 +741,7 @@ namespace CommandLineInterface {
         Param = KindofParameter;
         strip(Param);
         ILEN = len(Param);
-        gio::rewind(UnitNumber); // Performance Ouch!
+        ObjexxFCL::gio::rewind(UnitNumber); // Performance Ouch!
         EndofFile = false;
         Found = false;
         NewHeading = false;
@@ -706,7 +749,7 @@ namespace CommandLineInterface {
         while (!EndofFile && !Found) {
             {
                 IOFlags flags;
-                gio::read(UnitNumber, Format_700, flags) >> LINE;
+                ObjexxFCL::gio::read(UnitNumber, Format_700, flags) >> LINE;
                 ReadStat = flags.ios();
             }
             if (ReadStat < GoodIOStatValue) {
@@ -731,7 +774,7 @@ namespace CommandLineInterface {
             while (!EndofFile && !NewHeading) {
                 {
                     IOFlags flags;
-                    gio::read(UnitNumber, Format_700, flags) >> LINE;
+                    ObjexxFCL::gio::read(UnitNumber, Format_700, flags) >> LINE;
                     ReadStat = flags.ios();
                 }
                 if (ReadStat < GoodIOStatValue) {

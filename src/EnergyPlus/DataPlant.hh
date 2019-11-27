@@ -1,4 +1,4 @@
-// EnergyPlus, Copyright (c) 1996-2018, The Board of Trustees of the University of Illinois,
+// EnergyPlus, Copyright (c) 1996-2019, The Board of Trustees of the University of Illinois,
 // The Regents of the University of California, through Lawrence Berkeley National Laboratory
 // (subject to receipt of any required approvals from the U.S. Dept. of Energy), Oak Ridge
 // National Laboratory, managed by UT-Battelle, Alliance for Sustainable Energy, LLC, and other
@@ -54,17 +54,17 @@
 #include <ObjexxFCL/Optional.hh>
 
 // EnergyPlus Headers
-#include <DataGlobals.hh>
-#include <DataLoopNode.hh>
-#include <EnergyPlus.hh>
-#include <OutputProcessor.hh>
-#include <Plant/CallingOrder.hh>
-#include <Plant/Enums.hh>
-#include <Plant/Loop.hh>
-#include <Plant/PlantAvailManager.hh>
-#include <Plant/PlantLoopSolver.hh>
-#include <Plant/ReportLoopData.hh>
-#include <Plant/ReportVars.hh>
+#include <EnergyPlus/DataGlobals.hh>
+#include <EnergyPlus/DataLoopNode.hh>
+#include <EnergyPlus/EnergyPlus.hh>
+#include <EnergyPlus/OutputProcessor.hh>
+#include <EnergyPlus/Plant/CallingOrder.hh>
+#include <EnergyPlus/Plant/Enums.hh>
+#include <EnergyPlus/Plant/Loop.hh>
+#include <EnergyPlus/Plant/PlantAvailManager.hh>
+#include <EnergyPlus/Plant/PlantLoopSolver.hh>
+#include <EnergyPlus/Plant/ReportLoopData.hh>
+#include <EnergyPlus/Plant/ReportVars.hh>
 
 namespace EnergyPlus {
 
@@ -247,6 +247,8 @@ namespace DataPlant {
     extern int const TypeOf_SwimmingPool_Indoor;
     extern int const TypeOf_GrndHtExchgSlinky;
     extern int const TypeOf_FourPipeBeamAirTerminal;
+    extern int const TypeOf_HeatPumpEIRCooling;
+    extern int const TypeOf_HeatPumpEIRHeating;
 
     // Parameters for General Equipment Types
     extern int const NumGeneralEquipTypes;
