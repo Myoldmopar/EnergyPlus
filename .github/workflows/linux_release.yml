@@ -10,7 +10,7 @@ jobs:
       - name: apt-deps
         run: sudo apt-get install --no-install-recommends gfortran texlive-latex-recommended texlive-latex-extra texlive-xetex texlive-fonts-recommended
       - name: configure
-        run: mkdir build && cd build && cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DBUILD_DOCS=ON .. && cd ..
+        run: mkdir build && cd build && cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DBUILD_DOCS=ON -DTEX_INTERACTION=nonstopmode .. && cd ..
       - name: list_build_targets
         run: cd build && make help && cd ..
       - name: build_docs
