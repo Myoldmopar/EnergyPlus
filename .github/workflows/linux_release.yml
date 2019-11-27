@@ -1,14 +1,14 @@
-name: C/C++ CI
+name: Linux Release C/C++ 
 
 on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
       - name: apt-deps
-        run: sudo apt-get install gfortran 
+        run: sudo apt-get install gfortran
       - name: configure
         run: mkdir build && cd build && cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON .. && cd ..
       - name: make
@@ -18,4 +18,7 @@ jobs:
       - name: test_readvars
         run: ./build/Products/ReadVarsESO
       - name: eplus_unit_tests
-        run: ./build/Products/energyplus_tests  
+        run: ./build/Products/energyplus_tests
+      - name: eplus_integration_tests
+        run: cd build && ctest -j 2 -R "integration.*"
+      
