@@ -8,4 +8,4 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: custom_checks
-        run: python3 .github/workflows/linux_customchecks.py
+        run: python3 scripts/dev/run_customchecks.py
