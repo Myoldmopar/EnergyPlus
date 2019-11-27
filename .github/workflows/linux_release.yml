@@ -14,7 +14,12 @@ jobs:
       - name: list_build_targets
         run: cd build && make help && cd ..
       - name: build_docs
-        run: cd build && make -j 3 documentation && cd ..  
+        run: cd build && make -j 3 documentation && tar -czvf documentation.tar.gz doc-pdf/ && cd ..
+      - name: archive docs
+        uses: actions/upload-artifact@v1
+        with:
+          name: documentation
+          path: build/documentation.tar.gz
       - name: make
         run: cd build && make -j 3 && cd ..
       - name: test_eplus
