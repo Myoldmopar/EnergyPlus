@@ -1,0 +1,20 @@
+name: Linux LaTeX Documentation
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: apt-deps
+        run: sudo apt-get install --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-xetex texlive-fonts-recommended texlive-science
+      - name: configure
+        run: mkdir build && cd build && cmake -DBUILD_DOCS=ON -DTEX_INTERACTION=nonstopmode .. && cd ..
+      - name: build_docs
+        run: cd build && make -j 3 documentation && tar -czvf documentation.tar.gz doc-pdf/ && cd ..
+      - name: archive docs
+        uses: actions/upload-artifact@v1
+        with:
+          name: documentation
+          path: build/documentation.tar.gz
