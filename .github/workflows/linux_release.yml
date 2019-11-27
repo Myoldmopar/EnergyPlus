@@ -8,9 +8,11 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: apt-deps
-        run: sudo apt-get install gfortran
+        run: sudo apt-get install --no-install-recommends gfortran texlive-latex-recommended texlive-latex-extra
       - name: configure
         run: mkdir build && cd build && cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON .. && cd ..
+      - name: build_docs
+        run: cd build && make -j 3 documentation && cd ..  
       - name: make
         run: cd build && make -j 3 && cd ..
       - name: test_eplus
