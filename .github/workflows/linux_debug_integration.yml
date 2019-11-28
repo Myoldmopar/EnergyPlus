@@ -1,4 +1,4 @@
-name: Linux Debug Unit Test Coverage
+name: Linux Debug Integration Test Coverage
 
 on: [push]
 
