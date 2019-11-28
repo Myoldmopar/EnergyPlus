@@ -1,4 +1,4 @@
-name: Linux Release C/C++ 
+name: Linux Release Build
 
 on: [push]
 
