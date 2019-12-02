@@ -15,7 +15,7 @@ jobs:
         run: cmake -DBUILD_DOCS=ON -DTEX_INTERACTION=nonstopmode ..
         working-directory: ./build
       - name: build_docs
-        run: make -j 3 documentation && tar -czvf documentation.tar.gz
+        run: make -j 3 documentation
         working-directory: ./build
       - name: archive docs
         uses: actions/upload-artifact@v1
