@@ -10,7 +10,7 @@ jobs:
         run: sudo apt-get install gfortran
 
       - name: checkout_develop_branch
-        run: mkdir build && cd base && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout develop
+        run: mkdir build && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout develop
       - name: configure
         run: cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
@@ -33,7 +33,7 @@ jobs:
         run: rm -rf build/
 
       - name: checkout_this_branch
-        run: mkdir build && cd base && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout $GITHUB_SHA
+        run: mkdir build && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout $GITHUB_SHA
       - name: configure
         run: cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
