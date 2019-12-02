@@ -9,8 +9,11 @@ jobs:
       - uses: actions/checkout@v1
       - name: apt-deps
         run: sudo apt-get install --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-xetex texlive-fonts-recommended texlive-science
+      - name: make_build_dir
+        run: mkdir build
       - name: configure
-        run: mkdir build && cd build && cmake -DBUILD_DOCS=ON -DTEX_INTERACTION=nonstopmode .. && cd ..
+        run: cmake -DBUILD_DOCS=ON -DTEX_INTERACTION=nonstopmode ..
+        working-directory: ./build
       - name: build_docs
         run: make -j 3 documentation && tar -czvf documentation.tar.gz doc-pdf/
         working-directory: ./build

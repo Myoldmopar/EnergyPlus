@@ -12,7 +12,7 @@ jobs:
       - name: make_build_dir
         run: mkdir build
       - name: configure
-        run: cd build && cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
+        run: cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
       - name: make
         run: make -j 3
