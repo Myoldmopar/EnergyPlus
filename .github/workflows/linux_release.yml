@@ -12,7 +12,7 @@ jobs:
       - name: make_build_dir
         run: mkdir build
       - name: configure
-        run: cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
+        run: cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON ..
         working-directory: ./build
       - name: make
         run: make -j 3
@@ -22,14 +22,4 @@ jobs:
       - name: eplus_integration_tests
         run: ctest -j 2 -R "integration.*"
         working-directory: ./build
-      - name: eplus_performance_tests
-        run: ctest -j 2 -R "performance.*"
-        working-directory: ./build
-      - name: gather_performance_results
-        run: python3 ../scripts/dev/gather_performance_results.py
-        working-directory: ./build/performance_tests
-      - name: archive_performance_results
-        uses: actions/upload-artifact@v1
-        with:
-          name: performance
-          path: build/performance_tests/performance.json
+
