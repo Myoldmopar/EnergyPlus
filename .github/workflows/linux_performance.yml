@@ -9,6 +9,9 @@ jobs:
       - name: apt-deps
         run: sudo apt-get install gfortran
 
+      - name: setup_git_repo
+        run: git init
+
       - name: checkout_develop_branch
         run: mkdir build && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout develop
       - name: configure
