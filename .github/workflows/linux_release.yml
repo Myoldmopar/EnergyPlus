@@ -9,11 +9,27 @@ jobs:
       - uses: actions/checkout@v1
       - name: apt-deps
         run: sudo apt-get install gfortran
+      - name: make_build_dir
+        run: mkdir build
       - name: configure
-        run: mkdir build && cd build && cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON .. && cd ..
+        run: cd build && cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
+        working_directory: ./build
       - name: make
-        run: cd build && make -j 3 && cd ..
+        run: make -j 3
+        working_directory: ./build
       - name: eplus_unit_tests
         run: ./build/Products/energyplus_tests
       - name: eplus_integration_tests
-        run: cd build && ctest -j 2 -R "integration.*"
+        run: ctest -j 2 -R "integration.*"
+        working_directory: ./build
+      - name: eplus_performance_tests
+        run: ctest -j 2 -R "performance.*"
+        working_directory: ./build
+      - name: gather_performance_results
+        run: python3 ../scripts/dev/gather_performance_results.py
+        working_directory: ./build/performance_tests
+      - name: archive_performance_results
+        uses: actions/upload-artifact@v1
+        with:
+          name: performance
+          path: build/performance_tests/performance.json

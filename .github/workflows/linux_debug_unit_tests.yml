@@ -12,17 +12,23 @@ jobs:
       - name: configure_with_coverage
         run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Debug -DCOMMIT_SHA=aaaaaa$COMMIT_SHA -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DENABLE_COVERAGE:BOOL=ON -DENABLE_GTEST_DEBUG_MODE:BOOL=OFF .. && cd ..
       - name: make
-        run: cd build && make -j 3 && cd ..
+        run: make -j 3
+        working_directory: ./build
       - name: run_unit_tests
-        run: cd build && ctest -j 2 --timeout 4200 --no-compress-output -D ExperimentalTest -C Debug -E "integration.*" && cd ..
+        run: ctest -j 2 --timeout 4200 --no-compress-output -D ExperimentalTest -C Debug -E "integration.*"
+        working_directory: ./build
       - name: run_lcov
-        run: cd build && lcov -c -d . -o ./lcov.output --no-external --base-directory ../src/EnergyPlus && cd ..
+        run: lcov -c -d . -o ./lcov.output --no-external --base-directory ../src/EnergyPlus
+        working_directory: ./build
       - name: filter_lcov
-        run: cd build && lcov -r ./lcov.output `pwd`/\\* -o ./lcov.output.filtered && cd ..
+        run: lcov -r ./lcov.output `pwd`/\\* -o ./lcov.output.filtered
+        working_directory: ./build
       - name: generate_html
-        run: cd build && genhtml ./lcov.output.filtered -o lcov-html --demangle-cpp --function-coverage && cd ..
+        run: genhtml ./lcov.output.filtered -o lcov-html --demangle-cpp --function-coverage
+        working_directory: ./build
       - name: tarball_coverage
-        run: cd build && tar -czvf unit_test_coverage.tar.gz lcov-html/ && cd ..
+        run: tar -czvf unit_test_coverage.tar.gz lcov-html/
+        working_directory: ./build
       - name: archive_coverage
         uses: actions/upload-artifact@v1
         with:
