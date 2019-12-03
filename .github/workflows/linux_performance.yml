@@ -15,13 +15,13 @@ jobs:
       - name: checkout_develop_branch
         run: mkdir build && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout develop
       - name: configure
-        run: cmake -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
+        run: cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
       - name: make
         run: make -j 3
         working-directory: ./build
       - name: eplus_performance_tests
-        run: ctest -j 2 -R "performance.*"
+        run: ctest -VV -j 2 -R "performance.*"
         working-directory: ./build
       - name: gather_performance_results
         run: python3 ../scripts/dev/gather_performance_results.py
