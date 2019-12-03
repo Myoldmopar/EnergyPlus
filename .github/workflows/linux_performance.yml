@@ -8,8 +8,10 @@ jobs:
     steps:
       - name: apt-deps
         run: sudo apt-get install gfortran valgrind ccache
+      - name: get_this_repo
+        run: git clone https://github.com/$GITHUB_REPOSITORY script && cd script && git checkout $GITHUB_SHA && cd ..
       - name: run_builds
-        run: bash .github/workflows/linux_performance.sh
+        run: bash script/.github/workflows/linux_performance.sh
       - name: archive_performance_results
         uses: actions/upload-artifact@v1
         with:
