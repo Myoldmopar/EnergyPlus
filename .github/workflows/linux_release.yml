@@ -22,4 +22,3 @@ jobs:
       - name: eplus_integration_tests
         run: ctest -j 2 -R "integration.*"
         working-directory: ./build
-

@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: apt-deps
-        run: sudo apt-get install gfortran
+        run: sudo apt-get install gfortran valgrind
 
       - name: setup_git_repo
         run: git init
@@ -21,7 +21,7 @@ jobs:
         run: make -j 3
         working-directory: ./build
       - name: eplus_performance_tests
-        run: ctest -VV -j 2 -R "performance.*"
+        run: ctest -j 2 -R "performance.*"
         working-directory: ./build
       - name: gather_performance_results
         run: python3 ../scripts/dev/gather_performance_results.py
