@@ -11,6 +11,8 @@ jobs:
       - uses: actions/checkout@v1
         with:
           ref: develop
+      - name: make_build_dir
+        run: mkdir build
       - name: configure
         run: cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
@@ -33,6 +35,8 @@ jobs:
         run: rm -rf build/
 
       - uses: actions/checkout@v1
+      - name: make_build_dir
+          run: mkdir build
       - name: configure
         run: cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
