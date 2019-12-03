@@ -8,35 +8,31 @@ jobs:
     steps:
       - name: apt-deps
         run: sudo apt-get install gfortran valgrind
-
-      - name: setup_git_repo
-        run: git init
-
-      - name: checkout_develop_branch
-        run: mkdir build && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout develop
+      - uses: actions/checkout@v1
+        with:
+          ref: develop
       - name: configure
         run: cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
-      - name: make
-        run: make -j 3
-        working-directory: ./build
-      - name: eplus_performance_tests
-        run: ctest -j 2 -R "performance.*"
-        working-directory: ./build
-      - name: gather_performance_results
-        run: python3 ../../scripts/dev/gather_performance_results.py
-        working-directory: ./build/performance_tests
-      - name: archive_performance_results
-        uses: actions/upload-artifact@v1
-        with:
-          name: base_performance
-          path: build/performance_tests/performance.json
+#      - name: make
+#        run: make -j 3
+#        working-directory: ./build
+#      - name: eplus_performance_tests
+#        run: ctest -j 2 -R "performance.*"
+#        working-directory: ./build
+#      - name: gather_performance_results
+#        run: python3 ../../scripts/dev/gather_performance_results.py
+#        working-directory: ./build/performance_tests
+#      - name: archive_performance_results
+#        uses: actions/upload-artifact@v1
+#        with:
+#          name: base_performance
+#          path: build/performance_tests/performance.json
 
       - name: cleanup_build
         run: rm -rf build/
 
-      - name: checkout_this_branch
-        run: mkdir build && git remote add origin https://github.com/NREL/EnergyPlus && git fetch origin && git checkout $GITHUB_SHA
+      - uses: actions/checkout@v1
       - name: configure
         run: cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
         working-directory: ./build
