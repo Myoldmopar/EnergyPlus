@@ -24,7 +24,7 @@ jobs:
         run: ctest -j 2 -R "performance.*"
         working-directory: ./build
       - name: gather_performance_results
-        run: python3 ../scripts/dev/gather_performance_results.py
+        run: python3 ../../scripts/dev/gather_performance_results.py
         working-directory: ./build/performance_tests
       - name: archive_performance_results
         uses: actions/upload-artifact@v1
@@ -47,7 +47,7 @@ jobs:
         run: ctest -j 2 -R "performance.*"
         working-directory: ./build
       - name: gather_performance_results
-        run: python3 ../scripts/dev/gather_performance_results.py
+        run: python3 ../../scripts/dev/gather_performance_results.py
         working-directory: ./build/performance_tests
       - name: archive_performance_results
         uses: actions/upload-artifact@v1
