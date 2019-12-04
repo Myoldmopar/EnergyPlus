@@ -200,7 +200,7 @@ def gather_performance_results():
 
 try:
     performance_results = gather_performance_results()
-    print(json.dumps(performance_results, indent=2))
+    # print(json.dumps(performance_results, indent=2))
     with open('performance.json', 'w') as f:
         f.write(json.dumps(performance_results, indent=2))
 except:

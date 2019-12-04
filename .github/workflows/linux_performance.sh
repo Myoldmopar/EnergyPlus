@@ -11,15 +11,19 @@ cd repo
 git checkout "${GITHUB_SHA}"  # develop eventually
 mkdir build && cd build
 cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
-make -j 3
+make -j 3 energyplus
 ctest -j 2 -R "performance.*"
 
 # move into the performance_tests folder to gather results
 cd performance_tests
+echo "****** Inside performance tests, current dir: "
+pwd
 python3 ../../scripts/dev/gather_performance_results.py
 
 # now move to the original folder and store the results
 cd ../..
+echo "****** Moved back to original folder, current dir: "
+pwd
 cp repo/build/performance_tests/performance.json ./results/performance_base.json
 
 # delete the repo folder to start over
@@ -33,14 +37,18 @@ cd repo
 git checkout "${GITHUB_SHA}"
 mkdir build && cd build
 cmake -DBUILD_TESTING=ON -DBUILD_PERFORMANCE_TESTS:BOOL=ON -DVALGRIND_ANALYZE_PERFORMANCE_TESTS:BOOL=ON ..
-make -j 3
+make -j 3 energyplus
 ctest -j 2 -R "performance.*"
 
 # move into the performance_tests folder to gather results
 cd performance_tests
+echo "****** Inside performance tests, current dir: "
+pwd
 python3 ../../scripts/dev/gather_performance_results.py
 
 # now move to the original folder and store the results
 cd ../..
+echo "****** Moved back to original folder, current dir: "
+pwd
 cp repo/build/performance_tests/performance.json ./results/performance_mod.json
 
