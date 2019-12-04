@@ -21,7 +21,7 @@ pwd
 python3 ../../scripts/dev/gather_performance_results.py
 
 # now move to the original folder and store the results
-cd ../..
+cd ../../..
 echo "****** Moved back to original folder, current dir: "
 pwd
 cp repo/build/performance_tests/performance.json ./results/performance_base.json
@@ -47,7 +47,7 @@ pwd
 python3 ../../scripts/dev/gather_performance_results.py
 
 # now move to the original folder and store the results
-cd ../..
+cd ../../..
 echo "****** Moved back to original folder, current dir: "
 pwd
 cp repo/build/performance_tests/performance.json ./results/performance_mod.json
