@@ -1,0 +1,39 @@
+name: Linux Debug Unit Test Coverage
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: apt-deps
+        run: sudo apt-get install gfortran lcov gcovr
+      - name: make_build_dir
+        run: mkdir build
+      - name: configure_with_coverage
+        run: cmake -DCMAKE_BUILD_TYPE=Debug -DCOMMIT_SHA=aaaaaa$COMMIT_SHA -DBUILD_FORTRAN=ON -DBUILD_TESTING=ON -DENABLE_COVERAGE:BOOL=ON -DENABLE_GTEST_DEBUG_MODE:BOOL=OFF ..
+        working-directory: ./build
+      - name: make
+        run: make -j 3
+        working-directory: ./build
+      - name: run_unit_tests
+        run: ctest -j 2 --timeout 4200 --no-compress-output -D ExperimentalTest -C Debug -E "integration.*"
+        working-directory: ./build
+      - name: run_lcov
+        run: lcov -c -d . -o ./lcov.output --no-external --base-directory ../src/EnergyPlus
+        working-directory: ./build
+      - name: filter_lcov
+        run: lcov -r ./lcov.output `pwd`/\\* -o ./lcov.output.filtered
+        working-directory: ./build
+      - name: generate_html
+        run: genhtml ./lcov.output.filtered -o lcov-html --demangle-cpp --function-coverage
+        working-directory: ./build
+      - name: tarball_coverage
+        run: tar -czvf unit_test_coverage.tar.gz lcov-html/
+        working-directory: ./build
+      - name: archive_coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: unit_test_coverage
+          path: build/unit_test_coverage.tar.gz

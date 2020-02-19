@@ -1,0 +1,14 @@
+name: Linux CppCheck Analyzer
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - name: apt-deps
+        run: sudo apt-get install cppcheck
+      - name: run
+        run: cppcheck -q -j 2 --error-exitcode=2 --template='[{file}]:{line}:{severity}:{message}' --suppress="*:*third_party*" --suppress="*:*tst/EnergyPlus*" --suppress="uninitvar:*" .
+        working-directory: ./src/EnergyPlus
