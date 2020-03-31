@@ -124,9 +124,9 @@ namespace ReportSizingManager {
     void ReportSizingOutput(std::string const &CompType,    // the type of the component
                             std::string const &CompName,    // the name of the component
                             std::string const &VarDesc,     // the description of the input variable
-                            Real64 const VarValue,          // the value from the sizing calculation
+                            Nandle const VarValue,          // the value from the sizing calculation
                             Optional_string_const UsrDesc,  // the description of a user-specified variable
-                            Optional<Real64 const> UsrValue // the value from the user for the desc item
+                            Optional<Nandle const> UsrValue // the value from the user for the desc item
     )
     {
 
@@ -199,10 +199,10 @@ namespace ReportSizingManager {
                        std::string const &CompName,       // name of component
                        int const SizingType,              // integerized type of sizing requested (see DataHVACGlobals, e.g. CoolingCapacitySizing)
                        std::string const &SizingString,   // string containing info for eio report
-                       Real64 &SizingResult,              // result of the sizing procedure
+                       Nandle &SizingResult,              // result of the sizing procedure
                        bool const PrintWarningFlag,       // TRUE when requesting output (eio) reporting
                        std::string const &CallingRoutine, // name of calling routine for warning messages
-                       Real64 const fraction)
+                       Nandle const fraction)
     {
         // SUBROUTINE INFORMATION :
         // AUTHOR         Richard Raustad, FSEC
@@ -265,22 +265,22 @@ namespace ReportSizingManager {
         // bool DataIsDXCoil( false ); // TRUE if direct-expansion coil
         // bool DataAutosizable( true ); // TRUE if component is autosizable
         // bool DataEMSOverrideON( false ); // boolean determines if user relies on EMS to override autosizing
-        // Real64 DataDesInletWaterTemp( 0.0 ); // coil inlet water temperture used for warning messages
-        // Real64 DataDesInletAirHumRat( 0.0 ); // coil inlet air humidity ratio used for warning messages
-        // Real64 DataDesInletAirTemp( 0.0 ); // coil inlet air temperature used for warning messages
-        // Real64 DataDesOutletAirTemp( 0.0 ); // coil outlet air temperature used for sizing
-        // Real64 DataCoolCoilCap( 0.0 ); // cooling coil capacity used for sizing with scalable inputs [W]
-        // Real64 DataFlowUsedForSizing( 0.0 ); // air flow rate used for sizing with scalable inputs [m3/s]
-        // Real64 DataAirFlowUsedForSizing( 0.0 ); // air flow rate used for sizing with scalable inputs [m3/s]
-        // Real64 DataWaterFlowUsedForSizing( 0.0 ); // water flow rate used for sizing with scalable inputs [m3/s]
-        // Real64 DataCapacityUsedForSizing( 0.0 ); //capacity used for sizing with scalable inputs [W]
-        // Real64 DataDesignCoilCapacity( 0.0); // calculated capacity of coil at end of UA calculation
-        // Real64 DataHeatSizeRatio( 1.0 ); // heating coil size as a ratio of cooling coil capacity
-        // Real64 DataEMSOverride( 0.0 ); // value of EMS variable used to override autosizing
-        // Real64 DataBypassFrac( 0.0 ); // value of bypass fraction for Coil:Cooling:DX:TwoStageWithHumidityControlMode coils
-        // Real64 DataConstantUsedForSizing( 0.0 ); // base value used for sizing inputs that are ratios of other inputs
-        // Real64 DataFractionUsedForSizing( 0.0 ); // fractional value of base value used for sizing inputs that are ratios of other inputs
-        // Real64 DataNonZoneNonAirloopValue( 0.0 ); // used when equipment is not located in a zone or airloop (rarely used, ex. HPWH fan)
+        // Nandle DataDesInletWaterTemp( 0.0 ); // coil inlet water temperture used for warning messages
+        // Nandle DataDesInletAirHumRat( 0.0 ); // coil inlet air humidity ratio used for warning messages
+        // Nandle DataDesInletAirTemp( 0.0 ); // coil inlet air temperature used for warning messages
+        // Nandle DataDesOutletAirTemp( 0.0 ); // coil outlet air temperature used for sizing
+        // Nandle DataCoolCoilCap( 0.0 ); // cooling coil capacity used for sizing with scalable inputs [W]
+        // Nandle DataFlowUsedForSizing( 0.0 ); // air flow rate used for sizing with scalable inputs [m3/s]
+        // Nandle DataAirFlowUsedForSizing( 0.0 ); // air flow rate used for sizing with scalable inputs [m3/s]
+        // Nandle DataWaterFlowUsedForSizing( 0.0 ); // water flow rate used for sizing with scalable inputs [m3/s]
+        // Nandle DataCapacityUsedForSizing( 0.0 ); //capacity used for sizing with scalable inputs [W]
+        // Nandle DataDesignCoilCapacity( 0.0); // calculated capacity of coil at end of UA calculation
+        // Nandle DataHeatSizeRatio( 1.0 ); // heating coil size as a ratio of cooling coil capacity
+        // Nandle DataEMSOverride( 0.0 ); // value of EMS variable used to override autosizing
+        // Nandle DataBypassFrac( 0.0 ); // value of bypass fraction for Coil:Cooling:DX:TwoStageWithHumidityControlMode coils
+        // Nandle DataConstantUsedForSizing( 0.0 ); // base value used for sizing inputs that are ratios of other inputs
+        // Nandle DataFractionUsedForSizing( 0.0 ); // fractional value of base value used for sizing inputs that are ratios of other inputs
+        // Nandle DataNonZoneNonAirloopValue( 0.0 ); // used when equipment is not located in a zone or airloop (rarely used, ex. HPWH fan)
         //
         // EXAMPLE setup in DXCoils:
         //			if ( DXCoil( DXCoilNum ).DXCoilType_Num == CoilDX_CoolingTwoStageWHumControl ) {
@@ -324,16 +324,16 @@ namespace ReportSizingManager {
         //
         // PARENT OBJECT OVERRIDES:
         //
-        // Parent objects can override sizing calculations using a combination of boolean and Real64 variables.
+        // Parent objects can override sizing calculations using a combination of boolean and Nandle variables.
         //
         // Zone Equipment (eg):
-        // Boolean - ZoneEqSizing( CurZoneEqNum ).CoolingCapacity and Real64 - ZoneEqSizing ( CurZoneEqNum ).DesCoolingLoad;
+        // Boolean - ZoneEqSizing( CurZoneEqNum ).CoolingCapacity and Nandle - ZoneEqSizing ( CurZoneEqNum ).DesCoolingLoad;
         //
         // AirloopHVAC Equipment (eg):
-        // Boolean - UnitarySysEqSizing(CurSysNum).HeatingAirFlow and Real64 - UnitarySysEqSizing(CurSysNum).HeatingAirVolFlow
+        // Boolean - UnitarySysEqSizing(CurSysNum).HeatingAirFlow and Nandle - UnitarySysEqSizing(CurSysNum).HeatingAirVolFlow
         //
         // Outside Air System Equipment (eg):
-        // Boolean - OASysEqSizing( CurOASysNum ).CoolingAirFlow and Real64 - OASysEqSizing ( CurOASysNum ).CoolingAirVolFlow
+        // Boolean - OASysEqSizing( CurOASysNum ).CoolingAirFlow and Nandle - OASysEqSizing ( CurOASysNum ).CoolingAirVolFlow
 
         // USE STATEMENTS :
         using CurveManager::CurveValue;
@@ -367,7 +367,7 @@ namespace ReportSizingManager {
         using WaterCoils::SimpleHeatingCoilUAResidual;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const Acc(0.0001); // Accuracy of result
+        Nandle const Acc(0.0001); // Accuracy of result
         int const MaxIte(500);    // Maximum number of iterations
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
@@ -382,53 +382,53 @@ namespace ReportSizingManager {
         bool OASysFlag;                            // Logical flag determines if parent object set OA Sys coil property
         bool AirLoopSysFlag;                       // Logical flag determines if parent object set air loop coil property
         bool bCheckForZero;                        // logical to flag whether or not to check for very small autosized values
-        Real64 AutosizeDes;                        // autosized value
-        Real64 AutosizeUser;                       // user sized value
-        Real64 OutTemp;                            // outdoor air temperature [C]
-        Real64 CoilInTemp;                         // entering coil air temperature [C]
-        Real64 CoilInHumRat;                       // entering coil air humidity ratio [kg/kg]
-        Real64 CoilInWetBulb;                      // entering coil air wet-bulb temperature [C]
-        Real64 TotCapTempModFac;                   // DX coil total capacity as a function of temperature curve pointer
-        Real64 CoilInEnth;                         // entering coil air enthalpy [J/kg]
-        Real64 CoilOutTemp;                        // coil outlet air temperature [C]
-        Real64 CoilOutHumRat;                      // coil outlet air humidity ratio [kg/kg]
-        Real64 CoilOutEnth;                        // coil outlet air enthalpy [J/kg]
-        Real64 DesCoilLoad;                        // design coil load based on sizing inputs and entering air conditions [W]
-        Real64 PeakCoilLoad;                       // adjusted coil size based on TotCapTempModFac [W]
-        Real64 DesVolFlow;                         // coil design air volume flow rate [m3/s]
-        Real64 DesMassFlow;                        // coil design mass flow rate [kg/s]
-        Real64 CpAir;                              // specific heat of air [J/kg-K]
-        Real64 rhoair;                             // density of air [kg/m3]
-        Real64 OutAirFrac;                         // outdoor air fraction
-        Real64 MinPriFlowFrac;                     // minimum primary air flow fraction for induction units
-        Real64 CpAirStd;                           // specific heat of air at standard conditions [J/kg-K]
-        Real64 NominalCapacityDes;                 // Autosized nominal capacity for reporting [W]
-        Real64 RatedVolFlowPerRatedTotCap;         // ratio of volume flow rate to capacity [m3/W]
-        Real64 CoilDesWaterDeltaT;                 // water coil delta T used for sizing [C]
-        Real64 Cp;                                 // water loop fluid specific heat [J/kgK]
-        Real64 rho;                                // water loop fluid density [kg/m3]
-        Real64 DesSatEnthAtWaterInTemp;            // temp variable used for warning messages
-        Real64 DesHumRatAtWaterInTemp;             // temp variable used for warning messages
-        Real64 T1Out;                              // water coil air outlet temperature [C]
-        Real64 T2Out;                              // water coil water outlet temperature [C]
-        Real64 UA0;                                // lower bound of UA for autosizing
-        Real64 UA1;                                // upper bound of UA for autosizing
-        Real64 MinFlowFrac;                        // minimum flow fraction from terminal unit []
-        Real64 TDpIn;                              // coil inlet air dew point temperature [C]
+        Nandle AutosizeDes;                        // autosized value
+        Nandle AutosizeUser;                       // user sized value
+        Nandle OutTemp;                            // outdoor air temperature [C]
+        Nandle CoilInTemp;                         // entering coil air temperature [C]
+        Nandle CoilInHumRat;                       // entering coil air humidity ratio [kg/kg]
+        Nandle CoilInWetBulb;                      // entering coil air wet-bulb temperature [C]
+        Nandle TotCapTempModFac;                   // DX coil total capacity as a function of temperature curve pointer
+        Nandle CoilInEnth;                         // entering coil air enthalpy [J/kg]
+        Nandle CoilOutTemp;                        // coil outlet air temperature [C]
+        Nandle CoilOutHumRat;                      // coil outlet air humidity ratio [kg/kg]
+        Nandle CoilOutEnth;                        // coil outlet air enthalpy [J/kg]
+        Nandle DesCoilLoad;                        // design coil load based on sizing inputs and entering air conditions [W]
+        Nandle PeakCoilLoad;                       // adjusted coil size based on TotCapTempModFac [W]
+        Nandle DesVolFlow;                         // coil design air volume flow rate [m3/s]
+        Nandle DesMassFlow;                        // coil design mass flow rate [kg/s]
+        Nandle CpAir;                              // specific heat of air [J/kg-K]
+        Nandle rhoair;                             // density of air [kg/m3]
+        Nandle OutAirFrac;                         // outdoor air fraction
+        Nandle MinPriFlowFrac;                     // minimum primary air flow fraction for induction units
+        Nandle CpAirStd;                           // specific heat of air at standard conditions [J/kg-K]
+        Nandle NominalCapacityDes;                 // Autosized nominal capacity for reporting [W]
+        Nandle RatedVolFlowPerRatedTotCap;         // ratio of volume flow rate to capacity [m3/W]
+        Nandle CoilDesWaterDeltaT;                 // water coil delta T used for sizing [C]
+        Nandle Cp;                                 // water loop fluid specific heat [J/kgK]
+        Nandle rho;                                // water loop fluid density [kg/m3]
+        Nandle DesSatEnthAtWaterInTemp;            // temp variable used for warning messages
+        Nandle DesHumRatAtWaterInTemp;             // temp variable used for warning messages
+        Nandle T1Out;                              // water coil air outlet temperature [C]
+        Nandle T2Out;                              // water coil water outlet temperature [C]
+        Nandle UA0;                                // lower bound of UA for autosizing
+        Nandle UA1;                                // upper bound of UA for autosizing
+        Nandle MinFlowFrac;                        // minimum flow fraction from terminal unit []
+        Nandle TDpIn;                              // coil inlet air dew point temperature [C]
         int SupFanNum;                             // index to supply fan
         int RetFanNum;                             // index to return fan
-        Real64 SupFanDT;                           // supply air fan delta temperature [C]
-        Real64 RetFanDT;                           // return air fan delta temperature [C]
-        Real64 FanCoolLoad;                        // load due to fan operation added to cooling load [W]
-        Array1D<Real64> Par(4);                    // array passed to RegulaFalsi
+        Nandle SupFanDT;                           // supply air fan delta temperature [C]
+        Nandle RetFanDT;                           // return air fan delta temperature [C]
+        Nandle FanCoolLoad;                        // load due to fan operation added to cooling load [W]
+        Array1D<Nandle> Par(4);                    // array passed to RegulaFalsi
         std::string ScalableSM;                    // scalable sizing methods label for reporting
-        Real64 const RatedInletAirTemp(26.6667);   // 26.6667C or 80F
-        Real64 const RatedInletAirHumRat(0.01125); // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
+        Nandle const RatedInletAirTemp(26.6667);   // 26.6667C or 80F
+        Nandle const RatedInletAirHumRat(0.01125); // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
 
         std::string DDNameFanPeak;   // Name of the design day that produced the Peak
         std::string dateTimeFanPeak; // A String representing the DateTime of the Peak
-        Real64 DXFlowPerCapMinRatio(1.0);
-        Real64 DXFlowPerCapMaxRatio(1.0);
+        Nandle DXFlowPerCapMinRatio(1.0);
+        Nandle DXFlowPerCapMaxRatio(1.0);
 
         AutosizeDes = 0.0;
         AutosizeUser = 0.0;
@@ -1836,7 +1836,7 @@ namespace ReportSizingManager {
                     } else {
                         AutosizeDes = FinalZoneSizing(CurZoneEqNum).DesCoolCoilInTemp;
                     }
-                    Real64 fanDeltaT = 0.0;
+                    Nandle fanDeltaT = 0.0;
                     if (DataSizing::DataFanPlacement == DataSizing::zoneFanPlacement::zoneBlowThru) {
                         // calculate fan heat to get fan air-side delta T
                         FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, DataAirFlowUsedForSizing);
@@ -1871,7 +1871,7 @@ namespace ReportSizingManager {
                     } else {
                         AutosizeDes = FinalZoneSizing(CurZoneEqNum).CoolDesTemp;
                     }
-                    Real64 fanDeltaT = 0.0;
+                    Nandle fanDeltaT = 0.0;
                     if (DataSizing::DataFanPlacement == DataSizing::zoneFanPlacement::zoneDrawThru) {
                         // calculate fan heat to get fan air-side delta T
                         FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, DataAirFlowUsedForSizing);
@@ -2882,7 +2882,7 @@ namespace ReportSizingManager {
                             AutosizeDes =
                                 OutAirFrac * FinalSysSizing(CurSysNum).PrecoolTemp + (1.0 - OutAirFrac) * FinalSysSizing(CurSysNum).RetTempAtCoolPeak;
                         }
-                        Real64 fanDeltaT = 0.0;
+                        Nandle fanDeltaT = 0.0;
                         if (PrimaryAirSystem(CurSysNum).supFanLocation == DataAirSystems::fanPlacement::BlowThru) {
                             // water coils on main branch have no parent object to set DataFan* variables
                             if (DataFanIndex == -1) {
@@ -2920,7 +2920,7 @@ namespace ReportSizingManager {
                         }
                     } else if (DataDesOutletAirTemp > 0.0) {
                         AutosizeDes = DataDesOutletAirTemp;
-                        Real64 fanDeltaT = 0.0;
+                        Nandle fanDeltaT = 0.0;
                         if (PrimaryAirSystem(CurSysNum).supFanLocation == DataAirSystems::fanPlacement::DrawThru) {
                             // water coils on main branch have no parent object to set DataFan* variables
                             if (DataFanIndex == -1) {
@@ -2943,7 +2943,7 @@ namespace ReportSizingManager {
                         AutosizeDes -= fanDeltaT;
                     } else {
                         AutosizeDes = FinalSysSizing(CurSysNum).CoolSupTemp;
-                        Real64 fanDeltaT = 0.0;
+                        Nandle fanDeltaT = 0.0;
                         if (PrimaryAirSystem(CurSysNum).supFanLocation == DataAirSystems::fanPlacement::DrawThru) {
                             // water coils on main branch have no parent object to set DataFan* variables
                             if (DataFanIndex == -1) {
@@ -3150,7 +3150,7 @@ namespace ReportSizingManager {
                                 AirLoopHVACDOAS::airloopDOAS[DataAirLoop::OutsideAirSys(CurOASysNum).AirLoopDOASNum].m_FanTypeNum ==
                                     SimAirServingZones::Fan_System_Object) {
                                 int FanIndex = AirLoopHVACDOAS::airloopDOAS[DataAirLoop::OutsideAirSys(CurOASysNum).AirLoopDOASNum].m_FanIndex;
-                                Real64 DeltaT = HVACFan::fanObjs[FanIndex]->getFanDesignTemperatureRise();
+                                Nandle DeltaT = HVACFan::fanObjs[FanIndex]->getFanDesignTemperatureRise();
                                 CoilInTemp += DeltaT;
                             }
                             CoilInHumRat = AirLoopHVACDOAS::airloopDOAS[DataAirLoop::OutsideAirSys(CurOASysNum).AirLoopDOASNum].SizingCoolOAHumRat;
@@ -3401,7 +3401,7 @@ namespace ReportSizingManager {
                             AirLoopHVACDOAS::airloopDOAS[DataAirLoop::OutsideAirSys(CurOASysNum).AirLoopDOASNum].m_FanTypeNum ==
                                 SimAirServingZones::Fan_System_Object) {
                             int FanIndex = AirLoopHVACDOAS::airloopDOAS[DataAirLoop::OutsideAirSys(CurOASysNum).AirLoopDOASNum].m_FanIndex;
-                            Real64 DeltaT = HVACFan::fanObjs[FanIndex]->getFanDesignTemperatureRise();
+                            Nandle DeltaT = HVACFan::fanObjs[FanIndex]->getFanDesignTemperatureRise();
                             CoilInTemp += DeltaT;
                         }
                     } else {
@@ -3734,7 +3734,7 @@ namespace ReportSizingManager {
                                           ", DataCapacityUsedForSizing = " + TrimSigDigits(DataCapacityUsedForSizing, 1));
                         ShowContinueError("SizingString = " + SizingString + ", DataFlowUsedForSizing = " + TrimSigDigits(DataFlowUsedForSizing, 1));
                         ShowContinueError("SizingString = " + SizingString +
-                                          ", DataZoneUsedForSizing = " + TrimSigDigits(Real64(DataZoneUsedForSizing), 0));
+                                          ", DataZoneUsedForSizing = " + TrimSigDigits(Nandle(DataZoneUsedForSizing), 0));
                     }
                 } else if (SizingType == ASHRAEMaxSATHeatingSizing) {
                     if (DataCapacityUsedForSizing > 0.0 && DataFlowUsedForSizing > 0.0 && DataZoneUsedForSizing > 0) {
@@ -3747,7 +3747,7 @@ namespace ReportSizingManager {
                                           ", DataCapacityUsedForSizing = " + TrimSigDigits(DataCapacityUsedForSizing, 1));
                         ShowContinueError("SizingString = " + SizingString + ", DataFlowUsedForSizing = " + TrimSigDigits(DataFlowUsedForSizing, 1));
                         ShowContinueError("SizingString = " + SizingString +
-                                          ", DataZoneUsedForSizing = " + TrimSigDigits(Real64(DataZoneUsedForSizing), 0));
+                                          ", DataZoneUsedForSizing = " + TrimSigDigits(Nandle(DataZoneUsedForSizing), 0));
                     }
                 }
             }
@@ -4182,10 +4182,10 @@ namespace ReportSizingManager {
     }
 
     void GetCoilDesFlowT(int SysNum,           // central air system index
-                         Real64 CpAir,         // specific heat to be used in calculations [J/kgC]
-                         Real64 &DesFlow,      // returned design mass flow [kg/s]
-                         Real64 &DesExitTemp,  // returned design coil exit temperature [kg/s]
-                         Real64 &DesExitHumRat // returned design coil exit humidity ratio [kg/kg]
+                         Nandle CpAir,         // specific heat to be used in calculations [J/kgC]
+                         Nandle &DesFlow,      // returned design mass flow [kg/s]
+                         Nandle &DesExitTemp,  // returned design coil exit temperature [kg/s]
+                         Nandle &DesExitHumRat // returned design coil exit humidity ratio [kg/kg]
     )
     {
         // FUNCTION INFORMATION:
@@ -4218,11 +4218,11 @@ namespace ReportSizingManager {
         int DDAtTotPeak(0);
         int TimeStepAtTotPeak(0);
         int TimeStepAtPeak(0);
-        Real64 ZoneCoolLoadSum(0); // sum of zone cooling loads at the peak [W]
-        Real64 AvgZoneTemp(0);     // average zone temperature [C]
-        Real64 AvgSupTemp(0.0);    // average supply temperature for bypass control [C]
-        Real64 TotFlow(0.0);       // total flow for bypass control [m3/s]
-        Real64 MixTemp(0.0);       // mixed air temperature at the peak [C]
+        Nandle ZoneCoolLoadSum(0); // sum of zone cooling loads at the peak [W]
+        Nandle AvgZoneTemp(0);     // average zone temperature [C]
+        Nandle AvgSupTemp(0.0);    // average supply temperature for bypass control [C]
+        Nandle TotFlow(0.0);       // total flow for bypass control [m3/s]
+        Nandle MixTemp(0.0);       // mixed air temperature at the peak [C]
 
         CoolCapCtrl = SysSizInput(SysNum).CoolCapControl;
         PeakLoadType = SysSizInput(SysNum).CoolingPeakLoadType;
@@ -4289,9 +4289,9 @@ namespace ReportSizingManager {
         }
     }
 
-    Real64 setOAFracForZoneEqSizing(Real64 const &desMassFlow, DataSizing::ZoneEqSizingData const &zoneEqSizing)
+    Nandle setOAFracForZoneEqSizing(Nandle const &desMassFlow, DataSizing::ZoneEqSizingData const &zoneEqSizing)
     {
-        Real64 outAirFrac = 0.0;
+        Nandle outAirFrac = 0.0;
         if (desMassFlow <= 0.0) return outAirFrac;
 
         if (zoneEqSizing.ATMixerVolFlow > 0.0) {
@@ -4303,11 +4303,11 @@ namespace ReportSizingManager {
         return outAirFrac;
     }
 
-    Real64 setHeatCoilInletTempForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setHeatCoilInletTempForZoneEqSizing(Nandle const &outAirFrac,
                                                DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                DataSizing::ZoneSizingData const &finalZoneSizing)
     {
-        Real64 coilInTemp = 0.0;
+        Nandle coilInTemp = 0.0;
         if (zoneEqSizing.ATMixerVolFlow > 0.0) {
             // adjust for central DOAS AT mixer mixed inlet temp
             coilInTemp = (1.0 - outAirFrac) * finalZoneSizing.ZoneRetTempAtHeatPeak + outAirFrac * zoneEqSizing.ATMixerHeatPriDryBulb;
@@ -4321,11 +4321,11 @@ namespace ReportSizingManager {
         return coilInTemp;
     }
 
-    Real64 setHeatCoilInletHumRatForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setHeatCoilInletHumRatForZoneEqSizing(Nandle const &outAirFrac,
                                                  DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                  DataSizing::ZoneSizingData const &finalZoneSizing)
     {
-        Real64 coilInHumRat = 0.0;
+        Nandle coilInHumRat = 0.0;
         if (zoneEqSizing.ATMixerVolFlow > 0.0) {
             // adjust for central DOAS AT mixer mixed inlet humrat
             coilInHumRat = (1.0 - outAirFrac) * finalZoneSizing.ZoneHumRatAtHeatPeak + outAirFrac * zoneEqSizing.ATMixerHeatPriHumRat;
@@ -4337,11 +4337,11 @@ namespace ReportSizingManager {
         return coilInHumRat;
     }
 
-    Real64 setCoolCoilInletTempForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setCoolCoilInletTempForZoneEqSizing(Nandle const &outAirFrac,
                                                DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                DataSizing::ZoneSizingData const &finalZoneSizing)
     {
-        Real64 coilInTemp = 0.0;
+        Nandle coilInTemp = 0.0;
         if (zoneEqSizing.ATMixerVolFlow > 0.0) {
             // adjust for central DOAS AT mixer mixed inlet temp
             coilInTemp = (1.0 - outAirFrac) * finalZoneSizing.ZoneRetTempAtCoolPeak + outAirFrac * zoneEqSizing.ATMixerCoolPriDryBulb;
@@ -4355,11 +4355,11 @@ namespace ReportSizingManager {
         return coilInTemp;
     }
 
-    Real64 setCoolCoilInletHumRatForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setCoolCoilInletHumRatForZoneEqSizing(Nandle const &outAirFrac,
                                                  DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                  DataSizing::ZoneSizingData const &finalZoneSizing)
     {
-        Real64 coilInHumRat = 0.0;
+        Nandle coilInHumRat = 0.0;
         if (zoneEqSizing.ATMixerVolFlow > 0.0) {
             // adjust for central DOAS AT mixer mixed inlet humrat
             coilInHumRat = (1.0 - outAirFrac) * finalZoneSizing.ZoneHumRatAtCoolPeak + outAirFrac * zoneEqSizing.ATMixerCoolPriHumRat;

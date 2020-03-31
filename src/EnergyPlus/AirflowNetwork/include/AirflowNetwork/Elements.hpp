@@ -156,10 +156,10 @@ namespace AirflowNetwork {
     extern int AirflowNetworkNumOfZones;    // The number of zones for multizone calculation
 
     extern bool RollBackFlag;                         // Roll back flag when system time step down shifting
-    extern Array1D<Real64> ANZT;                      // Local zone air temperature for roll back use
-    extern Array1D<Real64> ANZW;                      // Local zone air humidity ratio for roll back use
-    extern Array1D<Real64> ANCO;                      // Local zone air CO2 for roll back use
-    extern Array1D<Real64> ANGC;                      // Local zone air generic contaminant for roll back use
+    extern Array1D<Nandle> ANZT;                      // Local zone air temperature for roll back use
+    extern Array1D<Nandle> ANZW;                      // Local zone air humidity ratio for roll back use
+    extern Array1D<Nandle> ANCO;                      // Local zone air CO2 for roll back use
+    extern Array1D<Nandle> ANGC;                      // Local zone air generic contaminant for roll back use
     extern int AirflowNetworkNumOfExhFan;             // Number of zone exhaust fans
     extern Array1D_bool AirflowNetworkZoneExhaustFan; // Logical to use zone exhaust fans
     extern bool AirflowNetworkFanActivated;           // Supply fan activation flag
@@ -167,11 +167,11 @@ namespace AirflowNetwork {
     // Multispeed HP only
     extern int MultiSpeedHPIndicator; // Indicator for multispeed heat pump use
     // Addiitonal airflow needed for an VAV fan to compensate the leakage losses and supply pathway pressure losses [kg/s]
-    extern Real64 VAVTerminalRatio;       // The terminal flow ratio when a supply VAV fan reach its max flow rate
+    extern Nandle VAVTerminalRatio;       // The terminal flow ratio when a supply VAV fan reach its max flow rate
     extern bool VAVSystem;                // This flag is used to represent a VAV system
-    extern Real64 ExhaustFanMassFlowRate; // Exhaust fan flow rate used in PressureStat
+    extern Nandle ExhaustFanMassFlowRate; // Exhaust fan flow rate used in PressureStat
     extern int PressureSetFlag;           // PressureSet flag
-    extern Real64 ReliefMassFlowRate;     // OA Mixer relief node flow rate used in PressureStat
+    extern Nandle ReliefMassFlowRate;     // OA Mixer relief node flow rate used in PressureStat
 
     // Types
 
@@ -195,13 +195,13 @@ namespace AirflowNetwork {
         int MaxIteration;         // Maximum number of iteration, default 500
         int InitFlag;             // Initialization flag
         Solver solver;
-        Real64 RelTol;               // Relative airflow convergence
-        Real64 AbsTol;               // Absolute airflow convergence
-        Real64 ConvLimit;            // Convergence acceleration limit
-        Real64 MaxPressure;          // Maximum pressure change in an element [Pa]
-        Real64 Azimuth;              // Azimuth Angle of Long Axis of Building, not used at WPCCntr = "INPUT"
-        Real64 AspectRatio;          // Ratio of Building Width Along Short Axis to Width Along Long Axis
-        Real64 DiffP;                // Minimum pressure difference
+        Nandle RelTol;               // Relative airflow convergence
+        Nandle AbsTol;               // Absolute airflow convergence
+        Nandle ConvLimit;            // Convergence acceleration limit
+        Nandle MaxPressure;          // Maximum pressure change in an element [Pa]
+        Nandle Azimuth;              // Azimuth Angle of Long Axis of Building, not used at WPCCntr = "INPUT"
+        Nandle AspectRatio;          // Ratio of Building Width Along Short Axis to Width Along Long Axis
+        Nandle DiffP;                // Minimum pressure difference
         int ExtLargeOpeningErrCount; // Exterior large opening error count during HVAC system operation
         int ExtLargeOpeningErrIndex; // Exterior large opening error index during HVAC system operation
         int OpenFactorErrCount;      // Large opening error count at Open factor > 1.0
@@ -227,13 +227,13 @@ namespace AirflowNetwork {
                                std::string const &HeightOption, // Height Selection: "ExternalNode" or "OpeningHeight" at WPCCntr = "INPUT"
                                int const MaxIteration,          // Maximum number of iteration, default 500
                                int const InitFlag,              // Initialization flag
-                               Real64 const RelTol,             // Relative airflow convergence
-                               Real64 const AbsTol,             // Absolute airflow convergence
-                               Real64 const ConvLimit,          // Convergence acceleration limit
-                               Real64 const MaxPressure,        // Maximum pressure change in an element [Pa]
-                               Real64 const Azimuth,            // Azimuth Angle of Long Axis of Building, not used at WPCCntr = "INPUT"
-                               Real64 const AspectRatio,        // Ratio of Building Width Along Short Axis to Width Along Long Axis
-                               Real64 const DiffP,              // Minimum pressure difference
+                               Nandle const RelTol,             // Relative airflow convergence
+                               Nandle const AbsTol,             // Absolute airflow convergence
+                               Nandle const ConvLimit,          // Convergence acceleration limit
+                               Nandle const MaxPressure,        // Maximum pressure change in an element [Pa]
+                               Nandle const Azimuth,            // Azimuth Angle of Long Axis of Building, not used at WPCCntr = "INPUT"
+                               Nandle const AspectRatio,        // Ratio of Building Width Along Short Axis to Width Along Long Axis
+                               Nandle const DiffP,              // Minimum pressure difference
                                int const ExtLargeOpeningErrCount, // Exterior large opening error count during HVAC system operation
                                int const ExtLargeOpeningErrIndex, // Exterior large opening error index during HVAC system operation
                                int const OpenFactorErrCount,      // Large opening error count at Open factor > 1.0
@@ -257,16 +257,16 @@ namespace AirflowNetwork {
         std::string ZoneName;    // Name of Associated EnergyPlus Thermal Zone
         std::string VentControl; // Ventilation Control Mode: "TEMPERATURE", "ENTHALPIC", "CONSTANT", or "NOVENT"
         std::string VentSchName; // Name of ventilation temperature control schedule
-        Real64 Height;           // Nodal height
-        Real64 OpenFactor;       // Limit Value on Multiplier for Modulating Venting Open Factor,
+        Nandle Height;           // Nodal height
+        Nandle OpenFactor;       // Limit Value on Multiplier for Modulating Venting Open Factor,
         // Not applicable if Vent Control Mode = CONSTANT or NOVENT
-        Real64 LowValueTemp; // Lower Value on Inside/Outside Temperature Difference for
+        Nandle LowValueTemp; // Lower Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with temp control
-        Real64 UpValueTemp; // Upper Value on Inside/Outside Temperature Difference for
+        Nandle UpValueTemp; // Upper Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with temp control
-        Real64 LowValueEnth; // Lower Value on Inside/Outside Temperature Difference for
+        Nandle LowValueEnth; // Lower Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with Enthalpic control
-        Real64 UpValueEnth; // Upper Value on Inside/Outside Temperature Difference for
+        Nandle UpValueEnth; // Upper Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with Enthalpic control
         int ZoneNum;                                // Zone number associated with ZoneName
         int VentSchNum;                             // Zone ventilation schedule number associated with ventilation schedule name
@@ -274,7 +274,7 @@ namespace AirflowNetwork {
         std::string VentingSchName;                 // Name of ventilation temperature control schedule
         int VentingSchNum;                          // Ventilation schedule number
         std::string SingleSidedCpType;              // Type of calculation method for single sided wind pressure coefficients
-        Real64 BuildWidth;                          // The width of the building along the facade that contains this zone.
+        Nandle BuildWidth;                          // The width of the building along the facade that contains this zone.
         int ASH55PeopleInd;                         // Index of people object with ASH55 comfort calcs for ventilation control
         int CEN15251PeopleInd;                      // Index of people object with CEN15251 comfort calcs for ventilation control
         std::string OccupantVentilationControlName; // Occupant ventilation control name
@@ -296,26 +296,26 @@ namespace AirflowNetwork {
         std::string SurfName;         // Name of Associated EnergyPlus surface
         std::string OpeningName;      // Name of opening component, either simple or detailed large opening
         std::string ExternalNodeName; // Name of external node, but not used at WPC="INPUT"
-        Real64 Factor;                // Crack Actual Value or Window Open Factor for Ventilation
+        Nandle Factor;                // Crack Actual Value or Window Open Factor for Ventilation
         int SurfNum;                  // Surface number
         std::array<int, 2> NodeNums;  // Positive: Zone numbers; 0: External
-        Real64 OpenFactor;            // Surface factor
-        Real64 OpenFactorLast;        // Surface factor at previous time step
+        Nandle OpenFactor;            // Surface factor
+        Nandle OpenFactorLast;        // Surface factor at previous time step
         bool EMSOpenFactorActuated;   // True if EMS actuation is on
-        Real64 EMSOpenFactor;         // Surface factor value from EMS for override
-        Real64 Height;                // Surface Height
-        Real64 Width;                 // Surface width
-        Real64 CHeight;               // Surface central height in z direction
+        Nandle EMSOpenFactor;         // Surface factor value from EMS for override
+        Nandle Height;                // Surface Height
+        Nandle Width;                 // Surface width
+        Nandle CHeight;               // Surface central height in z direction
         std::string VentControl;      // Ventilation Control Mode: TEMPERATURE, ENTHALPIC, CONSTANT, ZONELEVEL or NOVENT
         std::string VentSchName;      // ! Name of ventilation temperature control schedule
-        Real64 ModulateFactor;        // Limit Value on Multiplier for Modulating Venting Open Factor
-        Real64 LowValueTemp;          // Lower Value on Inside/Outside Temperature Difference for
+        Nandle ModulateFactor;        // Limit Value on Multiplier for Modulating Venting Open Factor
+        Nandle LowValueTemp;          // Lower Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with temp control
-        Real64 UpValueTemp; // Upper Value on Inside/Outside Temperature Difference for
+        Nandle UpValueTemp; // Upper Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with temp control
-        Real64 LowValueEnth; // Lower Value on Inside/Outside Temperature Difference for
+        Nandle LowValueEnth; // Lower Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with Enthalpic control
-        Real64 UpValueEnth; // Upper Value on Inside/Outside Temperature Difference for
+        Nandle UpValueEnth; // Upper Value on Inside/Outside Temperature Difference for
         // Modulating the Venting Open Factor with Enthalpic control
         std::string VentingSchName;                 // Name of ventilation temperature control schedule
         int VentSchNum;                             // Zone ventilation schedule number associated with ventilation schedule name
@@ -327,23 +327,23 @@ namespace AirflowNetwork {
         int ExtLargeOpeningErrIndex;                // Exterior large opening error index during HVAC system operation
         int OpenFactorErrCount;                     // Large opening error count at Open factor > 1.0
         int OpenFactorErrIndex;                     // Large opening error error index at Open factor > 1.0
-        Real64 Multiplier;                          // Window multiplier
+        Nandle Multiplier;                          // Window multiplier
         bool HybridVentClose;                       // Hybrid ventilation window close control logical
         bool HybridCtrlGlobal;                      // Hybrid ventilation global control logical
         bool HybridCtrlMaster;                      // Hybrid ventilation global control master
-        Real64 WindModifier;                        // Wind modifier from hybrid ventilation control
+        Nandle WindModifier;                        // Wind modifier from hybrid ventilation control
         std::string OccupantVentilationControlName; // Occupant ventilation control name
         int OccupantVentilationControlNum;          // Occupant ventilation control number
         int OpeningStatus;                          // Open status at current time step
         int PrevOpeningstatus;                      // Open status at previous time step
-        Real64 CloseElapsedTime;                    // Elapsed time during closing (min)
-        Real64 OpenElapsedTime;                     // Elapsed time during closing (min)
+        Nandle CloseElapsedTime;                    // Elapsed time during closing (min)
+        Nandle OpenElapsedTime;                     // Elapsed time during closing (min)
         int ClosingProbStatus;                      // Closing probability status
         int OpeningProbStatus;                      // Opening probability status
         bool RAFNflag;                              // True if this surface is used in AirflowNetwork:IntraZone:Linkage
         bool NonRectangular;                        // True if this surface is not rectangular
         int EquivRecMethod;             // Equivalent Rectangle Method input: 1 Height; 2 Base surface aspect ratio; 3 User input aspect ratio
-        Real64 EquivRecUserAspectRatio; // user input value when EquivRecMethod = 3
+        Nandle EquivRecUserAspectRatio; // user input value when EquivRecMethod = 3
 
         // Default Constructor
         MultizoneSurfaceProp()
@@ -366,34 +366,34 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;     // Name of large detailed opening component
-        Real64 FlowCoef;      // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
-        Real64 FlowExpo;      // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
+        Nandle FlowCoef;      // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
+        Nandle FlowExpo;      // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
         std::string TypeName; // Name of Large vertical opening type
         int LVOType;          // Large vertical opening type number
-        Real64 LVOValue;      // Extra crack length for LVO type 1 with multiple operable parts,
+        Nandle LVOValue;      // Extra crack length for LVO type 1 with multiple operable parts,
         // or Height of pivoting axis for LVO type 2
         int NumFac;         // Number of Opening Factor Values
-        Real64 OpenFac1;    // Opening factor #1
-        Real64 DischCoeff1; // Discharge coefficient for opening factor #1
-        Real64 WidthFac1;   // Width factor for for Opening factor #1
-        Real64 HeightFac1;  // Height factor for opening factor #1
-        Real64 StartHFac1;  // Start height factor for opening factor #1
-        Real64 OpenFac2;    // Opening factor #2
-        Real64 DischCoeff2; // Discharge coefficient for opening factor #2
-        Real64 WidthFac2;   // Width factor for for Opening factor #2
-        Real64 HeightFac2;  // Height factor for opening factor #2
-        Real64 StartHFac2;  // Start height factor for opening factor #2
-        Real64 OpenFac3;    // Opening factor #3
-        Real64 DischCoeff3; // Discharge coefficient for opening factor #3
-        Real64 WidthFac3;   // Width factor for for Opening factor #3
-        Real64 HeightFac3;  // Height factor for opening factor #3
-        Real64 StartHFac3;  // Start height factor for opening factor #3
-        Real64 OpenFac4;    // Opening factor #4
-        Real64 DischCoeff4; // Discharge coefficient for opening factor #4
-        Real64 WidthFac4;   // Width factor for for Opening factor #4
-        Real64 HeightFac4;  // Height factor for opening factor #4
-        Real64 StartHFac4;  // Start height factor for opening factor #4
-        Real64 OpenFactor;  // Opening factor
+        Nandle OpenFac1;    // Opening factor #1
+        Nandle DischCoeff1; // Discharge coefficient for opening factor #1
+        Nandle WidthFac1;   // Width factor for for Opening factor #1
+        Nandle HeightFac1;  // Height factor for opening factor #1
+        Nandle StartHFac1;  // Start height factor for opening factor #1
+        Nandle OpenFac2;    // Opening factor #2
+        Nandle DischCoeff2; // Discharge coefficient for opening factor #2
+        Nandle WidthFac2;   // Width factor for for Opening factor #2
+        Nandle HeightFac2;  // Height factor for opening factor #2
+        Nandle StartHFac2;  // Start height factor for opening factor #2
+        Nandle OpenFac3;    // Opening factor #3
+        Nandle DischCoeff3; // Discharge coefficient for opening factor #3
+        Nandle WidthFac3;   // Width factor for for Opening factor #3
+        Nandle HeightFac3;  // Height factor for opening factor #3
+        Nandle StartHFac3;  // Start height factor for opening factor #3
+        Nandle OpenFac4;    // Opening factor #4
+        Nandle DischCoeff4; // Discharge coefficient for opening factor #4
+        Nandle WidthFac4;   // Width factor for for Opening factor #4
+        Nandle HeightFac4;  // Height factor for opening factor #4
+        Nandle StartHFac4;  // Start height factor for opening factor #4
+        Nandle OpenFactor;  // Opening factor
         int WidthErrCount;  // Width error count
         int WidthErrIndex;  // Width error index
         int HeightErrCount; // Height error count
@@ -409,12 +409,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const EP_UNUSED(i),     // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -422,11 +422,11 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;  // Name of large simple opening component
-        Real64 FlowCoef;   // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
-        Real64 FlowExpo;   // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
-        Real64 MinRhoDiff; // Minimum density difference for two-way flow
-        Real64 DischCoeff; // Discharge coefficient at full opening
-        Real64 OpenFactor; // Opening factor
+        Nandle FlowCoef;   // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
+        Nandle FlowExpo;   // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
+        Nandle MinRhoDiff; // Minimum density difference for two-way flow
+        Nandle DischCoeff; // Discharge coefficient at full opening
+        Nandle OpenFactor; // Opening factor
 
         // Default Constructor
         SimpleOpening() : FlowCoef(0.0), FlowExpo(0.0), MinRhoDiff(0.0), DischCoeff(0.0), OpenFactor(0.0)
@@ -434,12 +434,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -447,10 +447,10 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;  // Name of large horizontal opening component
-        Real64 FlowCoef;   // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
-        Real64 FlowExpo;   // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
-        Real64 Slope;      // Sloping plane angle
-        Real64 DischCoeff; // Discharge coefficient at full opening
+        Nandle FlowCoef;   // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
+        Nandle FlowExpo;   // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
+        Nandle Slope;      // Sloping plane angle
+        Nandle DischCoeff; // Discharge coefficient at full opening
 
         // Default Constructor
         HorizontalOpening() : FlowCoef(0.0), FlowExpo(0.0), Slope(0.0), DischCoeff(0.0)
@@ -458,12 +458,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -471,16 +471,16 @@ namespace AirflowNetwork {
     {
         // Members
         std::string name;     // Name of standard conditions component
-        Real64 temperature;   // Standard temperature for crack data
-        Real64 pressure;      // Standard barometric pressure for crack data
-        Real64 humidityRatio; // Standard humidity ratio for crack data
+        Nandle temperature;   // Standard temperature for crack data
+        Nandle pressure;      // Standard barometric pressure for crack data
+        Nandle humidityRatio; // Standard humidity ratio for crack data
 
-        ReferenceConditions(const std::string &name, Real64 temperature = 20.0, Real64 pressure = 101325.0, Real64 humidityRatio = 0.0)
+        ReferenceConditions(const std::string &name, Nandle temperature = 20.0, Nandle pressure = 101325.0, Nandle humidityRatio = 0.0)
             : name(name), temperature(temperature), pressure(pressure), humidityRatio(humidityRatio)
         {
         }
 
-        // ReferenceConditions(Real64 temperature = 20.0, Real64 pressure = 101325.0, Real64 humidityRatio = 0.0)
+        // ReferenceConditions(Nandle temperature = 20.0, Nandle pressure = 101325.0, Nandle humidityRatio = 0.0)
         //    : temperature(temperature), pressure(pressure), humidityRatio(humidityRatio)
         //{
         //}
@@ -491,11 +491,11 @@ namespace AirflowNetwork {
         // Members
         std::string Name; // Name of crack component
         // std::string ExternalNodeNames; // Name of external node.Not required for internal surface
-        Real64 FlowCoef;  // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
-        Real64 FlowExpo;  // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
-        Real64 StandardT; // Standard temperature for crack data
-        Real64 StandardP; // Standard barometric pressure for crack data
-        Real64 StandardW; // Standard humidity ratio for crack data
+        Nandle FlowCoef;  // Air Mass Flow Coefficient When Window or Door Is Closed [kg/s at 1Pa]
+        Nandle FlowExpo;  // Air Mass Flow exponent When Window or Door Is Closed [dimensionless]
+        Nandle StandardT; // Standard temperature for crack data
+        Nandle StandardP; // Standard barometric pressure for crack data
+        Nandle StandardW; // Standard humidity ratio for crack data
 
         // Default Constructor
         SurfaceCrack() : FlowCoef(0.0), FlowExpo(0.0), StandardT(0.0), StandardP(0.0), StandardW(0.0)
@@ -503,12 +503,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -516,12 +516,12 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;   // Name of effective leakage area component
-        Real64 ELA;         // Effective leakage area
-        Real64 DischCoeff;  // Discharge coefficient
-        Real64 RefDeltaP;   // Reference pressure difference
-        Real64 FlowExpo;    // Air Mass Flow exponent When Window or Door Is Closed
-        Real64 TestDeltaP;  // Testing pressure difference
-        Real64 TestDisCoef; // Testing Discharge coefficient
+        Nandle ELA;         // Effective leakage area
+        Nandle DischCoeff;  // Discharge coefficient
+        Nandle RefDeltaP;   // Reference pressure difference
+        Nandle FlowExpo;    // Air Mass Flow exponent When Window or Door Is Closed
+        Nandle TestDeltaP;  // Testing pressure difference
+        Nandle TestDisCoef; // Testing Discharge coefficient
 
         // Default Constructor
         EffectiveLeakageArea() : ELA(0.0), DischCoeff(0.0), RefDeltaP(0.0), FlowExpo(0.0), TestDeltaP(0.0), TestDisCoef(0.0)
@@ -529,12 +529,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -542,13 +542,13 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name; // Name of exhaust fan component
-        Real64 FlowRate;  // mass flow rate
+        Nandle FlowRate;  // mass flow rate
         int SchedPtr;     // Schedule pointer
-        Real64 FlowCoef;  // Air Mass Flow Coefficient [kg/s at 1Pa]
-        Real64 FlowExpo;  // Air Mass Flow exponent [dimensionless]
-        Real64 StandardT; // Standard temperature for crack data
-        Real64 StandardP; // Standard barometric pressure for crack data
-        Real64 StandardW; // Standard humidity ratio for crack data
+        Nandle FlowCoef;  // Air Mass Flow Coefficient [kg/s at 1Pa]
+        Nandle FlowExpo;  // Air Mass Flow exponent [dimensionless]
+        Nandle StandardT; // Standard temperature for crack data
+        Nandle StandardP; // Standard barometric pressure for crack data
+        Nandle StandardW; // Standard humidity ratio for crack data
         int InletNode;    // Inlet node number
         int OutletNode;   // Outlet node number
         int EPlusZoneNum; // Zone number
@@ -562,12 +562,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -575,8 +575,8 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;      // Name of external node
-        Real64 azimuth;        // Azimuthal angle of the associated surface
-        Real64 height;         // Nodal height
+        Nandle azimuth;        // Azimuthal angle of the associated surface
+        Nandle height;         // Nodal height
         int ExtNum;            // External node number
         int OutAirNodeNum;     // Outdoor air node number
         int facadeNum;         // Facade number
@@ -594,7 +594,7 @@ namespace AirflowNetwork {
     struct DeltaCpProp
     {
         // Members
-        Array1D<Real64> WindDir; // Wind direction
+        Array1D<Nandle> WindDir; // Wind direction
 
         // Default Constructor
         DeltaCpProp()
@@ -607,7 +607,7 @@ namespace AirflowNetwork {
         // Members
         std::string Name;         // Name of node
         std::string RAFNNodeName; // RoomAir model node name
-        Real64 Height;            // Nodal height
+        Nandle Height;            // Nodal height
         int RAFNNodeNum;          // RoomAir model node number
         int ZoneNum;              // Zone number
         int AFNZoneNum;           // MultiZone number
@@ -623,7 +623,7 @@ namespace AirflowNetwork {
         // Members
         std::string Name;                     // Provide a unique linkage name
         std::array<std::string, 2> NodeNames; // Names of nodes (limited to 2)
-        std::array<Real64, 2> NodeHeights;    // Node heights
+        std::array<Nandle, 2> NodeHeights;    // Node heights
         std::string CompName;                 // Name of element
         int CompNum;                          // Element Number
         std::array<int, 2> NodeNums;          // Node numbers
@@ -652,7 +652,7 @@ namespace AirflowNetwork {
         std::string Name;      // Name of node
         std::string EPlusName; // EnergyPlus node name
         std::string EPlusType; // EnergyPlus node type
-        Real64 Height;         // Nodal height
+        Nandle Height;         // Nodal height
         int EPlusNodeNum;      // EPlus node number
         int AirLoopNum;        // AirLoop number
 
@@ -666,8 +666,8 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name; // Name of component leak
-        Real64 FlowCoef;  // Air Mass Flow Coefficient [kg/s at 1Pa]
-        Real64 FlowExpo;  // Air Mass Flow exponent [dimensionless]
+        Nandle FlowCoef;  // Air Mass Flow Coefficient [kg/s at 1Pa]
+        Nandle FlowExpo;  // Air Mass Flow exponent [dimensionless]
 
         // Default Constructor
         DuctLeak() : FlowCoef(0.0), FlowExpo(0.0)
@@ -675,12 +675,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -688,10 +688,10 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name; // Name of component leak
-        Real64 ELR;       // Value of effective leakage ratio
-        Real64 FlowRate;  // Maximum airflow rate
-        Real64 RefPres;   // Reference pressure difference
-        Real64 FlowExpo;  // Air Mass Flow exponent
+        Nandle ELR;       // Value of effective leakage ratio
+        Nandle FlowRate;  // Maximum airflow rate
+        Nandle RefPres;   // Reference pressure difference
+        Nandle FlowExpo;  // Air Mass Flow exponent
 
         // Default Constructor
         EffectiveLeakageRatio() : ELR(0.0), FlowRate(0.0), RefPres(0.0), FlowExpo(0.0)
@@ -699,12 +699,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const EP_UNUSED(i),     // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -712,24 +712,24 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;         // Name of duct component
-        Real64 L;                 // Duct length [m]
-        Real64 hydraulicDiameter; // Hydraulic diameter [m]
-        Real64 A;                 // Cross section area [m2]
-        Real64 roughness;         // Surface roughness [m]
-        Real64 TurDynCoef;        // Turbulent dynamic loss coefficient
-        Real64 UThermConduct;     // Conduction heat transmittance [W/m2-K]
-        Real64 UMoisture;         // Overall moisture transmittance [kg/m2]
-        Real64 InsideConvCoeff;   // Inside convection coefficient [W/m2-K]
-        Real64 OutsideConvCoeff;  // Outside convection coefficient [W/m2-K]
-        Real64 MThermal;          // Thermal capacity [J/K]
-        Real64 MMoisture;         // Moisture capacity [kg]
-        Real64 LamDynCoef;        // Laminar dynamic loss coefficient
-        Real64 LamFriCoef;        // Laminar friction loss coefficient
-        Real64 InitLamCoef;       // Coefficient of linear initialization
-        Real64 RelRough;          // e/D: relative roughness,
-        Real64 RelL;              // L/D: relative length,
-        Real64 g;                 // 1/sqrt(Darcy friction factor),
-        Real64 A1;                // 1.14 - 0.868589*ln(e/D),
+        Nandle L;                 // Duct length [m]
+        Nandle hydraulicDiameter; // Hydraulic diameter [m]
+        Nandle A;                 // Cross section area [m2]
+        Nandle roughness;         // Surface roughness [m]
+        Nandle TurDynCoef;        // Turbulent dynamic loss coefficient
+        Nandle UThermConduct;     // Conduction heat transmittance [W/m2-K]
+        Nandle UMoisture;         // Overall moisture transmittance [kg/m2]
+        Nandle InsideConvCoeff;   // Inside convection coefficient [W/m2-K]
+        Nandle OutsideConvCoeff;  // Outside convection coefficient [W/m2-K]
+        Nandle MThermal;          // Thermal capacity [J/K]
+        Nandle MMoisture;         // Moisture capacity [kg]
+        Nandle LamDynCoef;        // Laminar dynamic loss coefficient
+        Nandle LamFriCoef;        // Laminar friction loss coefficient
+        Nandle InitLamCoef;       // Coefficient of linear initialization
+        Nandle RelRough;          // e/D: relative roughness,
+        Nandle RelL;              // L/D: relative length,
+        Nandle g;                 // 1/sqrt(Darcy friction factor),
+        Nandle A1;                // 1.14 - 0.868589*ln(e/D),
 
         // Default Constructor
         Duct()
@@ -740,12 +740,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -753,16 +753,16 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name; // Name of damper component
-        Real64 LTP;       // Value for laminar turbulent transition
-        Real64 LamFlow;   // Laminar flow coefficient
-        Real64 TurFlow;   // Turbulent flow coefficient
-        Real64 FlowExpo;  // Air Mass Flow exponent
-        Real64 FlowMin;   // Minimum control air mass rate
-        Real64 FlowMax;   // Maximum control air mass rate
-        Real64 A0;        // First polynomial coefficient of the control variable (constant coefficient)
-        Real64 A1;        // Second polynomial coefficient of the control variable (linear coefficient)
-        Real64 A2;        // Third polynomial coefficient of the control variable (quadratic coefficient)
-        Real64 A3;        // Fourth polynomial coefficient of the control variable (cubic coefficient)
+        Nandle LTP;       // Value for laminar turbulent transition
+        Nandle LamFlow;   // Laminar flow coefficient
+        Nandle TurFlow;   // Turbulent flow coefficient
+        Nandle FlowExpo;  // Air Mass Flow exponent
+        Nandle FlowMin;   // Minimum control air mass rate
+        Nandle FlowMax;   // Maximum control air mass rate
+        Nandle A0;        // First polynomial coefficient of the control variable (constant coefficient)
+        Nandle A1;        // Second polynomial coefficient of the control variable (linear coefficient)
+        Nandle A2;        // Third polynomial coefficient of the control variable (quadratic coefficient)
+        Nandle A3;        // Fourth polynomial coefficient of the control variable (cubic coefficient)
 
         // Default Constructor
         Damper() : LTP(0.0), LamFlow(0.0), TurFlow(0.0), FlowExpo(0.0), FlowMin(0.0), FlowMax(0.0), A0(0.0), A1(0.0), A2(0.0), A3(0.0)
@@ -770,12 +770,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -783,13 +783,13 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;          // Name of detailed fan component
-        Real64 FlowRate;           // Air volume flow rate
-        Real64 Ctrl;               // Control ratio
+        Nandle FlowRate;           // Air volume flow rate
+        Nandle Ctrl;               // Control ratio
         int FanTypeNum;            // Fan type: Constant volume or ONOFF
         int FanIndex;              // Fan index
         int InletNode;             // Inlet node number
         int OutletNode;            // Outlet node number
-        Real64 MaxAirMassFlowRate; // Max Specified MAss Flow Rate of Damper [kg/s]
+        Nandle MaxAirMassFlowRate; // Max Specified MAss Flow Rate of Damper [kg/s]
         int AirLoopNum;            // Air loop number
         bool FanModelFlag;         // True, this fan is FAN:SYSTEMMODEL
 
@@ -800,12 +800,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -813,14 +813,14 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name;      // Name of constant volume fan component
-        Real64 FlowCoef;       // Coefficient for linear initialization [kg/s at 1Pa]
-        Real64 FlowExpo;       // Turbulent flow coefficient [dimensionless]
-        Real64 RhoAir;         // Reference air density
-        Real64 Qfree;          // Free delivery flow at P=0
-        Real64 Pshut;          // Shutoff pressure at Q=0
-        Real64 TranRat;        // Flow coefficient at laminar/turbulent transition
+        Nandle FlowCoef;       // Coefficient for linear initialization [kg/s at 1Pa]
+        Nandle FlowExpo;       // Turbulent flow coefficient [dimensionless]
+        Nandle RhoAir;         // Reference air density
+        Nandle Qfree;          // Free delivery flow at P=0
+        Nandle Pshut;          // Shutoff pressure at Q=0
+        Nandle TranRat;        // Flow coefficient at laminar/turbulent transition
         int n;                 // Number of ranges for fan performance curve
-        Array1D<Real64> Coeff; // Coefficients of fan performance curve.
+        Array1D<Nandle> Coeff; // Coefficients of fan performance curve.
         // Each range has a min flow rate and 4 coefficients
 
         // Default Constructor
@@ -829,12 +829,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -843,8 +843,8 @@ namespace AirflowNetwork {
         // Members
         std::string Name;         // Name of coil component
         std::string EPlusType;    // EnergyPlus coil type
-        Real64 L;                 // Air path length
-        Real64 hydraulicDiameter; // Air path hydraulic diameter
+        Nandle L;                 // Air path length
+        Nandle hydraulicDiameter; // Air path hydraulic diameter
         int AirLoopNum;           // AirLoop number
 
         // Default Constructor
@@ -853,12 +853,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -867,8 +867,8 @@ namespace AirflowNetwork {
         // Members
         std::string Name;         // Name of coil component
         std::string EPlusType;    // EnergyPlus coil type
-        Real64 L;                 // Air path length
-        Real64 hydraulicDiameter; // Air path hydraulic diameter
+        Nandle L;                 // Air path length
+        Nandle hydraulicDiameter; // Air path hydraulic diameter
         bool CoilParentExists;    // Is a coil component
 
         // Default Constructor
@@ -877,12 +877,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -891,8 +891,8 @@ namespace AirflowNetwork {
         // Members
         std::string Name;         // Name of coil component
         std::string EPlusType;    // EnergyPlus coil type
-        Real64 L;                 // Air path length
-        Real64 hydraulicDiameter; // Air path hydraulic diameter
+        Nandle L;                 // Air path length
+        Nandle hydraulicDiameter; // Air path hydraulic diameter
         int DamperInletNode;      // Damper inlet node number
         int DamperOutletNode;     // Damper outlet node number
         int AirLoopNum;           // AirLoop number
@@ -903,12 +903,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -916,8 +916,8 @@ namespace AirflowNetwork {
     {
         // Members
         std::string Name; // Name of constant pressure drop component
-        Real64 A;         // cross section area
-        Real64 DP;        // Pressure difference across the component
+        Nandle A;         // cross section area
+        Nandle DP;        // Pressure difference across the component
 
         // Default Constructor
         ConstantPressureDrop() : A(0.0), DP(0.0)
@@ -925,12 +925,12 @@ namespace AirflowNetwork {
         }
 
         int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                      const Real64 PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                      const Nandle PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                       int const i,                // Linkage number
                       const AirProperties &propN, // Node 1 properties
                       const AirProperties &propM, // Node 2 properties
-                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -952,7 +952,7 @@ namespace AirflowNetwork {
         std::string Name;      // Provide a unique node name
         std::string NodeType;  // Provide node type "External", "Thermal Zone" or "Other"
         std::string EPlusNode; // EnergyPlus node name
-        Real64 NodeHeight;     // Node height [m]
+        Nandle NodeHeight;     // Node height [m]
         int NodeNum;           // Node number
         int NodeTypeNum;       // Node type with integer number
         // 0: Calculated, 1: Given pressure;
@@ -1026,7 +1026,7 @@ namespace AirflowNetwork {
         int AirLoopNum;                // Air loop number
         int OANodeNum;                 // outdoor air node number
         bool bypass;                   // Can not perform pressure control as true
-        Real64 PresCtrlMassRate;
+        Nandle PresCtrlMassRate;
 
         // Default Constructor
         PressureControllerProp()
@@ -1041,11 +1041,11 @@ namespace AirflowNetwork {
         // Members
         std::string Name; // Name of exhaust fan component
         int SchedPtr;     // Schedule pointer
-        Real64 FlowCoef;  // Air Mass Flow Coefficient [kg/s at 1Pa]
-        Real64 FlowExpo;  // Air Mass Flow exponent [dimensionless]
-        Real64 StandardT; // Standard temperature for crack data [C]
-        Real64 StandardP; // Standard barometric pressure for crack data [Pa]
-        Real64 StandardW; // Standard humidity ratio for crack data [kg/kg]
+        Nandle FlowCoef;  // Air Mass Flow Coefficient [kg/s at 1Pa]
+        Nandle FlowExpo;  // Air Mass Flow exponent [dimensionless]
+        Nandle StandardT; // Standard temperature for crack data [C]
+        Nandle StandardP; // Standard barometric pressure for crack data [Pa]
+        Nandle StandardW; // Standard humidity ratio for crack data [kg/kg]
         int InletNode;    // Inlet node number
         int OutletNode;   // Outlet node number
         int OAMixerNum;   // OA Mixer number
@@ -1063,12 +1063,12 @@ namespace AirflowNetwork {
         }
 
         virtual int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                              const Real64 PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                              const Nandle PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                               int const i,                // Linkage number
                               const AirProperties &propN, // Node 1 properties
                               const AirProperties &propM, // Node 2 properties
-                              std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                              std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                              std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                              std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
@@ -1081,27 +1081,27 @@ namespace AirflowNetwork {
         }
 
         virtual int calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                              const Real64 PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                              const Nandle PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                               int const i,                // Linkage number
                               const AirProperties &propN, // Node 1 properties
                               const AirProperties &propM, // Node 2 properties
-                              std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                              std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                              std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                              std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
         );
     };
 
     struct AirflowNetworkNodeSimuData // Node variable for simulation
     {
         // Members
-        Real64 TZ;       // Temperature [C]
-        Real64 WZ;       // Humidity ratio [kg/kg]
-        Real64 PZ;       // Pressure [Pa]
-        Real64 CO2Z;     // CO2 [ppm]
-        Real64 GCZ;      // Generic contaminant [ppm]
-        Real64 TZlast;   // Temperature [C] at previous time step
-        Real64 WZlast;   // Humidity ratio [kg/kg] at previous time step
-        Real64 CO2Zlast; // CO2 [ppm] at previous time step
-        Real64 GCZlast;  // Generic contaminant [ppm] at previous time step
+        Nandle TZ;       // Temperature [C]
+        Nandle WZ;       // Humidity ratio [kg/kg]
+        Nandle PZ;       // Pressure [Pa]
+        Nandle CO2Z;     // CO2 [ppm]
+        Nandle GCZ;      // Generic contaminant [ppm]
+        Nandle TZlast;   // Temperature [C] at previous time step
+        Nandle WZlast;   // Humidity ratio [kg/kg] at previous time step
+        Nandle CO2Zlast; // CO2 [ppm] at previous time step
+        Nandle GCZlast;  // Generic contaminant [ppm] at previous time step
 
         // Default Constructor
         AirflowNetworkNodeSimuData() : TZ(0.0), WZ(0.0), PZ(0.0), CO2Z(0.0), GCZ(0.0), TZlast(0.0), WZlast(0.0), CO2Zlast(0.0), GCZlast(0.0)
@@ -1112,12 +1112,12 @@ namespace AirflowNetwork {
     struct AirflowNetworkLinkSimuData
     {
         // Members
-        Real64 FLOW;     // Mass flow rate [kg/s]
-        Real64 FLOW2;    // Mass flow rate [kg/s] for two way flow
-        Real64 DP;       // Pressure difference across a component
-        Real64 VolFLOW;  // Mass flow rate [m3/s]
-        Real64 VolFLOW2; // Mass flow rate [m3/s] for two way flow
-        Real64 DP1;
+        Nandle FLOW;     // Mass flow rate [kg/s]
+        Nandle FLOW2;    // Mass flow rate [kg/s] for two way flow
+        Nandle DP;       // Pressure difference across a component
+        Nandle VolFLOW;  // Mass flow rate [m3/s]
+        Nandle VolFLOW2; // Mass flow rate [m3/s] for two way flow
+        Nandle DP1;
 
         // Default Constructor
         AirflowNetworkLinkSimuData() : FLOW(0.0), FLOW2(0.0), DP(0.0), VolFLOW(0.0), VolFLOW2(0.0), DP1(0.0)
@@ -1128,17 +1128,17 @@ namespace AirflowNetwork {
     struct AirflowNetworkLinkReportData
     {
         // Members
-        Real64 FLOW;        // Mass flow rate [kg/s]
-        Real64 FLOW2;       // Mass flow rate [kg/s] for two way flow
-        Real64 VolFLOW;     // Mass flow rate [m^3/s]
-        Real64 VolFLOW2;    // Mass flow rate [m^3/s] for two way flow
-        Real64 FLOWOFF;     // Mass flow rate during OFF cycle [kg/s]
-        Real64 FLOW2OFF;    // Mass flow rate during OFF cycle [kg/s] for two way flow
-        Real64 VolFLOWOFF;  // Mass flow rate during OFF cycle [m^3/s]
-        Real64 VolFLOW2OFF; // Mass flow rate during OFF cycle [m^3/s] for two way flow
-        Real64 DP;          // Average Pressure difference across a component
-        Real64 DPON;        // Pressure difference across a component with fan on
-        Real64 DPOFF;       // Pressure difference across a component with fan off
+        Nandle FLOW;        // Mass flow rate [kg/s]
+        Nandle FLOW2;       // Mass flow rate [kg/s] for two way flow
+        Nandle VolFLOW;     // Mass flow rate [m^3/s]
+        Nandle VolFLOW2;    // Mass flow rate [m^3/s] for two way flow
+        Nandle FLOWOFF;     // Mass flow rate during OFF cycle [kg/s]
+        Nandle FLOW2OFF;    // Mass flow rate during OFF cycle [kg/s] for two way flow
+        Nandle VolFLOWOFF;  // Mass flow rate during OFF cycle [m^3/s]
+        Nandle VolFLOW2OFF; // Mass flow rate during OFF cycle [m^3/s] for two way flow
+        Nandle DP;          // Average Pressure difference across a component
+        Nandle DPON;        // Pressure difference across a component with fan on
+        Nandle DPOFF;       // Pressure difference across a component with fan off
 
         // Default Constructor
         AirflowNetworkLinkReportData()
@@ -1151,9 +1151,9 @@ namespace AirflowNetwork {
     struct AirflowNetworkNodeReportData // Node variable for simulation
     {
         // Members
-        Real64 PZ;    // Average Pressure [Pa]
-        Real64 PZON;  // Pressure with fan on [Pa]
-        Real64 PZOFF; // Pressure with fan off [Pa]
+        Nandle PZ;    // Average Pressure [Pa]
+        Nandle PZON;  // Pressure with fan on [Pa]
+        Nandle PZOFF; // Pressure with fan off [Pa]
 
         // Default Constructor
         AirflowNetworkNodeReportData() : PZ(0.0), PZON(0.0), PZOFF(0.0)
@@ -1164,29 +1164,29 @@ namespace AirflowNetwork {
     struct AirflowNetworkExchangeProp
     {
         // Members
-        Real64 MultiZoneSen;
-        Real64 MultiZoneLat;
-        Real64 LeakSen;
-        Real64 LeakLat;
-        Real64 CondSen;
-        Real64 DiffLat;
-        Real64 RadGain;
-        Real64 TotalSen;
-        Real64 TotalLat;
-        Real64 SumMCp;
-        Real64 SumMCpT;
-        Real64 SumMHr;
-        Real64 SumMHrW;
-        Real64 SumMMCp;
-        Real64 SumMMCpT;
-        Real64 SumMMHr;
-        Real64 SumMMHrW;
-        Real64 SumMHrCO;
-        Real64 SumMMHrCO;
-        Real64 TotalCO2;
-        Real64 SumMHrGC;
-        Real64 SumMMHrGC;
-        Real64 TotalGC;
+        Nandle MultiZoneSen;
+        Nandle MultiZoneLat;
+        Nandle LeakSen;
+        Nandle LeakLat;
+        Nandle CondSen;
+        Nandle DiffLat;
+        Nandle RadGain;
+        Nandle TotalSen;
+        Nandle TotalLat;
+        Nandle SumMCp;
+        Nandle SumMCpT;
+        Nandle SumMHr;
+        Nandle SumMHrW;
+        Nandle SumMMCp;
+        Nandle SumMMCpT;
+        Nandle SumMMHr;
+        Nandle SumMMHrW;
+        Nandle SumMHrCO;
+        Nandle SumMMHrCO;
+        Nandle TotalCO2;
+        Nandle SumMHrGC;
+        Nandle SumMMHrGC;
+        Nandle TotalGC;
 
         // Default Constructor
         AirflowNetworkExchangeProp()
@@ -1200,50 +1200,50 @@ namespace AirflowNetwork {
     struct AiflowNetworkReportProp
     {
         // Members
-        Real64 MultiZoneInfiSenGainW;
-        Real64 MultiZoneInfiSenGainJ;
-        Real64 MultiZoneInfiSenLossW;
-        Real64 MultiZoneInfiSenLossJ;
-        Real64 MultiZoneMixSenGainW;
-        Real64 MultiZoneMixSenGainJ;
-        Real64 MultiZoneMixSenLossW;
-        Real64 MultiZoneMixSenLossJ;
-        Real64 MultiZoneInfiLatGainW;
-        Real64 MultiZoneInfiLatGainJ;
-        Real64 MultiZoneInfiLatLossW;
-        Real64 MultiZoneInfiLatLossJ;
-        Real64 MultiZoneMixLatGainW;
-        Real64 MultiZoneMixLatGainJ;
-        Real64 MultiZoneMixLatLossW;
-        Real64 MultiZoneMixLatLossJ;
-        Real64 LeakSenGainW;
-        Real64 LeakSenGainJ;
-        Real64 LeakSenLossW;
-        Real64 LeakSenLossJ;
-        Real64 LeakLatGainW;
-        Real64 LeakLatGainJ;
-        Real64 LeakLatLossW;
-        Real64 LeakLatLossJ;
-        Real64 CondSenGainW;
-        Real64 CondSenGainJ;
-        Real64 CondSenLossW;
-        Real64 CondSenLossJ;
-        Real64 DiffLatGainW;
-        Real64 DiffLatGainJ;
-        Real64 DiffLatLossW;
-        Real64 DiffLatLossJ;
-        Real64 RadGainW;
-        Real64 RadGainJ;
-        Real64 RadLossW;
-        Real64 RadLossJ;
-        Real64 TotalSenGainW;
-        Real64 TotalSenGainJ;
-        Real64 TotalSenLossW;
-        Real64 TotalSenLossJ;
-        Real64 TotalLatGainW;
-        Real64 TotalLatGainJ;
-        Real64 TotalLatLossW;
-        Real64 TotalLatLossJ;
+        Nandle MultiZoneInfiSenGainW;
+        Nandle MultiZoneInfiSenGainJ;
+        Nandle MultiZoneInfiSenLossW;
+        Nandle MultiZoneInfiSenLossJ;
+        Nandle MultiZoneMixSenGainW;
+        Nandle MultiZoneMixSenGainJ;
+        Nandle MultiZoneMixSenLossW;
+        Nandle MultiZoneMixSenLossJ;
+        Nandle MultiZoneInfiLatGainW;
+        Nandle MultiZoneInfiLatGainJ;
+        Nandle MultiZoneInfiLatLossW;
+        Nandle MultiZoneInfiLatLossJ;
+        Nandle MultiZoneMixLatGainW;
+        Nandle MultiZoneMixLatGainJ;
+        Nandle MultiZoneMixLatLossW;
+        Nandle MultiZoneMixLatLossJ;
+        Nandle LeakSenGainW;
+        Nandle LeakSenGainJ;
+        Nandle LeakSenLossW;
+        Nandle LeakSenLossJ;
+        Nandle LeakLatGainW;
+        Nandle LeakLatGainJ;
+        Nandle LeakLatLossW;
+        Nandle LeakLatLossJ;
+        Nandle CondSenGainW;
+        Nandle CondSenGainJ;
+        Nandle CondSenLossW;
+        Nandle CondSenLossJ;
+        Nandle DiffLatGainW;
+        Nandle DiffLatGainJ;
+        Nandle DiffLatLossW;
+        Nandle DiffLatLossJ;
+        Nandle RadGainW;
+        Nandle RadGainJ;
+        Nandle RadLossW;
+        Nandle RadLossJ;
+        Nandle TotalSenGainW;
+        Nandle TotalSenGainJ;
+        Nandle TotalSenLossW;
+        Nandle TotalSenLossJ;
+        Nandle TotalLatGainW;
+        Nandle TotalLatGainJ;
+        Nandle TotalLatLossW;
+        Nandle TotalLatLossJ;
         bool OnOffFlag;
 
         // Default Constructor
@@ -1265,9 +1265,9 @@ namespace AirflowNetwork {
         // Members
         std::string SurfaceName;
         int SurfaceNum;                 // Name of surface referenced by view factor
-        Real64 ViewFactor;              // View factor
-        Real64 SurfaceResistanceFactor; // Total radiation heat transfer resistance factor
-        Real64 SurfaceRadLoad;          // Duct radiation load from surface [W]
+        Nandle ViewFactor;              // View factor
+        Nandle SurfaceResistanceFactor; // Total radiation heat transfer resistance factor
+        Nandle SurfaceRadLoad;          // Duct radiation load from surface [W]
 
         // Default constructor
         LinkageSurfaceProp() : SurfaceNum(0), ViewFactor(0.0), SurfaceResistanceFactor(0.0), SurfaceRadLoad(0.0)
@@ -1279,12 +1279,12 @@ namespace AirflowNetwork {
     {
         // Members
         std::string LinkageName;
-        Real64 DuctExposureFraction;
-        Real64 DuctEmittance;
+        Nandle DuctExposureFraction;
+        Nandle DuctEmittance;
         Array1D<LinkageSurfaceProp> LinkageSurfaceData;
         int ObjectNum;
-        Real64 QRad;
-        Real64 QConv;
+        Nandle QRad;
+        Nandle QConv;
 
         AirflowNetworkLinkageViewFactorProp() : DuctExposureFraction(0.0), DuctEmittance(0.0), ObjectNum(0), QRad(0.0), QConv(0.0)
         {

@@ -105,16 +105,16 @@ namespace ZoneDehumidifier {
         std::string UnitType;              // Type of unit
         int UnitType_Num;                  // Parameter equivalent to type of unit
         int SchedPtr;                      // Index number to availability schedule
-        Real64 RatedWaterRemoval;          // Rated water removal [liters/day]
-        Real64 RatedEnergyFactor;          // Rated energy factor [liters/kWh]
-        Real64 RatedAirVolFlow;            // Rated air flow rate through the dehumidifier [m3/s]
-        Real64 RatedAirMassFlow;           // Rated air mass flow rate through the dehumidifier [kg/s]
-        Real64 MinInletAirTemp;            // Minimum dry-bulb temperature for dehumidifier operation [C]
-        Real64 MaxInletAirTemp;            // Maximum dry-bulb temperature for dehumidifier operation [C]
-        Real64 InletAirMassFlow;           // Inlet air mass flow rate for the time step being simulated [kg/s]
-        Real64 OutletAirEnthalpy;          // Dehumidifier outlet air enthalpy [J/kg]
-        Real64 OutletAirHumRat;            // Dehumidifier outlet air humidity ratio [kg/kg]
-        Real64 OffCycleParasiticLoad;      // Off Cycle Parasitic Load, user input [W]
+        Nandle RatedWaterRemoval;          // Rated water removal [liters/day]
+        Nandle RatedEnergyFactor;          // Rated energy factor [liters/kWh]
+        Nandle RatedAirVolFlow;            // Rated air flow rate through the dehumidifier [m3/s]
+        Nandle RatedAirMassFlow;           // Rated air mass flow rate through the dehumidifier [kg/s]
+        Nandle MinInletAirTemp;            // Minimum dry-bulb temperature for dehumidifier operation [C]
+        Nandle MaxInletAirTemp;            // Maximum dry-bulb temperature for dehumidifier operation [C]
+        Nandle InletAirMassFlow;           // Inlet air mass flow rate for the time step being simulated [kg/s]
+        Nandle OutletAirEnthalpy;          // Dehumidifier outlet air enthalpy [J/kg]
+        Nandle OutletAirHumRat;            // Dehumidifier outlet air humidity ratio [kg/kg]
+        Nandle OffCycleParasiticLoad;      // Off Cycle Parasitic Load, user input [W]
         int AirInletNodeNum;               // Inlet air node number
         int AirOutletNodeNum;              // Outlet air node number
         int WaterRemovalCurveIndex;        // Index for water removal curve
@@ -137,19 +137,19 @@ namespace ZoneDehumidifier {
         int CondensateTankID;              // Condensate collection tank ID number
         int CondensateTankSupplyARRID;     // Condensate collection tank supply ID number
         // Report data
-        Real64 SensHeatingRate;            // Zone Dehumidifier Sensible Heating Rate [W]
-        Real64 SensHeatingEnergy;          // Zone Dehumidifier Sensible Heating Energy [J]
-        Real64 WaterRemovalRate;           // Zone Dehumidifier Water Removal Rate [kg/s]
-        Real64 WaterRemoved;               // Zone Dehumidifier Water Removed [kg]
-        Real64 ElecPower;                  // Zone Dehumidifier Electric Power [W]
-        Real64 ElecConsumption;            // Zone Dehumidifier Electric Consumption [J]
-        Real64 DehumidPLR;                 // Zone Dehumidifier Part-Load Ratio [-]
-        Real64 DehumidRTF;                 // Zone Dehumidifier Runtime Fraction [-]
-        Real64 DehumidCondVolFlowRate;     // Zone Dehumidifier Condensate Volumetric Flow Rate [m3/s]
-        Real64 DehumidCondVol;             // Zone Dehumidifier Condensate Volume [m3]
-        Real64 OutletAirTemp;              // Zone Dehumidifier Outlet Air Temperature [C]
-        Real64 OffCycleParasiticElecPower; // Zone Dehumidifier Off-Cycle Parasitic Electric Power [W]
-        Real64 OffCycleParasiticElecCons;  // Zone Dehumidifier Off-Cycle Parasitic Electric Consumption [J]
+        Nandle SensHeatingRate;            // Zone Dehumidifier Sensible Heating Rate [W]
+        Nandle SensHeatingEnergy;          // Zone Dehumidifier Sensible Heating Energy [J]
+        Nandle WaterRemovalRate;           // Zone Dehumidifier Water Removal Rate [kg/s]
+        Nandle WaterRemoved;               // Zone Dehumidifier Water Removed [kg]
+        Nandle ElecPower;                  // Zone Dehumidifier Electric Power [W]
+        Nandle ElecConsumption;            // Zone Dehumidifier Electric Consumption [J]
+        Nandle DehumidPLR;                 // Zone Dehumidifier Part-Load Ratio [-]
+        Nandle DehumidRTF;                 // Zone Dehumidifier Runtime Fraction [-]
+        Nandle DehumidCondVolFlowRate;     // Zone Dehumidifier Condensate Volumetric Flow Rate [m3/s]
+        Nandle DehumidCondVol;             // Zone Dehumidifier Condensate Volume [m3]
+        Nandle OutletAirTemp;              // Zone Dehumidifier Outlet Air Temperature [C]
+        Nandle OffCycleParasiticElecPower; // Zone Dehumidifier Off-Cycle Parasitic Electric Power [W]
+        Nandle OffCycleParasiticElecCons;  // Zone Dehumidifier Off-Cycle Parasitic Electric Consumption [J]
 
         // Default Constructor
         ZoneDehumidifierData()
@@ -177,8 +177,8 @@ namespace ZoneDehumidifier {
     void SimZoneDehumidifier(std::string const &CompName,   // Name of the zone dehumidifier
                              int const ZoneNum,             // Number of zone being served
                              bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                             Real64 &QSensOut,              // Sensible capacity delivered to zone (W)
-                             Real64 &QLatOut,               // Latent capacity delivered to zone (kg/s), dehumidify = negative
+                             Nandle &QSensOut,              // Sensible capacity delivered to zone (W)
+                             Nandle &QLatOut,               // Latent capacity delivered to zone (kg/s), dehumidify = negative
                              int &CompIndex                 // Index to the zone dehumidifier
     );
 
@@ -189,9 +189,9 @@ namespace ZoneDehumidifier {
     void SizeZoneDehumidifier();
 
     void CalcZoneDehumidifier(int const ZoneDehumNum,     // Index number of the current zone dehumidifier being simulated
-                              Real64 const QZnDehumidReq, // Dehumidification load to be met (kg/s), negative value means dehumidification load
-                              Real64 &SensibleOutput,     // Sensible (heating) output (W), sent to load predictor for next simulation time step
-                              Real64 &LatentOutput        // Latent (dehumidification) output provided (kg/s)
+                              Nandle const QZnDehumidReq, // Dehumidification load to be met (kg/s), negative value means dehumidification load
+                              Nandle &SensibleOutput,     // Sensible (heating) output (W), sent to load predictor for next simulation time step
+                              Nandle &LatentOutput        // Latent (dehumidification) output provided (kg/s)
     );
 
     void UpdateZoneDehumidifier(int const ZoneDehumNum); // Number of the current zone dehumidifier being simulated

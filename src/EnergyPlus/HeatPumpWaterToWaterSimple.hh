@@ -80,50 +80,50 @@ namespace HeatPumpWaterToWaterSimple {
         bool ON;                         // simulate the machine at it's operating part load ratio
         bool IsOn;                       // flag that the heat pump is ON during current time step
         bool MustRun;                    // flag that the heat pump is MUST RUN during current time step
-        Real64 SourceSideDesignMassFlow; // Design flow rate (kg/s)
+        Nandle SourceSideDesignMassFlow; // Design flow rate (kg/s)
 
-        Real64 LoadSideDesignMassFlow; // Design flow rate (kg/s)
+        Nandle LoadSideDesignMassFlow; // Design flow rate (kg/s)
 
-        Real64 RatedLoadVolFlowCool;             // Rated Cooling Load Side Volumetric Flow Rate [m3/s]
+        Nandle RatedLoadVolFlowCool;             // Rated Cooling Load Side Volumetric Flow Rate [m3/s]
         bool ratedLoadVolFlowCoolWasAutoSized;   // true if RatedSourceVolFlowCool was autosize on input
-        Real64 RatedSourceVolFlowCool;           // Rated Cooling Source Side Volumetric Flow Rate [m3/s]
+        Nandle RatedSourceVolFlowCool;           // Rated Cooling Source Side Volumetric Flow Rate [m3/s]
         bool ratedSourceVolFlowCoolWasAutoSized; // true if RatedSourceVolFlowCool was autosize on input
-        Real64 RatedCapCool;                     // Rated Cooling Capacity [W]
+        Nandle RatedCapCool;                     // Rated Cooling Capacity [W]
         bool ratedCapCoolWasAutoSized;           // true if RatedCapCool was autosize on input
-        Real64 RatedPowerCool;                   // Rated Cooling Power Consumption[W]
+        Nandle RatedPowerCool;                   // Rated Cooling Power Consumption[W]
         bool ratedPowerCoolWasAutoSized;         // ture if RatedPowerCool was autosize on input
-        Real64 CoolCap1;                         // 1st coefficient of the Cooling capacity performance curve
-        Real64 CoolCap2;                         // 2nd coefficient of the Cooling capacity performance curve
-        Real64 CoolCap3;                         // 3rd coefficient of the Cooling capacity performance curve
-        Real64 CoolCap4;                         // 4th coefficient of the Cooling capacity performance curve
-        Real64 CoolCap5;                         // 5th coefficient of the Cooling capacity performance curve
-        Real64 CoolPower1;                       // 1st coefficient of the Cooling power consumption curve
-        Real64 CoolPower2;                       // 2nd coefficient of the Cooling power consumption curve
-        Real64 CoolPower3;                       // 3rd coefficient of the Cooling power consumption curve
-        Real64 CoolPower4;                       // 4th coefficient of the Cooling power consumption curve
-        Real64 CoolPower5;                       // 5th coefficient of the Cooling power consumption curve
+        Nandle CoolCap1;                         // 1st coefficient of the Cooling capacity performance curve
+        Nandle CoolCap2;                         // 2nd coefficient of the Cooling capacity performance curve
+        Nandle CoolCap3;                         // 3rd coefficient of the Cooling capacity performance curve
+        Nandle CoolCap4;                         // 4th coefficient of the Cooling capacity performance curve
+        Nandle CoolCap5;                         // 5th coefficient of the Cooling capacity performance curve
+        Nandle CoolPower1;                       // 1st coefficient of the Cooling power consumption curve
+        Nandle CoolPower2;                       // 2nd coefficient of the Cooling power consumption curve
+        Nandle CoolPower3;                       // 3rd coefficient of the Cooling power consumption curve
+        Nandle CoolPower4;                       // 4th coefficient of the Cooling power consumption curve
+        Nandle CoolPower5;                       // 5th coefficient of the Cooling power consumption curve
         int CoolCapNegativeCounter;              // Counter for number of times cooling capacity curve is <= 0.0
         int CoolCapNegativeIndex;                // Index for recurring warning message regarding cooling capacity curve is <= 0.0
         int CoolPowerNegativeCounter;            // Counter for number of times cooling power curve is <= 0.0
         int CoolPowerNegativeIndex;              // Index for recurring warning message regarding cooling power curve is <= 0.0
-        Real64 RatedLoadVolFlowHeat;             // Rated Heating Load Side Volumetric Flow Rate [m3/s]
+        Nandle RatedLoadVolFlowHeat;             // Rated Heating Load Side Volumetric Flow Rate [m3/s]
         bool ratedLoadVolFlowHeatWasAutoSized;   // true if RatedLoadVolFlowHeat was autosize on input
-        Real64 RatedSourceVolFlowHeat;           // Rated Heating Source Side Volumetric Flow Rate [m3/s]
+        Nandle RatedSourceVolFlowHeat;           // Rated Heating Source Side Volumetric Flow Rate [m3/s]
         bool ratedSourceVolFlowHeatWasAutoSized; // true if RatedSourceVolFlowHeat was autosize on input
-        Real64 RatedCapHeat;                     // Rated Heating Capacity [W]
+        Nandle RatedCapHeat;                     // Rated Heating Capacity [W]
         bool ratedCapHeatWasAutoSized;           // true if RatedCapHeat was autosize on input
-        Real64 RatedPowerHeat;                   // Rated Heating Compressor Power[W]
+        Nandle RatedPowerHeat;                   // Rated Heating Compressor Power[W]
         bool ratedPowerHeatWasAutoSized;         // true if RatedPowerHeat was autosize on input
-        Real64 HeatCap1;                         // 1st coefficient of the Heating capacity performance curve
-        Real64 HeatCap2;                         // 2nd coefficient of the Heating capacity performance curve
-        Real64 HeatCap3;                         // 3rd coefficient of the Heating capacity performance curve
-        Real64 HeatCap4;                         // 4th coefficient of the Heating capacity performance curve
-        Real64 HeatCap5;                         // 5th coefficient of the Heating capacity performance curve
-        Real64 HeatPower1;                       // 1st coefficient of the Heating power consumption curve
-        Real64 HeatPower2;                       // 2nd coefficient of the Heating power consumption curve
-        Real64 HeatPower3;                       // 3rd coefficient of the Heating power consumption curve
-        Real64 HeatPower4;                       // 4th coefficient of the Heating power consumption curve
-        Real64 HeatPower5;                       // 5th coefficient of the Heating power consumption curve
+        Nandle HeatCap1;                         // 1st coefficient of the Heating capacity performance curve
+        Nandle HeatCap2;                         // 2nd coefficient of the Heating capacity performance curve
+        Nandle HeatCap3;                         // 3rd coefficient of the Heating capacity performance curve
+        Nandle HeatCap4;                         // 4th coefficient of the Heating capacity performance curve
+        Nandle HeatCap5;                         // 5th coefficient of the Heating capacity performance curve
+        Nandle HeatPower1;                       // 1st coefficient of the Heating power consumption curve
+        Nandle HeatPower2;                       // 2nd coefficient of the Heating power consumption curve
+        Nandle HeatPower3;                       // 3rd coefficient of the Heating power consumption curve
+        Nandle HeatPower4;                       // 4th coefficient of the Heating power consumption curve
+        Nandle HeatPower5;                       // 5th coefficient of the Heating power consumption curve
         int LoadSideInletNodeNum;                // Load Side Inlet Node
         int LoadSideOutletNodeNum;               // Load Side Outlet Node
         int SourceSideInletNodeNum;              // Source Side Inlet Node
@@ -142,25 +142,25 @@ namespace HeatPumpWaterToWaterSimple {
         int LoadBranchNum;         // load side plant loop branch index
         int LoadCompNum;           // load side plant loop component index
         int CondMassFlowIndex;     // index for criteria in PullCompInterconnectTrigger
-        Real64 refCOP;             // reference COP used for sizing reference power, user input
-        Real64 sizFac;             // component level sizing factor, user input
+        Nandle refCOP;             // reference COP used for sizing reference power, user input
+        Nandle sizFac;             // component level sizing factor, user input
         std::string companionName; // name of companion GSHP
         int companionIndex;        // index in GSHP structure for companion heat pump
         bool companionIdentified;  // true if this GSHP has found its companion heat pump
 
         // Report variables
-        Real64 reportPower;                  // Power Consumption [W]
-        Real64 reportEnergy;                 // Energy Consumption [J]
-        Real64 reportQLoad;                  // Load Side Heat Transfer Rate [W]
-        Real64 reportQLoadEnergy;            // Load Side Heat Transfer [J]
-        Real64 reportQSource;                // Source Side Heat Transfer Rate [W]
-        Real64 reportQSourceEnergy;          // Source Side Heat Transfer [J]
-        Real64 reportLoadSideMassFlowRate;   // Load side volumetric flow rate m3/s
-        Real64 reportLoadSideInletTemp;      // Load Side outlet temperature degC
-        Real64 reportLoadSideOutletTemp;     // Load Side outlet temperature degC
-        Real64 reportSourceSideMassFlowRate; // Source side volumetric flow rate m3/s
-        Real64 reportSourceSideInletTemp;    // Source Side outlet temperature degC
-        Real64 reportSourceSideOutletTemp;   // Source Side outlet temperature degC
+        Nandle reportPower;                  // Power Consumption [W]
+        Nandle reportEnergy;                 // Energy Consumption [J]
+        Nandle reportQLoad;                  // Load Side Heat Transfer Rate [W]
+        Nandle reportQLoadEnergy;            // Load Side Heat Transfer [J]
+        Nandle reportQSource;                // Source Side Heat Transfer Rate [W]
+        Nandle reportQSourceEnergy;          // Source Side Heat Transfer [J]
+        Nandle reportLoadSideMassFlowRate;   // Load side volumetric flow rate m3/s
+        Nandle reportLoadSideInletTemp;      // Load Side outlet temperature degC
+        Nandle reportLoadSideOutletTemp;     // Load Side outlet temperature degC
+        Nandle reportSourceSideMassFlowRate; // Source side volumetric flow rate m3/s
+        Nandle reportSourceSideInletTemp;    // Source Side outlet temperature degC
+        Nandle reportSourceSideOutletTemp;   // Source Side outlet temperature degC
 
         // init flags
         bool MyPlantScanFlag;
@@ -195,25 +195,25 @@ namespace HeatPumpWaterToWaterSimple {
 
         static void GetWatertoWaterHPInput();
 
-        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad, bool const RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad, bool const RunFlag) override;
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void getSizingFactor(Real64 &sizingFactor) override;
+        void getSizingFactor(Nandle &sizingFactor) override;
 
         void InitWatertoWaterHP(int const GSHPTypeNum,       // Type of GSHP
                                 std::string const &GSHPName, // User Specified Name of GSHP
                                 bool const FirstHVACIteration,
-                                Real64 const MyLoad // Demand Load
+                                Nandle const MyLoad // Demand Load
         );
 
         void sizeCoolingWaterToWaterHP();
 
         void sizeHeatingWaterToWaterHP();
 
-        void CalcWatertoWaterHPCooling(Real64 const MyLoad); // Operating Load
+        void CalcWatertoWaterHPCooling(Nandle const MyLoad); // Operating Load
 
-        void CalcWatertoWaterHPHeating(Real64 const MyLoad); // Operating Load
+        void CalcWatertoWaterHPHeating(Nandle const MyLoad); // Operating Load
 
         void UpdateGSHPRecords();
     };

@@ -281,7 +281,7 @@ namespace TranspiredCollector {
         Array1D_string Alphas; // Alpha items for extensible
         // Solar Collectors:Unglazed Transpired object
         int Item;                       // Item to be "gotten"
-        Array1D<Real64> Numbers(11);    // Numeric items for object
+        Array1D<Nandle> Numbers(11);    // Numeric items for object
         int NumAlphas;                  // Number of Alphas for each GetObjectItem call
         int NumNumbers;                 // Number of Numbers for each GetObjectItem call
         int MaxNumAlphas;               // argumenet for call to GetObjectDefMaxArgs
@@ -293,16 +293,16 @@ namespace TranspiredCollector {
         int AlphaOffset; // local temp var
         std::string Roughness;
         int ThisSurf;         // do loop counter
-        Real64 AvgAzimuth;    // temp for error checking
-        Real64 AvgTilt;       // temp for error checking
+        Nandle AvgAzimuth;    // temp for error checking
+        Nandle AvgTilt;       // temp for error checking
         int SurfID;           // local surface "pointer"
-        Real64 TiltRads;      // average tilt of collector in radians
-        Real64 tempHdeltaNPL; // temporary variable for bouyancy length scale
+        Nandle TiltRads;      // average tilt of collector in radians
+        Nandle tempHdeltaNPL; // temporary variable for bouyancy length scale
         int NumUTSCSplitter(0);
         Array1D_string AlphasSplit; // Alpha items for extensible
         // Solar Collectors:Unglazed Transpired object
         int ItemSplit;                        // Item to be "gotten"
-        Array1D<Real64> NumbersSplit(1);      // Numeric items for object
+        Array1D<Nandle> NumbersSplit(1);      // Numeric items for object
         int NumAlphasSplit;                   // Number of Alphas for each GetObjectItem call
         int NumNumbersSplit;                  // Number of Numbers for each GetObjectItem call
         int MaxNumAlphasSplit;                // argumenet for call to GetObjectDefMaxArgs
@@ -573,7 +573,7 @@ namespace TranspiredCollector {
             // now that we should have all the surfaces, do some preperations and checks.
 
             // are they all similar tilt and azimuth? Issue warnings so people can do it if they really want
-            Real64 const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(Item).SurfPtrs));
+            Nandle const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(Item).SurfPtrs));
             //			AvgAzimuth = sum( Surface( UTSC( Item ).SurfPtrs ).Azimuth * Surface( UTSC( Item ).SurfPtrs ).Area ) / sum( Surface(
             // UTSC(  Item
             //).SurfPtrs ).Area ); //Autodesk:F2C++ Array subscript usage: Replaced by below
@@ -777,7 +777,7 @@ namespace TranspiredCollector {
         // unused  INTEGER             :: InletNode
         int SplitBranch;
         int thisUTSC;
-        Real64 Tamb;
+        Nandle Tamb;
 
         if (MyOneTimeFlag) {
             // do various one time setups and pitch adjustments across all UTSC
@@ -846,7 +846,7 @@ namespace TranspiredCollector {
         }
 
         // determine average ambient temperature
-        Real64 const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs));
+        Nandle const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs));
         if (!DataEnvironment::IsRain) {
             Tamb = sum_product_sub(Surface, &SurfaceData::OutDryBulbTemp, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs) / surfaceArea;
         } else { // when raining we use wet bulb not drybulb
@@ -908,11 +908,11 @@ namespace TranspiredCollector {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const nu(15.66e-6); // kinematic viscosity (m**2/s) for air at 300 K
+        Nandle const nu(15.66e-6); // kinematic viscosity (m**2/s) for air at 300 K
         // (Mills 1999 Heat Transfer)
-        Real64 const k(0.0267); // thermal conductivity (W/m K) for air at 300 K
+        Nandle const k(0.0267); // thermal conductivity (W/m K) for air at 300 K
         // (Mills 1999 Heat Transfer)
-        Real64 const Sigma(5.6697e-08); // Stefan-Boltzmann constant
+        Nandle const Sigma(5.6697e-08); // Stefan-Boltzmann constant
         //  REAL(r64), PARAMETER  :: KelvinConv = KelvinConv         ! Conversion from Celsius to Kelvin
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -923,72 +923,72 @@ namespace TranspiredCollector {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // na
         // following arrays are used to temporarily hold results from multiple underlying surfaces
-        Array1D<Real64> HSkyARR;
-        Array1D<Real64> HGroundARR;
-        Array1D<Real64> HAirARR;
-        Array1D<Real64> HPlenARR;
-        Array1D<Real64> LocalWindArr;
+        Array1D<Nandle> HSkyARR;
+        Array1D<Nandle> HGroundARR;
+        Array1D<Nandle> HAirARR;
+        Array1D<Nandle> HPlenARR;
+        Array1D<Nandle> LocalWindArr;
         //  REAL(r64), ALLOCATABLE, DIMENSION(:) :: IscARR
         //  REAL(r64), ALLOCATABLE, DIMENSION(:) :: TsoARR
 
         // working variables
         // unused  INTEGER    :: InletNode  !
-        Real64 RhoAir;          // density of air
-        Real64 CpAir;           // specific heat of air
-        Real64 holeArea;        // area of perforations, includes corrugation of surface
-        Real64 Tamb;            // outdoor drybulb
-        Real64 A;               // projected area of collector, from sum of underlying surfaces
-        Real64 Vholes;          // mean velocity of air as it passes through collector holes
-        Real64 Vsuction;        // mean velocity of air as is approaches the collector
-        Real64 Vplen;           // mean velocity of air inside plenum
-        Real64 HcPlen;          // surface convection heat transfer coefficient for plenum surfaces
-        Real64 D;               // hole diameter
-        Real64 ReD;             // Reynolds number for holes
-        Real64 P;               // pitch, distance betweeen holes
-        Real64 Por;             // porosity, area fraction of collector that is open because of holes
-        Real64 Mdot;            // mass flow rate of suction air
-        Real64 QdotSource;      // energy flux for source/sink inside collector surface (for hybrid PV UTSC)
+        Nandle RhoAir;          // density of air
+        Nandle CpAir;           // specific heat of air
+        Nandle holeArea;        // area of perforations, includes corrugation of surface
+        Nandle Tamb;            // outdoor drybulb
+        Nandle A;               // projected area of collector, from sum of underlying surfaces
+        Nandle Vholes;          // mean velocity of air as it passes through collector holes
+        Nandle Vsuction;        // mean velocity of air as is approaches the collector
+        Nandle Vplen;           // mean velocity of air inside plenum
+        Nandle HcPlen;          // surface convection heat transfer coefficient for plenum surfaces
+        Nandle D;               // hole diameter
+        Nandle ReD;             // Reynolds number for holes
+        Nandle P;               // pitch, distance betweeen holes
+        Nandle Por;             // porosity, area fraction of collector that is open because of holes
+        Nandle Mdot;            // mass flow rate of suction air
+        Nandle QdotSource;      // energy flux for source/sink inside collector surface (for hybrid PV UTSC)
         int ThisSurf;           // do loop counter
         int NumSurfs;           // number of underlying HT surfaces associated with UTSC
         int Roughness;          // parameters for surface roughness, defined in DataHeatBalance
-        Real64 SolAbs;          // solar absorptivity of collector
-        Real64 AbsExt;          // thermal emmittance of collector
-        Real64 TempExt;         // collector temperature
+        Nandle SolAbs;          // solar absorptivity of collector
+        Nandle AbsExt;          // thermal emmittance of collector
+        Nandle TempExt;         // collector temperature
         int SurfPtr;            // index of surface in main surface structure
-        Real64 HMovInsul;       // dummy for call to InitExteriorConvectionCoeff
-        Real64 HExt;            // dummy for call to InitExteriorConvectionCoeff
+        Nandle HMovInsul;       // dummy for call to InitExteriorConvectionCoeff
+        Nandle HExt;            // dummy for call to InitExteriorConvectionCoeff
         int ConstrNum;          // index of construction in main construction structure
-        Real64 AbsThermSurf;    // thermal emmittance of underlying wall.
-        Real64 TsoK;            // underlying surface temperature in Kelvin
-        Real64 TscollK;         // collector temperature in Kelvin  (lagged)
-        Real64 AreaSum;         // sum of contributing surfaces for area-weighted averages.
-        Real64 Vwind;           // localized, and area-weighted average for wind speed
-        Real64 HrSky;           // radiation coeff for sky, area-weighted average
-        Real64 HrGround;        // radiation coeff for ground, area-weighted average
-        Real64 HrAtm;           // radiation coeff for air (bulk atmosphere), area-weighted average
-        Real64 Isc;             // Incoming combined solar radiation, area-weighted average
-        Real64 HrPlen;          // radiation coeff for plenum surfaces, area-weighted average
-        Real64 Tso;             // temperature of underlying surface, area-weighted average
-        Real64 HcWind;          // convection coeff for high speed wind situations
-        Real64 NuD;             // nusselt number for Reynolds based on hole
-        Real64 U;               // overall heat exchanger coefficient
-        Real64 HXeff;           // effectiveness for heat exchanger
-        Real64 t;               // collector thickness
-        Real64 ReS;             // Reynolds number based on suction velocity and pitch
-        Real64 ReW;             // Reynolds number based on Wind and pitch
-        Real64 ReB;             // Reynolds number based on hole velocity and pitch
-        Real64 ReH;             // Reynolds number based on hole velocity and diameter
-        Real64 Tscoll;          // temperature of collector
-        Real64 TaHX;            // leaving air temperature from heat exchanger (entering plenum)
-        Real64 Taplen;          // Air temperature in plen and outlet node.
-        Real64 SensHeatingRate; // Rate at which the system is heating outdoor air
+        Nandle AbsThermSurf;    // thermal emmittance of underlying wall.
+        Nandle TsoK;            // underlying surface temperature in Kelvin
+        Nandle TscollK;         // collector temperature in Kelvin  (lagged)
+        Nandle AreaSum;         // sum of contributing surfaces for area-weighted averages.
+        Nandle Vwind;           // localized, and area-weighted average for wind speed
+        Nandle HrSky;           // radiation coeff for sky, area-weighted average
+        Nandle HrGround;        // radiation coeff for ground, area-weighted average
+        Nandle HrAtm;           // radiation coeff for air (bulk atmosphere), area-weighted average
+        Nandle Isc;             // Incoming combined solar radiation, area-weighted average
+        Nandle HrPlen;          // radiation coeff for plenum surfaces, area-weighted average
+        Nandle Tso;             // temperature of underlying surface, area-weighted average
+        Nandle HcWind;          // convection coeff for high speed wind situations
+        Nandle NuD;             // nusselt number for Reynolds based on hole
+        Nandle U;               // overall heat exchanger coefficient
+        Nandle HXeff;           // effectiveness for heat exchanger
+        Nandle t;               // collector thickness
+        Nandle ReS;             // Reynolds number based on suction velocity and pitch
+        Nandle ReW;             // Reynolds number based on Wind and pitch
+        Nandle ReB;             // Reynolds number based on hole velocity and pitch
+        Nandle ReH;             // Reynolds number based on hole velocity and diameter
+        Nandle Tscoll;          // temperature of collector
+        Nandle TaHX;            // leaving air temperature from heat exchanger (entering plenum)
+        Nandle Taplen;          // Air temperature in plen and outlet node.
+        Nandle SensHeatingRate; // Rate at which the system is heating outdoor air
         //  INTEGER, SAVE    :: VsucErrCount=0 !  warning message counter
         //  CHARACTER(len=MaxNameLength) :: VsucErrString !  warning message counter string
-        Real64 AlessHoles; // Area for Kutscher's relation
+        Nandle AlessHoles; // Area for Kutscher's relation
 
         // Active UTSC calculation
         // first do common things for both correlations
-        Real64 const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs));
+        Nandle const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs));
         if (!IsRain) {
             //			Tamb = sum( Surface( UTSC( UTSCNum ).SurfPtrs ).OutDryBulbTemp * Surface( UTSC( UTSCNum ).SurfPtrs ).Area ) / sum(
             // Surface(  UTSC(  UTSCNum ).SurfPtrs ).Area ); //Autodesk:F2C++ Array subscript usage: Replaced by below
@@ -1255,22 +1255,22 @@ namespace TranspiredCollector {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         // local working variables
-        Real64 AspRat; // Aspect Ratio of gap
-        Real64 TmpTscoll;
-        Real64 TmpTaPlen;
-        Real64 RhoAir;
-        Real64 holeArea;
-        Real64 Tamb;
-        Real64 HrPlen;
-        Real64 HcPlen;
-        Real64 Isc;
-        Real64 MdotVent;
-        Real64 VdotWind;
-        Real64 VdotThermal;
-        Real64 Twbamb;
-        Real64 OutHumRatAmb;
+        Nandle AspRat; // Aspect Ratio of gap
+        Nandle TmpTscoll;
+        Nandle TmpTaPlen;
+        Nandle RhoAir;
+        Nandle holeArea;
+        Nandle Tamb;
+        Nandle HrPlen;
+        Nandle HcPlen;
+        Nandle Isc;
+        Nandle MdotVent;
+        Nandle VdotWind;
+        Nandle VdotThermal;
+        Nandle Twbamb;
+        Nandle OutHumRatAmb;
 
-        Real64 const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs));
+        Nandle const surfaceArea(sum_sub(Surface, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs));
         //		Tamb = sum( Surface( UTSC( UTSCNum ).SurfPtrs ).OutDryBulbTemp * Surface( UTSC( UTSCNum ).SurfPtrs ).Area ) / sum( Surface(
         // UTSC( UTSCNum ).SurfPtrs ).Area ); //Autodesk:F2C++ Array subscript usage: Replaced by below
         Tamb = sum_product_sub(Surface, &SurfaceData::OutDryBulbTemp, &SurfaceData::Area, UTSC(UTSCNum).SurfPtrs) /
@@ -1427,7 +1427,7 @@ namespace TranspiredCollector {
     }
 
     void SetUTSCQdotSource(int const UTSCNum,
-                           Real64 const QSource // source term in Watts
+                           Nandle const QSource // source term in Watts
     )
     {
 
@@ -1520,7 +1520,7 @@ namespace TranspiredCollector {
         }
     }
 
-    void GetUTSCTsColl(int const UTSCNum, Real64 &TsColl)
+    void GetUTSCTsColl(int const UTSCNum, Nandle &TsColl)
     {
 
         // SUBROUTINE INFORMATION:

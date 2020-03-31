@@ -122,9 +122,9 @@ namespace DataRootFinder {
         int SlopeType;  // Set to any of the iSlope<...> codes
         int MethodType; // Desired solution method.
         // Set to any of the iMethod<...> codes except for iMethodNone and iMethodBracket
-        Real64 TolX;  // Relative tolerance for variable X
-        Real64 ATolX; // Absolute tolerance for variable X
-        Real64 ATolY; // Absolute tolerance for variable Y
+        Nandle TolX;  // Relative tolerance for variable X
+        Nandle ATolX; // Absolute tolerance for variable X
+        Nandle ATolY; // Absolute tolerance for variable Y
 
         // Default Constructor
         ControlsType() : SlopeType(iSlopeNone), MethodType(iMethodNone), TolX(1.0e-3), ATolX(1.0e-3), ATolY(1.0e-3)
@@ -136,8 +136,8 @@ namespace DataRootFinder {
     {
         // Members
         bool DefinedFlag; // Set to true if point has been set; false otherwise
-        Real64 X;         // X value
-        Real64 Y;         // Y value = F(X)
+        Nandle X;         // X value
+        Nandle Y;         // Y value = F(X)
 
         // Default Constructor
         PointType() : DefinedFlag(false), X(0.0), Y(0.0)
@@ -152,8 +152,8 @@ namespace DataRootFinder {
         int StatusFlag; // Current status of root finder
         // Valid values are any of the STATUS_<code> constants
         int CurrentMethodType;      // Solution method used to perform current step
-        Real64 XCandidate;          // Candidate X value to use next when evaluating F(X)
-        Real64 ConvergenceRate;     // Convergence rate achieved over the last 2 successive iterations
+        Nandle XCandidate;          // Candidate X value to use next when evaluating F(X)
+        Nandle ConvergenceRate;     // Convergence rate achieved over the last 2 successive iterations
         PointType Increment;        // Increment between last 2 iterations
         PointType MinPoint;         // Point { XMin, F(XMin) }
         PointType MaxPoint;         // Point { XMax, F(XMax) }

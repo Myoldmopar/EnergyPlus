@@ -122,7 +122,7 @@ namespace Vectors {
 
     // Functions
 
-    Real64 AreaPolygon(int const n, Array1D<Vector> &p)
+    Nandle AreaPolygon(int const n, Array1D<Vector> &p)
     {
 
         // PURPOSE OF THIS SUBROUTINE:
@@ -133,7 +133,7 @@ namespace Vectors {
         // Graphic Gems.
 
         // Return value
-        Real64 areap;
+        Nandle areap;
 
         // Argument array dimensioning
         EP_SIZE_CHECK(p, n);
@@ -170,7 +170,7 @@ namespace Vectors {
         return areap;
     }
 
-    Real64 VecSquaredLength(Vector const &vec)
+    Nandle VecSquaredLength(Vector const &vec)
     {
 
         // PURPOSE OF THIS SUBROUTINE:
@@ -180,7 +180,7 @@ namespace Vectors {
         // Graphic Gems.
 
         // Return value
-        Real64 vecsqlen;
+        Nandle vecsqlen;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -193,7 +193,7 @@ namespace Vectors {
         return vecsqlen;
     }
 
-    Real64 VecLength(Vector const &vec)
+    Nandle VecLength(Vector const &vec)
     {
 
         // PURPOSE OF THIS SUBROUTINE:
@@ -203,7 +203,7 @@ namespace Vectors {
         // Graphic Gems.
 
         // Return value
-        Real64 veclen;
+        Nandle veclen;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -258,7 +258,7 @@ namespace Vectors {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 veclen;
+        Nandle veclen;
 
         veclen = VecLength(vec);
         if (veclen != 0.0) {
@@ -274,7 +274,7 @@ namespace Vectors {
         return VecNormalize;
     }
 
-    void VecRound(Vector &vec, Real64 const roundto)
+    void VecRound(Vector &vec, Nandle const roundto)
     {
 
         // PURPOSE OF THIS SUBROUTINE:
@@ -296,12 +296,12 @@ namespace Vectors {
 
     void DetermineAzimuthAndTilt(Array1D<Vector> const &Surf, // Surface Definition
                                  int const EP_UNUSED(NSides), // Number of sides to surface
-                                 Real64 &Azimuth,             // Outward Normal Azimuth Angle
-                                 Real64 &Tilt,                // Tilt angle of surface
+                                 Nandle &Azimuth,             // Outward Normal Azimuth Angle
+                                 Nandle &Tilt,                // Tilt angle of surface
                                  Vector &lcsx,
                                  Vector &lcsy,
                                  Vector &lcsz,
-                                 Real64 const EP_UNUSED(surfaceArea),
+                                 Nandle const EP_UNUSED(surfaceArea),
                                  Vector const &NewellSurfaceNormalVector)
     {
 
@@ -320,13 +320,13 @@ namespace Vectors {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         //  TYPE(Vector) :: x3,y3,z3,v12
         //  TYPE(Vector) :: y2
-        Real64 costheta;
-        Real64 rotang_0;
+        Nandle costheta;
+        Nandle rotang_0;
         //  REAL(r64) rotang_2
 
-        Real64 az;
+        Nandle az;
         //   REAL(r64) azm
-        Real64 tlt;
+        Nandle tlt;
         //  REAL(r64) newtlt
         //  REAL(r64) roundval
         //   REAL(r64) xcomp
@@ -460,7 +460,7 @@ namespace Vectors {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int i;
-        Real64 lenvec;
+        Nandle lenvec;
 
         // Object Data
         Vector normal;
@@ -493,7 +493,7 @@ namespace Vectors {
         }
     }
 
-    Real64 Pt2Plane(Vector const &pt,   // Point for determining the distance
+    Nandle Pt2Plane(Vector const &pt,   // Point for determining the distance
                     PlaneEq const &pleq // Equation of the plane
     )
     {
@@ -507,7 +507,7 @@ namespace Vectors {
         // Graphic Gems
 
         // Return value
-        Real64 PtDist; // Distance of the point to the plane
+        Nandle PtDist; // Distance of the point to the plane
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -630,9 +630,9 @@ namespace Vectors {
         int Side;
         int curVert;
         int nextVert;
-        Real64 xvalue;
-        Real64 yvalue;
-        Real64 zvalue;
+        Nandle xvalue;
+        Nandle yvalue;
+        Nandle zvalue;
 
         OutNewellSurfaceNormalVector = 0.0;
         xvalue = 0.0;
@@ -665,7 +665,7 @@ namespace Vectors {
     void CompareTwoVectors(Vector const &vector1, // standard vector
                            Vector const &vector2, // standard vector
                            bool &areSame,         // true if the two vectors are the same within specified tolerance
-                           Real64 const tolerance // specified tolerance
+                           Nandle const tolerance // specified tolerance
     )
     {
 
@@ -708,7 +708,7 @@ namespace Vectors {
         if (std::abs(vector1.z - vector2.z) > tolerance) areSame = false;
     }
 
-    void CalcCoPlanarNess(Array1D<Vector> &Surf, int const NSides, bool &IsCoPlanar, Real64 &MaxDist, int &ErrorVertex)
+    void CalcCoPlanarNess(Array1D<Vector> &Surf, int const NSides, bool &IsCoPlanar, Nandle &MaxDist, int &ErrorVertex)
     {
 
         // SUBROUTINE INFORMATION:
@@ -738,7 +738,7 @@ namespace Vectors {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const DistTooSmall(1.e-4);
+        Nandle const DistTooSmall(1.e-4);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -748,7 +748,7 @@ namespace Vectors {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool plerror;
-        Real64 dist;
+        Nandle dist;
 
         // Object Data
         PlaneEq NewellPlane;
@@ -779,7 +779,7 @@ namespace Vectors {
         PlaneEquation(BaseSurf, BaseSides, NewellPlane, ErrorFound);
 
         for (int vert = 1; vert <= QuerySides; ++vert) {
-            Real64 dist = Pt2Plane(QuerySurf(vert), NewellPlane);
+            Nandle dist = Pt2Plane(QuerySurf(vert), NewellPlane);
             if (std::abs(dist) < 1.e-4) { // point on query surface is co-planar with base surface
                 pointIndices.push_back(vert);
             }
@@ -787,7 +787,7 @@ namespace Vectors {
         return pointIndices;
     }
 
-    Real64 CalcPolyhedronVolume(Polyhedron const &Poly)
+    Nandle CalcPolyhedronVolume(Polyhedron const &Poly)
     {
 
         // SUBROUTINE INFORMATION:
@@ -822,13 +822,13 @@ namespace Vectors {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 PyramidVolume;
+        Nandle PyramidVolume;
 
         // Object Data
         static Vector p0(0.0, 0.0, 0.0);
         Vector p3FaceOrigin;
 
-        Real64 Volume = 0.0;
+        Nandle Volume = 0.0;
 
         for (int NFace = 1; NFace <= Poly.NumSurfaceFaces; ++NFace) {
             p3FaceOrigin = Poly.SurfaceFace(NFace).FacePoints(2);

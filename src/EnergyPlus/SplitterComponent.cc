@@ -234,7 +234,7 @@ namespace SplitterComponent {
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 
@@ -389,7 +389,7 @@ namespace SplitterComponent {
         int InletNode;
         int OutletNode;
         int NodeNum;
-        Real64 AirEnthalpy; // [J/kg]
+        Nandle AirEnthalpy; // [J/kg]
         static bool MyEnvrnFlag(true);
 
         // FLOW:
@@ -604,7 +604,7 @@ namespace SplitterComponent {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const FlowRateToler(0.01); // Tolerance for mass flow rate convergence (in kg/s)
+        Nandle const FlowRateToler(0.01); // Tolerance for mass flow rate convergence (in kg/s)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na

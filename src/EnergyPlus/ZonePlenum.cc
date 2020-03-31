@@ -336,7 +336,7 @@ namespace ZonePlenum {
         int MaxAlphas;
         int NodeNum;
         int IOStat;
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         std::string CurrentModuleObject; // for ease in getting objects
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
@@ -1066,7 +1066,7 @@ namespace ZonePlenum {
         int IndNum(0);                  // induced air index
         int ADUNum(0);                  // air distribution unit number
         int ADUListIndex(0);            // air distribution unit index in zone return plenum data structure
-        Real64 TotIndMassFlowRate(0.0); // total induced air mass flow rate [kg/s]
+        Nandle TotIndMassFlowRate(0.0); // total induced air mass flow rate [kg/s]
 
         // Reset the totals to zero before they are summed.
         ZoneRetPlenCond(ZonePlenumNum).OutletMassFlowRate = 0.0;
@@ -1333,7 +1333,7 @@ namespace ZonePlenum {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const FlowRateToler(0.01); // Tolerance for mass flow rate convergence (in kg/s)
+        Nandle const FlowRateToler(0.01); // Tolerance for mass flow rate convergence (in kg/s)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na

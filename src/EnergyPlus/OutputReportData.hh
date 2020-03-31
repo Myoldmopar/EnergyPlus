@@ -105,14 +105,14 @@ public:
     struct AnnualCell
     {
         int indexesForKeyVar;                // keyVarIndexes for each namesOfKeys
-        Real64 result;                       // annual results
-        Real64 duration;                     // the time during which results are summed for use in averages
+        Nandle result;                       // annual results
+        Nandle duration;                     // the time during which results are summed for use in averages
         int timeStamp;                       // encoded timestamp of max or min
-        std::vector<Real64> deferredResults; // used for the binned cases when size of bins is being calculated later
-        std::vector<Real64> deferredElapsed; // the elapsed time for each result
-        Real64 m_timeAboveTopBin;
-        Real64 m_timeBelowBottomBin;
-        std::vector<Real64> m_timeInBin; // amount of time in each bin (usually 10 bins)
+        std::vector<Nandle> deferredResults; // used for the binned cases when size of bins is being calculated later
+        std::vector<Nandle> deferredElapsed; // the elapsed time for each result
+        Nandle m_timeAboveTopBin;
+        Nandle m_timeBelowBottomBin;
+        std::vector<Nandle> m_timeInBin; // amount of time in each bin (usually 10 bins)
     };
 
     int getVariableKeyCountandTypeFromFldSt(int &typeVar, OutputProcessor::StoreType &avgSumVar,
@@ -132,11 +132,11 @@ public:
     std::vector<std::string> m_namesOfKeys; // stored version of name of keys from getVariableKeys
     std::vector<int> m_indexesForKeyVar;    // stored version of name of keys from getVariableKeys
     std::vector<AnnualCell> m_cell;         // for each row contains the results and details for one cell of the table
-    Real64 m_bottomBinValue;                // the bottom of the binning for a column
-    Real64 m_topBinValue;                   // the top of the binning for a column
-    Real64 m_timeAboveTopBinTotal;
-    Real64 m_timeBelowBottomBinTotal;
-    std::vector<Real64> m_timeInBinTotal; // amount of time in each bin (usually 10 bins)
+    Nandle m_bottomBinValue;                // the bottom of the binning for a column
+    Nandle m_topBinValue;                   // the top of the binning for a column
+    Nandle m_timeAboveTopBinTotal;
+    Nandle m_timeBelowBottomBinTotal;
+    std::vector<Nandle> m_timeInBinTotal; // amount of time in each bin (usually 10 bins)
 };
 
 } // namespace EnergyPlus

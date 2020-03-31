@@ -84,22 +84,22 @@ namespace SolarReflectionManager {
         int SurfNum;                     // Number of heat transfer surface
         std::string SurfName;            // Name of heat transfer surface
         int NumRecPts;                   // Number of receiving points
-        Array1D<Vector3<Real64>> RecPt;  // Coordinates of receiving point on receiving surface in global CS (m)
-        Vector3<Real64> NormVec;         // Unit outward normal to receiving surface
-        Real64 ThetaNormVec;             // Azimuth of surface normal (radians)
-        Real64 PhiNormVec;               // Altitude of surface normal (radians)
+        Array1D<Vector3<Nandle>> RecPt;  // Coordinates of receiving point on receiving surface in global CS (m)
+        Vector3<Nandle> NormVec;         // Unit outward normal to receiving surface
+        Nandle ThetaNormVec;             // Azimuth of surface normal (radians)
+        Nandle PhiNormVec;               // Altitude of surface normal (radians)
         int NumReflRays;                 // Number of rays from this receiving surface
-        Array1D<Vector3<Real64>> RayVec; // Unit vector in direction of ray from receiving surface
-        Array1D<Real64> CosIncAngRay;    // Cosine of angle between ray and receiving surface outward normal
-        Array1D<Real64> dOmegaRay;       // Delta solid angle associated with ray
-        Array2D<Vector3<Real64>> HitPt;  // For each receiving point and ray, coords of hit point on obstruction
+        Array1D<Vector3<Nandle>> RayVec; // Unit vector in direction of ray from receiving surface
+        Array1D<Nandle> CosIncAngRay;    // Cosine of angle between ray and receiving surface outward normal
+        Array1D<Nandle> dOmegaRay;       // Delta solid angle associated with ray
+        Array2D<Vector3<Nandle>> HitPt;  // For each receiving point and ray, coords of hit point on obstruction
         // that is closest to receiving point (m)
         Array2D_int HitPtSurfNum; // Number of surface containing the hit point for a ray, except:
         //  0 => ray does not hit an obstruction, but hits sky
         //  -1 => ray does not hit an obstruction, but hits ground
-        Array2D<Real64> HitPtSolRefl;          // Beam-to-diffuse solar reflectance at hit point
-        Array2D<Real64> RecPtHitPtDis;         // Distance from receiving point to hit point (m)
-        Array2D<Vector3<Real64>> HitPtNormVec; // Hit point's surface normal unit vector pointing into hemisphere
+        Array2D<Nandle> HitPtSolRefl;          // Beam-to-diffuse solar reflectance at hit point
+        Array2D<Nandle> RecPtHitPtDis;         // Distance from receiving point to hit point (m)
+        Array2D<Vector3<Nandle>> HitPtNormVec; // Hit point's surface normal unit vector pointing into hemisphere
         //  containing the receiving point
         Array1D_int PossibleObsSurfNums; // Surface numbers of possible obstructions for a receiving surf
         int NumPossibleObs;              // Number of possible obstructions for a receiving surface

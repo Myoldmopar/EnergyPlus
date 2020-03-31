@@ -88,34 +88,34 @@ namespace EarthTube {
         int ZonePtr;
         int SchedPtr;
         std::string SchedName;
-        Real64 DesignLevel;
-        Real64 MinTemperature;
-        Real64 MaxTemperature;
-        Real64 DelTemperature;
+        Nandle DesignLevel;
+        Nandle MinTemperature;
+        Nandle MaxTemperature;
+        Nandle DelTemperature;
         int FanType;
-        Real64 FanPressure;
-        Real64 FanEfficiency;
-        Real64 FanPower;
-        Real64 GroundTempz1z2t; // ground temp between z1 and z2 at time t
-        Real64 InsideAirTemp;
-        Real64 AirTemp;
-        Real64 HumRat;          // Humidity ratio of air leaving EarthTube and entering zone
-        Real64 WetBulbTemp;     // Humidity ratio of air leaving EarthTube and entering zone
-        Real64 r1;              // Inner Pipe Radius (m)
-        Real64 r2;              // Pipe Thickness (m)
-        Real64 r3;              // Distance between Pipe Outer Surface and Undistubed Soil (m)
-        Real64 PipeLength;      // Entire Pipe Length
-        Real64 PipeThermCond;   // Pipe Thermal Conductivity
-        Real64 z;               // Depth under the Ground Surface (m)
-        Real64 SoilThermDiff;   // Soil Thermal Diffusivity
-        Real64 SoilThermCond;   // Soil Thermal Conductivity
-        Real64 AverSoilSurTemp; // Average Soil Surface Temperature
-        Real64 ApmlSoilSurTemp; // Amplitude of Soil Surface Temperature
+        Nandle FanPressure;
+        Nandle FanEfficiency;
+        Nandle FanPower;
+        Nandle GroundTempz1z2t; // ground temp between z1 and z2 at time t
+        Nandle InsideAirTemp;
+        Nandle AirTemp;
+        Nandle HumRat;          // Humidity ratio of air leaving EarthTube and entering zone
+        Nandle WetBulbTemp;     // Humidity ratio of air leaving EarthTube and entering zone
+        Nandle r1;              // Inner Pipe Radius (m)
+        Nandle r2;              // Pipe Thickness (m)
+        Nandle r3;              // Distance between Pipe Outer Surface and Undistubed Soil (m)
+        Nandle PipeLength;      // Entire Pipe Length
+        Nandle PipeThermCond;   // Pipe Thermal Conductivity
+        Nandle z;               // Depth under the Ground Surface (m)
+        Nandle SoilThermDiff;   // Soil Thermal Diffusivity
+        Nandle SoilThermCond;   // Soil Thermal Conductivity
+        Nandle AverSoilSurTemp; // Average Soil Surface Temperature
+        Nandle ApmlSoilSurTemp; // Amplitude of Soil Surface Temperature
         int SoilSurPhaseConst;  // Phase constant of Soil Surface
-        Real64 ConstantTermCoef;
-        Real64 TemperatureTermCoef;
-        Real64 VelocityTermCoef;
-        Real64 VelocitySQTermCoef;
+        Nandle ConstantTermCoef;
+        Nandle TemperatureTermCoef;
+        Nandle VelocityTermCoef;
+        Nandle VelocitySQTermCoef;
 
         // Default Constructor
         EarthTubeData()
@@ -130,22 +130,22 @@ namespace EarthTube {
     struct EarthTubeZoneReportVars
     {
         // Members
-        Real64 EarthTubeHeatLoss;          // [J] Heat loss or cooling to zone from air delivered by earth tube
-        Real64 EarthTubeHeatLossRate;      // [W] Heat loss or cooling rate to zone from air delivered by earth tube
-        Real64 EarthTubeHeatGain;          // [J] Heat Gain to zone from air delivered by earth tube
-        Real64 EarthTubeHeatGainRate;      // [W] Heat Gain rate to zone from air delivered by earth tube
-        Real64 EarthTubeOATreatmentPower;  // [W] rate of heat transfer to/from air.  positive is heating OA to higher temp
-        Real64 EarthTubeVolume;            // Volume of Air {m3} due to EarthTube
-        Real64 EarthTubeVolFlowRate;       // Volume flow rate of air (m3/s) due to EarthTube
-        Real64 EarthTubeVolFlowRateStd;    // Volume flow rate of air (m3/s) due to EarthTube at standard air conditions
-        Real64 EarthTubeMass;              // Mass of Air {kg} due to EarthTube
-        Real64 EarthTubeMassFlowRate;      // Mass flow rate of air (kg/s) due to EarthTube
-        Real64 EarthTubeWaterMassFlowRate; // Mass flow rate of water vapor (kg/s) due to EarthTube
-        Real64 EarthTubeFanElec;           // [J] Fan Electricity consumed by EarthTube
-        Real64 EarthTubeFanElecPower;      // [W] Fan Electric power for EarthTube
-        Real64 EarthTubeAirTemp;           // Air Temp {C} of EarthTube, air leaving tube and entering zone
-        Real64 EarthTubeWetBulbTemp;       // Wet Bulb Temperature {C} of EarthTube, air leaving tube and entering zone
-        Real64 EarthTubeHumRat;            // Humidity Ratio {kg/kg} of EarthTube, air leaving tube and entering zone
+        Nandle EarthTubeHeatLoss;          // [J] Heat loss or cooling to zone from air delivered by earth tube
+        Nandle EarthTubeHeatLossRate;      // [W] Heat loss or cooling rate to zone from air delivered by earth tube
+        Nandle EarthTubeHeatGain;          // [J] Heat Gain to zone from air delivered by earth tube
+        Nandle EarthTubeHeatGainRate;      // [W] Heat Gain rate to zone from air delivered by earth tube
+        Nandle EarthTubeOATreatmentPower;  // [W] rate of heat transfer to/from air.  positive is heating OA to higher temp
+        Nandle EarthTubeVolume;            // Volume of Air {m3} due to EarthTube
+        Nandle EarthTubeVolFlowRate;       // Volume flow rate of air (m3/s) due to EarthTube
+        Nandle EarthTubeVolFlowRateStd;    // Volume flow rate of air (m3/s) due to EarthTube at standard air conditions
+        Nandle EarthTubeMass;              // Mass of Air {kg} due to EarthTube
+        Nandle EarthTubeMassFlowRate;      // Mass flow rate of air (kg/s) due to EarthTube
+        Nandle EarthTubeWaterMassFlowRate; // Mass flow rate of water vapor (kg/s) due to EarthTube
+        Nandle EarthTubeFanElec;           // [J] Fan Electricity consumed by EarthTube
+        Nandle EarthTubeFanElecPower;      // [W] Fan Electric power for EarthTube
+        Nandle EarthTubeAirTemp;           // Air Temp {C} of EarthTube, air leaving tube and entering zone
+        Nandle EarthTubeWetBulbTemp;       // Wet Bulb Temperature {C} of EarthTube, air leaving tube and entering zone
+        Nandle EarthTubeHumRat;            // Humidity Ratio {kg/kg} of EarthTube, air leaving tube and entering zone
 
         // Default Constructor
         EarthTubeZoneReportVars()

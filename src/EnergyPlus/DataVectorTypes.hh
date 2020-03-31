@@ -85,8 +85,8 @@ namespace DataVectorTypes {
     //  subscript lookup and are templates so we are using them as plug replacements
     //  for consistent API and to avoid cost of copying them
     // Note: For vectorization contexts std::array is a better choice
-    typedef ObjexxFCL::Vector3<Real64> Vector;
-    typedef ObjexxFCL::Vector2<Real64> Vector_2d;
+    typedef ObjexxFCL::Vector3<Nandle> Vector;
+    typedef ObjexxFCL::Vector2<Nandle> Vector_2d;
 
     struct Vector2dCount : Vector_2d
     {
@@ -100,17 +100,17 @@ namespace DataVectorTypes {
     //	{
     //		// Members
     //		// Right Handed Coordinate system is used
-    //		Real64 x;
-    //		Real64 y;
-    //		Real64 z;
+    //		Nandle x;
+    //		Nandle y;
+    //		Nandle z;
     //
     //		// Default Constructor
     //		Vector()
     //		{}
     //
     //
-    //		// Uniform Real64 Constructor
-    //		Vector( Real64 const v ) :
+    //		// Uniform Nandle Constructor
+    //		Vector( Nandle const v ) :
     //			x( v ),
     //			y( v ),
     //			z( v )
@@ -119,7 +119,7 @@ namespace DataVectorTypes {
     //		// Array Assignment
     //		inline
     //		Vector &
-    //		operator =( Array1D< Real64 > const & a )
+    //		operator =( Array1D< Nandle > const & a )
     //		{
     //			assert( ( a.l() == 1 ) && ( a.u() == 3 ) );
     //			x = a( 1 );
@@ -131,7 +131,7 @@ namespace DataVectorTypes {
     //		// Array Assignment
     //		inline
     //		Vector &
-    //		operator =( Array1A< Real64 > const a )
+    //		operator =( Array1A< Nandle > const a )
     //		{
     //			a.dim( 3 );
     //			x = a( 1 );
@@ -143,7 +143,7 @@ namespace DataVectorTypes {
     //		// Array Assignment
     //		inline
     //		Vector &
-    //		operator =( Array1S< Real64 > const & a )
+    //		operator =( Array1S< Nandle > const & a )
     //		{
     //			assert( ( a.l() == 1 ) && ( a.u() == 3 ) );
     //			x = a( 1 );
@@ -155,7 +155,7 @@ namespace DataVectorTypes {
     //		// Vector3 Assignment
     //		inline
     //		Vector &
-    //		operator =( Vector3< Real64 > const & v )
+    //		operator =( Vector3< Nandle > const & v )
     //		{
     //			x = v.x;
     //			y = v.y;
@@ -163,10 +163,10 @@ namespace DataVectorTypes {
     //			return *this;
     //		}
     //
-    //		// Real64 Assignment
+    //		// Nandle Assignment
     //		inline
     //		Vector &
-    //		operator =( Real64 const v )
+    //		operator =( Nandle const v )
     //		{
     //			x = v;
     //			y = v;
@@ -196,10 +196,10 @@ namespace DataVectorTypes {
     //			return *this;
     //		}
     //
-    //		// += Real64
+    //		// += Nandle
     //		inline
     //		Vector &
-    //		operator +=( Real64 const v )
+    //		operator +=( Nandle const v )
     //		{
     //			x += v;
     //			y += v;
@@ -207,10 +207,10 @@ namespace DataVectorTypes {
     //			return *this;
     //		}
     //
-    //		// -= Real64
+    //		// -= Nandle
     //		inline
     //		Vector &
-    //		operator -=( Real64 const v )
+    //		operator -=( Nandle const v )
     //		{
     //			x -= v;
     //			y -= v;
@@ -218,10 +218,10 @@ namespace DataVectorTypes {
     //			return *this;
     //		}
     //
-    //		// *= Real64
+    //		// *= Nandle
     //		inline
     //		Vector &
-    //		operator *=( Real64 const v )
+    //		operator *=( Nandle const v )
     //		{
     //			x *= v;
     //			y *= v;
@@ -229,12 +229,12 @@ namespace DataVectorTypes {
     //			return *this;
     //		}
     //
-    //		// /= Real64
+    //		// /= Nandle
     //		inline
     //		Vector &
-    //		operator /=( Real64 const v )
+    //		operator /=( Nandle const v )
     //		{
-    //			assert( v != Real64( 0.0 ) );
+    //			assert( v != Nandle( 0.0 ) );
     //			x /= v;
     //			y /= v;
     //			z /= v;
@@ -243,14 +243,14 @@ namespace DataVectorTypes {
     //
     //		// Array Conversion
     //		inline
-    //		operator Array1D< Real64 >() const
+    //		operator Array1D< Nandle >() const
     //		{
-    //			return Array1D< Real64 >( 3, { x, y, z } );
+    //			return Array1D< Nandle >( 3, { x, y, z } );
     //		}
     //
     //		// Length
     //		inline
-    //		Real64
+    //		Nandle
     //		length() const
     //		{
     //			return std::sqrt( ( x * x ) + ( y * y ) + ( z * z ) );
@@ -258,7 +258,7 @@ namespace DataVectorTypes {
     //
     //		// Length
     //		inline
-    //		Real64
+    //		Nandle
     //		length_squared() const
     //		{
     //			return ( x * x ) + ( y * y ) + ( z * z );
@@ -312,11 +312,11 @@ namespace DataVectorTypes {
     //			return c;
     //		}
     //
-    //		// Vector * Real64
+    //		// Vector * Nandle
     //		inline
     //		friend
     //		Vector
-    //		operator *( Vector const & a, Real64 const b )
+    //		operator *( Vector const & a, Nandle const b )
     //		{
     //			Vector r;
     //			r.x = a.x * b;
@@ -325,11 +325,11 @@ namespace DataVectorTypes {
     //			return r;
     //		}
     //
-    //		// Real64 * Vector
+    //		// Nandle * Vector
     //		inline
     //		friend
     //		Vector
-    //		operator *( Real64 const b, Vector const & a )
+    //		operator *( Nandle const b, Vector const & a )
     //		{
     //			Vector r;
     //			r.x = a.x * b;
@@ -364,11 +364,11 @@ namespace DataVectorTypes {
     //			return r;
     //		}
     //
-    //		// Vector / Real64
+    //		// Vector / Nandle
     //		inline
     //		friend
     //		Vector
-    //		operator /( Vector const & a, Real64 const b )
+    //		operator /( Vector const & a, Nandle const b )
     //		{
     //			assert( b != 0.0 );
     //			Vector r;
@@ -395,7 +395,7 @@ namespace DataVectorTypes {
     //		// Magnitude
     //		inline
     //		friend
-    //		Real64
+    //		Nandle
     //		magnitude( Vector const & a )
     //		{
     //			return std::sqrt( square( a.x ) + square( a.y ) + square( a.z ) );
@@ -404,7 +404,7 @@ namespace DataVectorTypes {
     //		// Magnitude Squared
     //		inline
     //		friend
-    //		Real64
+    //		Nandle
     //		magnitude_squared( Vector const & a )
     //		{
     //			return square( a.x ) + square( a.y ) + square( a.z );
@@ -413,7 +413,7 @@ namespace DataVectorTypes {
     //		// Distance
     //		inline
     //		friend
-    //		Real64
+    //		Nandle
     //		distance( Vector const & a, Vector const & b )
     //		{
     //			return std::sqrt( square( a.x - b.x ) + square( a.y - b.y ) + square( a.z - b.z ) );
@@ -422,7 +422,7 @@ namespace DataVectorTypes {
     //		// Distance Squared
     //		inline
     //		friend
-    //		Real64
+    //		Nandle
     //		distance_squared( Vector const & a, Vector const & b )
     //		{
     //			return square( a.x - b.x ) + square( a.y - b.y ) + square( a.z - b.z );
@@ -431,7 +431,7 @@ namespace DataVectorTypes {
     //		// Dot Product
     //		inline
     //		friend
-    //		Real64
+    //		Nandle
     //		dot( Vector const & a, Vector const & b )
     //		{
     //			return ( a.x * b.x ) + ( a.y * b.y ) + ( a.z * b.z );
@@ -440,8 +440,8 @@ namespace DataVectorTypes {
     //		// Dot Product
     //		inline
     //		friend
-    //		Real64
-    //		dot( Vector const & a, Vector3< Real64 > const & b )
+    //		Nandle
+    //		dot( Vector const & a, Vector3< Nandle > const & b )
     //		{
     //			return ( a.x * b.x ) + ( a.y * b.y ) + ( a.z * b.z );
     //		}
@@ -449,8 +449,8 @@ namespace DataVectorTypes {
     //		// Dot Product
     //		inline
     //		friend
-    //		Real64
-    //		dot( Vector3< Real64 > const & a, Vector const & b )
+    //		Nandle
+    //		dot( Vector3< Nandle > const & a, Vector const & b )
     //		{
     //			return ( a.x * b.x ) + ( a.y * b.y ) + ( a.z * b.z );
     //		}
@@ -472,7 +472,7 @@ namespace DataVectorTypes {
     //		inline
     //		friend
     //		Vector
-    //		cross( Vector const & a, Vector3< Real64 > const & b )
+    //		cross( Vector const & a, Vector3< Nandle > const & b )
     //		{
     //			Vector c;
     //			c.x = ( a.y * b.z ) - ( a.z * b.y );
@@ -485,7 +485,7 @@ namespace DataVectorTypes {
     //		inline
     //		friend
     //		Vector
-    //		cross( Vector3< Real64 > const & a, Vector const & b )
+    //		cross( Vector3< Nandle > const & a, Vector const & b )
     //		{
     //			Vector c;
     //			c.x = ( a.y * b.z ) - ( a.z * b.y );
@@ -496,24 +496,24 @@ namespace DataVectorTypes {
     //
     //		// Array Generator
     //		inline
-    //		Array1D< Real64 >
+    //		Array1D< Nandle >
     //		Array() const
     //		{
-    //			return Array1D< Real64 >( 3, { x, y, z } );
+    //			return Array1D< Nandle >( 3, { x, y, z } );
     //		}
     //
     //		// Vector3 Generator
     //		inline
-    //		Vector3< Real64 >
+    //		Vector3< Nandle >
     //		Vec3() const
     //		{
-    //			return Vector3< Real64 >( x, y, z );
+    //			return Vector3< Nandle >( x, y, z );
     //		}
     //
     //		// Assign to an Array
     //		inline
     //		void
-    //		assign_to( Array1D< Real64 > & a ) const
+    //		assign_to( Array1D< Nandle > & a ) const
     //		{
     //			a.dimension( 3 );
     //			a( 1 ) = x;
@@ -524,7 +524,7 @@ namespace DataVectorTypes {
     //		// Assign to a Vector3
     //		inline
     //		void
-    //		assign_to( Vector3< Real64 > & v ) const
+    //		assign_to( Vector3< Nandle > & v ) const
     //		{
     //			v.x = x;
     //			v.y = y;
@@ -536,8 +536,8 @@ namespace DataVectorTypes {
     //		// Square
     //		inline
     //		static
-    //		Real64
-    //		square( Real64 const x )
+    //		Nandle
+    //		square( Nandle const x )
     //		{
     //			return x * x;
     //		}
@@ -547,10 +547,10 @@ namespace DataVectorTypes {
     struct PlaneEq // This is used to specify a plane based on vectors in that plane
     {
         // Members
-        Real64 x;
-        Real64 y;
-        Real64 z;
-        Real64 w;
+        Nandle x;
+        Nandle y;
+        Nandle z;
+        Nandle w;
 
         // Default Constructor
         PlaneEq()
@@ -587,8 +587,8 @@ namespace DataVectorTypes {
     //	struct Vector_2d
     //	{
     //		// Members
-    //		Real64 x;
-    //		Real64 y;
+    //		Nandle x;
+    //		Nandle y;
     //
     //		// Default Constructor
     //		Vector_2d()
@@ -598,7 +598,7 @@ namespace DataVectorTypes {
     //		// Dot Product
     //		inline
     //		friend
-    //		Real64
+    //		Nandle
     //		dot( Vector_2d const & a, Vector_2d const & b )
     //		{
     //			return ( a.x * b.x ) + ( a.y * b.y );
@@ -607,7 +607,7 @@ namespace DataVectorTypes {
     //		// Cross Product
     //		inline
     //		friend
-    //		Real64
+    //		Nandle
     //		cross( Vector_2d const & a, Vector_2d const & b )
     //		{
     //			return ( a.x * b.y ) - ( a.y * b.x );

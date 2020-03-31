@@ -119,16 +119,16 @@ namespace DataGenerators {
     extern int const fuelModeGaseousConstituents;
     extern int const fuelModeGenericLiquid;
 
-    extern Real64 const MinProductGasTemp; // Minimum bound on search for product gas temps
-    extern Real64 const MaxProductGasTemp; // Maximum bound on search for product gas temps
+    extern Nandle const MinProductGasTemp; // Minimum bound on search for product gas temps
+    extern Nandle const MaxProductGasTemp; // Maximum bound on search for product gas temps
 
     extern int const NISTShomate;
     extern int const NASAPolynomial;
 
-    extern Real64 const RinKJperMolpK; // R is ideal gas constant (kJ/mol-K)
-    extern Real64 const InitHRTemp;    // Initialization temperature for heat recovery water
+    extern Nandle const RinKJperMolpK; // R is ideal gas constant (kJ/mol-K)
+    extern Nandle const InitHRTemp;    // Initialization temperature for heat recovery water
 
-    extern Real64 const ImBalanceTol; // used as fraction of electrical power at power module
+    extern Nandle const ImBalanceTol; // used as fraction of electrical power at power module
 
     extern int NumFuelConstit;
     extern int NumGeneratorFuelSups;
@@ -145,26 +145,26 @@ namespace DataGenerators {
         int NodeNum;          // node number for temperature at input
         int SchedNum;         // fuel temperature at input
         int CompPowerCurveID; // "pointer" to compressor power cubic curve
-        Real64 CompPowerLossFactor;
+        Nandle CompPowerLossFactor;
         int NumConstituents; // number of constituents in fue supply
         Array1D_string ConstitName;
-        Array1D<Real64> ConstitMolalFract;
+        Array1D<Nandle> ConstitMolalFract;
         // calculated data (except some for generic liquid)
         Array1D_int GasLibID;        // lookup ID in Gas Phase ThermoChemistry Structure Array
-        Real64 LHV;                  // lower heating value of gaseous fuel (kJ/mol)
-        Real64 LHVJperkg;            // lower heating value of gaseous fuel (J/kg)
-        Real64 LHVliquid;            // userdefined lhv for generic liquid (J/kg)
-        Real64 HHV;                  // higher heating value of fuel (J/kg)
-        Real64 MW;                   // molecular weight g/mol
-        Real64 eCO2;                 // mass flow based CO2 emmissions factor for complete combustion (-)
-        Real64 KmolPerSecToKgPerSec; // conversion from moles to kilograms for this fuel. (
-        Real64 StoicOxygenRate;
-        Real64 TfuelIntoCompress; // inlet fuel temperature
-        Real64 TfuelIntoFCPM;     // compressed fuel temp
-        Real64 PfuelCompEl;       // fuel compressor power
-        Real64 QskinLoss;         // pumping losses for zone
-        Real64 CO2ProductGasCoef; // molar multiplier for stoic products of this fuel
-        Real64 H2OProductGasCoef; // molar multiplier for stoic products of this fuel
+        Nandle LHV;                  // lower heating value of gaseous fuel (kJ/mol)
+        Nandle LHVJperkg;            // lower heating value of gaseous fuel (J/kg)
+        Nandle LHVliquid;            // userdefined lhv for generic liquid (J/kg)
+        Nandle HHV;                  // higher heating value of fuel (J/kg)
+        Nandle MW;                   // molecular weight g/mol
+        Nandle eCO2;                 // mass flow based CO2 emmissions factor for complete combustion (-)
+        Nandle KmolPerSecToKgPerSec; // conversion from moles to kilograms for this fuel. (
+        Nandle StoicOxygenRate;
+        Nandle TfuelIntoCompress; // inlet fuel temperature
+        Nandle TfuelIntoFCPM;     // compressed fuel temp
+        Nandle PfuelCompEl;       // fuel compressor power
+        Nandle QskinLoss;         // pumping losses for zone
+        Nandle CO2ProductGasCoef; // molar multiplier for stoic products of this fuel
+        Nandle H2OProductGasCoef; // molar multiplier for stoic products of this fuel
 
         // Default Constructor
         GeneratorFuelSupplyDataStruct()
@@ -181,27 +181,27 @@ namespace DataGenerators {
         // Members
         std::string ConstituentName;
         std::string ConstituentFormula;
-        Real64 StdRefMolarEnthOfForm;
+        Nandle StdRefMolarEnthOfForm;
         int ThermoMode; // method of calculation for thermodynamics
-        Real64 ShomateA;
-        Real64 ShomateB;
-        Real64 ShomateC;
-        Real64 ShomateD;
-        Real64 ShomateE;
-        Real64 ShomateF;
-        Real64 ShomateG;
-        Real64 ShomateH;
-        Real64 NumCarbons;
-        Real64 NumHydrogens;
-        Real64 NumOxygens;
-        Real64 MolecularWeight;
-        Real64 NASA_A1;
-        Real64 NASA_A2;
-        Real64 NASA_A3;
-        Real64 NASA_A4;
-        Real64 NASA_A5;
-        Real64 NASA_A6;
-        Real64 NASA_A7;
+        Nandle ShomateA;
+        Nandle ShomateB;
+        Nandle ShomateC;
+        Nandle ShomateD;
+        Nandle ShomateE;
+        Nandle ShomateF;
+        Nandle ShomateG;
+        Nandle ShomateH;
+        Nandle NumCarbons;
+        Nandle NumHydrogens;
+        Nandle NumOxygens;
+        Nandle MolecularWeight;
+        Nandle NASA_A1;
+        Nandle NASA_A2;
+        Nandle NASA_A3;
+        Nandle NASA_A4;
+        Nandle NASA_A5;
+        Nandle NASA_A6;
+        Nandle NASA_A7;
 
         // Default Constructor
         GasPropertyDataStruct()
@@ -217,52 +217,52 @@ namespace DataGenerators {
         // Members
         // user input data
         std::string Name;
-        Real64 PelMin;              // minimum operating point for electrical power Pel
-        Real64 PelMax;              // maximum operating point for electrical power Pel
-        Real64 UpTranLimit;         // power up transient limit W/s
-        Real64 DownTranLimit;       // power down tran limit  W/s
-        Real64 UpTranLimitFuel;     // fuel up transient limit kg/s
-        Real64 DownTranLimitFuel;   // fuel down transient limit kg/s
+        Nandle PelMin;              // minimum operating point for electrical power Pel
+        Nandle PelMax;              // maximum operating point for electrical power Pel
+        Nandle UpTranLimit;         // power up transient limit W/s
+        Nandle DownTranLimit;       // power down tran limit  W/s
+        Nandle UpTranLimitFuel;     // fuel up transient limit kg/s
+        Nandle DownTranLimitFuel;   // fuel down transient limit kg/s
         bool WarmUpByTimeDelay;     // Warm up mode control
         bool WarmUpByEngineTemp;    // Warm up mode control
-        Real64 StartUpTimeDelay;    // time for start up [hours]
-        Real64 WarmUpDelay;         // time for warm up delay [s]
-        Real64 StartUpFuel;         // fuel use during start up
-        Real64 StartUpElectConsum;  // electricity used during start up
-        Real64 StartUpElectProd;    // electricity produced during start up
-        Real64 ShutDownFuel;        // fuel consumed during shut down
-        Real64 ShutDownElectConsum; // Elect consumed during shut down
-        Real64 PcoolDown;           // power during cool down
-        Real64 CoolDownDelay;       // time for cool down delay [hours]
+        Nandle StartUpTimeDelay;    // time for start up [hours]
+        Nandle WarmUpDelay;         // time for warm up delay [s]
+        Nandle StartUpFuel;         // fuel use during start up
+        Nandle StartUpElectConsum;  // electricity used during start up
+        Nandle StartUpElectProd;    // electricity produced during start up
+        Nandle ShutDownFuel;        // fuel consumed during shut down
+        Nandle ShutDownElectConsum; // Elect consumed during shut down
+        Nandle PcoolDown;           // power during cool down
+        Nandle CoolDownDelay;       // time for cool down delay [hours]
         int NumCyclesInit;          // number of start stop cycles at beginning
-        Real64 NumRunHoursInit;     // number of hours of operation beginning
-        Real64 Pstandby;            // standby power [w]
-        Real64 MCeng;               // aggregated thermal mass of engine [  ]
-        Real64 MCcw;                // aggregated thermal mass of heat recovery [   ]
-        Real64 kf;                  // coefficient k_f for warmup fuel flow rate
-        Real64 TnomEngOp;           // nominal engine operating temperature [C]
-        Real64 kp;                  // coefficient k_p for warmup power
+        Nandle NumRunHoursInit;     // number of hours of operation beginning
+        Nandle Pstandby;            // standby power [w]
+        Nandle MCeng;               // aggregated thermal mass of engine [  ]
+        Nandle MCcw;                // aggregated thermal mass of heat recovery [   ]
+        Nandle kf;                  // coefficient k_f for warmup fuel flow rate
+        Nandle TnomEngOp;           // nominal engine operating temperature [C]
+        Nandle kp;                  // coefficient k_p for warmup power
         bool MandatoryFullCoolDown;
         bool WarmRestartOkay;
         int AvailabilitySchedID;
         // Calculated values and input from elsewhere
         int CurrentOpMode; // current operating mode, uses params like OpModeNormal
         int LastOpMode;
-        Real64 FractionalDayofLastShutDown;
-        Real64 FractionalDayofLastStartUp;
+        Nandle FractionalDayofLastShutDown;
+        Nandle FractionalDayofLastStartUp;
         bool HasBeenOn;
         bool DuringStartUp;
         bool DuringShutDown;
-        Real64 FuelMdotLastTimestep;
-        Real64 PelLastTimeStep;
+        Nandle FuelMdotLastTimestep;
+        Nandle PelLastTimeStep;
         int NumCycles;
-        Real64 PLRforSubtimestepStartUp;
-        Real64 PLRforSubtimestepShutDown; // part load for not in shut down, shut down part is (1 - PLR)
-        Real64 ElectEffNom;               // efficiency to use for control decisions
-        Real64 ThermEffNom;               // thermal efficiency to use fo control decisions
-        Real64 QdotHXMax;                 // Thermal power max
-        Real64 QdotHXMin;                 // thermal power min
-        Real64 QdotHXOpt;                 // thermal power nominal/optimal
+        Nandle PLRforSubtimestepStartUp;
+        Nandle PLRforSubtimestepShutDown; // part load for not in shut down, shut down part is (1 - PLR)
+        Nandle ElectEffNom;               // efficiency to use for control decisions
+        Nandle ThermEffNom;               // thermal efficiency to use fo control decisions
+        Nandle QdotHXMax;                 // Thermal power max
+        Nandle QdotHXMin;                 // thermal power min
+        Nandle QdotHXOpt;                 // thermal power nominal/optimal
 
         // Default Constructor
         GeneratorDynamicsManagerStruct()

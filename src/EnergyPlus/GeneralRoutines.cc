@@ -120,16 +120,16 @@ void ControlCompOutput(std::string const &CompName,           // the component N
                        std::string const &CompType,           // Type of component
                        int &CompNum,                          // Index of component in component array
                        bool const FirstHVACIteration,         // flag for 1st HVAV iteration in the time step
-                       Real64 const QZnReq,                   // zone load to be met
+                       Nandle const QZnReq,                   // zone load to be met
                        int const ActuatedNode,                // node that controls unit output
-                       Real64 const MaxFlow,                  // maximum water flow
-                       Real64 const MinFlow,                  // minimum water flow
-                       Real64 const ControlOffset,            // really the tolerance
+                       Nandle const MaxFlow,                  // maximum water flow
+                       Nandle const MinFlow,                  // minimum water flow
+                       Nandle const ControlOffset,            // really the tolerance
                        int &ControlCompTypeNum,               // Internal type num for CompType
                        int &CompErrIndex,                     // for Recurring error call
                        Optional_int_const TempInNode,         // inlet node for output calculation
                        Optional_int_const TempOutNode,        // outlet node for output calculation
-                       Optional<Real64 const> AirMassFlow,    // air mass flow rate
+                       Optional<Nandle const> AirMassFlow,    // air mass flow rate
                        Optional_int_const Action,             // 1=reverse; 2=normal
                        Optional_int_const EquipIndex,         // Identifier for equipment of Outdoor Air Unit "ONLY"
                        Optional_int_const LoopNum,            // for plant components, plant loop index
@@ -174,7 +174,7 @@ void ControlCompOutput(std::string const &CompName,           // the component N
     // SUBROUTINE PARAMETER DEFINITIONS:
     // Iteration maximum for reheat control
     static int const MaxIter(25);
-    static Real64 const iter_fac(1.0 / std::pow(2, MaxIter - 3));
+    static Nandle const iter_fac(1.0 / std::pow(2, MaxIter - 3));
     int const iReverseAction(1);
     int const iNormalAction(2);
 
@@ -199,26 +199,26 @@ void ControlCompOutput(std::string const &CompName,           // the component N
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
     static int Iter(0); // Iteration limit for the interval halving process
-    Real64 CpAir;       // specific heat of air (J/kg-C)
+    Nandle CpAir;       // specific heat of air (J/kg-C)
     bool Converged;
-    Real64 Denom;   // the denominator of the control signal
-    Real64 LoadMet; // Actual output of unit (watts)
+    Nandle Denom;   // the denominator of the control signal
+    Nandle LoadMet; // Actual output of unit (watts)
     // INTEGER, SAVE    :: ErrCount=0  ! Number of times that the maximum iterations was exceeded
     // INTEGER, SAVE    :: ErrCount1=0 ! for recurring error
     bool WaterCoilAirFlowControl;   // True if controlling air flow through water coil, water flow fixed
     int SimCompNum;                 // internal number for case statement
-    static Real64 HalvingPrec(0.0); // precision of halving algorithm
+    static Nandle HalvingPrec(0.0); // precision of halving algorithm
     bool BBConvergeCheckFlag;       // additional check on convergence specifically for radiant/convective baseboard units
 
     struct IntervalHalf
     {
         // Members
-        Real64 MaxFlow;
-        Real64 MinFlow;
-        Real64 MaxResult;
-        Real64 MinResult;
-        Real64 MidFlow;
-        Real64 MidResult;
+        Nandle MaxFlow;
+        Nandle MinFlow;
+        Nandle MaxResult;
+        Nandle MinResult;
+        Nandle MidFlow;
+        Nandle MidResult;
         bool MaxFlowCalc;
         bool MinFlowCalc;
         bool MinFlowResult;
@@ -230,12 +230,12 @@ void ControlCompOutput(std::string const &CompName,           // the component N
         }
 
         // Member Constructor
-        IntervalHalf(Real64 const MaxFlow,
-                     Real64 const MinFlow,
-                     Real64 const MaxResult,
-                     Real64 const MinResult,
-                     Real64 const MidFlow,
-                     Real64 const MidResult,
+        IntervalHalf(Nandle const MaxFlow,
+                     Nandle const MinFlow,
+                     Nandle const MaxResult,
+                     Nandle const MinResult,
+                     Nandle const MidFlow,
+                     Nandle const MidResult,
                      bool const MaxFlowCalc,
                      bool const MinFlowCalc,
                      bool const MinFlowResult,
@@ -249,11 +249,11 @@ void ControlCompOutput(std::string const &CompName,           // the component N
     struct ZoneEquipControllerProps
     {
         // Members
-        Real64 SetPoint;           // Desired setpoint;
-        Real64 MaxSetPoint;        // The maximum setpoint; either user input or reset per time step by simulation
-        Real64 MinSetPoint;        // The minimum setpoint; either user input or reset per time step by simulation
-        Real64 SensedValue;        // The sensed control variable of any type
-        Real64 CalculatedSetPoint; // The Calculated SetPoint or new control actuated value
+        Nandle SetPoint;           // Desired setpoint;
+        Nandle MaxSetPoint;        // The maximum setpoint; either user input or reset per time step by simulation
+        Nandle MinSetPoint;        // The minimum setpoint; either user input or reset per time step by simulation
+        Nandle SensedValue;        // The sensed control variable of any type
+        Nandle CalculatedSetPoint; // The Calculated SetPoint or new control actuated value
 
         // Default Constructor
         ZoneEquipControllerProps()
@@ -261,11 +261,11 @@ void ControlCompOutput(std::string const &CompName,           // the component N
         }
 
         // Member Constructor
-        ZoneEquipControllerProps(Real64 const SetPoint,          // Desired setpoint;
-                                 Real64 const MaxSetPoint,       // The maximum setpoint; either user input or reset per time step by simulation
-                                 Real64 const MinSetPoint,       // The minimum setpoint; either user input or reset per time step by simulation
-                                 Real64 const SensedValue,       // The sensed control variable of any type
-                                 Real64 const CalculatedSetPoint // The Calculated SetPoint or new control actuated value
+        ZoneEquipControllerProps(Nandle const SetPoint,          // Desired setpoint;
+                                 Nandle const MaxSetPoint,       // The maximum setpoint; either user input or reset per time step by simulation
+                                 Nandle const MinSetPoint,       // The minimum setpoint; either user input or reset per time step by simulation
+                                 Nandle const SensedValue,       // The sensed control variable of any type
+                                 Nandle const CalculatedSetPoint // The Calculated SetPoint or new control actuated value
                                  )
             : SetPoint(SetPoint), MaxSetPoint(MaxSetPoint), MinSetPoint(MinSetPoint), SensedValue(SensedValue), CalculatedSetPoint(CalculatedSetPoint)
         {
@@ -656,7 +656,7 @@ void ControlCompOutput(std::string const &CompName,           // the component N
     } // End of the Convergence Iteration
 }
 
-bool BBConvergeCheck(int const SimCompNum, Real64 const MaxFlow, Real64 const MinFlow)
+bool BBConvergeCheck(int const SimCompNum, Nandle const MaxFlow, Nandle const MinFlow)
 {
 
     // FUNCTION INFORMATION:
@@ -677,7 +677,7 @@ bool BBConvergeCheck(int const SimCompNum, Real64 const MaxFlow, Real64 const Mi
     bool BBConvergeCheck;
 
     // SUBROUTINE PARAMETER DEFINITIONS:
-    static Real64 const BBIterLimit(0.00001);
+    static Nandle const BBIterLimit(0.00001);
 
     if (SimCompNum != BBSteamRadConvNum && SimCompNum != BBWaterRadConvNum) {
         // For all zone equipment except radiant/convective baseboard (steam and water) units:
@@ -988,25 +988,25 @@ void ValidateComponent(std::string const &CompType,    // Component Type (e.g. C
 }
 
 void CalcPassiveExteriorBaffleGap(const Array1D_int &SurfPtrARR, // Array of indexes pointing to Surface structure in DataSurfaces
-                                  Real64 const VentArea,        // Area available for venting the gap [m2]
-                                  Real64 const Cv,              // Oriface coefficient for volume-based discharge, wind-driven [--]
-                                  Real64 const Cd,              // oriface coefficient for discharge,  bouyancy-driven [--]
-                                  Real64 const HdeltaNPL,       // Height difference from neutral pressure level [m]
-                                  Real64 const SolAbs,          // solar absorptivity of baffle [--]
-                                  Real64 const AbsExt,          // thermal absorptance/emittance of baffle material [--]
-                                  Real64 const Tilt,            // Tilt of gap [Degrees]
-                                  Real64 const AspRat,          // aspect ratio of gap  Height/gap [--]
-                                  Real64 const GapThick,        // Thickness of air space between baffle and underlying heat transfer surface
+                                  Nandle const VentArea,        // Area available for venting the gap [m2]
+                                  Nandle const Cv,              // Oriface coefficient for volume-based discharge, wind-driven [--]
+                                  Nandle const Cd,              // oriface coefficient for discharge,  bouyancy-driven [--]
+                                  Nandle const HdeltaNPL,       // Height difference from neutral pressure level [m]
+                                  Nandle const SolAbs,          // solar absorptivity of baffle [--]
+                                  Nandle const AbsExt,          // thermal absorptance/emittance of baffle material [--]
+                                  Nandle const Tilt,            // Tilt of gap [Degrees]
+                                  Nandle const AspRat,          // aspect ratio of gap  Height/gap [--]
+                                  Nandle const GapThick,        // Thickness of air space between baffle and underlying heat transfer surface
                                   int const Roughness,          // Roughness index (1-6), see DataHeatBalance parameters
-                                  Real64 const QdotSource,      // Source/sink term, e.g. electricity exported from solar cell [W]
-                                  Real64 &TsBaffle,             // Temperature of baffle (both sides) use lagged value on input [C]
-                                  Real64 &TaGap,                // Temperature of air gap (assumed mixed) use lagged value on input [C]
-                                  Optional<Real64> HcGapRpt,
-                                  Optional<Real64> HrGapRpt,
-                                  Optional<Real64> IscRpt,
-                                  Optional<Real64> MdotVentRpt,
-                                  Optional<Real64> VdotWindRpt,
-                                  Optional<Real64> VdotBouyRpt)
+                                  Nandle const QdotSource,      // Source/sink term, e.g. electricity exported from solar cell [W]
+                                  Nandle &TsBaffle,             // Temperature of baffle (both sides) use lagged value on input [C]
+                                  Nandle &TaGap,                // Temperature of air gap (assumed mixed) use lagged value on input [C]
+                                  Optional<Nandle> HcGapRpt,
+                                  Optional<Nandle> HrGapRpt,
+                                  Optional<Nandle> IscRpt,
+                                  Optional<Nandle> MdotVentRpt,
+                                  Optional<Nandle> VdotWindRpt,
+                                  Optional<Nandle> VdotBouyRpt)
 {
 
     // SUBROUTINE INFORMATION:
@@ -1054,11 +1054,11 @@ void CalcPassiveExteriorBaffleGap(const Array1D_int &SurfPtrARR, // Array of ind
     // SUBROUTINE ARGUMENT DEFINITIONS:
 
     // SUBROUTINE PARAMETER DEFINITIONS:
-    Real64 const g(9.807);           // gravitational constant (m/s**2)
-    Real64 const nu(15.66e-6);       // kinematic viscosity (m**2/s) for air at 300 K (Mills 1999 Heat Transfer)
-    Real64 const k(0.0267);          // thermal conductivity (W/m K) for air at 300 K (Mills 1999 Heat Transfer)
-    Real64 const Sigma(5.6697e-08);  // Stefan-Boltzmann constant
-    Real64 const KelvinConv(273.15); // Conversion from Celsius to Kelvin
+    Nandle const g(9.807);           // gravitational constant (m/s**2)
+    Nandle const nu(15.66e-6);       // kinematic viscosity (m**2/s) for air at 300 K (Mills 1999 Heat Transfer)
+    Nandle const k(0.0267);          // thermal conductivity (W/m K) for air at 300 K (Mills 1999 Heat Transfer)
+    Nandle const Sigma(5.6697e-08);  // Stefan-Boltzmann constant
+    Nandle const KelvinConv(273.15); // Conversion from Celsius to Kelvin
     static std::string const RoutineName("CalcPassiveExteriorBaffleGap");
     // INTERFACE BLOCK SPECIFICATIONS:
 
@@ -1067,53 +1067,53 @@ void CalcPassiveExteriorBaffleGap(const Array1D_int &SurfPtrARR, // Array of ind
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
     // following arrays are used to temporarily hold results from multiple underlying surfaces
-    Array1D<Real64> HSkyARR;
-    Array1D<Real64> HGroundARR;
-    Array1D<Real64> HAirARR;
-    Array1D<Real64> HPlenARR;
-    Array1D<Real64> HExtARR;
-    Array1D<Real64> LocalWindArr;
+    Array1D<Nandle> HSkyARR;
+    Array1D<Nandle> HGroundARR;
+    Array1D<Nandle> HAirARR;
+    Array1D<Nandle> HPlenARR;
+    Array1D<Nandle> HExtARR;
+    Array1D<Nandle> LocalWindArr;
 
     // local working variables
-    Real64 RhoAir;                       // density of air
-    Real64 CpAir;                        // specific heat of air
-    Real64 Tamb;                         // outdoor drybulb
-    Real64 A;                            // projected area of baffle from sum of underlying surfaces
-    Real64 HcPlen;                       // surface convection heat transfer coefficient for plenum surfaces
+    Nandle RhoAir;                       // density of air
+    Nandle CpAir;                        // specific heat of air
+    Nandle Tamb;                         // outdoor drybulb
+    Nandle A;                            // projected area of baffle from sum of underlying surfaces
+    Nandle HcPlen;                       // surface convection heat transfer coefficient for plenum surfaces
     int ThisSurf;                        // do loop counter
     int NumSurfs;                        // number of underlying HT surfaces associated with UTSC
-    Real64 TmpTsBaf;                     // baffle temperature
+    Nandle TmpTsBaf;                     // baffle temperature
     int SurfPtr;                         // index of surface in main surface structure
-    Real64 HMovInsul;                    // dummy for call to InitExteriorConvectionCoeff
-    Real64 HExt;                         // dummy for call to InitExteriorConvectionCoeff
+    Nandle HMovInsul;                    // dummy for call to InitExteriorConvectionCoeff
+    Nandle HExt;                         // dummy for call to InitExteriorConvectionCoeff
     int ConstrNum;                       // index of construction in main construction structure
-    Real64 AbsThermSurf;                 // thermal emmittance of underlying wall.
-    Real64 TsoK;                         // underlying surface temperature in Kelvin
-    Real64 TsBaffK;                      // baffle temperature in Kelvin  (lagged)
-    Real64 Vwind;                        // localized, and area-weighted average for wind speed
-    Real64 HrSky;                        // radiation coeff for sky, area-weighted average
-    Real64 HrGround;                     // radiation coeff for ground, area-weighted average
-    Real64 HrAtm;                        // radiation coeff for air (bulk atmosphere), area-weighted average
-    Real64 Isc;                          // Incoming combined solar radiation, area-weighted average
-    Real64 HrPlen;                       // radiation coeff for plenum surfaces, area-weighted average
-    Real64 Tso;                          // temperature of underlying surface, area-weighted average
-    Real64 TmeanK;                       // average of surface temps , for Beta in Grashoff no.
-    Real64 Gr;                           // Grasshof number for natural convection calc
-    Real64 VdotWind;                     // volume flow rate of nat. vent due to wind
-    Real64 VdotThermal;                  // Volume flow rate of nat. vent due to bouyancy
-    Real64 VdotVent;                     // total volume flow rate of nat vent
-    Real64 MdotVent;                     // total mass flow rate of nat vent
-    Real64 NuPlen;                       // Nusselt No. for plenum Gap
-    Real64 LocalOutDryBulbTemp;          // OutDryBulbTemp for here
-    Real64 LocalWetBulbTemp;             // OutWetBulbTemp for here
-    Real64 LocalOutHumRat;               // OutHumRat for here
+    Nandle AbsThermSurf;                 // thermal emmittance of underlying wall.
+    Nandle TsoK;                         // underlying surface temperature in Kelvin
+    Nandle TsBaffK;                      // baffle temperature in Kelvin  (lagged)
+    Nandle Vwind;                        // localized, and area-weighted average for wind speed
+    Nandle HrSky;                        // radiation coeff for sky, area-weighted average
+    Nandle HrGround;                     // radiation coeff for ground, area-weighted average
+    Nandle HrAtm;                        // radiation coeff for air (bulk atmosphere), area-weighted average
+    Nandle Isc;                          // Incoming combined solar radiation, area-weighted average
+    Nandle HrPlen;                       // radiation coeff for plenum surfaces, area-weighted average
+    Nandle Tso;                          // temperature of underlying surface, area-weighted average
+    Nandle TmeanK;                       // average of surface temps , for Beta in Grashoff no.
+    Nandle Gr;                           // Grasshof number for natural convection calc
+    Nandle VdotWind;                     // volume flow rate of nat. vent due to wind
+    Nandle VdotThermal;                  // Volume flow rate of nat. vent due to bouyancy
+    Nandle VdotVent;                     // total volume flow rate of nat vent
+    Nandle MdotVent;                     // total mass flow rate of nat vent
+    Nandle NuPlen;                       // Nusselt No. for plenum Gap
+    Nandle LocalOutDryBulbTemp;          // OutDryBulbTemp for here
+    Nandle LocalWetBulbTemp;             // OutWetBulbTemp for here
+    Nandle LocalOutHumRat;               // OutHumRat for here
     static bool ICSCollectorIsOn(false); // ICS collector has OSCM on
     int CollectorNum;                    // current solar collector index
-    Real64 ICSWaterTemp;                 // ICS solar collector water temp
-    Real64 ICSULossbottom;               // ICS solar collector bottom loss Conductance
+    Nandle ICSWaterTemp;                 // ICS solar collector water temp
+    Nandle ICSULossbottom;               // ICS solar collector bottom loss Conductance
     static bool MyICSEnvrnFlag(true);    // Local environment flag for ICS
 
-    Real64 const surfaceArea(sum_sub(Surface, &SurfaceData::Area, SurfPtrARR));
+    Nandle const surfaceArea(sum_sub(Surface, &SurfaceData::Area, SurfPtrARR));
 
     //	LocalOutDryBulbTemp = sum( Surface( SurfPtrARR ).Area * Surface( SurfPtrARR ).OutDryBulbTemp ) / sum( Surface( SurfPtrARR ).Area );
     ////Autodesk:F2C++ Array subscript usage: Replaced by below
@@ -1268,12 +1268,12 @@ void CalcPassiveExteriorBaffleGap(const Array1D_int &SurfPtrARR, // Array of ind
 
 //****************************************************************************
 
-void PassiveGapNusseltNumber(Real64 const AspRat, // Aspect Ratio of Gap height to gap width
-                             Real64 const Tilt,   // Tilt of gap, degrees
-                             Real64 const Tso,    // Temperature of gap surface closest to outside (K)
-                             Real64 const Tsi,    // Temperature of gap surface closest to zone (K)
-                             Real64 const Gr,     // Gap gas Grashof number
-                             Real64 &gNu          // Gap gas Nusselt number
+void PassiveGapNusseltNumber(Nandle const AspRat, // Aspect Ratio of Gap height to gap width
+                             Nandle const Tilt,   // Tilt of gap, degrees
+                             Nandle const Tso,    // Temperature of gap surface closest to outside (K)
+                             Nandle const Tsi,    // Temperature of gap surface closest to zone (K)
+                             Nandle const Gr,     // Gap gas Grashof number
+                             Nandle &gNu          // Gap gas Nusselt number
 )
 {
 
@@ -1302,29 +1302,29 @@ void PassiveGapNusseltNumber(Real64 const AspRat, // Aspect Ratio of Gap height 
     // SUBROUTINE ARGUMENT DEFINITIONS:
 
     // SUBROUTINE PARAMETER DEFINITIONS:
-    Real64 const Pr(0.71); // Prandtl number for air
+    Nandle const Pr(0.71); // Prandtl number for air
 
     // INTERFACE BLOCK SPECIFICATIONS
 
     // DERIVED TYPE DEFINITIONS
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS
-    Real64 Ra;     // Rayleigh number
-    Real64 gnu901; // Nusselt number temporary variables for
-    Real64 gnu902;
-    Real64 gnu90;
-    Real64 gnu601;
-    Real64 gnu602; // different tilt and Ra ranges
-    Real64 gnu60;
-    Real64 gnu601a;
-    Real64 gnua;
-    Real64 gnub;
-    Real64 cra; // Temporary variables
-    Real64 a;
-    Real64 b;
-    Real64 g;
-    Real64 ang;
-    Real64 tiltr;
+    Nandle Ra;     // Rayleigh number
+    Nandle gnu901; // Nusselt number temporary variables for
+    Nandle gnu902;
+    Nandle gnu90;
+    Nandle gnu601;
+    Nandle gnu602; // different tilt and Ra ranges
+    Nandle gnu60;
+    Nandle gnu601a;
+    Nandle gnua;
+    Nandle gnub;
+    Nandle cra; // Temporary variables
+    Nandle a;
+    Nandle b;
+    Nandle g;
+    Nandle ang;
+    Nandle tiltr;
 
     tiltr = Tilt * DegToRadians;
     Ra = Gr * Pr;
@@ -1370,10 +1370,10 @@ void PassiveGapNusseltNumber(Real64 const AspRat, // Aspect Ratio of Gap height 
     }
 }
 
-void CalcBasinHeaterPower(Real64 const Capacity,     // Basin heater capacity per degree C below setpoint (W/C)
+void CalcBasinHeaterPower(Nandle const Capacity,     // Basin heater capacity per degree C below setpoint (W/C)
                           int const SchedulePtr,     // Pointer to basin heater schedule
-                          Real64 const SetPointTemp, // setpoint temperature for basin heater operation (C)
-                          Real64 &Power              // Basin heater power (W)
+                          Nandle const SetPointTemp, // setpoint temperature for basin heater operation (C)
+                          Nandle &Power              // Basin heater power (W)
 )
 {
 
@@ -1414,7 +1414,7 @@ void CalcBasinHeaterPower(Real64 const Capacity,     // Basin heater capacity pe
     // na
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 BasinHeaterSch; // Schedule for basin heater operation
+    Nandle BasinHeaterSch; // Schedule for basin heater operation
 
     Power = 0.0;
     // Operate basin heater anytime outdoor temperature is below setpoint and water is not flowing through the equipment

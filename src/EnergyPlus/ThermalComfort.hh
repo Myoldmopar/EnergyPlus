@@ -63,111 +63,111 @@ namespace ThermalComfort {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    extern Real64 const TAbsConv;     // Converter for absolute temperature
-    extern Real64 const ActLevelConv; // Converter for activity level (1Met = 58.2 W/m2)
-    extern Real64 const BodySurfArea; // Dubois body surface area of the human body (m2)
-    extern Real64 const RadSurfEff;   // Fraction of surface effective for radiation
-    extern Real64 const StefanBoltz;  // Stefan-Boltzmann constant (W/m2K4)
+    extern Nandle const TAbsConv;     // Converter for absolute temperature
+    extern Nandle const ActLevelConv; // Converter for activity level (1Met = 58.2 W/m2)
+    extern Nandle const BodySurfArea; // Dubois body surface area of the human body (m2)
+    extern Nandle const RadSurfEff;   // Fraction of surface effective for radiation
+    extern Nandle const StefanBoltz;  // Stefan-Boltzmann constant (W/m2K4)
 
     // DERIVED TYPE DEFINITIONS
 
     // MODULE VARIABLE DECLARATIONS:
-    extern Real64 AbsAirTemp;                // Absolute air temperature; K
-    extern Real64 AbsCloSurfTemp;            // Absolute clothing surface temperature; K
-    extern Real64 AbsRadTemp;                // Absolute radiant temperature; K
-    extern Real64 AcclPattern;               // The pattern of acclimation
-    extern Real64 ActLevel;                  // Metabolic rate; w/m2
-    extern Real64 AirVel;                    // Air velocity; m/s
-    extern Real64 AirTemp;                   // Air temperature; C
-    extern Real64 CloBodyRat;                // Ratio of clothed body
-    extern Real64 CloInsul;                  // Clothing insulation
-    extern Real64 CloPermeatEff;             // Clothing permeation efficiency
-    extern Real64 CloSurfTemp;               // Clothing surface temperature; K
-    extern Real64 CloThermEff;               // The Burton thermal efficiency factor for clothing
-    extern Real64 CloUnit;                   // Clothing unit; CLO
-    extern Real64 ConvHeatLoss;              // Convective heat loss
-    extern Real64 CoreTempChange;            // Temperature change of core in 1 minute
-    extern Real64 CoreTemp;                  // Body core temperature
-    extern Real64 CoreTempNeut;              // Body core temperature of neutral state
-    extern Real64 CoreThermCap;              // Thermal capacity of core
-    extern Real64 DryHeatLoss;               // Heat loss from clothing surface due to both convection and radiation
-    extern Real64 DryRespHeatLoss;           // Dry respiration heat loss
-    extern Real64 EvapHeatLoss;              // Evaporative heat loss from skin
-    extern Real64 EvapHeatLossDiff;          // Evaporative heat loss due to moisture diffusion through skin
-    extern Real64 EvapHeatLossMax;           // Maximum evaporative heat loss
-    extern Real64 EvapHeatLossRegComf;       // Evaporative heat loss due to regulatory sweating at the state of comfort
-    extern Real64 EvapHeatLossRegSweat;      // Evaporative heat loss from regulatory sweating
-    extern Real64 EvapHeatLossSweat;         // Evaporative heat loss from the sweat secreted
-    extern Real64 EvapHeatLossSweatPrev;     // Old value of evaporative heat loss from the sweat secreted (KSU)
-    extern Real64 H;                         // Combined heat transfer coefficient
-    extern Real64 Hc;                        // Convective heat transfer coeffiency
-    extern Real64 HcFor;                     // Convective heat transfer coeffiency - Forced
-    extern Real64 HcNat;                     // Convective heat transfer coeffiency - Natural
-    extern Real64 HeatFlow;                  // Heat flow from core to skin
-    extern Real64 Hr;                        // Radiant heat transfer coeffiency
-    extern Real64 IntHeatProd;               // Internal heat production
+    extern Nandle AbsAirTemp;                // Absolute air temperature; K
+    extern Nandle AbsCloSurfTemp;            // Absolute clothing surface temperature; K
+    extern Nandle AbsRadTemp;                // Absolute radiant temperature; K
+    extern Nandle AcclPattern;               // The pattern of acclimation
+    extern Nandle ActLevel;                  // Metabolic rate; w/m2
+    extern Nandle AirVel;                    // Air velocity; m/s
+    extern Nandle AirTemp;                   // Air temperature; C
+    extern Nandle CloBodyRat;                // Ratio of clothed body
+    extern Nandle CloInsul;                  // Clothing insulation
+    extern Nandle CloPermeatEff;             // Clothing permeation efficiency
+    extern Nandle CloSurfTemp;               // Clothing surface temperature; K
+    extern Nandle CloThermEff;               // The Burton thermal efficiency factor for clothing
+    extern Nandle CloUnit;                   // Clothing unit; CLO
+    extern Nandle ConvHeatLoss;              // Convective heat loss
+    extern Nandle CoreTempChange;            // Temperature change of core in 1 minute
+    extern Nandle CoreTemp;                  // Body core temperature
+    extern Nandle CoreTempNeut;              // Body core temperature of neutral state
+    extern Nandle CoreThermCap;              // Thermal capacity of core
+    extern Nandle DryHeatLoss;               // Heat loss from clothing surface due to both convection and radiation
+    extern Nandle DryRespHeatLoss;           // Dry respiration heat loss
+    extern Nandle EvapHeatLoss;              // Evaporative heat loss from skin
+    extern Nandle EvapHeatLossDiff;          // Evaporative heat loss due to moisture diffusion through skin
+    extern Nandle EvapHeatLossMax;           // Maximum evaporative heat loss
+    extern Nandle EvapHeatLossRegComf;       // Evaporative heat loss due to regulatory sweating at the state of comfort
+    extern Nandle EvapHeatLossRegSweat;      // Evaporative heat loss from regulatory sweating
+    extern Nandle EvapHeatLossSweat;         // Evaporative heat loss from the sweat secreted
+    extern Nandle EvapHeatLossSweatPrev;     // Old value of evaporative heat loss from the sweat secreted (KSU)
+    extern Nandle H;                         // Combined heat transfer coefficient
+    extern Nandle Hc;                        // Convective heat transfer coeffiency
+    extern Nandle HcFor;                     // Convective heat transfer coeffiency - Forced
+    extern Nandle HcNat;                     // Convective heat transfer coeffiency - Natural
+    extern Nandle HeatFlow;                  // Heat flow from core to skin
+    extern Nandle Hr;                        // Radiant heat transfer coeffiency
+    extern Nandle IntHeatProd;               // Internal heat production
     extern int IterNum;                      // Number of iteration
-    extern Real64 LatRespHeatLoss;           // Latent respiration heat loss
+    extern Nandle LatRespHeatLoss;           // Latent respiration heat loss
     extern int MaxZoneNum;                   // Number of zones
     extern int MRTCalcType;                  // The type of MRT calculation (ZoneAveraged or SurfaceWeighted)
-    extern Real64 OpTemp;                    // Operative temperature
+    extern Nandle OpTemp;                    // Operative temperature
     extern int PeopleNum;                    // People number
-    extern Real64 RadHeatLoss;               // Radiant heat loss
-    extern Real64 RadTemp;                   // Radiant temperature; C
-    extern Real64 RelHum;                    // Relative humidity; Fraction
-    extern Real64 RespHeatLoss;              // The rate of respiratory heat loss
-    extern Real64 SatSkinVapPress;           // Saturated vapor pressure at skin temperature
-    extern Real64 ShivResponse;              // Metalbolic heat production due to shivering
-    extern Real64 SkinComfTemp;              // Skin temperature required to achieve thermal comfort; C
-    extern Real64 SkinComfVPress;            // Saturated water vapor pressure at required skin temperature; Torr
-    extern Real64 SkinTemp;                  // Skin temperature
-    extern Real64 SkinTempChange;            // Temperature change of skin in 1 minute
-    extern Real64 SkinTempNeut;              // Skin temperature at neutral state
-    extern Real64 SkinThermCap;              // Thermal capacity of Skin
-    extern Real64 SkinWetDiff;               // Skin wettedness for nonsweating portion of skin
-    extern Real64 SkinWetSweat;              // Skin wettedness required to evaporate regulatory sweat
-    extern Real64 SkinWetTot;                // Total skin wettedness
-    extern Real64 SkinVapPress;              // Vapor pressure at skin
-    extern Real64 SurfaceTemp;               // Surface temperature when MRTType is 'SurfaceWeighted'
-    extern Real64 ThermCndct;                // Thermal conductance of skin
-    extern Real64 ThermSensTransCoef;        // Theraml sensation coefficient for PMV
-    extern Real64 Time;                      // Time, hr
-    extern Real64 TimeChange;                // Change of time, hr
-    extern Real64 VapPress;                  // Vapor pressure; Torr  ?? BG Oct 2005 humm, this should be kPa
-    extern Real64 VasoconstrictFac;          // Constriction factor of blood vessel
-    extern Real64 VasodilationFac;           // Dilation factor of blood vessel
-    extern Real64 WorkEff;                   // Energy cosumption by external work; w/m2
+    extern Nandle RadHeatLoss;               // Radiant heat loss
+    extern Nandle RadTemp;                   // Radiant temperature; C
+    extern Nandle RelHum;                    // Relative humidity; Fraction
+    extern Nandle RespHeatLoss;              // The rate of respiratory heat loss
+    extern Nandle SatSkinVapPress;           // Saturated vapor pressure at skin temperature
+    extern Nandle ShivResponse;              // Metalbolic heat production due to shivering
+    extern Nandle SkinComfTemp;              // Skin temperature required to achieve thermal comfort; C
+    extern Nandle SkinComfVPress;            // Saturated water vapor pressure at required skin temperature; Torr
+    extern Nandle SkinTemp;                  // Skin temperature
+    extern Nandle SkinTempChange;            // Temperature change of skin in 1 minute
+    extern Nandle SkinTempNeut;              // Skin temperature at neutral state
+    extern Nandle SkinThermCap;              // Thermal capacity of Skin
+    extern Nandle SkinWetDiff;               // Skin wettedness for nonsweating portion of skin
+    extern Nandle SkinWetSweat;              // Skin wettedness required to evaporate regulatory sweat
+    extern Nandle SkinWetTot;                // Total skin wettedness
+    extern Nandle SkinVapPress;              // Vapor pressure at skin
+    extern Nandle SurfaceTemp;               // Surface temperature when MRTType is 'SurfaceWeighted'
+    extern Nandle ThermCndct;                // Thermal conductance of skin
+    extern Nandle ThermSensTransCoef;        // Theraml sensation coefficient for PMV
+    extern Nandle Time;                      // Time, hr
+    extern Nandle TimeChange;                // Change of time, hr
+    extern Nandle VapPress;                  // Vapor pressure; Torr  ?? BG Oct 2005 humm, this should be kPa
+    extern Nandle VasoconstrictFac;          // Constriction factor of blood vessel
+    extern Nandle VasodilationFac;           // Dilation factor of blood vessel
+    extern Nandle WorkEff;                   // Energy cosumption by external work; w/m2
     extern int ZoneNum;                      // Zone number
-    extern Real64 TemporarySixAMTemperature; // Temperature at 6am
+    extern Nandle TemporarySixAMTemperature; // Temperature at 6am
 
     // time that any zone is not comfortable based on simple ASHRAE 55 using summer clothes
-    extern Real64 AnyZoneTimeNotSimpleASH55Summer;
+    extern Nandle AnyZoneTimeNotSimpleASH55Summer;
     // time that any zone is not comfortable based on simple ASHRAE 55 using winter clothes
-    extern Real64 AnyZoneTimeNotSimpleASH55Winter;
+    extern Nandle AnyZoneTimeNotSimpleASH55Winter;
     // time that any zone is not comfortable based on simple ASHRAE 55 using summer or winter clothes
-    extern Real64 AnyZoneTimeNotSimpleASH55Either;
+    extern Nandle AnyZoneTimeNotSimpleASH55Either;
 
     // time that any zone has unmet met loads
-    extern Real64 AnyZoneNotMetHeating;
-    extern Real64 AnyZoneNotMetCooling;
-    extern Real64 AnyZoneNotMetHeatingOccupied;
-    extern Real64 AnyZoneNotMetCoolingOccupied;
-    extern Real64 AnyZoneNotMetOccupied;
+    extern Nandle AnyZoneNotMetHeating;
+    extern Nandle AnyZoneNotMetCooling;
+    extern Nandle AnyZoneNotMetHeatingOccupied;
+    extern Nandle AnyZoneNotMetCoolingOccupied;
+    extern Nandle AnyZoneNotMetOccupied;
     // total time from beginning of simulation AnyZoneTimeNotSimpleASH55
-    extern Real64 TotalAnyZoneTimeNotSimpleASH55Summer;
-    extern Real64 TotalAnyZoneTimeNotSimpleASH55Winter;
-    extern Real64 TotalAnyZoneTimeNotSimpleASH55Either;
+    extern Nandle TotalAnyZoneTimeNotSimpleASH55Summer;
+    extern Nandle TotalAnyZoneTimeNotSimpleASH55Winter;
+    extern Nandle TotalAnyZoneTimeNotSimpleASH55Either;
     // total time from beginning of simulation any zone not met
-    extern Real64 TotalAnyZoneNotMetHeating;
-    extern Real64 TotalAnyZoneNotMetCooling;
-    extern Real64 TotalAnyZoneNotMetHeatingOccupied;
-    extern Real64 TotalAnyZoneNotMetCoolingOccupied;
-    extern Real64 TotalAnyZoneNotMetOccupied;
-    extern Array1D<Real64> ZoneOccHrs;
+    extern Nandle TotalAnyZoneNotMetHeating;
+    extern Nandle TotalAnyZoneNotMetCooling;
+    extern Nandle TotalAnyZoneNotMetHeatingOccupied;
+    extern Nandle TotalAnyZoneNotMetCoolingOccupied;
+    extern Nandle TotalAnyZoneNotMetOccupied;
+    extern Array1D<Nandle> ZoneOccHrs;
     extern bool useEpwData;
-    extern Array1D<Real64> DailyAveOutTemp;
+    extern Array1D<Nandle> DailyAveOutTemp;
 
-    extern Real64 runningAverageASH;
+    extern Nandle runningAverageASH;
 
     // Subroutine Specifications for the Thermal Comfort module
 
@@ -176,27 +176,27 @@ namespace ThermalComfort {
     struct ThermalComfortDataType
     {
         // Members
-        Real64 FangerPMV;
-        Real64 FangerPPD;
-        Real64 CloSurfTemp; // clothing surface temp from iteration in FANGER calcs
-        Real64 PiercePMVET;
-        Real64 PiercePMVSET;
-        Real64 PierceDISC;
-        Real64 PierceTSENS;
-        Real64 PierceSET;
-        Real64 KsuTSV;
-        Real64 ThermalComfortMRT;
-        Real64 ThermalComfortOpTemp;
-        Real64 ClothingValue;
+        Nandle FangerPMV;
+        Nandle FangerPPD;
+        Nandle CloSurfTemp; // clothing surface temp from iteration in FANGER calcs
+        Nandle PiercePMVET;
+        Nandle PiercePMVSET;
+        Nandle PierceDISC;
+        Nandle PierceTSENS;
+        Nandle PierceSET;
+        Nandle KsuTSV;
+        Nandle ThermalComfortMRT;
+        Nandle ThermalComfortOpTemp;
+        Nandle ClothingValue;
         int ThermalComfortAdaptiveASH5590;
         int ThermalComfortAdaptiveASH5580;
         int ThermalComfortAdaptiveCEN15251CatI;
         int ThermalComfortAdaptiveCEN15251CatII;
         int ThermalComfortAdaptiveCEN15251CatIII;
-        Real64 TComfASH55;
-        Real64 TComfCEN15251;
-        Real64 ASHRAE55RunningMeanOutdoorTemp;
-        Real64 CEN15251RunningMeanOutdoorTemp;
+        Nandle TComfASH55;
+        Nandle TComfCEN15251;
+        Nandle ASHRAE55RunningMeanOutdoorTemp;
+        Nandle CEN15251RunningMeanOutdoorTemp;
 
         // Default Constructor
         ThermalComfortDataType()
@@ -217,12 +217,12 @@ namespace ThermalComfort {
         // REAL(r64)    :: dCurMeanRadiantTemp
         // REAL(r64)    :: dOperTemp
         // REAL(r64)    :: dHumidRatio
-        Real64 timeNotSummer;      // time when not in summer comfort range based on ASHRAE 55 simplified
-        Real64 timeNotWinter;      // time when not in winter comfort range based on ASHRAE 55 simplified
-        Real64 timeNotEither;      // time when  not in summer or winter comfort range based on ASHRAE 55 simplified
-        Real64 totalTimeNotSummer; // sum for simulation for summer
-        Real64 totalTimeNotWinter; // sum for simulation for winter
-        Real64 totalTimeNotEither; // sum for simulation for either
+        Nandle timeNotSummer;      // time when not in summer comfort range based on ASHRAE 55 simplified
+        Nandle timeNotWinter;      // time when not in winter comfort range based on ASHRAE 55 simplified
+        Nandle timeNotEither;      // time when  not in summer or winter comfort range based on ASHRAE 55 simplified
+        Nandle totalTimeNotSummer; // sum for simulation for summer
+        Nandle totalTimeNotWinter; // sum for simulation for winter
+        Nandle totalTimeNotEither; // sum for simulation for either
         bool ZoneIsOccupied;       // flag if zone has people
         int warningIndex;          // variable to store pointer to the recurring warning
         int warningIndex2;         // variable to store pointer to the recurring warning
@@ -239,14 +239,14 @@ namespace ThermalComfort {
     struct ThermalComfortSetPointType
     {
         // Members
-        Real64 notMetHeating;
-        Real64 notMetCooling;
-        Real64 notMetHeatingOccupied;
-        Real64 notMetCoolingOccupied;
-        Real64 totalNotMetHeating;
-        Real64 totalNotMetCooling;
-        Real64 totalNotMetHeatingOccupied;
-        Real64 totalNotMetCoolingOccupied;
+        Nandle notMetHeating;
+        Nandle notMetCooling;
+        Nandle notMetHeatingOccupied;
+        Nandle notMetCoolingOccupied;
+        Nandle totalNotMetHeating;
+        Nandle totalNotMetCooling;
+        Nandle totalNotMetHeatingOccupied;
+        Nandle totalNotMetCoolingOccupied;
 
         // Default Constructor
         ThermalComfortSetPointType()
@@ -259,7 +259,7 @@ namespace ThermalComfort {
     struct AngleFactorData
     {
         // Members
-        Array1D<Real64> AngleFactor; // Angle factor of each surface
+        Array1D<Nandle> AngleFactor; // Angle factor of each surface
         std::string Name;            // Angle factor list name
         Array1D_string SurfaceName;  // Names of the Surfces
         Array1D_int SurfacePtr;      // ALLOCATABLE to the names of the Surfces
@@ -288,8 +288,8 @@ namespace ThermalComfort {
     void InitThermalComfort();
 
     void CalcThermalComfortFanger(Optional_int_const PNum = _,     // People number for thermal comfort control
-                                  Optional<Real64 const> Tset = _, // Temperature setpoint for thermal comfort control
-                                  Optional<Real64> PMVResult = _   // PMV value for thermal comfort control
+                                  Optional<Nandle const> Tset = _, // Temperature setpoint for thermal comfort control
+                                  Optional<Nandle> PMVResult = _   // PMV value for thermal comfort control
     );
 
     void CalcThermalComfortPierce();
@@ -297,21 +297,21 @@ namespace ThermalComfort {
     void CalcThermalComfortKSU();
 
     void DERIV(int &TempIndiceNum,         // Number of temperature indices  unused1208
-               Array1D<Real64> &Temp,      // Temperature unused1208
-               Array1D<Real64> &TempChange // Change of temperature
+               Array1D<Nandle> &Temp,      // Temperature unused1208
+               Array1D<Nandle> &TempChange // Change of temperature
     );
 
-    void RKG(int &NEQ, Real64 &H, Real64 &X, Array1D<Real64> &Y, Array1D<Real64> &DY, Array1D<Real64> &C);
+    void RKG(int &NEQ, Nandle &H, Nandle &X, Array1D<Nandle> &Y, Array1D<Nandle> &DY, Array1D<Nandle> &C);
 
     void GetAngleFactorList();
 
-    Real64 CalcAngleFactorMRT(int const AngleFacNum);
+    Nandle CalcAngleFactorMRT(int const AngleFacNum);
 
-    Real64 CalcSurfaceWeightedMRT(int const ZoneNum, int const SurfNum);
+    Nandle CalcSurfaceWeightedMRT(int const ZoneNum, int const SurfNum);
 
-    Real64 CalcSatVapPressFromTemp(Real64 const Temp);
+    Nandle CalcSatVapPressFromTemp(Nandle const Temp);
 
-    Real64 CalcRadTemp(int const PeopleListNum); // Type of MRT calculation (zone averaged or surface weighted)
+    Nandle CalcRadTemp(int const PeopleListNum); // Type of MRT calculation (zone averaged or surface weighted)
 
     void CalcThermalComfortSimpleASH55();
 
@@ -324,13 +324,13 @@ namespace ThermalComfort {
     void CalcThermalComfortAdaptiveASH55(
         bool const initiate,                  // true if supposed to initiate
         Optional_bool_const wthrsim = _,      // true if this is a weather simulation
-        Optional<Real64 const> avgdrybulb = _ // approximate avg drybulb for design day.  will be used as previous period in design day
+        Optional<Nandle const> avgdrybulb = _ // approximate avg drybulb for design day.  will be used as previous period in design day
     );
 
     void CalcThermalComfortAdaptiveCEN15251(
         bool const initiate,                  // true if supposed to initiate
         Optional_bool_const wthrsim = _,      // true if this is a weather simulation
-        Optional<Real64 const> avgdrybulb = _ // approximate avg drybulb for design day.  will be used as previous period in design day
+        Optional<Nandle const> avgdrybulb = _ // approximate avg drybulb for design day.  will be used as previous period in design day
     );
 
     void DynamicClothingModel();

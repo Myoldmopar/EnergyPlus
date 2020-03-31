@@ -67,13 +67,13 @@ namespace OutsideEnergySources {
 
         // Members
         std::string Name;          // user identifier
-        Real64 NomCap = 0.0;             // design nominal capacity of district service
+        Nandle NomCap = 0.0;             // design nominal capacity of district service
         bool NomCapWasAutoSized = false;   // ture if Nominal Capacity was autosize on input
         int CapFractionSchedNum = 0;   // capacity modifier schedule number
         int InletNodeNum = 0;          // Node number on the inlet side of the plant
         int OutletNodeNum = 0;         // Node number on the inlet side of the plant
-        Real64 EnergyTransfer = 0.0;     // cooling energy provided in time step
-        Real64 EnergyRate = 0.0;         // cooling power
+        Nandle EnergyTransfer = 0.0;     // cooling energy provided in time step
+        Nandle EnergyRate = 0.0;         // cooling power
         int EnergyType = 0;            // flag for district heating OR cooling
         // loop topology variables
         int LoopNum = 0;
@@ -84,9 +84,9 @@ namespace OutsideEnergySources {
         bool OneTimeInitFlag = true;
         bool BeginEnvrnInitFlag = true;
         bool CheckEquipName = true;
-        Real64 MassFlowRate = 0.0;
-        Real64 InletTemp = 0.0;
-        Real64 OutletTemp = 0.0;
+        Nandle MassFlowRate = 0.0;
+        Nandle InletTemp = 0.0;
+        Nandle OutletTemp = 0.0;
 
         OutsideEnergySourceSpecs() = default;
 
@@ -94,19 +94,19 @@ namespace OutsideEnergySources {
 
         static PlantComponent *factory(int objectType, std::string objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad,
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad,
                       bool RunFlag) override;
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
         void getDesignCapacities(const PlantLocation &calledFromLocation,
-                                 Real64 &MaxLoad,
-                                 Real64 &MinLoad,
-                                 Real64 &OptLoad) override;
+                                 Nandle &MaxLoad,
+                                 Nandle &MinLoad,
+                                 Nandle &OptLoad) override;
 
-        void initialize(Real64 curLoad);
+        void initialize(Nandle curLoad);
 
-        void calculate(bool runFlag, Real64 curLoad);
+        void calculate(bool runFlag, Nandle curLoad);
 
         void size();
 
@@ -120,7 +120,7 @@ namespace OutsideEnergySources {
 
     void GetOutsideEnergySourcesInput();
 
-    void InitSimVars(int EnergySourceNum, Real64 MyLoad);
+    void InitSimVars(int EnergySourceNum, Nandle MyLoad);
 
 } // namespace OutsideEnergySources
 

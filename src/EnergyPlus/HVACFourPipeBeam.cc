@@ -481,7 +481,7 @@ namespace FourPipeBeam {
         return zoneIndex;
     }
 
-    Real64 HVACFourPipeBeam::getPrimAirDesignVolFlow()
+    Nandle HVACFourPipeBeam::getPrimAirDesignVolFlow()
     {
         return vDotDesignPrimAir;
     }
@@ -492,7 +492,7 @@ namespace FourPipeBeam {
     }
 
     void HVACFourPipeBeam::simulate(bool const FirstHVACIteration, // TRUE if first HVAC iteration in time step
-                                    Real64 &NonAirSysOutput        // convective cooling by the beam system [W]
+                                    Nandle &NonAirSysOutput        // convective cooling by the beam system [W]
     )
     {
 
@@ -734,17 +734,17 @@ namespace FourPipeBeam {
         static int pltSizHeatNum(0);
 
         bool ErrorsFound = false;
-        Real64 rho;                     // local fluid density
+        Nandle rho;                     // local fluid density
         bool noHardSizeAnchorAvailable; // aid for complex logic surrounding mix of hard size and autosizes
-        Real64 cpAir = 0.0;
+        Nandle cpAir = 0.0;
         int SolFlag;
-        Real64 ErrTolerance = 0.001;
+        Nandle ErrTolerance = 0.001;
 
-        Real64 mDotAirSolutionHeating = 0.0;
-        Real64 mDotAirSolutionCooling = 0.0;
-        Real64 originalTermUnitSizeMaxVDot = 0.0;
-        Real64 originalTermUnitSizeCoolVDot = 0.0;
-        Real64 originalTermUnitSizeHeatVDot = 0.0;
+        Nandle mDotAirSolutionHeating = 0.0;
+        Nandle mDotAirSolutionCooling = 0.0;
+        Nandle originalTermUnitSizeMaxVDot = 0.0;
+        Nandle originalTermUnitSizeCoolVDot = 0.0;
+        Nandle originalTermUnitSizeHeatVDot = 0.0;
 
         // convert rated primary flow rate to mass flow rate using standard pressure and dry air at 20.0
         this->mDotNormRatedPrimAir = this->vDotNormRatedPrimAir * DataEnvironment::rhoAirSTP;
@@ -813,8 +813,8 @@ namespace FourPipeBeam {
 
             CheckZoneSizing(this->unitType, this->name);
             // minimum flow rate is from air flow rate on the terminal unit final zone size ( typically ventilation minimum and may be too low)
-            Real64 minFlow(0.0);
-            Real64 maxFlowCool(0.0);
+            Nandle minFlow(0.0);
+            Nandle maxFlowCool(0.0);
             minFlow = std::min(DataEnvironment::StdRhoAir * originalTermUnitSizeMaxVDot,
                                TermUnitFinalZoneSizing(CurTermUnitSizingNum).DesOAFlow * DataEnvironment::StdRhoAir);
             minFlow = std::max(0.0, minFlow);
@@ -866,7 +866,7 @@ namespace FourPipeBeam {
 
             if (beamHeatingPresent) {
                 cpAir = PsyCpAirFnW(TermUnitFinalZoneSizing(CurTermUnitSizingNum).DesHeatCoilInHumRatTU);
-                Real64 maxFlowHeat = 0.0;
+                Nandle maxFlowHeat = 0.0;
                 if ((TermUnitFinalZoneSizing(CurTermUnitSizingNum).DesHeatCoilInTempTU -
                      TermUnitFinalZoneSizing(CurTermUnitSizingNum).ZoneTempAtHeatPeak) > 2.0) { // avoid div by zero and blow up
                     maxFlowHeat = TermUnitFinalZoneSizing(CurTermUnitSizingNum).DesHeatLoad /
@@ -1002,13 +1002,13 @@ namespace FourPipeBeam {
 
     } // set_size
 
-    Real64 HVACFourPipeBeam::residualSizing(Real64 const airFlow // air flow in kg/s
+    Nandle HVACFourPipeBeam::residualSizing(Nandle const airFlow // air flow in kg/s
     )
     {
 
-        static std::string const routineName("Real64 HVACFourPipeBeam::residualSizing ");
-        Real64 rho;      // local fluid density
-        Real64 Residuum; // residual to be minimized to zero
+        static std::string const routineName("Nandle HVACFourPipeBeam::residualSizing ");
+        Nandle rho;      // local fluid density
+        Nandle Residuum; // residual to be minimized to zero
 
         this->mDotSystemAir = airFlow;
         this->vDotDesignPrimAir = this->mDotSystemAir / DataEnvironment::StdRhoAir;
@@ -1062,7 +1062,7 @@ namespace FourPipeBeam {
     }
 
     void HVACFourPipeBeam::control(bool const EP_UNUSED(FirstHVACIteration), // TRUE if 1st HVAC simulation of system timestep
-                                   Real64 &NonAirSysOutput                   // convective cooling by the beam system [W]
+                                   Nandle &NonAirSysOutput                   // convective cooling by the beam system [W]
     )
     {
 
@@ -1075,7 +1075,7 @@ namespace FourPipeBeam {
         bool dOASMode = false; // true if unit is operating as DOAS terminal with no heating or cooling by beam
 
         int SolFlag;
-        Real64 ErrTolerance;
+        Nandle ErrTolerance;
 
         NonAirSysOutput = 0.0; // initialize
 
@@ -1276,13 +1276,13 @@ namespace FourPipeBeam {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 fModCoolCWMdot;  // Cooling capacity modification factor function of chilled water flow rate
-        Real64 fModCoolDeltaT;  // Cooling capacity modification factor function of air-water temperature difference
-        Real64 fModCoolAirMdot; // Cooling capacity modification factor function of primary air flow rate
-        Real64 fModHeatHWMdot;  // Heating capacity modification factor function of hot water flow rate
-        Real64 fModHeatDeltaT;  // Heating capacity modification factor function of water - air temperature difference
-        Real64 fModHeatAirMdot; // Heating capacity modification factor function of primary air flow rate
-        Real64 cp;              // local fluid specific heat
+        Nandle fModCoolCWMdot;  // Cooling capacity modification factor function of chilled water flow rate
+        Nandle fModCoolDeltaT;  // Cooling capacity modification factor function of air-water temperature difference
+        Nandle fModCoolAirMdot; // Cooling capacity modification factor function of primary air flow rate
+        Nandle fModHeatHWMdot;  // Heating capacity modification factor function of hot water flow rate
+        Nandle fModHeatDeltaT;  // Heating capacity modification factor function of water - air temperature difference
+        Nandle fModHeatAirMdot; // Heating capacity modification factor function of primary air flow rate
+        Nandle cp;              // local fluid specific heat
 
         this->qDotBeamHeating = 0.0;
         this->qDotBeamCooling = 0.0;
@@ -1390,11 +1390,11 @@ namespace FourPipeBeam {
         this->qDotTotalDelivered = this->qDotSystemAir + this->qDotBeamCooling + this->qDotBeamHeating;
     }
 
-    Real64 HVACFourPipeBeam::residualCooling(Real64 const cWFlow // cold water flow rate in kg/s
+    Nandle HVACFourPipeBeam::residualCooling(Nandle const cWFlow // cold water flow rate in kg/s
     )
     {
 
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
         this->mDotHW = 0.0;
         this->mDotCW = cWFlow;
         this->calc();
@@ -1405,11 +1405,11 @@ namespace FourPipeBeam {
         }
         return Residuum;
     }
-    Real64 HVACFourPipeBeam::residualHeating(Real64 const hWFlow // hot water flow rate in kg/s
+    Nandle HVACFourPipeBeam::residualHeating(Nandle const hWFlow // hot water flow rate in kg/s
     )
     {
 
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
         this->mDotHW = hWFlow;
         this->mDotCW = 0.0;
         this->calc();
@@ -1462,7 +1462,7 @@ namespace FourPipeBeam {
     void HVACFourPipeBeam::report() // fill out local output variables for reporting
     {
 
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 

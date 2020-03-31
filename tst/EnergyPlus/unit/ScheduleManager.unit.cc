@@ -122,7 +122,7 @@ TEST_F(EnergyPlusFixture, ScheduleManager_UpdateScheduleValues)
     }
     for (int daySchedulePointer = 1; daySchedulePointer <= 3; daySchedulePointer++) {
         for (int whichHour = 1; whichHour <= 24; whichHour++) {
-            Real64 schVal = 1.0;
+            Nandle schVal = 1.0;
             if (daySchedulePointer == 2) schVal = 2.0;
             if (daySchedulePointer == 3) schVal = 3.0;
             DaySchedule(daySchedulePointer).TSValue(1, whichHour) = schVal;

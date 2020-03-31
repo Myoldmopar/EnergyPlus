@@ -611,7 +611,7 @@ namespace NodeInputManager {
         int NCount;     // Actual number of node lists
         bool flagError; // true when error node list name should be output
         Array1D_string cAlphas;
-        Array1D<Real64> rNumbers;
+        Array1D<Nandle> rNumbers;
 
         bool localErrorsFound(false);
         inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, NCount, NumAlphas, NumNumbers);
@@ -1170,8 +1170,8 @@ namespace NodeInputManager {
         int iNode; // node loop index
         int iReq;  // requested report variables loop index
 
-        static Real64 RhoAirStdInit;
-        static Real64 RhoWaterStdInit;
+        static Nandle RhoAirStdInit;
+        static Nandle RhoWaterStdInit;
         static Array1D_int NodeWetBulbSchedPtr;
         static Array1D_bool NodeRelHumidityRepReq;
         static Array1D_int NodeRelHumiditySchedPtr;
@@ -1185,12 +1185,12 @@ namespace NodeInputManager {
         bool ReportRelHumidity;
         bool ReportDewPoint;
         bool ReportSpecificHeat;
-        Real64 SteamDensity;
-        Real64 EnthSteamInDry;
-        Real64 RhoAirCurrent; // temporary value for current air density f(baro, db , W)
-        Real64 rho;
-        Real64 Cp;
-        Real64 rhoStd;
+        Nandle SteamDensity;
+        Nandle EnthSteamInDry;
+        Nandle RhoAirCurrent; // temporary value for current air density f(baro, db , W)
+        Nandle rho;
+        Nandle Cp;
+        Nandle rhoStd;
 
         if (CalcMoreNodeInfoMyOneTimeFlag) {
             RhoAirStdInit = StdRhoAir;

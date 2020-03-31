@@ -105,15 +105,15 @@ namespace DataTimings {
     // MODULE VARIABLE DECLARATIONS:
     int NumTimingElements(0);
     int MaxTimingElements(0);
-    Real64 dailyWeatherTime;
-    Real64 dailyExteriorEnergyUseTime;
-    Real64 dailyHeatBalanceTime;
-    Real64 hbdailyInit;
-    Real64 hbdailyOutSurf;
-    Real64 hbdailyInSurf;
-    Real64 hbdailyHVAC;
-    Real64 hbdailyRep;
-    Real64 clockrate;
+    Nandle dailyWeatherTime;
+    Nandle dailyExteriorEnergyUseTime;
+    Nandle dailyHeatBalanceTime;
+    Nandle hbdailyInit;
+    Nandle hbdailyOutSurf;
+    Nandle hbdailyInSurf;
+    Nandle hbdailyHVAC;
+    Nandle hbdailyRep;
+    Nandle clockrate;
     bool lprocessingInputTiming(false);
     bool lmanageSimulationTiming(false);
     bool lcloseoutReportingTiming(false);
@@ -276,7 +276,7 @@ namespace DataTimings {
 #ifdef EP_Timings
         int loop;  // testing if already in structure
         int found; // indicator for element
-        Real64 stoptime;
+        Nandle stoptime;
         found = 0;
         for (loop = 1; loop <= NumTimingElements; ++loop) {
             if (Timing(loop).Element != ctimingElementstring) continue;
@@ -330,10 +330,10 @@ namespace DataTimings {
 
     void epSummaryTimes(
 #ifdef EP_NO_Timings
-        Real64 &EP_UNUSED(TimeUsed_CPUTime)
+        Nandle &EP_UNUSED(TimeUsed_CPUTime)
 #endif
 #ifdef EP_Timings
-            Real64 &TimeUsed_CPUTime
+            Nandle &TimeUsed_CPUTime
 #endif
     )
     {
@@ -394,7 +394,7 @@ namespace DataTimings {
 #endif
     }
 
-    Real64 epGetTimeUsed(std::string const &ctimingElementstring)
+    Nandle epGetTimeUsed(std::string const &ctimingElementstring)
     {
 
         // FUNCTION INFORMATION:
@@ -416,7 +416,7 @@ namespace DataTimings {
         using DataErrorTracking::AbortProcessing;
 
         // Return value
-        Real64 totalTimeUsed;
+        Nandle totalTimeUsed;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -451,7 +451,7 @@ namespace DataTimings {
         return totalTimeUsed;
     }
 
-    Real64 epGetTimeUsedperCall(std::string const &ctimingElementstring)
+    Nandle epGetTimeUsedperCall(std::string const &ctimingElementstring)
     {
 
         // FUNCTION INFORMATION:
@@ -474,7 +474,7 @@ namespace DataTimings {
         using DataErrorTracking::AbortProcessing;
 
         // Return value
-        Real64 averageTimeUsed;
+        Nandle averageTimeUsed;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -513,7 +513,7 @@ namespace DataTimings {
         return averageTimeUsed;
     }
 
-    Real64 eptime()
+    Nandle eptime()
     {
 
         // FUNCTION INFORMATION:
@@ -538,7 +538,7 @@ namespace DataTimings {
         // na
 
         // Return value
-        Real64 calctime; // calculated time based on "count" and "count_rate"
+        Nandle calctime; // calculated time based on "count" and "count_rate"
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -562,7 +562,7 @@ namespace DataTimings {
         return calctime;
     }
 
-    Real64 epElapsedTime()
+    Nandle epElapsedTime()
     {
 
         // FUNCTION INFORMATION:
@@ -585,7 +585,7 @@ namespace DataTimings {
         // na
 
         // Return value
-        Real64 calctime; // calculated time based on hrs, minutes, seconds, milliseconds
+        Nandle calctime; // calculated time based on hrs, minutes, seconds, milliseconds
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:

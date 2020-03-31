@@ -149,8 +149,8 @@ namespace HVACInterfaceManager {
         using namespace DataConvergParams;
         using DataContaminantBalance::Contaminant;
 
-        static Array1D<Real64> TmpRealARR(ConvergLogStackDepth); // Tuned Made static
-        Real64 DeltaEnergy;
+        static Array1D<Nandle> TmpRealARR(ConvergLogStackDepth); // Tuned Made static
+        Nandle DeltaEnergy;
 
         if ((CalledFrom == CalledFromAirSystemDemandSide) && (OutletNode == 0)) {
             // Air loop has no return path - only check mass flow and then set return inlet node mass flow to sum of demand side inlet nodes
@@ -161,9 +161,9 @@ namespace HVACInterfaceManager {
             AirLoopConvergence(AirLoopNum).HVACEnthalpyNotConverged(1) = false;
             AirLoopConvergence(AirLoopNum).HVACPressureNotConverged(1) = false;
 
-            Real64 totDemandSideMassFlow = 0.0;
-            Real64 totDemandSideMinAvail = 0.0;
-            Real64 totDemandSideMaxAvail = 0.0;
+            Nandle totDemandSideMassFlow = 0.0;
+            Nandle totDemandSideMinAvail = 0.0;
+            Nandle totDemandSideMaxAvail = 0.0;
             for (int demIn = 1; demIn <= DataAirLoop::AirToZoneNodeInfo(AirLoopNum).NumSupplyNodes; ++demIn) {
                 int demInNode = DataAirLoop::AirToZoneNodeInfo(AirLoopNum).ZoneEquipSupplyNodeNum(demIn);
                 totDemandSideMassFlow += Node(demInNode).MassFlowRate;
@@ -392,7 +392,7 @@ namespace HVACInterfaceManager {
     //***************
 
     // In-Place Right Shift by 1 of Array Elements
-    void rshift1(Array1D<Real64> &a)
+    void rshift1(Array1D<Nandle> &a)
     {
         assert(a.size_bounded());
         for (int i = a.u(), e = a.l(); i > e; --i) {
@@ -453,11 +453,11 @@ namespace HVACInterfaceManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OldTankOutletTemp;
-        Real64 OldOtherLoopSideInletMdot;
-        Real64 TankOutletTemp;
-        Real64 Cp;
-        Real64 MixedOutletTemp;
+        Nandle OldTankOutletTemp;
+        Nandle OldOtherLoopSideInletMdot;
+        Nandle TankOutletTemp;
+        Nandle Cp;
+        Nandle MixedOutletTemp;
         int ThisLoopSideInletNode;
 
         // FLOW:
@@ -574,7 +574,7 @@ namespace HVACInterfaceManager {
 
     //***************
 
-    void UpdateHalfLoopInletTemp(int const LoopNum, int const TankInletLoopSide, Real64 &TankOutletTemp)
+    void UpdateHalfLoopInletTemp(int const LoopNum, int const TankInletLoopSide, Nandle &TankOutletTemp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -619,7 +619,7 @@ namespace HVACInterfaceManager {
         // SUBROUTINE ARGUMENTS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const FracTotLoopMass(0.5); // Fraction of total loop mass assigned to the half loop
+        Nandle const FracTotLoopMass(0.5); // Fraction of total loop mass assigned to the half loop
         static std::string const RoutineName("UpdateHalfLoopInletTemp");
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -632,17 +632,17 @@ namespace HVACInterfaceManager {
         int TankOutletLoopSide;    // inlet loopsidenumber
         int TankInletNode;         // inlet loop side outlet node
         int TankOutletNode;        // inlet loop side outlet node
-        Real64 TankInletTemp;      // temporary variable
-        Real64 LastTankOutletTemp; // temporary variable
-        Real64 Cp;                 // specific heat
-        Real64 TimeElapsed;        // temporary value based on current clock time during simulation, fractional hours
+        Nandle TankInletTemp;      // temporary variable
+        Nandle LastTankOutletTemp; // temporary variable
+        Nandle Cp;                 // specific heat
+        Nandle TimeElapsed;        // temporary value based on current clock time during simulation, fractional hours
 
-        Real64 TimeStepSeconds;
-        Real64 MassFlowRate;
-        Real64 PumpHeat;
-        Real64 ThisTankMass;
-        Real64 TankFinalTemp;
-        Real64 TankAverageTemp;
+        Nandle TimeStepSeconds;
+        Nandle MassFlowRate;
+        Nandle PumpHeat;
+        Nandle ThisTankMass;
+        Nandle TankFinalTemp;
+        Nandle TankAverageTemp;
 
         // FLOW:
 
@@ -691,10 +691,10 @@ namespace HVACInterfaceManager {
 
         } else { // tank has mass
             if (MassFlowRate > 0.0) {
-                Real64 const mdotCp = MassFlowRate * Cp;
-                Real64 const mdotCpTempIn = mdotCp * TankInletTemp;
-                Real64 const tankMassCp = ThisTankMass * Cp;
-                Real64 const ExponentTerm = mdotCp / tankMassCp * TimeStepSeconds;
+                Nandle const mdotCp = MassFlowRate * Cp;
+                Nandle const mdotCpTempIn = mdotCp * TankInletTemp;
+                Nandle const tankMassCp = ThisTankMass * Cp;
+                Nandle const ExponentTerm = mdotCp / tankMassCp * TimeStepSeconds;
                 if (ExponentTerm >= 700.0) {
                     TankFinalTemp = (mdotCp * TankInletTemp + PumpHeat) / mdotCp;
 
@@ -738,7 +738,7 @@ namespace HVACInterfaceManager {
         TankOutletTemp = TankAverageTemp;
     }
 
-    void UpdateCommonPipe(int const LoopNum, int const TankInletLoopSide, int const CommonPipeType, Real64 &MixedOutletTemp)
+    void UpdateCommonPipe(int const LoopNum, int const TankInletLoopSide, int const CommonPipeType, Nandle &MixedOutletTemp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -800,18 +800,18 @@ namespace HVACInterfaceManager {
         int TankOutletLoopSide;    // inlet loopsidenumber
         int TankInletNode;         // inlet loop side outlet node
         int TankOutletNode;        // inlet loop side outlet node
-        Real64 TankInletTemp;      // temporary variable
-        Real64 LastTankOutletTemp; // temporary variable
-        Real64 Cp;                 // specific heat
-        Real64 TimeElapsed;        // temporary value based on current clock time during simulation, fractional hours
+        Nandle TankInletTemp;      // temporary variable
+        Nandle LastTankOutletTemp; // temporary variable
+        Nandle Cp;                 // specific heat
+        Nandle TimeElapsed;        // temporary value based on current clock time during simulation, fractional hours
 
-        Real64 FracTotLoopMass; // Fraction of total loop mass assigned to the half loop
-        Real64 TimeStepSeconds;
-        Real64 MassFlowRate;
-        Real64 PumpHeat;
-        Real64 ThisTankMass;
-        Real64 TankFinalTemp;
-        Real64 TankAverageTemp;
+        Nandle FracTotLoopMass; // Fraction of total loop mass assigned to the half loop
+        Nandle TimeStepSeconds;
+        Nandle MassFlowRate;
+        Nandle PumpHeat;
+        Nandle ThisTankMass;
+        Nandle TankFinalTemp;
+        Nandle TankAverageTemp;
 
         // FLOW:
 
@@ -900,8 +900,8 @@ namespace HVACInterfaceManager {
 
     void ManageSingleCommonPipe(int const LoopNum,           // plant loop number
                                 int const LoopSide,          // plant loop side number
-                                Real64 const TankOutletTemp, // inlet temperature to the common pipe passed in from the capacitance calculation
-                                Real64 &MixedOutletTemp      // inlet temperature to the common pipe passed in from the capacitance calculation
+                                Nandle const TankOutletTemp, // inlet temperature to the common pipe passed in from the capacitance calculation
+                                Nandle &MixedOutletTemp      // inlet temperature to the common pipe passed in from the capacitance calculation
     )
     {
 
@@ -935,14 +935,14 @@ namespace HVACInterfaceManager {
 
         // Locals
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS
-        static Real64 MdotPri(0.0);      // flow rate on primary side kg/s
-        static Real64 MdotSec(0.0);      // flow rate on secondary side kg/s
-        static Real64 MdotPriRCLeg(0.0); // flow rate of primary recirculation thru common pipe kg/s
-        static Real64 MdotSecRCLeg(0.0); // flow rate of secondary recirculation thru common pipe kg/s
-        static Real64 TempSecInlet(0.0); // temperature at secondary inlet deg C
-        static Real64 TempPriInlet(0.0); // temperature at primary inlet deg C
-        static Real64 TempPriOutTankOut(0.0);
-        static Real64 TempSecOutTankOut(0.0);
+        static Nandle MdotPri(0.0);      // flow rate on primary side kg/s
+        static Nandle MdotSec(0.0);      // flow rate on secondary side kg/s
+        static Nandle MdotPriRCLeg(0.0); // flow rate of primary recirculation thru common pipe kg/s
+        static Nandle MdotSecRCLeg(0.0); // flow rate of secondary recirculation thru common pipe kg/s
+        static Nandle TempSecInlet(0.0); // temperature at secondary inlet deg C
+        static Nandle TempPriInlet(0.0); // temperature at primary inlet deg C
+        static Nandle TempPriOutTankOut(0.0);
+        static Nandle TempSecOutTankOut(0.0);
         static int NodeNumPriOut(0);
         static int NodeNumSecOut(0);
         static int NodeNumPriIn(0);
@@ -950,7 +950,7 @@ namespace HVACInterfaceManager {
         int CPFlowDir; // flow direction in single common pipe
         static Array1D_bool MyEnvrnFlag;
         static bool OneTimeData(true);
-        Real64 CommonPipeTemp;
+        Nandle CommonPipeTemp;
 
         // One time call to set up report variables and set common pipe 'type' flag
         if (OneTimeData) {
@@ -1042,7 +1042,7 @@ namespace HVACInterfaceManager {
         }
     }
 
-    void ManageTwoWayCommonPipe(int const LoopNum, int const LoopSide, Real64 const TankOutletTemp)
+    void ManageTwoWayCommonPipe(int const LoopNum, int const LoopSide, Nandle const TankOutletTemp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1091,18 +1091,18 @@ namespace HVACInterfaceManager {
         static Array1D_bool MyEnvrnFlag;
         static bool OneTimeData(true);
         int CurCallingCase;              // local temporary
-        static Real64 MdotPri(0.0);      // flow rate on primary side kg/s
-        static Real64 MdotSec(0.0);      // flow rate on secondary side kg/s
-        static Real64 MdotPriToSec(0.0); // flow rate between primary and secondary side kg/s
-        static Real64 MdotPriRCLeg(0.0); // flow rate on primary recirculation common pipe kg/s
-        static Real64 MdotSecRCLeg(0.0); // flow rate on secondary recirculation common pipe kg/s
-        static Real64 TempSecInlet(0.0); // temperature at secondary inlet deg C
-        static Real64 TempPriInlet(0.0); // temperature at primary inlet deg C
-        static Real64 TempPriOutTankOut(0.0);
-        static Real64 TempSecOutTankOut(0.0);
-        static Real64 TempCPPrimaryCntrlSetPoint(0.0);
+        static Nandle MdotPri(0.0);      // flow rate on primary side kg/s
+        static Nandle MdotSec(0.0);      // flow rate on secondary side kg/s
+        static Nandle MdotPriToSec(0.0); // flow rate between primary and secondary side kg/s
+        static Nandle MdotPriRCLeg(0.0); // flow rate on primary recirculation common pipe kg/s
+        static Nandle MdotSecRCLeg(0.0); // flow rate on secondary recirculation common pipe kg/s
+        static Nandle TempSecInlet(0.0); // temperature at secondary inlet deg C
+        static Nandle TempPriInlet(0.0); // temperature at primary inlet deg C
+        static Nandle TempPriOutTankOut(0.0);
+        static Nandle TempSecOutTankOut(0.0);
+        static Nandle TempCPPrimaryCntrlSetPoint(0.0);
         // REAL(r64)  :: TempCPCntrlCurrent  = 0.0d0
-        static Real64 TempCPSecondaryCntrlSetPoint(0.0);
+        static Nandle TempCPSecondaryCntrlSetPoint(0.0);
         // REAL(r64)  :: TempCPCntrlCurrent  = 0.0d0
         static int NodeNumPriOut(0);
         static int NodeNumSecOut(0);

@@ -1766,7 +1766,7 @@ TEST_F(EnergyPlusFixture, Beam_sizeandSimulateOneZone)
     // DataLoopNode::Node( 44 ).Temp = 12.8; // primary air inlet node
     // DataLoopNode::Node( 38 ).Temp = 45.0; // hot water inlet node
 
-    Real64 NonAirSysOutput = 0.0;
+    Nandle NonAirSysOutput = 0.0;
     DataDefineEquip::AirDistUnit(1).airTerminalPtr->simulate(FirstHVACIteration, NonAirSysOutput);
 
     EXPECT_NEAR(DataLoopNode::Node(1).MassFlowRate, 0.36165246721684446, 0.00001);

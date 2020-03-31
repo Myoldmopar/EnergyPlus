@@ -58,9 +58,9 @@ namespace EnergyPlus {
 
 namespace PVWatts {
 
-    const Real64 AOI_MIN(0.5);
-    const Real64 AOI_MAX(89.5);
-    const Real64 DTOR(DataGlobals::DegToRadians);
+    const Nandle AOI_MIN(0.5);
+    const Nandle AOI_MAX(89.5);
+    const Nandle DTOR(DataGlobals::DegToRadians);
     enum RADMODE
     {
         DN_DF,
@@ -69,7 +69,7 @@ namespace PVWatts {
         POA_R,
         POA_P
     };
-    const Real64 SMALL(1e-6);
+    const Nandle SMALL(1e-6);
 
     class pvwatts_celltemp
     {

@@ -141,7 +141,7 @@ namespace SwimmingPool {
         DataHeatBalFanSys::SumLatentPool = 0.0;
 
         PlantLocation A(0, 0, 0, 0);
-        Real64 CurLoad = 0.0;
+        Nandle CurLoad = 0.0;
         bool RunFlag = true;
 
         for (auto &thisPool : Pool) {
@@ -155,7 +155,7 @@ namespace SwimmingPool {
 
     void SwimmingPoolData::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                     bool FirstHVACIteration,
-                                    Real64 &EP_UNUSED(CurLoad),
+                                    Nandle &EP_UNUSED(CurLoad),
                                     bool EP_UNUSED(RunFlag))
     {
         this->initialize(FirstHVACIteration);
@@ -178,11 +178,11 @@ namespace SwimmingPool {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("GetSwimmingPool: "); // include trailing blank space
-        Real64 const MinCoverFactor(0.0);                          // minimum value for cover factors
-        Real64 const MaxCoverFactor(1.0);                          // maximum value for cover factors
-        Real64 const MinDepth(0.05);                               // minimum average pool depth (to avoid obvious input errors)
-        Real64 const MaxDepth(10.0);                               // maximum average pool depth (to avoid obvious input errors)
-        Real64 const MinPowerFactor(0.0);                          // minimum power factor for miscellaneous equipment
+        Nandle const MinCoverFactor(0.0);                          // minimum value for cover factors
+        Nandle const MaxCoverFactor(1.0);                          // maximum value for cover factors
+        Nandle const MinDepth(0.05);                               // minimum average pool depth (to avoid obvious input errors)
+        Nandle const MaxDepth(10.0);                               // maximum average pool depth (to avoid obvious input errors)
+        Nandle const MinPowerFactor(0.0);                          // minimum power factor for miscellaneous equipment
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool ErrorsFound(false);         // Set to true if something goes wrong
@@ -192,7 +192,7 @@ namespace SwimmingPool {
         Array1D_string cNumericFields;   // Numeric field names
         int IOStatus;                    // Used in GetObjectItem
         int Item;                        // Item to be "gotten"
-        Array1D<Real64> Numbers;         // Numeric items for object
+        Array1D<Nandle> Numbers;         // Numeric items for object
         int NumAlphas;                   // Number of Alphas for each GetObjectItem call
         int NumArgs;                     // Unused variable that is part of a subroutine call
         int NumNumbers;                  // Number of Numbers for each GetObjectItem call
@@ -471,12 +471,12 @@ namespace SwimmingPool {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("InitSwimmingPool");
-        Real64 const MinActivityFactor = 0.0;  // Minimum value for activity factor
-        Real64 const MaxActivityFactor = 10.0; // Maximum value for activity factor (realistically)
+        Nandle const MinActivityFactor = 0.0;  // Minimum value for activity factor
+        Nandle const MaxActivityFactor = 10.0; // Maximum value for activity factor (realistically)
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 HeatGainPerPerson = ScheduleManager::GetCurrentScheduleValue(this->PeopleHeatGainSchedPtr);
-        Real64 PeopleModifier = ScheduleManager::GetCurrentScheduleValue(this->PeopleSchedPtr);
+        Nandle HeatGainPerPerson = ScheduleManager::GetCurrentScheduleValue(this->PeopleHeatGainSchedPtr);
+        Nandle PeopleModifier = ScheduleManager::GetCurrentScheduleValue(this->PeopleSchedPtr);
 
         if (this->MyOneTimeFlag) {
             this->setupOutputVars(); // Set up the output variables once here
@@ -522,7 +522,7 @@ namespace SwimmingPool {
             this->WaterOutletTemp = 0.0;
             this->WaterMassFlowRate = 0.0;
             this->PeopleHeatGain = 0.0;
-            Real64 Density = FluidProperties::GetDensityGlycol("WATER", this->PoolWaterTemp, this->GlycolIndex, RoutineName);
+            Nandle Density = FluidProperties::GetDensityGlycol("WATER", this->PoolWaterTemp, this->GlycolIndex, RoutineName);
             this->WaterMass = DataSurfaces::Surface(this->SurfacePtr).Area * this->AvgDepth * Density;
             this->WaterMassFlowRateMax = this->WaterVolFlowMax * Density;
             initSwimmingPoolPlantNodeFlow(this->MyPlantScanFlagPool);
@@ -542,7 +542,7 @@ namespace SwimmingPool {
 
         // initialize the flow rate for the component on the plant side (this follows standard procedure for other components like low temperature
         // radiant systems)
-        Real64 mdot = 0.0;
+        Nandle mdot = 0.0;
         PlantUtilities::SetComponentFlowRate(
             mdot, this->WaterInletNode, this->WaterOutletNode, this->HWLoopNum, this->HWLoopSide, this->HWBranchNum, this->HWCompNum);
         this->WaterInletTemp = DataLoopNode::Node(this->WaterInletNode).Temp;
@@ -801,47 +801,47 @@ namespace SwimmingPool {
         static std::string const RoutineName("CalcSwimmingPool");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 EvapRate;  // evaporation rate for pool in kg/s
-        Real64 CpDeltaTi; // inverse of specific heat of water times the plant loop temperature difference
+        Nandle EvapRate;  // evaporation rate for pool in kg/s
+        Nandle CpDeltaTi; // inverse of specific heat of water times the plant loop temperature difference
 
         // initialize local variables
         int SurfNum = this->SurfacePtr;                    // surface number of floor that is the pool
         int ZoneNum = DataSurfaces::Surface(SurfNum).Zone; // index to zone array
 
         // Convection coefficient calculation
-        Real64 HConvIn = 0.22 * std::pow(std::abs(this->PoolWaterTemp - DataHeatBalFanSys::MAT(ZoneNum)), 1.0 / 3.0) *
+        Nandle HConvIn = 0.22 * std::pow(std::abs(this->PoolWaterTemp - DataHeatBalFanSys::MAT(ZoneNum)), 1.0 / 3.0) *
                          this->CurCoverConvFac; // convection coefficient for pool
         calcSwimmingPoolEvap(EvapRate, SurfNum, DataHeatBalFanSys::MAT(ZoneNum), DataHeatBalFanSys::ZoneAirHumRat(ZoneNum));
         this->MakeUpWaterMassFlowRate = EvapRate;
-        Real64 EvapEnergyLossPerArea = -EvapRate *
+        Nandle EvapEnergyLossPerArea = -EvapRate *
                                        Psychrometrics::PsyHfgAirFnWTdb(DataHeatBalFanSys::ZoneAirHumRat(ZoneNum), DataHeatBalFanSys::MAT(ZoneNum)) /
                                        DataSurfaces::Surface(SurfNum).Area; // energy effect of evaporation rate per unit area in W/m2
         this->EvapHeatLossRate = EvapEnergyLossPerArea * DataSurfaces::Surface(SurfNum).Area;
         // LW and SW radiation term modification: any "excess" radiation blocked by the cover gets convected
         // to the air directly and added to the zone air heat balance
-        Real64 LWsum =
+        Nandle LWsum =
             (DataHeatBalance::QRadThermInAbs(SurfNum) + DataHeatBalSurface::NetLWRadToSurf(SurfNum) + DataHeatBalFanSys::QHTRadSysSurf(SurfNum) +
              DataHeatBalFanSys::QHWBaseboardSurf(SurfNum) + DataHeatBalFanSys::QSteamBaseboardSurf(SurfNum) +
              DataHeatBalFanSys::QElecBaseboardSurf(SurfNum)); // summation of all long-wavelenth radiation going to surface
-        Real64 LWtotal = this->CurCoverLWRadFac * LWsum;      // total flux from long-wavelength radiation to surface
-        Real64 SWtotal = this->CurCoverSWRadFac * DataHeatBalSurface::QRadSWInAbs(SurfNum); // total flux from short-wavelength radiation to surface
+        Nandle LWtotal = this->CurCoverLWRadFac * LWsum;      // total flux from long-wavelength radiation to surface
+        Nandle SWtotal = this->CurCoverSWRadFac * DataHeatBalSurface::QRadSWInAbs(SurfNum); // total flux from short-wavelength radiation to surface
         this->RadConvertToConvect =
             ((1.0 - this->CurCoverLWRadFac) * LWsum) + ((1.0 - this->CurCoverSWRadFac) * DataHeatBalSurface::QRadSWInAbs(SurfNum));
 
         // Heat gain from people (assumed to be all convective to pool water)
-        Real64 PeopleGain =
+        Nandle PeopleGain =
             this->PeopleHeatGain / DataSurfaces::Surface(SurfNum).Area; // heat gain from people in pool (assumed to be all convective)
 
         // Get an estimate of the pool water specific heat
-        Real64 Cp =
+        Nandle Cp =
             FluidProperties::GetSpecificHeatGlycol("WATER", this->PoolWaterTemp, this->GlycolIndex, RoutineName); // specific heat of pool water
 
-        Real64 TH22 =
+        Nandle TH22 =
             DataHeatBalSurface::TH(2, 2, SurfNum); // inside surface temperature at the previous time step equals the old pool water temperature
-        Real64 TInSurf =
+        Nandle TInSurf =
             this->CurSetPtTemp; // Setpoint temperature for pool which is also the goal temperature and also the inside surface face temperature
-        Real64 Tmuw = this->CurMakeupWaterTemp;                                // Inlet makeup water temperature
-        Real64 TLoopInletTemp = DataLoopNode::Node(this->WaterInletNode).Temp; // Inlet water temperature from the plant loop
+        Nandle Tmuw = this->CurMakeupWaterTemp;                                // Inlet makeup water temperature
+        Nandle TLoopInletTemp = DataLoopNode::Node(this->WaterInletNode).Temp; // Inlet water temperature from the plant loop
         this->WaterInletTemp = TLoopInletTemp;
 
         if (TLoopInletTemp <= TInSurf) {
@@ -852,7 +852,7 @@ namespace SwimmingPool {
         // Now calculate the requested mass flow rate from the plant loop to achieve the proper pool temperature
         // old equation using surface heat balance form: MassFlowRate = CpDeltaTi * ( CondTerms + ConvTerm + SWtotal + LWtotal + PeopleGain +
         // PoolMassTerm + MUWTerm + EvapEnergyLossPerArea );
-        Real64 MassFlowRate = (this->WaterMass / (DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour)) *
+        Nandle MassFlowRate = (this->WaterMass / (DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour)) *
                               ((TInSurf - TH22) / (TLoopInletTemp - TInSurf)); // Target mass flow rate to achieve the proper setpoint temperature
         if (MassFlowRate > this->WaterMassFlowRateMax) {
             MassFlowRate = this->WaterMassFlowRateMax;
@@ -877,22 +877,22 @@ namespace SwimmingPool {
             EvapRate * Psychrometrics::PsyHfgAirFnWTdb(DataHeatBalFanSys::ZoneAirHumRat(ZoneNum), DataHeatBalFanSys::MAT(ZoneNum));
     }
 
-    void SwimmingPoolData::calcSwimmingPoolEvap(Real64 &EvapRate,   // evaporation rate of pool
+    void SwimmingPoolData::calcSwimmingPoolEvap(Nandle &EvapRate,   // evaporation rate of pool
                                                 int const SurfNum,  // surface index
-                                                Real64 const MAT,   // mean air temperature
-                                                Real64 const HumRat // zone air humidity ratio
+                                                Nandle const MAT,   // mean air temperature
+                                                Nandle const HumRat // zone air humidity ratio
     )
     {
         static std::string const RoutineName("CalcSwimmingPoolEvap");
-        Real64 const CFinHg(0.00029613); // Multiple pressure in Pa by this constant to get inches of Hg
+        Nandle const CFinHg(0.00029613); // Multiple pressure in Pa by this constant to get inches of Hg
 
         // Evaporation calculation:
         // Evaporation Rate (lb/h) = 0.1 * Area (ft2) * Activity Factor * (Psat,pool - Ppar,air) (in Hg)
         // So evaporation rate, area, and pressures have to be converted to standard E+ units (kg/s, m2, and Pa, respectively)
         // Evaporation Rate per Area = Evaporation Rate * Heat of Vaporization / Area of Surface
 
-        Real64 PSatPool = Psychrometrics::PsyPsatFnTemp(this->PoolWaterTemp, RoutineName);
-        Real64 PParAir = Psychrometrics::PsyPsatFnTemp(MAT, RoutineName) * Psychrometrics::PsyRhFnTdbWPb(MAT, HumRat, DataEnvironment::OutBaroPress);
+        Nandle PSatPool = Psychrometrics::PsyPsatFnTemp(this->PoolWaterTemp, RoutineName);
+        Nandle PParAir = Psychrometrics::PsyPsatFnTemp(MAT, RoutineName) * Psychrometrics::PsyRhFnTdbWPb(MAT, HumRat, DataEnvironment::OutBaroPress);
         if (PSatPool < PParAir) PSatPool = PParAir;
         this->SatPressPoolWaterTemp = PSatPool;
         this->PartPressZoneAirTemp = PParAir;
@@ -934,7 +934,7 @@ namespace SwimmingPool {
         int WaterOutletNode = this->WaterOutletNode; // outlet node number
         PlantUtilities::SafeCopyPlantNode(WaterInletNode, WaterOutletNode);
 
-        Real64 WaterMassFlow = DataLoopNode::Node(WaterInletNode).MassFlowRate; // water mass flow rate
+        Nandle WaterMassFlow = DataLoopNode::Node(WaterInletNode).MassFlowRate; // water mass flow rate
         if (WaterMassFlow > 0.0) DataLoopNode::Node(WaterOutletNode).Temp = this->PoolWaterTemp;
     }
 
@@ -955,7 +955,7 @@ namespace SwimmingPool {
         // radiant systems.
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CloseEnough(0.01); // Some arbitrarily small value to avoid zeros and numbers that are almost the same
+        Nandle const CloseEnough(0.01); // Some arbitrarily small value to avoid zeros and numbers that are almost the same
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // DO loop counter for surface index
@@ -1015,7 +1015,7 @@ namespace SwimmingPool {
         }
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Peter Graham Ellis
@@ -1025,12 +1025,12 @@ namespace SwimmingPool {
         // This function calculates the zone sum of Hc*Area*Tsurf.  It replaces the old SUMHAT.
         // The SumHATsurf code below is also in the CalcZoneSums subroutine in ZoneTempPredictorCorrector and should be updated accordingly.
 
-        Real64 SumHATsurf = 0.0; // Return value
+        Nandle SumHATsurf = 0.0; // Return value
 
         for (int SurfNum = DataHeatBalance::Zone(ZoneNum).SurfaceFirst; SurfNum <= DataHeatBalance::Zone(ZoneNum).SurfaceLast; ++SurfNum) {
             if (!DataSurfaces::Surface(SurfNum).HeatTransSurf) continue; // Skip non-heat transfer surfaces
 
-            Real64 Area = DataSurfaces::Surface(SurfNum).Area; // Effective surface area
+            Nandle Area = DataSurfaces::Surface(SurfNum).Area; // Effective surface area
 
             if (DataSurfaces::Surface(SurfNum).Class == DataSurfaces::SurfaceClass_Window) {
                 if (DataSurfaces::SurfaceWindow(SurfNum).ShadingFlag == DataSurfaces::IntShadeOn ||
@@ -1072,7 +1072,7 @@ namespace SwimmingPool {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("ReportSwimmingPool");
-        Real64 const MinDensity = 1.0; // to avoid a divide by zero
+        Nandle const MinDensity = 1.0; // to avoid a divide by zero
 
         for (int PoolNum = 1; PoolNum <= NumSwimmingPools; ++PoolNum) {
 
@@ -1082,12 +1082,12 @@ namespace SwimmingPool {
             Pool(PoolNum).PoolWaterTemp = DataHeatBalSurface::TH(2, 1, SurfNum);
 
             // Next calculate the amount of heating done by the plant loop
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(
                 "WATER", Pool(PoolNum).PoolWaterTemp, Pool(PoolNum).GlycolIndex, RoutineName); // specific heat of water
             Pool(PoolNum).HeatPower = Pool(PoolNum).WaterMassFlowRate * Cp * (Pool(PoolNum).WaterInletTemp - Pool(PoolNum).PoolWaterTemp);
 
             // Now the power consumption of miscellaneous equipment
-            Real64 Density =
+            Nandle Density =
                 FluidProperties::GetDensityGlycol("WATER", Pool(PoolNum).PoolWaterTemp, Pool(PoolNum).GlycolIndex, RoutineName); // density of water
             if (Density > MinDensity) {
                 Pool(PoolNum).MiscEquipPower = Pool(PoolNum).MiscPowerFactor * Pool(PoolNum).WaterMassFlowRate / Density;
@@ -1109,16 +1109,16 @@ namespace SwimmingPool {
         }
     }
 
-    Real64 MakeUpWaterVolFlowFunct(Real64 MakeUpWaterMassFlowRate, Real64 Density)
+    Nandle MakeUpWaterVolFlowFunct(Nandle MakeUpWaterMassFlowRate, Nandle Density)
     {
-        Real64 MakeUpWaterVolumeFlow;
+        Nandle MakeUpWaterVolumeFlow;
         MakeUpWaterVolumeFlow = MakeUpWaterMassFlowRate / Density;
         return MakeUpWaterVolumeFlow;
     }
 
-    Real64 MakeUpWaterVolFunct(Real64 MakeUpWaterMass, Real64 Density)
+    Nandle MakeUpWaterVolFunct(Nandle MakeUpWaterMass, Nandle Density)
     {
-        Real64 MakeUpWaterVolume;
+        Nandle MakeUpWaterVolume;
         MakeUpWaterVolume = MakeUpWaterMass / Density;
         return MakeUpWaterVolume;
     }

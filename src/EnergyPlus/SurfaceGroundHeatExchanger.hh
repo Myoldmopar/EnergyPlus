@@ -64,9 +64,9 @@ namespace SurfaceGroundHeatExchanger {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    extern Real64 const SmallNum;        // Very small number to avoid div0 errors
-    extern Real64 const StefBoltzmann;   // Stefan-Boltzmann constant
-    extern Real64 const SurfaceHXHeight; // Surface Height above ground -- used in height dependent calcs.
+    extern Nandle const SmallNum;        // Very small number to avoid div0 errors
+    extern Nandle const StefBoltzmann;   // Stefan-Boltzmann constant
+    extern Nandle const SurfaceHXHeight; // Surface Height above ground -- used in height dependent calcs.
 
     extern int const SurfCond_Ground;
     extern int const SurfCond_Exposed;
@@ -89,44 +89,44 @@ namespace SurfaceGroundHeatExchanger {
     // extern int ConstructionNum; // construction index number
     // extern int TopRoughness; // roughness of top layer
     // extern int BtmRoughness; // roughness of bottom layer
-    extern Real64 nsvInletTemp;  // water inlet temperature
-    extern Real64 nsvOutletTemp; // water outlet temperature
-    extern Real64 FlowRate;      // water mass flow rate
-    extern Real64 TopSurfTemp;   // Top  surface temperature
-    extern Real64 BtmSurfTemp;   // Bottom  surface temperature
-    extern Real64 TopSurfFlux;   // Top  surface heat flux
-    extern Real64 BtmSurfFlux;   // Bottom  surface heat flux
-    extern Real64 SourceFlux;    // total heat transfer rate, Watts
-    extern Real64 SourceTemp;    // total heat transfer rate, Watts
-    extern Real64 TopThermAbs;   // Thermal absortivity of top layer
-    extern Real64 BtmThermAbs;   // Thermal absortivity of bottom layer
-    extern Real64 TopSolarAbs;   // Solar absortivity of top layer
+    extern Nandle nsvInletTemp;  // water inlet temperature
+    extern Nandle nsvOutletTemp; // water outlet temperature
+    extern Nandle FlowRate;      // water mass flow rate
+    extern Nandle TopSurfTemp;   // Top  surface temperature
+    extern Nandle BtmSurfTemp;   // Bottom  surface temperature
+    extern Nandle TopSurfFlux;   // Top  surface heat flux
+    extern Nandle BtmSurfFlux;   // Bottom  surface heat flux
+    extern Nandle SourceFlux;    // total heat transfer rate, Watts
+    extern Nandle SourceTemp;    // total heat transfer rate, Watts
+    extern Nandle TopThermAbs;   // Thermal absortivity of top layer
+    extern Nandle BtmThermAbs;   // Thermal absortivity of bottom layer
+    extern Nandle TopSolarAbs;   // Solar absortivity of top layer
     extern Array1D_bool CheckEquipName;
 
     // weather data records updated every zone time step
-    extern Real64 PastBeamSolarRad;    // Previous beam normal solar irradiance
-    extern Real64 PastSolarDirCosVert; // Previous vertical component of solar normal
-    extern Real64 PastDifSolarRad;     // Previous sky diffuse solar horizontal irradiance
-    extern Real64 PastGroundTemp;      // Previous ground temperature
+    extern Nandle PastBeamSolarRad;    // Previous beam normal solar irradiance
+    extern Nandle PastSolarDirCosVert; // Previous vertical component of solar normal
+    extern Nandle PastDifSolarRad;     // Previous sky diffuse solar horizontal irradiance
+    extern Nandle PastGroundTemp;      // Previous ground temperature
     extern bool PastIsRain;            // Previous Surfaces are wet for this time interval
     extern bool PastIsSnow;            // Previous Snow on the ground for this time interval
-    extern Real64 PastOutBaroPress;    // Previous outdoor air barometric pressure
-    extern Real64 PastOutDryBulbTemp;  // Previous outdoor air dry bulb temperature
-    extern Real64 PastOutHumRat;       // Previous outdoor air humidity ratio
-    extern Real64 PastOutAirDensity;   // Previous outdoor air density
-    extern Real64 PastOutWetBulbTemp;  // Previous outdoor air wet bulb temperature
-    extern Real64 PastOutDewPointTemp; // Previous outdoor dewpoint temperature
-    extern Real64 PastSkyTemp;         // Previous sky temperature
-    extern Real64 PastWindSpeed;       // Previous outdoor air wind speed
-    extern Real64 PastCloudFraction;   // Previous Fraction of sky covered by clouds
+    extern Nandle PastOutBaroPress;    // Previous outdoor air barometric pressure
+    extern Nandle PastOutDryBulbTemp;  // Previous outdoor air dry bulb temperature
+    extern Nandle PastOutHumRat;       // Previous outdoor air humidity ratio
+    extern Nandle PastOutAirDensity;   // Previous outdoor air density
+    extern Nandle PastOutWetBulbTemp;  // Previous outdoor air wet bulb temperature
+    extern Nandle PastOutDewPointTemp; // Previous outdoor dewpoint temperature
+    extern Nandle PastSkyTemp;         // Previous sky temperature
+    extern Nandle PastWindSpeed;       // Previous outdoor air wind speed
+    extern Nandle PastCloudFraction;   // Previous Fraction of sky covered by clouds
 
     // get input flag
     extern bool GetInputFlag;
 
     // time keeping variables used for keeping track of average flux over each time step
-    extern Array1D<Real64> QRadSysSrcAvg;      // Average source over the time step
-    extern Array1D<Real64> LastSysTimeElapsed; // record of system time
-    extern Array1D<Real64> LastTimeStepSys;    // previous time step size
+    extern Array1D<Nandle> QRadSysSrcAvg;      // Average source over the time step
+    extern Array1D<Nandle> LastSysTimeElapsed; // record of system time
+    extern Array1D<Nandle> LastTimeStepSys;    // previous time step size
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE PlantSurfaceGroundHeatExchangers
 
@@ -145,14 +145,14 @@ namespace SurfaceGroundHeatExchanger {
         std::string ConstructionName; // name of the associated construction
         std::string InletNode;        // surface GHE inlet fluid node
         std::string OutletNode;       // surface GHE outlet fluid node
-        Real64 DesignMassFlowRate;
-        Real64 TubeDiameter;  // hydronic tube inside diameter
-        Real64 TubeSpacing;   // tube spacing
-        Real64 SurfaceLength; // active length of surface GHE
-        Real64 SurfaceWidth;  // active width of surface GHE
-        Real64 TopThermAbs;   // Thermal absortivity of top layer
-        Real64 TopSolarAbs;   // solar absortivity of top layer
-        Real64 BtmThermAbs;   // Thermal absortivity of bottom layer
+        Nandle DesignMassFlowRate;
+        Nandle TubeDiameter;  // hydronic tube inside diameter
+        Nandle TubeSpacing;   // tube spacing
+        Nandle SurfaceLength; // active length of surface GHE
+        Nandle SurfaceWidth;  // active width of surface GHE
+        Nandle TopThermAbs;   // Thermal absortivity of top layer
+        Nandle TopSolarAbs;   // solar absortivity of top layer
+        Nandle BtmThermAbs;   // Thermal absortivity of bottom layer
         int LowerSurfCond;    // Type of lower surf. boundary condition
         int TubeCircuits;     // number of circuits in total
         int ConstructionNum;  // construction index number
@@ -172,56 +172,56 @@ namespace SurfaceGroundHeatExchanger {
         int CompNum;
 
         // QTF Constants
-        Real64 TsrcConstCoef;
-        Real64 TsrcVarCoef;
-        Real64 QbtmConstCoef;
-        Real64 QbtmVarCoef;
-        Real64 QtopConstCoef;
-        Real64 QtopVarCoef;
+        Nandle TsrcConstCoef;
+        Nandle TsrcVarCoef;
+        Nandle QbtmConstCoef;
+        Nandle QbtmVarCoef;
+        Nandle QtopConstCoef;
+        Nandle QtopVarCoef;
         // conventional CTF terms
         int NumCTFTerms; // number of terms for surface
         // could be allocated rather than hard dimensioning.
-        Array1D<Real64> CTFin;    // surf flux in ctf - X
-        Array1D<Real64> CTFout;   // surf flux in ctf - Z
-        Array1D<Real64> CTFcross; // surf flux in ctf - Y
-        Array1D<Real64> CTFflux;  // surf flux in ctf - F
+        Array1D<Nandle> CTFin;    // surf flux in ctf - X
+        Array1D<Nandle> CTFout;   // surf flux in ctf - Z
+        Array1D<Nandle> CTFcross; // surf flux in ctf - Y
+        Array1D<Nandle> CTFflux;  // surf flux in ctf - F
         // QTF coefficients
-        Array1D<Real64> CTFSourceIn;   // surf flux in ctf - Wi
-        Array1D<Real64> CTFSourceOut;  // surf flux out ctf - Wo
-        Array1D<Real64> CTFTSourceOut; // surf flux in qtf - x
-        Array1D<Real64> CTFTSourceIn;  // surf flux in qtf - y
-        Array1D<Real64> CTFTSourceQ;   // surf flux in qtf - f
+        Array1D<Nandle> CTFSourceIn;   // surf flux in ctf - Wi
+        Array1D<Nandle> CTFSourceOut;  // surf flux out ctf - Wo
+        Array1D<Nandle> CTFTSourceOut; // surf flux in qtf - x
+        Array1D<Nandle> CTFTSourceIn;  // surf flux in qtf - y
+        Array1D<Nandle> CTFTSourceQ;   // surf flux in qtf - f
         // History data
-        Array1D<Real64> TbtmHistory;
-        Array1D<Real64> TtopHistory;
-        Array1D<Real64> TsrcHistory;
-        Array1D<Real64> QbtmHistory;
-        Array1D<Real64> QtopHistory;
-        Array1D<Real64> QsrcHistory;
-        Real64 QSrc;
-        Real64 QSrcAvg;
-        Real64 LastQSrc;
-        Real64 LastSysTimeElapsed;
-        Real64 LastTimeStepSys;
+        Array1D<Nandle> TbtmHistory;
+        Array1D<Nandle> TtopHistory;
+        Array1D<Nandle> TsrcHistory;
+        Array1D<Nandle> QbtmHistory;
+        Array1D<Nandle> QtopHistory;
+        Array1D<Nandle> QsrcHistory;
+        Nandle QSrc;
+        Nandle QSrcAvg;
+        Nandle LastQSrc;
+        Nandle LastSysTimeElapsed;
+        Nandle LastTimeStepSys;
 
         // Report data
-        Real64 InletTemp;            // water inlet temperature
-        Real64 OutletTemp;           // water outlet temperature
-        Real64 MassFlowRate;         // water mass flow rate
-        Real64 TopSurfaceTemp;       // Top surface temperature
-        Real64 BtmSurfaceTemp;       // Bottom  surface temperature
-        Real64 TopSurfaceFlux;       // Top  surface heat flux
-        Real64 BtmSurfaceFlux;       // Bottom  surface heat flux
-        Real64 HeatTransferRate;     // total fluid heat transfer rate, Watts
-        Real64 SurfHeatTransferRate; // total surface heat transfer rate, Watts
-        Real64 Energy;               // cumulative energy, Joules
-        Real64 SurfEnergy;           // cumulative energy, Joules
-        Real64 SourceTemp;           // Source temperature
+        Nandle InletTemp;            // water inlet temperature
+        Nandle OutletTemp;           // water outlet temperature
+        Nandle MassFlowRate;         // water mass flow rate
+        Nandle TopSurfaceTemp;       // Top surface temperature
+        Nandle BtmSurfaceTemp;       // Bottom  surface temperature
+        Nandle TopSurfaceFlux;       // Top  surface heat flux
+        Nandle BtmSurfaceFlux;       // Bottom  surface heat flux
+        Nandle HeatTransferRate;     // total fluid heat transfer rate, Watts
+        Nandle SurfHeatTransferRate; // total surface heat transfer rate, Watts
+        Nandle Energy;               // cumulative energy, Joules
+        Nandle SurfEnergy;           // cumulative energy, Joules
+        Nandle SourceTemp;           // Source temperature
 
         bool MyFlag;
         bool InitQTF;
         bool MyEnvrnFlag;
-        Real64 SurfaceArea; // surface GHE surface area
+        Nandle SurfaceArea; // surface GHE surface area
 
         // Default Constructor
         SurfaceGroundHeatExchangerData()
@@ -245,7 +245,7 @@ namespace SurfaceGroundHeatExchanger {
         {
         }
 
-        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad, bool const RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad, bool const RunFlag) override;
 
         static PlantComponent *factory(int const objectType, std::string const objectName);
 
@@ -258,62 +258,62 @@ namespace SurfaceGroundHeatExchanger {
 
         //==============================================================================
 
-        void CalcBottomFluxCoefficents(Real64 const Tbottom, // current bottom (lower) surface temperature
-                                       Real64 const Ttop     // current top (upper) surface temperature
+        void CalcBottomFluxCoefficents(Nandle const Tbottom, // current bottom (lower) surface temperature
+                                       Nandle const Ttop     // current top (upper) surface temperature
         );
 
         //==============================================================================
 
-        void CalcTopFluxCoefficents(Real64 const Tbottom, // current bottom (lower) surface temperature
-                                    Real64 const Ttop     // current top (upper) surface temperature
+        void CalcTopFluxCoefficents(Nandle const Tbottom, // current bottom (lower) surface temperature
+                                    Nandle const Ttop     // current top (upper) surface temperature
         );
 
         //==============================================================================
 
-        void CalcSourceTempCoefficents(Real64 const Tbottom, // current bottom (lower) surface temperature
-                                       Real64 const Ttop     // current top (upper) surface temperature
+        void CalcSourceTempCoefficents(Nandle const Tbottom, // current bottom (lower) surface temperature
+                                       Nandle const Ttop     // current top (upper) surface temperature
         );
 
         //==============================================================================
 
-        Real64 CalcSourceFlux(); // component number
+        Nandle CalcSourceFlux(); // component number
 
         //==============================================================================
 
-        void UpdateHistories(Real64 const TopFlux,    // current top (top) surface flux
-                             Real64 const BottomFlux, // current bottom (bottom) surface flux
-                             Real64 const SourceFlux, // current source surface flux
-                             Real64 const SourceTemp  // current source temperature
+        void UpdateHistories(Nandle const TopFlux,    // current top (top) surface flux
+                             Nandle const BottomFlux, // current bottom (bottom) surface flux
+                             Nandle const SourceFlux, // current source surface flux
+                             Nandle const SourceTemp  // current source temperature
         );
 
         //==============================================================================
 
-        Real64 CalcHXEffectTerm(Real64 const Temperature,  // Temperature of water entering the surface, in C
-                                Real64 const WaterMassFlow // Mass flow rate, in kg/s
+        Nandle CalcHXEffectTerm(Nandle const Temperature,  // Temperature of water entering the surface, in C
+                                Nandle const WaterMassFlow // Mass flow rate, in kg/s
         );
 
         //==============================================================================
 
-        void CalcTopSurfTemp(Real64 const FluxTop,             // top surface flux
-                             Real64 &TempTop,                  // top surface temperature
-                             Real64 const ThisDryBulb,         // dry bulb temperature
-                             Real64 const ThisWetBulb,         // wet bulb temperature
-                             Real64 const ThisSkyTemp,         // sky temperature
-                             Real64 const ThisBeamSolarRad,    // beam solar radiation
-                             Real64 const ThisDifSolarRad,     // diffuse solar radiation
-                             Real64 const ThisSolarDirCosVert, // vertical component of solar normal
-                             Real64 const ThisWindSpeed,       // wind speed
+        void CalcTopSurfTemp(Nandle const FluxTop,             // top surface flux
+                             Nandle &TempTop,                  // top surface temperature
+                             Nandle const ThisDryBulb,         // dry bulb temperature
+                             Nandle const ThisWetBulb,         // wet bulb temperature
+                             Nandle const ThisSkyTemp,         // sky temperature
+                             Nandle const ThisBeamSolarRad,    // beam solar radiation
+                             Nandle const ThisDifSolarRad,     // diffuse solar radiation
+                             Nandle const ThisSolarDirCosVert, // vertical component of solar normal
+                             Nandle const ThisWindSpeed,       // wind speed
                              bool const ThisIsRain,            // rain flag
                              bool const ThisIsSnow             // snow flag
         );
 
         //==============================================================================
 
-        void CalcBottomSurfTemp(Real64 const FluxBtm,       // bottom surface flux
-                                Real64 &TempBtm,            // bottom surface temperature
-                                Real64 const ThisDryBulb,   // dry bulb temperature
-                                Real64 const ThisWindSpeed, // wind speed
-                                Real64 const ThisGroundTemp // ground temperature
+        void CalcBottomSurfTemp(Nandle const FluxBtm,       // bottom surface flux
+                                Nandle &TempBtm,            // bottom surface temperature
+                                Nandle const ThisDryBulb,   // dry bulb temperature
+                                Nandle const ThisWindSpeed, // wind speed
+                                Nandle const ThisGroundTemp // ground temperature
         );
 
         //==============================================================================

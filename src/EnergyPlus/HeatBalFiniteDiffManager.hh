@@ -63,28 +63,28 @@ namespace EnergyPlus {
 namespace HeatBalFiniteDiffManager {
 
     // MODULE PARAMETER DEFINITIONS:
-    extern Real64 const Lambda;
-    extern Real64 const smalldiff; // Used in places where "equality" tests should not be used.
+    extern Nandle const Lambda;
+    extern Nandle const smalldiff; // Used in places where "equality" tests should not be used.
 
     extern int const CrankNicholsonSecondOrder; // original CondFD scheme.  semi implicit, second order in time
     extern int const FullyImplicitFirstOrder;   // fully implicit scheme, first order in time.
     extern Array1D_string const cCondFDSchemeType;
 
-    extern Real64 const TempInitValue; // Initialization value for Temperature
-    extern Real64 const RhovInitValue; // Initialization value for Rhov
-    extern Real64 const EnthInitValue; // Initialization value for Enthalpy
+    extern Nandle const TempInitValue; // Initialization value for Temperature
+    extern Nandle const RhovInitValue; // Initialization value for Rhov
+    extern Nandle const EnthInitValue; // Initialization value for Enthalpy
 
     // MODULE VARIABLE DECLARATIONS:
-    extern Array1D<Real64> SigmaR;       // Total Resistance of construction layers
-    extern Array1D<Real64> SigmaC;       // Total Capacitance of construction layers
-    extern Array1D<Real64> QHeatInFlux;  // HeatFlux on Surface for reporting
-    extern Array1D<Real64> QHeatOutFlux; // HeatFlux on Surface for reporting
+    extern Array1D<Nandle> SigmaR;       // Total Resistance of construction layers
+    extern Array1D<Nandle> SigmaC;       // Total Capacitance of construction layers
+    extern Array1D<Nandle> QHeatInFlux;  // HeatFlux on Surface for reporting
+    extern Array1D<Nandle> QHeatOutFlux; // HeatFlux on Surface for reporting
     extern int CondFDSchemeType;         // solution scheme for CondFD - default
-    extern Real64 SpaceDescritConstant;  // spatial descritization constant,
-    extern Real64 MinTempLimit;          // lower limit check, degree C
-    extern Real64 MaxTempLimit;          // upper limit check, degree C
+    extern Nandle SpaceDescritConstant;  // spatial descritization constant,
+    extern Nandle MinTempLimit;          // lower limit check, degree C
+    extern Nandle MaxTempLimit;          // upper limit check, degree C
     extern int MaxGSiter;                // maximum number of Gauss Seidel iterations
-    extern Real64 fracTimeStepZone_Hour;
+    extern Nandle fracTimeStepZone_Hour;
     extern bool GetHBFiniteDiffInputFlag;
     extern int WarmupSurfTemp;
 
@@ -92,12 +92,12 @@ namespace HeatBalFiniteDiffManager {
     {
         // Members
         Array1D_string Name; // Name of construction
-        Array1D<Real64> DelX;
-        Array1D<Real64> TempStability;
-        Array1D<Real64> MoistStability;
+        Array1D<Nandle> DelX;
+        Array1D<Nandle> TempStability;
+        Array1D<Nandle> MoistStability;
         Array1D_int NodeNumPoint;
-        Array1D<Real64> Thickness;
-        Array1D<Real64> NodeXlocation; // sized to TotNode, contains X distance in m from outside face
+        Array1D<Nandle> Thickness;
+        Array1D<Nandle> NodeXlocation; // sized to TotNode, contains X distance in m from outside face
         int TotNodes;
         int DeltaTime;
 
@@ -110,37 +110,37 @@ namespace HeatBalFiniteDiffManager {
     struct SurfaceDataFD
     {
         // Members
-        Array1D<Real64> T;
-        Array1D<Real64> TOld;
-        Array1D<Real64> TT;
-        Array1D<Real64> Rhov;
-        Array1D<Real64> RhovOld;
-        Array1D<Real64> RhoT;
-        Array1D<Real64> TD;
-        Array1D<Real64> TDT;
-        Array1D<Real64> TDTLast;
-        Array1D<Real64> TDOld;
-        Array1D<Real64> TDreport; // Node temperatures for reporting [C]
-        Array1D<Real64> RH;
-        Array1D<Real64> RHreport;
-        Array1D<Real64> EnthOld; // Current node enthalpy
-        Array1D<Real64> EnthNew; // Node enthalpy at new time
-        Array1D<Real64> EnthLast;
-        Array1D<Real64> QDreport;        // Node heat flux for reporting [W/m2] postive is flow towards inside face of surface
-        Array1D<Real64> CpDelXRhoS1;     // Current outer half-node Cp * DelX * RhoS / Delt
-        Array1D<Real64> CpDelXRhoS2;     // Current inner half-node Cp * DelX * RhoS / Delt
-        Array1D<Real64> TDpriortimestep; // Node temperatures from previous timestep
+        Array1D<Nandle> T;
+        Array1D<Nandle> TOld;
+        Array1D<Nandle> TT;
+        Array1D<Nandle> Rhov;
+        Array1D<Nandle> RhovOld;
+        Array1D<Nandle> RhoT;
+        Array1D<Nandle> TD;
+        Array1D<Nandle> TDT;
+        Array1D<Nandle> TDTLast;
+        Array1D<Nandle> TDOld;
+        Array1D<Nandle> TDreport; // Node temperatures for reporting [C]
+        Array1D<Nandle> RH;
+        Array1D<Nandle> RHreport;
+        Array1D<Nandle> EnthOld; // Current node enthalpy
+        Array1D<Nandle> EnthNew; // Node enthalpy at new time
+        Array1D<Nandle> EnthLast;
+        Array1D<Nandle> QDreport;        // Node heat flux for reporting [W/m2] postive is flow towards inside face of surface
+        Array1D<Nandle> CpDelXRhoS1;     // Current outer half-node Cp * DelX * RhoS / Delt
+        Array1D<Nandle> CpDelXRhoS2;     // Current inner half-node Cp * DelX * RhoS / Delt
+        Array1D<Nandle> TDpriortimestep; // Node temperatures from previous timestep
         int SourceNodeNum;               // Node number for internal source layer (zero if no source)
-        Real64 QSource;                  // Internal source flux [W/m2]
+        Nandle QSource;                  // Internal source flux [W/m2]
         int GSloopCounter;               // count of inner loop iterations
         int GSloopErrorCount;            // recurring error counter
-        Real64 MaxNodeDelTemp;           // largest change in node temps after calc
-        Real64 EnthalpyM;                // Melting enthalpy at a particular temperature
-        Real64 EnthalpyF;                // Freezing enthalpy at a particular temperature
+        Nandle MaxNodeDelTemp;           // largest change in node temps after calc
+        Nandle EnthalpyM;                // Melting enthalpy at a particular temperature
+        Nandle EnthalpyF;                // Freezing enthalpy at a particular temperature
         Array1D<int> PhaseChangeState;
         Array1D<int> PhaseChangeStateOld;
         Array1D<int> PhaseChangeStateOldOld;
-        Array1D<Real64> PhaseChangeTemperatureReverse;
+        Array1D<Nandle> PhaseChangeTemperatureReverse;
 
         // Default Constructor
         SurfaceDataFD()
@@ -162,13 +162,13 @@ namespace HeatBalFiniteDiffManager {
     struct MaterialDataFD
     {
         // Members
-        Real64 tk1;               // Temperature coefficient for thermal conductivity
+        Nandle tk1;               // Temperature coefficient for thermal conductivity
         int numTempEnth;          // number of Temperature/Enthalpy pairs
         int numTempCond;          // number of Temperature/Conductivity pairs
-        Array2D<Real64> TempEnth; // Temperature enthalpy Function Pairs,
+        Array2D<Nandle> TempEnth; // Temperature enthalpy Function Pairs,
         //  TempEnth(1,1)= first Temp, TempEnth(1,2) = First Enthalpy,
         //  TempEnth(2,1) = secomd Temp, etc.
-        Array2D<Real64> TempCond; // Temperature thermal conductivity Function Pairs,
+        Array2D<Nandle> TempCond; // Temperature thermal conductivity Function Pairs,
         //  TempCond(1,1)= first Temp, Tempcond(1,2) = First conductivity,
         //  TempEnth(2,1) = secomd Temp, etc.
 
@@ -189,8 +189,8 @@ namespace HeatBalFiniteDiffManager {
     void clear_state();
 
     void ManageHeatBalFiniteDiff(int const SurfNum,
-                                 Real64 &TempSurfInTmp, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                                 Real64 &TempSurfOutTmp // Outside Surface Temperature of each Heat Transfer Surface
+                                 Nandle &TempSurfInTmp, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                                 Nandle &TempSurfOutTmp // Outside Surface Temperature of each Heat Transfer Surface
     );
 
     void GetCondFDInput();
@@ -200,8 +200,8 @@ namespace HeatBalFiniteDiffManager {
     void InitialInitHeatBalFiniteDiff();
 
     void CalcHeatBalFiniteDiff(int const Surf,
-                               Real64 &TempSurfInTmp, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                               Real64 &TempSurfOutTmp // Outside Surface Temperature of each Heat Transfer Surface
+                               Nandle &TempSurfInTmp, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                               Nandle &TempSurfOutTmp // Outside Surface Temperature of each Heat Transfer Surface
     );
 
     void ReportFiniteDiffInits(OutputFiles &outputFiles);
@@ -210,53 +210,53 @@ namespace HeatBalFiniteDiffManager {
                           int const TotNodes // number of nodes in surface
     );
 
-    Real64 terpld(Array2<Real64> const &a, Real64 const x1, int const nind, int const ndep);
+    Nandle terpld(Array2<Nandle> const &a, Nandle const x1, int const nind, int const ndep);
 
     void ExteriorBCEqns(int const Delt,              // Time Increment
                         int const i,                 // Node Index
                         int const Lay,               // Layer Number for Construction
                         int const Surf,              // Surface number
-                        Array1D<Real64> const &T,    // Old node Temperature in MFD finite difference solution
-                        Array1D<Real64> &TT,         // New node Temperature in MFD finite difference solution.
-                        Array1D<Real64> const &Rhov, // MFD Nodal Vapor Density[kg/m3] and is the old or last time step result.
-                        Array1D<Real64> &RhoT,       // MFD vapor density for the new time step.
-                        Array1D<Real64> &RH,         // Nodal relative humidity
-                        Array1D<Real64> const &TD,   // The old dry Temperature at each node for the CondFD algorithm..
-                        Array1D<Real64> &TDT,        // The current or new Temperature at each node location for the CondFD solution..
-                        Array1D<Real64> &EnthOld,    // Old Nodal enthalpy
-                        Array1D<Real64> &EnthNew,    // New Nodal enthalpy
+                        Array1D<Nandle> const &T,    // Old node Temperature in MFD finite difference solution
+                        Array1D<Nandle> &TT,         // New node Temperature in MFD finite difference solution.
+                        Array1D<Nandle> const &Rhov, // MFD Nodal Vapor Density[kg/m3] and is the old or last time step result.
+                        Array1D<Nandle> &RhoT,       // MFD vapor density for the new time step.
+                        Array1D<Nandle> &RH,         // Nodal relative humidity
+                        Array1D<Nandle> const &TD,   // The old dry Temperature at each node for the CondFD algorithm..
+                        Array1D<Nandle> &TDT,        // The current or new Temperature at each node location for the CondFD solution..
+                        Array1D<Nandle> &EnthOld,    // Old Nodal enthalpy
+                        Array1D<Nandle> &EnthNew,    // New Nodal enthalpy
                         int const TotNodes,          // Total nodes in layer
-                        Real64 const HMovInsul       // Conductance of movable(transparent) insulation.
+                        Nandle const HMovInsul       // Conductance of movable(transparent) insulation.
     );
 
     void InteriorNodeEqns(int const Delt,              // Time Increment
                           int const i,                 // Node Index
                           int const Lay,               // Layer Number for Construction
                           int const Surf,              // Surface number
-                          Array1D<Real64> const &T,    // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                          Array1D<Real64> &TT,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                          Array1D<Real64> const &Rhov, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                          Array1D<Real64> &RhoT,       // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                          Array1D<Real64> &RH,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                          Array1D<Real64> const &TD,   // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                          Array1D<Real64> &TDT,        // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                          Array1D<Real64> &EnthOld,    // Old Nodal enthalpy
-                          Array1D<Real64> &EnthNew     // New Nodal enthalpy
+                          Array1D<Nandle> const &T,    // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                          Array1D<Nandle> &TT,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                          Array1D<Nandle> const &Rhov, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                          Array1D<Nandle> &RhoT,       // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                          Array1D<Nandle> &RH,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                          Array1D<Nandle> const &TD,   // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                          Array1D<Nandle> &TDT,        // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                          Array1D<Nandle> &EnthOld,    // Old Nodal enthalpy
+                          Array1D<Nandle> &EnthNew     // New Nodal enthalpy
     );
 
     void IntInterfaceNodeEqns(int const Delt,                 // Time Increment
                               int const i,                    // Node Index
                               int const Lay,                  // Layer Number for Construction
                               int const Surf,                 // Surface number
-                              Array1D<Real64> const &T,       // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                              Array1D<Real64> &TT,            // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                              Array1D<Real64> const &Rhov,    // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                              Array1D<Real64> &RhoT,          // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                              Array1D<Real64> &RH,            // RELATIVE HUMIDITY.
-                              Array1D<Real64> const &TD,      // OLD NODE TEMPERATURES OF EACH HEAT TRANSFER SURF IN CONDFD.
-                              Array1D<Real64> &TDT,           // NEW NODE TEMPERATURES OF EACH HEAT TRANSFER SURF IN CONDFD.
-                              Array1D<Real64> const &EnthOld, // Old Nodal enthalpy
-                              Array1D<Real64> &EnthNew,       // New Nodal enthalpy
+                              Array1D<Nandle> const &T,       // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                              Array1D<Nandle> &TT,            // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                              Array1D<Nandle> const &Rhov,    // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                              Array1D<Nandle> &RhoT,          // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                              Array1D<Nandle> &RH,            // RELATIVE HUMIDITY.
+                              Array1D<Nandle> const &TD,      // OLD NODE TEMPERATURES OF EACH HEAT TRANSFER SURF IN CONDFD.
+                              Array1D<Nandle> &TDT,           // NEW NODE TEMPERATURES OF EACH HEAT TRANSFER SURF IN CONDFD.
+                              Array1D<Nandle> const &EnthOld, // Old Nodal enthalpy
+                              Array1D<Nandle> &EnthNew,       // New Nodal enthalpy
                               int const GSiter                // Iteration number of Gauss Seidell iteration
     );
 
@@ -264,30 +264,30 @@ namespace HeatBalFiniteDiffManager {
                         int const i,                 // Node Index
                         int const Lay,               // Layer Number for Construction
                         int const Surf,              // Surface number
-                        Array1D<Real64> const &T,    // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF (Old).
-                        Array1D<Real64> &TT,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF (New).
-                        Array1D<Real64> const &Rhov, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                        Array1D<Real64> &RhoT,       // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                        Array1D<Real64> &RH,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                        Array1D<Real64> const &TD,   // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                        Array1D<Real64> &TDT,        // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
-                        Array1D<Real64> &EnthOld,    // Old Nodal enthalpy
-                        Array1D<Real64> &EnthNew,    // New Nodal enthalpy
-                        Array1D<Real64> &TDreport    // Temperature value from previous HeatSurfaceHeatManager titeration's value
+                        Array1D<Nandle> const &T,    // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF (Old).
+                        Array1D<Nandle> &TT,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF (New).
+                        Array1D<Nandle> const &Rhov, // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                        Array1D<Nandle> &RhoT,       // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                        Array1D<Nandle> &RH,         // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                        Array1D<Nandle> const &TD,   // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                        Array1D<Nandle> &TDT,        // INSIDE SURFACE TEMPERATURE OF EACH HEAT TRANSFER SURF.
+                        Array1D<Nandle> &EnthOld,    // Old Nodal enthalpy
+                        Array1D<Nandle> &EnthNew,    // New Nodal enthalpy
+                        Array1D<Nandle> &TDreport    // Temperature value from previous HeatSurfaceHeatManager titeration's value
     );
 
     void CheckFDSurfaceTempLimits(int const SurfNum,            // surface number
-                                  Real64 const CheckTemperature // calculated temperature, not reset
+                                  Nandle const CheckTemperature // calculated temperature, not reset
     );
 
     void adjustPropertiesForPhaseChange(int finiteDifferenceLayerIndex,
                                         int surfaceIndex,
                                         const DataHeatBalance::MaterialProperties &materialDefinition,
-                                        Real64 temperaturePrevious,
-                                        Real64 temperatureUpdated,
-                                        Real64 &updatedSpecificHeat,
-                                        Real64 &updatedDensity,
-                                        Real64 &updatedThermalConductivity);
+                                        Nandle temperaturePrevious,
+                                        Nandle temperatureUpdated,
+                                        Nandle &updatedSpecificHeat,
+                                        Nandle &updatedDensity,
+                                        Nandle &updatedThermalConductivity);
 
 } // namespace HeatBalFiniteDiffManager
 

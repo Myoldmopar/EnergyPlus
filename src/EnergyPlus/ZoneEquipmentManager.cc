@@ -191,7 +191,7 @@ namespace ZoneEquipmentManager {
         bool FirstPassZoneEquipFlag(true); // indicates first pass through zone equipment, used to reset selected ZoneEqSizing variables
     }                                      // namespace
 
-    Array1D<Real64> AvgData; // scratch array for storing averaged data
+    Array1D<Nandle> AvgData; // scratch array for storing averaged data
     int NumOfTimeStepInDay;  // number of zone time steps in a day
     bool GetZoneEquipmentInputFlag(true);
     bool SizeZoneEquipmentOneTimeFlag(true);
@@ -607,23 +607,23 @@ namespace ZoneEquipmentManager {
         int SupplyAirNode;                    // node number of supply air node for ideal air system
         int ZoneNode;                         // node number of controlled zone
         int ReturnNode;                       // node number of controlled zone return node
-        Real64 DeltaTemp;                     // difference between supply air temp and zone temp [C]
-        Real64 CpAir;                         // heat capacity of air [J/kg-C]
-        Real64 SysOutputProvided;             // system sensible output [W]
-        Real64 LatOutputProvided;             // system latent output [kg/s]
-        Real64 Temp;                          // inlet temperature [C]
-        Real64 HumRat;                        // inlet humidity ratio [kg water/kg dry air]
-        Real64 Enthalpy;                      // inlet specific enthalpy [J/kg]
-        Real64 MassFlowRate;                  // inlet mass flow rate [kg/s]
-        Real64 RetTemp;                       // zone return temperature [C]
-        Real64 DOASMassFlowRate(0.0);         // DOAS air mass flow rate for sizing [kg/s]
-        Real64 DOASSupplyTemp(0.0);           // DOAS supply air temperature [C]
-        Real64 DOASSupplyHumRat(0.0);         // DOAS supply air humidity ratio [kgWater/kgDryAir]
-        Real64 DOASCpAir(0.0);                // heat capacity of DOAS air [J/kg-C]
-        Real64 DOASSysOutputProvided(0.0);    // heating / cooling provided by DOAS system [W]
-        Real64 TotDOASSysOutputProvided(0.0); // total DOAS load on the zone [W]
-        Real64 HR90H;                         // humidity ratio at DOAS high setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
-        Real64 HR90L;                         // humidity ratio at DOAS low setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
+        Nandle DeltaTemp;                     // difference between supply air temp and zone temp [C]
+        Nandle CpAir;                         // heat capacity of air [J/kg-C]
+        Nandle SysOutputProvided;             // system sensible output [W]
+        Nandle LatOutputProvided;             // system latent output [kg/s]
+        Nandle Temp;                          // inlet temperature [C]
+        Nandle HumRat;                        // inlet humidity ratio [kg water/kg dry air]
+        Nandle Enthalpy;                      // inlet specific enthalpy [J/kg]
+        Nandle MassFlowRate;                  // inlet mass flow rate [kg/s]
+        Nandle RetTemp;                       // zone return temperature [C]
+        Nandle DOASMassFlowRate(0.0);         // DOAS air mass flow rate for sizing [kg/s]
+        Nandle DOASSupplyTemp(0.0);           // DOAS supply air temperature [C]
+        Nandle DOASSupplyHumRat(0.0);         // DOAS supply air humidity ratio [kgWater/kgDryAir]
+        Nandle DOASCpAir(0.0);                // heat capacity of DOAS air [J/kg-C]
+        Nandle DOASSysOutputProvided(0.0);    // heating / cooling provided by DOAS system [W]
+        Nandle TotDOASSysOutputProvided(0.0); // total DOAS load on the zone [W]
+        Nandle HR90H;                         // humidity ratio at DOAS high setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
+        Nandle HR90L;                         // humidity ratio at DOAS low setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
 
         if (SizeZoneEquipmentOneTimeFlag) {
             SetUpZoneSizingArrays(OutputFiles::getSingleton());
@@ -833,15 +833,15 @@ namespace ZoneEquipmentManager {
         }
     }
 
-    void CalcDOASSupCondsForSizing(Real64 OutDB,        // outside air temperature [C]
-                                   Real64 OutHR,        // outside humidity ratio [kg Water / kg Dry Air]
+    void CalcDOASSupCondsForSizing(Nandle OutDB,        // outside air temperature [C]
+                                   Nandle OutHR,        // outside humidity ratio [kg Water / kg Dry Air]
                                    int DOASControl,     // dedicated outside air control strategy
-                                   Real64 DOASLowTemp,  // DOAS low setpoint [C]
-                                   Real64 DOASHighTemp, // DOAS high setpoint [C]
-                                   Real64 W90H, // humidity ratio at DOAS high setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
-                                   Real64 W90L, // humidity ratio at DOAS low setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
-                                   Real64 &DOASSupTemp, // DOAS supply temperature [C]
-                                   Real64 &DOASSupHR    // DOAS Supply Humidity ratio [kg Water / kg Dry Air]
+                                   Nandle DOASLowTemp,  // DOAS low setpoint [C]
+                                   Nandle DOASHighTemp, // DOAS high setpoint [C]
+                                   Nandle W90H, // humidity ratio at DOAS high setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
+                                   Nandle W90L, // humidity ratio at DOAS low setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
+                                   Nandle &DOASSupTemp, // DOAS supply temperature [C]
+                                   Nandle &DOASSupHR    // DOAS Supply Humidity ratio [kg Water / kg Dry Air]
     )
     {
         // FUNCTION INFORMATION:
@@ -957,15 +957,15 @@ namespace ZoneEquipmentManager {
         int CtrlZoneNum;                 // controlled zone index
         int ZoneSizNum;                  // zone sizing input index
         int TimeStepIndex;               // zone time step index
-        Real64 TotPeopleInZone;          // total (maximum) number of people in a zone
+        Nandle TotPeopleInZone;          // total (maximum) number of people in a zone
         int PeopleNum;                   // index of People structure
-        static Real64 OAFromPeople(0.0); // min OA calculated from zone occupancy [m3/s]
-        static Real64 OAFromArea(0.0);   // min OA calculated from zone area and OA flow per area [m3/s]
+        static Nandle OAFromPeople(0.0); // min OA calculated from zone occupancy [m3/s]
+        static Nandle OAFromArea(0.0);   // min OA calculated from zone area and OA flow per area [m3/s]
         int ZoneIndex;                   // index of Zone Sizing zone name in zone array
         int ZoneSizIndex;                // zone sizing do loop index
         static bool ErrorsFound(false);  // Set to true if errors in input, fatal at end of routine
-        static Real64 SchMax(0.0);       // maximum people multiplier value
-        Real64 OAVolumeFlowRate;         // outside air flow rate (m3/s)
+        static Nandle SchMax(0.0);       // maximum people multiplier value
+        Nandle OAVolumeFlowRate;         // outside air flow rate (m3/s)
         bool UseOccSchFlag;              // flag to use occupancy schedule when calculating OA
         bool UseMinOASchFlag;            // flag to use min OA schedule when calculating OA
         int DSOAPtr;                     // index to DesignSpecification:OutdoorAir object
@@ -2234,18 +2234,18 @@ namespace ZoneEquipmentManager {
         int TimeStepCounter;     // Time Step Counter
         int Minutes;             // Current Minutes Counter
         int HourPrint;           // Hour to print (timestamp)
-        Real64 OAFrac;           // outside air fraction
+        Nandle OAFrac;           // outside air fraction
         int TimeStepAtPeak;      // time step number at heat or cool peak
         int TimeStepAtPeakF;     // time step number at heat or cool peak (final)
         int DDNum;               // Design Day index
         int DDNumF;              // Design Day index (final)
-        Real64 TotCoolSizMult;   // combines user cooling design flow input with zone sizing multiplier
-        Real64 TotHeatSizMult;   // combines user heating design flow input with zone sizing multiplier
-        Real64 MinOAMass;        // zone minimum outside air mass flow rate kg/s
-        Real64 MaxHeatVolFlow;   // max of user specified design heating max flow [m3/s]
+        Nandle TotCoolSizMult;   // combines user cooling design flow input with zone sizing multiplier
+        Nandle TotHeatSizMult;   // combines user heating design flow input with zone sizing multiplier
+        Nandle MinOAMass;        // zone minimum outside air mass flow rate kg/s
+        Nandle MaxHeatVolFlow;   // max of user specified design heating max flow [m3/s]
         std::string HrMinString; // store hour/minute string before assigning to peak string array
-        Real64 SupplyTemp;       // supply air temperature [C]
-        Real64 DeltaTemp;        // supply air delta temperature [deltaC]
+        Nandle SupplyTemp;       // supply air temperature [C]
+        Nandle DeltaTemp;        // supply air delta temperature [deltaC]
 
         {
             auto const SELECT_CASE_var(CallIndicator);
@@ -3025,12 +3025,12 @@ namespace ZoneEquipmentManager {
                     }
                     // Save a set of design cooling air flow rates greater than or equal to the specified minimums without MinOA
                     {
-                        Real64 MaxOfMinCoolVolFlowNoOA = 0.0; // max of the user specified design cooling minimum flows without min OA flow [m3/s]
+                        Nandle MaxOfMinCoolVolFlowNoOA = 0.0; // max of the user specified design cooling minimum flows without min OA flow [m3/s]
                         if (FinalZoneSizing(CtrlZoneNum).CoolAirDesMethod == DesAirFlowWithLim) {
                             MaxOfMinCoolVolFlowNoOA =
                                 max(FinalZoneSizing(CtrlZoneNum).DesCoolMinAirFlow, FinalZoneSizing(CtrlZoneNum).DesCoolMinAirFlow2);
                         }
-                        Real64 MaxOfMinCoolMassFlowNoOA =
+                        Nandle MaxOfMinCoolMassFlowNoOA =
                             MaxOfMinCoolVolFlowNoOA *
                             FinalZoneSizing(CtrlZoneNum)
                                 .DesCoolDens; // max of the user specified design cooling minimum flows without min OA flow [m3/s]
@@ -3068,7 +3068,7 @@ namespace ZoneEquipmentManager {
 
                     // Now make sure that the design cooling air flow rates are greater than or equal to the specified minimums including MinOA
                     {
-                        Real64 MaxOfMinCoolVolFlow = 0.0; // max of the user specified design cooling minimum flows and min OA flow [m3/s]
+                        Nandle MaxOfMinCoolVolFlow = 0.0; // max of the user specified design cooling minimum flows and min OA flow [m3/s]
                         if (FinalZoneSizing(CtrlZoneNum).CoolAirDesMethod == DesAirFlowWithLim) {
                             MaxOfMinCoolVolFlow = max(FinalZoneSizing(CtrlZoneNum).DesCoolMinAirFlow,
                                                       FinalZoneSizing(CtrlZoneNum).DesCoolMinAirFlow2,
@@ -3076,7 +3076,7 @@ namespace ZoneEquipmentManager {
                         } else {
                             MaxOfMinCoolVolFlow = FinalZoneSizing(CtrlZoneNum).MinOA;
                         }
-                        Real64 MaxOfMinCoolMassFlow =
+                        Nandle MaxOfMinCoolMassFlow =
                             MaxOfMinCoolVolFlow *
                             FinalZoneSizing(CtrlZoneNum).DesCoolDens; // max of the user specified design cooling minimum flows and min OA flow [kg/s]
                         if (MaxOfMinCoolVolFlow > FinalZoneSizing(CtrlZoneNum).DesCoolVolFlow) {
@@ -3452,10 +3452,10 @@ namespace ZoneEquipmentManager {
         bool ErrorFlag;
         static bool ValidSAMComp(false);
 
-        Real64 SysOutputProvided; // sensible output delivered by zone equipment (W)
-        Real64 LatOutputProvided; // latent output delivered by zone equipment (kg/s)
-        Real64 AirSysOutput;
-        Real64 NonAirSysOutput;
+        Nandle SysOutputProvided; // sensible output delivered by zone equipment (W)
+        Nandle LatOutputProvided; // latent output delivered by zone equipment (kg/s)
+        Nandle AirSysOutput;
+        Nandle NonAirSysOutput;
 
         // Determine flow rate and temperature of supply air based on type of damper
 
@@ -3629,7 +3629,7 @@ namespace ZoneEquipmentManager {
                         bool HeatingActive = false;
                         bool CoolingActive = false;
                         int const OAUnitNum = 0;
-                        Real64 const OAUCoilOutTemp = 0.0;
+                        Nandle const OAUCoilOutTemp = 0.0;
                         bool const ZoneEquipment = true;
                         SimulateVRF(PrioritySimOrder(EquipTypeNum).EquipName,
                                     FirstHVACIteration,
@@ -3668,7 +3668,7 @@ namespace ZoneEquipmentManager {
                         bool HeatingActive = false;
                         bool CoolingActive = false;
                         int OAUnitNum = 0;
-                        Real64 OAUCoilOutTemp = 0.0;
+                        Nandle OAUCoilOutTemp = 0.0;
                         bool ZoneEquipFlag = true;
                         ZoneEquipList(CurZoneEqNum)
                             .compPointer[EquipPtr]
@@ -3839,7 +3839,7 @@ namespace ZoneEquipmentManager {
                     } else if (SELECT_CASE_var == HPWaterHeater_Num) { // 'WaterHeater:HeatPump:PumpedCondenser'
 //                        auto HPWH = WaterThermalTanks::HeatPumpWaterHeaterData::factory(PrioritySimOrder(EquipTypeNum).EquipName);
 //                        PlantLocation A(0, 0, 0, 0);
-//                        Real64 curLoad = 0.0;
+//                        Nandle curLoad = 0.0;
 //                        if (dynamic_cast<WaterThermalTanks::HeatPumpWaterHeaterData*> (HPWH)->StandAlone) {
 //                            dynamic_cast<WaterThermalTanks::HeatPumpWaterHeaterData*> (HPWH)->simulate(A, FirstHVACIteration, curLoad, true);
 //                            SysOutputProvided = dynamic_cast<WaterThermalTanks::HeatPumpWaterHeaterData*> (HPWH)->HPWaterHeaterSensibleCapacity;
@@ -4198,10 +4198,10 @@ namespace ZoneEquipmentManager {
         auto &energy(DataZoneEnergyDemands::ZoneSysEnergyDemand(ActualZoneNum));
         auto &moisture(DataZoneEnergyDemands::ZoneSysMoistureDemand(ActualZoneNum));
         auto &thisZEqList(DataZoneEquipment::ZoneEquipList(ctrlZoneNum));
-        Real64 heatLoadRatio = 1.0;
-        Real64 coolLoadRatio = 1.0;
-        Real64 availCap = 0.0;
-        Real64 plr = 1.0;
+        Nandle heatLoadRatio = 1.0;
+        Nandle coolLoadRatio = 1.0;
+        Nandle availCap = 0.0;
+        Nandle plr = 1.0;
         int numOperating = 0;
 
         switch (thisZEqList.LoadDistScheme) {
@@ -4213,9 +4213,9 @@ namespace ZoneEquipmentManager {
                 const int &equipNum = PrioritySimOrder(priorityNum).EquipPtr;
 
                 // Determine whether we're heating or cooling and choose the appropriate fraction
-                const Real64 heatLoadRatio = thisZEqList.SequentialHeatingFraction(equipNum);
-                const Real64 coolLoadRatio = thisZEqList.SequentialCoolingFraction(equipNum);
-                const Real64 loadRatio = (energy.TotalOutputRequired >= 0.0) ? heatLoadRatio : coolLoadRatio;
+                const Nandle heatLoadRatio = thisZEqList.SequentialHeatingFraction(equipNum);
+                const Nandle coolLoadRatio = thisZEqList.SequentialCoolingFraction(equipNum);
+                const Nandle loadRatio = (energy.TotalOutputRequired >= 0.0) ? heatLoadRatio : coolLoadRatio;
 
                 // Energy loads
                 energy.SequencedOutputRequired(priorityNum) = energy.TotalOutputRequired * loadRatio;
@@ -4469,8 +4469,8 @@ namespace ZoneEquipmentManager {
     }
 
     void UpdateSystemOutputRequired(int const ZoneNum,
-                                    Real64 const SysOutputProvided,     // sensible output provided by zone equipment (W)
-                                    Real64 const LatOutputProvided,     // latent output provided by zone equipment (kg/s)
+                                    Nandle const SysOutputProvided,     // sensible output provided by zone equipment (W)
+                                    Nandle const LatOutputProvided,     // latent output provided by zone equipment (kg/s)
                                     Optional_int_const EquipPriorityNum // index in PrioritySimOrder for this update
     )
     {
@@ -4591,7 +4591,7 @@ namespace ZoneEquipmentManager {
                 const int &nextSystem = PrioritySimOrder(nextEquipPriorityNum).EquipPtr;
 
                 // Determine the load ratio based on whether we're heating or cooling
-                const Real64 loadRatio = (energy.TotalOutputRequired >= 0.0) ? thisZEqList.SequentialHeatingFraction(nextSystem)
+                const Nandle loadRatio = (energy.TotalOutputRequired >= 0.0) ? thisZEqList.SequentialHeatingFraction(nextSystem)
                                                                              : thisZEqList.SequentialCoolingFraction(nextSystem);
 
                 // Update the zone energy demands
@@ -4719,25 +4719,25 @@ namespace ZoneEquipmentManager {
         using ScheduleManager::GetCurrentScheduleValue;
 
         int const IterMax(25);
-        Real64 const ConvergenceTolerance(0.000010);
+        Nandle const ConvergenceTolerance(0.000010);
 
         int NodeNum;
         int ZoneNode; // zone air node number
-        Real64 TotInletAirMassFlowRateMax;
-        Real64 TotInletAirMassFlowRateMaxAvail;
-        Real64 TotInletAirMassFlowRateMin;
-        Real64 TotInletAirMassFlowRateMinAvail;
-        Real64 TotSupplyAirMassFlowRate;
+        Nandle TotInletAirMassFlowRateMax;
+        Nandle TotInletAirMassFlowRateMaxAvail;
+        Nandle TotInletAirMassFlowRateMin;
+        Nandle TotInletAirMassFlowRateMinAvail;
+        Nandle TotSupplyAirMassFlowRate;
 
-        Real64 ZoneMixingAirMassFlowRate;
-        Real64 ZoneMixingNetAirMassFlowRate;
-        Real64 ZoneMixMassFlowRate;
-        Real64 ZoneMixingAirMassFlowRatePrevious;
-        Real64 ZoneReturnAirMassFlowRate;
-        Real64 ZoneInfiltrationMassFlowRate;
-        Real64 BuildingZoneMixingFlowOld;
-        Real64 BuildingZoneMixingFlow;
-        Real64 StdTotalReturnMassFlow;
+        Nandle ZoneMixingAirMassFlowRate;
+        Nandle ZoneMixingNetAirMassFlowRate;
+        Nandle ZoneMixMassFlowRate;
+        Nandle ZoneMixingAirMassFlowRatePrevious;
+        Nandle ZoneReturnAirMassFlowRate;
+        Nandle ZoneInfiltrationMassFlowRate;
+        Nandle BuildingZoneMixingFlowOld;
+        Nandle BuildingZoneMixingFlow;
+        Nandle StdTotalReturnMassFlow;
         int Iteration;
         int ZoneNum1;
 
@@ -4866,7 +4866,7 @@ namespace ZoneEquipmentManager {
                     StdTotalReturnMassFlow = max(0.0, StdTotalReturnMassFlow);
                 }
 
-                Real64 FinalTotalReturnMassFlow = 0;
+                Nandle FinalTotalReturnMassFlow = 0;
                 CalcZoneReturnFlows(ZoneNum, StdTotalReturnMassFlow, FinalTotalReturnMassFlow);
 
                 MassConservation(ZoneNum).RetMassFlowRate = FinalTotalReturnMassFlow;
@@ -4946,7 +4946,7 @@ namespace ZoneEquipmentManager {
             // adjust the zone return air flow rates to match any excess zone exhaust flows
             for (int airLoopNum = 1; airLoopNum <= NumPrimaryAirSys; ++airLoopNum) {
                 auto &thisAirLoopFlow(AirLoopFlow(airLoopNum));
-                Real64 adjZoneRetFlow = max(0.0, thisAirLoopFlow.ZoneRetFlow - thisAirLoopFlow.ExcessZoneExhFlow);
+                Nandle adjZoneRetFlow = max(0.0, thisAirLoopFlow.ZoneRetFlow - thisAirLoopFlow.ExcessZoneExhFlow);
                 if (thisAirLoopFlow.ZoneRetFlow > 0.0) {
                     thisAirLoopFlow.ZoneRetFlowRatio = adjZoneRetFlow / thisAirLoopFlow.ZoneRetFlow;
                 } else {
@@ -4959,7 +4959,7 @@ namespace ZoneEquipmentManager {
                 auto &thisZoneEquip(ZoneEquipConfig(zoneNum));
                 if (!thisZoneEquip.IsControlled) continue;
                 int numRetNodes = thisZoneEquip.NumReturnNodes;
-                Real64 totalZoneReturnMassFlow = 0.0;
+                Nandle totalZoneReturnMassFlow = 0.0;
                 for (int returnNum = 1; returnNum <= numRetNodes; ++returnNum) {
                     int retNode = thisZoneEquip.ReturnNode(returnNum);
                     int airLoopNum = thisZoneEquip.ReturnNodeAirLoopNum(returnNum);
@@ -4977,22 +4977,22 @@ namespace ZoneEquipmentManager {
                     !DataGlobals::WarmupFlag && !FirstHVACIteration) {
                     if (!thisZoneEquip.FlowError) {
                         // Net system flows first (sum leaving flows, less entering flows)
-                        Real64 sysUnbalExhaust = (thisZoneEquip.TotExhaustAirMassFlowRate - thisZoneEquip.ZoneExhBalanced);
-                        Real64 sysUnbalancedFlow = sysUnbalExhaust + totalZoneReturnMassFlow - thisZoneEquip.TotInletAirMassFlowRate;
+                        Nandle sysUnbalExhaust = (thisZoneEquip.TotExhaustAirMassFlowRate - thisZoneEquip.ZoneExhBalanced);
+                        Nandle sysUnbalancedFlow = sysUnbalExhaust + totalZoneReturnMassFlow - thisZoneEquip.TotInletAirMassFlowRate;
                         if (sysUnbalancedFlow > SmallMassFlow) {
                             int actualZone = thisZoneEquip.ActualZoneNum;
                             // Now include infiltration, ventilation, and mixing flows (these are all entering the zone, so subtract them)
-                            Real64 incomingFlow = DataHeatBalFanSys::OAMFL(actualZone) + DataHeatBalFanSys::VAMFL(actualZone) +
+                            Nandle incomingFlow = DataHeatBalFanSys::OAMFL(actualZone) + DataHeatBalFanSys::VAMFL(actualZone) +
                                                   DataHeatBalFanSys::MixingMassFlowZone(actualZone);
-                            Real64 unbalancedFlow = max(0.0, sysUnbalancedFlow - incomingFlow);
+                            Nandle unbalancedFlow = max(0.0, sysUnbalancedFlow - incomingFlow);
                             if (unbalancedFlow > SmallMassFlow) {
                                 // Re-check on volume basis - use current zone density for incoming, standard density for HVAC sys
-                                Real64 zoneTemp = Node(thisZoneEquip.ZoneNode).Temp;
-                                Real64 zoneHumRat = Node(thisZoneEquip.ZoneNode).HumRat;
-                                Real64 rhoZone = PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, zoneTemp, zoneHumRat, "CalcZoneMassBalance");
-                                Real64 incomingVolFlow = incomingFlow / rhoZone;
-                                Real64 sysUnbalancedVolFlow = sysUnbalancedFlow / DataEnvironment::StdRhoAir;
-                                Real64 unbalancedVolFlow = max(0.0, sysUnbalancedVolFlow - incomingVolFlow);
+                                Nandle zoneTemp = Node(thisZoneEquip.ZoneNode).Temp;
+                                Nandle zoneHumRat = Node(thisZoneEquip.ZoneNode).HumRat;
+                                Nandle rhoZone = PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, zoneTemp, zoneHumRat, "CalcZoneMassBalance");
+                                Nandle incomingVolFlow = incomingFlow / rhoZone;
+                                Nandle sysUnbalancedVolFlow = sysUnbalancedFlow / DataEnvironment::StdRhoAir;
+                                Nandle unbalancedVolFlow = max(0.0, sysUnbalancedVolFlow - incomingVolFlow);
                                 if (unbalancedVolFlow > DataHVACGlobals::SmallAirVolFlow) {
                                     ShowWarningError("In zone " + thisZoneEquip.ZoneName +
                                                      " there is unbalanced air flow. Load due to induced outdoor air is neglected.");
@@ -5040,16 +5040,16 @@ namespace ZoneEquipmentManager {
     }
 
     void CalcZoneReturnFlows(int const ZoneNum,
-                             Real64 &ExpTotalReturnMassFlow,  // Expected total return air mass flow rate
-                             Real64 &FinalTotalReturnMassFlow // Final total return air mass flow rate
+                             Nandle &ExpTotalReturnMassFlow,  // Expected total return air mass flow rate
+                             Nandle &FinalTotalReturnMassFlow // Final total return air mass flow rate
     )
     {
         auto &thisZoneEquip(ZoneEquipConfig(ZoneNum));
         int numRetNodes = thisZoneEquip.NumReturnNodes;
-        Real64 totReturnFlow = 0.0; // Total flow to all return nodes in the zone (kg/s)
-        Real64 totVarReturnFlow =
+        Nandle totReturnFlow = 0.0; // Total flow to all return nodes in the zone (kg/s)
+        Nandle totVarReturnFlow =
             0.0; // Total variable return flow, for return nodes connected to an airloop with an OA system or not with specified flow (kg/s)
-        Real64 returnSchedFrac = ScheduleManager::GetCurrentScheduleValue(thisZoneEquip.ReturnFlowSchedPtrNum);
+        Nandle returnSchedFrac = ScheduleManager::GetCurrentScheduleValue(thisZoneEquip.ReturnFlowSchedPtrNum);
         thisZoneEquip.FixedReturnFlow = false;
         FinalTotalReturnMassFlow = 0.0;
         thisZoneEquip.TotAvailAirLoopOA = 0.0;
@@ -5059,17 +5059,17 @@ namespace ZoneEquipmentManager {
             int retNode = thisZoneEquip.ReturnNode(returnNum);
 
             if (retNode > 0) {
-                Real64 returnNodeMassFlow = 0.0;
+                Nandle returnNodeMassFlow = 0.0;
                 auto &retNodeData(DataLoopNode::Node(retNode));
 
                 int inletNum = thisZoneEquip.ReturnNodeInletNum(returnNum); // which inlet node matches this return node (same airloop)
                 int ADUNum = 0;
                 if (inletNum > 0) ADUNum = thisZoneEquip.InletNodeADUNum(inletNum);
                 int airLoop = thisZoneEquip.ReturnNodeAirLoopNum(returnNum);
-                Real64 airLoopReturnFrac = 1.0;
+                Nandle airLoopReturnFrac = 1.0;
                 if (airLoop > 0) {
                     // Establish corresponding airloop inlet(s) mass flow rate and set return node max/min/maxavail
-                    Real64 inletMassFlow = 0.0;
+                    Nandle inletMassFlow = 0.0;
                     int maxMinNodeNum = 0;
                     auto &thisAirLoopFlow(DataAirLoop::AirLoopFlow(airLoop));
                     if (ADUNum > 0) {
@@ -5123,7 +5123,7 @@ namespace ZoneEquipmentManager {
                     } else if (!DataGlobals::DoingSizing) {
                         if (thisZoneEquip.NumReturnFlowBasisNodes > 0) {
                             // Set base return air flow rate for node 1 using basis node flow rates
-                            Real64 basisNodesMassFlow = 0.0;
+                            Nandle basisNodesMassFlow = 0.0;
                             for (int nodeNum = 1; nodeNum <= thisZoneEquip.NumReturnFlowBasisNodes; ++nodeNum) {
                                 basisNodesMassFlow += DataLoopNode::Node(thisZoneEquip.ReturnFlowBasisNode(nodeNum)).MassFlowRate;
                             }
@@ -5146,11 +5146,11 @@ namespace ZoneEquipmentManager {
 
         // Adjust return flows if greater than expected (i.e. there is exhaust or mixing flow reducing the total available for return)
         if ((totReturnFlow > ExpTotalReturnMassFlow) && (totVarReturnFlow > 0.0)) {
-            Real64 newReturnFlow = 0.0;
-            Real64 returnAdjFactor = (1 - ((totReturnFlow - ExpTotalReturnMassFlow) / totVarReturnFlow)); // Return flow adjustment factor
+            Nandle newReturnFlow = 0.0;
+            Nandle returnAdjFactor = (1 - ((totReturnFlow - ExpTotalReturnMassFlow) / totVarReturnFlow)); // Return flow adjustment factor
             for (int returnNum = 1; returnNum <= numRetNodes; ++returnNum) {
                 int retNode = thisZoneEquip.ReturnNode(returnNum);
-                Real64 curReturnFlow = DataLoopNode::Node(retNode).MassFlowRate;
+                Nandle curReturnFlow = DataLoopNode::Node(retNode).MassFlowRate;
                 if (retNode > 0) {
                     if (!thisZoneEquip.FixedReturnFlow(returnNum)) {
                         newReturnFlow = curReturnFlow * returnAdjFactor;
@@ -5219,23 +5219,23 @@ namespace ZoneEquipmentManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 QRetAir;         // Heat to return air from lights
-        Real64 CpAir;           // Air heat capacity [J/kg-K]
-        Real64 TempRetAir;      // Return air temperature [C]
-        Real64 TempZoneAir;     // Zone air temperature [C]
+        Nandle QRetAir;         // Heat to return air from lights
+        Nandle CpAir;           // Air heat capacity [J/kg-K]
+        Nandle TempRetAir;      // Return air temperature [C]
+        Nandle TempZoneAir;     // Zone air temperature [C]
         int ZoneNum;            // Controlled zone number
         int ActualZoneNum;      // Zone number
         int ZoneNode;           // Node number of controlled zone
         int ReturnNode;         // Node number of controlled zone's return air
         int SurfNum;            // Surface number
-        Real64 MassFlowRA;      // Return air mass flow [kg/s]
-        Real64 FlowThisTS;      // Window gap air mass flow [kg/s]
-        Real64 WinGapFlowToRA;  // Mass flow to return air from all airflow windows in zone [kg/s]
-        Real64 WinGapFlowTtoRA; // Sum of mass flow times outlet temp for all airflow windows in zone [(kg/s)-C]
-        Real64 WinGapTtoRA;     // Temp of outlet flow mixture to return air from all airflow windows in zone [C]
-        Real64 H2OHtOfVap;      // Heat of vaporization of water (W/kg)
-        Real64 ZoneMult;        // zone multiplier
-        Real64 SumRetAirLatentGainRate;
+        Nandle MassFlowRA;      // Return air mass flow [kg/s]
+        Nandle FlowThisTS;      // Window gap air mass flow [kg/s]
+        Nandle WinGapFlowToRA;  // Mass flow to return air from all airflow windows in zone [kg/s]
+        Nandle WinGapFlowTtoRA; // Sum of mass flow times outlet temp for all airflow windows in zone [(kg/s)-C]
+        Nandle WinGapTtoRA;     // Temp of outlet flow mixture to return air from all airflow windows in zone [C]
+        Nandle H2OHtOfVap;      // Heat of vaporization of water (W/kg)
+        Nandle ZoneMult;        // zone multiplier
+        Nandle SumRetAirLatentGainRate;
 
         for (ZoneNum = 1; ZoneNum <= NumOfZones; ++ZoneNum) {
             if (!ZoneEquipConfig(ZoneNum).IsControlled) continue;
@@ -5516,7 +5516,7 @@ namespace ZoneEquipmentManager {
         using namespace DataLoopNode;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const StdGravity(9.80665); // The acceleration of gravity at the sea level (m/s2)
+        Nandle const StdGravity(9.80665); // The acceleration of gravity at the sea level (m/s2)
         static std::string const RoutineNameMixing("CalcAirFlowSimple:Mixing");
         static std::string const RoutineNameCrossMixing("CalcAirFlowSimple:CrossMixing");
         static std::string const RoutineNameRefrigerationDoorMixing("CalcAirFlowSimple:RefrigerationDoorMixing");
@@ -5524,72 +5524,72 @@ namespace ZoneEquipmentManager {
         static std::string const RoutineNameZoneAirBalance("CalcAirFlowSimple:ZoneAirBalance");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MCP;
-        Real64 MCPxM;
-        Real64 MCPxN;
-        Real64 TZM;               // Temperature of From Zone
-        Real64 TZN;               // Temperature of this zone
-        Real64 TD;                // Delta Temp limit of Mixing statement
-        Real64 Tavg;              // Average temperature in two zones exchanging air
-        Real64 Wavg;              // Average humidity ratio in two zones exchanging air
+        Nandle MCP;
+        Nandle MCPxM;
+        Nandle MCPxN;
+        Nandle TZM;               // Temperature of From Zone
+        Nandle TZN;               // Temperature of this zone
+        Nandle TD;                // Delta Temp limit of Mixing statement
+        Nandle Tavg;              // Average temperature in two zones exchanging air
+        Nandle Wavg;              // Average humidity ratio in two zones exchanging air
         int m;                    // Index to From Zone
         int n;                    // Index of this zone
         int j;                    // Loop Counter
         int NZ;                   // A pointer
         int I;                    // Ventilation master object index
         int NH;                   // Hybrid controlled zone number
-        Real64 AirDensity;        // Density of air (kg/m^3)
-        Real64 CpAir;             // Heat capacity of air (J/kg-C)
-        Real64 OutletAirEnthalpy; // Enthlapy of outlet air (VENTILATION objects)
-        Real64 TempExt;
-        Real64 WindSpeedExt;
-        Real64 WindDirExt;
-        Real64 HumRatExt;
-        Real64 EnthalpyExt;
+        Nandle AirDensity;        // Density of air (kg/m^3)
+        Nandle CpAir;             // Heat capacity of air (J/kg-C)
+        Nandle OutletAirEnthalpy; // Enthlapy of outlet air (VENTILATION objects)
+        Nandle TempExt;
+        Nandle WindSpeedExt;
+        Nandle WindDirExt;
+        Nandle HumRatExt;
+        Nandle EnthalpyExt;
         bool MixingLimitFlag;
-        Real64 MixingTmin;
-        Real64 MixingTmax;
+        Nandle MixingTmin;
+        Nandle MixingTmax;
 
-        Real64 IVF; // DESIGN INFILTRATION FLOW RATE (M**3/SEC)
-        Real64 VVF; // DESIGN VENTILATION FLOW RATE (M**3/SEC)
-        Real64 MCpI_temp;
-        Real64 VAMFL_temp;
+        Nandle IVF; // DESIGN INFILTRATION FLOW RATE (M**3/SEC)
+        Nandle VVF; // DESIGN VENTILATION FLOW RATE (M**3/SEC)
+        Nandle MCpI_temp;
+        Nandle VAMFL_temp;
 
-        Real64 Cw;    // Opening effectivenss
-        Real64 Cd;    // Discharge coefficent
-        Real64 angle; // Angle between wind direction and effective angle
-        Real64 Qw;    // Volumetric flow driven by wind
-        Real64 Qst;   // Volumetric flow driven by stack effect
-        Real64 MassFlowDiff;
+        Nandle Cw;    // Opening effectivenss
+        Nandle Cd;    // Discharge coefficent
+        Nandle angle; // Angle between wind direction and effective angle
+        Nandle Qw;    // Volumetric flow driven by wind
+        Nandle Qst;   // Volumetric flow driven by stack effect
+        Nandle MassFlowDiff;
         // following variables used for refrigeration door mixing and all defined in EngRef
         int ZoneA;
         int ZoneB;
-        Real64 TZoneA;
-        Real64 TZoneB;
-        Real64 HumRatZoneA;
-        Real64 HumRatZoneB;
-        Real64 AirDensityZoneA;
-        Real64 CpAirZoneA;
-        Real64 AirDensityZoneB;
-        Real64 CpAirZoneB;
-        Real64 AirDensityAvg;
-        Real64 MassFlowDryAir;
-        Real64 SchedDoorOpen;
-        Real64 DoorHeight;
-        Real64 DoorArea;
-        Real64 DoorProt;
-        Real64 FDens;
-        Real64 Fb;
-        Real64 FFlow;
-        Real64 MassFlowToA;
-        Real64 MassFlowToB;
-        Real64 MassFlowXCpToA;
-        Real64 MassFlowXCpToB;
-        Real64 MassFlowXCpXTempToA;
-        Real64 MassFlowXCpXTempToB;
-        Real64 MassFlowXHumRatToA;
-        Real64 MassFlowXHumRatToB;
-        Real64 MassFlowRate;
+        Nandle TZoneA;
+        Nandle TZoneB;
+        Nandle HumRatZoneA;
+        Nandle HumRatZoneB;
+        Nandle AirDensityZoneA;
+        Nandle CpAirZoneA;
+        Nandle AirDensityZoneB;
+        Nandle CpAirZoneB;
+        Nandle AirDensityAvg;
+        Nandle MassFlowDryAir;
+        Nandle SchedDoorOpen;
+        Nandle DoorHeight;
+        Nandle DoorArea;
+        Nandle DoorProt;
+        Nandle FDens;
+        Nandle Fb;
+        Nandle FFlow;
+        Nandle MassFlowToA;
+        Nandle MassFlowToB;
+        Nandle MassFlowXCpToA;
+        Nandle MassFlowXCpToB;
+        Nandle MassFlowXCpXTempToA;
+        Nandle MassFlowXCpXTempToB;
+        Nandle MassFlowXHumRatToA;
+        Nandle MassFlowXHumRatToB;
+        Nandle MassFlowRate;
 
         // Allocate the ZMAT and ZHumRat arrays
 
@@ -6523,7 +6523,7 @@ namespace ZoneEquipmentManager {
         }
     }
 
-    void CalcZoneMixingFlowRateOfReceivingZone(int const ZoneNum, Real64 &ZoneMixingMassFlowRate)
+    void CalcZoneMixingFlowRateOfReceivingZone(int const ZoneNum, Nandle &ZoneMixingMassFlowRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6569,7 +6569,7 @@ namespace ZoneEquipmentManager {
         int Loop;
         int MixingNum;
         int NumOfReceivingZoneMixingObjects;
-        Real64 MixingMassFlowRate; // current zone mixing mass flow rate, [kg/s]
+        Nandle MixingMassFlowRate; // current zone mixing mass flow rate, [kg/s]
 
         MixingMassFlowRate = 0.0;
         // distribute the total zone mixing flow rate to the source zones
@@ -6633,7 +6633,7 @@ namespace ZoneEquipmentManager {
         int MixingNum;
         int ZoneMixingNum;
         int NumOfSourceZoneMixingObjects;
-        Real64 ZoneSourceMassFlowRate; // current zone as a source mass flow rate for zone mixing in other zones, [kg/s]
+        Nandle ZoneSourceMassFlowRate; // current zone as a source mass flow rate for zone mixing in other zones, [kg/s]
 
         ZoneSourceMassFlowRate = 0.0;
         NumOfSourceZoneMixingObjects = MassConservation(ZoneNum).NumSourceZonesMixingObject;
@@ -6730,8 +6730,8 @@ namespace ZoneEquipmentManager {
     void ReportZoneSizingDOASInputs(OutputFiles &outputFiles,
                                     std::string const &ZoneName,         // the name of the zone
                                     std::string const &DOASCtrlStrategy, // DOAS control strategy
-                                    Real64 const DOASLowTemp,            // DOAS design low setpoint temperature [C]
-                                    Real64 const DOASHighTemp            // DOAS design high setpoint temperature [C]
+                                    Nandle const DOASLowTemp,            // DOAS design low setpoint temperature [C]
+                                    Nandle const DOASHighTemp            // DOAS design high setpoint temperature [C]
     )
     {
 

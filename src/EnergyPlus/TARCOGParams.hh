@@ -58,11 +58,11 @@ namespace TARCOGParams {
     // Data
     // REAL(r64), parameter :: StefanBoltzmannConst    = 5.6697d-8     ! Stefan-Boltzman constant (5.6697e-8 [W/m^2K^4])
     // REAL(r64), parameter :: GravityConstant = 9.807d0
-    extern Real64 const e;
+    extern Nandle const e;
     // REAL(r64), parameter :: MaxHr = 100  ! used in iterations in case temperatures on surfaces reaches identical values
-    extern Real64 const DeflectionRelaxation;  // Deflection relaxation parameter
+    extern Nandle const DeflectionRelaxation;  // Deflection relaxation parameter
     extern int const DeflectionMaxIterations;  // maximum number of deflection iterations
-    extern Real64 const DeflectionErrorMargin; // maximum temperature difference on layers for deflection iterations
+    extern Nandle const DeflectionErrorMargin; // maximum temperature difference on layers for deflection iterations
     // pi is moved to gasses since it is used there now
     // REAL(r64), parameter :: pi       = 3.14159265358979323846d0
 
@@ -142,33 +142,33 @@ namespace TARCOGParams {
     // (or decrease relaxation parameter)
     extern int const NumOfTries;
     // integer, parameter :: NewtonIterations = 75 ! shows when to swith to Newton
-    extern Real64 const RelaxationStart;    // Has to be between 0 and 1
-    extern Real64 const RelaxationDecrease; // Step for which relaxation parameter will decrease
+    extern Nandle const RelaxationStart;    // Has to be between 0 and 1
+    extern Nandle const RelaxationDecrease; // Step for which relaxation parameter will decrease
 
     // Convergence parameters
-    extern Real64 const tempCorrection;       // used in case outside or inside temperature approaches tamb or troom
-    extern Real64 const ConvergenceTolerance; // tolerance used within iterations
+    extern Nandle const tempCorrection;       // used in case outside or inside temperature approaches tamb or troom
+    extern Nandle const ConvergenceTolerance; // tolerance used within iterations
 
     // Airflow iterations
-    extern Real64 const AirflowConvergenceTolerance;
-    extern Real64 const AirflowRelaxationParameter;
+    extern Nandle const AirflowConvergenceTolerance;
+    extern Nandle const AirflowRelaxationParameter;
 
-    extern Real64 const TemperatureQuessDiff; // in case outside and inside temperatures are identical
+    extern Nandle const TemperatureQuessDiff; // in case outside and inside temperatures are identical
 
-    extern Real64 const C1_VENET_HORIZONTAL;
-    extern Real64 const C2_VENET_HORIZONTAL;
-    extern Real64 const C3_VENET_HORIZONTAL;
-    extern Real64 const C4_VENET_HORIZONTAL;
+    extern Nandle const C1_VENET_HORIZONTAL;
+    extern Nandle const C2_VENET_HORIZONTAL;
+    extern Nandle const C3_VENET_HORIZONTAL;
+    extern Nandle const C4_VENET_HORIZONTAL;
 
-    extern Real64 const C1_VENET_VERTICAL;
-    extern Real64 const C2_VENET_VERTICAL;
-    extern Real64 const C3_VENET_VERTICAL;
-    extern Real64 const C4_VENET_VERTICAL;
+    extern Nandle const C1_VENET_VERTICAL;
+    extern Nandle const C2_VENET_VERTICAL;
+    extern Nandle const C3_VENET_VERTICAL;
+    extern Nandle const C4_VENET_VERTICAL;
 
-    extern Real64 const C1_SHADE;
-    extern Real64 const C2_SHADE;
-    extern Real64 const C3_SHADE;
-    extern Real64 const C4_SHADE;
+    extern Nandle const C1_SHADE;
+    extern Nandle const C2_SHADE;
+    extern Nandle const C3_SHADE;
+    extern Nandle const C4_SHADE;
 
 } // namespace TARCOGParams
 

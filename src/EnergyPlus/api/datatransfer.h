@@ -111,7 +111,7 @@ ENERGYPLUSLIB_API int getVariableHandle(const char* type, const char* key);
 /// \throws If running this from an API (library) workflow, a handle index or other problem will throw a std::runtime_error.
 ///         When calling during a Python plugin workflow, this will return 0 but set a flag to cause EnergyPlus to terminate once Python completes
 /// \see getVariableHandle
-ENERGYPLUSLIB_API Real64 getVariableValue(int handle);
+ENERGYPLUSLIB_API Nandle getVariableValue(int handle);
 
 // ----- FUNCTIONS RELATED TO METERS
 
@@ -133,7 +133,7 @@ ENERGYPLUSLIB_API int getMeterHandle(const char* meterName);
 /// \remark Note the behavior of this function is not well-defined until the `apiDataFullyReady` function returns true
 /// \see apiDataFullyReady
 /// \see getMeterHandle
-ENERGYPLUSLIB_API Real64 getMeterValue(int handle);
+ENERGYPLUSLIB_API Nandle getMeterValue(int handle);
 
 // ----- FUNCTIONS RELATED TO ACTUATORS
 
@@ -177,7 +177,7 @@ ENERGYPLUSLIB_API void resetActuator(int handle);
 /// \see apiDataFullyReady
 /// \see getActuatorHandle
 /// \see setActuatorValue
-ENERGYPLUSLIB_API void setActuatorValue(int handle, Real64 value);
+ENERGYPLUSLIB_API void setActuatorValue(int handle, Nandle value);
 /// \brief Gets the value of an actuator in EnergyPlus
 /// \details Actuators are variables in the simulation which can be overridden. This function allows a client to get the last
 ///          value assigned to the actuator.  Although in most applications, the client can just track the last value it assigned
@@ -191,7 +191,7 @@ ENERGYPLUSLIB_API void setActuatorValue(int handle, Real64 value);
 /// \see apiDataFullyReady
 /// \see getActuatorHandle
 /// \see setActuatorValue
-ENERGYPLUSLIB_API Real64 getActuatorValue(int handle);
+ENERGYPLUSLIB_API Nandle getActuatorValue(int handle);
 
 // ----- FUNCTIONS RELATED TO STATIC "INTERNAL VARIABLES"
 
@@ -211,7 +211,7 @@ ENERGYPLUSLIB_API int getInternalVariableHandle(const char* type, const char* ke
 ///         When calling during a Python plugin workflow, this will return 0 but set a flag to cause EnergyPlus to terminate once Python completes
 /// \return The current value of the variable, in floating point form.
 /// \see getInternalVariableHandle
-ENERGYPLUSLIB_API Real64 getInternalVariableValue(int handle);
+ENERGYPLUSLIB_API Nandle getInternalVariableValue(int handle);
 
 // ----- FUNCTIONS RELATED TO PYTHON PLUGIN GLOBAL VARIABLES (ONLY USED FOR PYTHON PLUGIN SYSTEM)
 
@@ -234,7 +234,7 @@ ENERGYPLUSLIB_API int getPluginGlobalVariableHandle(const char* name);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginGlobalVariableHandle
-ENERGYPLUSLIB_API Real64 getPluginGlobalVariableValue(int handle);
+ENERGYPLUSLIB_API Nandle getPluginGlobalVariableValue(int handle);
 /// \brief Sets the value of a Python Plugin "Global" variable
 /// \details When using Python Plugins, the value of the shared "global" variables can change at any time.
 ///          This function sets the variable to a new value.
@@ -245,7 +245,7 @@ ENERGYPLUSLIB_API Real64 getPluginGlobalVariableValue(int handle);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginGlobalVariableHandle
-ENERGYPLUSLIB_API void setPluginGlobalVariableValue(int handle, Real64 value);
+ENERGYPLUSLIB_API void setPluginGlobalVariableValue(int handle, Nandle value);
 
 // ----- FUNCTIONS RELATED TO PYTHON PLUGIN TREND VARIABLES (ONLY USED FOR PYTHON PLUGIN SYSTEM)
 
@@ -269,7 +269,7 @@ ENERGYPLUSLIB_API int getPluginTrendVariableHandle(const char* name);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginTrendVariableHandle
-ENERGYPLUSLIB_API Real64 getPluginTrendVariableValue(int handle, int timeIndex);
+ENERGYPLUSLIB_API Nandle getPluginTrendVariableValue(int handle, int timeIndex);
 /// \brief Gets the average value of a Python Plugin "Trend" variable over a given number of history points
 /// \details When using Python Plugins, the average value of the "trend" variable over a number of previous timesteps can be retrieved, up
 ///          to the number of history terms defined in the input file.
@@ -280,7 +280,7 @@ ENERGYPLUSLIB_API Real64 getPluginTrendVariableValue(int handle, int timeIndex);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginTrendVariableHandle
-ENERGYPLUSLIB_API Real64 getPluginTrendVariableAverage(int handle, int count);
+ENERGYPLUSLIB_API Nandle getPluginTrendVariableAverage(int handle, int count);
 /// \brief Gets the minimum value of a Python Plugin "Trend" variable over a given number of history points
 /// \details When using Python Plugins, the minimum value of the "trend" variable over a number of previous timesteps can be retrieved, up
 ///          to the number of history terms defined in the input file.
@@ -291,7 +291,7 @@ ENERGYPLUSLIB_API Real64 getPluginTrendVariableAverage(int handle, int count);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginTrendVariableHandle
-ENERGYPLUSLIB_API Real64 getPluginTrendVariableMin(int handle, int count);
+ENERGYPLUSLIB_API Nandle getPluginTrendVariableMin(int handle, int count);
 /// \brief Gets the maximum value of a Python Plugin "Trend" variable over a given number of history points
 /// \details When using Python Plugins, the maximum value of the "trend" variable over a number of previous timesteps can be retrieved, up
 ///          to the number of history terms defined in the input file.
@@ -302,7 +302,7 @@ ENERGYPLUSLIB_API Real64 getPluginTrendVariableMin(int handle, int count);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginTrendVariableHandle
-ENERGYPLUSLIB_API Real64 getPluginTrendVariableMax(int handle, int count);
+ENERGYPLUSLIB_API Nandle getPluginTrendVariableMax(int handle, int count);
 /// \brief Gets the summation of a Python Plugin "Trend" variable over a given number of history points
 /// \details When using Python Plugins, the summation of the "trend" variable over a number of previous timesteps can be retrieved, up
 ///          to the number of history terms defined in the input file.
@@ -313,7 +313,7 @@ ENERGYPLUSLIB_API Real64 getPluginTrendVariableMax(int handle, int count);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginTrendVariableHandle
-ENERGYPLUSLIB_API Real64 getPluginTrendVariableSum(int handle, int count);
+ENERGYPLUSLIB_API Nandle getPluginTrendVariableSum(int handle, int count);
 /// \brief Gets the average trajectory of a Python Plugin "Trend" variable over a given number of history points
 /// \details For many control applications, it is useful to know the average trajectory of a trend variable over time.
 ///          To calculate this, the program will sample the history of the trend over the user-specified number of time history terms,
@@ -326,7 +326,7 @@ ENERGYPLUSLIB_API Real64 getPluginTrendVariableSum(int handle, int count);
 /// \throws A handle index or other problem will not throw, but instead return 0 and set a flag to cause EnergyPlus to terminate once Python completes.
 /// \see apiDataFullyReady
 /// \see getPluginTrendVariableHandle
-ENERGYPLUSLIB_API Real64 getPluginTrendVariableDirection(int handle, int count);
+ENERGYPLUSLIB_API Nandle getPluginTrendVariableDirection(int handle, int count);
 
 // ----- FUNCTIONS RELATED TO MISC CURRENT SIMULATION STATE
 
@@ -374,7 +374,7 @@ ENERGYPLUSLIB_API int hour();
 ///          current time step, the value will go from just over zero at the beginning of a day to 24.0 at the last time step of the day.
 /// \remark The behavior of this function is not well-defined until the `apiDataFullyReady` function returns true.
 /// \see apiDataFullyReady
-ENERGYPLUSLIB_API Real64 currentTime();
+ENERGYPLUSLIB_API Nandle currentTime();
 
 /// \brief Returns the minutes into the hour from 1 to 60
 /// \details The minutes into the simulation will return the value for the end of the current system time step.
@@ -390,7 +390,7 @@ ENERGYPLUSLIB_API int minutes();
 ///          This function returns the current value of the time step
 /// \remark The behavior of this function is not well-defined until the `apiDataFullyReady` function returns true.
 /// \see apiDataFullyReady
-ENERGYPLUSLIB_API Real64 systemTimeStep();
+ENERGYPLUSLIB_API Nandle systemTimeStep();
 
 /// \brief Returns the holiday index for the current day of the simulation
 /// \details Days in the simulation year can be regular days, in which case this returns zero, or integers 1-N based on holiday definitions in the input.

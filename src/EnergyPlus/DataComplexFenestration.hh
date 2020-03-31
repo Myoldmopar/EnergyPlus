@@ -102,8 +102,8 @@ namespace DataComplexFenestration {
     {
         // Members
         std::string Name; // Name of support pillar
-        Real64 Spacing;   // Spacing between centers of support pillars (m)
-        Real64 Radius;    // Support pillar radius (m)
+        Nandle Spacing;   // Spacing between centers of support pillars (m)
+        Nandle Radius;    // Support pillar radius (m)
 
         // Default Constructor
         GapSupportPillar() : Spacing(0.0), Radius(0.0)
@@ -115,7 +115,7 @@ namespace DataComplexFenestration {
     {
         // Members
         std::string Name; // Name of deflection state
-        Real64 DeflectedThickness;
+        Nandle DeflectedThickness;
 
         // Default Constructor
         GapDeflectionState() : DeflectedThickness(0.0)
@@ -128,22 +128,22 @@ namespace DataComplexFenestration {
         // Members
         std::string Name;               // Name for complex shade
         int LayerType;                  // Layer type (OtherShadingType, Venetian, Woven, Perforated)
-        Real64 Thickness;               // Layer thickness (m)
-        Real64 Conductivity;            // Layer conductivity (W/m2K)
-        Real64 IRTransmittance;         // IR Transmittance
-        Real64 FrontEmissivity;         // Emissivity of front suraface
-        Real64 BackEmissivity;          // Emissivity of back surface
-        Real64 TopOpeningMultiplier;    // Coverage percent for top opening (%)
-        Real64 BottomOpeningMultiplier; // Coverage percent for bottom opening (%)
-        Real64 LeftOpeningMultiplier;   // Coverage percent for left opening (%)
-        Real64 RightOpeningMultiplier;  // Coverage percent for right opening (%)
-        Real64 FrontOpeningMultiplier;  // Coverage percent for front opening (%)
-        Real64 SlatWidth;               // Slat width (m)
-        Real64 SlatSpacing;             // Slat spacing (m)
-        Real64 SlatThickness;           // Slat thickness (m)
-        Real64 SlatAngle;               // Slat angle (deg)
-        Real64 SlatConductivity;        // Slat conductivity (W/m2K)
-        Real64 SlatCurve;               // Curvature radius of slat (if =0 then flat) (m)
+        Nandle Thickness;               // Layer thickness (m)
+        Nandle Conductivity;            // Layer conductivity (W/m2K)
+        Nandle IRTransmittance;         // IR Transmittance
+        Nandle FrontEmissivity;         // Emissivity of front suraface
+        Nandle BackEmissivity;          // Emissivity of back surface
+        Nandle TopOpeningMultiplier;    // Coverage percent for top opening (%)
+        Nandle BottomOpeningMultiplier; // Coverage percent for bottom opening (%)
+        Nandle LeftOpeningMultiplier;   // Coverage percent for left opening (%)
+        Nandle RightOpeningMultiplier;  // Coverage percent for right opening (%)
+        Nandle FrontOpeningMultiplier;  // Coverage percent for front opening (%)
+        Nandle SlatWidth;               // Slat width (m)
+        Nandle SlatSpacing;             // Slat spacing (m)
+        Nandle SlatThickness;           // Slat thickness (m)
+        Nandle SlatAngle;               // Slat angle (deg)
+        Nandle SlatConductivity;        // Slat conductivity (W/m2K)
+        Nandle SlatCurve;               // Curvature radius of slat (if =0 then flat) (m)
 
         // Default Constructor
         WindowComplexShade()
@@ -160,11 +160,11 @@ namespace DataComplexFenestration {
         std::string Name;           // Window thermal model name
         int CalculationStandard;    // Tarcog calculation standard
         int ThermalModel;           // Tarcog thermal model
-        Real64 SDScalar;            // SDScalar coefficient
+        Nandle SDScalar;            // SDScalar coefficient
         int DeflectionModel;        // Deflection model
-        Real64 VacuumPressureLimit; // Pressure limit at which it will be considered vacuum gas state
-        Real64 InitialTemperature;  // Window(s) temperature in time of fabrication
-        Real64 InitialPressure;     // Window(s) pressure in time of fabrication
+        Nandle VacuumPressureLimit; // Pressure limit at which it will be considered vacuum gas state
+        Nandle InitialTemperature;  // Window(s) temperature in time of fabrication
+        Nandle InitialPressure;     // Window(s) pressure in time of fabrication
 
         // Default Constructor
         WindowThermalModelParams()

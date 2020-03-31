@@ -76,25 +76,25 @@ namespace AirflowNetwork {
     extern int lowerLimitErrIdx;
     extern int upperLimitErrIdx;
 
-    Real64 airThermConductivity(Real64 T // Temperature in Celsius
+    Nandle airThermConductivity(Nandle T // Temperature in Celsius
     );
 
-    Real64 airDynamicVisc(Real64 T // Temperature in Celsius
+    Nandle airDynamicVisc(Nandle T // Temperature in Celsius
     );
 
-    Real64 airKinematicVisc(Real64 T, // Temperature in Celsius
-                            Real64 W, // Humidity ratio
-                            Real64 P  // Barometric pressure
+    Nandle airKinematicVisc(Nandle T, // Temperature in Celsius
+                            Nandle W, // Humidity ratio
+                            Nandle P  // Barometric pressure
     );
 
-    Real64 airThermalDiffusivity(Real64 T, // Temperature in Celsius
-                                 Real64 W, // Humidity ratio
-                                 Real64 P  // Barometric pressure
+    Nandle airThermalDiffusivity(Nandle T, // Temperature in Celsius
+                                 Nandle W, // Humidity ratio
+                                 Nandle P  // Barometric pressure
     );
 
-    Real64 airPrandtl(Real64 T, // Temperature in Celsius
-                      Real64 W, // Humidity ratio
-                      Real64 P  // Barometric pressure
+    Nandle airPrandtl(Nandle T, // Temperature in Celsius
+                      Nandle W, // Humidity ratio
+                      Nandle P  // Barometric pressure
     );
 
 } // namespace AirflowNetwork

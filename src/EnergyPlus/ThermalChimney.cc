@@ -200,14 +200,14 @@ namespace ThermalChimney {
         using namespace DataIPShortCuts;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const FlowFractionTolerance(0.0001); // Smallest deviation from unity for the sum of all fractions
+        Nandle const FlowFractionTolerance(0.0001); // Smallest deviation from unity for the sum of all fractions
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         //    CHARACTER(len=MaxNameLength), DIMENSION(23) :: AlphaName
         //    REAL(r64) , DIMENSION(63)              :: IHGNumbers
         int NumAlpha;
         int NumNumber;
-        Real64 AllRatiosSummed;
+        Nandle AllRatiosSummed;
         int TCZoneNum;  // Thermal chimney zone counter
         int TCZoneNum1; // Thermal chimney zone counter
         int IOStat;
@@ -543,10 +543,10 @@ namespace ThermalChimney {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // To be obtained from other modules and subroutines
-        Real64 SurfTempAbsorberWall;     // Absorber wall surface temperature (K)
-        Real64 SurfTempGlassCover;       // Glass cover surface temperature (K)
-        Real64 ConvTransCoeffWallFluid;  // Absorber wall convection trasnfer coefficient
-        Real64 ConvTransCoeffGlassFluid; // Glass cover convection trasnfer coefficient
+        Nandle SurfTempAbsorberWall;     // Absorber wall surface temperature (K)
+        Nandle SurfTempGlassCover;       // Glass cover surface temperature (K)
+        Nandle ConvTransCoeffWallFluid;  // Absorber wall convection trasnfer coefficient
+        Nandle ConvTransCoeffGlassFluid; // Glass cover convection trasnfer coefficient
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // Real local vaiables
@@ -555,40 +555,40 @@ namespace ThermalChimney {
         int ZoneNum; // DO loop counter for zones
         int TCZoneNumCounter;
         int TCZoneNum;
-        Real64 minorW; // width of enclosure (narrow dimension)
-        Real64 majorW; // width of major surface
-        Real64 TempmajorW;
+        Nandle minorW; // width of enclosure (narrow dimension)
+        Nandle majorW; // width of major surface
+        Nandle TempmajorW;
 
-        Real64 RoomAirTemp;
-        Real64 AirSpecHeatThermalChim; // (J/kg*C) or (J/kg*K)
-        Real64 AbsorberWallWidthTC;
-        Real64 TCVolumeAirFlowRate; // (m^3/s)
-        Real64 TCMassAirFlowRate;   // (kg/s)
-        Real64 DischargeCoeffTC;
-        Real64 AirOutletCrossAreaTC;
-        Real64 AirInletCrossArea;
-        Real64 AirRelativeCrossArea;
+        Nandle RoomAirTemp;
+        Nandle AirSpecHeatThermalChim; // (J/kg*C) or (J/kg*K)
+        Nandle AbsorberWallWidthTC;
+        Nandle TCVolumeAirFlowRate; // (m^3/s)
+        Nandle TCMassAirFlowRate;   // (kg/s)
+        Nandle DischargeCoeffTC;
+        Nandle AirOutletCrossAreaTC;
+        Nandle AirInletCrossArea;
+        Nandle AirRelativeCrossArea;
         // REAL(r64)                    :: OutletAirTempThermalChim
-        Real64 OverallThermalChimLength;
-        Real64 ThermChimTolerance;
-        Array1D<Real64> TempTCMassAirFlowRate(10);   // Temporary Value of Thermal Chimney Mass Flow Rate ()
-        Array1D<Real64> TempTCVolumeAirFlowRate(10); // Temporary Value of Thermal Chimney Volume Flow Rate ()
+        Nandle OverallThermalChimLength;
+        Nandle ThermChimTolerance;
+        Array1D<Nandle> TempTCMassAirFlowRate(10);   // Temporary Value of Thermal Chimney Mass Flow Rate ()
+        Array1D<Nandle> TempTCVolumeAirFlowRate(10); // Temporary Value of Thermal Chimney Volume Flow Rate ()
         int IterationLoop;
-        Real64 Process1; // Temporary Variable Used in the Middle of the Calculation
-        Real64 Process2; // Temporary Variable Used in the Middle of the Calculation
-        Real64 Process3; // Temporary Variable Used in the Middle of the Calculation
+        Nandle Process1; // Temporary Variable Used in the Middle of the Calculation
+        Nandle Process2; // Temporary Variable Used in the Middle of the Calculation
+        Nandle Process3; // Temporary Variable Used in the Middle of the Calculation
         // unused1208  REAL(r64)   :: Process4                            ! Temporary Variable Used in the Middle of the Calculation
-        Real64 AirDensityThermalChim; // (kg/m^3)
-        Real64 AirDensity;            // (kg/m^3)
-        Real64 CpAir;
-        Real64 TemporaryWallSurfTemp;
+        Nandle AirDensityThermalChim; // (kg/m^3)
+        Nandle AirDensity;            // (kg/m^3)
+        Nandle CpAir;
+        Nandle TemporaryWallSurfTemp;
 
-        Real64 DeltaL; // OverallThermalChimLength / NTC
+        Nandle DeltaL; // OverallThermalChimLength / NTC
         int ThermChimLoop1;
         int ThermChimLoop2;
-        Array2D<Real64> EquaCoef(NTC, NTC);    // Coefficients in Linear Algebraic Euqation for FINITE DIFFERENCE
-        Array1D<Real64> EquaConst(NTC);        // Constants in Linear Algebraic Equation for FINITE DIFFERENCE
-        Array1D<Real64> ThermChimSubTemp(NTC); // Air temperature of each thermal chimney air channel subregion
+        Array2D<Nandle> EquaCoef(NTC, NTC);    // Coefficients in Linear Algebraic Euqation for FINITE DIFFERENCE
+        Array1D<Nandle> EquaConst(NTC);        // Constants in Linear Algebraic Equation for FINITE DIFFERENCE
+        Array1D<Nandle> ThermChimSubTemp(NTC); // Air temperature of each thermal chimney air channel subregion
 
         for (Loop = 1; Loop <= TotThermalChimney; ++Loop) {
 
@@ -840,9 +840,9 @@ namespace ThermalChimney {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneLoop; // Counter for the # of zones (nz)
-        Real64 AirDensity;
-        Real64 CpAir;
-        Real64 TSMult;
+        Nandle AirDensity;
+        Nandle CpAir;
+        Nandle TSMult;
 
         TSMult = TimeStepSys * SecInHour;
 
@@ -871,7 +871,7 @@ namespace ThermalChimney {
         } // ... end of zone loads report variable update loop.
     }
 
-    void GaussElimination(Array2A<Real64> EquaCoef, Array1D<Real64> &EquaConst, Array1D<Real64> &ThermChimSubTemp, int const NTC)
+    void GaussElimination(Array2A<Nandle> EquaCoef, Array1D<Nandle> &EquaConst, Array1D<Nandle> &ThermChimSubTemp, int const NTC)
     {
         // SUBROUTINE INFORMATION:
 
@@ -906,12 +906,12 @@ namespace ThermalChimney {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Array1D<Real64> tempor(NTC);
-        Real64 tempb;
-        Real64 TCvalue;
-        Real64 TCcoefficient;
+        Array1D<Nandle> tempor(NTC);
+        Nandle tempb;
+        Nandle TCvalue;
+        Nandle TCcoefficient;
         int pivot;
-        Real64 ThermalChimSum;
+        Nandle ThermalChimSum;
         int ThermChimLoop1;
         int ThermChimLoop2;
         int ThermChimLoop3;

@@ -78,15 +78,15 @@ namespace DataTimings {
     // MODULE VARIABLE DECLARATIONS:
     extern int NumTimingElements;
     extern int MaxTimingElements;
-    extern Real64 dailyWeatherTime;
-    extern Real64 dailyExteriorEnergyUseTime;
-    extern Real64 dailyHeatBalanceTime;
-    extern Real64 hbdailyInit;
-    extern Real64 hbdailyOutSurf;
-    extern Real64 hbdailyInSurf;
-    extern Real64 hbdailyHVAC;
-    extern Real64 hbdailyRep;
-    extern Real64 clockrate;
+    extern Nandle dailyWeatherTime;
+    extern Nandle dailyExteriorEnergyUseTime;
+    extern Nandle dailyHeatBalanceTime;
+    extern Nandle hbdailyInit;
+    extern Nandle hbdailyOutSurf;
+    extern Nandle hbdailyInSurf;
+    extern Nandle hbdailyHVAC;
+    extern Nandle hbdailyRep;
+    extern Nandle clockrate;
     extern bool lprocessingInputTiming;
     extern bool lmanageSimulationTiming;
     extern bool lcloseoutReportingTiming;
@@ -117,8 +117,8 @@ namespace DataTimings {
     {
         // Members
         std::string Element;
-        Real64 rstartTime;
-        Real64 currentTimeSum;
+        Nandle rstartTime;
+        Nandle currentTimeSum;
         int calls;
 
         // Default Constructor
@@ -139,15 +139,15 @@ namespace DataTimings {
                     Optional_string_const wprint = _ // only needed (and assumed, if printit is true)
     );
 
-    void epSummaryTimes(Real64 &TimeUsed_CPUTime);
+    void epSummaryTimes(Nandle &TimeUsed_CPUTime);
 
-    Real64 epGetTimeUsed(std::string const &ctimingElementstring);
+    Nandle epGetTimeUsed(std::string const &ctimingElementstring);
 
-    Real64 epGetTimeUsedperCall(std::string const &ctimingElementstring);
+    Nandle epGetTimeUsedperCall(std::string const &ctimingElementstring);
 
-    Real64 eptime();
+    Nandle eptime();
 
-    Real64 epElapsedTime();
+    Nandle epElapsedTime();
 
 } // namespace DataTimings
 

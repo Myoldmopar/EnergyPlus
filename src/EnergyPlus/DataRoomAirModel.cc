@@ -163,100 +163,100 @@ namespace DataRoomAirModel {
     int TotNumOfAirNodes(0);
     int TotNumOfRoomAFNNodes(0);
     Array1D_int TotNumOfZoneAirNodes;
-    Array1D<Real64> ConvectiveFloorSplit;
-    Array1D<Real64> InfiltratFloorSplit;
+    Array1D<Nandle> ConvectiveFloorSplit;
+    Array1D<Nandle> InfiltratFloorSplit;
     // UCSD
-    Array1D<Real64> DVHcIn;
+    Array1D<Nandle> DVHcIn;
     int TotUCSDDV(0);             // Total number of UCSDDV zones
     Array1D_bool IsZoneDV;        // Is the air model for the zone UCSDDV?
-    Array1D<Real64> ZTOC;         // Temperature of occupied (lower) zone
-    Array1D<Real64> AvgTempGrad;  // vertical Average Temperature Gradient in the room
-    Array1D<Real64> ZTMX;         // Temperature of the mixing(upper) layer
-    Array1D<Real64> MaxTempGrad;  // maximum Average Temperature Gradient in the room
-    Array1D<Real64> HVACAirTemp;  // HVAC system temperature (DEG C)
-    Array1D<Real64> HVACMassFlow; // HVAC system mass flow rate (KG/S)
-    Array1D<Real64> ZTFloor;
-    Array1D<Real64> HeightTransition;
-    Array1D<Real64> FracMinFlow;
+    Array1D<Nandle> ZTOC;         // Temperature of occupied (lower) zone
+    Array1D<Nandle> AvgTempGrad;  // vertical Average Temperature Gradient in the room
+    Array1D<Nandle> ZTMX;         // Temperature of the mixing(upper) layer
+    Array1D<Nandle> MaxTempGrad;  // maximum Average Temperature Gradient in the room
+    Array1D<Nandle> HVACAirTemp;  // HVAC system temperature (DEG C)
+    Array1D<Nandle> HVACMassFlow; // HVAC system mass flow rate (KG/S)
+    Array1D<Nandle> ZTFloor;
+    Array1D<Nandle> HeightTransition;
+    Array1D<Nandle> FracMinFlow;
     Array1D_int ZoneDVMixedFlag;
-    Array1D<Real64> ZoneDVMixedFlagRep;
+    Array1D<Nandle> ZoneDVMixedFlagRep;
     Array1D_bool ZoneAirSystemON;
-    Array1D<Real64> TCMF; // comfort temperature
-    Array1D<Real64> ZoneCeilingHeight;
-    Array1D<Real64> MATFloor;    // [C] floor level mean air temp
-    Array1D<Real64> XMATFloor;   // [C] floor level mean air temp at t minus 1 zone time step
-    Array1D<Real64> XM2TFloor;   // [C] floor level mean air temp at t minus 2 zone time step
-    Array1D<Real64> XM3TFloor;   // [C] floor level mean air temp at t minus 3 zone time step
-    Array1D<Real64> XM4TFloor;   // [C] floor level mean air temp at t minus 4 zone time step
-    Array1D<Real64> DSXMATFloor; // [C] floor level mean air temp at t minus 1 system time step
-    Array1D<Real64> DSXM2TFloor; // [C] floor level mean air temp at t minus 2 system time step
-    Array1D<Real64> DSXM3TFloor; // [C] floor level mean air temp at t minus 3 system time step
-    Array1D<Real64> DSXM4TFloor; // [C] floor level mean air temp at t minus 4 system time step
-    Array1D<Real64> MATOC;       // [C] occupied mean air temp
-    Array1D<Real64> XMATOC;      // [C] occupied mean air temp at t minus 1 zone time step
-    Array1D<Real64> XM2TOC;      // [C] occupied mean air temp at t minus 2 zone time step
-    Array1D<Real64> XM3TOC;      // [C] occupied mean air temp at t minus 3 zone time step
-    Array1D<Real64> XM4TOC;      // [C] occupied mean air temp at t minus 4 zone time step
-    Array1D<Real64> DSXMATOC;    // [C] occupied mean air temp at t minus 1 system time step
-    Array1D<Real64> DSXM2TOC;    // [C] occupied mean air temp at t minus 2 system time step
-    Array1D<Real64> DSXM3TOC;    // [C] occupied mean air temp at t minus 3 system time step
-    Array1D<Real64> DSXM4TOC;    // [C] occupied mean air temp at t minus 4 system time step
-    Array1D<Real64> MATMX;       // [C] mixed (upper) mean air temp
-    Array1D<Real64> XMATMX;      // [C] mixed (upper) mean air temp at t minus 1 zone time step
-    Array1D<Real64> XM2TMX;      // [C] mixed (upper) mean air temp at t minus 2 zone time step
-    Array1D<Real64> XM3TMX;      // [C] mixed (upper) mean air temp at t minus 3 zone time step
-    Array1D<Real64> XM4TMX;      // [C] mixed (upper) mean air temp at t minus 4 zone time step
-    Array1D<Real64> DSXMATMX;    // [C] mixed  mean air temp at t minus 1 system time step
-    Array1D<Real64> DSXM2TMX;    // [C] mixed  mean air temp at t minus 2 system time step
-    Array1D<Real64> DSXM3TMX;    // [C] mixed  mean air temp at t minus 3 system time step
-    Array1D<Real64> DSXM4TMX;    // [C] mixed  mean air temp at t minus 4 system time step
-    Array1D<Real64> ZTM1Floor;   // [C] difference equation's Floor air temp at t minus 1
-    Array1D<Real64> ZTM2Floor;   // [C] difference equation's Floor air temp at t minus 2
-    Array1D<Real64> ZTM3Floor;   // [C] difference equation's Floor air temp at t minus 3
-    Array1D<Real64> ZTM1OC;      // [C] difference equation's Occupied air temp at t minus 1
-    Array1D<Real64> ZTM2OC;      // [C] difference equation's Occupied air temp at t minus 2
-    Array1D<Real64> ZTM3OC;      // [C] difference equation's Occupied air temp at t minus 3
-    Array1D<Real64> ZTM1MX;      // [C] difference equation's Mixed  air temp at t minus 1
-    Array1D<Real64> ZTM2MX;      // [C] difference equation's Mixed  air temp at t minus 1
-    Array1D<Real64> ZTM3MX;      // [C] difference equation's Mixed  air temp at t minus 1
-    Array1D<Real64> AIRRATFloor;
-    Array1D<Real64> AIRRATOC;
-    Array1D<Real64> AIRRATMX;
+    Array1D<Nandle> TCMF; // comfort temperature
+    Array1D<Nandle> ZoneCeilingHeight;
+    Array1D<Nandle> MATFloor;    // [C] floor level mean air temp
+    Array1D<Nandle> XMATFloor;   // [C] floor level mean air temp at t minus 1 zone time step
+    Array1D<Nandle> XM2TFloor;   // [C] floor level mean air temp at t minus 2 zone time step
+    Array1D<Nandle> XM3TFloor;   // [C] floor level mean air temp at t minus 3 zone time step
+    Array1D<Nandle> XM4TFloor;   // [C] floor level mean air temp at t minus 4 zone time step
+    Array1D<Nandle> DSXMATFloor; // [C] floor level mean air temp at t minus 1 system time step
+    Array1D<Nandle> DSXM2TFloor; // [C] floor level mean air temp at t minus 2 system time step
+    Array1D<Nandle> DSXM3TFloor; // [C] floor level mean air temp at t minus 3 system time step
+    Array1D<Nandle> DSXM4TFloor; // [C] floor level mean air temp at t minus 4 system time step
+    Array1D<Nandle> MATOC;       // [C] occupied mean air temp
+    Array1D<Nandle> XMATOC;      // [C] occupied mean air temp at t minus 1 zone time step
+    Array1D<Nandle> XM2TOC;      // [C] occupied mean air temp at t minus 2 zone time step
+    Array1D<Nandle> XM3TOC;      // [C] occupied mean air temp at t minus 3 zone time step
+    Array1D<Nandle> XM4TOC;      // [C] occupied mean air temp at t minus 4 zone time step
+    Array1D<Nandle> DSXMATOC;    // [C] occupied mean air temp at t minus 1 system time step
+    Array1D<Nandle> DSXM2TOC;    // [C] occupied mean air temp at t minus 2 system time step
+    Array1D<Nandle> DSXM3TOC;    // [C] occupied mean air temp at t minus 3 system time step
+    Array1D<Nandle> DSXM4TOC;    // [C] occupied mean air temp at t minus 4 system time step
+    Array1D<Nandle> MATMX;       // [C] mixed (upper) mean air temp
+    Array1D<Nandle> XMATMX;      // [C] mixed (upper) mean air temp at t minus 1 zone time step
+    Array1D<Nandle> XM2TMX;      // [C] mixed (upper) mean air temp at t minus 2 zone time step
+    Array1D<Nandle> XM3TMX;      // [C] mixed (upper) mean air temp at t minus 3 zone time step
+    Array1D<Nandle> XM4TMX;      // [C] mixed (upper) mean air temp at t minus 4 zone time step
+    Array1D<Nandle> DSXMATMX;    // [C] mixed  mean air temp at t minus 1 system time step
+    Array1D<Nandle> DSXM2TMX;    // [C] mixed  mean air temp at t minus 2 system time step
+    Array1D<Nandle> DSXM3TMX;    // [C] mixed  mean air temp at t minus 3 system time step
+    Array1D<Nandle> DSXM4TMX;    // [C] mixed  mean air temp at t minus 4 system time step
+    Array1D<Nandle> ZTM1Floor;   // [C] difference equation's Floor air temp at t minus 1
+    Array1D<Nandle> ZTM2Floor;   // [C] difference equation's Floor air temp at t minus 2
+    Array1D<Nandle> ZTM3Floor;   // [C] difference equation's Floor air temp at t minus 3
+    Array1D<Nandle> ZTM1OC;      // [C] difference equation's Occupied air temp at t minus 1
+    Array1D<Nandle> ZTM2OC;      // [C] difference equation's Occupied air temp at t minus 2
+    Array1D<Nandle> ZTM3OC;      // [C] difference equation's Occupied air temp at t minus 3
+    Array1D<Nandle> ZTM1MX;      // [C] difference equation's Mixed  air temp at t minus 1
+    Array1D<Nandle> ZTM2MX;      // [C] difference equation's Mixed  air temp at t minus 1
+    Array1D<Nandle> ZTM3MX;      // [C] difference equation's Mixed  air temp at t minus 1
+    Array1D<Nandle> AIRRATFloor;
+    Array1D<Nandle> AIRRATOC;
+    Array1D<Nandle> AIRRATMX;
     // Euler and Exact solution algorithms
-    Array1D<Real64> Zone1Floor;  // [C] difference equation's Floor air temp at previous dt
-    Array1D<Real64> ZoneMXFloor; // [C] difference equation's Floor air temp at t minus 1
-    Array1D<Real64> ZoneM2Floor; // [C] difference equation's Floor air temp at t minus 2
-    Array1D<Real64> Zone1OC;     // [C] difference equation's Occupied air temp at previous dt
-    Array1D<Real64> ZoneMXOC;    // [C] difference equation's Occupied air temp at t minus 1
-    Array1D<Real64> ZoneM2OC;    // [C] difference equation's Occupied air temp at t minus 2
-    Array1D<Real64> Zone1MX;     // [C] difference equation's Mixed  air temp at previous dt
-    Array1D<Real64> ZoneMXMX;    // [C] difference equation's Mixed  air temp at t minus 1
-    Array1D<Real64> ZoneM2MX;    // [C] difference equation's Mixed  air temp at t minus 2
+    Array1D<Nandle> Zone1Floor;  // [C] difference equation's Floor air temp at previous dt
+    Array1D<Nandle> ZoneMXFloor; // [C] difference equation's Floor air temp at t minus 1
+    Array1D<Nandle> ZoneM2Floor; // [C] difference equation's Floor air temp at t minus 2
+    Array1D<Nandle> Zone1OC;     // [C] difference equation's Occupied air temp at previous dt
+    Array1D<Nandle> ZoneMXOC;    // [C] difference equation's Occupied air temp at t minus 1
+    Array1D<Nandle> ZoneM2OC;    // [C] difference equation's Occupied air temp at t minus 2
+    Array1D<Nandle> Zone1MX;     // [C] difference equation's Mixed  air temp at previous dt
+    Array1D<Nandle> ZoneMXMX;    // [C] difference equation's Mixed  air temp at t minus 1
+    Array1D<Nandle> ZoneM2MX;    // [C] difference equation's Mixed  air temp at t minus 2
     // UCSD-CV
-    Array1D<Real64> CVHcIn;
+    Array1D<Nandle> CVHcIn;
     int TotUCSDCV(0);                // Total number of UCSDDV zones
     Array1D_bool IsZoneCV;           // Is the air model for the zone UCSDDV?
-    Array1D<Real64> ZoneCVisMixing;  // Zone set to CV is actually using a mixing model
-    Array1D<Real64> ZTJET;           // Jet Temperatures
-    Array1D<Real64> ZTREC;           // Recirculation Temperatures
-    Array1D<Real64> RoomOutflowTemp; // Temperature of air flowing out of the room
-    Array1D<Real64> JetRecAreaRatio;
-    Array1D<Real64> Urec;           // Recirculation region average velocity
-    Array1D<Real64> Ujet;           // Jet region average velocity
-    Array1D<Real64> Qrec;           // Recirculation zone total flow rate
-    Array1D<Real64> Qtot;           // Total volumetric inflow rate through all active aperatures [m3/s]
-    Array1D<Real64> RecInflowRatio; // Ratio of the recirculation volumetric flow rate to the total inflow flow rate []
-    Array1D<Real64> Uhc;
-    Array1D<Real64> Ain;                     // Inflow aperture area
-    Array1D<Real64> Droom;                   // CV Zone average length
-    Array1D<Real64> Dstar;                   // CV Zone average length, wind direction corrected
-    Array1D<Real64> Tin;                     // Inflow air temperature
-    Array1D<Real64> TotArea;                 // Sum of the areas of all apertures in the zone
+    Array1D<Nandle> ZoneCVisMixing;  // Zone set to CV is actually using a mixing model
+    Array1D<Nandle> ZTJET;           // Jet Temperatures
+    Array1D<Nandle> ZTREC;           // Recirculation Temperatures
+    Array1D<Nandle> RoomOutflowTemp; // Temperature of air flowing out of the room
+    Array1D<Nandle> JetRecAreaRatio;
+    Array1D<Nandle> Urec;           // Recirculation region average velocity
+    Array1D<Nandle> Ujet;           // Jet region average velocity
+    Array1D<Nandle> Qrec;           // Recirculation zone total flow rate
+    Array1D<Nandle> Qtot;           // Total volumetric inflow rate through all active aperatures [m3/s]
+    Array1D<Nandle> RecInflowRatio; // Ratio of the recirculation volumetric flow rate to the total inflow flow rate []
+    Array1D<Nandle> Uhc;
+    Array1D<Nandle> Ain;                     // Inflow aperture area
+    Array1D<Nandle> Droom;                   // CV Zone average length
+    Array1D<Nandle> Dstar;                   // CV Zone average length, wind direction corrected
+    Array1D<Nandle> Tin;                     // Inflow air temperature
+    Array1D<Nandle> TotArea;                 // Sum of the areas of all apertures in the zone
     Array2D_int AirflowNetworkSurfaceUCSDCV; // table for AirflowNetwork surfaces organization
     int CVNumAirflowNetworkSurfaces(0);      // total number of AirFlowNetwork surfaces.
     // Interzone surfaces counts twice.
-    Array1D<Real64> Rfr;          // Ration between inflow and recirculation air flows
-    Array1D<Real64> ZoneCVhasREC; // Airflow pattern is C(0), CR(1)
+    Array1D<Nandle> Rfr;          // Ration between inflow and recirculation air flows
+    Array1D<Nandle> ZoneCVhasREC; // Airflow pattern is C(0), CR(1)
     bool UCSDModelUsed(false);
     bool MundtModelUsed(false);
     // UCSD-UF
@@ -264,13 +264,13 @@ namespace DataRoomAirModel {
     int TotUCSDUE(0);      // total number of UCSDUE zones
     Array1D_bool IsZoneUI; // controls program flow, for interior or exterior UFAD model
     Array1D_int ZoneUFPtr;
-    Array1D<Real64> UFHcIn;
+    Array1D<Nandle> UFHcIn;
     Array1D_int ZoneUFMixedFlag;
-    Array1D<Real64> ZoneUFMixedFlagRep;
-    Array1D<Real64> ZoneUFGamma;
-    Array1D<Real64> ZoneUFPowInPlumes;            // [W]
-    Array1D<Real64> ZoneUFPowInPlumesfromWindows; // [W]
-    Array1D<Real64> Phi;                          // dimensionless measure of occupied subzone temperature
+    Array1D<Nandle> ZoneUFMixedFlagRep;
+    Array1D<Nandle> ZoneUFGamma;
+    Array1D<Nandle> ZoneUFPowInPlumes;            // [W]
+    Array1D<Nandle> ZoneUFPowInPlumesfromWindows; // [W]
+    Array1D<Nandle> Phi;                          // dimensionless measure of occupied subzone temperature
 
     // END UCSD
 

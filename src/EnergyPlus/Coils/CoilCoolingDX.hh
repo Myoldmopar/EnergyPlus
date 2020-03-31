@@ -78,18 +78,18 @@ struct CoilCoolingDX
     static void clear_state();
     void instantiateFromInputSpec(const CoilCoolingDXInputSpecification &input_data);
     void oneTimeInit();
-    void simulate(int useAlternateMode, Real64 PLR, int speedNum, Real64 speedRatio, int fanOpMode, Real64 LoadSHR = -1.0);
+    void simulate(int useAlternateMode, Nandle PLR, int speedNum, Nandle speedRatio, int fanOpMode, Nandle LoadSHR = -1.0);
     void setData(int fanIndex, int fanType, std::string const &fanName, int airLoopNum);
     void getFixedData(int &evapInletNodeIndex,
                       int &evapOutletNodeIndex,
                       int &condInletNodeIndex,
                       int &normalModeNumSpeeds,
                       CoilCoolingDXCurveFitPerformance::CapControlMethod &capacityControlMethod,
-                      Real64 &minOutdoorDryBulb);
-    void getDataAfterSizing(Real64 &normalModeRatedEvapAirFlowRate,
-                            Real64 &normalModeRatedCapacity,
-                            std::vector<Real64> &normalModeFlowRates,
-                            std::vector<Real64> &normalModeRatedCapacities);
+                      Nandle &minOutdoorDryBulb);
+    void getDataAfterSizing(Nandle &normalModeRatedEvapAirFlowRate,
+                            Nandle &normalModeRatedCapacity,
+                            std::vector<Nandle> &normalModeFlowRates,
+                            std::vector<Nandle> &normalModeRatedCapacities);
     static void inline passThroughNodeData(DataLoopNode::NodeData &in, DataLoopNode::NodeData &out);
     void size();
 
@@ -105,14 +105,14 @@ struct CoilCoolingDX
     CoilCoolingDXCurveFitPerformance performance;
     int condensateTankIndex = 0;
     int condensateTankSupplyARRID = 0;
-    Real64 condensateVolumeFlow = 0.0;
-    Real64 condensateVolumeConsumption = 0.0;
+    Nandle condensateVolumeFlow = 0.0;
+    Nandle condensateVolumeConsumption = 0.0;
     int evaporativeCondSupplyTankIndex = 0;
     int evaporativeCondSupplyTankARRID = 0;
-    Real64 evaporativeCondSupplyTankVolumeFlow = 0.0;
-    // Real64 evaporativeCondSupplyTankVolumeConsumption = 0.0;
-    Real64 evapCondPumpElecPower = 0.0;
-    Real64 evapCondPumpElecConsumption = 0.0;
+    Nandle evaporativeCondSupplyTankVolumeFlow = 0.0;
+    // Nandle evaporativeCondSupplyTankVolumeConsumption = 0.0;
+    Nandle evapCondPumpElecPower = 0.0;
+    Nandle evapCondPumpElecConsumption = 0.0;
     int airLoopNum = 0; // Add for AFN compatibility, revisit at a later date
     int supplyFanIndex = 0;
     int supplyFanType = 0;
@@ -121,30 +121,30 @@ struct CoilCoolingDX
     int CoolingCoilType = 0; // Coolig coil type
 
     // report variables
-    Real64 totalCoolingEnergyRate = 0.0;
-    Real64 totalCoolingEnergy = 0.0;
-    Real64 sensCoolingEnergyRate = 0.0;
-    Real64 sensCoolingEnergy = 0.0;
-    Real64 latCoolingEnergyRate = 0.0;
-    Real64 latCoolingEnergy = 0.0;
+    Nandle totalCoolingEnergyRate = 0.0;
+    Nandle totalCoolingEnergy = 0.0;
+    Nandle sensCoolingEnergyRate = 0.0;
+    Nandle sensCoolingEnergy = 0.0;
+    Nandle latCoolingEnergyRate = 0.0;
+    Nandle latCoolingEnergy = 0.0;
 
-    Real64 coolingCoilRuntimeFraction = 0.0;
-    Real64 elecCoolingPower = 0.0;
-    Real64 elecCoolingConsumption = 0.0;
+    Nandle coolingCoilRuntimeFraction = 0.0;
+    Nandle elecCoolingPower = 0.0;
+    Nandle elecCoolingConsumption = 0.0;
 
-    Real64 airMassFlowRate = 0.0;
-    Real64 inletAirDryBulbTemp = 0.0;
-    Real64 inletAirHumRat = 0.0;
-    Real64 outletAirDryBulbTemp = 0.0;
-    Real64 outletAirHumRat = 0.0;
-    Real64 partLoadRatioReport = 0.0;
-    Real64 runTimeFraction = 0.0;
+    Nandle airMassFlowRate = 0.0;
+    Nandle inletAirDryBulbTemp = 0.0;
+    Nandle inletAirHumRat = 0.0;
+    Nandle outletAirDryBulbTemp = 0.0;
+    Nandle outletAirHumRat = 0.0;
+    Nandle partLoadRatioReport = 0.0;
+    Nandle runTimeFraction = 0.0;
     int speedNumReport = 0;
-    Real64 speedRatioReport = 0.0;
-    Real64 wasteHeatEnergyRate = 0.0;
-    Real64 wasteHeatEnergy = 0.0;
-    Real64 recoveredHeatEnergy = 0.0;
-    Real64 recoveredHeatEnergyRate = 0.0;
+    Nandle speedRatioReport = 0.0;
+    Nandle wasteHeatEnergyRate = 0.0;
+    Nandle wasteHeatEnergy = 0.0;
+    Nandle recoveredHeatEnergy = 0.0;
+    Nandle recoveredHeatEnergyRate = 0.0;
 };
 
 extern int const coilNormalMode; // Normal operation mode

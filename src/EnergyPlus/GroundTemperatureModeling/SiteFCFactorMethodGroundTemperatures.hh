@@ -66,7 +66,7 @@ class SiteFCFactorMethodGroundTemps : public BaseGroundTempsModel
 {
 public:
     int timeOfSimInMonths;
-    Array1D<Real64> fcFactorGroundTemps;
+    Array1D<Nandle> fcFactorGroundTemps;
 
     // Default Constructor
     SiteFCFactorMethodGroundTemps() : timeOfSimInMonths(0), fcFactorGroundTemps(12, 13.0)
@@ -75,11 +75,11 @@ public:
 
     static std::shared_ptr<SiteFCFactorMethodGroundTemps> FCFactorGTMFactory(OutputFiles &outputFiles, int objectType, std::string objectName);
 
-    Real64 getGroundTemp() override;
+    Nandle getGroundTemp() override;
 
-    Real64 getGroundTempAtTimeInSeconds(Real64 const depth, Real64 const timeInSecondsOfSim) override;
+    Nandle getGroundTempAtTimeInSeconds(Nandle const depth, Nandle const timeInSecondsOfSim) override;
 
-    Real64 getGroundTempAtTimeInMonths(Real64 const depth, int const monthOfSim) override;
+    Nandle getGroundTempAtTimeInMonths(Nandle const depth, int const monthOfSim) override;
 
 };
 

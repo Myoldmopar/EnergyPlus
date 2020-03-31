@@ -71,15 +71,15 @@ namespace SteamBaseboardRadiator {
     extern int NumSteamBaseboards;
     extern int SteamIndex;
 
-    extern Array1D<Real64> QBBSteamRadSource;    // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> QBBSteamRadSrcAvg;    // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone
+    extern Array1D<Nandle> QBBSteamRadSource;    // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> QBBSteamRadSrcAvg;    // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone
     // with no source
 
     // Record keeping variables used to calculate QBBRadSrcAvg locally
-    extern Array1D<Real64> LastQBBSteamRadSrc; // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastQBBSteamRadSrc; // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     extern Array1D_bool MySizeFlag;
     extern Array1D_bool CheckEquipName;
     extern Array1D_bool SetLoopIndexFlag; // get loop number flag
@@ -104,31 +104,31 @@ namespace SteamBaseboardRadiator {
         int FluidIndex;       // Fluid index for FluidProperties (Steam)
         int ControlCompTypeNum;
         int CompErrIndex;
-        Real64 DegOfSubcooling;      // Temperature differences due to subcooling of the condensate [C]
-        Real64 Offset;               // Control accuracy
-        Real64 SteamMassFlowRate;    // Mass flow rate of steam passing through the heater [kg/s]
-        Real64 SteamMassFlowRateMax; // Maximum mass flow rate of steam [kg/s]
-        Real64 SteamVolFlowRateMax;  // Maximum volumetric flow rate of steam [m3/s]
-        Real64 SteamOutletTemp;      // Outlet steam temperature from the heater [C]
-        Real64 SteamInletTemp;       // Inlet steam temperature [C]
-        Real64 SteamInletEnthalpy;   // Enthalpy of the steam delivered from the boiler [J/kg]
-        Real64 SteamOutletEnthalpy;  // Enthalpy of the steam leaving the heater [J/kg]
-        Real64 SteamInletPress;      // Pressure of steam at the inlet of the heater [Pa]
-        Real64 SteamOutletPress;     // Pressure of steam at the outlet of the heater [Pa]
-        Real64 SteamInletQuality;    // Quality of steam at the inlet of the heater [Pa]
-        Real64 SteamOutletQuality;   // Quality of steam at the outlet of the heater [Pa]
-        Real64 FracRadiant;          // User defined fraction for radiant heat addition
-        Real64 FracConvect;          // Fraction for convective heat addition
-        Real64 FracDistribPerson;    // Fraction for radiant heat incident on people
-        Array1D<Real64> FracDistribToSurf;
-        Real64 TotPower;   // Convective system impact rate that the heater actually meets [W]
-        Real64 Power;      // Maximum heating rate [W]
-        Real64 ConvPower;  // Convective heating rate [W]
-        Real64 RadPower;   // Radiant heating rate [W]
-        Real64 TotEnergy;  // Convective system impact energy [J]
-        Real64 Energy;     // Maximum heating energy [J]
-        Real64 ConvEnergy; // Convective heating energy [J]
-        Real64 RadEnergy;  // Radiant heating energy [J]
+        Nandle DegOfSubcooling;      // Temperature differences due to subcooling of the condensate [C]
+        Nandle Offset;               // Control accuracy
+        Nandle SteamMassFlowRate;    // Mass flow rate of steam passing through the heater [kg/s]
+        Nandle SteamMassFlowRateMax; // Maximum mass flow rate of steam [kg/s]
+        Nandle SteamVolFlowRateMax;  // Maximum volumetric flow rate of steam [m3/s]
+        Nandle SteamOutletTemp;      // Outlet steam temperature from the heater [C]
+        Nandle SteamInletTemp;       // Inlet steam temperature [C]
+        Nandle SteamInletEnthalpy;   // Enthalpy of the steam delivered from the boiler [J/kg]
+        Nandle SteamOutletEnthalpy;  // Enthalpy of the steam leaving the heater [J/kg]
+        Nandle SteamInletPress;      // Pressure of steam at the inlet of the heater [Pa]
+        Nandle SteamOutletPress;     // Pressure of steam at the outlet of the heater [Pa]
+        Nandle SteamInletQuality;    // Quality of steam at the inlet of the heater [Pa]
+        Nandle SteamOutletQuality;   // Quality of steam at the outlet of the heater [Pa]
+        Nandle FracRadiant;          // User defined fraction for radiant heat addition
+        Nandle FracConvect;          // Fraction for convective heat addition
+        Nandle FracDistribPerson;    // Fraction for radiant heat incident on people
+        Array1D<Nandle> FracDistribToSurf;
+        Nandle TotPower;   // Convective system impact rate that the heater actually meets [W]
+        Nandle Power;      // Maximum heating rate [W]
+        Nandle ConvPower;  // Convective heating rate [W]
+        Nandle RadPower;   // Radiant heating rate [W]
+        Nandle TotEnergy;  // Convective system impact energy [J]
+        Nandle Energy;     // Maximum heating energy [J]
+        Nandle ConvEnergy; // Convective heating energy [J]
+        Nandle RadEnergy;  // Radiant heating energy [J]
         int LoopNum;       // plant loop index
         int LoopSideNum;   // plant loop side index
         int BranchNum;     // plant loop branch index
@@ -138,7 +138,7 @@ namespace SteamBaseboardRadiator {
         int BBInletTempFlowReSimIndex;
         int HeatingCapMethod; // - Method for steam baseboard Radiator system heating capacity scaledsizing calculation (HeatingDesignCapacity,
                               // CapacityPerFloorArea, FracOfAutosizedHeatingCapacity)
-        Real64 ScaledHeatingCapacity; // -  steam baseboard Radiator system scaled maximum heating capacity {W} or scalable variable of zone HVAC
+        Nandle ScaledHeatingCapacity; // -  steam baseboard Radiator system scaled maximum heating capacity {W} or scalable variable of zone HVAC
                                       // equipment, {-}, or {W/m2}
 
         // Default Constructor
@@ -175,7 +175,7 @@ namespace SteamBaseboardRadiator {
                            int const ActualZoneNum,
                            int const ControlledZoneNum,
                            bool const FirstHVACIteration,
-                           Real64 &PowerMet,
+                           Nandle &PowerMet,
                            int &CompIndex);
 
     void GetSteamBaseboardInput();
@@ -184,7 +184,7 @@ namespace SteamBaseboardRadiator {
 
     void SizeSteamBaseboard(int const BaseboardNum);
 
-    void CalcSteamBaseboard(int &BaseboardNum, Real64 &LoadMet);
+    void CalcSteamBaseboard(int &BaseboardNum, Nandle &LoadMet);
 
     void UpdateSteamBaseboard(int const BaseboardNum);
 
@@ -194,7 +194,7 @@ namespace SteamBaseboardRadiator {
 
     void ReportSteamBaseboard(int const BaseboardNum);
 
-    Real64 SumHATsurf(int const ZoneNum); // Zone number
+    Nandle SumHATsurf(int const ZoneNum); // Zone number
 
     void UpdateSteamBaseboardPlantConnection(int const BaseboardTypeNum,       // type index
                                              std::string const &BaseboardName, // component name

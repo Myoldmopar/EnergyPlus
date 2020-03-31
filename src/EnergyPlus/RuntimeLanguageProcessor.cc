@@ -252,10 +252,10 @@ namespace RuntimeLanguageProcessor {
         // Locals
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        static Real64 tmpCurrentTime(0.0);
-        static Real64 tmpMinutes(0.0);
-        static Real64 tmpHours(0.0);
-        static Real64 tmpCurEnvirNum(0.0);
+        static Nandle tmpCurrentTime(0.0);
+        static Nandle tmpMinutes(0.0);
+        static Nandle tmpHours(0.0);
+        static Nandle tmpCurEnvirNum(0.0);
         Array1D_int datevalues(8);
         // value(1)   Current year
         // value(2)   Current month
@@ -2072,19 +2072,19 @@ namespace RuntimeLanguageProcessor {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int thisTrend;      // local temporary
         int thisIndex;      // local temporary
-        Real64 thisAverage; // local temporary
+        Nandle thisAverage; // local temporary
         int loop;           // local temporary
-        Real64 thisSlope;   // local temporary
-        Real64 thisMax;     // local temporary
-        Real64 thisMin;     // local temporary
+        Nandle thisSlope;   // local temporary
+        Nandle thisMax;     // local temporary
+        Nandle thisMin;     // local temporary
         int OperandNum;
         int SeedN;              // number of digits in the number used to seed the generator
         Array1D_int SeedIntARR; // local temporary for random seed
-        Real64 tmpRANDU1;       // local temporary for uniform random number
-        Real64 tmpRANDU2;       // local temporary for uniform random number
-        Real64 tmpRANDG;        // local temporary for gaussian random number
-        Real64 UnitCircleTest;  // local temporary for Box-Muller algo
-        Real64 TestValue;       // local temporary
+        Nandle tmpRANDU1;       // local temporary for uniform random number
+        Nandle tmpRANDU2;       // local temporary for uniform random number
+        Nandle tmpRANDG;        // local temporary for gaussian random number
+        Nandle UnitCircleTest;  // local temporary for Box-Muller algo
+        Nandle TestValue;       // local temporary
 
         // Object Data
         Array1D<ErlValueType> Operand;
@@ -2759,7 +2759,7 @@ namespace RuntimeLanguageProcessor {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         int ConstructNum;
         bool errFlag;
@@ -3794,7 +3794,7 @@ namespace RuntimeLanguageProcessor {
         return String;
     }
 
-    ErlValueType SetErlValueNumber(Real64 const Number, Optional<ErlValueType const> OrigValue)
+    ErlValueType SetErlValueNumber(Nandle const Number, Optional<ErlValueType const> OrigValue)
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         P. Ellis
@@ -4348,7 +4348,7 @@ namespace RuntimeLanguageProcessor {
     }
 
     void ExternalInterfaceSetErlVariable(int const varNum,  // The variable index to be written during run time
-                                         Real64 const value // The real time value of the vairable to be set
+                                         Nandle const value // The real time value of the vairable to be set
     )
     {
 

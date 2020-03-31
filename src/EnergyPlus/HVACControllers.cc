@@ -191,7 +191,7 @@ namespace HVACControllers {
     // Data
     // MODULE PARAMETER DEFINITIONS
     // Number of significant digits to display in error messages for floating-point numbers
-    Real64 const SomeFloatingPoint(1.0);
+    Nandle const SomeFloatingPoint(1.0);
     int const NumSigDigits(PRECISION(SomeFloatingPoint));
 
     static std::string const BlankString;
@@ -579,7 +579,7 @@ namespace HVACControllers {
         int IOStat;
         int AirLoopNum;            // DO index for each air loop
         bool ActuatorNodeNotFound; // true if no water coil inlet node match for actuator node
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
         Array1D_string AlphArray;
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
@@ -854,7 +854,7 @@ namespace HVACControllers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ActuatedNode;
         int SensedNode;
-        Real64 NoFlowResetValue;
+        Nandle NoFlowResetValue;
 
         ActuatedNode = ControllerProps(ControlNum).ActuatedNode;
         SensedNode = ControllerProps(ControlNum).SensedNode;
@@ -971,7 +971,7 @@ namespace HVACControllers {
         static Array1D_bool MyEnvrnFlag;
         static Array1D_bool MySizeFlag;
         static Array1D_bool MyPlantIndexsFlag;
-        Real64 rho; // local fluid density
+        Nandle rho; // local fluid density
 
         if (InitControllerOneTimeFlag) {
 
@@ -1621,7 +1621,7 @@ namespace HVACControllers {
         int PreviousSolutionIndex;
         bool PreviousSolutionDefinedFlag;
         int PreviousSolutionMode;
-        Real64 PreviousSolutionValue;
+        Nandle PreviousSolutionValue;
 
         // Obtain actuated and sensed nodes
         ActuatedNode = ControllerProps(ControlNum).ActuatedNode;
@@ -2267,7 +2267,7 @@ namespace HVACControllers {
         }
     }
 
-    void ExitCalcController(int const ControlNum, Real64 const NextActuatedValue, int const Mode, bool &IsConvergedFlag, bool &IsUpToDateFlag)
+    void ExitCalcController(int const ControlNum, Nandle const NextActuatedValue, int const Mode, bool &IsConvergedFlag, bool &IsUpToDateFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2587,11 +2587,11 @@ namespace HVACControllers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int AirLoopControlNum;
         int NumWarmRestarts;
-        Real64 WarmRestartSuccessRatio;
+        Nandle WarmRestartSuccessRatio;
         int NumCalls;
         int TotIterations;
         int MaxIterations;
-        Real64 AvgIterations;
+        Nandle AvgIterations;
         int iModeNum;
 
         // FLOW

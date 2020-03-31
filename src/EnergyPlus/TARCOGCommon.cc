@@ -95,7 +95,7 @@ namespace TARCOGCommon {
         return layertype == VENETBLIND_HORIZ || layertype == VENETBLIND_VERT || layertype == WOVSHADE || layertype == PERFORATED || layertype == BSDF || layertype == DIFFSHADE;
     }
 
-    Real64 LDSumMax(Real64 const Width, Real64 const Height)
+    Nandle LDSumMax(Nandle const Width, Nandle const Height)
     {
         // LDSumMax function calculates sum part of equation for maximum deflection
         // Width - glazing system width
@@ -107,7 +107,7 @@ namespace TARCOGCommon {
         // use TARCOGGassesParams
 
         // Return value
-        Real64 LDSumMax;
+        Nandle LDSumMax;
 
         // Locals
         int i;
@@ -115,8 +115,8 @@ namespace TARCOGCommon {
 
         LDSumMax = 0.0;
         for (i = 1; i <= mmax; i += 2) {
-            Real64 const sin_i(std::sin(i * PiOvr2));
-            Real64 const pow_i_W(pow_2(i / Width));
+            Nandle const sin_i(std::sin(i * PiOvr2));
+            Nandle const pow_i_W(pow_2(i / Width));
             for (j = 1; j <= nmax; j += 2) {
                 LDSumMax += (sin_i * std::sin(j * PiOvr2)) / (i * j * pow_2(pow_i_W + pow_2(j / Height)));
             } // do j = 1, nmax, 2
@@ -125,7 +125,7 @@ namespace TARCOGCommon {
         return LDSumMax;
     }
 
-    Real64 LDSumMean(Real64 const Width, Real64 const Height)
+    Nandle LDSumMean(Nandle const Width, Nandle const Height)
     {
         // LDSumMean function calculates sum part of equation for mean deflection
         // Width - glazing system width
@@ -137,17 +137,17 @@ namespace TARCOGCommon {
         // use TARCOGGassesParams
 
         // Return value
-        Real64 LDSumMean;
+        Nandle LDSumMean;
 
         // Locals
-        static Real64 const Pi_squared(Pi * Pi);
+        static Nandle const Pi_squared(Pi * Pi);
         int i;
         int j;
 
         LDSumMean = 0.0;
         for (i = 1; i <= mmax; i += 2) {
-            Real64 const pow_i_Pi_2(i * i * Pi_squared);
-            Real64 const pow_i_W(pow_2(i / Width));
+            Nandle const pow_i_Pi_2(i * i * Pi_squared);
+            Nandle const pow_i_W(pow_2(i / Width));
             for (j = 1; j <= nmax; j += 2) {
                 LDSumMean += 4.0 / (pow_i_Pi_2 * pow_2(j) * pow_2(pow_i_W + pow_2(j / Height)));
             } // do j = 1, nmax, 2
@@ -156,12 +156,12 @@ namespace TARCOGCommon {
         return LDSumMean;
     }
 
-    void modifyHcGap(Array1D<Real64> const &hcgap, // Convective coefficient for gap
-                     Array1D<Real64> const &qv,    // Heat flow from ventilation [W/m2]
-                     Array1D<Real64> const &hcv,   // Convective heat flow coefficient due to ventilation
-                     Array1D<Real64> &hcgapMod,    // Modified heat flow coefficient for gap
+    void modifyHcGap(Array1D<Nandle> const &hcgap, // Convective coefficient for gap
+                     Array1D<Nandle> const &qv,    // Heat flow from ventilation [W/m2]
+                     Array1D<Nandle> const &hcv,   // Convective heat flow coefficient due to ventilation
+                     Array1D<Nandle> &hcgapMod,    // Modified heat flow coefficient for gap
                      int const nlayer,             // Number of layers
-                     Real64 const edgeGlCorFac     // Edge of glass correction factor
+                     Nandle const edgeGlCorFac     // Edge of glass correction factor
     )
     {
         for (int i = 1; i <= nlayer + 1; ++i) {
@@ -174,23 +174,23 @@ namespace TARCOGCommon {
     }
 
     void matrixQBalance(int const nlayer,
-                        Array2<Real64> &a,
-                        Array1D<Real64> &b,
-                        Array1D<Real64> const &sconScaled, // Solid layer coduction coefficient divided by thickness
-                        Array1D<Real64> const &hcgas,
-                        Array1D<Real64> &hcgapMod, // Modified heat flow coefficient for gap
-                        Array1D<Real64> const &asol,
-                        Array1D<Real64> const &qv,
-                        Array1D<Real64> const &hcv, // Convective heat flow coefficient due to ventilation
-                        Real64 const Tin,
-                        Real64 const Tout,
-                        Real64 const Gin,
-                        Real64 const Gout,
-                        Array1D<Real64> const &theta,
-                        Array1D<Real64> const &tir,
-                        Array1D<Real64> const &rir,
-                        Array1D<Real64> const &emis,
-                        Real64 const edgeGlCorrFac // Edge of glass correction factor
+                        Array2<Nandle> &a,
+                        Array1D<Nandle> &b,
+                        Array1D<Nandle> const &sconScaled, // Solid layer coduction coefficient divided by thickness
+                        Array1D<Nandle> const &hcgas,
+                        Array1D<Nandle> &hcgapMod, // Modified heat flow coefficient for gap
+                        Array1D<Nandle> const &asol,
+                        Array1D<Nandle> const &qv,
+                        Array1D<Nandle> const &hcv, // Convective heat flow coefficient due to ventilation
+                        Nandle const Tin,
+                        Nandle const Tout,
+                        Nandle const Gin,
+                        Nandle const Gout,
+                        Array1D<Nandle> const &theta,
+                        Array1D<Nandle> const &tir,
+                        Array1D<Nandle> const &rir,
+                        Array1D<Nandle> const &emis,
+                        Nandle const edgeGlCorrFac // Edge of glass correction factor
     )
     {
 
@@ -297,7 +297,7 @@ namespace TARCOGCommon {
         }
     }
 
-    void EquationsSolver(Array2<Real64> &a, Array1D<Real64> &b, int const n, int &nperr, std::string &ErrorMessage)
+    void EquationsSolver(Array2<Nandle> &a, Array1D<Nandle> &b, int const n, int &nperr, std::string &ErrorMessage)
     {
         //***********************************************************************
         // Purpose: solves the main system of energy balance equations
@@ -315,7 +315,7 @@ namespace TARCOGCommon {
 
         // Locals
         Array1D_int indx(n);
-        Real64 d;
+        Nandle d;
 
         ludcmp(a, n, indx, d, nperr, ErrorMessage);
 
@@ -325,22 +325,22 @@ namespace TARCOGCommon {
         lubksb(a, n, indx, b);
     }
 
-    void ludcmp(Array2<Real64> &a, int const n, Array1D_int &indx, Real64 &d, int &nperr, std::string &ErrorMessage)
+    void ludcmp(Array2<Nandle> &a, int const n, Array1D_int &indx, Nandle &d, int &nperr, std::string &ErrorMessage)
     {
 
         // Locals
         static int const NMAX(500);
-        static Array1D<Real64> vv(NMAX);
+        static Array1D<Nandle> vv(NMAX);
 
-        Real64 const TINY(1.0e-20);
+        Nandle const TINY(1.0e-20);
 
         int i;
         int imax;
         int j;
         int k;
-        Real64 aamax;
-        Real64 dum;
-        Real64 sum;
+        Nandle aamax;
+        Nandle dum;
+        Nandle sum;
 
         d = 1.0;
         for (i = 1; i <= n; ++i) {
@@ -397,7 +397,7 @@ namespace TARCOGCommon {
         } // j
     }
 
-    void lubksb(Array2A<Real64> const a, int const n, const Array1D_int &indx, Array1D<Real64> &b)
+    void lubksb(Array2A<Nandle> const a, int const n, const Array1D_int &indx, Array1D<Nandle> &b)
     {
         //***********************************************************************
         //***********************************************************************
@@ -412,7 +412,7 @@ namespace TARCOGCommon {
         int ii;
         int j;
         int ll;
-        Real64 sum;
+        Nandle sum;
 
         ii = 0;
         for (i = 1; i <= n; ++i) {
@@ -438,13 +438,13 @@ namespace TARCOGCommon {
         } // i
     }
 
-    Real64 pos(Real64 const x)
+    Nandle pos(Nandle const x)
     {
         //***********************************************************************
         //***********************************************************************
 
         // Return value
-        Real64 pos;
+        Nandle pos;
 
         pos = (x + std::abs(x)) / 2.0;
 

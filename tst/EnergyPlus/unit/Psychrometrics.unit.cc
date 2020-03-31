@@ -61,14 +61,14 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyTsatFnHPb_Test)
     InitializePsychRoutines();
 
     // Test 1: TEMP. IS FROM  20 C  TO   40 C
-    Real64 H = 7.5223e4 - 1.78637e4;
-    Real64 PB = 1.01325e5;
-    Real64 result = PsyTsatFnHPb_raw(H, PB);
-    Real64 actual_result = 20.0;
+    Nandle H = 7.5223e4 - 1.78637e4;
+    Nandle PB = 1.01325e5;
+    Nandle result = PsyTsatFnHPb_raw(H, PB);
+    Nandle actual_result = 20.0;
     EXPECT_NEAR(actual_result, result, 0.001);
 
     // Test 2: Cache version of the function - first call
-    Real64 cache_miss_result = PsyTsatFnHPb(H, PB);
+    Nandle cache_miss_result = PsyTsatFnHPb(H, PB);
     EXPECT_NEAR(actual_result, cache_miss_result, 0.001);
 
     // Test 3: TEMP. IS FROM   0 C  TO   20 C
@@ -142,7 +142,7 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyTsatFnHPb_Test)
     H = 7.5223e4 - 1.78637e4;
     PB = 1.0133e5;
     actual_result = 20.0;
-    Real64 cache_hit_result = PsyTsatFnHPb(H, PB);
+    Nandle cache_hit_result = PsyTsatFnHPb(H, PB);
     EXPECT_NEAR(actual_result, cache_hit_result, 0.001);
 }
 
@@ -152,14 +152,14 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyTsatFnPb_Test)
     InitializePsychRoutines();
 
     // Test 1: general
-    Real64 PB = 101325.0;
-    Real64 result = PsyTsatFnPb_raw(PB);
-    Real64 actual_result = 99.974;
+    Nandle PB = 101325.0;
+    Nandle result = PsyTsatFnPb_raw(PB);
+    Nandle actual_result = 99.974;
     EXPECT_NEAR(actual_result, result, 0.001);
 
     // Test 2: Cache version of the function - first call
     PB = 101325.0;
-    Real64 cache_result = PsyTsatFnPb(PB);
+    Nandle cache_result = PsyTsatFnPb(PB);
     EXPECT_NEAR(actual_result, cache_result, 0.001);
 
     // Test 3: upper bound
@@ -189,10 +189,10 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyTsatFnPb_Test)
 TEST_F(EnergyPlusFixture, Psychrometrics_PsyWFnTdpPb_Test)
 {
 
-    Real64 TDP;
+    Nandle TDP;
     // Sea level pressure
-    Real64 PB = 101325.0;
-    Real64 W;
+    Nandle PB = 101325.0;
+    Nandle W;
 
     TDP = 99.0;
     W = Psychrometrics::PsyWFnTdpPb(TDP, PB);
@@ -227,8 +227,8 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyWFnTdpPb_Test)
     EXPECT_TRUE(compare_err_stream(error_string1, true));
 }
 
-inline Real64 PsyCpAirFnWTdb(Real64 const dw, // humidity ratio {kgWater/kgDryAir}
-                             Real64 const T   // input temperature {Celsius}
+inline Nandle PsyCpAirFnWTdb(Nandle const dw, // humidity ratio {kgWater/kgDryAir}
+                             Nandle const T   // input temperature {Celsius}
 )
 {
 
@@ -251,16 +251,16 @@ inline Real64 PsyCpAirFnWTdb(Real64 const dw, // humidity ratio {kgWater/kgDryAi
     // USAGE:  cpa = PsyCpAirFnWTdb(w,T)
 
     // Static locals
-    static Real64 dwSave(-100.0);
-    static Real64 Tsave(-100.0);
-    static Real64 cpaSave(-100.0);
+    static Nandle dwSave(-100.0);
+    static Nandle Tsave(-100.0);
+    static Nandle cpaSave(-100.0);
 
     // check if last call had the same input and if it did just use the saved output
     if ((Tsave == T) && (dwSave == dw)) return cpaSave;
 
     // compute heat capacity of air
-    Real64 const w(max(dw, 1.0e-5));
-    Real64 const cpa((PsyHFnTdbW(T + 0.1, w) - PsyHFnTdbW(T, w)) * 10.0); // result => heat capacity of air {J/kg-C}
+    Nandle const w(max(dw, 1.0e-5));
+    Nandle const cpa((PsyHFnTdbW(T + 0.1, w) - PsyHFnTdbW(T, w)) * 10.0); // result => heat capacity of air {J/kg-C}
 
     // save values for next call
     dwSave = dw;
@@ -276,10 +276,10 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyCpAirFn_Test)
     InitializePsychRoutines();
 
     // Test 1: analytical PsyCpAirFnW is independent of temperature
-    Real64 W = 0.0080;
-    Real64 T = 24.0;
-    Real64 local_result = 1.00484e3 + W * 1.85895e3; // PsyCpAirFnW per cp = dh/dT
-    Real64 analytic_result = PsyCpAirFnW(W);         // cp = dh/dT
+    Nandle W = 0.0080;
+    Nandle T = 24.0;
+    Nandle local_result = 1.00484e3 + W * 1.85895e3; // PsyCpAirFnW per cp = dh/dT
+    Nandle analytic_result = PsyCpAirFnW(W);         // cp = dh/dT
     // check analytical function result
     EXPECT_DOUBLE_EQ(analytic_result, local_result);
 
@@ -287,7 +287,7 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyCpAirFn_Test)
     W = 0.0085;
     T = 26.0;
     analytic_result = PsyCpAirFnW(W);               // cp = dh/dT
-    Real64 numerical_result = PsyCpAirFnWTdb(W, T); // cp = delta_h / delta_T
+    Nandle numerical_result = PsyCpAirFnWTdb(W, T); // cp = delta_h / delta_T
     // check result
     EXPECT_NEAR(analytic_result, numerical_result, 1.0E-010);
 
@@ -308,13 +308,13 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyCpAirFn_Test)
     EXPECT_NEAR(analytic_result, numerical_result, 1.0E-010);
 
     // Test 5: analytical vs numerical cp values for psychomteric chart T and W range
-    Real64 SSE = 0.0;
-    Real64 Error = 0.0;
-    Real64 Error_sum = 0.0;
-    Real64 Error_min = 100.0;
-    Real64 Error_max = -100.0;
-    Real64 Tmax = 50.0;
-    Real64 Wmax = 0.030;
+    Nandle SSE = 0.0;
+    Nandle Error = 0.0;
+    Nandle Error_sum = 0.0;
+    Nandle Error_min = 100.0;
+    Nandle Error_max = -100.0;
+    Nandle Tmax = 50.0;
+    Nandle Wmax = 0.030;
     analytic_result = 0.0;
     numerical_result = 0.0;
     for (int TLoop = 0; TLoop <= 100; TLoop++) {
@@ -332,8 +332,8 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyCpAirFn_Test)
             Error_sum += Error;
         }
     }
-    Real64 StdError = std::sqrt(SSE / 100);
-    Real64 Error_avg = Error_sum / 101;
+    Nandle StdError = std::sqrt(SSE / 100);
+    Nandle Error_avg = Error_sum / 101;
     // check analytical vs numerical cp values stats
     EXPECT_DOUBLE_EQ(Error_min, -2.8808244678657502e-10);
     EXPECT_DOUBLE_EQ(Error_max, 2.5875124265439808e-10);
@@ -347,27 +347,27 @@ TEST_F(EnergyPlusFixture, Psychrometrics_CpAirValue_Test)
     InitializePsychRoutines();
 
     // Test 1: dry cooling process test, delta enthalpy vs cpair times delta T
-    Real64 W1 = 0.0030;
-    Real64 T1 = 24.0;
-    Real64 W2 = 0.0030;
-    Real64 T2 = 20.0;
+    Nandle W1 = 0.0030;
+    Nandle T1 = 24.0;
+    Nandle W2 = 0.0030;
+    Nandle T2 = 20.0;
 
     // Dry Cooling Test
-    Real64 MassFlowRate = 5.0;                 // kgDryAir/s
-    Real64 CpAir = 1.00484e3 + W1 * 1.85895e3; // PsyCpAirFnW per cp = dh/dT
-    Real64 CpAir1 = PsyCpAirFnW(W1);           // PsyCpAirFnW per cp = dh/dT
-    Real64 CpAir2 = PsyCpAirFnW(W2);           // PsyCpAirFnW per cp = dh/dT
+    Nandle MassFlowRate = 5.0;                 // kgDryAir/s
+    Nandle CpAir = 1.00484e3 + W1 * 1.85895e3; // PsyCpAirFnW per cp = dh/dT
+    Nandle CpAir1 = PsyCpAirFnW(W1);           // PsyCpAirFnW per cp = dh/dT
+    Nandle CpAir2 = PsyCpAirFnW(W2);           // PsyCpAirFnW per cp = dh/dT
     // check inputs and intermediate values
     EXPECT_DOUBLE_EQ(W1, W2);
     EXPECT_DOUBLE_EQ(CpAir, CpAir1);
     EXPECT_DOUBLE_EQ(CpAir, CpAir2);
     // check heat transfer rate calc methods
-    Real64 Qfrom_mdot_CpAir_DeltaT = MassFlowRate * CpAir * (T1 - T2);
+    Nandle Qfrom_mdot_CpAir_DeltaT = MassFlowRate * CpAir * (T1 - T2);
 
     // get enthalpy at state 1 and 2
-    Real64 H1 = PsyHFnTdbW(T1, W1); // enthaly ait state 1
-    Real64 H2 = PsyHFnTdbW(T2, W2); // enthaly ait state 2
-    Real64 Qfrom_mdot_DeltaH = MassFlowRate * (H1 - H2);
+    Nandle H1 = PsyHFnTdbW(T1, W1); // enthaly ait state 1
+    Nandle H2 = PsyHFnTdbW(T2, W2); // enthaly ait state 2
+    Nandle Qfrom_mdot_DeltaH = MassFlowRate * (H1 - H2);
 
     // check heat rate
     EXPECT_DOUBLE_EQ(Qfrom_mdot_CpAir_DeltaT, Qfrom_mdot_DeltaH);
@@ -392,11 +392,11 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyTwbFnTdbWPb_Test)
     InitializePsychRoutines();
 
     // Test when wet bulb temperature is below zero
-    Real64 TDB = 1; // C
-    Real64 W = 0.002; // Kg.water/Kg.dryair
-    Real64 Pb = 101325.0;
-    Real64 result = PsyTwbFnTdbWPb(TDB, W, Pb);
-    Real64 expected_result = -2.200; // expected result from psychrometrics chart
+    Nandle TDB = 1; // C
+    Nandle W = 0.002; // Kg.water/Kg.dryair
+    Nandle Pb = 101325.0;
+    Nandle result = PsyTwbFnTdbWPb(TDB, W, Pb);
+    Nandle expected_result = -2.200; // expected result from psychrometrics chart
     EXPECT_NEAR(result, expected_result, 0.001);
 
 }

@@ -169,7 +169,7 @@ int getVariableHandle(const char* type, const char* key) {
     return -1; // return -1 if it wasn't found
 }
 
-Real64 getVariableValue(const int handle) {
+Nandle getVariableValue(const int handle) {
     // this function works in conjunction with the plan set up in getVariableHandle
     // basically, the handles are contiguous, with:
     //  - index 1 being the first real variable handle
@@ -182,7 +182,7 @@ Real64 getVariableValue(const int handle) {
     } else if (handle <= EnergyPlus::OutputProcessor::NumOfRVariable + EnergyPlus::OutputProcessor::NumOfIVariable) {
         int thisHandle = handle - EnergyPlus::OutputProcessor::NumOfRVariable;
         auto &thisOutputVar = EnergyPlus::OutputProcessor::IVariableTypes(thisHandle);
-        return (Real64)*thisOutputVar.VarPtr.Which;
+        return (Nandle)*thisOutputVar.VarPtr.Which;
     } else {
         if (EnergyPlus::DataGlobals::eplusRunningViaAPI) {
             std::cout << "ERROR: Variable handle out of range in getVariableValue" << std::endl;
@@ -210,7 +210,7 @@ int getMeterHandle(const char* meterName) {
     }
 }
 
-Real64 getMeterValue(int handle) {
+Nandle getMeterValue(int handle) {
     if (handle >= 1 && handle <= (int)EnergyPlus::OutputProcessor::EnergyMeters.size()) {
         return EnergyPlus::GetCurrentMeterValue(handle);
     } else {
@@ -266,7 +266,7 @@ void resetActuator(int handle) {
     }
 }
 
-void setActuatorValue(const int handle, const Real64 value) {
+void setActuatorValue(const int handle, const Nandle value) {
     if (handle >= 1 && handle <= (int)EnergyPlus::DataRuntimeLanguage::EMSActuatorAvailable.size()) {
         auto & theActuator(EnergyPlus::DataRuntimeLanguage::EMSActuatorAvailable(handle));
         if (theActuator.RealValue) {
@@ -292,7 +292,7 @@ void setActuatorValue(const int handle, const Real64 value) {
     }
 }
 
-Real64 getActuatorValue(const int handle) {
+Nandle getActuatorValue(const int handle) {
     if (handle >= 1 && handle <= (int)EnergyPlus::DataRuntimeLanguage::EMSActuatorAvailable.size()) {
         auto &theActuator(EnergyPlus::DataRuntimeLanguage::EMSActuatorAvailable(handle));
         if (theActuator.RealValue) {
@@ -338,13 +338,13 @@ int getInternalVariableHandle(const char* type, const char* key) {
     return -1;
 }
 
-Real64 getInternalVariableValue(int handle) {
+Nandle getInternalVariableValue(int handle) {
     if (handle >= 1 && handle <= (int)EnergyPlus::DataRuntimeLanguage::EMSInternalVarsAvailable.size()) {
         auto thisVar = EnergyPlus::DataRuntimeLanguage::EMSInternalVarsAvailable(handle);
         if (thisVar.PntrVarTypeUsed == EnergyPlus::DataRuntimeLanguage::PntrReal) {
             return *thisVar.RealValue;
         } else if (thisVar.PntrVarTypeUsed == EnergyPlus::DataRuntimeLanguage::PntrInteger) {
-            return (Real64)(*thisVar.IntValue);
+            return (Nandle)(*thisVar.IntValue);
         } else {
             // Doesn't look like this struct actually has a logical member type, so uh, throw here?
             std::cout << "ERROR: Invalid internal variable type here, developer issue." << std::endl;
@@ -370,7 +370,7 @@ int getPluginGlobalVariableHandle(const char* name) {
     return EnergyPlus::PluginManagement::pluginManager->getGlobalVariableHandle(name);
 }
 
-Real64 getPluginGlobalVariableValue(int handle) {
+Nandle getPluginGlobalVariableValue(int handle) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxGlobalVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return 0
@@ -382,7 +382,7 @@ Real64 getPluginGlobalVariableValue(int handle) {
     return EnergyPlus::PluginManagement::pluginManager->getGlobalVariableValue(handle);
 }
 
-void setPluginGlobalVariableValue(int handle, Real64 value) {
+void setPluginGlobalVariableValue(int handle, Nandle value) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxGlobalVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return
@@ -397,7 +397,7 @@ int getPluginTrendVariableHandle(const char* name) {
     return EnergyPlus::PluginManagement::pluginManager->getTrendVariableHandle(name);
 }
 
-Real64 getPluginTrendVariableValue(int handle, int timeIndex) {
+Nandle getPluginTrendVariableValue(int handle, int timeIndex) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxTrendVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return
@@ -417,7 +417,7 @@ Real64 getPluginTrendVariableValue(int handle, int timeIndex) {
     return EnergyPlus::PluginManagement::pluginManager->getTrendVariableValue(handle, timeIndex);
 }
 
-Real64 getPluginTrendVariableAverage(int handle, int count) {
+Nandle getPluginTrendVariableAverage(int handle, int count) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxTrendVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return
@@ -437,7 +437,7 @@ Real64 getPluginTrendVariableAverage(int handle, int count) {
     return EnergyPlus::PluginManagement::pluginManager->getTrendVariableAverage(handle, count);
 }
 
-Real64 getPluginTrendVariableMin(int handle, int count) {
+Nandle getPluginTrendVariableMin(int handle, int count) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxTrendVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return
@@ -457,7 +457,7 @@ Real64 getPluginTrendVariableMin(int handle, int count) {
     return EnergyPlus::PluginManagement::pluginManager->getTrendVariableMin(handle, count);
 }
 
-Real64 getPluginTrendVariableMax(int handle, int count) {
+Nandle getPluginTrendVariableMax(int handle, int count) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxTrendVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return
@@ -477,7 +477,7 @@ Real64 getPluginTrendVariableMax(int handle, int count) {
     return EnergyPlus::PluginManagement::pluginManager->getTrendVariableMax(handle, count);
 }
 
-Real64 getPluginTrendVariableSum(int handle, int count) {
+Nandle getPluginTrendVariableSum(int handle, int count) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxTrendVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return
@@ -497,7 +497,7 @@ Real64 getPluginTrendVariableSum(int handle, int count) {
     return EnergyPlus::PluginManagement::pluginManager->getTrendVariableSum(handle, count);
 }
 
-Real64 getPluginTrendVariableDirection(int handle, int count) {
+Nandle getPluginTrendVariableDirection(int handle, int count) {
     if (handle < 0 || handle > EnergyPlus::PluginManagement::pluginManager->maxTrendVariableIndex) {
         // need to fatal out once the plugin is done
         // throw an error, set the fatal flag, and then return
@@ -546,7 +546,7 @@ int hour() {
     return EnergyPlus::DataGlobals::HourOfDay - 1; // no, just stay on 0..23+ DSTadjust ! offset by 1 and daylight savings time
 }
 
-Real64 currentTime() {
+Nandle currentTime() {
     if (EnergyPlus::DataHVACGlobals::TimeStepSys < EnergyPlus::DataGlobals::TimeStepZone) {
         // CurrentTime is for end of zone timestep, need to move back to beginning of current zone timestep, then add on system time elapsed already plus current system timestep
         return EnergyPlus::DataGlobals::CurrentTime - EnergyPlus::DataGlobals::TimeStepZone + EnergyPlus::DataHVACGlobals::SysTimeElapsed + EnergyPlus::DataHVACGlobals::TimeStepSys;
@@ -558,9 +558,9 @@ Real64 currentTime() {
 int minutes() {
     // the -1 is to push us to the right minute, but this should be handled cautiously because if we are inside the HVAC iteration loop,
     // currentTime() returns a floating point fractional hour, so truncation could put this a few seconds from the expected minute.
-    Real64 currentTimeVal = currentTime();
-    Real64 fractionalHoursIntoTheDay = currentTimeVal - double(EnergyPlus::DataGlobals::HourOfDay - 1);
-    Real64 fractionalMinutesIntoTheDay = fractionalHoursIntoTheDay * 60.0;
+    Nandle currentTimeVal = currentTime();
+    Nandle fractionalHoursIntoTheDay = currentTimeVal - double(EnergyPlus::DataGlobals::HourOfDay - 1);
+    Nandle fractionalMinutesIntoTheDay = fractionalHoursIntoTheDay * 60.0;
     return (int)(fractionalMinutesIntoTheDay);
 }
 
@@ -592,7 +592,7 @@ int warmupFlag() {
     }
 }
 
-Real64 systemTimeStep() {
+Nandle systemTimeStep() {
     return EnergyPlus::DataHVACGlobals::TimeStepSys;
 }
 

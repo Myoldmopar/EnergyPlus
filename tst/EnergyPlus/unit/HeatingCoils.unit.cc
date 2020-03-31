@@ -120,8 +120,8 @@ TEST_F(EnergyPlusFixture, HeatingCoils_OutletAirPropertiesTest)
 {
     // 7391 Test outlet air properties for MultiStageGasHeatingCoil
     int CoilNum = 1;
-    Real64 OffMassFlowrate = 0.2;
-    Real64 OnMassFlowrate = 0.6;
+    Nandle OffMassFlowrate = 0.2;
+    Nandle OnMassFlowrate = 0.6;
 
     HeatingCoils::HeatingCoil.allocate(CoilNum);
     HeatingCoils::HeatingCoil(CoilNum).InletAirTemp = 0.0;
@@ -144,7 +144,7 @@ TEST_F(EnergyPlusFixture, HeatingCoils_OutletAirPropertiesTest)
 
     HeatingCoils::HeatingCoil(CoilNum).InletAirMassFlowRate = OffMassFlowrate;
     HeatingCoils::CalcMultiStageGasHeatingCoil(CoilNum, 0.0, 0.0, 1, 2);
-    Real64 HeatLoad00 =
+    Nandle HeatLoad00 =
         HeatingCoils::HeatingCoil(CoilNum).InletAirMassFlowRate *
         (Psychrometrics::PsyHFnTdbW(HeatingCoils::HeatingCoil(CoilNum).OutletAirTemp, HeatingCoils::HeatingCoil(CoilNum).OutletAirHumRat) - 
             HeatingCoils::HeatingCoil(CoilNum).InletAirEnthalpy);
@@ -152,7 +152,7 @@ TEST_F(EnergyPlusFixture, HeatingCoils_OutletAirPropertiesTest)
 
     HeatingCoils::HeatingCoil(CoilNum).InletAirMassFlowRate = 0.5 * OnMassFlowrate + (1.0 - 0.5) * OffMassFlowrate;
     HeatingCoils::CalcMultiStageGasHeatingCoil(CoilNum, 0.0, 0.5, 1, 2);
-    Real64 HeatLoad05 =
+    Nandle HeatLoad05 =
         HeatingCoils::HeatingCoil(CoilNum).InletAirMassFlowRate *
               (Psychrometrics::PsyHFnTdbW(HeatingCoils::HeatingCoil(CoilNum).OutletAirTemp, HeatingCoils::HeatingCoil(CoilNum).OutletAirHumRat) -
                HeatingCoils::HeatingCoil(CoilNum).InletAirEnthalpy);
@@ -160,7 +160,7 @@ TEST_F(EnergyPlusFixture, HeatingCoils_OutletAirPropertiesTest)
 
     HeatingCoils::HeatingCoil(CoilNum).InletAirMassFlowRate = OnMassFlowrate;
     HeatingCoils::CalcMultiStageGasHeatingCoil(CoilNum, 0.0, 1.0, 1, 2);
-    Real64 HeatLoad10 =
+    Nandle HeatLoad10 =
         HeatingCoils::HeatingCoil(CoilNum).InletAirMassFlowRate *
               (Psychrometrics::PsyHFnTdbW(HeatingCoils::HeatingCoil(CoilNum).OutletAirTemp, HeatingCoils::HeatingCoil(CoilNum).OutletAirHumRat) -
                HeatingCoils::HeatingCoil(CoilNum).InletAirEnthalpy);

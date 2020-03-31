@@ -1065,7 +1065,7 @@ TEST_F(EnergyPlusFixture, OASystem_HotWaterPreheatCoilScheduledOnSim)
     int AirLoopNum(1);
     int OASysNum(1);
     int AirInletNodeNum(0);
-    Real64 CpAir(0.0);
+    Nandle CpAir(0.0);
 
     std::string const idf_objects = delimited_string({
         "  Timestep, 4;",

@@ -62,14 +62,14 @@ namespace DataPrecisionGlobals {
     extern int const r32;
     extern int const r64;
     extern int const default_prec;
-    extern Real64 const constant_zero;
-    extern Real64 const constant_one;
-    extern Real64 const constant_minusone;
-    extern Real64 const constant_twenty;
-    extern Real64 const constant_pointfive;
-    extern Real64 const EXP_LowerLimit; // In IVF=2.061153622438558d-009 - used 20
+    extern Nandle const constant_zero;
+    extern Nandle const constant_one;
+    extern Nandle const constant_minusone;
+    extern Nandle const constant_twenty;
+    extern Nandle const constant_pointfive;
+    extern Nandle const EXP_LowerLimit; // In IVF=2.061153622438558d-009 - used 20
     // because it's already used in other parts of the code
-    extern Real64 const EXP_UpperLimit; // In IVF=2.353852668370200d+017
+    extern Nandle const EXP_UpperLimit; // In IVF=2.353852668370200d+017
 
 } // namespace DataPrecisionGlobals
 

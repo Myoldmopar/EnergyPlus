@@ -60,14 +60,14 @@ namespace EnergyPlus {
 
 TEST_F(EnergyPlusFixture, UnitVentilatorSetOAMassFlowRateForCoolingVariablePercentTest)
 {
-    Real64 MinOA;
-    Real64 MassFlowRate;
-    Real64 MaxOA;
-    Real64 Tinlet;
-    Real64 Toutdoor;
-    Real64 OAMassFlowRate;
-    Real64 ExpectedOAMassFlowRate;
-    Real64 UnitVentNum;
+    Nandle MinOA;
+    Nandle MassFlowRate;
+    Nandle MaxOA;
+    Nandle Tinlet;
+    Nandle Toutdoor;
+    Nandle OAMassFlowRate;
+    Nandle ExpectedOAMassFlowRate;
+    Nandle UnitVentNum;
     
     DataLoopNode::clear_state();
     UnitVentilator::clear_state();
@@ -206,12 +206,12 @@ TEST_F(EnergyPlusFixture, UnitVentilatorSetOAMassFlowRateForCoolingVariablePerce
 TEST_F(EnergyPlusFixture, UnitVentilatorCalcMdotCCoilCycFanTest)
 {
  
-    Real64 QZnReq;
-    Real64 QCoilReq;
+    Nandle QZnReq;
+    Nandle QCoilReq;
     int UnitVentNum;
-    Real64 PartLoadRatio;
-    Real64 mdot;
-    Real64 ExpectedResult;
+    Nandle PartLoadRatio;
+    Nandle mdot;
+    Nandle ExpectedResult;
 
     UnitVentNum = 1;
     UnitVentilator::UnitVent.allocate(UnitVentNum);

@@ -81,40 +81,40 @@ namespace ZonePlenum {
         std::string ZonePlenumName;
         std::string ZoneName;
         std::string ZoneNodeName;
-        Real64 ZoneTemp;
-        Real64 ZoneHumRat;
-        Real64 ZoneEnthalpy;
-        Real64 OutletTemp;
-        Real64 OutletHumRat;
-        Real64 OutletEnthalpy;
-        Real64 OutletPressure;
+        Nandle ZoneTemp;
+        Nandle ZoneHumRat;
+        Nandle ZoneEnthalpy;
+        Nandle OutletTemp;
+        Nandle OutletHumRat;
+        Nandle OutletEnthalpy;
+        Nandle OutletPressure;
         int ZoneNodeNum;
         int ActualZoneNum;
         int OutletNode;
-        Real64 OutletMassFlowRate;         // MassFlow through the ZonePlenum being Simulated [kg/Sec]
-        Real64 OutletMassFlowRateMaxAvail; // [kg/Sec]
-        Real64 OutletMassFlowRateMinAvail; // [kg/Sec]
+        Nandle OutletMassFlowRate;         // MassFlow through the ZonePlenum being Simulated [kg/Sec]
+        Nandle OutletMassFlowRateMaxAvail; // [kg/Sec]
+        Nandle OutletMassFlowRateMinAvail; // [kg/Sec]
         int NumInducedNodes;
         Array1D_int InducedNode;
-        Array1D<Real64> InducedMassFlowRate;
-        Array1D<Real64> InducedMassFlowRateMaxAvail;
-        Array1D<Real64> InducedMassFlowRateMinAvail;
-        Array1D<Real64> InducedTemp;
-        Array1D<Real64> InducedHumRat;
-        Array1D<Real64> InducedEnthalpy;
-        Array1D<Real64> InducedPressure;
-        Array1D<Real64> InducedCO2;
-        Array1D<Real64> InducedGenContam;
+        Array1D<Nandle> InducedMassFlowRate;
+        Array1D<Nandle> InducedMassFlowRateMaxAvail;
+        Array1D<Nandle> InducedMassFlowRateMinAvail;
+        Array1D<Nandle> InducedTemp;
+        Array1D<Nandle> InducedHumRat;
+        Array1D<Nandle> InducedEnthalpy;
+        Array1D<Nandle> InducedPressure;
+        Array1D<Nandle> InducedCO2;
+        Array1D<Nandle> InducedGenContam;
         bool InitFlag;
         int NumInletNodes;
         Array1D_int InletNode;
-        Array1D<Real64> InletMassFlowRate;
-        Array1D<Real64> InletMassFlowRateMaxAvail;
-        Array1D<Real64> InletMassFlowRateMinAvail;
-        Array1D<Real64> InletTemp;
-        Array1D<Real64> InletHumRat;
-        Array1D<Real64> InletEnthalpy;
-        Array1D<Real64> InletPressure;
+        Array1D<Nandle> InletMassFlowRate;
+        Array1D<Nandle> InletMassFlowRateMaxAvail;
+        Array1D<Nandle> InletMassFlowRateMinAvail;
+        Array1D<Nandle> InletTemp;
+        Array1D<Nandle> InletHumRat;
+        Array1D<Nandle> InletEnthalpy;
+        Array1D<Nandle> InletPressure;
         Array1D_int ADUIndex;  // index to AirDistUnit leaking to this plenum
         int NumADUs;           // number of ADU's that can leak to this plenum
         Array1D_int ZoneEqNum; // list of zone equip config indices for this plenum
@@ -134,29 +134,29 @@ namespace ZonePlenum {
         std::string ZonePlenumName;
         std::string ZoneName;
         std::string ZoneNodeName;
-        Real64 ZoneTemp;
-        Real64 ZoneHumRat;
-        Real64 ZoneEnthalpy;
-        Real64 InletTemp;
-        Real64 InletHumRat;
-        Real64 InletEnthalpy;
-        Real64 InletPressure;
+        Nandle ZoneTemp;
+        Nandle ZoneHumRat;
+        Nandle ZoneEnthalpy;
+        Nandle InletTemp;
+        Nandle InletHumRat;
+        Nandle InletEnthalpy;
+        Nandle InletPressure;
         int ZoneNodeNum;
         int ActualZoneNum;
         int InletNode;
-        Real64 InletMassFlowRate;         // MassFlow through the ZonePlenum being Simulated [kg/Sec]
-        Real64 InletMassFlowRateMaxAvail; // [kg/Sec]
-        Real64 InletMassFlowRateMinAvail; // [kg/Sec]
+        Nandle InletMassFlowRate;         // MassFlow through the ZonePlenum being Simulated [kg/Sec]
+        Nandle InletMassFlowRateMaxAvail; // [kg/Sec]
+        Nandle InletMassFlowRateMinAvail; // [kg/Sec]
         bool InitFlag;
         int NumOutletNodes;
         Array1D_int OutletNode;
-        Array1D<Real64> OutletMassFlowRate;
-        Array1D<Real64> OutletMassFlowRateMaxAvail;
-        Array1D<Real64> OutletMassFlowRateMinAvail;
-        Array1D<Real64> OutletTemp;
-        Array1D<Real64> OutletHumRat;
-        Array1D<Real64> OutletEnthalpy;
-        Array1D<Real64> OutletPressure;
+        Array1D<Nandle> OutletMassFlowRate;
+        Array1D<Nandle> OutletMassFlowRateMaxAvail;
+        Array1D<Nandle> OutletMassFlowRateMinAvail;
+        Array1D<Nandle> OutletTemp;
+        Array1D<Nandle> OutletHumRat;
+        Array1D<Nandle> OutletEnthalpy;
+        Array1D<Nandle> OutletPressure;
 
         // Default Constructor
         ZoneSupplyPlenumConditions()

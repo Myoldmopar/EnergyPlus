@@ -79,7 +79,7 @@ TEST_F(EnergyPlusFixture, TestTrendVariable)
     }
 
     // now pretend to run through a few simulation time steps, setting the value a few times and updating the trend
-    std::vector<Real64> fakeValues = {3.14, 2.78, 12.0};
+    std::vector<Nandle> fakeValues = {3.14, 2.78, 12.0};
     for (int i = 0; i < 3; i++) {
         EnergyPlus::PluginManagement::PluginManager::setGlobalVariableValue(globalVarIndex, fakeValues[i]);
         pluginManager.updatePluginValues();

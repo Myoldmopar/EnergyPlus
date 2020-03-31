@@ -118,9 +118,9 @@ namespace ZoneAirLoopEquipmentManager {
 
     void ManageZoneAirLoopEquipment(std::string const &ZoneAirLoopEquipName,
                                     bool const FirstHVACIteration,
-                                    Real64 &SysOutputProvided,
-                                    Real64 &NonAirSysOutput,
-                                    Real64 &LatOutputProvided, // Latent add/removal supplied by air dist unit (kg/s), dehumid = negative
+                                    Nandle &SysOutputProvided,
+                                    Nandle &NonAirSysOutput,
+                                    Nandle &LatOutputProvided, // Latent add/removal supplied by air dist unit (kg/s), dehumid = negative
                                     int const ActualZoneNum,
                                     int &ControlledZoneNum,
                                     int &CompIndex)
@@ -219,7 +219,7 @@ namespace ZoneAirLoopEquipmentManager {
         int NumNums;
         int IOStat;
         static Array1D_string AlphArray(5);      // Tuned Made static
-        static Array1D<Real64> NumArray(2);      // Tuned Made static
+        static Array1D<Nandle> NumArray(2);      // Tuned Made static
         static bool ErrorsFound(false);          // If errors detected in input
         bool IsNotOK;                            // Flag to verify name
         static Array1D_string cAlphaFields(5);   // Alpha field names //Tuned Made static
@@ -576,9 +576,9 @@ namespace ZoneAirLoopEquipmentManager {
     }
 
     void SimZoneAirLoopEquipment(int const AirDistUnitNum,
-                                 Real64 &SysOutputProvided,
-                                 Real64 &NonAirSysOutput,
-                                 Real64 &LatOutputProvided, // Latent add/removal provided by this unit (kg/s), dehumidify = negative
+                                 Nandle &SysOutputProvided,
+                                 Nandle &NonAirSysOutput,
+                                 Nandle &LatOutputProvided, // Latent add/removal provided by this unit (kg/s), dehumidify = negative
                                  bool const FirstHVACIteration,
                                  int const ControlledZoneNum,
                                  int const ActualZoneNum)
@@ -610,12 +610,12 @@ namespace ZoneAirLoopEquipmentManager {
         int InNodeNum;                      // air distribution unit inlet node
         int OutNodeNum;                     // air distribution unit outlet node
         static int AirLoopNum(0);           // index of air loop
-        Real64 MassFlowRateMaxAvail;        // max avail mass flow rate excluding leaks [kg/s]
-        Real64 MassFlowRateMinAvail;        // min avail mass flow rate excluding leaks [kg/s]
-        Real64 MassFlowRateUpStreamLeakMax; // max upstream leak flow rate [kg/s]
-        static Real64 DesFlowRatio(0.0);    // ratio of system to sum of zones design flow rate
-        static Real64 SpecHumOut(0.0);      // Specific humidity ratio of outlet air (kg moisture / kg moist air)
-        static Real64 SpecHumIn(0.0);       // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle MassFlowRateMaxAvail;        // max avail mass flow rate excluding leaks [kg/s]
+        Nandle MassFlowRateMinAvail;        // min avail mass flow rate excluding leaks [kg/s]
+        Nandle MassFlowRateUpStreamLeakMax; // max upstream leak flow rate [kg/s]
+        static Nandle DesFlowRatio(0.0);    // ratio of system to sum of zones design flow rate
+        static Nandle SpecHumOut(0.0);      // Specific humidity ratio of outlet air (kg moisture / kg moist air)
+        static Nandle SpecHumIn(0.0);       // Specific humidity ratio of inlet air (kg moisture / kg moist air)
 
         ProvideSysOutput = true;
         for (AirDistCompNum = 1; AirDistCompNum <= AirDistUnit(AirDistUnitNum).NumComponents; ++AirDistCompNum) {
@@ -826,7 +826,7 @@ namespace ZoneAirLoopEquipmentManager {
                                      Psychrometrics::PsyHFnTdbW(Node(ZoneEquipConfig(ControlledZoneNum).ZoneNode).Temp,
                                                                 Node(ZoneEquipConfig(ControlledZoneNum).ZoneNode).HumRat));
             } else {
-                Real64 CpAirAvg = PsyCpAirFnW(0.5 * (SpecHumOut + SpecHumOut));
+                Nandle CpAirAvg = PsyCpAirFnW(0.5 * (SpecHumOut + SpecHumOut));
                 SysOutputProvided = Node(AirDistUnit(AirDistUnitNum).OutletNodeNum).MassFlowRate * CpAirAvg *
                                     (Node(AirDistUnit(AirDistUnitNum).OutletNodeNum).Temp - Node(ZoneEquipConfig(ControlledZoneNum).ZoneNode).Temp);
             }

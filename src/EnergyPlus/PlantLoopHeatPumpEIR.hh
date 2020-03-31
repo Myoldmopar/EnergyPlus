@@ -80,14 +80,14 @@ namespace EIRPlantLoopHeatPumps {
         int plantTypeOfNum = -1;
         std::string companionCoilName = "";
         EIRPlantLoopHeatPump *companionHeatPumpCoil = nullptr;
-        Real64 sizingFactor = 1.0;
+        Nandle sizingFactor = 1.0;
         bool waterSource = false;
         bool airSource = false;
 
         // reference data
-        Real64 referenceCapacity = 0.0;
+        Nandle referenceCapacity = 0.0;
         bool referenceCapacityWasAutoSized = false;
-        Real64 referenceCOP = 0.0;
+        Nandle referenceCOP = 0.0;
 
         // curve references
         int capFuncTempCurveIndex = 0;
@@ -95,26 +95,26 @@ namespace EIRPlantLoopHeatPumps {
         int powerRatioFuncPLRCurveIndex = 0;
 
         // flow rate terms
-        Real64 loadSideDesignVolFlowRate = 0.0;
+        Nandle loadSideDesignVolFlowRate = 0.0;
         bool loadSideDesignVolFlowRateWasAutoSized = false;
-        Real64 sourceSideDesignVolFlowRate = 0.0;
+        Nandle sourceSideDesignVolFlowRate = 0.0;
         bool sourceSideDesignVolFlowRateWasAutoSized = false;
-        Real64 loadSideDesignMassFlowRate = 0.0;
-        Real64 sourceSideDesignMassFlowRate = 0.0;
-        Real64 loadSideMassFlowRate = 0.0;
-        Real64 sourceSideMassFlowRate = 0.0;
+        Nandle loadSideDesignMassFlowRate = 0.0;
+        Nandle sourceSideDesignMassFlowRate = 0.0;
+        Nandle loadSideMassFlowRate = 0.0;
+        Nandle sourceSideMassFlowRate = 0.0;
 
         // simulation variables
-        Real64 loadSideHeatTransfer = 0.0;
-        Real64 sourceSideHeatTransfer = 0.0;
-        Real64 loadSideInletTemp = 0.0;
-        Real64 loadSideOutletTemp = 0.0;
-        Real64 sourceSideInletTemp = 0.0;
-        Real64 sourceSideOutletTemp = 0.0;
-        Real64 powerUsage = 0.0;
-        Real64 loadSideEnergy = 0.0;
-        Real64 sourceSideEnergy = 0.0;
-        Real64 powerEnergy = 0.0;
+        Nandle loadSideHeatTransfer = 0.0;
+        Nandle sourceSideHeatTransfer = 0.0;
+        Nandle loadSideInletTemp = 0.0;
+        Nandle loadSideOutletTemp = 0.0;
+        Nandle sourceSideInletTemp = 0.0;
+        Nandle sourceSideOutletTemp = 0.0;
+        Nandle powerUsage = 0.0;
+        Nandle loadSideEnergy = 0.0;
+        Nandle sourceSideEnergy = 0.0;
+        Nandle powerEnergy = 0.0;
         bool running = false;
 
         // topology variables
@@ -132,24 +132,24 @@ namespace EIRPlantLoopHeatPumps {
         bool envrnInit = true;
 
         // a couple worker functions to easily allow merging of cooling and heating operations
-        std::function<Real64(Real64, Real64)> calcLoadOutletTemp;
-        std::function<Real64(Real64, Real64)> calcQsource;
-        std::function<Real64(Real64, Real64)> calcSourceOutletTemp;
+        std::function<Nandle(Nandle, Nandle)> calcLoadOutletTemp;
+        std::function<Nandle(Nandle, Nandle)> calcQsource;
+        std::function<Nandle(Nandle, Nandle)> calcSourceOutletTemp;
 
         virtual ~EIRPlantLoopHeatPump() = default;
 
         EIRPlantLoopHeatPump() = default;
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 
         void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation),
-                                 Real64 &EP_UNUSED(MaxLoad),
-                                 Real64 &EP_UNUSED(MinLoad),
-                                 Real64 &EP_UNUSED(OptLoad)) override;
+                                 Nandle &EP_UNUSED(MaxLoad),
+                                 Nandle &EP_UNUSED(MinLoad),
+                                 Nandle &EP_UNUSED(OptLoad)) override;
 
-        void doPhysics(Real64 currentLoad);
+        void doPhysics(Nandle currentLoad);
 
         void sizeLoadSide();
 
@@ -157,7 +157,7 @@ namespace EIRPlantLoopHeatPumps {
 
         void sizeSrcSideASHP();
 
-        Real64 getLoadSideOutletSetPointTemp();
+        Nandle getLoadSideOutletSetPointTemp();
 
         void setOperatingFlowRatesASHP();
 
@@ -175,12 +175,12 @@ namespace EIRPlantLoopHeatPumps {
 
         static void checkConcurrentOperation();
 
-        static Real64 add(Real64 const a, Real64 const b)
+        static Nandle add(Nandle const a, Nandle const b)
         {
             return a + b;
         }
 
-        static Real64 subtract(Real64 const a, Real64 const b)
+        static Nandle subtract(Nandle const a, Nandle const b)
         {
             return a - b;
         }

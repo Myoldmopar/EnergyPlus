@@ -103,10 +103,10 @@ namespace FanCoilUnits {
     extern Array1D_bool MySizeFlag;
     extern Array1D_bool CheckEquipName;
     extern bool GetFanCoilInputFlag; // First time, input is "gotten"
-    extern Real64 FanFlowRatio;
+    extern Nandle FanFlowRatio;
     extern bool HeatingLoad;         // True when zone needs heating
     extern bool CoolingLoad;         // True when zone needs cooling
-    extern Real64 const Small5WLoad; // load threshold 5.0 W
+    extern Nandle const Small5WLoad; // load threshold 5.0 W
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE
 
@@ -130,19 +130,19 @@ namespace FanCoilUnits {
         // 'VariableFanVariableFlow'
         int SpeedFanSel; // Speed fan selected
         int CapCtrlMeth_Num;
-        Real64 PLR;               // Part Load Ratio, fraction of time step fancoil is on
+        Nandle PLR;               // Part Load Ratio, fraction of time step fancoil is on
         int MaxIterIndexH;        // Maximum iterations exceeded for heating
         int BadMassFlowLimIndexH; // Bad mass flow limit error index for heating
         int MaxIterIndexC;        // Maximum iterations exceeded for cooling
         int BadMassFlowLimIndexC; // Bad mass flow limit error index for cooling
-        Real64 FanAirVolFlow;     // m3/s
-        Real64 MaxAirVolFlow;     // m3/s
-        Real64 MaxAirMassFlow;    // kg/s
-        Real64 LowSpeedRatio;     // Low speed fan supply air flow ratio
-        Real64 MedSpeedRatio;     // Medium speed fan supply air flow ratio
-        Real64 SpeedFanRatSel;    // Speed fan ratio determined by fan speed selection at each timestep
-        Real64 OutAirVolFlow;     // m3/s
-        Real64 OutAirMassFlow;    // kg/s
+        Nandle FanAirVolFlow;     // m3/s
+        Nandle MaxAirVolFlow;     // m3/s
+        Nandle MaxAirMassFlow;    // kg/s
+        Nandle LowSpeedRatio;     // Low speed fan supply air flow ratio
+        Nandle MedSpeedRatio;     // Medium speed fan supply air flow ratio
+        Nandle SpeedFanRatSel;    // Speed fan ratio determined by fan speed selection at each timestep
+        Nandle OutAirVolFlow;     // m3/s
+        Nandle OutAirMassFlow;    // kg/s
         int AirInNode;            // inlet air node number
         int AirOutNode;           // outlet air node number
         int OutsideAirNode;       // outside air node number
@@ -166,21 +166,21 @@ namespace FanCoilUnits {
         int CCoilPlantTypeOfNum;
         int ControlCompTypeNum;
         int CompErrIndex;
-        Real64 MaxColdWaterVolFlow; // m3/s
-        Real64 MinColdWaterVolFlow; // m3/s
-        Real64 MinColdWaterFlow;    // kg/s
-        Real64 ColdControlOffset;   // control tolerance
+        Nandle MaxColdWaterVolFlow; // m3/s
+        Nandle MinColdWaterVolFlow; // m3/s
+        Nandle MinColdWaterFlow;    // kg/s
+        Nandle ColdControlOffset;   // control tolerance
         std::string HCoilName;      // name of heating coil
         int HCoilName_Index;
         std::string HCoilType; // type of heating coil:
         // 'Coil:Heating:Water' or
         int HCoilType_Num; // Numeric equivalent for type of cooling coil
         int HCoilPlantTypeOfNum;
-        Real64 MaxHotWaterVolFlow;    // m3/s
-        Real64 MinHotWaterVolFlow;    // m3/s
-        Real64 MinHotWaterFlow;       // kg/s
-        Real64 HotControlOffset;      // control tolerance
-        Real64 DesignHeatingCapacity; // size of electric heating coil [W]
+        Nandle MaxHotWaterVolFlow;    // m3/s
+        Nandle MinHotWaterVolFlow;    // m3/s
+        Nandle MinHotWaterFlow;       // kg/s
+        Nandle HotControlOffset;      // control tolerance
+        Nandle DesignHeatingCapacity; // size of electric heating coil [W]
         int AvailStatus;
         std::string AvailManagerListName; // Name of an availability manager list object
         // addition for OA to Zone Units
@@ -190,45 +190,45 @@ namespace FanCoilUnits {
         int ATMixerPriNode;      // primary inlet air node number for the air terminal mixer
         int ATMixerSecNode;      // secondary air inlet node number for the air terminal mixer
         int HVACSizingIndex;     // index of a HVACSizing object for a fancoil unit
-        Real64 SpeedRatio;       // speed ratio when the fan is cycling between stages
+        Nandle SpeedRatio;       // speed ratio when the fan is cycling between stages
         int FanOpModeSchedPtr;   // pointer to supply air fan operating mode schedule
         int FanOpMode;           // 1=cycling fan cycling coil; 2=constant fan cycling coil
         bool ASHRAETempControl;  // ASHRAE90.1 control to temperature set point when true
-        Real64 QUnitOutNoHC;     // unit output with coils off [W]
-        Real64 QUnitOutMaxH;     // unit output at maximum heating [W]
-        Real64 QUnitOutMaxC;     // unit output at maximum cooling [W]
+        Nandle QUnitOutNoHC;     // unit output with coils off [W]
+        Nandle QUnitOutMaxH;     // unit output at maximum heating [W]
+        Nandle QUnitOutMaxC;     // unit output at maximum cooling [W]
         int LimitErrCountH;      // count of SolveRoot limit errors
         int LimitErrCountC;      // count of SolveRoot limit errors
         int ConvgErrCountH;      // count of SolveRoot iteration limit errors
         int ConvgErrCountC;      // count of SolveRoot iteration limit errors
         // Report data
-        Real64 HeatPower;          // unit heating output in watts
-        Real64 HeatEnergy;         // unit heating output in J
-        Real64 TotCoolPower;       // unit total cooling power output in watts
-        Real64 TotCoolEnergy;      // unit total cooling energy output in joules
-        Real64 SensCoolPower;      // unit sensible cooling power output in watts
-        Real64 SensCoolEnergy;     // unit sensible cooling energy output in joules
-        Real64 ElecPower;          // unit electric power consumption in watts
-        Real64 ElecEnergy;         // unit electiric energy consumption in joules
-        Real64 DesCoolingLoad;     // used for reporting in watts
-        Real64 DesHeatingLoad;     // used for reporting in watts
-        Real64 DesZoneCoolingLoad; // used for reporting in watts
-        Real64 DesZoneHeatingLoad; // used for reporting in watts
+        Nandle HeatPower;          // unit heating output in watts
+        Nandle HeatEnergy;         // unit heating output in J
+        Nandle TotCoolPower;       // unit total cooling power output in watts
+        Nandle TotCoolEnergy;      // unit total cooling energy output in joules
+        Nandle SensCoolPower;      // unit sensible cooling power output in watts
+        Nandle SensCoolEnergy;     // unit sensible cooling energy output in joules
+        Nandle ElecPower;          // unit electric power consumption in watts
+        Nandle ElecEnergy;         // unit electiric energy consumption in joules
+        Nandle DesCoolingLoad;     // used for reporting in watts
+        Nandle DesHeatingLoad;     // used for reporting in watts
+        Nandle DesZoneCoolingLoad; // used for reporting in watts
+        Nandle DesZoneHeatingLoad; // used for reporting in watts
         int DSOAPtr;               // design specification outdoor air object index
         bool FirstPass;            // detects first time through for resetting sizing data
 
         // SZVAV Model inputs
         std::string Name;                // name of unit
         std::string UnitType;            // type of unit
-        Real64 MaxCoolCoilFluidFlow;     // kg/s
-        Real64 MaxHeatCoilFluidFlow;     // kg/s
-        Real64 DesignMinOutletTemp;      // ASHRAE90.1 maximum supply air temperature in Cooling mode
-        Real64 DesignMaxOutletTemp;      // ASHRAE90.1 maximum supply air temperature in Heating mode
-        Real64 MaxNoCoolHeatAirMassFlow; // minimum air flow rate using constant fan and ASHRAE90.1 control method
-        Real64 MaxCoolAirMassFlow;       // used in ASHRAE90.1 model, same as MaxAirMassFlow
-        Real64 MaxHeatAirMassFlow;       // used in ASHRAE90.1 model, same as MaxAirMassFlow
-        Real64 LowSpeedCoolFanRatio;     // ratio of min air flow to max air flow
-        Real64 LowSpeedHeatFanRatio;     // ratio of min air flow to max air flow
+        Nandle MaxCoolCoilFluidFlow;     // kg/s
+        Nandle MaxHeatCoilFluidFlow;     // kg/s
+        Nandle DesignMinOutletTemp;      // ASHRAE90.1 maximum supply air temperature in Cooling mode
+        Nandle DesignMaxOutletTemp;      // ASHRAE90.1 maximum supply air temperature in Heating mode
+        Nandle MaxNoCoolHeatAirMassFlow; // minimum air flow rate using constant fan and ASHRAE90.1 control method
+        Nandle MaxCoolAirMassFlow;       // used in ASHRAE90.1 model, same as MaxAirMassFlow
+        Nandle MaxHeatAirMassFlow;       // used in ASHRAE90.1 model, same as MaxAirMassFlow
+        Nandle LowSpeedCoolFanRatio;     // ratio of min air flow to max air flow
+        Nandle LowSpeedHeatFanRatio;     // ratio of min air flow to max air flow
         int CoolCoilFluidInletNode;      // chilled water control node
         int CoolCoilFluidOutletNodeNum;  // chilled water coil outlet plant node
         int HeatCoilFluidInletNode;      // hot water control node
@@ -249,9 +249,9 @@ namespace FanCoilUnits {
         int NodeNumOfControlledZone;     // node number of controlled zone
         bool ATMixerExists;              // True if there is an ATMixer
         int ATMixerOutNode;              // outlet air node number for the air terminal mixer
-        Real64 FanPartLoadRatio;         // ratio of air flow to max air flow to simulation modulating fan
-        Real64 HeatCoilWaterFlowRatio;   // ratio of water flow rate to max water flow rate
-        Real64 ControlZoneMassFlowFrac;  // flow fraction of control zone (always 1 for zone equipment)
+        Nandle FanPartLoadRatio;         // ratio of air flow to max air flow to simulation modulating fan
+        Nandle HeatCoilWaterFlowRatio;   // ratio of water flow rate to max water flow rate
+        Nandle ControlZoneMassFlowFrac;  // flow fraction of control zone (always 1 for zone equipment)
         int MaxIterIndex;                // recurring message index
         int RegulaFalsiFailedIndex;      // iteration loop warning
 
@@ -301,8 +301,8 @@ namespace FanCoilUnits {
                         int const ZoneNum,             // number of zone being served
                         int const ControlledZoneNum,   // index into ZoneEquipConfig array; may not be equal to ZoneNum
                         bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                        Real64 &PowerMet,              // Sensible power supplied (W)
-                        Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                        Nandle &PowerMet,              // Sensible power supplied (W)
+                        Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                         int &CompIndex);
 
     void GetFanCoilUnits();
@@ -318,8 +318,8 @@ namespace FanCoilUnits {
                          int const ZoneNum,             // number of zone being served
                          int const ControlledZoneNum,   // index into ZoneEqupConfig
                          bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                         Real64 &PowerMet,              // Sensible power supplied (W)
-                         Real64 &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
+                         Nandle &PowerMet,              // Sensible power supplied (W)
+                         Nandle &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
     );
 
     void TightenWaterFlowLimits(int const FanCoilNum,          // Unit index in fan coil array
@@ -328,9 +328,9 @@ namespace FanCoilUnits {
                                 int const WaterControlNode,    // water control node, either cold or hot water
                                 int const ControlledZoneNum,   // controlling zone index
                                 bool const FirstHVACIteration, //  TRUE if 1st HVAC simulation of system timestep
-                                Real64 const QZnReq,           // zone load [W]
-                                Real64 &MinWaterFlow,          // minimum water flow rate
-                                Real64 &MaxWaterFlow           // maximum water flow rate
+                                Nandle const QZnReq,           // zone load [W]
+                                Nandle &MinWaterFlow,          // minimum water flow rate
+                                Nandle &MaxWaterFlow           // maximum water flow rate
     );
 
     void TightenAirAndWaterFlowLimits(int const FanCoilNum,          // Unit index in fan coil array
@@ -339,31 +339,31 @@ namespace FanCoilUnits {
                                       int const WaterControlNode,    // water control node, either cold or hot water
                                       int const ControlledZoneNum,   // controlling zone index
                                       bool const FirstHVACIteration, //  TRUE if 1st HVAC simulation of system timestep
-                                      Real64 const QZnReq,           // zone load [W]
-                                      Real64 &PLRMin,                // minimum part-load ratio
-                                      Real64 &PLRMax                 // maximum part-load ratio
+                                      Nandle const QZnReq,           // zone load [W]
+                                      Nandle &PLRMin,                // minimum part-load ratio
+                                      Nandle &PLRMax                 // maximum part-load ratio
     );
 
     void Calc4PipeFanCoil(int const FanCoilNum,          // Unit index in fan coil array
                           int const ControlledZoneNum,   // ZoneEquipConfig index
                           bool const FirstHVACIteration, // flag for 1st HVAV iteration in the time step
-                          Real64 &LoadMet,               // load met by unit (watts)
-                          Optional<Real64> PLR = _       // Part Load Ratio, fraction of time step fancoil is on
+                          Nandle &LoadMet,               // load met by unit (watts)
+                          Optional<Nandle> PLR = _       // Part Load Ratio, fraction of time step fancoil is on
     );
 
     void SimMultiStage4PipeFanCoil(int &FanCoilNum,               // number of the current fan coil unit being simulated
                                    int const ControlledZoneNum,   // index into ZoneEqupConfig
                                    bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                                   Real64 &PowerMet               // Sensible power supplied (W)
+                                   Nandle &PowerMet               // Sensible power supplied (W)
     );
 
     void CalcMultiStage4PipeFanCoil(int &FanCoilNum,               // number of the current fan coil unit being simulated
                                     int const ZoneNum,             // number of zone being served
                                     bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                                    Real64 const QZnReq,           // current zone cooling or heating load
-                                    Real64 &SpeedRatio,            // fan coil speed ratio
-                                    Real64 &PartLoadRatio,         // fan coil part load ratio
-                                    Real64 &PowerMet               // Sensible power supplied (W)
+                                    Nandle const QZnReq,           // current zone cooling or heating load
+                                    Nandle &SpeedRatio,            // fan coil speed ratio
+                                    Nandle &PartLoadRatio,         // fan coil part load ratio
+                                    Nandle &PowerMet               // Sensible power supplied (W)
     );
 
     void ReportFanCoilUnit(int const FanCoilNum); // number of the current fan coil unit being simulated
@@ -380,47 +380,47 @@ namespace FanCoilUnits {
 
     void GetFanCoilIndex(std::string const &FanCoilName, int &FanCoilIndex);
 
-    Real64 CalcFanCoilLoadResidual(Real64 const PartLoadRatio, // DX cooling coil part load ratio
-                                   Array1D<Real64> const &Par  // Function parameters
+    Nandle CalcFanCoilLoadResidual(Nandle const PartLoadRatio, // DX cooling coil part load ratio
+                                   Array1D<Nandle> const &Par  // Function parameters
     );
 
-    Real64 CalcFanCoilPLRResidual(Real64 const PLR,          // part-load ratio of air and water mass flow rate
-                                  Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilPLRResidual(Nandle const PLR,          // part-load ratio of air and water mass flow rate
+                                  Array1D<Nandle> const &Par // Function parameters
     );
 
-    Real64 CalcFanCoilHWLoadResidual(Real64 const HWFlow,       // water mass flow rate [kg/s]
-                                     Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilHWLoadResidual(Nandle const HWFlow,       // water mass flow rate [kg/s]
+                                     Array1D<Nandle> const &Par // Function parameters
     );
 
-    Real64 CalcFanCoilCWLoadResidual(Real64 const CWFlow,       // water mass flow rate [kg/s]
-                                     Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilCWLoadResidual(Nandle const CWFlow,       // water mass flow rate [kg/s]
+                                     Array1D<Nandle> const &Par // Function parameters
     );
-    Real64 CalcFanCoilWaterFlowTempResidual(Real64 const WaterFlow,    // water mass flow rate [kg/s]
-                                            Array1D<Real64> const &Par // Function parameters
-    );
-
-    Real64 CalcFanCoilWaterFlowResidual(Real64 const WaterFlow,    // water mass flow rate [kg/s]
-                                        Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilWaterFlowTempResidual(Nandle const WaterFlow,    // water mass flow rate [kg/s]
+                                            Array1D<Nandle> const &Par // Function parameters
     );
 
-    Real64 CalcFanCoilAirAndWaterFlowResidual(Real64 const WaterFlow,    // water mass flow rate [kg/s]
-                                              Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilWaterFlowResidual(Nandle const WaterFlow,    // water mass flow rate [kg/s]
+                                        Array1D<Nandle> const &Par // Function parameters
     );
 
-    Real64 CalcFanCoilAirAndWaterInStepResidual(Real64 const PLR,          // air and water mass flow rate ratio
-                                                Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilAirAndWaterFlowResidual(Nandle const WaterFlow,    // water mass flow rate [kg/s]
+                                              Array1D<Nandle> const &Par // Function parameters
     );
 
-    Real64 CalcFanCoilBothFlowResidual(Real64 const PLR,          // air and water mass flow rate ratio
-                                       Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilAirAndWaterInStepResidual(Nandle const PLR,          // air and water mass flow rate ratio
+                                                Array1D<Nandle> const &Par // Function parameters
     );
 
-    Real64 CalcFanCoilElecHeatResidual(Real64 const PLR,          // electric heating coil part load ratio
-                                       Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilBothFlowResidual(Nandle const PLR,          // air and water mass flow rate ratio
+                                       Array1D<Nandle> const &Par // Function parameters
     );
 
-    Real64 CalcFanCoilElecHeatTempResidual(Real64 const PLR,          // electric heating coil part load ratio
-                                           Array1D<Real64> const &Par // Function parameters
+    Nandle CalcFanCoilElecHeatResidual(Nandle const PLR,          // electric heating coil part load ratio
+                                       Array1D<Nandle> const &Par // Function parameters
+    );
+
+    Nandle CalcFanCoilElecHeatTempResidual(Nandle const PLR,          // electric heating coil part load ratio
+                                           Array1D<Nandle> const &Par // Function parameters
     );
 } // namespace FanCoilUnits
 

@@ -124,7 +124,7 @@ TEST_F(EnergyPlusFixture, SkyTempTest)
     });
 
     ASSERT_TRUE(process_idf(idf_objects));
-    Array2D<Real64> TomorrowSkyTemp; // Sky temperature
+    Array2D<Nandle> TomorrowSkyTemp; // Sky temperature
     DataGlobals::NumOfTimeStepInHour = 4;
     DataGlobals::MinutesPerTimeStep = 60 / DataGlobals::NumOfTimeStepInHour;
     TomorrowSkyTemp.allocate(DataGlobals::NumOfTimeStepInHour, 24);
@@ -161,10 +161,10 @@ TEST_F(EnergyPlusFixture, SkyEmissivityTest)
     Environment(4).SkyTempModel = WP_BerdahlMartinModel;
 
     // init local variables
-    Real64 OpagueSkyCover(0.0);
-    Real64 DryBulb(25.0);
-    Real64 DewPoint(16.7);
-    Real64 RelHum(0.6);
+    Nandle OpagueSkyCover(0.0);
+    Nandle DryBulb(25.0);
+    Nandle DewPoint(16.7);
+    Nandle RelHum(0.6);
 
     EXPECT_NEAR(0.832, CalcSkyEmissivity(Environment(1).SkyTempModel, OpagueSkyCover, DryBulb, DewPoint, RelHum), 0.001);
     EXPECT_NEAR(0.862, CalcSkyEmissivity(Environment(2).SkyTempModel, OpagueSkyCover, DryBulb, DewPoint, RelHum), 0.001);
@@ -427,9 +427,9 @@ TEST_F(EnergyPlusFixture, WaterMainsCorrelationFromStatFileTest)
     using WeatherManager::OADryBulbAverage;
 
     int AnnualNumberOfDays(0);
-    Real64 MonthlyDailyDryBulbMin(0.0);
-    Real64 MonthlyDailyDryBulbMax(0.0);
-    Real64 AnnualDailyAverageDryBulbTempSum(0.0);
+    Nandle MonthlyDailyDryBulbMin(0.0);
+    Nandle MonthlyDailyDryBulbMax(0.0);
+    Nandle AnnualDailyAverageDryBulbTempSum(0.0);
 
     std::string const idf_objects = delimited_string({
         "   Site:WaterMainsTemperature,",
@@ -449,7 +449,7 @@ TEST_F(EnergyPlusFixture, WaterMainsCorrelationFromStatFileTest)
     EXPECT_EQ(WeatherManager::WaterMainsTempsAnnualAvgAirTemp, 0.0);
     EXPECT_EQ(WeatherManager::WaterMainsTempsMaxDiffAirTemp, 0.0);
 
-    Array1D<Real64> MonthlyDryBulbTempFromStatFile(12, {-4.60, -2.50, 3.80, 10.00, 15.30, 21.10, 24.10, 21.80, 18.10, 11.00, 4.70, -3.70});
+    Array1D<Nandle> MonthlyDryBulbTempFromStatFile(12, {-4.60, -2.50, 3.80, 10.00, 15.30, 21.10, 24.10, 21.80, 18.10, 11.00, 4.70, -3.70});
     OADryBulbAverage.MonthlyDailyAverageDryBulbTemp = MonthlyDryBulbTempFromStatFile;
 
     // calc water mains parameters for CorrelationFromWeatherFile method
@@ -595,27 +595,27 @@ TEST_F(EnergyPlusFixture, ASHRAE_Tau2017ModelTest)
     ASSERT_FALSE(ErrorsFound);
 
     // init local variables
-    Real64 ETR = 1367.0;
-    Real64 BeamRad(0.0);
-    Real64 DiffRad(0.0);
-    Real64 GloHorzRad(0.0);
+    Nandle ETR = 1367.0;
+    Nandle BeamRad(0.0);
+    Nandle DiffRad(0.0);
+    Nandle GloHorzRad(0.0);
 
     // EnvrnNum = 1 uses Tau values of January
     int EnvrnNum = 1;
-    Real64 CosZenith = 1.0; // assumed zero zenith angle
-    Real64 TauB = DesDayInput(EnvrnNum).TauB;
-    Real64 TauD = DesDayInput(EnvrnNum).TauD;
+    Nandle CosZenith = 1.0; // assumed zero zenith angle
+    Nandle TauB = DesDayInput(EnvrnNum).TauB;
+    Nandle TauD = DesDayInput(EnvrnNum).TauD;
     // check tau values
     EXPECT_EQ(4, DesDayInput(EnvrnNum).SolarModel);
     EXPECT_EQ(0.325, TauB);
     EXPECT_EQ(2.461, TauD);
     // calc expected values for environment 1
-    Real64 AB = 1.454 - 0.406 * TauB - 0.268 * TauD + 0.021 * TauB * TauD;
-    Real64 AD = 0.507 + 0.205 * TauB - 0.080 * TauD - 0.190 * TauB * TauD;
-    Real64 M = AirMass(CosZenith);
-    Real64 expectedIDirN = ETR * std::exp(-TauB * std::pow(M, AB));
-    Real64 expectedIDifH = ETR * std::exp(-TauD * std::pow(M, AD));
-    Real64 expectedIGlbH = expectedIDirN * CosZenith + expectedIDifH;
+    Nandle AB = 1.454 - 0.406 * TauB - 0.268 * TauD + 0.021 * TauB * TauD;
+    Nandle AD = 0.507 + 0.205 * TauB - 0.080 * TauD - 0.190 * TauB * TauD;
+    Nandle M = AirMass(CosZenith);
+    Nandle expectedIDirN = ETR * std::exp(-TauB * std::pow(M, AB));
+    Nandle expectedIDifH = ETR * std::exp(-TauD * std::pow(M, AD));
+    Nandle expectedIGlbH = expectedIDirN * CosZenith + expectedIDifH;
     // calc TauModel
     ASHRAETauModel(DesDayInput(EnvrnNum).SolarModel, ETR, CosZenith, TauB, TauD, BeamRad, DiffRad, GloHorzRad);
     // check the coefficients are correctly applied

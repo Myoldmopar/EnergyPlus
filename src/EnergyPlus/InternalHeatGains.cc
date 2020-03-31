@@ -268,7 +268,7 @@ namespace InternalHeatGains {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Array1D_string AlphaName;
-        Array1D<Real64> IHGNumbers;
+        Array1D<Nandle> IHGNumbers;
         int IOStat;
         int Loop;
         bool MustInpSch;
@@ -280,24 +280,24 @@ namespace InternalHeatGains {
         int lastOption;
         Array1D_bool RepVarSet;
         //   Variables for reporting nominal internal gains
-        Real64 LightTot;       // Total Lights for calculating lights per square meter
-        Real64 ElecTot;        // Total Electric Load for calculating electric per square meter
-        Real64 GasTot;         // Total Gas load for calculating gas per square meter
-        Real64 OthTot;         // Total Other load for calculating other load per square meter
-        Real64 HWETot;         // Total Hot Water Equipment for calculating HWE per square meter
-        Real64 StmTot;         // Total Steam for calculating Steam per square meter
+        Nandle LightTot;       // Total Lights for calculating lights per square meter
+        Nandle ElecTot;        // Total Electric Load for calculating electric per square meter
+        Nandle GasTot;         // Total Gas load for calculating gas per square meter
+        Nandle OthTot;         // Total Other load for calculating other load per square meter
+        Nandle HWETot;         // Total Hot Water Equipment for calculating HWE per square meter
+        Nandle StmTot;         // Total Steam for calculating Steam per square meter
         std::string BBHeatInd; // Yes if BBHeat in zone, no if not.
         int Loop1;
-        Real64 SchMin;
-        Real64 SchMax;
+        Nandle SchMin;
+        Nandle SchMax;
         static bool UsingThermalComfort(false);
         std::string liteName;
         int zonePt;
-        Real64 mult;
-        static Real64 sumArea(0.0);
-        static Real64 sumPower(0.0);
+        Nandle mult;
+        static Nandle sumArea(0.0);
+        static Nandle sumPower(0.0);
         int ZoneNum;
-        Real64 maxOccupLoad;
+        Nandle maxOccupLoad;
         std::string CurrentModuleObject;
         bool errFlag;
         int Item;
@@ -311,7 +311,7 @@ namespace InternalHeatGains {
         static constexpr auto Format_723("! <{} Internal Gains Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {{m2}},# Zone Occupants,{}");
         static constexpr auto Format_724(" {}, {}\n");
 
-        auto print_and_divide_if_greater_than_zero = [&](const Real64 numerator, const Real64 denominator) {
+        auto print_and_divide_if_greater_than_zero = [&](const Nandle numerator, const Nandle denominator) {
             if (denominator > 0.0) {
                 print(outputFiles.eio, "{:.3R},", numerator / denominator);
             } else {
@@ -3941,7 +3941,7 @@ namespace InternalHeatGains {
                 }
 
                 if (ZoneITEq(Loop).FlowControlWithApproachTemps) {
-                    Real64 TAirInSizing = 0.0;
+                    Nandle TAirInSizing = 0.0;
                     // Set the TAirInSizing to the maximun setpoint value to do sizing based on the maximum fan and cpu power of the ite object
                     SetPointManager::GetSetPointManagerInputData(ErrorsFound);
                     for (int SetPtMgrNum = 1; SetPtMgrNum <= SetPointManager::NumSZClSetPtMgrs; ++SetPtMgrNum) {
@@ -5186,7 +5186,7 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Array1D<Real64> const C(
+        static Array1D<Nandle> const C(
             9, {6.4611027, 0.946892, 0.0000255737, 7.139322, -0.0627909, 0.0000589271, -0.198550, 0.000940018, -0.00000149532});
         static ZoneCatEUseData const zeroZoneCatEUse; // For initialization
 
@@ -5197,22 +5197,22 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ActivityLevel_WperPerson; // Units on Activity Level (Schedule)
-        Real64 NumberOccupants;          // Number of occupants
+        Nandle ActivityLevel_WperPerson; // Units on Activity Level (Schedule)
+        Nandle NumberOccupants;          // Number of occupants
         int SurfNum;                     // DO loop counter for surfaces
         int Loop;
         int NZ;
-        Real64 Q;                  // , QR
-        Real64 TotalPeopleGain;    // Total heat gain from people (intermediate calculational variable)
-        Real64 SensiblePeopleGain; // Sensible heat gain from people (intermediate calculational variable)
-        Real64 FractionConvected;  // For general lighting, fraction of heat from lights convected to zone air
-        Real64 FractionReturnAir;  // For general lighting, fraction of heat from lights convected to zone's return air
-        Real64 FractionRadiant;    // For general lighting, fraction of heat from lights to zone that is long wave
+        Nandle Q;                  // , QR
+        Nandle TotalPeopleGain;    // Total heat gain from people (intermediate calculational variable)
+        Nandle SensiblePeopleGain; // Sensible heat gain from people (intermediate calculational variable)
+        Nandle FractionConvected;  // For general lighting, fraction of heat from lights convected to zone air
+        Nandle FractionReturnAir;  // For general lighting, fraction of heat from lights convected to zone's return air
+        Nandle FractionRadiant;    // For general lighting, fraction of heat from lights to zone that is long wave
 
-        Real64 ReturnPlenumTemp;  // Air temperature of a zone's return air plenum (C)
-        Real64 pulseMultipler;    // use to create a pulse for the load component report computations
-        static Real64 curQL(0.0); // radiant value prior to adjustment for pulse for load component report
-        static Real64 adjQL(0.0); // radiant value including adjustment for pulse for load component report
+        Nandle ReturnPlenumTemp;  // Air temperature of a zone's return air plenum (C)
+        Nandle pulseMultipler;    // use to create a pulse for the load component report computations
+        static Nandle curQL(0.0); // radiant value prior to adjustment for pulse for load component report
+        static Nandle adjQL(0.0); // radiant value including adjustment for pulse for load component report
 
         //  REAL(r64), ALLOCATABLE, SAVE, DIMENSION(:) :: QSA
 
@@ -5565,7 +5565,7 @@ namespace InternalHeatGains {
             auto &thisEnclosure(DataViewFactorInformation::ZoneRadiantInfo(enclosureNum));
             QL(enclosureNum) = 0.0;
             for (int const zoneNum : thisEnclosure.ZoneNums) {
-                Real64 zoneQL;
+                Nandle zoneQL;
                 SumAllInternalRadiationGains(zoneNum, zoneQL);
                 QL(enclosureNum) += zoneQL;
             }
@@ -5653,44 +5653,44 @@ namespace InternalHeatGains {
 
         // Operating Limits for environmental class: None, A1, A2, A3, A4, B, C
         // From ASHRAE 2011 Thermal Guidelines environmental classes for Air-Cooled ITE
-        static Array1D<Real64> const DBMin(7, {-99.0, 15.0, 10.0, 5.0, 5.0, 5.0, 5.0});           // Minimum dry-bulb temperature [C]
-        static Array1D<Real64> const DBMax(7, {99.0, 32.0, 35.0, 40.0, 45.0, 35.0, 40.0});        // Maximum dry-bulb temperature [C]
-        static Array1D<Real64> const DPMax(7, {99.0, 17.0, 21.0, 24.0, 24.0, 28.0, 28.0});        // Maximum dewpoint temperature [C]
-        static Array1D<Real64> const DPMin(7, {-99.0, -99.0, -99.0, -12.0, -12.0, -99.0, -99.0}); // Minimum dewpoint temperature [C]
-        static Array1D<Real64> const RHMin(7, {0.0, 20.0, 20.0, 8.0, 8.0, 8.0, 8.0});             // Minimum relative humidity [%]
-        static Array1D<Real64> const RHMax(7, {99.0, 80.0, 80.0, 85.0, 90.0, 80.0, 80.0});        // Maximum relative humidity [%]
+        static Array1D<Nandle> const DBMin(7, {-99.0, 15.0, 10.0, 5.0, 5.0, 5.0, 5.0});           // Minimum dry-bulb temperature [C]
+        static Array1D<Nandle> const DBMax(7, {99.0, 32.0, 35.0, 40.0, 45.0, 35.0, 40.0});        // Maximum dry-bulb temperature [C]
+        static Array1D<Nandle> const DPMax(7, {99.0, 17.0, 21.0, 24.0, 24.0, 28.0, 28.0});        // Maximum dewpoint temperature [C]
+        static Array1D<Nandle> const DPMin(7, {-99.0, -99.0, -99.0, -12.0, -12.0, -99.0, -99.0}); // Minimum dewpoint temperature [C]
+        static Array1D<Nandle> const RHMin(7, {0.0, 20.0, 20.0, 8.0, 8.0, 8.0, 8.0});             // Minimum relative humidity [%]
+        static Array1D<Nandle> const RHMax(7, {99.0, 80.0, 80.0, 85.0, 90.0, 80.0, 80.0});        // Maximum relative humidity [%]
 
         static std::string const RoutineName("CalcZoneITEq");
         int Loop;
         int NZ;
         int SupplyNodeNum;                                // Supply air node number (if zero, then not specified)
-        Real64 OperSchedFrac;                             // Operating schedule fraction
-        Real64 CPULoadSchedFrac;                          // CPU loading schedule fraction
-        Real64 AirConnection;                             // Air connection type
-        Real64 TSupply;                                   // Supply air temperature [C]
-        Real64 WSupply;                                   // Supply air humidity ratio [kgWater/kgDryAir]
-        Real64 RecircFrac;                                // Recirulation fraction - current
-        Real64 TRecirc;                                   // Recirulation air temperature [C]
-        Real64 WRecirc;                                   // Recirulation air humidity ratio [kgWater/kgDryAir]
-        Real64 TAirIn;                                    // Entering air dry-bulb temperature [C]
-        Real64 TAirInDesign;                              // Design entering air dry-bulb temperature [C]
-        Real64 WAirIn;                                    // Entering air humidity ratio [kgWater/kgDryAir]
-        Real64 TDPAirIn;                                  // Entering air dewpoint temperature [C]
-        Real64 RHAirIn;                                   // Entering air relative humidity [%]
-        Real64 SupplyHeatIndex;                           // Supply heat index
-        Real64 TAirOut;                                   // Leaving air temperature [C]
-        Real64 AirVolFlowFrac;                            // Air volume flow fraction
-        Real64 AirVolFlowFracDesignT;                     // Air volume flow fraction at design entering air temperature
-        Real64 AirVolFlowRate;                            // Air volume flow rate at current density [m3/s]
-        Real64 AirMassFlowRate;                           // Air mass flow rate [kg/s]
-        Real64 CPUPower;                                  // CPU power input [W]
-        Real64 FanPower;                                  // Fan power input [W]
-        Real64 UPSPower;                                  // UPS new power input (losses) [W]
-        Real64 UPSPartLoadRatio;                          // UPS part load ratio (current total power input / design total power input)
-        Real64 UPSHeatGain;                               // UPS convective heat gain to zone [W]
+        Nandle OperSchedFrac;                             // Operating schedule fraction
+        Nandle CPULoadSchedFrac;                          // CPU loading schedule fraction
+        Nandle AirConnection;                             // Air connection type
+        Nandle TSupply;                                   // Supply air temperature [C]
+        Nandle WSupply;                                   // Supply air humidity ratio [kgWater/kgDryAir]
+        Nandle RecircFrac;                                // Recirulation fraction - current
+        Nandle TRecirc;                                   // Recirulation air temperature [C]
+        Nandle WRecirc;                                   // Recirulation air humidity ratio [kgWater/kgDryAir]
+        Nandle TAirIn;                                    // Entering air dry-bulb temperature [C]
+        Nandle TAirInDesign;                              // Design entering air dry-bulb temperature [C]
+        Nandle WAirIn;                                    // Entering air humidity ratio [kgWater/kgDryAir]
+        Nandle TDPAirIn;                                  // Entering air dewpoint temperature [C]
+        Nandle RHAirIn;                                   // Entering air relative humidity [%]
+        Nandle SupplyHeatIndex;                           // Supply heat index
+        Nandle TAirOut;                                   // Leaving air temperature [C]
+        Nandle AirVolFlowFrac;                            // Air volume flow fraction
+        Nandle AirVolFlowFracDesignT;                     // Air volume flow fraction at design entering air temperature
+        Nandle AirVolFlowRate;                            // Air volume flow rate at current density [m3/s]
+        Nandle AirMassFlowRate;                           // Air mass flow rate [kg/s]
+        Nandle CPUPower;                                  // CPU power input [W]
+        Nandle FanPower;                                  // Fan power input [W]
+        Nandle UPSPower;                                  // UPS new power input (losses) [W]
+        Nandle UPSPartLoadRatio;                          // UPS part load ratio (current total power input / design total power input)
+        Nandle UPSHeatGain;                               // UPS convective heat gain to zone [W]
         int EnvClass;                                     // Index for environmental class (None=0, A1=1, A2=2, A3=3, A4=4, B=5, C=6)
-        Array1D<Real64> ZoneSumTinMinusTSup(NumOfZones);  // Numerator for zone-level sensible heat index (SHI)
-        Array1D<Real64> ZoneSumToutMinusTSup(NumOfZones); // Denominator for zone-level sensible heat index (SHI)
+        Array1D<Nandle> ZoneSumTinMinusTSup(NumOfZones);  // Numerator for zone-level sensible heat index (SHI)
+        Array1D<Nandle> ZoneSumToutMinusTSup(NumOfZones); // Denominator for zone-level sensible heat index (SHI)
 
         std::map<int, std::vector<int>> ZoneITEMap;
 
@@ -6012,9 +6012,9 @@ namespace InternalHeatGains {
         }
 
         std::map<int, std::vector<int>>::iterator it = ZoneITEMap.begin();
-        Real64 totalGain;
-        Real64 totalRate;
-        Real64 TAirReturn;
+        Nandle totalGain;
+        Nandle totalRate;
+        Nandle TAirReturn;
         while (it != ZoneITEMap.end()) {
             if (Zone(it->first).HasAdjustedReturnTempByITE) {
                 totalGain = 0;
@@ -6295,7 +6295,7 @@ namespace InternalHeatGains {
         }
     }
 
-    Real64 GetDesignLightingLevelForZone(int const WhichZone) // name of zone
+    Nandle GetDesignLightingLevelForZone(int const WhichZone) // name of zone
     {
 
         // FUNCTION INFORMATION:
@@ -6320,7 +6320,7 @@ namespace InternalHeatGains {
         using namespace DataGlobals;
 
         // Return value
-        Real64 DesignLightingLevelSum; // Sum of design lighting level for this zone
+        Nandle DesignLightingLevelSum; // Sum of design lighting level for this zone
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -6404,8 +6404,8 @@ namespace InternalHeatGains {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Loop;
-        Real64 LightsRepMin; // Minimum Lighting replacement fraction for any lights statement for this zone
-        Real64 LightsRepMax; // Maximum Lighting replacement fraction for any lights statement for this zone
+        Nandle LightsRepMin; // Minimum Lighting replacement fraction for any lights statement for this zone
+        Nandle LightsRepMax; // Maximum Lighting replacement fraction for any lights statement for this zone
         int NumLights;       // Number of Lights statement for that zone.
 
         if (GetInternalHeatGainsInputFlag) {
@@ -6538,7 +6538,7 @@ namespace InternalHeatGains {
     }
 
     void SumAllInternalConvectionGains(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                       Real64 &SumConvGainRate)
+                                       Nandle &SumConvGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6572,7 +6572,7 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 tmpSumConvGainRate;
+        Nandle tmpSumConvGainRate;
         int DeviceNum;
 
         tmpSumConvGainRate = 0.0;
@@ -6589,9 +6589,9 @@ namespace InternalHeatGains {
     }
 
     // For HybridModel
-    void SumAllInternalConvectionGainsExceptPeople(int const ZoneNum, Real64 &SumConvGainRateExceptPeople)
+    void SumAllInternalConvectionGainsExceptPeople(int const ZoneNum, Nandle &SumConvGainRateExceptPeople)
     {
-        Real64 tmpSumConvGainRateExceptPeople;
+        Nandle tmpSumConvGainRateExceptPeople;
         int DeviceNum;
         std::string str_people = "PEOPLE";
         tmpSumConvGainRateExceptPeople = 0.0;
@@ -6612,7 +6612,7 @@ namespace InternalHeatGains {
 
     void SumInternalConvectionGainsByTypes(int const ZoneNum,             // zone index pointer for which zone to sum gains for
                                            const Array1D_int &GainTypeARR, // variable length 1-d array of integer valued gain types
-                                           Real64 &SumConvGainRate)
+                                           Nandle &SumConvGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6649,7 +6649,7 @@ namespace InternalHeatGains {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfTypes;
-        Real64 tmpSumConvGainRate;
+        Nandle tmpSumConvGainRate;
         int DeviceNum;
         int TypeNum;
 
@@ -6674,7 +6674,7 @@ namespace InternalHeatGains {
     }
 
     void SumAllReturnAirConvectionGains(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                        Real64 &SumReturnAirGainRate,
+                                        Nandle &SumReturnAirGainRate,
                                         int const ReturnNodeNum // return air node number
     )
     {
@@ -6686,7 +6686,7 @@ namespace InternalHeatGains {
         // PURPOSE OF THIS SUBROUTINE:
         // worker routine for summing all the internal gain types
 
-        Real64 tmpSumRetAirGainRate;
+        Nandle tmpSumRetAirGainRate;
         int DeviceNum;
 
         tmpSumRetAirGainRate = 0.0;
@@ -6708,7 +6708,7 @@ namespace InternalHeatGains {
 
     void SumReturnAirConvectionGainsByTypes(int const ZoneNum,             // zone index pointer for which zone to sum gains for
                                             const Array1D_int &GainTypeARR, // variable length 1-d array of integer valued gain types
-                                            Real64 &SumReturnAirGainRate)
+                                            Nandle &SumReturnAirGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6745,7 +6745,7 @@ namespace InternalHeatGains {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfTypes;
-        Real64 tmpSumRetAirConvGainRate;
+        Nandle tmpSumRetAirConvGainRate;
         int DeviceNum;
         int TypeNum;
 
@@ -6770,7 +6770,7 @@ namespace InternalHeatGains {
     }
 
     void SumAllInternalRadiationGains(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                      Real64 &SumRadGainRate)
+                                      Nandle &SumRadGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6804,7 +6804,7 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 tmpSumRadGainRate;
+        Nandle tmpSumRadGainRate;
         int DeviceNum;
 
         tmpSumRadGainRate = 0.0;
@@ -6823,7 +6823,7 @@ namespace InternalHeatGains {
 
     void SumInternalRadiationGainsByTypes(int const ZoneNum,             // zone index pointer for which zone to sum gains for
                                           const Array1D_int &GainTypeARR, // variable length 1-d array of integer valued gain types
-                                          Real64 &SumRadiationGainRate)
+                                          Nandle &SumRadiationGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6860,7 +6860,7 @@ namespace InternalHeatGains {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfTypes;
-        Real64 tmpSumRadiationGainRate;
+        Nandle tmpSumRadiationGainRate;
         int DeviceNum;
         int TypeNum;
 
@@ -6885,7 +6885,7 @@ namespace InternalHeatGains {
     }
 
     void SumAllInternalLatentGains(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                   Real64 &SumLatentGainRate)
+                                   Nandle &SumLatentGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6919,7 +6919,7 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 tmpSumLatentGainRate;
+        Nandle tmpSumLatentGainRate;
         int DeviceNum;
 
         tmpSumLatentGainRate = 0.0;
@@ -6938,7 +6938,7 @@ namespace InternalHeatGains {
 
     // Added for hybrid model -- calculate the latent gain from all sources except for people
     void SumAllInternalLatentGainsExceptPeople(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                               Real64 &SumLatentGainRateExceptPeople)
+                                               Nandle &SumLatentGainRateExceptPeople)
     {
         if (ZoneIntGain(ZoneNum).NumberOfDevices == 0) {
             SumLatentGainRateExceptPeople = 0.0;
@@ -6953,7 +6953,7 @@ namespace InternalHeatGains {
 
     void SumInternalLatentGainsByTypes(int const ZoneNum,              // zone index pointer for which zone to sum gains for
                                        const Array1D_int &GainTypeARR, // variable length 1-d array of integer valued gain types
-                                       Real64 &SumLatentGainRate)
+                                       Nandle &SumLatentGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6990,7 +6990,7 @@ namespace InternalHeatGains {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfTypes;
-        Real64 tmpSumLatentGainRate;
+        Nandle tmpSumLatentGainRate;
         int DeviceNum;
         int TypeNum;
 
@@ -7015,7 +7015,7 @@ namespace InternalHeatGains {
     }
 
     void SumAllReturnAirLatentGains(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                    Real64 &SumRetAirLatentGainRate,
+                                    Nandle &SumRetAirLatentGainRate,
                                     int const ReturnNodeNum // return air node number
     )
     {
@@ -7051,7 +7051,7 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 tmpSumLatentGainRate;
+        Nandle tmpSumLatentGainRate;
         int DeviceNum;
 
         tmpSumLatentGainRate = 0.0;
@@ -7072,7 +7072,7 @@ namespace InternalHeatGains {
     }
 
     void SumAllInternalCO2Gains(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                Real64 &SumCO2GainRate)
+                                Nandle &SumCO2GainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7106,7 +7106,7 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 tmpSumCO2GainRate;
+        Nandle tmpSumCO2GainRate;
         int DeviceNum;
 
         tmpSumCO2GainRate = 0.0;
@@ -7125,7 +7125,7 @@ namespace InternalHeatGains {
 
     // Added for hybrid model -- function for calculating CO2 gains except people
     void SumAllInternalCO2GainsExceptPeople(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                            Real64 &SumCO2GainRateExceptPeople)
+                                            Nandle &SumCO2GainRateExceptPeople)
     {
         if (ZoneIntGain(ZoneNum).NumberOfDevices == 0) {
             SumCO2GainRateExceptPeople = 0.0;
@@ -7141,7 +7141,7 @@ namespace InternalHeatGains {
 
     void SumInternalCO2GainsByTypes(int const ZoneNum,              // zone index pointer for which zone to sum gains for
                                     const Array1D_int &GainTypeARR, // variable length 1-d array of integer valued gain types
-                                    Real64 &SumCO2GainRate)
+                                    Nandle &SumCO2GainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7178,7 +7178,7 @@ namespace InternalHeatGains {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfTypes;
-        Real64 tmpSumCO2GainRate;
+        Nandle tmpSumCO2GainRate;
         int DeviceNum;
         int TypeNum;
 
@@ -7203,7 +7203,7 @@ namespace InternalHeatGains {
     }
 
     void SumAllInternalGenericContamGains(int const ZoneNum, // zone index pointer for which zone to sum gains for
-                                          Real64 &SumGCGainRate)
+                                          Nandle &SumGCGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7237,7 +7237,7 @@ namespace InternalHeatGains {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 tmpSumGCGainRate;
+        Nandle tmpSumGCGainRate;
         int DeviceNum;
 
         tmpSumGCGainRate = 0.0;
@@ -7468,8 +7468,8 @@ namespace InternalHeatGains {
     void SumInternalConvectionGainsByIndices(
         int const ZoneNum,                 // zone index pointer for which zone to sum gains for
         const Array1D_int &DeviceIndexARR,  // variable length 1-d array of integer device index pointers to include in summation
-        const Array1D<Real64> &FractionARR, // array of fractional multipliers to apply to devices
-        Real64 &SumConvGainRate)
+        const Array1D<Nandle> &FractionARR, // array of fractional multipliers to apply to devices
+        Nandle &SumConvGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7507,10 +7507,10 @@ namespace InternalHeatGains {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfIndices;
         int NumberOfFractions;
-        Real64 tmpSumConvGainRate;
+        Nandle tmpSumConvGainRate;
         int loop;
         int DeviceNum;
-        Real64 DeviceFraction;
+        Nandle DeviceFraction;
 
         NumberOfIndices = isize(DeviceIndexARR);
         NumberOfFractions = isize(FractionARR);
@@ -7537,8 +7537,8 @@ namespace InternalHeatGains {
     void SumInternalLatentGainsByIndices(
         int const ZoneNum,                  // zone index pointer for which zone to sum gains for
         const Array1D_int &DeviceIndexARR,  // variable length 1-d array of integer device index pointers to include in summation
-        const Array1D<Real64> &FractionARR, // array of fractional multipliers to apply to devices
-        Real64 &SumLatentGainRate)
+        const Array1D<Nandle> &FractionARR, // array of fractional multipliers to apply to devices
+        Nandle &SumLatentGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7576,10 +7576,10 @@ namespace InternalHeatGains {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfIndices;
         int NumberOfFractions;
-        Real64 tmpSumLatentGainRate;
+        Nandle tmpSumLatentGainRate;
         int loop;
         int DeviceNum;
-        Real64 DeviceFraction;
+        Nandle DeviceFraction;
 
         NumberOfIndices = isize(DeviceIndexARR);
         NumberOfFractions = isize(FractionARR);
@@ -7606,8 +7606,8 @@ namespace InternalHeatGains {
     void SumReturnAirConvectionGainsByIndices(
         int const ZoneNum,                  // zone index pointer for which zone to sum gains for
         const Array1D_int &DeviceIndexARR,  // variable length 1-d array of integer device index pointers to include in summation
-        const Array1D<Real64> &FractionARR, // array of fractional multipliers to apply to devices
-        Real64 &SumReturnAirGainRate)
+        const Array1D<Nandle> &FractionARR, // array of fractional multipliers to apply to devices
+        Nandle &SumReturnAirGainRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7645,10 +7645,10 @@ namespace InternalHeatGains {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumberOfIndices;
         int NumberOfFractions;
-        Real64 tmpSumReturnAirGainRate;
+        Nandle tmpSumReturnAirGainRate;
         int loop;
         int DeviceNum;
-        Real64 DeviceFraction;
+        Nandle DeviceFraction;
 
         NumberOfIndices = isize(DeviceIndexARR);
         NumberOfFractions = isize(FractionARR);

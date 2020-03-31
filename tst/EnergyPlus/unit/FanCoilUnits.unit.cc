@@ -116,14 +116,14 @@ TEST_F(EnergyPlusFixture, MultiStage4PipeFanCoilHeatingTest)
     int ZoneNum(1);
     bool FirstHVACIteration(false);
     bool ErrorsFound(false);
-    Real64 PartLoadRatio(1.0);
-    Real64 SpeedRatio(0.0);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
+    Nandle PartLoadRatio(1.0);
+    Nandle SpeedRatio(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -427,14 +427,14 @@ TEST_F(EnergyPlusFixture, MultiStage4PipeFanCoilCoolingTest)
     int ZoneNum(1);
     bool FirstHVACIteration(false);
     bool ErrorsFound(false);
-    Real64 PartLoadRatio(1.0);
-    Real64 SpeedRatio(0.0);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
+    Nandle PartLoadRatio(1.0);
+    Nandle SpeedRatio(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -741,13 +741,13 @@ TEST_F(EnergyPlusFixture, ConstantFanVariableFlowFanCoilHeatingTest)
     int ControlledZoneNum(1);
     bool FirstHVACIteration(true);
     bool ErrorsFound(false);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
-    Real64 LatOutputProvided(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
+    Nandle LatOutputProvided(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -1128,13 +1128,13 @@ TEST_F(EnergyPlusFixture, ElectricCoilFanCoilHeatingTest)
     int ControlledZoneNum(1);
     bool FirstHVACIteration(true);
     bool ErrorsFound(false);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
-    Real64 LatOutputProvided(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
+    Nandle LatOutputProvided(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -1436,13 +1436,13 @@ TEST_F(EnergyPlusFixture, ConstantFanVariableFlowFanCoilCoolingTest)
     int ControlledZoneNum(1);
     bool FirstHVACIteration(true);
     bool ErrorsFound(false);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
-    Real64 LatOutputProvided(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
+    Nandle LatOutputProvided(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -1788,13 +1788,13 @@ TEST_F(EnergyPlusFixture, FanCoil_ASHRAE90VariableFan)
     int ZoneNum(1);
     bool FirstHVACIteration(false);
     bool ErrorsFound(false);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QLatOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QLatOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -2181,16 +2181,16 @@ TEST_F(EnergyPlusFixture, FanCoil_ASHRAE90VariableFan)
     CoilNames.clear();
 }
 
-Real64 ResidualFancoil(Real64 const mdot,
-                       Array1<Real64> const &Par // Function parameters
+Nandle ResidualFancoil(Nandle const mdot,
+                       Array1<Nandle> const &Par // Function parameters
 )
 {
     int FanCoilNum = 1;
     int ControlledZoneNum = 1;
     bool FirstHVACIteration = false;
-    Real64 QUnitOut;
-    Real64 QZnReq = Par(1);
-    Real64 Residual;
+    Nandle QUnitOut;
+    Nandle QZnReq = Par(1);
+    Nandle Residual;
 
     Node(12).MassFlowRate = mdot;
 
@@ -2209,7 +2209,7 @@ TEST_F(EnergyPlusFixture, Test_TightenWaterFlowLimits)
     int FanCoilNum(1);
     bool FirstHVACIteration(false);
     bool ErrorsFound(false);
-    Real64 QZnReq(-1000.0);
+    Nandle QZnReq(-1000.0);
     DataPlant::TotNumLoops = 2;
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -2320,8 +2320,8 @@ TEST_F(EnergyPlusFixture, Test_TightenWaterFlowLimits)
     bool CoolingLoad = true;
     bool HeatingLoad = false;
     int ControlledZoneNum = 1;
-    Real64 MinWaterFlow = 0.0;
-    Real64 MaxWaterFlow = 1.5;
+    Nandle MinWaterFlow = 0.0;
+    Nandle MaxWaterFlow = 1.5;
     Node(FanCoil(FanCoilNum).AirInNode).Temp = 24.0;
     Node(FanCoil(FanCoilNum).AirInNode).HumRat = 0.00946;
     Node(FanCoil(FanCoilNum).AirInNode).Enthalpy = 48228.946;
@@ -2461,13 +2461,13 @@ TEST_F(EnergyPlusFixture, Test_TightenWaterFlowLimits)
 
     MinWaterFlow = 0.0;
     MaxWaterFlow = 1.5;
-    Real64 ErrorToler = 0.00001;
+    Nandle ErrorToler = 0.00001;
     int MaxIte = 4;
     int SolFla;
-    Real64 mdot;
-    Real64 minFlow;
-    Real64 maxFlow;
-    Array1D<Real64> Par(2); // Function parameters
+    Nandle mdot;
+    Nandle minFlow;
+    Nandle maxFlow;
+    Array1D<Nandle> Par(2); // Function parameters
     Par(1) = -1000.0;
     Par(2) = 0.0;
 
@@ -2488,13 +2488,13 @@ TEST_F(EnergyPlusFixture, FanCoil_CyclingFanMode)
     int ZoneNum(1);
     bool FirstHVACIteration(false);
     bool ErrorsFound(false);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QLatOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QLatOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;
@@ -2891,13 +2891,13 @@ TEST_F(EnergyPlusFixture, FanCoil_FanSystemModelCyclingFanMode)
     int ZoneNum(1);
     bool FirstHVACIteration(false);
     bool ErrorsFound(false);
-    Real64 QZnReq(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QLatOut(0.0);
-    Real64 AirMassFlow(0.0);
-    Real64 MaxAirMassFlow(0.0);
+    Nandle QZnReq(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QLatOut(0.0);
+    Nandle AirMassFlow(0.0);
+    Nandle MaxAirMassFlow(0.0);
 
     DataEnvironment::OutBaroPress = 101325.0;
     DataEnvironment::StdRhoAir = 1.20;

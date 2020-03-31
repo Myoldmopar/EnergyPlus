@@ -67,7 +67,7 @@ namespace BaseboardRadiator {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    extern Real64 const SimpConvAirFlowSpeed; // m/s
+    extern Nandle const SimpConvAirFlowSpeed; // m/s
 
     // DERIVED TYPE DEFINITIONS
 
@@ -93,22 +93,22 @@ namespace BaseboardRadiator {
         int WaterOutletNode;
         int ControlCompTypeNum;
         int CompErrIndex;
-        Real64 UA;
-        Real64 WaterMassFlowRate;
-        Real64 WaterVolFlowRateMax;  // m3/s
-        Real64 WaterMassFlowRateMax; // kg/s
-        Real64 Offset;
-        Real64 AirMassFlowRate;    // kg/s
-        Real64 DesAirMassFlowRate; // kg/s
-        Real64 WaterInletTemp;
-        Real64 WaterOutletTemp;
-        Real64 WaterInletEnthalpy;
-        Real64 WaterOutletEnthalpy;
-        Real64 AirInletTemp;
-        Real64 AirInletHumRat;
-        Real64 AirOutletTemp;
-        Real64 Power;
-        Real64 Energy;
+        Nandle UA;
+        Nandle WaterMassFlowRate;
+        Nandle WaterVolFlowRateMax;  // m3/s
+        Nandle WaterMassFlowRateMax; // kg/s
+        Nandle Offset;
+        Nandle AirMassFlowRate;    // kg/s
+        Nandle DesAirMassFlowRate; // kg/s
+        Nandle WaterInletTemp;
+        Nandle WaterOutletTemp;
+        Nandle WaterInletEnthalpy;
+        Nandle WaterOutletEnthalpy;
+        Nandle AirInletTemp;
+        Nandle AirInletHumRat;
+        Nandle AirOutletTemp;
+        Nandle Power;
+        Nandle Energy;
         int LoopNum;     // plant loop index
         int LoopSideNum; // plant loop side index
         int BranchNum;   // plant loop branch index
@@ -118,7 +118,7 @@ namespace BaseboardRadiator {
         int BBInletTempFlowReSimIndex;
         int HeatingCapMethod; // - Method for water baseboard Radiator system heating capacity scaledsizing calculation (HeatingDesignCapacity,
                               // CapacityPerFloorArea, FracOfAutosizedHeatingCapacity)
-        Real64 ScaledHeatingCapacity; // -  water baseboard Radiator system scaled maximum heating capacity {W} or scalable variable of zone HVAC
+        Nandle ScaledHeatingCapacity; // -  water baseboard Radiator system scaled maximum heating capacity {W} or scalable variable of zone HVAC
                                       // equipment, {-}, or {W/m2}
 
         // Default Constructor
@@ -154,7 +154,7 @@ namespace BaseboardRadiator {
                       int const ActualZoneNum,
                       int const ControlledZoneNum,
                       bool const FirstHVACIteration,
-                      Real64 &PowerMet,
+                      Nandle &PowerMet,
                       int &CompIndex);
 
     void GetBaseboardInput();
@@ -163,14 +163,14 @@ namespace BaseboardRadiator {
 
     void SizeBaseboard(int const BaseboardNum);
 
-    void SimHWConvective(int &BaseboardNum, Real64 &LoadMet);
+    void SimHWConvective(int &BaseboardNum, Nandle &LoadMet);
 
     void UpdateBaseboard(int &BaseboardNum);
 
     void ReportBaseboard(int const BaseboardNum);
 
-    Real64 HWBaseboardUAResidual(Real64 const UA,           // UA of coil
-                                 Array1D<Real64> const &Par // par(1) = design coil load [W]
+    Nandle HWBaseboardUAResidual(Nandle const UA,           // UA of coil
+                                 Array1D<Nandle> const &Par // par(1) = design coil load [W]
     );
 
     void UpdateBaseboardPlantConnection(int const BaseboardTypeNum,       // type index

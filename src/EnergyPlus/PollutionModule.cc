@@ -3927,16 +3927,16 @@ namespace PollutionModule {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ElecValue;
-        Real64 NatGasValue;
-        Real64 FuelOil1Value;
-        Real64 FuelOil2Value;
-        Real64 CoalValue;
-        Real64 GasolineValue;
-        Real64 PropaneValue;
-        Real64 DieselValue;
-        Real64 OtherFuel1Value;
-        Real64 OtherFuel2Value;
+        Nandle ElecValue;
+        Nandle NatGasValue;
+        Nandle FuelOil1Value;
+        Nandle FuelOil2Value;
+        Nandle CoalValue;
+        Nandle GasolineValue;
+        Nandle PropaneValue;
+        Nandle DieselValue;
+        Nandle OtherFuel1Value;
+        Nandle OtherFuel2Value;
 
         //       Then the amount of Pollution produced by each fuel type is
         //       calculated in kgs.
@@ -5805,7 +5805,7 @@ namespace PollutionModule {
 
     void GetFuelFactorInfo(std::string const &fuelName,  // input fuel name  (standard from Tabular reports)
                            bool &fuelFactorUsed,         // return value true if user has entered this fuel
-                           Real64 &fuelSourceFactor,     // if used, the source factor
+                           Nandle &fuelSourceFactor,     // if used, the source factor
                            bool &fuelFactorScheduleUsed, // if true, schedules for this fuel are used
                            int &ffScheduleIndex          // if schedules for this fuel are used, return schedule index
     )
@@ -6034,9 +6034,9 @@ namespace PollutionModule {
         }
     }
 
-    void GetEnvironmentalImpactFactorInfo(Real64 &efficiencyDistrictHeating, // if entered, the efficiency of District Heating
-                                          Real64 &efficiencyDistrictCooling, // if entered, the efficiency of District Cooling
-                                          Real64 &sourceFactorSteam          // if entered, the source factor for Steam
+    void GetEnvironmentalImpactFactorInfo(Nandle &efficiencyDistrictHeating, // if entered, the efficiency of District Heating
+                                          Nandle &efficiencyDistrictCooling, // if entered, the efficiency of District Cooling
+                                          Nandle &sourceFactorSteam          // if entered, the source factor for Steam
     )
     {
 

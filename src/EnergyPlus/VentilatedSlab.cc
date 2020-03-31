@@ -179,17 +179,17 @@ namespace VentilatedSlab {
     // MODULE VARIABLE DECLARATIONS:
     bool HCoilOn(false);                  // TRUE if the heating coil (gas or electric especially) should be running
     int NumOfVentSlabs(0);                // Number of ventilated slab in the input file
-    Real64 OAMassFlowRate(0.0);           // Outside air mass flow rate for the ventilated slab
+    Nandle OAMassFlowRate(0.0);           // Outside air mass flow rate for the ventilated slab
     Array1D_double QRadSysSrcAvg;         // Average source over the time step for a particular radiant surfaceD
-    Array1D<Real64> ZeroSourceSumHATsurf; // Equal to SumHATsurf for all the walls in a zone with no source
+    Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to SumHATsurf for all the walls in a zone with no source
     int MaxCloNumOfSurfaces(0);           // Used to set allocate size in CalcClo routine
-    Real64 QZnReq(0.0);                   // heating or cooling needed by system [watts]
+    Nandle QZnReq(0.0);                   // heating or cooling needed by system [watts]
 
     // Record keeping variables used to calculate QRadSysSrcAvg locally
 
     Array1D_double LastQRadSysSrc;      // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     Array1D_bool CheckEquipName;
 
     // Autosizing variables
@@ -225,8 +225,8 @@ namespace VentilatedSlab {
     void SimVentilatedSlab(std::string const &CompName,   // name of the fan coil unit
                            int const ZoneNum,             // number of zone being served
                            bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                           Real64 &PowerMet,              // Sensible power supplied (W)
-                           Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                           Nandle &PowerMet,              // Sensible power supplied (W)
+                           Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                            int &CompIndex)
     {
 
@@ -361,7 +361,7 @@ namespace VentilatedSlab {
         Array1D_string cAlphaArgs;     // Alpha input items for object
         Array1D_string cAlphaFields;   // Alpha field names
         Array1D_string cNumericFields; // Numeric field names
-        Array1D<Real64> rNumericArgs;  // Numeric input items for object
+        Array1D<Nandle> rNumericArgs;  // Numeric input items for object
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;   // Logical array, numeric field input BLANK = .TRUE.
         bool SteamMessageNeeded;
@@ -1423,12 +1423,12 @@ namespace VentilatedSlab {
         int InNode;                       // inlet node number in Ventilated Slab loop
         int OutNode;                      // outlet node number in Ventilated Slab loop
         int OutsideAirNode;               // outside air node number in Ventilated Slab loop
-        Real64 RhoAir;                    // air density at InNode
-        Real64 TempSteamIn;
-        Real64 SteamDensity;
+        Nandle RhoAir;                    // air density at InNode
+        Nandle TempSteamIn;
+        Nandle SteamDensity;
         int ZoneAirInNode;
         int MixOut;
-        Real64 rho;
+        Nandle rho;
         bool errFlag;
         // FLOW:
 
@@ -1759,38 +1759,38 @@ namespace VentilatedSlab {
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
         int PltSizCoolNum; // index of plant sizing object for 1st cooling loop
         bool ErrorsFound;
-        Real64 DesCoilLoad;
-        Real64 TempSteamIn;
-        Real64 EnthSteamInDry;
-        Real64 EnthSteamOutWet;
-        Real64 LatentHeatSteam;
-        Real64 SteamDensity;
+        Nandle DesCoilLoad;
+        Nandle TempSteamIn;
+        Nandle EnthSteamInDry;
+        Nandle EnthSteamOutWet;
+        Nandle LatentHeatSteam;
+        Nandle SteamDensity;
         static int CoilWaterInletNode(0);
         static int CoilWaterOutletNode(0);
         static int CoilSteamInletNode(0);
         static int CoilSteamOutletNode(0);
         std::string CoolingCoilName;
         std::string CoolingCoilType;
-        Real64 rho;
-        Real64 Cp;
+        Nandle rho;
+        Nandle Cp;
         static int DummyWaterIndex(1);
         bool IsAutoSize;                // Indicator to autosize
-        Real64 MaxAirVolFlowDes;        // Autosized maximum air flow for reporting
-        Real64 MaxAirVolFlowUser;       // Hardsized maximum air flow for reporting
-        Real64 OutAirVolFlowDes;        // Autosized outdoor air flow for reporting
-        Real64 OutAirVolFlowUser;       // Hardsized outdoor air flow for reporting
-        Real64 MinOutAirVolFlowDes;     // Autosized minimum outdoor air flow for reporting
-        Real64 MinOutAirVolFlowUser;    // Hardsized minimum outdoor air flow for reporting
-        Real64 MaxVolHotWaterFlowDes;   // Autosized maximum hot water flow for reporting
-        Real64 MaxVolHotWaterFlowUser;  // Hardsized maximum hot water flow for reporting
-        Real64 MaxVolHotSteamFlowDes;   // Autosized maximum hot steam flow for reporting
-        Real64 MaxVolHotSteamFlowUser;  // Hardsized maximum hot steam flow for reporting
-        Real64 MaxVolColdWaterFlowDes;  // Autosized maximum cold water flow for reporting
-        Real64 MaxVolColdWaterFlowUser; // Hardsized maximum cold water flow for reporting
+        Nandle MaxAirVolFlowDes;        // Autosized maximum air flow for reporting
+        Nandle MaxAirVolFlowUser;       // Hardsized maximum air flow for reporting
+        Nandle OutAirVolFlowDes;        // Autosized outdoor air flow for reporting
+        Nandle OutAirVolFlowUser;       // Hardsized outdoor air flow for reporting
+        Nandle MinOutAirVolFlowDes;     // Autosized minimum outdoor air flow for reporting
+        Nandle MinOutAirVolFlowUser;    // Hardsized minimum outdoor air flow for reporting
+        Nandle MaxVolHotWaterFlowDes;   // Autosized maximum hot water flow for reporting
+        Nandle MaxVolHotWaterFlowUser;  // Hardsized maximum hot water flow for reporting
+        Nandle MaxVolHotSteamFlowDes;   // Autosized maximum hot steam flow for reporting
+        Nandle MaxVolHotSteamFlowUser;  // Hardsized maximum hot steam flow for reporting
+        Nandle MaxVolColdWaterFlowDes;  // Autosized maximum cold water flow for reporting
+        Nandle MaxVolColdWaterFlowUser; // Hardsized maximum cold water flow for reporting
         std::string CompName;           // component name
         std::string CompType;           // component type
         std::string SizingString;       // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;                // autosized value of coil input field
+        Nandle TempSize;                // autosized value of coil input field
         int FieldNum = 2;               // IDD numeric field number where input field description is found
         int SizingMethod;  // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                            // HeatingCapacitySizing, etc.)
@@ -1800,10 +1800,10 @@ namespace VentilatedSlab {
                            // FractionOfAutosizedHeatingAirflow ...)
         int CapSizingMethod(0); // capacity sizing methods (HeatingDesignCapacity, CapacityPerFloorArea, FractionOfAutosizedCoolingCapacity, and
                                 // FractionOfAutosizedHeatingCapacity )
-        Real64 CoolingAirVolFlowScalable; // cooling airvolume for rate determined using scalable sizing method
-        Real64 HeatingAirVolFlowScalable; // heating airvolume for rate determined using scalable sizing method
+        Nandle CoolingAirVolFlowScalable; // cooling airvolume for rate determined using scalable sizing method
+        Nandle HeatingAirVolFlowScalable; // heating airvolume for rate determined using scalable sizing method
         bool DoWaterCoilSizing = false;   // if TRUE do water coil sizing calculation
-        Real64 WaterCoilSizDeltaT;        // water coil deltaT for design water flow rate autosizing
+        Nandle WaterCoilSizDeltaT;        // water coil deltaT for design water flow rate autosizing
         int CoilNum;                      // index of water coil object
 
         DoWaterCoilSizing = false;
@@ -2419,8 +2419,8 @@ namespace VentilatedSlab {
     void CalcVentilatedSlab(int &Item,                     // number of the current ventilated slab being simulated
                             int const ZoneNum,             // number of zone being served
                             bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                            Real64 &PowerMet,              // power supplied (W)
-                            Real64 &LatOutputProvided      // latent capacity supplied (kg/s)
+                            Nandle &PowerMet,              // power supplied (W)
+                            Nandle &LatOutputProvided      // latent capacity supplied (kg/s)
     )
     {
 
@@ -2492,15 +2492,15 @@ namespace VentilatedSlab {
         using WaterCoils::CheckWaterCoilSchedule;
 
         // Locals
-        Real64 QZnReq;
+        Nandle QZnReq;
 
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
 
-        Real64 const LowTempDiff(0.1); // Smallest allowed temperature difference for comparisons
+        Nandle const LowTempDiff(0.1); // Smallest allowed temperature difference for comparisons
         // (below this value the temperatures are assumed equal)
-        Real64 const LowOAFracDiff(0.01); // Smallest allowed outside air fraction difference for comparison
+        Nandle const LowOAFracDiff(0.01); // Smallest allowed outside air fraction difference for comparison
         // (below this value the fractions are assumed equal)
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -2509,37 +2509,37 @@ namespace VentilatedSlab {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow;  // air mass flow rate [kg/sec]
+        Nandle AirMassFlow;  // air mass flow rate [kg/sec]
         int AirRelNode;      // outside air relief node
         int ControlNode;     // the hot water or cold water inlet node
         int InletNode;       // system air inlet node
         int FanOutletNode;   // system fan outlet node
         int ZoneAirInNode;   // zone supply air node
-        Real64 MaxOAFrac;    // maximum possible outside air fraction
-        Real64 MaxWaterFlow; // maximum water flow for heating or cooling [kg/sec]
-        Real64 MinOAFrac;    // minimum possible outside air fraction
-        Real64 MinWaterFlow; // minimum water flow for heating or cooling [kg/sec]
+        Nandle MaxOAFrac;    // maximum possible outside air fraction
+        Nandle MaxWaterFlow; // maximum water flow for heating or cooling [kg/sec]
+        Nandle MinOAFrac;    // minimum possible outside air fraction
+        Nandle MinWaterFlow; // minimum water flow for heating or cooling [kg/sec]
         int OutletNode;      // air outlet node
         int OutsideAirNode;  // outside air node
         int MixoutNode;      // oa mixer outlet node
         int ReturnAirNode;   // return air node
-        Real64 QUnitOut;     // heating or sens. cooling provided by fan coil unit [watts]
-        Real64 LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
-        Real64 Tdesired;     // desired temperature after mixing inlet and outdoor air [degrees C]
-        Real64 Tinlet;       // temperature of air coming into the ventilated slab [degrees C]
-        Real64 Toutdoor;     // temperature of outdoor air being introduced into the ventilated slab [degrees C]
-        Real64 MaxSteamFlow;
-        Real64 MinSteamFlow;
-        Real64 RadInTemp;      // "Desired" radiant system air inlet temperature [Celsius]**setpoint
-        Real64 SetPointTemp;   // temperature that will be used to control the radiant system [Celsius]
-        Real64 SetPointTempHi; // Current high point in setpoint temperature range
-        Real64 SetPointTempLo; // Current low point in setpoint temperature range
-        Real64 AirTempHi;      // Current high point in water temperature range
-        Real64 AirTempLo;      // Current low point in water temperature range
-        Real64 AirTempHeatHi;  // Current high point in water temperature range
-        Real64 AirTempCoolLo;  // Current low point in water temperature range
-        Real64 CpFan;          // Intermediate calculational variable for specific heat of air <<NOV9 Updated
-        Real64 ZoneRadNum;     // number of zone being served *********************
+        Nandle QUnitOut;     // heating or sens. cooling provided by fan coil unit [watts]
+        Nandle LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
+        Nandle Tdesired;     // desired temperature after mixing inlet and outdoor air [degrees C]
+        Nandle Tinlet;       // temperature of air coming into the ventilated slab [degrees C]
+        Nandle Toutdoor;     // temperature of outdoor air being introduced into the ventilated slab [degrees C]
+        Nandle MaxSteamFlow;
+        Nandle MinSteamFlow;
+        Nandle RadInTemp;      // "Desired" radiant system air inlet temperature [Celsius]**setpoint
+        Nandle SetPointTemp;   // temperature that will be used to control the radiant system [Celsius]
+        Nandle SetPointTempHi; // Current high point in setpoint temperature range
+        Nandle SetPointTempLo; // Current low point in setpoint temperature range
+        Nandle AirTempHi;      // Current high point in water temperature range
+        Nandle AirTempLo;      // Current low point in water temperature range
+        Nandle AirTempHeatHi;  // Current high point in water temperature range
+        Nandle AirTempCoolLo;  // Current low point in water temperature range
+        Nandle CpFan;          // Intermediate calculational variable for specific heat of air <<NOV9 Updated
+        Nandle ZoneRadNum;     // number of zone being served *********************
         int RadSurfNum;        // DO loop counter for the surfaces that comprise a particular radiant system
         std::string MSlabIn;
         std::string MSlabOut;
@@ -3247,7 +3247,7 @@ namespace VentilatedSlab {
         // Resimulate fans if AirMassFlow is zero and FanElecPower is > 0, indicating that load or condensation controls shut off the ventilated slab
         // in CalcVentilatedSlabRadComps
         AirMassFlow = Node(OutletNode).MassFlowRate;
-        Real64 locFanElecPower = 0.0;
+        Nandle locFanElecPower = 0.0;
         if (VentSlab(Item).FanType_Num == DataHVACGlobals::FanType_SystemModelObject) {
             locFanElecPower = HVACFan::fanObjs[VentSlab(Item).Fan_Index]->fanPower();
         } else {
@@ -3273,7 +3273,7 @@ namespace VentilatedSlab {
 
     void CalcVentilatedSlabComps(int const Item,                // system index in ventilated slab array
                                  bool const FirstHVACIteration, // flag for 1st HVAV iteration in the time step
-                                 Real64 &LoadMet                // load met by the system (watts)
+                                 Nandle &LoadMet                // load met by the system (watts)
     )
     {
 
@@ -3319,15 +3319,15 @@ namespace VentilatedSlab {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow; // total mass flow through the system
-        Real64 CpAirZn;     // specific heat of dry air at zone conditions (zone conditions same as system inlet)
+        Nandle AirMassFlow; // total mass flow through the system
+        Nandle CpAirZn;     // specific heat of dry air at zone conditions (zone conditions same as system inlet)
         int HCoilInAirNode; // inlet node number for fan exit/coil inlet
         int InletNode;      // system air inlet node
         int OutletNode;     // system air outlet node
         // unused0309  INTEGER        :: HCoilOutAirNode
-        Real64 QCoilReq; // Heat addition required from an electric/gas heating coil
-        Real64 HCoilOutAirTemp;
-        Real64 HCoilInAirTemp;
+        Nandle QCoilReq; // Heat addition required from an electric/gas heating coil
+        Nandle HCoilOutAirTemp;
+        Nandle HCoilInAirTemp;
         // unused1208  REAL(r64)           :: RadInTemp       ! Set temperature for "Slab In Node"
 
         // FLOW:
@@ -3397,8 +3397,8 @@ namespace VentilatedSlab {
     }
 
     void CalcVentilatedSlabCoilOutput(int const Item,           // system index in ventilated slab array
-                                      Real64 &PowerMet,         // power supplied (W)
-                                      Real64 &LatOutputProvided // latent capacity supplied (kg/s)
+                                      Nandle &PowerMet,         // power supplied (W)
+                                      Nandle &LatOutputProvided // latent capacity supplied (kg/s)
     )
     {
 
@@ -3415,13 +3415,13 @@ namespace VentilatedSlab {
         // Calculates the sensible and total enthalpy change from the fan outlet node to the slab inlet node.
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow; // total mass flow through the system
+        Nandle AirMassFlow; // total mass flow through the system
         int FanOutletNode;  // system fan outlet node
         int OutletNode;     // air outlet node
-        Real64 SpecHumOut;  // Specific humidity ratio of outlet air (kg moisture / kg moist air)
-        Real64 SpecHumIn;   // Specific humidity ratio of inlet air (kg moisture / kg moist air)
-        Real64 QTotUnitOut; // total unit output [watts]
-        Real64 QUnitOut;    // heating or sens. cooling provided by fan coil unit [watts]
+        Nandle SpecHumOut;  // Specific humidity ratio of outlet air (kg moisture / kg moist air)
+        Nandle SpecHumIn;   // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle QTotUnitOut; // total unit output [watts]
+        Nandle QUnitOut;    // heating or sens. cooling provided by fan coil unit [watts]
 
         // FLOW:
 
@@ -3501,18 +3501,18 @@ namespace VentilatedSlab {
         using WaterCoils::SimulateWaterCoilComponents;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CondDeltaTemp(0.001); // How close the surface temperatures can get to the dewpoint temperature
+        Nandle const CondDeltaTemp(0.001); // How close the surface temperatures can get to the dewpoint temperature
         // of a space before the radiant cooling system shuts off the flow.
-        Real64 const ZeroSystemResp(0.1); // Response below which the system response is really zero
-        Real64 const TempCheckLimit(0.1); // Maximum allowed temperature difference between outlet temperature calculations
+        Nandle const ZeroSystemResp(0.1); // Response below which the system response is really zero
+        Nandle const TempCheckLimit(0.1); // Maximum allowed temperature difference between outlet temperature calculations
         static std::string const CurrentModuleObject("ZoneHVAC:VentilatedSlab");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ConstrNum;         // Index for construction number in Construct derived type
-        Real64 CpAirZn;        // Intermediate calculational variable for specific heat of air
-        Real64 DewPointTemp;   // Dew-point temperature based on the zone air conditions
-        Real64 EpsMdotCpAirZn; // Epsilon (heat exchanger terminology) times water mass flow rate times water specific heat
-        Real64 Mdot;           // Intermediate calculation variable for mass flow rate in a surface within the radiant system
+        Nandle CpAirZn;        // Intermediate calculational variable for specific heat of air
+        Nandle DewPointTemp;   // Dew-point temperature based on the zone air conditions
+        Nandle EpsMdotCpAirZn; // Epsilon (heat exchanger terminology) times water mass flow rate times water specific heat
+        Nandle Mdot;           // Intermediate calculation variable for mass flow rate in a surface within the radiant system
         int RadSurfNum;        // DO loop counter for the surfaces that comprise a particular radiant system
         int RadSurfNum2;       // DO loop counter for the surfaces that comprise a particular radiant system
         int RadSurfNum3;       // DO loop counter for the surfaces that comprise a particular radiant system
@@ -3521,42 +3521,42 @@ namespace VentilatedSlab {
         int SurfNum;  // Index for radiant surface in Surface derived type
         int SurfNum2; // Index for radiant surface in Surface derived type
         // unused0309  INTEGER  :: RadSurfNumNum
-        Real64 TotalVentSlabRadPower; // Total heat source/sink to radiant system
-        Real64 AirMassFlow;           // air mass flow rate in the radiant system, kg/s
+        Nandle TotalVentSlabRadPower; // Total heat source/sink to radiant system
+        Nandle AirMassFlow;           // air mass flow rate in the radiant system, kg/s
         int SlabInNode;               // Node number of the air entering the radiant system
-        Real64 AirOutletTempCheck;    // Radiant system air outlet temperature (calculated from mixing all outlet streams together)
-        Real64 AirTempIn;             // Temperature of the air entering the radiant system, in C
+        Nandle AirOutletTempCheck;    // Radiant system air outlet temperature (calculated from mixing all outlet streams together)
+        Nandle AirTempIn;             // Temperature of the air entering the radiant system, in C
         int ZoneNum;                  // number of zone being served
-        Real64 ZoneMult;              // Zone multiplier for this system
-        Real64 Ca;                    // Coefficients to relate the inlet air temperature to the heat source
-        Real64 Cb;
-        Real64 Cc;
-        Real64 Cd;
-        Real64 Ce;
-        Real64 Cf;
-        Real64 Cg;
-        Real64 Ch;
-        Real64 Ci;
-        Real64 Cj;
-        Real64 Ck;
-        Real64 Cl;
+        Nandle ZoneMult;              // Zone multiplier for this system
+        Nandle Ca;                    // Coefficients to relate the inlet air temperature to the heat source
+        Nandle Cb;
+        Nandle Cc;
+        Nandle Cd;
+        Nandle Ce;
+        Nandle Cf;
+        Nandle Cg;
+        Nandle Ch;
+        Nandle Ci;
+        Nandle Cj;
+        Nandle Ck;
+        Nandle Cl;
         // For more info on Ca through Cl, refer Constant Flow Radiant System
         // unused0309  REAL(r64):: CoreNumber
-        static Real64 Ckj; // Coefficients for individual surfaces within a radiant system
-        static Real64 Cmj;
-        static Array1D<Real64> AirTempOut; // Array of outlet air temperatures for each surface in the radiant system
+        static Nandle Ckj; // Coefficients for individual surfaces within a radiant system
+        static Nandle Cmj;
+        static Array1D<Nandle> AirTempOut; // Array of outlet air temperatures for each surface in the radiant system
         int FanOutletNode;                 // unit air outlet node
         int OAInletNode;                   // unit air outlet node
         int MixoutNode;                    // unit air outlet node
         int ReturnAirNode;                 // discription
         int ZoneAirInNode;                 // supply air node
         // For Phase 3
-        Real64 CNumDS;
-        Real64 CLengDS;
-        Real64 CDiaDS;
-        Real64 FlowFrac;
+        Nandle CNumDS;
+        Nandle CLengDS;
+        Nandle CDiaDS;
+        Nandle FlowFrac;
         // unused0309  REAL(r64)  :: SlabAirOutTemp
-        Real64 MSlabAirInTemp;
+        Nandle MSlabAirInTemp;
         static bool ErrorsFound(false); // Set to true if errors in input, fatal at end of routine
 
         std::string MSlabIn;
@@ -4188,7 +4188,7 @@ namespace VentilatedSlab {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int AirRelNode;     // relief air node number in ventilated slab loop
         int InletNode;      // inlet node number for ventilated slab loop
-        Real64 OAFraction;  // Outside air fraction of inlet air
+        Nandle OAFraction;  // Outside air fraction of inlet air
         int OAMixOutNode;   // outside air mixer outlet node for ventilated slab loop
         int OutsideAirNode; // outside air node number in ventilated slab loop
 
@@ -4289,20 +4289,20 @@ namespace VentilatedSlab {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CpAppAir;        // Specific heat of air
+        Nandle CpAppAir;        // Specific heat of air
         int RadSurfNum;         // DO loop counter for radiant surfaces in the ventilated slab
         int SurfNum;            // Surface index number for the current ventilated slab
         int AirInletNode;       // Node number for the air side inlet of the ventilated slab
-        Real64 TotalHeatSource; // Total heat source or sink for a particular system (sum of all surface source/sinks)
+        Nandle TotalHeatSource; // Total heat source or sink for a particular system (sum of all surface source/sinks)
         int TotRadSurfaces;     // Total number of radiant surfaces in this system
-        Real64 AirMassFlow;     // Flow rate of water in the radiant system
+        Nandle AirMassFlow;     // Flow rate of water in the radiant system
         int AirOutletNode;      // Node number for the water side outlet of the radiant system
         int FanOutNode;         // Node number for the water side outlet of the radiant system
-        Real64 ZoneMult;        // Zone multiplier
+        Nandle ZoneMult;        // Zone multiplier
         int ZoneNum;            // Zone for this ventilated slab
         int MixOutNode;         // Node number for the water side outlet of the radiant system
         int OANode;             // Node number for the water side outlet of the radiant system
-        Real64 OAFraction;      // Outside air fraction of inlet air
+        Nandle OAFraction;      // Outside air fraction of inlet air
         int ZoneInletNode;      // Node number for the air side inlet of the ventilated slab
         // FLOW:
 
@@ -4399,13 +4399,13 @@ namespace VentilatedSlab {
         }
     }
 
-    Real64 CalcVentSlabHXEffectTerm(int const Item,            // Index number of radiant system under consideration
-                                    Real64 const Temperature,  // Temperature of air entering the radiant system, in C
-                                    Real64 const AirMassFlow,  // Mass flow rate of water in the radiant system, in kg/s
-                                    Real64 const FlowFraction, // Mass flow rate fraction for this surface in the radiant system
-                                    Real64 const CoreLength,   // Length of tubing in the radiant system, in m
-                                    Real64 const CoreDiameter, // Inside diameter of the tubing in the radiant system, in m
-                                    Real64 const CoreNumbers)
+    Nandle CalcVentSlabHXEffectTerm(int const Item,            // Index number of radiant system under consideration
+                                    Nandle const Temperature,  // Temperature of air entering the radiant system, in C
+                                    Nandle const AirMassFlow,  // Mass flow rate of water in the radiant system, in kg/s
+                                    Nandle const FlowFraction, // Mass flow rate fraction for this surface in the radiant system
+                                    Nandle const CoreLength,   // Length of tubing in the radiant system, in m
+                                    Nandle const CoreDiameter, // Inside diameter of the tubing in the radiant system, in m
+                                    Nandle const CoreNumbers)
     {
 
         // SUBROUTINE INFORMATION:
@@ -4439,18 +4439,18 @@ namespace VentilatedSlab {
         using DataGlobals::Pi;
 
         // Return value
-        Real64 CalcVentSlabHXEffectTerm;
+        Nandle CalcVentSlabHXEffectTerm;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MaxLaminarRe(2300.0); // Maximum Reynolds number for laminar flow
+        Nandle const MaxLaminarRe(2300.0); // Maximum Reynolds number for laminar flow
         int const NumOfPropDivisions(13);
-        Real64 const MaxExpPower(50.0); // Maximum power after which EXP argument would be zero for DP variables
-        static Array1D<Real64> const Temps(
+        Nandle const MaxExpPower(50.0); // Maximum power after which EXP argument would be zero for DP variables
+        static Array1D<Nandle> const Temps(
             NumOfPropDivisions, {1.85, 6.85, 11.85, 16.85, 21.85, 26.85, 31.85, 36.85, 41.85, 46.85, 51.85, 56.85, 61.85}); // Temperature, in C
-        static Array1D<Real64> const Mu(NumOfPropDivisions,
+        static Array1D<Nandle> const Mu(NumOfPropDivisions,
                                         {0.0000088,
                                          0.0000176,
                                          0.00001781,
@@ -4464,10 +4464,10 @@ namespace VentilatedSlab {
                                          0.0000195,
                                          0.00001971,
                                          0.00001992}); // Viscosity, in Ns/m2
-        static Array1D<Real64> const Conductivity(
+        static Array1D<Nandle> const Conductivity(
             NumOfPropDivisions,
             {0.01275, 0.0255, 0.0258, 0.0261, 0.0264, 0.0267, 0.02705, 0.0274, 0.02775, 0.0281, 0.0284, 0.0287, 0.01435}); // Conductivity, in W/mK
-        static Array1D<Real64> const Pr(NumOfPropDivisions, 0.69); // Prandtl number (dimensionless)
+        static Array1D<Nandle> const Pr(NumOfPropDivisions, 0.69); // Prandtl number (dimensionless)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -4477,15 +4477,15 @@ namespace VentilatedSlab {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Index;
-        Real64 InterpFrac;
-        Real64 NuD;
-        Real64 ReD;
-        Real64 NTU;
-        Real64 CpAppAir;
-        Real64 Kactual;
-        Real64 MUactual;
-        Real64 PRactual;
-        Real64 SysAirMassFlow; // Specific heat of air
+        Nandle InterpFrac;
+        Nandle NuD;
+        Nandle ReD;
+        Nandle NTU;
+        Nandle CpAppAir;
+        Nandle Kactual;
+        Nandle MUactual;
+        Nandle PRactual;
+        Nandle SysAirMassFlow; // Specific heat of air
 
         // FLOW:
         // First find out where we are in the range of temperatures
@@ -4544,7 +4544,7 @@ namespace VentilatedSlab {
         return CalcVentSlabHXEffectTerm;
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
 
         // FUNCTION INFORMATION:
@@ -4570,14 +4570,14 @@ namespace VentilatedSlab {
         using namespace DataHeatBalSurface;
 
         // Return value
-        Real64 SumHATsurf;
+        Nandle SumHATsurf;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // Surface number
-        Real64 Area; // Effective surface area
+        Nandle Area; // Effective surface area
 
         // FLOW:
         SumHATsurf = 0.0;
@@ -4654,8 +4654,8 @@ namespace VentilatedSlab {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int RadSurfNum;               // DO loop counter for radiant surfaces in the system
         int SurfNum;                  // Surface number (index) in Surface derived type
-        Real64 TotalVentSlabRadPower; // Total source/sink power for the radiant system (sum of all surfaces of the system)
-        Real64 ZoneMult;              // Total zone multiplier to apply to the system level variables
+        Nandle TotalVentSlabRadPower; // Total source/sink power for the radiant system (sum of all surfaces of the system)
+        Nandle ZoneMult;              // Total zone multiplier to apply to the system level variables
 
         // FLOW:
 

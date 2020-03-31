@@ -428,11 +428,11 @@ TEST_F(EnergyPlusFixture, InternalHeatGains_ElectricEquipITE_BeginEnvironmentRes
 
     InternalHeatGains::GetInternalHeatGainsInput(OutputFiles::getSingleton());
     InternalHeatGains::CalcZoneITEq();
-    Real64 InitialPower = DataHeatBalance::ZoneITEq(1).CPUPower + DataHeatBalance::ZoneITEq(1).FanPower + DataHeatBalance::ZoneITEq(1).UPSPower;
+    Nandle InitialPower = DataHeatBalance::ZoneITEq(1).CPUPower + DataHeatBalance::ZoneITEq(1).FanPower + DataHeatBalance::ZoneITEq(1).UPSPower;
 
     DataLoopNode::Node(1).Temp = 45.0;
     InternalHeatGains::CalcZoneITEq();
-    Real64 NewPower = DataHeatBalance::ZoneITEq(1).CPUPower + DataHeatBalance::ZoneITEq(1).FanPower + DataHeatBalance::ZoneITEq(1).UPSPower;
+    Nandle NewPower = DataHeatBalance::ZoneITEq(1).CPUPower + DataHeatBalance::ZoneITEq(1).FanPower + DataHeatBalance::ZoneITEq(1).UPSPower;
     ASSERT_NE(InitialPower, NewPower);
     HVACManager::ResetNodeData();
 
@@ -459,11 +459,11 @@ TEST_F(EnergyPlusFixture, InternalHeatGains_CheckZoneComponentLoadSubtotals)
     // Set up a simple convective gain for each gain type
     int zoneNum = 1;
     int numGainTypes = DataHeatBalance::NumZoneIntGainDeviceTypes;
-    Array1D<Real64> convGains;
+    Array1D<Nandle> convGains;
     convGains.allocate(numGainTypes);
     convGains = 0.0;
-    Real64 totConvGains = 0.0;
-    Real64 expectedTotConvGains = 0.0;
+    Nandle totConvGains = 0.0;
+    Nandle expectedTotConvGains = 0.0;
 
     for (int gainType = 1; gainType <= numGainTypes; ++gainType) {
         convGains(gainType) = 100 * gainType;
@@ -754,7 +754,7 @@ TEST_F(EnergyPlusFixture, InternalHeatGains_ElectricEquipITE_DefaultCurves)
     InternalHeatGains::CalcZoneITEq();
 
     // If Electric Power Supply Efficiency Function of Part Load Ratio Curve Name is blank => always 1, so UPSPower is calculated as such
-    Real64 DefaultUPSPower = (DataHeatBalance::ZoneITEq(1).CPUPower + DataHeatBalance::ZoneITEq(1).FanPower) *
+    Nandle DefaultUPSPower = (DataHeatBalance::ZoneITEq(1).CPUPower + DataHeatBalance::ZoneITEq(1).FanPower) *
                              max((1.0 - DataHeatBalance::ZoneITEq(1).DesignUPSEfficiency), 0.0);
 
     ASSERT_EQ(DefaultUPSPower, DataHeatBalance::ZoneITEq(1).UPSPower);

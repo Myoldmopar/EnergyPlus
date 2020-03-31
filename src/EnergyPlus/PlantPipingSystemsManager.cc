@@ -180,7 +180,7 @@ namespace EnergyPlus {
 
         void Circuit::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                bool const EP_UNUSED(FirstHVACIteration),
-                               Real64 &EP_UNUSED(CurLoad),
+                               Nandle &EP_UNUSED(CurLoad),
                                bool const EP_UNUSED(RunFlag)) {
             // Retrieve the parent domain index for this pipe circuit
             auto &thisDomain(domains[this->ParentDomainIndex]);
@@ -303,7 +303,7 @@ namespace EnergyPlus {
 
                         thisDomain.HeatFlux = thisDomain.AggregateHeatFlux / thisDomain.NumHeatFlux;
 
-                        Real64 ZoneTemp = 0.0;
+                        Nandle ZoneTemp = 0.0;
 
                         // Set ZoneTemp equal to the average air temperature of the zones the coupled surfaces are part of.
                         for (auto &z: thisDomain.ZoneCoupledSurfaces) {
@@ -312,7 +312,7 @@ namespace EnergyPlus {
                         }
 
                         ZoneTemp = ZoneTemp / thisDomain.ZoneCoupledSurfaces.size();
-                        Real64 AvgSlabTemp = thisDomain.GetAverageTempByType(CellType::ZoneGroundInterface);
+                        Nandle AvgSlabTemp = thisDomain.GetAverageTempByType(CellType::ZoneGroundInterface);
 
                         int yMax = ubound(thisDomain.Cells, 2);
 
@@ -1067,14 +1067,14 @@ namespace EnergyPlus {
                 }
 
                 // Total surface area
-                auto lambda = [](Real64 total, ZoneCoupledSurfaceData const &z) { return total + z.SurfaceArea; };
-                Real64 const ThisArea = std::accumulate(thisDomain.ZoneCoupledSurfaces.begin(),
+                auto lambda = [](Nandle total, ZoneCoupledSurfaceData const &z) { return total + z.SurfaceArea; };
+                Nandle const ThisArea = std::accumulate(thisDomain.ZoneCoupledSurfaces.begin(),
                                                         thisDomain.ZoneCoupledSurfaces.end(), 0.0, lambda);
 
                 thisDomain.SlabArea = ThisArea / 4; // We are only interested in 1/4 of total area due to symmetry
 
                 // Surface dimensions
-                Real64 thisAspectRatio = DataIPShortCuts::rNumericArgs(2);
+                Nandle thisAspectRatio = DataIPShortCuts::rNumericArgs(2);
                 thisDomain.SlabWidth = std::sqrt(ThisArea / thisAspectRatio);
                 thisDomain.SlabLength = thisDomain.SlabWidth * thisAspectRatio;
 
@@ -1105,7 +1105,7 @@ namespace EnergyPlus {
                 thisDomain.Mesh.Y.thisMeshDistribution = MeshDistribution::SymmetricGeometric;
                 thisDomain.Mesh.Z.thisMeshDistribution = MeshDistribution::SymmetricGeometric;
 
-                Real64 MeshCoefficient = DataIPShortCuts::rNumericArgs(12);
+                Nandle MeshCoefficient = DataIPShortCuts::rNumericArgs(12);
                 if (MeshCoefficient == 0.0) MeshCoefficient = 1.6;
                 thisDomain.Mesh.X.GeometricSeriesCoefficient = MeshCoefficient;
                 thisDomain.Mesh.Y.GeometricSeriesCoefficient = MeshCoefficient;
@@ -1187,7 +1187,7 @@ namespace EnergyPlus {
 
                 // Read in the some of the inputs into the local type for clarity during transition
                 thisDomain.Extents.yMax = DataIPShortCuts::rNumericArgs(1);
-                Real64 const thisAspectRatio = DataIPShortCuts::rNumericArgs(2);
+                Nandle const thisAspectRatio = DataIPShortCuts::rNumericArgs(2);
                 thisDomain.PerimeterOffset = DataIPShortCuts::rNumericArgs(3);
                 thisDomain.HorizInsWidth = DataIPShortCuts::rNumericArgs(10);
                 thisDomain.VertInsDepth = DataIPShortCuts::rNumericArgs(12);
@@ -1433,7 +1433,7 @@ namespace EnergyPlus {
                                                                                 DataIPShortCuts::cAlphaArgs(3));
 
                 // Total surface area
-                Real64 ThisArea = 0.0;
+                Nandle ThisArea = 0.0;
                 for (auto &z : thisDomain.ZoneCoupledSurfaces) {
                     ThisArea += z.SurfaceArea;
                 }
@@ -1477,7 +1477,7 @@ namespace EnergyPlus {
             }
         }
 
-        bool SiteGroundDomainUsingNoMassMat(Real64 const MaterialThickness,
+        bool SiteGroundDomainUsingNoMassMat(Nandle const MaterialThickness,
                                             int const MaterialNum) {
             
             if ( (MaterialThickness <= 0.0) || (DataHeatBalance::Material(MaterialNum).ROnly) ) {
@@ -1888,8 +1888,8 @@ namespace EnergyPlus {
                                              ErrorsFound);
 
                 int const NumPipeSegments = static_cast<int>(DataIPShortCuts::rNumericArgs(3));
-                Real64 const thisInterPipeSpacing = DataIPShortCuts::rNumericArgs(4);
-                Real64 const thisBurialDepth = DataIPShortCuts::rNumericArgs(7);
+                Nandle const thisInterPipeSpacing = DataIPShortCuts::rNumericArgs(4);
+                Nandle const thisBurialDepth = DataIPShortCuts::rNumericArgs(7);
 
                 //******* We'll first set up the domain ********
                 // the extents will be: zMax = axial length; yMax = burial depth*2; xMax = ( NumPipes+1 )*HorizontalPipeSpacing
@@ -2149,7 +2149,7 @@ namespace EnergyPlus {
                 }
 
                 // Once we find ourselves on the plant loop, we can do other things
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(thisCircuit->LoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(thisCircuit->LoopNum).FluidName,
                                                                DataGlobals::InitConvTemp,
                                                                DataPlant::PlantLoop(thisCircuit->LoopNum).FluidIndex,
                                                                RoutineName);
@@ -2262,7 +2262,7 @@ namespace EnergyPlus {
                                         std::string const &ObjectName,
                                         std::string const &InstanceName,
                                         std::string const &FieldName,
-                                        Real64 const FieldEntry,
+                                        Nandle const FieldEntry,
                                         std::string const &Condition,
                                         bool &ErrorsFound) {
 
@@ -2363,7 +2363,7 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            Real64 LocalMax(0.0);
+            Nandle LocalMax(0.0);
             for (int X = 0, X_end = this->x_max_index; X <= X_end; ++X) {
                 for (int Y = 0, Y_end = this->y_max_index; Y <= Y_end; ++Y) {
                     for (int Z = 0, Z_end = this->z_max_index; Z <= Z_end; ++Z) {
@@ -2383,9 +2383,9 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            Real64 ThisCellMax;
+            Nandle ThisCellMax;
 
-            Real64 MaxDivAmount = 0.0;
+            Nandle MaxDivAmount = 0.0;
             for (auto &radCell : CellToCheck.PipeCellData.Soil) {
                 ThisCellMax = std::abs(radCell.Temperature - radCell.Temperature_PrevIteration);
                 if (ThisCellMax > MaxDivAmount) {
@@ -2510,8 +2510,8 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            Real64 const MaxLimit = this->SimControls.MaximumTemperatureLimit;
-            Real64 const MinLimit = this->SimControls.MinimumTemperatureLimit;
+            Nandle const MaxLimit = this->SimControls.MaximumTemperatureLimit;
+            Nandle const MinLimit = this->SimControls.MinimumTemperatureLimit;
 
             auto const &Cells(this->Cells);
             for (std::size_t i = 0, e = Cells.size(); i < e; ++i) {
@@ -2521,7 +2521,7 @@ namespace EnergyPlus {
             return false;
         }
 
-        Real64 CartesianCell::normalArea(Direction const direction) const {
+        Nandle CartesianCell::normalArea(Direction const direction) const {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -2549,12 +2549,12 @@ namespace EnergyPlus {
             return 0;
         }
 
-        CartesianPipeCellInformation::CartesianPipeCellInformation(Real64 const GridCellWidth,
+        CartesianPipeCellInformation::CartesianPipeCellInformation(Nandle const GridCellWidth,
                                                 RadialSizing const &PipeSizes,
                                                 int const NumRadialNodes,
-                                                Real64 const CellDepth,
-                                                Real64 const InsulationThickness,
-                                                Real64 const RadialGridExtent,
+                                                Nandle const CellDepth,
+                                                Nandle const InsulationThickness,
+                                                Nandle const RadialGridExtent,
                                                 bool const SimHasInsulation) {
 
             // SUBROUTINE INFORMATION:
@@ -2564,14 +2564,14 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 InsulationInnerRadius;
-            Real64 InsulationOuterRadius;
-            Real64 InsulationCentroid;
-            Real64 MinimumSoilRadius;
+            Nandle InsulationInnerRadius;
+            Nandle InsulationOuterRadius;
+            Nandle InsulationCentroid;
+            Nandle MinimumSoilRadius;
 
             //'calculate pipe radius
-            Real64 const PipeOuterRadius = PipeSizes.OuterDia / 2.0;
-            Real64 const PipeInnerRadius = PipeSizes.InnerDia / 2.0;
+            Nandle const PipeOuterRadius = PipeSizes.OuterDia / 2.0;
+            Nandle const PipeInnerRadius = PipeSizes.InnerDia / 2.0;
 
             //'--we will work from inside out, calculating dimensions and instantiating variables--
             //'first instantiate the water cell
@@ -2599,8 +2599,8 @@ namespace EnergyPlus {
             this->RadialSliceWidth = RadialGridExtent / NumRadialNodes;
 
             // first set Rval to the minimum soil radius plus half a slice thickness for the innermost radial node
-            Real64 Rval = MinimumSoilRadius + (this->RadialSliceWidth / 2.0);
-            Real64 ThisSliceInnerRadius = MinimumSoilRadius;
+            Nandle Rval = MinimumSoilRadius + (this->RadialSliceWidth / 2.0);
+            Nandle ThisSliceInnerRadius = MinimumSoilRadius;
             this->Soil.emplace_back(Rval, ThisSliceInnerRadius, ThisSliceInnerRadius + this->RadialSliceWidth);
 
             //'then loop through the rest and assign them, each radius is simply one more slice thickness
@@ -2740,11 +2740,11 @@ namespace EnergyPlus {
             }
 
             //'** MAKE REGIONS > BOUNDARIES **'
-            std::vector<Real64> XBoundaryPoints = CreateBoundaryList(XRegions, this->Extents.xMax,
+            std::vector<Nandle> XBoundaryPoints = CreateBoundaryList(XRegions, this->Extents.xMax,
                                                                      RegionType::XDirection);
-            std::vector<Real64> YBoundaryPoints = CreateBoundaryList(YRegions, this->Extents.yMax,
+            std::vector<Nandle> YBoundaryPoints = CreateBoundaryList(YRegions, this->Extents.yMax,
                                                                      RegionType::YDirection);
-            std::vector<Real64> ZBoundaryPoints = CreateBoundaryList(ZRegions, this->Extents.zMax,
+            std::vector<Nandle> ZBoundaryPoints = CreateBoundaryList(ZRegions, this->Extents.zMax,
                                                                      RegionType::ZDirection);
 
             //'****** DEVELOP CELL ARRAY *****'
@@ -2766,25 +2766,25 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE PARAMETER DEFINITIONS:
-            Real64 const BasementCellFraction(0.001); // the fraction of domain extent to use for the basement cells
+            Nandle const BasementCellFraction(0.001); // the fraction of domain extent to use for the basement cells
             // actual dimension shouldn't matter for calculation purposes
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 BasementDistFromBottom;
-            Real64 FloorLocation;
-            Real64 UnderFloorLocation;
-            Real64 PipeCellWidth;
-            Real64 SurfCellWidth; // Basement surface...
-            Real64 SideXLocation;
-            Real64 SideXWallLocation;
-            Real64 SideXInsulationLocation;
-            Real64 SideZLocation;
-            Real64 SideZWallLocation;
-            Real64 SideZInsulationLocation;
-            Real64 SlabDistFromBottom;
-            Real64 YInsulationLocation;
-            Real64 CellWidth(0.0);
-            Real64 InterfaceCellWidth(0.008);
+            Nandle BasementDistFromBottom;
+            Nandle FloorLocation;
+            Nandle UnderFloorLocation;
+            Nandle PipeCellWidth;
+            Nandle SurfCellWidth; // Basement surface...
+            Nandle SideXLocation;
+            Nandle SideXWallLocation;
+            Nandle SideXInsulationLocation;
+            Nandle SideZLocation;
+            Nandle SideZWallLocation;
+            Nandle SideZInsulationLocation;
+            Nandle SlabDistFromBottom;
+            Nandle YInsulationLocation;
+            Nandle CellWidth(0.0);
+            Nandle InterfaceCellWidth(0.008);
 
             // Object Data
             std::vector<MeshPartition> PreviousEntries;
@@ -3080,7 +3080,7 @@ namespace EnergyPlus {
         std::vector<GridRegion>
         Domain::createPartitionRegionList(std::vector<MeshPartition> const &ThesePartitionCenters,
                                           bool const PartitionsExist,
-                                          Real64 const DirExtentMax) {
+                                          Nandle const DirExtentMax) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -3102,12 +3102,12 @@ namespace EnergyPlus {
             for (int Index = 0; Index < (int) ThesePartitionCenters.size(); ++Index) {
                 auto &thisPartitionCenter = ThesePartitionCenters[Index];
 
-                Real64 const ThisCellWidthBy2 = thisPartitionCenter.TotalWidth / 2.0;
+                Nandle const ThisCellWidthBy2 = thisPartitionCenter.TotalWidth / 2.0;
                 PartitionType ThisPartitionType = thisPartitionCenter.partitionType;
 
                 //'use this half width to validate the region and add it to the collection
-                Real64 CellLeft = thisPartitionCenter.rDimension - ThisCellWidthBy2;
-                Real64 CellRight = thisPartitionCenter.rDimension + ThisCellWidthBy2;
+                Nandle CellLeft = thisPartitionCenter.rDimension - ThisCellWidthBy2;
+                Nandle CellRight = thisPartitionCenter.rDimension + ThisCellWidthBy2;
 
                 // check to make sure this location is valid
                 if (CellLeft < 0.0 || CellRight > DirExtentMax) {
@@ -3198,7 +3198,7 @@ namespace EnergyPlus {
 
         void Domain::createRegionList(std::vector<GridRegion> &Regions,
                                       std::vector<GridRegion> const &ThesePartitionRegions,
-                                      Real64 const DirExtentMax,
+                                      Nandle const DirExtentMax,
                                       RegionType const DirDirection,
                                       bool const PartitionsExist,
                                       Optional_int BasementWallXIndex,
@@ -3220,7 +3220,7 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             int cellCountUpToNow = 0;
-            std::vector<Real64> tempCellWidths;
+            std::vector<Nandle> tempCellWidths;
 
             if (PartitionsExist) {
 
@@ -3315,8 +3315,8 @@ namespace EnergyPlus {
 
 #pragma clang diagnostic pop
 
-        std::vector<Real64> CreateBoundaryList(std::vector<GridRegion> const &RegionList,
-                                               Real64 const DirExtentMax,
+        std::vector<Nandle> CreateBoundaryList(std::vector<GridRegion> const &RegionList,
+                                               Nandle const DirExtentMax,
                                                RegionType const DirDirection) {
 
             // FUNCTION INFORMATION:
@@ -3325,7 +3325,7 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            std::vector<Real64> RetVal;
+            std::vector<Nandle> RetVal;
             for (auto const &thisRegion : RegionList) {
                 switch (thisRegion.thisRegionType) {
                     case RegionType::Pipe:
@@ -3344,7 +3344,7 @@ namespace EnergyPlus {
                         break;
                     default:
                         if (thisRegion.thisRegionType == DirDirection) {
-                            Real64 StartingPointCounter = thisRegion.Min;
+                            Nandle StartingPointCounter = thisRegion.Min;
                             for (auto &cellWidth : thisRegion.CellWidths) {
                                 RetVal.push_back(StartingPointCounter);
                                 StartingPointCounter += cellWidth;
@@ -3356,9 +3356,9 @@ namespace EnergyPlus {
             return RetVal;
         }
 
-        void Domain::createCellArray(std::vector<Real64> const &XBoundaryPoints,
-                                     std::vector<Real64> const &YBoundaryPoints,
-                                     std::vector<Real64> const &ZBoundaryPoints) {
+        void Domain::createCellArray(std::vector<Nandle> const &XBoundaryPoints,
+                                     std::vector<Nandle> const &YBoundaryPoints,
+                                     std::vector<Nandle> const &ZBoundaryPoints) {
 
             // SUBROUTINE INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -3399,23 +3399,23 @@ namespace EnergyPlus {
 
                         //'set up x-direction variables
                         int CellXIndex = X;                            //'zero based index
-                        Real64 CellXMinValue = XBoundaryPoints[X];     //'left wall x-value
-                        Real64 CellXMaxValue = XBoundaryPoints[X + 1]; //'right wall x-value
-                        Real64 CellXCenter = (CellXMinValue + CellXMaxValue) / 2;
-                        Real64 CellWidth = CellXMaxValue - CellXMinValue;
+                        Nandle CellXMinValue = XBoundaryPoints[X];     //'left wall x-value
+                        Nandle CellXMaxValue = XBoundaryPoints[X + 1]; //'right wall x-value
+                        Nandle CellXCenter = (CellXMinValue + CellXMaxValue) / 2;
+                        Nandle CellWidth = CellXMaxValue - CellXMinValue;
 
                         //'set up y-direction variables
                         int CellYIndex = Y;                            //'zero based index
-                        Real64 CellYMinValue = YBoundaryPoints[Y];     //'bottom wall y-value
-                        Real64 CellYMaxValue = YBoundaryPoints[Y + 1]; //'top wall y-value
-                        Real64 CellYCenter = (CellYMinValue + CellYMaxValue) / 2;
-                        Real64 CellHeight = CellYMaxValue - CellYMinValue;
+                        Nandle CellYMinValue = YBoundaryPoints[Y];     //'bottom wall y-value
+                        Nandle CellYMaxValue = YBoundaryPoints[Y + 1]; //'top wall y-value
+                        Nandle CellYCenter = (CellYMinValue + CellYMaxValue) / 2;
+                        Nandle CellHeight = CellYMaxValue - CellYMinValue;
 
                         //'set up z-direction variables
                         int CellZIndex = Z;                            //'zero based index
-                        Real64 CellZMinValue = ZBoundaryPoints[Z];     //'lower z value
-                        Real64 CellZMaxValue = ZBoundaryPoints[Z + 1]; //'higher z value
-                        Real64 CellZCenter = (CellZMinValue + CellZMaxValue) / 2;
+                        Nandle CellZMinValue = ZBoundaryPoints[Z];     //'lower z value
+                        Nandle CellZMaxValue = ZBoundaryPoints[Z + 1]; //'higher z value
+                        Nandle CellZCenter = (CellZMinValue + CellZMaxValue) / 2;
 
                         //'set up an extent class for this cell
                         CellExtents theseCellExtents = CellExtents(CellXMaxValue, CellYMaxValue, CellZMaxValue,
@@ -3588,8 +3588,8 @@ namespace EnergyPlus {
                         }
 
                         //'check to see if this is a pipe node...
-                        Real64 InsulationThickness(0.0);
-                        Real64 RadialMeshThickness(0.0);
+                        Nandle InsulationThickness(0.0);
+                        Nandle RadialMeshThickness(0.0);
                         bool HasInsulation(false);
                         RadialSizing PipeSizing;
                         Circuit * circuitReference = nullptr;
@@ -3676,22 +3676,22 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 CellRightCentroidX;
-            Real64 CellRightLeftWallX;
-            Real64 CellLeftCentroidX;
-            Real64 CellLeftRightWallX;
-            Real64 LeftCellCentroidX;
-            Real64 LeftCellRightWallX;
-            Real64 RightCellCentroidX;
-            Real64 RightCellLeftWallX;
-            Real64 UpperCellCentroidY;
-            Real64 UpperCellLowerWallY;
-            Real64 LowerCellCentroidY;
-            Real64 LowerCellUpperWallY;
-            Real64 UpperZCellCentroidZ;
-            Real64 UpperZCellLowerWallZ;
-            Real64 LowerZCellCentroidZ;
-            Real64 LowerZCellUpperWallZ;
+            Nandle CellRightCentroidX;
+            Nandle CellRightLeftWallX;
+            Nandle CellLeftCentroidX;
+            Nandle CellLeftRightWallX;
+            Nandle LeftCellCentroidX;
+            Nandle LeftCellRightWallX;
+            Nandle RightCellCentroidX;
+            Nandle RightCellLeftWallX;
+            Nandle UpperCellCentroidY;
+            Nandle UpperCellLowerWallY;
+            Nandle LowerCellCentroidY;
+            Nandle LowerCellUpperWallY;
+            Nandle UpperZCellCentroidZ;
+            Nandle UpperZCellLowerWallZ;
+            Nandle LowerZCellCentroidZ;
+            Nandle LowerZCellUpperWallZ;
 
             auto const &cells(this->Cells);
             for (int X = 0, X_end = this->x_max_index; X <= X_end; ++X) {
@@ -3700,11 +3700,11 @@ namespace EnergyPlus {
                         auto const &cell(cells(X, Y, Z));
 
                         //'for convenience
-                        Real64 const &ThisCellCentroidX = cell.Centroid.X;
-                        Real64 const &ThisCellCentroidY = cell.Centroid.Y;
-                        Real64 const &ThisCellCentroidZ = cell.Centroid.Z;
-                        Real64 ThisAdiabaticMultiplier = 1.0;
-                        Real64 ThisAdiabaticMultiplierMirror = 1.0;
+                        Nandle const &ThisCellCentroidX = cell.Centroid.X;
+                        Nandle const &ThisCellCentroidY = cell.Centroid.Y;
+                        Nandle const &ThisCellCentroidZ = cell.Centroid.Z;
+                        Nandle ThisAdiabaticMultiplier = 1.0;
+                        Nandle ThisAdiabaticMultiplierMirror = 1.0;
 
                         //'setup east/west cell neighbors
                         if (X == 0) {
@@ -3891,9 +3891,9 @@ namespace EnergyPlus {
                                             int const Y,
                                             int const Z,
                                             Direction const direction,
-                                            Real64 const ThisCentroidToNeighborWall,
-                                            Real64 const ThisWallToNeighborCentroid,
-                                            Real64 const ThisAdiabaticMultiplier) {
+                                            Nandle const ThisCentroidToNeighborWall,
+                                            Nandle const ThisWallToNeighborCentroid,
+                                            Nandle const ThisAdiabaticMultiplier) {
             // SUBROUTINE INFORMATION:
             //       AUTHOR         Edwin Lee
             //       DATE WRITTEN   Summer 2011
@@ -4025,19 +4025,19 @@ namespace EnergyPlus {
             }
             assert(g.Max > g.Min);
 
-            Real64 GridWidth = g.Max - g.Min;
+            Nandle GridWidth = g.Max - g.Min;
 
             if (ThisMesh.thisMeshDistribution == MeshDistribution::Uniform) {
                 if (this->HasZoneCoupledSlab && g.thisRegionType == RegionType::YDirection &&
                     g.Max == this->Extents.yMax) { // Slab region
-                    Real64 const CellWidth = GridWidth / this->NumSlabCells;
+                    Nandle const CellWidth = GridWidth / this->NumSlabCells;
                     for (int I = 0; I <= this->NumSlabCells - 1; ++I) {
                         g.CellWidths.push_back(CellWidth);
                     }
                 } else {
                     // we have it quite simple
                     assert(ThisMesh.RegionMeshCount > 0);
-                    Real64 const CellWidth = GridWidth / ThisMesh.RegionMeshCount;
+                    Nandle const CellWidth = GridWidth / ThisMesh.RegionMeshCount;
                     for (int I = 0; I <= ThisMesh.RegionMeshCount - 1; ++I) {
                         g.CellWidths.push_back(CellWidth);
                     }
@@ -4048,12 +4048,12 @@ namespace EnergyPlus {
                 //'first get the total number of cells on this half of the region
                 int NumCellsOnEachSide = ThisMesh.RegionMeshCount / 2; // Already validated to be an even #
                 //'calculate geometric series
-                Real64 SummationTerm = 0.0;
+                Nandle SummationTerm = 0.0;
                 for (int I = 1; I <= NumCellsOnEachSide; ++I) {
                     SummationTerm += std::pow(ThisMesh.GeometricSeriesCoefficient, I - 1);
                 }
                 //'set up a list of cell widths for this region
-                Real64 CellWidth = (GridWidth / 2) / SummationTerm;
+                Nandle CellWidth = (GridWidth / 2) / SummationTerm;
                 g.CellWidths.push_back(CellWidth);
                 for (int I = 1; I <= NumCellsOnEachSide - 1; ++I) {
                     CellWidth *= ThisMesh.GeometricSeriesCoefficient;
@@ -4068,11 +4068,11 @@ namespace EnergyPlus {
                 int NumCells = ThisMesh.RegionMeshCount;
                 if (g.thisRegionType == RegionType::XDirection || g.thisRegionType == RegionType::ZDirection) {
                     //'calculate geometric series
-                    Real64 SummationTerm = 0.0;
+                    Nandle SummationTerm = 0.0;
                     for (int I = 1; I <= NumCells; ++I) {
                         SummationTerm += std::pow(ThisMesh.GeometricSeriesCoefficient, I - 1);
                     }
-                    Real64 CellWidth = GridWidth / SummationTerm;
+                    Nandle CellWidth = GridWidth / SummationTerm;
                     if (g.Min == 0) {
                         // Ground region to the left of the slab will have cells expanding to the left
                         // adding them here moving forward, then reversing it to get this effect
@@ -4095,17 +4095,17 @@ namespace EnergyPlus {
                     // Assign uniform cell thickness to the slab cells.
                     if (g.Max == this->Extents.yMax) {
                         NumCells = this->NumSlabCells;
-                        Real64 CellWidth = GridWidth / NumCells;
+                        Nandle CellWidth = GridWidth / NumCells;
                         for (int I = 0; I <= NumCells - 1; ++I) {
                             g.CellWidths.push_back(CellWidth);
                         }
                     } else {
                         //'calculate geometric series
-                        Real64 SummationTerm = 0.0;
+                        Nandle SummationTerm = 0.0;
                         for (int I = 1; I <= NumCells; ++I) {
                             SummationTerm += std::pow(ThisMesh.GeometricSeriesCoefficient, I - 1);
                         }
-                        Real64 CellWidth = GridWidth / SummationTerm;
+                        Nandle CellWidth = GridWidth / SummationTerm;
                         // Ground region under the slab will have cells expanding as we go down
                         // adding them here moving forward, then reversing it to get this effect
                         // Possible spot for diffs
@@ -4247,7 +4247,7 @@ namespace EnergyPlus {
             }
         }
 
-        Real64 Domain::EvaluateFieldCellTemperature(CartesianCell &cell) {
+        Nandle Domain::EvaluateFieldCellTemperature(CartesianCell &cell) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4256,9 +4256,9 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // FUNCTION LOCAL VARIABLE DECLARATIONS:
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
-            Real64 AdiabaticMultiplier = 1.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
+            Nandle AdiabaticMultiplier = 1.0;
 
             // add effect from cell history
             Numerator += cell.Temperature_PrevTimeStep;
@@ -4271,8 +4271,8 @@ namespace EnergyPlus {
             // loop across each direction in the simulation
             for (int DirectionCounter = 0; DirectionCounter <= NumFieldCells; ++DirectionCounter) {
 
-                Real64 NeighborTemp = 0.0;
-                Real64 Resistance = 0.0;
+                Nandle NeighborTemp = 0.0;
+                Nandle Resistance = 0.0;
                 Direction CurDirection = this->NeighborFieldCells[DirectionCounter];
 
                 //'evaluate the transient expression terms
@@ -4287,7 +4287,7 @@ namespace EnergyPlus {
             return Numerator / Denominator;
         }
 
-        Real64 Domain::EvaluateGroundSurfaceTemperature(CartesianCell &cell) {
+        Nandle Domain::EvaluateGroundSurfaceTemperature(CartesianCell &cell) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4296,60 +4296,60 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // FUNCTION PARAMETER DEFINITIONS:
-            Real64 const AirDensity(1.22521);   // '[kg/m3]
-            Real64 const AirSpecificHeat(1003); // '[J/kg-K]
+            Nandle const AirDensity(1.22521);   // '[kg/m3]
+            Nandle const AirSpecificHeat(1003); // '[J/kg-K]
             // evapotranspiration parameters
-            Real64 const MeanSolarConstant(0.08196); // 1367 [W/m2], entered in [MJ/m2-minute]
-            Real64 const A_s(0.25);                  // ?
-            Real64 const B_s(0.5);                   // ?
-            Real64 const Absor_Corrected(0.77);
-            Real64 const Convert_Wm2_To_MJhrmin(3600.0 / 1000000.0);
-            Real64 const Convert_MJhrmin_To_Wm2(1.0 / Convert_Wm2_To_MJhrmin);
-            Real64 const Rho_water(998.0); // [kg/m3]
+            Nandle const MeanSolarConstant(0.08196); // 1367 [W/m2], entered in [MJ/m2-minute]
+            Nandle const A_s(0.25);                  // ?
+            Nandle const B_s(0.5);                   // ?
+            Nandle const Absor_Corrected(0.77);
+            Nandle const Convert_Wm2_To_MJhrmin(3600.0 / 1000000.0);
+            Nandle const Convert_MJhrmin_To_Wm2(1.0 / Convert_Wm2_To_MJhrmin);
+            Nandle const Rho_water(998.0); // [kg/m3]
 
             // FUNCTION LOCAL VARIABLE DECLARATIONS:
-            Real64 NeighborTemp = 0.0;
-            Real64 IncidentHeatGain;
-            Real64 Latitude_Degrees;   // Latitude, degrees N
-            Real64 StMeridian_Degrees; // Standard meridian, degrees W -- note it is degrees E in DataEnvironment
-            Real64 Longitude_Degrees;  // Longitude, degrees W -- note it is degrees E in DataEnvironment
+            Nandle NeighborTemp = 0.0;
+            Nandle IncidentHeatGain;
+            Nandle Latitude_Degrees;   // Latitude, degrees N
+            Nandle StMeridian_Degrees; // Standard meridian, degrees W -- note it is degrees E in DataEnvironment
+            Nandle Longitude_Degrees;  // Longitude, degrees W -- note it is degrees E in DataEnvironment
             // evapotranspiration calculated values
-            Real64 Latitude_Radians;
-            Real64 DayOfYear;
-            Real64 HourOfDay;
-            Real64 CurSecondsIntoToday;
-            Real64 dr;
-            Real64 Declination;
-            Real64 b_SC;
-            Real64 Sc;
-            Real64 Hour_Angle;
-            Real64 X_sunset;
-            Real64 Sunset_Angle;
-            Real64 Solar_Angle_1;
-            Real64 Solar_Angle_2;
-            Real64 QRAD_A;
-            Real64 QRAD_SO;
-            Real64 Ratio_SO;
-            Real64 IncidentSolar_MJhrmin;
-            Real64 AbsorbedIncidentSolar_MJhrmin;
-            Real64 VaporPressureSaturated_kPa;
-            Real64 VaporPressureActual_kPa;
-            Real64 QRAD_NL;
-            Real64 NetIncidentRadiation_MJhr; // [MJ/hr]
-            Real64 NetIncidentRadiation_Wm2;  // [W/m2]
-            Real64 CN;
-            Real64 G_hr;
-            Real64 Cd;
-            Real64 Slope_S;
-            Real64 Pressure;
-            Real64 PsychrometricConstant;
-            Real64 EvapotransFluidLoss_mmhr;
-            Real64 EvapotransFluidLoss_mhr;
-            Real64 LatentHeatVaporization;
-            Real64 EvapotransHeatLoss_MJhrmin; // [MJ/m2-hr]
-            Real64 EvapotransHeatLoss_Wm2;     // [W/m2]
-            Real64 CurAirTempK;
-            Real64 GroundCoverCoefficient;
+            Nandle Latitude_Radians;
+            Nandle DayOfYear;
+            Nandle HourOfDay;
+            Nandle CurSecondsIntoToday;
+            Nandle dr;
+            Nandle Declination;
+            Nandle b_SC;
+            Nandle Sc;
+            Nandle Hour_Angle;
+            Nandle X_sunset;
+            Nandle Sunset_Angle;
+            Nandle Solar_Angle_1;
+            Nandle Solar_Angle_2;
+            Nandle QRAD_A;
+            Nandle QRAD_SO;
+            Nandle Ratio_SO;
+            Nandle IncidentSolar_MJhrmin;
+            Nandle AbsorbedIncidentSolar_MJhrmin;
+            Nandle VaporPressureSaturated_kPa;
+            Nandle VaporPressureActual_kPa;
+            Nandle QRAD_NL;
+            Nandle NetIncidentRadiation_MJhr; // [MJ/hr]
+            Nandle NetIncidentRadiation_Wm2;  // [W/m2]
+            Nandle CN;
+            Nandle G_hr;
+            Nandle Cd;
+            Nandle Slope_S;
+            Nandle Pressure;
+            Nandle PsychrometricConstant;
+            Nandle EvapotransFluidLoss_mmhr;
+            Nandle EvapotransFluidLoss_mhr;
+            Nandle LatentHeatVaporization;
+            Nandle EvapotransHeatLoss_MJhrmin; // [MJ/m2-hr]
+            Nandle EvapotransHeatLoss_Wm2;     // [W/m2]
+            Nandle CurAirTempK;
+            Nandle GroundCoverCoefficient;
 
             // retrieve information from E+ globals
             Latitude_Degrees = DataEnvironment::Latitude;
@@ -4360,12 +4360,12 @@ namespace EnergyPlus {
             GroundCoverCoefficient = this->Moisture.GroundCoverCoefficient;
 
             // initialize values
-            Real64 AdiabaticMultiplier = 1.0;
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
-            Real64 Resistance = 0.0;
-            Real64 Beta = cell.Beta;
-            Real64 ThisNormalArea = cell.normalArea(Direction::PositiveY);
+            Nandle AdiabaticMultiplier = 1.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
+            Nandle Resistance = 0.0;
+            Nandle Beta = cell.Beta;
+            Nandle ThisNormalArea = cell.normalArea(Direction::PositiveY);
 
             //'add effect from previous time step
             Numerator += cell.Temperature_PrevTimeStep;
@@ -4585,7 +4585,7 @@ namespace EnergyPlus {
             return Numerator / Denominator;
         }
 
-        Real64 Domain::EvaluateBasementCellTemperature(CartesianCell &cell) {
+        Nandle Domain::EvaluateBasementCellTemperature(CartesianCell &cell) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4594,13 +4594,13 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // FUNCTION LOCAL VARIABLE DECLARATIONS:
-            Real64 Beta;
-            Real64 NeighborTemp = 0.0;
-            Real64 HeatFlux;
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
-            Real64 Resistance = 0.0;
-            Real64 AdiabaticMultiplier = 1.0;
+            Nandle Beta;
+            Nandle NeighborTemp = 0.0;
+            Nandle HeatFlux;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
+            Nandle Resistance = 0.0;
+            Nandle AdiabaticMultiplier = 1.0;
 
             // add effect from previous time step
             Numerator += cell.Temperature_PrevTimeStep;
@@ -4671,7 +4671,7 @@ namespace EnergyPlus {
             return Numerator / Denominator;
         }
 
-        Real64 Domain::EvaluateFarfieldBoundaryTemperature(CartesianCell &cell) {
+        Nandle Domain::EvaluateFarfieldBoundaryTemperature(CartesianCell &cell) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4680,11 +4680,11 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // FUNCTION LOCAL VARIABLE DECLARATIONS:
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
-            Real64 Resistance = 0.0;
-            Real64 AdiabaticMultiplier = 1.0;
-            Real64 Beta = cell.Beta;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
+            Nandle Resistance = 0.0;
+            Nandle AdiabaticMultiplier = 1.0;
+            Nandle Beta = cell.Beta;
 
             // add effect from previous time step
             Numerator += cell.Temperature_PrevTimeStep;
@@ -4697,7 +4697,7 @@ namespace EnergyPlus {
             // Do all neighbor cells
             for (int DirectionCounter = 0; DirectionCounter <= NumFieldCells; ++DirectionCounter) {
                 Direction CurDirection = this->NeighborFieldCells[DirectionCounter];
-                Real64 NeighborTemp = 0.0;
+                Nandle NeighborTemp = 0.0;
                 this->EvaluateNeighborCharacteristics(cell, CurDirection, NeighborTemp, Resistance,
                                                       AdiabaticMultiplier);
                 Numerator += AdiabaticMultiplier * (Beta / Resistance) * NeighborTemp;
@@ -4707,7 +4707,7 @@ namespace EnergyPlus {
             // Then all farfield boundaries
             for (int DirectionCounter = 0; DirectionCounter <= NumBoundaryCells; ++DirectionCounter) {
                 Direction CurDirection = this->NeighborBoundaryCells[DirectionCounter];
-                Real64 NeighborTemp = 0.0;
+                Nandle NeighborTemp = 0.0;
                 this->EvaluateFarfieldCharacteristics(cell, CurDirection, NeighborTemp, Resistance,
                                                       AdiabaticMultiplier);
                 Numerator += AdiabaticMultiplier * (Beta / Resistance) * NeighborTemp;
@@ -4717,7 +4717,7 @@ namespace EnergyPlus {
             return Numerator / Denominator;
         }
 
-        Real64 Domain::EvaluateZoneInterfaceTemperature(CartesianCell &cell) {
+        Nandle Domain::EvaluateZoneInterfaceTemperature(CartesianCell &cell) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4726,13 +4726,13 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // FUNCTION LOCAL VARIABLE DECLARATIONS:
-            Real64 HeatFlux;
-            Real64 ConductionArea;
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
-            Real64 Resistance = 0.0;
-            Real64 AdiabaticMultiplier = 1.0;
-            Real64 Beta = cell.Beta;
+            Nandle HeatFlux;
+            Nandle ConductionArea;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
+            Nandle Resistance = 0.0;
+            Nandle AdiabaticMultiplier = 1.0;
+            Nandle Beta = cell.Beta;
 
             // add effect from previous time step
             Numerator += cell.Temperature_PrevTimeStep;
@@ -4767,7 +4767,7 @@ namespace EnergyPlus {
             // loop across each direction in the simulation
             for (int DirectionCounter = 0; DirectionCounter <= NumFieldCells; ++DirectionCounter) {
 
-                Real64 NeighborTemp = 0.0;
+                Nandle NeighborTemp = 0.0;
                 Direction CurDirection = this->NeighborFieldCells[DirectionCounter];
 
                 // Have to be careful here to make sure heat conduction happens only in the appropriate directions
@@ -4811,7 +4811,7 @@ namespace EnergyPlus {
             return Numerator / Denominator;
         }
 
-        Real64 Domain::GetBasementWallHeatFlux() {
+        Nandle Domain::GetBasementWallHeatFlux() {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4819,7 +4819,7 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            Real64 RunningSummation = 0.0;
+            Nandle RunningSummation = 0.0;
             auto const &numSurfaces = static_cast<unsigned int>(this->BasementZone.WallSurfacePointers.size());
             for (auto &surfaceIndex : this->BasementZone.WallSurfacePointers) {
                 RunningSummation += DataHeatBalSurface::QdotConvOutRepPerArea(surfaceIndex);
@@ -4827,7 +4827,7 @@ namespace EnergyPlus {
             return -RunningSummation / numSurfaces; // heat flux is negative here
         }
 
-        Real64 Domain::GetBasementFloorHeatFlux() {
+        Nandle Domain::GetBasementFloorHeatFlux() {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4835,7 +4835,7 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            Real64 RunningSummation = 0.0;
+            Nandle RunningSummation = 0.0;
             auto const &numSurfaces = static_cast<unsigned int>(this->BasementZone.FloorSurfacePointers.size());
             for (auto &surfaceIndex : this->BasementZone.FloorSurfacePointers) {
                 RunningSummation += DataHeatBalSurface::QdotConvOutRepPerArea(surfaceIndex);
@@ -4852,7 +4852,7 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE PARAMETER DEFINITIONS:
-            Real64 const BigNumber(10000.0);
+            Nandle const BigNumber(10000.0);
 
             // First the wall
             this->BasementWallTemp = this->GetAverageTempByType(CellType::BasementWall);
@@ -4871,7 +4871,7 @@ namespace EnergyPlus {
             DataSurfaces::OSCM(OSCMIndex).HRad = 0.0;
         }
 
-        Real64 Domain::GetZoneInterfaceHeatFlux() {
+        Nandle Domain::GetZoneInterfaceHeatFlux() {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4879,7 +4879,7 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            Real64 RunningSummation = 0.0;
+            Nandle RunningSummation = 0.0;
             auto const &NumSurfaces = this->ZoneCoupledSurfaces.size();
             for (auto &z : this->ZoneCoupledSurfaces) {
                 RunningSummation += DataHeatBalSurface::QdotConvOutRepPerArea(z.IndexInSurfaceArray);
@@ -4896,7 +4896,7 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE PARAMETER DEFINITIONS:
-            Real64 const BigNumber(10000.0);
+            Nandle const BigNumber(10000.0);
 
             this->ZoneCoupledSurfaceTemp = this->GetAverageTempByType(CellType::ZoneGroundInterface);
             int OSCMIndex = this->ZoneCoupledOSCMIndex;
@@ -4909,7 +4909,7 @@ namespace EnergyPlus {
             this->ResetHeatFluxFlag = true;
         }
 
-        Real64 Domain::GetAverageTempByType(CellType const cellType) {
+        Nandle Domain::GetAverageTempByType(CellType const cellType) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4918,8 +4918,8 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // FUNCTION LOCAL VARIABLE DECLARATIONS:
-            Real64 RunningSummation = 0.0;
-            Real64 RunningVolume = 0.0;
+            Nandle RunningSummation = 0.0;
+            Nandle RunningVolume = 0.0;
 
             auto const &cells(Cells);
             for (int X = 0, X_end = this->x_max_index; X <= X_end; ++X) {
@@ -4927,7 +4927,7 @@ namespace EnergyPlus {
                     for (int Z = 0, Z_end = this->z_max_index; Z <= Z_end; ++Z) {
                         auto const &cell(cells(X, Y, Z));
                         if (cell.cellType == cellType) {
-                            Real64 CellVolume = cell.volume();
+                            Nandle CellVolume = cell.volume();
                             RunningVolume += CellVolume;
                             RunningSummation += CellVolume * cell.Temperature;
                         }
@@ -4943,8 +4943,8 @@ namespace EnergyPlus {
         }
 
         void
-        Domain::EvaluateFarfieldCharacteristics(CartesianCell &cell, Direction const direction, Real64 &neighbortemp,
-                                                Real64 &resistance, Real64 &adiabaticMultiplier) {
+        Domain::EvaluateFarfieldCharacteristics(CartesianCell &cell, Direction const direction, Nandle &neighbortemp,
+                                                Nandle &resistance, Nandle &adiabaticMultiplier) {
 
             // SUBROUTINE INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4953,7 +4953,7 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 distance(0.0);
+            Nandle distance(0.0);
 
             switch (direction) {
                 case Direction::NegativeX:
@@ -4976,7 +4976,7 @@ namespace EnergyPlus {
             adiabaticMultiplier = cell.NeighborInfo[direction].adiabaticMultiplier;
         }
 
-        Real64 Domain::GetFarfieldTemp(CartesianCell const &cell) {
+        Nandle Domain::GetFarfieldTemp(CartesianCell const &cell) {
 
             // FUNCTION INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -4984,8 +4984,8 @@ namespace EnergyPlus {
             //       MODIFIED       na
             //       RE-ENGINEERED  na
 
-            Real64 CurTime = this->Cur.CurSimTimeSeconds;
-            Real64 z = this->Extents.yMax - cell.Centroid.Y;
+            Nandle CurTime = this->Cur.CurSimTimeSeconds;
+            Nandle z = this->Extents.yMax - cell.Centroid.Y;
             return this->groundTempModel->getGroundTempAtTimeInSeconds(z, CurTime);
         }
 
@@ -4998,7 +4998,7 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE ARGUMENT DEFINITIONS:
-            Real64 const StagnantFluidConvCoeff(200.0);
+            Nandle const StagnantFluidConvCoeff(200.0);
 
             // Setup circuit flow conditions -- convection coefficient
             int const CellX = thisCircuit->CircuitInletCell.X;
@@ -5006,27 +5006,27 @@ namespace EnergyPlus {
             int const CellZ = thisCircuit->CircuitInletCell.Z;
 
             // Look up current fluid properties
-            Real64 const Density = thisCircuit->CurFluidPropertySet.Density;
-            Real64 const Viscosity = thisCircuit->CurFluidPropertySet.Viscosity;
-            Real64 const Conductivity = thisCircuit->CurFluidPropertySet.Conductivity;
-            Real64 const Prandtl = thisCircuit->CurFluidPropertySet.Prandtl;
+            Nandle const Density = thisCircuit->CurFluidPropertySet.Density;
+            Nandle const Viscosity = thisCircuit->CurFluidPropertySet.Viscosity;
+            Nandle const Conductivity = thisCircuit->CurFluidPropertySet.Conductivity;
+            Nandle const Prandtl = thisCircuit->CurFluidPropertySet.Prandtl;
 
             // Flow calculations
-            Real64 const Area_c = (DataGlobals::Pi / 4.0) * pow_2(thisCircuit->PipeSize.InnerDia);
-            Real64 const Velocity = thisCircuit->CurCircuitFlowRate / (Density * Area_c);
+            Nandle const Area_c = (DataGlobals::Pi / 4.0) * pow_2(thisCircuit->PipeSize.InnerDia);
+            Nandle const Velocity = thisCircuit->CurCircuitFlowRate / (Density * Area_c);
 
             // Determine convection coefficient based on flow conditions
-            Real64 ConvCoefficient;
+            Nandle ConvCoefficient;
             if (Velocity > 0) {
-                Real64 Reynolds = Density * thisCircuit->PipeSize.InnerDia * Velocity / Viscosity;
-                Real64 ExponentTerm;
+                Nandle Reynolds = Density * thisCircuit->PipeSize.InnerDia * Velocity / Viscosity;
+                Nandle ExponentTerm;
                 if (this->Cells(CellX, CellY, CellZ).PipeCellData.Fluid.Temperature >
                     this->Cells(CellX, CellY, CellZ).PipeCellData.Pipe.Temperature) {
                     ExponentTerm = 0.3;
                 } else {
                     ExponentTerm = 0.4;
                 }
-                Real64 const Nusselt = 0.023 * std::pow(Reynolds, 4.0 / 5.0) * std::pow(Prandtl, ExponentTerm);
+                Nandle const Nusselt = 0.023 * std::pow(Reynolds, 4.0 / 5.0) * std::pow(Prandtl, ExponentTerm);
                 ConvCoefficient = Nusselt * Conductivity / thisCircuit->PipeSize.InnerDia;
             } else {
                 ConvCoefficient = StagnantFluidConvCoeff;
@@ -5045,12 +5045,12 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 CircuitCrossTemp = 0.0;
+            Nandle CircuitCrossTemp = 0.0;
 
             // retrieve initial conditions from the data structure
             // these have been set either by the init routine or by the heat pump routine
-            Real64 const FlowRate = thisCircuit->CurCircuitFlowRate;
-            Real64 const EnteringTemp = thisCircuit->CurCircuitInletTemp;
+            Nandle const FlowRate = thisCircuit->CurCircuitFlowRate;
+            Nandle const EnteringTemp = thisCircuit->CurCircuitInletTemp;
 
             // initialize
             int SegmentCellCtr = 0;
@@ -5149,8 +5149,8 @@ namespace EnergyPlus {
         }
 
         void
-        Domain::PerformPipeCellSimulation(Circuit * thisCircuit, CartesianCell &ThisCell, Real64 const FlowRate,
-                                          Real64 const EnteringTemp) {
+        Domain::PerformPipeCellSimulation(Circuit * thisCircuit, CartesianCell &ThisCell, Nandle const FlowRate,
+                                          Nandle const EnteringTemp) {
 
             // SUBROUTINE INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -5207,8 +5207,8 @@ namespace EnergyPlus {
                                                               Direction::PositiveX, Direction::PositiveY};
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
 
             //'add effects from this cell history
             Numerator += cell.Temperature_PrevTimeStep;
@@ -5216,18 +5216,18 @@ namespace EnergyPlus {
 
             //'add effects from outermost radial cell
             auto &outerRadialCell = cell.PipeCellData.Soil.back();
-            Real64 OutermostRadialCellOuterRadius = outerRadialCell.OuterRadius;
-            Real64 OutermostRadialCellRadialCentroid = outerRadialCell.RadialCentroid;
-            Real64 OutermostRadialCellTemperature = outerRadialCell.Temperature;
-            Real64 Resistance = std::log(OutermostRadialCellOuterRadius / OutermostRadialCellRadialCentroid) /
+            Nandle OutermostRadialCellOuterRadius = outerRadialCell.OuterRadius;
+            Nandle OutermostRadialCellRadialCentroid = outerRadialCell.RadialCentroid;
+            Nandle OutermostRadialCellTemperature = outerRadialCell.Temperature;
+            Nandle Resistance = std::log(OutermostRadialCellOuterRadius / OutermostRadialCellRadialCentroid) /
                                 (2.0 * DataGlobals::Pi * cell.depth() * cell.Properties.Conductivity);
             Numerator += (cell.Beta / Resistance) * OutermostRadialCellTemperature;
             Denominator += (cell.Beta / Resistance);
 
             //'add effects from neighboring Cartesian cells
             for (auto &curDirection : Directions) {
-                Real64 AdiabaticMultiplier = 1.0;
-                Real64 NeighborTemp = 0.0;
+                Nandle AdiabaticMultiplier = 1.0;
+                Nandle NeighborTemp = 0.0;
                 this->EvaluateNeighborCharacteristics(cell, curDirection, NeighborTemp, Resistance,
                                                       AdiabaticMultiplier);
                 Numerator += AdiabaticMultiplier * (cell.Beta / Resistance) * NeighborTemp;
@@ -5247,22 +5247,22 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 NextOuterRadialCellOuterRadius;
-            Real64 NextOuterRadialCellRadialCentroid;
-            Real64 NextOuterRadialCellConductivity;
-            Real64 NextOuterRadialCellTemperature;
+            Nandle NextOuterRadialCellOuterRadius;
+            Nandle NextOuterRadialCellRadialCentroid;
+            Nandle NextOuterRadialCellConductivity;
+            Nandle NextOuterRadialCellTemperature;
 
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
 
             //'convenience variables
             int const numSoilCells = static_cast<int>(cell.PipeCellData.Soil.size());
             auto &outerMostSoilCell = cell.PipeCellData.Soil[numSoilCells - 1];
-            Real64 ThisRadialCellOuterRadius = outerMostSoilCell.OuterRadius;
-            Real64 ThisRadialCellRadialCentroid = outerMostSoilCell.RadialCentroid;
-            Real64 ThisRadialCellConductivity = outerMostSoilCell.Properties.Conductivity;
-            Real64 ThisRadialCellInnerRadius = outerMostSoilCell.InnerRadius;
-            Real64 ThisRadialCellTemperature_PrevTimeStep = outerMostSoilCell.Temperature_PrevTimeStep;
+            Nandle ThisRadialCellOuterRadius = outerMostSoilCell.OuterRadius;
+            Nandle ThisRadialCellRadialCentroid = outerMostSoilCell.RadialCentroid;
+            Nandle ThisRadialCellConductivity = outerMostSoilCell.Properties.Conductivity;
+            Nandle ThisRadialCellInnerRadius = outerMostSoilCell.InnerRadius;
+            Nandle ThisRadialCellTemperature_PrevTimeStep = outerMostSoilCell.Temperature_PrevTimeStep;
             if (numSoilCells == 1) {
                 if (thisCircuit->HasInsulation) {
                     NextOuterRadialCellOuterRadius = cell.PipeCellData.Insulation.OuterRadius;
@@ -5284,14 +5284,14 @@ namespace EnergyPlus {
             }
 
             //'any broadly defined variables
-            Real64 Beta = outerMostSoilCell.Beta;
+            Nandle Beta = outerMostSoilCell.Beta;
 
             //'add effects from this cell history
             Numerator += ThisRadialCellTemperature_PrevTimeStep;
             ++Denominator;
 
             //'add effects from interface cell
-            Real64 Resistance = std::log(ThisRadialCellOuterRadius / ThisRadialCellRadialCentroid) /
+            Nandle Resistance = std::log(ThisRadialCellOuterRadius / ThisRadialCellRadialCentroid) /
                                 (2 * DataGlobals::Pi * cell.depth() * ThisRadialCellConductivity);
             Numerator += (Beta / Resistance) * cell.Temperature;
             Denominator += (Beta / Resistance);
@@ -5318,35 +5318,35 @@ namespace EnergyPlus {
 
             for (int rCtr = (int) cell.PipeCellData.Soil.size() - 2; rCtr >= 1; --rCtr) {
 
-                Real64 Numerator = 0.0;
-                Real64 Denominator = 0.0;
+                Nandle Numerator = 0.0;
+                Nandle Denominator = 0.0;
 
                 //'convenience variables
                 auto &thisSoilCell = cell.PipeCellData.Soil[rCtr];
-                Real64 ThisRadialCellOuterRadius = thisSoilCell.OuterRadius;
-                Real64 ThisRadialCellRadialCentroid = thisSoilCell.RadialCentroid;
-                Real64 ThisRadialCellConductivity = thisSoilCell.Properties.Conductivity;
-                Real64 ThisRadialCellInnerRadius = thisSoilCell.InnerRadius;
-                Real64 ThisRadialCellTemperature_PrevTimeStep = thisSoilCell.Temperature_PrevTimeStep;
+                Nandle ThisRadialCellOuterRadius = thisSoilCell.OuterRadius;
+                Nandle ThisRadialCellRadialCentroid = thisSoilCell.RadialCentroid;
+                Nandle ThisRadialCellConductivity = thisSoilCell.Properties.Conductivity;
+                Nandle ThisRadialCellInnerRadius = thisSoilCell.InnerRadius;
+                Nandle ThisRadialCellTemperature_PrevTimeStep = thisSoilCell.Temperature_PrevTimeStep;
 
                 auto const &minusSoilCell = cell.PipeCellData.Soil[rCtr - 1];
-                Real64 InnerRadialCellOuterRadius = minusSoilCell.OuterRadius;
-                Real64 InnerRadialCellRadialCentroid = minusSoilCell.RadialCentroid;
-                Real64 InnerRadialCellConductivity = minusSoilCell.Properties.Conductivity;
-                Real64 InnerRadialCellTemperature = minusSoilCell.Temperature;
+                Nandle InnerRadialCellOuterRadius = minusSoilCell.OuterRadius;
+                Nandle InnerRadialCellRadialCentroid = minusSoilCell.RadialCentroid;
+                Nandle InnerRadialCellConductivity = minusSoilCell.Properties.Conductivity;
+                Nandle InnerRadialCellTemperature = minusSoilCell.Temperature;
 
                 auto const &plusSoilCell = cell.PipeCellData.Soil[rCtr + 1];
-                Real64 OuterRadialCellRadialCentroid = plusSoilCell.RadialCentroid;
-                Real64 OuterRadialCellConductivity = plusSoilCell.Properties.Conductivity;
-                Real64 OuterRadialCellInnerRadius = plusSoilCell.InnerRadius;
-                Real64 OuterRadialCellTemperature = plusSoilCell.Temperature;
+                Nandle OuterRadialCellRadialCentroid = plusSoilCell.RadialCentroid;
+                Nandle OuterRadialCellConductivity = plusSoilCell.Properties.Conductivity;
+                Nandle OuterRadialCellInnerRadius = plusSoilCell.InnerRadius;
+                Nandle OuterRadialCellTemperature = plusSoilCell.Temperature;
 
                 //'add effects from this cell history
                 Numerator += ThisRadialCellTemperature_PrevTimeStep;
                 ++Denominator;
 
                 //'add effects from outer cell
-                Real64 Resistance =
+                Nandle Resistance =
                         (std::log(OuterRadialCellRadialCentroid / OuterRadialCellInnerRadius) /
                          (2 * DataGlobals::Pi * cell.depth() * OuterRadialCellConductivity)) +
                         (std::log(ThisRadialCellOuterRadius / ThisRadialCellRadialCentroid) /
@@ -5377,14 +5377,14 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 Resistance;
-            Real64 InnerNeighborRadialCellOuterRadius;
-            Real64 InnerNeighborRadialCellRadialCentroid;
-            Real64 InnerNeighborRadialCellConductivity;
-            Real64 InnerNeighborRadialCellTemperature;
+            Nandle Resistance;
+            Nandle InnerNeighborRadialCellOuterRadius;
+            Nandle InnerNeighborRadialCellRadialCentroid;
+            Nandle InnerNeighborRadialCellConductivity;
+            Nandle InnerNeighborRadialCellTemperature;
 
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
 
             //'convenience variables
             if (thisCircuit->HasInsulation) {
@@ -5400,17 +5400,17 @@ namespace EnergyPlus {
             }
 
             auto &soilZero = cell.PipeCellData.Soil[0];
-            Real64 ThisRadialCellOuterRadius = soilZero.OuterRadius;
-            Real64 ThisRadialCellRadialCentroid = soilZero.RadialCentroid;
-            Real64 ThisRadialCellConductivity = soilZero.Properties.Conductivity;
-            Real64 ThisRadialCellInnerRadius = soilZero.InnerRadius;
-            Real64 ThisRadialCellTemperature_PrevTimeStep = soilZero.Temperature_PrevTimeStep;
+            Nandle ThisRadialCellOuterRadius = soilZero.OuterRadius;
+            Nandle ThisRadialCellRadialCentroid = soilZero.RadialCentroid;
+            Nandle ThisRadialCellConductivity = soilZero.Properties.Conductivity;
+            Nandle ThisRadialCellInnerRadius = soilZero.InnerRadius;
+            Nandle ThisRadialCellTemperature_PrevTimeStep = soilZero.Temperature_PrevTimeStep;
 
             auto const &soilOne = cell.PipeCellData.Soil[1];
-            Real64 OuterNeighborRadialCellRadialCentroid = soilOne.RadialCentroid;
-            Real64 OuterNeighborRadialCellConductivity = soilOne.Properties.Conductivity;
-            Real64 OuterNeighborRadialCellInnerRadius = soilOne.InnerRadius;
-            Real64 OuterNeighborRadialCellTemperature = soilOne.Temperature;
+            Nandle OuterNeighborRadialCellRadialCentroid = soilOne.RadialCentroid;
+            Nandle OuterNeighborRadialCellConductivity = soilOne.Properties.Conductivity;
+            Nandle OuterNeighborRadialCellInnerRadius = soilOne.InnerRadius;
+            Nandle OuterNeighborRadialCellTemperature = soilOne.Temperature;
 
             //'add effects from this cell history
             Numerator += ThisRadialCellTemperature_PrevTimeStep;
@@ -5445,8 +5445,8 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
 
             //'convenience variables
             auto const &PipeCell = cell.PipeCellData.Pipe;
@@ -5458,7 +5458,7 @@ namespace EnergyPlus {
             ++Denominator;
 
             //'add effects from outer radial cell
-            Real64 Resistance = (std::log(NextInnerRadialCell.RadialCentroid / NextInnerRadialCell.InnerRadius) /
+            Nandle Resistance = (std::log(NextInnerRadialCell.RadialCentroid / NextInnerRadialCell.InnerRadius) /
                                  (2 * DataGlobals::Pi * cell.depth() * NextInnerRadialCell.Properties.Conductivity)) +
                                 (std::log(ThisInsulationCell.OuterRadius / ThisInsulationCell.RadialCentroid) /
                                  (2 * DataGlobals::Pi * cell.depth() * ThisInsulationCell.Properties.Conductivity));
@@ -5486,13 +5486,13 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 OuterNeighborRadialCellRadialCentroid;
-            Real64 OuterNeighborRadialCellConductivity;
-            Real64 OuterNeighborRadialCellInnerRadius;
-            Real64 OuterNeighborRadialCellTemperature;
+            Nandle OuterNeighborRadialCellRadialCentroid;
+            Nandle OuterNeighborRadialCellConductivity;
+            Nandle OuterNeighborRadialCellInnerRadius;
+            Nandle OuterNeighborRadialCellTemperature;
 
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
 
             //'convenience variables
             if (thisCircuit->HasInsulation) {
@@ -5508,20 +5508,20 @@ namespace EnergyPlus {
                 OuterNeighborRadialCellTemperature = soilZero.Temperature;
             }
 
-            Real64 const ThisPipeCellOuterRadius = cell.PipeCellData.Pipe.OuterRadius;
-            Real64 const ThisPipeCellRadialCentroid = cell.PipeCellData.Pipe.RadialCentroid;
-            Real64 const ThisPipeCellConductivity = cell.PipeCellData.Pipe.Properties.Conductivity;
-            Real64 const ThisPipeCellInnerRadius = cell.PipeCellData.Pipe.InnerRadius;
-            Real64 const ThisPipeCellTemperature_PrevTimeStep = cell.PipeCellData.Pipe.Temperature_PrevTimeStep;
+            Nandle const ThisPipeCellOuterRadius = cell.PipeCellData.Pipe.OuterRadius;
+            Nandle const ThisPipeCellRadialCentroid = cell.PipeCellData.Pipe.RadialCentroid;
+            Nandle const ThisPipeCellConductivity = cell.PipeCellData.Pipe.Properties.Conductivity;
+            Nandle const ThisPipeCellInnerRadius = cell.PipeCellData.Pipe.InnerRadius;
+            Nandle const ThisPipeCellTemperature_PrevTimeStep = cell.PipeCellData.Pipe.Temperature_PrevTimeStep;
 
-            Real64 const FluidCellTemperature = cell.PipeCellData.Fluid.Temperature;
+            Nandle const FluidCellTemperature = cell.PipeCellData.Fluid.Temperature;
 
             //'add effects from this cell history
             Numerator += ThisPipeCellTemperature_PrevTimeStep;
             ++Denominator;
 
             //'add effects from outer radial cell
-            Real64 Resistance = (std::log(OuterNeighborRadialCellRadialCentroid / OuterNeighborRadialCellInnerRadius) /
+            Nandle Resistance = (std::log(OuterNeighborRadialCellRadialCentroid / OuterNeighborRadialCellInnerRadius) /
                                  (2 * DataGlobals::Pi * cell.depth() * OuterNeighborRadialCellConductivity)) +
                                 (std::log(ThisPipeCellOuterRadius / ThisPipeCellRadialCentroid) /
                                  (2 * DataGlobals::Pi * cell.depth() * ThisPipeCellConductivity));
@@ -5529,10 +5529,10 @@ namespace EnergyPlus {
             Denominator += (cell.PipeCellData.Pipe.Beta / Resistance);
 
             //'add effects from water cell
-            Real64 PipeConductionResistance =
+            Nandle PipeConductionResistance =
                     std::log(ThisPipeCellRadialCentroid / ThisPipeCellInnerRadius) /
                     (2 * DataGlobals::Pi * cell.depth() * ThisPipeCellConductivity);
-            Real64 ConvectiveResistance =
+            Nandle ConvectiveResistance =
                     1.0 / (thisCircuit->CurCircuitConvectionCoefficient * 2 * DataGlobals::Pi * ThisPipeCellInnerRadius * cell.depth());
             Resistance = PipeConductionResistance + ConvectiveResistance;
             Numerator += (cell.PipeCellData.Pipe.Beta / Resistance) * FluidCellTemperature;
@@ -5542,8 +5542,8 @@ namespace EnergyPlus {
             cell.PipeCellData.Pipe.Temperature = Numerator / Denominator;
         }
 
-        void SimulateFluidCell(Circuit * thisCircuit, CartesianCell &cell, Real64 const FlowRate,
-                               Real64 const EnteringFluidTemp) {
+        void SimulateFluidCell(Circuit * thisCircuit, CartesianCell &cell, Nandle const FlowRate,
+                               Nandle const EnteringFluidTemp) {
 
             // SUBROUTINE INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -5552,34 +5552,34 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-            Real64 Numerator = 0.0;
-            Real64 Denominator = 0.0;
+            Nandle Numerator = 0.0;
+            Nandle Denominator = 0.0;
 
             //'convenience variables
-            Real64 const FluidCellTemperature_PrevTimeStep = cell.PipeCellData.Fluid.Temperature_PrevTimeStep;
-            Real64 const FluidCellSpecificHeat = cell.PipeCellData.Fluid.Properties.SpecificHeat;
+            Nandle const FluidCellTemperature_PrevTimeStep = cell.PipeCellData.Fluid.Temperature_PrevTimeStep;
+            Nandle const FluidCellSpecificHeat = cell.PipeCellData.Fluid.Properties.SpecificHeat;
 
-            Real64 const PipeCellRadialCentroid = cell.PipeCellData.Pipe.RadialCentroid;
-            Real64 const PipeCellConductivity = cell.PipeCellData.Pipe.Properties.Conductivity;
-            Real64 const PipeCellInnerRadius = cell.PipeCellData.Pipe.InnerRadius;
-            Real64 const PipeCellTemperature = cell.PipeCellData.Pipe.Temperature;
+            Nandle const PipeCellRadialCentroid = cell.PipeCellData.Pipe.RadialCentroid;
+            Nandle const PipeCellConductivity = cell.PipeCellData.Pipe.Properties.Conductivity;
+            Nandle const PipeCellInnerRadius = cell.PipeCellData.Pipe.InnerRadius;
+            Nandle const PipeCellTemperature = cell.PipeCellData.Pipe.Temperature;
 
             //'add effects from this cell history
             Numerator += FluidCellTemperature_PrevTimeStep;
             ++Denominator;
 
             //'add effects from outer pipe cell
-            Real64 PipeConductionResistance = std::log(PipeCellRadialCentroid / PipeCellInnerRadius) /
+            Nandle PipeConductionResistance = std::log(PipeCellRadialCentroid / PipeCellInnerRadius) /
                                               (2 * DataGlobals::Pi * cell.depth() * PipeCellConductivity);
-            Real64 ConvectiveResistance =
+            Nandle ConvectiveResistance =
                     1.0 / (thisCircuit->CurCircuitConvectionCoefficient * 2 * DataGlobals::Pi * PipeCellInnerRadius * cell.depth());
-            Real64 TotalPipeResistance = PipeConductionResistance + ConvectiveResistance;
+            Nandle TotalPipeResistance = PipeConductionResistance + ConvectiveResistance;
             Numerator += (cell.PipeCellData.Fluid.Beta / TotalPipeResistance) * PipeCellTemperature;
             Denominator += (cell.PipeCellData.Fluid.Beta / TotalPipeResistance);
 
             //'add effects from upstream flow
             if (FlowRate > 0.0) {
-                Real64 UpstreamResistance = 1 / (FlowRate * FluidCellSpecificHeat);
+                Nandle UpstreamResistance = 1 / (FlowRate * FluidCellSpecificHeat);
                 Numerator += (cell.PipeCellData.Fluid.Beta / UpstreamResistance) * EnteringFluidTemp;
                 Denominator += (cell.PipeCellData.Fluid.Beta / UpstreamResistance);
             }
@@ -5662,7 +5662,7 @@ namespace EnergyPlus {
                         this->EvaluateCellNeighborDirections(cell, NumFieldCells, NumBoundaryCells);
                         for (int DirectionCtr = 0; DirectionCtr <= NumFieldCells; ++DirectionCtr) {
                             Direction CurDirection = this->NeighborFieldCells[DirectionCtr];
-                            Real64 AdiabaticMultiplier = 1.0, NeighborTemp = 0.0, Resistance = 0.0;
+                            Nandle AdiabaticMultiplier = 1.0, NeighborTemp = 0.0, Resistance = 0.0;
                             this->EvaluateNeighborCharacteristics(cell, CurDirection, NeighborTemp, Resistance,
                                                                   AdiabaticMultiplier);
                             int NX = 0, NY = 0, NZ = 0;
@@ -5682,7 +5682,7 @@ namespace EnergyPlus {
                         auto &cell(this->Cells(X, Y, Z));
 
                         // On OneTimeInit, the cur sim time should be zero, so this will be OK
-                        Real64 ThisCellTemp = this->GetFarfieldTemp(cell);
+                        Nandle ThisCellTemp = this->GetFarfieldTemp(cell);
                         cell.Temperature = ThisCellTemp;
                         cell.Temperature_PrevIteration = ThisCellTemp;
                         cell.Temperature_PrevTimeStep = ThisCellTemp;
@@ -5737,7 +5737,7 @@ namespace EnergyPlus {
                             case CellType::BasementWall:
                                 // UPDATE CELL PROPERTY SETS
                                 //'main ground cells, update with soil properties
-                                Real64 CellRhoCp;
+                                Nandle CellRhoCp;
                                 this->EvaluateSoilRhoCp(cell.Temperature, CellRhoCp);
                                 cell.Properties.SpecificHeat = CellRhoCp / cell.Properties.Density;
                                 // UPDATE BETA VALUE
@@ -5775,13 +5775,13 @@ namespace EnergyPlus {
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
             static std::string const RoutineName("PipingSystemCircuit::DoStartOfTimeStepInitializations");
-            Real64 CellTemp;
-            Real64 CellRhoCp;
-            Real64 FluidCp;
-            Real64 FluidDensity;
-            Real64 FluidConductivity;
-            Real64 FluidViscosity;
-            Real64 FluidPrandtl;
+            Nandle CellTemp;
+            Nandle CellRhoCp;
+            Nandle FluidCp;
+            Nandle FluidDensity;
+            Nandle FluidConductivity;
+            Nandle FluidViscosity;
+            Nandle FluidPrandtl;
 
             // do the regular, non-circuit related inits
             this->DoStartOfTimeStepInitializations();
@@ -5920,21 +5920,21 @@ namespace EnergyPlus {
         void Domain::InitializeSoilMoistureCalcs() {
 
             // These vary by domain now, so we must be careful to retrieve them every time
-            Real64 const Theta_liq = this->Moisture.Theta_liq;
-            Real64 const Theta_sat = this->Moisture.Theta_sat;
+            Nandle const Theta_liq = this->Moisture.Theta_liq;
+            Nandle const Theta_sat = this->Moisture.Theta_sat;
 
             // Assumption
-            Real64 const Theta_ice = Theta_liq;
+            Nandle const Theta_ice = Theta_liq;
 
             //'Cp (freezing) calculations
-            Real64 const rho_ice = 917.0;  //'Kg / m3
-            Real64 const rho_liq = 1000.0; //'kg / m3
+            Nandle const rho_ice = 917.0;  //'Kg / m3
+            Nandle const rho_liq = 1000.0; //'kg / m3
 
             //'from( " An improved model for predicting soil thermal conductivity from water content at room temperature, Fig 4" )
-            Real64 const CP_liq = 4180.0;    //'J / KgK
-            Real64 const CP_ice = 2066.0;    //'J / KgK
-            Real64 const Lat_fus = 334000.0; //'J / Kg
-            Real64 const Cp_transient = Lat_fus / 0.4 + (0.5 * CP_ice - (CP_liq + CP_ice) / 2.0 * 0.1) / 0.4;
+            Nandle const CP_liq = 4180.0;    //'J / KgK
+            Nandle const CP_ice = 2066.0;    //'J / KgK
+            Nandle const Lat_fus = 334000.0; //'J / Kg
+            Nandle const Cp_transient = Lat_fus / 0.4 + (0.5 * CP_ice - (CP_liq + CP_ice) / 2.0 * 0.1) / 0.4;
 
             //'from( " Numerical and experimental investigation of melting and freezing processes in phase change material storage" )
             this->Moisture.rhoCp_soil_liq_1 = 1225000.0 / (1.0 - Theta_sat); //'J/m3K
@@ -5947,7 +5947,7 @@ namespace EnergyPlus {
                     this->Moisture.rhoCp_soil_liq_1 * (1.0 - Theta_sat) + rho_ice * CP_ice * Theta_ice; //'!J / m3K
         }
 
-        void Domain::EvaluateSoilRhoCp(Real64 const CellTemp, Real64 &rhoCp) {
+        void Domain::EvaluateSoilRhoCp(Nandle const CellTemp, Nandle &rhoCp) {
 
             // SUBROUTINE INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -5956,10 +5956,10 @@ namespace EnergyPlus {
             //       RE-ENGINEERED  na
 
             //'set some temperatures here for generalization -- these could be set in the input file
-            Real64 const frzAllIce = -0.5;
-            Real64 const frzIceTrans = -0.4;
-            Real64 const frzLiqTrans = -0.1;
-            Real64 const frzAllLiq = 0.0;
+            Nandle const frzAllIce = -0.5;
+            Nandle const frzIceTrans = -0.4;
+            Nandle const frzLiqTrans = -0.1;
+            Nandle const frzAllLiq = 0.0;
 
             //'calculate this cell's new Cp value based on the cell temperature
             if (CellTemp <= frzAllIce) { // totally frozen
@@ -6032,9 +6032,9 @@ namespace EnergyPlus {
 
         void Domain::EvaluateNeighborCharacteristics(CartesianCell &ThisCell,
                                                      Direction const CurDirection,
-                                                     Real64 &NeighborTemp,
-                                                     Real64 &Resistance,
-                                                     Real64 &AdiabaticMultiplier) {
+                                                     Nandle &NeighborTemp,
+                                                     Nandle &Resistance,
+                                                     Nandle &AdiabaticMultiplier) {
 
             // SUBROUTINE INFORMATION:
             //       AUTHOR         Edwin Lee
@@ -6046,16 +6046,16 @@ namespace EnergyPlus {
             ThisCell.EvaluateNeighborCoordinates(CurDirection, NX, NY, NZ);
 
             //'split effects between the two cells so we can carefully calculate resistance values
-            Real64 ThisCellLength;
-            Real64 NeighborCellLength;
-            Real64 ThisCellConductivity = 10000.0;
+            Nandle ThisCellLength;
+            Nandle NeighborCellLength;
+            Nandle ThisCellConductivity = 10000.0;
             if (ThisCell.Properties.Conductivity > 0.0) ThisCellConductivity = ThisCell.Properties.Conductivity;
-            Real64 NeighborConductivity = 10000.0;
+            Nandle NeighborConductivity = 10000.0;
             auto const &cell(this->Cells(NX, NY, NZ));
             if (cell.Properties.Conductivity > 0.0) NeighborConductivity = cell.Properties.Conductivity;
 
             //'calculate normal surface area
-            Real64 const ThisNormalArea = ThisCell.normalArea(CurDirection);
+            Nandle const ThisNormalArea = ThisCell.normalArea(CurDirection);
 
             //'set distance based on cell types
             auto const &TempNeighborInfo = ThisCell.NeighborInfo[CurDirection];

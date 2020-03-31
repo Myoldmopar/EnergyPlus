@@ -66,7 +66,7 @@ TEST_F(EnergyPlusFixture, ExcessiveHeatStorage_Test)
     using namespace DataPlant;
     using namespace HVACInterfaceManager;
     using namespace DataHVACGlobals;
-    Real64 TankOutletTemp;
+    Nandle TankOutletTemp;
     TimeStepSys = 1;
     TotNumLoops = 1;
     PlantLoop.allocate(TotNumLoops);

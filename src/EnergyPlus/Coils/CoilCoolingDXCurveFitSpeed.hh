@@ -60,21 +60,21 @@ namespace EnergyPlus {
 struct CoilCoolingDXCurveFitSpeedInputSpecification
 {
     std::string name;
-    Real64 gross_rated_total_cooling_capacity_ratio_to_nominal;
-    Real64 gross_rated_sensible_heat_ratio;
-    Real64 gross_rated_cooling_COP;
-    Real64 evaporator_air_flow_fraction;
-    Real64 condenser_air_flow_fraction;
-    Real64 active_fraction_of_coil_face_area;
-    Real64 rated_evaporative_condenser_pump_power_fraction;
-    Real64 rated_evaporator_fan_power_per_volume_flow_rate;
-    Real64 evaporative_condenser_effectiveness;
+    Nandle gross_rated_total_cooling_capacity_ratio_to_nominal;
+    Nandle gross_rated_sensible_heat_ratio;
+    Nandle gross_rated_cooling_COP;
+    Nandle evaporator_air_flow_fraction;
+    Nandle condenser_air_flow_fraction;
+    Nandle active_fraction_of_coil_face_area;
+    Nandle rated_evaporative_condenser_pump_power_fraction;
+    Nandle rated_evaporator_fan_power_per_volume_flow_rate;
+    Nandle evaporative_condenser_effectiveness;
     std::string total_cooling_capacity_function_of_temperature_curve_name;
     std::string total_cooling_capacity_function_of_air_flow_fraction_curve_name;
     std::string energy_input_ratio_function_of_temperature_curve_name;
     std::string energy_input_ratio_function_of_air_flow_fraction_curve_name;
     std::string part_load_fraction_correlation_curve_name;
-    Real64 rated_waste_heat_fraction_of_power_input;
+    Nandle rated_waste_heat_fraction_of_power_input;
     std::string waste_heat_function_of_temperature_curve_name;
     std::string sensible_heat_ratio_modifier_function_of_temperature_curve_name;
     std::string sensible_heat_ratio_modifier_function_of_flow_fraction_curve_name;
@@ -102,50 +102,50 @@ struct CoilCoolingDXCurveFitSpeed
 
     // fixed values
     std::string name;
-    Real64 RatedAirMassFlowRate = 0.0;     // rated air mass flow rate at speed {kg/s}
-    Real64 RatedCondAirMassFlowRate = 0.0; // rated condenser air mass flow rate at speed {kg/s}
-    Real64 grossRatedSHR = 0.0;            // rated sensible heat ratio at speed
-    Real64 RatedCBF = 0.0;                 // rated coil bypass factor at speed
-    Real64 RatedEIR = 0.0;                 // rated energy input ratio at speed {W/W}
-    Real64 ratedCOP = 0.0;
-    Real64 rated_total_capacity = 0.0;
-    Real64 rated_evap_fan_power_per_volume_flow_rate = 0.0;
-    Real64 ratedWasteHeatFractionOfPowerInput = 0.0; // rated waste heat fraction of power input
-    Real64 evap_condenser_pump_power_fraction = 0.0;
-    Real64 evap_condenser_effectiveness = 0.0;
+    Nandle RatedAirMassFlowRate = 0.0;     // rated air mass flow rate at speed {kg/s}
+    Nandle RatedCondAirMassFlowRate = 0.0; // rated condenser air mass flow rate at speed {kg/s}
+    Nandle grossRatedSHR = 0.0;            // rated sensible heat ratio at speed
+    Nandle RatedCBF = 0.0;                 // rated coil bypass factor at speed
+    Nandle RatedEIR = 0.0;                 // rated energy input ratio at speed {W/W}
+    Nandle ratedCOP = 0.0;
+    Nandle rated_total_capacity = 0.0;
+    Nandle rated_evap_fan_power_per_volume_flow_rate = 0.0;
+    Nandle ratedWasteHeatFractionOfPowerInput = 0.0; // rated waste heat fraction of power input
+    Nandle evap_condenser_pump_power_fraction = 0.0;
+    Nandle evap_condenser_effectiveness = 0.0;
 
     int FanOpMode = 0;                   // fan operating mode, constant or cycling fan
 
     // stuff getting assigned by the parent mode
-    Real64 parentModeRatedGrossTotalCap = 0.0;
-    Real64 parentModeRatedEvapAirFlowRate = 0.0;
-    Real64 parentModeRatedCondAirFlowRate = 0.0;
+    Nandle parentModeRatedGrossTotalCap = 0.0;
+    Nandle parentModeRatedEvapAirFlowRate = 0.0;
+    Nandle parentModeRatedCondAirFlowRate = 0.0;
     int parentOperatingMode = 0;
 
     // speed class objects
-    Real64 ambPressure = 0.0; // outdoor pressure {Pa]
-    Real64 PLR = 0.0;
-    Real64 CondInletTemp = 0.0;     // condenser inlet node temp or outdoor temp if no condenser node {C}
-    Real64 AirFF = 0.0;             // ratio of air mass flow rate to rated air mass flow rate
-    Real64 fullLoadPower = 0.0;     // full load power at speed {W}
-    Real64 fullLoadWasteHeat = 0.0; // full load waste heat at speed {W}
-    Real64 RTF = 0.0;               // coil runtime fraction at speed
-    Real64 AirMassFlow = 0.0;       // coil inlet air mass flow rate {kg/s}
-    Real64 evap_air_flow_rate = 0.0;
-    Real64 condenser_air_flow_rate = 0.0;
-    Real64 active_fraction_of_face_coil_area = 0.0;
+    Nandle ambPressure = 0.0; // outdoor pressure {Pa]
+    Nandle PLR = 0.0;
+    Nandle CondInletTemp = 0.0;     // condenser inlet node temp or outdoor temp if no condenser node {C}
+    Nandle AirFF = 0.0;             // ratio of air mass flow rate to rated air mass flow rate
+    Nandle fullLoadPower = 0.0;     // full load power at speed {W}
+    Nandle fullLoadWasteHeat = 0.0; // full load waste heat at speed {W}
+    Nandle RTF = 0.0;               // coil runtime fraction at speed
+    Nandle AirMassFlow = 0.0;       // coil inlet air mass flow rate {kg/s}
+    Nandle evap_air_flow_rate = 0.0;
+    Nandle condenser_air_flow_rate = 0.0;
+    Nandle active_fraction_of_face_coil_area = 0.0;
 
     // rating data
-    Real64 RatedInletAirTemp = 26.6667;        // 26.6667C or 80F
-    Real64 RatedInletWetBulbTemp = 19.44;    // 19.44 or 67F
-    Real64 RatedInletAirHumRat = 0.01125;      // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
-    Real64 RatedOutdoorAirTemp = 35.0;      // 35 C or 95F
-    Real64 DryCoilOutletHumRatioMin = 0.00001; // dry coil outlet minimum hum ratio kgH2O/kgdry air
+    Nandle RatedInletAirTemp = 26.6667;        // 26.6667C or 80F
+    Nandle RatedInletWetBulbTemp = 19.44;    // 19.44 or 67F
+    Nandle RatedInletAirHumRat = 0.01125;      // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
+    Nandle RatedOutdoorAirTemp = 35.0;      // 35 C or 95F
+    Nandle DryCoilOutletHumRatioMin = 0.00001; // dry coil outlet minimum hum ratio kgH2O/kgdry air
 
     void CalcSpeedOutput(
-        const DataLoopNode::NodeData &inletNode, DataLoopNode::NodeData &outletNode, Real64 &PLR, int &fanOpMode, Real64 condInletTemp);
+        const DataLoopNode::NodeData &inletNode, DataLoopNode::NodeData &outletNode, Nandle &PLR, int &fanOpMode, Nandle condInletTemp);
     void size();
-    Real64 CalcBypassFactor(Real64 tdb, Real64 w, Real64 h, Real64 p);
+    Nandle CalcBypassFactor(Nandle tdb, Nandle w, Nandle h, Nandle p);
 
 private:
     bool processCurve(const std::string& curveName,
@@ -153,11 +153,11 @@ private:
                       std::vector<int> validDims,
                       const std::string& routineName,
                       const std::string& fieldName,
-                      Real64 Var1,               // required 1st independent variable
-                      Optional<Real64 const> Var2 = _, // 2nd independent variable
-                      Optional<Real64 const> Var3 = _, // 3rd independent variable
-                      Optional<Real64 const> Var4 = _, // 4th independent variable
-                      Optional<Real64 const> Var5 = _);
+                      Nandle Var1,               // required 1st independent variable
+                      Optional<Nandle const> Var2 = _, // 2nd independent variable
+                      Optional<Nandle const> Var3 = _, // 3rd independent variable
+                      Optional<Nandle const> Var4 = _, // 4th independent variable
+                      Optional<Nandle const> Var5 = _);
 };
 } // namespace EnergyPlus
 

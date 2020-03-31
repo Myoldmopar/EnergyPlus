@@ -65,78 +65,78 @@ namespace MicroCHPElectricGenerator {
     struct MicroCHPParamsNonNormalized
     {
         std::string Name;         // name of this PowerModule data
-        Real64 MaxElecPower;      // net electric power [W]
-        Real64 MinElecPower;      // net electric power [W]
-        Real64 MinWaterMdot;      // minimum cooling water flow [kg/s]
-        Real64 MaxWaterTemp;      // limit temp for inlet cooling water [C]
+        Nandle MaxElecPower;      // net electric power [W]
+        Nandle MinElecPower;      // net electric power [W]
+        Nandle MinWaterMdot;      // minimum cooling water flow [kg/s]
+        Nandle MaxWaterTemp;      // limit temp for inlet cooling water [C]
         int ElecEffCurveID;       // index for TriQuadratic for electrical efficiency
         int ThermalEffCurveID;    // index for TriQuadric for thermal efficiency
         bool InternalFlowControl; // Plant or Internal Flow rate control?
         bool PlantFlowControl;    // default is plant control
         int WaterFlowCurveID;     // index for BiQuadratic for water flow rate internal control
         int AirFlowCurveID;       // index for Quadratic for generator air flow
-        Real64 DeltaPelMax;       // max rate of change in net electric power [W/s}
-        Real64 DeltaFuelMdotMax;  // Maximum Rate of change in fuel flow rate [kmol/s2]
-        Real64 UAhx;              // heat exchanger UA [W/K]
-        Real64 UAskin;            // skin loss UA [W/K]
-        Real64 RadiativeFraction; // skin loss fraction to radiant energy []
-        Real64 MCeng;             // aggregated thermal mass of engine [J/K]
-        Real64 MCcw;              // aggregated thermal mass of heat recovery [J/k]
-        Real64 Pstandby;          // standby power [w]
+        Nandle DeltaPelMax;       // max rate of change in net electric power [W/s}
+        Nandle DeltaFuelMdotMax;  // Maximum Rate of change in fuel flow rate [kmol/s2]
+        Nandle UAhx;              // heat exchanger UA [W/K]
+        Nandle UAskin;            // skin loss UA [W/K]
+        Nandle RadiativeFraction; // skin loss fraction to radiant energy []
+        Nandle MCeng;             // aggregated thermal mass of engine [J/K]
+        Nandle MCcw;              // aggregated thermal mass of heat recovery [J/k]
+        Nandle Pstandby;          // standby power [w]
         bool WarmUpByTimeDelay;   // Warm up mode control
         bool WarmUpByEngineTemp;  // Warm up mode control
-        Real64 kf;                // coefficient k_f for warmup fuel flow rate
-        Real64 TnomEngOp;         // nominal engine operating temperature [C]
-        Real64 kp;                // coefficient k_p for warmup power
-        Real64 Rfuelwarmup;       // Warm Up Fuel Flow Rate Limit Ratio
-        Real64 WarmUpDelay;       // time for warm up delay [s]
-        Real64 PcoolDown;         // power during cool down
-        Real64 CoolDownDelay;     // time for cool down delay [s]
+        Nandle kf;                // coefficient k_f for warmup fuel flow rate
+        Nandle TnomEngOp;         // nominal engine operating temperature [C]
+        Nandle kp;                // coefficient k_p for warmup power
+        Nandle Rfuelwarmup;       // Warm Up Fuel Flow Rate Limit Ratio
+        Nandle WarmUpDelay;       // time for warm up delay [s]
+        Nandle PcoolDown;         // power during cool down
+        Nandle CoolDownDelay;     // time for cool down delay [s]
         bool MandatoryFullCoolDown;
         bool WarmRestartOkay;
         // calculated and from elsewhere
-        Real64 TimeElapsed; // Fraction of the current hour that has elapsed (h)
+        Nandle TimeElapsed; // Fraction of the current hour that has elapsed (h)
         // Saved in order to identify the beginning of a new system time
         int OpMode;
-        Real64 OffModeTime;      // amount of time generator spent in Off mode
-        Real64 StandyByModeTime; // amount of time generator spent in standby mode
-        Real64 WarmUpModeTime;   // amount of time generator spent in warm up mode
-        Real64 NormalModeTime;   // amount of time generator spent in normal mode
-        Real64 CoolDownModeTime; // amount of time generator spent in Cool down mode
-        Real64 TengLast;         // last timestep's value for engine temperature
-        Real64 TempCWOutLast;    // last timestep's value for cooling water outlet temperature
-        Real64 Pnet;
-        Real64 ElecEff;
-        Real64 Qgross;
-        Real64 ThermEff;
-        Real64 Qgenss;
-        Real64 NdotFuel;
-        Real64 MdotFuel;
-        Real64 Teng;
-        Real64 TcwIn;
-        Real64 TcwOut;
-        Real64 MdotAir;
-        Real64 QdotSkin; // rate of heat loss to zone
-        Real64 QdotConvZone;
-        Real64 QdotRadZone;
-        Real64 ACPowerGen;           // reporting: power (W)
-        Real64 ACEnergyGen;          // reporting: energy (J)
-        Real64 QdotHX;               // reporting: rate of heat exchange from engine to coolant (W)
-        Real64 QdotHR;               // reporting: rate of heat recovered (W)
-        Real64 TotalHeatEnergyRec;   // reporting: total heat recovered (J)
-        Real64 FuelEnergyLHV;        // reporting: Fuel Energy used in Lower Heating Value(J)
-        Real64 FuelEnergyUseRateLHV; // reporting: Fuel Energy used in Lower Heating Value(W)
-        Real64 FuelEnergyHHV;        // reporting: Fuel Energy used in Higher Heating Value(J)
-        Real64 FuelEnergyUseRateHHV; // reporting: Fuel Energy used in Higher Heating Value(W)
-        Real64 HeatRecInletTemp;     // reporting: Heat Recovery Loop Inlet Temperature (C)
-        Real64 HeatRecOutletTemp;    // reporting: Heat Recovery Loop Outlet Temperature (C)
-        Real64 FuelCompressPower;    // electrical power used by fuel supply compressor [W]
-        Real64 FuelCompressEnergy;   // electrical energy used by fuel supply compressor [J]
-        Real64 FuelCompressSkinLoss; // heat rate of losses.by fuel supply compressor [W]
-        Real64 SkinLossPower;        // heat loss to surrounding zone [W]
-        Real64 SkinLossEnergy;       // heat loss to surround zone [J]
-        Real64 SkinLossConvect;      // convective heat loss to zone [W]
-        Real64 SkinLossRadiat;       // radiative heat loss to zone [W]
+        Nandle OffModeTime;      // amount of time generator spent in Off mode
+        Nandle StandyByModeTime; // amount of time generator spent in standby mode
+        Nandle WarmUpModeTime;   // amount of time generator spent in warm up mode
+        Nandle NormalModeTime;   // amount of time generator spent in normal mode
+        Nandle CoolDownModeTime; // amount of time generator spent in Cool down mode
+        Nandle TengLast;         // last timestep's value for engine temperature
+        Nandle TempCWOutLast;    // last timestep's value for cooling water outlet temperature
+        Nandle Pnet;
+        Nandle ElecEff;
+        Nandle Qgross;
+        Nandle ThermEff;
+        Nandle Qgenss;
+        Nandle NdotFuel;
+        Nandle MdotFuel;
+        Nandle Teng;
+        Nandle TcwIn;
+        Nandle TcwOut;
+        Nandle MdotAir;
+        Nandle QdotSkin; // rate of heat loss to zone
+        Nandle QdotConvZone;
+        Nandle QdotRadZone;
+        Nandle ACPowerGen;           // reporting: power (W)
+        Nandle ACEnergyGen;          // reporting: energy (J)
+        Nandle QdotHX;               // reporting: rate of heat exchange from engine to coolant (W)
+        Nandle QdotHR;               // reporting: rate of heat recovered (W)
+        Nandle TotalHeatEnergyRec;   // reporting: total heat recovered (J)
+        Nandle FuelEnergyLHV;        // reporting: Fuel Energy used in Lower Heating Value(J)
+        Nandle FuelEnergyUseRateLHV; // reporting: Fuel Energy used in Lower Heating Value(W)
+        Nandle FuelEnergyHHV;        // reporting: Fuel Energy used in Higher Heating Value(J)
+        Nandle FuelEnergyUseRateHHV; // reporting: Fuel Energy used in Higher Heating Value(W)
+        Nandle HeatRecInletTemp;     // reporting: Heat Recovery Loop Inlet Temperature (C)
+        Nandle HeatRecOutletTemp;    // reporting: Heat Recovery Loop Outlet Temperature (C)
+        Nandle FuelCompressPower;    // electrical power used by fuel supply compressor [W]
+        Nandle FuelCompressEnergy;   // electrical energy used by fuel supply compressor [J]
+        Nandle FuelCompressSkinLoss; // heat rate of losses.by fuel supply compressor [W]
+        Nandle SkinLossPower;        // heat loss to surrounding zone [W]
+        Nandle SkinLossEnergy;       // heat loss to surround zone [J]
+        Nandle SkinLossConvect;      // convective heat loss to zone [W]
+        Nandle SkinLossRadiat;       // radiative heat loss to zone [W]
 
         // Default Constructor
         MicroCHPParamsNonNormalized()
@@ -161,15 +161,15 @@ namespace MicroCHPElectricGenerator {
         std::string ParamObjName;             // name of parameter object
         MicroCHPParamsNonNormalized A42Model; // Nested parameter data structure
         bool ModelTypeAnnex42;                // normalized =  non-normalized?
-        Real64 NomEff;                        // nominal efficiency
+        Nandle NomEff;                        // nominal efficiency
         std::string ZoneName;
         int ZoneID;
         std::string PlantInletNodeName;
         int PlantInletNodeID;
         std::string PlantOutletNodeName;
         int PlantOutletNodeID;
-        Real64 PlantMassFlowRate;              // only if internal control
-        Real64 PlantMassFlowRateMax;           // hardware limit for node%massflowrateMax
+        Nandle PlantMassFlowRate;              // only if internal control
+        Nandle PlantMassFlowRateMax;           // hardware limit for node%massflowrateMax
         bool PlantMassFlowRateMaxWasAutoSized; // true if mass flow rate was autosized on input
         std::string AirInletNodeName;
         int AirInletNodeID;
@@ -197,9 +197,9 @@ namespace MicroCHPElectricGenerator {
         {
         }
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 
@@ -211,8 +211,8 @@ namespace MicroCHPElectricGenerator {
 
         void CalcMicroCHPNoNormalizeGeneratorModel(bool RunFlagElectCenter, // TRUE when Generator operating
                                                    bool RunFlagPlant,
-                                                   Real64 MyElectricLoad, // Generator demand
-                                                   Real64 MyThermalLoad,
+                                                   Nandle MyElectricLoad, // Generator demand
+                                                   Nandle MyThermalLoad,
                                                    bool FirstHVACIteration);
 
         void UpdateMicroCHPGeneratorRecords();
@@ -222,36 +222,36 @@ namespace MicroCHPElectricGenerator {
 
     void GetMicroCHPGeneratorInput();
 
-    Real64 FuncDetermineEngineTemp(Real64 TcwOut,   // hot water leaving temp
-                                   Real64 MCeng,    // Fictitious mass and heat capacity of engine
-                                   Real64 UAHX,     // Heat exchanger UA
-                                   Real64 UAskin,   // Skin losses UA
-                                   Real64 Troom,    // surrounding zone temperature C
-                                   Real64 Qgenss,   // steady state generator heat generation
-                                   Real64 TengLast, // engine temp at previous time step
-                                   Real64 time      // elapsed time since previous evaluation
+    Nandle FuncDetermineEngineTemp(Nandle TcwOut,   // hot water leaving temp
+                                   Nandle MCeng,    // Fictitious mass and heat capacity of engine
+                                   Nandle UAHX,     // Heat exchanger UA
+                                   Nandle UAskin,   // Skin losses UA
+                                   Nandle Troom,    // surrounding zone temperature C
+                                   Nandle Qgenss,   // steady state generator heat generation
+                                   Nandle TengLast, // engine temp at previous time step
+                                   Nandle time      // elapsed time since previous evaluation
     );
 
-    Real64 FuncDetermineCoolantWaterExitTemp(Real64 TcwIn,      // hot water inlet temp
-                                             Real64 MCcw,       // Fictitious mass and heat capacity of coolant hx
-                                             Real64 UAHX,       // Heat exchanger UA
-                                             Real64 MdotCpcw,   // mass flow and specific heat of coolant water
-                                             Real64 Teng,       // engine mass temperature C
-                                             Real64 TcwoutLast, // coolant water leaving temp at previous time step
-                                             Real64 time        // elapsed time since previous evaluation
+    Nandle FuncDetermineCoolantWaterExitTemp(Nandle TcwIn,      // hot water inlet temp
+                                             Nandle MCcw,       // Fictitious mass and heat capacity of coolant hx
+                                             Nandle UAHX,       // Heat exchanger UA
+                                             Nandle MdotCpcw,   // mass flow and specific heat of coolant water
+                                             Nandle Teng,       // engine mass temperature C
+                                             Nandle TcwoutLast, // coolant water leaving temp at previous time step
+                                             Nandle time        // elapsed time since previous evaluation
     );
 
-    bool CheckMicroCHPThermalBalance(Real64 NomHeatGen, // nominal heat generation rate for scaling
-                                     Real64 TcwIn,      // hot water inlet temp
-                                     Real64 TcwOut,     // hot water leaving temp
-                                     Real64 Teng,       // engine mass temperature C
-                                     Real64 Troom,      // surrounding zone temperature C
-                                     Real64 UAHX,       // Heat exchanger UA
-                                     Real64 UAskin,     // Skin losses UA
-                                     Real64 Qgenss,     // steady state generator heat generation
-                                     Real64 MCeng,      // Fictitious mass and heat capacity of engine
-                                     Real64 MCcw,       // Fictitious mass and heat capacity of coolant hx
-                                     Real64 MdotCpcw    // mass flow and specific heat of coolant water
+    bool CheckMicroCHPThermalBalance(Nandle NomHeatGen, // nominal heat generation rate for scaling
+                                     Nandle TcwIn,      // hot water inlet temp
+                                     Nandle TcwOut,     // hot water leaving temp
+                                     Nandle Teng,       // engine mass temperature C
+                                     Nandle Troom,      // surrounding zone temperature C
+                                     Nandle UAHX,       // Heat exchanger UA
+                                     Nandle UAskin,     // Skin losses UA
+                                     Nandle Qgenss,     // steady state generator heat generation
+                                     Nandle MCeng,      // Fictitious mass and heat capacity of engine
+                                     Nandle MCcw,       // Fictitious mass and heat capacity of coolant hx
+                                     Nandle MdotCpcw    // mass flow and specific heat of coolant water
     );
 
     void FigureMicroCHPZoneGains();

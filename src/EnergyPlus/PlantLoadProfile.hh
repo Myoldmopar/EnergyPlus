@@ -89,23 +89,23 @@ namespace PlantLoadProfile {
         bool Init;          // Flag for initialization:  TRUE means do the init
         bool InitSizing;    // Flag for initialization of plant sizing
         int InletNode;
-        Real64 InletTemp; // Inlet temperature (C)
+        Nandle InletTemp; // Inlet temperature (C)
         int OutletNode;
-        Real64 OutletTemp;        // Outlet temperature (C)
+        Nandle OutletTemp;        // Outlet temperature (C)
         int LoadSchedule;         // Pointer to schedule object
         bool EMSOverridePower;    // if true, then EMS is calling to override power level
-        Real64 EMSPowerValue;     // value EMS is directing to use for power [W]
-        Real64 PeakVolFlowRate;   // Peak volumetric flow rate, also water consumption rate (m3/s)
+        Nandle EMSPowerValue;     // value EMS is directing to use for power [W]
+        Nandle PeakVolFlowRate;   // Peak volumetric flow rate, also water consumption rate (m3/s)
         int FlowRateFracSchedule; // Pointer to schedule object
-        Real64 VolFlowRate;       // Volumetric flow rate (m3/s)
-        Real64 MassFlowRate;      // Mass flow rate (kg/s)
+        Nandle VolFlowRate;       // Volumetric flow rate (m3/s)
+        Nandle MassFlowRate;      // Mass flow rate (kg/s)
         bool EMSOverrideMassFlow;
-        Real64 EMSMassFlowValue;
+        Nandle EMSMassFlowValue;
         // Report variables
-        Real64 Power;         // Power required to meet the load (W)
-        Real64 Energy;        // Energy required to meet the load (J)
-        Real64 HeatingEnergy; // Heating Energy required to meet the load (J)
-        Real64 CoolingEnergy; // Cooling Energy required to meet the load (J)
+        Nandle Power;         // Power required to meet the load (W)
+        Nandle Energy;        // Energy required to meet the load (J)
+        Nandle HeatingEnergy; // Heating Energy required to meet the load (J)
+        Nandle CoolingEnergy; // Cooling Energy required to meet the load (J)
         bool SetLoopIndexFlag;
 
         // Default Constructor
@@ -120,7 +120,7 @@ namespace PlantLoadProfile {
         // Functions
         static PlantComponent *factory(std::string objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad, bool const RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad, bool const RunFlag) override;
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 

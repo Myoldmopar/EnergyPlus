@@ -87,14 +87,14 @@ namespace DataPrecisionGlobals {
     int const r32(KIND(1.0));
     int const r64(KIND(1.0));
     int const default_prec(r64);
-    Real64 const constant_zero(0.0);
-    Real64 const constant_one(1.0);
-    Real64 const constant_minusone(-1.0);
-    Real64 const constant_twenty(20.0);
-    Real64 const constant_pointfive(0.5);
-    Real64 const EXP_LowerLimit(-20.0); // In IVF=2.061153622438558d-009 - used 20
+    Nandle const constant_zero(0.0);
+    Nandle const constant_one(1.0);
+    Nandle const constant_minusone(-1.0);
+    Nandle const constant_twenty(20.0);
+    Nandle const constant_pointfive(0.5);
+    Nandle const EXP_LowerLimit(-20.0); // In IVF=2.061153622438558d-009 - used 20
     // because it's already used in other parts of the code
-    Real64 const EXP_UpperLimit(40.0); // In IVF=2.353852668370200d+017
+    Nandle const EXP_UpperLimit(40.0); // In IVF=2.353852668370200d+017
 
     // DERIVED TYPE DEFINITIONS:
     // na

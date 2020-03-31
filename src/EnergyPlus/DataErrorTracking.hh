@@ -126,9 +126,9 @@ namespace DataErrorTracking {
         int Count;            // Count of total times this recurring error message has been called
         int WarmupCount;      // Count of times this recurring error message has been called during warmup
         int SizingCount;      // Count of times this recurring error message has been called during sizing
-        Real64 MaxValue;      // Max of the values passed for this recurring error message
-        Real64 MinValue;      // Min of the values passed for this recurring error message
-        Real64 SumValue;      // Sum of the values passed for this recurring error message
+        Nandle MaxValue;      // Max of the values passed for this recurring error message
+        Nandle MinValue;      // Min of the values passed for this recurring error message
+        Nandle SumValue;      // Sum of the values passed for this recurring error message
         std::string MaxUnits; // units for Max values
         std::string MinUnits; // units for Min values
         std::string SumUnits; // units for Sum values

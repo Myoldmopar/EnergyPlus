@@ -828,9 +828,9 @@ namespace OutputReportPredefined {
     int pdchLeedEcUnt;
     int pdchLeedEcsProc;
     int pdchLeedEcsTotal;
-    Real64 LEEDelecCostTotal;
-    Real64 LEEDgasCostTotal;
-    Real64 LEEDothrCostTotal;
+    Nandle LEEDelecCostTotal;
+    Nandle LEEDgasCostTotal;
+    Nandle LEEDothrCostTotal;
 
     int pdstLeedRenewSum;
     int pdchLeedRenRatCap;
@@ -882,10 +882,10 @@ namespace OutputReportPredefined {
     int const recKindSurface(1);
     int const recKindSubsurface(2);
 
-    Real64 TotalNotMetHeatingOccupiedForABUPS(0.0);
-    Real64 TotalNotMetCoolingOccupiedForABUPS(0.0);
-    Real64 TotalNotMetOccupiedForABUPS(0.0);
-    Real64 TotalTimeNotSimpleASH55EitherForABUPS(0.0);
+    Nandle TotalNotMetHeatingOccupiedForABUPS(0.0);
+    Nandle TotalNotMetCoolingOccupiedForABUPS(0.0);
+    Nandle TotalNotMetOccupiedForABUPS(0.0);
+    Nandle TotalTimeNotSimpleASH55EitherForABUPS(0.0);
 
     // Object Data
     Array1D<reportNameType> reportName;
@@ -2607,7 +2607,7 @@ namespace OutputReportPredefined {
         pdchLeedSchStPt11pmWedCnt = newPreDefColumn(pdstLeedSchedSetPts, "Days with Same 11pm Value");
     }
 
-    void PreDefTableEntry(int const columnIndex, std::string const &objName, Real64 const tableEntryReal, Optional_int_const numSigDigits)
+    void PreDefTableEntry(int const columnIndex, std::string const &objName, Nandle const tableEntryReal, Optional_int_const numSigDigits)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Jason Glazer
@@ -2820,7 +2820,7 @@ namespace OutputReportPredefined {
     }
 
     void
-    AddCompSizeTableEntry(std::string const &FieldType, std::string const &FieldName, std::string const &FieldDescription, Real64 const FieldValue)
+    AddCompSizeTableEntry(std::string const &FieldType, std::string const &FieldName, std::string const &FieldDescription, Nandle const FieldValue)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Jason Glazer

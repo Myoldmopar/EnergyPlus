@@ -140,12 +140,12 @@ namespace HeatBalanceHAMTManager {
     int const ittermax(150); // Maximum Number of itterations
     int const adjmax(6);     // Maximum Number of Adjacent Cells
 
-    Real64 const wdensity(1000.0); // Density of water kg.m-3
-    Real64 const wspech(4180.0);   // Specific Heat Capacity of Water J.kg-1.K-1 (at 20C)
-    Real64 const whv(2489000.0);   // Evaporation enthalpy of water J.kg-1
-    Real64 const convt(0.002);     // Temperature convergence limit
-    Real64 const qvplim(100000.0); // Maximum latent heat W
-    Real64 const rhmax(1.01);      // Maximum RH value
+    Nandle const wdensity(1000.0); // Density of water kg.m-3
+    Nandle const wspech(4180.0);   // Specific Heat Capacity of Water J.kg-1.K-1 (at 20C)
+    Nandle const whv(2489000.0);   // Evaporation enthalpy of water J.kg-1
+    Nandle const convt(0.002);     // Temperature convergence limit
+    Nandle const qvplim(100000.0); // Maximum latent heat W
+    Nandle const rhmax(1.01);      // Maximum RH value
 
     static std::string const BlankString;
 
@@ -162,20 +162,20 @@ namespace HeatBalanceHAMTManager {
     Array1D_int Intcell;
     Array1D_int IntConcell;
 
-    Array1D<Real64> watertot;
-    Array1D<Real64> surfrh;
-    Array1D<Real64> surfextrh;
-    Array1D<Real64> surftemp;
-    Array1D<Real64> surfexttemp;
-    Array1D<Real64> surfvp;
+    Array1D<Nandle> watertot;
+    Array1D<Nandle> surfrh;
+    Array1D<Nandle> surfextrh;
+    Array1D<Nandle> surftemp;
+    Array1D<Nandle> surfexttemp;
+    Array1D<Nandle> surfvp;
 
-    Array1D<Real64> extvtc;   // External Surface vapor transfer coefficient
-    Array1D<Real64> intvtc;   // Internal Surface Vapor Transfer Coefficient
+    Array1D<Nandle> extvtc;   // External Surface vapor transfer coefficient
+    Array1D<Nandle> intvtc;   // Internal Surface Vapor Transfer Coefficient
     Array1D_bool extvtcflag;  // External Surface vapor transfer coefficient flag
     Array1D_bool intvtcflag;  // Internal Surface Vapor Transfer Coefficient flag
     Array1D_bool MyEnvrnFlag; // Flag to reset surface properties.
 
-    Real64 deltat(0.0); // time step in seconds
+    Nandle deltat(0.0); // time step in seconds
 
     int TotCellsMax(0); // Maximum number of cells per material
 
@@ -189,7 +189,7 @@ namespace HeatBalanceHAMTManager {
 
     // Functions
 
-    void ManageHeatBalHAMT(int const SurfNum, Real64 &TempSurfInTmp, Real64 &TempSurfOutTmp)
+    void ManageHeatBalHAMT(int const SurfNum, Nandle &TempSurfInTmp, Nandle &TempSurfOutTmp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -266,11 +266,11 @@ namespace HeatBalanceHAMTManager {
         Array1D_bool lAlphaBlanks;
         Array1D_bool lNumericBlanks;
 
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
 
-        Real64 dumrh;
-        Real64 dumdata;
-        Real64 avdata;
+        Nandle dumrh;
+        Nandle dumdata;
+        Nandle avdata;
 
         int MaxNums;
         int MaxAlphas;
@@ -720,7 +720,7 @@ namespace HeatBalanceHAMTManager {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const adjdist(0.00005); // Allowable distance between two cells, also used as limit on cell length
+        Nandle const adjdist(0.00005); // Allowable distance between two cells, also used as limit on cell length
         static std::string const RoutineName("InitCombinedHeatAndMoistureFiniteElement: ");
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -745,11 +745,11 @@ namespace HeatBalanceHAMTManager {
         int errorCount;
         int MaterNum;
 
-        Real64 runor;
-        Real64 high1;
-        Real64 low2;
-        Real64 testlen;
-        Real64 waterd; // water density
+        Nandle runor;
+        Nandle high1;
+        Nandle low2;
+        Nandle testlen;
+        Nandle waterd; // water density
         bool DoReport;
 
         deltat = TimeStepZone * 3600.0;
@@ -822,7 +822,7 @@ namespace HeatBalanceHAMTManager {
                     Material(matid).divs = Material(matid).divmax;
                 }
                 // Check length of cell - reduce number of divisions if necessary
-                Real64 const sin_negPIOvr2 = std::sin(-Pi / 2.0);
+                Nandle const sin_negPIOvr2 = std::sin(-Pi / 2.0);
                 while (true) {
                     testlen =
                         Material(matid).Thickness * ((std::sin(Pi * (-1.0 / double(Material(matid).divs)) - Pi / 2.0) / 2.0) - (sin_negPIOvr2 / 2.0));
@@ -1074,7 +1074,7 @@ namespace HeatBalanceHAMTManager {
         }
     }
 
-    void CalcHeatBalHAMT(int const sid, Real64 &TempSurfInTmp, Real64 &TempSurfOutTmp)
+    void CalcHeatBalHAMT(int const sid, Nandle &TempSurfInTmp, Nandle &TempSurfOutTmp)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Phillip Biddulph
@@ -1111,28 +1111,28 @@ namespace HeatBalanceHAMTManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TempSurfInP;
-        Real64 RhoIn;
-        Real64 RhoOut;
-        Real64 torsum;
-        Real64 oorsum;
-        Real64 phioosum;
-        Real64 phiorsum;
-        Real64 vpoosum;
-        Real64 vporsum;
-        Real64 rhr1;
-        Real64 rhr2;
-        Real64 wcap;
-        Real64 thermr1;
-        Real64 thermr2;
-        Real64 tcap;
-        Real64 qvp;
-        Real64 vaporr1;
-        Real64 vaporr2;
-        Real64 vpdiff;
-        Real64 sumtp1;
-        Real64 tempmax;
-        Real64 tempmin;
+        Nandle TempSurfInP;
+        Nandle RhoIn;
+        Nandle RhoOut;
+        Nandle torsum;
+        Nandle oorsum;
+        Nandle phioosum;
+        Nandle phiorsum;
+        Nandle vpoosum;
+        Nandle vporsum;
+        Nandle rhr1;
+        Nandle rhr2;
+        Nandle wcap;
+        Nandle thermr1;
+        Nandle thermr2;
+        Nandle tcap;
+        Nandle qvp;
+        Nandle vaporr1;
+        Nandle vaporr2;
+        Nandle vpdiff;
+        Nandle sumtp1;
+        Nandle tempmax;
+        Nandle tempmin;
 
         int ii;
         int matid;
@@ -1146,7 +1146,7 @@ namespace HeatBalanceHAMTManager {
         static int qvpErrCount(0);
         //    INTEGER, SAVE :: tempErrReport=0
         static int qvpErrReport(0);
-        Real64 denominator;
+        Nandle denominator;
 
         if (BeginEnvrnFlag && MyEnvrnFlag(sid)) {
             cells(Extcell(sid)).rh = 0.0;
@@ -1554,8 +1554,8 @@ namespace HeatBalanceHAMTManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int cid;
-        Real64 watermass;
-        Real64 matmass;
+        Nandle watermass;
+        Nandle matmass;
         // unused1208    REAL(r64), SAVE :: InOld=0.0D0
         // unused1208    REAL(r64), SAVE :: OutOld=0.0D0
 
@@ -1584,7 +1584,7 @@ namespace HeatBalanceHAMTManager {
         surfvp(sid) = RHtoVP(cells(Intcell(sid)).rh, cells(Intcell(sid)).temp);
     }
 
-    void interp(int const ndata, const Array1D<Real64> &xx, const Array1D<Real64> &yy, Real64 const invalue, Real64 &outvalue, Optional<Real64> outgrad)
+    void interp(int const ndata, const Array1D<Nandle> &xx, const Array1D<Nandle> &yy, Nandle const invalue, Nandle &outvalue, Optional<Nandle> outgrad)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Phillip Biddulph
@@ -1623,11 +1623,11 @@ namespace HeatBalanceHAMTManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 xxlow;
-        Real64 xxhigh;
-        Real64 yylow;
-        Real64 yyhigh;
-        Real64 mygrad;
+        Nandle xxlow;
+        Nandle xxhigh;
+        Nandle yylow;
+        Nandle yyhigh;
+        Nandle mygrad;
         int step;
 
         mygrad = 0.0;
@@ -1659,7 +1659,7 @@ namespace HeatBalanceHAMTManager {
         }
     }
 
-    Real64 RHtoVP(Real64 const RH, Real64 const Temperature)
+    Nandle RHtoVP(Nandle const RH, Nandle const Temperature)
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Phillip Biddulph
@@ -1680,7 +1680,7 @@ namespace HeatBalanceHAMTManager {
         // na
 
         // Return value
-        Real64 RHtoVP;
+        Nandle RHtoVP;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1696,7 +1696,7 @@ namespace HeatBalanceHAMTManager {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        Real64 VPSat;
+        Nandle VPSat;
 
         VPSat = PsyPsatFnTemp(Temperature);
 
@@ -1705,7 +1705,7 @@ namespace HeatBalanceHAMTManager {
         return RHtoVP;
     }
 
-    Real64 WVDC(Real64 const Temperature, Real64 const ambp)
+    Nandle WVDC(Nandle const Temperature, Nandle const ambp)
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Phillip Biddulph
@@ -1728,7 +1728,7 @@ namespace HeatBalanceHAMTManager {
         // na
 
         // Return value
-        Real64 WVDC;
+        Nandle WVDC;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:

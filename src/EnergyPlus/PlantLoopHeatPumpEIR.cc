@@ -88,7 +88,7 @@ namespace EIRPlantLoopHeatPumps {
 
     void EIRPlantLoopHeatPump::simulate(const EnergyPlus::PlantLocation &calledFromLocation,
                                         bool const FirstHVACIteration,
-                                        Real64 &CurLoad,
+                                        Nandle &CurLoad,
                                         bool const RunFlag)
     {
 
@@ -127,7 +127,7 @@ namespace EIRPlantLoopHeatPumps {
         DataLoopNode::Node(this->sourceSideNodes.outlet).Temp = this->sourceSideOutletTemp;
     }
 
-    Real64 EIRPlantLoopHeatPump::getLoadSideOutletSetPointTemp()
+    Nandle EIRPlantLoopHeatPump::getLoadSideOutletSetPointTemp()
     {
         auto &thisLoadPlantLoop = DataPlant::PlantLoop(this->loadSideLocation.loopNum);
         auto &thisLoadLoopSide = thisLoadPlantLoop.LoopSide(this->loadSideLocation.loopSideNum);
@@ -287,10 +287,10 @@ namespace EIRPlantLoopHeatPumps {
         }
     }
 
-    void EIRPlantLoopHeatPump::doPhysics(Real64 currentLoad)
+    void EIRPlantLoopHeatPump::doPhysics(Nandle currentLoad)
     {
 
-        Real64 const reportingInterval = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle const reportingInterval = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
         // read inlet temperatures
         this->loadSideInletTemp = DataLoopNode::Node(this->loadSideNodes.inlet).Temp;
@@ -305,32 +305,32 @@ namespace EIRPlantLoopHeatPumps {
         }
 
         // get setpoint on the load side outlet
-        Real64 loadSideOutletSetpointTemp = this->getLoadSideOutletSetPointTemp();
+        Nandle loadSideOutletSetpointTemp = this->getLoadSideOutletSetPointTemp();
 
         // evaluate capacity modifier curve and determine load side heat transfer
-        Real64 capacityModifierFuncTemp =
+        Nandle capacityModifierFuncTemp =
             CurveManager::CurveValue(this->capFuncTempCurveIndex, loadSideOutletSetpointTemp, this->sourceSideInletTemp);
-        Real64 availableCapacity = this->referenceCapacity * capacityModifierFuncTemp;
-        Real64 partLoadRatio = 0.0;
+        Nandle availableCapacity = this->referenceCapacity * capacityModifierFuncTemp;
+        Nandle partLoadRatio = 0.0;
         if (availableCapacity > 0) {
             partLoadRatio = max(0.0, min(std::abs(currentLoad) / availableCapacity, 1.0));
         }
 
         // evaluate the actual current operating load side heat transfer rate
         auto &thisLoadPlantLoop = DataPlant::PlantLoop(this->loadSideLocation.loopNum);
-        Real64 CpLoad = FluidProperties::GetSpecificHeatGlycol(
+        Nandle CpLoad = FluidProperties::GetSpecificHeatGlycol(
             thisLoadPlantLoop.FluidName, DataLoopNode::Node(this->loadSideNodes.inlet).Temp, thisLoadPlantLoop.FluidIndex, "PLHPEIR::simulate()");
         this->loadSideHeatTransfer = availableCapacity * partLoadRatio;
         this->loadSideEnergy = this->loadSideHeatTransfer * reportingInterval;
 
         // calculate load side outlet conditions
-        Real64 const loadMCp = this->loadSideMassFlowRate * CpLoad;
+        Nandle const loadMCp = this->loadSideMassFlowRate * CpLoad;
         this->loadSideOutletTemp = this->calcLoadOutletTemp(this->loadSideInletTemp, this->loadSideHeatTransfer / loadMCp);
 
         // calculate power usage from EIR curves
-        Real64 eirModifierFuncTemp =
+        Nandle eirModifierFuncTemp =
             CurveManager::CurveValue(this->powerRatioFuncTempCurveIndex, this->loadSideOutletTemp, this->sourceSideInletTemp);
-        Real64 eirModifierFuncPLR = CurveManager::CurveValue(this->powerRatioFuncPLRCurveIndex, partLoadRatio);
+        Nandle eirModifierFuncPLR = CurveManager::CurveValue(this->powerRatioFuncPLRCurveIndex, partLoadRatio);
         this->powerUsage = (this->loadSideHeatTransfer / this->referenceCOP) * eirModifierFuncPLR * eirModifierFuncTemp;
         this->powerEnergy = this->powerUsage * reportingInterval;
 
@@ -339,14 +339,14 @@ namespace EIRPlantLoopHeatPumps {
         this->sourceSideEnergy = this->sourceSideHeatTransfer * reportingInterval;
 
         // calculate source side outlet conditions
-        Real64 CpSrc = 0.0;
+        Nandle CpSrc = 0.0;
         if (this->waterSource) {
             CpSrc = FluidProperties::GetSpecificHeatGlycol(
                 thisLoadPlantLoop.FluidName, DataLoopNode::Node(this->loadSideNodes.inlet).Temp, thisLoadPlantLoop.FluidIndex, "PLHPEIR::simulate()");
         } else if (this->airSource) {
             CpSrc = Psychrometrics::PsyCpAirFnW(DataEnvironment::OutHumRat);
         }
-        Real64 const sourceMCp = this->sourceSideMassFlowRate * CpSrc;
+        Nandle const sourceMCp = this->sourceSideMassFlowRate * CpSrc;
         this->sourceSideOutletTemp = this->calcSourceOutletTemp(this->sourceSideInletTemp, this->sourceSideHeatTransfer / sourceMCp);
     }
 
@@ -494,7 +494,7 @@ namespace EIRPlantLoopHeatPumps {
         } // plant setup
 
         if (DataGlobals::BeginEnvrnFlag && this->envrnInit && DataPlant::PlantFirstSizesOkayToFinalize) {
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
                                                            DataGlobals::InitConvTemp,
                                                            DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidIndex,
                                                            routineName);
@@ -534,7 +534,7 @@ namespace EIRPlantLoopHeatPumps {
         }
     }
 
-    void EIRPlantLoopHeatPump::getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void EIRPlantLoopHeatPump::getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         if (calledFromLocation.loopNum == this->loadSideLocation.loopNum) {
             this->sizeLoadSide();
@@ -565,20 +565,20 @@ namespace EIRPlantLoopHeatPumps {
         bool errorsFound = false;
 
         // these variables will be used throughout this function as a temporary value of that physical state
-        Real64 tmpCapacity = this->referenceCapacity;
-        Real64 tmpLoadVolFlow = this->loadSideDesignVolFlowRate;
+        Nandle tmpCapacity = this->referenceCapacity;
+        Nandle tmpLoadVolFlow = this->loadSideDesignVolFlowRate;
 
         std::string const typeName = DataPlant::ccSimPlantEquipTypes(this->plantTypeOfNum);
-        Real64 loadSideInitTemp = DataGlobals::CWInitConvTemp;
+        Nandle loadSideInitTemp = DataGlobals::CWInitConvTemp;
         if (this->plantTypeOfNum == DataPlant::TypeOf_HeatPumpEIRHeating) {
             loadSideInitTemp = DataGlobals::HWInitConvTemp;
         }
 
-        Real64 const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
+        Nandle const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
                                                              loadSideInitTemp,
                                                              DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidIndex,
                                                              "EIRPlantLoopHeatPump::size()");
-        Real64 const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
+        Nandle const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
                                                                  loadSideInitTemp,
                                                                  DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidIndex,
                                                                  "EIRPlantLoopHeatPump::size()");
@@ -617,7 +617,7 @@ namespace EIRPlantLoopHeatPumps {
                     // this blocks means the capacity value was hard-sized
                     if (this->referenceCapacity > 0.0 && tmpCapacity > 0.0) {
                         // then the capacity was hard-sized to a good value and the tmpCapacity was calculated to a good value too
-                        Real64 hardSizedCapacity = this->referenceCapacity;
+                        Nandle hardSizedCapacity = this->referenceCapacity;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput(typeName,
@@ -659,7 +659,7 @@ namespace EIRPlantLoopHeatPumps {
                     }
                 } else {
                     if (this->loadSideDesignVolFlowRate > 0.0 && tmpLoadVolFlow > 0.0) {
-                        Real64 hardSizedLoadSideFlow = this->loadSideDesignVolFlowRate;
+                        Nandle hardSizedLoadSideFlow = this->loadSideDesignVolFlowRate;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput(typeName,
@@ -747,21 +747,21 @@ namespace EIRPlantLoopHeatPumps {
         bool errorsFound = false;
 
         // these variables will be used throughout this function as a temporary value of that physical state
-        Real64 tmpCapacity = this->referenceCapacity;
-        Real64 tmpLoadVolFlow = this->loadSideDesignVolFlowRate;
-        Real64 tmpSourceVolFlow;
+        Nandle tmpCapacity = this->referenceCapacity;
+        Nandle tmpLoadVolFlow = this->loadSideDesignVolFlowRate;
+        Nandle tmpSourceVolFlow;
 
         std::string const typeName = DataPlant::ccSimPlantEquipTypes(this->plantTypeOfNum);
-        Real64 sourceSideInitTemp = DataGlobals::HWInitConvTemp;
+        Nandle sourceSideInitTemp = DataGlobals::HWInitConvTemp;
         if (this->plantTypeOfNum == DataPlant::TypeOf_HeatPumpEIRHeating) {
             sourceSideInitTemp = DataGlobals::CWInitConvTemp;
         }
 
-        Real64 const rhoSrc = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
+        Nandle const rhoSrc = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
                                                                 sourceSideInitTemp,
                                                                 DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidIndex,
                                                                 "EIRPlantLoopHeatPump::size()");
-        Real64 const CpSrc = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
+        Nandle const CpSrc = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidName,
                                                                     sourceSideInitTemp,
                                                                     DataPlant::PlantLoop(this->loadSideLocation.loopNum).FluidIndex,
                                                                     "EIRPlantLoopHeatPump::size()");
@@ -777,7 +777,7 @@ namespace EIRPlantLoopHeatPumps {
             // First the definition of COP: COP = Qload/Power, therefore Power = Qload/COP
             // Then the energy balance:     Qsrc = Qload + Power
             // Substituting for Power:      Qsrc = Qload + Qload/COP, therefore Qsrc = Qload (1 + 1/COP)
-            Real64 const designSourceSideHeatTransfer = tmpCapacity * (1 + 1 / this->referenceCOP);
+            Nandle const designSourceSideHeatTransfer = tmpCapacity * (1 + 1 / this->referenceCOP);
             // To get the design source flow rate, just apply the sensible heat rate equation:
             //                              Qsrc = rho_src * Vdot_src * Cp_src * DeltaT_src
             //                              Vdot_src = Q_src / (rho_src * Cp_src * DeltaT_src)
@@ -798,7 +798,7 @@ namespace EIRPlantLoopHeatPumps {
         } else {
             // source design flow was hard-sized
             if (this->sourceSideDesignVolFlowRate > 0.0 && tmpSourceVolFlow > 0.0) {
-                Real64 const hardSizedSourceSideFlow = this->sourceSideDesignVolFlowRate;
+                Nandle const hardSizedSourceSideFlow = this->sourceSideDesignVolFlowRate;
                 if (DataPlant::PlantFinalSizesOkayToReport) {
                     if (DataGlobals::DoPlantSizing) {
                         ReportSizingManager::ReportSizingOutput(typeName,
@@ -853,34 +853,34 @@ namespace EIRPlantLoopHeatPumps {
         bool errorsFound = false;
 
         // these variables will be used throughout this function as a temporary value of that physical state
-        Real64 tmpCapacity = this->referenceCapacity;
-        Real64 tmpLoadVolFlow = this->loadSideDesignVolFlowRate;
-        Real64 tmpSourceVolFlow = 0.0;
+        Nandle tmpCapacity = this->referenceCapacity;
+        Nandle tmpLoadVolFlow = this->loadSideDesignVolFlowRate;
+        Nandle tmpSourceVolFlow = 0.0;
 
         std::string const typeName = DataPlant::ccSimPlantEquipTypes(this->plantTypeOfNum);
 
         // will leave like this for now
         // need to update these to better values later
-        Real64 sourceSideInitTemp = 20;
-        Real64 sourceSideHumRat = 0.0;
+        Nandle sourceSideInitTemp = 20;
+        Nandle sourceSideHumRat = 0.0;
         if (this->plantTypeOfNum == DataPlant::TypeOf_HeatPumpEIRHeating) {
             // same here; update later
             sourceSideInitTemp = 20;
         }
 
-        Real64 const rhoSrc = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::StdBaroPress, sourceSideInitTemp, sourceSideHumRat);
-        Real64 const CpSrc = Psychrometrics::PsyCpAirFnW(sourceSideHumRat);
+        Nandle const rhoSrc = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::StdBaroPress, sourceSideInitTemp, sourceSideHumRat);
+        Nandle const CpSrc = Psychrometrics::PsyCpAirFnW(sourceSideHumRat);
 
         // set the source-side flow rate
         if (this->sourceSideDesignVolFlowRateWasAutoSized) {
             // load-side capacity should already be set, so unless the flow rate is specified, we can set
             // an assumed reasonable flow rate since this doesn't affect downstream components
-            Real64 DeltaT_src = 10;
+            Nandle DeltaT_src = 10;
             // to get the source flow, we first must calculate the required heat impact on the source side
             // First the definition of COP: COP = Qload/Power, therefore Power = Qload/COP
             // Then the energy balance:     Qsrc = Qload + Power
             // Substituting for Power:      Qsrc = Qload + Qload/COP, therefore Qsrc = Qload (1 + 1/COP)
-            Real64 const designSourceSideHeatTransfer = tmpCapacity * (1 + 1 / this->referenceCOP);
+            Nandle const designSourceSideHeatTransfer = tmpCapacity * (1 + 1 / this->referenceCOP);
             // To get the design source flow rate, just apply the sensible heat rate equation:
             //                              Qsrc = rho_src * Vdot_src * Cp_src * DeltaT_src
             //                              Vdot_src = Q_src / (rho_src * Cp_src * DeltaT_src)
@@ -970,16 +970,16 @@ namespace EIRPlantLoopHeatPumps {
             std::string thisType;
             int thisTypeNum;
             std::string nodesType;
-            std::function<Real64(Real64, Real64)> calcLoadOutletTemp;
-            std::function<Real64(Real64, Real64)> calcQsource;
-            std::function<Real64(Real64, Real64)> calcSourceOutletTemp;
+            std::function<Nandle(Nandle, Nandle)> calcLoadOutletTemp;
+            std::function<Nandle(Nandle, Nandle)> calcQsource;
+            std::function<Nandle(Nandle, Nandle)> calcSourceOutletTemp;
 
             ClassType(std::string _thisType,
                       int _thisTypeNum,
                       std::string _nodesType,
-                      std::function<Real64(Real64, Real64)> _tLoadOutFunc,
-                      std::function<Real64(Real64, Real64)> _qSrcFunc,
-                      std::function<Real64(Real64, Real64)> _tSrcOutFunc)
+                      std::function<Nandle(Nandle, Nandle)> _tLoadOutFunc,
+                      std::function<Nandle(Nandle, Nandle)> _qSrcFunc,
+                      std::function<Nandle(Nandle, Nandle)> _tSrcOutFunc)
                 : thisType(std::move(_thisType)), thisTypeNum(_thisTypeNum), nodesType(std::move(_nodesType)),
                   calcLoadOutletTemp(std::move(_tLoadOutFunc)), calcQsource(std::move(_qSrcFunc)), calcSourceOutletTemp(std::move(_tSrcOutFunc))
             {
@@ -1054,7 +1054,7 @@ namespace EIRPlantLoopHeatPumps {
                     if (fields.find("reference_coefficient_of_performance") != fields.end()) {
                         thisPLHP.referenceCOP = fields.at("reference_coefficient_of_performance");
                     } else {
-                        Real64 defaultVal = 0.0;
+                        Nandle defaultVal = 0.0;
                         if (!inputProcessor->getDefaultValue(cCurrentModuleObject, "reference_coefficient_of_performance", defaultVal)) {
                             // this error condition would mean that someone broke the input dictionary, not their
                             // input file.  I can't really unit test it so I'll leave it here as a severe error
@@ -1070,7 +1070,7 @@ namespace EIRPlantLoopHeatPumps {
                     if (fields.find("sizing_factor") != fields.end()) {
                         thisPLHP.sizingFactor = fields.at("sizing_factor");
                     } else {
-                        Real64 defaultVal = 0.0;
+                        Nandle defaultVal = 0.0;
                         if (!inputProcessor->getDefaultValue(cCurrentModuleObject, "sizing_factor", defaultVal)) {
                             // this error condition would mean that someone broke the input dictionary, not their
                             // input file.  I can't really unit test it so I'll leave it here as a severe error

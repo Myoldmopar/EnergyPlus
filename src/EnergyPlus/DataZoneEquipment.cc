@@ -176,9 +176,9 @@ namespace DataZoneEquipment {
 
     Array1D_bool CrossMixingReportFlag;
     Array1D_bool MixingReportFlag;
-    Array1D<Real64> VentMCP;
-    Array1D<Real64> ZMAT;
-    Array1D<Real64> ZHumRat;
+    Array1D<Nandle> VentMCP;
+    Array1D<Nandle> ZMAT;
+    Array1D<Nandle> ZHumRat;
 
     // Utility routines for module
 
@@ -306,7 +306,7 @@ namespace DataZoneEquipment {
         std::string ReturnNodeListName;
         std::string ReturnFlowBasisNodeListName;
         Array1D_string AlphArray;
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
         int MaxAlphas;
         int MaxNums;
         int NumParams;
@@ -1432,7 +1432,7 @@ namespace DataZoneEquipment {
         return ReturnIndex;
     }
 
-    Real64 CalcDesignSpecificationOutdoorAir(int const DSOAPtr,          // Pointer to DesignSpecification:OutdoorAir object
+    Nandle CalcDesignSpecificationOutdoorAir(int const DSOAPtr,          // Pointer to DesignSpecification:OutdoorAir object
                                              int const ActualZoneNum,    // Zone index
                                              bool const UseOccSchFlag,   // Zone occupancy schedule will be used instead of using total zone occupancy
                                              bool const UseMinOASchFlag, // Use min OA schedule in DesignSpecification:OutdoorAir object
@@ -1485,7 +1485,7 @@ namespace DataZoneEquipment {
         using ScheduleManager::GetScheduleMaxValue;
 
         // Return value
-        Real64 OAVolumeFlowRate; // Return value for calculated outdoor air volume flow rate [m3/s]
+        Nandle OAVolumeFlowRate; // Return value for calculated outdoor air volume flow rate [m3/s]
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1500,24 +1500,24 @@ namespace DataZoneEquipment {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 DSOAFlowPeople;  // Outdoor air volume flow rate based on occupancy (m3/s)
-        Real64 DSOAFlowPerZone; // Outdoor air volume flow rate (m3/s)
-        Real64 DSOAFlowPerArea; // Outdoor air volume flow rate based on zone floor area (m3/s)
-        Real64 DSOAFlowACH;     // Outdoor air volume flow rate based on air changes per hour (m3/s)
-        Real64 PeopleCount;     // total count of people in people objects
+        Nandle DSOAFlowPeople;  // Outdoor air volume flow rate based on occupancy (m3/s)
+        Nandle DSOAFlowPerZone; // Outdoor air volume flow rate (m3/s)
+        Nandle DSOAFlowPerArea; // Outdoor air volume flow rate based on zone floor area (m3/s)
+        Nandle DSOAFlowACH;     // Outdoor air volume flow rate based on air changes per hour (m3/s)
+        Nandle PeopleCount;     // total count of people in people objects
         int Loop;               // index counter in LOOP
         bool PerPersonModeNotSet;
         bool MaxOAFlag;
-        Real64 ZoneOAPeople;              // Zone OA flow rate based on number of occupants [m3/s]
-        Real64 ZoneOAArea;                // Zone OA flow rate based on space floor area [m3/s]
-        Real64 ZoneOAMin;                 // Minimum Zone OA flow rate when the zone is unoccupied (i.e. ZoneOAPeople = 0)
+        Nandle ZoneOAPeople;              // Zone OA flow rate based on number of occupants [m3/s]
+        Nandle ZoneOAArea;                // Zone OA flow rate based on space floor area [m3/s]
+        Nandle ZoneOAMin;                 // Minimum Zone OA flow rate when the zone is unoccupied (i.e. ZoneOAPeople = 0)
                                           // used for "ProportionalControl" System outdoor air method
-        Real64 ZoneOAMax;                 // Maximum Zone OA flow rate (ZoneOAPeople + ZoneOAArea)
+        Nandle ZoneOAMax;                 // Maximum Zone OA flow rate (ZoneOAPeople + ZoneOAArea)
                                           // used for "ProportionalControl" System outdoor air method
-        Real64 ZoneMaxCO2;                // Breathing-zone CO2 concentartion
-        Real64 ZoneMinCO2;                // Minimum CO2 concentration in zone
-        Real64 ZoneContamControllerSched; // Schedule value for ZoneControl:ContaminantController
-        Real64 CO2PeopleGeneration;       // CO2 generation from people at design level
+        Nandle ZoneMaxCO2;                // Breathing-zone CO2 concentartion
+        Nandle ZoneMinCO2;                // Minimum CO2 concentration in zone
+        Nandle ZoneContamControllerSched; // Schedule value for ZoneControl:ContaminantController
+        Nandle CO2PeopleGeneration;       // CO2 generation from people at design level
         int PeopleNum;
         static Array1D_bool MyEnvrnFlag;
         static bool OneTimeFlag(true);
@@ -1645,7 +1645,7 @@ namespace DataZoneEquipment {
                 }
 
             } else if (SELECT_CASE_var == ZOAM_ProportionalControlSchOcc || SELECT_CASE_var == ZOAM_ProportionalControlDesOcc) {
-                Real64 ZoneEz = 1.0;
+                Nandle ZoneEz = 1.0;
                 ZoneOAPeople = 0.0;
                 if (OARequirements(DSOAPtr).OAFlowMethod != ZOAM_ProportionalControlDesOcc) {
                     ZoneOAPeople = ZoneIntGain(ActualZoneNum).NOFOCC * Zone(ActualZoneNum).Multiplier * Zone(ActualZoneNum).ListMultiplier *
@@ -1867,12 +1867,12 @@ namespace DataZoneEquipment {
         DataHVACGlobals::MinAirLoopIterationsAfterFirst = minIterations;
     }
 
-    Real64 EquipList::SequentialHeatingFraction(const int equipNum)
+    Nandle EquipList::SequentialHeatingFraction(const int equipNum)
     {
         return ScheduleManager::GetCurrentScheduleValue(SequentialHeatingFractionSchedPtr(equipNum));
     }
 
-    Real64 EquipList::SequentialCoolingFraction(const int equipNum)
+    Nandle EquipList::SequentialCoolingFraction(const int equipNum)
     {
         return ScheduleManager::GetCurrentScheduleValue(SequentialCoolingFractionSchedPtr(equipNum));
     }

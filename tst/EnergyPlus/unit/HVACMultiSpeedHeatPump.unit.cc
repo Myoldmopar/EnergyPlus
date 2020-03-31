@@ -106,8 +106,8 @@ TEST_F(EnergyPlusFixture, HVACMultiSpeedHeatPump_ReportVariableInitTest)
     int const MSHeatPumpNum(2);
     bool const FirstHVACIteration(true);
     int const AirLoopNum(2);
-    Real64 QZnReq(-10000.0);
-    Real64 OnOffAirFlowRatio(1.0);
+    Nandle QZnReq(-10000.0);
+    Nandle OnOffAirFlowRatio(1.0);
 
     std::string const idf_objects = delimited_string({
 
@@ -1347,7 +1347,7 @@ TEST_F(EnergyPlusFixture, HVACMultiSpeedHeatPump_ReportVariableInitTest)
     DXCoils::DXCoil(2).MSRatedCBF(1) = 0.2;
     DXCoils::DXCoil(2).MSRatedCBF(2) = 0.2;
 
-    Real64 QSensUnitOut;
+    Nandle QSensUnitOut;
     // Cooling
     SimMSHP(MSHeatPumpNum, FirstHVACIteration, AirLoopNum, QSensUnitOut, QZnReq, OnOffAirFlowRatio);
     // Check outlet conditions
@@ -1426,7 +1426,7 @@ TEST_F(EnergyPlusFixture, HVACMultiSpeedHeatPump_HeatRecoveryTest)
     HVACMultiSpeedHeatPump::MSHPHeatRecovery(1);
 
     // outlet temp should equal inlet temp since mass flow rate = 0
-    Real64 calculatedOutletTemp =
+    Nandle calculatedOutletTemp =
         DataLoopNode::Node(HeatRecInNode).Temp + DataHVACGlobals::MSHPWasteHeat / (DataLoopNode::Node(HeatRecInNode).MassFlowRate * 4181.0);
     EXPECT_DOUBLE_EQ(0.0, MSHeatPump(1).HeatRecoveryRate);
     EXPECT_DOUBLE_EQ(50.0, MSHeatPump(1).HeatRecoveryInletTemp);
@@ -1453,7 +1453,7 @@ TEST_F(EnergyPlusFixture, HVACMultiSpeedHeatPump_HeatRecoveryTest)
     EXPECT_DOUBLE_EQ(50.0, MSHeatPump(1).HeatRecoveryInletTemp);
     EXPECT_DOUBLE_EQ(80.0, MSHeatPump(1).HeatRecoveryOutletTemp);
     EXPECT_DOUBLE_EQ(0.1, MSHeatPump(1).HeatRecoveryMassFlowRate);
-    Real64 QHeatRecovery =
+    Nandle QHeatRecovery =
         DataLoopNode::Node(HeatRecInNode).MassFlowRate * 4181.0 * (MSHeatPump(1).HeatRecoveryOutletTemp - MSHeatPump(1).HeatRecoveryInletTemp);
     EXPECT_DOUBLE_EQ(QHeatRecovery, MSHeatPump(1).HeatRecoveryRate);
     EXPECT_DOUBLE_EQ(12543.0, QHeatRecovery);

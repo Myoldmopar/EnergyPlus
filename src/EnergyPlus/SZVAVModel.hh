@@ -95,11 +95,11 @@ namespace SZVAVModel {
                         bool const &FirstHVACIteration,
                         bool const &CoolingLoad,
                         bool const &HeatingLoad,
-                        Real64 const &ZoneLoad,
-                        Real64 &OnOffAirFlowRatio,
+                        Nandle const &ZoneLoad,
+                        Nandle &OnOffAirFlowRatio,
                         bool const &HXUnitOn,
                         int const &AirLoopNum,
-                        Real64 &PartLoadFrac,
+                        Nandle &PartLoadFrac,
                         int const &CompressorONFlag
 
     );
@@ -109,11 +109,11 @@ namespace SZVAVModel {
                         bool const &FirstHVACIteration,
                         bool const &CoolingLoad,
                         bool const &HeatingLoad,
-                        Real64 const &ZoneLoad,
-                        Real64 &OnOffAirFlowRatio,
+                        Nandle const &ZoneLoad,
+                        Nandle &OnOffAirFlowRatio,
                         bool const &HXUnitOn,
                         int const &AirLoopNum,
-                        Real64 &PartLoadFrac,
+                        Nandle &PartLoadFrac,
                         int const &CompressorONFlag
 
     );
@@ -123,11 +123,11 @@ namespace SZVAVModel {
                         bool const &FirstHVACIteration,
                         bool const &CoolingLoad,
                         bool const &HeatingLoad,
-                        Real64 const &ZoneLoad,
-                        Real64 &OnOffAirFlowRatio,
+                        Nandle const &ZoneLoad,
+                        Nandle &OnOffAirFlowRatio,
                         bool const &HXUnitOn,
                         int const &AirLoopNum,
-                        Real64 &PartLoadFrac,
+                        Nandle &PartLoadFrac,
                         int const &CompressorONFlag);
 
 } // namespace SZVAVModel

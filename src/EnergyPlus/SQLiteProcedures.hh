@@ -162,11 +162,11 @@ public:
                                             Optional_string_const ScheduleName = _);
 
     void createSQLiteReportDataRecord(int const recordIndex,
-                                      Real64 const value,
+                                      Nandle const value,
                                       Optional_int_const reportingInterval = _,
-                                      Optional<Real64 const> minValue = _,
+                                      Optional<Nandle const> minValue = _,
                                       Optional_int_const minValueDate = _,
-                                      Optional<Real64 const> maxValue = _,
+                                      Optional<Nandle const> maxValue = _,
                                       Optional_int_const maxValueDate = _,
                                       Optional_int_const minutesPerTimeStep = _);
 
@@ -178,8 +178,8 @@ public:
                                      Optional_int_const Month = _,
                                      Optional_int_const DayOfMonth = _,
                                      Optional_int_const Hour = _,
-                                     Optional<Real64 const> EndMinute = _,
-                                     Optional<Real64 const> StartMinute = _,
+                                     Optional<Nandle const> EndMinute = _,
+                                     Optional<Nandle const> StartMinute = _,
                                      Optional_int_const DST = _,
                                      Optional_string_const DayType = _,
                                      bool const warmupFlag = false);
@@ -188,24 +188,24 @@ public:
 
     void addSQLiteZoneSizingRecord(std::string const &ZoneName,   // the name of the zone
                                    std::string const &LoadType,   // the description of the input variable
-                                   Real64 const CalcDesLoad,      // the value from the sizing calculation [W]
-                                   Real64 const UserDesLoad,      // the value from the sizing calculation modified by user input [W]
-                                   Real64 const CalcDesFlow,      // calculated design air flow rate [m3/s]
-                                   Real64 const UserDesFlow,      // user input or modified design air flow rate [m3/s]
+                                   Nandle const CalcDesLoad,      // the value from the sizing calculation [W]
+                                   Nandle const UserDesLoad,      // the value from the sizing calculation modified by user input [W]
+                                   Nandle const CalcDesFlow,      // calculated design air flow rate [m3/s]
+                                   Nandle const UserDesFlow,      // user input or modified design air flow rate [m3/s]
                                    std::string const &DesDayName, // the name of the design day that produced the peak
                                    std::string const &PeakHrMin,  // time stamp of the peak
-                                   Real64 const PeakTemp,         // temperature at peak [C]
-                                   Real64 const PeakHumRat,       // humidity ratio at peak [kg water/kg dry air]
-                                   Real64 const MinOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
-                                   Real64 const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
+                                   Nandle const PeakTemp,         // temperature at peak [C]
+                                   Nandle const PeakHumRat,       // humidity ratio at peak [kg water/kg dry air]
+                                   Nandle const MinOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
+                                   Nandle const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
     );
 
     void addSQLiteSystemSizingRecord(std::string const &SysName,      // the name of the system
                                      std::string const &LoadType,     // either "Cooling" or "Heating"
                                      std::string const &PeakLoadType, // either "Sensible" or "Total"
-                                     Real64 const &UserDesCap,        // User  Design Capacity
-                                     Real64 const &CalcDesVolFlow,    // Calculated Cooling Design Air Flow Rate
-                                     Real64 const &UserDesVolFlow,    // User Cooling Design Air Flow Rate
+                                     Nandle const &UserDesCap,        // User  Design Capacity
+                                     Nandle const &CalcDesVolFlow,    // Calculated Cooling Design Air Flow Rate
+                                     Nandle const &UserDesVolFlow,    // User Cooling Design Air Flow Rate
                                      std::string const &DesDayName,   // the name of the design day that produced the peak
                                      std::string const &PeakHrMin     // time stamp of the peak
     );
@@ -213,7 +213,7 @@ public:
     void addSQLiteComponentSizingRecord(std::string const &CompType, // the type of the component
                                         std::string const &CompName, // the name of the component
                                         std::string const &VarDesc,  // the description of the input variable
-                                        Real64 const VarValue        // the value from the sizing calculation
+                                        Nandle const VarValue        // the value from the sizing calculation
     );
 
     void createSQLiteDaylightMapTitle(int const mapNum,
@@ -222,7 +222,7 @@ public:
                                       int const zone,
                                       std::string const &refPt1,
                                       std::string const &refPt2,
-                                      Real64 const zCoord);
+                                      Nandle const zCoord);
 
     void createSQLiteDaylightMap(int const mapNum,
                                  int const year,
@@ -230,10 +230,10 @@ public:
                                  int const dayOfMonth,
                                  int const hourOfDay,
                                  int const nX,
-                                 Array1D<Real64> const &x,
+                                 Array1D<Nandle> const &x,
                                  int const nY,
-                                 Array1D<Real64> const &y,
-                                 Array2<Real64> const &illuminance);
+                                 Array1D<Nandle> const &y,
+                                 Array2<Nandle> const &illuminance);
 
     void createSQLiteTabularDataRecords(Array2D_string const &body, // row,column
                                         Array1D_string const &rowLabels,

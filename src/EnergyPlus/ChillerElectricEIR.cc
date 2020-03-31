@@ -162,7 +162,7 @@ namespace ChillerElectricEIR {
         return nullptr; // LCOV_EXCL_LINE
     }
 
-    void ElectricEIRChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag)
+    void ElectricEIRChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Richard Raustad
@@ -206,7 +206,7 @@ namespace ChillerElectricEIR {
         }
     }
 
-    void ElectricEIRChillerSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void ElectricEIRChillerSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         if (calledFromLocation.loopNum == this->CWLoopNum) {
             MinLoad = this->RefCap * this->MinPartLoadRat;
@@ -219,13 +219,13 @@ namespace ChillerElectricEIR {
         }
     }
 
-    void ElectricEIRChillerSpecs::getDesignTemperatures(Real64 &TempDesCondIn, Real64 &TempDesEvapOut)
+    void ElectricEIRChillerSpecs::getDesignTemperatures(Nandle &TempDesCondIn, Nandle &TempDesEvapOut)
     {
         TempDesCondIn = this->TempRefCondIn;
         TempDesEvapOut = this->TempRefEvapOut;
     }
 
-    void ElectricEIRChillerSpecs::getSizingFactor(Real64 &sizFac)
+    void ElectricEIRChillerSpecs::getSizingFactor(Nandle &sizFac)
     {
         sizFac = this->SizFac;
     }
@@ -233,7 +233,7 @@ namespace ChillerElectricEIR {
     void ElectricEIRChillerSpecs::onInitLoopEquip(const PlantLocation &calledFromLocation)
     {
         bool runFlag = true;
-        Real64 myLoad = 0.0;
+        Nandle myLoad = 0.0;
 
         this->initialize(runFlag, myLoad);
 
@@ -665,7 +665,7 @@ namespace ChillerElectricEIR {
 
             //   Check the CAP-FT, EIR-FT, and PLR curves and warn user if different from 1.0 by more than +-10%
             if (ElectricEIRChiller(EIRChillerNum).ChillerCapFTIndex > 0) {
-                Real64 CurveVal = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerCapFTIndex,
+                Nandle CurveVal = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerCapFTIndex,
                                                            ElectricEIRChiller(EIRChillerNum).TempRefEvapOut,
                                                            ElectricEIRChiller(EIRChillerNum).TempRefCondIn);
                 if (CurveVal > 1.10 || CurveVal < 0.90) {
@@ -677,7 +677,7 @@ namespace ChillerElectricEIR {
             }
 
             if (ElectricEIRChiller(EIRChillerNum).ChillerEIRFTIndex > 0) {
-                Real64 CurveVal = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerEIRFTIndex,
+                Nandle CurveVal = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerEIRFTIndex,
                                                            ElectricEIRChiller(EIRChillerNum).TempRefEvapOut,
                                                            ElectricEIRChiller(EIRChillerNum).TempRefCondIn);
                 if (CurveVal > 1.10 || CurveVal < 0.90) {
@@ -689,7 +689,7 @@ namespace ChillerElectricEIR {
             }
 
             if (ElectricEIRChiller(EIRChillerNum).ChillerEIRFPLRIndex > 0) {
-                Real64 CurveVal = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerEIRFPLRIndex, 1.0);
+                Nandle CurveVal = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerEIRFPLRIndex, 1.0);
 
                 if (CurveVal > 1.10 || CurveVal < 0.90) {
                     ShowWarningError(RoutineName + DataIPShortCuts::cCurrentModuleObject + "=\"" + DataIPShortCuts::cAlphaArgs(1) + "\"");
@@ -701,9 +701,9 @@ namespace ChillerElectricEIR {
 
             if (ElectricEIRChiller(EIRChillerNum).ChillerEIRFPLRIndex > 0) {
                 bool FoundNegValue = false;
-                Array1D<Real64> CurveValArray(11); // Used to evaluate PLFFPLR curve objects
+                Array1D<Nandle> CurveValArray(11); // Used to evaluate PLFFPLR curve objects
                 for (int CurveCheck = 0; CurveCheck <= 10; ++CurveCheck) {
-                    Real64 CurveValTmp = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerEIRFPLRIndex, double(CurveCheck / 10.0));
+                    Nandle CurveValTmp = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerEIRFPLRIndex, double(CurveCheck / 10.0));
                     if (CurveValTmp < 0.0) FoundNegValue = true;
                     CurveValArray(CurveCheck + 1) = int(CurveValTmp * 100.0) / 100.0;
                 }
@@ -948,7 +948,7 @@ namespace ChillerElectricEIR {
         }
     }
 
-    void ElectricEIRChillerSpecs::initialize(bool const RunFlag, Real64 const MyLoad)
+    void ElectricEIRChillerSpecs::initialize(bool const RunFlag, Nandle const MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1077,7 +1077,7 @@ namespace ChillerElectricEIR {
 
         if (this->MyEnvrnFlag && DataGlobals::BeginEnvrnFlag && (DataPlant::PlantFirstSizesOkayToFinalize)) {
 
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                            DataGlobals::CWInitConvTemp,
                                                            DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                            RoutineName);
@@ -1145,7 +1145,7 @@ namespace ChillerElectricEIR {
                 this->HeatRecMaxCapacityLimit = this->HeatRecCapacityFraction * (this->RefCap + this->RefCap / this->RefCOP);
 
                 if (this->HeatRecSetPointNodeNum > 0) {
-                    Real64 THeatRecSetPoint(0.0); // tests set point node for proper set point value
+                    Nandle THeatRecSetPoint(0.0); // tests set point node for proper set point value
                     {
                         auto const SELECT_CASE_var(DataPlant::PlantLoop(this->HRLoopNum).LoopDemandCalcScheme);
                         if (SELECT_CASE_var == DataPlant::SingleSetPoint) {
@@ -1201,8 +1201,8 @@ namespace ChillerElectricEIR {
                 DataLoopNode::Node(DataPlant::PlantLoop(this->CWLoopNum).TempSetPointNodeNum).TempSetPointHi;
         }
 
-        Real64 mdot;
-        Real64 mdotCond;
+        Nandle mdot;
+        Nandle mdotCond;
         if ((std::abs(MyLoad) > 0.0) && RunFlag) {
             mdot = this->EvapMassFlowRateMax;
             mdotCond = this->CondMassFlowRateMax;
@@ -1261,9 +1261,9 @@ namespace ChillerElectricEIR {
 
         int PltSizCondNum = 0;
         bool ErrorsFound = false;
-        Real64 tmpNomCap = this->RefCap;
-        Real64 tmpEvapVolFlowRate = this->EvapVolFlowRate;
-        Real64 tmpCondVolFlowRate = this->CondVolFlowRate;
+        Nandle tmpNomCap = this->RefCap;
+        Nandle tmpEvapVolFlowRate = this->EvapVolFlowRate;
+        Nandle tmpCondVolFlowRate = this->CondVolFlowRate;
 
         if (this->CondenserType == WaterCooled) {
             PltSizCondNum = DataPlant::PlantLoop(this->CDLoopNum).PlantSizNum;
@@ -1291,7 +1291,7 @@ namespace ChillerElectricEIR {
                     }
                 } else { // Hard-size with sizing data
                     if (this->EvapVolFlowRate > 0.0 && tmpEvapVolFlowRate > 0.0) {
-                        Real64 EvapVolFlowRateUser = this->EvapVolFlowRate;
+                        Nandle EvapVolFlowRateUser = this->EvapVolFlowRate;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             ReportSizingManager::ReportSizingOutput("Chiller:Electric:EIR",
                                                                     this->Name,
@@ -1332,12 +1332,12 @@ namespace ChillerElectricEIR {
 
         if (PltSizNum > 0) {
             if (DataSizing::PlantSizData(PltSizNum).DesVolFlowRate >= DataHVACGlobals::SmallWaterVolFlow) {
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                                    DataGlobals::CWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                                    RoutineName);
 
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                                DataGlobals::CWInitConvTemp,
                                                                DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                                RoutineName);
@@ -1357,7 +1357,7 @@ namespace ChillerElectricEIR {
                     }
                 } else { // Hard-sized with sizing data
                     if (this->RefCap > 0.0 && tmpNomCap > 0.0) {
-                        Real64 RefCapUser = this->RefCap;
+                        Nandle RefCapUser = this->RefCap;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             ReportSizingManager::ReportSizingOutput("Chiller:Electric:EIR",
                                                                     this->Name,
@@ -1394,11 +1394,11 @@ namespace ChillerElectricEIR {
         if (PltSizCondNum > 0 && PltSizNum > 0) {
             if (DataSizing::PlantSizData(PltSizNum).DesVolFlowRate >= DataHVACGlobals::SmallWaterVolFlow && tmpNomCap > 0.0) {
 
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CDLoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CDLoopNum).FluidName,
                                                                DataGlobals::CWInitConvTemp,
                                                                DataPlant::PlantLoop(this->CDLoopNum).FluidIndex,
                                                                RoutineName);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CDLoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CDLoopNum).FluidName,
                                                                    this->TempRefCondIn,
                                                                    DataPlant::PlantLoop(this->CDLoopNum).FluidIndex,
                                                                    RoutineName);
@@ -1421,7 +1421,7 @@ namespace ChillerElectricEIR {
                     }
                 } else {
                     if (this->CondVolFlowRate > 0.0 && tmpCondVolFlowRate > 0.0) {
-                        Real64 CondVolFlowRateUser = this->CondVolFlowRate;
+                        Nandle CondVolFlowRateUser = this->CondVolFlowRate;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             ReportSizingManager::ReportSizingOutput("Chiller:Electric:EIR",
                                                                     this->Name,
@@ -1469,7 +1469,7 @@ namespace ChillerElectricEIR {
                     std::string SizingString = "Reference Condenser Fluid Flow Rate  [m3/s]";
                     DataSizing::DataConstantUsedForSizing = this->RefCap;
                     DataSizing::DataFractionUsedForSizing = 0.000114;
-                    Real64 TempSize = this->CondVolFlowRate;
+                    Nandle TempSize = this->CondVolFlowRate;
                     bool bPRINT = true; // TRUE if sizing is reported to output (eio)
                     ReportSizingManager::RequestSizing(CompType, this->Name, SizingMethod, SizingString, TempSize, bPRINT, RoutineName);
                     this->CondVolFlowRate = TempSize;
@@ -1484,7 +1484,7 @@ namespace ChillerElectricEIR {
 
         // now do heat recovery flow rate sizing if active
         if (this->HeatRecActive) {
-            Real64 tempHeatRecVolFlowRate = tmpCondVolFlowRate * this->HeatRecCapacityFraction;
+            Nandle tempHeatRecVolFlowRate = tmpCondVolFlowRate * this->HeatRecCapacityFraction;
             if (this->DesignHeatRecVolFlowRateWasAutoSized) {
 
                 if (DataPlant::PlantFirstSizesOkayToFinalize) {
@@ -1500,7 +1500,7 @@ namespace ChillerElectricEIR {
                 }
             } else {
                 if (this->DesignHeatRecVolFlowRate > 0.0 && tempHeatRecVolFlowRate > 0.0) {
-                    Real64 nomHeatRecVolFlowRateUser = this->DesignHeatRecVolFlowRate;
+                    Nandle nomHeatRecVolFlowRateUser = this->DesignHeatRecVolFlowRate;
                     if (DataPlant::PlantFinalSizesOkayToReport) {
                         if (DataGlobals::DoPlantSizing) {
                             ReportSizingManager::ReportSizingOutput("Chiller:Electric:EIR",
@@ -1536,7 +1536,7 @@ namespace ChillerElectricEIR {
 
         if (DataPlant::PlantFinalSizesOkayToReport) {
             if (this->IPLVFlag) {
-                Real64 IPLV;
+                Nandle IPLV;
                 StandardRatings::CalcChillerIPLV(OutputFiles::getSingleton(),
                                                  this->Name,
                                                  DataPlant::TypeOf_Chiller_ElectricEIR,
@@ -1548,9 +1548,9 @@ namespace ChillerElectricEIR {
                                                  this->ChillerEIRFPLRIndex,
                                                  this->MinUnloadRat,
                                                  IPLV,
-                                                 Optional<const Real64>(),
+                                                 Optional<const Nandle>(),
                                                  ObjexxFCL::Optional_int_const(),
-                                                 Optional<const Real64>());
+                                                 Optional<const Nandle>());
                 this->IPLVFlag = false;
             }
             // create predefined report
@@ -1564,7 +1564,7 @@ namespace ChillerElectricEIR {
         }
     }
 
-    void ElectricEIRChillerSpecs::calculate(Real64 &MyLoad, bool const RunFlag)
+    void ElectricEIRChillerSpecs::calculate(Nandle &MyLoad, bool const RunFlag)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Richard Raustad, FSEC
@@ -1586,18 +1586,18 @@ namespace ChillerElectricEIR {
         static ObjexxFCL::gio::Fmt OutputFormat("(F6.2)");
         static std::string const RoutineName("CalcElectricEIRChillerModel");
 
-        Real64 EvapOutletTempSetPoint(0.0); // Evaporator outlet temperature setpoint [C]
-        Real64 EvapDeltaTemp(0.0);          // Evaporator temperature difference [C]
-        Real64 TempLoad(0.0);               // Actual load to be met by chiller. This value is compared to MyLoad
+        Nandle EvapOutletTempSetPoint(0.0); // Evaporator outlet temperature setpoint [C]
+        Nandle EvapDeltaTemp(0.0);          // Evaporator temperature difference [C]
+        Nandle TempLoad(0.0);               // Actual load to be met by chiller. This value is compared to MyLoad
         // and reset when necessary since this chiller can cycle, the load passed
         // should be the actual load. Instead the minimum PLR * RefCap is
         // passed in. [W]
-        Real64 CurrentEndTime;         // end time of time step for current simulation time step
+        Nandle CurrentEndTime;         // end time of time step for current simulation time step
         static std::string OutputChar; // character string for warning messages
 
         // Set module level inlet and outlet nodes and initialize other local variables
         this->CondMassFlowRate = 0.0;
-        Real64 FRAC = 1.0; // Chiller cycling ratio
+        Nandle FRAC = 1.0; // Chiller cycling ratio
 
         // Set performance curve outputs to 0.0 when chiller is off
         this->ChillerCapFT = 0.0;
@@ -1692,19 +1692,19 @@ namespace ChillerElectricEIR {
         } // End of the Air Cooled/Evap Cooled Logic block
 
         // If not air or evap cooled then set to the condenser node that is attached to a cooling tower
-        Real64 condInletTemp = DataLoopNode::Node(this->CondInletNodeNum).Temp;
+        Nandle condInletTemp = DataLoopNode::Node(this->CondInletNodeNum).Temp;
 
         // LOAD LOCAL VARIABLES FROM DATA STRUCTURE (for code readability)
-        Real64 ChillerRefCap = this->RefCap;
-        Real64 ReferenceCOP = this->RefCOP;
+        Nandle ChillerRefCap = this->RefCap;
+        Nandle ReferenceCOP = this->RefCOP;
         this->EvapOutletTemp = DataLoopNode::Node(this->EvapOutletNodeNum).Temp;
-        Real64 TempLowLimitEout = this->TempLowLimitEvapOut;
+        Nandle TempLowLimitEout = this->TempLowLimitEvapOut;
 
         // If there is a fault of chiller fouling (zrp_Nov2016)
         if (this->FaultyChillerFoulingFlag && (!DataGlobals::WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerFoulingIndex;
-            Real64 NomCap_ff = ChillerRefCap;
-            Real64 ReferenceCOP_ff = ReferenceCOP;
+            Nandle NomCap_ff = ChillerRefCap;
+            Nandle ReferenceCOP_ff = ReferenceCOP;
 
             // calculate the Faulty Chiller Fouling Factor using fault information
             this->FaultyChillerFoulingFactor = FaultsManager::FaultsChillerFouling(FaultIndex).CalFoulingFactor();
@@ -1785,7 +1785,7 @@ namespace ChillerElectricEIR {
         // If there is a fault of Chiller SWT Sensor (zrp_Jun2016)
         if (this->FaultyChillerSWTFlag && (!DataGlobals::WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerSWTIndex;
-            Real64 EvapOutletTempSetPoint_ff = EvapOutletTempSetPoint;
+            Nandle EvapOutletTempSetPoint_ff = EvapOutletTempSetPoint;
 
             // calculate the sensor offset using fault information
             this->FaultyChillerSWTOffset = FaultsManager::FaultsChillerSWTSensor(FaultIndex).CalFaultOffsetAct();
@@ -1798,7 +1798,7 @@ namespace ChillerElectricEIR {
 
         // correct temperature if using heat recovery
         // use report values for latest valid calculation, lagged somewhat
-        Real64 AvgCondSinkTemp;
+        Nandle AvgCondSinkTemp;
         if (this->HeatRecActive) {
             if ((this->QHeatRecovered + this->QCondenser) > 0.0) { // protect div by zero
                 AvgCondSinkTemp = (this->QHeatRecovered * this->HeatRecInletTemp + this->QCondenser * this->CondInletTemp) /
@@ -1835,14 +1835,14 @@ namespace ChillerElectricEIR {
         }
 
         // Available chiller capacity as a function of temperature
-        Real64 AvailChillerCap = ChillerRefCap * this->ChillerCapFT;
+        Nandle AvailChillerCap = ChillerRefCap * this->ChillerCapFT;
 
         // Only perform this check for temperature setpoint control
         if (DataPlant::PlantLoop(this->CWLoopNum).LoopSide(this->CWLoopSideNum).Branch(this->CWBranchNum).Comp(this->CWCompNum).CurOpSchemeType ==
             DataPlant::CompSetPtBasedSchemeType) {
             // Calculate water side load
 
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                                DataLoopNode::Node(this->EvapInletNodeNum).Temp,
                                                                DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                                RoutineName);
@@ -1868,14 +1868,14 @@ namespace ChillerElectricEIR {
         }
 
         // Part load ratio based on load and available chiller capacity, cap at max part load ratio
-        Real64 PartLoadRat; // Operating part load ratio
+        Nandle PartLoadRat; // Operating part load ratio
         if (AvailChillerCap > 0) {
             PartLoadRat = max(0.0, min(std::abs(MyLoad) / AvailChillerCap, this->MaxPartLoadRat));
         } else {
             PartLoadRat = 0.0;
         }
 
-        Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+        Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                            DataLoopNode::Node(this->EvapInletNodeNum).Temp,
                                                            DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                            RoutineName);
@@ -2182,7 +2182,7 @@ namespace ChillerElectricEIR {
             }
 
             if (this->CondenserType == EvapCooled) {
-                Real64 RhoAir = Psychrometrics::PsyRhoAirFnPbTdbW(
+                Nandle RhoAir = Psychrometrics::PsyRhoAirFnPbTdbW(
                     DataEnvironment::StdBaroPress, condInletTemp, DataLoopNode::Node(this->CondInletNodeNum).HumRat, RoutineName);
                 // CondMassFlowRate is already multiplied by PLR, convert to water use rate
                 this->EvapWaterConsumpRate =
@@ -2198,10 +2198,10 @@ namespace ChillerElectricEIR {
         }
     }
 
-    void ElectricEIRChillerSpecs::calcHeatRecovery(Real64 &QCond,              // Current condenser load [W]
-                                                   Real64 const CondMassFlow,  // Current condenser mass flow [kg/s]
-                                                   Real64 const condInletTemp, // Current condenser inlet temp [C]
-                                                   Real64 &QHeatRec            // Amount of heat recovered [W]
+    void ElectricEIRChillerSpecs::calcHeatRecovery(Nandle &QCond,              // Current condenser load [W]
+                                                   Nandle const CondMassFlow,  // Current condenser mass flow [kg/s]
+                                                   Nandle const condInletTemp, // Current condenser inlet temp [C]
+                                                   Nandle &QHeatRec            // Amount of heat recovered [W]
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2215,29 +2215,29 @@ namespace ChillerElectricEIR {
         static std::string const RoutineName("EIRChillerHeatRecovery");
 
         // Inlet node to the heat recovery heat exchanger
-        Real64 heatRecInletTemp = DataLoopNode::Node(this->HeatRecInletNodeNum).Temp;
-        Real64 HeatRecMassFlowRate = DataLoopNode::Node(this->HeatRecInletNodeNum).MassFlowRate;
+        Nandle heatRecInletTemp = DataLoopNode::Node(this->HeatRecInletNodeNum).Temp;
+        Nandle HeatRecMassFlowRate = DataLoopNode::Node(this->HeatRecInletNodeNum).MassFlowRate;
 
-        Real64 CpHeatRec = FluidProperties::GetSpecificHeatGlycol(
+        Nandle CpHeatRec = FluidProperties::GetSpecificHeatGlycol(
             DataPlant::PlantLoop(this->HRLoopNum).FluidName, heatRecInletTemp, DataPlant::PlantLoop(this->HRLoopNum).FluidIndex, RoutineName);
-        Real64 CpCond = FluidProperties::GetSpecificHeatGlycol(
+        Nandle CpCond = FluidProperties::GetSpecificHeatGlycol(
             DataPlant::PlantLoop(this->CDLoopNum).FluidName, condInletTemp, DataPlant::PlantLoop(this->CDLoopNum).FluidIndex, RoutineName);
 
         // Before we modify the QCondenser, the total or original value is transferred to QTot
-        Real64 QTotal = QCond;
+        Nandle QTotal = QCond;
 
         if (this->HeatRecSetPointNodeNum == 0) { // use original algorithm that blends temps
-            Real64 TAvgIn = (HeatRecMassFlowRate * CpHeatRec * heatRecInletTemp + CondMassFlow * CpCond * condInletTemp) /
+            Nandle TAvgIn = (HeatRecMassFlowRate * CpHeatRec * heatRecInletTemp + CondMassFlow * CpCond * condInletTemp) /
                             (HeatRecMassFlowRate * CpHeatRec + CondMassFlow * CpCond);
 
-            Real64 TAvgOut = QTotal / (HeatRecMassFlowRate * CpHeatRec + CondMassFlow * CpCond) + TAvgIn;
+            Nandle TAvgOut = QTotal / (HeatRecMassFlowRate * CpHeatRec + CondMassFlow * CpCond) + TAvgIn;
 
             QHeatRec = HeatRecMassFlowRate * CpHeatRec * (TAvgOut - heatRecInletTemp);
             QHeatRec = max(QHeatRec, 0.0); // ensure non negative
             // check if heat flow too large for physical size of bundle
             QHeatRec = min(QHeatRec, this->HeatRecMaxCapacityLimit);
         } else {                          // use new algorithm to meet setpoint
-            Real64 THeatRecSetPoint(0.0); // local value for heat recovery leaving setpoint [C]
+            Nandle THeatRecSetPoint(0.0); // local value for heat recovery leaving setpoint [C]
             {
                 auto const SELECT_CASE_var(DataPlant::PlantLoop(this->HRLoopNum).LoopDemandCalcScheme);
 
@@ -2251,7 +2251,7 @@ namespace ChillerElectricEIR {
             }
 
             // load to heat recovery setpoint
-            Real64 QHeatRecToSetPoint = HeatRecMassFlowRate * CpHeatRec * (THeatRecSetPoint - heatRecInletTemp);
+            Nandle QHeatRecToSetPoint = HeatRecMassFlowRate * CpHeatRec * (THeatRecSetPoint - heatRecInletTemp);
             QHeatRecToSetPoint = max(QHeatRecToSetPoint, 0.0);
             QHeatRec = min(QTotal, QHeatRecToSetPoint);
             // check if heat flow too large for physical size of bundle
@@ -2260,7 +2260,7 @@ namespace ChillerElectricEIR {
 
         // check if limit on inlet is present and exceeded.
         if (this->HeatRecInletLimitSchedNum > 0) {
-            Real64 HeatRecHighInletLimit = ScheduleManager::GetCurrentScheduleValue(this->HeatRecInletLimitSchedNum);
+            Nandle HeatRecHighInletLimit = ScheduleManager::GetCurrentScheduleValue(this->HeatRecInletLimitSchedNum);
             if (heatRecInletTemp > HeatRecHighInletLimit) { // shut down heat recovery
                 QHeatRec = 0.0;
             }
@@ -2276,7 +2276,7 @@ namespace ChillerElectricEIR {
         }
     }
 
-    void ElectricEIRChillerSpecs::update(Real64 const MyLoad, bool const RunFlag)
+    void ElectricEIRChillerSpecs::update(Nandle const MyLoad, bool const RunFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2287,7 +2287,7 @@ namespace ChillerElectricEIR {
         //  Reporting
 
         // Number of seconds per HVAC system time step, to convert from W (J/s) to J
-        Real64 ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
         if (MyLoad >= 0 || !RunFlag) { // Chiller not running so pass inlet states to outlet states
             // Set node conditions

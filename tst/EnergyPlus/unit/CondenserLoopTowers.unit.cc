@@ -512,7 +512,7 @@ TEST_F(EnergyPlusFixture, CondenserLoopTowers_MerkelNoCooling)
     CondenserLoopTowers::towers(1).initialize();
     CondenserLoopTowers::towers(1).SizeVSMerkelTower();
     CondenserLoopTowers::towers(1).initialize();
-    Real64 MyLoad = 0.0;
+    Nandle MyLoad = 0.0;
     CondenserLoopTowers::towers(1).calculateMerkelVariableSpeedTower(MyLoad);
     CondenserLoopTowers::towers(1).update();
     CondenserLoopTowers::towers(1).report(true);
@@ -2268,7 +2268,7 @@ TEST_F(EnergyPlusFixture, CondenserLoopTowers_MerkelUserInputTowerSizing)
 TEST_F(EnergyPlusFixture, CondenserLoopTowers_TwoSpeedTowerLowSpeedNomCapSizing)
 {
 
-    Real64 LowSpeedCoolTowerNomCap(0.0);
+    Nandle LowSpeedCoolTowerNomCap(0.0);
 
     std::string const idf_objects =
         delimited_string({"  Site:Location,",
@@ -3939,8 +3939,8 @@ TEST_F(EnergyPlusFixture, VSCoolingTowers_WaterOutletTempTest)
     VSTower.initialize();
 
     VSTower.InletWaterTemp = 35.0;
-    Real64 WaterFlowRateRatio = 0.75;
-    Real64 AirWetBulbTemp = DataEnvironment::OutWetBulbTemp;
+    Nandle WaterFlowRateRatio = 0.75;
+    Nandle AirWetBulbTemp = DataEnvironment::OutWetBulbTemp;
 
     DataPlant::PlantLoop(VSTower.LoopNum).LoopSide(VSTower.LoopSideNum).FlowLock = 1;
     DataPlant::PlantLoop(VSTower.LoopNum).LoopSide(VSTower.LoopSideNum).TempSetPoint = 30.0;
@@ -3949,7 +3949,7 @@ TEST_F(EnergyPlusFixture, VSCoolingTowers_WaterOutletTempTest)
     VSTower.calculateVariableSpeedTower();
     EXPECT_DOUBLE_EQ(30.0, VSTower.OutletWaterTemp);
     EXPECT_DOUBLE_EQ(1.0, VSTower.FanCyclingRatio);
-    Real64 TowerOutletWaterTemp = VSTower.calculateVariableTowerOutletTemp(WaterFlowRateRatio, VSTower.__AirFlowRateRatio, AirWetBulbTemp);
+    Nandle TowerOutletWaterTemp = VSTower.calculateVariableTowerOutletTemp(WaterFlowRateRatio, VSTower.__AirFlowRateRatio, AirWetBulbTemp);
     EXPECT_NEAR(30.0, TowerOutletWaterTemp, 0.0001);
 
     // test case 2:

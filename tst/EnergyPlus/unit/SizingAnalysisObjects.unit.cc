@@ -74,10 +74,10 @@ class SizingAnalysisObjectsTest : public testing::Test
 {
 
 public:
-    Real64 lowLogVal;
-    Real64 midLogVal;
-    Real64 hiLogVal;
-    Real64 LogVal; // actual variable pointed to
+    Nandle lowLogVal;
+    Nandle midLogVal;
+    Nandle hiLogVal;
+    Nandle LogVal; // actual variable pointed to
     int averagingWindow;
     int logIndex;
 
@@ -224,7 +224,7 @@ TEST_F(SizingAnalysisObjectsTest, BasicLogging4stepsPerHour)
     int DayOfSim(1);
     int HourofDay(1);
     int timeStp(1);
-    Real64 timeStepDuration(0.25);
+    Nandle timeStepDuration(0.25);
     int numTimeStepsInHour(4);
     LogVal = lowLogVal;
     ZoneTimestepObject tmpztStepStamp1( // call constructor
@@ -292,7 +292,7 @@ TEST_F(SizingAnalysisObjectsTest, LoggingDDWrap1stepPerHour)
     int DayOfSim(1);
     int HourofDay(1);
     int timeStp(1);
-    Real64 timeStepDuration(1.0);
+    Nandle timeStepDuration(1.0);
     int numTimeStepsInHour(1);
 
     LogVal = lowLogVal;
@@ -327,8 +327,8 @@ TEST_F(SizingAnalysisObjectsTest, PlantCoincidentAnalyObjTest)
     std::string loopName;
     int loopNum;
     int nodeNum;
-    Real64 density;
-    Real64 cp;
+    Nandle density;
+    Nandle cp;
     int timestepsInAvg;
     int plantSizingIndex;
 
@@ -348,7 +348,7 @@ TEST_F(SizingAnalysisObjectsTest, PlantCoincidentAnalyObjTest)
     int DayOfSim(1);
     int HourofDay(1);
     int timeStp(1);
-    Real64 timeStepDuration(0.25);
+    Nandle timeStepDuration(0.25);
     int numTimeStepsInHour(4);
 
     ZoneTimestepObject tmpztStepStamp1( // call constructor
@@ -403,7 +403,7 @@ TEST_F(SizingAnalysisObjectsTest, LoggingSubStep4stepPerHour)
     int DayOfSim(1);
     int HourofDay(0);
     DataHVACGlobals::TimeStepSys = 1.0 / (4.0 * 5.0); // fractional hours, duration
-    Real64 zoneTimeStepDuration(0.25);
+    Nandle zoneTimeStepDuration(0.25);
     int numTimeStepsInHour(4);
 
     LogVal = lowLogVal;
@@ -411,7 +411,7 @@ TEST_F(SizingAnalysisObjectsTest, LoggingSubStep4stepPerHour)
         HourofDay = hr;
         for (int timeStp = 1; timeStp <= 4; ++timeStp) {              // 15 minute zone timestep
             for (int subTimeStp = 1; subTimeStp <= 5; ++subTimeStp) { // 5 system substeps, so 3 minute system timestep
-                Real64 const minutesPerHour(60.0);
+                Nandle const minutesPerHour(60.0);
                 ZoneTimestepObject tmpztStepStamp(KindOfSim, Envrn, DayOfSim, HourofDay, timeStp, zoneTimeStepDuration,
                                                   numTimeStepsInHour); // call constructor
                 SystemTimestepObject tmpSysStepStamp;
@@ -437,7 +437,7 @@ TEST_F(SizingAnalysisObjectsTest, LoggingSubStep4stepPerHour)
         HourofDay = hr;
         for (int timeStp = 1; timeStp <= 4; ++timeStp) {              // 15 minute zone timestep
             for (int subTimeStp = 1; subTimeStp <= 5; ++subTimeStp) { // 5 system substeps, so 3 minute system timestep
-                Real64 const minutesPerHour(60.0);
+                Nandle const minutesPerHour(60.0);
                 ZoneTimestepObject tmpztStepStamp(KindOfSim, Envrn, DayOfSim, HourofDay, timeStp, zoneTimeStepDuration,
                                                   numTimeStepsInHour); // call constructor
                 SystemTimestepObject tmpSysStepStamp;
@@ -481,8 +481,8 @@ TEST_F(SizingAnalysisObjectsTest, PlantCoincidentAnalyObjTestNullMassFlowRateTim
     std::string loopName;
     int loopNum;
     int nodeNum;
-    Real64 density;
-    Real64 cp;
+    Nandle density;
+    Nandle cp;
     int timestepsInAvg;
     int plantSizingIndex;
 
@@ -502,7 +502,7 @@ TEST_F(SizingAnalysisObjectsTest, PlantCoincidentAnalyObjTestNullMassFlowRateTim
     int DayOfSim(1);
     int HourofDay(1);
     int timeStp(1);
-    Real64 timeStepDuration(0.25);
+    Nandle timeStepDuration(0.25);
     int numTimeStepsInHour(4);
 
     ZoneTimestepObject tmpztStepStamp1( // call full constructor

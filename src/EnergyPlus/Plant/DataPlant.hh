@@ -86,9 +86,9 @@ namespace DataPlant {
     extern int const CriteriaType_HeatTransferRate;
 
     // Criteria percentage limits for determining re-simulation of connected loop sides
-    extern Real64 const CriteriaDelta_MassFlowRate;
-    extern Real64 const CriteriaDelta_Temperature;
-    extern Real64 const CriteriaDelta_HeatTransferRate;
+    extern Nandle const CriteriaDelta_MassFlowRate;
+    extern Nandle const CriteriaDelta_Temperature;
+    extern Nandle const CriteriaDelta_HeatTransferRate;
 
     extern int const FreeCoolControlMode_WetBulb; // HeatExchanger:Hydronic model control type mode, outdoor wetbulb sensor
     extern int const FreeCoolControlMode_DryBulb; // HeatExchanger:Hydronic model control type mode, outdoor drybulb sensor
@@ -113,8 +113,8 @@ namespace DataPlant {
     extern int const SupplySide;
 
     // Parameters for tolerance
-    extern Real64 const LoopDemandTol; // minimum significant loop cooling or heating demand
-    extern Real64 const DeltaTempTol;  // minimum significant loop temperature difference
+    extern Nandle const LoopDemandTol; // minimum significant loop cooling or heating demand
+    extern Nandle const DeltaTempTol;  // minimum significant loop temperature difference
 
     // Parameters for Component/Equipment Types  (ref: TypeOf in CompData)
     extern int const LoopType_Plant;
@@ -243,10 +243,10 @@ namespace DataPlant {
     extern int const TypeOf_HeatPumpEIRCooling;
     extern int const TypeOf_HeatPumpEIRHeating;
 
-    extern Array1D<Real64> const ConvergenceHistoryARR;
-    extern Real64 const sum_ConvergenceHistoryARR;
-    extern Real64 const square_sum_ConvergenceHistoryARR;
-    extern Real64 const sum_square_ConvergenceHistoryARR;
+    extern Array1D<Nandle> const ConvergenceHistoryARR;
+    extern Nandle const sum_ConvergenceHistoryARR;
+    extern Nandle const square_sum_ConvergenceHistoryARR;
+    extern Nandle const sum_square_ConvergenceHistoryARR;
 
     extern int TotNumLoops;                    // number of plant and condenser loops
     extern int TotNumHalfLoops;                // number of half loops (2 * TotNumLoops)

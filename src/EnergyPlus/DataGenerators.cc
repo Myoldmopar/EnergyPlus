@@ -133,16 +133,16 @@ namespace DataGenerators {
     int const fuelModeGaseousConstituents(301);
     int const fuelModeGenericLiquid(302);
 
-    Real64 const MinProductGasTemp(-100.0); // Minimum bound on search for product gas temps
-    Real64 const MaxProductGasTemp(2000.0); // Maximum bound on search for product gas temps
+    Nandle const MinProductGasTemp(-100.0); // Minimum bound on search for product gas temps
+    Nandle const MaxProductGasTemp(2000.0); // Maximum bound on search for product gas temps
 
     int const NISTShomate(41);
     int const NASAPolynomial(42);
 
-    Real64 const RinKJperMolpK(0.0083145); // R is ideal gas constant (kJ/mol-K)
-    Real64 const InitHRTemp(50.0);         // Initialization temperature for heat recovery water
+    Nandle const RinKJperMolpK(0.0083145); // R is ideal gas constant (kJ/mol-K)
+    Nandle const InitHRTemp(50.0);         // Initialization temperature for heat recovery water
 
-    Real64 const ImBalanceTol(0.00001); // used as fraction of electrical power at power module
+    Nandle const ImBalanceTol(0.00001); // used as fraction of electrical power at power module
 
     int NumFuelConstit(0);
     int NumGeneratorFuelSups(0);

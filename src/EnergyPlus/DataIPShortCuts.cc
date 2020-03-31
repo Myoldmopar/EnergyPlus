@@ -97,7 +97,7 @@ namespace DataIPShortCuts {
     Array1D_bool lNumericFieldBlanks;
     Array1D_bool lAlphaFieldBlanks;
     Array1D_string cAlphaArgs;
-    Array1D<Real64> rNumericArgs;
+    Array1D<Nandle> rNumericArgs;
     std::string cCurrentModuleObject;
 
     // Clears the global data in DataIPShortCuts.

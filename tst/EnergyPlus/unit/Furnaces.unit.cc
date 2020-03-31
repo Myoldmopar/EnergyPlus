@@ -88,8 +88,8 @@ TEST_F(EnergyPlusFixture, SetVSHPAirFlowTest_VSFurnaceFlowTest)
 {
 
     int FurnaceNum(1);
-    Real64 OnOffAirFlowRatio; // This is a return value
-    Real64 PartLoadRatio(1.0);
+    Nandle OnOffAirFlowRatio; // This is a return value
+    Nandle PartLoadRatio(1.0);
     Node.allocate(10);
     CurDeadBandOrSetback.allocate(1);
     Schedule.allocate(1);
@@ -240,11 +240,11 @@ TEST_F(EnergyPlusFixture, SetVSHPAirFlowTest_VSFurnaceFlowTest)
 
     bool firstHVACIteration = true;
     int compOp = 1;
-    Real64 zoneLoad = 1000;
-    Real64 moistureLoad = 0.0;
-    Real64 heatCoilLoad = 0.0;
-    Real64 reheatCoilLoad = 0.0;
-    Real64 onOffAirFlowRatio = 1.0;
+    Nandle zoneLoad = 1000;
+    Nandle moistureLoad = 0.0;
+    Nandle heatCoilLoad = 0.0;
+    Nandle reheatCoilLoad = 0.0;
+    Nandle onOffAirFlowRatio = 1.0;
     bool hXUnitOn = false;
 
     DataEnvironment::OutDryBulbTemp = 35.0;

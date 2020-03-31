@@ -163,8 +163,8 @@ TEST_F(EnergyPlusFixture, VAVNoReheatTerminalUnitSchedule)
     int ZoneNodeNum = 1;
     int InletNodeNum = 4;
     bool FirstHVACIteration = true;
-    Real64 SysMinMassFlow = 1.0 * DataEnvironment::StdRhoAir; // From inputs for Zone 1 VAV
-    Real64 SysMaxMassFlow = 2.0 * DataEnvironment::StdRhoAir; // From inputs for Zone 1 VAV
+    Nandle SysMinMassFlow = 1.0 * DataEnvironment::StdRhoAir; // From inputs for Zone 1 VAV
+    Nandle SysMaxMassFlow = 2.0 * DataEnvironment::StdRhoAir; // From inputs for Zone 1 VAV
 
     // Test with heating load
     DataZoneEnergyDemands::ZoneSysEnergyDemand(1).RemainingOutputRequired = 2000.0; // Heating load - expect min flow rate
@@ -335,8 +335,8 @@ TEST_F(EnergyPlusFixture, VAVReheatTerminalUnitSchedule)
     int ZoneNodeNum = 1;
     int InletNodeNum = 5;
     bool FirstHVACIteration = true;
-    Real64 SysMinMassFlow = 0.25 * DataEnvironment::StdRhoAir; // From inputs for Zone 1 VAV
-    Real64 SysMaxMassFlow = 1.0 * DataEnvironment::StdRhoAir;  // From inputs for Zone 1 VAV
+    Nandle SysMinMassFlow = 0.25 * DataEnvironment::StdRhoAir; // From inputs for Zone 1 VAV
+    Nandle SysMaxMassFlow = 1.0 * DataEnvironment::StdRhoAir;  // From inputs for Zone 1 VAV
 
     // Test with heating load
     DataZoneEnergyDemands::ZoneSysEnergyDemand(1).RemainingOutputRequired = 2000.0; // Heating load - expect min flow rate
@@ -1261,15 +1261,15 @@ TEST_F(EnergyPlusFixture, SingleDuct_ZeroFloorAreaTest)
 
     // zone floor area of zone 1 = 0, zone 2 > 0. Expect TU MaxAirVolFlowRateDuringReheat = 0 only for zone 1.
     // this test isn't relevant anymore since defaulting is done differently
-    Real64 MaxAirVolFlowRateDuringReheatDes = min(FinalZoneSizing(1).DesHeatVolFlowMax, SingleDuct::sd_airterminal(1).MaxAirVolFlowRate);
-    // Real64 MaxAirVolFlowRateDuringReheatDes = min( 0.002032 * SingleDuct::sd_airterminal( 1 ).ZoneFloorArea, SingleDuct::sd_airterminal( 1 ).MaxAirVolFlowRate );
+    Nandle MaxAirVolFlowRateDuringReheatDes = min(FinalZoneSizing(1).DesHeatVolFlowMax, SingleDuct::sd_airterminal(1).MaxAirVolFlowRate);
+    // Nandle MaxAirVolFlowRateDuringReheatDes = min( 0.002032 * SingleDuct::sd_airterminal( 1 ).ZoneFloorArea, SingleDuct::sd_airterminal( 1 ).MaxAirVolFlowRate );
     // apply limit based on min stop
     MaxAirVolFlowRateDuringReheatDes =
         max(MaxAirVolFlowRateDuringReheatDes, (SingleDuct::sd_airterminal(1).MaxAirVolFlowRate * SingleDuct::sd_airterminal(1).ZoneMinAirFrac));
 
     // This isn't relevant any more since the default is calculated differently
-    Real64 MaxAirVolFractionDuringReheatDes = min(1.0, (FinalZoneSizing(1).DesHeatVolFlowMax / SingleDuct::sd_airterminal(1).MaxAirVolFlowRate));
-    // Real64 MaxAirVolFractionDuringReheatDes = min( 1.0, ( 0.002032 * SingleDuct::sd_airterminal( 1 ).ZoneFloorArea / SingleDuct::sd_airterminal( 1 ).MaxAirVolFlowRate )
+    Nandle MaxAirVolFractionDuringReheatDes = min(1.0, (FinalZoneSizing(1).DesHeatVolFlowMax / SingleDuct::sd_airterminal(1).MaxAirVolFlowRate));
+    // Nandle MaxAirVolFractionDuringReheatDes = min( 1.0, ( 0.002032 * SingleDuct::sd_airterminal( 1 ).ZoneFloorArea / SingleDuct::sd_airterminal( 1 ).MaxAirVolFlowRate )
     // ); apply limit based on min stop
     MaxAirVolFractionDuringReheatDes = max(MaxAirVolFractionDuringReheatDes, SingleDuct::sd_airterminal(1).ZoneMinAirFrac);
     // apply model math
@@ -1303,8 +1303,8 @@ TEST_F(EnergyPlusFixture, TestOAMassFlowRateUsingStdRhoAir)
     // DATE WRITTEN: Jul. 2016
     // TEST: #5366
 
-    Real64 SAMassFlow;
-    Real64 AirLoopOAFrac;
+    Nandle SAMassFlow;
+    Nandle AirLoopOAFrac;
 
     SingleDuct::sd_airterminal.allocate(1);
     Zone.allocate(1);
@@ -2471,13 +2471,13 @@ TEST_F(EnergyPlusFixture, SingleDuct_VAVWaterCoilSizing)
     //	" Until: 24:00, 10.0;       !- Field 23",
 
     DataEnvironment::StdRhoAir = 1.2027389349552706;
-    Real64 CoilInTemp = TermUnitFinalZoneSizing(1).DesHeatCoilInTempTU;
-    Real64 DesMassFlow = DataEnvironment::StdRhoAir * TermUnitSizing(1).AirVolFlow;
-    Real64 DesZoneHeatLoad = FinalZoneSizing(1).DesHeatLoad * FinalZoneSizing(1).HeatSizingFactor;
-    Real64 ZoneDesTemp = FinalZoneSizing(1).ZoneTempAtHeatPeak;
-    Real64 ZoneDesHumRat = FinalZoneSizing(1).ZoneHumRatAtHeatPeak;
+    Nandle CoilInTemp = TermUnitFinalZoneSizing(1).DesHeatCoilInTempTU;
+    Nandle DesMassFlow = DataEnvironment::StdRhoAir * TermUnitSizing(1).AirVolFlow;
+    Nandle DesZoneHeatLoad = FinalZoneSizing(1).DesHeatLoad * FinalZoneSizing(1).HeatSizingFactor;
+    Nandle ZoneDesTemp = FinalZoneSizing(1).ZoneTempAtHeatPeak;
+    Nandle ZoneDesHumRat = FinalZoneSizing(1).ZoneHumRatAtHeatPeak;
 
-    Real64 DesCoilLoad = DesZoneHeatLoad + Psychrometrics::PsyCpAirFnW(ZoneDesHumRat) * DesMassFlow * (ZoneDesTemp - CoilInTemp);
+    Nandle DesCoilLoad = DesZoneHeatLoad + Psychrometrics::PsyCpAirFnW(ZoneDesHumRat) * DesMassFlow * (ZoneDesTemp - CoilInTemp);
 
     EXPECT_EQ(CoilInTemp, 16.0);
     EXPECT_EQ(DesZoneHeatLoad, 0.0);

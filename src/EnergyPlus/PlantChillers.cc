@@ -121,7 +121,7 @@ namespace PlantChillers {
     int const AirCooled(1);
     int const WaterCooled(2);
     int const EvapCooled(3);
-    Real64 const KJtoJ(1000.0); // convert Kjoules to joules
+    Nandle const KJtoJ(1000.0); // convert Kjoules to joules
 
     // chiller flow modes
     int const FlowModeNotSet(200);
@@ -163,7 +163,7 @@ namespace PlantChillers {
         ConstCOPChiller.deallocate();
     }
 
-    void BaseChillerSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void BaseChillerSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         if (calledFromLocation.loopNum == this->CWLoopNum) {
             MinLoad = this->NomCap * this->MinPartLoadRat;
@@ -176,7 +176,7 @@ namespace PlantChillers {
         }
     }
 
-    void BaseChillerSpecs::getSizingFactor(Real64 &_SizFac)
+    void BaseChillerSpecs::getSizingFactor(Nandle &_SizFac)
     {
         _SizFac = this->SizFac;
     }
@@ -189,7 +189,7 @@ namespace PlantChillers {
         }
     }
 
-    void BaseChillerSpecs::getDesignTemperatures(Real64 &_TempDesCondIn, Real64 &_TempDesEvapOut)
+    void BaseChillerSpecs::getDesignTemperatures(Nandle &_TempDesCondIn, Nandle &_TempDesEvapOut)
     {
         _TempDesEvapOut = this->TempDesEvapOut;
         _TempDesCondIn = this->TempDesCondIn;
@@ -685,7 +685,7 @@ namespace PlantChillers {
         }
     }
 
-    void ElectricChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag)
+    void ElectricChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag)
     {
         if (calledFromLocation.loopNum == this->CWLoopNum) { // chilled water loop
             this->initialize(RunFlag, CurLoad);
@@ -717,7 +717,7 @@ namespace PlantChillers {
         }
     }
 
-    void ElectricChillerSpecs::initialize(bool const RunFlag, Real64 const MyLoad)
+    void ElectricChillerSpecs::initialize(bool const RunFlag, Nandle const MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -849,7 +849,7 @@ namespace PlantChillers {
 
         if (this->MyEnvrnFlag && DataGlobals::BeginEnvrnFlag && (DataPlant::PlantFirstSizesOkayToFinalize)) {
 
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                            DataGlobals::CWInitConvTemp,
                                                            DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                            RoutineName);
@@ -918,7 +918,7 @@ namespace PlantChillers {
                 this->HeatRecMaxCapacityLimit = this->HeatRecCapacityFraction * (this->NomCap + this->NomCap / this->COP);
 
                 if (this->HeatRecSetPointNodeNum > 0) {
-                    Real64 THeatRecSetPoint(0.0);
+                    Nandle THeatRecSetPoint(0.0);
                     {
                         auto const SELECT_CASE_var(DataPlant::PlantLoop(this->HRLoopNum).LoopDemandCalcScheme);
                         if (SELECT_CASE_var == DataPlant::SingleSetPoint) {
@@ -976,8 +976,8 @@ namespace PlantChillers {
             }
         }
 
-        Real64 mdot = 0.0;
-        Real64 mdotCond = 0.0;
+        Nandle mdot = 0.0;
+        Nandle mdotCond = 0.0;
         if ((MyLoad < 0.0) && RunFlag) {
             // request full then take what can get
             mdot = this->EvapMassFlowRateMax;
@@ -993,7 +993,7 @@ namespace PlantChillers {
         // Initialize heat recovery flow rates at node
         if (this->HeatRecActive) {
 
-            Real64 thisMdot = 0.0;
+            Nandle thisMdot = 0.0;
             if (RunFlag) {
                 thisMdot = this->DesignHeatRecMassFlowRate;
             }
@@ -1038,16 +1038,16 @@ namespace PlantChillers {
         int PltSizCondNum(0);    // Plant Sizing index for condenser loop
         bool ErrorsFound(false); // If errors detected in input
         std::string equipName;
-        Real64 rho;                               // local fluid density
-        Real64 Cp;                                // local fluid specific heat
-        Real64 tmpNomCap;                         // local nominal capacity cooling power
-        Real64 tmpEvapVolFlowRate;                // local evaporator design volume flow rate
-        Real64 tmpCondVolFlowRate;                // local condenser design volume flow rate
-        Real64 tmpHeatRecVolFlowRate(0.0);        // local heat recovery design volume flow rate
-        Real64 EvapVolFlowRateUser(0.0);          // Hardsized evaporator flow rate for reporting
-        Real64 NomCapUser(0.0);                   // Hardsized reference capacity for reporting
-        Real64 CondVolFlowRateUser(0.0);          // Hardsized condenser flow rate for reporting
-        Real64 DesignHeatRecVolFlowRateUser(0.0); // Hardsized heat recovery flow rate for reporting
+        Nandle rho;                               // local fluid density
+        Nandle Cp;                                // local fluid specific heat
+        Nandle tmpNomCap;                         // local nominal capacity cooling power
+        Nandle tmpEvapVolFlowRate;                // local evaporator design volume flow rate
+        Nandle tmpCondVolFlowRate;                // local condenser design volume flow rate
+        Nandle tmpHeatRecVolFlowRate(0.0);        // local heat recovery design volume flow rate
+        Nandle EvapVolFlowRateUser(0.0);          // Hardsized evaporator flow rate for reporting
+        Nandle NomCapUser(0.0);                   // Hardsized reference capacity for reporting
+        Nandle CondVolFlowRateUser(0.0);          // Hardsized condenser flow rate for reporting
+        Nandle DesignHeatRecVolFlowRateUser(0.0); // Hardsized heat recovery flow rate for reporting
 
         // init local temporary version in case of partial/mixed autosizing
         tmpEvapVolFlowRate = this->EvapVolFlowRate;
@@ -1304,7 +1304,7 @@ namespace PlantChillers {
         }
     }
 
-    void ElectricChillerSpecs::calculate(Real64 &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
+    void ElectricChillerSpecs::calculate(Nandle &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dan Fisher / Brandon Anderson
@@ -1325,45 +1325,45 @@ namespace PlantChillers {
         // 2. CHILLER User Manual
 
         // Locals
-        Real64 _CondInletTemp; // C - condenser inlet temperature, water side
+        Nandle _CondInletTemp; // C - condenser inlet temperature, water side
 
         static ObjexxFCL::gio::Fmt OutputFormat("(F6.2)");
         static std::string const RoutineName("CalcElectricChillerModel");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 _MinPartLoadRat;          // min allowed operating frac full load
-        Real64 _MaxPartLoadRat;          // max allowed operating frac full load
-        Real64 TempCondInDesign;         // C - (Electric ADJTC(1)The design secondary loop fluid
-        Real64 TempRiseRat;              // intermediate result:  temperature rise ratio
-        Real64 TempEvapOut;              // C - evaporator outlet temperature, water side
-        Real64 TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
-        Real64 TempEvapOutDesign;        // design evaporator outlet temperature, water side
-        Real64 ChillerNomCap;            // chiller nominal capacity
-        Real64 AvailChillerCap;          // chiller available capacity
-        Real64 RatedCOP;                 // rated coefficient of performance, from user input
-        Real64 FracFullLoadPower;        // fraction of full load power
-        Real64 EvapDeltaTemp(0.0);       // C - evaporator temperature difference, water side
-        Real64 DeltaTemp;                // C - intermediate result: condenser/evaporator temp diff
-        Real64 AvailNomCapRat;           // intermediate result: available nominal capacity ratio
-        Real64 FullLoadPowerRat;         // intermediate result: full load power ratio
-        Real64 PartLoadRat;              // part load ratio for efficiency calculation
-        Real64 OperPartLoadRat;          // Actual Operating PLR
-        Real64 TempLowLimitEout;         // C - Evaporator low temp. limit cut off
-        Real64 EvapMassFlowRateMax;      // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
+        Nandle _MinPartLoadRat;          // min allowed operating frac full load
+        Nandle _MaxPartLoadRat;          // max allowed operating frac full load
+        Nandle TempCondInDesign;         // C - (Electric ADJTC(1)The design secondary loop fluid
+        Nandle TempRiseRat;              // intermediate result:  temperature rise ratio
+        Nandle TempEvapOut;              // C - evaporator outlet temperature, water side
+        Nandle TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
+        Nandle TempEvapOutDesign;        // design evaporator outlet temperature, water side
+        Nandle ChillerNomCap;            // chiller nominal capacity
+        Nandle AvailChillerCap;          // chiller available capacity
+        Nandle RatedCOP;                 // rated coefficient of performance, from user input
+        Nandle FracFullLoadPower;        // fraction of full load power
+        Nandle EvapDeltaTemp(0.0);       // C - evaporator temperature difference, water side
+        Nandle DeltaTemp;                // C - intermediate result: condenser/evaporator temp diff
+        Nandle AvailNomCapRat;           // intermediate result: available nominal capacity ratio
+        Nandle FullLoadPowerRat;         // intermediate result: full load power ratio
+        Nandle PartLoadRat;              // part load ratio for efficiency calculation
+        Nandle OperPartLoadRat;          // Actual Operating PLR
+        Nandle TempLowLimitEout;         // C - Evaporator low temp. limit cut off
+        Nandle EvapMassFlowRateMax;      // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
         int EvapInletNode;               // evaporator inlet node number, water side
         int EvapOutletNode;              // evaporator outlet node number, water side
         int CondInletNode;               // condenser inlet node number, water side
         int CondOutletNode;              // condenser outlet node number, water side
-        Real64 FRAC;
+        Nandle FRAC;
         int PlantLoopNum;
         int LoopNum;
         int LoopSideNum;
         int BranchNum;
         int CompNum;
-        Real64 CurrentEndTime;  // end time of time step for current simulation time step
+        Nandle CurrentEndTime;  // end time of time step for current simulation time step
         std::string OutputChar; // character string for warning messages
-        Real64 Cp;              // local for fluid specif heat, for evaporator
-        Real64 CpCond;          // local for fluid specif heat, for condenser
+        Nandle Cp;              // local for fluid specif heat, for evaporator
+        Nandle CpCond;          // local for fluid specif heat, for condenser
 
         // set module level inlet and outlet nodes
         this->EvapMassFlowRate = 0.0;
@@ -1487,8 +1487,8 @@ namespace PlantChillers {
         // If there is a fault of chiller fouling (zrp_Nov2016)
         if (this->FaultyChillerFoulingFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerFoulingIndex;
-            Real64 NomCap_ff = ChillerNomCap;
-            Real64 RatedCOP_ff = RatedCOP;
+            Nandle NomCap_ff = ChillerNomCap;
+            Nandle RatedCOP_ff = RatedCOP;
 
             // calculate the Faulty Chiller Fouling Factor using fault information
             this->FaultyChillerFoulingFactor = FaultsManager::FaultsChillerFouling(FaultIndex).CalFoulingFactor();
@@ -1550,7 +1550,7 @@ namespace PlantChillers {
         // If there is a fault of Chiller SWT Sensor (zrp_Jun2016)
         if (this->FaultyChillerSWTFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerSWTIndex;
-            Real64 EvapOutletTemp_ff = TempEvapOut;
+            Nandle EvapOutletTemp_ff = TempEvapOut;
 
             // calculate the sensor offset using fault information
             this->FaultyChillerSWTOffset = FaultsManager::FaultsChillerSWTSensor(FaultIndex).CalFaultOffsetAct();
@@ -1909,10 +1909,10 @@ namespace PlantChillers {
         }
     }
 
-    void ElectricChillerSpecs::calcHeatRecovery(Real64 &QCond,               // current condenser load
-                                                Real64 const CondMassFlow,   // current condenser Mass Flow
-                                                Real64 const _CondInletTemp, // current condenser Inlet Temp
-                                                Real64 &QHeatRec             // amount of heat recovered
+    void ElectricChillerSpecs::calcHeatRecovery(Nandle &QCond,               // current condenser load
+                                                Nandle const CondMassFlow,   // current condenser Mass Flow
+                                                Nandle const _CondInletTemp, // current condenser Inlet Temp
+                                                Nandle &QHeatRec             // amount of heat recovered
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1923,21 +1923,21 @@ namespace PlantChillers {
         // Calculate the heat recovered from the chiller condenser
 
         // Locals
-        Real64 _HeatRecInletTemp;
+        Nandle _HeatRecInletTemp;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("ChillerHeatRecovery");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 QTotal;
-        Real64 HeatRecMassFlowRate;
-        Real64 TAvgIn;
-        Real64 TAvgOut;
-        Real64 CpHeatRec;
-        Real64 CpCond;
-        Real64 THeatRecSetPoint(0.0);
-        Real64 QHeatRecToSetPoint;
-        Real64 HeatRecHighInletLimit;
+        Nandle QTotal;
+        Nandle HeatRecMassFlowRate;
+        Nandle TAvgIn;
+        Nandle TAvgOut;
+        Nandle CpHeatRec;
+        Nandle CpCond;
+        Nandle THeatRecSetPoint(0.0);
+        Nandle QHeatRecToSetPoint;
+        Nandle HeatRecHighInletLimit;
 
         // Begin routine
         _HeatRecInletTemp = Node(this->HeatRecInletNodeNum).Temp;
@@ -2001,13 +2001,13 @@ namespace PlantChillers {
         }
     }
 
-    void ElectricChillerSpecs::update(Real64 const MyLoad, bool const RunFlag)
+    void ElectricChillerSpecs::update(Nandle const MyLoad, bool const RunFlag)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR:          Dan Fisher / Brandon Anderson
         //       DATE WRITTEN:    September 2000
 
-        Real64 const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
         if (MyLoad >= 0.0 || !RunFlag) { // Chiller not running so pass inlet states to outlet states
             // set node temperatures
@@ -2100,7 +2100,7 @@ namespace PlantChillers {
         return nullptr;
     }
 
-    void EngineDrivenChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag)
+    void EngineDrivenChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag)
     {
         if (calledFromLocation.loopNum == this->CWLoopNum) { // chilled water loop
             this->initialize(RunFlag, CurLoad);
@@ -2702,7 +2702,7 @@ namespace PlantChillers {
         }
     }
 
-    void EngineDrivenChillerSpecs::initialize(bool const RunFlag, Real64 const MyLoad)
+    void EngineDrivenChillerSpecs::initialize(bool const RunFlag, Nandle const MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2725,9 +2725,9 @@ namespace PlantChillers {
         int CondOutletNode;
         int EvapInletNode;
         int EvapOutletNode;
-        Real64 rho;      // local fluid density
-        Real64 mdot;     // local mass flow rate
-        Real64 mdotCond; // local mass flow rate for condenser
+        Nandle rho;      // local fluid density
+        Nandle mdot;     // local mass flow rate
+        Nandle mdotCond; // local mass flow rate for condenser
         bool errFlag;
         int InletNode;
         int OutletNode;
@@ -2994,14 +2994,14 @@ namespace PlantChillers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool ErrorsFound; // If errors detected in input
         std::string equipName;
-        Real64 rho;                 // local fluid density
-        Real64 Cp;                  // local fluid specific heat
-        Real64 tmpNomCap;           // local nominal capacity cooling power
-        Real64 tmpEvapVolFlowRate;  // local evaporator design volume flow rate
-        Real64 tmpCondVolFlowRate;  // local condenser design volume flow rate
-        Real64 EvapVolFlowRateUser; // Hardsized evaporator flow rate for reporting
-        Real64 NomCapUser;          // Hardsized reference capacity for reporting
-        Real64 CondVolFlowRateUser; // Hardsized condenser flow rate for reporting
+        Nandle rho;                 // local fluid density
+        Nandle Cp;                  // local fluid specific heat
+        Nandle tmpNomCap;           // local nominal capacity cooling power
+        Nandle tmpEvapVolFlowRate;  // local evaporator design volume flow rate
+        Nandle tmpCondVolFlowRate;  // local condenser design volume flow rate
+        Nandle EvapVolFlowRateUser; // Hardsized evaporator flow rate for reporting
+        Nandle NomCapUser;          // Hardsized reference capacity for reporting
+        Nandle CondVolFlowRateUser; // Hardsized condenser flow rate for reporting
 
         int PltSizCondNum = 0;
         ErrorsFound = false;
@@ -3205,7 +3205,7 @@ namespace PlantChillers {
 
         // autosize support for heat recovery flow rate.
         if (this->HeatRecActive) {
-            Real64 tmpHeatRecVolFlowRate = tmpCondVolFlowRate * this->HeatRecCapacityFraction;
+            Nandle tmpHeatRecVolFlowRate = tmpCondVolFlowRate * this->HeatRecCapacityFraction;
             if (DataPlant::PlantFirstSizesOkayToFinalize) {
                 if (this->DesignHeatRecVolFlowRateWasAutoSized) {
                     this->DesignHeatRecVolFlowRate = tmpHeatRecVolFlowRate;
@@ -3221,7 +3221,7 @@ namespace PlantChillers {
                     }
                 } else {
                     if (this->DesignHeatRecVolFlowRate > 0.0 && tmpHeatRecVolFlowRate > 0.0) {
-                        Real64 DesignHeatRecVolFlowRateUser = this->DesignHeatRecVolFlowRate;
+                        Nandle DesignHeatRecVolFlowRateUser = this->DesignHeatRecVolFlowRate;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput("Chiller:EngineDriven",
@@ -3271,7 +3271,7 @@ namespace PlantChillers {
         }
     }
 
-    void EngineDrivenChillerSpecs::calculate(Real64 &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
+    void EngineDrivenChillerSpecs::calculate(Nandle &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dan Fisher / Brandon Anderson
@@ -3292,61 +3292,61 @@ namespace PlantChillers {
         // 2. CHILLER User Manual
 
         // Locals
-        Real64 _CondInletTemp; // C - condenser inlet temperature, water side
+        Nandle _CondInletTemp; // C - condenser inlet temperature, water side
 
-        Real64 const ExhaustCP(1.047);    // Exhaust Gas Specific Heat (J/kg-K)
-        Real64 const ReferenceTemp(25.0); // Reference temperature by which lower heating
+        Nandle const ExhaustCP(1.047);    // Exhaust Gas Specific Heat (J/kg-K)
+        Nandle const ReferenceTemp(25.0); // Reference temperature by which lower heating
         // value is reported.  This should be subtracted
         // off of when calculated exhaust energies.
         static ObjexxFCL::gio::Fmt OutputFormat("(F6.2)");
         static std::string const RoutineName("CalcEngineDrivenChillerModel");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 _MinPartLoadRat;          // min allowed operating frac full load
-        Real64 _MaxPartLoadRat;          // max allowed operating frac full load
-        Real64 TempCondIn;               // C - (EngineDriven ADJTC(1)The design secondary loop fluid
-        Real64 TempCondInDesign;         // C - (EngineDriven ADJTC(1)The design secondary loop fluid
-        Real64 TempRiseRat;              // intermediate result:  temperature rise ratio
-        Real64 TempEvapOut;              // C - evaporator outlet temperature, water side
-        Real64 TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
-        Real64 TempEvapOutDesign;        // design evaporator outlet temperature, water side
-        Real64 ChillerNomCap;            // chiller nominal capacity
-        Real64 AvailChillerCap;          // chiller available capacity
-        Real64 COP;                      // coefficient of performance
-        Real64 FracFullLoadPower;        // fraction of full load power
-        Real64 EvapDeltaTemp(0.0);       // C - evaporator temperature difference, water side
-        Real64 DeltaTemp;                // C - intermediate result: condenser/evaporator temp diff
-        Real64 AvailNomCapRat;           // intermediate result: available nominal capacity ratio
-        Real64 FullLoadPowerRat;         // intermediate result: full load power ratio
-        Real64 PartLoadRat(0.0);         // part load ratio for efficiency
-        Real64 OperPartLoadRat;          // Actual operating PLR
+        Nandle _MinPartLoadRat;          // min allowed operating frac full load
+        Nandle _MaxPartLoadRat;          // max allowed operating frac full load
+        Nandle TempCondIn;               // C - (EngineDriven ADJTC(1)The design secondary loop fluid
+        Nandle TempCondInDesign;         // C - (EngineDriven ADJTC(1)The design secondary loop fluid
+        Nandle TempRiseRat;              // intermediate result:  temperature rise ratio
+        Nandle TempEvapOut;              // C - evaporator outlet temperature, water side
+        Nandle TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
+        Nandle TempEvapOutDesign;        // design evaporator outlet temperature, water side
+        Nandle ChillerNomCap;            // chiller nominal capacity
+        Nandle AvailChillerCap;          // chiller available capacity
+        Nandle COP;                      // coefficient of performance
+        Nandle FracFullLoadPower;        // fraction of full load power
+        Nandle EvapDeltaTemp(0.0);       // C - evaporator temperature difference, water side
+        Nandle DeltaTemp;                // C - intermediate result: condenser/evaporator temp diff
+        Nandle AvailNomCapRat;           // intermediate result: available nominal capacity ratio
+        Nandle FullLoadPowerRat;         // intermediate result: full load power ratio
+        Nandle PartLoadRat(0.0);         // part load ratio for efficiency
+        Nandle OperPartLoadRat;          // Actual operating PLR
         int EvapInletNode;               // evaporator inlet node number, water side
         int EvapOutletNode;              // evaporator outlet node number, water side
         int CondInletNode;               // condenser inlet node number, water side
         int CondOutletNode;              // condenser outlet node number, water side
-        Real64 EvapMassFlowRateMax;      // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
-        Real64 TempLowLimitEout;         // C - Evaporator low temp. limit cut off
-        Real64 FRAC;
+        Nandle EvapMassFlowRateMax;      // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
+        Nandle TempLowLimitEout;         // C - Evaporator low temp. limit cut off
+        Nandle FRAC;
         int LoopNum;
         int LoopSideNum;
-        Real64 CurrentEndTime;  // end time of time step for current simulation time step
+        Nandle CurrentEndTime;  // end time of time step for current simulation time step
         std::string OutputChar; // character string for warning messages
-        Real64 Cp;              // local for fluid specif heat, for evaporator
-        Real64 CpCond;          // local for fluid specif heat, for condenser
+        Nandle Cp;              // local for fluid specif heat, for evaporator
+        Nandle CpCond;          // local for fluid specif heat, for condenser
 
         // Special variables for EngineDriven Chiller
-        Real64 _MaxExhaustperPowerOutput; // curve fit parameter
-        Real64 ClngLoadFuelRat;           // (RELDC) Ratio of Shaft Power to Fuel Energy Input
-        Real64 RecJacHeattoFuelRat;       // (RJACDC) Ratio of Recoverable Jacket Heat to Fuel Energy Input
-        Real64 RecLubeHeattoFuelRat;      // (RLUBDC) Ratio of Recoverable Lube Oil Heat to Fuel Energy Input
-        Real64 TotExhausttoFuelRat;       // (REXDC) Total Exhaust Energy Input to Fuel Energy Input
-        Real64 TotalExhaustEnergy;
-        Real64 _ExhaustTemp;   // (TEX) Exhaust Gas Temp
-        Real64 ExhaustGasFlow; // exhaust gas mass flow rate
-        Real64 _DesignMinExitGasTemp;
-        Real64 _UA;       // (UACDC) exhaust gas Heat Exchanger UA
-        Real64 EngineDrivenFuelEnergy;
-        Real64 HeatRecRatio; // When Max Temp is reached the amount of recovered heat has to be reduced.
+        Nandle _MaxExhaustperPowerOutput; // curve fit parameter
+        Nandle ClngLoadFuelRat;           // (RELDC) Ratio of Shaft Power to Fuel Energy Input
+        Nandle RecJacHeattoFuelRat;       // (RJACDC) Ratio of Recoverable Jacket Heat to Fuel Energy Input
+        Nandle RecLubeHeattoFuelRat;      // (RLUBDC) Ratio of Recoverable Lube Oil Heat to Fuel Energy Input
+        Nandle TotExhausttoFuelRat;       // (REXDC) Total Exhaust Energy Input to Fuel Energy Input
+        Nandle TotalExhaustEnergy;
+        Nandle _ExhaustTemp;   // (TEX) Exhaust Gas Temp
+        Nandle ExhaustGasFlow; // exhaust gas mass flow rate
+        Nandle _DesignMinExitGasTemp;
+        Nandle _UA;       // (UACDC) exhaust gas Heat Exchanger UA
+        Nandle EngineDrivenFuelEnergy;
+        Nandle HeatRecRatio; // When Max Temp is reached the amount of recovered heat has to be reduced.
 
         // set module level inlet and outlet nodes
         this->EvapMassFlowRate = 0.0;
@@ -3516,8 +3516,8 @@ namespace PlantChillers {
         // If there is a fault of chiller fouling (zrp_Nov2016)
         if (this->FaultyChillerFoulingFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerFoulingIndex;
-            Real64 NomCap_ff = ChillerNomCap;
-            Real64 COP_ff = COP;
+            Nandle NomCap_ff = ChillerNomCap;
+            Nandle COP_ff = COP;
 
             // calculate the Faulty Chiller Fouling Factor using fault information
             this->FaultyChillerFoulingFactor = FaultsManager::FaultsChillerFouling(FaultIndex).CalFoulingFactor();
@@ -3530,7 +3530,7 @@ namespace PlantChillers {
         // If there is a fault of Chiller SWT Sensor (zrp_Jun2016)
         if (this->FaultyChillerSWTFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerSWTIndex;
-            Real64 EvapOutletTemp_ff = TempEvapOut;
+            Nandle EvapOutletTemp_ff = TempEvapOut;
 
             // calculate the sensor offset using fault information
             this->FaultyChillerSWTOffset = FaultsManager::FaultsChillerSWTSensor(FaultIndex).CalFaultOffsetAct();
@@ -3934,7 +3934,7 @@ namespace PlantChillers {
         }
     }
 
-    void EngineDrivenChillerSpecs::calcHeatRecovery(Real64 const EnergyRecovered, Real64 &HeatRecRatio)
+    void EngineDrivenChillerSpecs::calcHeatRecovery(Nandle const EnergyRecovered, Nandle &HeatRecRatio)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR:          Brandon Anderson
@@ -3953,11 +3953,11 @@ namespace PlantChillers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int HeatRecInNode;
-        Real64 _HeatRecMdot;
-        Real64 MinHeatRecMdot(0.0);
-        Real64 HeatRecInTemp;
-        Real64 HeatRecOutTemp;
-        Real64 HeatRecCp;
+        Nandle _HeatRecMdot;
+        Nandle MinHeatRecMdot(0.0);
+        Nandle HeatRecInTemp;
+        Nandle HeatRecOutTemp;
+        Nandle HeatRecCp;
 
         // Load inputs to local structure
         HeatRecInNode = this->HeatRecInletNodeNum;
@@ -4005,13 +4005,13 @@ namespace PlantChillers {
         this->HeatRecMdotActual = _HeatRecMdot;
     }
 
-    void EngineDrivenChillerSpecs::update(Real64 const MyLoad, bool const RunFlag)
+    void EngineDrivenChillerSpecs::update(Nandle const MyLoad, bool const RunFlag)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR:          Dan Fisher / Brandon Anderson
         //       DATE WRITTEN:    September 2000
 
-        Real64 const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
         if (MyLoad >= 0.0 || !RunFlag) { // Chiller not running
             // set node temperatures
@@ -4078,7 +4078,7 @@ namespace PlantChillers {
         return nullptr;
     }
 
-    void GTChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag)
+    void GTChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag)
     {
         if (calledFromLocation.loopNum == this->CWLoopNum) { // chilled water loop
             this->initialize(RunFlag, CurLoad);
@@ -4626,7 +4626,7 @@ namespace PlantChillers {
         }
     }
 
-    void GTChillerSpecs::initialize(bool const RunFlag, Real64 const MyLoad)
+    void GTChillerSpecs::initialize(bool const RunFlag, Nandle const MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -4649,9 +4649,9 @@ namespace PlantChillers {
         int CondOutletNode; // node number of water outlet node from the condenser
         int EvapInletNode;
         int EvapOutletNode;
-        Real64 rho;      // local fluid density
-        Real64 mdot;     // local mass flow rate
-        Real64 mdotCond; // local mass flow rate for condenser
+        Nandle rho;      // local fluid density
+        Nandle mdot;     // local mass flow rate
+        Nandle mdotCond; // local mass flow rate for condenser
         int InletNode;
         int OutletNode;
         int LoopNum;
@@ -4917,16 +4917,16 @@ namespace PlantChillers {
         int PltSizCondNum; // Plant Sizing index for condenser loop
         bool ErrorsFound;  // If errors detected in input
         std::string equipName;
-        Real64 rho;                  // local fluid density
-        Real64 Cp;                   // local fluid specific heat
-        Real64 tmpNomCap;            // local nominal capacity cooling power
-        Real64 tmpEvapVolFlowRate;   // local evaporator design volume flow rate
-        Real64 tmpCondVolFlowRate;   // local condenser design volume flow rate
-        Real64 EvapVolFlowRateUser;  // Hardsized evaporator flow rate for reporting
-        Real64 NomCapUser;           // Hardsized reference capacity for reporting
-        Real64 CondVolFlowRateUser;  // Hardsized condenser flow rate for reporting
-        Real64 GTEngineCapacityDes;  // Autosized GT engine capacity for reporting
-        Real64 GTEngineCapacityUser; // Hardsized GT engine capacity for reporting
+        Nandle rho;                  // local fluid density
+        Nandle Cp;                   // local fluid specific heat
+        Nandle tmpNomCap;            // local nominal capacity cooling power
+        Nandle tmpEvapVolFlowRate;   // local evaporator design volume flow rate
+        Nandle tmpCondVolFlowRate;   // local condenser design volume flow rate
+        Nandle EvapVolFlowRateUser;  // Hardsized evaporator flow rate for reporting
+        Nandle NomCapUser;           // Hardsized reference capacity for reporting
+        Nandle CondVolFlowRateUser;  // Hardsized condenser flow rate for reporting
+        Nandle GTEngineCapacityDes;  // Autosized GT engine capacity for reporting
+        Nandle GTEngineCapacityUser; // Hardsized GT engine capacity for reporting
 
         PltSizCondNum = 0;
         ErrorsFound = false;
@@ -5167,7 +5167,7 @@ namespace PlantChillers {
 
         // autosize support for heat recovery flow rate.
         if (this->HeatRecActive) {
-            Real64 tmpHeatRecVolFlowRate = this->CondVolFlowRate * this->HeatRecCapacityFraction;
+            Nandle tmpHeatRecVolFlowRate = this->CondVolFlowRate * this->HeatRecCapacityFraction;
             if (DataPlant::PlantFirstSizesOkayToFinalize) {
                 if (this->DesignHeatRecVolFlowRateWasAutoSized) {
                     this->DesignHeatRecVolFlowRate = tmpHeatRecVolFlowRate;
@@ -5185,7 +5185,7 @@ namespace PlantChillers {
                     }
                 } else {
                     if (this->DesignHeatRecVolFlowRate > 0.0 && tmpHeatRecVolFlowRate > 0.0) {
-                        Real64 DesignHeatRecVolFlowRateUser = this->DesignHeatRecVolFlowRate;
+                        Nandle DesignHeatRecVolFlowRateUser = this->DesignHeatRecVolFlowRate;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput("Chiller:CombustionTurbine",
@@ -5235,7 +5235,7 @@ namespace PlantChillers {
         }
     }
 
-    void GTChillerSpecs::calculate(Real64 &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
+    void GTChillerSpecs::calculate(Nandle &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dan Fisher / Brandon Anderson
@@ -5256,71 +5256,71 @@ namespace PlantChillers {
         // 2. CHILLER User Manual
 
         // Locals
-        Real64 _ExhaustStackTemp(0.0); // Temperature of Exhaust Gases
-        Real64 _CondInletTemp;         // C - condenser inlet temperature, water side
+        Nandle _ExhaustStackTemp(0.0); // Temperature of Exhaust Gases
+        Nandle _CondInletTemp;         // C - condenser inlet temperature, water side
 
-        Real64 const ExhaustCP(1.047); // Exhaust Gas Specific Heat
+        Nandle const ExhaustCP(1.047); // Exhaust Gas Specific Heat
         static ObjexxFCL::gio::Fmt OutputFormat("(F6.2)");
         static std::string const RoutineName("CalcGTChillerModel");
         static std::string const RoutineNameHeatRecovery("ChillerHeatRecovery");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 _MinPartLoadRat;          // min allowed operating frac full load
-        Real64 _MaxPartLoadRat;          // max allowed operating frac full load
-        Real64 TempCondIn;               // C - (GT ADJTC(1)The design secondary loop fluid
-        Real64 TempCondInDesign;         // C - (GT ADJTC(1)The design secondary loop fluid
-        Real64 TempRiseRat;              // intermediate result:  temperature rise ratio
-        Real64 TempEvapOut;              // C - evaporator outlet temperature, water side
-        Real64 TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
-        Real64 TempEvapOutDesign;        // design evaporator outlet temperature, water side
-        Real64 ChillerNomCap;            // chiller nominal capacity
-        Real64 AvailChillerCap;          // chiller available capacity
-        Real64 COP;                      // coefficient of performance
-        Real64 FracFullLoadPower;        // fraction of full load power
-        Real64 EvapDeltaTemp(0.0);       // C - evaporator temperature difference, water side
-        Real64 DeltaTemp;                // C - intermediate result: condenser/evaporator temp diff
-        Real64 AvailNomCapRat;           // intermediate result: available nominal capacity ratio
-        Real64 FullLoadPowerRat;         // intermediate result: full load power ratio
-        Real64 PartLoadRat(0.0);         // part load ratio for efficiency calculations
-        Real64 OperPartLoadRat;          // Actual Operating PLR
+        Nandle _MinPartLoadRat;          // min allowed operating frac full load
+        Nandle _MaxPartLoadRat;          // max allowed operating frac full load
+        Nandle TempCondIn;               // C - (GT ADJTC(1)The design secondary loop fluid
+        Nandle TempCondInDesign;         // C - (GT ADJTC(1)The design secondary loop fluid
+        Nandle TempRiseRat;              // intermediate result:  temperature rise ratio
+        Nandle TempEvapOut;              // C - evaporator outlet temperature, water side
+        Nandle TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
+        Nandle TempEvapOutDesign;        // design evaporator outlet temperature, water side
+        Nandle ChillerNomCap;            // chiller nominal capacity
+        Nandle AvailChillerCap;          // chiller available capacity
+        Nandle COP;                      // coefficient of performance
+        Nandle FracFullLoadPower;        // fraction of full load power
+        Nandle EvapDeltaTemp(0.0);       // C - evaporator temperature difference, water side
+        Nandle DeltaTemp;                // C - intermediate result: condenser/evaporator temp diff
+        Nandle AvailNomCapRat;           // intermediate result: available nominal capacity ratio
+        Nandle FullLoadPowerRat;         // intermediate result: full load power ratio
+        Nandle PartLoadRat(0.0);         // part load ratio for efficiency calculations
+        Nandle OperPartLoadRat;          // Actual Operating PLR
         int EvapInletNode;               // evaporator inlet node number, water side
         int EvapOutletNode;              // evaporator outlet node number, water side
         int CondInletNode;               // condenser inlet node number, water side
         int CondOutletNode;              // condenser outlet node number, water side
-        Real64 EvapMassFlowRateMax(0.0); // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
-        Real64 TempLowLimitEout;         // C - Evaporator low temp. limit cut off
+        Nandle EvapMassFlowRateMax(0.0); // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
+        Nandle TempLowLimitEout;         // C - Evaporator low temp. limit cut off
         // Special variables for GT Chiller
-        Real64 RPLoad;
-        Real64 PLoad;
-        Real64 _GTEngineCapacity;     // Capacity of GT Unit attached to Chiller
-        Real64 _MaxExhaustperGTPower; // Maximum Exhaust Flow per KW Power Out
-        Real64 RL;
-        Real64 RL2;
+        Nandle RPLoad;
+        Nandle PLoad;
+        Nandle _GTEngineCapacity;     // Capacity of GT Unit attached to Chiller
+        Nandle _MaxExhaustperGTPower; // Maximum Exhaust Flow per KW Power Out
+        Nandle RL;
+        Nandle RL2;
 
-        Real64 _FuelEnergyIn(0.0);  // (EFUEL) Amount of Fuel Energy Required to run gas turbine
-        Real64 _ExhaustFlow(0.0);   // (FEX) Exhaust Gas Flow Rate cubic meters per second
-        Real64 _ExhaustTemp(0.0);   // (TEX) Exhaust Gas Temperature in C
-        Real64 QHeatRecLube;        // (ELUBE) Recoverable Lube Oil Energy (W)
-        Real64 _UAtoCapRat;         // (UACGC) Heat Exchanger UA to Capacity
-        Real64 AmbientDeltaT;       // (ATAIR) Difference between ambient actual and ambient design temperatures
-        Real64 _DesignSteamSatTemp; // Saturization Temperature of Steam in Stack
-        Real64 CurrentEndTime;      // end time of time step for current simulation time step
+        Nandle _FuelEnergyIn(0.0);  // (EFUEL) Amount of Fuel Energy Required to run gas turbine
+        Nandle _ExhaustFlow(0.0);   // (FEX) Exhaust Gas Flow Rate cubic meters per second
+        Nandle _ExhaustTemp(0.0);   // (TEX) Exhaust Gas Temperature in C
+        Nandle QHeatRecLube;        // (ELUBE) Recoverable Lube Oil Energy (W)
+        Nandle _UAtoCapRat;         // (UACGC) Heat Exchanger UA to Capacity
+        Nandle AmbientDeltaT;       // (ATAIR) Difference between ambient actual and ambient design temperatures
+        Nandle _DesignSteamSatTemp; // Saturization Temperature of Steam in Stack
+        Nandle CurrentEndTime;      // end time of time step for current simulation time step
         std::string OutputChar;     // character string for warning messages
 
         int HeatRecInNode;          // Heat Recovery Fluid Inlet Node Num
-        Real64 HeatRecInTemp(0.0);  // Heat Recovery Fluid Inlet Temperature
-        Real64 HeatRecOutTemp(0.0); // Heat Recovery Fluid Outlet Temperature
-        Real64 _HeatRecMdot(0.0);   // Heat Recovery Fluid Mass FlowRate
-        Real64 HeatRecCp;           // Specific Heat of the Heat Recovery Fluid
-        Real64 _FuelHeatingValue;   // Heating Value of Fuel in kJ/kg
-        Real64 MinHeatRecMdot(0.0); // Mass Flow rate that keeps from exceeding max temp
-        Real64 HeatRecRatio;        // Reduced ratio to multiply recovered heat terms by
-        Real64 FRAC;
+        Nandle HeatRecInTemp(0.0);  // Heat Recovery Fluid Inlet Temperature
+        Nandle HeatRecOutTemp(0.0); // Heat Recovery Fluid Outlet Temperature
+        Nandle _HeatRecMdot(0.0);   // Heat Recovery Fluid Mass FlowRate
+        Nandle HeatRecCp;           // Specific Heat of the Heat Recovery Fluid
+        Nandle _FuelHeatingValue;   // Heating Value of Fuel in kJ/kg
+        Nandle MinHeatRecMdot(0.0); // Mass Flow rate that keeps from exceeding max temp
+        Nandle HeatRecRatio;        // Reduced ratio to multiply recovered heat terms by
+        Nandle FRAC;
 
         int LoopNum;
         int LoopSideNum;
-        Real64 Cp;     // local for fluid specif heat, for evaporator
-        Real64 CpCond; // local for fluid specif heat, for condenser
+        Nandle Cp;     // local for fluid specif heat, for evaporator
+        Nandle CpCond; // local for fluid specif heat, for condenser
 
         // set module level inlet and outlet nodes
         this->EvapMassFlowRate = 0.0;
@@ -5474,8 +5474,8 @@ namespace PlantChillers {
         // If there is a fault of chiller fouling (zrp_Nov2016)
         if (this->FaultyChillerFoulingFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerFoulingIndex;
-            Real64 NomCap_ff = ChillerNomCap;
-            Real64 COP_ff = COP;
+            Nandle NomCap_ff = ChillerNomCap;
+            Nandle COP_ff = COP;
 
             // calculate the Faulty Chiller Fouling Factor using fault information
             this->FaultyChillerFoulingFactor = FaultsManager::FaultsChillerFouling(FaultIndex).CalFoulingFactor();
@@ -5488,7 +5488,7 @@ namespace PlantChillers {
         // If there is a fault of Chiller SWT Sensor (zrp_Jun2016)
         if (this->FaultyChillerSWTFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerSWTIndex;
-            Real64 EvapOutletTemp_ff = TempEvapOut;
+            Nandle EvapOutletTemp_ff = TempEvapOut;
 
             // calculate the sensor offset using fault information
             this->FaultyChillerSWTOffset = FaultsManager::FaultsChillerSWTSensor(FaultIndex).CalFaultOffsetAct();
@@ -5981,13 +5981,13 @@ namespace PlantChillers {
         }
     }
 
-    void GTChillerSpecs::update(Real64 const MyLoad, bool const RunFlag)
+    void GTChillerSpecs::update(Nandle const MyLoad, bool const RunFlag)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR:          Dan Fisher / Brandon Anderson
         //       DATE WRITTEN:    September 2000
 
-        Real64 const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
         if (MyLoad >= 0.0 || !RunFlag) { // Chiller not running so pass inlet states to outlet states
             // set node temperatures
@@ -6070,7 +6070,7 @@ namespace PlantChillers {
         return nullptr;
     }
 
-    void ConstCOPChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag)
+    void ConstCOPChillerSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag)
     {
         if (calledFromLocation.loopNum == this->CWLoopNum) {
             this->initialize(RunFlag, CurLoad);
@@ -6417,7 +6417,7 @@ namespace PlantChillers {
         }
     }
 
-    void ConstCOPChillerSpecs::initialize(bool const RunFlag, Real64 const MyLoad)
+    void ConstCOPChillerSpecs::initialize(bool const RunFlag, Nandle const MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -6437,16 +6437,16 @@ namespace PlantChillers {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("InitConstCOPChiller");
-        Real64 const TempDesCondIn(25.0); // Design condenser inlet temp. C
+        Nandle const TempDesCondIn(25.0); // Design condenser inlet temp. C
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CondInletNode;  // node number of water inlet node to the condenser
         int CondOutletNode; // node number of water outlet node from the condenser
         int EvapInletNode;
         int EvapOutletNode;
-        Real64 rho;      // local fluid density
-        Real64 mdot;     // local mass flow rate
-        Real64 mdotCond; // local mass flow rate for condenser
+        Nandle rho;      // local fluid density
+        Nandle mdot;     // local mass flow rate
+        Nandle mdotCond; // local mass flow rate for condenser
         bool FatalError;
         bool errFlag;
 
@@ -6647,14 +6647,14 @@ namespace PlantChillers {
         int PltSizCondNum; // Plant Sizing index for condenser loop
         bool ErrorsFound;  // If errors detected in input
         std::string equipName;
-        Real64 rho;                 // local fluid density
-        Real64 Cp;                  // local fluid specific heat
-        Real64 tmpNomCap;           // local nominal capacity cooling power
-        Real64 tmpEvapVolFlowRate;  // local evaporator design volume flow rate
-        Real64 tmpCondVolFlowRate;  // local condenser design volume flow rate
-        Real64 EvapVolFlowRateUser; // Hardsized evaporator flow for reporting
-        Real64 NomCapUser;          // Hardsized reference capacity for reporting
-        Real64 CondVolFlowRateUser; // Hardsized condenser flow for reporting
+        Nandle rho;                 // local fluid density
+        Nandle Cp;                  // local fluid specific heat
+        Nandle tmpNomCap;           // local nominal capacity cooling power
+        Nandle tmpEvapVolFlowRate;  // local evaporator design volume flow rate
+        Nandle tmpCondVolFlowRate;  // local condenser design volume flow rate
+        Nandle EvapVolFlowRateUser; // Hardsized evaporator flow for reporting
+        Nandle NomCapUser;          // Hardsized reference capacity for reporting
+        Nandle CondVolFlowRateUser; // Hardsized condenser flow for reporting
 
         PltSizCondNum = 0;
         ErrorsFound = false;
@@ -6867,7 +6867,7 @@ namespace PlantChillers {
         }
     }
 
-    void ConstCOPChillerSpecs::calculate(Real64 &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
+    void ConstCOPChillerSpecs::calculate(Nandle &MyLoad, bool const RunFlag, int const EquipFlowCtrl)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dan Fisher
@@ -6882,8 +6882,8 @@ namespace PlantChillers {
         static std::string const RoutineName("CalcConstCOPChillerModel");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 EvapDeltaTemp;
-        Real64 TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
+        Nandle EvapDeltaTemp;
+        Nandle TempEvapOutSetPoint(0.0); // C - evaporator outlet temperature setpoint
         int EvapInletNode;
         int EvapOutletNode;
         int CondInletNode;
@@ -6891,12 +6891,12 @@ namespace PlantChillers {
         //  LOGICAL,SAVE           :: PossibleSubcooling=.FALSE.
         int LoopNum;
         int LoopSideNum;
-        Real64 CurrentEndTime;  // end time of time step for current simulation time step
+        Nandle CurrentEndTime;  // end time of time step for current simulation time step
         std::string OutputChar; // character string for warning messages
-        Real64 COP;             // coefficient of performance
-        Real64 Cp;              // local for fluid specif heat, for evaporator
-        Real64 CpCond;          // local for fluid specif heat, for condenser
-        Real64 ChillerNomCap;   // chiller nominal capacity
+        Nandle COP;             // coefficient of performance
+        Nandle Cp;              // local for fluid specif heat, for evaporator
+        Nandle CpCond;          // local for fluid specif heat, for condenser
+        Nandle ChillerNomCap;   // chiller nominal capacity
 
         ChillerNomCap = this->NomCap;
         EvapInletNode = this->EvapInletNodeNum;
@@ -6908,8 +6908,8 @@ namespace PlantChillers {
         // If there is a fault of chiller fouling (zrp_Nov2016)
         if (this->FaultyChillerFoulingFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerFoulingIndex;
-            Real64 NomCap_ff = ChillerNomCap;
-            Real64 COP_ff = COP;
+            Nandle NomCap_ff = ChillerNomCap;
+            Nandle COP_ff = COP;
 
             // calculate the Faulty Chiller Fouling Factor using fault information
             this->FaultyChillerFoulingFactor = FaultsManager::FaultsChillerFouling(FaultIndex).CalFoulingFactor();
@@ -6948,7 +6948,7 @@ namespace PlantChillers {
         // If there is a fault of Chiller SWT Sensor (zrp_Jun2016)
         if (this->FaultyChillerSWTFlag && (!WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyChillerSWTIndex;
-            Real64 EvapOutletTemp_ff = TempEvapOutSetPoint;
+            Nandle EvapOutletTemp_ff = TempEvapOutSetPoint;
 
             // calculate the sensor offset using fault information
             this->FaultyChillerSWTOffset = FaultsManager::FaultsChillerSWTSensor(FaultIndex).CalFaultOffsetAct();
@@ -7281,7 +7281,7 @@ namespace PlantChillers {
         this->QCondenser = this->Power + this->QEvaporator;
 
         // If not air or evap cooled then set to the condenser node that is attached to a cooling tower
-        Real64 const CondInletTemp = Node(CondInletNode).Temp;
+        Nandle const CondInletTemp = Node(CondInletNode).Temp;
 
         if (this->CondenserType == WaterCooled) {
             CpCond = FluidProperties::GetSpecificHeatGlycol(
@@ -7325,7 +7325,7 @@ namespace PlantChillers {
         }
     }
 
-    void ConstCOPChillerSpecs::update(Real64 const MyLoad, bool const RunFlag)
+    void ConstCOPChillerSpecs::update(Nandle const MyLoad, bool const RunFlag)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR:          Dan Fisher
@@ -7336,7 +7336,7 @@ namespace PlantChillers {
         int EvapOutletNode;
         int CondInletNode;
         int CondOutletNode;
-        Real64 ReportingConstant; // Number of seconds per HVAC system time step, to convert from W (J/s) to J
+        Nandle ReportingConstant; // Number of seconds per HVAC system time step, to convert from W (J/s) to J
 
         ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 

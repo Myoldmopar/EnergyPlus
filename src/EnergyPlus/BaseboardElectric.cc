@@ -98,7 +98,7 @@ namespace BaseboardElectric {
     // Data
     // MODULE PARAMETER DEFINITIONS
     std::string const cCMO_BBRadiator_Electric("ZoneHVAC:Baseboard:Convective:Electric");
-    Real64 const SimpConvAirFlowSpeed(0.5); // m/s
+    Nandle const SimpConvAirFlowSpeed(0.5); // m/s
 
     // DERIVED TYPE DEFINITIONS
 
@@ -124,7 +124,7 @@ namespace BaseboardElectric {
         BaseboardNumericFields.deallocate();
     }
 
-    void SimElectricBaseboard(std::string const &EquipName, int const ActualZoneNum, int const ControlledZoneNum, Real64 &PowerMet, int &CompIndex)
+    void SimElectricBaseboard(std::string const &EquipName, int const ActualZoneNum, int const ControlledZoneNum, Nandle &PowerMet, int &CompIndex)
     {
 
         // SUBROUTINE INFORMATION:
@@ -162,7 +162,7 @@ namespace BaseboardElectric {
 
         int BaseboardNum;               // index of unit in baseboard array
         static bool GetInputFlag(true); // one time get input flag
-        Real64 QZnReq;                  // zone load not yet satisfied
+        Nandle QZnReq;                  // zone load not yet satisfied
 
         if (GetInputFlag) {
             GetBaseboardInput();
@@ -565,13 +565,13 @@ namespace BaseboardElectric {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool IsAutoSize;            // Indicator to autosizing nominal capacity
-        Real64 NominalCapacityDes;  // Design nominal capacity for reporting
-        Real64 NominalCapacityUser; // User hard-sized nominal capacity for reporting
+        Nandle NominalCapacityDes;  // Design nominal capacity for reporting
+        Nandle NominalCapacityUser; // User hard-sized nominal capacity for reporting
 
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         int FieldNum = 1;         // IDD numeric field number where input field description is found
         int SizingMethod; // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                           // HeatingCapacitySizing, etc.)
@@ -627,7 +627,7 @@ namespace BaseboardElectric {
         }
     }
 
-    void SimElectricConvective(int const BaseboardNum, Real64 const LoadMet)
+    void SimElectricConvective(int const BaseboardNum, Nandle const LoadMet)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Richard Liesen
@@ -665,13 +665,13 @@ namespace BaseboardElectric {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirInletTemp;
-        Real64 CpAir;
-        Real64 AirMassFlowRate;
-        Real64 CapacitanceAir;
-        Real64 Effic;
-        Real64 AirOutletTemp;
-        Real64 QBBCap;
+        Nandle AirInletTemp;
+        Nandle CpAir;
+        Nandle AirMassFlowRate;
+        Nandle CapacitanceAir;
+        Nandle Effic;
+        Nandle AirOutletTemp;
+        Nandle QBBCap;
 
         AirInletTemp = Baseboard(BaseboardNum).AirInletTemp;
         AirOutletTemp = AirInletTemp;

@@ -140,80 +140,80 @@ namespace SystemReports {
 
     // MODULE VARIABLE DECLARATIONS:
     // Ventilation Report Variables
-    Array1D<Real64> MaxCoolingLoadMetByVent;
-    Array1D<Real64> MaxCoolingLoadAddedByVent;
-    Array1D<Real64> MaxOvercoolingByVent;
-    Array1D<Real64> MaxHeatingLoadMetByVent;
-    Array1D<Real64> MaxHeatingLoadAddedByVent;
-    Array1D<Real64> MaxOverheatingByVent;
-    Array1D<Real64> MaxNoLoadHeatingByVent;
-    Array1D<Real64> MaxNoLoadCoolingByVent;
+    Array1D<Nandle> MaxCoolingLoadMetByVent;
+    Array1D<Nandle> MaxCoolingLoadAddedByVent;
+    Array1D<Nandle> MaxOvercoolingByVent;
+    Array1D<Nandle> MaxHeatingLoadMetByVent;
+    Array1D<Nandle> MaxHeatingLoadAddedByVent;
+    Array1D<Nandle> MaxOverheatingByVent;
+    Array1D<Nandle> MaxNoLoadHeatingByVent;
+    Array1D<Nandle> MaxNoLoadCoolingByVent;
 
-    Array1D<Real64> RemMaxCoolingLoadMetByVent;
-    Array1D<Real64> RemMaxCoolingLoadAddedByVent;
-    Array1D<Real64> RemMaxOvercoolingByVent;
-    Array1D<Real64> RemMaxHeatingLoadMetByVent;
-    Array1D<Real64> RemMaxHeatingLoadAddedByVent;
-    Array1D<Real64> RemMaxOverheatingByVent;
-    Array1D<Real64> RemMaxNoLoadHeatingByVent;
-    Array1D<Real64> RemMaxNoLoadCoolingByVent;
+    Array1D<Nandle> RemMaxCoolingLoadMetByVent;
+    Array1D<Nandle> RemMaxCoolingLoadAddedByVent;
+    Array1D<Nandle> RemMaxOvercoolingByVent;
+    Array1D<Nandle> RemMaxHeatingLoadMetByVent;
+    Array1D<Nandle> RemMaxHeatingLoadAddedByVent;
+    Array1D<Nandle> RemMaxOverheatingByVent;
+    Array1D<Nandle> RemMaxNoLoadHeatingByVent;
+    Array1D<Nandle> RemMaxNoLoadCoolingByVent;
 
-    Array1D<Real64> LastMaxCoolingLoadMetByVent;
-    Array1D<Real64> LastMaxCoolingLoadAddedByVent;
-    Array1D<Real64> LastMaxOvercoolingByVent;
-    Array1D<Real64> LastMaxHeatingLoadMetByVent;
-    Array1D<Real64> LastMaxHeatingLoadAddedByVent;
-    Array1D<Real64> LastMaxOverheatingByVent;
-    Array1D<Real64> LastMaxNoLoadHeatingByVent;
-    Array1D<Real64> LastMaxNoLoadCoolingByVent;
+    Array1D<Nandle> LastMaxCoolingLoadMetByVent;
+    Array1D<Nandle> LastMaxCoolingLoadAddedByVent;
+    Array1D<Nandle> LastMaxOvercoolingByVent;
+    Array1D<Nandle> LastMaxHeatingLoadMetByVent;
+    Array1D<Nandle> LastMaxHeatingLoadAddedByVent;
+    Array1D<Nandle> LastMaxOverheatingByVent;
+    Array1D<Nandle> LastMaxNoLoadHeatingByVent;
+    Array1D<Nandle> LastMaxNoLoadCoolingByVent;
 
-    Array1D<Real64> SysTotZoneLoadHTNG;
-    Array1D<Real64> SysTotZoneLoadCLNG;
-    Array1D<Real64> SysOALoadHTNG;
-    Array1D<Real64> SysOALoadCLNG;
-    Array1D<Real64> SysTotHTNG;
-    Array1D<Real64> SysTotCLNG;
+    Array1D<Nandle> SysTotZoneLoadHTNG;
+    Array1D<Nandle> SysTotZoneLoadCLNG;
+    Array1D<Nandle> SysOALoadHTNG;
+    Array1D<Nandle> SysOALoadCLNG;
+    Array1D<Nandle> SysTotHTNG;
+    Array1D<Nandle> SysTotCLNG;
 
-    Array1D<Real64> SysTotH2OHOT;
-    Array1D<Real64> SysTotH2OCOLD;
-    Array1D<Real64> SysTotElec;
-    Array1D<Real64> SysTotGas;
-    Array1D<Real64> SysTotSteam;
+    Array1D<Nandle> SysTotH2OHOT;
+    Array1D<Nandle> SysTotH2OCOLD;
+    Array1D<Nandle> SysTotElec;
+    Array1D<Nandle> SysTotGas;
+    Array1D<Nandle> SysTotSteam;
 
-    Array1D<Real64> SysHumidHTNG;
-    Array1D<Real64> SysHumidElec;
-    Array1D<Real64> SysHumidGas;
-    Array1D<Real64> SysEvapCLNG;
-    Array1D<Real64> SysEvapElec;
-    Array1D<Real64> SysHeatExHTNG;
-    Array1D<Real64> SysHeatExCLNG;
-    Array1D<Real64> DesDehumidCLNG;
-    Array1D<Real64> DesDehumidElec;
-    Array1D<Real64> SysSolarCollectHeating;
-    Array1D<Real64> SysSolarCollectCooling;
-    Array1D<Real64> SysUserDefinedTerminalHeating;
-    Array1D<Real64> SysUserDefinedTerminalCooling;
+    Array1D<Nandle> SysHumidHTNG;
+    Array1D<Nandle> SysHumidElec;
+    Array1D<Nandle> SysHumidGas;
+    Array1D<Nandle> SysEvapCLNG;
+    Array1D<Nandle> SysEvapElec;
+    Array1D<Nandle> SysHeatExHTNG;
+    Array1D<Nandle> SysHeatExCLNG;
+    Array1D<Nandle> DesDehumidCLNG;
+    Array1D<Nandle> DesDehumidElec;
+    Array1D<Nandle> SysSolarCollectHeating;
+    Array1D<Nandle> SysSolarCollectCooling;
+    Array1D<Nandle> SysUserDefinedTerminalHeating;
+    Array1D<Nandle> SysUserDefinedTerminalCooling;
 
-    Array1D<Real64> SysFANCompHTNG;
-    Array1D<Real64> SysFANCompElec;
-    Array1D<Real64> SysCCCompCLNG;
-    Array1D<Real64> SysCCCompH2OCOLD;
-    Array1D<Real64> SysCCCompElec;
-    Array1D<Real64> SysHCCompH2OHOT;
-    Array1D<Real64> SysHCCompElec;
-    Array1D<Real64> SysHCCompElecRes;
-    Array1D<Real64> SysHCCompHTNG;
-    Array1D<Real64> SysHCCompGas;
-    Array1D<Real64> SysHCCompSteam;
-    Array1D<Real64> SysDomesticH2O;
+    Array1D<Nandle> SysFANCompHTNG;
+    Array1D<Nandle> SysFANCompElec;
+    Array1D<Nandle> SysCCCompCLNG;
+    Array1D<Nandle> SysCCCompH2OCOLD;
+    Array1D<Nandle> SysCCCompElec;
+    Array1D<Nandle> SysHCCompH2OHOT;
+    Array1D<Nandle> SysHCCompElec;
+    Array1D<Nandle> SysHCCompElecRes;
+    Array1D<Nandle> SysHCCompHTNG;
+    Array1D<Nandle> SysHCCompGas;
+    Array1D<Nandle> SysHCCompSteam;
+    Array1D<Nandle> SysDomesticH2O;
 
-    Array1D<Real64> ZoneOAMassFlow;       // zone mech vent mass flow rate {kg/s}
-    Array1D<Real64> ZoneOAMass;           // zone mech vent total mass for time {kg}
-    Array1D<Real64> ZoneOAVolFlowStdRho;  // zone mech vent volume flow rate at standard density {m3/s}
-    Array1D<Real64> ZoneOAVolStdRho;      // zone mech vent total volume OA at standard density {m3/s}
-    Array1D<Real64> ZoneOAVolFlowCrntRho; // zone mech vent volume flow rate at current density {m3/s}
-    Array1D<Real64> ZoneOAVolCrntRho;     // zone mech vent total volume OA at current density {m3/s}
-    Array1D<Real64> ZoneMechACH;          // zone mech vent air changes per hour {ACH}
+    Array1D<Nandle> ZoneOAMassFlow;       // zone mech vent mass flow rate {kg/s}
+    Array1D<Nandle> ZoneOAMass;           // zone mech vent total mass for time {kg}
+    Array1D<Nandle> ZoneOAVolFlowStdRho;  // zone mech vent volume flow rate at standard density {m3/s}
+    Array1D<Nandle> ZoneOAVolStdRho;      // zone mech vent total volume OA at standard density {m3/s}
+    Array1D<Nandle> ZoneOAVolFlowCrntRho; // zone mech vent volume flow rate at current density {m3/s}
+    Array1D<Nandle> ZoneOAVolCrntRho;     // zone mech vent total volume OA at current density {m3/s}
+    Array1D<Nandle> ZoneMechACH;          // zone mech vent air changes per hour {ACH}
 
     bool AirLoopLoadsReportEnabled(true);
     bool VentLoadsReportEnabled(true);
@@ -3534,11 +3534,11 @@ namespace SystemReports {
         int AirDistHeatInletNodeNum;
         int EnergyType;
         int ActualZoneNum;
-        Real64 CompEnergyUse;
-        Real64 ZoneLoad;
-        Real64 CompLoad;
-        Real64 ADUCoolFlowrate;
-        Real64 ADUHeatFlowrate;
+        Nandle CompEnergyUse;
+        Nandle ZoneLoad;
+        Nandle CompLoad;
+        Nandle ADUCoolFlowrate;
+        Nandle ADUHeatFlowrate;
         bool CompLoadFlag;
 
         if (!AirLoopLoadsReportEnabled) return;
@@ -3801,8 +3801,8 @@ namespace SystemReports {
                              int const AirLoopNum,
                              std::string const &CompType,
                              int const EnergyType,
-                             Real64 const CompLoad,
-                             Real64 const CompEnergy)
+                             Nandle const CompLoad,
+                             Nandle const CompEnergy)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dan Fisher
@@ -4414,7 +4414,7 @@ namespace SystemReports {
         using WindowAC::GetWindowACZoneInletAirNode;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallLoad(0.1); // (W)
+        Nandle const SmallLoad(0.1); // (W)
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CtrlZoneNum;             // ZONE counter
@@ -4425,22 +4425,22 @@ namespace SystemReports {
         int AirDistCoolInletNodeNum; // Air distribution unit inlet node number
         int AirDistHeatInletNodeNum; // Air distribution unit outlet node number
 
-        Real64 ZFAUEnthReturnAir;  // Zone forced Air unit enthalpy of the return air [kJ/kgK]
-        Real64 ZFAUTempMixedAir;   // Zone forced Air unit dry-bulb temperature of the mixed air [C]
-        Real64 ZFAUHumRatMixedAir; // Zone forced Air unit humidity ratio of the mixed air [kg/kg]
-        Real64 ZFAUEnthMixedAir;   // Zone forced Air unit enthalpy of the mixed air [kJ/kgK]
-        Real64 ZFAUEnthOutdoorAir; // Zone forced Air unit enthalpy of the outdoor air [kJ/kgK]
-        Real64 ZFAUFlowRate;       // Zone forced Air unit air mass flow rate [kg/s]
-        Real64 ZFAUZoneVentLoad;   // ventilation load attributed to a particular zone from zone forced air units [J]
-        Real64 ZFAUOutAirFlow;     // outside air flow rate for zone from zone forced air units.
+        Nandle ZFAUEnthReturnAir;  // Zone forced Air unit enthalpy of the return air [kJ/kgK]
+        Nandle ZFAUTempMixedAir;   // Zone forced Air unit dry-bulb temperature of the mixed air [C]
+        Nandle ZFAUHumRatMixedAir; // Zone forced Air unit humidity ratio of the mixed air [kg/kg]
+        Nandle ZFAUEnthMixedAir;   // Zone forced Air unit enthalpy of the mixed air [kJ/kgK]
+        Nandle ZFAUEnthOutdoorAir; // Zone forced Air unit enthalpy of the outdoor air [kJ/kgK]
+        Nandle ZFAUFlowRate;       // Zone forced Air unit air mass flow rate [kg/s]
+        Nandle ZFAUZoneVentLoad;   // ventilation load attributed to a particular zone from zone forced air units [J]
+        Nandle ZFAUOutAirFlow;     // outside air flow rate for zone from zone forced air units.
         int ZoneInletAirNode;      // Zone forced Air unit zone inlet node number
 
-        Real64 ZoneVentLoad;          // ventilation load attributed to a particular zone
-        Real64 ZoneLoad;              // ventilation load attributed to a particular zone
-        Real64 OutAirFlow;            // Total outside air mass flow from zone equipment and air loop equipment [kg/s]
-        Real64 ZoneFlowFrac;          // fraction of mixed air flowing to a zone
-        Real64 ZoneVolume;            // Volume of zone [m3]
-        Real64 currentZoneAirDensity; // current zone air density (outside barometric pressure) [kg/m3]
+        Nandle ZoneVentLoad;          // ventilation load attributed to a particular zone
+        Nandle ZoneLoad;              // ventilation load attributed to a particular zone
+        Nandle OutAirFlow;            // Total outside air mass flow from zone equipment and air loop equipment [kg/s]
+        Nandle ZoneFlowFrac;          // fraction of mixed air flowing to a zone
+        Nandle ZoneVolume;            // Volume of zone [m3]
+        Nandle currentZoneAirDensity; // current zone air density (outside barometric pressure) [kg/m3]
 
         int ActualZoneNum;    // Zone forced Air zone number
         int OutAirNode;       // Zone forced Air unit outdoor air node number
@@ -4468,8 +4468,8 @@ namespace SystemReports {
 
         for (CtrlZoneNum = 1; CtrlZoneNum <= NumOfZones; ++CtrlZoneNum) {
             if (!ZoneEquipConfig(CtrlZoneNum).IsControlled) continue;
-            Real64 ZAirSysZoneVentLoad = 0.0; // ventilation load attributed to a particular zone from all primary air systems serving the zone [J]
-            Real64 ZAirSysOutAirFlow = 0.0;   // outside air flow rate for zone from all primary air systems serving thezone [kg/s]
+            Nandle ZAirSysZoneVentLoad = 0.0; // ventilation load attributed to a particular zone from all primary air systems serving the zone [J]
+            Nandle ZAirSysOutAirFlow = 0.0;   // outside air flow rate for zone from all primary air systems serving thezone [kg/s]
             // first clear out working variables from previous zone.
             ZFAUFlowRate = 0.0;
             ZFAUZoneVentLoad = 0.0;
@@ -4717,13 +4717,13 @@ namespace SystemReports {
 
             // loop over the zone supply air path inlet nodes
             for (ZoneInNum = 1; ZoneInNum <= ZoneEquipConfig(CtrlZoneNum).NumInletNodes; ++ZoneInNum) {
-                Real64 AirSysEnthReturnAir = 0.0;    // enthalpy of the return air (mixing box inlet node, return side) [kJ/kgK]
-                Real64 AirSysEnthMixedAir = 0.0;     // enthalpy of the mixed air (mixing box outlet node, mixed air side) [kJ/kgK]
-                Real64 AirSysZoneVentLoad = 0.0;     // ventilation load attributed to a particular zone from primary air system [J]
-                Real64 ADUCoolFlowrate = 0.0;        // Air distribution unit cooling air mass flow rate [kg/s]
-                Real64 ADUHeatFlowrate = 0.0;        // Air distribution unit heating air mass flow rate [kg/s]
-                Real64 AirSysTotalMixFlowRate = 0.0; // Mixed air mass flow rate [kg/s]
-                Real64 AirSysOutAirFlow = 0.0;       // outside air flow rate for zone from primary air system [kg/s]
+                Nandle AirSysEnthReturnAir = 0.0;    // enthalpy of the return air (mixing box inlet node, return side) [kJ/kgK]
+                Nandle AirSysEnthMixedAir = 0.0;     // enthalpy of the mixed air (mixing box outlet node, mixed air side) [kJ/kgK]
+                Nandle AirSysZoneVentLoad = 0.0;     // ventilation load attributed to a particular zone from primary air system [J]
+                Nandle ADUCoolFlowrate = 0.0;        // Air distribution unit cooling air mass flow rate [kg/s]
+                Nandle ADUHeatFlowrate = 0.0;        // Air distribution unit heating air mass flow rate [kg/s]
+                Nandle AirSysTotalMixFlowRate = 0.0; // Mixed air mass flow rate [kg/s]
+                Nandle AirSysOutAirFlow = 0.0;       // outside air flow rate for zone from primary air system [kg/s]
                 // retrieve air loop index
                 AirLoopNum = ZoneEquipConfig(CtrlZoneNum).InletNodeAirLoopNum(ZoneInNum);
                 MixedAirNode = 0;

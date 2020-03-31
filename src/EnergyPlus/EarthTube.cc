@@ -167,7 +167,7 @@ namespace EarthTube {
         using ScheduleManager::GetScheduleValuesForDay;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const EarthTubeTempLimit(100.0); // degrees Celsius
+        Nandle const EarthTubeTempLimit(100.0); // degrees Celsius
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumAlpha;
@@ -513,27 +513,27 @@ namespace EarthTube {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Loop;
         int NZ;
-        Real64 Process1;        // Variable Used in the Middle of the Calculation
-        Real64 GroundTempz1z2t; // Average Ground Temperature between Depth z1 and z2 at time t
+        Nandle Process1;        // Variable Used in the Middle of the Calculation
+        Nandle GroundTempz1z2t; // Average Ground Temperature between Depth z1 and z2 at time t
 
-        Real64 AirThermCond;         // Thermal Conductivity of Air (W/mC)
-        Real64 AirKinemVisco;        // Kinematic Viscosity of Air (m2/s)
-        Real64 AirThermDiffus;       // Thermal Diffusivity of Air (m2/s)
-        Real64 Re;                   // Reynolds Number for Flow Inside Pipe
-        Real64 Pr;                   // Prandtl Number for Flow Inside Pipe
-        Real64 Nu;                   // Nusselt Number for Flow Inside Pipe
-        Real64 fa;                   // Friction Factor of Pipe
-        Real64 PipeHeatTransCoef;    // Convective Heat Transfer Coefficient at Inner Pipe Surface
-        Real64 Rc;                   // Thermal Resistance due to Convection between Air and Pipe Inner Surface
-        Real64 Rp;                   // Thermal Resistance due to Conduction between Pipe Inner and Outer Surface
-        Real64 Rs;                   // Thermal Resistance due to Conduction between Pipe Outer Surface and Soil
-        Real64 Rt;                   // Total Thermal Resistance between Pipe Air and Soil
-        Real64 OverallHeatTransCoef; // Overall Heat Transfer Coefficient of Earth Tube
-        Real64 AverPipeAirVel;       // Average Pipe Air Velocity (m/s)
-        Real64 AirMassFlowRate;      // Actual Mass Flow Rate of Air inside Pipe
-        Real64 AirSpecHeat;          // Specific Heat of Air
-        Real64 AirDensity;           // Density of Air
-        static Array1D<Real64> EVF;  // DESIGN EARTHTUBE FLOW RATE (M**3/SEC)
+        Nandle AirThermCond;         // Thermal Conductivity of Air (W/mC)
+        Nandle AirKinemVisco;        // Kinematic Viscosity of Air (m2/s)
+        Nandle AirThermDiffus;       // Thermal Diffusivity of Air (m2/s)
+        Nandle Re;                   // Reynolds Number for Flow Inside Pipe
+        Nandle Pr;                   // Prandtl Number for Flow Inside Pipe
+        Nandle Nu;                   // Nusselt Number for Flow Inside Pipe
+        Nandle fa;                   // Friction Factor of Pipe
+        Nandle PipeHeatTransCoef;    // Convective Heat Transfer Coefficient at Inner Pipe Surface
+        Nandle Rc;                   // Thermal Resistance due to Convection between Air and Pipe Inner Surface
+        Nandle Rp;                   // Thermal Resistance due to Conduction between Pipe Inner and Outer Surface
+        Nandle Rs;                   // Thermal Resistance due to Conduction between Pipe Outer Surface and Soil
+        Nandle Rt;                   // Total Thermal Resistance between Pipe Air and Soil
+        Nandle OverallHeatTransCoef; // Overall Heat Transfer Coefficient of Earth Tube
+        Nandle AverPipeAirVel;       // Average Pipe Air Velocity (m/s)
+        Nandle AirMassFlowRate;      // Actual Mass Flow Rate of Air inside Pipe
+        Nandle AirSpecHeat;          // Specific Heat of Air
+        Nandle AirDensity;           // Density of Air
+        static Array1D<Nandle> EVF;  // DESIGN EARTHTUBE FLOW RATE (M**3/SEC)
 
         // Allocate the EVF array
         if (!allocated(EVF)) EVF.allocate(NumOfZones);
@@ -645,10 +645,10 @@ namespace EarthTube {
         // and calculates parameters associated with humidity ratio.
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 InsideEnthalpy;
-        Real64 OutletAirEnthalpy;
-        Real64 InsideDewPointTemp;
-        Real64 InsideHumRat;
+        Nandle InsideEnthalpy;
+        Nandle OutletAirEnthalpy;
+        Nandle InsideDewPointTemp;
+        Nandle InsideHumRat;
 
         InsideDewPointTemp = PsyTdpFnWPb(OutHumRat, OutBaroPress);
 
@@ -707,9 +707,9 @@ namespace EarthTube {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneLoop;     // Counter for the # of zones (nz)
         int EarthTubeNum; // Counter for EarthTube statements
-        Real64 AirDensity;
-        Real64 CpAir;
-        Real64 ReportingConstant; // reporting constant for this module
+        Nandle AirDensity;
+        Nandle CpAir;
+        Nandle ReportingConstant; // reporting constant for this module
 
         ReportingConstant = TimeStepSys * SecInHour;
 

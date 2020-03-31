@@ -55,19 +55,19 @@ namespace AirflowNetwork {
     int lowerLimitErrIdx(0);
     int upperLimitErrIdx(0);
 
-    Real64 airThermConductivity(Real64 T // Temperature in Celsius
+    Nandle airThermConductivity(Nandle T // Temperature in Celsius
     )
     {
         // Dry air thermal conductivity {W/m-K}
         // Correlated over the range -20C to 70C
         // Reference Cengel & Ghajar, Heat and Mass Transfer. 5th ed.
 
-        Real64 const LowerLimit = -20;
-        Real64 const UpperLimit = 70;
+        Nandle const LowerLimit = -20;
+        Nandle const UpperLimit = 70;
 
-        Real64 const a = 0.02364;
-        Real64 const b = 0.0000754772569209165;
-        Real64 const c = -2.40977632412045e-8;
+        Nandle const a = 0.02364;
+        Nandle const b = 0.0000754772569209165;
+        Nandle const c = -2.40977632412045e-8;
 
         if (T < LowerLimit) {
             if (lowerLimitErrIdx == 0) {
@@ -92,23 +92,23 @@ namespace AirflowNetwork {
         return a + b * T + c * pow_2(T);
     }
 
-    Real64 airDynamicVisc(Real64 T // Temperature in Celsius
+    Nandle airDynamicVisc(Nandle T // Temperature in Celsius
     )
     {
         return 1.71432e-5 + 4.828e-8 * T;
     }
 
-    Real64 airKinematicVisc(Real64 T, // Temperature in Celsius
-                            Real64 W, // Humidity ratio
-                            Real64 P  // Barometric pressure
+    Nandle airKinematicVisc(Nandle T, // Temperature in Celsius
+                            Nandle W, // Humidity ratio
+                            Nandle P  // Barometric pressure
     )
     {
         // Dry air kinematic viscosity {m2/s}
         // Correlated over the range -20C to 70C
         // Reference Cengel & Ghajar, Heat and Mass Transfer. 5th ed.
 
-        Real64 const LowerLimit = -20;
-        Real64 const UpperLimit = 70;
+        Nandle const LowerLimit = -20;
+        Nandle const UpperLimit = 70;
 
         if (T < LowerLimit) {
             T = LowerLimit;
@@ -119,17 +119,17 @@ namespace AirflowNetwork {
         return airDynamicVisc(T) / AIRDENSITY(P, T, W);
     }
 
-    Real64 airThermalDiffusivity(Real64 T, // Temperature in Celsius
-                                 Real64 W, // Humidity ratio
-                                 Real64 P  // Barometric pressure
+    Nandle airThermalDiffusivity(Nandle T, // Temperature in Celsius
+                                 Nandle W, // Humidity ratio
+                                 Nandle P  // Barometric pressure
     )
     {
         // Dry air thermal diffusivity {-}
         // Correlated over the range -20C to 70C
         // Reference Cengel & Ghajar, Heat and Mass Transfer. 5th ed.
 
-        Real64 const LowerLimit = -20;
-        Real64 const UpperLimit = 70;
+        Nandle const LowerLimit = -20;
+        Nandle const UpperLimit = 70;
 
         if (T < LowerLimit) {
             T = LowerLimit;
@@ -140,17 +140,17 @@ namespace AirflowNetwork {
         return airThermConductivity(T) / (AIRCP(W) * AIRDENSITY(P, T, W));
     }
 
-    Real64 airPrandtl(Real64 T, // Temperature in Celsius
-                      Real64 W, // Humidity ratio
-                      Real64 P  // Barometric pressure
+    Nandle airPrandtl(Nandle T, // Temperature in Celsius
+                      Nandle W, // Humidity ratio
+                      Nandle P  // Barometric pressure
     )
     {
         // Dry air Prandtl number {-}
         // Correlated over the range -20C to 70C
         // Reference Cengel & Ghajar, Heat and Mass Transfer. 5th ed.
 
-        Real64 const LowerLimit = -20;
-        Real64 const UpperLimit = 70;
+        Nandle const LowerLimit = -20;
+        Nandle const UpperLimit = 70;
 
         if (T < LowerLimit) {
             T = LowerLimit;

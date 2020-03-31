@@ -83,7 +83,7 @@ TEST(VectorsTest, VecNormalize)
     {
         Vector const v(3.0, 3.0, 3.0);
         Vector const n(VecNormalize(v));
-        Real64 const h(3.0 / std::sqrt(27.0));
+        Nandle const h(3.0 / std::sqrt(27.0));
         EXPECT_DOUBLE_EQ(h, n.x);
         EXPECT_DOUBLE_EQ(h, n.y);
         EXPECT_DOUBLE_EQ(h, n.z);
@@ -91,7 +91,7 @@ TEST(VectorsTest, VecNormalize)
     {
         Vector const v(1.0, 3.0, 5.0);
         Vector const n(VecNormalize(v));
-        Real64 const f(1.0 / std::sqrt(35.0));
+        Nandle const f(1.0 / std::sqrt(35.0));
         EXPECT_DOUBLE_EQ(f * v.x, n.x);
         EXPECT_DOUBLE_EQ(f * v.y, n.y);
         EXPECT_DOUBLE_EQ(f * v.z, n.z);

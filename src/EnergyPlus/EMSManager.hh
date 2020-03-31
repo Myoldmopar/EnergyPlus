@@ -148,7 +148,7 @@ void SetupEMSActuator(std::string const &cComponentTypeName,
                       std::string const &cControlTypeName,
                       std::string const &cUnits,
                       bool &lEMSActuated,
-                      Real64 &rValue);
+                      Nandle &rValue);
 
 void SetupEMSActuator(std::string const &cComponentTypeName,
                       std::string const &cUniqueIDName,
@@ -164,7 +164,7 @@ void SetupEMSActuator(std::string const &cComponentTypeName,
                       bool &lEMSActuated,
                       bool &lValue);
 
-void SetupEMSInternalVariable(std::string const &cDataTypeName, std::string const &cUniqueIDName, std::string const &cUnits, Real64 &rValue);
+void SetupEMSInternalVariable(std::string const &cDataTypeName, std::string const &cUniqueIDName, std::string const &cUnits, Nandle &rValue);
 
 void SetupEMSInternalVariable(std::string const &cDataTypeName, std::string const &cUniqueIDName, std::string const &cUnits, int &iValue);
 

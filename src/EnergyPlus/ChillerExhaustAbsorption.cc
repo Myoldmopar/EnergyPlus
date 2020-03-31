@@ -135,7 +135,7 @@ namespace ChillerExhaustAbsorption {
         return nullptr; // LCOV_EXCL_LINE
     }
 
-    void ExhaustAbsorberSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag)
+    void ExhaustAbsorberSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag)
     {
 
         // kind of a hacky way to find the location of this, but it's what plantloopequip was doing
@@ -174,7 +174,7 @@ namespace ChillerExhaustAbsorption {
         }
     }
 
-    void ExhaustAbsorberSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void ExhaustAbsorberSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
 
         // kind of a hacky way to find the location of this, but it's what plantloopequip was doing
@@ -187,7 +187,7 @@ namespace ChillerExhaustAbsorption {
             MaxLoad = this->NomCoolingCap * this->MaxPartLoadRat;
             OptLoad = this->NomCoolingCap * this->OptPartLoadRat;
         } else if (BranchInletNodeNum == this->HeatReturnNodeNum) {            // Operate as heater
-            Real64 Sim_HeatCap = this->NomCoolingCap * this->NomHeatCoolRatio; // W - nominal heating capacity
+            Nandle Sim_HeatCap = this->NomCoolingCap * this->NomHeatCoolRatio; // W - nominal heating capacity
             MinLoad = Sim_HeatCap * this->MinPartLoadRat;
             MaxLoad = Sim_HeatCap * this->MaxPartLoadRat;
             OptLoad = Sim_HeatCap * this->OptPartLoadRat;
@@ -202,7 +202,7 @@ namespace ChillerExhaustAbsorption {
         } // Operate as Chiller or Heater
     }
 
-    void ExhaustAbsorberSpecs::getSizingFactor(Real64 &_SizFac)
+    void ExhaustAbsorberSpecs::getSizingFactor(Nandle &_SizFac)
     {
         _SizFac = this->SizFac;
     }
@@ -222,7 +222,7 @@ namespace ChillerExhaustAbsorption {
         }
     }
 
-    void ExhaustAbsorberSpecs::getDesignTemperatures(Real64 &TempDesCondIn, Real64 &TempDesEvapOut)
+    void ExhaustAbsorberSpecs::getDesignTemperatures(Nandle &TempDesCondIn, Nandle &TempDesEvapOut)
     {
         TempDesEvapOut = this->TempDesCHWSupply;
         TempDesCondIn = this->TempDesCondReturn;
@@ -643,8 +643,8 @@ namespace ChillerExhaustAbsorption {
         int HeatInletNode;  // node number of hot water inlet node
         int HeatOutletNode; // node number of hot water outlet node
         bool errFlag;
-        Real64 rho;  // local fluid density
-        Real64 mdot; // lcoal fluid mass flow rate
+        Nandle rho;  // local fluid density
+        Nandle mdot; // lcoal fluid mass flow rate
 
         if (this->oneTimeInit) {
             this->setupOutputVariables();
@@ -905,16 +905,16 @@ namespace ChillerExhaustAbsorption {
 
         bool ErrorsFound; // If errors detected in input
         std::string equipName;
-        Real64 Cp;                     // local fluid specific heat
-        Real64 rho;                    // local fluid density
-        Real64 tmpNomCap;              // local nominal capacity cooling power
-        Real64 tmpEvapVolFlowRate;     // local evaporator design volume flow rate
-        Real64 tmpCondVolFlowRate;     // local condenser design volume flow rate
-        Real64 tmpHeatRecVolFlowRate;  // local heat recovery design volume flow rate
-        Real64 NomCapUser;             // Hardsized nominal capacity for reporting
-        Real64 EvapVolFlowRateUser;    // Hardsized evaporator volume flow rate for reporting
-        Real64 CondVolFlowRateUser;    // Hardsized condenser flow rate for reporting
-        Real64 HeatRecVolFlowRateUser; // Hardsized generator flow rate for reporting
+        Nandle Cp;                     // local fluid specific heat
+        Nandle rho;                    // local fluid density
+        Nandle tmpNomCap;              // local nominal capacity cooling power
+        Nandle tmpEvapVolFlowRate;     // local evaporator design volume flow rate
+        Nandle tmpCondVolFlowRate;     // local condenser design volume flow rate
+        Nandle tmpHeatRecVolFlowRate;  // local heat recovery design volume flow rate
+        Nandle NomCapUser;             // Hardsized nominal capacity for reporting
+        Nandle EvapVolFlowRateUser;    // Hardsized evaporator volume flow rate for reporting
+        Nandle CondVolFlowRateUser;    // Hardsized condenser flow rate for reporting
+        Nandle HeatRecVolFlowRateUser; // Hardsized generator flow rate for reporting
 
         ErrorsFound = false;
         tmpNomCap = this->NomCoolingCap;
@@ -1237,7 +1237,7 @@ namespace ChillerExhaustAbsorption {
         }
     }
 
-    void ExhaustAbsorberSpecs::calcChiller(Real64 &MyLoad)
+    void ExhaustAbsorberSpecs::calcChiller(Nandle &MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1261,22 +1261,22 @@ namespace ChillerExhaustAbsorption {
         // FlowLock = 1  if mass flow rates may not be changed by loop components
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const AbsLeavingTemp(176.667); // C - Minimum temperature leaving the Chiller absorber (350 F)
+        Nandle const AbsLeavingTemp(176.667); // C - Minimum temperature leaving the Chiller absorber (350 F)
         std::string const RoutineName("CalcExhaustAbsorberChillerModel");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // Local copies of ExhaustAbsorberSpecs Type
         // all variables that are local copies of data structure
         // variables are prefaced with an "l" for local.
-        Real64 lNomCoolingCap;           // W - design nominal capacity of Absorber
-        Real64 lThermalEnergyCoolRatio;  // ratio of ThermalEnergy input to cooling output
-        Real64 lThermalEnergyHeatRatio;  // ratio of ThermalEnergy input to heating output
-        Real64 lElecCoolRatio;           // ratio of electricity input to cooling output
+        Nandle lNomCoolingCap;           // W - design nominal capacity of Absorber
+        Nandle lThermalEnergyCoolRatio;  // ratio of ThermalEnergy input to cooling output
+        Nandle lThermalEnergyHeatRatio;  // ratio of ThermalEnergy input to heating output
+        Nandle lElecCoolRatio;           // ratio of electricity input to cooling output
         int lChillReturnNodeNum;         // Node number on the inlet side of the plant
         int lChillSupplyNodeNum;         // Node number on the outlet side of the plant
         int lCondReturnNodeNum;          // Node number on the inlet side of the condenser
-        Real64 lMinPartLoadRat;          // min allowed operating frac full load
-        Real64 lMaxPartLoadRat;          // max allowed operating frac full load
+        Nandle lMinPartLoadRat;          // min allowed operating frac full load
+        Nandle lMaxPartLoadRat;          // max allowed operating frac full load
         int lCoolCapFTCurve;             // cooling capacity as a function of temperature curve
         int lThermalEnergyCoolFTCurve;   // ThermalEnergy-Input-to cooling output Ratio Function of Temperature Curve
         int lThermalEnergyCoolFPLRCurve; // ThermalEnergy-Input-to cooling output Ratio Function of Part Load Ratio Curve
@@ -1284,52 +1284,52 @@ namespace ChillerExhaustAbsorption {
         int lElecCoolFPLRCurve;          // Electric-Input-to cooling output Ratio Function of Part Load Ratio Curve
         bool lIsEnterCondensTemp;        // if using entering conderser water temperature is TRUE, exiting is FALSE
         bool lIsWaterCooled;             // if water cooled it is TRUE
-        Real64 lCHWLowLimitTemp;         // Chilled Water Lower Limit Temperature
+        Nandle lCHWLowLimitTemp;         // Chilled Water Lower Limit Temperature
         int lExhaustAirInletNodeNum;     // Combustion Air Inlet Node number
         // Local copies of ExhaustAbsorberReportVars Type
-        Real64 lCoolingLoad(0.0); // cooling load on the chiller (previously called QEvap)
-        // Real64 lCoolingEnergy( 0.0 ); // variable to track total cooling load for period (was EvapEnergy)
-        Real64 lTowerLoad(0.0); // load on the cooling tower/condenser (previously called QCond)
-        // Real64 lTowerEnergy( 0.0 ); // variable to track total tower load for a period (was CondEnergy)
-        // Real64 lThermalEnergyUseRate( 0.0 ); // instantaneous use of exhaust for period
-        // Real64 lThermalEnergy( 0.0 ); // variable to track total ThermalEnergy used for a period
-        Real64 lCoolThermalEnergyUseRate(0.0); // instantaneous use of exhaust for period for cooling
-        // Real64 lCoolThermalEnergy( 0.0 ); // variable to track total ThermalEnergy used for a period for cooling
-        Real64 lHeatThermalEnergyUseRate(0.0); // instantaneous use of exhaust for period for heating
-        // Real64 lElectricPower( 0.0 ); // parasitic electric power used (was PumpingPower)
-        // Real64 lElectricEnergy( 0.0 ); // track the total electricity used for a period (was PumpingEnergy)
-        Real64 lCoolElectricPower(0.0); // parasitic electric power used  for cooling
-        // Real64 lCoolElectricEnergy( 0.0 ); // track the total electricity used for a period for cooling
-        Real64 lHeatElectricPower(0.0);        // parasitic electric power used  for heating
-        Real64 lChillReturnTemp(0.0);          // reporting: evaporator inlet temperature (was EvapInletTemp)
-        Real64 lChillSupplyTemp(0.0);          // reporting: evaporator outlet temperature (was EvapOutletTemp)
-        Real64 lChillWaterMassFlowRate(0.0);   // reporting: evaporator mass flow rate (was Evapmdot)
-        Real64 lCondReturnTemp(0.0);           // reporting: condenser inlet temperature (was CondInletTemp)
-        Real64 lCondSupplyTemp(0.0);           // reporting: condenser outlet temperature (was CondOutletTemp)
-        Real64 lCondWaterMassFlowRate(0.0);    // reporting: condenser mass flow rate (was Condmdot)
-        Real64 lCoolPartLoadRatio(0.0);        // operating part load ratio (load/capacity for cooling)
-        Real64 lHeatPartLoadRatio(0.0);        // operating part load ratio (load/capacity for heating)
-        Real64 lAvailableCoolingCapacity(0.0); // current capacity after temperature adjustment
-        Real64 lFractionOfPeriodRunning(0.0);
-        Real64 PartLoadRat(0.0);                // actual operating part load ratio of unit (ranges from minplr to 1)
-        Real64 lChillWaterMassflowratemax(0.0); // Maximum flow rate through the evaporator
-        Real64 lExhaustInTemp(0.0);             // Exhaust inlet temperature
-        Real64 lExhaustInFlow(0.0);             // Exhaust inlet flow rate
-        Real64 lExhHeatRecPotentialCool(0.0);   // Exhaust heat recovery potential during cooling
-        Real64 lExhaustAirHumRat(0.0);
+        Nandle lCoolingLoad(0.0); // cooling load on the chiller (previously called QEvap)
+        // Nandle lCoolingEnergy( 0.0 ); // variable to track total cooling load for period (was EvapEnergy)
+        Nandle lTowerLoad(0.0); // load on the cooling tower/condenser (previously called QCond)
+        // Nandle lTowerEnergy( 0.0 ); // variable to track total tower load for a period (was CondEnergy)
+        // Nandle lThermalEnergyUseRate( 0.0 ); // instantaneous use of exhaust for period
+        // Nandle lThermalEnergy( 0.0 ); // variable to track total ThermalEnergy used for a period
+        Nandle lCoolThermalEnergyUseRate(0.0); // instantaneous use of exhaust for period for cooling
+        // Nandle lCoolThermalEnergy( 0.0 ); // variable to track total ThermalEnergy used for a period for cooling
+        Nandle lHeatThermalEnergyUseRate(0.0); // instantaneous use of exhaust for period for heating
+        // Nandle lElectricPower( 0.0 ); // parasitic electric power used (was PumpingPower)
+        // Nandle lElectricEnergy( 0.0 ); // track the total electricity used for a period (was PumpingEnergy)
+        Nandle lCoolElectricPower(0.0); // parasitic electric power used  for cooling
+        // Nandle lCoolElectricEnergy( 0.0 ); // track the total electricity used for a period for cooling
+        Nandle lHeatElectricPower(0.0);        // parasitic electric power used  for heating
+        Nandle lChillReturnTemp(0.0);          // reporting: evaporator inlet temperature (was EvapInletTemp)
+        Nandle lChillSupplyTemp(0.0);          // reporting: evaporator outlet temperature (was EvapOutletTemp)
+        Nandle lChillWaterMassFlowRate(0.0);   // reporting: evaporator mass flow rate (was Evapmdot)
+        Nandle lCondReturnTemp(0.0);           // reporting: condenser inlet temperature (was CondInletTemp)
+        Nandle lCondSupplyTemp(0.0);           // reporting: condenser outlet temperature (was CondOutletTemp)
+        Nandle lCondWaterMassFlowRate(0.0);    // reporting: condenser mass flow rate (was Condmdot)
+        Nandle lCoolPartLoadRatio(0.0);        // operating part load ratio (load/capacity for cooling)
+        Nandle lHeatPartLoadRatio(0.0);        // operating part load ratio (load/capacity for heating)
+        Nandle lAvailableCoolingCapacity(0.0); // current capacity after temperature adjustment
+        Nandle lFractionOfPeriodRunning(0.0);
+        Nandle PartLoadRat(0.0);                // actual operating part load ratio of unit (ranges from minplr to 1)
+        Nandle lChillWaterMassflowratemax(0.0); // Maximum flow rate through the evaporator
+        Nandle lExhaustInTemp(0.0);             // Exhaust inlet temperature
+        Nandle lExhaustInFlow(0.0);             // Exhaust inlet flow rate
+        Nandle lExhHeatRecPotentialCool(0.0);   // Exhaust heat recovery potential during cooling
+        Nandle lExhaustAirHumRat(0.0);
         // other local variables
-        Real64 ChillDeltaTemp; // chilled water temperature difference
-        Real64 ChillSupplySetPointTemp(0.0);
-        Real64 calcCondTemp; // the condenser temperature used for curve calculation
+        Nandle ChillDeltaTemp; // chilled water temperature difference
+        Nandle ChillSupplySetPointTemp(0.0);
+        Nandle calcCondTemp; // the condenser temperature used for curve calculation
         // either return or supply depending on user input
-        Real64 revisedEstimateAvailCap; // final estimate of available capacity if using leaving
+        Nandle revisedEstimateAvailCap; // final estimate of available capacity if using leaving
         // condenser water temperature
-        Real64 errorAvailCap; // error fraction on final estimate of AvailableCoolingCapacity
+        Nandle errorAvailCap; // error fraction on final estimate of AvailableCoolingCapacity
         int LoopNum;
         int LoopSideNum;
-        Real64 Cp_CW;      // local fluid specific heat for chilled water
-        Real64 Cp_CD = -1; // local fluid specific heat for condenser water -- initializing to negative to ensure it isn't used uninitialized
-        Real64 CpAir;      // specific heat of exhaust air
+        Nandle Cp_CW;      // local fluid specific heat for chilled water
+        Nandle Cp_CD = -1; // local fluid specific heat for condenser water -- initializing to negative to ensure it isn't used uninitialized
+        Nandle CpAir;      // specific heat of exhaust air
 
         // define constant values
 
@@ -1668,7 +1668,7 @@ namespace ChillerExhaustAbsorption {
         this->ElectricPower = lCoolElectricPower + lHeatElectricPower;
     }
 
-    void ExhaustAbsorberSpecs::calcHeater(Real64 &MyLoad, bool RunFlag)
+    void ExhaustAbsorberSpecs::calcHeater(Nandle &MyLoad, bool RunFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1696,50 +1696,50 @@ namespace ChillerExhaustAbsorption {
         //                 below Setpoint
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const AbsLeavingTemp(176.667); // C - Minimum temperature leaving the Chiller absorber (350 F)
+        Nandle const AbsLeavingTemp(176.667); // C - Minimum temperature leaving the Chiller absorber (350 F)
         static std::string const RoutineName("CalcExhaustAbsorberHeaterModel");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // Local copies of ExhaustAbsorberSpecs Type
         // all variables that are local copies of data structure
         // variables are prefaced with an "l" for local.
-        Real64 lNomCoolingCap;            // W - design nominal capacity of Absorber
-        Real64 lNomHeatCoolRatio;         // ratio of heating to cooling capacity
-        Real64 lThermalEnergyHeatRatio;   // ratio of ThermalEnergy input to heating output
-        Real64 lElecHeatRatio;            // ratio of electricity input to heating output
+        Nandle lNomCoolingCap;            // W - design nominal capacity of Absorber
+        Nandle lNomHeatCoolRatio;         // ratio of heating to cooling capacity
+        Nandle lThermalEnergyHeatRatio;   // ratio of ThermalEnergy input to heating output
+        Nandle lElecHeatRatio;            // ratio of electricity input to heating output
         int lHeatReturnNodeNum;           // absorber hot water inlet node number, water side
         int lHeatSupplyNodeNum;           // absorber hot water outlet node number, water side
-        Real64 lMinPartLoadRat;           // min allowed operating frac full load
-        Real64 lMaxPartLoadRat;           // max allowed operating frac full load
+        Nandle lMinPartLoadRat;           // min allowed operating frac full load
+        Nandle lMaxPartLoadRat;           // max allowed operating frac full load
         int lHeatCapFCoolCurve;           // Heating Capacity Function of Cooling Capacity Curve
         int lThermalEnergyHeatFHPLRCurve; // ThermalEnergy Input to heat output ratio during heating only function
         // Local copies of ExhaustAbsorberReportVars Type
-        Real64 lHeatingLoad(0.0); // heating load on the chiller
-        // Real64 lHeatingEnergy( 0.0 ); // heating energy
-        // Real64 lThermalEnergyUseRate( 0.0 ); // instantaneous use of Thermal Energy for period
-        // Real64 lThermalEnergy( 0.0 ); // variable to track total Thermal Energy used for a period (reference only)
-        Real64 lCoolThermalEnergyUseRate(0.0); // instantaneous use of thermal energy for period for cooling
-        Real64 lHeatThermalEnergyUseRate(0.0); // instantaneous use of thermal energy for period for heating
-        Real64 lCoolElectricPower(0.0);        // parasitic electric power used  for cooling
-        Real64 lHeatElectricPower(0.0);        // parasitic electric power used  for heating
-        Real64 lHotWaterReturnTemp(0.0);       // reporting: hot water return (inlet) temperature
-        Real64 lHotWaterSupplyTemp(0.0);       // reporting: hot water supply (outlet) temperature
-        Real64 lHotWaterMassFlowRate(0.0);     // reporting: hot water mass flow rate
-        Real64 lCoolPartLoadRatio(0.0);        // operating part load ratio (load/capacity for cooling)
-        Real64 lHeatPartLoadRatio(0.0);        // operating part load ratio (load/capacity for heating)
-        Real64 lAvailableHeatingCapacity(0.0); // current heating capacity
-        Real64 lFractionOfPeriodRunning(0.0);
-        Real64 lExhaustInTemp(0.0);           // Exhaust inlet temperature
-        Real64 lExhaustInFlow(0.0);           // Exhaust inlet flow rate
-        Real64 lExhHeatRecPotentialHeat(0.0); // Exhaust heat recovery potential
-        Real64 lExhaustAirHumRat(0.0);
+        Nandle lHeatingLoad(0.0); // heating load on the chiller
+        // Nandle lHeatingEnergy( 0.0 ); // heating energy
+        // Nandle lThermalEnergyUseRate( 0.0 ); // instantaneous use of Thermal Energy for period
+        // Nandle lThermalEnergy( 0.0 ); // variable to track total Thermal Energy used for a period (reference only)
+        Nandle lCoolThermalEnergyUseRate(0.0); // instantaneous use of thermal energy for period for cooling
+        Nandle lHeatThermalEnergyUseRate(0.0); // instantaneous use of thermal energy for period for heating
+        Nandle lCoolElectricPower(0.0);        // parasitic electric power used  for cooling
+        Nandle lHeatElectricPower(0.0);        // parasitic electric power used  for heating
+        Nandle lHotWaterReturnTemp(0.0);       // reporting: hot water return (inlet) temperature
+        Nandle lHotWaterSupplyTemp(0.0);       // reporting: hot water supply (outlet) temperature
+        Nandle lHotWaterMassFlowRate(0.0);     // reporting: hot water mass flow rate
+        Nandle lCoolPartLoadRatio(0.0);        // operating part load ratio (load/capacity for cooling)
+        Nandle lHeatPartLoadRatio(0.0);        // operating part load ratio (load/capacity for heating)
+        Nandle lAvailableHeatingCapacity(0.0); // current heating capacity
+        Nandle lFractionOfPeriodRunning(0.0);
+        Nandle lExhaustInTemp(0.0);           // Exhaust inlet temperature
+        Nandle lExhaustInFlow(0.0);           // Exhaust inlet flow rate
+        Nandle lExhHeatRecPotentialHeat(0.0); // Exhaust heat recovery potential
+        Nandle lExhaustAirHumRat(0.0);
         // other local variables
-        Real64 HeatDeltaTemp(0.0); // hot water temperature difference
-        Real64 HeatSupplySetPointTemp(0.0);
+        Nandle HeatDeltaTemp(0.0); // hot water temperature difference
+        Nandle HeatSupplySetPointTemp(0.0);
         int LoopNum;
         int LoopSideNum;
-        Real64 Cp_HW; // local fluid specific heat for hot water
-        Real64 CpAir;
+        Nandle Cp_HW; // local fluid specific heat for hot water
+        Nandle CpAir;
         int lExhaustAirInletNodeNum; // Combustion Air Inlet Node number
 
         // set node values to data structure values for nodes
@@ -1925,7 +1925,7 @@ namespace ChillerExhaustAbsorption {
         this->ExhHeatRecPotentialHeat = lExhHeatRecPotentialHeat;
     }
 
-    void ExhaustAbsorberSpecs::updateCoolRecords(Real64 MyLoad, bool RunFlag)
+    void ExhaustAbsorberSpecs::updateCoolRecords(Nandle MyLoad, bool RunFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1941,7 +1941,7 @@ namespace ChillerExhaustAbsorption {
         int lCondReturnNodeNum;      // Node number on the inlet side of the condenser
         int lCondSupplyNodeNum;      // Node number on the outlet side of the condenser
         int lExhaustAirInletNodeNum; // Node number on the inlet side of the plant
-        Real64 RptConstant;
+        Nandle RptConstant;
 
         lChillReturnNodeNum = this->ChillReturnNodeNum;
         lChillSupplyNodeNum = this->ChillSupplyNodeNum;
@@ -1980,7 +1980,7 @@ namespace ChillerExhaustAbsorption {
         }
     }
 
-    void ExhaustAbsorberSpecs::updateHeatRecords(Real64 MyLoad, bool RunFlag)
+    void ExhaustAbsorberSpecs::updateHeatRecords(Nandle MyLoad, bool RunFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1993,7 +1993,7 @@ namespace ChillerExhaustAbsorption {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int lHeatReturnNodeNum; // absorber steam inlet node number, water side
         int lHeatSupplyNodeNum; // absorber steam outlet node number, water side
-        Real64 RptConstant;
+        Nandle RptConstant;
 
         lHeatReturnNodeNum = this->HeatReturnNodeNum;
         lHeatSupplyNodeNum = this->HeatSupplyNodeNum;

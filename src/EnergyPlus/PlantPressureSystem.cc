@@ -406,11 +406,11 @@ namespace PlantPressureSystem {
         int OutletNodeNum;            // Component outlet node number
         int PressureCurveType;        // Type of curve used to evaluate pressure drop
         int PressureCurveIndex;       // Curve index for PerfCurve structure
-        Real64 NodeMassFlow;          // Nodal mass flow rate {kg/s}
-        Real64 NodeTemperature;       // Nodal temperature {C}
-        Real64 NodeDensity;           // Nodal density {kg/m3}
-        Real64 NodeViscosity;         // Nodal viscosity, assuming mu here (dynamic viscosity)
-        Real64 BranchDeltaPress(0.0); // Pressure drop for component, {Pa}
+        Nandle NodeMassFlow;          // Nodal mass flow rate {kg/s}
+        Nandle NodeTemperature;       // Nodal temperature {C}
+        Nandle NodeDensity;           // Nodal density {kg/m3}
+        Nandle NodeViscosity;         // Nodal viscosity, assuming mu here (dynamic viscosity)
+        Nandle BranchDeltaPress(0.0); // Pressure drop for component, {Pa}
         static int ErrorCounter(0);   // For proper error handling
 
         // Exit early if need be
@@ -497,18 +497,18 @@ namespace PlantPressureSystem {
         int LoopSideNum;
         int BranchNum;
         int NumBranches;
-        Real64 BranchPressureDrop;
-        Real64 LoopSidePressureDrop;
-        Real64 LoopPressureDrop;
-        Array1D<Real64> ParallelBranchPressureDrops;
-        Array1D<Real64> ParallelBranchInletPressures;
+        Nandle BranchPressureDrop;
+        Nandle LoopSidePressureDrop;
+        Nandle LoopPressureDrop;
+        Array1D<Nandle> ParallelBranchPressureDrops;
+        Array1D<Nandle> ParallelBranchInletPressures;
         int ParallelBranchCounter;
-        Real64 SplitterInletPressure;
-        Real64 MixerPressure;
+        Nandle SplitterInletPressure;
+        Nandle MixerPressure;
         bool FoundAPumpOnBranch;
-        Real64 EffectiveLoopKValue;
-        Real64 EffectiveLoopSideKValue;
-        Real64 TempVal_SumOfOneByRootK;
+        Nandle EffectiveLoopKValue;
+        Nandle EffectiveLoopSideKValue;
+        Nandle TempVal_SumOfOneByRootK;
 
         // Exit if not needed
         if (!PlantLoop(LoopNum).HasPressureComponents) return;
@@ -658,7 +658,7 @@ namespace PlantPressureSystem {
         PlantLoop(LoopNum).PressureEffectiveK = EffectiveLoopKValue;
     }
 
-    void DistributePressureOnBranch(int const LoopNum, int const LoopSideNum, int const BranchNum, Real64 &BranchPressureDrop, bool &PumpFound)
+    void DistributePressureOnBranch(int const LoopNum, int const LoopSideNum, int const BranchNum, Nandle &BranchPressureDrop, bool &PumpFound)
     {
 
         // SUBROUTINE INFORMATION:
@@ -684,7 +684,7 @@ namespace PlantPressureSystem {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CompNum;
         int NumCompsOnBranch;
-        Real64 TempBranchPressureDrop;
+        Nandle TempBranchPressureDrop;
 
         // Initialize
         TempBranchPressureDrop = 0.0;
@@ -741,7 +741,7 @@ namespace PlantPressureSystem {
         }
     }
 
-    void PassPressureAcrossMixer(int const LoopNum, int const LoopSideNum, Real64 &MixerPressure, int const NumBranchesOnLoopSide)
+    void PassPressureAcrossMixer(int const LoopNum, int const LoopSideNum, Nandle &MixerPressure, int const NumBranchesOnLoopSide)
     {
 
         // SUBROUTINE INFORMATION:
@@ -770,7 +770,7 @@ namespace PlantPressureSystem {
         }
     }
 
-    void PassPressureAcrossSplitter(int const LoopNum, int const LoopSideNum, Real64 &SplitterInletPressure)
+    void PassPressureAcrossSplitter(int const LoopNum, int const LoopSideNum, Nandle &SplitterInletPressure)
     {
 
         // SUBROUTINE INFORMATION:
@@ -832,13 +832,13 @@ namespace PlantPressureSystem {
         Node(SupplyOutletNodeNum).Press = Node(DemandInletNodeNum).Press;
     }
 
-    Real64 ResolveLoopFlowVsPressure(int const LoopNum,            // - Index of which plant/condenser loop is being simulated
-                                     Real64 const SystemMassFlow,  // - Initial "guess" at system mass flow rate [kg/s]
+    Nandle ResolveLoopFlowVsPressure(int const LoopNum,            // - Index of which plant/condenser loop is being simulated
+                                     Nandle const SystemMassFlow,  // - Initial "guess" at system mass flow rate [kg/s]
                                      int const PumpCurveNum,       // - Pump curve to use when calling the curve manager for psi = f(phi)
-                                     Real64 const PumpSpeed,       // - Pump rotational speed, [rps] (revs per second)
-                                     Real64 const PumpImpellerDia, // - Nominal pump impeller diameter [m]
-                                     Real64 const MinPhi,          // - Minimum allowable value of phi, requested by the pump manager from curve mgr
-                                     Real64 const MaxPhi           // - Maximum allowable value of phi, requested by the pump manager from curve mgr
+                                     Nandle const PumpSpeed,       // - Pump rotational speed, [rps] (revs per second)
+                                     Nandle const PumpImpellerDia, // - Nominal pump impeller diameter [m]
+                                     Nandle const MinPhi,          // - Minimum allowable value of phi, requested by the pump manager from curve mgr
+                                     Nandle const MaxPhi           // - Maximum allowable value of phi, requested by the pump manager from curve mgr
     )
     {
 
@@ -870,34 +870,34 @@ namespace PlantPressureSystem {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 ResolvedLoopMassFlowRate;
+        Nandle ResolvedLoopMassFlowRate;
 
         // FUNCTION PARAMETER DEFINITIONS:
         static std::string const RoutineName("ResolvedLoopMassFlowRate: ");
         int const MaxIters(100);
         static std::string const DummyFluidName;
-        Real64 const PressureConvergeCriteria(0.1); // Pa
-        Real64 const ZeroTolerance(0.0001);
+        Nandle const PressureConvergeCriteria(0.1); // Pa
+        Nandle const ZeroTolerance(0.0001);
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 PumpPressureRise;
-        Real64 NodeTemperature;
-        Real64 NodeDensity;
-        Real64 SystemPressureDrop;
-        Real64 PhiPump;
-        Real64 PhiSystem;
-        Real64 PsiPump;
+        Nandle PumpPressureRise;
+        Nandle NodeTemperature;
+        Nandle NodeDensity;
+        Nandle SystemPressureDrop;
+        Nandle PhiPump;
+        Nandle PhiSystem;
+        Nandle PsiPump;
         int FluidIndex;
         int Iteration;
-        Real64 LocalSystemMassFlow;
-        Real64 LoopEffectiveK;
+        Nandle LocalSystemMassFlow;
+        Nandle LoopEffectiveK;
         bool Converged;
         static int ZeroKWarningCounter(0);
         static int MaxIterWarningCounter(0);
-        Array1D<Real64> MassFlowIterativeHistory(3);
-        Real64 MdotDeltaLatest;
-        Real64 MdotDeltaPrevious;
-        Real64 DampingFactor;
+        Array1D<Nandle> MassFlowIterativeHistory(3);
+        Nandle MdotDeltaLatest;
+        Nandle MdotDeltaPrevious;
+        Nandle DampingFactor;
 
         // Get loop level data
         FluidIndex = PlantLoop(LoopNum).FluidIndex;

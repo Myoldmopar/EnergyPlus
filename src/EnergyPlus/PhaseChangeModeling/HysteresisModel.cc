@@ -79,12 +79,12 @@ namespace HysteresisPhaseChange {
         return nullptr;
     }
 
-    Real64 HysteresisPhaseChange::getEnthalpy(Real64 T, Real64 Tc, Real64 tau1, Real64 tau2)
+    Nandle HysteresisPhaseChange::getEnthalpy(Nandle T, Nandle Tc, Nandle tau1, Nandle tau2)
     {
         // Looks up the enthalpy on the characteristic curve defined by the parameters Tc, tau1, and tau2,
         // and the position on that curve defined by T.
-        Real64 eta1 = (this->totalLatentHeat / 2) * exp(-2 * std::abs(T - Tc) / tau1);
-        Real64 eta2 = (this->totalLatentHeat / 2) * exp(-2 * std::abs(T - Tc) / tau2);
+        Nandle eta1 = (this->totalLatentHeat / 2) * exp(-2 * std::abs(T - Tc) / tau1);
+        Nandle eta2 = (this->totalLatentHeat / 2) * exp(-2 * std::abs(T - Tc) / tau2);
         if (T <= Tc) {
             return (this->specificHeatSolid * T) + eta1;
         } else {
@@ -92,21 +92,21 @@ namespace HysteresisPhaseChange {
         }
     }
 
-    Real64 HysteresisPhaseChange::getCurrentSpecificHeat(
-        Real64 prevTempTD, Real64 updatedTempTDT, Real64 phaseChangeTempReverse, int prevPhaseChangeState, int &phaseChangeState)
+    Nandle HysteresisPhaseChange::getCurrentSpecificHeat(
+        Nandle prevTempTD, Nandle updatedTempTDT, Nandle phaseChangeTempReverse, int prevPhaseChangeState, int &phaseChangeState)
     {
         // Main public facing function; returns the current specific heat based on input properties, and current and previous conditions.
         // In a future version, this could be compartmentalized to track all states and histories, but it would require some further modification to
         // the HBFDManager
-        Real64 TempLowPCM = this->peakTempMelting - this->deltaTempMeltingLow;
-        Real64 TempHighPCM = this->peakTempMelting + this->deltaTempMeltingHigh;
-        Real64 Tc;   // assigned later
-        Real64 Tau1; // assigned later
-        Real64 Tau2; // assigned later
-        Real64 TempLowPCF = this->peakTempFreezing - this->deltaTempFreezingLow;
-        Real64 TempHighPCF = this->peakTempFreezing + this->deltaTempFreezingHigh;
-        Real64 Cp;
-        Real64 phaseChangeDeltaT = prevTempTD - updatedTempTDT;
+        Nandle TempLowPCM = this->peakTempMelting - this->deltaTempMeltingLow;
+        Nandle TempHighPCM = this->peakTempMelting + this->deltaTempMeltingHigh;
+        Nandle Tc;   // assigned later
+        Nandle Tau1; // assigned later
+        Nandle Tau2; // assigned later
+        Nandle TempLowPCF = this->peakTempFreezing - this->deltaTempFreezingLow;
+        Nandle TempHighPCF = this->peakTempFreezing + this->deltaTempFreezingHigh;
+        Nandle Cp;
+        Nandle phaseChangeDeltaT = prevTempTD - updatedTempTDT;
 
         // determine phase change state and curve characteristics based on delta T direction, updated temp, and previous state
         if (phaseChangeDeltaT <= 0) {
@@ -261,13 +261,13 @@ namespace HysteresisPhaseChange {
         return Cp;
     }
 
-    Real64 HysteresisPhaseChange::specHeat(Real64 temperaturePrev,
-                                           Real64 temperatureCurrent,
-                                           Real64 criticalTemperature,
-                                           Real64 tau1,
-                                           Real64 tau2,
-                                           Real64 EnthalpyOld,
-                                           Real64 EnthalpyNew)
+    Nandle HysteresisPhaseChange::specHeat(Nandle temperaturePrev,
+                                           Nandle temperatureCurrent,
+                                           Nandle criticalTemperature,
+                                           Nandle tau1,
+                                           Nandle tau2,
+                                           Nandle EnthalpyOld,
+                                           Nandle EnthalpyNew)
     {
 
         //	Tc                  ! Critical (Melting/Freezing) Temperature of PCM
@@ -276,26 +276,26 @@ namespace HysteresisPhaseChange {
         //	EnthalpyOld         ! Previous Timestep Nodal Enthalpy
         //	EnthalpyNew         ! Current Timestep Nodal Enthalpy
 
-        Real64 T = temperatureCurrent;
+        Nandle T = temperatureCurrent;
 
         if (T < criticalTemperature) {
-            Real64 DEta1 = -(this->totalLatentHeat * (T - criticalTemperature) * exp(-2 * std::abs(T - criticalTemperature) / tau1)) /
+            Nandle DEta1 = -(this->totalLatentHeat * (T - criticalTemperature) * exp(-2 * std::abs(T - criticalTemperature) / tau1)) /
                            (tau1 * std::abs(T - criticalTemperature));
-            Real64 Cp1 = this->specificHeatSolid;
+            Nandle Cp1 = this->specificHeatSolid;
             return (Cp1 + DEta1);
         } else if (T == criticalTemperature) {
             return (EnthalpyNew - EnthalpyOld) / (temperatureCurrent - temperaturePrev);
         } else if (T > criticalTemperature) {
-            Real64 DEta2 = (this->totalLatentHeat * (T - criticalTemperature) * exp(-2 * std::abs(T - criticalTemperature) / tau2)) /
+            Nandle DEta2 = (this->totalLatentHeat * (T - criticalTemperature) * exp(-2 * std::abs(T - criticalTemperature) / tau2)) /
                            (tau2 * std::abs(T - criticalTemperature));
-            Real64 Cp2 = this->specificHeatLiquid;
+            Nandle Cp2 = this->specificHeatLiquid;
             return Cp2 + DEta2;
         } else {
             return 0;
         }
     }
 
-    Real64 HysteresisPhaseChange::getConductivity(Real64 T)
+    Nandle HysteresisPhaseChange::getConductivity(Nandle T)
     {
         if (T < this->peakTempMelting) {
             return this->fullySolidThermalConductivity;
@@ -306,7 +306,7 @@ namespace HysteresisPhaseChange {
         }
     }
 
-    Real64 HysteresisPhaseChange::getDensity(Real64 T)
+    Nandle HysteresisPhaseChange::getDensity(Nandle T)
     {
         if (T < this->peakTempMelting) {
             return this->fullySolidDensity;

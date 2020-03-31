@@ -70,48 +70,48 @@ namespace DataConvergParams {
     // Note: Unless otherwise noted, the tolerance parameters listed below were chosen
     // to represent educated guesses at what the tolerances for individual physical
     // parameters should be.
-    extern Real64 const HVACEnthalpyToler;               // Tolerance for enthalpy comparisons (in kJ/kgK)
-    extern Real64 const HVACFlowRateToler;               // Tolerance for mass flow rate convergence (in kg/s) [~20 CFM]
-    extern Real64 const HVACFlowRateSlopeToler;          // Slope tolerance for mass flow, kg/s/iteration
-    extern Real64 const HVACFlowRateOscillationToler;    // tolerance for detecting duplicate flow rate in stack
-    extern Real64 const HVACHumRatToler;                 // Tolerance for humidity ratio comparisons (kg water/kg dryair)
-    extern Real64 const HVACHumRatSlopeToler;            // Slope tolerance for humidity ratio, kg water/kg-dryair/iteration
-    extern Real64 const HVACHumRatOscillationToler;      // tolerance for detecting duplicate humidity ratio in stack
-    extern Real64 const HVACQualityToler;                // Tolerance for fluid quality comparisons (dimensionless)
-    extern Real64 const HVACPressToler;                  // Tolerance for pressure comparisons (in Pascals)
-    extern Real64 const HVACTemperatureToler;            // Tolerance for temperature comparisons (in degrees C or K)
-    extern Real64 const HVACTemperatureSlopeToler;       // Slope tolerance for Temperature, Deg C/iteration
-    extern Real64 const HVACTemperatureOscillationToler; // tolerance for detecting duplicate temps in stack
-    extern Real64 const HVACEnergyToler;                 // Tolerance for Energy comparisons (in Watts W)
+    extern Nandle const HVACEnthalpyToler;               // Tolerance for enthalpy comparisons (in kJ/kgK)
+    extern Nandle const HVACFlowRateToler;               // Tolerance for mass flow rate convergence (in kg/s) [~20 CFM]
+    extern Nandle const HVACFlowRateSlopeToler;          // Slope tolerance for mass flow, kg/s/iteration
+    extern Nandle const HVACFlowRateOscillationToler;    // tolerance for detecting duplicate flow rate in stack
+    extern Nandle const HVACHumRatToler;                 // Tolerance for humidity ratio comparisons (kg water/kg dryair)
+    extern Nandle const HVACHumRatSlopeToler;            // Slope tolerance for humidity ratio, kg water/kg-dryair/iteration
+    extern Nandle const HVACHumRatOscillationToler;      // tolerance for detecting duplicate humidity ratio in stack
+    extern Nandle const HVACQualityToler;                // Tolerance for fluid quality comparisons (dimensionless)
+    extern Nandle const HVACPressToler;                  // Tolerance for pressure comparisons (in Pascals)
+    extern Nandle const HVACTemperatureToler;            // Tolerance for temperature comparisons (in degrees C or K)
+    extern Nandle const HVACTemperatureSlopeToler;       // Slope tolerance for Temperature, Deg C/iteration
+    extern Nandle const HVACTemperatureOscillationToler; // tolerance for detecting duplicate temps in stack
+    extern Nandle const HVACEnergyToler;                 // Tolerance for Energy comparisons (in Watts W)
     // to be consistent, should be 20.d0 (BG Aug 2012)
 
-    extern Real64 const HVACCpApprox; // Air Cp (20C,0.0Kg/Kg) Only for energy Tolerance Calculation
+    extern Nandle const HVACCpApprox; // Air Cp (20C,0.0Kg/Kg) Only for energy Tolerance Calculation
     // Only used to scale the answer for a more intuitive answer for comparison
 
-    extern Real64 const PlantEnthalpyToler;    // Tolerance for enthalpy comparisons (in kJ/kgK)
-    extern Real64 const PlantFlowRateToler;    // Tolerance for mass flow rate convergence (in kg/s) [~2 CFM]
-    extern Real64 const PlantLowFlowRateToler; // // Tolerance for low flow rate used for determining when
+    extern Nandle const PlantEnthalpyToler;    // Tolerance for enthalpy comparisons (in kJ/kgK)
+    extern Nandle const PlantFlowRateToler;    // Tolerance for mass flow rate convergence (in kg/s) [~2 CFM]
+    extern Nandle const PlantLowFlowRateToler; // // Tolerance for low flow rate used for determining when
     // plant pumps can be shut down
-    extern Real64 const PlantFlowRateOscillationToler;
-    extern Real64 const PlantFlowRateSlopeToler; // Slope tolerance for mass flow, kg/s/iteration
+    extern Nandle const PlantFlowRateOscillationToler;
+    extern Nandle const PlantFlowRateSlopeToler; // Slope tolerance for mass flow, kg/s/iteration
 
-    extern Real64 const PlantPressToler;                  // Tolerance for pressure comparisons (in Pascals)
-    extern Real64 const PlantTemperatureToler;            // Tolerance for temperature comparisons (in degrees C or K)
-    extern Real64 const PlantTemperatureSlopeToler;       // Slope tolerance for Temperature, Deg C/iteration
-    extern Real64 const PlantTemperatureOscillationToler; // tolerance for detecting duplicate temps in stack
+    extern Nandle const PlantPressToler;                  // Tolerance for pressure comparisons (in Pascals)
+    extern Nandle const PlantTemperatureToler;            // Tolerance for temperature comparisons (in degrees C or K)
+    extern Nandle const PlantTemperatureSlopeToler;       // Slope tolerance for Temperature, Deg C/iteration
+    extern Nandle const PlantTemperatureOscillationToler; // tolerance for detecting duplicate temps in stack
 
-    extern Real64 const PlantEnergyToler; // Tolerance for Energy comparisons (in Watts W)
+    extern Nandle const PlantEnergyToler; // Tolerance for Energy comparisons (in Watts W)
 
-    extern Real64 const PlantCpApprox; // Approximate Cp used in Interface manager for
+    extern Nandle const PlantCpApprox; // Approximate Cp used in Interface manager for
     // Energy Tolerance Calculation, used to scale the answer
     // for a more intuitive answer for comparison
-    extern Real64 const PlantFlowFlowRateToler; // Tolerance for mass flow rate convergence (in kg/s)
+    extern Nandle const PlantFlowFlowRateToler; // Tolerance for mass flow rate convergence (in kg/s)
 
     extern int const ConvergLogStackDepth;
-    extern Array1D<Real64> const ConvergLogStackARR;
-    extern Real64 const sum_ConvergLogStackARR;
-    extern Real64 const square_sum_ConvergLogStackARR;
-    extern Real64 const sum_square_ConvergLogStackARR;
+    extern Array1D<Nandle> const ConvergLogStackARR;
+    extern Nandle const sum_ConvergLogStackARR;
+    extern Nandle const square_sum_ConvergLogStackARR;
+    extern Nandle const sum_square_ConvergLogStackARR;
 
     extern int const CalledFromAirSystemDemandSide;
     extern int const CalledFromAirSystemSupplySideDeck1;
@@ -123,11 +123,11 @@ namespace DataConvergParams {
 
     extern int AirLoopConvergFail;
 
-    extern Real64 MinTimeStepSys;  // =1 minute
-    extern Real64 MinTimeStepTol;  // = min allowable for ABS(1.-TimeStepSys/(MinTimeStepSys))
-    extern Real64 MaxZoneTempDiff; // 0.3 C = (1% OF 300 C) = max allowable difference between
+    extern Nandle MinTimeStepSys;  // =1 minute
+    extern Nandle MinTimeStepTol;  // = min allowable for ABS(1.-TimeStepSys/(MinTimeStepSys))
+    extern Nandle MaxZoneTempDiff; // 0.3 C = (1% OF 300 C) = max allowable difference between
     //   zone air temp at Time=T and Time=T-1
-    extern Real64 MinSysTimeRemaining; // = 1 second
+    extern Nandle MinSysTimeRemaining; // = 1 second
     extern int MaxIter;                // maximum number of iterations allowed
 
     extern int MaxPlantSubIterations; // Iteration Max for Plant Simulation sub iterations
@@ -139,9 +139,9 @@ namespace DataConvergParams {
     {
         // Members
         int NodeNum;
-        Array1D<Real64> HumidityRatio;
-        Array1D<Real64> MassFlowRate;
-        Array1D<Real64> Temperature;
+        Array1D<Nandle> HumidityRatio;
+        Array1D<Nandle> MassFlowRate;
+        Array1D<Nandle> Temperature;
 
         // Default Constructor
         HVACNodeConvergLogStruct()
@@ -167,33 +167,33 @@ namespace DataConvergParams {
     {
         // Members
         Array1D_bool HVACMassFlowNotConverged;                   // Flag to show mass flow convergence
-        Array1D<Real64> HVACFlowDemandToSupplyTolValue;          // Queue of convergence "results"
-        Array1D<Real64> HVACFlowSupplyDeck1ToDemandTolValue;     // Queue of convergence "results"
-        Array1D<Real64> HVACFlowSupplyDeck2ToDemandTolValue;     // Queue of convergence "results"
+        Array1D<Nandle> HVACFlowDemandToSupplyTolValue;          // Queue of convergence "results"
+        Array1D<Nandle> HVACFlowSupplyDeck1ToDemandTolValue;     // Queue of convergence "results"
+        Array1D<Nandle> HVACFlowSupplyDeck2ToDemandTolValue;     // Queue of convergence "results"
         Array1D_bool HVACHumRatNotConverged;                     // Flag to show humidity ratio convergence   or failure
-        Array1D<Real64> HVACHumDemandToSupplyTolValue;           // Queue of convergence "results"
-        Array1D<Real64> HVACHumSupplyDeck1ToDemandTolValue;      // Queue of convergence "results"
-        Array1D<Real64> HVACHumSupplyDeck2ToDemandTolValue;      // Queue of convergence "results"
+        Array1D<Nandle> HVACHumDemandToSupplyTolValue;           // Queue of convergence "results"
+        Array1D<Nandle> HVACHumSupplyDeck1ToDemandTolValue;      // Queue of convergence "results"
+        Array1D<Nandle> HVACHumSupplyDeck2ToDemandTolValue;      // Queue of convergence "results"
         Array1D_bool HVACTempNotConverged;                       // Flag to show temperature convergence  or failure
-        Array1D<Real64> HVACTempDemandToSupplyTolValue;          // Queue of convergence "results"
-        Array1D<Real64> HVACTempSupplyDeck1ToDemandTolValue;     // Queue of convergence "results"
-        Array1D<Real64> HVACTempSupplyDeck2ToDemandTolValue;     // Queue of convergence "results"
+        Array1D<Nandle> HVACTempDemandToSupplyTolValue;          // Queue of convergence "results"
+        Array1D<Nandle> HVACTempSupplyDeck1ToDemandTolValue;     // Queue of convergence "results"
+        Array1D<Nandle> HVACTempSupplyDeck2ToDemandTolValue;     // Queue of convergence "results"
         Array1D_bool HVACEnergyNotConverged;                     // Flag to show energy convergence   or failure
-        Array1D<Real64> HVACEnergyDemandToSupplyTolValue;        // Queue of convergence "results"
-        Array1D<Real64> HVACEnergySupplyDeck1ToDemandTolValue;   // Queue of convergence "results"
-        Array1D<Real64> HVACEnergySupplyDeck2ToDemandTolValue;   // Queue of convergence "results"
+        Array1D<Nandle> HVACEnergyDemandToSupplyTolValue;        // Queue of convergence "results"
+        Array1D<Nandle> HVACEnergySupplyDeck1ToDemandTolValue;   // Queue of convergence "results"
+        Array1D<Nandle> HVACEnergySupplyDeck2ToDemandTolValue;   // Queue of convergence "results"
         Array1D_bool HVACEnthalpyNotConverged;                   // Flag to show energy convergence   or failure
-        Array1D<Real64> HVACEnthalpyDemandToSupplyTolValue;      // Queue of convergence "results"
-        Array1D<Real64> HVACEnthalpySupplyDeck1ToDemandTolValue; // Queue of convergence "results"
-        Array1D<Real64> HVACEnthalpySupplyDeck2ToDemandTolValue; // Queue of convergence "results"
+        Array1D<Nandle> HVACEnthalpyDemandToSupplyTolValue;      // Queue of convergence "results"
+        Array1D<Nandle> HVACEnthalpySupplyDeck1ToDemandTolValue; // Queue of convergence "results"
+        Array1D<Nandle> HVACEnthalpySupplyDeck2ToDemandTolValue; // Queue of convergence "results"
         Array1D_bool HVACPressureNotConverged;                   // Flag to show energy convergence   or failure
-        Array1D<Real64> HVACPressureDemandToSupplyTolValue;      // Queue of convergence "results"
-        Array1D<Real64> HVACPressureSupplyDeck1ToDemandTolValue; // Queue of convergence "results"
-        Array1D<Real64> HVACPressueSupplyDeck2ToDemandTolValue;  // Queue of convergence "results"
+        Array1D<Nandle> HVACPressureDemandToSupplyTolValue;      // Queue of convergence "results"
+        Array1D<Nandle> HVACPressureSupplyDeck1ToDemandTolValue; // Queue of convergence "results"
+        Array1D<Nandle> HVACPressueSupplyDeck2ToDemandTolValue;  // Queue of convergence "results"
         Array1D_bool HVACQualityNotConverged;                    // Flag to show energy convergence   or failure
-        Array1D<Real64> HVACQualityDemandToSupplyTolValue;       // Queue of convergence "results"
-        Array1D<Real64> HVACQualitSupplyDeck1ToDemandTolValue;   // Queue of convergence "results"
-        Array1D<Real64> HVACQualitySupplyDeck2ToDemandTolValue;  // Queue of convergence "results"
+        Array1D<Nandle> HVACQualityDemandToSupplyTolValue;       // Queue of convergence "results"
+        Array1D<Nandle> HVACQualitSupplyDeck1ToDemandTolValue;   // Queue of convergence "results"
+        Array1D<Nandle> HVACQualitySupplyDeck2ToDemandTolValue;  // Queue of convergence "results"
 
         // Default Constructor
         HVACAirLoopIterationConvergenceStruct()
@@ -219,11 +219,11 @@ namespace DataConvergParams {
     {
         // Members
         bool PlantMassFlowNotConverged;                  // Flag to show mass flow convergence
-        Array1D<Real64> PlantFlowDemandToSupplyTolValue; // Queue of convergence "results"
-        Array1D<Real64> PlantFlowSupplyToDemandTolValue; // Queue of convergence "results"
+        Array1D<Nandle> PlantFlowDemandToSupplyTolValue; // Queue of convergence "results"
+        Array1D<Nandle> PlantFlowSupplyToDemandTolValue; // Queue of convergence "results"
         bool PlantTempNotConverged;                      // Flag to show temperature convergence (0) or failure (1)
-        Array1D<Real64> PlantTempDemandToSupplyTolValue; // Queue of convergence "results"
-        Array1D<Real64> PlantTempSupplyToDemandTolValue; // Queue of convergence "results"
+        Array1D<Nandle> PlantTempDemandToSupplyTolValue; // Queue of convergence "results"
+        Array1D<Nandle> PlantTempSupplyToDemandTolValue; // Queue of convergence "results"
 
         // Default Constructor
         PlantIterationConvergenceStruct()

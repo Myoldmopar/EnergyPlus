@@ -138,22 +138,22 @@ TEST_F(EnergyPlusFixture, ChillerHeater_Autosize)
     PlantCentralGSHP::Wrapper(1).GLHELoopNum = PltSizCondNum;
 
     // Calculate expected values
-    Real64 rho_evap = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(PltSizNum).FluidName,
+    Nandle rho_evap = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(PltSizNum).FluidName,
                                                         DataGlobals::CWInitConvTemp,
                                                         DataPlant::PlantLoop(PltSizNum).FluidIndex,
                                                         "ChillerHeater_Autosize_TEST");
 
-    Real64 Cp_evap = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(PltSizNum).FluidName,
+    Nandle Cp_evap = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(PltSizNum).FluidName,
                                                             DataGlobals::CWInitConvTemp,
                                                             DataPlant::PlantLoop(PltSizNum).FluidIndex,
                                                             "ChillerHeater_Autosize_TEST");
 
-    Real64 rho_cond = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(PltSizCondNum).FluidName,
+    Nandle rho_cond = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(PltSizCondNum).FluidName,
                                                         DataGlobals::CWInitConvTemp,
                                                         DataPlant::PlantLoop(PltSizCondNum).FluidIndex,
                                                         "ChillerHeater_Autosize_TEST");
 
-    Real64 Cp_cond = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(PltSizCondNum).FluidName,
+    Nandle Cp_cond = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(PltSizCondNum).FluidName,
                                                             PlantCentralGSHP::Wrapper(1).ChillerHeater(1).TempRefCondInCooling,
                                                             DataPlant::PlantLoop(PltSizCondNum).FluidIndex,
                                                             "ChillerHeater_Autosize_TEST");
@@ -161,11 +161,11 @@ TEST_F(EnergyPlusFixture, ChillerHeater_Autosize)
     // Note: Each individual chiller heater module is sized to be capable of supporting the total load on the wrapper
 
     // Flow is multiplied by the SizFac
-    Real64 EvapVolFlowRateExpected = DataSizing::PlantSizData(PltSizNum).DesVolFlowRate * PlantCentralGSHP::Wrapper(1).ChillerHeater(1).SizFac;
+    Nandle EvapVolFlowRateExpected = DataSizing::PlantSizData(PltSizNum).DesVolFlowRate * PlantCentralGSHP::Wrapper(1).ChillerHeater(1).SizFac;
 
-    Real64 RefCapCoolingExpected = rho_evap * Cp_evap * EvapVolFlowRateExpected * DataSizing::PlantSizData(PltSizNum).DeltaT;
+    Nandle RefCapCoolingExpected = rho_evap * Cp_evap * EvapVolFlowRateExpected * DataSizing::PlantSizData(PltSizNum).DeltaT;
 
-    Real64 CondVolFlowRateExpected =
+    Nandle CondVolFlowRateExpected =
         RefCapCoolingExpected *
         (1.0 + (1.0 / PlantCentralGSHP::Wrapper(1).ChillerHeater(1).RefCOPCooling) * PlantCentralGSHP::Wrapper(1).ChillerHeater(1).OpenMotorEff) /
         (rho_cond * Cp_cond * DataSizing::PlantSizData(PltSizCondNum).DeltaT);
@@ -184,15 +184,15 @@ TEST_F(EnergyPlusFixture, ChillerHeater_Autosize)
 
     // Ensure that stuff that other quantities that depends on RefCapCooling are also initialized properly
     // Heating Cap
-    Real64 RefCapClgHtgExpected = RefCapCoolingExpected * PlantCentralGSHP::Wrapper(1).ChillerHeater(1).ClgHtgToCoolingCapRatio;
+    Nandle RefCapClgHtgExpected = RefCapCoolingExpected * PlantCentralGSHP::Wrapper(1).ChillerHeater(1).ClgHtgToCoolingCapRatio;
     EXPECT_DOUBLE_EQ(RefCapClgHtgExpected, PlantCentralGSHP::Wrapper(1).ChillerHeater(1).RefCapClgHtg);
 
     // Heating Power: Calc cooling Power = Cap / COP, and multiply by ratio
-    Real64 RefPowerClgHtgExpected = (RefCapCoolingExpected / PlantCentralGSHP::Wrapper(1).ChillerHeater(1).RefCOPCooling) *
+    Nandle RefPowerClgHtgExpected = (RefCapCoolingExpected / PlantCentralGSHP::Wrapper(1).ChillerHeater(1).RefCOPCooling) *
                                     PlantCentralGSHP::Wrapper(1).ChillerHeater(1).ClgHtgtoCogPowerRatio;
     EXPECT_DOUBLE_EQ(RefPowerClgHtgExpected, PlantCentralGSHP::Wrapper(1).ChillerHeater(1).RefPowerClgHtg);
 
     // Heating COP = Heating Cap / Heating Power
-    Real64 RefCOPClgHtgExpected = RefCapClgHtgExpected / RefPowerClgHtgExpected;
+    Nandle RefCOPClgHtgExpected = RefCapClgHtgExpected / RefPowerClgHtgExpected;
     EXPECT_DOUBLE_EQ(RefCOPClgHtgExpected, PlantCentralGSHP::Wrapper(1).ChillerHeater(1).RefCOPClgHtg);
 }

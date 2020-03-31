@@ -91,17 +91,17 @@ namespace HVACUnitaryBypassVAV {
     // MODULE VARIABLE DECLARATIONS:
 
     extern int NumCBVAV;                  // Number of CBVAV systems in input file
-    extern Real64 CompOnMassFlow;         // System air mass flow rate w/ compressor ON
-    extern Real64 OACompOnMassFlow;       // OA mass flow rate w/ compressor ON
-    extern Real64 CompOffMassFlow;        // System air mass flow rate w/ compressor OFF
-    extern Real64 OACompOffMassFlow;      // OA mass flow rate w/ compressor OFF
-    extern Real64 CompOnFlowRatio;        // fan flow ratio when coil on
-    extern Real64 CompOffFlowRatio;       // fan flow ratio when coil off
-    extern Real64 FanSpeedRatio;          // ratio of air flow ratio passed to fan object
-    extern Real64 BypassDuctFlowFraction; // Fraction of unit mass flow that returns to inlet of CBVAV unit through bypass duct
-    extern Real64 PartLoadFrac;           // Compressor part-load fraction
-    extern Real64 SaveCompressorPLR;      // Holds DX compressor PLR from active DX coil
-    extern Real64 TempSteamIn;            // steam coil steam inlet temperature
+    extern Nandle CompOnMassFlow;         // System air mass flow rate w/ compressor ON
+    extern Nandle OACompOnMassFlow;       // OA mass flow rate w/ compressor ON
+    extern Nandle CompOffMassFlow;        // System air mass flow rate w/ compressor OFF
+    extern Nandle OACompOffMassFlow;      // OA mass flow rate w/ compressor OFF
+    extern Nandle CompOnFlowRatio;        // fan flow ratio when coil on
+    extern Nandle CompOffFlowRatio;       // fan flow ratio when coil off
+    extern Nandle FanSpeedRatio;          // ratio of air flow ratio passed to fan object
+    extern Nandle BypassDuctFlowFraction; // Fraction of unit mass flow that returns to inlet of CBVAV unit through bypass duct
+    extern Nandle PartLoadFrac;           // Compressor part-load fraction
+    extern Nandle SaveCompressorPLR;      // Holds DX compressor PLR from active DX coil
+    extern Nandle TempSteamIn;            // steam coil steam inlet temperature
     extern Array1D_bool CheckEquipName;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE
@@ -116,18 +116,18 @@ namespace HVACUnitaryBypassVAV {
         std::string UnitType;            // Type of unit
         std::string Sched;               // Availability schedule name
         int SchedPtr;                    // Index number to availability schedule
-        Real64 MaxCoolAirVolFlow;        // System air volumetric flow rate during cooling operation [m3/s]
-        Real64 MaxHeatAirVolFlow;        // System air volumetric flow rate during heating operation [m3/s]
-        Real64 MaxNoCoolHeatAirVolFlow;  // System air volumetric flow rate when no cooling or heating [m3/s]
-        Real64 MaxCoolAirMassFlow;       // System air mass flow rate during cooling operation [kg/s]
-        Real64 MaxHeatAirMassFlow;       // System air mass flow rate during heating operation [kg/s]
-        Real64 MaxNoCoolHeatAirMassFlow; // System air mass flow rate when no cooling or heating [kg/s]
-        Real64 CoolOutAirVolFlow;        // OA volumetric flow rate during cooling operation [m3/s]
-        Real64 HeatOutAirVolFlow;        // OA volumetric flow rate during heating operation [m3/s]
-        Real64 NoCoolHeatOutAirVolFlow;  // OA volumetric flow rate when no cooling or heating [m3/s]
-        Real64 CoolOutAirMassFlow;       // OA mass flow rate during cooling operation [kg/s]
-        Real64 HeatOutAirMassFlow;       // OA mass flow rate during heating operation [kg/s]
-        Real64 NoCoolHeatOutAirMassFlow; // OA mass flow rate when no cooling or heating [kg/s]
+        Nandle MaxCoolAirVolFlow;        // System air volumetric flow rate during cooling operation [m3/s]
+        Nandle MaxHeatAirVolFlow;        // System air volumetric flow rate during heating operation [m3/s]
+        Nandle MaxNoCoolHeatAirVolFlow;  // System air volumetric flow rate when no cooling or heating [m3/s]
+        Nandle MaxCoolAirMassFlow;       // System air mass flow rate during cooling operation [kg/s]
+        Nandle MaxHeatAirMassFlow;       // System air mass flow rate during heating operation [kg/s]
+        Nandle MaxNoCoolHeatAirMassFlow; // System air mass flow rate when no cooling or heating [kg/s]
+        Nandle CoolOutAirVolFlow;        // OA volumetric flow rate during cooling operation [m3/s]
+        Nandle HeatOutAirVolFlow;        // OA volumetric flow rate during heating operation [m3/s]
+        Nandle NoCoolHeatOutAirVolFlow;  // OA volumetric flow rate when no cooling or heating [m3/s]
+        Nandle CoolOutAirMassFlow;       // OA mass flow rate during cooling operation [kg/s]
+        Nandle HeatOutAirMassFlow;       // OA mass flow rate during heating operation [kg/s]
+        Nandle NoCoolHeatOutAirMassFlow; // OA mass flow rate when no cooling or heating [kg/s]
         int OutAirSchPtr;                // Index number to outside air multiplier schedule
         int AirInNode;                   // Inlet air node number for CBVAV unit
         int AirOutNode;                  // Outlet air node number for CBVAV unit
@@ -147,10 +147,10 @@ namespace HVACUnitaryBypassVAV {
         int FanType_Num;                 // Fan type number (see DataHVACGlobals)
         int FanIndex;                    // Index number to fan
         int FanOpModeSchedPtr;           // Fan operating mode schedule pointer
-        Real64 FanVolFlow;               // Volumetric flow rate of system supply air fan [m3/s]
-        Real64 HeatingSpeedRatio;        // Fan speed ratio in heating mode
-        Real64 CoolingSpeedRatio;        // Fan speed ratio in cooling mode
-        Real64 NoHeatCoolSpeedRatio;     // Fan speed ratio when no cooling or heating
+        Nandle FanVolFlow;               // Volumetric flow rate of system supply air fan [m3/s]
+        Nandle HeatingSpeedRatio;        // Fan speed ratio in heating mode
+        Nandle CoolingSpeedRatio;        // Fan speed ratio in cooling mode
+        Nandle NoHeatCoolSpeedRatio;     // Fan speed ratio when no cooling or heating
         bool CheckFanFlow;               // Check fan volumetric flow versus system flow in init routine.
         std::string DXCoolCoilName;      // Name of DX cooling coil
         std::string DXCoolCoilType;      // Type of DX cooling coil, Coil:DX:Cooling:SingleSpeed or
@@ -175,32 +175,32 @@ namespace HVACUnitaryBypassVAV {
         int CompNum;                      // plant loop component index for water heating coil
         int HotWaterCoilMaxIterIndex;     // Index to recurring warning message
         int HotWaterCoilMaxIterIndex2;    // Index to recurring warning message
-        Real64 MaxHeatCoilFluidFlow;      // water or steam mass flow rate for heating coil [kg/s]
-        Real64 DesignHeatingCapacity;     // design heating capacity of the heating coil
-        Real64 DesignSuppHeatingCapacity; // Operating capacity of supplemental Heating Coil [W]
-        Real64 MinOATCompressor;          // Minimum OAT for compressor operation [C]
-        Real64 MinLATCooling;             // Minimum leaving air temp for compressor cooling operation [C]
-        Real64 MaxLATHeating;             // Maximum leaving air temp for heating operation [C]
+        Nandle MaxHeatCoilFluidFlow;      // water or steam mass flow rate for heating coil [kg/s]
+        Nandle DesignHeatingCapacity;     // design heating capacity of the heating coil
+        Nandle DesignSuppHeatingCapacity; // Operating capacity of supplemental Heating Coil [W]
+        Nandle MinOATCompressor;          // Minimum OAT for compressor operation [C]
+        Nandle MinLATCooling;             // Minimum leaving air temp for compressor cooling operation [C]
+        Nandle MaxLATHeating;             // Maximum leaving air temp for heating operation [C]
         // Report data
-        Real64 TotHeatEnergyRate;  // Total heating output [W]
-        Real64 TotHeatEnergy;      // Total heating output [J]
-        Real64 TotCoolEnergyRate;  // Total cooling output [W]
-        Real64 TotCoolEnergy;      // Total cooling output [J]
-        Real64 SensHeatEnergyRate; // Sensible heating output [W]
-        Real64 SensHeatEnergy;     // Sensible heating output [J]
-        Real64 SensCoolEnergyRate; // Sensible cooling output [W]
-        Real64 SensCoolEnergy;     // Sensible cooling output [J]
-        Real64 LatHeatEnergyRate;  // Latent heating output [W]
-        Real64 LatHeatEnergy;      // Latent heating output [J]
-        Real64 LatCoolEnergyRate;  // Latent cooling output [W]
-        Real64 LatCoolEnergy;      // Latent cooling output [J]
-        Real64 ElecPower;          // Electricity consumed [W]
-        Real64 ElecConsumption;    // Electricity consumed [J]
-        Real64 FanPartLoadRatio;   // Fan part-load ratio for time step
-        Real64 CompPartLoadRatio;  // Compressor part-load ratio for time step
+        Nandle TotHeatEnergyRate;  // Total heating output [W]
+        Nandle TotHeatEnergy;      // Total heating output [J]
+        Nandle TotCoolEnergyRate;  // Total cooling output [W]
+        Nandle TotCoolEnergy;      // Total cooling output [J]
+        Nandle SensHeatEnergyRate; // Sensible heating output [W]
+        Nandle SensHeatEnergy;     // Sensible heating output [J]
+        Nandle SensCoolEnergyRate; // Sensible cooling output [W]
+        Nandle SensCoolEnergy;     // Sensible cooling output [J]
+        Nandle LatHeatEnergyRate;  // Latent heating output [W]
+        Nandle LatHeatEnergy;      // Latent heating output [J]
+        Nandle LatCoolEnergyRate;  // Latent cooling output [W]
+        Nandle LatCoolEnergy;      // Latent cooling output [J]
+        Nandle ElecPower;          // Electricity consumed [W]
+        Nandle ElecConsumption;    // Electricity consumed [J]
+        Nandle FanPartLoadRatio;   // Fan part-load ratio for time step
+        Nandle CompPartLoadRatio;  // Compressor part-load ratio for time step
         int LastMode;              // Last mode of operation, coolingmode or heatingmode
         int AirFlowControl;        // Fan control mode, UseCompressorOnFlow or UseCompressorOffFlow
-        Real64 CompPartLoadFrac;   // Compressor part load ratio
+        Nandle CompPartLoadFrac;   // Compressor part load ratio
         int AirLoopNumber;         // Air loop served by the CBVAV system
         int NumControlledZones;
         Array1D_int ControlledZoneNum;           // Index to controlled zones
@@ -219,10 +219,10 @@ namespace HVACUnitaryBypassVAV {
         int HeatingCoilInletNode;                // Inlet node of heating coil
         int HeatingCoilOutletNode;               // Outlet node of heating coil
         int FanInletNodeNum;                     // fan inlet node number
-        Real64 OutletTempSetPoint;               // Oulet node temperature setpoint [C]
-        Real64 CoilTempSetPoint;                 // Coil oulet node temperature setpoint (inc. fan heat) [C]
+        Nandle OutletTempSetPoint;               // Oulet node temperature setpoint [C]
+        Nandle CoilTempSetPoint;                 // Coil oulet node temperature setpoint (inc. fan heat) [C]
         int HeatCoolMode;                        // System operating mode (0 = floating, 1 = cooling, 2 = heating)
-        Real64 BypassMassFlowRate;               // Bypass mass flow rate report variable [m3/s]
+        Nandle BypassMassFlowRate;               // Bypass mass flow rate report variable [m3/s]
         int DehumidificationMode;                // Dehumidification mode (0=normal, 1=enhanced)
         int DehumidControlType;                  // Dehumidification control type (currently only for multimode coil)
         bool HumRatMaxCheck;                     // Used in Init for warning messages
@@ -261,8 +261,8 @@ namespace HVACUnitaryBypassVAV {
         bool FirstPass;                          // used to determine when first call is made
         int plenumIndex;                         // index to AirloopHVAC:ReturnPlenum
         int mixerIndex;                          // index to AirloopHVAC:ZoneMixer
-        Real64 changeOverTimer;                  // timer to avoid rapid change of operating modes (e.g., cooling to heating)
-        Real64 minModeChangeTime;                // time limit before mode change is allowed (hr)
+        Nandle changeOverTimer;                  // timer to avoid rapid change of operating modes (e.g., cooling to heating)
+        Nandle minModeChangeTime;                // time limit before mode change is allowed (hr)
         int OutNodeSPMIndex;                     // set point manager index if exists on outlet node
         bool modeChanged;                        // identifies operating mode changed this time step
 
@@ -313,8 +313,8 @@ namespace HVACUnitaryBypassVAV {
 
     void SimCBVAV(int const CBVAVNum,            // Index of the current CBVAV system being simulated
                   bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                  Real64 &QSensUnitOut,          // Sensible delivered capacity [W]
-                  Real64 &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
+                  Nandle &QSensUnitOut,          // Sensible delivered capacity [W]
+                  Nandle &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
                   bool &HXUnitOn                 // flag to enable heat exchanger
     );
 
@@ -323,7 +323,7 @@ namespace HVACUnitaryBypassVAV {
     void InitCBVAV(int const CBVAVNum,            // Index of the current CBVAV unit being simulated
                    bool const FirstHVACIteration, // TRUE if first HVAC iteration
                    int const AirLoopNum,          // air loop index
-                   Real64 &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to average airflow over timestep
+                   Nandle &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to average airflow over timestep
                    bool &HXUnitOn                 // flag to enable heat exchanger
     );
 
@@ -331,55 +331,55 @@ namespace HVACUnitaryBypassVAV {
 
     void ControlCBVAVOutput(int const CBVAVNum,            // Index to CBVAV system
                             bool const FirstHVACIteration, // Flag for 1st HVAC iteration
-                            Real64 &PartLoadFrac,          // Unit part load fraction
-                            Real64 &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
+                            Nandle &PartLoadFrac,          // Unit part load fraction
+                            Nandle &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
                             bool &HXUnitOn                 // flag to enable heat exchanger
     );
 
     void CalcCBVAV(int const CBVAVNum,            // Unit index in fan coil array
                    bool const FirstHVACIteration, // Flag for 1st HVAC iteration
-                   Real64 &PartLoadFrac,          // Compressor part load fraction
-                   Real64 &LoadMet,               // Load met by unit (W)
-                   Real64 &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
+                   Nandle &PartLoadFrac,          // Compressor part load fraction
+                   Nandle &LoadMet,               // Load met by unit (W)
+                   Nandle &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
                    bool const HXUnitOn            // flag to enable heat exchanger
     );
 
     void GetZoneLoads(int const CBVAVNum // Index to CBVAV unit being simulated
     );
 
-    Real64 CalcSetPointTempTarget(int const CBVAVNumber); // Index to changeover-bypass VAV system
+    Nandle CalcSetPointTempTarget(int const CBVAVNumber); // Index to changeover-bypass VAV system
 
-    Real64 DOE2DXCoilResidual(Real64 const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                              Array1D<Real64> const &Par // Par(1) = DX coil number
+    Nandle DOE2DXCoilResidual(Nandle const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                              Array1D<Nandle> const &Par // Par(1) = DX coil number
     );
 
-    Real64 HXAssistDXCoilResidual(Real64 const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                  Array1D<Real64> const &Par // Par(1) = DX coil number
+    Nandle HXAssistDXCoilResidual(Nandle const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                  Array1D<Nandle> const &Par // Par(1) = DX coil number
     );
 
-    Real64 DXHeatingCoilResidual(Real64 const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                 Array1D<Real64> const &Par // Par(1) = DX coil number
+    Nandle DXHeatingCoilResidual(Nandle const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                 Array1D<Nandle> const &Par // Par(1) = DX coil number
     );
 
-    Real64 MultiModeDXCoilResidual(Real64 const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                   Array1D<Real64> const &Par  // Par(1) = DX coil number
+    Nandle MultiModeDXCoilResidual(Nandle const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                   Array1D<Nandle> const &Par  // Par(1) = DX coil number
     );
 
     void SetAverageAirFlow(int const CBVAVNum,           // Index to CBVAV system
-                           Real64 &OnOffAirFlowRatio    // Ratio of compressor ON airflow to average airflow over timestep
+                           Nandle &OnOffAirFlowRatio    // Ratio of compressor ON airflow to average airflow over timestep
     );
 
     void ReportCBVAV(int const CBVAVNum); // Index of the current CBVAV unit being simulated
 
     void CalcNonDXHeatingCoils(int const CBVAVNum,            // Changeover bypass VAV unit index
                                bool const FirstHVACIteration, // flag for first HVAC iteration in the time step
-                               Real64 &HeatCoilLoad,          // heating coil load to be met (Watts)
+                               Nandle &HeatCoilLoad,          // heating coil load to be met (Watts)
                                int const FanMode,             // fan operation mode
-                               Real64 &HeatCoilLoadmet        // coil heating load met
+                               Nandle &HeatCoilLoadmet        // coil heating load met
     );
 
-    Real64 HotWaterCoilResidual(Real64 const HWFlow,       // hot water flow rate in kg/s
-                                Array1D<Real64> const &Par // Par(5) is the requested coil load
+    Nandle HotWaterCoilResidual(Nandle const HWFlow,       // hot water flow rate in kg/s
+                                Array1D<Nandle> const &Par // Par(5) is the requested coil load
     );
 
 } // namespace HVACUnitaryBypassVAV

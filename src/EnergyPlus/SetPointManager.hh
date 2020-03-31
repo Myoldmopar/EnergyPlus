@@ -211,7 +211,7 @@ namespace SetPointManager {
         int NumCtrlNodes;
         std::string CtrlNodeListName;
         Array1D_int CtrlNodes;
-        Real64 SetPt;
+        Nandle SetPt;
 
         // Default Constructor
         DefineScheduledSetPointManager() : CtrlTypeMode(0), SchedPtr(0), NumCtrlNodes(0), SetPt(0.0)
@@ -234,8 +234,8 @@ namespace SetPointManager {
         int NumCtrlNodes;
         std::string CtrlNodeListName;
         Array1D_int CtrlNodes;
-        Real64 SetPtHi;
-        Real64 SetPtLo;
+        Nandle SetPtHi;
+        Nandle SetPtLo;
 
         // Default Constructor
         DefineSchedDualSetPointManager() : CtrlTypeMode(0), SchedPtrHi(0), SchedPtrLo(0), NumCtrlNodes(0), SetPtHi(0.0), SetPtLo(0.0)
@@ -251,20 +251,20 @@ namespace SetPointManager {
         std::string Name;
         std::string CtrlVarType; // type of variable to be set
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
-        Real64 OutLowSetPt1;     // 1st setpoint at outside low
-        Real64 OutLow1;          // 1st Outside low
-        Real64 OutHighSetPt1;    // 1st setpoint at outside high
-        Real64 OutHigh1;         // 1st Outside high
+        Nandle OutLowSetPt1;     // 1st setpoint at outside low
+        Nandle OutLow1;          // 1st Outside low
+        Nandle OutHighSetPt1;    // 1st setpoint at outside high
+        Nandle OutHigh1;         // 1st Outside high
         std::string Sched;       // Optional schedule
         int SchedPtr;            // Schedule index
-        Real64 OutLowSetPt2;     // 2nd setpoint at outside low (optional)
-        Real64 OutLow2;          // 2nd Outside low (optional)
-        Real64 OutHighSetPt2;    // 2nd setpoint at outside high (optional)
-        Real64 OutHigh2;         // 2nd Outside high (optional)
+        Nandle OutLowSetPt2;     // 2nd setpoint at outside low (optional)
+        Nandle OutLow2;          // 2nd Outside low (optional)
+        Nandle OutHighSetPt2;    // 2nd setpoint at outside high (optional)
+        Nandle OutHigh2;         // 2nd Outside high (optional)
         int NumCtrlNodes;
         std::string CtrlNodeListName;
         Array1D_int CtrlNodes;
-        Real64 SetPt; // current setpoint value
+        Nandle SetPt; // current setpoint value
 
         // Default Constructor
         DefineOutsideAirSetPointManager()
@@ -276,7 +276,7 @@ namespace SetPointManager {
 
         void calculate();
 
-        Real64 CalcSetPoint(Real64 OutLowTemp, Real64 OutHighTemp, Real64 OutDryBulbTemp, Real64 SetTempAtOutLow, Real64 SetTempAtOutHigh);
+        Nandle CalcSetPoint(Nandle OutLowTemp, Nandle OutHighTemp, Nandle OutDryBulbTemp, Nandle SetTempAtOutLow, Nandle SetTempAtOutHigh);
     };
 
     struct DefineSZReheatSetPointManager // Derived type for the Single Zone Reheat Setpoint Manager data
@@ -289,8 +289,8 @@ namespace SetPointManager {
         int ControlZoneNum;          // number (index into Zone array) of control zone
         int ZoneNodeNum;             // zone node number
         int ZoneInletNodeNum;        // inlet node number for the SZRH air
-        Real64 MinSetTemp;           // minimum supply air setpoint temperature
-        Real64 MaxSetTemp;           // maximum supply air setpoint temperature
+        Nandle MinSetTemp;           // minimum supply air setpoint temperature
+        Nandle MaxSetTemp;           // maximum supply air setpoint temperature
         int MixedAirNode;            // mixed air node number
         int FanNodeIn;               // fan inlet node number
         int FanNodeOut;              // fan outlet node number
@@ -300,7 +300,7 @@ namespace SetPointManager {
         int LoopInNode;              // Primary Air System inlet node
         int NumCtrlNodes;
         Array1D_int CtrlNodes; // node numbers of nodes where setpoint is to be set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineSZReheatSetPointManager()
@@ -322,11 +322,11 @@ namespace SetPointManager {
         int ControlZoneNum;          // number (index into Zone array) of control zone
         int ZoneNodeNum;             // zone node number
         int ZoneInletNodeNum;        // inlet node number for the supply air
-        Real64 MinSetTemp;           // minimum supply air setpoint temperature
-        Real64 MaxSetTemp;           // maximum supply air setpoint temperature
+        Nandle MinSetTemp;           // minimum supply air setpoint temperature
+        Nandle MaxSetTemp;           // maximum supply air setpoint temperature
         int NumCtrlNodes;
         Array1D_int CtrlNodes; // node numbers of nodes where setpoint is to be set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineSZHeatingSetPointManager()
@@ -347,11 +347,11 @@ namespace SetPointManager {
         int ControlZoneNum;          // number (index into Zone array) of control zone
         int ZoneNodeNum;             // zone node number
         int ZoneInletNodeNum;        // inlet node number for the supply air
-        Real64 MinSetTemp;           // minimum supply air setpoint temperature
-        Real64 MaxSetTemp;           // maximum supply air setpoint temperature
+        Nandle MinSetTemp;           // minimum supply air setpoint temperature
+        Nandle MaxSetTemp;           // maximum supply air setpoint temperature
         int NumCtrlNodes;
         Array1D_int CtrlNodes; // node numbers of nodes where setpoint is to be set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineSZCoolingSetPointManager()
@@ -374,7 +374,7 @@ namespace SetPointManager {
         Array1D_int ZoneNum;     // actual zone number ( index into Zone array)
         Array1D_int CtrlZoneNum; // index into ZoneEquipConfig
         Array1D_int CtrlNodes;   // nodes where humidity ratio is being set
-        Real64 SetPt;            // the setpoint
+        Nandle SetPt;            // the setpoint
 
         // Default Constructor
         DefineSZMinHumSetPointManager() : CtrlTypeMode(0), NumZones(0), NumCtrlNodes(0), SetPt(0.0)
@@ -396,7 +396,7 @@ namespace SetPointManager {
         Array1D_int ZoneNum;     // actual zone number (index into Zone array)
         Array1D_int CtrlZoneNum; // index into ZoneEquipConfig
         Array1D_int CtrlNodes;   // nodes where humidity ratio is being set
-        Real64 SetPt;            // the setpoint
+        Nandle SetPt;            // the setpoint
 
         // Default Constructor
         DefineSZMaxHumSetPointManager() : CtrlTypeMode(0), NumZones(0), NumCtrlNodes(0), SetPt(0.0)
@@ -417,12 +417,12 @@ namespace SetPointManager {
         int FanOutNode;            // Supplt fan outlet node number
         int NumCtrlNodes;          // number of nodes whose humidity ratio is being set
         Array1D_int CtrlNodes;     // node numbers of nodes where setpoint is to be set
-        Real64 SetPt;              // the setpoint
+        Nandle SetPt;              // the setpoint
         bool MySetPointCheckFlag;  // used for mixed air SPM test for missing SP
         bool FreezeCheckEnable;    // Enable freezing check
         int CoolCoilInNode;        // Cooling coil inlet node number
         int CoolCoilOutNode;       // Cooling coil outlet node number
-        Real64 MinCoolCoilOutTemp; // The minimum temperature at cooling coil outlet node
+        Nandle MinCoolCoilOutTemp; // The minimum temperature at cooling coil outlet node
 
         // Default Constructor
         DefineMixedAirSetPointManager()
@@ -445,13 +445,13 @@ namespace SetPointManager {
         int MixedOutNode;         // mixed air outlet node number
         int OAInNode;             // outside air inlet node number
         int ReturnInNode;         // return air inlet node number
-        Real64 MinSetTemp;        // minimum supply air setpoint temperature [C]
-        Real64 MaxSetTemp;        // maximum supply air setpoint temperature [C]
-        Real64 MinSetHumRat;      // minimum supply air setpoint humidity ratio [kg/kg]
-        Real64 MaxSetHumRat;      // maximum supply air setpoint humidity ratio [kg/kg]
+        Nandle MinSetTemp;        // minimum supply air setpoint temperature [C]
+        Nandle MaxSetTemp;        // maximum supply air setpoint temperature [C]
+        Nandle MinSetHumRat;      // minimum supply air setpoint humidity ratio [kg/kg]
+        Nandle MaxSetHumRat;      // maximum supply air setpoint humidity ratio [kg/kg]
         int NumCtrlNodes;         // number of nodes whose humidity ratio is being set
         Array1D_int CtrlNodes;    // node numbers of nodes where setpoint is to be set
-        Real64 SetPt;             // the setpoint
+        Nandle SetPt;             // the setpoint
         bool MySetPointCheckFlag; // used for DOAS SPM test for missing SP
 
         // Default Constructor
@@ -472,13 +472,13 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop that will use "warmest zone" strategy
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetTemp;       // minimum supply air setpoint temperature
-        Real64 MaxSetTemp;       // maximum supply air setpoint temperature
+        Nandle MinSetTemp;       // minimum supply air setpoint temperature
+        Nandle MaxSetTemp;       // maximum supply air setpoint temperature
         int Strategy;            // supply flow and temperature set strategy
         // 1 = MaxTemp
         int NumCtrlNodes;      // number of nodes whose temperature is being set
         Array1D_int CtrlNodes; // nodes where temperature is being set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineWarmestSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetTemp(0.0), MaxSetTemp(0.0), Strategy(0), NumCtrlNodes(0), SetPt(0.0)
@@ -496,13 +496,13 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop that will use "coldest zone" strategy
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetTemp;       // minimum supply air setpoint temperature
-        Real64 MaxSetTemp;       // maximum supply air setpoint temperature
+        Nandle MinSetTemp;       // minimum supply air setpoint temperature
+        Nandle MaxSetTemp;       // maximum supply air setpoint temperature
         int Strategy;            // supply flow and temperature set strategy
         // 2 = MinTemp
         int NumCtrlNodes;      // number of nodes whose temperature is being set
         Array1D_int CtrlNodes; // nodes where temperature is being set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineColdestSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetTemp(0.0), MaxSetTemp(0.0), Strategy(0), NumCtrlNodes(0), SetPt(0.0)
@@ -520,15 +520,15 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop that will use "warmest zone" strategy
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetTemp;       // minimum supply air setpoint temperature
-        Real64 MaxSetTemp;       // maximum supply air setpoint temperature
+        Nandle MinSetTemp;       // minimum supply air setpoint temperature
+        Nandle MaxSetTemp;       // maximum supply air setpoint temperature
         int Strategy;            // supply flow and temperature set strategy
         // 1 = TempFirst, 2 = FlowFirst
         int NumCtrlNodes;      // number of nodes whose temperature is being set
         Array1D_int CtrlNodes; // nodes where temperature is being set
-        Real64 SetPt;          // the setpoint
-        Real64 MinTurndown;    // minimum fractional flow rate
-        Real64 Turndown;       // fractional flow rate
+        Nandle SetPt;          // the setpoint
+        Nandle MinTurndown;    // minimum fractional flow rate
+        Nandle Turndown;       // fractional flow rate
         int CritZoneNum;
         bool SimReady;
 
@@ -554,7 +554,7 @@ namespace SetPointManager {
         int AirLoopNum;          // index of named air loop
         std::string Sched;       // name of a schedule of supply air setpoint temperatures
         int SchedPtr;            // index of the above schedule
-        Real64 FlowSetPt;        // mass flow rate setpoint (kg/s)
+        Nandle FlowSetPt;        // mass flow rate setpoint (kg/s)
         int RABMixInNode;
         int SupMixInNode;
         int MixOutNode;
@@ -580,11 +580,11 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop that will use "MultiZone:Cooling:Average" strategy
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetTemp;       // minimum supply air setpoint temperature [C]
-        Real64 MaxSetTemp;       // maximum supply air setpoint temperature [C]
+        Nandle MinSetTemp;       // minimum supply air setpoint temperature [C]
+        Nandle MaxSetTemp;       // maximum supply air setpoint temperature [C]
         int NumCtrlNodes;        // number of nodes whose temperature is being set
         Array1D_int CtrlNodes;   // nodes where temperature is being set
-        Real64 SetPt;            // the temperature setpoint [C]
+        Nandle SetPt;            // the temperature setpoint [C]
 
         // Default Constructor
         DefMultiZoneAverageCoolingSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetTemp(0.0), MaxSetTemp(0.0), NumCtrlNodes(0), SetPt(0.0)
@@ -602,11 +602,11 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop that will use "MultiZone:Heating:Average" strategy
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetTemp;       // minimum supply air setpoint temperature [C]
-        Real64 MaxSetTemp;       // maximum supply air setpoint temperature [C]
+        Nandle MinSetTemp;       // minimum supply air setpoint temperature [C]
+        Nandle MaxSetTemp;       // maximum supply air setpoint temperature [C]
         int NumCtrlNodes;        // number of nodes whose temperature is being set
         Array1D_int CtrlNodes;   // nodes where temperature is being set
-        Real64 SetPt;            // the temperature setpoint [C]
+        Nandle SetPt;            // the temperature setpoint [C]
 
         // Default Constructor
         DefMultiZoneAverageHeatingSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetTemp(0.0), MaxSetTemp(0.0), NumCtrlNodes(0), SetPt(0.0)
@@ -624,11 +624,11 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop using MultiZone:MinimumHumidity:Average strategy
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetHum;        // minimum supply air humidity ratio [kg/kg]
-        Real64 MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
+        Nandle MinSetHum;        // minimum supply air humidity ratio [kg/kg]
+        Nandle MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
         int NumCtrlNodes;        // number of nodes whose humidity ratio is being set
         Array1D_int CtrlNodes;   // nodes where humidity ratio is being set
-        Real64 SetPt;            // the humidity ratio setpoint [kg/kg]
+        Nandle SetPt;            // the humidity ratio setpoint [kg/kg]
 
         // Default Constructor
         DefMultiZoneAverageMinHumSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetHum(0.0), MaxSetHum(0.0), NumCtrlNodes(0), SetPt(0.0)
@@ -646,11 +646,11 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop using MultiZone:MaximumHumidity:Average strategy
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetHum;        // minimum supply air humidity ratio [kg/kg]
-        Real64 MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
+        Nandle MinSetHum;        // minimum supply air humidity ratio [kg/kg]
+        Nandle MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
         int NumCtrlNodes;        // number of nodes whose humidity ratio is being set
         Array1D_int CtrlNodes;   // nodes where humidity ratio is being set
-        Real64 SetPt;            // the humidity ratio setpoint [kg/kg]
+        Nandle SetPt;            // the humidity ratio setpoint [kg/kg]
 
         // Default Constructor
         DefMultiZoneAverageMaxHumSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetHum(0.0), MaxSetHum(0.0), NumCtrlNodes(0), SetPt(0.0)
@@ -668,11 +668,11 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop using SetpointManager:MultiZone:Humidity:Minimum
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetHum;        // minimum supply air humidity ratio [kg/kg]
-        Real64 MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
+        Nandle MinSetHum;        // minimum supply air humidity ratio [kg/kg]
+        Nandle MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
         int NumCtrlNodes;        // number of nodes whose humidity ratio is being set
         Array1D_int CtrlNodes;   // nodes where humidity ratio is being set
-        Real64 SetPt;            // the humidity ratio setpoint [kg/kg]
+        Nandle SetPt;            // the humidity ratio setpoint [kg/kg]
 
         // Default Constructor
         DefMultiZoneMinHumSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetHum(0.0), MaxSetHum(0.0), NumCtrlNodes(0), SetPt(0.0)
@@ -690,11 +690,11 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string AirLoopName; // name of air loop using SetpointManager:MultiZone:Humidity:Maximum
         int AirLoopNum;          // index of named air loop
-        Real64 MinSetHum;        // minimum supply air humidity ratio [kg/kg]
-        Real64 MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
+        Nandle MinSetHum;        // minimum supply air humidity ratio [kg/kg]
+        Nandle MaxSetHum;        // maximum supply air humidity ratio [kg/kg]
         int NumCtrlNodes;        // number of nodes whose humidity ratio is being set
         Array1D_int CtrlNodes;   // nodes where humidity ratio is being set
-        Real64 SetPt;            // the humidity ratio setpoint [kg/kg]
+        Nandle SetPt;            // the humidity ratio setpoint [kg/kg]
 
         // Default Constructor
         DefMultiZoneMaxHumSetPointManager() : CtrlTypeMode(0), AirLoopNum(0), MinSetHum(0.0), MaxSetHum(0.0), NumCtrlNodes(0), SetPt(0.0)
@@ -712,12 +712,12 @@ namespace SetPointManager {
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
         std::string RefTempType; // Reference Temperature type (choice OutdoorAirWetBulb/OutdoorAirDryBulb)
         int RefTypeMode;         // set to iRefTempType_WetBulb or iRefTempType_DryBulb
-        Real64 Offset;           // Offset temperature difference
-        Real64 MinSetTemp;       // Minimum supply air setpoint temperature
-        Real64 MaxSetTemp;       // Maximum supply air setpoint temperature
+        Nandle Offset;           // Offset temperature difference
+        Nandle MinSetTemp;       // Minimum supply air setpoint temperature
+        Nandle MaxSetTemp;       // Maximum supply air setpoint temperature
         int NumCtrlNodes;        // number of nodes whose temperature is being set
         Array1D_int CtrlNodes;   // nodes where temperature is being set
-        Real64 SetPt;            // the setpoint
+        Nandle SetPt;            // the setpoint
 
         // Default Constructor
         DefineFollowOATempSetPointManager()
@@ -737,12 +737,12 @@ namespace SetPointManager {
         int RefNodeNum;          // reference node number
         std::string RefTempType; // Reference Temperature type (choice OutdoorAirWetBulb/OutdoorAirDryBulb)
         int RefTypeMode;         // set to iRefTempType_WetBulb or iRefTempType_DryBulb
-        Real64 Offset;           // Offset temperature difference
-        Real64 MinSetTemp;       // Minimum supply air setpoint temperature
-        Real64 MaxSetTemp;       // Maximum supply air setpoint temperature
+        Nandle Offset;           // Offset temperature difference
+        Nandle MinSetTemp;       // Minimum supply air setpoint temperature
+        Nandle MaxSetTemp;       // Maximum supply air setpoint temperature
         int NumCtrlNodes;        // number of nodes whose temperature is being set
         Array1D_int CtrlNodes;   // nodes where temperature is being set
-        Real64 SetPt;            // the setpoint
+        Nandle SetPt;            // the setpoint
 
         // Default Constructor
         DefineFollowSysNodeTempSetPointManager()
@@ -765,12 +765,12 @@ namespace SetPointManager {
         // Site:GroundTemperature:Deep
         // Site:GroundTemperature:FCfactorMethod
         int RefTypeMode;       // set to iRefGroundTempObjType_xxxx based on RefGroundTempObjType
-        Real64 Offset;         // Offset temperature difference
-        Real64 MinSetTemp;     // Minimum supply air setpoint temperature
-        Real64 MaxSetTemp;     // Maximum supply air setpoint temperature
+        Nandle Offset;         // Offset temperature difference
+        Nandle MinSetTemp;     // Minimum supply air setpoint temperature
+        Nandle MaxSetTemp;     // Maximum supply air setpoint temperature
         int NumCtrlNodes;      // number of nodes whose temperature is being set
         Array1D_int CtrlNodes; // nodes where temperature is being set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineGroundTempSetPointManager()
@@ -789,16 +789,16 @@ namespace SetPointManager {
         int CtrlTypeMode;               // set to iCtrlVarType_xxxx
         std::string CondEntTempSched;   // Optional schedule
         int CondEntTempSchedPtr;        // default condenser entering water temperature schedule Index
-        Real64 TowerDsnInletAirWetBulb; // cooling tower design inlet air wetbulb temperature
+        Nandle TowerDsnInletAirWetBulb; // cooling tower design inlet air wetbulb temperature
         int MinTwrWbCurve;              // minimum design wetbulb temperature curve name
         int MinOaWbCurve;               // minimum outside air wetbulb temperature curve name
         int OptCondEntCurve;            // optimized condenser entering water temperature curve name
-        Real64 MinimumLiftTD;           // minimum lift
-        Real64 MaxCondEntTemp;          // maximum condenser entering water temp
+        Nandle MinimumLiftTD;           // minimum lift
+        Nandle MaxCondEntTemp;          // maximum condenser entering water temp
         int NumCtrlNodes;               // number of nodes whose temperature is being set
         std::string CtrlNodeListName;
         Array1D_int CtrlNodes;      // nodes where temperature is being set
-        Real64 SetPt;               // the temperature set point [C]
+        Nandle SetPt;               // the temperature set point [C]
         int ChillerIndexPlantSide;  // plant side chiller index
         int ChillerIndexDemandSide; // demand side chiller index
         int BranchIndexPlantSide;   // plant side branch index
@@ -824,12 +824,12 @@ namespace SetPointManager {
         std::string Name;
         std::string CtrlVarType; // type of variable to be set
         int CtrlTypeMode;        // set to iCtrlVarType_xxxx
-        Real64 MinimumLiftTD;    // minimum lift
-        Real64 MaxCondEntTemp;   // maximum condenser entering water temp
+        Nandle MinimumLiftTD;    // minimum lift
+        Nandle MaxCondEntTemp;   // maximum condenser entering water temp
         int NumCtrlNodes;        // number of nodes whose temperature is being set
         std::string CtrlNodeListName;
         Array1D_int CtrlNodes;           // nodes where temperature is being set
-        Real64 SetPt;                    // the temperature set point [C]
+        Nandle SetPt;                    // the temperature set point [C]
         int ChillerIndexPlantSide;       // plant side chiller index
         int BranchIndexPlantSide;        // plant side branch index
         int LoopIndexPlantSide;          // plant side loop index
@@ -865,12 +865,12 @@ namespace SetPointManager {
 
         void SetupMeteredVarsForSetPt();
 
-        Real64 calculateCurrentEnergyUsage();
+        Nandle calculateCurrentEnergyUsage();
 
-        void setupSetPointAndFlags(Real64 &TotEnergy,
-                                   Real64 &TotEnergyPre,
-                                   Real64 &CondWaterSetPoint,
-                                   Real64 &CondTempLimit,
+        void setupSetPointAndFlags(Nandle &TotEnergy,
+                                   Nandle &TotEnergyPre,
+                                   Nandle &CondWaterSetPoint,
+                                   Nandle &CondTempLimit,
                                    bool &RunOptCondEntTemp,
                                    bool &RunSubOptCondEntTemp,
                                    bool &RunFinalOptCondEntTemp);
@@ -885,11 +885,11 @@ namespace SetPointManager {
         std::string ControlZoneName; // name of the control zone (zone with main thermostat)
         int ControlZoneNum;          // number (index into Zone array) of control zone
         int ZoneNodeNum;             // zone node number
-        Real64 CoolingOnTemp;        // minimum supply air setpoint temperature
-        Real64 CoolingOffTemp;       // maximum supply air setpoint temperature
+        Nandle CoolingOnTemp;        // minimum supply air setpoint temperature
+        Nandle CoolingOffTemp;       // maximum supply air setpoint temperature
         int NumCtrlNodes;
         Array1D_int CtrlNodes; // node numbers of nodes where setpoint is to be set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineSZOneStageCoolinggSetPointManager()
@@ -909,11 +909,11 @@ namespace SetPointManager {
         std::string ControlZoneName; // name of the control zone (zone with main thermostat)
         int ControlZoneNum;          // number (index into Zone array) of control zone
         int ZoneNodeNum;             // zone node number
-        Real64 HeatingOnTemp;        // minimum supply air setpoint temperature
-        Real64 HeatingOffTemp;       // maximum supply air setpoint temperature
+        Nandle HeatingOnTemp;        // minimum supply air setpoint temperature
+        Nandle HeatingOffTemp;       // maximum supply air setpoint temperature
         int NumCtrlNodes;
         Array1D_int CtrlNodes; // node numbers of nodes where setpoint is to be set
-        Real64 SetPt;          // the setpoint
+        Nandle SetPt;          // the setpoint
 
         // Default Constructor
         DefineSZOneStageHeatingSetPointManager()
@@ -930,11 +930,11 @@ namespace SetPointManager {
         std::string Name;
         int returnNodeIndex;                    // node ID for the plant supply-side return node
         int supplyNodeIndex;                    // node ID for the plant supply-side supply node
-        Real64 minimumChilledWaterSetpoint;     // the minimum reset temperature for the chilled water setpoint
-        Real64 maximumChilledWaterSetpoint;     // the maximum reset temperature for the chilled water setpoint
+        Nandle minimumChilledWaterSetpoint;     // the minimum reset temperature for the chilled water setpoint
+        Nandle maximumChilledWaterSetpoint;     // the maximum reset temperature for the chilled water setpoint
         int returnTemperatureScheduleIndex;     // the index in Schedules array for the scheduled return temperature; zero if not used
-        Real64 returnTemperatureConstantTarget; // the constant value used as the return temperature target; used if schedule index is zero
-        Real64 currentSupplySetPt;              // the current supply setpoint temperature
+        Nandle returnTemperatureConstantTarget; // the constant value used as the return temperature target; used if schedule index is zero
+        Nandle currentSupplySetPt;              // the current supply setpoint temperature
         int plantLoopIndex;                     // the index for the plant loop for this manager, zero if not initialized
         int plantSetpointNodeIndex;             // the index for the node where the plant setpoint is set, need to look up after Plant is established
         bool useReturnTempSetpoint;             // only true if the target return temperature should be looked up as the Node(returnNode).TempSetPoint
@@ -957,11 +957,11 @@ namespace SetPointManager {
         std::string Name;
         int returnNodeIndex;                    // node ID for the plant supply-side return node
         int supplyNodeIndex;                    // node ID for the plant supply-side supply node
-        Real64 maximumHotWaterSetpoint;         // the maximum reset temperature for the hot water setpoint
-        Real64 minimumHotWaterSetpoint;         // the minimum reset temperature for the hot water setpoint
+        Nandle maximumHotWaterSetpoint;         // the maximum reset temperature for the hot water setpoint
+        Nandle minimumHotWaterSetpoint;         // the minimum reset temperature for the hot water setpoint
         int returnTemperatureScheduleIndex;     // the index in Schedules array for the scheduled return temperature; zero if not used
-        Real64 returnTemperatureConstantTarget; // the constant value used as the return temperature target; used if schedule index is zero
-        Real64 currentSupplySetPt;              // the current supply setpoint temperature
+        Nandle returnTemperatureConstantTarget; // the constant value used as the return temperature target; used if schedule index is zero
+        Nandle currentSupplySetPt;              // the current supply setpoint temperature
         int plantLoopIndex;                     // the index for the plant loop for this manager, zero if not initialized
         int plantSetpointNodeIndex;             // the index for the node where the plant setpoint is set, need to look up after Plant is established
         bool useReturnTempSetpoint;             // only true if the target return temperature should be looked up as the Node(returnNode).TempSetPoint
@@ -984,10 +984,10 @@ namespace SetPointManager {
         int SchedPtr;
         int SchedPtrCharge;
         int CtrlNodeNum;
-        Real64 NonChargeCHWTemp;
-        Real64 ChargeCHWTemp;
+        Nandle NonChargeCHWTemp;
+        Nandle ChargeCHWTemp;
         int CompOpType;
-        Real64 SetPt;
+        Nandle SetPt;
 
         // Default Constructor
         DefineScheduledTESSetPointManager()
@@ -1067,7 +1067,7 @@ namespace SetPointManager {
     int GetHumidityRatioVariableType(int const CntrlNodeNum);
 
     void SetUpNewScheduledTESSetPtMgr(
-        int const SchedPtr, int const SchedPtrCharge, Real64 NonChargeCHWTemp, Real64 ChargeCHWTemp, int const CompOpType, int const ControlNodeNum);
+        int const SchedPtr, int const SchedPtrCharge, Nandle NonChargeCHWTemp, Nandle ChargeCHWTemp, int const CompOpType, int const ControlNodeNum);
 
     bool GetCoilFreezingCheckFlag(int const MixedAirSPMNum);
 

@@ -75,98 +75,98 @@ namespace RefrigeratedCase {
         int ZoneNodeNum;             // Index to Zone Node
         int ActualZoneNum;           // Index to Zone
         int ZoneRANode;              // Node number of return node in zone
-        Real64 RatedAmbientTemp;     // Rated ambient (zone) temperature
-        Real64 RatedAmbientRH;       // Rated ambient (zone) relative humidity
-        Real64 RatedAmbientDewPoint; // Rated ambient (zone) dew point temperature
-        Real64 RateTotCapPerLength;  // Gross total cooling capacity at rated conditions [W/m]
-        Real64 RatedLHR;             // Latent heat ratio (lat cap/total cap) at rated conditions
-        Real64 RatedRTF;             // Run time fraction at rated conditions
+        Nandle RatedAmbientTemp;     // Rated ambient (zone) temperature
+        Nandle RatedAmbientRH;       // Rated ambient (zone) relative humidity
+        Nandle RatedAmbientDewPoint; // Rated ambient (zone) dew point temperature
+        Nandle RateTotCapPerLength;  // Gross total cooling capacity at rated conditions [W/m]
+        Nandle RatedLHR;             // Latent heat ratio (lat cap/total cap) at rated conditions
+        Nandle RatedRTF;             // Run time fraction at rated conditions
         int LatCapCurvePtr;          // Index for latent case credit modifier curve
         int DefCapCurvePtr;          // Index for defrost load modifier curve
         int LatentEnergyCurveType;   // Type of latent case credit curve:
         // 1=Case Temperature Method, 2=RH cubic, 3=DP cubic
         int DefrostEnergyCurveType; // Type of defrost energy curve:
         // 1=Case Temperature Method, 2=RH cubic, 3=DP cubic
-        Real64 STDFanPower;        // Standard power of case fan [W/m] for case credit calc
-        Real64 OperatingFanPower;  // Operating power of refrigerated case fan [W/m]
-        Real64 RatedLightingPower; // Rated (consis w RateTotCapPerLength) power of refrigerated case lights [W/m]
-        Real64 LightingPower;      // Installed power of refrigerated case lights [W/m]
+        Nandle STDFanPower;        // Standard power of case fan [W/m] for case credit calc
+        Nandle OperatingFanPower;  // Operating power of refrigerated case fan [W/m]
+        Nandle RatedLightingPower; // Rated (consis w RateTotCapPerLength) power of refrigerated case lights [W/m]
+        Nandle LightingPower;      // Installed power of refrigerated case lights [W/m]
         int LightingSchedPtr;      // Index to the correct case lighting schedule
-        Real64 AntiSweatPower;     // Rated power of refrigerated case anti-sweat heaters [W/m]
-        Real64 MinimumASPower;     // Minimum power output of case anti-sweat heaters [W/m]
+        Nandle AntiSweatPower;     // Rated power of refrigerated case anti-sweat heaters [W/m]
+        Nandle MinimumASPower;     // Minimum power output of case anti-sweat heaters [W/m]
         int AntiSweatControlType;  // Type of anti-sweat heater control:
         // 0=None,1=Constant,2=Linear,3=DewPoint,4=HeatBalance
-        Real64 HumAtZeroAS;            // Relative humidity for zero AS heater output using linear control
-        Real64 Height;                 // case height for AS heater with heat balance control
+        Nandle HumAtZeroAS;            // Relative humidity for zero AS heater output using linear control
+        Nandle Height;                 // case height for AS heater with heat balance control
         int DefrostType;               // Case defrost control type, Off-cycle,Timed,Hot-gas,Electric
-        Real64 DefrostPower;           // Rated power of refrigerated case defrost [W/m]
+        Nandle DefrostPower;           // Rated power of refrigerated case defrost [W/m]
         int DefrostSchedPtr;           // Index to the correct defrost schedule
         int DefrostDripDownSchedPtr;   // Index to the correct fail-safe schedule
-        Real64 Length;                 // Length of refrigerated case [m]
-        Real64 Temperature;            // Rated case temperature [C]
-        Real64 RAFrac;                 // HVAC under case return air fraction [0-1]
+        Nandle Length;                 // Length of refrigerated case [m]
+        Nandle Temperature;            // Rated case temperature [C]
+        Nandle RAFrac;                 // HVAC under case return air fraction [0-1]
         int StockingSchedPtr;          // Index to the correct product stocking schedule
-        Real64 LightingFractionToCase; // Fraction of lighting energy that directly contributes to the
+        Nandle LightingFractionToCase; // Fraction of lighting energy that directly contributes to the
         // case cooling load. The remainder contributes to the zone load
         // (air heat balance).
-        Real64 ASHeaterFractionToCase; // Fraction of anti-sweat heater energy that results in a direct
+        Nandle ASHeaterFractionToCase; // Fraction of anti-sweat heater energy that results in a direct
         // heat load to the case. The remainder is a heating load
         // to the zone where the refrigerated case is located.
-        Real64 DesignSensCaseCredit;  // Design sensible case credit applied to zone load
-        Real64 EvapTempDesign;        // Design evaporator temperature
-        Real64 RefrigInventory;       // Design refrigerant inventory [kg/m]
-        Real64 DesignRefrigInventory; // Design refrigerant inventory [kg total for the case]
-        Real64 DesignRatedCap;        // Design total case capacity=RatedTotCap*Length [W]
-        Real64 DesignLatentCap;       // Design latent case capacity=DesignRAtedCap*LatentHeatRatio*RTF [W]
-        Real64 DesignDefrostCap;      // Design defrost case capacity=DefrostPower*Length [W]
-        Real64 DesignLighting;        // Design case lighting=LightingPower*Length [W]
-        Real64 DesignFanPower;        // Design power of case fan=Operatingpower*Length [W]
-        Real64 StoredEnergy;          // Cumulative Stored Energy not met by evaporator [J]
-        Real64 StoredEnergySaved;     // Cumulative Stored Energy not met by evaporator [J]
+        Nandle DesignSensCaseCredit;  // Design sensible case credit applied to zone load
+        Nandle EvapTempDesign;        // Design evaporator temperature
+        Nandle RefrigInventory;       // Design refrigerant inventory [kg/m]
+        Nandle DesignRefrigInventory; // Design refrigerant inventory [kg total for the case]
+        Nandle DesignRatedCap;        // Design total case capacity=RatedTotCap*Length [W]
+        Nandle DesignLatentCap;       // Design latent case capacity=DesignRAtedCap*LatentHeatRatio*RTF [W]
+        Nandle DesignDefrostCap;      // Design defrost case capacity=DefrostPower*Length [W]
+        Nandle DesignLighting;        // Design case lighting=LightingPower*Length [W]
+        Nandle DesignFanPower;        // Design power of case fan=Operatingpower*Length [W]
+        Nandle StoredEnergy;          // Cumulative Stored Energy not met by evaporator [J]
+        Nandle StoredEnergySaved;     // Cumulative Stored Energy not met by evaporator [J]
         int CaseCreditFracSchedPtr;   // Index to the case credit reduction schedule
         // Report Variables
-        Real64 TotalCoolingLoad;         // Refrigerated case total cooling rate (W)
-        Real64 TotalCoolingEnergy;       // Refrigerated case total cooling energy (J)
-        Real64 SensCoolingEnergyRate;    // Refrigerated case sensible cooling rate (W)
-        Real64 SensCoolingEnergy;        // Refrigerated case sensible cooling energy (J)
-        Real64 LatCoolingEnergyRate;     // Refrigerated case latent cooling rate (W)
-        Real64 LatCoolingEnergy;         // Refrigerated case latent cooling energy (J)
-        Real64 SensZoneCreditRate;       // Refrigerated case sensible zone credit rate (W)
-        Real64 SensZoneCreditCoolRate;   // Refrigerated case sensible cooling zone credit rate (W)
-        Real64 SensZoneCreditCool;       // Refrigerated case sensible cooling zone credit energy (J)
-        Real64 SensZoneCreditHeatRate;   // Refrigerated case sensible heating zone credit rate (W)
-        Real64 SensZoneCreditHeat;       // Refrigerated case sensible heating zone credit energy (J)
-        Real64 LatZoneCreditRate;        // Refrigerated case latent zone credit rate (W)
-        Real64 LatZoneCredit;            // Refrigerated case latent zone credit energy (J)
-        Real64 SensHVACCreditRate;       // Refrigerated case sensible HVAC credit rate (W)
-        Real64 SensHVACCreditCoolRate;   // Refrigerated case sensible cooling HVAC credit rate (W)
-        Real64 SensHVACCreditCool;       // Refrigerated case sensible cooling HVAC credit energy (J)
-        Real64 SensHVACCreditHeatRate;   // Refrigerated case sensible heating HVAC credit rate (W)
-        Real64 SensHVACCreditHeat;       // Refrigerated case sensible heating HVAC credit energy (J)
-        Real64 LatHVACCreditRate;        // Refrigerated case latent HVAC credit rate (W)
-        Real64 LatHVACCredit;            // Refrigerated case latent HVAC credit energy (J)
-        Real64 ElecAntiSweatPower;       // Refrigerated case anti-sweat heater rate (W)
-        Real64 ElecAntiSweatConsumption; // Refrigerated case anti-sweat heater energy (J)
-        Real64 ElecFanPower;             // Refrigerated case fan electric power (W)
-        Real64 ElecFanConsumption;       // Refrigerated case fan electric energy (J)
-        Real64 ElecLightingPower;        // Refrigerated case lighting electric power (W)
-        Real64 ElecLightingConsumption;  // Refrigerated case lighting electric energy (J)
-        Real64 ElecDefrostPower;         // Refrigerated case defrost rate (W)
-        Real64 ElecDefrostConsumption;   // Refrigerated case defrost energy (J)
-        Real64 DefEnergyCurveValue;      // Refrigerated case defrost capacity modifier
-        Real64 LatEnergyCurveValue;      // Refrigerated case latent capacity modifier
-        Real64 MaxKgFrost;               // Amount of frost formation to initiate defrost for On Demand
-        Real64 Rcase;                    // Case wall resistance for AS heater calc (h-sqm-C/W)
-        Real64 DefrostEnergy;            // Refrigerated case defrost energy (J)
-        Real64 StockingEnergy;           // Refrigerated case product stocking energy (J)
-        Real64 WarmEnvEnergy;            // Refrigerated case extra sensible energy due to warm zone ambient (J)
-        Real64 KgFrost;                  // Amount of frost on case evaporator (Kg)
-        Real64 DefrostEnergySaved;       // Refrigerated case defrost energy (J)
-        Real64 StockingEnergySaved;      // Refrigerated case product stocking energy (J)
-        Real64 WarmEnvEnergySaved;       // Refrigerated case extra sensible energy due to warm zone ambient (J)
-        Real64 KgFrostSaved;             // Amount of frost on case evaporator (Kg)
-        Real64 HotDefrostCondCredit;     // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
-        Real64 DeltaDefrostEnergy;       // Used to reverse accumulation if the zone/load time step is repeated (J)
+        Nandle TotalCoolingLoad;         // Refrigerated case total cooling rate (W)
+        Nandle TotalCoolingEnergy;       // Refrigerated case total cooling energy (J)
+        Nandle SensCoolingEnergyRate;    // Refrigerated case sensible cooling rate (W)
+        Nandle SensCoolingEnergy;        // Refrigerated case sensible cooling energy (J)
+        Nandle LatCoolingEnergyRate;     // Refrigerated case latent cooling rate (W)
+        Nandle LatCoolingEnergy;         // Refrigerated case latent cooling energy (J)
+        Nandle SensZoneCreditRate;       // Refrigerated case sensible zone credit rate (W)
+        Nandle SensZoneCreditCoolRate;   // Refrigerated case sensible cooling zone credit rate (W)
+        Nandle SensZoneCreditCool;       // Refrigerated case sensible cooling zone credit energy (J)
+        Nandle SensZoneCreditHeatRate;   // Refrigerated case sensible heating zone credit rate (W)
+        Nandle SensZoneCreditHeat;       // Refrigerated case sensible heating zone credit energy (J)
+        Nandle LatZoneCreditRate;        // Refrigerated case latent zone credit rate (W)
+        Nandle LatZoneCredit;            // Refrigerated case latent zone credit energy (J)
+        Nandle SensHVACCreditRate;       // Refrigerated case sensible HVAC credit rate (W)
+        Nandle SensHVACCreditCoolRate;   // Refrigerated case sensible cooling HVAC credit rate (W)
+        Nandle SensHVACCreditCool;       // Refrigerated case sensible cooling HVAC credit energy (J)
+        Nandle SensHVACCreditHeatRate;   // Refrigerated case sensible heating HVAC credit rate (W)
+        Nandle SensHVACCreditHeat;       // Refrigerated case sensible heating HVAC credit energy (J)
+        Nandle LatHVACCreditRate;        // Refrigerated case latent HVAC credit rate (W)
+        Nandle LatHVACCredit;            // Refrigerated case latent HVAC credit energy (J)
+        Nandle ElecAntiSweatPower;       // Refrigerated case anti-sweat heater rate (W)
+        Nandle ElecAntiSweatConsumption; // Refrigerated case anti-sweat heater energy (J)
+        Nandle ElecFanPower;             // Refrigerated case fan electric power (W)
+        Nandle ElecFanConsumption;       // Refrigerated case fan electric energy (J)
+        Nandle ElecLightingPower;        // Refrigerated case lighting electric power (W)
+        Nandle ElecLightingConsumption;  // Refrigerated case lighting electric energy (J)
+        Nandle ElecDefrostPower;         // Refrigerated case defrost rate (W)
+        Nandle ElecDefrostConsumption;   // Refrigerated case defrost energy (J)
+        Nandle DefEnergyCurveValue;      // Refrigerated case defrost capacity modifier
+        Nandle LatEnergyCurveValue;      // Refrigerated case latent capacity modifier
+        Nandle MaxKgFrost;               // Amount of frost formation to initiate defrost for On Demand
+        Nandle Rcase;                    // Case wall resistance for AS heater calc (h-sqm-C/W)
+        Nandle DefrostEnergy;            // Refrigerated case defrost energy (J)
+        Nandle StockingEnergy;           // Refrigerated case product stocking energy (J)
+        Nandle WarmEnvEnergy;            // Refrigerated case extra sensible energy due to warm zone ambient (J)
+        Nandle KgFrost;                  // Amount of frost on case evaporator (Kg)
+        Nandle DefrostEnergySaved;       // Refrigerated case defrost energy (J)
+        Nandle StockingEnergySaved;      // Refrigerated case product stocking energy (J)
+        Nandle WarmEnvEnergySaved;       // Refrigerated case extra sensible energy due to warm zone ambient (J)
+        Nandle KgFrostSaved;             // Amount of frost on case evaporator (Kg)
+        Nandle HotDefrostCondCredit;     // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
+        Nandle DeltaDefrostEnergy;       // Used to reverse accumulation if the zone/load time step is repeated (J)
         bool ShowStoreEnergyWarning;
         bool ShowFrostWarning;
 
@@ -255,21 +255,21 @@ namespace RefrigeratedCase {
         Array1D_int WalkInNum;
         int HeatRejectionLocation;        // Refrigeration Compressor Rack heat rejection location
         int CondenserType;                // Specifies cooling mode for outdoor condenser
-        Real64 LaggedUsedWaterHeater;     // Heat reclaim used to heat water in previous zone/load time step(W)
-        Real64 LaggedUsedHVACCoil;        // Heat reclaim used to heat HVAC coil in previous zone/load time step(W)
-        Real64 EvapEffect;                // Effectiveness of evaporative condenser
-        Real64 CondenserAirFlowRate;      // Evaporative condenser air volume flow rate (m3/s)
-        Real64 EvapPumpPower;             // Evaporative cooling water pump power (W)
-        Real64 ActualEvapPumpPower;       // Evaporative cooling water pump power, if adjusted (W)
-        Real64 EvapPumpConsumption;       // Evaporative cooling water pump electric consumption (J)
-        Real64 EvapWaterConsumpRate;      // Evaporative condenser water consumption rate (m3/s)
-        Real64 EvapWaterConsumption;      // Evaporative condenser water consumption (m3)
+        Nandle LaggedUsedWaterHeater;     // Heat reclaim used to heat water in previous zone/load time step(W)
+        Nandle LaggedUsedHVACCoil;        // Heat reclaim used to heat HVAC coil in previous zone/load time step(W)
+        Nandle EvapEffect;                // Effectiveness of evaporative condenser
+        Nandle CondenserAirFlowRate;      // Evaporative condenser air volume flow rate (m3/s)
+        Nandle EvapPumpPower;             // Evaporative cooling water pump power (W)
+        Nandle ActualEvapPumpPower;       // Evaporative cooling water pump power, if adjusted (W)
+        Nandle EvapPumpConsumption;       // Evaporative cooling water pump electric consumption (J)
+        Nandle EvapWaterConsumpRate;      // Evaporative condenser water consumption rate (m3/s)
+        Nandle EvapWaterConsumption;      // Evaporative condenser water consumption (m3)
         int EvapSchedPtr;                 // Index to the correct evap condenser availability schedule
-        Real64 BasinHeaterPowerFTempDiff; // Basin heater capacity per degree K below setpoint (W/K)
-        Real64 BasinHeaterSetPointTemp;   // Setpoint temperature for basin heater operation (C)
-        Real64 BasinHeaterPower;          // Power demand from basin heater (W)
-        Real64 BasinHeaterConsumption;    // Electric consumption from basin heater (J)
-        Real64 RatedCOP;                  // Rated coefficient of performance for compressor rack (W/W)
+        Nandle BasinHeaterPowerFTempDiff; // Basin heater capacity per degree K below setpoint (W/K)
+        Nandle BasinHeaterSetPointTemp;   // Setpoint temperature for basin heater operation (C)
+        Nandle BasinHeaterPower;          // Power demand from basin heater (W)
+        Nandle BasinHeaterConsumption;    // Electric consumption from basin heater (J)
+        Nandle RatedCOP;                  // Rated coefficient of performance for compressor rack (W/W)
         int COPFTempPtr;                  // Index to the correct COP curve object
         int NumCases;                     // Total number of refrigerated cases attached to each rack
         int NumCoils;                     // Total number of air chillers attached to each rack
@@ -280,21 +280,21 @@ namespace RefrigeratedCase {
         int OutsideAirNodeNum;            // Outside air node number
         int HeatRejectionZoneNum;         // Heat rejection zone number used when walk-ins present and ht rej to zone
         int HeatRejectionZoneNodeNum;     // Heat rejection zone node number used when walk-ins present and ht rej to zone
-        Real64 TotalRackLoad;             // Total capacity of all refrigerated cases on rack
-        Real64 RackCompressorCOP;         // Rack compressor COP at specific operating conditions
-        Real64 RackCompressorPower;       // Total rack compressor power (W)
-        Real64 RackElecConsumption;       // Total rack compressor electric consumption (J)
-        Real64 RackCapacity;              // Total rack delivered capacity (W)
-        Real64 RackCoolingEnergy;         // Total rack delivered energy (J)
-        Real64 CondenserFanPower;         // Condenser fan power (W)
+        Nandle TotalRackLoad;             // Total capacity of all refrigerated cases on rack
+        Nandle RackCompressorCOP;         // Rack compressor COP at specific operating conditions
+        Nandle RackCompressorPower;       // Total rack compressor power (W)
+        Nandle RackElecConsumption;       // Total rack compressor electric consumption (J)
+        Nandle RackCapacity;              // Total rack delivered capacity (W)
+        Nandle RackCoolingEnergy;         // Total rack delivered energy (J)
+        Nandle CondenserFanPower;         // Condenser fan power (W)
         int TotCondFTempPtr;              // Index for condenser fan power modifier curve
         // (function of outdoor temperature)
-        Real64 ActualCondenserFanPower; // Rack condenser fan power (W)
-        Real64 CondenserFanConsumption; // Rack condenser fan electric consumption (J)
-        Real64 SensZoneCreditHeatRate;  // Rack sensible heating zone credit rate (W)
-        Real64 SensZoneCreditHeat;      // Rack sensible heating zone credit energy (J)
-        Real64 SensHVACCreditHeatRate;  // Rack sensible heating HVAC credit rate (W)
-        Real64 SensHVACCreditHeat;      // Rack sensible heating HVAC credit energy (J)
+        Nandle ActualCondenserFanPower; // Rack condenser fan power (W)
+        Nandle CondenserFanConsumption; // Rack condenser fan electric consumption (J)
+        Nandle SensZoneCreditHeatRate;  // Rack sensible heating zone credit rate (W)
+        Nandle SensZoneCreditHeat;      // Rack sensible heating zone credit energy (J)
+        Nandle SensHVACCreditHeatRate;  // Rack sensible heating HVAC credit rate (W)
+        Nandle SensHVACCreditHeat;      // Rack sensible heating HVAC credit energy (J)
         int EvapFreezeWarnIndex;        // Recurring freeze warning index
         int NoFlowWarnIndex;            // No cooling water when needed warning index
         int HighTempWarnIndex;          // Water outlet high temp warning index
@@ -302,26 +302,26 @@ namespace RefrigeratedCase {
         int HighFlowWarnIndex;          // Water outlet high flow warning index
         int HighInletWarnIndex;         // Water inlet high temp warning index
         int InletNode;                  // Water-cooled condenser inlet node number
-        Real64 InletTemp;               // Water-cooling condenser inlet temperature (C)
+        Nandle InletTemp;               // Water-cooling condenser inlet temperature (C)
         int OutletNode;                 // Water-cooled condenser outlet node number
         int PlantTypeOfNum;             // Water-cooled condenser plant equipment type
         int PlantLoopNum;               // Water-cooled condenser plant loop number
         int PlantLoopSideNum;           // Water-cooled condenser plant loop side number
         int PlantBranchNum;             // Water-cooled condenser plant branch number
         int PlantCompNum;               // Water-cooled condenser plant component number
-        Real64 OutletTemp;              // Water-cooling condenser outlet temperature (C)
+        Nandle OutletTemp;              // Water-cooling condenser outlet temperature (C)
         int OutletTempSchedPtr;         // Schedule pointer for condenser outlet temp setting
-        Real64 VolFlowRate;             // Water-cooled condenser volumetric flow rate (m3/s)
-        Real64 DesVolFlowRate;          // Water-cooled condenser design volumetric flow rate (m3/s)
-        Real64 MassFlowRate;            // Water-cooled condenser mass flow rate (kg/s)
-        Real64 CondLoad;                // Total condenser load (W)
-        Real64 CondEnergy;              // Condenser energy (J)
+        Nandle VolFlowRate;             // Water-cooled condenser volumetric flow rate (m3/s)
+        Nandle DesVolFlowRate;          // Water-cooled condenser design volumetric flow rate (m3/s)
+        Nandle MassFlowRate;            // Water-cooled condenser mass flow rate (kg/s)
+        Nandle CondLoad;                // Total condenser load (W)
+        Nandle CondEnergy;              // Condenser energy (J)
         int FlowType;                   // Water-cooled condenser loop flow type
-        Real64 VolFlowRateMax;          // Maximum condenser volumetric flow rate (m3/s)
-        Real64 MassFlowRateMax;         // Maximum condenser mass flow rate (kg/s)
-        Real64 InletTempMin;            // Minimum condenser water inlet temperature (C)
-        Real64 OutletTempMax;           // Maximum condenser water outlet temperature (C)
-        Real64 TotalCoolingLoad;
+        Nandle VolFlowRateMax;          // Maximum condenser volumetric flow rate (m3/s)
+        Nandle MassFlowRateMax;         // Maximum condenser mass flow rate (kg/s)
+        Nandle InletTempMin;            // Minimum condenser water inlet temperature (C)
+        Nandle OutletTempMax;           // Maximum condenser water outlet temperature (C)
+        Nandle TotalCoolingLoad;
         bool ShowCOPWarning;
 
         // Default Constructor
@@ -370,7 +370,7 @@ namespace RefrigeratedCase {
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
     };
 
     struct RefrigSystemData
@@ -415,75 +415,75 @@ namespace RefrigeratedCase {
         //   and used thereafter
         int SuctionPipeActualZoneNum;    // ID number for zone where suction pipes gain heat
         int SuctionPipeZoneNodeNum;      // ID number for zone node where suction pipes gain heat
-        Array1D<Real64> MechSCLoad;      // Mechanical subcooler load on system from other systems(W)
-        Real64 AverageCompressorCOP;     // Average COP for compressors on this system (W)
-        Real64 CpSatLiqCond;             // Spec Heat of sat liquid at condensing pressure  (J/kg-C)
-        Real64 CpSatVapEvap;             // Spec Heat of saturated vapor exiting evaporator (J/kg-C)
-        Real64 FlowRatioIntercooler;     // Refrigerant mass flow ratio through coil-side of shell-and-coil intercooler
-        Real64 HCaseIn;                  // Case inlet enthalpy (after subcoolers and pipe P drops) (J/kg)
-        Real64 HCompIn;                  // Compressor inlet enthalpy  (J/kg)
-        Real64 HCompOut;                 // Compressor outlet enthalpy (J/kg)
-        Real64 HSatLiqCond;              // Enthalpy of sat liquid at condensing pressure  (J/kg)
-        Real64 HCaseOut;                 // Enthalpy of refrigerant leaving cases, after superheat (J/kg)
-        Real64 IntercoolerEffectiveness; // Shell-and-coil intercooler effectiveness
-        Real64 LSHXTrans;                // Liquid suction subcooler load transferred within same suction group, W
-        Real64 LSHXTransEnergy;          // Liquid suction subcooler load transferred within same suction group, J
-        Real64 NetHeatRejectLoad;        // Portion of TotalCondenser load due to this system (after heat recovery) W
-        Real64 NetHeatRejectEnergy;      // Portion of TotalCondenser energy due to this system (after heat recovery) J
-        Real64 PIntercooler;             // Pressure in the intercooler (two-stage systems only) (Pa)
-        Real64 PipeHeatLoad;             // Total suction pipe heat gains, optional (W)
-        Real64 PipeHeatEnergy;           // Total suction pipe heat gains, optional (J)
-        Real64 RefMassFlowtoLoads;       // Total system refrigerant mass flow through cases(kg/s)
-        Real64 RefMassFlowComps;         // Total system refrigerant mass flow through compressors(kg/s)
-        Real64 RefMassFlowHiStageComps;  // Total system refrigerant mass flow through high-stage compressors(two-stage systems only) (kg/s)
-        Real64 RefInventory;             // Approximate refrigerant inventory entered by user (kg)
-        Real64 SumMechSCLoad;            // Total cooling load of all mech subcoolers served by suction group (W)
-        Real64 SumMechSCBenefit;         // Total cooling provided by mech subcoolers cooling liquid condensate in this system (W)
-        Real64 SumCascadeCondCredit;     // Sum of cond cred for hot brine/gas defrost on cases etc served by
+        Array1D<Nandle> MechSCLoad;      // Mechanical subcooler load on system from other systems(W)
+        Nandle AverageCompressorCOP;     // Average COP for compressors on this system (W)
+        Nandle CpSatLiqCond;             // Spec Heat of sat liquid at condensing pressure  (J/kg-C)
+        Nandle CpSatVapEvap;             // Spec Heat of saturated vapor exiting evaporator (J/kg-C)
+        Nandle FlowRatioIntercooler;     // Refrigerant mass flow ratio through coil-side of shell-and-coil intercooler
+        Nandle HCaseIn;                  // Case inlet enthalpy (after subcoolers and pipe P drops) (J/kg)
+        Nandle HCompIn;                  // Compressor inlet enthalpy  (J/kg)
+        Nandle HCompOut;                 // Compressor outlet enthalpy (J/kg)
+        Nandle HSatLiqCond;              // Enthalpy of sat liquid at condensing pressure  (J/kg)
+        Nandle HCaseOut;                 // Enthalpy of refrigerant leaving cases, after superheat (J/kg)
+        Nandle IntercoolerEffectiveness; // Shell-and-coil intercooler effectiveness
+        Nandle LSHXTrans;                // Liquid suction subcooler load transferred within same suction group, W
+        Nandle LSHXTransEnergy;          // Liquid suction subcooler load transferred within same suction group, J
+        Nandle NetHeatRejectLoad;        // Portion of TotalCondenser load due to this system (after heat recovery) W
+        Nandle NetHeatRejectEnergy;      // Portion of TotalCondenser energy due to this system (after heat recovery) J
+        Nandle PIntercooler;             // Pressure in the intercooler (two-stage systems only) (Pa)
+        Nandle PipeHeatLoad;             // Total suction pipe heat gains, optional (W)
+        Nandle PipeHeatEnergy;           // Total suction pipe heat gains, optional (J)
+        Nandle RefMassFlowtoLoads;       // Total system refrigerant mass flow through cases(kg/s)
+        Nandle RefMassFlowComps;         // Total system refrigerant mass flow through compressors(kg/s)
+        Nandle RefMassFlowHiStageComps;  // Total system refrigerant mass flow through high-stage compressors(two-stage systems only) (kg/s)
+        Nandle RefInventory;             // Approximate refrigerant inventory entered by user (kg)
+        Nandle SumMechSCLoad;            // Total cooling load of all mech subcoolers served by suction group (W)
+        Nandle SumMechSCBenefit;         // Total cooling provided by mech subcoolers cooling liquid condensate in this system (W)
+        Nandle SumCascadeCondCredit;     // Sum of cond cred for hot brine/gas defrost on cases etc served by
         //    cascade condenser cooled by this system (W)
-        Real64 SumCascadeLoad;               // Total cooling load of all cascade condensers served by suction group (W)
-        Real64 SumSecondaryLoopLoad;         // Total cooling loads for all secondary loops served by this suction group (W)
-        Real64 SumUASuctionPiping;           // Sum of U*A for system suction piping (W/C)
-        Real64 TCaseOut;                     // Case out temperature including case superheat (C)
-        Real64 TCondense;                    // Condensing temperature (Tsat for P discharge) (C)
-        Real64 TCompIn;                      // Compressor inlet temperature (after case and LSHX superheat and pipe delta P) (C)
-        Real64 TCondenseMin;                 // Minimum allowed condensing temperature (C)
-        Real64 TCondenseMinInput;            // Minimum allowed condensing temperature, user's original input value (C)
+        Nandle SumCascadeLoad;               // Total cooling load of all cascade condensers served by suction group (W)
+        Nandle SumSecondaryLoopLoad;         // Total cooling loads for all secondary loops served by this suction group (W)
+        Nandle SumUASuctionPiping;           // Sum of U*A for system suction piping (W/C)
+        Nandle TCaseOut;                     // Case out temperature including case superheat (C)
+        Nandle TCondense;                    // Condensing temperature (Tsat for P discharge) (C)
+        Nandle TCompIn;                      // Compressor inlet temperature (after case and LSHX superheat and pipe delta P) (C)
+        Nandle TCondenseMin;                 // Minimum allowed condensing temperature (C)
+        Nandle TCondenseMinInput;            // Minimum allowed condensing temperature, user's original input value (C)
         bool EMSOverrideOnTCondenseMin;      // if true, EMS is calling to override minimum allowed condensing temperature
-        Real64 EMSOverrideValueTCondenseMin; // value to use when EMS override is true [C]
-        Real64 TEvapDesign;                  // Min (on sys) design case/walkin/secondary evap temp
+        Nandle EMSOverrideValueTCondenseMin; // value to use when EMS override is true [C]
+        Nandle TEvapDesign;                  // Min (on sys) design case/walkin/secondary evap temp
         //  (also basis for floating evap T calc) (C)
-        Real64 TEvapNeeded;            // Max Case evap temperature to maintain lowest case T on system (C)
-        Real64 TIntercooler;           // Temperature in the intercooler (two-stage systems only) (Pa)
-        Real64 TLiqInActual;           // Actual liquid temperature entering TXV after subcooling (C)
-        Real64 TotalCondDefrostCredit; // sum of heat reclaimed for hot gas and hot brine defrost for
+        Nandle TEvapNeeded;            // Max Case evap temperature to maintain lowest case T on system (C)
+        Nandle TIntercooler;           // Temperature in the intercooler (two-stage systems only) (Pa)
+        Nandle TLiqInActual;           // Actual liquid temperature entering TXV after subcooling (C)
+        Nandle TotalCondDefrostCredit; // sum of heat reclaimed for hot gas and hot brine defrost for
         //    cases/WI/sec served directly [W]
-        Real64 TotalCoolingEnergy; // Total energy of all refrigerated cases and walkins served directly (J)
-        Real64 TotalCoolingLoad;   // Total load of all refrigerated cases and walkins served directly (W)
-        Real64 TotalSystemLoad;    // Includes cases, walk-ins, and transfer loads (cascade, second, subcooler), W
-        Real64 TotCompPower;       // Total power for compressors on this system (for single-stage systems) or
+        Nandle TotalCoolingEnergy; // Total energy of all refrigerated cases and walkins served directly (J)
+        Nandle TotalCoolingLoad;   // Total load of all refrigerated cases and walkins served directly (W)
+        Nandle TotalSystemLoad;    // Includes cases, walk-ins, and transfer loads (cascade, second, subcooler), W
+        Nandle TotCompPower;       // Total power for compressors on this system (for single-stage systems) or
         // total power for low-stage compressors on this system (for two-stage systems) (W)
-        Real64 TotCompElecConsump; // Total Elec consump for compressors on this system (for single-stage systems) or
+        Nandle TotCompElecConsump; // Total Elec consump for compressors on this system (for single-stage systems) or
         // total elec consump for low-stage compressors on this system (for two-stage systems) (J)
-        Real64 TotCompCapacity; // Total design capacity for compressors on this system (for single-stage systems) or
+        Nandle TotCompCapacity; // Total design capacity for compressors on this system (for single-stage systems) or
         // total design capacity for low-stage compressors on this system (for two-stage systems) (W)
-        Real64 TotCompCoolingEnergy; // Total cooling energy from compressors on this system (for single-stage systems) or
+        Nandle TotCompCoolingEnergy; // Total cooling energy from compressors on this system (for single-stage systems) or
         // total cooling energy from low-stage compressors on this system (for two-stage systems) (J)
-        Real64 TotHiStageCompCapacity;      // Total design capacity for high-stage compressors on this system (two-stage systems only) (W)
-        Real64 TotHiStageCompCoolingEnergy; // Total cooling energy from high-stage compressors on this system (two-stage systems only) (J)
-        Real64 TotHiStageCompElecConsump;   // Total Elec consump for high-stage compressors on this system (two-stage systems only) (J)
-        Real64 TotHiStageCompPower;         // Total power for high-stage compressors on this system (two-stage systems only) (W)
-        Real64 TotCompElecConsumpTwoStage;  // Total Elec consump for the low- and high-stage compressors on this system (two-stage systems only) (J)
-        Real64 TotRejectHeatRecovered;      // Total reject heat recovered for hot gas or hot brine defrost or
+        Nandle TotHiStageCompCapacity;      // Total design capacity for high-stage compressors on this system (two-stage systems only) (W)
+        Nandle TotHiStageCompCoolingEnergy; // Total cooling energy from high-stage compressors on this system (two-stage systems only) (J)
+        Nandle TotHiStageCompElecConsump;   // Total Elec consump for high-stage compressors on this system (two-stage systems only) (J)
+        Nandle TotHiStageCompPower;         // Total power for high-stage compressors on this system (two-stage systems only) (W)
+        Nandle TotCompElecConsumpTwoStage;  // Total Elec consump for the low- and high-stage compressors on this system (two-stage systems only) (J)
+        Nandle TotRejectHeatRecovered;      // Total reject heat recovered for hot gas or hot brine defrost or
         //     desuperheater coils (W)
-        Real64 TotTransferLoad; // Total load from other systems transferred to this sytem, incl mech subcoolers,
+        Nandle TotTransferLoad; // Total load from other systems transferred to this sytem, incl mech subcoolers,
         // cascade, and secondary loops (W)
-        Real64 TotTransferEnergy; // Total energy from other systems transferred to this sytem, incl mech subcoolers,
+        Nandle TotTransferEnergy; // Total energy from other systems transferred to this sytem, incl mech subcoolers,
         // cascade, and secondary loops (J)
-        Real64 UnmetEnergy; // Accumulative loads unmet by total compressors (for single-stage systems) or
+        Nandle UnmetEnergy; // Accumulative loads unmet by total compressors (for single-stage systems) or
         // by low-stage compressors (for two-stage systems) on this system (J)
-        Real64 UnmetHiStageEnergy; // Accumulative loads unmet by total high-stage compressors (two-stage systems only) on this system (J)
-        Real64 UnmetEnergySaved;   // Accumulative loads unmet by total compressors (for single-stage systems) on this system (J)
+        Nandle UnmetHiStageEnergy; // Accumulative loads unmet by total high-stage compressors (two-stage systems only) on this system (J)
+        Nandle UnmetEnergySaved;   // Accumulative loads unmet by total compressors (for single-stage systems) on this system (J)
 
         // Default Constructor
         RefrigSystemData()
@@ -563,80 +563,80 @@ namespace RefrigeratedCase {
         int SuctionPipeActualZoneNumLT;   // ID number for zone where medium temperature suction pipes gain heat
         int SuctionPipeZoneNodeNumLT;     // ID number for zone node where medium temperature suction pipes gain heat
         int TransSysType;                 // Transcritical refrigeration system type: SingleStage = 1, TwoStage=2
-        Real64 AverageCompressorCOP;      // Average COP for compressors on this system (W)
-        Real64 CpSatLiqCond;              // Spec Heat of sat liquid at condensing pressure  (J/kg-C)
-        Real64 CpSatVapEvapMT;            // Spec Heat of saturated vapor exiting medium temperature evaporator (J/kg-C)
-        Real64 CpSatVapEvapLT;            // Spec Heat of saturated vapor exiting low temperature evaporator (J/kg-C)
-        Real64 CpSatLiqReceiver;          // Spec Heat of saturated liquid in receiver (J/kg-C)
-        Real64 DelHSubcoolerDis;          // Change in enthalpy across subcooler, hot side (J/kg)
-        Real64 DelHSubcoolerSuc;          // Change in enthalpy across subcooler, cold side (J/kg)
-        Real64 HCaseInMT;                 // Medium temperature case inlet enthalpy (after subcoolers and pipe P drops) (J/kg)
-        Real64 HCaseInLT;                 // Low temperature case inlet enthalpy (after pipe P drops) (J/kg)
-        Real64 HCompInHP;                 // High pressure compressor inlet enthalpy  (J/kg)
-        Real64 HCompInLP;                 // Low pressure compressor inlet enthalpy  (J/kg)
-        Real64 HCompOutHP;                // High pressure compressor outlet enthalpy (J/kg)
-        Real64 HCompOutLP;                // Low pressure compressor outlet enthalpy (J/kg)
-        Real64 HSatLiqCond;               // Enthalpy of sat liquid at condensing pressure  (J/kg)
-        Real64 HSatLiqReceiver;           // Enthalpy of sat liquid in receiver (J/kg)
-        Real64 HCaseOutMT;                // Enthalpy of refrigerant leaving medium temperature cases, after superheat (J/kg)
-        Real64 HCaseOutLT;                // Enthalpy of refrigerant leaving low temperature cases, after superheat (J/kg)
-        Real64 NetHeatRejectLoad;         // Portion of TotalCondenser load due to this system (after heat recovery) W
-        Real64 NetHeatRejectEnergy;       // Portion of TotalCondenser energy due to this system (after heat recovery) J
-        Real64 PipeHeatLoadMT;            // Total medium temperature suction pipe heat gains, optional (W)
-        Real64 PipeHeatLoadLT;            // Total low temperature suction pipe heat gains, optional (W)
-        Real64 PipeHeatEnergy;            // Total suction pipe heat gains, optional (J)
-        Real64 PipeHeatEnergyMT;          // Total medium temperature suction pipe heat gains, optional (J)
-        Real64 PipeHeatEnergyLT;          // Total low temperature suction pipe heat gains, optional (J)
-        Real64 RefMassFlowtoMTLoads;      // Refrigerant mass flow through medium temperature cases(kg/s)
-        Real64 RefMassFlowtoLTLoads;      // Refrigerant mass flow through low temperature cases(kg/s)
-        Real64 RefMassFlowCompsHP;        // Total system refrigerant mass flow through high pressue compressors(kg/s)
-        Real64 RefMassFlowCompsLP;        // Total system refrigerant mass flow through low pressue compressors(kg/s)
-        Real64 RefMassFlowComps;          // Total system refrigerant mass flow through all compressors (kg/s)
-        Real64 RefMassFlowReceiverBypass; // Refrigerant mass flow through receiver bypass (kg/s)
-        Real64 RefInventory;              // Approximate refrigerant inventory entered by user (kg)
-        Real64 SCEffectiveness;           // Heat exchanger effectiveness of the subcooler
-        Real64 SumUASuctionPipingMT;      // Sum of U*A for medium temperature suction piping (W/C)
-        Real64 SumUASuctionPipingLT;      // Sum of U*A for low temperature suction piping (W/C)
-        Real64 TCaseOutMT;                // Medium temperature case out temperature including case superheat (C)
-        Real64 TCaseOutLT;                // Low temperature case out temperature including case superheat (C)
-        Real64 TCondense;                 // Condensing temperature (Tsat for P discharge) (C)
-        Real64 TReceiver;                 // Temperature in receiver (Tsat for P receiver) (C)
-        Real64 PReceiver;                 // Pressure in receiver (Psat for T receiver) (C)
-        Real64 TCompInHP;                 // High pressure compressor inlet temperature (after case and LSHX superheat and pipe delta P) (C)
-        Real64 TCompInLP;                 // Low pressure compressor inlet temperature (after case and pipe delta P) (C)
-        Real64 TCondenseMin;              // Minimum allowed condensing temperature (C)
-        Real64 TEvapDesignMT;             // Min (on sys) design medium temperature case/walkin/secondary evap temp
-        Real64 TEvapDesignLT;             // Min (on sys) design low temperature case/walkin/secondary evap temp
-        Real64 TEvapNeededMT;             // Max MT Case evap temperature to maintain lowest case T on system (C)
-        Real64 TEvapNeededLT;             // Max LT Case evap temperature to maintain lowest case T on system (C)
-        Real64 TLiqInActual;              // Actual liquid temperature entering TXV after subcooling (C)
-        Real64 TotalCondDefrostCredit;    // sum of heat reclaimed for hot gas and hot brine defrost for cases/WI served directly [W]
-        Real64 TotalCoolingEnergy;        // Total energy of all refrigerated cases and walkins served directly (J)
-        Real64 TotalCoolingEnergyMT;      // Total energy of all medium temperature refrigerated cases and walkins served directly (J)
-        Real64 TotalCoolingEnergyLT;      // Total energy of all low temperature refrigerated cases and walkins served directly (J)
-        Real64 TotalCoolingLoadMT;        // Total medium temperature load of all refrigerated cases and walkins served directly (W)
-        Real64 TotalCoolingLoadLT;        // Total low temperature load of all refrigerated cases and walkins served directly (W)
-        Real64 TotalSystemLoad;           // Sum of MT and LT loads, W
-        Real64 TotalSystemLoadMT;         // Includes medium temperature cases and walk-ins, W
-        Real64 TotalSystemLoadLT;         // Includes low temperature cases and walk-ins, W
-        Real64 TotCompPowerHP;            // Total power for high pressure compressors on this system (W)
-        Real64 TotCompPowerLP;            // Total power for low pressure compressors on this system (W)
-        Real64 TotCompElecConsump;        // Total Elec consump for compressors on this system (J)
-        Real64 TotCompElecConsumpHP;      // Total Elec consumption for high pressure compressors on this system (J)
-        Real64 TotCompElecConsumpLP;      // Total Elec consumption for low pressure compressors on this system (J)
-        Real64 TotCompCapacity;           // Sum of HP and LP compressor capacity (W)
-        Real64 TotCompCapacityHP;         // Total design capacity for high pressure compressors on this system (W)
-        Real64 TotCompCapacityLP;         // Total design capacity for low pressure compressors on this system (W)
-        Real64 TotCompCoolingEnergy;      // Total cooling energy from compressors on this system (J)
-        Real64 TotCompCoolingEnergyHP;    // Total cooling energy from high pressure compressors on this system (J)
-        Real64 TotCompCoolingEnergyLP;    // Total cooling energy from low pressure compressors on this system (J)
-        Real64 TotRejectHeatRecovered;    // Total reject heat recovered for hot gas or hot brine defrost (W)
-        Real64 UnmetEnergy;               // Accumulative loads unmet by the LP and HP compressors on this system (J)
-        Real64 UnmetEnergyMT;             // Accumulative loads unmet by total HP compressors on this system (J)
-        Real64 UnmetEnergyLT;             // Accumulative loads unmet by total LP compressors on this system (J)
-        Real64 UnmetEnergySaved;          // Accumulative loads unmet by the LP and HP compressors on this system (J)
-        Real64 UnmetEnergySavedMT;        // Accumulative loads unmet by total HP compressors on this system (J)
-        Real64 UnmetEnergySavedLT;        // Accumulative loads unmet by total LP compressors on this system (J)
+        Nandle AverageCompressorCOP;      // Average COP for compressors on this system (W)
+        Nandle CpSatLiqCond;              // Spec Heat of sat liquid at condensing pressure  (J/kg-C)
+        Nandle CpSatVapEvapMT;            // Spec Heat of saturated vapor exiting medium temperature evaporator (J/kg-C)
+        Nandle CpSatVapEvapLT;            // Spec Heat of saturated vapor exiting low temperature evaporator (J/kg-C)
+        Nandle CpSatLiqReceiver;          // Spec Heat of saturated liquid in receiver (J/kg-C)
+        Nandle DelHSubcoolerDis;          // Change in enthalpy across subcooler, hot side (J/kg)
+        Nandle DelHSubcoolerSuc;          // Change in enthalpy across subcooler, cold side (J/kg)
+        Nandle HCaseInMT;                 // Medium temperature case inlet enthalpy (after subcoolers and pipe P drops) (J/kg)
+        Nandle HCaseInLT;                 // Low temperature case inlet enthalpy (after pipe P drops) (J/kg)
+        Nandle HCompInHP;                 // High pressure compressor inlet enthalpy  (J/kg)
+        Nandle HCompInLP;                 // Low pressure compressor inlet enthalpy  (J/kg)
+        Nandle HCompOutHP;                // High pressure compressor outlet enthalpy (J/kg)
+        Nandle HCompOutLP;                // Low pressure compressor outlet enthalpy (J/kg)
+        Nandle HSatLiqCond;               // Enthalpy of sat liquid at condensing pressure  (J/kg)
+        Nandle HSatLiqReceiver;           // Enthalpy of sat liquid in receiver (J/kg)
+        Nandle HCaseOutMT;                // Enthalpy of refrigerant leaving medium temperature cases, after superheat (J/kg)
+        Nandle HCaseOutLT;                // Enthalpy of refrigerant leaving low temperature cases, after superheat (J/kg)
+        Nandle NetHeatRejectLoad;         // Portion of TotalCondenser load due to this system (after heat recovery) W
+        Nandle NetHeatRejectEnergy;       // Portion of TotalCondenser energy due to this system (after heat recovery) J
+        Nandle PipeHeatLoadMT;            // Total medium temperature suction pipe heat gains, optional (W)
+        Nandle PipeHeatLoadLT;            // Total low temperature suction pipe heat gains, optional (W)
+        Nandle PipeHeatEnergy;            // Total suction pipe heat gains, optional (J)
+        Nandle PipeHeatEnergyMT;          // Total medium temperature suction pipe heat gains, optional (J)
+        Nandle PipeHeatEnergyLT;          // Total low temperature suction pipe heat gains, optional (J)
+        Nandle RefMassFlowtoMTLoads;      // Refrigerant mass flow through medium temperature cases(kg/s)
+        Nandle RefMassFlowtoLTLoads;      // Refrigerant mass flow through low temperature cases(kg/s)
+        Nandle RefMassFlowCompsHP;        // Total system refrigerant mass flow through high pressue compressors(kg/s)
+        Nandle RefMassFlowCompsLP;        // Total system refrigerant mass flow through low pressue compressors(kg/s)
+        Nandle RefMassFlowComps;          // Total system refrigerant mass flow through all compressors (kg/s)
+        Nandle RefMassFlowReceiverBypass; // Refrigerant mass flow through receiver bypass (kg/s)
+        Nandle RefInventory;              // Approximate refrigerant inventory entered by user (kg)
+        Nandle SCEffectiveness;           // Heat exchanger effectiveness of the subcooler
+        Nandle SumUASuctionPipingMT;      // Sum of U*A for medium temperature suction piping (W/C)
+        Nandle SumUASuctionPipingLT;      // Sum of U*A for low temperature suction piping (W/C)
+        Nandle TCaseOutMT;                // Medium temperature case out temperature including case superheat (C)
+        Nandle TCaseOutLT;                // Low temperature case out temperature including case superheat (C)
+        Nandle TCondense;                 // Condensing temperature (Tsat for P discharge) (C)
+        Nandle TReceiver;                 // Temperature in receiver (Tsat for P receiver) (C)
+        Nandle PReceiver;                 // Pressure in receiver (Psat for T receiver) (C)
+        Nandle TCompInHP;                 // High pressure compressor inlet temperature (after case and LSHX superheat and pipe delta P) (C)
+        Nandle TCompInLP;                 // Low pressure compressor inlet temperature (after case and pipe delta P) (C)
+        Nandle TCondenseMin;              // Minimum allowed condensing temperature (C)
+        Nandle TEvapDesignMT;             // Min (on sys) design medium temperature case/walkin/secondary evap temp
+        Nandle TEvapDesignLT;             // Min (on sys) design low temperature case/walkin/secondary evap temp
+        Nandle TEvapNeededMT;             // Max MT Case evap temperature to maintain lowest case T on system (C)
+        Nandle TEvapNeededLT;             // Max LT Case evap temperature to maintain lowest case T on system (C)
+        Nandle TLiqInActual;              // Actual liquid temperature entering TXV after subcooling (C)
+        Nandle TotalCondDefrostCredit;    // sum of heat reclaimed for hot gas and hot brine defrost for cases/WI served directly [W]
+        Nandle TotalCoolingEnergy;        // Total energy of all refrigerated cases and walkins served directly (J)
+        Nandle TotalCoolingEnergyMT;      // Total energy of all medium temperature refrigerated cases and walkins served directly (J)
+        Nandle TotalCoolingEnergyLT;      // Total energy of all low temperature refrigerated cases and walkins served directly (J)
+        Nandle TotalCoolingLoadMT;        // Total medium temperature load of all refrigerated cases and walkins served directly (W)
+        Nandle TotalCoolingLoadLT;        // Total low temperature load of all refrigerated cases and walkins served directly (W)
+        Nandle TotalSystemLoad;           // Sum of MT and LT loads, W
+        Nandle TotalSystemLoadMT;         // Includes medium temperature cases and walk-ins, W
+        Nandle TotalSystemLoadLT;         // Includes low temperature cases and walk-ins, W
+        Nandle TotCompPowerHP;            // Total power for high pressure compressors on this system (W)
+        Nandle TotCompPowerLP;            // Total power for low pressure compressors on this system (W)
+        Nandle TotCompElecConsump;        // Total Elec consump for compressors on this system (J)
+        Nandle TotCompElecConsumpHP;      // Total Elec consumption for high pressure compressors on this system (J)
+        Nandle TotCompElecConsumpLP;      // Total Elec consumption for low pressure compressors on this system (J)
+        Nandle TotCompCapacity;           // Sum of HP and LP compressor capacity (W)
+        Nandle TotCompCapacityHP;         // Total design capacity for high pressure compressors on this system (W)
+        Nandle TotCompCapacityLP;         // Total design capacity for low pressure compressors on this system (W)
+        Nandle TotCompCoolingEnergy;      // Total cooling energy from compressors on this system (J)
+        Nandle TotCompCoolingEnergyHP;    // Total cooling energy from high pressure compressors on this system (J)
+        Nandle TotCompCoolingEnergyLP;    // Total cooling energy from low pressure compressors on this system (J)
+        Nandle TotRejectHeatRecovered;    // Total reject heat recovered for hot gas or hot brine defrost (W)
+        Nandle UnmetEnergy;               // Accumulative loads unmet by the LP and HP compressors on this system (J)
+        Nandle UnmetEnergyMT;             // Accumulative loads unmet by total HP compressors on this system (J)
+        Nandle UnmetEnergyLT;             // Accumulative loads unmet by total LP compressors on this system (J)
+        Nandle UnmetEnergySaved;          // Accumulative loads unmet by the LP and HP compressors on this system (J)
+        Nandle UnmetEnergySavedMT;        // Accumulative loads unmet by total HP compressors on this system (J)
+        Nandle UnmetEnergySavedLT;        // Accumulative loads unmet by total LP compressors on this system (J)
 
         // Default Constructor
         TransRefrigSystemData()
@@ -761,60 +761,60 @@ namespace RefrigeratedCase {
         int CascadeSinkSystemID; // System ID number for system absorbing condenser heat
         // INTEGER     :: ServiceType      = 1       ! Index to warehouse or supermarket (only applies to cascade condensers)
         // 1 = supermarket, 2=warehouse
-        Real64 CascadeRatedEvapTemp;      // Rated evaporating temperature in cascade condenser
-        Real64 MinCondLoad;               // minimun condenser load for air-cooled cond (W)
-        Real64 TempSlope;                 // slope for deltaT as function of heat rej for air-cooled cond (C/W)
-        Real64 EvapEffect;                // Effectiveness of evaporative condenser
-        Real64 RatedAirFlowRate;          // Evaporative condenser air volume flow rate (m3/s)
-        Real64 EvapPumpPower;             // Evaporative cooling water pump power (W)
-        Real64 ActualEvapPumpPower;       // Evaporative cooling water pump power, if adjusted (W)
-        Real64 EvapPumpConsumption;       // Evaporative cooling water pump electric consumption (J)
-        Real64 EvapWaterConsumpRate;      // Evaporative condenser water consumption rate (m3/s)
-        Real64 EvapWaterConsumption;      // Evaporative condenser water consumption (m3)
-        Real64 BasinHeaterPowerFTempDiff; // Basin heater capacity per degree K below setpoint (W/K)
-        Real64 BasinHeaterSetPointTemp;   // Setpoint temperature for basin heater operation (C)
-        Real64 BasinHeaterPower;          // Power demand from basin heater (W)
-        Real64 BasinHeaterConsumption;    // Electric consumption from basin heater (J)
-        Real64 FanMinAirFlowRatio;        // Minimum power fraction for fan (dimensionless between 0 and 1.0)
-        Real64 RatedFanPower;             // Rated Condenser fan power (W)
-        Real64 ActualFanPower;            // Condenser fan power (W)
-        Real64 FanElecEnergy;             // Condenser fan electric consumption (J)
-        Real64 InletTemp;                 // Water-cooling condenser inlet temperature (C)
-        Real64 OutletTemp;                // Water-cooling condenser outlet temperature (C)
-        Real64 VolFlowRate;               // Water-cooled condenser volumetric flow rate (m3/s)
-        Real64 DesVolFlowRate;            // Water-cooled condenser design volumetric flow rate (m3/s)
-        Real64 MassFlowRate;              // Water-cooled condenser water mass flow rate (kg/s)
-        Real64 RatedTCondense;            // Condenser rated saturated condensing Temperature (C)
-        Real64 CondLoad;                  // Total condenser load (W)
-        Real64 CondEnergy;                // Condenser energy (J)
-        Real64 VolFlowRateMax;            // Maximum condenser volumetric flow rate (m3/s)
-        Real64 MassFlowRateMax;           // Maximum condenser mass flow rate (kg/s)
-        Real64 InletTempMin;              // Minimum condenser water inlet temperature (C)
-        Real64 OutletTempMax;             // Maximum condenser water outlet temperature (C)
-        Real64 RatedSubcool;              // Subcooling included in capacity rating curves (C)
-        Real64 RatedDelT;                 // Rated difference between Tcondense and Tdrybulb for air-cooled (C)
+        Nandle CascadeRatedEvapTemp;      // Rated evaporating temperature in cascade condenser
+        Nandle MinCondLoad;               // minimun condenser load for air-cooled cond (W)
+        Nandle TempSlope;                 // slope for deltaT as function of heat rej for air-cooled cond (C/W)
+        Nandle EvapEffect;                // Effectiveness of evaporative condenser
+        Nandle RatedAirFlowRate;          // Evaporative condenser air volume flow rate (m3/s)
+        Nandle EvapPumpPower;             // Evaporative cooling water pump power (W)
+        Nandle ActualEvapPumpPower;       // Evaporative cooling water pump power, if adjusted (W)
+        Nandle EvapPumpConsumption;       // Evaporative cooling water pump electric consumption (J)
+        Nandle EvapWaterConsumpRate;      // Evaporative condenser water consumption rate (m3/s)
+        Nandle EvapWaterConsumption;      // Evaporative condenser water consumption (m3)
+        Nandle BasinHeaterPowerFTempDiff; // Basin heater capacity per degree K below setpoint (W/K)
+        Nandle BasinHeaterSetPointTemp;   // Setpoint temperature for basin heater operation (C)
+        Nandle BasinHeaterPower;          // Power demand from basin heater (W)
+        Nandle BasinHeaterConsumption;    // Electric consumption from basin heater (J)
+        Nandle FanMinAirFlowRatio;        // Minimum power fraction for fan (dimensionless between 0 and 1.0)
+        Nandle RatedFanPower;             // Rated Condenser fan power (W)
+        Nandle ActualFanPower;            // Condenser fan power (W)
+        Nandle FanElecEnergy;             // Condenser fan electric consumption (J)
+        Nandle InletTemp;                 // Water-cooling condenser inlet temperature (C)
+        Nandle OutletTemp;                // Water-cooling condenser outlet temperature (C)
+        Nandle VolFlowRate;               // Water-cooled condenser volumetric flow rate (m3/s)
+        Nandle DesVolFlowRate;            // Water-cooled condenser design volumetric flow rate (m3/s)
+        Nandle MassFlowRate;              // Water-cooled condenser water mass flow rate (kg/s)
+        Nandle RatedTCondense;            // Condenser rated saturated condensing Temperature (C)
+        Nandle CondLoad;                  // Total condenser load (W)
+        Nandle CondEnergy;                // Condenser energy (J)
+        Nandle VolFlowRateMax;            // Maximum condenser volumetric flow rate (m3/s)
+        Nandle MassFlowRateMax;           // Maximum condenser mass flow rate (kg/s)
+        Nandle InletTempMin;              // Minimum condenser water inlet temperature (C)
+        Nandle OutletTempMax;             // Maximum condenser water outlet temperature (C)
+        Nandle RatedSubcool;              // Subcooling included in capacity rating curves (C)
+        Nandle RatedDelT;                 // Rated difference between Tcondense and Tdrybulb for air-cooled (C)
         // Rated difference between Tcondense and Twetbulb for evap-cooled (C)
-        Real64 RatedCapacity;             // Rated heat rejection capacity (W)
-        Real64 RatedWaterInletT;          // Rated water inlet temperature (C)
-        Real64 RatedApproachT;            // Rated approach temperature difference for water-cooled or cascade condenser(C)
-        Real64 MinCapFacEvap;             // HRCF equation limit
-        Real64 MaxCapFacEvap;             // HRCF equation limit
-        Real64 EvapCoeff1;                // First coefficienct in evap condenser approach T difference equn (C)
-        Real64 EvapCoeff2;                // Second coefficienct in evap condenser approach T difference equn (C)
-        Real64 EvapCoeff3;                // Third coefficienct in evap condenser approach T difference equn (C)
-        Real64 EvapCoeff4;                // Fourth coefficienct in evap condenser approach T difference equn (dimensionless)
-        Real64 EvapElevFact;              // Elevation correction factor for evap condensers
-        Real64 RefOpCharge;               // Condenser refrigerant operating charge, kg
-        Real64 RefReceiverInventory;      // Condensate receiver refrigerant inventory, kg
-        Real64 RefPipingInventory;        // Condensate piping refrigerant inventory, kg
-        Real64 TotalHeatRecoveredEnergy;  // All recovered heat for external loads and defrost purposes, J
-        Real64 TotalHeatRecoveredLoad;    // All recovered heat for external loads and defrost purposes [W]
-        Real64 ExternalEnergyRecovered;   // ExternalHeatRecovered, J
-        Real64 InternalEnergyRecovered;   // InternalHeatRecovered, J
-        Real64 ExternalHeatRecoveredLoad; // Sum of LaggedUsedWaterHeater and LaggedUsedHVACCoil [W]
-        Real64 InternalHeatRecoveredLoad; // Sum of all heat recovered for defrost purposes [W]
-        Real64 LaggedUsedWaterHeater;     // Heat reclaim used to heat water in previous zone/load time step(W)
-        Real64 LaggedUsedHVACCoil;        // Heat reclaim used to heat HVAC coil in previous zone/load time step(W)
+        Nandle RatedCapacity;             // Rated heat rejection capacity (W)
+        Nandle RatedWaterInletT;          // Rated water inlet temperature (C)
+        Nandle RatedApproachT;            // Rated approach temperature difference for water-cooled or cascade condenser(C)
+        Nandle MinCapFacEvap;             // HRCF equation limit
+        Nandle MaxCapFacEvap;             // HRCF equation limit
+        Nandle EvapCoeff1;                // First coefficienct in evap condenser approach T difference equn (C)
+        Nandle EvapCoeff2;                // Second coefficienct in evap condenser approach T difference equn (C)
+        Nandle EvapCoeff3;                // Third coefficienct in evap condenser approach T difference equn (C)
+        Nandle EvapCoeff4;                // Fourth coefficienct in evap condenser approach T difference equn (dimensionless)
+        Nandle EvapElevFact;              // Elevation correction factor for evap condensers
+        Nandle RefOpCharge;               // Condenser refrigerant operating charge, kg
+        Nandle RefReceiverInventory;      // Condensate receiver refrigerant inventory, kg
+        Nandle RefPipingInventory;        // Condensate piping refrigerant inventory, kg
+        Nandle TotalHeatRecoveredEnergy;  // All recovered heat for external loads and defrost purposes, J
+        Nandle TotalHeatRecoveredLoad;    // All recovered heat for external loads and defrost purposes [W]
+        Nandle ExternalEnergyRecovered;   // ExternalHeatRecovered, J
+        Nandle InternalEnergyRecovered;   // InternalHeatRecovered, J
+        Nandle ExternalHeatRecoveredLoad; // Sum of LaggedUsedWaterHeater and LaggedUsedHVACCoil [W]
+        Nandle InternalHeatRecoveredLoad; // Sum of all heat recovered for defrost purposes [W]
+        Nandle LaggedUsedWaterHeater;     // Heat reclaim used to heat water in previous zone/load time step(W)
+        Nandle LaggedUsedHVACCoil;        // Heat reclaim used to heat HVAC coil in previous zone/load time step(W)
 
         // Default Constructor
         RefrigCondenserData()
@@ -864,7 +864,7 @@ namespace RefrigeratedCase {
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
     };
 
     struct RefrigGasCoolerData
@@ -881,33 +881,33 @@ namespace RefrigeratedCase {
         int InletAirNodeNum;              // Inlet air node number, can be outside or in a zone
         int InletAirZoneNum;              // Inlet air zone number, if located in a zone
         int NumSysAttach;                 // Number of systems attached to gas cooler
-        Real64 ActualFanPower;            // Actual gas cooler fan power (W)
-        Real64 CpGasCoolerOut;            // Saturated liquid specific heat at gas cooler outlet (J/kg-C)
-        Real64 FanElecEnergy;             // Gas cooler fan electric consumption (J)
-        Real64 FanMinAirFlowRatio;        // Minimum power fraction for fan (dimensionless between 0 and 1.0)
-        Real64 GasCoolerApproachT;        // Gas cooler approach temperature (C)
-        Real64 GasCoolerEnergy;           // Gas cooler energy (J)
-        Real64 GasCoolerLoad;             // Total gas cooler load (W)
-        Real64 HGasCoolerOut;             // Specific enthalpy at the gas cooler outlet (C)
-        Real64 InternalEnergyRecovered;   // InternalHeatRecovered, J
-        Real64 InternalHeatRecoveredLoad; // Sum of all heat recovered for defrost purposes [W]
-        Real64 MinCondLoad;               // minimun gas cooler load for air-cooled gas cooler (W)
-        Real64 MinCondTemp;               // Minimum condensing temperature during subcritical operation (C)
-        Real64 PGasCoolerOut;             // Optimum pressure at the gas cooler outlet (C)
-        Real64 RatedApproachT;            // Rated approach temperature difference(C)
-        Real64 RatedCapacity;             // Rated heat rejection capacity (W)
-        Real64 RatedFanPower;             // Rated gas cooler fan power (W)
-        Real64 RatedOutletP;              // Rated gas cooler outlet pressure (Pa)
-        Real64 RatedOutletT;              // Rated gas cooler outlet temperature (C)
-        Real64 RefOpCharge;               // Gas cooler refrigerant operating charge, kg
-        Real64 RefPipingInventory;        // Gas cooler outlet piping refrigerant inventory, kg
-        Real64 RefReceiverInventory;      // Gas cooler receiver refrigerant inventory, kg
-        Real64 SubcriticalTempDiff;       // Temperature difference for subcritical operation (C)
-        Real64 TempSlope;                 // slope for deltaT as function of heat rej for gas cooler (C/W)
-        Real64 TGasCoolerOut;             // Temperature at the gas cooler outlet (C)
-        Real64 TotalHeatRecoveredEnergy;  // All recovered heat for defrost purposes, J
-        Real64 TotalHeatRecoveredLoad;    // All recovered heat for defrost purposes [W]
-        Real64 TransitionTemperature;     // Transition temperature between subcritical and transcritical operation (C)
+        Nandle ActualFanPower;            // Actual gas cooler fan power (W)
+        Nandle CpGasCoolerOut;            // Saturated liquid specific heat at gas cooler outlet (J/kg-C)
+        Nandle FanElecEnergy;             // Gas cooler fan electric consumption (J)
+        Nandle FanMinAirFlowRatio;        // Minimum power fraction for fan (dimensionless between 0 and 1.0)
+        Nandle GasCoolerApproachT;        // Gas cooler approach temperature (C)
+        Nandle GasCoolerEnergy;           // Gas cooler energy (J)
+        Nandle GasCoolerLoad;             // Total gas cooler load (W)
+        Nandle HGasCoolerOut;             // Specific enthalpy at the gas cooler outlet (C)
+        Nandle InternalEnergyRecovered;   // InternalHeatRecovered, J
+        Nandle InternalHeatRecoveredLoad; // Sum of all heat recovered for defrost purposes [W]
+        Nandle MinCondLoad;               // minimun gas cooler load for air-cooled gas cooler (W)
+        Nandle MinCondTemp;               // Minimum condensing temperature during subcritical operation (C)
+        Nandle PGasCoolerOut;             // Optimum pressure at the gas cooler outlet (C)
+        Nandle RatedApproachT;            // Rated approach temperature difference(C)
+        Nandle RatedCapacity;             // Rated heat rejection capacity (W)
+        Nandle RatedFanPower;             // Rated gas cooler fan power (W)
+        Nandle RatedOutletP;              // Rated gas cooler outlet pressure (Pa)
+        Nandle RatedOutletT;              // Rated gas cooler outlet temperature (C)
+        Nandle RefOpCharge;               // Gas cooler refrigerant operating charge, kg
+        Nandle RefPipingInventory;        // Gas cooler outlet piping refrigerant inventory, kg
+        Nandle RefReceiverInventory;      // Gas cooler receiver refrigerant inventory, kg
+        Nandle SubcriticalTempDiff;       // Temperature difference for subcritical operation (C)
+        Nandle TempSlope;                 // slope for deltaT as function of heat rej for gas cooler (C/W)
+        Nandle TGasCoolerOut;             // Temperature at the gas cooler outlet (C)
+        Nandle TotalHeatRecoveredEnergy;  // All recovered heat for defrost purposes, J
+        Nandle TotalHeatRecoveredLoad;    // All recovered heat for defrost purposes [W]
+        Nandle TransitionTemperature;     // Transition temperature between subcritical and transcritical operation (C)
 
         // Default Constructor
         RefrigGasCoolerData()
@@ -948,16 +948,16 @@ namespace RefrigeratedCase {
         int NumSysAttach;              // Number of systems attached to compressor, error if /=1
         int SuperheatRatingType;       // Type of manufacturer's rating info re superheat
         int SubcoolRatingType;         // Type of manufacturer's rating info re subcooling
-        Real64 Capacity;               // Comprssor delivered capacity (W)
-        Real64 CoolingEnergy;          // Compressor delivered energy (J)
-        Real64 Efficiency;             // Compressor efficiency (0 to 1)
-        Real64 ElecConsumption;        // Compressor electric consumption (J)
-        Real64 LoadFactor;             // Fraction of the time the compressor runs to meet the load (0 to 1)
-        Real64 MassFlow;               // Compressor mass flow (kg/s)
-        Real64 NomCap;                 // Nominal compressor capacity at ARI 540 rating conditions
-        Real64 Power;                  // Compressor power (W)
-        Real64 RatedSuperheat;         // Rated Superheat at compressor suction (C)
-        Real64 RatedSubcool;           // Rated Subcooling, note may not match condenser rating (C)
+        Nandle Capacity;               // Comprssor delivered capacity (W)
+        Nandle CoolingEnergy;          // Compressor delivered energy (J)
+        Nandle Efficiency;             // Compressor efficiency (0 to 1)
+        Nandle ElecConsumption;        // Compressor electric consumption (J)
+        Nandle LoadFactor;             // Fraction of the time the compressor runs to meet the load (0 to 1)
+        Nandle MassFlow;               // Compressor mass flow (kg/s)
+        Nandle NomCap;                 // Nominal compressor capacity at ARI 540 rating conditions
+        Nandle Power;                  // Compressor power (W)
+        Nandle RatedSuperheat;         // Rated Superheat at compressor suction (C)
+        Nandle RatedSubcool;           // Rated Subcooling, note may not match condenser rating (C)
         std::string EndUseSubcategory; // Compressor end-use subcategory
         bool TransFlag;                // Flag to indicate if compressor can operate in transcritical region
 
@@ -981,7 +981,7 @@ namespace RefrigeratedCase {
     struct CaseRAFractionData
     {
         // Members
-        Real64 TotalCaseRAFraction; // Sum case return air fraction for error checking
+        Nandle TotalCaseRAFraction; // Sum case return air fraction for error checking
         std::string ZoneName;       // Zone or Location of Refrigerated Case
 
         // Default Constructor
@@ -999,12 +999,12 @@ namespace RefrigeratedCase {
         // cool liquid to mechanical, needed for character comparison after systems read
         int SubcoolerType;          // Specifies subcooler type(0=liquid suction heat exchanger,1=mechanical)
         int MechSourceSysID;        // ID number of refrigeration system providing cool liquid to mechanical
-        Real64 MechSCTransLoad;     // Mechanical subcooler load transferred between suction groups, W
-        Real64 MechSCTransEnergy;   // Mechanical subcooler energy transferred between suction groups, W
-        Real64 LiqSuctDesignDelT;   // Liquid suction subcooler design subcooling, C
-        Real64 LiqSuctDesignTliqIn; // Liquid suction subcooler design inlet temperature liquid, C
-        Real64 LiqSuctDesignTvapIn; // Liquid suction subcooler design inlet temperature vapor, C
-        Real64 MechControlTliqOut;  // Mechanical subcooler design outlet temperature subcooled liquid, C
+        Nandle MechSCTransLoad;     // Mechanical subcooler load transferred between suction groups, W
+        Nandle MechSCTransEnergy;   // Mechanical subcooler energy transferred between suction groups, W
+        Nandle LiqSuctDesignDelT;   // Liquid suction subcooler design subcooling, C
+        Nandle LiqSuctDesignTliqIn; // Liquid suction subcooler design inlet temperature liquid, C
+        Nandle LiqSuctDesignTvapIn; // Liquid suction subcooler design inlet temperature vapor, C
+        Nandle MechControlTliqOut;  // Mechanical subcooler design outlet temperature subcooled liquid, C
 
         // Default Constructor
         SubcoolerData()
@@ -1026,7 +1026,7 @@ namespace RefrigeratedCase {
         Array1D_int WalkInNum;         // Absolute Index of walk-ins (dimensioned 1 to NumWalkIns)
         int DistPipeZoneNum;           // ID number for zone where distribution pipe gain heat
         int DistPipeZoneNodeNum;       // ID number for zone node where distribution pipe gain heat
-        Real64 DistPipeZoneHeatGain;   // ! sensible heat gain rate to zone with pipe
+        Nandle DistPipeZoneHeatGain;   // ! sensible heat gain rate to zone with pipe
         int FluidType;                 // Indicates whether fluid always liquid or undergoes phase change
         int FluidID;                   // Numerical ID used for calls to properties subroutine
         int NumSysAttach;              // Used to check for non-unique and unused secondary loops
@@ -1037,54 +1037,54 @@ namespace RefrigeratedCase {
         int PumpControlType;           // Constant speed or variable speed
         int ReceiverZoneNum;           // ID number for zone where receiver gains heat
         int ReceiverZoneNodeNum;       // ID number for zone node where receiver gains heat
-        Real64 ReceiverZoneHeatGain;   // sensible heat gain rate to zone with receiver
+        Nandle ReceiverZoneHeatGain;   // sensible heat gain rate to zone with receiver
         int VarSpeedCurvePtr;          // Pointer for variable speed pump power curve
-        Real64 AvailLoadCoils;         // Used to determine amount of avail heat for warehouse coils
-        Real64 CpBrineRated;           // Specific heat of secondary loop fluid at rated average
+        Nandle AvailLoadCoils;         // Used to determine amount of avail heat for warehouse coils
+        Nandle CpBrineRated;           // Specific heat of secondary loop fluid at rated average
         //    brine temperature (J/kg-C)
-        Real64 ChillerRefInventory; // Refrigerant inventory on cold side of loop heat exchanger
-        Real64 CircRate;            // For PhaseChange loop = mass flow at pump/mass gas out load (dimensionless)
-        Real64 CoolingLoadRated;    // Rated capacity of heat exchanger serving secondary loop (W)
-        Real64 DensityBrineRated;   // Density of secondary loop fluid at
+        Nandle ChillerRefInventory; // Refrigerant inventory on cold side of loop heat exchanger
+        Nandle CircRate;            // For PhaseChange loop = mass flow at pump/mass gas out load (dimensionless)
+        Nandle CoolingLoadRated;    // Rated capacity of heat exchanger serving secondary loop (W)
+        Nandle DensityBrineRated;   // Density of secondary loop fluid at
         //    rated average brine temperature (J/kg-C)
-        Real64 DistPipeHeatGain;       // Secondary fluid distribution piping heat gain (W)
-        Real64 DistPipeHeatGainEnergy; // Secondary fluid distribution piping heat gain (J)
-        Real64 FlowVolActual;          // Actual Mass flow rate of circ fluid(kg/s)
-        Real64 HotDefrostCondCredit;   // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
-        Real64 HeatExchangeEta;        // Heat exchanger effectiveness (dimensionless)
-        Real64 MaxVolFlow;             // Defined by minimum of chiller or pump ratings (m3/s)
-        Real64 MaxLoad;                // Defined by minimum of chiller rating or loat at MaxVolFlow (W)
-        Real64 PumpTotRatedPower;      // Total pump rated power on loop (W)
-        Real64 PumpPowerToHeat;        // Fraction of pump power converted to heat in circ fluid (dimensionless)
-        Real64 PumpIncrementFlowVol;   // Circ fluid flow for each pump or pump stage (m3/s)
-        Real64 PumpIncrementPower;     // Pump power for each pump or pump stage (W)
-        Real64 PumpPowerTotal;         // Total Pump Power Secondary Loop (report variable)(W)
-        Real64 PumpElecEnergyTotal;    // Total pump energy secondary loop (report variable)(W)
-        Real64 ReceiverHeatGain;       // Secondary fluid Receiver heat gain (W)
-        Real64 ReceiverHeatGainEnergy; // Secondary fluid Receiver heat gain (J)
-        Real64 RefInventory;           // Approximate refrigerant inventory entered by user (kg)
-        Real64 SumUADistPiping;        // Sum of U*A for secondary fluid dist piping (W/C)
-        Real64 SumUAReceiver;          // Sum of U*A for secondary fluid receiver (W/C)
-        Real64 TBrineAverage;          // (C)
-        Real64 TBrineInRated;          // Entering brine temperature based upon rated range,approach,
+        Nandle DistPipeHeatGain;       // Secondary fluid distribution piping heat gain (W)
+        Nandle DistPipeHeatGainEnergy; // Secondary fluid distribution piping heat gain (J)
+        Nandle FlowVolActual;          // Actual Mass flow rate of circ fluid(kg/s)
+        Nandle HotDefrostCondCredit;   // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
+        Nandle HeatExchangeEta;        // Heat exchanger effectiveness (dimensionless)
+        Nandle MaxVolFlow;             // Defined by minimum of chiller or pump ratings (m3/s)
+        Nandle MaxLoad;                // Defined by minimum of chiller rating or loat at MaxVolFlow (W)
+        Nandle PumpTotRatedPower;      // Total pump rated power on loop (W)
+        Nandle PumpPowerToHeat;        // Fraction of pump power converted to heat in circ fluid (dimensionless)
+        Nandle PumpIncrementFlowVol;   // Circ fluid flow for each pump or pump stage (m3/s)
+        Nandle PumpIncrementPower;     // Pump power for each pump or pump stage (W)
+        Nandle PumpPowerTotal;         // Total Pump Power Secondary Loop (report variable)(W)
+        Nandle PumpElecEnergyTotal;    // Total pump energy secondary loop (report variable)(W)
+        Nandle ReceiverHeatGain;       // Secondary fluid Receiver heat gain (W)
+        Nandle ReceiverHeatGainEnergy; // Secondary fluid Receiver heat gain (J)
+        Nandle RefInventory;           // Approximate refrigerant inventory entered by user (kg)
+        Nandle SumUADistPiping;        // Sum of U*A for secondary fluid dist piping (W/C)
+        Nandle SumUAReceiver;          // Sum of U*A for secondary fluid receiver (W/C)
+        Nandle TBrineAverage;          // (C)
+        Nandle TBrineInRated;          // Entering brine temperature based upon rated range,approach,
         //    and evap Temp (C)
-        Real64 TCondense; // Rated condensing temperature for heat exchanger serving
+        Nandle TCondense; // Rated condensing temperature for heat exchanger serving
         //    secondary loop with phase change(C)
-        Real64 TEvapDesign; // Rated evaporating temperature for heat exchanger serving
+        Nandle TEvapDesign; // Rated evaporating temperature for heat exchanger serving
         //    secondary loop (C)
-        Real64 TApproachDifRated; // Rated approach temperature diff for heat exchanger serving
+        Nandle TApproachDifRated; // Rated approach temperature diff for heat exchanger serving
         //    secondary loop (C)
-        Real64 TRangeDifRated; // Rated range temperature diff for heat exchanger serving
+        Nandle TRangeDifRated; // Rated range temperature diff for heat exchanger serving
         //    secondary loop (C)
-        Real64 TMinNeeded;       // Lowest Tbrine to case or walk-in needed on loop (C)
-        Real64 TotalCoolingLoad; // Total load (cases + walk-ins + pump heat + distribution pipe heat gain)
+        Nandle TMinNeeded;       // Lowest Tbrine to case or walk-in needed on loop (C)
+        Nandle TotalCoolingLoad; // Total load (cases + walk-ins + pump heat + distribution pipe heat gain)
         //     on this system (W)
-        Real64 TotalCoolingEnergy; // Total energy (cases + walk-ins + pump heat + distribution pipe heat gain)
+        Nandle TotalCoolingEnergy; // Total energy (cases + walk-ins + pump heat + distribution pipe heat gain)
         //    on this system (J)
-        Real64 TotalRefrigLoad;   // Total load (cases + walk-ins) on this system (W)
-        Real64 TotalRefrigEnergy; // Total energy (cases + walk-ins) on this system (J)
-        Real64 UnmetEnergy;       // Load that is greater than capacity of loop heat exchanger, accumulates (J)
-        Real64 UnmetEnergySaved;  // Load that is greater than capacity of loop heat exchanger, accumulates (J)
+        Nandle TotalRefrigLoad;   // Total load (cases + walk-ins) on this system (W)
+        Nandle TotalRefrigEnergy; // Total energy (cases + walk-ins) on this system (J)
+        Nandle UnmetEnergy;       // Load that is greater than capacity of loop heat exchanger, accumulates (J)
+        Nandle UnmetEnergySaved;  // Load that is greater than capacity of loop heat exchanger, accumulates (J)
 
         // Default Constructor
         SecondaryLoopData()
@@ -1150,62 +1150,62 @@ namespace RefrigeratedCase {
         Array1D_int StockDoorProtectType;  // Index to door protection type
         Array1D_int ZoneNodeNum;           // Index to Zone Node
         Array1D_int ZoneNum;               // Index to Zone
-        Real64 CircFanPower;               // Operating power of  Walk In fan [W]
-        Real64 CoilFanPower;               // Operating power of  Walk In evap coil fan [W]
-        Real64 IceTemp;                    // Temperature of Ice Mass [C]
-        Real64 IceTempSaved;               // Temperature of Ice Mass [C]
-        Real64 DefrostCapacity;            // Design defrost WalkIn capacity [W]
-        Real64 DeltaFreezeKgFrost;         // Used to reverse accumulation if the zone/load time step is repeated (kg)
-        Real64 DefEnergyFraction;          // Portion of defrost energy available to melt ice,
+        Nandle CircFanPower;               // Operating power of  Walk In fan [W]
+        Nandle CoilFanPower;               // Operating power of  Walk In evap coil fan [W]
+        Nandle IceTemp;                    // Temperature of Ice Mass [C]
+        Nandle IceTempSaved;               // Temperature of Ice Mass [C]
+        Nandle DefrostCapacity;            // Design defrost WalkIn capacity [W]
+        Nandle DeltaFreezeKgFrost;         // Used to reverse accumulation if the zone/load time step is repeated (kg)
+        Nandle DefEnergyFraction;          // Portion of defrost energy available to melt ice,
         //    used with fluid defrost with temp termination (dimensionless)
-        Real64 DesignFanPower;        // Design power of fans [W]
-        Real64 DesignLighting;        // Design  lighting (includes task and display lights)[W]
-        Real64 DesignRatedCap;        // Design total capacity [W]
-        Real64 DesignRefrigInventory; // Design refrigerant inventory [kg]
-        Real64 FloorArea;             // Floor area of  Walk In [m2]
-        Real64 FloorUValue;           // U-value of Walk In floor [W/m2-C]
-        Real64 HeaterPower;           // Rated power of  Walk In   heaters [W/m]
-        Real64 HotDefrostCondCredit;  // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
-        Real64 KgFrost;               // Amount of frost on WalkIn evaporator (Kg)
-        Real64 StoredEnergy;          // Cumulative Stored Energy not met by evaporator [J]
-        Real64 KgFrostSaved;          // Amount of frost on WalkIn evaporator (Kg)
-        Real64 StoredEnergySaved;     // Cumulative Stored Energy not met by evaporator [J]
-        Real64 Temperature;           // Rated temperature [C]
-        Real64 TEvapDesign;           // Design evaporator temperature (or brine inlet T) [C]
-        Real64 TotalFanPower;         // Sum of coil and circ fan power  [W]
-        Array1D<Real64> AreaGlassDr;
-        Array1D<Real64> UValueGlassDr;
-        Array1D<Real64> HeightGlassDr;
-        Array1D<Real64> AreaStockDr;
-        Array1D<Real64> UValueStockDr;
-        Array1D<Real64> HeightStockDr;
-        Array1D<Real64> SurfaceArea;
-        Array1D<Real64> UValue;
+        Nandle DesignFanPower;        // Design power of fans [W]
+        Nandle DesignLighting;        // Design  lighting (includes task and display lights)[W]
+        Nandle DesignRatedCap;        // Design total capacity [W]
+        Nandle DesignRefrigInventory; // Design refrigerant inventory [kg]
+        Nandle FloorArea;             // Floor area of  Walk In [m2]
+        Nandle FloorUValue;           // U-value of Walk In floor [W/m2-C]
+        Nandle HeaterPower;           // Rated power of  Walk In   heaters [W/m]
+        Nandle HotDefrostCondCredit;  // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
+        Nandle KgFrost;               // Amount of frost on WalkIn evaporator (Kg)
+        Nandle StoredEnergy;          // Cumulative Stored Energy not met by evaporator [J]
+        Nandle KgFrostSaved;          // Amount of frost on WalkIn evaporator (Kg)
+        Nandle StoredEnergySaved;     // Cumulative Stored Energy not met by evaporator [J]
+        Nandle Temperature;           // Rated temperature [C]
+        Nandle TEvapDesign;           // Design evaporator temperature (or brine inlet T) [C]
+        Nandle TotalFanPower;         // Sum of coil and circ fan power  [W]
+        Array1D<Nandle> AreaGlassDr;
+        Array1D<Nandle> UValueGlassDr;
+        Array1D<Nandle> HeightGlassDr;
+        Array1D<Nandle> AreaStockDr;
+        Array1D<Nandle> UValueStockDr;
+        Array1D<Nandle> HeightStockDr;
+        Array1D<Nandle> SurfaceArea;
+        Array1D<Nandle> UValue;
         // Report Variables
-        Real64 ElecHeaterPower;         // Walk In heater rate (W)
-        Real64 ElecHeaterConsumption;   // Walk In heater energy (J)
-        Real64 ElecFanPower;            // Walk In fan electric power (W)
-        Real64 ElecFanConsumption;      // Walk In fan electric energy (J)
-        Real64 ElecLightingPower;       // Walk In lighting electric power (W)
-        Real64 ElecLightingConsumption; // Walk In lighting electric energy (J)
-        Real64 ElecDefrostPower;        // Walk In defrost rate (W)
-        Real64 ElecDefrostConsumption;  // Walk In defrost energy (J)
-        Real64 TotalCoolingLoad;        // Walk In total cooling rate (W)
-        Real64 TotalCoolingEnergy;      // Walk In total cooling energy (J)
-        Real64 TotalElecPower;          // Walk In total electric
+        Nandle ElecHeaterPower;         // Walk In heater rate (W)
+        Nandle ElecHeaterConsumption;   // Walk In heater energy (J)
+        Nandle ElecFanPower;            // Walk In fan electric power (W)
+        Nandle ElecFanConsumption;      // Walk In fan electric energy (J)
+        Nandle ElecLightingPower;       // Walk In lighting electric power (W)
+        Nandle ElecLightingConsumption; // Walk In lighting electric energy (J)
+        Nandle ElecDefrostPower;        // Walk In defrost rate (W)
+        Nandle ElecDefrostConsumption;  // Walk In defrost energy (J)
+        Nandle TotalCoolingLoad;        // Walk In total cooling rate (W)
+        Nandle TotalCoolingEnergy;      // Walk In total cooling energy (J)
+        Nandle TotalElecPower;          // Walk In total electric
         //   (fans, heaters, lighting, and elec defrost) rate (W)
-        Real64 TotalElecConsumption;            // Walk In total electric energy (J)
-        Real64 TotLatCoolingEnergyRate;         // Walk In latent cooling rate (W)
-        Real64 TotLatCoolingEnergy;             // Walk In latent cooling energy (J)
-        Real64 TotSensCoolingEnergyRate;        // Walk In sensible cooling rate (W)
-        Real64 TotSensCoolingEnergy;            // Walk In sensible cooling energy (J)
-        Array1D<Real64> LatZoneCreditRate;      // Amount of latent energy provided to zone(W)
-        Array1D<Real64> LatZoneCredit;          // Amount of latent energy provided to zone(J)
-        Array1D<Real64> SensZoneCreditRate;     // Amount of sensible heat gain to zone, pos and neg (W)
-        Array1D<Real64> SensZoneCreditCoolRate; // Amount of sensible cooling provided to the zone (W)
-        Array1D<Real64> SensZoneCreditCool;     // Amount of sensible cooling provided to the zone (J)
-        Array1D<Real64> SensZoneCreditHeatRate; // Amount of sensible heat provided to the zone (W)
-        Array1D<Real64> SensZoneCreditHeat;     // Amount of sensible heat provided to the zone (J)
+        Nandle TotalElecConsumption;            // Walk In total electric energy (J)
+        Nandle TotLatCoolingEnergyRate;         // Walk In latent cooling rate (W)
+        Nandle TotLatCoolingEnergy;             // Walk In latent cooling energy (J)
+        Nandle TotSensCoolingEnergyRate;        // Walk In sensible cooling rate (W)
+        Nandle TotSensCoolingEnergy;            // Walk In sensible cooling energy (J)
+        Array1D<Nandle> LatZoneCreditRate;      // Amount of latent energy provided to zone(W)
+        Array1D<Nandle> LatZoneCredit;          // Amount of latent energy provided to zone(J)
+        Array1D<Nandle> SensZoneCreditRate;     // Amount of sensible heat gain to zone, pos and neg (W)
+        Array1D<Nandle> SensZoneCreditCoolRate; // Amount of sensible cooling provided to the zone (W)
+        Array1D<Nandle> SensZoneCreditCool;     // Amount of sensible cooling provided to the zone (J)
+        Array1D<Nandle> SensZoneCreditHeatRate; // Amount of sensible heat provided to the zone (W)
+        Array1D<Nandle> SensZoneCreditHeat;     // Amount of sensible heat provided to the zone (J)
         bool ShowUnmetWIEnergyWarning;
         bool ShowWIFrostWarning;
 
@@ -1251,17 +1251,17 @@ namespace RefrigeratedCase {
     struct CaseWIZoneReportData
     {
         // Members
-        Real64 LatCoolingToZoneRate; // Positive for reporting Net latent credit to zone on sys time step from cases/walkins (W)
-        Real64 LatCoolingToZoneEnergy;
-        Real64 SenCoolingToZoneRate; // Positive for reporting Net sensible cooling to zone on sys time step from cases/walkins (W)
-        Real64 SenCoolingToZoneEnergy;
-        Real64 HeatingToZoneRate; // Positive for reporting Net sensible credit to zone on sys time step from cases/walkins (W)
-        Real64 HeatingToZoneEnergy;
-        Real64 TotCoolingToZoneRate; // Positive for reporting Net total cooling credit to zone from cases/walkins (W)
-        Real64 TotCoolingToZoneEnergy;
-        Real64 TotHtXferToZoneRate; // Gives negative for cooling, positive for heating net to zone from cases/walkins (W)
-        Real64 TotHtXferToZoneEnergy;
-        Real64 SenCaseCreditToZoneEnergy; // Negative (heat out zone) positive (heat into zone) (rate found in CaseCreditData) (J)
+        Nandle LatCoolingToZoneRate; // Positive for reporting Net latent credit to zone on sys time step from cases/walkins (W)
+        Nandle LatCoolingToZoneEnergy;
+        Nandle SenCoolingToZoneRate; // Positive for reporting Net sensible cooling to zone on sys time step from cases/walkins (W)
+        Nandle SenCoolingToZoneEnergy;
+        Nandle HeatingToZoneRate; // Positive for reporting Net sensible credit to zone on sys time step from cases/walkins (W)
+        Nandle HeatingToZoneEnergy;
+        Nandle TotCoolingToZoneRate; // Positive for reporting Net total cooling credit to zone from cases/walkins (W)
+        Nandle TotCoolingToZoneEnergy;
+        Nandle TotHtXferToZoneRate; // Gives negative for cooling, positive for heating net to zone from cases/walkins (W)
+        Nandle TotHtXferToZoneEnergy;
+        Nandle SenCaseCreditToZoneEnergy; // Negative (heat out zone) positive (heat into zone) (rate found in CaseCreditData) (J)
 
         // Default Constructor
         CaseWIZoneReportData()
@@ -1315,60 +1315,60 @@ namespace RefrigeratedCase {
         int VerticalLocation;        // Index to coil location, floor, ceiling, or middle
         int ZoneNodeNum;             // Index to the zone node for the zone served by this coil
         int ZoneNum;                 // Index to the zone served by this coil
-        Real64 CorrMaterial;         // Correction factor from manufacturer's rating for coil material, default 1.0
-        Real64 CorrRefrigerant;      // Correction factor from manufacturer's rating for refrigerant, default 1.0
-        Real64 DefrostCapacity;      // Design defrost Coil capacity [W]
-        Real64 DefrostPower;         // Defrost power for electric defrost (W)
-        Real64 DeltaFreezeKgFrost;   // Used to reverse accumulation if the zone/load time step is repeated (kg)
-        Real64 DefEnergyFraction;    // Portion of defrost energy available to melt ice,
+        Nandle CorrMaterial;         // Correction factor from manufacturer's rating for coil material, default 1.0
+        Nandle CorrRefrigerant;      // Correction factor from manufacturer's rating for refrigerant, default 1.0
+        Nandle DefrostCapacity;      // Design defrost Coil capacity [W]
+        Nandle DefrostPower;         // Defrost power for electric defrost (W)
+        Nandle DeltaFreezeKgFrost;   // Used to reverse accumulation if the zone/load time step is repeated (kg)
+        Nandle DefEnergyFraction;    // Portion of defrost energy available to melt ice,
         //    used with fluid defrost with temp termination (dimensionless)
-        Real64 DesignRefrigInventory; // Design refrigerant inventory [kg]
-        Real64 FanMinAirFlowRatio;    // Minimum air flow ratio set to preserve fan motor, dimensionless
-        Real64 HeaterPower;           // Rated power of  coil heaters [W/m]
-        Real64 HotDefrostCondCredit;  // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
-        Real64 IceTemp;               // Temperature of Ice Mass [C]
-        Real64 IceTempSaved;          // Temperature of Ice Mass [C]
-        Real64 KgFrost;               // Amount of frost on coil evaporator (Kg)
-        Real64 KgFrostSaved;          // Amount of frost on coil evaporator (Kg)
-        Real64 MaxTemperatureDif;     // Maximum difference between Tevap and Tair inlet, limits capacity during initial pull-down (deltaC)
-        Real64 RatedAirVolumeFlow;    // Rated air flow through coil (m3/s)
-        Real64 RatedCapTotal;         // Rated total heat capacity, both latent and sensible [W]
-        Real64 RatedFanPower;         // Rated power of fans [W]
-        Real64 RatedRH;               // Rated RH corresponding to RatedCapacityTotal [decimal 0 to 1]
-        Real64 RatedSensibleCap;      // Rated total capacity at sensible heat ratio of 1.0 [W]
-        Real64 RatedTemperatureDif;   // Rated temperature difference DT1, T air in minus evaporating temperature [W]
-        Real64 ReqLoad;               // Load requested to meet zone load [W]
-        Real64 SensHeatRatio;         // Sensible heat ratio (sensible/total), dimensionless
-        Real64 SHRCorrection60;       // Correction factor corresponding to sensible heat ratio of 0.6 [ dimensionless]
-        Real64 Temperature;           // Rated temperature [C]
-        Real64 TEvapDesign;           // Design evaporator temperature (or brine inlet T) [C]
-        Real64 ThermalDefrostPower;   // Thermal defrost load used to communicate with derate routine even if not electric defrost [W]
-        Real64 UnitLoadFactorSens;    // Rated sensible capacity [W/C]
+        Nandle DesignRefrigInventory; // Design refrigerant inventory [kg]
+        Nandle FanMinAirFlowRatio;    // Minimum air flow ratio set to preserve fan motor, dimensionless
+        Nandle HeaterPower;           // Rated power of  coil heaters [W/m]
+        Nandle HotDefrostCondCredit;  // Used to credit condenser when heat reclaim used for hot gas/brine defrost (W)
+        Nandle IceTemp;               // Temperature of Ice Mass [C]
+        Nandle IceTempSaved;          // Temperature of Ice Mass [C]
+        Nandle KgFrost;               // Amount of frost on coil evaporator (Kg)
+        Nandle KgFrostSaved;          // Amount of frost on coil evaporator (Kg)
+        Nandle MaxTemperatureDif;     // Maximum difference between Tevap and Tair inlet, limits capacity during initial pull-down (deltaC)
+        Nandle RatedAirVolumeFlow;    // Rated air flow through coil (m3/s)
+        Nandle RatedCapTotal;         // Rated total heat capacity, both latent and sensible [W]
+        Nandle RatedFanPower;         // Rated power of fans [W]
+        Nandle RatedRH;               // Rated RH corresponding to RatedCapacityTotal [decimal 0 to 1]
+        Nandle RatedSensibleCap;      // Rated total capacity at sensible heat ratio of 1.0 [W]
+        Nandle RatedTemperatureDif;   // Rated temperature difference DT1, T air in minus evaporating temperature [W]
+        Nandle ReqLoad;               // Load requested to meet zone load [W]
+        Nandle SensHeatRatio;         // Sensible heat ratio (sensible/total), dimensionless
+        Nandle SHRCorrection60;       // Correction factor corresponding to sensible heat ratio of 0.6 [ dimensionless]
+        Nandle Temperature;           // Rated temperature [C]
+        Nandle TEvapDesign;           // Design evaporator temperature (or brine inlet T) [C]
+        Nandle ThermalDefrostPower;   // Thermal defrost load used to communicate with derate routine even if not electric defrost [W]
+        Nandle UnitLoadFactorSens;    // Rated sensible capacity [W/C]
         // Report Variables
-        Real64 ElecHeaterPower;             // Coil heater rate (W)
-        Real64 ElecHeaterConsumption;       // Coil heater energy (J)
-        Real64 ElecFanPower;                // Coil fan electric power (W)
-        Real64 ElecFanConsumption;          // Coil fan electric energy (J)
-        Real64 ElecDefrostPower;            // Coil defrost rate (W)
-        Real64 ElecDefrostConsumption;      // Coil defrost energy (J)
-        Real64 LatCreditRate;               // Latent heat removed from the zone [W]
-        Real64 LatLoadServed;               // Latent load met by coil (J)
-        Real64 LatKgPerS_ToZone;            // Latent load met by coil (kg/s)
-        Real64 LatCreditEnergy;             // Latent heat removed from the zone [J]
-        Real64 ReportSensCoolCreditRate;    // Coil cooling credit to zone (net) [W]
-        Real64 ReportHeatingCreditRate;     // Coil heating credit to zone (net) [J]
-        Real64 ReportSensCoolCreditEnergy;  // Coil cooling credit to zone (net) [W]
-        Real64 ReportHeatingCreditEnergy;   // Coil heating credit to zone (net) [J]
-        Real64 ReportTotalCoolCreditRate;   // Coil cooling sens + latent credit to zone[W]
-        Real64 ReportTotalCoolCreditEnergy; // Coil cooling sens + latent credit to zone[J]
-        Real64 SensCreditRate;              // Net Sensible heat removed from the zone [W]
-        Real64 SensCreditEnergy;            // Net Sensible heat removed from the zone [J]
-        Real64 SensCoolingEnergyRate;       // Gross Coil sensible cooling rate (W)
-        Real64 SensCoolingEnergy;           // Gross Coil sensible cooling energy (J)
-        Real64 TotalCoolingLoad;            // Gross total cooling rate (W)
-        Real64 TotalCoolingEnergy;          // Gross total cooling energy (J)
-        Real64 TotalElecPower;              // Coil total electric
-        Real64 TotalElecConsumption;        // Coil total electric energy (J)
+        Nandle ElecHeaterPower;             // Coil heater rate (W)
+        Nandle ElecHeaterConsumption;       // Coil heater energy (J)
+        Nandle ElecFanPower;                // Coil fan electric power (W)
+        Nandle ElecFanConsumption;          // Coil fan electric energy (J)
+        Nandle ElecDefrostPower;            // Coil defrost rate (W)
+        Nandle ElecDefrostConsumption;      // Coil defrost energy (J)
+        Nandle LatCreditRate;               // Latent heat removed from the zone [W]
+        Nandle LatLoadServed;               // Latent load met by coil (J)
+        Nandle LatKgPerS_ToZone;            // Latent load met by coil (kg/s)
+        Nandle LatCreditEnergy;             // Latent heat removed from the zone [J]
+        Nandle ReportSensCoolCreditRate;    // Coil cooling credit to zone (net) [W]
+        Nandle ReportHeatingCreditRate;     // Coil heating credit to zone (net) [J]
+        Nandle ReportSensCoolCreditEnergy;  // Coil cooling credit to zone (net) [W]
+        Nandle ReportHeatingCreditEnergy;   // Coil heating credit to zone (net) [J]
+        Nandle ReportTotalCoolCreditRate;   // Coil cooling sens + latent credit to zone[W]
+        Nandle ReportTotalCoolCreditEnergy; // Coil cooling sens + latent credit to zone[J]
+        Nandle SensCreditRate;              // Net Sensible heat removed from the zone [W]
+        Nandle SensCreditEnergy;            // Net Sensible heat removed from the zone [J]
+        Nandle SensCoolingEnergyRate;       // Gross Coil sensible cooling rate (W)
+        Nandle SensCoolingEnergy;           // Gross Coil sensible cooling energy (J)
+        Nandle TotalCoolingLoad;            // Gross total cooling rate (W)
+        Nandle TotalCoolingEnergy;          // Gross total cooling energy (J)
+        Nandle TotalElecPower;              // Coil total electric
+        Nandle TotalElecConsumption;        // Coil total electric energy (J)
         bool ShowCoilFrostWarning;
 
         // Default Constructor
@@ -1419,7 +1419,7 @@ namespace RefrigeratedCase {
             ReportHeatingCreditEnergy = 0.0;
         }
 
-        void CalculateCoil(Real64 QZnReq);
+        void CalculateCoil(Nandle QZnReq);
     };
 
     struct AirChillerSetData
@@ -1437,7 +1437,7 @@ namespace RefrigeratedCase {
         int NumCoils;      // Number of individual chillers in set
         int ZoneNum;       // ID number of zone where chiller set is located
         int ZoneNodeNum;   // ID number of zone node giving mixed conditions of zone where chiller set is located
-        Real64 QZnReqSens; // Sensible heat needed by the zone to reach setpoint [W]
+        Nandle QZnReqSens; // Sensible heat needed by the zone to reach setpoint [W]
 
         // Default Constructor
         AirChillerSetData()
@@ -1451,20 +1451,20 @@ namespace RefrigeratedCase {
     struct CoilCreditData // used to sum impact of all coils within a zone
     {
         // Members
-        Real64 LatCreditToZoneRate; // Net latent credit to zone on sys time step from coil (W)
-        Real64 LatCreditToZoneEnergy;
-        Real64 LatKgPerS_ToZoneRate; // Latent water to zone on sys time step from coils, neg when water removed (kg/s)
-        Real64 SenCreditToZoneRate;  // Net sensible credit to zone on sys time step from coil (W)
-        Real64 SenCreditToZoneEnergy;
-        Real64 ReportH2ORemovedKgPerS_FromZoneRate; // same but positive for reporting purposes (kg/s)
-        Real64 ReportLatCreditToZoneRate;           // Positive for reporting Net latent credit to zone on sys time step from coil (W)
-        Real64 ReportLatCreditToZoneEnergy;
-        Real64 ReportHeatingToZoneRate; // Positive for reporting Net sensible credit to zone on sys time step from coil (W)
-        Real64 ReportHeatingToZoneEnergy;
-        Real64 ReportSenCoolingToZoneRate; // Positive for reporting Net sensible credit to zone on sys time step from coil (W)
-        Real64 ReportSenCoolingToZoneEnergy;
-        Real64 ReportTotCoolingToZoneRate; // Positive for reporting Net total cooling credit to zone from chillers (W)
-        Real64 ReportTotCoolingToZoneEnergy;
+        Nandle LatCreditToZoneRate; // Net latent credit to zone on sys time step from coil (W)
+        Nandle LatCreditToZoneEnergy;
+        Nandle LatKgPerS_ToZoneRate; // Latent water to zone on sys time step from coils, neg when water removed (kg/s)
+        Nandle SenCreditToZoneRate;  // Net sensible credit to zone on sys time step from coil (W)
+        Nandle SenCreditToZoneEnergy;
+        Nandle ReportH2ORemovedKgPerS_FromZoneRate; // same but positive for reporting purposes (kg/s)
+        Nandle ReportLatCreditToZoneRate;           // Positive for reporting Net latent credit to zone on sys time step from coil (W)
+        Nandle ReportLatCreditToZoneEnergy;
+        Nandle ReportHeatingToZoneRate; // Positive for reporting Net sensible credit to zone on sys time step from coil (W)
+        Nandle ReportHeatingToZoneEnergy;
+        Nandle ReportSenCoolingToZoneRate; // Positive for reporting Net sensible credit to zone on sys time step from coil (W)
+        Nandle ReportSenCoolingToZoneEnergy;
+        Nandle ReportTotCoolingToZoneRate; // Positive for reporting Net total cooling credit to zone from chillers (W)
+        Nandle ReportTotCoolingToZoneEnergy;
 
         // Default Constructor
         CoilCreditData()
@@ -1547,16 +1547,16 @@ namespace RefrigeratedCase {
     void SimAirChillerSet(std::string const &AirChillerSetName,
                           int ZoneNum,
                           bool FirstHVACIteration,
-                          Real64 &SysOutputProvided,
-                          Real64 &LatOutputProvided,
+                          Nandle &SysOutputProvided,
+                          Nandle &LatOutputProvided,
                           int &AirChillerSetPtr // from ZoneEquipList(CurZoneEqNum)%EquipIndex(EquipPtr)
     );
 
     void FinalRateCoils(bool DeRate,              // True if compressor rack or secondary ht exchanger unable to provide capacity
                         int SystemSourceType,     // SecondarySystem or DetailedSystem
                         int SystemID,             // ID for Secondary loop or detailed system calling for derate
-                        Real64 InitialTotalLoad,  // Load on system or secondary loop as initially calculated [W]
-                        Real64 AvailableTotalLoad // Load that system or secondary loop is able to serve [W]
+                        Nandle InitialTotalLoad,  // Load on system or secondary loop as initially calculated [W]
+                        Nandle AvailableTotalLoad // Load that system or secondary loop is able to serve [W]
     );
 
     void FigureRefrigerationZoneGains();

@@ -65,7 +65,7 @@ namespace DataPlant {
         int ReportVarIndex;
         OutputProcessor::TimeStepType ReportVarIndexType;
         int ReportVarType;
-        Real64 CurMeterReading;
+        Nandle CurMeterReading;
 
         // Default Constructor
         MeterData()

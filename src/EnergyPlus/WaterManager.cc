@@ -257,13 +257,13 @@ namespace WaterManager {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
-        static Real64 tmpMax(0.0);
-        static Real64 tmpMin(0.0);
-        static Real64 tmpNumerator(0.0);
-        static Real64 tmpArea(0.0);
-        static Real64 tmpDenominator(0.0);
+        static Nandle tmpMax(0.0);
+        static Nandle tmpMin(0.0);
+        static Nandle tmpNumerator(0.0);
+        static Nandle tmpArea(0.0);
+        static Nandle tmpDenominator(0.0);
         static int ThisSurf(0);
         int NumIrrigation;
         int Dummy;
@@ -995,8 +995,8 @@ namespace WaterManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 schedRate;
-        Real64 ScaleFactor;
+        Nandle schedRate;
+        Nandle ScaleFactor;
 
         if (RainFall.ModeID == RainSchedDesign) {
             schedRate = GetCurrentScheduleValue(RainFall.RainSchedID); // m/hr
@@ -1045,7 +1045,7 @@ namespace WaterManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 schedRate;
+        Nandle schedRate;
         // REAL(r64)  :: ScaleFactor
 
         Irrigation.ScheduledAmount = 0.0;
@@ -1135,25 +1135,25 @@ namespace WaterManager {
         // see DataWater.cc
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 OrigVdotDemandRequest(0.0);
-        static Real64 TotVdotDemandAvail(0.0);
-        static Real64 OrigVolDemandRequest(0.0);
-        static Real64 TotVolDemandAvail(0.0);
-        static Real64 OrigVdotSupplyAvail(0.0);
-        static Real64 TotVdotSupplyAvail(0.0);
-        static Real64 TotVolSupplyAvail(0.0);
+        static Nandle OrigVdotDemandRequest(0.0);
+        static Nandle TotVdotDemandAvail(0.0);
+        static Nandle OrigVolDemandRequest(0.0);
+        static Nandle TotVolDemandAvail(0.0);
+        static Nandle OrigVdotSupplyAvail(0.0);
+        static Nandle TotVdotSupplyAvail(0.0);
+        static Nandle TotVolSupplyAvail(0.0);
         //  REAL(r64)    :: TotVolSupplyAllow = 0.0d0
-        static Real64 overflowVdot(0.0);
-        static Real64 overflowVol(0.0);
-        static Real64 overflowTwater(0.0);
-        static Real64 NetVdotAdd(0.0);
-        static Real64 NetVolAdd(0.0);
-        static Real64 FillVolRequest(0.0);
-        static Real64 TotVolAllowed(0.0);
-        static Real64 AvailVolume(0.0);
-        static Real64 underflowVdot(0.0);
-        static Real64 VolumePredict(0.0);
-        static Real64 OverFillVolume(0.0);
+        static Nandle overflowVdot(0.0);
+        static Nandle overflowVol(0.0);
+        static Nandle overflowTwater(0.0);
+        static Nandle NetVdotAdd(0.0);
+        static Nandle NetVolAdd(0.0);
+        static Nandle FillVolRequest(0.0);
+        static Nandle TotVolAllowed(0.0);
+        static Nandle AvailVolume(0.0);
+        static Nandle underflowVdot(0.0);
+        static Nandle VolumePredict(0.0);
+        static Nandle OverFillVolume(0.0);
 
         if (BeginTimeStepFlag) {
             // initializations are done in UpdateWaterManager
@@ -1594,8 +1594,8 @@ namespace WaterManager {
         // see DataWater.cc
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 LossFactor(0.0);
-        Real64 VdotAvail;
+        Nandle LossFactor(0.0);
+        Nandle VdotAvail;
 
         // If (.NOT.(IsRain)) Then ! is it raining now? No don't use this flag since precip schedule might differ from weather file
         if (RainFall.CurrentRate <= 0.0) {
@@ -1677,9 +1677,9 @@ namespace WaterManager {
         // see DataWater.cc
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 VdotDelivered;
+        Nandle VdotDelivered;
         //  REAL(r64) :: VdotRequest
-        Real64 PumpPower;
+        Nandle PumpPower;
 
         if (BeginTimeStepFlag) {
             // do any updating needed

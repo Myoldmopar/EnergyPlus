@@ -323,7 +323,7 @@ namespace RoomAirModelUserTempPattern {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // unused    INTEGER    :: thisZoneInfo
-        Real64 AvailTest;
+        Nandle AvailTest;
         int CurntPatternKey;
         int CurPatrnID;
         // unused    INTEGER    :: thisZoneInfoSurf
@@ -424,7 +424,7 @@ namespace RoomAirModelUserTempPattern {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Tmean;
+        Nandle Tmean;
         int found;
         int i;
 
@@ -482,15 +482,15 @@ namespace RoomAirModelUserTempPattern {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Tmean;
+        Nandle Tmean;
         int lowSideID;
         int highSideID;
-        Real64 thisZeta;
+        Nandle thisZeta;
         int i;
-        Real64 lowSideZeta;
-        Real64 hiSideZeta;
-        Real64 fractBtwn;
-        Real64 tmpDeltaTai;
+        Nandle lowSideZeta;
+        Nandle hiSideZeta;
+        Nandle fractBtwn;
+        Nandle tmpDeltaTai;
 
         tmpDeltaTai = 0.0;
         Tmean = AirPatternZoneInfo(ZoneNum).TairMean;
@@ -569,16 +569,16 @@ namespace RoomAirModelUserTempPattern {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Tmean;                        // MAT deg C
-        Real64 Grad;                         // vertical temperature gradient C/m
-        Real64 DeltaT;                       // temperature difference
-        Real64 CoolLoad;                     // sensible cooling load
-        Real64 HeatLoad;                     // sensible heating load
-        Real64 ZetaTmean;                    // non-dimensional height for mean air temp
+        Nandle Tmean;                        // MAT deg C
+        Nandle Grad;                         // vertical temperature gradient C/m
+        Nandle DeltaT;                       // temperature difference
+        Nandle CoolLoad;                     // sensible cooling load
+        Nandle HeatLoad;                     // sensible heating load
+        Nandle ZetaTmean;                    // non-dimensional height for mean air temp
         int i;                               // do loop index
-        Real64 thisZeta;                     // non-dimensional height
-        Real64 DeltaHeight;                  // height difference in m
-        Real64 tempDeltaTai;                 // temporary temperature difference
+        Nandle thisZeta;                     // non-dimensional height
+        Nandle DeltaHeight;                  // height difference in m
+        Nandle tempDeltaTai;                 // temporary temperature difference
         static Array1D_bool SetupOutputFlag; // flag to set up output variable one-time if 2-grad model used
         static bool MyOneTimeFlag(true);
 
@@ -727,14 +727,14 @@ namespace RoomAirModelUserTempPattern {
 
         AirPatternZoneInfo(ZoneNum).Gradient = Grad;
     }
-    Real64 OutdoorDryBulbGrad(Real64 DryBulbTemp, // Zone(ZoneNum).OutDryBulbTemp
-                              Real64 UpperBound,  // RoomAirPattern(PattrnID).TwoGradPatrn.UpperBoundTempScale
-                              Real64 HiGradient,  // RoomAirPattern(PattrnID).TwoGradPatrn.HiGradient
-                              Real64 LowerBound,  // RoomAirPattern(PattrnID).TwoGradPatrn.LowerBoundTempScale
-                              Real64 LowGradient  // RoomAirPattern(PattrnID).TwoGradPatrn.LowGradient
+    Nandle OutdoorDryBulbGrad(Nandle DryBulbTemp, // Zone(ZoneNum).OutDryBulbTemp
+                              Nandle UpperBound,  // RoomAirPattern(PattrnID).TwoGradPatrn.UpperBoundTempScale
+                              Nandle HiGradient,  // RoomAirPattern(PattrnID).TwoGradPatrn.HiGradient
+                              Nandle LowerBound,  // RoomAirPattern(PattrnID).TwoGradPatrn.LowerBoundTempScale
+                              Nandle LowGradient  // RoomAirPattern(PattrnID).TwoGradPatrn.LowGradient
     )
     {
-        Real64 Grad;
+        Nandle Grad;
         if (DryBulbTemp >= UpperBound) {
             Grad = HiGradient;
 
@@ -789,13 +789,13 @@ namespace RoomAirModelUserTempPattern {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // na
-        Real64 Tmean;        // MAT
+        Nandle Tmean;        // MAT
         int i;               // loop counter
-        Real64 Grad;         // vertical temperature gradient
-        Real64 ZetaTmean;    // non-dimens. height for MAT, 0.5
-        Real64 thisZeta;     // temporary non-dimens height
-        Real64 DeltaHeight;  // temporary height difference
-        Real64 tempDeltaTai; // temporary Delta Tai
+        Nandle Grad;         // vertical temperature gradient
+        Nandle ZetaTmean;    // non-dimens. height for MAT, 0.5
+        Nandle thisZeta;     // temporary non-dimens height
+        Nandle DeltaHeight;  // temporary height difference
+        Nandle tempDeltaTai; // temporary Delta Tai
 
         Tmean = AirPatternZoneInfo(ZoneNum).TairMean;
         Grad = RoomAirPattern(PattrnID).GradPatrn.Gradient;
@@ -816,7 +816,7 @@ namespace RoomAirModelUserTempPattern {
 
     //*****************************************************************************************
 
-    Real64 FigureNDheightInZone(int const thisHBsurf) // index in main Surface array
+    Nandle FigureNDheightInZone(int const thisHBsurf) // index in main Surface array
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         B.Griffith
@@ -848,13 +848,13 @@ namespace RoomAirModelUserTempPattern {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 FigureNDheightInZone;
+        Nandle FigureNDheightInZone;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const TolValue(0.0001);
+        Nandle const TolValue(0.0001);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -864,20 +864,20 @@ namespace RoomAirModelUserTempPattern {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int thisZone;
-        Real64 ZoneZorig;
-        Real64 ZoneCeilHeight;
-        Real64 Zcm;
-        Real64 SurfMinZ;
-        Real64 SurfMaxZ;
-        Real64 Zeta;
-        Real64 FloorCount;
-        Real64 ZFlrAvg;
-        Real64 ZMax;
-        Real64 ZMin;
+        Nandle ZoneZorig;
+        Nandle ZoneCeilHeight;
+        Nandle Zcm;
+        Nandle SurfMinZ;
+        Nandle SurfMaxZ;
+        Nandle Zeta;
+        Nandle FloorCount;
+        Nandle ZFlrAvg;
+        Nandle ZMax;
+        Nandle ZMin;
         int Count;
         int SurfNum;
-        Real64 Z1;
-        Real64 Z2;
+        Nandle Z1;
+        Nandle Z2;
 
         // Get the centroid height for the surface
         Zcm = Surface(thisHBsurf).Centroid.z;
@@ -1005,21 +1005,21 @@ namespace RoomAirModelUserTempPattern {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int SurfFirst; // index number of the first surface in the zone
         int SurfLast;
-        Real64 QRetAir;         // Heat to return air from lights
-        Real64 CpAir;           // Air heat capacity [J/kg-K]
-        Real64 TempRetAir;      // Return air temperature [C]
-        Real64 TempZoneAir;     // Zone air temperature [C]
+        Nandle QRetAir;         // Heat to return air from lights
+        Nandle CpAir;           // Air heat capacity [J/kg-K]
+        Nandle TempRetAir;      // Return air temperature [C]
+        Nandle TempZoneAir;     // Zone air temperature [C]
         int ZoneNode;           // Node number of controlled zone
         int SurfNum;            // Surface number
-        Real64 MassFlowRA;      // Return air mass flow [kg/s]
-        Real64 FlowThisTS;      // Window gap air mass flow [kg/s]
-        Real64 WinGapFlowToRA;  // Mass flow to return air from all airflow windows in zone [kg/s]
-        Real64 WinGapFlowTtoRA; // Sum of mass flow times outlet temp for all airflow windows in zone [(kg/s)-C]
-        Real64 WinGapTtoRA;     // Temp of outlet flow mixture to return air from all airflow windows in zone [C]
-        Real64 H2OHtOfVap;      // Heat of vaporization of water (W/kg)
-        Real64 RhoAir;          // Density of air (Kg/m3)
-        Real64 ZoneMult;
-        Real64 SumRetAirLatentGainRate;
+        Nandle MassFlowRA;      // Return air mass flow [kg/s]
+        Nandle FlowThisTS;      // Window gap air mass flow [kg/s]
+        Nandle WinGapFlowToRA;  // Mass flow to return air from all airflow windows in zone [kg/s]
+        Nandle WinGapFlowTtoRA; // Sum of mass flow times outlet temp for all airflow windows in zone [(kg/s)-C]
+        Nandle WinGapTtoRA;     // Temp of outlet flow mixture to return air from all airflow windows in zone [C]
+        Nandle H2OHtOfVap;      // Heat of vaporization of water (W/kg)
+        Nandle RhoAir;          // Density of air (Kg/m3)
+        Nandle ZoneMult;
+        Nandle SumRetAirLatentGainRate;
 
         // FLOW:
 
@@ -1150,7 +1150,7 @@ namespace RoomAirModelUserTempPattern {
         if (allocated(AirPatternZoneInfo(ZoneNum).ExhaustAirNodeID)) {
             auto const &APZoneInfo(AirPatternZoneInfo(ZoneNum));
             auto const &EANodeID(APZoneInfo.ExhaustAirNodeID);
-            Real64 const Texhaust(APZoneInfo.Texhaust);
+            Nandle const Texhaust(APZoneInfo.Texhaust);
             for (int i = 1, ie = EANodeID.u(); i <= ie; ++i) {
                 Node(EANodeID(i)).Temp = Texhaust;
             }

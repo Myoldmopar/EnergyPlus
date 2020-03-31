@@ -138,7 +138,7 @@ TEST_F(EnergyPlusFixture, ChillerElectricEIR_AirCooledChiller)
 {
 
     bool RunFlag(true);
-    Real64 MyLoad(-10000.0);
+    Nandle MyLoad(-10000.0);
 
     DataPlant::TotNumLoops = 2;
     DataEnvironment::OutBaroPress = 101325.0;
@@ -238,7 +238,7 @@ TEST_F(EnergyPlusFixture, ChillerElectricEIR_AirCooledChiller)
     EXPECT_NEAR(thisEIR.EvapMassFlowRateMax, 0.999898, 0.0000001);
 
     // check autocalculate for air-cooled or evap-cooled chiller condenser side fluid flow rate
-    Real64 CalcCondVolFlow = thisEIR.RefCap * 0.000114;
+    Nandle CalcCondVolFlow = thisEIR.RefCap * 0.000114;
     EXPECT_EQ(CalcCondVolFlow, thisEIR.CondVolFlowRate);
     EXPECT_NEAR(thisEIR.CondVolFlowRate, 2.3925760323498, 0.0000001);
     EXPECT_NEAR(thisEIR.CondMassFlowRateMax, 2.7918772761695, 0.0000001);

@@ -290,37 +290,37 @@ TEST_F(EnergyPlusFixture, FaultsManager_FaultChillerSWTSensor_CalFaultChillerSWT
     // To check CalFaultChillerSWT which calculates the mass flow rate and supply water temperature of a chiller with faulty SWT sensor.
 
     bool FlagVariableFlow;         // True if chiller is variable flow and false if it is constant flow
-    Real64 FaultyChillerSWTOffset; // Faulty chiller SWT sensor offset
-    Real64 Cp = 4500;              // Local fluid specific heat
-    Real64 EvapInletTemp = 12;     // Chiller evaporator inlet water temperature
-    Real64 EvapOutletTemp = 7;     // Chiller evaporator outlet water temperature, fault free
-    Real64 EvapMassFlowRate = 40;  // Chiller mass flow rate, fault free
-    Real64 QEvaporator = 900000;   // Chiller evaporator heat transfer rate, fault free
+    Nandle FaultyChillerSWTOffset; // Faulty chiller SWT sensor offset
+    Nandle Cp = 4500;              // Local fluid specific heat
+    Nandle EvapInletTemp = 12;     // Chiller evaporator inlet water temperature
+    Nandle EvapOutletTemp = 7;     // Chiller evaporator outlet water temperature, fault free
+    Nandle EvapMassFlowRate = 40;  // Chiller mass flow rate, fault free
+    Nandle QEvaporator = 900000;   // Chiller evaporator heat transfer rate, fault free
     FaultPropertiesChillerSWT FaultChiller;
 
     // 1) offset is 0C
     FlagVariableFlow = false;
-    Real64 EvapOutletTemp_1 = EvapOutletTemp;     // Chiller evaporator outlet water temperature
-    Real64 EvapMassFlowRate_1 = EvapMassFlowRate; // Chiller mass flow rate
-    Real64 QEvaporator_1 = QEvaporator;           // Chiller evaporator heat transfer rate
+    Nandle EvapOutletTemp_1 = EvapOutletTemp;     // Chiller evaporator outlet water temperature
+    Nandle EvapMassFlowRate_1 = EvapMassFlowRate; // Chiller mass flow rate
+    Nandle QEvaporator_1 = QEvaporator;           // Chiller evaporator heat transfer rate
     FaultyChillerSWTOffset = 0;
     FaultChiller.CalFaultChillerSWT(FlagVariableFlow, FaultyChillerSWTOffset, Cp, EvapInletTemp, EvapOutletTemp_1, EvapMassFlowRate_1, QEvaporator_1);
     EXPECT_EQ(1, EvapOutletTemp_1 / EvapOutletTemp);
     EXPECT_EQ(1, QEvaporator_1 / QEvaporator);
 
     // 2) offset is 2C
-    Real64 EvapOutletTemp_2 = EvapOutletTemp;     // Chiller evaporator outlet water temperature
-    Real64 EvapMassFlowRate_2 = EvapMassFlowRate; // Chiller mass flow rate
-    Real64 QEvaporator_2 = QEvaporator;           // Chiller evaporator heat transfer rate
+    Nandle EvapOutletTemp_2 = EvapOutletTemp;     // Chiller evaporator outlet water temperature
+    Nandle EvapMassFlowRate_2 = EvapMassFlowRate; // Chiller mass flow rate
+    Nandle QEvaporator_2 = QEvaporator;           // Chiller evaporator heat transfer rate
     FaultyChillerSWTOffset = 2;
     FaultChiller.CalFaultChillerSWT(FlagVariableFlow, FaultyChillerSWTOffset, Cp, EvapInletTemp, EvapOutletTemp_2, EvapMassFlowRate_2, QEvaporator_2);
     EXPECT_NEAR(0.714, EvapOutletTemp_2 / EvapOutletTemp, 0.001);
     EXPECT_NEAR(1.400, QEvaporator_2 / QEvaporator, 0.001);
 
     // 3) offset is -2C
-    Real64 EvapOutletTemp_3 = EvapOutletTemp;     // Chiller evaporator outlet water temperature
-    Real64 EvapMassFlowRate_3 = EvapMassFlowRate; // Chiller mass flow rate
-    Real64 QEvaporator_3 = QEvaporator;           // Chiller evaporator heat transfer rate
+    Nandle EvapOutletTemp_3 = EvapOutletTemp;     // Chiller evaporator outlet water temperature
+    Nandle EvapMassFlowRate_3 = EvapMassFlowRate; // Chiller mass flow rate
+    Nandle QEvaporator_3 = QEvaporator;           // Chiller evaporator heat transfer rate
     FaultyChillerSWTOffset = -2;
     FaultChiller.CalFaultChillerSWT(FlagVariableFlow, FaultyChillerSWTOffset, Cp, EvapInletTemp, EvapOutletTemp_3, EvapMassFlowRate_3, QEvaporator_3);
     EXPECT_NEAR(1.285, EvapOutletTemp_3 / EvapOutletTemp, 0.001);
@@ -332,7 +332,7 @@ TEST_F(EnergyPlusFixture, FaultsManager_CalFaultOffsetAct)
     // PURPOSE OF THIS SUBROUTINE:
     // To check CalFaultOffsetAct which calculates the dynamic fault offset based on the fault availability schedule and severity schedule.
 
-    Real64 OffsetAct;
+    Nandle OffsetAct;
     FaultProperties Fault;
 
     Fault.AvaiSchedPtr = -1;
@@ -740,7 +740,7 @@ TEST_F(EnergyPlusFixture, FaultsManager_FoulingCoil_AssignmentAndCalc)
 
         // Check calculation
         // Expected FaultFrac * (1/UAfouled - 1 / UACoilTotal)
-        // Real64 expectedFoulingFactor = 0.75 * ((1.0 / 3.32) - (1.0 / 6.64));
+        // Nandle expectedFoulingFactor = 0.75 * ((1.0 / 3.32) - (1.0 / 6.64));
         // EXPECT_NEAR(expectedFoulingFactor, FaultsManager::FouledCoils(FaultIndex).CalFaultyCoilFoulingFactor(), 0.0001);
     }
 
@@ -771,10 +771,10 @@ TEST_F(EnergyPlusFixture, FaultsManager_FoulingCoil_AssignmentAndCalc)
         EXPECT_NEAR(0.1, FaultsManager::FouledCoils(FaultIndex).Aratio, 0.0001);
 
         // Check calculation
-        //Real64 waterTerm = 0.0005 / (100.0*0.1); // Rf_water/A_water = Rfw / (Aout * Aratio)
-        //Real64 airTerm = 0.0001 / 100.0;         // Rf_air/A_air = Rfa / Aout
+        //Nandle waterTerm = 0.0005 / (100.0*0.1); // Rf_water/A_water = Rfw / (Aout * Aratio)
+        //Nandle airTerm = 0.0001 / 100.0;         // Rf_air/A_air = Rfa / Aout
         // Expected FaultFrac * (waterTerm + airTerm)
-        // Real64 expectedFoulingFactor = 0.75 * (waterTerm + airTerm);
+        // Nandle expectedFoulingFactor = 0.75 * (waterTerm + airTerm);
         // EXPECT_NEAR(expectedFoulingFactor, FaultsManager::FouledCoils(FaultIndex).CalFaultyCoilFoulingFactor(), 0.0001);
     }
 

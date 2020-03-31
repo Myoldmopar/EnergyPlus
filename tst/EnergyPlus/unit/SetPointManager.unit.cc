@@ -362,7 +362,7 @@ TEST_F(EnergyPlusFixture, SetPointManager_DefineCondEntSetPointManager)
     DataPlant::PlantLoop(chwLoopIndex).LoopSide(supplySide).Branch.allocate(1);
     DataPlant::PlantLoop(chwLoopIndex).LoopSide(supplySide).Branch(chillerBranchChW).Comp.allocate(1);
     DataPlant::PlantLoop(chwLoopIndex).LoopSide(supplySide).Branch(chillerBranchChW).Comp(chillerCompIndex).NodeNumOut = evapOutletNodeNum;
-    Real64 const designCondenserEnteringTemp = 20;
+    Nandle const designCondenserEnteringTemp = 20;
     DataPlant::PlantLoop(chwLoopIndex).LoopSide(supplySide).Branch(chillerBranchChW).Comp(chillerCompIndex).TempDesCondIn =
         designCondenserEnteringTemp;
     DataPlant::PlantLoop(chwLoopIndex).LoopSide(supplySide).Branch(chillerBranchChW).Comp(chillerCompIndex).TempDesEvapOut = 5;
@@ -423,10 +423,10 @@ TEST_F(EnergyPlusFixture, SetPointManager_DefineCondEntSetPointManager)
 TEST_F(EnergyPlusFixture, SetPointManager_setupSetPointAndFlags)
 {
 
-    Real64 totEnergy = 0.0;
-    Real64 totEnergyPrevious = 0.0;
-    Real64 condenserWaterSetPoint = 0.0;
-    Real64 condenserWaterSetPointLimit = 10.0;
+    Nandle totEnergy = 0.0;
+    Nandle totEnergyPrevious = 0.0;
+    Nandle condenserWaterSetPoint = 0.0;
+    Nandle condenserWaterSetPointLimit = 10.0;
     bool statusRunOptimalCondenserEnteringTemp = false;
     bool statusRunSubOptimalCondenserEnteringTemp = false;
     bool statusRunFinalOptimalCondenserEnteringTemp = false;
@@ -786,7 +786,7 @@ TEST_F(EnergyPlusFixture, SZRHOAFractionImpact)
 
 TEST_F(EnergyPlusFixture, SetPointManager_CalcSetPointTest)
 {
-    Real64 SetPt1, SetPt2, SetPt3, SetPt4, SetPt5, SetPt6, SetPt7, SetPt8;
+    Nandle SetPt1, SetPt2, SetPt3, SetPt4, SetPt5, SetPt6, SetPt7, SetPt8;
     SetPointManager::DefineOutsideAirSetPointManager thisSPM;
     // CalcSetPoint(OutLowTemp, OutHighTemp, OutDryBulbTemp, SetTempAtOutLow, SetTempAtOutHigh);
     // SetTempAtOutLow > SetTempAtOutHigh
@@ -1236,8 +1236,8 @@ TEST_F(EnergyPlusFixture, ColdestSetPointMgrInSingleDuct)
     EXPECT_EQ(DataLoopNode::NodeID(13), "VAV SYS 1 OUTLET NODE");
     EXPECT_DOUBLE_EQ(16.0, SetPointManager::WarmestSetPtMgr(1).SetPt); // no cooling load, sets to maximum limit value
 
-    Real64 CpAir(0.0);
-    Real64 ZoneSetPointTemp(0.0);
+    Nandle CpAir(0.0);
+    Nandle ZoneSetPointTemp(0.0);
 
     CpAir = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(2).HumRat);
     ZoneSetPointTemp = DataLoopNode::Node(5).Temp +
@@ -1301,7 +1301,7 @@ TEST_F(EnergyPlusFixture, SetPointManager_OutdoorAirResetMaxTempTest)
     SetPointManager::SimSetPointManagers();
     SetPointManager::UpdateSetPointManagers();
     // SetPt = SetTempAtOutLow - ((OutDryBulbTemp - OutLowTemp)/(OutHighTemp - OutLowTemp)) * (SetTempAtOutLow - SetTempAtOutHigh);
-    Real64 SetPt = 60.0 - ((2.0 - -17.778) / (21.11 - -17.778)) * (60.0 - 40.0);
+    Nandle SetPt = 60.0 - ((2.0 - -17.778) / (21.11 - -17.778)) * (60.0 - 40.0);
     // check OA Reset Set Point Manager sim
     EXPECT_EQ(SetPt, DataLoopNode::Node(1).TempSetPointHi);
 }
@@ -1359,7 +1359,7 @@ TEST_F(EnergyPlusFixture, SetPointManager_OutdoorAirResetMinTempTest)
     SetPointManager::SimSetPointManagers();
     SetPointManager::UpdateSetPointManagers();
     // SetPt = SetTempAtOutLow - ((OutDryBulbTemp - OutLowTemp)/(OutHighTemp - OutLowTemp)) * (SetTempAtOutLow - SetTempAtOutHigh);
-    Real64 SetPt = 80.0 - ((2.0 - -17.778) / (21.11 - -17.778)) * (80.0 - 35.0);
+    Nandle SetPt = 80.0 - ((2.0 - -17.778) / (21.11 - -17.778)) * (80.0 - 35.0);
     // check OA Reset Set Point Manager sim
     EXPECT_EQ(SetPt, DataLoopNode::Node(1).TempSetPointLo);
 }

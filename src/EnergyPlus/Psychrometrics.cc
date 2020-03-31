@@ -190,7 +190,7 @@ namespace Psychrometrics {
 #endif
 
 #ifndef EP_psych_errors
-    Real64 const KelvinConv(273.15);
+    Nandle const KelvinConv(273.15);
 #endif
 
 #ifdef EP_cache_PsyTwbFnTdbWPb
@@ -353,7 +353,7 @@ namespace Psychrometrics {
 #ifdef EP_psych_stats
         int EchoInputFile; // found unit number for "eplusout.audit"
         int Loop;
-        Real64 AverageIterations;
+        Nandle AverageIterations;
         std::string istring;
 
         EchoInputFile = FindUnitNumber(outputAuditFile);
@@ -376,10 +376,10 @@ namespace Psychrometrics {
     }
 
 #ifdef EP_psych_errors
-    void PsyRhoAirFnPbTdbW_error(Real64 const pb,              // barometric pressure (Pascals)
-                                 Real64 const tdb,             // dry bulb temperature (Celsius)
-                                 Real64 const dw,              // humidity ratio (kgWater/kgDryAir)
-                                 Real64 const rhoair,          // density of air
+    void PsyRhoAirFnPbTdbW_error(Nandle const pb,              // barometric pressure (Pascals)
+                                 Nandle const tdb,             // dry bulb temperature (Celsius)
+                                 Nandle const dw,              // humidity ratio (kgWater/kgDryAir)
+                                 Nandle const rhoair,          // density of air
                                  std::string const &CalledFrom // routine this function was called from (error messages) !unused1208
     )
     {
@@ -400,9 +400,9 @@ namespace Psychrometrics {
 #endif
 
 #ifdef EP_psych_errors
-    void PsyRhFnTdbRhovLBnd0C_error(Real64 const Tdb,             // dry-bulb temperature {C}
-                                    Real64 const Rhovapor,        // vapor density in air {kg/m3}
-                                    Real64 const RHValue,         // relative humidity value (0.0-1.0)
+    void PsyRhFnTdbRhovLBnd0C_error(Nandle const Tdb,             // dry-bulb temperature {C}
+                                    Nandle const Rhovapor,        // vapor density in air {kg/m3}
+                                    Nandle const RHValue,         // relative humidity value (0.0-1.0)
                                     std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -456,9 +456,9 @@ namespace Psychrometrics {
 
 #ifdef EP_cache_PsyTwbFnTdbWPb
 
-    Real64 PsyTwbFnTdbWPb(Real64 const Tdb,             // dry-bulb temperature {C}
-                          Real64 const W,               // humidity ratio
-                          Real64 const Pb,              // barometric pressure {Pascals}
+    Nandle PsyTwbFnTdbWPb(Nandle const Tdb,             // dry-bulb temperature {C}
+                          Nandle const W,               // humidity ratio
+                          Nandle const Pb,              // barometric pressure {Pascals}
                           std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -483,7 +483,7 @@ namespace Psychrometrics {
         // na
 
         // Return value
-        Real64 Twb_result; // result=> Temperature Wet-Bulb {C}
+        Nandle Twb_result; // result=> Temperature Wet-Bulb {C}
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -502,9 +502,9 @@ namespace Psychrometrics {
         Int64 W_tag;
         Int64 Pb_tag;
         Int64 hash;
-        Real64 Tdb_tag_r;
-        Real64 W_tag_r;
-        Real64 Pb_tag_r;
+        Nandle Tdb_tag_r;
+        Nandle W_tag_r;
+        Nandle Pb_tag_r;
 
 #ifdef EP_psych_stats
         ++NumTimesCalled(iPsyTwbFnTdbWPb_cache);
@@ -538,17 +538,17 @@ namespace Psychrometrics {
         return Twb_result;
     }
 
-    Real64 PsyTwbFnTdbWPb_raw(Real64 const TDB,             // dry-bulb temperature {C}
-                              Real64 const dW,              // humidity ratio
-                              Real64 const Patm,            // barometric pressure {Pascals}
+    Nandle PsyTwbFnTdbWPb_raw(Nandle const TDB,             // dry-bulb temperature {C}
+                              Nandle const dW,              // humidity ratio
+                              Nandle const Patm,            // barometric pressure {Pascals}
                               std::string const &CalledFrom // routine this function was called from (error messages)
     )
 
 #else
 
-    Real64 PsyTwbFnTdbWPb(Real64 const TDB,             // dry-bulb temperature {C}
-                          Real64 const dW,              // humidity ratio
-                          Real64 const Patm,            // barometric pressure {Pascals}
+    Nandle PsyTwbFnTdbWPb(Nandle const TDB,             // dry-bulb temperature {C}
+                          Nandle const dW,              // humidity ratio
+                          Nandle const Patm,            // barometric pressure {Pascals}
                           std::string const &CalledFrom // routine this function was called from (error messages)
     )
 #endif
@@ -575,14 +575,14 @@ namespace Psychrometrics {
         using General::Iterate;
 
         // Return value
-        Real64 TWB; // result=> Temperature Wet-Bulb {C}
+        Nandle TWB; // result=> Temperature Wet-Bulb {C}
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
         int const itmax(100); // Maximum No of Iterations
-        static Real64 convTol(0.0001);
+        static Nandle convTol(0.0001);
         static std::string const RoutineName("PsyTwbFnTdbWPb");
         static ObjexxFCL::gio::Fmt fmtLD("*");
 
@@ -593,18 +593,18 @@ namespace Psychrometrics {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 tBoil;                       // Boiling temperature of water at given pressure
-        static Real64 last_Patm(-99999.0);  // barometric pressure {Pascals}  (last)
-        static Real64 last_tBoil(-99999.0); // Boiling temperature of water at given pressure (last)
-        Real64 newW;                        // Humidity ratio calculated with wet bulb guess
-        Real64 W;                           // Humidity ratio entered and corrected as necessary
-        Real64 ResultX;                     // ResultX is the final Iteration result passed back to the calling routine
-        Real64 WBT;                         // Current Value of WetBulbTemperature
-        Real64 error;                       // Deviation of dependent variable in iteration
-        Real64 X1;                          // Independent variable in ITERATE
-        Real64 Y1;                          // Dependent variable in ITERATE
-        Real64 Wstar;                       // Humidity  ratio as a function of Sat Press of Wet Bulb
-        Real64 PSatstar;                    // Saturation pressure at wet bulb temperature
+        Nandle tBoil;                       // Boiling temperature of water at given pressure
+        static Nandle last_Patm(-99999.0);  // barometric pressure {Pascals}  (last)
+        static Nandle last_tBoil(-99999.0); // Boiling temperature of water at given pressure (last)
+        Nandle newW;                        // Humidity ratio calculated with wet bulb guess
+        Nandle W;                           // Humidity ratio entered and corrected as necessary
+        Nandle ResultX;                     // ResultX is the final Iteration result passed back to the calling routine
+        Nandle WBT;                         // Current Value of WetBulbTemperature
+        Nandle error;                       // Deviation of dependent variable in iteration
+        Nandle X1;                          // Independent variable in ITERATE
+        Nandle Y1;                          // Dependent variable in ITERATE
+        Nandle Wstar;                       // Humidity  ratio as a function of Sat Press of Wet Bulb
+        Nandle PSatstar;                    // Saturation pressure at wet bulb temperature
         int iter;                           // Iteration counter
         int icvg;                           // Iteration convergence flag
         bool FlagError;                     // set when errors should be flagged
@@ -758,10 +758,10 @@ namespace Psychrometrics {
     }
 
 #ifdef EP_psych_errors
-    void PsyVFnTdbWPb_error(Real64 const TDB,             // dry-bulb temperature {C}
-                            Real64 const w,               // humidity ratio
-                            Real64 const PB,              // barometric pressure {Pascals}
-                            Real64 const V,               // specific volume {m3/kg}
+    void PsyVFnTdbWPb_error(Nandle const TDB,             // dry-bulb temperature {C}
+                            Nandle const w,               // humidity ratio
+                            Nandle const PB,              // barometric pressure {Pascals}
+                            Nandle const V,               // specific volume {m3/kg}
                             std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -787,9 +787,9 @@ namespace Psychrometrics {
 #endif
 
 #ifdef EP_psych_errors
-    void PsyWFnTdbH_error(Real64 const TDB,             // dry-bulb temperature {C}
-                          Real64 const H,               // enthalpy {J/kg}
-                          Real64 const W,               // humidity ratio
+    void PsyWFnTdbH_error(Nandle const TDB,             // dry-bulb temperature {C}
+                          Nandle const H,               // enthalpy {J/kg}
+                          Nandle const W,               // humidity ratio
                           std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -815,13 +815,13 @@ namespace Psychrometrics {
 
 #ifdef EP_cache_PsyPsatFnTemp
 
-    Real64 PsyPsatFnTemp_raw(Real64 const T,               // dry-bulb temperature {C}
+    Nandle PsyPsatFnTemp_raw(Nandle const T,               // dry-bulb temperature {C}
                              std::string const &CalledFrom // routine this function was called from (error messages)
     )
 
 #else
 
-    Real64 PsyPsatFnTemp(Real64 const T,               // dry-bulb temperature {C}
+    Nandle PsyPsatFnTemp(Nandle const T,               // dry-bulb temperature {C}
                          std::string const &CalledFrom // routine this function was called from (error messages)
     )
 #endif
@@ -846,7 +846,7 @@ namespace Psychrometrics {
         // USE STATEMENTS:
 
         // Return value
-        Real64 Pascal; // result=> saturation pressure {Pascals}
+        Nandle Pascal; // result=> saturation pressure {Pascals}
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -885,7 +885,7 @@ namespace Psychrometrics {
 #endif
 
         // Convert temperature from Centigrade to Kelvin.
-        Real64 const Tkel(T + KelvinConv); // Dry-bulb in REAL(r64) for function passing
+        Nandle const Tkel(T + KelvinConv); // Dry-bulb in REAL(r64) for function passing
 
         // If below -100C,set value of Pressure corresponding to Saturation Temperature of -100C.
         if (Tkel < 173.15) {
@@ -893,43 +893,43 @@ namespace Psychrometrics {
 
             // If below freezing, calculate saturation pressure over ice.
         } else if (Tkel < KelvinConv) {      // Tkel >= 173.15
-            Real64 const C1(-5674.5359);     // Coefficient for TKel < KelvinConvK
-            Real64 const C2(6.3925247);      // Coefficient for TKel < KelvinConvK
-            Real64 const C3(-0.9677843e-2);  // Coefficient for TKel < KelvinConvK
-            Real64 const C4(0.62215701e-6);  // Coefficient for TKel < KelvinConvK
-            Real64 const C5(0.20747825e-8);  // Coefficient for TKel < KelvinConvK
-            Real64 const C6(-0.9484024e-12); // Coefficient for TKel < KelvinConvK
-            Real64 const C7(4.1635019);      // Coefficient for TKel < KelvinConvK
+            Nandle const C1(-5674.5359);     // Coefficient for TKel < KelvinConvK
+            Nandle const C2(6.3925247);      // Coefficient for TKel < KelvinConvK
+            Nandle const C3(-0.9677843e-2);  // Coefficient for TKel < KelvinConvK
+            Nandle const C4(0.62215701e-6);  // Coefficient for TKel < KelvinConvK
+            Nandle const C5(0.20747825e-8);  // Coefficient for TKel < KelvinConvK
+            Nandle const C6(-0.9484024e-12); // Coefficient for TKel < KelvinConvK
+            Nandle const C7(4.1635019);      // Coefficient for TKel < KelvinConvK
             Pascal = std::exp(C1 / Tkel + C2 + Tkel * (C3 + Tkel * (C4 + Tkel * (C5 + C6 * Tkel))) + C7 * std::log(Tkel));
 
             // If above freezing, calculate saturation pressure over liquid water.
         } else if (Tkel <= 473.15) { // Tkel >= 173.15 // Tkel >= KelvinConv
 #ifndef EP_IF97
-            Real64 const C8(-5800.2206);      // Coefficient for TKel >= KelvinConvK
-            Real64 const C9(1.3914993);       // Coefficient for TKel >= KelvinConvK
-            Real64 const C10(-0.048640239);   // Coefficient for TKel >= KelvinConvK
-            Real64 const C11(0.41764768e-4);  // Coefficient for TKel >= KelvinConvK
-            Real64 const C12(-0.14452093e-7); // Coefficient for TKel >= KelvinConvK
-            Real64 const C13(6.5459673);      // Coefficient for TKel >= KelvinConvK
+            Nandle const C8(-5800.2206);      // Coefficient for TKel >= KelvinConvK
+            Nandle const C9(1.3914993);       // Coefficient for TKel >= KelvinConvK
+            Nandle const C10(-0.048640239);   // Coefficient for TKel >= KelvinConvK
+            Nandle const C11(0.41764768e-4);  // Coefficient for TKel >= KelvinConvK
+            Nandle const C12(-0.14452093e-7); // Coefficient for TKel >= KelvinConvK
+            Nandle const C13(6.5459673);      // Coefficient for TKel >= KelvinConvK
             Pascal = std::exp(C8 / Tkel + C9 + Tkel * (C10 + Tkel * (C11 + Tkel * C12)) + C13 * std::log(Tkel));
 #else
             // Table 34 in IF97
-            Real64 const N1(0.11670521452767e04);
-            Real64 const N2(-0.72421316703206e06);
-            Real64 const N3(-0.17073846940092e02);
-            Real64 const N4(0.12020824702470e05);
-            Real64 const N5(-0.32325550322333e07);
-            Real64 const N6(0.14915108613530e02);
-            Real64 const N7(-0.48232657361591e04);
-            Real64 const N8(0.40511340542057e06);
-            Real64 const N9(-0.23855557567849);
-            Real64 const N10(0.65017534844798e03);
+            Nandle const N1(0.11670521452767e04);
+            Nandle const N2(-0.72421316703206e06);
+            Nandle const N3(-0.17073846940092e02);
+            Nandle const N4(0.12020824702470e05);
+            Nandle const N5(-0.32325550322333e07);
+            Nandle const N6(0.14915108613530e02);
+            Nandle const N7(-0.48232657361591e04);
+            Nandle const N8(0.40511340542057e06);
+            Nandle const N9(-0.23855557567849);
+            Nandle const N10(0.65017534844798e03);
             //         !IF97 equations
-            Real64 const phi = Tkel + N9 / (Tkel - N10); // IF97 equation 29b
-            Real64 const phi2 = phi * phi;               // phi squared
-            Real64 const A = phi2 + N1 * phi + N2;
-            Real64 const B = N3 * phi2 + N4 * phi + N5;
-            Real64 const C = N6 * phi2 + N7 * phi + N8;
+            Nandle const phi = Tkel + N9 / (Tkel - N10); // IF97 equation 29b
+            Nandle const phi2 = phi * phi;               // phi squared
+            Nandle const A = phi2 + N1 * phi + N2;
+            Nandle const B = N3 * phi2 + N4 * phi + N5;
+            Nandle const C = N6 * phi2 + N7 * phi + N8;
             Pascal = 1000000.0 * pow_4((2.0 * C) / (-B + std::sqrt((B * B) - 4.0 * A * C)));
 #endif
             // If above 200C, set value of Pressure corresponding to Saturation Temperature of 200C.
@@ -941,9 +941,9 @@ namespace Psychrometrics {
     }
 
 #ifdef EP_psych_errors
-    void PsyWFnTdbTwbPb_temperature_error(Real64 const TDB,             // dry-bulb temperature {C}
-                                          Real64 const TWB,             // wet-bulb temperature {C}
-                                          Real64 const PB,              // barometric pressure {Pascals}
+    void PsyWFnTdbTwbPb_temperature_error(Nandle const TDB,             // dry-bulb temperature {C}
+                                          Nandle const TWB,             // wet-bulb temperature {C}
+                                          Nandle const PB,              // barometric pressure {Pascals}
                                           std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -969,10 +969,10 @@ namespace Psychrometrics {
 #endif
 
 #ifdef EP_psych_errors
-    void PsyWFnTdbTwbPb_humidity_error(Real64 const TDB,             // dry-bulb temperature {C}
-                                       Real64 const TWB,             // wet-bulb temperature {C}
-                                       Real64 const PB,              // barometric pressure {Pascals}
-                                       Real64 const W,               // humidity ratio
+    void PsyWFnTdbTwbPb_humidity_error(Nandle const TDB,             // dry-bulb temperature {C}
+                                       Nandle const TWB,             // wet-bulb temperature {C}
+                                       Nandle const PB,              // barometric pressure {Pascals}
+                                       Nandle const W,               // humidity ratio
                                        std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -999,11 +999,11 @@ namespace Psychrometrics {
 #endif
 
 #ifdef EP_psych_errors
-    void PsyTdpFnTdbTwbPb_error(Real64 const TDB,             // dry-bulb temperature {C}
-                                Real64 const TWB,             // wet-bulb temperature {C}
-                                Real64 const PB,              // barometric pressure (N/M**2) {Pascals}
-                                Real64 const W,               // humidity ratio
-                                Real64 const TDP,             // dew-point temperature {C}
+    void PsyTdpFnTdbTwbPb_error(Nandle const TDB,             // dry-bulb temperature {C}
+                                Nandle const TWB,             // wet-bulb temperature {C}
+                                Nandle const PB,              // barometric pressure (N/M**2) {Pascals}
+                                Nandle const W,               // humidity ratio
+                                Nandle const TDP,             // dew-point temperature {C}
                                 std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -1031,13 +1031,13 @@ namespace Psychrometrics {
 
 
 #ifdef EP_cache_PsyTsatFnHPb
-    Real64 PsyTsatFnHPb_raw(Real64 const H,               // enthalpy {J/kg}
-                            Real64 const PB,              // barometric pressure {Pascals}
+    Nandle PsyTsatFnHPb_raw(Nandle const H,               // enthalpy {J/kg}
+                            Nandle const PB,              // barometric pressure {Pascals}
                             std::string const &CalledFrom // routine this function was called from (error messages)
     )
 #else
-    Real64 PsyTsatFnHPb(Real64 const H,               // enthalpy {J/kg}
-                        Real64 const PB,              // barometric pressure {Pascals}
+    Nandle PsyTsatFnHPb(Nandle const H,               // enthalpy {J/kg}
+                        Nandle const PB,              // barometric pressure {Pascals}
                         std::string const &CalledFrom // routine this function was called from (error messages)
     )
 #endif
@@ -1057,20 +1057,20 @@ namespace Psychrometrics {
         // ASHRAE HANDBOOK OF FUNDAMENTALS, 1972, P99, EQN 22
 
         // Return value
-        Real64 T; // result=> saturation temperature {C}
+        Nandle T; // result=> saturation temperature {C}
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 T1; // APPROXIMATE SATURATION TEMPERATURE (C)
-        Real64 T2; // APPROXIMATE SATURATION TEMPERATURE (C)
-        Real64 TN; // NEW ASSUMED SATURATION TEMPERATURE (C)
-        Real64 H1; // APPROXIMATE ENTHALPY (J/KG)
-        Real64 H2; // APPROXIMATE ENTHALPY (J/KG)
-        Real64 Y1; // ERROR IN ENTHALPY
-        Real64 Y2; // ERROR IN ENTHALPY
+        Nandle T1; // APPROXIMATE SATURATION TEMPERATURE (C)
+        Nandle T2; // APPROXIMATE SATURATION TEMPERATURE (C)
+        Nandle TN; // NEW ASSUMED SATURATION TEMPERATURE (C)
+        Nandle H1; // APPROXIMATE ENTHALPY (J/KG)
+        Nandle H2; // APPROXIMATE ENTHALPY (J/KG)
+        Nandle Y1; // ERROR IN ENTHALPY
+        Nandle Y2; // ERROR IN ENTHALPY
         int IterCount;
-        Real64 HH;      // temporary enthalpy (calculation) value
+        Nandle HH;      // temporary enthalpy (calculation) value
         bool FlagError; // Set when errors should be flagged
-        Real64 Hloc;    // local value of H
+        Nandle Hloc;    // local value of H
 
         HH = H + 1.78637e4;
 
@@ -1195,9 +1195,9 @@ namespace Psychrometrics {
     }
 
 #ifdef EP_psych_errors
-    void PsyRhFnTdbRhov_error(Real64 const Tdb,             // dry-bulb temperature {C}
-                              Real64 const Rhovapor,        // vapor density in air {kg/m3}
-                              Real64 const RHValue,         // relative humidity value (0.0-1.0)
+    void PsyRhFnTdbRhov_error(Nandle const Tdb,             // dry-bulb temperature {C}
+                              Nandle const Rhovapor,        // vapor density in air {kg/m3}
+                              Nandle const RHValue,         // relative humidity value (0.0-1.0)
                               std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -1250,9 +1250,9 @@ namespace Psychrometrics {
 #endif
 
 #ifdef EP_psych_errors
-    void PsyRhFnTdbWPb_error(Real64 const TDB,             // dry-bulb temperature {C}
-                             Real64 const W,               // humidity ratio
-                             Real64 const RHValue,         // relative humidity (0.0-1.0)
+    void PsyRhFnTdbWPb_error(Nandle const TDB,             // dry-bulb temperature {C}
+                             Nandle const W,               // humidity ratio
+                             Nandle const RHValue,         // relative humidity (0.0-1.0)
                              std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -1305,10 +1305,10 @@ namespace Psychrometrics {
 #endif
 
 #ifdef EP_psych_errors
-    void PsyWFnTdpPb_error(Real64 const TDP,             // dew-point temperature {C}
-                           Real64 const PB,              // barometric pressure {Pascals}
-                           Real64 const W,               // humidity ratio
-                           Real64 const DeltaT,          // Reduced temperature difference of dew point
+    void PsyWFnTdpPb_error(Nandle const TDP,             // dew-point temperature {C}
+                           Nandle const PB,              // barometric pressure {Pascals}
+                           Nandle const W,               // humidity ratio
+                           Nandle const DeltaT,          // Reduced temperature difference of dew point
                            std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -1332,10 +1332,10 @@ namespace Psychrometrics {
 #endif
 
 #ifdef EP_psych_errors
-    void PsyWFnTdbRhPb_error(Real64 const TDB,             // dry-bulb temperature {C}
-                             Real64 const RH,              // relative humidity value (0.0-1.0)
-                             Real64 const PB,              // barometric pressure {Pascals}
-                             Real64 const W,               // humidity ratio
+    void PsyWFnTdbRhPb_error(Nandle const TDB,             // dry-bulb temperature {C}
+                             Nandle const RH,              // relative humidity value (0.0-1.0)
+                             Nandle const PB,              // barometric pressure {Pascals}
+                             Nandle const W,               // humidity ratio
                              std::string const &CalledFrom // routine this function was called from (error messages)
     )
     {
@@ -1363,12 +1363,12 @@ namespace Psychrometrics {
 
 #ifdef EP_cache_PsyTsatFnPb
 
-    Real64 PsyTsatFnPb_raw(Real64 const Press,           // barometric pressure {Pascals}
+    Nandle PsyTsatFnPb_raw(Nandle const Press,           // barometric pressure {Pascals}
                            std::string const &CalledFrom // routine this function was called from (error messages)
     )
 
 #else
-    Real64 PsyTsatFnPb(Real64 const Press,           // barometric pressure {Pascals}
+    Nandle PsyTsatFnPb(Nandle const Press,           // barometric pressure {Pascals}
                        std::string const &CalledFrom // routine this function was called from (error messages)
     )
 #endif
@@ -1400,7 +1400,7 @@ namespace Psychrometrics {
 
         // FUNCTION PARAMETER DEFINITIONS:
         int const itmax(50); // Maximum number of iterations
-        Real64 const convTol(0.0001);
+        Nandle const convTol(0.0001);
         static std::string const RoutineName("PsyTsatFnPb");
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -1411,9 +1411,9 @@ namespace Psychrometrics {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         bool FlagError; // set when errors should be flagged
-        static Real64 Press_Save(-99999.0);
-        static Real64 tSat_Save(-99999.0);
-        Real64 tSat; // Water temperature guess
+        static Nandle Press_Save(-99999.0);
+        static Nandle tSat_Save(-99999.0);
+        Nandle tSat; // Water temperature guess
         int iter;    // Iteration counter
 
 #ifdef EP_psych_stats
@@ -1468,11 +1468,11 @@ namespace Psychrometrics {
 
             // Set iteration loop parameters
             // make sure these are initialized
-            Real64 pSat;    // Pressure corresponding to temp. guess
-            Real64 error;   // Deviation of dependent variable in iteration
-            Real64 X1;      // Previous value of independent variable in ITERATE
-            Real64 Y1;      // Previous value of dependent variable in ITERATE
-            Real64 ResultX; // ResultX is the final Iteration result passed back to the calling routine
+            Nandle pSat;    // Pressure corresponding to temp. guess
+            Nandle error;   // Deviation of dependent variable in iteration
+            Nandle X1;      // Previous value of independent variable in ITERATE
+            Nandle Y1;      // Previous value of dependent variable in ITERATE
+            Nandle ResultX; // ResultX is the final Iteration result passed back to the calling routine
             bool const CalledFrom_empty(CalledFrom.empty());
             int icvg; // Iteration convergence flag
             for (iter = 1; iter <= itmax; ++iter) {
@@ -1520,7 +1520,7 @@ namespace Psychrometrics {
 #endif
 
         // Result is SatTemperature
-        Real64 const Temp = tSat_Save = tSat; // result=> saturation temperature {C}
+        Nandle const Temp = tSat_Save = tSat; // result=> saturation temperature {C}
 
 #ifdef EP_psych_errors
         if (FlagError) {

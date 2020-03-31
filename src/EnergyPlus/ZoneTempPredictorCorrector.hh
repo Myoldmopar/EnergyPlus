@@ -136,22 +136,22 @@ namespace ZoneTempPredictorCorrector {
     // Number of zone with onoff thermostat
     extern int NumOnOffCtrZone;
 
-    extern Array1D<Real64> ZoneSetPointLast;
-    extern Array1D<Real64> TempIndZnLd;
-    extern Array1D<Real64> TempDepZnLd;
-    extern Array1D<Real64> ZoneAirRelHum; // Zone relative humidity in percent
+    extern Array1D<Nandle> ZoneSetPointLast;
+    extern Array1D<Nandle> TempIndZnLd;
+    extern Array1D<Nandle> TempDepZnLd;
+    extern Array1D<Nandle> ZoneAirRelHum; // Zone relative humidity in percent
 
     // Zone temperature history - used only for oscillation test
-    extern Array2D<Real64> ZoneTempHist;
-    extern Array1D<Real64> ZoneTempOscillate;
-    extern Array1D<Real64> ZoneTempOscillateDuringOccupancy;
-    extern Array1D<Real64> ZoneTempOscillateInDeadband;
-    extern Real64 AnyZoneTempOscillate;
-    extern Real64 AnyZoneTempOscillateDuringOccupancy;
-    extern Real64 AnyZoneTempOscillateInDeadband;
-    extern Real64 AnnualAnyZoneTempOscillate;
-    extern Real64 AnnualAnyZoneTempOscillateDuringOccupancy;
-    extern Real64 AnnualAnyZoneTempOscillateInDeadband;
+    extern Array2D<Nandle> ZoneTempHist;
+    extern Array1D<Nandle> ZoneTempOscillate;
+    extern Array1D<Nandle> ZoneTempOscillateDuringOccupancy;
+    extern Array1D<Nandle> ZoneTempOscillateInDeadband;
+    extern Nandle AnyZoneTempOscillate;
+    extern Nandle AnyZoneTempOscillateDuringOccupancy;
+    extern Nandle AnyZoneTempOscillateInDeadband;
+    extern Nandle AnnualAnyZoneTempOscillate;
+    extern Nandle AnnualAnyZoneTempOscillateDuringOccupancy;
+    extern Nandle AnnualAnyZoneTempOscillateInDeadband;
     extern bool OscillationVariablesNeeded;
 
     // SUBROUTINE SPECIFICATIONS:
@@ -196,13 +196,13 @@ namespace ZoneTempPredictorCorrector {
     {
         // Members
         bool initialized;
-        Array1D<Real64> ThermalComfortAdaptiveASH55_Upper_90;
-        Array1D<Real64> ThermalComfortAdaptiveASH55_Upper_80;
-        Array1D<Real64> ThermalComfortAdaptiveASH55_Central;
-        Array1D<Real64> ThermalComfortAdaptiveCEN15251_Upper_I;
-        Array1D<Real64> ThermalComfortAdaptiveCEN15251_Upper_II;
-        Array1D<Real64> ThermalComfortAdaptiveCEN15251_Upper_III;
-        Array1D<Real64> ThermalComfortAdaptiveCEN15251_Central;
+        Array1D<Nandle> ThermalComfortAdaptiveASH55_Upper_90;
+        Array1D<Nandle> ThermalComfortAdaptiveASH55_Upper_80;
+        Array1D<Nandle> ThermalComfortAdaptiveASH55_Central;
+        Array1D<Nandle> ThermalComfortAdaptiveCEN15251_Upper_I;
+        Array1D<Nandle> ThermalComfortAdaptiveCEN15251_Upper_II;
+        Array1D<Nandle> ThermalComfortAdaptiveCEN15251_Upper_III;
+        Array1D<Nandle> ThermalComfortAdaptiveCEN15251_Central;
 
         // Default Constructor
         AdaptiveComfortDailySetPointSchedule() : initialized(false)
@@ -220,16 +220,16 @@ namespace ZoneTempPredictorCorrector {
     extern Array1D<ZoneComfortFangerControlType> SetPointSingleHeatCoolFanger;
     extern Array1D<ZoneComfortFangerControlType> SetPointDualHeatCoolFanger;
     extern AdaptiveComfortDailySetPointSchedule AdapComfortDailySetPointSchedule;
-    extern Array1D<Real64> AdapComfortSetPointSummerDesDay;
+    extern Array1D<Nandle> AdapComfortSetPointSummerDesDay;
 
     // Functions
     void clear_state();
 
     void ManageZoneAirUpdates(int const UpdateType,   // Can be iGetZoneSetPoints, iPredictStep, iCorrectStep
-                              Real64 &ZoneTempChange, // Temp change in zone air btw previous and current timestep
+                              Nandle &ZoneTempChange, // Temp change in zone air btw previous and current timestep
                               bool const ShortenTimeStepSys,
                               bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                              Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                              Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     );
 
     void GetZoneAirSetPoints(OutputFiles &outputFiles);
@@ -238,33 +238,33 @@ namespace ZoneTempPredictorCorrector {
 
     void PredictSystemLoads(bool const ShortenTimeStepSys,
                             bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                            Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                            Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     );
 
     void CalcZoneAirTempSetPoints();
 
-    void CalculateMonthlyRunningAverageDryBulb(Array1D<Real64> &runningAverageASH, Array1D<Real64> &runningAverageCEN);
+    void CalculateMonthlyRunningAverageDryBulb(Array1D<Nandle> &runningAverageASH, Array1D<Nandle> &runningAverageCEN);
 
-    void CalculateAdaptiveComfortSetPointSchl(Array1D<Real64> const &runningAverageASH, Array1D<Real64> const &runningAverageCEN);
+    void CalculateAdaptiveComfortSetPointSchl(Array1D<Nandle> const &runningAverageASH, Array1D<Nandle> const &runningAverageCEN);
 
-    void CalcPredictedSystemLoad(int const ZoneNum, Real64 RAFNFrac);
+    void CalcPredictedSystemLoad(int const ZoneNum, Nandle RAFNFrac);
 
-    void CalcPredictedHumidityRatio(int const ZoneNum, Real64 RAFNFrac);
+    void CalcPredictedHumidityRatio(int const ZoneNum, Nandle RAFNFrac);
 
-    void ReportMoistLoadsZoneMultiplier(Real64 &TotalLoad,
-                                        Real64 &TotalHumidLoad,
-                                        Real64 &TotalDehumidLoad,
-                                        Real64 &MoistLoadSingleZone,
-                                        Real64 &MoistLoadHumidSingleZone,
-                                        Real64 &MoistLoadDehumidSingleZone,
-                                        Real64 const ZoneMultiplier,
-                                        Real64 const ZoneMultiplierList
+    void ReportMoistLoadsZoneMultiplier(Nandle &TotalLoad,
+                                        Nandle &TotalHumidLoad,
+                                        Nandle &TotalDehumidLoad,
+                                        Nandle &MoistLoadSingleZone,
+                                        Nandle &MoistLoadHumidSingleZone,
+                                        Nandle &MoistLoadDehumidSingleZone,
+                                        Nandle const ZoneMultiplier,
+                                        Nandle const ZoneMultiplierList
     );
 
-    void CorrectZoneAirTemp(Real64 &ZoneTempChange, // Temperature change in zone air between previous and current timestep
+    void CorrectZoneAirTemp(Nandle &ZoneTempChange, // Temperature change in zone air between previous and current timestep
                             bool const ShortenTimeStepSys,
                             bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step history
-                            Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                            Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     );
 
     void PushZoneTimestepHistories();
@@ -275,66 +275,66 @@ namespace ZoneTempPredictorCorrector {
 
     void CorrectZoneHumRat(int const ZoneNum);
 
-    void DownInterpolate4HistoryValues(Real64 const OldTimeStep,
-                                       Real64 const NewTimeStep,
-                                       Real64 &oldVal0,
-                                       Real64 &oldVal1,
-                                       Real64 &oldVal2,
-                                       Real64 &oldVal3,
-                                       Real64 &oldVal4,
-                                       Real64 &newVal0,
-                                       Real64 &newVal1,
-                                       Real64 &newVal2,
-                                       Real64 &newVal3, // unused 1208
-                                       Real64 &newVal4  // unused 1208
+    void DownInterpolate4HistoryValues(Nandle const OldTimeStep,
+                                       Nandle const NewTimeStep,
+                                       Nandle &oldVal0,
+                                       Nandle &oldVal1,
+                                       Nandle &oldVal2,
+                                       Nandle &oldVal3,
+                                       Nandle &oldVal4,
+                                       Nandle &newVal0,
+                                       Nandle &newVal1,
+                                       Nandle &newVal2,
+                                       Nandle &newVal3, // unused 1208
+                                       Nandle &newVal4  // unused 1208
     );
 
     void InverseModelTemperature(int const ZoneNum,              // Zone number
-                                 Real64 &SumIntGain,             // Zone sum of convective internal gains
-                                 Real64 &SumIntGainExceptPeople, // Zone sum of convective internal gains except for people
-                                 Real64 &SumHA,                  // Zone sum of Hc*Area
-                                 Real64 &SumHATsurf,             // Zone sum of Hc*Area*Tsurf
-                                 Real64 &SumHATref,              // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-                                 Real64 &SumMCp,                 // Zone sum of MassFlowRate*Cp
-                                 Real64 &SumMCpT,                // Zone sum of MassFlowRate*Cp*T
-                                 Real64 &SumSysMCp,              // Zone sum of air system MassFlowRate*Cp
-                                 Real64 &SumSysMCpT,             // Zone sum of air system MassFlowRate*Cp*T
-                                 Real64 &AirCap                  // Formerly CoefAirrat, coef in zone temp eqn with dim of "air power capacity"rd
+                                 Nandle &SumIntGain,             // Zone sum of convective internal gains
+                                 Nandle &SumIntGainExceptPeople, // Zone sum of convective internal gains except for people
+                                 Nandle &SumHA,                  // Zone sum of Hc*Area
+                                 Nandle &SumHATsurf,             // Zone sum of Hc*Area*Tsurf
+                                 Nandle &SumHATref,              // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+                                 Nandle &SumMCp,                 // Zone sum of MassFlowRate*Cp
+                                 Nandle &SumMCpT,                // Zone sum of MassFlowRate*Cp*T
+                                 Nandle &SumSysMCp,              // Zone sum of air system MassFlowRate*Cp
+                                 Nandle &SumSysMCpT,             // Zone sum of air system MassFlowRate*Cp*T
+                                 Nandle &AirCap                  // Formerly CoefAirrat, coef in zone temp eqn with dim of "air power capacity"rd
     );
 
     void InverseModelHumidity(int const ZoneNum,              // Zone number
-                              Real64 &LatentGain,             // Zone sum of latent gain
-                              Real64 &LatentGainExceptPeople, // Zone sum of latent gain except for people
-                              Real64 &ZoneMassFlowRate,       // Zone air mass flow rate
-                              Real64 &MoistureMassFlowRate,   // Zone moisture mass flow rate
-                              Real64 &H2OHtOfVap,             // Heat of vaporization of air
-                              Real64 &RhoAir                  // Air density
+                              Nandle &LatentGain,             // Zone sum of latent gain
+                              Nandle &LatentGainExceptPeople, // Zone sum of latent gain except for people
+                              Nandle &ZoneMassFlowRate,       // Zone air mass flow rate
+                              Nandle &MoistureMassFlowRate,   // Zone moisture mass flow rate
+                              Nandle &H2OHtOfVap,             // Heat of vaporization of air
+                              Nandle &RhoAir                  // Air density
     );
 
     void CalcZoneSums(int const ZoneNum,  // Zone number
-                      Real64 &SumIntGain, // Zone sum of convective internal gains
-                      Real64 &SumHA,      // Zone sum of Hc*Area
-                      Real64 &SumHATsurf, // Zone sum of Hc*Area*Tsurf
-                      Real64 &SumHATref,  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-                      Real64 &SumMCp,     // Zone sum of MassFlowRate*Cp
-                      Real64 &SumMCpT,    // Zone sum of MassFlowRate*Cp*T
-                      Real64 &SumSysMCp,  // Zone sum of air system MassFlowRate*Cp
-                      Real64 &SumSysMCpT  // Zone sum of air system MassFlowRate*Cp*T
+                      Nandle &SumIntGain, // Zone sum of convective internal gains
+                      Nandle &SumHA,      // Zone sum of Hc*Area
+                      Nandle &SumHATsurf, // Zone sum of Hc*Area*Tsurf
+                      Nandle &SumHATref,  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+                      Nandle &SumMCp,     // Zone sum of MassFlowRate*Cp
+                      Nandle &SumMCpT,    // Zone sum of MassFlowRate*Cp*T
+                      Nandle &SumSysMCp,  // Zone sum of air system MassFlowRate*Cp
+                      Nandle &SumSysMCpT  // Zone sum of air system MassFlowRate*Cp*T
     );
 
     void CalcZoneComponentLoadSums(int const ZoneNum,        // Zone number
-                                   Real64 const TempDepCoef, // Dependent coefficient
-                                   Real64 const TempIndCoef, // Independent coefficient
-                                   Real64 &SumIntGains,      // Zone sum of convective internal gains
-                                   Real64 &SumHADTsurfs,     // Zone sum of Hc*Area*(Tsurf - Tz)
-                                   Real64 &SumMCpDTzones,    // zone sum of MassFlowRate*cp*(TremotZone - Tz) transfer air from other zone, Mixing
-                                   Real64 &SumMCpDtInfil,    // Zone sum of MassFlowRate*Cp*(Tout - Tz) transfer from outside, ventil, earth tube
-                                   Real64 &SumMCpDTsystem,   // Zone sum of air system MassFlowRate*Cp*(Tsup - Tz)
-                                   Real64 &SumNonAirSystem,  // Zone sum of non air system convective heat gains
-                                   Real64 &CzdTdt,           // Zone air energy storage term.
-                                   Real64 &imBalance,        // put all terms in eq. 5 on RHS , should be zero
-                                   Real64 &SumEnthalpyM,     // Zone sum of phase change material melting enthlpy
-                                   Real64 &SumEnthalpyH      // Zone sum of phase change material freezing enthalpy
+                                   Nandle const TempDepCoef, // Dependent coefficient
+                                   Nandle const TempIndCoef, // Independent coefficient
+                                   Nandle &SumIntGains,      // Zone sum of convective internal gains
+                                   Nandle &SumHADTsurfs,     // Zone sum of Hc*Area*(Tsurf - Tz)
+                                   Nandle &SumMCpDTzones,    // zone sum of MassFlowRate*cp*(TremotZone - Tz) transfer air from other zone, Mixing
+                                   Nandle &SumMCpDtInfil,    // Zone sum of MassFlowRate*Cp*(Tout - Tz) transfer from outside, ventil, earth tube
+                                   Nandle &SumMCpDTsystem,   // Zone sum of air system MassFlowRate*Cp*(Tsup - Tz)
+                                   Nandle &SumNonAirSystem,  // Zone sum of non air system convective heat gains
+                                   Nandle &CzdTdt,           // Zone air energy storage term.
+                                   Nandle &imBalance,        // put all terms in eq. 5 on RHS , should be zero
+                                   Nandle &SumEnthalpyM,     // Zone sum of phase change material melting enthlpy
+                                   Nandle &SumEnthalpyH      // Zone sum of phase change material freezing enthalpy
         );
 
     bool VerifyThermostatInZone(std::string const &ZoneName); // Zone to verify
@@ -343,20 +343,20 @@ namespace ZoneTempPredictorCorrector {
 
     void DetectOscillatingZoneTemp();
 
-    void AdjustAirSetPointsforOpTempCntrl(int const TempControlledZoneID, int const ActualZoneNum, Real64 &ZoneAirSetPoint);
+    void AdjustAirSetPointsforOpTempCntrl(int const TempControlledZoneID, int const ActualZoneNum, Nandle &ZoneAirSetPoint);
 
-    void AdjustOperativeSetPointsforAdapComfort(int const TempControlledZoneID, Real64 &ZoneAirSetPoint);
+    void AdjustOperativeSetPointsforAdapComfort(int const TempControlledZoneID, Nandle &ZoneAirSetPoint);
 
     void CalcZoneAirComfortSetPoints();
 
     void GetComfortSetPoints(int const PeopleNum,
                              int const ComfortControlNum,
-                             Real64 const PMVSet,
-                             Real64 &Tset // drybulb setpoint temperature for a given PMV value
+                             Nandle const PMVSet,
+                             Nandle &Tset // drybulb setpoint temperature for a given PMV value
     );
 
-    Real64 PMVResidual(Real64 const Tset,
-                       Array1D<Real64> const &Par // par(1) = PMV set point
+    Nandle PMVResidual(Nandle const Tset,
+                       Array1D<Nandle> const &Par // par(1) = PMV set point
     );
 
     void AdjustCoolingSetPointforTempAndHumidityControl(int const TempControlledZoneID,
@@ -367,7 +367,7 @@ namespace ZoneTempPredictorCorrector {
 
     void FillPredefinedTableOnThermostatSetpoints();
 
-    std::tuple<Real64, int, std::string>
+    std::tuple<Nandle, int, std::string>
     temperatureAndCountInSch(int const &scheduleIndex, bool const &isSummer, int const &dayOfWeek, int const &hourOfDay);
 
 } // namespace ZoneTempPredictorCorrector

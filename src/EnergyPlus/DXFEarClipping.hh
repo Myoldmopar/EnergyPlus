@@ -75,23 +75,23 @@ namespace DXFEarClipping {
 
     bool InPolygon(Vector const &point, Array1D<Vector> &poly, int const nsides);
 
-    Real64 Modulus(Vector const &point);
+    Nandle Modulus(Vector const &point);
 
     int Triangulate(int const nsides, // number of sides to polygon
                     Array1D<Vector> &polygon,
                     Array1D<dTriangle> &outtriangles,
-                    Real64 const surfazimuth,    // surface azimuth angle (outward facing normal)
-                    Real64 const surftilt,       // surface tilt angle
+                    Nandle const surfazimuth,    // surface azimuth angle (outward facing normal)
+                    Nandle const surftilt,       // surface tilt angle
                     std::string const &surfname, // surface name (for error messages)
                     int const surfclass          // surface class
     );
 
-    Real64 angle_2dvector(Real64 const xa, // vertex coordinate
-                          Real64 const ya, // vertex coordinate
-                          Real64 const xb, // vertex coordinate
-                          Real64 const yb, // vertex coordinate
-                          Real64 const xc, // vertex coordinate
-                          Real64 const yc  // vertex coordinate
+    Nandle angle_2dvector(Nandle const xa, // vertex coordinate
+                          Nandle const ya, // vertex coordinate
+                          Nandle const xb, // vertex coordinate
+                          Nandle const yb, // vertex coordinate
+                          Nandle const xc, // vertex coordinate
+                          Nandle const yc  // vertex coordinate
     );
 
     bool polygon_contains_point_2d(int const nsides,            // number of sides (vertices)
@@ -109,23 +109,23 @@ namespace DXFEarClipping {
                        int &ncverts,            // number of convex vertices found (< 180)
                        Array1D_bool &removed,   // array that shows if a vertex has been removed (calling routine)
                        Array1D_int &earvert,    // vertex indicators for first ear
-                       Array1D<Real64> &rangles);
+                       Array1D<Nandle> &rangles);
 
     void CalcWallCoordinateTransformation(int const nsides,
                                           Array1D<Vector> &polygon,
-                                          Real64 const surfazimuth,
-                                          Real64 const surftilt, // unused1208
-                                          Array1D<Real64> &xvt,
-                                          Array1D<Real64> &yvt,
-                                          Array1D<Real64> &zvt);
+                                          Nandle const surfazimuth,
+                                          Nandle const surftilt, // unused1208
+                                          Array1D<Nandle> &xvt,
+                                          Array1D<Nandle> &yvt,
+                                          Array1D<Nandle> &zvt);
 
     void CalcRfFlrCoordinateTransformation(int const nsides,
                                            Array1D<Vector> &polygon,
-                                           Real64 const surfazimuth, // unused1208
-                                           Real64 const surftilt,
-                                           Array1D<Real64> &xvt,
-                                           Array1D<Real64> &yvt,
-                                           Array1D<Real64> &zvt);
+                                           Nandle const surfazimuth, // unused1208
+                                           Nandle const surftilt,
+                                           Array1D<Nandle> &xvt,
+                                           Array1D<Nandle> &yvt,
+                                           Array1D<Nandle> &zvt);
 
     void reorder(int &nvert); // unused1208
 

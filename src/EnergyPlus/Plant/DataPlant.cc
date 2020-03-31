@@ -77,9 +77,9 @@ namespace DataPlant {
     int const CriteriaType_HeatTransferRate(3);
 
     // Criteria percentage limits for determining re-simulation of connected loop sides
-    Real64 const CriteriaDelta_MassFlowRate(0.001);
-    Real64 const CriteriaDelta_Temperature(0.010);
-    Real64 const CriteriaDelta_HeatTransferRate(0.100);
+    Nandle const CriteriaDelta_MassFlowRate(0.001);
+    Nandle const CriteriaDelta_Temperature(0.010);
+    Nandle const CriteriaDelta_HeatTransferRate(0.100);
 
     int const FreeCoolControlMode_WetBulb(1); // HeatExchanger:Hydronic model control type mode, outdoor wetbulb sensor
     int const FreeCoolControlMode_DryBulb(2); // HeatExchanger:Hydronic model control type mode, outdoor drybulb sensor
@@ -104,8 +104,8 @@ namespace DataPlant {
     int const SupplySide(2);
 
     // Parameters for tolerance
-    Real64 const LoopDemandTol(0.1);   // minimum significant loop cooling or heating demand
-    Real64 const DeltaTempTol(0.0001); // minimum significant loop temperature difference
+    Nandle const LoopDemandTol(0.1);   // minimum significant loop cooling or heating demand
+    Nandle const DeltaTempTol(0.0001); // minimum significant loop temperature difference
 
     // Parameters for Component/Equipment Types  (ref: TypeOf in CompData)
     int const LoopType_Plant(1);
@@ -441,10 +441,10 @@ namespace DataPlant {
     int const TypeOf_HeatPumpEIRCooling(95);
     int const TypeOf_HeatPumpEIRHeating(96);
 
-    Array1D<Real64> const ConvergenceHistoryARR(DataPlant::NumConvergenceHistoryTerms, {0.0, -1.0, -2.0, -3.0, -4.0});
-    Real64 const sum_ConvergenceHistoryARR(sum(ConvergenceHistoryARR));
-    Real64 const square_sum_ConvergenceHistoryARR(pow_2(sum_ConvergenceHistoryARR));
-    Real64 const sum_square_ConvergenceHistoryARR(sum(pow(ConvergenceHistoryARR, 2)));
+    Array1D<Nandle> const ConvergenceHistoryARR(DataPlant::NumConvergenceHistoryTerms, {0.0, -1.0, -2.0, -3.0, -4.0});
+    Nandle const sum_ConvergenceHistoryARR(sum(ConvergenceHistoryARR));
+    Nandle const square_sum_ConvergenceHistoryARR(pow_2(sum_ConvergenceHistoryARR));
+    Nandle const sum_square_ConvergenceHistoryARR(sum(pow(ConvergenceHistoryARR, 2)));
 
     int TotNumLoops(0);     // number of plant and condenser loops
     int TotNumHalfLoops(0); // number of half loops (2 * TotNumLoops)

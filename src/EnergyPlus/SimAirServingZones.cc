@@ -407,7 +407,7 @@ namespace SimAirServingZones {
 
         // SUBROUTINE LOCAL VARIABLE DEFINITIONS
         int NumNumbers;                // number of numbers returned by GetObjectItem
-        Array1D<Real64> Numbers;       // numbers (REAL(r64)s) returned by GetObjectItem
+        Array1D<Nandle> Numbers;       // numbers (REAL(r64)s) returned by GetObjectItem
         Array1D_string cNumericFields; // Numeric field names
         Array1D_bool lNumericBlanks;   // Logical array, numeric field input BLANK = .TRUE.
         int NumAlphas;                 // number of strings returned by GetObjectItem
@@ -1532,9 +1532,9 @@ namespace SimAirServingZones {
         int NodeNumIn;                     // node number of a splitter inlet node or a branch inlet node
         int SplitterOutNum;                // DO loop index of splitter outlets
         int PlenumOutNum;                  // DO loop index of supply plenum outlets
-        Real64 MassFlowSaved;              // mass flow rate for a node saved from previous call
-        Real64 MassFlowSet;                // desired mass flow rate for a node
-        static Real64 SumZoneDesFlow(0.0); // sum of the zone design air mass flow rates for zones served by a system
+        Nandle MassFlowSaved;              // mass flow rate for a node saved from previous call
+        Nandle MassFlowSet;                // desired mass flow rate for a node
+        static Nandle SumZoneDesFlow(0.0); // sum of the zone design air mass flow rates for zones served by a system
         int SupAirPath;                    // supply air path do loop index
         int SupAirPathNum;                 // specific supply air path index
         int SplitterNum;                   // Zone equip splitter index
@@ -1550,7 +1550,7 @@ namespace SimAirServingZones {
         int RetFanIndex;
         bool FoundOASys;
         static int TUInNode(0); // inlet node number of a terminal unit
-        static Real64 MassFlowSetToler;
+        static Nandle MassFlowSetToler;
         static Array1D_int CtrlZoneNumsCool;
         static Array1D_int CtrlZoneNumsHeat;
         static Array1D_int ZoneInletNodesCool;
@@ -1572,7 +1572,7 @@ namespace SimAirServingZones {
         ///////////////////////////
 
         bool ErrorsFound;
-        static Real64 OAReliefDiff(0.0); // local for massflow change across OA system, kg/s
+        static Nandle OAReliefDiff(0.0); // local for massflow change across OA system, kg/s
 
         Array1D_int tmpNodeARR;
         int nodeLoop;
@@ -2519,8 +2519,8 @@ namespace SimAirServingZones {
         // SUBROUTINE LOCAL VARIABLE DEFINITIONS
         // Last saved HVAC time stamp at beginning of step in seconds.
         // Used to control when to reset the statistic counters for each new HVAC step.
-        static Real64 SavedPreviousHVACTime(0.0);
-        Real64 rxTime;
+        static Nandle SavedPreviousHVACTime(0.0);
+        Nandle rxTime;
         // Maximum of iteration counters across all air loops
         static int IterMax(0);
         // Aggregated number of iterations across all air loops
@@ -2638,7 +2638,7 @@ namespace SimAirServingZones {
 
         if (numAirLoopDOAS > 0) {
             int index;
-            Real64 OAMassFLowrate = 0.0;
+            Nandle OAMassFLowrate = 0.0;
             for (std::size_t loop = 0; loop < airloopDOAS.size(); ++loop) {
                 auto &thisAirLoopDOASObjec = airloopDOAS[loop]; // <- regular reference variable, not a pointer
                 if (thisAirLoopDOASObjec.m_AirLoopDOASNum > -1) {
@@ -3549,9 +3549,9 @@ namespace SimAirServingZones {
         // DERIVED TYPE DEFINITIONS: None
 
         // SUBROUTINE LOCAL VARIABLE DEFINITIONS:
-        Real64 QActual;
+        Nandle QActual;
         int OAUnitNum = 0;           // used only for UnitarySystem call
-        Real64 OAUCoilOutTemp = 0.0; // used only for UnitarySystem call
+        Nandle OAUCoilOutTemp = 0.0; // used only for UnitarySystem call
         bool ZoneEquipFlag = false;  // used only for UnitarySystem call
 
         // FLOW:
@@ -3635,8 +3635,8 @@ namespace SimAirServingZones {
                 SimCoilUserDefined(CompName, CompIndex, AirLoopNum, HeatingActive, CoolingActive);
 
             } else if (SELECT_CASE_var == UnitarySystemModel) { // 'AirLoopHVAC:UnitarySystem'
-                Real64 sensOut = 0.0;
-                Real64 latOut = 0.0;
+                Nandle sensOut = 0.0;
+                Nandle latOut = 0.0;
                 CompPointer->simulate(CompName,
                                       FirstHVACIteration,
                                       AirLoopNum,
@@ -3692,10 +3692,10 @@ namespace SimAirServingZones {
             } else if (SELECT_CASE_var == ZoneVRFasAirLoopEquip) { // 'ZoneHVAC:TerminalUnit:VariableRefrigerantFlow'
                 int ControlledZoneNum = 0;
                 int const OAUnitNum = 0;
-                Real64 const OAUCoilOutTemp = 0.0;
+                Nandle const OAUCoilOutTemp = 0.0;
                 bool const ZoneEquipment = false;
-                Real64 sysOut = 0.0;
-                Real64 latOut = 0.0;
+                Nandle sysOut = 0.0;
+                Nandle latOut = 0.0;
                 HVACVariableRefrigerantFlow::SimulateVRF(CompName,
                                                          FirstHVACIteration,
                                                          ControlledZoneNum,
@@ -3769,14 +3769,14 @@ namespace SimAirServingZones {
         int OutletNodeNum;              // node number of a splitter outlet node
         int RABNodeNum;                 // splitter outlet RAB node
         int NonRABNodeNum;              // splitter outlet nonRAB node
-        Real64 MassFlowRateSetSum;      // sum of mass flow rate setpoints for splitter outlet nodes
-        Real64 MassFlowRateOut;         // outlet mass flow rate of mixer
-        Real64 MassFlowRateMinAvailOut; // outlet minimum available mass flow rate
-        Real64 OutletHumRat;            // outlet humidity ratio of mixer
-        Real64 OutletEnthalpy;          // outlet enthalpy of mixer
-        Real64 OutletPress;
-        Real64 OutletCO2; // outlet CO2 of mixer
-        Real64 OutletGC;  // outlet generic contaminant of mixer
+        Nandle MassFlowRateSetSum;      // sum of mass flow rate setpoints for splitter outlet nodes
+        Nandle MassFlowRateOut;         // outlet mass flow rate of mixer
+        Nandle MassFlowRateMinAvailOut; // outlet minimum available mass flow rate
+        Nandle OutletHumRat;            // outlet humidity ratio of mixer
+        Nandle OutletEnthalpy;          // outlet enthalpy of mixer
+        Nandle OutletPress;
+        Nandle OutletCO2; // outlet CO2 of mixer
+        Nandle OutletGC;  // outlet generic contaminant of mixer
 
         // FLOW
         MassFlowRateSetSum = 0.0;
@@ -3936,8 +3936,8 @@ namespace SimAirServingZones {
 
         int BranchNum;                 // branch DO loop index
         int NodeIndex;                 // node on branch DO loop index
-        Real64 MassFlowRateOutSum;     // sum of splitter outlet mass flow rates (imposed)
-        Real64 BranchMassFlowMaxAvail; // branch level maximum flow rate possible
+        Nandle MassFlowRateOutSum;     // sum of splitter outlet mass flow rates (imposed)
+        Nandle BranchMassFlowMaxAvail; // branch level maximum flow rate possible
         int OutletNum;                 // splitter outlet DO loop index
         int OutletNodeNum;             // a splitter outlet node number
         int InletNodeNum;              // splitter inlet node number
@@ -4799,16 +4799,16 @@ namespace SimAirServingZones {
 
         using namespace OutputReportPredefined;
 
-        Real64 MinOAFlow;                // design minimum outside air flow for a system
-        Real64 ZoneOAFracCooling;        // zone OA fraction for cooling design air flow
-        Real64 ZoneOAFracHeating;        // zone OA fraction for heating design air flow
-        static Real64 Ep(1.0);           // zone primary air fraction
-        Real64 ZoneSA;                   // Zone supply air flow rate
-        Real64 ZonePA;                   // Zone primary air flow rate
-        Real64 ClgSupplyAirAdjustFactor; // temporary variable
-        Real64 HtgSupplyAirAdjustFactor; // temporary variable
-        Real64 SysOAUnc;                 // uncorrected system OA summing up people and area based OA for all zones for VRP
-        Real64 ZoneOAUnc;                // uncorrected zone OA summing up people and area based OA for each zone
+        Nandle MinOAFlow;                // design minimum outside air flow for a system
+        Nandle ZoneOAFracCooling;        // zone OA fraction for cooling design air flow
+        Nandle ZoneOAFracHeating;        // zone OA fraction for heating design air flow
+        static Nandle Ep(1.0);           // zone primary air fraction
+        Nandle ZoneSA;                   // Zone supply air flow rate
+        Nandle ZonePA;                   // Zone primary air flow rate
+        Nandle ClgSupplyAirAdjustFactor; // temporary variable
+        Nandle HtgSupplyAirAdjustFactor; // temporary variable
+        Nandle SysOAUnc;                 // uncorrected system OA summing up people and area based OA for all zones for VRP
+        Nandle ZoneOAUnc;                // uncorrected zone OA summing up people and area based OA for each zone
 
         // begin system OA calcs, this is the first pass, std 62.1 calcs are redone after adjustments and zone units are set up
 
@@ -5312,17 +5312,17 @@ namespace SimAirServingZones {
         int I;             // write statement index
         int J;             // write statement index
         //  REAL(r64)    :: HourFrac           ! fractional hour
-        Real64 SysCoolRetTemp;              // system cooling return temperature for a time step [C]
-        Real64 SysHeatRetTemp;              // system heating return temperature for a time step [C]
-        Real64 RhoAir;                      // density of air kg/m3
-        Real64 OutAirFrac;                  // outside air fraction
-        Real64 SysCoolMixTemp;              // system cooling mixed air temperature [C]
-        Real64 SysHeatMixTemp;              // system heating mixed air temperature [C]
-        Real64 SysSensCoolCap;              // system sensible cooling capacity [W]
-        Real64 SysTotCoolCap;               // system total cooling capacity [W]
-        Real64 SysCoolZoneAvgTemp;          // system cooling zone average temperature [C]
-        Real64 SysHeatZoneAvgTemp;          // system heating zone average temperature [C]
-        Real64 SysHeatCap;                  // system heating capacity [W]
+        Nandle SysCoolRetTemp;              // system cooling return temperature for a time step [C]
+        Nandle SysHeatRetTemp;              // system heating return temperature for a time step [C]
+        Nandle RhoAir;                      // density of air kg/m3
+        Nandle OutAirFrac;                  // outside air fraction
+        Nandle SysCoolMixTemp;              // system cooling mixed air temperature [C]
+        Nandle SysHeatMixTemp;              // system heating mixed air temperature [C]
+        Nandle SysSensCoolCap;              // system sensible cooling capacity [W]
+        Nandle SysTotCoolCap;               // system total cooling capacity [W]
+        Nandle SysCoolZoneAvgTemp;          // system cooling zone average temperature [C]
+        Nandle SysHeatZoneAvgTemp;          // system heating zone average temperature [C]
+        Nandle SysHeatCap;                  // system heating capacity [W]
         int HourCounter;                    // Hour Counter
         int TimeStepCounter;                // Time Step Counter
         int Minutes;                        // Current Minutes Counter
@@ -5332,43 +5332,43 @@ namespace SimAirServingZones {
         int HeatDDNum;                      // design day index of a peak cooling day
         int CoolTimeStepNum;                // time step index (in day) of a cooling peak
         int HeatTimeStepNum;                // time step index (in day) of a cooling peak
-        Real64 OutAirTemp;                  // outside air temperature
-        Real64 OutAirHumRat;                // outside air humifity ratio
-        Real64 SysCoolMixHumRat;            // system cooling mixed air humidity ratio [kg water/kg dry air]
-        Real64 SysCoolRetHumRat;            // system coolingreturn air humifity ratio [kg water/kg dry air]
-        Real64 SysHeatMixHumRat;            // system heating mixed air humidity ratio [kg water/kg dry air]
-        Real64 SysHeatRetHumRat;            // system heatingreturn air humifity ratio [kg water/kg dry air]
-        Real64 SysCoolOutTemp;              // system cooling outside air temperature [C]
-        Real64 SysCoolOutHumRat;            // system cooling outside air humidity ratio [kg water/kg dry air]
-        Real64 SysHeatOutTemp;              // system heating outside air temperature [C]
-        Real64 SysHeatOutHumRat;            // system heating outside air humidity ratio [kg water/kg dry air]
-        Real64 SysDOASHeatAdd;              // system DOAS heat addition rate [W]
-        Real64 SysDOASLatAdd;               // system DOAS latent heat addition rate [W]
-        Real64 SysCoolSizingRat;            // ratio of user input design flow for cooling divided by calculated design cooling flow
-        Real64 SysHeatSizingRat;            // ratio of user input design flow for heating divided by calculated design heating flow
-        Real64 ZoneOARatio;                 // ratio of zone OA flow to zone design cooling or heating flow
-        Real64 RetTempRise;                 // difference between zone return temperature and zone temperature [delta K]
-        Real64 SysCoolingEv;                // System level ventilation effectiveness for cooling mode
-        Real64 SysHeatingEv;                // System level ventilation effectiveness for heating mode
-        static Array1D<Real64> EvBySysCool; // saved value of SysCoolingEv used in 62.1 tabular report
-        static Array1D<Real64> EvBySysHeat; // saved value of SysHeatingEv used in 62.1 tabular report
-        static Real64 Ep(1.0);              // zone primary air fraction
-        static Real64 Er(0.0);              // zone secondary recirculation fraction
-        static Real64 Fa(1.0);              // temporary variable used in multi-path VRP calc
-        static Real64 Fb(1.0);              // temporary variable used in multi-path VRP calc
-        static Real64 Fc(1.0);              // temporary variable used in multi-path VRP calc
-        static Real64 Xs(1.0);              // uncorrected system outdoor air fraction
-        static Real64 MinHeatingEvz(1.0);   // minimum zone ventilation efficiency for heating (to be used as system efficiency)
-        static Real64 MinCoolingEvz(1.0);   // minimum zone ventilation efficiency for cooling (to be used as system efficiency)
-        static Real64 ZoneOAFrac(0.0);      // zone OA fraction
-        static Real64 ZoneEz(1.0);          // zone air distribution effectiveness
-        static Real64 Vou(0.0);             // Uncorrected outdoor air intake for all zones per ASHRAE std 62.1
-        static Real64 Vot(0.0);             // Required outdoor air intake at primary AHU per ASHRAE std 62.1
-        Real64 SysHtgPeakAirflow;           // Peak heating airflow
+        Nandle OutAirTemp;                  // outside air temperature
+        Nandle OutAirHumRat;                // outside air humifity ratio
+        Nandle SysCoolMixHumRat;            // system cooling mixed air humidity ratio [kg water/kg dry air]
+        Nandle SysCoolRetHumRat;            // system coolingreturn air humifity ratio [kg water/kg dry air]
+        Nandle SysHeatMixHumRat;            // system heating mixed air humidity ratio [kg water/kg dry air]
+        Nandle SysHeatRetHumRat;            // system heatingreturn air humifity ratio [kg water/kg dry air]
+        Nandle SysCoolOutTemp;              // system cooling outside air temperature [C]
+        Nandle SysCoolOutHumRat;            // system cooling outside air humidity ratio [kg water/kg dry air]
+        Nandle SysHeatOutTemp;              // system heating outside air temperature [C]
+        Nandle SysHeatOutHumRat;            // system heating outside air humidity ratio [kg water/kg dry air]
+        Nandle SysDOASHeatAdd;              // system DOAS heat addition rate [W]
+        Nandle SysDOASLatAdd;               // system DOAS latent heat addition rate [W]
+        Nandle SysCoolSizingRat;            // ratio of user input design flow for cooling divided by calculated design cooling flow
+        Nandle SysHeatSizingRat;            // ratio of user input design flow for heating divided by calculated design heating flow
+        Nandle ZoneOARatio;                 // ratio of zone OA flow to zone design cooling or heating flow
+        Nandle RetTempRise;                 // difference between zone return temperature and zone temperature [delta K]
+        Nandle SysCoolingEv;                // System level ventilation effectiveness for cooling mode
+        Nandle SysHeatingEv;                // System level ventilation effectiveness for heating mode
+        static Array1D<Nandle> EvBySysCool; // saved value of SysCoolingEv used in 62.1 tabular report
+        static Array1D<Nandle> EvBySysHeat; // saved value of SysHeatingEv used in 62.1 tabular report
+        static Nandle Ep(1.0);              // zone primary air fraction
+        static Nandle Er(0.0);              // zone secondary recirculation fraction
+        static Nandle Fa(1.0);              // temporary variable used in multi-path VRP calc
+        static Nandle Fb(1.0);              // temporary variable used in multi-path VRP calc
+        static Nandle Fc(1.0);              // temporary variable used in multi-path VRP calc
+        static Nandle Xs(1.0);              // uncorrected system outdoor air fraction
+        static Nandle MinHeatingEvz(1.0);   // minimum zone ventilation efficiency for heating (to be used as system efficiency)
+        static Nandle MinCoolingEvz(1.0);   // minimum zone ventilation efficiency for cooling (to be used as system efficiency)
+        static Nandle ZoneOAFrac(0.0);      // zone OA fraction
+        static Nandle ZoneEz(1.0);          // zone air distribution effectiveness
+        static Nandle Vou(0.0);             // Uncorrected outdoor air intake for all zones per ASHRAE std 62.1
+        static Nandle Vot(0.0);             // Required outdoor air intake at primary AHU per ASHRAE std 62.1
+        Nandle SysHtgPeakAirflow;           // Peak heating airflow
         int MatchingCooledZoneNum;          // temporary variable
-        Real64 termunitsizingtempfrac;      // 1.0/(1.0+termunitsizing(ctrlzone)%inducrat)
-        Real64 termunitsizingtemp;          // (1.0+termunitsizing(ctrlzone)%inducrat)
-        Real64 VozClg(0.0);                 // corrected (for ventilation efficiency) zone outside air flow rate [m3/s]
+        Nandle termunitsizingtempfrac;      // 1.0/(1.0+termunitsizing(ctrlzone)%inducrat)
+        Nandle termunitsizingtemp;          // (1.0+termunitsizing(ctrlzone)%inducrat)
+        Nandle VozClg(0.0);                 // corrected (for ventilation efficiency) zone outside air flow rate [m3/s]
 
         NumOfTimeStepInDay = NumOfTimeStepInHour * 24;
 
@@ -5455,7 +5455,7 @@ namespace SimAirServingZones {
                     for (int ZonesCooledNum = 1; ZonesCooledNum <= NumZonesCooled; ++ZonesCooledNum) { // loop over cooled zones
                         int CtrlZoneNum = AirToZoneNodeInfo(AirLoopNum).CoolCtrlZoneNums(ZonesCooledNum);
                         int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitCoolSizingIndex(ZonesCooledNum);
-                        Real64 adjCoolMassFlow = TermUnitSizing(TermUnitSizingIndex)
+                        Nandle adjCoolMassFlow = TermUnitSizing(TermUnitSizingIndex)
                                                      .applyTermUnitSizingCoolFlow(ZoneSizing(CurOverallSimDay, CtrlZoneNum).DesCoolMassFlow,
                                                                                   ZoneSizing(CurOverallSimDay, CtrlZoneNum).DesCoolMassFlowNoOA);
                         SysSizing(CurOverallSimDay, AirLoopNum).NonCoinCoolMassFlow +=
@@ -5466,7 +5466,7 @@ namespace SimAirServingZones {
                         for (int ZonesHeatedNum = 1; ZonesHeatedNum <= NumZonesHeated; ++ZonesHeatedNum) { // loop over heated zones
                             int CtrlZoneNum = AirToZoneNodeInfo(AirLoopNum).HeatCtrlZoneNums(ZonesHeatedNum);
                             int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitHeatSizingIndex(ZonesHeatedNum);
-                            Real64 adjHeatMassFlow = TermUnitSizing(TermUnitSizingIndex)
+                            Nandle adjHeatMassFlow = TermUnitSizing(TermUnitSizingIndex)
                                                          .applyTermUnitSizingHeatFlow(ZoneSizing(CurOverallSimDay, CtrlZoneNum).DesHeatMassFlow,
                                                                                       ZoneSizing(CurOverallSimDay, CtrlZoneNum).DesHeatMassFlowNoOA);
                             SysSizing(CurOverallSimDay, AirLoopNum).NonCoinHeatMassFlow +=
@@ -5476,7 +5476,7 @@ namespace SimAirServingZones {
                         for (int ZonesCooledNum = 1; ZonesCooledNum <= NumZonesCooled; ++ZonesCooledNum) { // loop over cooled zones
                             int CtrlZoneNum = AirToZoneNodeInfo(AirLoopNum).CoolCtrlZoneNums(ZonesCooledNum);
                             int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitCoolSizingIndex(ZonesCooledNum);
-                            Real64 adjHeatMassFlow = TermUnitSizing(TermUnitSizingIndex)
+                            Nandle adjHeatMassFlow = TermUnitSizing(TermUnitSizingIndex)
                                                          .applyTermUnitSizingHeatFlow(ZoneSizing(CurOverallSimDay, CtrlZoneNum).DesHeatMassFlow,
                                                                                       ZoneSizing(CurOverallSimDay, CtrlZoneNum).DesHeatMassFlowNoOA);
                             SysSizing(CurOverallSimDay, AirLoopNum).NonCoinHeatMassFlow +=
@@ -5544,7 +5544,7 @@ namespace SimAirServingZones {
                         int CtrlZoneNum = AirToZoneNodeInfo(AirLoopNum).CoolCtrlZoneNums(ZonesCooledNum);
                         int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitCoolSizingIndex(ZonesCooledNum);
                         // sum up the system mass flow rate for this time step
-                        Real64 adjCoolFlowSeq =
+                        Nandle adjCoolFlowSeq =
                             TermUnitSizing(TermUnitSizingIndex)
                                 .applyTermUnitSizingCoolFlow(ZoneSizing(CurOverallSimDay, CtrlZoneNum).CoolFlowSeq(TimeStepInDay),
                                                              ZoneSizing(CurOverallSimDay, CtrlZoneNum).CoolFlowSeqNoOA(TimeStepInDay));
@@ -5672,7 +5672,7 @@ namespace SimAirServingZones {
                             int CtrlZoneNum = AirToZoneNodeInfo(AirLoopNum).HeatCtrlZoneNums(ZonesHeatedNum);
                             int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitHeatSizingIndex(ZonesHeatedNum);
                             // sum up the heating mass flow rate for this time step
-                            Real64 adjHeatFlowSeq =
+                            Nandle adjHeatFlowSeq =
                                 TermUnitSizing(TermUnitSizingIndex)
                                     .applyTermUnitSizingHeatFlow(ZoneSizing(CurOverallSimDay, CtrlZoneNum).HeatFlowSeq(TimeStepInDay),
                                                                  ZoneSizing(CurOverallSimDay, CtrlZoneNum).HeatFlowSeqNoOA(TimeStepInDay));
@@ -5762,7 +5762,7 @@ namespace SimAirServingZones {
                             int CtrlZoneNum = AirToZoneNodeInfo(AirLoopNum).CoolCtrlZoneNums(ZonesCooledNum);
                             int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitCoolSizingIndex(ZonesCooledNum);
                             // sum up the heating mass flow rate for this time step
-                            Real64 adjHeatFlowSeq =
+                            Nandle adjHeatFlowSeq =
                                 TermUnitSizing(TermUnitSizingIndex)
                                     .applyTermUnitSizingHeatFlow(ZoneSizing(CurOverallSimDay, CtrlZoneNum).HeatFlowSeq(TimeStepInDay),
                                                                  ZoneSizing(CurOverallSimDay, CtrlZoneNum).HeatFlowSeqNoOA(TimeStepInDay));
@@ -6368,7 +6368,7 @@ namespace SimAirServingZones {
                     // If the ventilation was autosized using the ASHRAE VRP method, then the design zone and system ventilation values
                     // must be based on the larger of the cooling or heating OA
                     if (FinalSysSizing(AirLoopNum).OAAutoSized && FinalSysSizing(AirLoopNum).SystemOAMethod == SOAM_VRP) {
-                        Real64 VotMax = max(VotClgBySys(AirLoopNum), VotHtgBySys(AirLoopNum));
+                        Nandle VotMax = max(VotClgBySys(AirLoopNum), VotHtgBySys(AirLoopNum));
 
                         // Reset the system level ventilation to the larger of the system-level cooling or heating Vot
                         FinalSysSizing(AirLoopNum).DesOutAirVolFlow = VotMax;
@@ -6378,13 +6378,13 @@ namespace SimAirServingZones {
                         // Loop through cooled zones and heated zones - ok if there's overlap
                         for (int zoneNum = 1; zoneNum <= NumZonesCooled; ++zoneNum) {
                             int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitCoolSizingIndex(zoneNum);
-                            Real64 VozMax = max(TermUnitFinalZoneSizing(TermUnitSizingIndex).VozClgByZone,
+                            Nandle VozMax = max(TermUnitFinalZoneSizing(TermUnitSizingIndex).VozClgByZone,
                                                 TermUnitFinalZoneSizing(TermUnitSizingIndex).VozHtgByZone);
                             TermUnitFinalZoneSizing(TermUnitSizingIndex).MinOA = VozMax;
                         }
                         for (int zoneNum = 1; zoneNum <= NumZonesHeated; ++zoneNum) {
                             int TermUnitSizingIndex = AirToZoneNodeInfo(AirLoopNum).TermUnitHeatSizingIndex(zoneNum);
-                            Real64 VozMax = max(TermUnitFinalZoneSizing(TermUnitSizingIndex).VozClgByZone,
+                            Nandle VozMax = max(TermUnitFinalZoneSizing(TermUnitSizingIndex).VozClgByZone,
                                                 TermUnitFinalZoneSizing(TermUnitSizingIndex).VozHtgByZone);
                             TermUnitFinalZoneSizing(TermUnitSizingIndex).MinOA = VozMax;
                         }
@@ -6593,7 +6593,7 @@ namespace SimAirServingZones {
                         // save the system cooling supply air hum rat
                         TermUnitFinalZoneSizing(TermUnitSizingIndex).DesCoolCoilInHumRatTU = CalcSysSizing(AirLoopNum).CoolSupHumRat;
                         if (TermUnitFinalZoneSizing(TermUnitSizingIndex).DesCoolMassFlow <= 0.0) continue;
-                        Real64 coolMassFlow = TermUnitFinalZoneSizing(TermUnitSizingIndex)
+                        Nandle coolMassFlow = TermUnitFinalZoneSizing(TermUnitSizingIndex)
                                                   .DesCoolMassFlow; // already scaled for term unit sizing in UpdateTermUnitFinalZoneSizing
                         CalcSysSizing(AirLoopNum).NonCoinCoolMassFlow += coolMassFlow / (1.0 + TermUnitSizing(TermUnitSizingIndex).InducRat);
                         SysCoolRetTemp += TermUnitFinalZoneSizing(TermUnitSizingIndex).ZoneRetTempAtCoolPeak * coolMassFlow /
@@ -6654,7 +6654,7 @@ namespace SimAirServingZones {
                             // save the system heating supply air hum rat
                             TermUnitFinalZoneSizing(TermUnitSizingIndex).DesHeatCoilInHumRatTU = CalcSysSizing(AirLoopNum).HeatSupHumRat;
                             if (TermUnitFinalZoneSizing(TermUnitSizingIndex).DesHeatMassFlow <= 0.0) continue;
-                            Real64 heatMassFlow = TermUnitFinalZoneSizing(TermUnitSizingIndex)
+                            Nandle heatMassFlow = TermUnitFinalZoneSizing(TermUnitSizingIndex)
                                                       .DesHeatMassFlow; // already scaled for term unit sizing in UpdateTermUnitFinalZoneSizing
                             CalcSysSizing(AirLoopNum).NonCoinHeatMassFlow += heatMassFlow / (1.0 + TermUnitSizing(TermUnitSizingIndex).InducRat);
                             SysHeatRetTemp += TermUnitFinalZoneSizing(TermUnitSizingIndex).ZoneRetTempAtHeatPeak * heatMassFlow /
@@ -6698,7 +6698,7 @@ namespace SimAirServingZones {
                             // save the system heating supply air hum rat
                             TermUnitFinalZoneSizing(TermUnitSizingIndex).DesHeatCoilInHumRatTU = CalcSysSizing(AirLoopNum).HeatSupHumRat;
                             if (TermUnitFinalZoneSizing(TermUnitSizingIndex).DesHeatMassFlow <= 0.0) continue;
-                            Real64 heatMassFlow = TermUnitFinalZoneSizing(TermUnitSizingIndex)
+                            Nandle heatMassFlow = TermUnitFinalZoneSizing(TermUnitSizingIndex)
                                                       .DesHeatMassFlow; // already scaled for term unit sizing in UpdateTermUnitFinalZoneSizing
                             CalcSysSizing(AirLoopNum).NonCoinHeatMassFlow += heatMassFlow / (1.0 + TermUnitSizing(TermUnitSizingIndex).InducRat);
                             SysHeatRetTemp += TermUnitFinalZoneSizing(TermUnitSizingIndex).ZoneRetTempAtHeatPeak * heatMassFlow /
@@ -7263,17 +7263,17 @@ namespace SimAirServingZones {
         static std::string const RoutineName("UpdateSysSizingForScalableInputs: "); // include trailing blank space
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TempSize;           // autosized value
-        Real64 CoilInTemp;         // entering coil air temperature [C]
-        Real64 CoilInHumRat;       // entering coil air humidity ratio [kg/kg]
-        Real64 CoilInEnth;         // entering coil air enthalpy [J/kg]
-        Real64 CoilOutTemp;        // coil outlet air temperature [C]
-        Real64 CoilOutHumRat;      // coil outlet air humidity ratio [kg/kg]
-        Real64 CoilOutEnth;        // coil outlet air enthalpy [J/kg]
-        Real64 OutAirFrac;         // outdoor air fraction [-]
-        Real64 CpAirStd;           // specific heat of air at standard condition
-        Real64 FractionOfAutosize; // user specified autosized fraction for capacity and supply air flow
-        Real64 AutosizedCapacity;  // autosized heating and cooling capacity
+        Nandle TempSize;           // autosized value
+        Nandle CoilInTemp;         // entering coil air temperature [C]
+        Nandle CoilInHumRat;       // entering coil air humidity ratio [kg/kg]
+        Nandle CoilInEnth;         // entering coil air enthalpy [J/kg]
+        Nandle CoilOutTemp;        // coil outlet air temperature [C]
+        Nandle CoilOutHumRat;      // coil outlet air humidity ratio [kg/kg]
+        Nandle CoilOutEnth;        // coil outlet air enthalpy [J/kg]
+        Nandle OutAirFrac;         // outdoor air fraction [-]
+        Nandle CpAirStd;           // specific heat of air at standard condition
+        Nandle FractionOfAutosize; // user specified autosized fraction for capacity and supply air flow
+        Nandle AutosizedCapacity;  // autosized heating and cooling capacity
 
         DataFracOfAutosizedCoolingCapacity = 1.0;
         DataFracOfAutosizedHeatingCapacity = 1.0;
@@ -7466,7 +7466,7 @@ namespace SimAirServingZones {
         }
     }
 
-    Real64 GetHeatingSATempForSizing(int const IndexAirLoop // air loop index
+    Nandle GetHeatingSATempForSizing(int const IndexAirLoop // air loop index
     )
     {
 
@@ -7498,10 +7498,10 @@ namespace SimAirServingZones {
         // USE ZoneAirLoopEquipmentManager, ONLY: GetZoneAirLoopEquipment
 
         // Locals
-        Real64 ReheatCoilInTempForSizing;     // Dry bulb temperature of the reheat coil inlet air [C]
-        Real64 ReheatCoilInHumRatForSizing;   // Humidity ratio of the reheat coil inlet air [kg/kg]
-        Real64 ReheatCoilInEnthalpyForSizing; // Enthalpy of the reheat coil inlet air [J/kg]
-        Real64 OutAirFrac;
+        Nandle ReheatCoilInTempForSizing;     // Dry bulb temperature of the reheat coil inlet air [C]
+        Nandle ReheatCoilInHumRatForSizing;   // Humidity ratio of the reheat coil inlet air [kg/kg]
+        Nandle ReheatCoilInEnthalpyForSizing; // Enthalpy of the reheat coil inlet air [J/kg]
+        Nandle OutAirFrac;
 
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
@@ -7550,7 +7550,7 @@ namespace SimAirServingZones {
         return ReheatCoilInTempForSizing;
     }
 
-    Real64 GetHeatingSATempHumRatForSizing(int const IndexAirLoop // air loop index
+    Nandle GetHeatingSATempHumRatForSizing(int const IndexAirLoop // air loop index
     )
     {
 
@@ -7580,8 +7580,8 @@ namespace SimAirServingZones {
         // USE ZoneAirLoopEquipmentManager, ONLY: GetZoneAirLoopEquipment
 
         // Locals
-        Real64 ReheatCoilInHumRatForSizing;
-        Real64 OutAirFrac;
+        Nandle ReheatCoilInHumRatForSizing;
+        Nandle OutAirFrac;
 
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
@@ -7770,10 +7770,10 @@ namespace SimAirServingZones {
     //        Utility Subroutines for the SimAir Module
     // *****************************************************************************
 
-    void LimitZoneVentEff(Real64 Xs,               // ratio of uncorrected system outdoor air flow rate to the design system supply flow rate
-                          Real64 Voz,              // corrected (divided by distribution efficiency) zone outside air flow rate [m3/s]
+    void LimitZoneVentEff(Nandle Xs,               // ratio of uncorrected system outdoor air flow rate to the design system supply flow rate
+                          Nandle Voz,              // corrected (divided by distribution efficiency) zone outside air flow rate [m3/s]
                           int TermUnitSizingIndex, // terminal unit sizing index
-                          Real64 &SystemCoolingEv  // system ventilation efficiency
+                          Nandle &SystemCoolingEv  // system ventilation efficiency
     )
     {
         // FUNCTION INFORMATION:
@@ -7795,8 +7795,8 @@ namespace SimAirServingZones {
         using namespace OutputReportPredefined;
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneOAFrac(0.0);  // ratio of Voz to available zone supply air flow
-        Real64 AvailSAFlow(0.0); // available zone supply air flow [m3/s]
+        Nandle ZoneOAFrac(0.0);  // ratio of Voz to available zone supply air flow
+        Nandle AvailSAFlow(0.0); // available zone supply air flow [m3/s]
 
         if (SystemCoolingEv < TermUnitFinalZoneSizing(TermUnitSizingIndex).ZoneVentilationEff) {
             // reset ZoneOAFrac
@@ -7814,10 +7814,10 @@ namespace SimAirServingZones {
             SystemCoolingEv = TermUnitFinalZoneSizing(TermUnitSizingIndex).ZoneVentilationEff;
 
             // Vpz: "Primary" supply air from main air handler served by an oa mixer
-            Real64 VpzClgByZone = TermUnitFinalZoneSizing(TermUnitSizingIndex).DesCoolVolFlow;
+            Nandle VpzClgByZone = TermUnitFinalZoneSizing(TermUnitSizingIndex).DesCoolVolFlow;
 
             // Vdz: "Discharge" supply air delivered to zone by terminal unit
-            Real64 VdzClgByZone = 0.0;
+            Nandle VdzClgByZone = 0.0;
             // Taken from similar section in SetUpSysSizingArrays
             if (TermUnitFinalZoneSizing(TermUnitSizingIndex).ZoneSecondaryRecirculation > 0.0) { // multi-path system
                 VdzClgByZone = max(TermUnitSizing(TermUnitSizingIndex).AirVolFlow, VpzClgByZone);

@@ -179,7 +179,7 @@ namespace DesiccantDehumidifiers {
     int NumDesicDehums;        // number of desiccant dehumidifiers of all types
     int NumSolidDesicDehums;   // number of solid desiccant dehumidifiers
     int NumGenericDesicDehums; // number of generic desiccant dehumidifiers
-    Real64 TempSteamIn(100.0); // steam coil steam inlet temperature
+    Nandle TempSteamIn(100.0); // steam coil steam inlet temperature
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE <module_name>
     namespace {
@@ -217,7 +217,7 @@ namespace DesiccantDehumidifiers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int DesicDehumNum;   // index of solid desiccant unit being simulated
-        Real64 HumRatNeeded; // process air leaving humidity ratio set by controller [kg water/kg air]
+        Nandle HumRatNeeded; // process air leaving humidity ratio set by controller [kg water/kg air]
 
         if (GetInputDesiccantDehumidifier) {
             GetDesiccantDehumidifierInput();
@@ -354,11 +354,11 @@ namespace DesiccantDehumidifiers {
         std::string CurrentModuleObject;       // for ease in getting objects
         int DesuperHeaterIndex;                // Index of desuperheater heating coil
         int RegenCoilControlNodeNum;           // Control node number of regen heating coil
-        Real64 CoilBypassedFlowFrac;           // Bypass air fraction for multimode DX coils
+        Nandle CoilBypassedFlowFrac;           // Bypass air fraction for multimode DX coils
         Array1D_string Alphas;                 // Alpha input items for object
         Array1D_string cAlphaFields;           // Alpha field names
         Array1D_string cNumericFields;         // Numeric field names
-        Array1D<Real64> Numbers;               // Numeric input items for object
+        Array1D<Nandle> Numbers;               // Numeric input items for object
         Array1D_bool lAlphaBlanks;             // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;           // Logical array, numeric field input BLANK = .TRUE.
         static int MaxNums(0);                 // Maximum number of numeric input fields
@@ -370,7 +370,7 @@ namespace DesiccantDehumidifiers {
         bool errFlag;                      // local error flag
         std::string RegenCoilType;         // Regen heating coil type
         std::string RegenCoilName;         // Regen heating coil name
-        static Real64 SteamDensity(0.0);   // density of steam at 100C
+        static Nandle SteamDensity(0.0);   // density of steam at 100C
         int SteamIndex;                    // steam coil Index
         bool RegairHeatingCoilFlag(false); // local error flag
 
@@ -1740,9 +1740,9 @@ namespace DesiccantDehumidifiers {
 
         static bool ErrorsFound(false); // Set to true if errors in input, fatal at end of routine
         int SteamIndex;                 // steam coil index
-        Real64 FluidDensity;            // steam or water coil fluid density
-        Real64 CoilMaxVolFlowRate;      // water or steam max volumetric water flow rate
-        Real64 QCoilActual;             // actual CBVAV steam heating coil load met (W)
+        Nandle FluidDensity;            // steam or water coil fluid density
+        Nandle CoilMaxVolFlowRate;      // water or steam max volumetric water flow rate
+        Nandle QCoilActual;             // actual CBVAV steam heating coil load met (W)
         bool ErrorFlag;                 // local error flag returned from data mining
 
         if (InitDesiccantDehumidifierOneTimeFlag) {
@@ -1978,7 +1978,7 @@ namespace DesiccantDehumidifiers {
     }
 
     void ControlDesiccantDehumidifier(int const DesicDehumNum, // number of the current dehumidifier being simulated
-                                      Real64 &HumRatNeeded,    // process air leaving humidity ratio set by controller [kg water/kg air]
+                                      Nandle &HumRatNeeded,    // process air leaving humidity ratio set by controller [kg water/kg air]
                                       bool const EP_UNUSED(FirstHVACIteration) // TRUE if 1st HVAC simulation of system timestep !unused1208
     )
     {
@@ -2024,8 +2024,8 @@ namespace DesiccantDehumidifiers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool UnitOn;                 // unit on flag
-        Real64 ProcAirMassFlowRate;  // process air mass flow rate [kg/s]
-        Real64 RegenAirMassFlowRate; // regen air mass flow rate [kg/s]
+        Nandle ProcAirMassFlowRate;  // process air mass flow rate [kg/s]
+        Nandle RegenAirMassFlowRate; // regen air mass flow rate [kg/s]
 
         ProcAirMassFlowRate = 0.0;
         RegenAirMassFlowRate = 0.0;
@@ -2123,7 +2123,7 @@ namespace DesiccantDehumidifiers {
     }
 
     void CalcSolidDesiccantDehumidifier(int const DesicDehumNum,      // number of the current dehumidifier being simulated
-                                        Real64 const HumRatNeeded,    // process air leaving humidity ratio set by controller [kgWater/kgDryAir]
+                                        Nandle const HumRatNeeded,    // process air leaving humidity ratio set by controller [kgWater/kgDryAir]
                                         bool const FirstHVACIteration // TRUE if 1st HVAC simulation of system timestep
     )
     {
@@ -2173,97 +2173,97 @@ namespace DesiccantDehumidifiers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 ProcAirInHumRat;     // process inlet air humidity ratio [kgWater/kgDryAir]
-        Real64 ProcAirInTemp;       // process inlet air temperature [C]
-        Real64 ProcAirOutHumRat;    // process outlet air humidity ratio [kgWater/kgDryAir]
-        Real64 MinProcAirOutHumRat; // minimum available process outlet air humidity ratio [kgWater/kgDryAir]
-        Real64 ProcAirOutTemp;      // process outlet air temperature [C]
-        Real64 ProcAirVel;          // process air velocity [m/s]
-        Real64 QRegen;              // regen heat input rate requested from regen coil [W]
-        Real64 QDelivered;          // regen heat actually delivered by regen coil [W]
+        Nandle ProcAirInHumRat;     // process inlet air humidity ratio [kgWater/kgDryAir]
+        Nandle ProcAirInTemp;       // process inlet air temperature [C]
+        Nandle ProcAirOutHumRat;    // process outlet air humidity ratio [kgWater/kgDryAir]
+        Nandle MinProcAirOutHumRat; // minimum available process outlet air humidity ratio [kgWater/kgDryAir]
+        Nandle ProcAirOutTemp;      // process outlet air temperature [C]
+        Nandle ProcAirVel;          // process air velocity [m/s]
+        Nandle QRegen;              // regen heat input rate requested from regen coil [W]
+        Nandle QDelivered;          // regen heat actually delivered by regen coil [W]
         // REAL(r64) :: RegenAirInHumRat        ! regen inlet air humidity ratio [kgWater/kgDryAir]
-        Real64 RegenAirInTemp;       // regen inlet air temperature [C]
-        Real64 RegenAirVel;          // regen air velocity [m/s]
-        Real64 ProcAirMassFlowRate;  // process air mass flow rate [kg/s]
-        Real64 RegenAirMassFlowRate; // regen air mass flow rate [kg/s]
-        Real64 SpecRegenEnergy;      // specific regen energy [J/kg of water removed]
-        Real64 NomRegenTemp;         // nominal regen temperature for regen energy curve
-        Real64 ElecUseRate;          // electricity consumption rate [W]
-        Real64 PartLoad;             // fraction of dehumidification capacity required to meet setpoint
+        Nandle RegenAirInTemp;       // regen inlet air temperature [C]
+        Nandle RegenAirVel;          // regen air velocity [m/s]
+        Nandle ProcAirMassFlowRate;  // process air mass flow rate [kg/s]
+        Nandle RegenAirMassFlowRate; // regen air mass flow rate [kg/s]
+        Nandle SpecRegenEnergy;      // specific regen energy [J/kg of water removed]
+        Nandle NomRegenTemp;         // nominal regen temperature for regen energy curve
+        Nandle ElecUseRate;          // electricity consumption rate [W]
+        Nandle PartLoad;             // fraction of dehumidification capacity required to meet setpoint
         bool UnitOn;                 // unit on flag
 
         static bool MyOneTimeFlag(true); // one time flag
-        static Real64 RhoAirStdInit;
+        static Nandle RhoAirStdInit;
 
         // Variables for hardwired coefficients for default performance model
 
-        Real64 TC0;
-        Real64 TC1;
-        Real64 TC2;
-        Real64 TC3;
-        Real64 TC4;
-        Real64 TC5;
-        Real64 TC6;
-        Real64 TC7;
-        Real64 TC8;
-        Real64 TC9;
-        Real64 TC10;
-        Real64 TC11;
-        Real64 TC12;
-        Real64 TC13;
-        Real64 TC14;
-        Real64 TC15;
+        Nandle TC0;
+        Nandle TC1;
+        Nandle TC2;
+        Nandle TC3;
+        Nandle TC4;
+        Nandle TC5;
+        Nandle TC6;
+        Nandle TC7;
+        Nandle TC8;
+        Nandle TC9;
+        Nandle TC10;
+        Nandle TC11;
+        Nandle TC12;
+        Nandle TC13;
+        Nandle TC14;
+        Nandle TC15;
 
-        Real64 WC0;
-        Real64 WC1;
-        Real64 WC2;
-        Real64 WC3;
-        Real64 WC4;
-        Real64 WC5;
-        Real64 WC6;
-        Real64 WC7;
-        Real64 WC8;
-        Real64 WC9;
-        Real64 WC10;
-        Real64 WC11;
-        Real64 WC12;
-        Real64 WC13;
-        Real64 WC14;
-        Real64 WC15;
+        Nandle WC0;
+        Nandle WC1;
+        Nandle WC2;
+        Nandle WC3;
+        Nandle WC4;
+        Nandle WC5;
+        Nandle WC6;
+        Nandle WC7;
+        Nandle WC8;
+        Nandle WC9;
+        Nandle WC10;
+        Nandle WC11;
+        Nandle WC12;
+        Nandle WC13;
+        Nandle WC14;
+        Nandle WC15;
 
-        Real64 QC0;
-        Real64 QC1;
-        Real64 QC2;
-        Real64 QC3;
-        Real64 QC4;
-        Real64 QC5;
-        Real64 QC6;
-        Real64 QC7;
-        Real64 QC8;
-        Real64 QC9;
-        Real64 QC10;
-        Real64 QC11;
-        Real64 QC12;
-        Real64 QC13;
-        Real64 QC14;
-        Real64 QC15;
+        Nandle QC0;
+        Nandle QC1;
+        Nandle QC2;
+        Nandle QC3;
+        Nandle QC4;
+        Nandle QC5;
+        Nandle QC6;
+        Nandle QC7;
+        Nandle QC8;
+        Nandle QC9;
+        Nandle QC10;
+        Nandle QC11;
+        Nandle QC12;
+        Nandle QC13;
+        Nandle QC14;
+        Nandle QC15;
 
-        Real64 RC0;
-        Real64 RC1;
-        Real64 RC2;
-        Real64 RC3;
-        Real64 RC4;
-        Real64 RC5;
-        Real64 RC6;
-        Real64 RC7;
-        Real64 RC8;
-        Real64 RC9;
-        Real64 RC10;
-        Real64 RC11;
-        Real64 RC12;
-        Real64 RC13;
-        Real64 RC14;
-        Real64 RC15;
+        Nandle RC0;
+        Nandle RC1;
+        Nandle RC2;
+        Nandle RC3;
+        Nandle RC4;
+        Nandle RC5;
+        Nandle RC6;
+        Nandle RC7;
+        Nandle RC8;
+        Nandle RC9;
+        Nandle RC10;
+        Nandle RC11;
+        Nandle RC12;
+        Nandle RC13;
+        Nandle RC14;
+        Nandle RC15;
 
         // Setup internal variables for calculations
 
@@ -2546,7 +2546,7 @@ namespace DesiccantDehumidifiers {
     }
 
     void CalcGenericDesiccantDehumidifier(int const DesicDehumNum,      // number of the current dehumidifier being simulated
-                                          Real64 const HumRatNeeded,    // process air leaving humidity ratio set by controller [kg water/kg air]
+                                          Nandle const HumRatNeeded,    // process air leaving humidity ratio set by controller [kg water/kg air]
                                           bool const FirstHVACIteration // TRUE if 1st HVAC simulation of system timestep
     )
     {
@@ -2585,7 +2585,7 @@ namespace DesiccantDehumidifiers {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MinVolFlowPerRatedTotQ(0.00002684); // m3/s per W = 200 cfm/ton,
+        Nandle const MinVolFlowPerRatedTotQ(0.00002684); // m3/s per W = 200 cfm/ton,
         // min vol flow per rated evaporator capacity
         static ObjexxFCL::gio::Fmt fmtLD("*");
 
@@ -2596,28 +2596,28 @@ namespace DesiccantDehumidifiers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 DDPartLoadRatio;          // fraction of dehumidification capacity required to meet setpoint
-        static Real64 QRegen(0.0);       // required coil load passed to sim heating coil routine (W)
-        Real64 MassFlowRateNew;          // new required mass flow rate calculated to keep regen setpoint temperature (kg/s)
-        Real64 CondenserWasteHeat;       // Condenser waste heat (W)
-        Real64 CpAir;                    // Specific heat of air (J/kg-K)
-        Real64 NewRegenInTemp;           // new temp calculated from condenser waste heat (C)
-        Real64 ExhaustFanMassFlowRate;   // exhaust fan mass flow rate (kg/s)
-        Real64 ExhaustFanPLR;            // exhaust fan run time fraction calculated from new mass flow rate for regen side
-        Real64 ExhaustFanPowerMod;       // used to calculate exhaust fan power from flow fraction
-        Real64 VolFlowPerRatedTotQ;      // flow rate per rated total cooling capacity of the companion coil (m3/s/W)
-        Real64 FanDeltaT;                // used to account for fan heat when calculating regeneration heater energy (C)
-        Real64 OnOffFanPLF;              // save air loop fan part load fracton while calculating exhaust fan power
-        Real64 RegenSetPointTemp;        // regeneration temperature setpoint (C)
+        Nandle DDPartLoadRatio;          // fraction of dehumidification capacity required to meet setpoint
+        static Nandle QRegen(0.0);       // required coil load passed to sim heating coil routine (W)
+        Nandle MassFlowRateNew;          // new required mass flow rate calculated to keep regen setpoint temperature (kg/s)
+        Nandle CondenserWasteHeat;       // Condenser waste heat (W)
+        Nandle CpAir;                    // Specific heat of air (J/kg-K)
+        Nandle NewRegenInTemp;           // new temp calculated from condenser waste heat (C)
+        Nandle ExhaustFanMassFlowRate;   // exhaust fan mass flow rate (kg/s)
+        Nandle ExhaustFanPLR;            // exhaust fan run time fraction calculated from new mass flow rate for regen side
+        Nandle ExhaustFanPowerMod;       // used to calculate exhaust fan power from flow fraction
+        Nandle VolFlowPerRatedTotQ;      // flow rate per rated total cooling capacity of the companion coil (m3/s/W)
+        Nandle FanDeltaT;                // used to account for fan heat when calculating regeneration heater energy (C)
+        Nandle OnOffFanPLF;              // save air loop fan part load fracton while calculating exhaust fan power
+        Nandle RegenSetPointTemp;        // regeneration temperature setpoint (C)
         int RegenCoilIndex;              // index to regeneration heating coil, 0 when not used
         int CompanionCoilIndexNum;       // index for companion DX cooling coil, 0 when DX coil is not used
         std::string MinVol;              // character string used for error messages
         std::string VolFlowChar;         // character string used for error messages
         static bool MyOneTimeFlag(true); // one time flag
-        static Real64 RhoAirStdInit;     // standard air density (kg/m3)
+        static Nandle RhoAirStdInit;     // standard air density (kg/m3)
         bool UnitOn;                     // unit on flag
         //  LOGICAL       :: SimFlag                    ! used to turn off additional simulation if DX Coil is off
-        Real64 QRegen_OASysFanAdjust; // temporary variable used to adjust regen heater load during iteration
+        Nandle QRegen_OASysFanAdjust; // temporary variable used to adjust regen heater load during iteration
 
         UnitOn = false;
         DDPartLoadRatio = 0.0;
@@ -3184,7 +3184,7 @@ namespace DesiccantDehumidifiers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         ReportingConstant = TimeStepSys * SecInHour;
 
@@ -3204,8 +3204,8 @@ namespace DesiccantDehumidifiers {
 
     void CalcNonDXHeatingCoils(int const DesicDehumNum,          // Desiccant dehumidifier unit index
                                bool const FirstHVACIteration,    // flag for first HVAC iteration in the time step
-                               Real64 const RegenCoilLoad,       // heating coil load to be met (Watts)
-                               Optional<Real64> RegenCoilLoadmet // heating load met
+                               Nandle const RegenCoilLoad,       // heating coil load to be met (Watts)
+                               Optional<Nandle> RegenCoilLoadmet // heating load met
     )
     {
 
@@ -3240,7 +3240,7 @@ namespace DesiccantDehumidifiers {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const ErrTolerance(0.001); // convergence limit for hotwater coil
+        Nandle const ErrTolerance(0.001); // convergence limit for hotwater coil
         int const SolveMaxIter(50);       // Max iteration for SolveRoot
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -3250,13 +3250,13 @@ namespace DesiccantDehumidifiers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RegenCoilActual; // actual heating load met
-        Real64 mdot;            // heating coil steam or hot water mass flow rate
-        Real64 MinWaterFlow;    // minimum hot water mass flow rate
+        Nandle RegenCoilActual; // actual heating load met
+        Nandle mdot;            // heating coil steam or hot water mass flow rate
+        Nandle MinWaterFlow;    // minimum hot water mass flow rate
         // unused  REAL(r64)      :: PartLoadFraction  ! heating or cooling part load fraction
-        Real64 MaxHotWaterFlow; // maximum hot water mass flow rate, kg/s
-        Real64 HotWaterMdot;    // actual hot water mass flow rate
-        Array1D<Real64> Par(3);
+        Nandle MaxHotWaterFlow; // maximum hot water mass flow rate, kg/s
+        Nandle HotWaterMdot;    // actual hot water mass flow rate
+        Array1D<Nandle> Par(3);
         int SolFlag;
 
         RegenCoilActual = 0.0;
@@ -3391,8 +3391,8 @@ namespace DesiccantDehumidifiers {
         if (present(RegenCoilLoadmet)) RegenCoilLoadmet = RegenCoilActual;
     }
 
-    Real64 HotWaterCoilResidual(Real64 const HWFlow,       // hot water flow rate in kg/s
-                                Array1D<Real64> const &Par // Par(5) is the requested coil load
+    Nandle HotWaterCoilResidual(Nandle const HWFlow,       // hot water flow rate in kg/s
+                                Array1D<Nandle> const &Par // Par(5) is the requested coil load
     )
     {
 
@@ -3416,7 +3416,7 @@ namespace DesiccantDehumidifiers {
         using WaterCoils::SimulateWaterCoilComponents;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -3435,9 +3435,9 @@ namespace DesiccantDehumidifiers {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int DesicDehumNum;
         bool FirstHVACSoln;
-        Real64 RegenCoilActual;   // delivered coild load, W
-        Real64 RegenCoilHeatLoad; // requested coild load, W
-        Real64 mdot;
+        Nandle RegenCoilActual;   // delivered coild load, W
+        Nandle RegenCoilHeatLoad; // requested coild load, W
+        Nandle mdot;
 
         DesicDehumNum = int(Par(1));
         FirstHVACSoln = (Par(2) > 0.0);

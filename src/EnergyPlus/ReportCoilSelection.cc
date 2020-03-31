@@ -430,10 +430,10 @@ void ReportCoilSelection::writeCoilSelectionOutput2()
 
 void ReportCoilSelection::setCoilFinalSizes(std::string const &coilName,    // user-defined name of the coil
                                             std::string const &coilObjName, //  coil object name, e.g., Coil:Cooling:Water
-                                            Real64 const totGrossCap,       // total capacity [W]
-                                            Real64 const sensGrossCap,      // sensible capacity [W]
-                                            Real64 const airFlowRate,       // design or reference or rated air flow rate [m3/s]
-                                            Real64 const waterFlowRate      // design or reference or rated water flow rate [m3/s]
+                                            Nandle const totGrossCap,       // total capacity [W]
+                                            Nandle const sensGrossCap,      // sensible capacity [W]
+                                            Nandle const airFlowRate,       // design or reference or rated air flow rate [m3/s]
+                                            Nandle const waterFlowRate      // design or reference or rated water flow rate [m3/s]
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilObjName);
@@ -861,14 +861,14 @@ void ReportCoilSelection::doFinalProcessingOfCoilData()
 
         // apply ADP method to find an SHR for Ideal loads peak, calculate sensible capacity for cooling coils
         if (c->coilDesEntTemp > c->coilDesLvgTemp) {                                                              // cooling coil
-            Real64 CoilADPTemp = Psychrometrics::PsyTdpFnWPb(c->coilDesLvgHumRat, DataEnvironment::StdBaroPress); // apparatus dewpoint temperature
-            Real64 CoilADPHumRat =
+            Nandle CoilADPTemp = Psychrometrics::PsyTdpFnWPb(c->coilDesLvgHumRat, DataEnvironment::StdBaroPress); // apparatus dewpoint temperature
+            Nandle CoilADPHumRat =
                 Psychrometrics::PsyWFnTdpPb(CoilADPTemp, DataEnvironment::StdBaroPress); // humidity ratio at apparatus dewpoint temperaure
-            Real64 CoilTinwADPEnthalpy = Psychrometrics::PsyHFnTdbW(
+            Nandle CoilTinwADPEnthalpy = Psychrometrics::PsyHFnTdbW(
                 c->coilDesEntTemp, CoilADPHumRat); // Enthalpy at inlet drybulb and humidity ratio at apparatus dewpoint temperature
-            Real64 CoilADPEnthalpy =
+            Nandle CoilADPEnthalpy =
                 Psychrometrics::PsyHFnTdbW(CoilADPTemp, CoilADPHumRat); // Enthalpy at apparatus dewpoint, with Tdb set at apparatus dewpoint
-            Real64 SHRatIdealPeak(1.0);
+            Nandle SHRatIdealPeak(1.0);
             if ((c->coilDesEntEnth - CoilADPEnthalpy) > 1.e-10) {
                 SHRatIdealPeak = min((CoilTinwADPEnthalpy - CoilADPEnthalpy) / (c->coilDesEntEnth - CoilADPEnthalpy), 1.0); // calculate SHR
             } else {
@@ -929,19 +929,19 @@ int ReportCoilSelection::getIndexForOrCreateDataObjFromCoilName(std::string cons
 
 void ReportCoilSelection::setRatedCoilConditions(std::string const &coilName,     // ! user-defined name of the coil
                                                  std::string const &coilObjName,  //  coil object name, e.g., Coil:Cooling:Water
-                                                 Real64 const RatedCoilTotCap,    // ! rated coil total capacity [W]
-                                                 Real64 const RatedCoilSensCap,   // rated coil sensible capacity [W]
-                                                 Real64 const RatedAirMassFlow,   // rated coil design air mass flow rate [m3/s]
-                                                 Real64 const RatedCoilInDb,      // rated coil inlet air dry bulb at time of peak [C]
-                                                 Real64 const RatedCoilInHumRat,  // rated coil inlet air humidity ratio [kgWater/kgDryAir]
-                                                 Real64 const RatedCoilInWb,      // rated coil inlet air wet bulb [C]
-                                                 Real64 const RatedCoilOutDb,     // rated coil outlet air dry bulb [C]
-                                                 Real64 const RatedCoilOutHumRat, // rated coil outlet air humidity ratio, [kgWater/kgDryAir]
-                                                 Real64 const RatedCoilOutWb,     // rated coil outlet air wet bulb [C]
-                                                 Real64 const RatedCoilOadbRef,   // rated DX coil outside air dry bulb reference [C]
-                                                 Real64 const RatedCoilOawbRef,   // rated DX coil outside air wet bulb reference [C]
-                                                 Real64 const RatedCoilBpFactor,  // rated coil bypass factor
-                                                 Real64 const RatedCoilEff        // rated coil effectiveness
+                                                 Nandle const RatedCoilTotCap,    // ! rated coil total capacity [W]
+                                                 Nandle const RatedCoilSensCap,   // rated coil sensible capacity [W]
+                                                 Nandle const RatedAirMassFlow,   // rated coil design air mass flow rate [m3/s]
+                                                 Nandle const RatedCoilInDb,      // rated coil inlet air dry bulb at time of peak [C]
+                                                 Nandle const RatedCoilInHumRat,  // rated coil inlet air humidity ratio [kgWater/kgDryAir]
+                                                 Nandle const RatedCoilInWb,      // rated coil inlet air wet bulb [C]
+                                                 Nandle const RatedCoilOutDb,     // rated coil outlet air dry bulb [C]
+                                                 Nandle const RatedCoilOutHumRat, // rated coil outlet air humidity ratio, [kgWater/kgDryAir]
+                                                 Nandle const RatedCoilOutWb,     // rated coil outlet air wet bulb [C]
+                                                 Nandle const RatedCoilOadbRef,   // rated DX coil outside air dry bulb reference [C]
+                                                 Nandle const RatedCoilOawbRef,   // rated DX coil outside air wet bulb reference [C]
+                                                 Nandle const RatedCoilBpFactor,  // rated coil bypass factor
+                                                 Nandle const RatedCoilEff        // rated coil effectiveness
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilObjName);
@@ -976,7 +976,7 @@ void ReportCoilSelection::setRatedCoilConditions(std::string const &coilName,   
 
 void ReportCoilSelection::setCoilAirFlow(std::string const &coilName, // user-defined name of the coil
                                          std::string const &coilType, // idf input object class name of coil
-                                         Real64 const airVdot,        // air flow rate in m3/s
+                                         Nandle const airVdot,        // air flow rate in m3/s
                                          bool const isAutoSized       // true if air flow was autosized
 )
 {
@@ -990,7 +990,7 @@ void ReportCoilSelection::setCoilAirFlow(std::string const &coilName, // user-de
 
 void ReportCoilSelection::setCoilWaterFlowNodeNums(std::string const &coilName, // user-defined name of the coil
                                                    std::string const &coilType, // idf input object class name of coil
-                                                   Real64 const waterVdot,      // plant fluid flow rate in m3/s
+                                                   Nandle const waterVdot,      // plant fluid flow rate in m3/s
                                                    bool const isAutoSized,      // true if water flow was autosized
                                                    int const inletNodeNum,      // coil chw inlet node num
                                                    int const outletNodeNum,     // coil chw outlet node num
@@ -1007,7 +1007,7 @@ void ReportCoilSelection::setCoilWaterFlowNodeNums(std::string const &coilName, 
 
 void ReportCoilSelection::setCoilWaterFlowPltSizNum(std::string const &coilName, // user-defined name of the coil
                                                     std::string const &coilType, // idf input object class name of coil
-                                                    Real64 const waterVdot,      // plant fluid flow rate in m3/s
+                                                    Nandle const waterVdot,      // plant fluid flow rate in m3/s
                                                     bool const isAutoSized,      // true if water flow was autosized
                                                     int const plantSizNum,       // plant sizing structure index
                                                     int const plantLoopNum       // plant loop structure index
@@ -1057,7 +1057,7 @@ void ReportCoilSelection::setCoilWaterFlowPltSizNum(std::string const &coilName,
 
 void ReportCoilSelection::setCoilEntAirTemp(std::string const &coilName,    // user-defined name of the coil
                                             std::string const &coilType,    // idf input object class name of coil
-                                            Real64 const entAirDryBulbTemp, // degree C air entering coil
+                                            Nandle const entAirDryBulbTemp, // degree C air entering coil
                                             int const curSysNum,            // airloop system number index, if non zero
                                             int const curZoneEqNum          // zone equipment list index, if non-zero
 )
@@ -1072,7 +1072,7 @@ void ReportCoilSelection::setCoilEntAirTemp(std::string const &coilName,    // u
 
 void ReportCoilSelection::setCoilEntAirHumRat(std::string const &coilName, // user-defined name of the coil
                                               std::string const &coilType, // idf input object class name of coil
-                                              Real64 const entAirHumrat    //
+                                              Nandle const entAirHumrat    //
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1082,7 +1082,7 @@ void ReportCoilSelection::setCoilEntAirHumRat(std::string const &coilName, // us
 
 void ReportCoilSelection::setCoilEntWaterTemp(std::string const &coilName, // user-defined name of the coil
                                               std::string const &coilType, // idf input object class name of coil
-                                              Real64 const entWaterTemp    //
+                                              Nandle const entWaterTemp    //
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1092,7 +1092,7 @@ void ReportCoilSelection::setCoilEntWaterTemp(std::string const &coilName, // us
 
 void ReportCoilSelection::setCoilLvgWaterTemp(std::string const &coilName, // user-defined name of the coil
                                               std::string const &coilType, // idf input object class name of coil
-                                              Real64 const lvgWaterTemp    //
+                                              Nandle const lvgWaterTemp    //
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1102,7 +1102,7 @@ void ReportCoilSelection::setCoilLvgWaterTemp(std::string const &coilName, // us
 
 void ReportCoilSelection::setCoilWaterDeltaT(std::string const &coilName, // user-defined name of the coil
                                              std::string const &coilType, // idf input object class name of coil
-                                             Real64 const CoilWaterDeltaT // degree C temperature difference used to size coil
+                                             Nandle const CoilWaterDeltaT // degree C temperature difference used to size coil
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1112,7 +1112,7 @@ void ReportCoilSelection::setCoilWaterDeltaT(std::string const &coilName, // use
 
 void ReportCoilSelection::setCoilLvgAirTemp(std::string const &coilName,   // user-defined name of the coil
                                             std::string const &coilType,   // idf input object class name of coil
-                                            Real64 const lvgAirDryBulbTemp //
+                                            Nandle const lvgAirDryBulbTemp //
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1122,7 +1122,7 @@ void ReportCoilSelection::setCoilLvgAirTemp(std::string const &coilName,   // us
 
 void ReportCoilSelection::setCoilLvgAirHumRat(std::string const &coilName, // user-defined name of the coil
                                               std::string const &coilType, // idf input object class name of coil
-                                              Real64 const lvgAirHumRat    //
+                                              Nandle const lvgAirHumRat    //
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1133,15 +1133,15 @@ void ReportCoilSelection::setCoilLvgAirHumRat(std::string const &coilName, // us
 void ReportCoilSelection::setCoilCoolingCapacity(
     std::string const &coilName,       // user-defined name of the coil
     std::string const &coilType,       // idf input object class name of coil
-    Real64 const TotalCoolingCap,      // {W} coil cooling capacity, sizing result
+    Nandle const TotalCoolingCap,      // {W} coil cooling capacity, sizing result
     bool const isAutoSize,             // true if value was autosized
     int const curSysNum,               // airloop system number index, if non zero
     int const curZoneEqNum,            // zone equipment list index, if non-zero
     int const curOASysNum,             // OA system equipment list index, if non-zero
-    Real64 const fanCoolLoad,          // {W} fan load used in ideal loads coil sizing
-    Real64 const coilCapFunTempFac,    // {W} curve result for modification factor for capacity as a function of temperature
-    Real64 const DXFlowPerCapMinRatio, // non dimensional ratio, capacity adjustment ratio min
-    Real64 const DXFlowPerCapMaxRatio  // non dimensional ratio, capacity adjustment ratio max
+    Nandle const fanCoolLoad,          // {W} fan load used in ideal loads coil sizing
+    Nandle const coilCapFunTempFac,    // {W} curve result for modification factor for capacity as a function of temperature
+    Nandle const DXFlowPerCapMinRatio, // non dimensional ratio, capacity adjustment ratio min
+    Nandle const DXFlowPerCapMaxRatio  // non dimensional ratio, capacity adjustment ratio max
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1207,10 +1207,10 @@ void ReportCoilSelection::setCoilCoolingCapacity(
 
         // loop over cooled zones attached to this airloop to find average Room condition
         // change weighting to use supply air flow rate rather than zone air volume for all the zones on this coil's air system
-        Real64 sumT_Vdot(0.0);   // numerator for average zone temperature, zone temperature values times zone supply air volume flow rate
-        Real64 sumW_Vdot(0.0);   // numerator average zone humidity ratio, zone hum rat value times zone supply air volume flow rate
-        Real64 sumSensLoad(0.0); // straight total for zone design loads
-        Real64 sumVdot(0.0);     // denominator for supply air flow rate weighted averages
+        Nandle sumT_Vdot(0.0);   // numerator for average zone temperature, zone temperature values times zone supply air volume flow rate
+        Nandle sumW_Vdot(0.0);   // numerator average zone humidity ratio, zone hum rat value times zone supply air volume flow rate
+        Nandle sumSensLoad(0.0); // straight total for zone design loads
+        Nandle sumVdot(0.0);     // denominator for supply air flow rate weighted averages
 
         // Decide what day and time to use for zone/room averages
         int SysPeakDDnum(0);
@@ -1229,20 +1229,20 @@ void ReportCoilSelection::setCoilCoolingCapacity(
 
         if (SysPeakDDnum > 0 && SysPeakTimeStepInDay > 0) {
             for (auto &z : c->zoneNum) {
-                Real64 mult = DataHeatBalance::Zone(z).Multiplier * DataHeatBalance::Zone(z).ListMultiplier;
-                Real64 Tz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolZoneTempSeq(SysPeakTimeStepInDay);
-                Real64 Vdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolFlowSeq(SysPeakTimeStepInDay);
+                Nandle mult = DataHeatBalance::Zone(z).Multiplier * DataHeatBalance::Zone(z).ListMultiplier;
+                Nandle Tz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolZoneTempSeq(SysPeakTimeStepInDay);
+                Nandle Vdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolFlowSeq(SysPeakTimeStepInDay);
                 if (Vdot_z == 0.0) { // take value from final zone sizing
                     Vdot_z = DataSizing::FinalZoneSizing(z).CoolMassFlow;
                     if (Vdot_z == 0.0) {
                         Vdot_z = DataSizing::FinalSysSizing(curSysNum).DesCoolVolFlow * DataEnvironment::StdRhoAir / c->zoneNum.size();
                     }
                 }
-                Real64 Wz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolZoneHumRatSeq(SysPeakTimeStepInDay);
+                Nandle Wz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolZoneHumRatSeq(SysPeakTimeStepInDay);
                 sumT_Vdot += Tz * Vdot_z * mult;
                 sumW_Vdot += Wz * Vdot_z * mult;
                 sumVdot += Vdot_z * mult;
-                Real64 Qdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolLoadSeq(SysPeakTimeStepInDay);
+                Nandle Qdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).CoolLoadSeq(SysPeakTimeStepInDay);
                 if (Qdot_z > 0.0) {
                     sumSensLoad += Qdot_z * mult;
                 } else {
@@ -1405,15 +1405,15 @@ void ReportCoilSelection::setCoilCoolingCapacity(
 void ReportCoilSelection::setCoilHeatingCapacity(
     std::string const &coilName,       // user-defined name of the coil
     std::string const &coilType,       // idf input object class name of coil
-    Real64 const totalHeatingCap,      // {W} coil Heating capacity
+    Nandle const totalHeatingCap,      // {W} coil Heating capacity
     bool const isAutoSize,             // true if value was autosized
     int const curSysNum,               // airloop system number index, if non zero
     int const curZoneEqNum,            // zone equipment list index, if non-zero
     int const curOASysNum,             // OA system equipment list index, if non-zero
-    Real64 const fanHeatGain,          // {W} fan load used in ideal loads coil sizing
-    Real64 const coilCapFunTempFac,    // {W} curve result for modification factor for capacity as a function of temperature
-    Real64 const DXFlowPerCapMinRatio, // non dimensional ratio, capacity adjustment ratio min
-    Real64 const DXFlowPerCapMaxRatio  // non dimensional ratio, capacity adjustment ratio max
+    Nandle const fanHeatGain,          // {W} fan load used in ideal loads coil sizing
+    Nandle const coilCapFunTempFac,    // {W} curve result for modification factor for capacity as a function of temperature
+    Nandle const DXFlowPerCapMinRatio, // non dimensional ratio, capacity adjustment ratio min
+    Nandle const DXFlowPerCapMaxRatio  // non dimensional ratio, capacity adjustment ratio max
 )
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
@@ -1448,10 +1448,10 @@ void ReportCoilSelection::setCoilHeatingCapacity(
 
         // loop over heated zones attached to this airloop to find average Room condition, if none heated use cooled zones
         // weighted average by zone supply air volume flow rate for all the zones on this coil's air system
-        Real64 sumT_Vdot(0.0); // numerator for average zone temperature, zone temperature values times zone air volume
-        Real64 sumW_Vdot(0.0); // numerator average zone humidity ratio, zone hum rat value times zone air volume
-        Real64 sumLoad(0.0);   // straight total for zone design loads
-        Real64 sumVdot(0.0);   // denominator for zone-volume weighted averages
+        Nandle sumT_Vdot(0.0); // numerator for average zone temperature, zone temperature values times zone air volume
+        Nandle sumW_Vdot(0.0); // numerator average zone humidity ratio, zone hum rat value times zone air volume
+        Nandle sumLoad(0.0);   // straight total for zone design loads
+        Nandle sumVdot(0.0);   // denominator for zone-volume weighted averages
 
         int SysPeakDDnum(0);
         SysPeakDDnum = DataSizing::FinalSysSizing(curSysNum).HeatDDNum;
@@ -1459,20 +1459,20 @@ void ReportCoilSelection::setCoilHeatingCapacity(
         SysPeakTimeStepInDay = DataSizing::FinalSysSizing(curSysNum).SysHeatCoilTimeStepPk;
         if (SysPeakDDnum > 0 && SysPeakTimeStepInDay > 0) { // may be zero if no peak found because of zero system load
             for (auto &z : c->zoneNum) {
-                Real64 mult = DataHeatBalance::Zone(z).Multiplier * DataHeatBalance::Zone(z).ListMultiplier;
-                Real64 Tz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatZoneTempSeq(SysPeakTimeStepInDay);
-                Real64 Vdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatFlowSeq(SysPeakTimeStepInDay);
+                Nandle mult = DataHeatBalance::Zone(z).Multiplier * DataHeatBalance::Zone(z).ListMultiplier;
+                Nandle Tz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatZoneTempSeq(SysPeakTimeStepInDay);
+                Nandle Vdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatFlowSeq(SysPeakTimeStepInDay);
                 if (Vdot_z == 0.0) { // take value from final zone sizing
                     Vdot_z = DataSizing::FinalZoneSizing(z).HeatMassFlow;
                     if (Vdot_z == 0.0) {
                         Vdot_z = DataSizing::FinalSysSizing(curSysNum).DesHeatVolFlow * DataEnvironment::StdRhoAir / c->zoneNum.size();
                     }
                 }
-                Real64 Wz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatZoneHumRatSeq(SysPeakTimeStepInDay);
+                Nandle Wz = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatZoneHumRatSeq(SysPeakTimeStepInDay);
                 sumT_Vdot += Tz * Vdot_z * mult;
                 sumW_Vdot += Wz * Vdot_z * mult;
                 sumVdot += Vdot_z * mult;
-                Real64 Qdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatLoadSeq(SysPeakTimeStepInDay);
+                Nandle Qdot_z = DataSizing::CalcZoneSizing(SysPeakDDnum, z).HeatLoadSeq(SysPeakTimeStepInDay);
                 if (Qdot_z > 0.0) {
                     sumLoad += Qdot_z * mult;
                 } else {
@@ -1586,7 +1586,7 @@ void ReportCoilSelection::setCoilHeatingCapacity(
                 c->coilDesEntHumRat = DataSizing::TermUnitFinalZoneSizing(DataSizing::CurTermUnitSizingNum).DesHeatCoilInHumRatTU;
             }
         } else if (DataSizing::TermUnitPIU) {
-            Real64 MinPriFlowFrac = DataSizing::TermUnitSizing(DataSizing::CurTermUnitSizingNum).MinFlowFrac;
+            Nandle MinPriFlowFrac = DataSizing::TermUnitSizing(DataSizing::CurTermUnitSizingNum).MinFlowFrac;
             if (DataSizing::TermUnitSizing(DataSizing::CurTermUnitSizingNum).InducesPlenumAir) {
                 if (c->coilDesEntTemp == -999.0) { // don't overwrite if already set directly by setCoilEntAirTemp
                     c->coilDesEntTemp =
@@ -1608,7 +1608,7 @@ void ReportCoilSelection::setCoilHeatingCapacity(
             }
         } else if (DataSizing::ZoneEqFanCoil) {
             if (c->coilDesEntTemp == -999.0) { // don't overwrite if already set directly by setCoilEntAirTemp
-                Real64 desOAFlowFrac = DataSizing::FinalZoneSizing(curZoneEqNum).DesHeatOAFlowFrac;
+                Nandle desOAFlowFrac = DataSizing::FinalZoneSizing(curZoneEqNum).DesHeatOAFlowFrac;
                 c->coilDesEntTemp = desOAFlowFrac * DataSizing::FinalZoneSizing(curZoneEqNum).OutTempAtHeatPeak +
                                     (1.0 - desOAFlowFrac) * DataSizing::FinalZoneSizing(curZoneEqNum).ZoneTempAtHeatPeak;
                 c->coilDesEntHumRat = desOAFlowFrac * DataSizing::FinalZoneSizing(curZoneEqNum).OutHumRatAtHeatPeak +
@@ -1722,7 +1722,7 @@ void ReportCoilSelection::setCoilHeatingCapacity(
 
 void ReportCoilSelection::setCoilWaterCoolingCapacity(std::string const &coilName,  // user-defined name of the coil
                                                       std::string const &coilType,  // idf input object class name of coil
-                                                      Real64 const totalCoolingCap, // {W} coil cooling capacity
+                                                      Nandle const totalCoolingCap, // {W} coil cooling capacity
                                                       bool const isAutoSize,        // true if value was autosized
                                                       int const inletNodeNum,       // coil chw inlet node num
                                                       int const outletNodeNum,      // coil chw outlet node num
@@ -1744,7 +1744,7 @@ void ReportCoilSelection::setCoilWaterCoolingCapacity(std::string const &coilNam
 
 void ReportCoilSelection::setCoilWaterHeaterCapacityNodeNums(std::string const &coilName,  // user-defined name of the coil
                                                              std::string const &coilType,  // idf input object class name of coil
-                                                             Real64 const totalHeatingCap, // {W} coil Heating capacity
+                                                             Nandle const totalHeatingCap, // {W} coil Heating capacity
                                                              bool const isAutoSize,        // true if value was autosized
                                                              int const inletNodeNum,       // coil chw inlet node num
                                                              int const outletNodeNum,      // coil chw outlet node num
@@ -1766,7 +1766,7 @@ void ReportCoilSelection::setCoilWaterHeaterCapacityNodeNums(std::string const &
 
 void ReportCoilSelection::setCoilWaterHeaterCapacityPltSizNum(std::string const &coilName,  // user-defined name of the coil
                                                               std::string const &coilType,  // idf input object class name of coil
-                                                              Real64 const totalHeatingCap, // {W} coil Heating capacity
+                                                              Nandle const totalHeatingCap, // {W} coil Heating capacity
                                                               bool const isAutoSize,        // true if value was autosized
                                                               int const dataPltSizNum,      // plant sizing structure index
                                                               int const dataWaterLoopNum    // plant loop structure index
@@ -1782,8 +1782,8 @@ void ReportCoilSelection::setCoilWaterHeaterCapacityPltSizNum(std::string const 
 
 void ReportCoilSelection::setCoilUA(std::string const &coilName,            // user-defined name of the coil
                                     std::string const &coilType,            // idf input object class name of coil
-                                    Real64 const UAvalue,                   // [W/k] UA value for coil,
-                                    Real64 const dataCapacityUsedForSizing, // [W] sizing global
+                                    Nandle const UAvalue,                   // [W/k] UA value for coil,
+                                    Nandle const dataCapacityUsedForSizing, // [W] sizing global
                                     bool const isAutoSize,                  // true if value was autosized
                                     int const curSysNum,                    // airloop system number index, if non zero
                                     int const curZoneEqNum                  // zone equipment list index, if non-zero
@@ -1801,7 +1801,7 @@ void ReportCoilSelection::setCoilUA(std::string const &coilName,            // u
 
 void ReportCoilSelection::setCoilReheatMultiplier(std::string const &coilName, // user-defined name of the coil
                                                   std::string const &coilType, // idf input object class name of coil
-                                                  Real64 const multiplierReheatLoad)
+                                                  Nandle const multiplierReheatLoad)
 {
     int index = getIndexForOrCreateDataObjFromCoilName(coilName, coilType);
     auto &c(coilSelectionDataObjs[index]);
@@ -1907,7 +1907,7 @@ bool ReportCoilSelection::isCompTypeCoil(std::string const &compType // string c
     return found;
 }
 
-void ReportCoilSelection::setZoneLatentLoadCoolingIdealPeak(int const zoneIndex, Real64 const zoneCoolingLatentLoad)
+void ReportCoilSelection::setZoneLatentLoadCoolingIdealPeak(int const zoneIndex, Nandle const zoneCoolingLatentLoad)
 {
     // loop over all the coils and the zones in the coils and if this zone index is in the coil
     for (auto &c : coilSelectionDataObjs) {
@@ -1923,7 +1923,7 @@ void ReportCoilSelection::setZoneLatentLoadCoolingIdealPeak(int const zoneIndex,
     }
 }
 
-void ReportCoilSelection::setZoneLatentLoadHeatingIdealPeak(int const zoneIndex, Real64 const zoneHeatingLatentLoad)
+void ReportCoilSelection::setZoneLatentLoadHeatingIdealPeak(int const zoneIndex, Nandle const zoneHeatingLatentLoad)
 {
     // loop over all the coils and the zones in the coils and if this zone index is in the coil
     for (auto &c : coilSelectionDataObjs) {

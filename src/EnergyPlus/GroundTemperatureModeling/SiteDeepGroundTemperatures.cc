@@ -135,7 +135,7 @@ std::shared_ptr<SiteDeepGroundTemps> SiteDeepGroundTemps::DeepGTMFactory(OutputF
 
 //******************************************************************************
 
-Real64 SiteDeepGroundTemps::getGroundTemp()
+Nandle SiteDeepGroundTemps::getGroundTemp()
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -151,7 +151,7 @@ Real64 SiteDeepGroundTemps::getGroundTemp()
 
 //******************************************************************************
 
-Real64 SiteDeepGroundTemps::getGroundTempAtTimeInSeconds(Real64 const EP_UNUSED(_depth), Real64 const _seconds)
+Nandle SiteDeepGroundTemps::getGroundTempAtTimeInSeconds(Nandle const EP_UNUSED(_depth), Nandle const _seconds)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -167,7 +167,7 @@ Real64 SiteDeepGroundTemps::getGroundTempAtTimeInSeconds(Real64 const EP_UNUSED(
     using WeatherManager::NumDaysInYear;
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 secPerMonth = NumDaysInYear * SecsInDay / 12;
+    Nandle secPerMonth = NumDaysInYear * SecsInDay / 12;
 
     // Convert secs to months
     int month = ceil(_seconds / secPerMonth);
@@ -184,7 +184,7 @@ Real64 SiteDeepGroundTemps::getGroundTempAtTimeInSeconds(Real64 const EP_UNUSED(
 
 //******************************************************************************
 
-Real64 SiteDeepGroundTemps::getGroundTempAtTimeInMonths(Real64 const EP_UNUSED(_depth), int const _month)
+Nandle SiteDeepGroundTemps::getGroundTempAtTimeInMonths(Nandle const EP_UNUSED(_depth), int const _month)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell

@@ -202,9 +202,9 @@ namespace RootFinder {
     void SetupRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
                          int const SlopeType,                // Either iSlopeIncreasing or iSlopeDecreasing
                          int const MethodType,               // Any of the iMethod<name> code but iMethodNone
-                         Real64 const TolX,                  // Relative tolerance for X variables
-                         Real64 const ATolX,                 // Absolute tolerance for X variables
-                         Real64 const ATolY                  // Absolute tolerance for Y variables
+                         Nandle const TolX,                  // Relative tolerance for X variables
+                         Nandle const ATolX,                 // Absolute tolerance for X variables
+                         Nandle const ATolY                  // Absolute tolerance for Y variables
     )
     {
 
@@ -287,8 +287,8 @@ namespace RootFinder {
     }
 
     void ResetRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                         Real64 const XMin,                  // Minimum X value allowed
-                         Real64 const XMax                   // Maximum X value allowed
+                         Nandle const XMin,                  // Minimum X value allowed
+                         Nandle const XMax                   // Maximum X value allowed
     )
     {
 
@@ -373,8 +373,8 @@ namespace RootFinder {
     }
 
     void InitializeRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                              Real64 const XMin,                  // Minimum X value allowed
-                              Real64 const XMax                   // Maximum X value allowed
+                              Nandle const XMin,                  // Minimum X value allowed
+                              Nandle const XMax                   // Maximum X value allowed
     )
     {
 
@@ -410,8 +410,8 @@ namespace RootFinder {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SavedXCandidate;
-        Real64 XMinReset;
+        Nandle SavedXCandidate;
+        Nandle XMinReset;
         // FLOW:
 
         XMinReset = XMin;
@@ -437,8 +437,8 @@ namespace RootFinder {
     }
 
     void IterateRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                           Real64 const X,                     // X value of current iterate
-                           Real64 const Y,                     // Y value of current iterate
+                           Nandle const X,                     // X value of current iterate
+                           Nandle const Y,                     // Y value of current iterate
                            Optional_bool IsDoneFlag            // If TRUE indicates that the iteration should be stopped
     )
     {
@@ -844,7 +844,7 @@ namespace RootFinder {
     }
 
     bool CheckRootFinderCandidate(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                  Real64 const X                            // X value for current iterate
+                                  Nandle const X                            // X value for current iterate
     )
     {
         // FUNCTION INFORMATION:
@@ -898,7 +898,7 @@ namespace RootFinder {
     }
 
     bool CheckMinMaxRange(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                          Real64 const X                            // X value for current iterate
+                          Nandle const X                            // X value for current iterate
     )
     {
         // FUNCTION INFORMATION:
@@ -961,7 +961,7 @@ namespace RootFinder {
     }
 
     bool CheckLowerUpperBracket(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                Real64 const X                            // X value for current iterate
+                                Nandle const X                            // X value for current iterate
     )
     {
         // FUNCTION INFORMATION:
@@ -1143,7 +1143,7 @@ namespace RootFinder {
         // Safety factor used to detect a singular residual function between the min and max
         // points.
         // NOTE: Requesting exactly the same value is obtained by setting SafetyFactor = 0.0
-        Real64 const SafetyFactor(0.1);
+        Nandle const SafetyFactor(0.1);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1152,8 +1152,8 @@ namespace RootFinder {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 DeltaY; // Difference between min and max Y-values
-        Real64 ATolY;  // Absolute tolerance used to detected equal min and max Y-values
+        Nandle DeltaY; // Difference between min and max Y-values
+        Nandle ATolY;  // Absolute tolerance used to detected equal min and max Y-values
 
         // FLOW:
 
@@ -1322,7 +1322,7 @@ namespace RootFinder {
     }
 
     bool CheckRootFinderConvergence(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                    Real64 const Y                            // Y value for current iterate
+                                    Nandle const Y                            // Y value for current iterate
     )
     {
         // FUNCTION INFORMATION:
@@ -1376,7 +1376,7 @@ namespace RootFinder {
     }
 
     bool CheckIncrementRoundOff(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                Real64 const X                            // X value for current iterate
+                                Nandle const X                            // X value for current iterate
     )
     {
         // FUNCTION INFORMATION:
@@ -1414,8 +1414,8 @@ namespace RootFinder {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 DeltaX; // Increment in X since last iterate
-        Real64 TolX;   // Tolerance to satisfy for X increment
+        Nandle DeltaX; // Increment in X since last iterate
+        Nandle TolX;   // Tolerance to satisfy for X increment
         // FLOW:
 
         CheckIncrementRoundOff = false;
@@ -1471,9 +1471,9 @@ namespace RootFinder {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 DeltaUL; // Distance between lower and upper points
-        Real64 TypUL;   // Typical value for values lying within lower/upper interval
-        Real64 TolUL;   // Tolerance to satisfy for lower-upper distance
+        Nandle DeltaUL; // Distance between lower and upper points
+        Nandle TypUL;   // Typical value for values lying within lower/upper interval
+        Nandle TolUL;   // Tolerance to satisfy for lower-upper distance
         // FLOW:
 
         // Check for round-off error in Lower/Upper interval
@@ -1495,8 +1495,8 @@ namespace RootFinder {
     }
 
     void UpdateMinMax(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                      Real64 const X,                     // X value for current iterate
-                      Real64 const Y                      // Y value for current iterate, F(X)=Y
+                      Nandle const X,                     // X value for current iterate
+                      Nandle const Y                      // Y value for current iterate, F(X)=Y
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1552,8 +1552,8 @@ namespace RootFinder {
     }
 
     void UpdateBracket(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                       Real64 const X,                     // X value for current iterate
-                       Real64 const Y                      // Y value for current iterate, F(X)=Y
+                       Nandle const X,                     // X value for current iterate
+                       Nandle const Y                      // Y value for current iterate, F(X)=Y
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1724,8 +1724,8 @@ namespace RootFinder {
     }
 
     void UpdateHistory(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                       Real64 const X,                     // X value for current iterate
-                       Real64 const Y                      // Y value for current iterate, F(X)=Y
+                       Nandle const X,                     // X value for current iterate
+                       Nandle const Y                      // Y value for current iterate, F(X)=Y
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1800,8 +1800,8 @@ namespace RootFinder {
     }
 
     void UpdateRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                          Real64 const X,                     // X value for current iterate
-                          Real64 const Y                      // Y value for current iterate, F(X)=Y
+                          Nandle const X,                     // X value for current iterate
+                          Nandle const Y                      // Y value for current iterate, F(X)=Y
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1925,8 +1925,8 @@ namespace RootFinder {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int I;
         int J;
-        Real64 XTemp;
-        Real64 YTemp;
+        Nandle XTemp;
+        Nandle YTemp;
         // FLOW:
 
         // Nothing to do if only one point stored in history
@@ -1992,7 +1992,7 @@ namespace RootFinder {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 XNext(0.0);
+        static Nandle XNext(0.0);
 
         // FLOW:
 
@@ -2083,7 +2083,7 @@ namespace RootFinder {
     }
 
     bool BracketRoot(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                     Real64 &XNext                             // Next value
+                     Nandle &XNext                             // Next value
     )
     {
         // FUNCTION INFORMATION:
@@ -2166,7 +2166,7 @@ namespace RootFinder {
         return BracketRoot;
     }
 
-    Real64 BisectionMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
+    Nandle BisectionMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Dimitri Curtil (LBNL)
@@ -2193,7 +2193,7 @@ namespace RootFinder {
         // na
 
         // Return value
-        Real64 BisectionMethod;
+        Nandle BisectionMethod;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2217,7 +2217,7 @@ namespace RootFinder {
         return BisectionMethod;
     }
 
-    Real64 FalsePositionMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
+    Nandle FalsePositionMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Dimitri Curtil (LBNL)
@@ -2246,7 +2246,7 @@ namespace RootFinder {
         // na
 
         // Return value
-        Real64 FalsePositionMethod;
+        Nandle FalsePositionMethod;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2261,9 +2261,9 @@ namespace RootFinder {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 XCandidate;
-        Real64 Num;
-        Real64 Den;
+        Nandle XCandidate;
+        Nandle Num;
+        Nandle Den;
 
         // FLOW:
 
@@ -2289,7 +2289,7 @@ namespace RootFinder {
         return FalsePositionMethod;
     }
 
-    Real64 SecantMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
+    Nandle SecantMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Dimitri Curtil (LBNL)
@@ -2319,7 +2319,7 @@ namespace RootFinder {
         // na
 
         // Return value
-        Real64 SecantMethod;
+        Nandle SecantMethod;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2334,7 +2334,7 @@ namespace RootFinder {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 XCandidate;
+        Nandle XCandidate;
 
         // FLOW:
 
@@ -2358,7 +2358,7 @@ namespace RootFinder {
     }
 
     bool SecantFormula(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                       Real64 &XNext                             // Result from Secant formula if possible to compute
+                       Nandle &XNext                             // Result from Secant formula if possible to compute
     )
     {
         // FUNCTION INFORMATION:
@@ -2402,8 +2402,8 @@ namespace RootFinder {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 Num;
-        Real64 Den;
+        Nandle Num;
+        Nandle Den;
 
         // FLOW:
 
@@ -2422,7 +2422,7 @@ namespace RootFinder {
         return SecantFormula;
     }
 
-    Real64 BrentMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
+    Nandle BrentMethod(RootFinderDataType &RootFinderData) // Data used by root finding algorithm
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Dimitri Curtil (LBNL)
@@ -2453,7 +2453,7 @@ namespace RootFinder {
         // na
 
         // Return value
-        Real64 BrentMethod;
+        Nandle BrentMethod;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2468,18 +2468,18 @@ namespace RootFinder {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 XCandidate;
-        Real64 A;
-        Real64 FA;
-        Real64 B;
-        Real64 FB;
-        Real64 C;
-        Real64 FC;
-        Real64 R;
-        Real64 S;
-        Real64 T;
-        Real64 P;
-        Real64 Q;
+        Nandle XCandidate;
+        Nandle A;
+        Nandle FA;
+        Nandle B;
+        Nandle FB;
+        Nandle C;
+        Nandle FC;
+        Nandle R;
+        Nandle S;
+        Nandle T;
+        Nandle P;
+        Nandle Q;
         // FLOW:
 
         // Only attempt Brent's method if enough history points are available

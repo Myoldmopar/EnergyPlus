@@ -130,7 +130,7 @@ void CoilCoolingDXCurveFitSpeed::instantiateFromInputSpec(const CoilCoolingDXCur
                                       RatedInletAirTemp);
 
     if (!errorsFound && !input_data.waste_heat_function_of_temperature_curve_name.empty()) {
-        Real64 CurveVal = CurveManager::CurveValue(this->indexWHFT, RatedOutdoorAirTemp, RatedInletAirTemp);
+        Nandle CurveVal = CurveManager::CurveValue(this->indexWHFT, RatedOutdoorAirTemp, RatedInletAirTemp);
         if (CurveVal > 1.10 || CurveVal < 0.90) {
             ShowWarningError(routineName + this->object_name + "=\"" + this->name + "\", curve values");
             ShowContinueError("Waste Heat Modifier Function of Temperature Curve Name = " + input_data.waste_heat_function_of_temperature_curve_name);
@@ -147,12 +147,12 @@ void CoilCoolingDXCurveFitSpeed::instantiateFromInputSpec(const CoilCoolingDXCur
 
     if (!errorsFound) {
         //     Test PLF curve minimum and maximum. Cap if less than 0.7 or greater than 1.0.
-        Real64 MinCurveVal = 999.0;
-        Real64 MaxCurveVal = -999.0;
-        Real64 CurveInput = 0.0;
-        Real64 MinCurvePLR = 0.0, MaxCurvePLR = 0.0;
+        Nandle MinCurveVal = 999.0;
+        Nandle MaxCurveVal = -999.0;
+        Nandle CurveInput = 0.0;
+        Nandle MinCurvePLR = 0.0, MaxCurvePLR = 0.0;
         while (CurveInput <= 1.0) {
-            Real64 CurveVal = CurveManager::CurveValue(this->indexPLRFPLF, CurveInput);
+            Nandle CurveVal = CurveManager::CurveValue(this->indexPLRFPLF, CurveInput);
             if (CurveVal < MinCurveVal) {
                 MinCurveVal = CurveVal;
                 MinCurvePLR = CurveInput;
@@ -192,11 +192,11 @@ bool CoilCoolingDXCurveFitSpeed::processCurve(const std::string& curveName,
                                               std::vector<int> validDims,
                                               const std::string& routineName,
                                               const std::string& fieldName,
-                                              Real64 const Var1,           // required 1st independent variable
-                                              Optional<Real64 const> Var2, // 2nd independent variable
-                                              Optional<Real64 const> Var3, // 3rd independent variable
-                                              Optional<Real64 const> Var4, // 4th independent variable
-                                              Optional<Real64 const> Var5) // 5th independent variable
+                                              Nandle const Var1,           // required 1st independent variable
+                                              Optional<Nandle const> Var2, // 2nd independent variable
+                                              Optional<Nandle const> Var3, // 3rd independent variable
+                                              Optional<Nandle const> Var4, // 4th independent variable
+                                              Optional<Nandle const> Var5) // 5th independent variable
 {
     if (curveName.empty()) {
         return false;
@@ -375,7 +375,7 @@ void CoilCoolingDXCurveFitSpeed::size()
 }
 
 void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
-    const DataLoopNode::NodeData &inletNode, DataLoopNode::NodeData &outletNode, Real64 &_PLR, int &fanOpMode, const Real64 condInletTemp)
+    const DataLoopNode::NodeData &inletNode, DataLoopNode::NodeData &outletNode, Nandle &_PLR, int &fanOpMode, const Nandle condInletTemp)
 {
 
     // SUBROUTINE PARAMETER DEFINITIONS:
@@ -392,9 +392,9 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
         return;
     }
 
-    Real64 hDelta;    // enthalpy difference across cooling coil
-    Real64 A0;  // ratio of UA to Cp
-    Real64 CBF; // adjusted coil bypass factor
+    Nandle hDelta;    // enthalpy difference across cooling coil
+    Nandle A0;  // ratio of UA to Cp
+    Nandle CBF; // adjusted coil bypass factor
     if (RatedCBF > 0.0) {
         A0 = -std::log(RatedCBF) * RatedAirMassFlowRate;
     } else {
@@ -402,25 +402,25 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
         ShowFatalError(RoutineName + "Rated CBF=" + General::RoundSigDigits(RatedCBF, 6) + " is <= 0.0 for " + object_name + "=" + name);
         A0 = 0.0;
     }
-    Real64 ADiff = -A0 / AirMassFlow;
+    Nandle ADiff = -A0 / AirMassFlow;
     if (ADiff >= DataPrecisionGlobals::EXP_LowerLimit) {
         CBF = std::exp(ADiff);
     } else {
         CBF = 0.0;
     }
 
-    Real64 inletWetBulb = Psychrometrics::PsyTwbFnTdbWPb(inletNode.Temp, inletNode.HumRat, ambPressure);
-    Real64 inletw = inletNode.HumRat;
+    Nandle inletWetBulb = Psychrometrics::PsyTwbFnTdbWPb(inletNode.Temp, inletNode.HumRat, ambPressure);
+    Nandle inletw = inletNode.HumRat;
 
     int Counter = 0;              // iteration counter for dry coil condition
     int const MaxIter(30);        // iteration limit
-    Real64 const Tolerance(0.01); // iteration convergence limit
-    Real64 RF = 0.4;              // relaxation factor for holding back changes in value during iteration
-    Real64 TotCap;
-    Real64 SHR;
+    Nandle const Tolerance(0.01); // iteration convergence limit
+    Nandle RF = 0.4;              // relaxation factor for holding back changes in value during iteration
+    Nandle TotCap;
+    Nandle SHR;
     while (true) {
 
-        Real64 TotCapTempModFac = 1.0;
+        Nandle TotCapTempModFac = 1.0;
         if (indexCapFT > 0) {
             if (CurveManager::PerfCurve(indexCapFT).NumDims == 2) {
                 TotCapTempModFac = CurveManager::CurveValue(indexCapFT, inletWetBulb, condInletTemp);
@@ -428,7 +428,7 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
                 TotCapTempModFac = CurveManager::CurveValue(indexCapFT, condInletTemp);
             }
         }
-        Real64 TotCapFlowModFac = 1.0;
+        Nandle TotCapFlowModFac = 1.0;
         if (indexCapFFF > 0) {
             TotCapFlowModFac = CurveManager::CurveValue(indexCapFFF, AirFF);
         }
@@ -437,12 +437,12 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
         hDelta = TotCap / AirMassFlow;
 
         if (indexSHRFT > 0 && indexSHRFFF > 0) {
-            Real64 SHRTempModFrac = 1.0;
+            Nandle SHRTempModFrac = 1.0;
             if (indexSHRFT > 0) {
                 SHRTempModFrac = max(CurveManager::CurveValue(indexSHRFT, inletWetBulb, inletNode.Temp), 0.0);
             }
 
-            Real64 SHRFlowModFrac = 1.0;
+            Nandle SHRFlowModFrac = 1.0;
             if (indexSHRFFF > 0) {
                 SHRFlowModFrac = max(CurveManager::CurveValue(indexSHRFFF, AirFF), 0.0);
             }
@@ -452,10 +452,10 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
             break;
         } else {
             // Calculate apparatus dew point conditions using TotCap and CBF
-            Real64 hADP = inletNode.Enthalpy - hDelta / (1.0 - CBF);
-            Real64 tADP = Psychrometrics::PsyTsatFnHPb(hADP, ambPressure, RoutineName);
-            Real64 wADP = Psychrometrics::PsyWFnTdbH(tADP, hADP, RoutineName);
-            Real64 hTinwADP = Psychrometrics::PsyHFnTdbW(inletNode.Temp, wADP);
+            Nandle hADP = inletNode.Enthalpy - hDelta / (1.0 - CBF);
+            Nandle tADP = Psychrometrics::PsyTsatFnHPb(hADP, ambPressure, RoutineName);
+            Nandle wADP = Psychrometrics::PsyWFnTdbH(tADP, hADP, RoutineName);
+            Nandle hTinwADP = Psychrometrics::PsyHFnTdbW(inletNode.Temp, wADP);
             if ((inletNode.Enthalpy - hADP) > 1.e-10) {
                 SHR = min((hTinwADP - hADP) / (inletNode.Enthalpy - hADP), 1.0);
             } else {
@@ -464,7 +464,7 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
             // Check for dry evaporator conditions (win < wadp)
             if (wADP > inletw || (Counter >= 1 && Counter < MaxIter)) {
                 if (inletw == 0.0) inletw = 0.00001;
-                Real64 werror = (inletw - wADP) / inletw;
+                Nandle werror = (inletw - wADP) / inletw;
                 // Increase InletAirHumRatTemp at constant InletAirTemp to find coil dry-out point. Then use the
                 // capacity at the dry-out point to determine exiting conditions from coil. This is required
                 // since the TotCapTempModFac doesn't work properly with dry-coil conditions.
@@ -479,13 +479,13 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
         }
     }
 
-    Real64 PLF = 1.0; // part load factor as a function of PLR, RTF = PLR / PLF
+    Nandle PLF = 1.0; // part load factor as a function of PLR, RTF = PLR / PLF
     if (indexPLRFPLF > 0) {
         PLF = CurveManager::CurveValue(indexPLRFPLF, _PLR); // Calculate part-load factor
     }
     if (fanOpMode == DataHVACGlobals::CycFanCycCoil) DataHVACGlobals::OnOffFanPartLoadFraction = PLF;
 
-    Real64 EIRTempModFac = 1.0; // EIR as a function of temperature curve result
+    Nandle EIRTempModFac = 1.0; // EIR as a function of temperature curve result
     if (indexEIRFT > 0) {
         if (CurveManager::PerfCurve(indexEIRFT).NumDims == 2) {
             EIRTempModFac = CurveManager::CurveValue(indexEIRFT, inletWetBulb, condInletTemp);
@@ -493,48 +493,48 @@ void CoilCoolingDXCurveFitSpeed::CalcSpeedOutput(
             EIRTempModFac = CurveManager::CurveValue(indexEIRFT, condInletTemp);
         }
     }
-    Real64 EIRFlowModFac = 1.0; // EIR as a function of flow fraction curve result
+    Nandle EIRFlowModFac = 1.0; // EIR as a function of flow fraction curve result
     if (indexEIRFFF > 0) {
         EIRFlowModFac = CurveManager::CurveValue(indexEIRFFF, AirFF);
     }
 
-    Real64 wastHeatempModFac = 1.0; // waste heat fraction as a function of temperature curve result
+    Nandle wastHeatempModFac = 1.0; // waste heat fraction as a function of temperature curve result
     if (indexWHFT > 0) {
         wastHeatempModFac = CurveManager::CurveValue(indexWHFT, condInletTemp, inletNode.Temp);
     }
 
-    Real64 EIR = RatedEIR * EIRFlowModFac * EIRTempModFac;
+    Nandle EIR = RatedEIR * EIRFlowModFac * EIRTempModFac;
     RTF = _PLR / PLF;
     fullLoadPower = TotCap * EIR;
     fullLoadWasteHeat = ratedWasteHeatFractionOfPowerInput * wastHeatempModFac * fullLoadPower;
 
     outletNode.Enthalpy = inletNode.Enthalpy - hDelta;
-    Real64 hTinwout = inletNode.Enthalpy - ((1.0 - SHR) * hDelta);
+    Nandle hTinwout = inletNode.Enthalpy - ((1.0 - SHR) * hDelta);
     outletNode.HumRat = Psychrometrics::PsyWFnTdbH(inletNode.Temp, hTinwout);
     outletNode.Temp = Psychrometrics::PsyTdbFnHW(outletNode.Enthalpy, outletNode.HumRat);
 }
 
-Real64 CoilCoolingDXCurveFitSpeed::CalcBypassFactor(Real64 tdb, Real64 w, Real64 h, Real64 p)
+Nandle CoilCoolingDXCurveFitSpeed::CalcBypassFactor(Nandle tdb, Nandle w, Nandle h, Nandle p)
 {
 
     static std::string const RoutineName("CalcBypassFactor: ");
     // Bypass factors are calculated at rated conditions at sea level (make sure in.p is Standard Pressure)
-    Real64 calcCBF;
+    Nandle calcCBF;
 
-    Real64 airMassFlowRate = evap_air_flow_rate * Psychrometrics::PsyRhoAirFnPbTdbW(p, tdb, w);
-    Real64 deltaH = rated_total_capacity / airMassFlowRate;
-    Real64 outp = p;
-    Real64 outh = h - deltaH;
-    Real64 outw = Psychrometrics::PsyWFnTdbH(tdb, h - (1.0 - this->grossRatedSHR) * deltaH); // enthalpy at Tdb,in and Wout
-    Real64 outtdb = Psychrometrics::PsyTdbFnHW(outh, outw);
-    Real64 outrh = Psychrometrics::PsyRhFnTdbWPb(outtdb, outw, outp);
+    Nandle airMassFlowRate = evap_air_flow_rate * Psychrometrics::PsyRhoAirFnPbTdbW(p, tdb, w);
+    Nandle deltaH = rated_total_capacity / airMassFlowRate;
+    Nandle outp = p;
+    Nandle outh = h - deltaH;
+    Nandle outw = Psychrometrics::PsyWFnTdbH(tdb, h - (1.0 - this->grossRatedSHR) * deltaH); // enthalpy at Tdb,in and Wout
+    Nandle outtdb = Psychrometrics::PsyTdbFnHW(outh, outw);
+    Nandle outrh = Psychrometrics::PsyRhFnTdbWPb(outtdb, outw, outp);
 
     if (outrh >= 1.0) {
-        Real64 outletAirTempSat = Psychrometrics::PsyTsatFnHPb(outh, outp, RoutineName);
+        Nandle outletAirTempSat = Psychrometrics::PsyTsatFnHPb(outh, outp, RoutineName);
         if (outtdb < outletAirTempSat) { // Limit to saturated conditions at OutletAirEnthalpy
             outtdb = outletAirTempSat + 0.005;
             outw = Psychrometrics::PsyWFnTdbH(outtdb, outh, RoutineName);
-            Real64 adjustedSHR = (Psychrometrics::PsyHFnTdbW(tdb, outw) - outh) / deltaH;
+            Nandle adjustedSHR = (Psychrometrics::PsyHFnTdbW(tdb, outw) - outh) / deltaH;
             ShowWarningError(RoutineName + object_name + " \"" + name +
                              "\", SHR adjusted to achieve valid outlet air properties and the simulation continues.");
             ShowContinueError("Initial SHR = " + General::RoundSigDigits(this->grossRatedSHR, 5));
@@ -543,16 +543,16 @@ Real64 CoilCoolingDXCurveFitSpeed::CalcBypassFactor(Real64 tdb, Real64 w, Real64
     }
 
     // ADP conditions
-    Real64 adp_tdb = Psychrometrics::PsyTdpFnWPb(outw, outp);
+    Nandle adp_tdb = Psychrometrics::PsyTdpFnWPb(outw, outp);
 
     std::size_t iter = 0;
     const std::size_t maxIter(50);
-    Real64 errorLast = 100.0;
-    Real64 deltaADPTemp = 5.0;
-    Real64 tolerance = 1.0; // initial conditions for iteration
-    Real64 slopeAtConds = 0.0;
-    Real64 deltaT = tdb - outtdb;
-    Real64 deltaHumRat = w - outw;
+    Nandle errorLast = 100.0;
+    Nandle deltaADPTemp = 5.0;
+    Nandle tolerance = 1.0; // initial conditions for iteration
+    Nandle slopeAtConds = 0.0;
+    Nandle deltaT = tdb - outtdb;
+    Nandle deltaHumRat = w - outw;
     bool cbfErrors = false;
 
     if (deltaT > 0.0) slopeAtConds = deltaHumRat / deltaT;
@@ -564,7 +564,7 @@ Real64 CoilCoolingDXCurveFitSpeed::CalcBypassFactor(Real64 tdb, Real64 w, Real64
         ShowFatalError("Errors found in calculating coil bypass factors");
     }
 
-    Real64 adp_w = min(outw, Psychrometrics::PsyWFnTdpPb(adp_tdb, DataEnvironment::StdPressureSeaLevel));
+    Nandle adp_w = min(outw, Psychrometrics::PsyWFnTdpPb(adp_tdb, DataEnvironment::StdPressureSeaLevel));
 
     while ((iter <= maxIter) && (tolerance > 0.001)) {
 
@@ -573,9 +573,9 @@ Real64 CoilCoolingDXCurveFitSpeed::CalcBypassFactor(Real64 tdb, Real64 w, Real64
         ++iter;
         //  Find new slope using guessed Tadp
         adp_w = min(outw, Psychrometrics::PsyWFnTdpPb(adp_tdb, DataEnvironment::StdPressureSeaLevel));
-        Real64 slope = (w - adp_w) / max(0.001, (tdb - adp_tdb));
+        Nandle slope = (w - adp_w) / max(0.001, (tdb - adp_tdb));
         //  check for convergence (slopes are equal to within error tolerance)
-        Real64 error = (slope - slopeAtConds) / slopeAtConds;
+        Nandle error = (slope - slopeAtConds) / slopeAtConds;
         if ((error > 0.0) && (errorLast < 0.0)) {
             deltaADPTemp = -deltaADPTemp / 2.0;
         } else if ((error < 0.0) && (errorLast > 0.0)) {
@@ -588,7 +588,7 @@ Real64 CoilCoolingDXCurveFitSpeed::CalcBypassFactor(Real64 tdb, Real64 w, Real64
     }
 
     //   Calculate Bypass Factor from Enthalpies
-    Real64 adp_h = Psychrometrics::PsyHFnTdbW(adp_tdb, adp_w);
+    Nandle adp_h = Psychrometrics::PsyHFnTdbW(adp_tdb, adp_w);
     calcCBF = min(1.0, (outh - adp_h) / (h - adp_h));
 
     if (iter > maxIter) {

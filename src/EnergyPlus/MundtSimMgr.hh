@@ -64,9 +64,9 @@ namespace MundtSimMgr {
 
     // Data
     // MODULE PARAMETER DEFINITIONS:
-    extern Real64 const CpAir;    // Specific heat of air
-    extern Real64 const MinSlope; // Bound on result from Mundt model
-    extern Real64 const MaxSlope; // Bound on result from Mundt Model
+    extern Nandle const CpAir;    // Specific heat of air
+    extern Nandle const MinSlope; // Bound on result from Mundt model
+    extern Nandle const MaxSlope; // Bound on result from Mundt Model
 
     // MODULE DERIVED TYPE DEFINITIONS:
 
@@ -86,14 +86,14 @@ namespace MundtSimMgr {
     extern Array1D_int RoomNodeIDs;     // ids of the first NumRoomNode Air Nodes
     extern Array1D_int ID1dSurf;        // numbers used to identify surfaces
     extern int MundtZoneNum;            // index of zones using Mundt model
-    extern Real64 ZoneHeight;           // zone height
-    extern Real64 ZoneFloorArea;        // zone floor area
-    extern Real64 QventCool;            // heat gain due to ventilation
-    extern Real64 ConvIntGain;          // heat gain due to internal gains
-    extern Real64 SupplyAirTemp;        // supply air temperature
-    extern Real64 SupplyAirVolumeRate;  // supply air volume flowrate
-    extern Real64 ZoneAirDensity;       // zone air density
-    extern Real64 QsysCoolTot;          // zone sensible cooling load
+    extern Nandle ZoneHeight;           // zone height
+    extern Nandle ZoneFloorArea;        // zone floor area
+    extern Nandle QventCool;            // heat gain due to ventilation
+    extern Nandle ConvIntGain;          // heat gain due to internal gains
+    extern Nandle SupplyAirTemp;        // supply air temperature
+    extern Nandle SupplyAirVolumeRate;  // supply air volume flowrate
+    extern Nandle ZoneAirDensity;       // zone air density
+    extern Nandle QsysCoolTot;          // zone sensible cooling load
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE MundtSimMgr
 
@@ -110,8 +110,8 @@ namespace MundtSimMgr {
         // Members
         std::string AirNodeName; // Name of air nodes
         int ClassType;           // Type of air nodes
-        Real64 Height;           // Z coordinates [m] node's Control Vol. center
-        Real64 Temp;             // Surface temperature BC
+        Nandle Height;           // Z coordinates [m] node's Control Vol. center
+        Nandle Temp;             // Surface temperature BC
         Array1D_bool SurfMask;   // Limit of 60 surfaces at current sizing
 
         // Default Constructor
@@ -123,10 +123,10 @@ namespace MundtSimMgr {
     struct DefineSurfaceSettings
     {
         // Members
-        Real64 Area;     // m2
-        Real64 Temp;     // surface temperature BC
-        Real64 Hc;       // convective film coeff BC
-        Real64 TMeanAir; // effective near-surface air temp from air model solution
+        Nandle Area;     // m2
+        Nandle Temp;     // surface temperature BC
+        Nandle Hc;       // convective film coeff BC
+        Nandle TMeanAir; // effective near-surface air temp from air model solution
 
         // Default Constructor
         DefineSurfaceSettings() : Area(0.0), Temp(0.0), Hc(0.0), TMeanAir(0.0)
@@ -178,13 +178,13 @@ namespace MundtSimMgr {
     //*****************************************************************************************
 
     void SetNodeResult(int const NodeID,       // node ID
-                       Real64 const TempResult // temperature for the specified air node
+                       Nandle const TempResult // temperature for the specified air node
     );
 
     //*****************************************************************************************
 
     void SetSurfTmeanAir(int const SurfID,    // surface ID
-                         Real64 const TeffAir // temperature of air node adjacent to the specified surface
+                         Nandle const TeffAir // temperature of air node adjacent to the specified surface
     );
 
     //*****************************************************************************************

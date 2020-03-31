@@ -77,9 +77,9 @@ namespace HeatBalanceMovableInsulation {
     using ScheduleManager::GetCurrentScheduleValue;
 
     void EvalOutsideMovableInsulation(int const SurfNum,       // DO loop counter for surfaces
-                                      Real64 &HMovInsul,       // Resistance or "h" value of movable insulation
+                                      Nandle &HMovInsul,       // Resistance or "h" value of movable insulation
                                       int &RoughIndexMovInsul, // Roughness index of movable insulation
-                                      Real64 &AbsExt           // Absorptivity of outer most layer
+                                      Nandle &AbsExt           // Absorptivity of outer most layer
     )
     {
 
@@ -100,7 +100,7 @@ namespace HeatBalanceMovableInsulation {
         // (I)BLAST legacy routine OMVINS
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MovInsulSchedVal; // Value of the movable insulation schedule for current time
+        Nandle MovInsulSchedVal; // Value of the movable insulation schedule for current time
 
         // FLOW:
         MovInsulSchedVal = GetCurrentScheduleValue(Surface(SurfNum).SchedMovInsulExt);
@@ -140,8 +140,8 @@ namespace HeatBalanceMovableInsulation {
     }
 
     void EvalInsideMovableInsulation(int const SurfNum, // DO loop counter for surfaces
-                                     Real64 &HMovInsul, // Resistance or "h" value of movable insulation
-                                     Real64 &AbsInt     // Inside solar absorptance of movable insulation
+                                     Nandle &HMovInsul, // Resistance or "h" value of movable insulation
+                                     Nandle &AbsInt     // Inside solar absorptance of movable insulation
     )
     {
 
@@ -164,7 +164,7 @@ namespace HeatBalanceMovableInsulation {
         // (I)BLAST legacy routine IMVINS
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MovInsulSchedVal; // Value of the movable insulation schedule for current time
+        Nandle MovInsulSchedVal; // Value of the movable insulation schedule for current time
 
         // FLOW:
         MovInsulSchedVal = GetCurrentScheduleValue(Surface(SurfNum).SchedMovInsulInt);

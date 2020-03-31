@@ -93,9 +93,9 @@ namespace DataWindowEquivalentLayer {
     struct CFSLWP
     {
         // Members
-        Real64 EPSLF; // thermal emittance, front (outside) side
-        Real64 EPSLB; // thermal emittance, back (inside) side
-        Real64 TAUL;  // thermal transmittance (same value for front or back)
+        Nandle EPSLF; // thermal emittance, front (outside) side
+        Nandle EPSLB; // thermal emittance, back (inside) side
+        Nandle TAUL;  // thermal transmittance (same value for front or back)
 
         // Default Constructor
         CFSLWP() : EPSLF(0.0), EPSLB(0.0), TAUL(0.0)
@@ -106,22 +106,22 @@ namespace DataWindowEquivalentLayer {
     struct CFSSWP
     {
         // Members
-        Real64 RHOSFBB; // Solar reflectance, BEAM-BEAM, front (outside) side (any angle of incidence)
-        Real64 RHOSBBB; // Solar reflectance, BEAM-BEAM, back (inside) side (any angle of incidence)
-        Real64 TAUSFBB; // Solar transmittance, BEAM-BEAM, any angle of incidence
+        Nandle RHOSFBB; // Solar reflectance, BEAM-BEAM, front (outside) side (any angle of incidence)
+        Nandle RHOSBBB; // Solar reflectance, BEAM-BEAM, back (inside) side (any angle of incidence)
+        Nandle TAUSFBB; // Solar transmittance, BEAM-BEAM, any angle of incidence
         // radiation incident from front (outside)
-        Real64 TAUSBBB; // Solar transmittance, BEAM-BEAM, any angle of incidence
+        Nandle TAUSBBB; // Solar transmittance, BEAM-BEAM, any angle of incidence
         //    radiation incident from back (inside)
-        Real64 RHOSFBD; // Solar reflectance, BEAM-DIFFUSE, front (outside) side
+        Nandle RHOSFBD; // Solar reflectance, BEAM-DIFFUSE, front (outside) side
         //    BEAM-DIFFUSE, any angle of incidence
-        Real64 RHOSBBD; // Solar reflectance, BEAM-DIFFUSE, back (inside) side
+        Nandle RHOSBBD; // Solar reflectance, BEAM-DIFFUSE, back (inside) side
         //    any angle of incidence
-        Real64 TAUSFBD; // Solar transmittance, BEAM-DIFFUSE, front (outside) side
+        Nandle TAUSFBD; // Solar transmittance, BEAM-DIFFUSE, front (outside) side
         //    any angle of incidence
-        Real64 TAUSBBD; // Solar transmittance, BEAM-DIFFUSE, any angle of incidence
-        Real64 RHOSFDD; // Solar reflectance, DIFFUSE-DIFFUSE, front (outside) side
-        Real64 RHOSBDD; // Solar reflectance, DIFFUSE-DIFFUSE, back (inside) side
-        Real64 TAUS_DD; // Solar transmittance, DIFFUSE-DIFFUSE
+        Nandle TAUSBBD; // Solar transmittance, BEAM-DIFFUSE, any angle of incidence
+        Nandle RHOSFDD; // Solar reflectance, DIFFUSE-DIFFUSE, front (outside) side
+        Nandle RHOSBDD; // Solar reflectance, DIFFUSE-DIFFUSE, back (inside) side
+        Nandle TAUS_DD; // Solar transmittance, DIFFUSE-DIFFUSE
         //    (same value for radiation incident from front or back)
 
         // Default Constructor
@@ -153,20 +153,20 @@ namespace DataWindowEquivalentLayer {
         //   short wave (solar)
         //   long wave (thermal)
         // Shade Geometry (Slat, Drape, Insect Screen)
-        Real64 S; // spacing
+        Nandle S; // spacing
         //    VB: slat spacing, m, >0
         //    PD: rectangular pleat spacing, m >0
         //    IS: wire center-to-center spacing (pitch), m, >0
         //    else unused
-        Real64 W; // width
+        Nandle W; // width
         //    VB: slat tip-to-tip (chord width), m, >0
         //        if crown > 0, W < slat flattened width
         //    PD: pleat depth, m >= 0
         //    IS: wire diameter, m, >0, <S
-        Real64 C; // crown
+        Nandle C; // crown
         //    VB: slat crown, m >=0 if used
         //    crown assume upward for ltyVBHOR else unused
-        Real64 PHI_DEG; // Angle
+        Nandle PHI_DEG; // Angle
         //    VB: slat angle, degrees (-90 <= PHI_DEG <= 90)
         //        ltyVBHOR: + = front-side slat tip below horizontal
         //        ltyVBVER: + = front-side slat tip is counter-
@@ -190,18 +190,18 @@ namespace DataWindowEquivalentLayer {
         // Members
         std::string Name; // Gas Type (AIR, ARGON, XENON, KRYPTON, CUSTOM)
         // Gas Conductivity: K = AK + BK*T + CK*T*T
-        Real64 AK; // conductivity coeff constant term,  (W/m-K)
-        Real64 BK; // conductivity coeff of T term, (W/m-K2)
-        Real64 CK; // conductivity coeff of T^2 term, (W/m-K^3)
+        Nandle AK; // conductivity coeff constant term,  (W/m-K)
+        Nandle BK; // conductivity coeff of T term, (W/m-K2)
+        Nandle CK; // conductivity coeff of T^2 term, (W/m-K^3)
         // Gas Specific heat: CP = ACP + BCP*T + CCP*T*T
-        Real64 ACP; // specific heat constant term, (J/kg-K)
-        Real64 BCP; // specific heat coeff of T term, (J/kg-K^2)
-        Real64 CCP; // specific heat coeff of T^2 term, (J/kg-K^3)
+        Nandle ACP; // specific heat constant term, (J/kg-K)
+        Nandle BCP; // specific heat coeff of T term, (J/kg-K^2)
+        Nandle CCP; // specific heat coeff of T^2 term, (J/kg-K^3)
         // Gas Viscosity: Visc = AVISC + BVISC*T + CVISC*T*T
-        Real64 AVISC; // viscosity constant term, (N-sec/m2)
-        Real64 BVISC; // viscosity coeff of T term, (N-sec/m2-K)
-        Real64 CVISC; // viscosity coeff of T^2 term, (N-sec/m2-K^2)
-        Real64 MHAT;  // apparent molecular weight of gas
+        Nandle AVISC; // viscosity constant term, (N-sec/m2)
+        Nandle BVISC; // viscosity coeff of T term, (N-sec/m2-K)
+        Nandle CVISC; // viscosity coeff of T^2 term, (N-sec/m2-K^2)
+        Nandle MHAT;  // apparent molecular weight of gas
 
         // Default Constructor
         CFSFILLGAS() : AK(0.0), BK(0.0), CK(0.0), ACP(0.0), BCP(0.0), CCP(0.0), AVISC(0.0), BVISC(0.0), CVISC(0.0), MHAT(0.0)
@@ -214,14 +214,14 @@ namespace DataWindowEquivalentLayer {
         // Members
         std::string Name; // Gap layer name
         int GTYPE;        // gap type (gtyXXX above)
-        Real64 TAS;       // actual surface-surface gap thickness, mm (always > 0)
+        Nandle TAS;       // actual surface-surface gap thickness, mm (always > 0)
         //   VB: minimum tip-surface distance (slats normal to CFS plane)
-        Real64 TAS_EFF; // effective gap thickness, mm (always > 0)
+        Nandle TAS_EFF; // effective gap thickness, mm (always > 0)
         //   if either adjacent layer is VB adjusted
         //   slat angle and convective behavior
         //   else = TAS
         CFSFILLGAS FG; // fill gas properties (see above)
-        Real64 RHOGAS; // fill gas density (kg/m3)
+        Nandle RHOGAS; // fill gas density (kg/m3)
 
         // Default Constructor
         CFSGAP() : GTYPE(0), TAS(0.0), TAS_EFF(0.0), RHOGAS(0.0)

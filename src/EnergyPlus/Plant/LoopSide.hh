@@ -68,17 +68,17 @@ namespace DataPlant {
         bool SimNonZoneEquipNeeded;   // Plant requests resimulate non zone Equip
         bool SimElectLoadCentrNeeded; // Plant requests resimulate generators
         bool OncePerTimeStepOperations;
-        Real64 TimeElapsed;            // store time for dynamic updates for last time
-        Real64 FlowRequest;            // Flow request in the half loop
-        Real64 FlowRequestTemperature; // Average Flow request outlet Temp in the half loop
+        Nandle TimeElapsed;            // store time for dynamic updates for last time
+        Nandle FlowRequest;            // Flow request in the half loop
+        Nandle FlowRequestTemperature; // Average Flow request outlet Temp in the half loop
         // It's necessary to hold the values here since AIR and GROUND SPs aren't associated with either a node or a SP manager
-        Real64 TempSetPoint;            // Loop temperature setpoint
-        Real64 TempSetPointHi;          // High Loop temperature setpoint
-        Real64 TempSetPointLo;          // Low Loop temperature setpoint
-        Real64 TempInterfaceTankOutlet; // Used by interface manager in common pipe simulation
+        Nandle TempSetPoint;            // Loop temperature setpoint
+        Nandle TempSetPointHi;          // High Loop temperature setpoint
+        Nandle TempSetPointLo;          // Low Loop temperature setpoint
+        Nandle TempInterfaceTankOutlet; // Used by interface manager in common pipe simulation
         // This is the temperature at the loop outlet linterface
         // with half-loop capacitance and pump heat accounted for.
-        Real64 LastTempInterfaceTankOutlet;
+        Nandle LastTempInterfaceTankOutlet;
         std::string BranchList;  // Branch list name for the half loop
         std::string ConnectList; // Connector list name for the half loop
         int TotalBranches;       // Total number of branches on the half loop
@@ -89,12 +89,12 @@ namespace DataPlant {
         int TotalPumps;          // total number of pumps on the half loop
         bool BranchPumpsExist;   // logical flag indication branch pumps exist on half loop
         Array1D<LoopSidePumpInformation> Pumps;
-        Real64 TotalPumpHeat; // [W] total heat addition by the pumps to place in "tank"
+        Nandle TotalPumpHeat; // [W] total heat addition by the pumps to place in "tank"
         bool BypassExists;
         bool InletNodeSetPt;
         bool OutletNodeSetPt;
         bool EMSCtrl;
-        Real64 EMSValue;
+        Nandle EMSValue;
         bool FlowRestrictionFlag; // Max available flow at the outlet of the half loop
         // is less than max available flow at inlet
         int FlowLock;                         // DSU
@@ -105,35 +105,35 @@ namespace DataPlant {
         MixerData Mixer;             // Data for splitter on branch (if any)
         bool HasPressureComponents;
         bool HasParallelPressComps;
-        Real64 PressureDrop;
-        Real64 PressureEffectiveK;
+        Nandle PressureDrop;
+        Nandle PressureEffectiveK;
         int errCount_LoadWasntDist;
         int errIndex_LoadWasntDist;
         int errCount_LoadRemains;
         int errIndex_LoadRemains;
-        Real64 LoopSideInlet_TankTemp;
-        Real64 LoopSideInlet_MdotCpDeltaT;
-        Real64 LoopSideInlet_McpDTdt;
-        Real64 LoopSideInlet_CapExcessStorageTime;
-        Real64 LoopSideInlet_CapExcessStorageTimeReport;
-        Real64 LoopSideInlet_TotalTime;
+        Nandle LoopSideInlet_TankTemp;
+        Nandle LoopSideInlet_MdotCpDeltaT;
+        Nandle LoopSideInlet_McpDTdt;
+        Nandle LoopSideInlet_CapExcessStorageTime;
+        Nandle LoopSideInlet_CapExcessStorageTimeReport;
+        Nandle LoopSideInlet_TotalTime;
         PlantConvergencePoint InletNode;
         PlantConvergencePoint OutletNode;
-        Real64 flowRequestNeedIfOn;
-        Real64 flowRequestNeedAndTurnOn;
-        Real64 flowRequestFinal;
+        Nandle flowRequestNeedIfOn;
+        Nandle flowRequestNeedAndTurnOn;
+        Nandle flowRequestFinal;
         bool hasConstSpeedBranchPumps;
-        Array1D<Real64> noLoadConstantSpeedBranchFlowRateSteps;
-        Real64 InitialDemandToLoopSetPoint;
-        Real64 CurrentAlterationsToDemand;
-        Real64 UpdatedDemandToLoopSetPoint;
-        Real64 LoadToLoopSetPointThatWasntMet; // Unmet Demand
-        Real64 InitialDemandToLoopSetPointSAVED;
+        Array1D<Nandle> noLoadConstantSpeedBranchFlowRateSteps;
+        Nandle InitialDemandToLoopSetPoint;
+        Nandle CurrentAlterationsToDemand;
+        Nandle UpdatedDemandToLoopSetPoint;
+        Nandle LoadToLoopSetPointThatWasntMet; // Unmet Demand
+        Nandle InitialDemandToLoopSetPointSAVED;
         std::string loopSideDescription;
         int refrigIndex; // Index denoting refrigerant used (possibly steam)
         // report variables
-        Real64 LoopSetPtDemandAtInlet;
-        Real64 ThisSideLoadAlterations;
+        Nandle LoopSetPtDemandAtInlet;
+        Nandle ThisSideLoadAlterations;
         // these are intended to be temporary
         int myLoopNum;
         int myLoopSideNum;
@@ -159,13 +159,13 @@ namespace DataPlant {
 
         void ValidateFlowControlPaths();
 
-        Real64 DetermineLoopSideFlowRate(int ThisSideInletNode, Real64 ThisSideLoopFlowRequest);
+        Nandle DetermineLoopSideFlowRate(int ThisSideInletNode, Nandle ThisSideLoopFlowRequest);
 
-        void SimulateAllLoopSideBranches(Real64 ThisLoopSideFlow, bool FirstHVACIteration, bool &LoopShutDownFlag);
+        void SimulateAllLoopSideBranches(Nandle ThisLoopSideFlow, bool FirstHVACIteration, bool &LoopShutDownFlag);
 
         void SimulateLoopSideBranchGroup(int FirstBranchNum,
                                          int LastBranchNum,
-                                         Real64 FlowRequest,
+                                         Nandle FlowRequest,
                                          bool FirstHVACIteration,
                                          bool &LoopShutDownFlag);
 
@@ -179,27 +179,27 @@ namespace DataPlant {
 
         void DoFlowAndLoadSolutionPass(int OtherSide, int ThisSideInletNode, bool FirstHVACIteration);
 
-        Real64 CalcOtherSideDemand(Real64 ThisLoopSideFlow);
+        Nandle CalcOtherSideDemand(Nandle ThisLoopSideFlow);
 
-        Real64 SetupLoopFlowRequest(int OtherSide);
+        Nandle SetupLoopFlowRequest(int OtherSide);
 
-        Real64 EvaluateLoopSetPointLoad(int FirstBranchNum,
+        Nandle EvaluateLoopSetPointLoad(int FirstBranchNum,
                                         int LastBranchNum,
-                                        Real64 ThisLoopSideFlow);
+                                        Nandle ThisLoopSideFlow);
 
-        void ResolveParallelFlows(Real64 ThisLoopSideFlow, bool FirstHVACIteration);
+        void ResolveParallelFlows(Nandle ThisLoopSideFlow, bool FirstHVACIteration);
 
-        void SimulateSinglePump(PlantLocation SpecificPumpLocation, Real64 & SpecificPumpFlowRate);
+        void SimulateSinglePump(PlantLocation SpecificPumpLocation, Nandle & SpecificPumpFlowRate);
 
         void UpdateAnyLoopDemandAlterations(int BranchNum, int CompNum);
 
         void SimulateAllLoopSidePumps(Optional<PlantLocation const> SpecificPumpLocation = _,
-                                      Optional<Real64 const> SpecificPumpFlowRate = _);
+                                      Optional<Nandle const> SpecificPumpFlowRate = _);
 
-        void AdjustPumpFlowRequestByEMSControls(int BranchNum, int CompNum, Real64 &FlowToRequest);
+        void AdjustPumpFlowRequestByEMSControls(int BranchNum, int CompNum, Nandle &FlowToRequest);
 
         void PushBranchFlowCharacteristics(int BranchNum,
-                                           Real64 ValueToPush,
+                                           Nandle ValueToPush,
                                            bool FirstHVACIteration // TRUE if First HVAC iteration of Time step
         );
 

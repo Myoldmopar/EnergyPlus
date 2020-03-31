@@ -82,14 +82,14 @@ ZoneTimestepObject::ZoneTimestepObject(
     int daySim,               // days into simulation period, usually DataGlobals::DayOfSim
     int hourDay,              // hour into day, 1-24, filled by DataGlobals::HourOfDay
     int timeStep,             // time steps into hour, filled by DataGlobals::TimeStep
-    Real64 timeStepDurat,     // duration of timestep in fractional hours, usually OutputProcessor::TimeValue( ZoneIndex ).TimeStep
+    Nandle timeStepDurat,     // duration of timestep in fractional hours, usually OutputProcessor::TimeValue( ZoneIndex ).TimeStep
     int numOfTimeStepsPerHour // timesteps in each hour, usually DataGlobals::NumOfTimeStepInHour
     )
     : kindOfSim(kindSim), envrnNum(environmentNum), dayOfSim(daySim), hourOfDay(hourDay),
 
       timeStepDuration(timeStepDurat)
 {
-    Real64 const minutesPerHour(60.0);
+    Nandle const minutesPerHour(60.0);
     int const hoursPerDay(24);
 
     stepEndMinute = timeStepDuration * minutesPerHour + (timeStep - 1) * timeStepDuration * minutesPerHour;
@@ -178,8 +178,8 @@ void SizingLog::FillSysStep(ZoneTimestepObject tmpztStepStamp, SystemTimestepObj
     int ztIndex(0);
     int oldNumSubSteps(0);
     int newNumSubSteps(0);
-    Real64 const MinutesPerHour(60.0);
-    Real64 ZoneStepStartMinutes(0.0);
+    Nandle const MinutesPerHour(60.0);
+    Nandle ZoneStepStartMinutes(0.0);
 
     ztIndex = GetSysStepZtStepIndex(tmpztStepStamp);
 
@@ -215,7 +215,7 @@ void SizingLog::FillSysStep(ZoneTimestepObject tmpztStepStamp, SystemTimestepObj
 
 void SizingLog::AverageSysTimeSteps()
 {
-    Real64 RunningSum;
+    Nandle RunningSum;
 
     for (auto &zt : ztStepObj) {
         if (zt.numSubSteps > 0) {
@@ -230,8 +230,8 @@ void SizingLog::AverageSysTimeSteps()
 
 void SizingLog::ProcessRunningAverage()
 {
-    Real64 RunningSum = 0.0;
-    Real64 divisor = double(timeStepsInAverage);
+    Nandle RunningSum = 0.0;
+    Nandle divisor = double(timeStepsInAverage);
 
     std::map<int, int>::iterator end = ztStepCountByEnvrnMap.end();
     for (std::map<int, int>::iterator itr = ztStepCountByEnvrnMap.begin(); itr != end; ++itr) {
@@ -254,7 +254,7 @@ void SizingLog::ProcessRunningAverage()
 
 ZoneTimestepObject SizingLog::GetLogVariableDataMax()
 {
-    Real64 MaxVal;
+    Nandle MaxVal;
     ZoneTimestepObject tmpztStepStamp;
     MaxVal = 0.0;
 
@@ -273,11 +273,11 @@ ZoneTimestepObject SizingLog::GetLogVariableDataMax()
     return tmpztStepStamp;
 }
 
-Real64 SizingLog::GetLogVariableDataAtTimestamp(ZoneTimestepObject tmpztStepStamp)
+Nandle SizingLog::GetLogVariableDataAtTimestamp(ZoneTimestepObject tmpztStepStamp)
 {
     int const index = GetZtStepIndex(tmpztStepStamp);
 
-    Real64 const val = ztStepObj[index].runningAvgDataValue;
+    Nandle const val = ztStepObj[index].runningAvgDataValue;
 
     return val;
 }
@@ -296,7 +296,7 @@ void SizingLog::SetupNewEnvironment(int const seedEnvrnNum, int const newEnvrnNu
     newEnvrnToSeedEnvrnMap[newEnvrnNum] = seedEnvrnNum;
 }
 
-int SizingLoggerFramework::SetupVariableSizingLog(Real64 &rVariable, int stepsInAverage)
+int SizingLoggerFramework::SetupVariableSizingLog(Nandle &rVariable, int stepsInAverage)
 {
     using DataGlobals::ksDesignDay;
     using DataGlobals::ksRunPeriodDesign;
@@ -401,7 +401,7 @@ void SizingLoggerFramework::UpdateSizingLogValuesZoneStep()
 
 void SizingLoggerFramework::UpdateSizingLogValuesSystemStep()
 {
-    Real64 const MinutesPerHour(60.0);
+    Nandle const MinutesPerHour(60.0);
     ZoneTimestepObject tmpztStepStamp;
     SystemTimestepObject tmpSysStepStamp;
 
@@ -428,7 +428,7 @@ void SizingLoggerFramework::IncrementSizingPeriodSet()
 }
 
 PlantCoinicidentAnalysis::PlantCoinicidentAnalysis(
-    std::string loopName, int loopIndex, int nodeNum, Real64 density, Real64 cp, int numStepsInAvg, int sizingIndex)
+    std::string loopName, int loopIndex, int nodeNum, Nandle density, Nandle cp, int numStepsInAvg, int sizingIndex)
 {
     name = loopName;
     plantLoopIndex = loopIndex;
@@ -455,10 +455,10 @@ void PlantCoinicidentAnalysis::ResolveDesignFlowRate(OutputFiles &outputFiles, i
     using DataHVACGlobals::SmallWaterVolFlow;
     using WeatherManager::Environment;
     bool setNewSizes;
-    Real64 sizingFac;
-    Real64 normalizedChange;
-    Real64 newFoundVolFlowRate;
-    Real64 peakLoadCalculatedMassFlow;
+    Nandle sizingFac;
+    Nandle normalizedChange;
+    Nandle newFoundVolFlowRate;
+    Nandle peakLoadCalculatedMassFlow;
     std::string chIteration;
     std::string chSetSizes;
     std::string chDemandTrapUsed;

@@ -202,9 +202,9 @@ TEST_F(EnergyPlusFixture, SingleSpeedHeatingCoilCurveTest)
         }
         rCurve.InterpolationType = EvaluateCurveToLimits;
     }
-    Real64 NetHeatingCapRatedHighTemp;
-    Real64 NetHeatingCapRatedLowTemp;
-    Real64 HSPF;
+    Nandle NetHeatingCapRatedHighTemp;
+    Nandle NetHeatingCapRatedLowTemp;
+    Nandle HSPF;
 
     SingleSpeedDXHeatingCoilStandardRatings(Coil.RatedTotCap(1), Coil.RatedCOP(1), Coil.CCapFFlow(1), Coil.CCapFTemp(1), Coil.EIRFFlow(1),
                                             Coil.EIRFTemp(1), Coil.RatedAirVolFlowRate(1), Coil.FanPowerPerEvapAirFlowRate(1),
@@ -212,27 +212,27 @@ TEST_F(EnergyPlusFixture, SingleSpeedHeatingCoilCurveTest)
                                             Coil.OATempCompressorOn, Coil.OATempCompressorOnOffBlank, Coil.DefrostControl);
 
     // evaluate capacity curves
-    Real64 TotCapTempModFacRated = CurveValue(Coil.CCapFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempRated);
-    Real64 TotCapFlowModFac = CurveValue(Coil.CCapFFlow(1), 1.0);
-    Real64 NetHeatingCapRated =
+    Nandle TotCapTempModFacRated = CurveValue(Coil.CCapFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempRated);
+    Nandle TotCapFlowModFac = CurveValue(Coil.CCapFFlow(1), 1.0);
+    Nandle NetHeatingCapRated =
         Coil.RatedTotCap(1) * TotCapTempModFacRated * TotCapFlowModFac + Coil.RatedAirVolFlowRate(1) * Coil.FanPowerPerEvapAirFlowRate(1);
     // check curve values and heating capacity
     EXPECT_GT(TotCapTempModFacRated, 0.0);
     EXPECT_DOUBLE_EQ(TotCapFlowModFac, 1.0);
     EXPECT_DOUBLE_EQ(NetHeatingCapRatedHighTemp, NetHeatingCapRated);
     // evaluate capacity curves
-    Real64 CapTempModFacH2Test = CurveValue(Coil.CCapFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH2Test);
+    Nandle CapTempModFacH2Test = CurveValue(Coil.CCapFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH2Test);
     EXPECT_GT(CapTempModFacH2Test, 0.0);
-    Real64 CapTempModFacH3Test = CurveValue(Coil.CCapFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH3Test);
+    Nandle CapTempModFacH3Test = CurveValue(Coil.CCapFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH3Test);
     // if CapTempModFacH3Test curves value is less than zero, NetHeatingCapRatedLowTemp is set to zero
     EXPECT_LT(CapTempModFacH3Test, 0.0);
 
     // check heating capacity at low temperature
     EXPECT_DOUBLE_EQ(NetHeatingCapRatedLowTemp, 0.0);
     // evaluate EIR curves
-    Real64 EIRTempModFacRated = CurveValue(Coil.EIRFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempRated);
-    Real64 EIRTempModFacH2Test = CurveValue(Coil.EIRFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH2Test);
-    Real64 EIRTempModFacH3Test = CurveValue(Coil.EIRFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH3Test);
+    Nandle EIRTempModFacRated = CurveValue(Coil.EIRFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempRated);
+    Nandle EIRTempModFacH2Test = CurveValue(Coil.EIRFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH2Test);
+    Nandle EIRTempModFacH3Test = CurveValue(Coil.EIRFTemp(1), StandardRatings::HeatingOutdoorCoilInletAirDBTempH3Test);
     // check EIR curve value
     EXPECT_LT(EIRTempModFacRated, 0.0);
     EXPECT_GT(EIRTempModFacH2Test, 0.0);
@@ -315,7 +315,7 @@ TEST_F(EnergyPlusFixture, ChillerIPLVTest)
     PerfCurve(CurveNum).Var1Max = 1;
     ChillerElectricEIR::ElectricEIRChiller(1).ChillerEIRFPLRIndex = 3;
 
-    Real64 IPLV;
+    Nandle IPLV;
     CalcChillerIPLV(OutputFiles::getSingleton(),
                     ChillerElectricEIR::ElectricEIRChiller(1).Name,
                     TypeOf_Chiller_ElectricEIR,
@@ -327,9 +327,9 @@ TEST_F(EnergyPlusFixture, ChillerIPLVTest)
                     ChillerElectricEIR::ElectricEIRChiller(1).ChillerEIRFPLRIndex,
                     ChillerElectricEIR::ElectricEIRChiller(1).MinUnloadRat,
                     IPLV,
-                    Optional<const Real64>(),
+                    Optional<const Nandle>(),
                     ObjexxFCL::Optional_int_const(),
-                    Optional<const Real64>());
+                    Optional<const Nandle>());
 
     EXPECT_DOUBLE_EQ(round(IPLV * 100) / 100, 3.87); // 13.20 IPLV
 

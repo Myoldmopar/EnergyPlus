@@ -143,15 +143,15 @@ namespace SteamBaseboardRadiator {
     int NumSteamBaseboards(0);
     int SteamIndex(0);
 
-    Array1D<Real64> QBBSteamRadSource;    // Need to keep the last value in case we are still iterating
-    Array1D<Real64> QBBSteamRadSrcAvg;    // Need to keep the last value in case we are still iterating
-    Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone
+    Array1D<Nandle> QBBSteamRadSource;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> QBBSteamRadSrcAvg;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone
     // with no source
 
     // Record keeping variables used to calculate QBBRadSrcAvg locally
-    Array1D<Real64> LastQBBSteamRadSrc; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastQBBSteamRadSrc; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     Array1D_bool MySizeFlag;
     Array1D_bool CheckEquipName;
     Array1D_bool SetLoopIndexFlag; // get loop number flag
@@ -168,7 +168,7 @@ namespace SteamBaseboardRadiator {
                            int const ActualZoneNum,
                            int const ControlledZoneNum,
                            bool const FirstHVACIteration,
-                           Real64 &PowerMet,
+                           Nandle &PowerMet,
                            int &CompIndex)
     {
 
@@ -191,10 +191,10 @@ namespace SteamBaseboardRadiator {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int BaseboardNum;               // index of unit in baseboard array
         static bool GetInputFlag(true); // one time get input flag
-        Real64 QZnReq;                  // zone load not yet satisfied
-        Real64 MaxSteamFlow;
-        Real64 MinSteamFlow;
-        static Real64 mdot(0.0);
+        Nandle QZnReq;                  // zone load not yet satisfied
+        Nandle MaxSteamFlow;
+        Nandle MinSteamFlow;
+        static Nandle mdot(0.0);
 
         if (GetInputFlag) {
             GetSteamBaseboardInput();
@@ -329,10 +329,10 @@ namespace SteamBaseboardRadiator {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("GetSteamBaseboardInput:");
-        Real64 const MaxFraction(1.0);       // Maximum limit of fractional values
-        Real64 const MinFraction(0.0);       // Minimum limit of fractional values
-        Real64 const MaxSteamFlowRate(10.0); // Maximum limit of steam volume flow rate in m3/s
-        Real64 const MinSteamFlowRate(0.0);  // Minimum limit of steam volume flow rate in m3/s
+        Nandle const MaxFraction(1.0);       // Maximum limit of fractional values
+        Nandle const MinFraction(0.0);       // Minimum limit of fractional values
+        Nandle const MaxSteamFlowRate(10.0); // Maximum limit of steam volume flow rate in m3/s
+        Nandle const MinSteamFlowRate(0.0);  // Minimum limit of steam volume flow rate in m3/s
         //    INTEGER,PARAMETER :: MaxDistribSurfaces   = 20          ! Maximum number of surfaces that a baseboard heater can radiate to
         int const MinDistribSurfaces(1);            // Minimum number of surfaces that a baseboard heater can radiate to
         int const iHeatCAPMAlphaNum(5);             // get input index to steam baseboard Radiator system heating capacity sizing method
@@ -343,7 +343,7 @@ namespace SteamBaseboardRadiator {
             3); //  get input index to steam baseboard Radiator system electric heating capacity sizing as fraction of autozized heating capacity
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AllFracsSummed; // Sum of the fractions radiant
+        Nandle AllFracsSummed; // Sum of the fractions radiant
         int BaseboardNum;      // Baseboard number
         int NumAlphas;         // Number of Alphas for each GetobjectItem call
         int NumNumbers;        // Number of Numbers for each GetobjectItem call
@@ -762,8 +762,8 @@ namespace SteamBaseboardRadiator {
         int SteamInletNode;
         int ZoneNode;
         int ZoneNum;
-        Real64 StartEnthSteam;
-        Real64 SteamDensity;
+        Nandle StartEnthSteam;
+        Nandle SteamDensity;
         bool errFlag;
 
         // Do the one time initializations
@@ -935,21 +935,21 @@ namespace SteamBaseboardRadiator {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PltSizSteamNum(0);               // Index of plant sizing object for 1st steam loop
-        Real64 DesCoilLoad(0.0);             // Design heating load in the zone
-        Real64 SteamInletTemp;               // Inlet steam temperature in C
-        Real64 EnthSteamInDry;               // Enthalpy of dry steam
-        Real64 EnthSteamOutWet;              // Enthalpy of wet steam
-        Real64 LatentHeatSteam;              // latent heat of steam
-        Real64 SteamDensity;                 // Density of steam
-        Real64 Cp;                           // local fluid specific heat
+        Nandle DesCoilLoad(0.0);             // Design heating load in the zone
+        Nandle SteamInletTemp;               // Inlet steam temperature in C
+        Nandle EnthSteamInDry;               // Enthalpy of dry steam
+        Nandle EnthSteamOutWet;              // Enthalpy of wet steam
+        Nandle LatentHeatSteam;              // latent heat of steam
+        Nandle SteamDensity;                 // Density of steam
+        Nandle Cp;                           // local fluid specific heat
         bool ErrorsFound(false);             // If errors detected in input
         bool IsAutoSize(false);              // Indicator to autosizing steam flow
-        Real64 SteamVolFlowRateMaxDes(0.0);  // Design maximum steam volume flow for reporting
-        Real64 SteamVolFlowRateMaxUser(0.0); // User hard-sized maximum steam volume flow for reporting
+        Nandle SteamVolFlowRateMaxDes(0.0);  // Design maximum steam volume flow for reporting
+        Nandle SteamVolFlowRateMaxUser(0.0); // User hard-sized maximum steam volume flow for reporting
         std::string CompName;                // component name
         std::string CompType;                // component type
         std::string SizingString;            // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;                     // autosized value of coil input field
+        Nandle TempSize;                     // autosized value of coil input field
         int FieldNum = 1;                    // IDD numeric field number where input field description is found
         int SizingMethod;                    // Integer representation of sizing method name (HeatingCapacitySizing)
         bool PrintFlag;                      // TRUE when sizing information is reported in the eio file
@@ -1089,7 +1089,7 @@ namespace SteamBaseboardRadiator {
         }
     }
 
-    void CalcSteamBaseboard(int &BaseboardNum, Real64 &LoadMet)
+    void CalcSteamBaseboard(int &BaseboardNum, Nandle &LoadMet)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Daeho Kang
@@ -1131,17 +1131,17 @@ namespace SteamBaseboardRadiator {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneNum;
-        Real64 RadHeat;
-        Real64 SteamBBHeat;
-        Real64 SteamInletTemp;
-        Real64 SteamOutletTemp;
-        Real64 SteamMassFlowRate;
-        Real64 SubcoolDeltaT;
-        Real64 QZnReq;
-        Real64 EnthSteamInDry;
-        Real64 EnthSteamOutWet;
-        Real64 LatentHeatSteam;
-        Real64 Cp;
+        Nandle RadHeat;
+        Nandle SteamBBHeat;
+        Nandle SteamInletTemp;
+        Nandle SteamOutletTemp;
+        Nandle SteamMassFlowRate;
+        Nandle SubcoolDeltaT;
+        Nandle QZnReq;
+        Nandle EnthSteamInDry;
+        Nandle EnthSteamOutWet;
+        Nandle LatentHeatSteam;
+        Nandle Cp;
 
         ZoneNum = SteamBaseboard(BaseboardNum).ZonePtr;
         QZnReq = ZoneSysEnergyDemand(ZoneNum).RemainingOutputReqToHeatSP;
@@ -1373,7 +1373,7 @@ namespace SteamBaseboardRadiator {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
+        Nandle const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1386,7 +1386,7 @@ namespace SteamBaseboardRadiator {
         int BaseboardNum;         // Counter for the baseboard
         int SurfNum;              // Pointer to the Surface derived type
         int ZoneNum;              // Pointer to the Zone derived type
-        Real64 ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
+        Nandle ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
 
         // FLOW:
         // Initialize arrays
@@ -1466,7 +1466,7 @@ namespace SteamBaseboardRadiator {
         SteamBaseboard(BaseboardNum).RadEnergy = SteamBaseboard(BaseboardNum).RadPower * TimeStepSys * SecInHour;
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
 
         // FUNCTION INFORMATION:
@@ -1492,14 +1492,14 @@ namespace SteamBaseboardRadiator {
         using namespace DataHeatBalSurface;
 
         // Return value
-        Real64 SumHATsurf;
+        Nandle SumHATsurf;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // Surface number
-        Real64 Area; // Effective surface area
+        Nandle Area; // Effective surface area
 
         // FLOW:
         SumHATsurf = 0.0;

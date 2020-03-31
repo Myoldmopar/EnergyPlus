@@ -150,61 +150,61 @@ namespace SolarReflectionManager {
         int ObsSurfNum;         // Surface number of an obstruction
         bool ObsBehindRec;      // True if an obstruction is entirely behind a receiving surface
         bool ObsHasView;        // True if view between receiving surface and heat trans surf obstruction
-        Vector3<Real64> RecVec; // First vertex of a receiving surface (m)
-        Vector3<Real64> ObsVec; // A vertex of a candidate obstructing surface (m)
-        Vector3<Real64> VecAB;  // Vector from receiving surface vertex to obstruction surface vertex (m)
-        Vector3<Real64> HitPt;  // Hit point (m)
-        Real64 DotProd;         // Dot product of vectors (m2)
+        Vector3<Nandle> RecVec; // First vertex of a receiving surface (m)
+        Vector3<Nandle> ObsVec; // A vertex of a candidate obstructing surface (m)
+        Vector3<Nandle> VecAB;  // Vector from receiving surface vertex to obstruction surface vertex (m)
+        Vector3<Nandle> HitPt;  // Hit point (m)
+        Nandle DotProd;         // Dot product of vectors (m2)
         int RecPtNum;           // Receiving point number
         // unused  REAL(r64)         :: SumX                 ! Sum of X (or Y or Z) coordinate values of a surface
         // unused  REAL(r64)         :: SumY                 ! Sum of X (or Y or Z) coordinate values of a surface
         // unused  REAL(r64)         :: SumZ                 ! Sum of X (or Y or Z) coordinate values of a surface
-        Real64 PhiSurf;   // Altitude of normal to receiving surface (radians)
-        Real64 ThetaSurf; // Azimuth of normal to receiving surface (radians)
-        Real64 PhiMin;    // Minimum and maximum values of ray altitude angle (radians)
-        Real64 PhiMax;    // Minimum and maximum values of ray altitude angle (radians)
-        Real64 ThetaMin;  // Minimum and maximum values of ray azimuth angle (radians)
-        Real64 ThetaMax;  // Minimum and maximum values of ray azimuth angle (radians)
-        Real64 Phi;       // Ray altitude angle, increment, sine, and cosine
-        Real64 DPhi;      // Ray altitude angle, increment, sine, and cosine
-        Real64 SPhi;      // Ray altitude angle, increment, sine, and cosine
-        Real64 CPhi;      // Ray altitude angle, increment, sine, and cosine
-        Real64 Theta;     // Ray azimuth angle and increment
-        Real64 DTheta;    // Ray azimuth angle and increment
+        Nandle PhiSurf;   // Altitude of normal to receiving surface (radians)
+        Nandle ThetaSurf; // Azimuth of normal to receiving surface (radians)
+        Nandle PhiMin;    // Minimum and maximum values of ray altitude angle (radians)
+        Nandle PhiMax;    // Minimum and maximum values of ray altitude angle (radians)
+        Nandle ThetaMin;  // Minimum and maximum values of ray azimuth angle (radians)
+        Nandle ThetaMax;  // Minimum and maximum values of ray azimuth angle (radians)
+        Nandle Phi;       // Ray altitude angle, increment, sine, and cosine
+        Nandle DPhi;      // Ray altitude angle, increment, sine, and cosine
+        Nandle SPhi;      // Ray altitude angle, increment, sine, and cosine
+        Nandle CPhi;      // Ray altitude angle, increment, sine, and cosine
+        Nandle Theta;     // Ray azimuth angle and increment
+        Nandle DTheta;    // Ray azimuth angle and increment
         int IPhi;         // Ray altitude angle and azimuth angle indices
         int ITheta;       // Ray altitude angle and azimuth angle indices
         // unused  REAL(r64)         :: APhi                 ! Intermediate variable
         int RayNum;                   // Ray number
-        Vector3<Real64> URay;         // Unit vector along ray pointing away from receiving surface
-        Real64 CosIncAngRay;          // Cosine of angle of incidence of ray on receiving surface
-        Real64 dOmega;                // Solid angle associated with a ray
+        Vector3<Nandle> URay;         // Unit vector along ray pointing away from receiving surface
+        Nandle CosIncAngRay;          // Cosine of angle of incidence of ray on receiving surface
+        Nandle dOmega;                // Solid angle associated with a ray
         bool hit;                     // True iff obstruction is hit
         int TotObstructionsHit;       // Number of obstructions hit by a ray
-        Real64 HitDistance;           // Distance from receiving point to hit point for a ray (m)
+        Nandle HitDistance;           // Distance from receiving point to hit point for a ray (m)
         int NearestHitSurfNum;        // Surface number of nearest obstruction hit by a ray
-        Vector3<Real64> NearestHitPt; // Nearest hit pit for a ray (m)
-        Real64 NearestHitDistance;    // Distance from receiving point to nearest hit point for a ray (m)
+        Vector3<Nandle> NearestHitPt; // Nearest hit pit for a ray (m)
+        Nandle NearestHitDistance;    // Distance from receiving point to nearest hit point for a ray (m)
         int ObsSurfNumToSkip;         // Surface number of obstruction to be ignored
-        Vector3<Real64> RecPt;        // Receiving point (m)
-        Vector3<Real64> RayVec;       // Unit vector along ray
-        Vector3<Real64> Vec1;         // Vectors between hit surface vertices (m)
-        Vector3<Real64> Vec2;         // Vectors between hit surface vertices (m)
-        Vector3<Real64> VNorm;        // For a hit surface, unit normal vector pointing into the hemisphere
+        Vector3<Nandle> RecPt;        // Receiving point (m)
+        Vector3<Nandle> RayVec;       // Unit vector along ray
+        Vector3<Nandle> Vec1;         // Vectors between hit surface vertices (m)
+        Vector3<Nandle> Vec2;         // Vectors between hit surface vertices (m)
+        Vector3<Nandle> VNorm;        // For a hit surface, unit normal vector pointing into the hemisphere
         // containing the receiving point
         int ObsConstrNum; // Construction number of obstruction; = 0 if a shading surface
-        Real64 Alfa;      // Direction angles for ray heading towards the ground (radians)
-        Real64 Beta;
-        Real64 HorDis;               // Distance between ground hit point and proj'n of receiving pt onto ground (m)
-        Vector3<Real64> GroundHitPt; // Coordinates of ground hit point
+        Nandle Alfa;      // Direction angles for ray heading towards the ground (radians)
+        Nandle Beta;
+        Nandle HorDis;               // Distance between ground hit point and proj'n of receiving pt onto ground (m)
+        Vector3<Nandle> GroundHitPt; // Coordinates of ground hit point
         // unused  REAL(r64)         :: ArgASin
-        Real64 ACosTanTan;
+        Nandle ACosTanTan;
         int J;           // DO loop indices
         int K;           // DO loop indices
         int NumRecPts;   // Number of surface receiving points for reflected solar radiation
-        Real64 VertexWt; // Vertex weighting factor for calculating receiving points
+        Nandle VertexWt; // Vertex weighting factor for calculating receiving points
 
-        static Vector3<Real64> const unit_z(0.0, 0.0, 1.0);
-        static Vector3<Real64> const zero3(0.0);
+        static Vector3<Nandle> const unit_z(0.0, 0.0, 1.0);
+        static Vector3<Nandle> const zero3(0.0);
 
         // FLOW:
 
@@ -395,9 +395,9 @@ namespace SolarReflectionManager {
             // Phi = 0 at the horizon; Phi = Pi/2 at the zenith
 
             PhiSurf = std::asin(SolReflRecSurf(RecSurfNum).NormVec.z);
-            Real64 const tan_PhiSurf = std::tan(PhiSurf);
-            Real64 const sin_PhiSurf = std::sin(PhiSurf);
-            Real64 const cos_PhiSurf = std::cos(PhiSurf);
+            Nandle const tan_PhiSurf = std::tan(PhiSurf);
+            Nandle const sin_PhiSurf = std::sin(PhiSurf);
+            Nandle const cos_PhiSurf = std::cos(PhiSurf);
 
             if (std::abs(SolReflRecSurf(RecSurfNum).NormVec.x) > 1.0e-5 || std::abs(SolReflRecSurf(RecSurfNum).NormVec.y) > 1.0e-5) {
                 ThetaSurf = std::atan2(SolReflRecSurf(RecSurfNum).NormVec.y, SolReflRecSurf(RecSurfNum).NormVec.x);
@@ -659,7 +659,7 @@ namespace SolarReflectionManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Vector3<Real64> SunVec(0.0); // Unit vector to sun
+        static Vector3<Nandle> SunVec(0.0); // Unit vector to sun
         static int RecSurfNum(0);           // Receiving surface number
         static int SurfNum(0);              // Heat transfer surface number corresponding to RecSurfNum
         static int RecPtNum(0);             // Receiving point number
@@ -667,25 +667,25 @@ namespace SolarReflectionManager {
         static int HitPtSurfNum(0);         // Surface number of hit point: -1 = ground,
         // 0 = sky or obstruction with receiving point below ground level,
         // >0 = obstruction with receiving point above ground level
-        Array1D<Real64> ReflBmToDiffSolObs(MaxRecPts); // Irradiance at a receiving point for
+        Array1D<Nandle> ReflBmToDiffSolObs(MaxRecPts); // Irradiance at a receiving point for
         // beam solar diffusely reflected from obstructions, divided by
         // beam normal irradiance
-        Array1D<Real64> ReflBmToDiffSolGnd(MaxRecPts); // Irradiance at a receiving point for
+        Array1D<Nandle> ReflBmToDiffSolGnd(MaxRecPts); // Irradiance at a receiving point for
         // beam solar diffusely reflected from the ground, divided by
         // beam normal irradiance
         static int RayNum(0);                      // Ray number
         bool hit;                                  // True iff obstruction is hit
-        static Vector3<Real64> OriginThisRay(0.0); // Origin point of a ray (m)
-        static Vector3<Real64> ObsHitPt(0.0);      // Hit point on obstruction (m)
+        static Vector3<Nandle> OriginThisRay(0.0); // Origin point of a ray (m)
+        static Vector3<Nandle> ObsHitPt(0.0);      // Hit point on obstruction (m)
         static int ObsSurfNum(0);                  // Obstruction surface number
-        static Real64 CosIncBmAtHitPt(0.0);        // Cosine of incidence angle of beam solar at hit point
-        static Real64 CosIncBmAtHitPt2(0.0);       // Cosine of incidence angle of beam solar at hit point,
+        static Nandle CosIncBmAtHitPt(0.0);        // Cosine of incidence angle of beam solar at hit point
+        static Nandle CosIncBmAtHitPt2(0.0);       // Cosine of incidence angle of beam solar at hit point,
         //  the mirrored shading surface
-        static Real64 BmReflSolRadiance(0.0); // Solar radiance at hit point due to incident beam, divided
+        static Nandle BmReflSolRadiance(0.0); // Solar radiance at hit point due to incident beam, divided
         //  by beam normal irradiance
-        static Real64 dReflBeamToDiffSol(0.0); // Contribution to reflection factor at a receiving point
+        static Nandle dReflBeamToDiffSol(0.0); // Contribution to reflection factor at a receiving point
         //  from beam solar reflected from a hit point
-        static Real64 SunLitFract(0.0); // Sunlit fraction
+        static Nandle SunLitFract(0.0); // Sunlit fraction
 
         ReflBmToDiffSolObs = 0.0;
         ReflBmToDiffSolGnd = 0.0;
@@ -942,31 +942,31 @@ namespace SolarReflectionManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Vector3<Real64> SunVec(0.0);            // Unit vector to sun
-        static Vector3<Real64> SunVecMir(0.0);         // Unit vector to sun mirrored by a reflecting surface
-        static Vector3<Real64> RecPt(0.0);             // Receiving point (m)
-        static Vector3<Real64> HitPtRefl(0.0);         // Hit point on a reflecting surface (m)
-        Array1D<Real64> ReflBmToDiffSolObs(MaxRecPts); // Irradiance at a receiving point for
+        static Vector3<Nandle> SunVec(0.0);            // Unit vector to sun
+        static Vector3<Nandle> SunVecMir(0.0);         // Unit vector to sun mirrored by a reflecting surface
+        static Vector3<Nandle> RecPt(0.0);             // Receiving point (m)
+        static Vector3<Nandle> HitPtRefl(0.0);         // Hit point on a reflecting surface (m)
+        Array1D<Nandle> ReflBmToDiffSolObs(MaxRecPts); // Irradiance at a receiving point for
         // beam solar diffusely reflected from obstructions, divided by
         // beam normal irradiance
         // unused  INTEGER           :: RayNum               =0   ! Ray number
         bool hitRefl;                                // True iff reflecting surface is hit
         bool hitObs;                                 // True iff obstruction is hit
-        static Vector3<Real64> HitPtObs(0.0);        // Hit point on obstruction (m)
+        static Vector3<Nandle> HitPtObs(0.0);        // Hit point on obstruction (m)
         bool hitObsRefl;                             // True iff obstruction hit between rec. pt. and reflection point
-        static Vector3<Real64> ReflNorm(0.0);        // Unit normal to reflecting surface
-        Array1D<Real64> ReflBmToBmSolObs(MaxRecPts); // Irradiance at a receiving point for
+        static Vector3<Nandle> ReflNorm(0.0);        // Unit normal to reflecting surface
+        Array1D<Nandle> ReflBmToBmSolObs(MaxRecPts); // Irradiance at a receiving point for
         // beam solar specularly reflected from obstructions, divided by
         // beam normal irradiance
-        Real64 ReflDistanceSq;                            // Distance squared from receiving point to hit point on a reflecting surface (m)
-        Real64 ReflDistance;                              // Distance from receiving point to hit point on a reflecting surface (m)
-        static Real64 SpecReflectance(0.0);               // Specular reflectance of a reflecting surface
+        Nandle ReflDistanceSq;                            // Distance squared from receiving point to hit point on a reflecting surface (m)
+        Nandle ReflDistance;                              // Distance from receiving point to hit point on a reflecting surface (m)
+        static Nandle SpecReflectance(0.0);               // Specular reflectance of a reflecting surface
         static int ConstrNumRefl(0);                      // Construction number of a reflecting surface
-        static Real64 CosIncAngRefl(0.0);                 // Cosine of incidence angle of beam on reflecting surface
-        static Real64 CosIncAngRec(0.0);                  // Angle of incidence of reflected beam on receiving surface
-        static Real64 ReflFac(0.0);                       // Contribution to specular reflection factor
-        Array1D<Real64> ReflFacTimesCosIncSum(MaxRecPts); // Sum of ReflFac times CosIncAngRefl
-        static Real64 CosIncWeighted(0.0);                // Cosine of incidence angle on receiving surf weighted by reflection factor
+        static Nandle CosIncAngRefl(0.0);                 // Cosine of incidence angle of beam on reflecting surface
+        static Nandle CosIncAngRec(0.0);                  // Angle of incidence of reflected beam on receiving surface
+        static Nandle ReflFac(0.0);                       // Contribution to specular reflection factor
+        Array1D<Nandle> ReflFacTimesCosIncSum(MaxRecPts); // Sum of ReflFac times CosIncAngRefl
+        static Nandle CosIncWeighted(0.0);                // Cosine of incidence angle on receiving surf weighted by reflection factor
 
         ReflBmToDiffSolObs = 0.0;
         ReflFacTimesCosIncSum = 0.0;
@@ -1133,44 +1133,44 @@ namespace SolarReflectionManager {
         // >0 = obstruction with receiving point above ground level
         static int HitPtSurfNumX(0); // For a shading surface, HitPtSurfNum for original surface,
         // HitPitSurfNum + 1 for mirror surface
-        Array1D<Real64> ReflSkySolObs(MaxRecPts); // Irradiance at a receiving point for sky diffuse solar
+        Array1D<Nandle> ReflSkySolObs(MaxRecPts); // Irradiance at a receiving point for sky diffuse solar
         // reflected from obstructions, divided by unobstructed
         // sky diffuse horizontal irradiance
-        Array1D<Real64> ReflSkySolGnd(MaxRecPts); // Irradiance at a receiving point for sky diffuse solar
+        Array1D<Nandle> ReflSkySolGnd(MaxRecPts); // Irradiance at a receiving point for sky diffuse solar
         // reflected from ground, divided by unobstructed
         // sky diffuse horizontal irradiance
         static int RayNum(0);                  // Ray number
-        static Vector3<Real64> HitPtRefl(0.0); // Coordinates of hit point on obstruction or ground (m)
+        static Vector3<Nandle> HitPtRefl(0.0); // Coordinates of hit point on obstruction or ground (m)
         bool hitObs;                           // True iff obstruction is hit
-        static Vector3<Real64> HitPtObs(0.0);  // Hit point on an obstruction (m)
+        static Vector3<Nandle> HitPtObs(0.0);  // Hit point on an obstruction (m)
         // unused  REAL(r64)         :: ObsHitPt(3)          =0.0 ! Hit point on obstruction (m)
-        static Real64 SkyReflSolRadiance(0.0); // Reflected radiance at hit point divided by unobstructed
+        static Nandle SkyReflSolRadiance(0.0); // Reflected radiance at hit point divided by unobstructed
         //  sky diffuse horizontal irradiance
-        static Real64 dReflSkySol(0.0); // Contribution to reflection factor at a receiving point
+        static Nandle dReflSkySol(0.0); // Contribution to reflection factor at a receiving point
         //  from sky solar reflected from a hit point
-        static Vector3<Real64> URay(0.0);            // Unit vector along ray from ground hit point
-        static Vector3<Real64> SurfVertToGndPt(0.0); // Vector from a vertex of possible obstructing surface to ground
+        static Vector3<Nandle> URay(0.0);            // Unit vector along ray from ground hit point
+        static Vector3<Nandle> SurfVertToGndPt(0.0); // Vector from a vertex of possible obstructing surface to ground
         //  hit point (m)
-        static Vector3<Real64> SurfVert(0.0); // Surface vertex (m)
+        static Vector3<Nandle> SurfVert(0.0); // Surface vertex (m)
         // FLOW:
 
-        Real64 const DPhi(PiOvr2 / (AltAngStepsForSolReflCalc / 2.0));      // Altitude angle and increment (radians)
-        Real64 const DTheta(2.0 * Pi / (2.0 * AzimAngStepsForSolReflCalc)); // Azimuth increment (radians)
+        Nandle const DPhi(PiOvr2 / (AltAngStepsForSolReflCalc / 2.0));      // Altitude angle and increment (radians)
+        Nandle const DTheta(2.0 * Pi / (2.0 * AzimAngStepsForSolReflCalc)); // Azimuth increment (radians)
 
         // Pre-compute these constants
         // Initialize the 0 index with dummy value so the iterators line up below
-        std::vector<Real64> sin_Phi({-1});
-        std::vector<Real64> cos_Phi({-1});
+        std::vector<Nandle> sin_Phi({-1});
+        std::vector<Nandle> cos_Phi({-1});
         for (int IPhi = 1; IPhi <= (AltAngStepsForSolReflCalc / 2); ++IPhi) {
-            Real64 Phi((IPhi - 0.5) * DPhi); // Altitude angle and increment (radians)
+            Nandle Phi((IPhi - 0.5) * DPhi); // Altitude angle and increment (radians)
             sin_Phi.push_back(std::sin(Phi));
             cos_Phi.push_back(std::cos(Phi));
         }
 
-        std::vector<Real64> sin_Theta({-1});
-        std::vector<Real64> cos_Theta({-1});
+        std::vector<Nandle> sin_Theta({-1});
+        std::vector<Nandle> cos_Theta({-1});
         for (int ITheta = 1; ITheta <= 2 * AzimAngStepsForSolReflCalc; ++ITheta) {
-            Real64 Theta = (ITheta - 0.5) * DTheta; // Azimuth angle (radians)
+            Nandle Theta = (ITheta - 0.5) * DTheta; // Azimuth angle (radians)
             sin_Theta.push_back(std::sin(Theta));
             cos_Theta.push_back(std::cos(Theta));
         }
@@ -1230,14 +1230,14 @@ namespace SolarReflectionManager {
                         // Divide hemisphere centered at ground hit point into elements of altitude Phi and
                         // azimuth Theta and create upward-going ray unit vector at each Phi,Theta pair.
                         // Phi = 0 at the horizon; Phi = Pi/2 at the zenith.
-                        Real64 dReflSkyGnd = 0.0; // Factor for ground radiance due to direct sky diffuse reflection
+                        Nandle dReflSkyGnd = 0.0; // Factor for ground radiance due to direct sky diffuse reflection
                         // Altitude loop
                         for (int IPhi = 1; IPhi <= (AltAngStepsForSolReflCalc / 2); ++IPhi) {
                             // Third component of ray unit vector in (Theta,Phi) direction
                             URay(3) = sin_Phi[IPhi];
-                            Real64 dOmega = cos_Phi[IPhi] * DTheta * DPhi; // Solid angle increment (steradians)
+                            Nandle dOmega = cos_Phi[IPhi] * DTheta * DPhi; // Solid angle increment (steradians)
                             // Cosine of angle of incidence of ray on ground
-                            Real64 CosIncAngRayToSky = sin_Phi[IPhi]; // Cosine of incidence angle on ground of ray to sky
+                            Nandle CosIncAngRayToSky = sin_Phi[IPhi]; // Cosine of incidence angle on ground of ray to sky
                             // Azimuth loop
                             for (int ITheta = 1; ITheta <= 2 * AzimAngStepsForSolReflCalc; ++ITheta) {
                                 URay.x = cos_Phi[IPhi] * cos_Theta[ITheta];

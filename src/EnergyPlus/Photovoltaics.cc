@@ -150,7 +150,7 @@ namespace Photovoltaics {
                         std::string const &GeneratorName,   // user specified name of Generator
                         int &GeneratorIndex,
                         bool const RunFlag,            // is PV ON or OFF as determined by schedules in ElecLoadCenter
-                        Real64 const EP_UNUSED(PVLoad) // electrical load on the PV (not really used... PV models assume "full on" !unused1208
+                        Nandle const EP_UNUSED(PVLoad) // electrical load on the PV (not really used... PV models assume "full on" !unused1208
     )
     {
 
@@ -229,10 +229,10 @@ namespace Photovoltaics {
 
     void GetPVGeneratorResults(int const EP_UNUSED(GeneratorType), // type of Generator !unused1208
                                int const GeneratorIndex,
-                               Real64 &GeneratorPower,  // electrical power
-                               Real64 &GeneratorEnergy, // electrical energy
-                               Real64 &ThermalPower,
-                               Real64 &ThermalEnergy)
+                               Nandle &GeneratorPower,  // electrical power
+                               Nandle &GeneratorEnergy, // electrical energy
+                               Nandle &ThermalPower,
+                               Nandle &ThermalEnergy)
     {
 
         // SUBROUTINE INFORMATION:
@@ -840,7 +840,7 @@ namespace Photovoltaics {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ThisSurf; // working index ptr to Surface arrays
-        Real64 Eff;   // working variable for solar electric efficiency
+        Nandle Eff;   // working variable for solar electric efficiency
         // unused1208    REAL(r64) :: ArrayEnergy !working variable for PV energy this system time step
         // first get surface index to use as a pointer
 
@@ -991,7 +991,7 @@ namespace Photovoltaics {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ThisSurf; // working variable for indexing surfaces
         // unused1208    INTEGER :: thisMod  ! working variable for indexing module parameters
-        Real64 Ee;
+        Nandle Ee;
 
         ThisSurf = PVarray(PVnum).SurfacePtr;
 
@@ -1245,7 +1245,7 @@ namespace Photovoltaics {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static bool MyOneTimeFlag(true);
         static Array1D_bool MyEnvrnFlag;
-        Real64 TimeElapsed; // Fraction of the current hour that has elapsed (h)
+        Nandle TimeElapsed; // Fraction of the current hour that has elapsed (h)
 
         // perform the one time initializations
         if (MyOneTimeFlag) {
@@ -1321,11 +1321,11 @@ namespace Photovoltaics {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const EPS(0.001);
-        Real64 const ERR(0.001);
-        Real64 const MinInsolation(30.0);
+        Nandle const EPS(0.001);
+        Nandle const ERR(0.001);
+        Nandle const MinInsolation(30.0);
         int const KMAX(100);
-        Real64 const EtaIni(0.10); // initial value of eta
+        Nandle const EtaIni(0.10); // initial value of eta
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -1334,36 +1334,36 @@ namespace Photovoltaics {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 PVTimeStep; // internal timestep (in seconds) for cell temperature mode 3
-        Real64 DummyErr;
-        Real64 ETA;
-        Real64 Tambient;
-        Real64 EtaOld;
-        Real64 ILRef;
-        Real64 AARef;
-        Real64 IORef;
-        Real64 SeriesResistance;
-        Real64 IL;
-        Real64 AA;
-        Real64 IO;
-        Real64 ISCG1;
-        Real64 ISC;
-        Real64 VOCG1;
-        Real64 VOC;
-        Real64 VLEFT;
-        Real64 VRIGHT;
-        Real64 VM;
-        Real64 IM;
-        Real64 PM;
-        Real64 IA;
-        Real64 ISCA;
-        Real64 VA;
-        Real64 VOCA;
-        Real64 PA;
+        static Nandle PVTimeStep; // internal timestep (in seconds) for cell temperature mode 3
+        Nandle DummyErr;
+        Nandle ETA;
+        Nandle Tambient;
+        Nandle EtaOld;
+        Nandle ILRef;
+        Nandle AARef;
+        Nandle IORef;
+        Nandle SeriesResistance;
+        Nandle IL;
+        Nandle AA;
+        Nandle IO;
+        Nandle ISCG1;
+        Nandle ISC;
+        Nandle VOCG1;
+        Nandle VOC;
+        Nandle VLEFT;
+        Nandle VRIGHT;
+        Nandle VM;
+        Nandle IM;
+        Nandle PM;
+        Nandle IA;
+        Nandle ISCA;
+        Nandle VA;
+        Nandle VOCA;
+        Nandle PA;
         int CC;
         int K;
-        Real64 CellTemp(0.0); // cell temperature in Kelvin
-        Real64 CellTempC;     // cell temperature in degrees C
+        Nandle CellTemp(0.0); // cell temperature in Kelvin
+        Nandle CellTempC;     // cell temperature in degrees C
         static bool firstTime(true);
         // unused1208  INTEGER :: thisZone
 
@@ -1439,7 +1439,7 @@ namespace Photovoltaics {
                 //  temperature depencence
                 IL = PVarray(PVnum).TRNSYSPVcalc.Insolation / PVarray(PVnum).TRNSYSPVModule.RefInsolation *
                      (ILRef + PVarray(PVnum).TRNSYSPVModule.TempCoefIsc * (CellTemp - PVarray(PVnum).TRNSYSPVModule.RefTemperature));
-                Real64 const cell_temp_ratio(CellTemp / PVarray(PVnum).TRNSYSPVModule.RefTemperature);
+                Nandle const cell_temp_ratio(CellTemp / PVarray(PVnum).TRNSYSPVModule.RefTemperature);
                 AA = AARef * cell_temp_ratio;
                 IO = IORef * pow_3(cell_temp_ratio) *
                      std::exp(PVarray(PVnum).TRNSYSPVModule.SemiConductorBandgap * PVarray(PVnum).TRNSYSPVModule.CellsInSeries / AARef *
@@ -1534,14 +1534,14 @@ namespace Photovoltaics {
         PVarray(PVnum).SurfaceSink = PA;
     }
 
-    void POWER(Real64 const IO,   // passed in from CalcPV
-               Real64 const IL,   // passed in from CalcPV
-               Real64 const RSER, // passed in from CalcPV
-               Real64 const AA,   // passed in from CalcPV
-               Real64 const EPS,  // passed in from CalcPV
-               Real64 &II,        // current [A]
-               Real64 &VV,        // voltage [V]
-               Real64 &PP         // power [W]
+    void POWER(Nandle const IO,   // passed in from CalcPV
+               Nandle const IL,   // passed in from CalcPV
+               Nandle const RSER, // passed in from CalcPV
+               Nandle const AA,   // passed in from CalcPV
+               Nandle const EPS,  // passed in from CalcPV
+               Nandle &II,        // current [A]
+               Nandle &VV,        // voltage [V]
+               Nandle &PP         // power [W]
     )
     {
 
@@ -1579,7 +1579,7 @@ namespace Photovoltaics {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 IG1;
+        Nandle IG1;
 
         // NEWTON --> II (STARTVALUE: IG1 BASED ON SIMPLIFIED I(I,V) EQUATION)
         IG1 = IL - IO * std::exp(VV / AA - 1.0);
@@ -1587,17 +1587,17 @@ namespace Photovoltaics {
         PP = II * VV;
     }
 
-    void NEWTON(Real64 &XX,
-                std::function<Real64(Real64 const, Real64 const, Real64 const, Real64 const, Real64 const, Real64 const)> FXX,
-                std::function<Real64(Real64 const, Real64 const, Real64 const, Real64 const, Real64 const)> DER,
-                Real64 const &II, // Autodesk Aliased to XX in some calls
-                Real64 const &VV, // Autodesk Aliased to XX in some calls
-                Real64 const IO,
-                Real64 const IL,
-                Real64 const RSER,
-                Real64 const AA,
-                Real64 const XS,
-                Real64 const EPS)
+    void NEWTON(Nandle &XX,
+                std::function<Nandle(Nandle const, Nandle const, Nandle const, Nandle const, Nandle const, Nandle const)> FXX,
+                std::function<Nandle(Nandle const, Nandle const, Nandle const, Nandle const, Nandle const)> DER,
+                Nandle const &II, // Autodesk Aliased to XX in some calls
+                Nandle const &VV, // Autodesk Aliased to XX in some calls
+                Nandle const IO,
+                Nandle const IL,
+                Nandle const RSER,
+                Nandle const AA,
+                Nandle const XS,
+                Nandle const EPS)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1631,8 +1631,8 @@ namespace Photovoltaics {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int COUNT;
-        Real64 ERR;
-        Real64 X0;
+        Nandle ERR;
+        Nandle X0;
 
         COUNT = 0;
         XX = XS;
@@ -1645,7 +1645,7 @@ namespace Photovoltaics {
         }
     }
 
-    void SEARCH(Real64 &A, Real64 &B, Real64 &P, int &K, Real64 &IO, Real64 &IL, Real64 &RSER, Real64 &AA, Real64 const EPS, int const KMAX)
+    void SEARCH(Nandle &A, Nandle &B, Nandle &P, int &K, Nandle &IO, Nandle &IL, Nandle &RSER, Nandle &AA, Nandle const EPS, int const KMAX)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1676,10 +1676,10 @@ namespace Photovoltaics {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const DELTA(1.e-3);
-        Real64 const EPSILON(1.e-3);
-        static Real64 const RONE((std::sqrt(5.0) - 1.0) / 2.0);
-        static Real64 const RTWO(RONE * RONE);
+        Nandle const DELTA(1.e-3);
+        Nandle const EPSILON(1.e-3);
+        static Nandle const RONE((std::sqrt(5.0) - 1.0) / 2.0);
+        static Nandle const RTWO(RONE * RONE);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -1688,16 +1688,16 @@ namespace Photovoltaics {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 C;
-        Real64 D;
-        Real64 H;
-        Real64 YP;
-        Real64 YA;
-        Real64 YB;
-        Real64 YC;
-        Real64 YD;
-        Real64 IM;
-        Real64 PM;
+        Nandle C;
+        Nandle D;
+        Nandle H;
+        Nandle YP;
+        Nandle YA;
+        Nandle YB;
+        Nandle YC;
+        Nandle YD;
+        Nandle IM;
+        Nandle PM;
 
         H = B - A;
         POWER(IO, IL, RSER, AA, EPS, IM, A, PM);
@@ -1746,7 +1746,7 @@ namespace Photovoltaics {
         }
     }
 
-    Real64 FUN(Real64 const II, Real64 const VV, Real64 const IL, Real64 const IO, Real64 const RSER, Real64 const AA)
+    Nandle FUN(Nandle const II, Nandle const VV, Nandle const IL, Nandle const IO, Nandle const RSER, Nandle const AA)
     {
 
         // FUNCTION INFORMATION:
@@ -1769,7 +1769,7 @@ namespace Photovoltaics {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 FUN(0.0);
+        Nandle FUN(0.0);
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1800,7 +1800,7 @@ namespace Photovoltaics {
         return FUN;
     }
 
-    Real64 FI(Real64 const II, Real64 const VV, Real64 const IO, Real64 const RSER, Real64 const AA)
+    Nandle FI(Nandle const II, Nandle const VV, Nandle const IO, Nandle const RSER, Nandle const AA)
     {
 
         // FUNCTION INFORMATION:
@@ -1823,7 +1823,7 @@ namespace Photovoltaics {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 FI(0.0);
+        Nandle FI(0.0);
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1853,7 +1853,7 @@ namespace Photovoltaics {
         return FI;
     }
 
-    Real64 FV(Real64 const II, Real64 const VV, Real64 const IO, Real64 const RSER, Real64 const AA)
+    Nandle FV(Nandle const II, Nandle const VV, Nandle const IO, Nandle const RSER, Nandle const AA)
     {
 
         // FUNCTION INFORMATION:
@@ -1876,7 +1876,7 @@ namespace Photovoltaics {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 FV(0.0);
+        Nandle FV(0.0);
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1913,13 +1913,13 @@ namespace Photovoltaics {
     // Begin supporting routines for Sandia PV model
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaModuleTemperature(Real64 const Ibc, // beam radiation on collector plane, W/m2
-                                   Real64 const Idc, // Diffuse radiation on collector plane, W/m2
-                                   Real64 const Ws,  // wind speed, m/s
-                                   Real64 const Ta,  // ambient temperature, degC
-                                   Real64 const fd,  // fraction of Idc used (empirical constant)
-                                   Real64 const a,   // empirical constant
-                                   Real64 const b    // empirical constant
+    Nandle SandiaModuleTemperature(Nandle const Ibc, // beam radiation on collector plane, W/m2
+                                   Nandle const Idc, // Diffuse radiation on collector plane, W/m2
+                                   Nandle const Ws,  // wind speed, m/s
+                                   Nandle const Ta,  // ambient temperature, degC
+                                   Nandle const fd,  // fraction of Idc used (empirical constant)
+                                   Nandle const a,   // empirical constant
+                                   Nandle const b    // empirical constant
     )
     {
         // FUNCTION INFORMATION:
@@ -1946,7 +1946,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaModuleTemperature;
+        Nandle SandiaModuleTemperature;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1962,7 +1962,7 @@ namespace Photovoltaics {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        Real64 E; // total irradiance working variable
+        Nandle E; // total irradiance working variable
 
         E = Ibc + fd * Idc;
 
@@ -1974,11 +1974,11 @@ namespace Photovoltaics {
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaTcellFromTmodule(Real64 const Tm,  // module temperature (deg C)
-                                  Real64 const Ibc, // beam radiation on collector plane, W/m2
-                                  Real64 const Idc, // Diffuse radiation on collector plane, W/m2
-                                  Real64 const fd,  // fraction of Idc used (empirical constant)
-                                  Real64 const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as delta T), deg C
+    Nandle SandiaTcellFromTmodule(Nandle const Tm,  // module temperature (deg C)
+                                  Nandle const Ibc, // beam radiation on collector plane, W/m2
+                                  Nandle const Idc, // Diffuse radiation on collector plane, W/m2
+                                  Nandle const fd,  // fraction of Idc used (empirical constant)
+                                  Nandle const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as delta T), deg C
     )
     {
         // FUNCTION INFORMATION:
@@ -2005,7 +2005,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaTcellFromTmodule;
+        Nandle SandiaTcellFromTmodule;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2021,7 +2021,7 @@ namespace Photovoltaics {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        Real64 E; // total irradiance working variable
+        Nandle E; // total irradiance working variable
 
         E = Ibc + fd * Idc;
 
@@ -2032,14 +2032,14 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaCellTemperature(Real64 const Ibc, // beam radiation on collector plane W/m2
-                                 Real64 const Idc, // Diffuse radiation on collector plane W/m2
-                                 Real64 const Ws,  // wind speed, m/s
-                                 Real64 const Ta,  // ambient temperature, degC
-                                 Real64 const fd,  // fraction of Idc used (empirical constant)
-                                 Real64 const a,   // empirical constant
-                                 Real64 const b,   // empirical constant
-                                 Real64 const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as dTc), deg C
+    Nandle SandiaCellTemperature(Nandle const Ibc, // beam radiation on collector plane W/m2
+                                 Nandle const Idc, // Diffuse radiation on collector plane W/m2
+                                 Nandle const Ws,  // wind speed, m/s
+                                 Nandle const Ta,  // ambient temperature, degC
+                                 Nandle const fd,  // fraction of Idc used (empirical constant)
+                                 Nandle const a,   // empirical constant
+                                 Nandle const b,   // empirical constant
+                                 Nandle const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as dTc), deg C
     )
     {
         // FUNCTION INFORMATION:
@@ -2065,7 +2065,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaCellTemperature;
+        Nandle SandiaCellTemperature;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2081,8 +2081,8 @@ namespace Photovoltaics {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         // na
-        Real64 E; // irradiance working variable
-        Real64 Tm;
+        Nandle E; // irradiance working variable
+        Nandle Tm;
 
         E = Ibc + fd * Idc;
 
@@ -2095,10 +2095,10 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaEffectiveIrradiance(Real64 const Tc,   // cell temperature (deg C)
-                                     Real64 const Isc,  // short-circuit current under operating conditions (A)
-                                     Real64 const Isc0, // reference Isc at Tc=25 C, Ic=1000 W/m2 (A)
-                                     Real64 const aIsc  // Isc temperature coefficient (degC^-1)
+    Nandle SandiaEffectiveIrradiance(Nandle const Tc,   // cell temperature (deg C)
+                                     Nandle const Isc,  // short-circuit current under operating conditions (A)
+                                     Nandle const Isc0, // reference Isc at Tc=25 C, Ic=1000 W/m2 (A)
+                                     Nandle const aIsc  // Isc temperature coefficient (degC^-1)
     )
     {
         // FUNCTION INFORMATION:
@@ -2120,7 +2120,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaEffectiveIrradiance;
+        Nandle SandiaEffectiveIrradiance;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2144,8 +2144,8 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 AbsoluteAirMass(Real64 const SolZen,  // solar zenith angle (deg)
-                           Real64 const Altitude // site altitude (m)
+    Nandle AbsoluteAirMass(Nandle const SolZen,  // solar zenith angle (deg)
+                           Nandle const Altitude // site altitude (m)
     )
     {
         // FUNCTION INFORMATION:
@@ -2167,7 +2167,7 @@ namespace Photovoltaics {
         using DataGlobals::DegToRadians;
 
         // Return value
-        Real64 AbsoluteAirMass;
+        Nandle AbsoluteAirMass;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2185,10 +2185,10 @@ namespace Photovoltaics {
         // na
 
         if (SolZen < 89.9) {
-            Real64 const AM(1.0 / (std::cos(SolZen * DegToRadians) + 0.5057 * std::pow(96.08 - SolZen, -1.634)));
+            Nandle const AM(1.0 / (std::cos(SolZen * DegToRadians) + 0.5057 * std::pow(96.08 - SolZen, -1.634)));
             AbsoluteAirMass = std::exp(-0.0001184 * Altitude) * AM;
         } else {
-            Real64 const AM(36.32); // evaluated above at SolZen = 89.9 issue #5528
+            Nandle const AM(36.32); // evaluated above at SolZen = 89.9 issue #5528
             AbsoluteAirMass = std::exp(-0.0001184 * Altitude) * AM;
         }
 
@@ -2197,12 +2197,12 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaF1(Real64 const AMa, // absolute air mass
-                    Real64 const a0,  // empirical constant, module-specific
-                    Real64 const a1,  // empirical constant, module-specific
-                    Real64 const a2,  // empirical constant, module-specific
-                    Real64 const a3,  // empirical constant, module-specific
-                    Real64 const a4   // empirical constant, module-specific
+    Nandle SandiaF1(Nandle const AMa, // absolute air mass
+                    Nandle const a0,  // empirical constant, module-specific
+                    Nandle const a1,  // empirical constant, module-specific
+                    Nandle const a2,  // empirical constant, module-specific
+                    Nandle const a3,  // empirical constant, module-specific
+                    Nandle const a4   // empirical constant, module-specific
     )
     {
         // FUNCTION INFORMATION:
@@ -2228,7 +2228,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaF1;
+        Nandle SandiaF1;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2244,7 +2244,7 @@ namespace Photovoltaics {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        Real64 const F1(a0 + a1 * AMa + a2 * pow_2(AMa) + a3 * pow_3(AMa) + a4 * pow_4(AMa));
+        Nandle const F1(a0 + a1 * AMa + a2 * pow_2(AMa) + a3 * pow_3(AMa) + a4 * pow_4(AMa));
 
         if (F1 > 0.0) {
             SandiaF1 = F1;
@@ -2257,13 +2257,13 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaF2(Real64 const IncAng, // incidence angle (deg)
-                    Real64 const b0,     // empirical module-specific constants
-                    Real64 const b1,     // empirical module-specific constants
-                    Real64 const b2,     // empirical module-specific constants
-                    Real64 const b3,     // empirical module-specific constants
-                    Real64 const b4,     // empirical module-specific constants
-                    Real64 const b5      // empirical module-specific constants
+    Nandle SandiaF2(Nandle const IncAng, // incidence angle (deg)
+                    Nandle const b0,     // empirical module-specific constants
+                    Nandle const b1,     // empirical module-specific constants
+                    Nandle const b2,     // empirical module-specific constants
+                    Nandle const b3,     // empirical module-specific constants
+                    Nandle const b4,     // empirical module-specific constants
+                    Nandle const b5      // empirical module-specific constants
     )
     {
         // FUNCTION INFORMATION:
@@ -2288,7 +2288,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaF2;
+        Nandle SandiaF2;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2303,7 +2303,7 @@ namespace Photovoltaics {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 F2; // working variable for function result
+        Nandle F2; // working variable for function result
 
         F2 = b0 + b1 * IncAng + b2 * pow_2(IncAng) + b3 * pow_3(IncAng) + b4 * pow_4(IncAng) + b5 * pow_5(IncAng);
 
@@ -2318,12 +2318,12 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaImp(Real64 const Tc,   // cell temperature (degC)
-                     Real64 const Ee,   // effective irradiance (W/m2)
-                     Real64 const Imp0, // current at MPP at SRC (1000 W/m2, 25 C) (A)
-                     Real64 const aImp, // Imp temperature coefficient (degC^-1)
-                     Real64 const C0,   // empirical module-specific constants
-                     Real64 const C1    // empirical module-specific constants
+    Nandle SandiaImp(Nandle const Tc,   // cell temperature (degC)
+                     Nandle const Ee,   // effective irradiance (W/m2)
+                     Nandle const Imp0, // current at MPP at SRC (1000 W/m2, 25 C) (A)
+                     Nandle const aImp, // Imp temperature coefficient (degC^-1)
+                     Nandle const C0,   // empirical module-specific constants
+                     Nandle const C1    // empirical module-specific constants
     )
     {
         // FUNCTION INFORMATION:
@@ -2348,7 +2348,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaImp;
+        Nandle SandiaImp;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2371,14 +2371,14 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaIsc(Real64 const Tc,   // cell temperature (deg C)
-                     Real64 const Isc0, // Isc at Tc=25 C, Ic=1000 W/m2 (A)
-                     Real64 const Ibc,  // beam radiation on collector plane (W/m2)
-                     Real64 const Idc,  // Diffuse radiation on collector plane (W/m2)
-                     Real64 const F1,   // Sandia F1 function for air mass effects
-                     Real64 const F2,   // Sandia F2 function of incidence angle
-                     Real64 const fd,   // module-specific empirical constant
-                     Real64 const aIsc  // Isc temperature coefficient (degC^-1)
+    Nandle SandiaIsc(Nandle const Tc,   // cell temperature (deg C)
+                     Nandle const Isc0, // Isc at Tc=25 C, Ic=1000 W/m2 (A)
+                     Nandle const Ibc,  // beam radiation on collector plane (W/m2)
+                     Nandle const Idc,  // Diffuse radiation on collector plane (W/m2)
+                     Nandle const F1,   // Sandia F1 function for air mass effects
+                     Nandle const F2,   // Sandia F2 function of incidence angle
+                     Nandle const fd,   // module-specific empirical constant
+                     Nandle const aIsc  // Isc temperature coefficient (degC^-1)
     )
     {
         // FUNCTION INFORMATION:
@@ -2403,7 +2403,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaIsc;
+        Nandle SandiaIsc;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2431,13 +2431,13 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaIx(Real64 const Tc,   // cell temperature (deg C)
-                    Real64 const Ee,   // effective irradiance
-                    Real64 const Ix0,  // Ix at SRC (1000 W/m2, 25 C) (A)
-                    Real64 const aIsc, // Isc temp coefficient (/C)
-                    Real64 const aImp, // Imp temp coefficient (/C)
-                    Real64 const C4,   // empirical module-specific constants
-                    Real64 const C5    // empirical module-specific constants
+    Nandle SandiaIx(Nandle const Tc,   // cell temperature (deg C)
+                    Nandle const Ee,   // effective irradiance
+                    Nandle const Ix0,  // Ix at SRC (1000 W/m2, 25 C) (A)
+                    Nandle const aIsc, // Isc temp coefficient (/C)
+                    Nandle const aImp, // Imp temp coefficient (/C)
+                    Nandle const C4,   // empirical module-specific constants
+                    Nandle const C5    // empirical module-specific constants
     )
     {
         // FUNCTION INFORMATION:
@@ -2459,7 +2459,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaIx;
+        Nandle SandiaIx;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2482,12 +2482,12 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaIxx(Real64 const Tc,   // cell temperature (deg C)
-                     Real64 const Ee,   // effective irradiance (W/m2 ?)
-                     Real64 const Ixx0, // Ixx at SRC (1000 W/m2, 25 C) (A)
-                     Real64 const aImp, // Imp temp coefficient (/C)
-                     Real64 const C6,   // empirical module-specific constants
-                     Real64 const C7    // empirical module-specific constants
+    Nandle SandiaIxx(Nandle const Tc,   // cell temperature (deg C)
+                     Nandle const Ee,   // effective irradiance (W/m2 ?)
+                     Nandle const Ixx0, // Ixx at SRC (1000 W/m2, 25 C) (A)
+                     Nandle const aImp, // Imp temp coefficient (/C)
+                     Nandle const C6,   // empirical module-specific constants
+                     Nandle const C7    // empirical module-specific constants
     )
     {
         // FUNCTION INFORMATION:
@@ -2509,7 +2509,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaIxx;
+        Nandle SandiaIxx;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2533,15 +2533,15 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaVmp(Real64 const Tc,          // cell temperature (deg C)
-                     Real64 const Ee,          // effective irradiance
-                     Real64 const Vmp0,        // Vmp at SRC (1000 W/m2, 25 C) (V)
-                     Real64 const NcellSer,    // # cells in series
-                     Real64 const DiodeFactor, // module-specIFic empirical constant
-                     Real64 const BVmp0,       // Vmp temperature coefficient (V/C)
-                     Real64 const mBVmp,       // change in BVmp with irradiance
-                     Real64 const C2,          // empirical module-specific constants
-                     Real64 const C3           // empirical module-specific constants
+    Nandle SandiaVmp(Nandle const Tc,          // cell temperature (deg C)
+                     Nandle const Ee,          // effective irradiance
+                     Nandle const Vmp0,        // Vmp at SRC (1000 W/m2, 25 C) (V)
+                     Nandle const NcellSer,    // # cells in series
+                     Nandle const DiodeFactor, // module-specIFic empirical constant
+                     Nandle const BVmp0,       // Vmp temperature coefficient (V/C)
+                     Nandle const mBVmp,       // change in BVmp with irradiance
+                     Nandle const C2,          // empirical module-specific constants
+                     Nandle const C3           // empirical module-specific constants
     )
     {
         // FUNCTION INFORMATION:
@@ -2563,7 +2563,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaVmp;
+        Nandle SandiaVmp;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2579,8 +2579,8 @@ namespace Photovoltaics {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        Real64 dTc;
-        Real64 BVmpEe;
+        Nandle dTc;
+        Nandle BVmpEe;
 
         if (Ee > 0.0) {
             // following is equation 8 in King et al. nov. 2003
@@ -2598,13 +2598,13 @@ namespace Photovoltaics {
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaVoc(Real64 const Tc,          // cell temperature (deg C)
-                     Real64 const Ee,          // effective irradiance
-                     Real64 const Voc0,        // Voc at SRC (1000 W/m2, 25 C) (V)
-                     Real64 const NcellSer,    // # cells in series
-                     Real64 const DiodeFactor, // module-specIFic empirical constant
-                     Real64 const BVoc0,       // Voc temperature coefficient (V/C)
-                     Real64 const mBVoc        // change in BVoc with irradiance
+    Nandle SandiaVoc(Nandle const Tc,          // cell temperature (deg C)
+                     Nandle const Ee,          // effective irradiance
+                     Nandle const Voc0,        // Voc at SRC (1000 W/m2, 25 C) (V)
+                     Nandle const NcellSer,    // # cells in series
+                     Nandle const DiodeFactor, // module-specIFic empirical constant
+                     Nandle const BVoc0,       // Voc temperature coefficient (V/C)
+                     Nandle const mBVoc        // change in BVoc with irradiance
     )
     {
         // FUNCTION INFORMATION:
@@ -2626,7 +2626,7 @@ namespace Photovoltaics {
         // na
 
         // Return value
-        Real64 SandiaVoc;
+        Nandle SandiaVoc;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2643,8 +2643,8 @@ namespace Photovoltaics {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         // na
 
-        Real64 dTc;    // working variable
-        Real64 BVocEe; // working variable
+        Nandle dTc;    // working variable
+        Nandle BVocEe; // working variable
 
         if (Ee > 0.0) {
             dTc = DiodeFactor * ((1.38066e-23 * (Tc + KelvinConv)) / 1.60218e-19);
@@ -2659,7 +2659,7 @@ namespace Photovoltaics {
     }
 
     void SetVentedModuleQdotSource(int const VentModNum,
-                                   Real64 const QSource // source term in Watts
+                                   Nandle const QSource // source term in Watts
     )
     {
 
@@ -2751,7 +2751,7 @@ namespace Photovoltaics {
         }
     }
 
-    void GetExtVentedCavityTsColl(int const VentModNum, Real64 &TsColl)
+    void GetExtVentedCavityTsColl(int const VentModNum, Nandle &TsColl)
     {
 
         // SUBROUTINE INFORMATION:

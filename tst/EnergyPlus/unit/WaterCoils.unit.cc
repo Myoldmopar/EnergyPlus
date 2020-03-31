@@ -472,9 +472,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterUASizing)
     SizeWaterCoil(CoilNum);
     EXPECT_DOUBLE_EQ(1.0, WaterCoil(CoilNum).DesAirVolFlowRate);
 
-    Real64 CpAirStd = 0.0;
-    Real64 DesMassFlow = 0.0;
-    Real64 DesCoilHeatingLoad = 0.0;
+    Nandle CpAirStd = 0.0;
+    Nandle DesMassFlow = 0.0;
+    Nandle DesCoilHeatingLoad = 0.0;
 
     CpAirStd = PsyCpAirFnW(0.0);
     DesMassFlow = WaterCoil(CoilNum).DesAirVolFlowRate * StdRhoAir;
@@ -483,9 +483,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterUASizing)
     // check heating coil design load
     EXPECT_DOUBLE_EQ(DesCoilHeatingLoad, WaterCoil(CoilNum).DesWaterHeatingCoilRate);
 
-    Real64 Cp = 0;
-    Real64 rho = 0;
-    Real64 DesWaterFlowRate = 0;
+    Nandle Cp = 0;
+    Nandle rho = 0;
+    Nandle DesWaterFlowRate = 0;
 
     Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
     rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
@@ -624,9 +624,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterLowAirFlowUASizing)
     SizeWaterCoil(CoilNum);
     EXPECT_DOUBLE_EQ(1.0, WaterCoil(CoilNum).DesAirVolFlowRate);
 
-    Real64 CpAirStd = 0.0;
-    Real64 DesMassFlow = 0.0;
-    Real64 DesCoilHeatingLoad = 0.0;
+    Nandle CpAirStd = 0.0;
+    Nandle DesMassFlow = 0.0;
+    Nandle DesCoilHeatingLoad = 0.0;
 
     CpAirStd = PsyCpAirFnW(0.0);
     DesMassFlow = WaterCoil(CoilNum).DesAirVolFlowRate * StdRhoAir;
@@ -635,9 +635,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterLowAirFlowUASizing)
     // check heating coil design load
     EXPECT_DOUBLE_EQ(DesCoilHeatingLoad, WaterCoil(CoilNum).DesWaterHeatingCoilRate);
 
-    Real64 Cp = 0;
-    Real64 rho = 0;
-    Real64 DesWaterFlowRate = 0;
+    Nandle Cp = 0;
+    Nandle rho = 0;
+    Nandle DesWaterFlowRate = 0;
 
     Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
     rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
@@ -781,9 +781,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterUASizingLowHwaterInletTemp)
     SizeWaterCoil(CoilNum);
     EXPECT_DOUBLE_EQ(1.0, WaterCoil(CoilNum).DesAirVolFlowRate);
 
-    Real64 CpAirStd = 0.0;
-    Real64 DesMassFlow = 0.0;
-    Real64 DesCoilHeatingLoad = 0.0;
+    Nandle CpAirStd = 0.0;
+    Nandle DesMassFlow = 0.0;
+    Nandle DesCoilHeatingLoad = 0.0;
 
     CpAirStd = PsyCpAirFnW(0.0);
     DesMassFlow = WaterCoil(CoilNum).DesAirVolFlowRate * StdRhoAir;
@@ -792,9 +792,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterUASizingLowHwaterInletTemp)
     // check heating coil design load
     EXPECT_DOUBLE_EQ(DesCoilHeatingLoad, WaterCoil(CoilNum).DesWaterHeatingCoilRate);
 
-    Real64 Cp = 0;
-    Real64 rho = 0;
-    Real64 DesWaterFlowRate = 0;
+    Nandle Cp = 0;
+    Nandle rho = 0;
+    Nandle DesWaterFlowRate = 0;
 
     Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
     rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
@@ -806,9 +806,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterUASizingLowHwaterInletTemp)
     // check coil UA-value sizing for low design loop exit temp
     EXPECT_NEAR(2479.27, WaterCoil(CoilNum).UACoil, 0.01);
 
-    Real64 DesCoilInletWaterTempUsed = 0.0;
-    Real64 DataFanOpMode = ContFanCycCoil;
-    Real64 UAMax = WaterCoil(CoilNum).DesWaterHeatingCoilRate;
+    Nandle DesCoilInletWaterTempUsed = 0.0;
+    Nandle DataFanOpMode = ContFanCycCoil;
+    Nandle UAMax = WaterCoil(CoilNum).DesWaterHeatingCoilRate;
 
     // check if coil design inlet water temperature is increased above the plant loop exit temp
     EstimateCoilInletWaterTemp(CoilNum, DataFanOpMode, 1.0, UAMax, DesCoilInletWaterTempUsed);
@@ -894,9 +894,9 @@ TEST_F(WaterCoilsTest, CoilCoolingWaterSimpleSizing)
     SizeWaterCoil(CoilNum);
     EXPECT_DOUBLE_EQ(1.0, WaterCoil(CoilNum).DesAirVolFlowRate);
 
-    Real64 DesCoilCoolingLoad = 0.0;
-    Real64 CoilInEnth = 0.0;
-    Real64 CoilOutEnth = 0.0;
+    Nandle DesCoilCoolingLoad = 0.0;
+    Nandle CoilInEnth = 0.0;
+    Nandle CoilOutEnth = 0.0;
 
     CoilInEnth = PsyHFnTdbW(20.0, 0.01);
     CoilOutEnth = PsyHFnTdbW(10.0, 0.0085);
@@ -905,9 +905,9 @@ TEST_F(WaterCoilsTest, CoilCoolingWaterSimpleSizing)
     // check cooling coil design load
     EXPECT_DOUBLE_EQ(DesCoilCoolingLoad, WaterCoil(CoilNum).DesWaterCoolingCoilRate);
 
-    Real64 Cp = 0;
-    Real64 rho = 0;
-    Real64 DesWaterFlowRate = 0;
+    Nandle Cp = 0;
+    Nandle rho = 0;
+    Nandle DesWaterFlowRate = 0;
 
     Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
     rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
@@ -1010,9 +1010,9 @@ TEST_F(WaterCoilsTest, CoilCoolingWaterDetailedSizing)
     SizeWaterCoil(CoilNum);
     EXPECT_DOUBLE_EQ(1.0, WaterCoil(CoilNum).DesAirVolFlowRate);
 
-    Real64 DesCoilCoolingLoad = 0.0;
-    Real64 CoilInEnth = 0.0;
-    Real64 CoilOutEnth = 0.0;
+    Nandle DesCoilCoolingLoad = 0.0;
+    Nandle CoilInEnth = 0.0;
+    Nandle CoilOutEnth = 0.0;
 
     CoilInEnth = PsyHFnTdbW(FinalSysSizing(1).MixTempAtCoolPeak, FinalSysSizing(1).MixHumRatAtCoolPeak);
     CoilOutEnth = PsyHFnTdbW(FinalSysSizing(1).CoolSupTemp, FinalSysSizing(1).CoolSupHumRat);
@@ -1020,9 +1020,9 @@ TEST_F(WaterCoilsTest, CoilCoolingWaterDetailedSizing)
     // check cooling coil design load
     EXPECT_DOUBLE_EQ(DesCoilCoolingLoad, WaterCoil(CoilNum).DesWaterCoolingCoilRate);
 
-    Real64 Cp = 0;
-    Real64 rho = 0;
-    Real64 DesWaterFlowRate = 0;
+    Nandle Cp = 0;
+    Nandle rho = 0;
+    Nandle DesWaterFlowRate = 0;
 
     Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
     rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
@@ -1106,9 +1106,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterSimpleSizing)
     SizeWaterCoil(CoilNum);
     EXPECT_DOUBLE_EQ(1.0, WaterCoil(CoilNum).DesAirVolFlowRate);
 
-    Real64 CpAirStd = 0.0;
-    Real64 DesMassFlow = 0.0;
-    Real64 DesCoilHeatingLoad = 0.0;
+    Nandle CpAirStd = 0.0;
+    Nandle DesMassFlow = 0.0;
+    Nandle DesCoilHeatingLoad = 0.0;
 
     CpAirStd = PsyCpAirFnW(0.0);
     DesMassFlow = FinalSysSizing(1).DesMainVolFlow * StdRhoAir;
@@ -1117,9 +1117,9 @@ TEST_F(WaterCoilsTest, CoilHeatingWaterSimpleSizing)
     // check heating coil design load
     EXPECT_DOUBLE_EQ(DesCoilHeatingLoad, WaterCoil(CoilNum).DesWaterHeatingCoilRate);
 
-    Real64 Cp = 0;
-    Real64 rho = 0;
-    Real64 DesWaterFlowRate = 0;
+    Nandle Cp = 0;
+    Nandle rho = 0;
+    Nandle DesWaterFlowRate = 0;
 
     Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
     rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::HWInitConvTemp, PlantLoop(1).FluidIndex, "Unit Test");
@@ -1207,9 +1207,9 @@ TEST_F(WaterCoilsTest, HotWaterHeatingCoilAutoSizeTempTest)
     SizeWaterCoil(CoilNum);
     EXPECT_DOUBLE_EQ(1.0, WaterCoil(CoilNum).DesAirVolFlowRate);
 
-    Real64 CpAirStd(0.0);
-    Real64 DesMassFlow(0.0);
-    Real64 DesCoilHeatingLoad(0.0);
+    Nandle CpAirStd(0.0);
+    Nandle DesMassFlow(0.0);
+    Nandle DesCoilHeatingLoad(0.0);
 
     CpAirStd = PsyCpAirFnW(0.0);
     DesMassFlow = WaterCoil(CoilNum).DesAirVolFlowRate * StdRhoAir;
@@ -1218,9 +1218,9 @@ TEST_F(WaterCoilsTest, HotWaterHeatingCoilAutoSizeTempTest)
     // check heating coil design load
     EXPECT_DOUBLE_EQ(DesCoilHeatingLoad, WaterCoil(CoilNum).DesWaterHeatingCoilRate);
 
-    Real64 Cp(0.0);
-    Real64 rho(0.0);
-    Real64 DesWaterFlowRate(0.0);
+    Nandle Cp(0.0);
+    Nandle rho(0.0);
+    Nandle DesWaterFlowRate(0.0);
 
     // now size heating coil hot water flow rate at 60.0C
     Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, 60.0, PlantLoop(1).FluidIndex, "Unit Test");

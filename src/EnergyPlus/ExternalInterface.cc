@@ -99,10 +99,10 @@ namespace ExternalInterface {
     // http://www.modelisar.com
 
     // Data
-    Real64 tComm(0.0);                // Communication time step
-    Real64 tStop(3600.0);             // Stop time used during the warmup period
-    Real64 tStart(0.0);               // Start time used during the warmup period
-    Real64 hStep(15.0);               // Communication step size
+    Nandle tComm(0.0);                // Communication time step
+    Nandle tStop(3600.0);             // Stop time used during the warmup period
+    Nandle tStart(0.0);               // Start time used during the warmup period
+    Nandle hStep(15.0);               // Communication step size
     bool FlagReIni(false);            // Flag for reinitialization of states in GetSetAndDoStep
     std::string FMURootWorkingFolder; // FMU root working folder
 
@@ -740,7 +740,7 @@ namespace ExternalInterface {
 
                         // generate vectors here first
                         std::vector<unsigned int> valueReferenceVec;
-                        std::vector<Real64> realVarValueVec;
+                        std::vector<Nandle> realVarValueVec;
                         for (unsigned long x = 1; x <= size(FMU(i).Instance(j).fmuOutputVariableSchedule); ++x) {
                             valueReferenceVec.push_back(FMU(i).Instance(j).fmuOutputVariableSchedule(x).ValueReference);
                             realVarValueVec.push_back(FMU(i).Instance(j).fmuOutputVariableSchedule(x).RealVarValue);
@@ -771,7 +771,7 @@ namespace ExternalInterface {
                     if (size(FMU(i).Instance(j).fmuOutputVariableVariable) > 0) {
 
                         std::vector<unsigned int> valueReferenceVec2;
-                        std::vector<Real64> realVarValueVec2;
+                        std::vector<Nandle> realVarValueVec2;
                         for (unsigned long x = 1; x <= size(FMU(i).Instance(j).fmuOutputVariableVariable); ++x) {
                             valueReferenceVec2.push_back(FMU(i).Instance(j).fmuOutputVariableVariable(x).ValueReference);
                             realVarValueVec2.push_back(FMU(i).Instance(j).fmuOutputVariableVariable(x).RealVarValue);
@@ -802,7 +802,7 @@ namespace ExternalInterface {
 
                         // generate vectors here first
                         std::vector<unsigned int> valueReferenceVec3;
-                        std::vector<Real64> realVarValueVec3;
+                        std::vector<Nandle> realVarValueVec3;
                         for (unsigned long x = 1; x <= size(FMU(i).Instance(j).fmuOutputVariableActuator); ++x) {
                             valueReferenceVec3.push_back(FMU(i).Instance(j).fmuOutputVariableActuator(x).ValueReference);
                             realVarValueVec3.push_back(FMU(i).Instance(j).fmuOutputVariableActuator(x).RealVarValue);
@@ -872,7 +872,7 @@ namespace ExternalInterface {
                         valueReferenceVec4.push_back(FMU(i).Instance(j).fmuInputVariable(x).ValueReference);
                     }
 
-                    std::vector<Real64> rtsValueVec4;
+                    std::vector<Nandle> rtsValueVec4;
                     for (unsigned long x = 1; x <= size(FMU(i).Instance(j).eplusOutputVariable); ++x) {
                         rtsValueVec4.push_back(FMU(i).Instance(j).eplusOutputVariable(x).RTSValue);
                     }
@@ -1816,7 +1816,7 @@ namespace ExternalInterface {
         return str.substr(first, last - first + 1);
     }
 
-    Real64 GetCurSimStartTimeSeconds()
+    Nandle GetCurSimStartTimeSeconds()
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Thierry S. Nouidui, Michael Wetter, Wangda Zuo
@@ -1835,7 +1835,7 @@ namespace ExternalInterface {
         using DataGlobals::HourOfDay;
 
         // Locals
-        Real64 simtime;
+        Nandle simtime;
 
         if (!CurrentYearIsLeapYear) {
             switch (Month) {
@@ -2068,7 +2068,7 @@ namespace ExternalInterface {
                                 valRefVec.push_back(FMU(i).Instance(j).fmuInputVariable(x).ValueReference);
                             }
 
-                            std::vector<Real64> rtsValVec;
+                            std::vector<Nandle> rtsValVec;
                             for (unsigned long x = 1; x <= size(FMU(i).Instance(j).eplusOutputVariable); ++x) {
                                 rtsValVec.push_back(FMU(i).Instance(j).eplusOutputVariable(x).RTSValue);
                             }
@@ -2126,7 +2126,7 @@ namespace ExternalInterface {
                         for (unsigned long x = 1; x <= size(FMUTemp(i).Instance(j).fmuInputVariable); ++x) {
                             valRefVec.push_back(FMUTemp(i).Instance(j).fmuInputVariable(x).ValueReference);
                         }
-                        std::vector<Real64> rtsValVec;
+                        std::vector<Nandle> rtsValVec;
                         for (unsigned long x = 1; x <= size(FMUTemp(i).Instance(j).eplusOutputVariable); ++x) {
                             rtsValVec.push_back(FMUTemp(i).Instance(j).eplusOutputVariable(x).RTSValue);
                         }
@@ -2272,11 +2272,11 @@ namespace ExternalInterface {
         int flaRea;       // flag read from the socket
         int nDblWri;      // number of doubles to write to socket
         int nDblRea;      // number of doubles to read from socket
-        Real64 curSimTim; // current simulation time
-        Real64 preSimTim; // previous time step's simulation time
+        Nandle curSimTim; // current simulation time
+        Nandle preSimTim; // previous time step's simulation time
 
-        Array1D<Real64> dblValWri(nDblMax);
-        Array1D<Real64> dblValRea(nDblMax);
+        Array1D<Nandle> dblValWri(nDblMax);
+        Array1D<Nandle> dblValRea(nDblMax);
         std::string retValCha;
         bool continueSimulation; // Flag, true if simulation should continue
         static bool firstCall(true);

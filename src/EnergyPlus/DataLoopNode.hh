@@ -96,8 +96,8 @@ namespace DataLoopNode {
     extern bool const ObjectIsParent;
     extern bool const ObjectIsNotParent;
     extern bool const IncrementFluidStreamYes;
-    extern Real64 const SensedNodeFlagValue;
-    extern Real64 const SensedLoadFlagValue;
+    extern Nandle const SensedNodeFlagValue;
+    extern Nandle const SensedLoadFlagValue;
 
     // DERIVED TYPE DEFINITIONS:
 
@@ -120,29 +120,29 @@ namespace DataLoopNode {
         // Members
         int FluidType;               // must be one of the valid parameters
         int FluidIndex;              // For Fluid Properties
-        Real64 Temp;                 // {C}
-        Real64 TempMin;              // {C}
-        Real64 TempMax;              // {C}
-        Real64 TempSetPoint;         // {C}
-        Real64 TempLastTimestep;     // [C}   DSU
-        Real64 MassFlowRateRequest;  // {kg/s}  DSU
-        Real64 MassFlowRate;         // {kg/s}
-        Real64 MassFlowRateMin;      // {kg/s}
-        Real64 MassFlowRateMax;      // {kg/s}
-        Real64 MassFlowRateMinAvail; // {kg/s}
-        Real64 MassFlowRateMaxAvail; // {kg/s}
-        Real64 MassFlowRateSetPoint; // {kg/s}
-        Real64 Quality;              // {0.0-1.0 vapor fraction/percent}
-        Real64 Press;                // {Pa}
-        Real64 Enthalpy;             // {J/kg}
-        Real64 EnthalpyLastTimestep; // {J/kg}  DSU for steam?
-        Real64 HumRat;               // {}
-        Real64 HumRatMin;            // {}
-        Real64 HumRatMax;            // {}
-        Real64 HumRatSetPoint;       // {}
-        Real64 TempSetPointHi;       // {C}
-        Real64 TempSetPointLo;       // {C}
-        Real64 Height;               // {m}
+        Nandle Temp;                 // {C}
+        Nandle TempMin;              // {C}
+        Nandle TempMax;              // {C}
+        Nandle TempSetPoint;         // {C}
+        Nandle TempLastTimestep;     // [C}   DSU
+        Nandle MassFlowRateRequest;  // {kg/s}  DSU
+        Nandle MassFlowRate;         // {kg/s}
+        Nandle MassFlowRateMin;      // {kg/s}
+        Nandle MassFlowRateMax;      // {kg/s}
+        Nandle MassFlowRateMinAvail; // {kg/s}
+        Nandle MassFlowRateMaxAvail; // {kg/s}
+        Nandle MassFlowRateSetPoint; // {kg/s}
+        Nandle Quality;              // {0.0-1.0 vapor fraction/percent}
+        Nandle Press;                // {Pa}
+        Nandle Enthalpy;             // {J/kg}
+        Nandle EnthalpyLastTimestep; // {J/kg}  DSU for steam?
+        Nandle HumRat;               // {}
+        Nandle HumRatMin;            // {}
+        Nandle HumRatMax;            // {}
+        Nandle HumRatSetPoint;       // {}
+        Nandle TempSetPointHi;       // {C}
+        Nandle TempSetPointLo;       // {C}
+        Nandle Height;               // {m}
 
         //  Following are for Outdoor Air Nodes Scheduled Properties
         bool IsLocalNode;
@@ -152,23 +152,23 @@ namespace DataLoopNode {
         int OutAirWindDirSchedNum;
 
         //  Following are for Outdoor Air Nodes "read only"
-        Real64 OutAirDryBulb;              // {C}
+        Nandle OutAirDryBulb;              // {C}
         bool EMSOverrideOutAirDryBulb;     // if true, the EMS is calling to override outdoor air node drybulb setting
-        Real64 EMSValueForOutAirDryBulb;   // value EMS is directing to use for outdoor air node's drybulb {C}
-        Real64 OutAirWetBulb;              // {C}
+        Nandle EMSValueForOutAirDryBulb;   // value EMS is directing to use for outdoor air node's drybulb {C}
+        Nandle OutAirWetBulb;              // {C}
         bool EMSOverrideOutAirWetBulb;     // if true, the EMS is calling to override outdoor air node wetbulb setting
-        Real64 EMSValueForOutAirWetBulb;   // value EMS is directing to use for outdoor air node's wetbulb {C}
-        Real64 OutAirWindSpeed;            // {m/s}
+        Nandle EMSValueForOutAirWetBulb;   // value EMS is directing to use for outdoor air node's wetbulb {C}
+        Nandle OutAirWindSpeed;            // {m/s}
         bool EMSOverrideOutAirWindSpeed;   // if true, the EMS is calling to override outdoor air node wind speed setting
-        Real64 EMSValueForOutAirWindSpeed; // value EMS is directing to use for outdoor air node's drybulb {m/s}
-        Real64 OutAirWindDir;              // {degree}
+        Nandle EMSValueForOutAirWindSpeed; // value EMS is directing to use for outdoor air node's drybulb {m/s}
+        Nandle OutAirWindDir;              // {degree}
         bool EMSOverrideOutAirWindDir;     // if true, the EMS is calling to override outdoor air node wind direction setting
-        Real64 EMSValueForOutAirWindDir;   // value EMS is directing to use for outdoor air node's wind directio {degree}
+        Nandle EMSValueForOutAirWindDir;   // value EMS is directing to use for outdoor air node's wind directio {degree}
         // Contaminant
-        Real64 CO2;                // {ppm}
-        Real64 CO2SetPoint;        // {ppm}
-        Real64 GenContam;          // {ppm}
-        Real64 GenContamSetPoint;  // {ppm}
+        Nandle CO2;                // {ppm}
+        Nandle CO2SetPoint;        // {ppm}
+        Nandle GenContam;          // {ppm}
+        Nandle GenContamSetPoint;  // {ppm}
         bool SPMNodeWetBulbRepReq; // Set to true when node has SPM which follows wetbulb
 
         // error message flag
@@ -192,50 +192,50 @@ namespace DataLoopNode {
         // Member Constructor
         NodeData(int const FluidType,               // must be one of the valid parameters
                  int const FluidIndex,              // For Fluid Properties
-                 Real64 const Temp,                 // {C}
-                 Real64 const TempMin,              // {C}
-                 Real64 const TempMax,              // {C}
-                 Real64 const TempSetPoint,         // {C}
-                 Real64 const TempLastTimestep,     // [C}   DSU
-                 Real64 const MassFlowRateRequest,  // {kg/s}  DSU
-                 Real64 const MassFlowRate,         // {kg/s}
-                 Real64 const MassFlowRateMin,      // {kg/s}
-                 Real64 const MassFlowRateMax,      // {kg/s}
-                 Real64 const MassFlowRateMinAvail, // {kg/s}
-                 Real64 const MassFlowRateMaxAvail, // {kg/s}
-                 Real64 const MassFlowRateSetPoint, // {kg/s}
-                 Real64 const Quality,              // {0.0-1.0 vapor fraction/percent}
-                 Real64 const Press,                // {Pa}
-                 Real64 const Enthalpy,             // {J/kg}
-                 Real64 const EnthalpyLastTimestep, // {J/kg}  DSU for steam?
-                 Real64 const HumRat,               // {}
-                 Real64 const HumRatMin,            // {}
-                 Real64 const HumRatMax,            // {}
-                 Real64 const HumRatSetPoint,       // {}
-                 Real64 const TempSetPointHi,       // {C}
-                 Real64 const TempSetPointLo,       // {C}
-                 Real64 const Height,               // {m}
+                 Nandle const Temp,                 // {C}
+                 Nandle const TempMin,              // {C}
+                 Nandle const TempMax,              // {C}
+                 Nandle const TempSetPoint,         // {C}
+                 Nandle const TempLastTimestep,     // [C}   DSU
+                 Nandle const MassFlowRateRequest,  // {kg/s}  DSU
+                 Nandle const MassFlowRate,         // {kg/s}
+                 Nandle const MassFlowRateMin,      // {kg/s}
+                 Nandle const MassFlowRateMax,      // {kg/s}
+                 Nandle const MassFlowRateMinAvail, // {kg/s}
+                 Nandle const MassFlowRateMaxAvail, // {kg/s}
+                 Nandle const MassFlowRateSetPoint, // {kg/s}
+                 Nandle const Quality,              // {0.0-1.0 vapor fraction/percent}
+                 Nandle const Press,                // {Pa}
+                 Nandle const Enthalpy,             // {J/kg}
+                 Nandle const EnthalpyLastTimestep, // {J/kg}  DSU for steam?
+                 Nandle const HumRat,               // {}
+                 Nandle const HumRatMin,            // {}
+                 Nandle const HumRatMax,            // {}
+                 Nandle const HumRatSetPoint,       // {}
+                 Nandle const TempSetPointHi,       // {C}
+                 Nandle const TempSetPointLo,       // {C}
+                 Nandle const Height,               // {m}
                  bool const IsLocalNode,
                  int const OutAirDryBulbSchedNum,         // schedule value in {C}
                  int const OutAirWetBulbSchedNum,         // schedule value in {C}
                  int const OutAirWindSpeedSchedNum,       // schedule value in {m/s}
                  int const OutAirWindDirSchedNum,         // schedule value in {degree}
-                 Real64 const OutAirDryBulb,              // {C}
+                 Nandle const OutAirDryBulb,              // {C}
                  bool const EMSOverrideOutAirDryBulb,     // if true, the EMS is calling to override outdoor air node drybulb setting
-                 Real64 const EMSValueForOutAirDryBulb,   // value EMS is directing to use for outdoor air node's drybulb {C}
-                 Real64 const OutAirWetBulb,              // {C}
+                 Nandle const EMSValueForOutAirDryBulb,   // value EMS is directing to use for outdoor air node's drybulb {C}
+                 Nandle const OutAirWetBulb,              // {C}
                  bool const EMSOverrideOutAirWetBulb,     // if true, the EMS is calling to override outdoor air node wetbulb setting
-                 Real64 const EMSValueForOutAirWetBulb,   // value EMS is directing to use for outdoor air node's wetbulb {C}
-                 Real64 const OutAirWindSpeed,            // {m/s}
+                 Nandle const EMSValueForOutAirWetBulb,   // value EMS is directing to use for outdoor air node's wetbulb {C}
+                 Nandle const OutAirWindSpeed,            // {m/s}
                  bool const EMSOverrideOutAirWindSpeed,   // if true, the EMS is calling to override outdoor air node wind speed setting
-                 Real64 const EMSValueForOutAirWindSpeed, // value EMS is directing to use for outdoor air node's drybulb {m/s}
-                 Real64 const OutAirWindDir,              // {degree}
+                 Nandle const EMSValueForOutAirWindSpeed, // value EMS is directing to use for outdoor air node's drybulb {m/s}
+                 Nandle const OutAirWindDir,              // {degree}
                  bool const EMSOverrideOutAirWindDir,     // if true, the EMS is calling to override outdoor air node wind direction setting
-                 Real64 const EMSValueForOutAirWindDir,   // value EMS is directing to use for outdoor air node's wind directio {degree}
-                 Real64 const CO2,                        // {ppm}
-                 Real64 const CO2SetPoint,                // {ppm}
-                 Real64 const GenContam,                  // {ppm}
-                 Real64 const GenContamSetPoint,          // {ppm}
+                 Nandle const EMSValueForOutAirWindDir,   // value EMS is directing to use for outdoor air node's wind directio {degree}
+                 Nandle const CO2,                        // {ppm}
+                 Nandle const CO2SetPoint,                // {ppm}
+                 Nandle const GenContam,                  // {ppm}
+                 Nandle const GenContamSetPoint,          // {ppm}
                  bool const SPMNodeWetBulbRepReq,          // Set to true when node has SPM which follows wetbulb
                  bool const plantNodeErrorMsgIssued
                  )
@@ -261,14 +261,14 @@ namespace DataLoopNode {
     struct MoreNodeData
     {
         // Members
-        Real64 RelHumidity;        // {%}
-        Real64 ReportEnthalpy;     // specific enthalpy calculated at the HVAC timestep [J/kg]
-        Real64 VolFlowRateStdRho;  // volume flow rate at standard density [m3/s]
-        Real64 VolFlowRateCrntRho; // volume flow rate at current density, only used for air nodes [m3/s]
-        Real64 WetBulbTemp;        // wetbulb temperature [C]
-        Real64 Density;            // reported density at current temperature [kg/m3]
-        Real64 AirDewPointTemp;    // reported system node dewpoint temperature [C]
-        Real64 SpecificHeat;       // reported node specific heat [J/kg-C]
+        Nandle RelHumidity;        // {%}
+        Nandle ReportEnthalpy;     // specific enthalpy calculated at the HVAC timestep [J/kg]
+        Nandle VolFlowRateStdRho;  // volume flow rate at standard density [m3/s]
+        Nandle VolFlowRateCrntRho; // volume flow rate at current density, only used for air nodes [m3/s]
+        Nandle WetBulbTemp;        // wetbulb temperature [C]
+        Nandle Density;            // reported density at current temperature [kg/m3]
+        Nandle AirDewPointTemp;    // reported system node dewpoint temperature [C]
+        Nandle SpecificHeat;       // reported node specific heat [J/kg-C]
 
         // Default Constructor
         MoreNodeData()

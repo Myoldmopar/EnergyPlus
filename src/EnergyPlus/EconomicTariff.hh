@@ -279,7 +279,7 @@ namespace EconomicTariff {
         int tariffIndx;         // index of the tariff name in the tariff array
         int kindOfObj;          // enumerated list for the kind of economics object
         int index;              // pointer to item in specific array
-        Array1D<Real64> values; // values
+        Array1D<Nandle> values; // values
         // the following items are not part of the object description
         bool isArgument; // flag if the variable is ever used as an argument (value needed)
         bool isAssigned; // flag if the variable is ever assigned to
@@ -315,8 +315,8 @@ namespace EconomicTariff {
         int kindGasMtr;             // kinf of gas meter - 0 (default) is not gas, 1 is gas
         int resourceNum;            // based on list of DataGlobalConstants
         int convChoice;             // enumerated choice index of the conversion factor
-        Real64 energyConv;          // energy conversion factor
-        Real64 demandConv;          // demand conversion factor
+        Nandle energyConv;          // energy conversion factor
+        Nandle demandConv;          // demand conversion factor
         std::string periodSchedule; // name of the period schedule (time of day)
         int periodSchIndex;         // index to the period schedule
         std::string seasonSchedule; // name of the season schedule (winter/summer)
@@ -324,11 +324,11 @@ namespace EconomicTariff {
         std::string monthSchedule;  // name of month schedule (when months end)
         int monthSchIndex;          // index to the month schedule
         int demandWindow;           // enumerated list of the kind of demand window
-        Real64 demWinTime;          // length of time for the demand window
-        Real64 monthChgVal;         // monthly charge value
+        Nandle demWinTime;          // length of time for the demand window
+        Nandle monthChgVal;         // monthly charge value
         int monthChgPt;             // pointer to a variable that contains the monthly charge
         // if 0 then use monthChgVal
-        Real64 minMonthChgVal; // minimum monthly charge value
+        Nandle minMonthChgVal; // minimum monthly charge value
         int minMonthChgPt;     // pointer to a variable that contains the minimum monthly charge
         // if 0 then use minMonthChgVal
         std::string chargeSchedule;  // name of the charge schedule (for real time pricing)
@@ -395,24 +395,24 @@ namespace EconomicTariff {
         int nativeAboveCustomerBaseEnergy;
         int nativeBelowCustomerBaseEnergy;
         // arrays for holding gathered values
-        Array2D<Real64> gatherEnergy;
-        Array2D<Real64> gatherDemand;
-        Real64 collectTime;
-        Real64 collectEnergy;
+        Array2D<Nandle> gatherEnergy;
+        Array2D<Nandle> gatherDemand;
+        Nandle collectTime;
+        Nandle collectEnergy;
         // arryas for holding real time pricing gathered values
-        Array1D<Real64> RTPcost;
-        Array1D<Real64> RTPaboveBaseCost;
-        Array1D<Real64> RTPbelowBaseCost;
-        Array1D<Real64> RTPaboveBaseEnergy;
-        Array1D<Real64> RTPbelowBaseEnergy;
+        Array1D<Nandle> RTPcost;
+        Array1D<Nandle> RTPaboveBaseCost;
+        Array1D<Nandle> RTPbelowBaseCost;
+        Array1D<Nandle> RTPaboveBaseEnergy;
+        Array1D<Nandle> RTPbelowBaseEnergy;
         Array1D_int seasonForMonth;
         // overall qualification of the rate
         bool isQualified;
         int ptDisqualifier;
         // overall selection and annual cost
         bool isSelected;
-        Real64 totalAnnualCost;
-        Real64 totalAnnualEnergy;
+        Nandle totalAnnualCost;
+        Nandle totalAnnualEnergy;
 
         // Default Constructor
         TariffType()
@@ -443,7 +443,7 @@ namespace EconomicTariff {
         int tariffIndx;      // index of the tariff name in the tariff array
         int sourcePt;        // index of the variable in the variable array
         bool isMaximum;      // indicator if maximum test otherwise minimum
-        Real64 thresholdVal; // value of the threshold
+        Nandle thresholdVal; // value of the threshold
         int thresholdPt;     // pointer to the variable holding the values
         int season;          // enumerated list of the kind of season
         bool isConsecutive;  // indicator if consecutive months otherwise count
@@ -465,7 +465,7 @@ namespace EconomicTariff {
         int sourcePt;      // index of the variable in the variable array
         int season;        // enumerated list of the kind of season
         int categoryPt;    // index of the category in the variable array
-        Real64 costPerVal; // cost per unit value
+        Nandle costPerVal; // cost per unit value
         int costPerPt;     // cost per unit index in the variable array (0 is flag for no variable)
 
         // Default Constructor
@@ -483,12 +483,12 @@ namespace EconomicTariff {
         int season;                 // enumerated list of the kind of season
         int categoryPt;             // index of the category in the variable array
         int remainingPt;            // index of the remaining into variable in the variable array
-        Real64 blkSzMultVal;        // block size multiplier value
+        Nandle blkSzMultVal;        // block size multiplier value
         int blkSzMultPt;            // block size variable in the variable array (0 is flag for no variable)
         int numBlk;                 // number of blocks used
-        Array1D<Real64> blkSzVal;   // array of block size values
+        Array1D<Nandle> blkSzVal;   // array of block size values
         Array1D_int blkSzPt;        // block size variables index to the variable array (0 is no variable)
-        Array1D<Real64> blkCostVal; // array of block cost values
+        Array1D<Nandle> blkCostVal; // array of block cost values
         Array1D_int blkCostPt;      // block cost variables index to the variable array (0 is no variable)
 
         // Default Constructor
@@ -508,9 +508,9 @@ namespace EconomicTariff {
         int adjustmentPt;     // index fo the adjustment variable in the variable array
         int seasonFrom;       // enumerated list of the kind of season
         int seasonTo;         // enumerated list of the kind of season
-        Real64 multiplierVal; // value of the ratchet multiplier
+        Nandle multiplierVal; // value of the ratchet multiplier
         int multiplierPt;     // multiplier variable in the variable array (0 for no variable)
-        Real64 offsetVal;     // value of the ratchet offset
+        Nandle offsetVal;     // value of the ratchet offset
         int offsetPt;         // offset variable in the variable array (0 for no variable)
 
         // Default Constructor
@@ -539,7 +539,7 @@ namespace EconomicTariff {
     {
         // Members
         int varPt;              // pointer to item in specific array
-        Array1D<Real64> values; // values
+        Array1D<Nandle> values; // values
 
         // Default Constructor
         StackType() : varPt(0), values(MaxNumMonths, 0.0)
@@ -651,9 +651,9 @@ namespace EconomicTariff {
 
     void ComputeTariff();
 
-    void pushStack(Array1A<Real64> const monthlyArray, int const variablePointer);
+    void pushStack(Array1A<Nandle> const monthlyArray, int const variablePointer);
 
-    void popStack(Array1A<Real64> monthlyArray, int &variablePointer);
+    void popStack(Array1A<Nandle> monthlyArray, int &variablePointer);
 
     void evaluateChargeSimple(int const usingVariable);
 
@@ -675,14 +675,14 @@ namespace EconomicTariff {
 
     void showWarningsBasedOnTotal();
 
-    void getMaxAndSum(int const varPointer, Real64 &sumResult, Real64 &maxResult);
+    void getMaxAndSum(int const varPointer, Nandle &sumResult, Nandle &maxResult);
 
     void
     ReportEconomicVariable(std::string const &titleString, bool const includeCategory, bool const showCurrencySymbol, std::string const &forString);
 
     void selectTariff();
 
-    void GetMonthlyCostForResource(int const inResourceNumber, Array1A<Real64> outMonthlyCosts);
+    void GetMonthlyCostForResource(int const inResourceNumber, Array1A<Nandle> outMonthlyCosts);
 
     void clear_state();
 

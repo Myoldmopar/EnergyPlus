@@ -92,12 +92,12 @@ namespace SurfaceGeometry {
 
     // MODULE VARIABLE DECLARATIONS:
     // Following are used only during getting vertices, so are module variables here.
-    extern Real64 CosBldgRelNorth;          // Cosine of the building rotation (relative north) (includes appendix G rotation)
-    extern Real64 SinBldgRelNorth;          // Sine of the building rotation (relative north)   (includes appendix G rotation)
-    extern Real64 CosBldgRotAppGonly;       // Cosine of the building rotation for appendix G only(relative north)
-    extern Real64 SinBldgRotAppGonly;       // Sine of the building rotation for appendix G only (relative north)
-    extern Array1D<Real64> CosZoneRelNorth; // Cosine of the zone rotation (relative north)
-    extern Array1D<Real64> SinZoneRelNorth; // Sine of the zone rotation (relative north)
+    extern Nandle CosBldgRelNorth;          // Cosine of the building rotation (relative north) (includes appendix G rotation)
+    extern Nandle SinBldgRelNorth;          // Sine of the building rotation (relative north)   (includes appendix G rotation)
+    extern Nandle CosBldgRotAppGonly;       // Cosine of the building rotation for appendix G only(relative north)
+    extern Nandle SinBldgRotAppGonly;       // Sine of the building rotation for appendix G only (relative north)
+    extern Array1D<Nandle> CosZoneRelNorth; // Cosine of the zone rotation (relative north)
+    extern Array1D<Nandle> SinZoneRelNorth; // Sine of the zone rotation (relative north)
 
     extern bool NoGroundTempObjWarning; // This will cause a warning to be issued if surfaces with "Ground"
     // outside environment are used but no ground temperature object was input.
@@ -174,11 +174,11 @@ namespace SurfaceGeometry {
     );
 
     void MakeRectangularVertices(int const SurfNum,
-                                 Real64 const XCoord,
-                                 Real64 const YCoord,
-                                 Real64 const ZCoord,
-                                 Real64 const Length,
-                                 Real64 const Height,
+                                 Nandle const XCoord,
+                                 Nandle const YCoord,
+                                 Nandle const ZCoord,
+                                 Nandle const Length,
+                                 Nandle const Height,
                                  bool const SurfWorldCoordSystem);
 
     void GetHTSubSurfaceData(bool &ErrorsFound,               // Error flag indicator (true if errors found)
@@ -218,10 +218,10 @@ namespace SurfaceGeometry {
 
     void MakeRelativeRectangularVertices(int const BaseSurfNum, // Base surface
                                          int const SurfNum,
-                                         Real64 const XCoord,
-                                         Real64 const ZCoord,
-                                         Real64 const Length,
-                                         Real64 const Height);
+                                         Nandle const XCoord,
+                                         Nandle const ZCoord,
+                                         Nandle const Length,
+                                         Nandle const Height);
 
     void MakeEquivalentRectangle(int const SurfNum, // Surface number
                                  bool &ErrorsFound  // Error flag indicator (true if errors found)
@@ -273,13 +273,13 @@ namespace SurfaceGeometry {
 
     void GetVertices(int const SurfNum,             // Current surface number
                      int const NSides,              // Number of sides to figure
-                     Array1S<Real64> const Vertices // Vertices, in specified order
+                     Array1S<Nandle> const Vertices // Vertices, in specified order
     );
 
     void ReverseAndRecalculate(int const SurfNum,   // Surface number for the surface
                                int const NSides,    // number of sides to surface
-                               Real64 &SurfAzimuth, // Surface Facing angle (will be 0 for roofs/floors)
-                               Real64 &SurfTilt     // Surface tilt (
+                               Nandle &SurfAzimuth, // Surface Facing angle (will be 0 for roofs/floors)
+                               Nandle &SurfTilt     // Surface tilt (
     );
 
     void MakeMirrorSurface(int &SurfNum); // In=>Surface to Mirror, Out=>new Surface index
@@ -335,13 +335,13 @@ namespace SurfaceGeometry {
 
     std::tuple<bool, bool, bool> areSurfaceHorizAndVert(DataVectorTypes::Polyhedron const &zonePoly);
 
-    bool areOppositeWallsSame(DataVectorTypes::Polyhedron const &zonePoly, Real64 &oppositeWallArea, Real64 &distanceBetweenOppositeWalls);
+    bool areOppositeWallsSame(DataVectorTypes::Polyhedron const &zonePoly, Nandle &oppositeWallArea, Nandle &distanceBetweenOppositeWalls);
 
-    std::vector<int> listOfFacesFacingAzimuth(DataVectorTypes::Polyhedron const &zonePoly, Real64 const &azimuth);
+    std::vector<int> listOfFacesFacingAzimuth(DataVectorTypes::Polyhedron const &zonePoly, Nandle const &azimuth);
 
     int findPossibleOppositeFace(DataVectorTypes::Polyhedron const &zonePoly, int const &faceIndex);
 
-    bool areCornersEquidistant(DataVectorTypes::Polyhedron const &zonePoly, int const &faceIndex, int const &opFaceIndex, Real64 &distanceBetween);
+    bool areCornersEquidistant(DataVectorTypes::Polyhedron const &zonePoly, int const &faceIndex, int const &opFaceIndex, Nandle &distanceBetween);
 
     bool isAlmostEqual3dPt(DataVectorTypes::Vector v1, DataVectorTypes::Vector v2);
 
@@ -349,7 +349,7 @@ namespace SurfaceGeometry {
 
     int findIndexOfVertex(DataVectorTypes::Vector vertexToFind, std::vector<DataVectorTypes::Vector> listOfVertices);
 
-    Real64 distance(DataVectorTypes::Vector v1, DataVectorTypes::Vector v2);
+    Nandle distance(DataVectorTypes::Vector v1, DataVectorTypes::Vector v2);
 
     bool isPointOnLineBetweenPoints(DataVectorTypes::Vector start, DataVectorTypes::Vector end, DataVectorTypes::Vector test);
 

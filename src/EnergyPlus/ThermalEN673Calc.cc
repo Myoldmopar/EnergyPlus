@@ -93,38 +93,38 @@ namespace ThermalEN673Calc {
 
     void Calc_EN673(int const standard,
                     int const nlayer,
-                    Real64 const tout,
-                    Real64 const tind,
-                    Array1D<Real64> &gap,
-                    Array1D<Real64> &thick,
-                    Array1D<Real64> &scon,
-                    const Array1D<Real64> &emis,
-                    Real64 const totsol,
-                    Real64 const tilt,
-                    Real64 const dir,
-                    const Array1D<Real64> &asol,
-                    const Array1D<Real64> &presure,
+                    Nandle const tout,
+                    Nandle const tind,
+                    Array1D<Nandle> &gap,
+                    Array1D<Nandle> &thick,
+                    Array1D<Nandle> &scon,
+                    const Array1D<Nandle> &emis,
+                    Nandle const totsol,
+                    Nandle const tilt,
+                    Nandle const dir,
+                    const Array1D<Nandle> &asol,
+                    const Array1D<Nandle> &presure,
                     Array2A_int const iprop,
-                    Array2A<Real64> const frct,
+                    Array2A<Nandle> const frct,
                     const Array1D_int &nmix,
-                    Array2A<Real64> const xgcon,
-                    Array2A<Real64> const xgvis,
-                    Array2A<Real64> const xgcp,
-                    const Array1D<Real64> &xwght,
-                    Array1D<Real64> &theta,
-                    Real64 &ufactor,
-                    Real64 &hcin,
-                    Real64 &hin,
-                    Real64 &hout,
-                    Real64 &shgc,
+                    Array2A<Nandle> const xgcon,
+                    Array2A<Nandle> const xgvis,
+                    Array2A<Nandle> const xgcp,
+                    const Array1D<Nandle> &xwght,
+                    Array1D<Nandle> &theta,
+                    Nandle &ufactor,
+                    Nandle &hcin,
+                    Nandle &hin,
+                    Nandle &hout,
+                    Nandle &shgc,
                     int &nperr,
                     std::string &ErrorMessage,
                     const Array1D_int &ibc,
-                    Array1D<Real64> &hg,
-                    Array1D<Real64> &hr,
-                    Array1D<Real64> &hs,
-                    Array1D<Real64> &Ra,
-                    Array1D<Real64> &Nu)
+                    Array1D<Nandle> &hg,
+                    Array1D<Nandle> &hr,
+                    Array1D<Nandle> &hs,
+                    Array1D<Nandle> &Ra,
+                    Array1D<Nandle> &Nu)
     {
 
         // Using/Aliasing
@@ -175,9 +175,9 @@ namespace ThermalEN673Calc {
 
         /// Gaps:
 
-        Array1D<Real64> rs(maxlay3);
-        Real64 rtot;
-        Real64 sft;
+        Array1D<Nandle> rs(maxlay3);
+        Nandle rtot;
+        Nandle sft;
 
         // call  propcon90(standard, mgas, gcon, gvis, gcp, grho, wght, nperr)
         rtot = 0.0;
@@ -227,34 +227,34 @@ namespace ThermalEN673Calc {
     }
 
     void EN673ISO10292(int const nlayer,
-                       Real64 const tout,
-                       Real64 const tind,
-                       const Array1D<Real64> &emis,
-                       const Array1D<Real64> &gap,
-                       const Array1D<Real64> &thick,
-                       const Array1D<Real64> &scon,
-                       Real64 const tilt,
+                       Nandle const tout,
+                       Nandle const tind,
+                       const Array1D<Nandle> &emis,
+                       const Array1D<Nandle> &gap,
+                       const Array1D<Nandle> &thick,
+                       const Array1D<Nandle> &scon,
+                       Nandle const tilt,
                        Array2A_int const iprop,
-                       Array2A<Real64> const frct,
-                       Array2A<Real64> const xgcon,
-                       Array2A<Real64> const xgvis,
-                       Array2A<Real64> const xgcp,
-                       const Array1D<Real64> &xwght,
-                       const Array1D<Real64> &presure,
+                       Array2A<Nandle> const frct,
+                       Array2A<Nandle> const xgcon,
+                       Array2A<Nandle> const xgvis,
+                       Array2A<Nandle> const xgcp,
+                       const Array1D<Nandle> &xwght,
+                       const Array1D<Nandle> &presure,
                        const Array1D_int &nmix,
-                       Array1D<Real64> &theta,
+                       Array1D<Nandle> &theta,
                        int const standard,
-                       Array1D<Real64> &hg,
-                       Array1D<Real64> &hr,
-                       Array1D<Real64> &hs,
-                       Real64 &hin,
-                       Real64 const hout,
-                       Real64 &hcin,
+                       Array1D<Nandle> &hg,
+                       Array1D<Nandle> &hr,
+                       Array1D<Nandle> &hs,
+                       Nandle &hin,
+                       Nandle const hout,
+                       Nandle &hcin,
                        const Array1D_int &ibc,
-                       Array1D<Real64> &rs,
-                       Real64 &ufactor,
-                       Array1D<Real64> &Ra,
-                       Array1D<Real64> &Nu,
+                       Array1D<Nandle> &rs,
+                       Nandle &ufactor,
+                       Array1D<Nandle> &Ra,
+                       Array1D<Nandle> &Nu,
                        int &nperr,
                        std::string &ErrorMessage)
     {
@@ -286,28 +286,28 @@ namespace ThermalEN673Calc {
 
         // Locals
         // dr...internal variables
-        Real64 Tm;
-        Real64 diff;
-        Real64 Rg;
-        Array1D<Real64> dT(maxlay1);
+        Nandle Tm;
+        Nandle diff;
+        Nandle Rg;
+        Array1D<Nandle> dT(maxlay1);
         int i;
         int j;
         int iter;
-        Real64 dens;
-        Real64 visc;
-        Real64 con;
-        Real64 cp;
-        Real64 pr;
-        Array1D<Real64> Gr(maxlay);
-        Real64 A;
-        Real64 n;
-        Real64 hrin;
-        Real64 sumRs;
-        Real64 sumRsold;
+        Nandle dens;
+        Nandle visc;
+        Nandle con;
+        Nandle cp;
+        Nandle pr;
+        Array1D<Nandle> Gr(maxlay);
+        Nandle A;
+        Nandle n;
+        Nandle hrin;
+        Nandle sumRs;
+        Nandle sumRsold;
 
-        Real64 const eps(1.0e-4); // set iteration accuracy
+        Nandle const eps(1.0e-4); // set iteration accuracy
 
-        Array1D<Real64> frctg(maxgas);
+        Array1D<Nandle> frctg(maxgas);
         Array1D_int ipropg(maxgas);
 
         // jel..hrin is 4.4 for standard clear glass:
@@ -516,19 +516,19 @@ namespace ThermalEN673Calc {
         // dr...END OF ITERATIONS
     }
 
-    void linint(Real64 const x1, Real64 const x2, Real64 const y1, Real64 const y2, Real64 const x, Real64 &y)
+    void linint(Nandle const x1, Nandle const x2, Nandle const y1, Nandle const y2, Nandle const x, Nandle &y)
     {
 
         y = (y2 - y1) / (x2 - x1) * (x - x1) + y1; // Autodesk:DivZero Should protect against divide by zero
     }
 
-    void solar_EN673(Real64 const dir,
-                     Real64 const totsol,
-                     Real64 const rtot,
-                     const Array1D<Real64> &rs,
+    void solar_EN673(Nandle const dir,
+                     Nandle const totsol,
+                     Nandle const rtot,
+                     const Array1D<Nandle> &rs,
                      int const nlayer,
-                     const Array1D<Real64> &absol,
-                     Real64 &sf,
+                     const Array1D<Nandle> &absol,
+                     Nandle &sf,
                      int const standard,
                      int &nperr,
                      std::string &ErrorMessage)
@@ -552,8 +552,8 @@ namespace ThermalEN673Calc {
         // Locals
         int i;
         int j;
-        Real64 fract;
-        Real64 flowin;
+        Nandle fract;
+        Nandle flowin;
 
         fract = 0.0;
         flowin = 0.0;

@@ -116,16 +116,16 @@ namespace DisplacementVentMgr {
     // na
 
     // MODULE VARIABLE DECLARATIONS:
-    Real64 HAT_MX;                       // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone
-    Real64 HA_MX;                        // HA_MX Convection Coefficient times Area for the upper subzone
-    Real64 HAT_OC;                       // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone
-    Real64 HA_OC;                        // HA_OC Convection Coefficient times Area for the lower subzone
-    Real64 HAT_FLOOR;                    // HAT_FLOOR Convection Coefficient times Area times Temperature for the floor(?) subzone
-    Real64 HA_FLOOR;                     // HA_FLOOR Convection Coefficient times Area for the floor(?) subzone
-    Real64 HeightFloorSubzoneTop(0.2);   // Assumed thickness of floor subzone
-    Real64 ThickOccupiedSubzoneMin(0.2); // Minimum thickness of occupied subzone
-    Real64 HeightIntMass(0.0);           // Height of internal mass surfaces, assumed vertical, cannot exceed ceiling height
-    Real64 HeightIntMassDefault(2.0);    // Default height of internal mass surfaces
+    Nandle HAT_MX;                       // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone
+    Nandle HA_MX;                        // HA_MX Convection Coefficient times Area for the upper subzone
+    Nandle HAT_OC;                       // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone
+    Nandle HA_OC;                        // HA_OC Convection Coefficient times Area for the lower subzone
+    Nandle HAT_FLOOR;                    // HAT_FLOOR Convection Coefficient times Area times Temperature for the floor(?) subzone
+    Nandle HA_FLOOR;                     // HA_FLOOR Convection Coefficient times Area for the floor(?) subzone
+    Nandle HeightFloorSubzoneTop(0.2);   // Assumed thickness of floor subzone
+    Nandle ThickOccupiedSubzoneMin(0.2); // Minimum thickness of occupied subzone
+    Nandle HeightIntMass(0.0);           // Height of internal mass surfaces, assumed vertical, cannot exceed ceiling height
+    Nandle HeightIntMassDefault(2.0);    // Default height of internal mass surfaces
 
     // SUBROUTINE SPECIFICATIONS:
 
@@ -253,7 +253,7 @@ namespace DisplacementVentMgr {
 
     //**************************************************************************************************
 
-    void HcUCSDDV(int const ZoneNum, Real64 const FractionHeight)
+    void HcUCSDDV(int const ZoneNum, Nandle const FractionHeight)
     {
 
         // SUBROUTINE INFORMATION:
@@ -277,15 +277,15 @@ namespace DisplacementVentMgr {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Ctd;         // DO loop counter for surfaces
-        Real64 HLD;      // Convection coefficient for the lower area of surface
-        Real64 TmedDV;   // Average temperature for DV
-        Real64 Z1;       // auxiliary var for lowest height
-        Real64 Z2;       // auxiliary var for highest height
-        Real64 ZSupSurf; // highest height for this surface
-        Real64 ZInfSurf; // lowest height for this surface
-        Real64 HLU;      // Convection coefficient for the upper area of surface
-        Real64 LayH;     // Height of the Occupied/Mixed subzone interface
-        Real64 LayFrac;  // Fraction height of the Occupied/Mixed subzone interface
+        Nandle HLD;      // Convection coefficient for the lower area of surface
+        Nandle TmedDV;   // Average temperature for DV
+        Nandle Z1;       // auxiliary var for lowest height
+        Nandle Z2;       // auxiliary var for highest height
+        Nandle ZSupSurf; // highest height for this surface
+        Nandle ZInfSurf; // lowest height for this surface
+        Nandle HLU;      // Convection coefficient for the upper area of surface
+        Nandle LayH;     // Height of the Occupied/Mixed subzone interface
+        Nandle LayFrac;  // Fraction height of the Occupied/Mixed subzone interface
         int SurfNum;     // Surface number
 
         HAT_MX = 0.0;
@@ -542,17 +542,17 @@ namespace DisplacementVentMgr {
 
     //**************************************************************************************************
 
-    Real64 calculateThirdOrderFloorTemperature(Real64 temperatureHistoryTerm,
-                                               Real64 HAT_floor,
-                                               Real64 HA_floor,
-                                               Real64 MCpT_Total,
-                                               Real64 MCp_Total,
-                                               Real64 occupiedTemp,
-                                               Real64 nonAirSystemResponse,
-                                               Real64 zoneMultiplier,
-                                               Real64 airCap)
+    Nandle calculateThirdOrderFloorTemperature(Nandle temperatureHistoryTerm,
+                                               Nandle HAT_floor,
+                                               Nandle HA_floor,
+                                               Nandle MCpT_Total,
+                                               Nandle MCp_Total,
+                                               Nandle occupiedTemp,
+                                               Nandle nonAirSystemResponse,
+                                               Nandle zoneMultiplier,
+                                               Nandle airCap)
     {
-        static const Real64 elevenOverSix = 11.0 / 6.0;
+        static const Nandle elevenOverSix = 11.0 / 6.0;
         return (temperatureHistoryTerm + HAT_floor + MCpT_Total + 0.6 * occupiedTemp * MCp_Total + nonAirSystemResponse / zoneMultiplier) /
                (elevenOverSix * airCap + HA_floor + 1.6 * MCp_Total);
     }
@@ -592,51 +592,51 @@ namespace DisplacementVentMgr {
         using ScheduleManager::GetScheduleIndex;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 const OneThird(1.0 / 3.0);
-        static Real64 const MinFlow_pow_fac(std::pow(1.0 / 24.55 * 1.0, 1.0 / 0.6));
+        static Nandle const OneThird(1.0 / 3.0);
+        static Nandle const MinFlow_pow_fac(std::pow(1.0 / 24.55 * 1.0, 1.0 / 0.6));
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 HeightFrac;               // Fractional height of transition between occupied and mixed subzones
-        Real64 GainsFrac;                // Fraction of lower subzone internal gains that mix as opposed to forming plumes
-        Real64 ConvGains;                // Total convective gains in the room
-        Real64 ConvGainsOccupiedSubzone; // Total convective gains released in occupied subzone
-        Real64 ConvGainsMixedSubzone;    // Total convective gains released in mixed subzone
-        Real64 MCp_Total;                // Total capacity rate into the zone - assumed to enter at low level
-        Real64 ZTAveraged;
-        Real64 TempDiffCritRep; // Minimum temperature difference between mixed and occupied subzones for reporting
+        Nandle HeightFrac;               // Fractional height of transition between occupied and mixed subzones
+        Nandle GainsFrac;                // Fraction of lower subzone internal gains that mix as opposed to forming plumes
+        Nandle ConvGains;                // Total convective gains in the room
+        Nandle ConvGainsOccupiedSubzone; // Total convective gains released in occupied subzone
+        Nandle ConvGainsMixedSubzone;    // Total convective gains released in mixed subzone
+        Nandle MCp_Total;                // Total capacity rate into the zone - assumed to enter at low level
+        Nandle ZTAveraged;
+        Nandle TempDiffCritRep; // Minimum temperature difference between mixed and occupied subzones for reporting
         bool MIXFLAG;
         int Ctd;
-        Real64 MinFlow;
-        Real64 NumPLPP; // Number of plumes per person
+        Nandle MinFlow;
+        Nandle NumPLPP; // Number of plumes per person
         int NumberOfOccupants;
-        Real64 MTGAUX;
+        Nandle MTGAUX;
         int ZoneEquipConfigNum;
         int NodeNum;
-        Real64 PowerInPlumes;
-        Real64 SumSysMCp;
-        Real64 SumSysMCpT;
-        Real64 NodeTemp;
-        Real64 MassFlowRate;
-        Real64 CpAir;
-        Real64 MCpT_Total;
+        Nandle PowerInPlumes;
+        Nandle SumSysMCp;
+        Nandle SumSysMCpT;
+        Nandle NodeTemp;
+        Nandle MassFlowRate;
+        Nandle CpAir;
+        Nandle MCpT_Total;
         int ZoneNodeNum; // index number of the zone node
-        Real64 NumberOfPlumes;
-        Real64 SumMCp;
-        Real64 SumMCpT;
-        Real64 AirCap;
-        Real64 TempHistTerm;
-        Real64 PowerPerPlume;
-        Real64 HeightMixedSubzoneAve;    // Height of center of mixed air subzone
-        Real64 HeightOccupiedSubzoneAve; // Height of center of occupied air subzone
-        Real64 HeightFloorSubzoneAve;    // Height of center of floor air subzone
-        Real64 HeightThermostat;         // Height of center of thermostat/temperature control sensor
-        Real64 HeightComfort;            // Height at which air temperature value is used to calculate comfort
-        Real64 CeilingHeight;
-        Real64 ZoneMult; // total zone multiplier
+        Nandle NumberOfPlumes;
+        Nandle SumMCp;
+        Nandle SumMCpT;
+        Nandle AirCap;
+        Nandle TempHistTerm;
+        Nandle PowerPerPlume;
+        Nandle HeightMixedSubzoneAve;    // Height of center of mixed air subzone
+        Nandle HeightOccupiedSubzoneAve; // Height of center of occupied air subzone
+        Nandle HeightFloorSubzoneAve;    // Height of center of floor air subzone
+        Nandle HeightThermostat;         // Height of center of thermostat/temperature control sensor
+        Nandle HeightComfort;            // Height at which air temperature value is used to calculate comfort
+        Nandle CeilingHeight;
+        Nandle ZoneMult; // total zone multiplier
         int Loop;
         int FlagApertures;
-        static Real64 TempDepCoef(0.0); // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
-        static Real64 TempIndCoef(0.0); // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
+        static Nandle TempDepCoef(0.0); // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
+        static Nandle TempIndCoef(0.0); // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
         static Array1D_int IntGainTypesOccupied(29,
                                                 {IntGainTypeOf_People,
                                                  IntGainTypeOf_WaterHeaterMixed,
@@ -669,7 +669,7 @@ namespace DisplacementVentMgr {
                                                  IntGainTypeOf_RefrigerationWalkIn});
 
         static Array1D_int IntGainTypesMixedSubzone(2, {IntGainTypeOf_DaylightingDeviceTubular, IntGainTypeOf_Lights});
-        Real64 RetAirGain;
+        Nandle RetAirGain;
 
         // Exact solution or Euler method
         if (ZoneAirSolutionAlgo != Use3rdOrder) {
@@ -850,7 +850,7 @@ namespace DisplacementVentMgr {
             // The system will mix
             HeightFrac = 0.0;
         } else {
-            Real64 const plume_fac(NumberOfPlumes * std::pow(PowerPerPlume, OneThird));
+            Nandle const plume_fac(NumberOfPlumes * std::pow(PowerPerPlume, OneThird));
             HeightFrac = min(24.55 * std::pow(MCp_Total * 0.000833 / plume_fac, 0.6) / CeilingHeight, 1.0);
             for (Ctd = 1; Ctd <= 4; ++Ctd) {
                 HcUCSDDV(ZoneNum, HeightFrac);

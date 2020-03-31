@@ -132,7 +132,7 @@ namespace FluidCoolers {
 
     void FluidCoolerspecs::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                     bool const EP_UNUSED(FirstHVACIteration),
-                                    Real64 &EP_UNUSED(CurLoad),
+                                    Nandle &EP_UNUSED(CurLoad),
                                     bool const RunFlag)
     {
         this->initialize();
@@ -151,7 +151,7 @@ namespace FluidCoolers {
         this->size();
     }
 
-    void FluidCoolerspecs::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void FluidCoolerspecs::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         MaxLoad = this->FluidCoolerNominalCapacity;
         OptLoad = this->FluidCoolerNominalCapacity;
@@ -184,7 +184,7 @@ namespace FluidCoolers {
         int NumNums;                  // Number of elements in the numeric array
         int IOStat;                   // IO Status when calling get input subroutine
         bool ErrorsFound(false);      // Logical flag set .TRUE. if errors found while getting input data
-        Array1D<Real64> NumArray(16); // Numeric input data array
+        Array1D<Nandle> NumArray(16); // Numeric input data array
         Array1D_string AlphArray(5);  // Character string input data array
 
         // Get number of all Fluid Coolers specified in the input data file (idf)
@@ -720,7 +720,7 @@ namespace FluidCoolers {
         // Begin environment initializations
         if (this->beginEnvrnInit && DataGlobals::BeginEnvrnFlag && (DataPlant::PlantFirstSizesOkayToFinalize)) {
 
-            Real64 const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+            Nandle const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                  DataGlobals::InitConvTemp,
                                                                  DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                  RoutineName);
@@ -790,27 +790,27 @@ namespace FluidCoolers {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);    // Maximum number of iterations
-        Real64 const Acc(0.0001); // Accuracy of result
+        Nandle const Acc(0.0001); // Accuracy of result
         static std::string const CalledFrom("SizeFluidCooler");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int SolFla;                     // Flag of solver
-        Real64 DesFluidCoolerLoad(0.0); // Design fluid cooler load [W]
-        Real64 UA0;                     // Lower bound for UA [W/C]
-        Real64 UA1;                     // Upper bound for UA [W/C]
-        Real64 UA;                      // Calculated UA value
-        Real64 OutWaterTempAtUA0;       // Water outlet temperature at UA0
-        Real64 OutWaterTempAtUA1;       // Water outlet temperature at UA1
-        Array1D<Real64> Par(5);         // Parameter array need for RegulaFalsi routine
+        Nandle DesFluidCoolerLoad(0.0); // Design fluid cooler load [W]
+        Nandle UA0;                     // Lower bound for UA [W/C]
+        Nandle UA1;                     // Upper bound for UA [W/C]
+        Nandle UA;                      // Calculated UA value
+        Nandle OutWaterTempAtUA0;       // Water outlet temperature at UA0
+        Nandle OutWaterTempAtUA1;       // Water outlet temperature at UA1
+        Array1D<Nandle> Par(5);         // Parameter array need for RegulaFalsi routine
         std::string equipName;
-        Real64 Cp;                            // local specific heat for fluid
-        Real64 rho;                           // local density for fluid
-        Real64 tmpHighSpeedFanPower;          // local temporary for high speed fan power
-        Real64 tmpHighSpeedEvapFluidCoolerUA; // local temporary for high speed cooler UA
+        Nandle Cp;                            // local specific heat for fluid
+        Nandle rho;                           // local density for fluid
+        Nandle tmpHighSpeedFanPower;          // local temporary for high speed fan power
+        Nandle tmpHighSpeedEvapFluidCoolerUA; // local temporary for high speed cooler UA
         bool ErrorsFound;
 
-        Real64 tmpDesignWaterFlowRate = this->DesignWaterFlowRate;
-        Real64 tmpHighSpeedAirFlowRate = this->HighSpeedAirFlowRate;
+        Nandle tmpDesignWaterFlowRate = this->DesignWaterFlowRate;
+        Nandle tmpHighSpeedAirFlowRate = this->HighSpeedAirFlowRate;
         // Find the appropriate Plant Sizing object
         int PltSizCondNum = DataPlant::PlantLoop(this->LoopNum).PlantSizNum;
 
@@ -1446,7 +1446,7 @@ namespace FluidCoolers {
         static std::string const RoutineName("SingleSpeedFluidCooler");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TempSetPoint = 0.0;
+        Nandle TempSetPoint = 0.0;
 
         // set inlet and outlet nodes
         auto &waterInletNode = this->WaterInletNodeNum;
@@ -1470,18 +1470,18 @@ namespace FluidCoolers {
         }
 
         //   Initialize local variables
-        Real64 OutletWaterTempOFF = DataLoopNode::Node(waterInletNode).Temp;
+        Nandle OutletWaterTempOFF = DataLoopNode::Node(waterInletNode).Temp;
         this->OutletWaterTemp = OutletWaterTempOFF;
 
-        Real64 UAdesign = this->HighSpeedFluidCoolerUA;
-        Real64 AirFlowRate = this->HighSpeedAirFlowRate;
-        Real64 FanPowerOn = this->HighSpeedFanPower;
+        Nandle UAdesign = this->HighSpeedFluidCoolerUA;
+        Nandle AirFlowRate = this->HighSpeedAirFlowRate;
+        Nandle FanPowerOn = this->HighSpeedFanPower;
 
         CalcFluidCoolerOutlet(this->indexInArray, this->WaterMassFlowRate, AirFlowRate, UAdesign, this->OutletWaterTemp);
 
         if (this->OutletWaterTemp <= TempSetPoint) {
             //   Setpoint was met with pump ON and fan ON, calculate run-time fraction or just wasn't needed at all
-            Real64 FanModeFrac = 0.0;
+            Nandle FanModeFrac = 0.0;
             if (this->OutletWaterTemp != OutletWaterTempOFF) { // don't divide by zero
                 FanModeFrac = (TempSetPoint - OutletWaterTempOFF) / (this->OutletWaterTemp - OutletWaterTempOFF);
             }
@@ -1491,7 +1491,7 @@ namespace FluidCoolers {
             //    Setpoint was not met, fluid cooler ran at full capacity
             this->FanPower = FanPowerOn;
         }
-        Real64 CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+        Nandle CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                 DataLoopNode::Node(waterInletNode).Temp,
                                                                 DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                 RoutineName);
@@ -1552,7 +1552,7 @@ namespace FluidCoolers {
         static std::string const RoutineName("TwoSpeedFluidCooler");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TempSetPoint = 0.0;
+        Nandle TempSetPoint = 0.0;
 
         auto &waterInletNode = this->WaterInletNodeNum;
         this->Qactual = 0.0;
@@ -1574,18 +1574,18 @@ namespace FluidCoolers {
 
         // set local variable for fluid cooler
         this->WaterMassFlowRate = DataLoopNode::Node(waterInletNode).MassFlowRate;
-        Real64 OutletWaterTempOFF = DataLoopNode::Node(waterInletNode).Temp;
-        Real64 OutletWaterTemp1stStage = OutletWaterTempOFF;
-        Real64 OutletWaterTemp2ndStage = OutletWaterTempOFF;
-        Real64 FanModeFrac = 0.0;
+        Nandle OutletWaterTempOFF = DataLoopNode::Node(waterInletNode).Temp;
+        Nandle OutletWaterTemp1stStage = OutletWaterTempOFF;
+        Nandle OutletWaterTemp2ndStage = OutletWaterTempOFF;
+        Nandle FanModeFrac = 0.0;
 
         if (OutletWaterTempOFF < TempSetPoint) { // already there don't need to run the cooler
             return;
         }
 
-        Real64 UAdesign = this->LowSpeedFluidCoolerUA;
-        Real64 AirFlowRate = this->LowSpeedAirFlowRate;
-        Real64 FanPowerLow = this->LowSpeedFanPower;
+        Nandle UAdesign = this->LowSpeedFluidCoolerUA;
+        Nandle AirFlowRate = this->LowSpeedAirFlowRate;
+        Nandle FanPowerLow = this->LowSpeedFanPower;
 
         CalcFluidCoolerOutlet(this->indexInArray, this->WaterMassFlowRate, AirFlowRate, UAdesign, OutletWaterTemp1stStage);
 
@@ -1601,7 +1601,7 @@ namespace FluidCoolers {
             // Setpoint was not met, turn on fluid cooler 2nd stage fan
             UAdesign = this->HighSpeedFluidCoolerUA;
             AirFlowRate = this->HighSpeedAirFlowRate;
-            Real64 FanPowerHigh = this->HighSpeedFanPower;
+            Nandle FanPowerHigh = this->HighSpeedFanPower;
 
             CalcFluidCoolerOutlet(this->indexInArray, this->WaterMassFlowRate, AirFlowRate, UAdesign, OutletWaterTemp2ndStage);
 
@@ -1616,14 +1616,14 @@ namespace FluidCoolers {
                 this->FanPower = FanPowerHigh;
             }
         }
-        Real64 CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+        Nandle CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                 DataLoopNode::Node(waterInletNode).Temp,
                                                                 DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                 RoutineName);
         this->Qactual = this->WaterMassFlowRate * CpWater * (DataLoopNode::Node(waterInletNode).Temp - this->OutletWaterTemp);
     }
 
-    void CalcFluidCoolerOutlet(int FluidCoolerNum, Real64 _WaterMassFlowRate, Real64 AirFlowRate, Real64 UAdesign, Real64 &_OutletWaterTemp)
+    void CalcFluidCoolerOutlet(int FluidCoolerNum, Nandle _WaterMassFlowRate, Nandle AirFlowRate, Nandle UAdesign, Nandle &_OutletWaterTemp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1639,8 +1639,8 @@ namespace FluidCoolers {
         // See methodology for Single Speed or Two Speed Fluid Cooler model
 
         // Locals
-        Real64 _InletWaterTemp; // Water inlet temperature
-        Real64 _Qactual;        // Actual heat transfer rate between fluid cooler water and air [W]
+        Nandle _InletWaterTemp; // Water inlet temperature
+        Nandle _Qactual;        // Actual heat transfer rate between fluid cooler water and air [W]
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("CalcFluidCoolerOutlet");
@@ -1650,32 +1650,32 @@ namespace FluidCoolers {
         // set local fluid cooler inlet and outlet temperature variables
         _InletWaterTemp = SimpleFluidCooler(FluidCoolerNum).WaterTemp;
         _OutletWaterTemp = _InletWaterTemp;
-        Real64 InletAirTemp = SimpleFluidCooler(FluidCoolerNum).AirTemp;
+        Nandle InletAirTemp = SimpleFluidCooler(FluidCoolerNum).AirTemp;
 
         // set water and air properties
-        Real64 AirDensity =
+        Nandle AirDensity =
             Psychrometrics::PsyRhoAirFnPbTdbW(SimpleFluidCooler(FluidCoolerNum).AirPress, InletAirTemp, SimpleFluidCooler(FluidCoolerNum).AirHumRat);
-        Real64 AirMassFlowRate = AirFlowRate * AirDensity;
-        Real64 CpAir = Psychrometrics::PsyCpAirFnW(SimpleFluidCooler(FluidCoolerNum).AirHumRat);
-        Real64 CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(SimpleFluidCooler(FluidCoolerNum).LoopNum).FluidName,
+        Nandle AirMassFlowRate = AirFlowRate * AirDensity;
+        Nandle CpAir = Psychrometrics::PsyCpAirFnW(SimpleFluidCooler(FluidCoolerNum).AirHumRat);
+        Nandle CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(SimpleFluidCooler(FluidCoolerNum).LoopNum).FluidName,
                                                                 _InletWaterTemp,
                                                                 DataPlant::PlantLoop(SimpleFluidCooler(FluidCoolerNum).LoopNum).FluidIndex,
                                                                 RoutineName);
 
         // Calculate mass flow rates
-        Real64 MdotCpWater = _WaterMassFlowRate * CpWater;
-        Real64 AirCapacity = AirMassFlowRate * CpAir;
+        Nandle MdotCpWater = _WaterMassFlowRate * CpWater;
+        Nandle AirCapacity = AirMassFlowRate * CpAir;
 
         // calculate the minimum to maximum capacity ratios of airside and waterside
-        Real64 CapacityRatioMin = min(AirCapacity, MdotCpWater);
-        Real64 CapacityRatioMax = max(AirCapacity, MdotCpWater);
-        Real64 CapacityRatio = CapacityRatioMin / CapacityRatioMax;
+        Nandle CapacityRatioMin = min(AirCapacity, MdotCpWater);
+        Nandle CapacityRatioMax = max(AirCapacity, MdotCpWater);
+        Nandle CapacityRatio = CapacityRatioMin / CapacityRatioMax;
 
         // Calculate number of transfer units (NTU)
-        Real64 NumTransferUnits = UAdesign / CapacityRatioMin;
-        Real64 ETA = std::pow(NumTransferUnits, 0.22);
-        Real64 A = CapacityRatio * NumTransferUnits / ETA;
-        Real64 effectiveness = 1.0 - std::exp((std::exp(-A) - 1.0) / (CapacityRatio / ETA));
+        Nandle NumTransferUnits = UAdesign / CapacityRatioMin;
+        Nandle ETA = std::pow(NumTransferUnits, 0.22);
+        Nandle A = CapacityRatio * NumTransferUnits / ETA;
+        Nandle effectiveness = 1.0 - std::exp((std::exp(-A) - 1.0) / (CapacityRatio / ETA));
 
         // calculate water to air heat transfer
         _Qactual = effectiveness * CapacityRatioMin * (_InletWaterTemp - InletAirTemp);
@@ -1687,8 +1687,8 @@ namespace FluidCoolers {
         }
     }
 
-    Real64 SimpleFluidCoolerUAResidual(Real64 const UA,           // UA of fluid cooler
-                                       Array1D<Real64> const &Par // par(1) = design fluid cooler load [W]
+    Nandle SimpleFluidCoolerUAResidual(Nandle const UA,           // UA of fluid cooler
+                                       Array1D<Nandle> const &Par // par(1) = design fluid cooler load [W]
     )
     {
 
@@ -1715,12 +1715,12 @@ namespace FluidCoolers {
         // par(5) = water specific heat [J/(kg*C)]
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutWaterTemp; // outlet water temperature [C]
+        Nandle OutWaterTemp; // outlet water temperature [C]
 
         int FluidCoolerIndex = int(Par(2));
         CalcFluidCoolerOutlet(FluidCoolerIndex, Par(3), Par(4), UA, OutWaterTemp);
-        Real64 const Output = Par(5) * Par(3) * (SimpleFluidCooler(FluidCoolerIndex).WaterTemp - OutWaterTemp);
-        Real64 Residuum = (Par(1) - Output) / Par(1);
+        Nandle const Output = Par(5) * Par(3) * (SimpleFluidCooler(FluidCoolerIndex).WaterTemp - OutWaterTemp);
+        Nandle Residuum = (Par(1) - Output) / Par(1);
         return Residuum;
     }
 
@@ -1742,7 +1742,7 @@ namespace FluidCoolers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string CharErrOut;
         std::string CharLowOutletTemp;
-        Real64 LoopMinTemp;
+        Nandle LoopMinTemp;
 
         auto &waterOutletNode = this->WaterOutletNodeNum;
         DataLoopNode::Node(waterOutletNode).Temp = this->OutletWaterTemp;
@@ -1820,7 +1820,7 @@ namespace FluidCoolers {
         // PURPOSE OF THIS SUBROUTINE:
         // This subroutine updates the report variables for the fluid cooler.
 
-        Real64 ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
         auto &waterInletNode = this->WaterInletNodeNum;
         if (!RunFlag) {
             this->InletWaterTemp = DataLoopNode::Node(waterInletNode).Temp;

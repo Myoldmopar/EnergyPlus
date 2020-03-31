@@ -90,9 +90,9 @@ namespace HVACSingleDuctInduc {
         int UnitType_Num;         // index to type of unit
         std::string Sched;        // availability schedule
         int SchedPtr;             // index to schedule
-        Real64 MaxTotAirVolFlow;  // m3/s (autosizable)
-        Real64 MaxTotAirMassFlow; // kg/s
-        Real64 InducRatio;        // ratio of induced air flow to primary air flow
+        Nandle MaxTotAirVolFlow;  // m3/s (autosizable)
+        Nandle MaxTotAirMassFlow; // kg/s
+        Nandle InducRatio;        // ratio of induced air flow to primary air flow
         int PriAirInNode;         // unit primary air inlet node number
         int SecAirInNode;         // unit induced air inlet node number
         int OutAirNode;           // unit air outlet node number
@@ -102,11 +102,11 @@ namespace HVACSingleDuctInduc {
         std::string HCoil;        // name of heating coil component
         int HCoil_Num;            // index to this coil
         int HCoil_PlantTypeNum;
-        Real64 MaxVolHotWaterFlow; // m3/s (autosizable)
-        Real64 MaxHotWaterFlow;    // kg/s
-        Real64 MinVolHotWaterFlow; // m3/s
-        Real64 MinHotWaterFlow;    // kg/s
-        Real64 HotControlOffset;   // control tolerance
+        Nandle MaxVolHotWaterFlow; // m3/s (autosizable)
+        Nandle MaxHotWaterFlow;    // kg/s
+        Nandle MinVolHotWaterFlow; // m3/s
+        Nandle MinHotWaterFlow;    // kg/s
+        Nandle HotControlOffset;   // control tolerance
         int HWLoopNum;             // index for plant loop with hot water coil
         int HWLoopSide;            // index for plant loop side for hot water coil
         int HWBranchNum;           // index for plant branch for hot water coil
@@ -117,11 +117,11 @@ namespace HVACSingleDuctInduc {
         std::string CCoil;         // name of cooling coil component
         int CCoil_Num;             // index to this coil
         int CCoil_PlantTypeNum;
-        Real64 MaxVolColdWaterFlow; // m3/s (autosizable)
-        Real64 MaxColdWaterFlow;    // kg/s
-        Real64 MinVolColdWaterFlow; // m3/s
-        Real64 MinColdWaterFlow;    // kg/s
-        Real64 ColdControlOffset;   // control tolerance
+        Nandle MaxVolColdWaterFlow; // m3/s (autosizable)
+        Nandle MaxColdWaterFlow;    // kg/s
+        Nandle MinVolColdWaterFlow; // m3/s
+        Nandle MinColdWaterFlow;    // kg/s
+        Nandle ColdControlOffset;   // control tolerance
         int CWLoopNum;              // index for plant loop with chilled water coil
         int CWLoopSide;             // index for plant loop side for chilled water coil
         int CWBranchNum;            // index for plant branch for chilled water coil
@@ -130,11 +130,11 @@ namespace HVACSingleDuctInduc {
         int CWCoilFailNum2;         // index for errors
         std::string MixerName;      // name of air mixer component
         int Mixer_Num;              // index to this mixer
-        Real64 MaxPriAirMassFlow;   // kg/s
-        Real64 MaxSecAirMassFlow;   // kg/s
+        Nandle MaxPriAirMassFlow;   // kg/s
+        Nandle MaxSecAirMassFlow;   // kg/s
         int ADUNum;                 // index of corresponding air distribution unit
-        Real64 DesCoolingLoad;      // used for reporting during coil sizing
-        Real64 DesHeatingLoad;      // used for reporting during coil sizing
+        Nandle DesCoolingLoad;      // used for reporting during coil sizing
+        Nandle DesHeatingLoad;      // used for reporting during coil sizing
         int CtrlZoneNum;            // Pointer to CtrlZone data structure
         int CtrlZoneInNodeIndex;    // which controlled zone inlet node number corresponds with this unit
         int AirLoopNum;             // index to airloop that this terminal unit is connected to
@@ -183,17 +183,17 @@ namespace HVACSingleDuctInduc {
     void CalcFourPipeIndUnit(int const IUNum,               // Unit index
                              bool const FirstHVACIteration, // flag for 1st HVAV iteration in the time step
                              int const ZoneNode,            // zone node number
-                             Real64 const HWFlow,           // hot water flow (kg/s)
-                             Real64 const CWFlow,           // cold water flow (kg/s)
-                             Real64 &LoadMet                // load met by unit (watts)
+                             Nandle const HWFlow,           // hot water flow (kg/s)
+                             Nandle const CWFlow,           // cold water flow (kg/s)
+                             Nandle &LoadMet                // load met by unit (watts)
     );
 
-    Real64 FourPipeIUHeatingResidual(Real64 const HWFlow,       // hot water flow rate in kg/s
-                                     Array1D<Real64> const &Par // Par(5) is the requested zone load
+    Nandle FourPipeIUHeatingResidual(Nandle const HWFlow,       // hot water flow rate in kg/s
+                                     Array1D<Nandle> const &Par // Par(5) is the requested zone load
     );
 
-    Real64 FourPipeIUCoolingResidual(Real64 const CWFlow,       // cold water flow rate in kg/s
-                                     Array1D<Real64> const &Par // Par(5) is the requested zone load
+    Nandle FourPipeIUCoolingResidual(Nandle const CWFlow,       // cold water flow rate in kg/s
+                                     Array1D<Nandle> const &Par // Par(5) is the requested zone load
     );
 
     // ========================= Utilities =======================

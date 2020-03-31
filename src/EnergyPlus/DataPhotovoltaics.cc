@@ -104,7 +104,7 @@ namespace DataPhotovoltaics {
     int const CrystallineSiPVCells(1);
     int const AmorphousSiPVCells(2);
 
-    Real64 const MinIrradiance(0.3); // [W/m2] Assume no operation if Ic is below this number (W/m2)
+    Nandle const MinIrradiance(0.3); // [W/m2] Assume no operation if Ic is below this number (W/m2)
     // DERIVED TYPE DEFINITIONS
 
     // INTERFACE BLOCK SPECIFICATIONS
@@ -116,7 +116,7 @@ namespace DataPhotovoltaics {
     int NumSimplePVModuleTypes(0); // count of number of input objs for simple model
     int NumSNLPVModuleTypes(0);    // count of number of input objs for Sandia model
 
-    Real64 ShuntResistance(0.0); // old "RSH" in common block of trnsys code
+    Nandle ShuntResistance(0.0); // old "RSH" in common block of trnsys code
 
     // Object Data
     Array1D<PVArrayStruct> PVarray;

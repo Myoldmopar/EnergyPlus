@@ -363,7 +363,7 @@ bool EnergyPlusFixture::compare_idf(std::string const &EP_UNUSED(name),
                                     int const EP_UNUSED(num_numbers),
                                     std::vector<std::string> const &EP_UNUSED(alphas),
                                     std::vector<bool> const &EP_UNUSED(alphas_blank),
-                                    std::vector<Real64> const &EP_UNUSED(numbers),
+                                    std::vector<Nandle> const &EP_UNUSED(numbers),
                                     std::vector<bool> const &EP_UNUSED(numbers_blank))
 {
     // using namespace InputProcessor;

@@ -85,9 +85,9 @@ namespace HybridEvapCoolingModel {
     class CModeSolutionSpace
     {
     public:
-        std::vector<Real64> MassFlowRatio;
-        std::vector<Real64> OutdoorAirFraction;
-        void AddItem(Real64 X, Real64 Y)
+        std::vector<Nandle> MassFlowRatio;
+        std::vector<Nandle> OutdoorAirFraction;
+        void AddItem(Nandle X, Nandle Y)
         {
             MassFlowRatio.push_back(X);
             OutdoorAirFraction.push_back(Y);
@@ -112,23 +112,23 @@ namespace HybridEvapCoolingModel {
         int TFUsa_curve_pointer;
         int WUsa_curve_pointer;
 
-        Real64 Max_Msa;
-        Real64 Min_Msa;
-        Real64 Min_OAF;
-        Real64 Max_OAF;
-        Real64 Minimum_Outdoor_Air_Temperature;
-        Real64 Maximum_Outdoor_Air_Temperature;
-        Real64 Minimum_Outdoor_Air_Humidity_Ratio;
-        Real64 Maximum_Outdoor_Air_Humidity_Ratio;
-        Real64 Minimum_Outdoor_Air_Relative_Humidity;
-        Real64 Maximum_Outdoor_Air_Relative_Humidity;
-        Real64 Minimum_Return_Air_Temperature;
-        Real64 Maximum_Return_Air_Temperature;
-        Real64 Minimum_Return_Air_Humidity_Ratio;
-        Real64 Maximum_Return_Air_Humidity_Ratio;
-        Real64 Minimum_Return_Air_Relative_Humidity;
-        Real64 Maximum_Return_Air_Relative_Humidity;
-        Real64 ModelScalingFactor;
+        Nandle Max_Msa;
+        Nandle Min_Msa;
+        Nandle Min_OAF;
+        Nandle Max_OAF;
+        Nandle Minimum_Outdoor_Air_Temperature;
+        Nandle Maximum_Outdoor_Air_Temperature;
+        Nandle Minimum_Outdoor_Air_Humidity_Ratio;
+        Nandle Maximum_Outdoor_Air_Humidity_Ratio;
+        Nandle Minimum_Outdoor_Air_Relative_Humidity;
+        Nandle Maximum_Outdoor_Air_Relative_Humidity;
+        Nandle Minimum_Return_Air_Temperature;
+        Nandle Maximum_Return_Air_Temperature;
+        Nandle Minimum_Return_Air_Humidity_Ratio;
+        Nandle Maximum_Return_Air_Humidity_Ratio;
+        Nandle Minimum_Return_Air_Relative_Humidity;
+        Nandle Maximum_Return_Air_Relative_Humidity;
+        Nandle ModelScalingFactor;
         int MODE_BLOCK_OFFSET_Alpha;
         int BLOCK_HEADER_OFFSET_Alpha;
         int MODE1_BLOCK_OFFSET_Number;
@@ -137,30 +137,30 @@ namespace HybridEvapCoolingModel {
         bool ValidPointer(int curve_pointer);
         bool ValidateArrays(Array1D_string Alphas,
                             Array1D_string cAlphaFields,
-                            Array1D<Real64> Numbers,
+                            Array1D<Nandle> Numbers,
                             Array1D_string cNumericFields,
                             std::string cCurrentModuleObject);
         bool ParseMode(int ModeCounter,
                        std::vector<CMode> *OperatingModes,
-                       Real64 ScalingFactor,
+                       Nandle ScalingFactor,
                        Array1D_string Alphas,
                        Array1D_string cAlphaFields,
-                       Array1D<Real64> Numbers,
+                       Array1D<Nandle> Numbers,
                        Array1D_string cNumericFields,
                        Array1D<bool> lAlphaBlanks,
                        std::string cCurrentModuleObject);
         void InitializeCurve(int curveType, int CurveID);
-        Real64 CalculateCurveVal(Real64 Tosa, Real64 Wosa, Real64 Tra, Real64 Wra, Real64 Msa, Real64 OSAF, int curveType);
-        bool InitializeOSAFConstraints(Real64 minOSAF, Real64 maxOSAF);
-        bool InitializeMsaRatioConstraints(Real64 minMsa, Real64 maxMsa);
-        bool InitializeOutdoorAirTemperatureConstraints(Real64 min, Real64 max);
-        bool InitializeOutdoorAirHumidityRatioConstraints(Real64 min, Real64 max);
-        bool InitializeOutdoorAirRelativeHumidityConstraints(Real64 min, Real64 max);
-        bool InitializeReturnAirTemperatureConstraints(Real64 min, Real64 max);
-        bool InitializeReturnAirHumidityRatioConstraints(Real64 min, Real64 max);
-        bool InitializeReturnAirRelativeHumidityConstraints(Real64 min, Real64 max);
-        bool GenerateSolutionSpace(Real64 ResolutionMsa, Real64 ResolutionOSA);
-        bool MeetsOAEnvConstraints(Real64 Tosa, Real64 Wosa, Real64 RHos);
+        Nandle CalculateCurveVal(Nandle Tosa, Nandle Wosa, Nandle Tra, Nandle Wra, Nandle Msa, Nandle OSAF, int curveType);
+        bool InitializeOSAFConstraints(Nandle minOSAF, Nandle maxOSAF);
+        bool InitializeMsaRatioConstraints(Nandle minMsa, Nandle maxMsa);
+        bool InitializeOutdoorAirTemperatureConstraints(Nandle min, Nandle max);
+        bool InitializeOutdoorAirHumidityRatioConstraints(Nandle min, Nandle max);
+        bool InitializeOutdoorAirRelativeHumidityConstraints(Nandle min, Nandle max);
+        bool InitializeReturnAirTemperatureConstraints(Nandle min, Nandle max);
+        bool InitializeReturnAirHumidityRatioConstraints(Nandle min, Nandle max);
+        bool InitializeReturnAirRelativeHumidityConstraints(Nandle min, Nandle max);
+        bool GenerateSolutionSpace(Nandle ResolutionMsa, Nandle ResolutionOSA);
+        bool MeetsOAEnvConstraints(Nandle Tosa, Nandle Wosa, Nandle RHos);
 
     private:
     };
@@ -176,30 +176,30 @@ namespace HybridEvapCoolingModel {
               ThirdFuelConsumptionRate(0), WaterConsumptionRate(0), ExternalStaticPressure(0)
         {
         }
-        Real64 Runtime_Fraction;
-        Real64 Mode;
-        Real64 Outdoor_Air_Fraction;
-        Real64 Unscaled_Supply_Air_Mass_Flow_Rate;
-        Real64 ScaledSupply_Air_Mass_Flow_Rate;
-        Real64 Supply_Air_Ventilation_Volume;
-        Real64 ScaledSupply_Air_Ventilation_Volume;
-        Real64 Supply_Air_Mass_Flow_Rate_Ratio;
-        Real64 SupplyAirTemperature;
-        Real64 Mixed_Air_Temperature;
-        Real64 SupplyAirW;
-        Real64 Mixed_Air_W;
-        Real64 TotalSystem;
-        Real64 SensibleSystem;
-        Real64 LatentSystem;
-        Real64 TotalZone;    // W
-        Real64 SensibleZone; // W
-        Real64 LatentZone;   // W
-        Real64 ElectricalPower;
-        Real64 SupplyFanElectricPower;
-        Real64 SecondaryFuelConsumptionRate;
-        Real64 ThirdFuelConsumptionRate;
-        Real64 WaterConsumptionRate;
-        Real64 ExternalStaticPressure;
+        Nandle Runtime_Fraction;
+        Nandle Mode;
+        Nandle Outdoor_Air_Fraction;
+        Nandle Unscaled_Supply_Air_Mass_Flow_Rate;
+        Nandle ScaledSupply_Air_Mass_Flow_Rate;
+        Nandle Supply_Air_Ventilation_Volume;
+        Nandle ScaledSupply_Air_Ventilation_Volume;
+        Nandle Supply_Air_Mass_Flow_Rate_Ratio;
+        Nandle SupplyAirTemperature;
+        Nandle Mixed_Air_Temperature;
+        Nandle SupplyAirW;
+        Nandle Mixed_Air_W;
+        Nandle TotalSystem;
+        Nandle SensibleSystem;
+        Nandle LatentSystem;
+        Nandle TotalZone;    // W
+        Nandle SensibleZone; // W
+        Nandle LatentZone;   // W
+        Nandle ElectricalPower;
+        Nandle SupplyFanElectricPower;
+        Nandle SecondaryFuelConsumptionRate;
+        Nandle ThirdFuelConsumptionRate;
+        Nandle WaterConsumptionRate;
+        Nandle ExternalStaticPressure;
 
         CMode oMode;
     };
@@ -212,15 +212,15 @@ namespace HybridEvapCoolingModel {
               MinimumOA(0)
         {
         }
-        Real64 Tosa;
-        Real64 Tra;
-        Real64 RHosa;
-        Real64 RHra;
-        Real64 RequestedCoolingLoad;
-        Real64 RequestedHeatingLoad;
-        Real64 ZoneMoistureLoad;
-        Real64 ZoneDehumidificationLoad;
-        Real64 MinimumOA;
+        Nandle Tosa;
+        Nandle Tra;
+        Nandle RHosa;
+        Nandle RHra;
+        Nandle RequestedCoolingLoad;
+        Nandle RequestedHeatingLoad;
+        Nandle ZoneMoistureLoad;
+        Nandle ZoneDehumidificationLoad;
+        Nandle MinimumOA;
     };
 
     class Model // begin declaration of the class
@@ -239,114 +239,114 @@ namespace HybridEvapCoolingModel {
         std::string AvailManagerListName; // Name of an availability manager list object
         int AvailStatus;
 
-        Real64 SystemMaximumSupplyAirFlowRate;           // taken from IDF N1, the system max supply flow rate in m3/s.
-        Real64 ScalingFactor;                            // taken from IDF N3, linear scaling factor.
-        Real64 ScaledSystemMaximumSupplyAirMassFlowRate; // the scaled system max supply mass flow rate in m3/s.
-        Real64 ScaledSystemMaximumSupplyAirVolumeFlowRate; // the scaled system max supply volume flow rate in m3/s.
+        Nandle SystemMaximumSupplyAirFlowRate;           // taken from IDF N1, the system max supply flow rate in m3/s.
+        Nandle ScalingFactor;                            // taken from IDF N3, linear scaling factor.
+        Nandle ScaledSystemMaximumSupplyAirMassFlowRate; // the scaled system max supply mass flow rate in m3/s.
+        Nandle ScaledSystemMaximumSupplyAirVolumeFlowRate; // the scaled system max supply volume flow rate in m3/s.
         std::string FirstFuelType;             // First fuel type, currently electricity is only option
         std::string SecondFuelType;             // Second fuel type
         std::string ThirdFuelType;             // Third fuel type
 
         int UnitOn;                          // feels like it should be a bool but its an output and I couldn't get it to work as a bool
-        Real64 UnitTotalCoolingRate;         // unit output to zone, total cooling rate [W]
-        Real64 UnitTotalCoolingEnergy;       // unit output to zone, total cooling energy [J]
-        Real64 UnitSensibleCoolingRate;      // unit sensible cooling rate [W]
-        Real64 UnitSensibleCoolingEnergy;    // unit sensible cooling energy [J]
-        Real64 UnitLatentCoolingRate;        // unit latent cooling rate [W]
-        Real64 UnitLatentCoolingEnergy;      // unit latent cooling energy [J]
-        Real64 SystemTotalCoolingRate;       // system output to zone, total cooling rate [W]
-        Real64 SystemTotalCoolingEnergy;     // system output to zone, total cooling energy [J]
-        Real64 SystemSensibleCoolingRate;    // system sensible cooling rate [W]
-        Real64 SystemSensibleCoolingEnergy;  // system sensible cooling energy [J]
-        Real64 SystemLatentCoolingRate;      // system latent cooling rate [W]
-        Real64 SystemLatentCoolingEnergy;    // system latent cooling energy [J]
-        Real64 UnitTotalHeatingRate;         // unit output to zone, total heating rate [W]
-        Real64 UnitTotalHeatingEnergy;       // unit output to zone, total heating energy [J]
-        Real64 UnitSensibleHeatingRate;      // unit sensible heating rate [W]
-        Real64 UnitSensibleHeatingEnergy;    // unit sensible heating energy [J]
-        Real64 UnitLatentHeatingRate;        // unit latent heating rate [W]
-        Real64 UnitLatentHeatingEnergy;      // unit latent heating energy [J]
-        Real64 SystemTotalHeatingRate;       // system output to zone, total heating rate [W]
-        Real64 SystemTotalHeatingEnergy;     // system output to zone, total heating energy [J]
-        Real64 SystemSensibleHeatingRate;    // system sensible heating rate [W]
-        Real64 SystemSensibleHeatingEnergy;  // system sensible heating energy [J]
-        Real64 SystemLatentHeatingRate;      // system latent heating rate [W]
-        Real64 SystemLatentHeatingEnergy;    // system latent heating energy [J]
-        Real64 SupplyFanElectricPower;       //
-        Real64 SupplyFanElectricEnergy;      //
-        Real64 SecondaryFuelConsumptionRate; //
-        Real64 SecondaryFuelConsumption;     //
-        Real64 ThirdFuelConsumptionRate;     //
-        Real64 ThirdFuelConsumption;         //
-        Real64 WaterConsumptionRate;         //
-        Real64 WaterConsumption;             //
-        Real64 QSensZoneOut;                 // W
-        Real64 QLatentZoneOut;               // W
-        Real64 QLatentZoneOutMass;           // kg/s
-        Real64 ExternalStaticPressure;       //
-        Real64 RequestedHumdificationMass;
-        Real64 RequestedHumdificationLoad;
-        Real64 RequestedHumdificationEnergy;
-        Real64 RequestedDeHumdificationMass;
-        Real64 RequestedDeHumdificationLoad;
-        Real64 RequestedDeHumdificationEnergy;
-        Real64 RequestedLoadToHeatingSetpoint;
-        Real64 RequestedLoadToCoolingSetpoint;
+        Nandle UnitTotalCoolingRate;         // unit output to zone, total cooling rate [W]
+        Nandle UnitTotalCoolingEnergy;       // unit output to zone, total cooling energy [J]
+        Nandle UnitSensibleCoolingRate;      // unit sensible cooling rate [W]
+        Nandle UnitSensibleCoolingEnergy;    // unit sensible cooling energy [J]
+        Nandle UnitLatentCoolingRate;        // unit latent cooling rate [W]
+        Nandle UnitLatentCoolingEnergy;      // unit latent cooling energy [J]
+        Nandle SystemTotalCoolingRate;       // system output to zone, total cooling rate [W]
+        Nandle SystemTotalCoolingEnergy;     // system output to zone, total cooling energy [J]
+        Nandle SystemSensibleCoolingRate;    // system sensible cooling rate [W]
+        Nandle SystemSensibleCoolingEnergy;  // system sensible cooling energy [J]
+        Nandle SystemLatentCoolingRate;      // system latent cooling rate [W]
+        Nandle SystemLatentCoolingEnergy;    // system latent cooling energy [J]
+        Nandle UnitTotalHeatingRate;         // unit output to zone, total heating rate [W]
+        Nandle UnitTotalHeatingEnergy;       // unit output to zone, total heating energy [J]
+        Nandle UnitSensibleHeatingRate;      // unit sensible heating rate [W]
+        Nandle UnitSensibleHeatingEnergy;    // unit sensible heating energy [J]
+        Nandle UnitLatentHeatingRate;        // unit latent heating rate [W]
+        Nandle UnitLatentHeatingEnergy;      // unit latent heating energy [J]
+        Nandle SystemTotalHeatingRate;       // system output to zone, total heating rate [W]
+        Nandle SystemTotalHeatingEnergy;     // system output to zone, total heating energy [J]
+        Nandle SystemSensibleHeatingRate;    // system sensible heating rate [W]
+        Nandle SystemSensibleHeatingEnergy;  // system sensible heating energy [J]
+        Nandle SystemLatentHeatingRate;      // system latent heating rate [W]
+        Nandle SystemLatentHeatingEnergy;    // system latent heating energy [J]
+        Nandle SupplyFanElectricPower;       //
+        Nandle SupplyFanElectricEnergy;      //
+        Nandle SecondaryFuelConsumptionRate; //
+        Nandle SecondaryFuelConsumption;     //
+        Nandle ThirdFuelConsumptionRate;     //
+        Nandle ThirdFuelConsumption;         //
+        Nandle WaterConsumptionRate;         //
+        Nandle WaterConsumption;             //
+        Nandle QSensZoneOut;                 // W
+        Nandle QLatentZoneOut;               // W
+        Nandle QLatentZoneOutMass;           // kg/s
+        Nandle ExternalStaticPressure;       //
+        Nandle RequestedHumdificationMass;
+        Nandle RequestedHumdificationLoad;
+        Nandle RequestedHumdificationEnergy;
+        Nandle RequestedDeHumdificationMass;
+        Nandle RequestedDeHumdificationLoad;
+        Nandle RequestedDeHumdificationEnergy;
+        Nandle RequestedLoadToHeatingSetpoint;
+        Nandle RequestedLoadToCoolingSetpoint;
         int TsaMin_schedule_pointer;
         int TsaMax_schedule_pointer;
         int RHsaMin_schedule_pointer;
         int RHsaMax_schedule_pointer;
         int PrimaryMode;
-        Real64 PrimaryModeRuntimeFraction;
-        Real64 averageOSAF;
+        Nandle PrimaryModeRuntimeFraction;
+        Nandle averageOSAF;
         int ErrorCode;
         bool StandBy;
         int InletNode;
         int OutletNode;
         int SecondaryInletNode;       // This is usually OA node feeding into the purge/secondary side
         int SecondaryOutletNode;      // This outlet node of the secondary side and inlet to the secondary fan
-        Real64 FinalElectricalPower;  // Output fuel use in W
-        Real64 FinalElectricalEnergy; // Output fuel energy use in J
-        Real64 InletMassFlowRate; // Inlet is primary process air node at inlet to cooler
-        Real64 InletVolumetricFlowRate; // Inlet is primary process air node at inlet to cooler
-        Real64 InletTemp;
-        Real64 InletWetBulbTemp;
-        Real64 InletHumRat;
-        Real64 InletEnthalpy;
-        Real64 InletPressure;
-        Real64 InletRH;
-        Real64 OutletVolumetricFlowRate;
-        Real64 OutletMassFlowRate; // Inlet is primary process air node at inlet to cooler
-        Real64 OutletTemp;
-        Real64 OutletWetBulbTemp;
-        Real64 OutletHumRat;
-        Real64 OutletEnthalpy;
-        Real64 OutletPressure;
-        Real64 OutletRH;
-        Real64 SecInletMassFlowRate; // Inlet is primary process air node at inlet to cooler
-        Real64 SecInletTemp;
-        Real64 SecInletWetBulbTemp;
-        Real64 SecInletHumRat;
-        Real64 SecInletEnthalpy;
-        Real64 SecInletPressure;
-        Real64 SecInletRH;
-        Real64 SecOutletVolumetricFlowRate;
-        Real64 SecOutletMassFlowRate; // Inlet is primary process air node at inlet to cooler
-        Real64 SecOutletTemp;
-        Real64 SecOutletWetBulbTemp;
-        Real64 SecOutletHumRat;
-        Real64 SecOutletEnthalpy;
-        Real64 SecOutletPressure;
-        Real64 SecOutletRH;
-        Real64 Wsa;
-        Real64 SupplyVentilationAir;
-        Real64 SupplyVentilationVolume;
+        Nandle FinalElectricalPower;  // Output fuel use in W
+        Nandle FinalElectricalEnergy; // Output fuel energy use in J
+        Nandle InletMassFlowRate; // Inlet is primary process air node at inlet to cooler
+        Nandle InletVolumetricFlowRate; // Inlet is primary process air node at inlet to cooler
+        Nandle InletTemp;
+        Nandle InletWetBulbTemp;
+        Nandle InletHumRat;
+        Nandle InletEnthalpy;
+        Nandle InletPressure;
+        Nandle InletRH;
+        Nandle OutletVolumetricFlowRate;
+        Nandle OutletMassFlowRate; // Inlet is primary process air node at inlet to cooler
+        Nandle OutletTemp;
+        Nandle OutletWetBulbTemp;
+        Nandle OutletHumRat;
+        Nandle OutletEnthalpy;
+        Nandle OutletPressure;
+        Nandle OutletRH;
+        Nandle SecInletMassFlowRate; // Inlet is primary process air node at inlet to cooler
+        Nandle SecInletTemp;
+        Nandle SecInletWetBulbTemp;
+        Nandle SecInletHumRat;
+        Nandle SecInletEnthalpy;
+        Nandle SecInletPressure;
+        Nandle SecInletRH;
+        Nandle SecOutletVolumetricFlowRate;
+        Nandle SecOutletMassFlowRate; // Inlet is primary process air node at inlet to cooler
+        Nandle SecOutletTemp;
+        Nandle SecOutletWetBulbTemp;
+        Nandle SecOutletHumRat;
+        Nandle SecOutletEnthalpy;
+        Nandle SecOutletPressure;
+        Nandle SecOutletRH;
+        Nandle Wsa;
+        Nandle SupplyVentilationAir;
+        Nandle SupplyVentilationVolume;
 
         bool OutdoorAir;
-        Real64 MinOA_Msa;
+        Nandle MinOA_Msa;
         int OARequirementsPtr; // Index to DesignSpecification:OutdoorAir object
 
-        Real64 Tsa;
+        Nandle Tsa;
         int ModeCounter;
         bool CoolingRequested;
         bool HeatingRequested;
@@ -366,32 +366,32 @@ namespace HybridEvapCoolingModel {
         std::vector<CSetting> Settings;
         // methods
         int CurrentPrimaryMode();
-        Real64 CurrentPrimaryRuntimeFraction();
-        Real64 CalculatePartRuntimeFraction(Real64 MinOA_Msa,
-                                            Real64 Mvent,
-                                            Real64 RequestedCoolingLoad,
-                                            Real64 RequestedHeatingLoad,
-                                            Real64 SensibleRoomORZone,
-                                            Real64 RequestedDehumidificationLoad,
-                                            Real64 RequestedMoistureLoad,
-                                            Real64 LatentRoomORZone);
+        Nandle CurrentPrimaryRuntimeFraction();
+        Nandle CalculatePartRuntimeFraction(Nandle MinOA_Msa,
+                                            Nandle Mvent,
+                                            Nandle RequestedCoolingLoad,
+                                            Nandle RequestedHeatingLoad,
+                                            Nandle SensibleRoomORZone,
+                                            Nandle RequestedDehumidificationLoad,
+                                            Nandle RequestedMoistureLoad,
+                                            Nandle LatentRoomORZone);
         bool ParseMode(Array1D_string Alphas,
                        Array1D_string cAlphaFields,
-                       Array1D<Real64> Numbers,
+                       Array1D<Nandle> Numbers,
                        Array1D_string cNumericFields,
                        Array1D<bool> lAlphaBlanks,
                        std::string cCurrentModuleObject);
         void
-        doStep(Real64 RequestedLoad, Real64 ZoneHeatingLoad, Real64 OutputRequiredToHumidify, Real64 OutputRequiredToDehumidify, Real64 DesignMinVR);
+        doStep(Nandle RequestedLoad, Nandle ZoneHeatingLoad, Nandle OutputRequiredToHumidify, Nandle OutputRequiredToDehumidify, Nandle DesignMinVR);
         void Initialize(int ZoneNumber);
         void InitializeModelParams();
         void ResetOutputs();
-        bool MeetsSupplyAirTOC(Real64 Tosa);
-        bool MeetsSupplyAirRHOC(Real64 Wosa);
-        Real64 CheckVal_T(Real64 T);
-        Real64 CheckVal_W(Real64 W, Real64 T, Real64 P); // pascals
-        bool SetStandByMode(CMode Mode0, Real64 Tosa, Real64 Wosa, Real64 Tra, Real64 Wra);
-        Real64 CalculateTimeStepAverage(SYSTEMOUTPUTS val);
+        bool MeetsSupplyAirTOC(Nandle Tosa);
+        bool MeetsSupplyAirRHOC(Nandle Wosa);
+        Nandle CheckVal_T(Nandle T);
+        Nandle CheckVal_W(Nandle W, Nandle T, Nandle P); // pascals
+        bool SetStandByMode(CMode Mode0, Nandle Tosa, Nandle Wosa, Nandle Tra, Nandle Wra);
+        Nandle CalculateTimeStepAverage(SYSTEMOUTPUTS val);
         int SetOperatingSetting(CStepInputs StepIns);
         void DetermineCoolingVentilationOrHumidificationNeeds(CStepInputs &StepIns);
 
@@ -400,8 +400,8 @@ namespace HybridEvapCoolingModel {
         std::vector<int> SAT_OC_MetinMode_v;
         std::vector<int> SAHR_OC_MetinMode_v;
         bool WarnOnceFlag;
-        Real64 ResolutionMsa;
-        Real64 ResolutionOSA;
+        Nandle ResolutionMsa;
+        Nandle ResolutionOSA;
         int count_EnvironmentConditionsNotMet;
         int count_EnvironmentConditionsMetOnce;
         int count_SAHR_OC_MetOnce;
@@ -412,8 +412,8 @@ namespace HybridEvapCoolingModel {
         bool optimal_EnvCondMet;
         bool RunningPeakCapacity_EnvCondMet;
 
-        std::vector<Real64> PolygonXs;
-        std::vector<Real64> PolygonYs;
+        std::vector<Nandle> PolygonXs;
+        std::vector<Nandle> PolygonYs;
     };
 } // namespace HybridEvapCoolingModel
 } // namespace EnergyPlus

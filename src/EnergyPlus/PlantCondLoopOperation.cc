@@ -155,8 +155,8 @@ namespace PlantCondLoopOperation {
                                      int const LoopSideNum, // PlantLoop data structure LoopSide counter
                                      int const BranchNum,   // PlantLoop data structure branch counter
                                      int const CompNum,     // PlantLoop data structure component counter
-                                     Real64 &LoopDemand,
-                                     Real64 &RemLoopDemand,
+                                     Nandle &LoopDemand,
+                                     Nandle &RemLoopDemand,
                                      bool const FirstHVACIteration,
                                      bool &LoopShutDownFlag, // EMS flag to tell loop solver to shut down pumps
                                      bool &LoadDistributionWasPerformed)
@@ -212,10 +212,10 @@ namespace PlantCondLoopOperation {
         // used to locate data in PL()%OpScheme(CurSchemePtr)%EquipList(ListPtr)
         // Local values from the PlantLoop()%OpScheme() data structure
         int CurSchemeType;         // identifier set in PlantData
-        Real64 RangeVariable(0.0); // holds the 'loop demand', wetbulb temp, etc.
-        Real64 TestRangeVariable;  // abs of RangeVariable for logic tests etc.
-        Real64 RangeHiLimit;       // upper limit of the range variable
-        Real64 RangeLoLimit;       // lower limit of the range variable
+        Nandle RangeVariable(0.0); // holds the 'loop demand', wetbulb temp, etc.
+        Nandle TestRangeVariable;  // abs of RangeVariable for logic tests etc.
+        Nandle RangeHiLimit;       // upper limit of the range variable
+        Nandle RangeLoLimit;       // lower limit of the range variable
         // Local values from the PlantLoop()%LoopSide()%Branch()%Comp() data structure
         int NumEquipLists; // number of equipment lists
         // Error control flags
@@ -803,7 +803,7 @@ namespace PlantCondLoopOperation {
         Array1D_string AlphArray;      // Alpha input items for object
         Array1D_string cAlphaFields;   // Alpha field names
         Array1D_string cNumericFields; // Numeric field names
-        Array1D<Real64> NumArray;      // Numeric input items for object
+        Array1D<Nandle> NumArray;      // Numeric input items for object
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;   // Logical array, numeric field input BLANK = .TRUE.
         static int TotalArgs(0);       // Total number of alpha and numeric arguments (max) for a
@@ -814,10 +814,10 @@ namespace PlantCondLoopOperation {
         std::string LoopOpSchemeObj; // Used to identify the object name for loop equipment operation scheme
         bool SchemeNameFound;        // Set to FALSE if a match of OpScheme object and OpScheme name is not found
         int InnerListNum;            // inner loop list number
-        Real64 OuterListNumLowerLimit;
-        Real64 OuterListNumUpperLimit;
-        Real64 InnerListNumLowerLimit;
-        Real64 InnerListNumUpperLimit;
+        Nandle OuterListNumLowerLimit;
+        Nandle OuterListNumUpperLimit;
+        Nandle InnerListNumLowerLimit;
+        Nandle InnerListNumUpperLimit;
 
         SchemeNameFound = true;
 
@@ -997,7 +997,7 @@ namespace PlantCondLoopOperation {
         Array1D_string AlphArray;      // Alpha input items for object
         Array1D_string cAlphaFields;   // Alpha field names
         Array1D_string cNumericFields; // Numeric field names
-        Array1D<Real64> NumArray;      // Numeric input items for object
+        Array1D<Nandle> NumArray;      // Numeric input items for object
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;   // Logical array, numeric field input BLANK = .TRUE.
         static int TotalArgs(0);       // Total number of alpha and numeric arguments (max) for a
@@ -1330,7 +1330,7 @@ namespace PlantCondLoopOperation {
         int CompNum;
         int CompInNode;
         int IOStat;
-        Real64 CompFlowRate(0.0);
+        Nandle CompFlowRate(0.0);
         std::string LoopOpSchemeObj; // Used to identify the object name for loop equipment operation scheme
         bool SchemeNameFound;        // Set to FALSE if a match of OpScheme object and OpScheme name is not found
         bool NodeEMSSetPointMissing;
@@ -1338,8 +1338,8 @@ namespace PlantCondLoopOperation {
         int OnPeakSchedPtr;
         std::string ChargeSchedName;
         int ChargeSchedPtr;
-        Real64 NonChargCHWTemp;
-        Real64 OffPeakCHWTemp;
+        Nandle NonChargCHWTemp;
+        Nandle OffPeakCHWTemp;
         int CompNumA;
         int CompNumN;
         int CompOpType; // 1=cooling, 2=dual(or other)
@@ -1849,7 +1849,7 @@ namespace PlantCondLoopOperation {
 
         bool errFlag1;
         bool errFlag2;
-        Real64 HighestRange;
+        Nandle HighestRange;
 
         // Object Data
 
@@ -2167,8 +2167,8 @@ namespace PlantCondLoopOperation {
                              int const LoopSideNum,
                              int const CurSchemePtr, // use as index in PlantLoop()OpScheme() data structure
                              int const ListPtr,      // use as index in PlantLoop()OpScheme() data structure
-                             Real64 const LoopDemand,
-                             Real64 &RemLoopDemand)
+                             Nandle const LoopDemand,
+                             Nandle &RemLoopDemand)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2203,15 +2203,15 @@ namespace PlantCondLoopOperation {
         // DERIVED TYPE DEFINITIONS
         // na
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ChangeInLoad;
-        Real64 DivideLoad;
-        Real64 UniformLoad;
-        Real64 NewLoad;
-        Real64 PlantCapacity;
-        Real64 MinCompPLR;
-        Real64 LargestMinCompPLR;
-        Real64 PlantPLR;
-        Real64 CompLoad;
+        Nandle ChangeInLoad;
+        Nandle DivideLoad;
+        Nandle UniformLoad;
+        Nandle NewLoad;
+        Nandle PlantCapacity;
+        Nandle MinCompPLR;
+        Nandle LargestMinCompPLR;
+        Nandle PlantPLR;
+        Nandle CompLoad;
         int LoadFlag;
 
         int BranchNum;
@@ -2226,9 +2226,9 @@ namespace PlantCondLoopOperation {
 
         struct LoadPLRPoint
         {
-            Real64 plant_capacity_to_this_point;
-            Real64 largest_min_plr_to_this_point;
-            LoadPLRPoint(Real64 capacity, Real64 plr)
+            Nandle plant_capacity_to_this_point;
+            Nandle largest_min_plr_to_this_point;
+            LoadPLRPoint(Nandle capacity, Nandle plr)
             {
                 plant_capacity_to_this_point = capacity;
                 largest_min_plr_to_this_point = plr;
@@ -2646,7 +2646,7 @@ namespace PlantCondLoopOperation {
     void AdjustChangeInLoadForLastStageUpperRangeLimit(int const LoopNum,         // component topology
                                                        int const CurOpSchemePtr,  // currect active operation scheme
                                                        int const CurEquipListPtr, // current equipment list
-                                                       Real64 &ChangeInLoad       // positive magnitude of load change
+                                                       Nandle &ChangeInLoad       // positive magnitude of load change
     )
     {
 
@@ -2681,7 +2681,7 @@ namespace PlantCondLoopOperation {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RangeHiLimit;
+        Nandle RangeHiLimit;
 
         if (PlantLoop(LoopNum).OpScheme(CurOpSchemePtr).EquipListNumForLastStage == CurEquipListPtr) { // at final last stage
 
@@ -2694,7 +2694,7 @@ namespace PlantCondLoopOperation {
                                        int const LoopSideNum, // component topology
                                        int const BranchNum,   // component topology
                                        int const CompNum,     // component topology
-                                       Real64 &ChangeInLoad   // positive magnitude of load change
+                                       Nandle &ChangeInLoad   // positive magnitude of load change
     )
     {
 
@@ -2734,14 +2734,14 @@ namespace PlantCondLoopOperation {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 CurMassFlowRate(0.0);
-        static Real64 ToutLowLimit(0.0);
-        static Real64 ToutHiLimit(0.0);
-        static Real64 TinLowLimit(0.0);
-        static Real64 Tinlet(0.0);
-        static Real64 Tsensor(0.0);
-        static Real64 CurSpecHeat(0.0);
-        static Real64 QdotTmp(0.0);
+        static Nandle CurMassFlowRate(0.0);
+        static Nandle ToutLowLimit(0.0);
+        static Nandle ToutHiLimit(0.0);
+        static Nandle TinLowLimit(0.0);
+        static Nandle Tinlet(0.0);
+        static Nandle Tsensor(0.0);
+        static Nandle CurSpecHeat(0.0);
+        static Nandle QdotTmp(0.0);
         static int ControlNodeNum(0);
 
         auto &this_component(PlantLoop(LoopNum).LoopSide(LoopSideNum).Branch(BranchNum).Comp(CompNum));
@@ -2885,24 +2885,24 @@ namespace PlantCondLoopOperation {
         static std::string const RoutineName("FindCompSPLoad");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CompDemand;
-        Real64 DemandMdot;
-        Real64 ActualMdot;
-        Real64 TempIn;
-        Real64 CurSpecHeat;
-        Real64 TempSetPt(0.0);
-        Real64 CompMinLoad;
-        Real64 CompMaxLoad;
-        Real64 CompOptLoad;
+        Nandle CompDemand;
+        Nandle DemandMdot;
+        Nandle ActualMdot;
+        Nandle TempIn;
+        Nandle CurSpecHeat;
+        Nandle TempSetPt(0.0);
+        Nandle CompMinLoad;
+        Nandle CompMaxLoad;
+        Nandle CompOptLoad;
         int DemandNode;
         int CompPtr;
         int OpSchemePtr;
         int ListPtr;
         int SetPtNode;
         int NumEquipLists;
-        Real64 rho;
-        Real64 CurrentDemandForCoolingOp;
-        Real64 CurrentDemandForHeatingOp;
+        Nandle rho;
+        Nandle CurrentDemandForCoolingOp;
+        Nandle CurrentDemandForHeatingOp;
 
         auto &this_component(PlantLoop(LoopNum).LoopSide(LoopSideNum).Branch(BranchNum).Comp(CompNum));
 
@@ -3020,8 +3020,8 @@ namespace PlantCondLoopOperation {
                                         int const CompNum,
                                         int const CurCompLevelOpNum, // index for Plant()%LoopSide()%Branch()%Comp()%OpScheme()
                                         int const CurSchemePtr,
-                                        Real64 const LoopDemand,
-                                        Real64 &EP_UNUSED(RemLoopDemand))
+                                        Nandle const LoopDemand,
+                                        Nandle &EP_UNUSED(RemLoopDemand))
     {
 
         // SUBROUTINE INFORMATION:
@@ -3089,7 +3089,7 @@ namespace PlantCondLoopOperation {
 
     //********************************
 
-    Real64 FindRangeVariable(int const LoopNum,      // PlantLoop data structure loop counter
+    Nandle FindRangeVariable(int const LoopNum,      // PlantLoop data structure loop counter
                              int const CurSchemePtr, // set by PL()%LoopSide()%Branch()%Comp()%OpScheme()%OpSchemePtr
                              int const CurSchemeType // identifier set in PlantData
     )
@@ -3108,7 +3108,7 @@ namespace PlantCondLoopOperation {
         using DataEnvironment::OutWetBulbTemp;
 
         // Return value
-        Real64 FindRangeVariable(0.0);
+        Nandle FindRangeVariable(0.0);
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -3124,7 +3124,7 @@ namespace PlantCondLoopOperation {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ReferenceNodeNum;
-        Real64 NodeTemperature;
+        Nandle NodeTemperature;
 
         if (CurSchemeType == DryBulbTDBOpSchemeType) { // drybulb temp based controls
             ReferenceNodeNum = PlantLoop(LoopNum).OpScheme(CurSchemePtr).ReferenceNodeNumber;
@@ -3416,11 +3416,11 @@ namespace PlantCondLoopOperation {
         static std::string const RoutineName("ActivateEMSControls");
 
         // SUBROUTINE VARIABLE DEFINITIONS
-        Real64 CurMassFlowRate;
-        Real64 ToutLowLimit;
-        Real64 Tinlet;
-        Real64 CurSpecHeat;
-        Real64 QTemporary;
+        Nandle CurMassFlowRate;
+        Nandle ToutLowLimit;
+        Nandle Tinlet;
+        Nandle CurSpecHeat;
+        Nandle QTemporary;
         // unused REAL(r64)                  :: ChangeInLoad
 
         // MODULE VARIABLE DECLARATIONS:
@@ -3501,7 +3501,7 @@ namespace PlantCondLoopOperation {
                                          int const LoopSideNum,
                                          int const BranchNum,
                                          int const CompNum,
-                                         Real64 &ChangeInLoad // positive magnitude of load change
+                                         Nandle &ChangeInLoad // positive magnitude of load change
     )
     {
 

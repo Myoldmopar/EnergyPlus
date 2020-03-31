@@ -88,7 +88,7 @@ namespace DualDuct {
     extern int NumDualDuctConstVolDampers;
     extern int NumDualDuctVarVolDampers;
     extern int NumDualDuctVarVolOA;
-    extern Real64 MassFlowSetToler;
+    extern Nandle MassFlowSetToler;
     extern bool GetDualDuctInputFlag; // Flag set to make sure you get input once
 
     // Subroutine Specifications for the Module
@@ -109,17 +109,17 @@ namespace DualDuct {
     struct DualDuctAirTerminalFlowConditions
     {
         // Members
-        Real64 AirMassFlowRate;         // MassFlow through the Damper being Simulated [kg/Sec]
-        Real64 AirMassFlowRateMaxAvail; // MassFlow through the Damper being Simulated [kg/Sec]
-        Real64 AirMassFlowRateMinAvail; // MassFlow through the Damper being Simulated [kg/Sec]
-        Real64 AirMassFlowRateMax;      // Max Mass Flow Rate or the Design Mass Flow Rate
-        Real64 AirTemp;
-        Real64 AirHumRat;
-        Real64 AirEnthalpy;
-        Real64 AirMassFlowRateHist1; // flow history back 1 iteration kg/s
-        Real64 AirMassFlowRateHist2; // flow history back 2 iteration kg/s
-        Real64 AirMassFlowRateHist3; // flow history back 3 iteration kg/s
-        Real64 AirMassFlowDiffMag;   // flow difference scale, kg/s
+        Nandle AirMassFlowRate;         // MassFlow through the Damper being Simulated [kg/Sec]
+        Nandle AirMassFlowRateMaxAvail; // MassFlow through the Damper being Simulated [kg/Sec]
+        Nandle AirMassFlowRateMinAvail; // MassFlow through the Damper being Simulated [kg/Sec]
+        Nandle AirMassFlowRateMax;      // Max Mass Flow Rate or the Design Mass Flow Rate
+        Nandle AirTemp;
+        Nandle AirHumRat;
+        Nandle AirEnthalpy;
+        Nandle AirMassFlowRateHist1; // flow history back 1 iteration kg/s
+        Nandle AirMassFlowRateHist2; // flow history back 2 iteration kg/s
+        Nandle AirMassFlowRateHist3; // flow history back 3 iteration kg/s
+        Nandle AirMassFlowDiffMag;   // flow difference scale, kg/s
 
         // Default Constructor
         DualDuctAirTerminalFlowConditions()
@@ -137,36 +137,36 @@ namespace DualDuct {
         int DamperType;            // Type of Damper ie. VAV, Mixing, Inducing, etc.
         std::string Schedule;      // Damper Operation Schedule
         int SchedPtr;              // Pointer to the correct schedule
-        Real64 MaxAirVolFlowRate;  // Max Specified Volume Flow Rate of Damper [m3/sec]
-        Real64 MaxAirMassFlowRate; // Max Specified MAss Flow Rate of Damper [kg/s]
+        Nandle MaxAirVolFlowRate;  // Max Specified Volume Flow Rate of Damper [m3/sec]
+        Nandle MaxAirMassFlowRate; // Max Specified MAss Flow Rate of Damper [kg/s]
         int HotAirInletNodeNum;
         int ColdAirInletNodeNum;
         int OutletNodeNum;
-        Real64 ZoneMinAirFracDes;        // Fraction of supply air used as design minimum flow
-        Real64 ZoneMinAirFrac;           // Fraction of supply air used as current minimum flow
-        Real64 ColdAirDamperPosition;
-        Real64 HotAirDamperPosition;
+        Nandle ZoneMinAirFracDes;        // Fraction of supply air used as design minimum flow
+        Nandle ZoneMinAirFrac;           // Fraction of supply air used as current minimum flow
+        Nandle ColdAirDamperPosition;
+        Nandle HotAirDamperPosition;
         int OAInletNodeNum;              // Alternate Node for VAV:OutdoorAir for Outdoor Air
         int RecircAirInletNodeNum;       // Alternate Node for VAV:OutdoorAir for Recirc Air
         bool RecircIsUsed;               // if true. then not using recirc duct, which is okay
-        Real64 DesignOAFlowRate;         // Terminal Outdoor Air Design Flow Rate for VAV:OutdoorAir, m3/s
-        Real64 DesignRecircFlowRate;     // Terminal Recirc Air Design Flow Rate for VAV:OutdoorAir, m3/s
+        Nandle DesignOAFlowRate;         // Terminal Outdoor Air Design Flow Rate for VAV:OutdoorAir, m3/s
+        Nandle DesignRecircFlowRate;     // Terminal Recirc Air Design Flow Rate for VAV:OutdoorAir, m3/s
         int OAControlMode;               // Choice of scheduled, constant, or dynamic for VAV:OutdoorAir
-        Real64 RecircAirDamperPosition;  // Alternate Damper Pos Output for VAV:OutdoorAir for Recirc Air
-        Real64 OADamperPosition;         // Alternate Damper Pos Output for VAV:OutdoorAir for Recirc Air
-        Real64 OAFraction;               // Outdoor Air Fraction for VAV:OutdoorAir
+        Nandle RecircAirDamperPosition;  // Alternate Damper Pos Output for VAV:OutdoorAir for Recirc Air
+        Nandle OADamperPosition;         // Alternate Damper Pos Output for VAV:OutdoorAir for Recirc Air
+        Nandle OAFraction;               // Outdoor Air Fraction for VAV:OutdoorAir
         int ADUNum;                      // index of corresponding air distribution unit ZoneHVAC:AirdistributionUnit
         int CtrlZoneNum;                 // Pointer to CtrlZone data structure
         int CtrlZoneInNodeIndex;         // which controlled zone inlet node number corresponds with this unit
         int ActualZoneNum;               // Pointer to Zone data Structure
-        Real64 OutdoorAirFlowRate;       // report variable for TU outdoor air flow rate
+        Nandle OutdoorAirFlowRate;       // report variable for TU outdoor air flow rate
         bool NoOAFlowInputFromUser;      // avoids OA calculation if no input specified by user
         int OARequirementsPtr;           // - Index to DesignSpecification:OutdoorAir object
         int OAPerPersonMode;             // mode for how per person rates are determined, DCV or design.
-        Real64 OAPerPersonByDesignLevel; // store sum of people and per person rate, constant, m3/s
+        Nandle OAPerPersonByDesignLevel; // store sum of people and per person rate, constant, m3/s
         int AirLoopNum;                  // index to airloop that this terminal unit is connected to
         int ZoneTurndownMinAirFracSchPtr;    // pointer to the schedule for turndown minimum airflow fraction
-        Real64 ZoneTurndownMinAirFrac;       // turndown minimum airflow fraction value, multiplier of zone design minimum air flow 
+        Nandle ZoneTurndownMinAirFrac;       // turndown minimum airflow fraction value, multiplier of zone design minimum air flow
         bool ZoneTurndownMinAirFracSchExist; // if true, if zone turndown min air frac schedule exist
         bool MyEnvrnFlag;            // environment flag
         bool MySizeFlag;             // sizing flag
@@ -205,12 +205,12 @@ namespace DualDuct {
 
         void SimDualDuctVAVOutdoorAir(int const ZoneNum, int const ZoneNodeNum);
 
-        void CalcOAMassFlow(Real64 &SAMassFlow,   // outside air based on optional user input
-            Real64 &AirLoopOAFrac // outside air based on optional user input
+        void CalcOAMassFlow(Nandle &SAMassFlow,   // outside air based on optional user input
+            Nandle &AirLoopOAFrac // outside air based on optional user input
         );
 
-        void CalcOAOnlyMassFlow(Real64 &OAMassFlow,               // outside air flow from user input kg/s
-            Optional<Real64> MaxOAVolFlow = _ // design level for outside air m3/s
+        void CalcOAOnlyMassFlow(Nandle &OAMassFlow,               // outside air flow from user input kg/s
+            Optional<Nandle> MaxOAVolFlow = _ // design level for outside air m3/s
         );
 
         // End Algorithm Section of the Module

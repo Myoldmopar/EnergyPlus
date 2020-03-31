@@ -254,7 +254,7 @@ TEST_F(EnergyPlusFixture, HybridModel_CorrectZoneAirTempTest)
     Zone(1).Volume = 1061.88;
     TimeStepZone = 10.0 / 60.0; // Zone timestep in hours
     TimeStepSys = 10.0 / 60.0;
-    Real64 ZoneTempChange;
+    Nandle ZoneTempChange;
 
     // Hybrid modeling trigger
     FlagHybridModel_TM = true;

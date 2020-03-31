@@ -148,15 +148,15 @@ namespace DElightManagerF {
         int iNumWindows;        // Counter for windows hosted in each surface
         int iconstruct;         // Index for construction type of surfaces
         int iMatlLayer;         // Index for the outside (i.e., 1st) Material Layer for a Construction
-        Real64 rExtVisRefl;     // Exterior visible reflectance of a material
-        Real64 rLightLevel;     // installed lighting level for current zone
-        Real64 CosBldgRelNorth; // Cosine of Building rotation
-        Real64 SinBldgRelNorth; // Sine of Building rotation
-        Real64 CosZoneRelNorth; // Cosine of Zone rotation
-        Real64 SinZoneRelNorth; // Sine of Zone rotation
-        Real64 Xb;              // temp var for transformation calc
-        Real64 Yb;              // temp var for transformation calc
-        Array1D<Real64> RefPt_WCS_Coord(3);
+        Nandle rExtVisRefl;     // Exterior visible reflectance of a material
+        Nandle rLightLevel;     // installed lighting level for current zone
+        Nandle CosBldgRelNorth; // Cosine of Building rotation
+        Nandle SinBldgRelNorth; // Sine of Building rotation
+        Nandle CosZoneRelNorth; // Cosine of Zone rotation
+        Nandle SinZoneRelNorth; // Sine of Zone rotation
+        Nandle Xb;              // temp var for transformation calc
+        Nandle Yb;              // temp var for transformation calc
+        Array1D<Nandle> RefPt_WCS_Coord(3);
         Array1D_int iWndoConstIndexes(100);
         bool lWndoConstFound;      // Flag for non-unique window const index
         std::string cNameWOBlanks; // Name without blanks
@@ -165,14 +165,14 @@ namespace DElightManagerF {
         bool lWndoIsDoppelganger; // Flag for doppelganger window test
         int iDoppelganger;
         bool ldoTransform;
-        Real64 roldAspectRatio;
-        Real64 rnewAspectRatio;
-        Real64 Xo;
-        Real64 XnoRot;
-        Real64 Xtrans;
-        Real64 Yo;
-        Real64 YnoRot;
-        Real64 Ytrans;
+        Nandle roldAspectRatio;
+        Nandle rnewAspectRatio;
+        Nandle Xo;
+        Nandle XnoRot;
+        Nandle Xtrans;
+        Nandle Yo;
+        Nandle YnoRot;
+        Nandle Ytrans;
 
         // Formats
         static ObjexxFCL::gio::Fmt Format_901("(\"Version EPlus : DElight input generated from EnergyPlus processed input \",A)");
@@ -647,7 +647,7 @@ namespace DElightManagerF {
         return;
     }
 
-    void GenerateDElightDaylightCoefficients(Real64 &dLatitude, int &iErrorFlag)
+    void GenerateDElightDaylightCoefficients(Nandle &dLatitude, int &iErrorFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -712,7 +712,7 @@ namespace DElightManagerF {
         }
     }
 
-    void CheckForGeometricTransform(bool &doTransform, Real64 &OldAspectRatio, Real64 &NewAspectRatio)
+    void CheckForGeometricTransform(bool &doTransform, Nandle &OldAspectRatio, Nandle &NewAspectRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -741,7 +741,7 @@ namespace DElightManagerF {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Array1D_string cAlphas(1);
-        Array1D<Real64> rNumerics(2);
+        Array1D<Nandle> rNumerics(2);
         int NAlphas;
         int NNum;
         int IOStat;
@@ -802,14 +802,14 @@ namespace DElightManagerF {
 
     void DElightElecLtgCtrl(int iNameLength,
                             std::string cZoneName,
-                            Real64 dBldgLat,
-                            Real64 dHISKF,
-                            Real64 dHISUNF,
-                            Real64 dCloudFraction,
-                            Real64 dSOLCOSX,
-                            Real64 dSOLCOSY,
-                            Real64 dSOLCOSZ,
-                            Real64 &pdPowerReducFac,
+                            Nandle dBldgLat,
+                            Nandle dHISKF,
+                            Nandle dHISUNF,
+                            Nandle dCloudFraction,
+                            Nandle dSOLCOSX,
+                            Nandle dSOLCOSY,
+                            Nandle dSOLCOSZ,
+                            Nandle &pdPowerReducFac,
                             int piErrorFlag)
     {
         auto zoneNameArr(getCharArrayFromString(cZoneName));

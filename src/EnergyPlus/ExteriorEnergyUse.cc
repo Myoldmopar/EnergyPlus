@@ -199,9 +199,9 @@ namespace ExteriorEnergyUse {
         int NumWtrEq;                   // Temporary -- number of ExteriorWaterEquipment statements
         std::string TypeString;         // Fuel Type string (returned from Validation)
         std::string EndUseSubcategoryName;
-        Real64 SchMax;                     // Max value of schedule for item
-        Real64 SchMin;                     // Min value of schedule for item
-        static Real64 sumDesignLevel(0.0); // for predefined report of design level total
+        Nandle SchMax;                     // Max value of schedule for item
+        Nandle SchMin;                     // Min value of schedule for item
+        static Nandle sumDesignLevel(0.0); // for predefined report of design level total
 
         NumExteriorLights = inputProcessor->getNumObjectsFound("Exterior:Lights");
         ExteriorLights.allocate(NumExteriorLights);

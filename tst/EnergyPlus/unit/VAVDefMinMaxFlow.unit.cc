@@ -91,10 +91,10 @@ namespace EnergyPlus {
 TEST_F(EnergyPlusFixture, VAVDefMinMaxFlowTestVentEffLimit)
 {
 
-    Real64 ZoneOAFrac;   // ratio of outdoor air (divided by distribution effectiveness) to available supply air
-    Real64 VozClg;       //   outdoor air flow divided by distribution effectiveness [m3/s]
-    Real64 Xs;           // ratio of uncorrected system outdoor air flow rate to the design system supply flow rate
-    Real64 SysCoolingEv; // system ventilation effectiveness
+    Nandle ZoneOAFrac;   // ratio of outdoor air (divided by distribution effectiveness) to available supply air
+    Nandle VozClg;       //   outdoor air flow divided by distribution effectiveness [m3/s]
+    Nandle Xs;           // ratio of uncorrected system outdoor air flow rate to the design system supply flow rate
+    Nandle SysCoolingEv; // system ventilation effectiveness
     int CtrlZoneNum;     // controlled zone number
 
     TermUnitFinalZoneSizing.allocate(2);

@@ -102,7 +102,7 @@ namespace HeatBalanceKivaManager {
     }
 
     KivaInstanceMap::KivaInstanceMap(
-        Kiva::Foundation &foundation, int floorSurface, std::vector<int> wallSurfaces, int zoneNum, Real64 zoneAssumedTemperature, Real64 floorWeight, int constructionNum, KivaManager* kmPtr)
+        Kiva::Foundation &foundation, int floorSurface, std::vector<int> wallSurfaces, int zoneNum, Nandle zoneAssumedTemperature, Nandle floorWeight, int constructionNum, KivaManager* kmPtr)
         : instance(foundation), floorSurface(floorSurface), wallSurfaces(wallSurfaces), zoneNum(zoneNum), zoneControlType(KIVAZONE_UNCONTROLLED),
           zoneControlNum(0), zoneAssumedTemperature(zoneAssumedTemperature), floorWeight(floorWeight), constructionNum(constructionNum), kmPtr(kmPtr)
     {
@@ -195,7 +195,7 @@ namespace HeatBalanceKivaManager {
 
         unsigned index, indexPrev;
         unsigned dataSize = kivaWeather.windSpeed.size();
-        Real64 weightNow;
+        Nandle weightNow;
 
         if (kivaWeather.intervalsPerHour == 1) {
             index = (date - 1) * 24 + (hour - 1);
@@ -229,12 +229,12 @@ namespace HeatBalanceKivaManager {
         bcs->deepGroundTemperature = kivaWeather.annualAverageDrybulbTemp + DataGlobals::KelvinConv;
 
         // Estimate indoor temperature
-        static const Real64 defaultFlagTemp = -999; // default sets this below -999 at -9999 so uses value if entered
-        const Real64 standardTemp = 22;            // degC
-        Real64 assumedFloatingTemp = standardTemp; // degC (somewhat arbitrary assumption--not knowing anything else
+        static const Nandle defaultFlagTemp = -999; // default sets this below -999 at -9999 so uses value if entered
+        const Nandle standardTemp = 22;            // degC
+        Nandle assumedFloatingTemp = standardTemp; // degC (somewhat arbitrary assumption--not knowing anything else
                                                    // about the building at this point)
 
-        Real64 Tin;
+        Nandle Tin;
         if (zoneAssumedTemperature > defaultFlagTemp) {
             Tin = zoneAssumedTemperature + DataGlobals::KelvinConv;
         } else {
@@ -257,7 +257,7 @@ namespace HeatBalanceKivaManager {
                     int schNameId = DataZoneControls::TempControlledZone(zoneControlNum).SchIndx_SingleHeatSetPoint;
                     int schTypeId = DataZoneControls::TempControlledZone(zoneControlNum).ControlTypeSchIndx(schNameId);
                     int spSchId = ZoneTempPredictorCorrector::SetPointSingleHeating(schTypeId).TempSchedIndex;
-                    Real64 setpoint = ScheduleManager::LookUpScheduleValue(spSchId, hour, timestep);
+                    Nandle setpoint = ScheduleManager::LookUpScheduleValue(spSchId, hour, timestep);
                     Tin = setpoint + DataGlobals::KelvinConv;
 
                 } else if (controlType == DataHVACGlobals::SingleCoolingSetPoint) {
@@ -265,7 +265,7 @@ namespace HeatBalanceKivaManager {
                     int schNameId = DataZoneControls::TempControlledZone(zoneControlNum).SchIndx_SingleCoolSetPoint;
                     int schTypeId = DataZoneControls::TempControlledZone(zoneControlNum).ControlTypeSchIndx(schNameId);
                     int spSchId = ZoneTempPredictorCorrector::SetPointSingleCooling(schTypeId).TempSchedIndex;
-                    Real64 setpoint = ScheduleManager::LookUpScheduleValue(spSchId, hour, timestep);
+                    Nandle setpoint = ScheduleManager::LookUpScheduleValue(spSchId, hour, timestep);
                     Tin = setpoint + DataGlobals::KelvinConv;
 
                 } else if (controlType == DataHVACGlobals::SingleHeatCoolSetPoint) {
@@ -273,7 +273,7 @@ namespace HeatBalanceKivaManager {
                     int schNameId = DataZoneControls::TempControlledZone(zoneControlNum).SchIndx_SingleHeatCoolSetPoint;
                     int schTypeId = DataZoneControls::TempControlledZone(zoneControlNum).ControlTypeSchIndx(schNameId);
                     int spSchId = ZoneTempPredictorCorrector::SetPointSingleHeatCool(schTypeId).TempSchedIndex;
-                    Real64 setpoint = ScheduleManager::LookUpScheduleValue(spSchId, hour, timestep);
+                    Nandle setpoint = ScheduleManager::LookUpScheduleValue(spSchId, hour, timestep);
                     Tin = setpoint + DataGlobals::KelvinConv;
 
                 } else if (controlType == DataHVACGlobals::DualSetPointWithDeadBand) {
@@ -282,17 +282,17 @@ namespace HeatBalanceKivaManager {
                     int schTypeId = DataZoneControls::TempControlledZone(zoneControlNum).ControlTypeSchIndx(schNameId);
                     int heatSpSchId = ZoneTempPredictorCorrector::SetPointDualHeatCool(schTypeId).HeatTempSchedIndex;
                     int coolSpSchId = ZoneTempPredictorCorrector::SetPointDualHeatCool(schTypeId).CoolTempSchedIndex;
-                    Real64 heatSetpoint = ScheduleManager::LookUpScheduleValue(heatSpSchId, hour, timestep);
-                    Real64 coolSetpoint = ScheduleManager::LookUpScheduleValue(coolSpSchId, hour, timestep);
-                    const Real64 heatBalanceTemp = 10.0; // (assumed) degC
-                    const Real64 coolBalanceTemp = 15.0; // (assumed) degC
+                    Nandle heatSetpoint = ScheduleManager::LookUpScheduleValue(heatSpSchId, hour, timestep);
+                    Nandle coolSetpoint = ScheduleManager::LookUpScheduleValue(coolSpSchId, hour, timestep);
+                    const Nandle heatBalanceTemp = 10.0; // (assumed) degC
+                    const Nandle coolBalanceTemp = 15.0; // (assumed) degC
 
                     if (bcs->outdoorTemp < heatBalanceTemp) {
                         Tin = heatSetpoint + DataGlobals::KelvinConv;
                     } else if (bcs->outdoorTemp > coolBalanceTemp) {
                         Tin = coolSetpoint + DataGlobals::KelvinConv;
                     } else {
-                        Real64 weight = (coolBalanceTemp - bcs->outdoorTemp) / (coolBalanceTemp - heatBalanceTemp);
+                        Nandle weight = (coolBalanceTemp - bcs->outdoorTemp) / (coolBalanceTemp - heatBalanceTemp);
                         Tin = heatSetpoint * weight + coolSetpoint * (1.0 - weight) + DataGlobals::KelvinConv;
                     }
 
@@ -313,16 +313,16 @@ namespace HeatBalanceKivaManager {
 
                 int heatSpSchId = DataZoneControls::StageControlledZone(zoneControlNum).HSBchedIndex;
                 int coolSpSchId = DataZoneControls::StageControlledZone(zoneControlNum).CSBchedIndex;
-                Real64 heatSetpoint = ScheduleManager::LookUpScheduleValue(heatSpSchId, hour, timestep);
-                Real64 coolSetpoint = ScheduleManager::LookUpScheduleValue(coolSpSchId, hour, timestep);
-                const Real64 heatBalanceTemp = 10.0; // (assumed) degC
-                const Real64 coolBalanceTemp = 15.0; // (assumed) degC
+                Nandle heatSetpoint = ScheduleManager::LookUpScheduleValue(heatSpSchId, hour, timestep);
+                Nandle coolSetpoint = ScheduleManager::LookUpScheduleValue(coolSpSchId, hour, timestep);
+                const Nandle heatBalanceTemp = 10.0; // (assumed) degC
+                const Nandle coolBalanceTemp = 15.0; // (assumed) degC
                 if (bcs->outdoorTemp < heatBalanceTemp) {
                     Tin = heatSetpoint + DataGlobals::KelvinConv;
                 } else if (bcs->outdoorTemp > coolBalanceTemp) {
                     Tin = coolSetpoint + DataGlobals::KelvinConv;
                 } else {
-                    Real64 weight = (coolBalanceTemp - bcs->outdoorTemp) / (coolBalanceTemp - heatBalanceTemp);
+                    Nandle weight = (coolBalanceTemp - bcs->outdoorTemp) / (coolBalanceTemp - heatBalanceTemp);
                     Tin = heatSetpoint * weight + coolSetpoint * (1.0 - weight) + DataGlobals::KelvinConv;
                 }
                 break;
@@ -382,21 +382,21 @@ namespace HeatBalanceKivaManager {
 
 
         // Calculate area weighted average for walls
-        Real64 QAtotal = 0.0;
-        Real64 Atotal = 0.0;
-        Real64 TARadTotal = 0.0;
-        Real64 TAConvTotal = 0.0;
+        Nandle QAtotal = 0.0;
+        Nandle Atotal = 0.0;
+        Nandle TARadTotal = 0.0;
+        Nandle TAConvTotal = 0.0;
         for (auto &wl : wallSurfaces) {
-            Real64 Q = DataHeatBalSurface::QRadSWInAbs(wl) + // solar
+            Nandle Q = DataHeatBalSurface::QRadSWInAbs(wl) + // solar
                        DataHeatBalance::QRadThermInAbs(wl) + // internal gains
                        DataHeatBalFanSys::QHTRadSysSurf(wl) + DataHeatBalFanSys::QHWBaseboardSurf(floorSurface) +
                        DataHeatBalFanSys::QCoolingPanelSurf(wl) + DataHeatBalFanSys::QSteamBaseboardSurf(floorSurface) +
                        DataHeatBalFanSys::QElecBaseboardSurf(wl); // HVAC
 
-            Real64 &A = DataSurfaces::Surface(wl).Area;
+            Nandle &A = DataSurfaces::Surface(wl).Area;
 
-            Real64 Trad = ThermalComfort::CalcSurfaceWeightedMRT(zoneNum, wl);
-            Real64 Tconv = DataHeatBalance::TempEffBulkAir(wl);
+            Nandle Trad = ThermalComfort::CalcSurfaceWeightedMRT(zoneNum, wl);
+            Nandle Tconv = DataHeatBalance::TempEffBulkAir(wl);
 
             QAtotal += Q * A;
             TARadTotal += Trad * A;
@@ -425,7 +425,7 @@ namespace HeatBalanceKivaManager {
     {
     }
 
-    KivaManager::WallGroup::WallGroup(Real64 exposedPerimeter, std::vector<int> wallIDs) : exposedPerimeter(exposedPerimeter), wallIDs(wallIDs)
+    KivaManager::WallGroup::WallGroup(Nandle exposedPerimeter, std::vector<int> wallIDs) : exposedPerimeter(exposedPerimeter), wallIDs(wallIDs)
     {
     }
 
@@ -549,36 +549,36 @@ namespace HeatBalanceKivaManager {
         int WDay;
         int WHour;
         int WMinute;
-        Real64 DryBulb;
-        Real64 DewPoint;
-        Real64 RelHum;
-        Real64 AtmPress;
-        Real64 ETHoriz;
-        Real64 ETDirect;
-        Real64 IRHoriz;
-        Real64 GLBHoriz;
-        Real64 DirectRad;
-        Real64 DiffuseRad;
-        Real64 GLBHorizIllum;
-        Real64 DirectNrmIllum;
-        Real64 DiffuseHorizIllum;
-        Real64 ZenLum;
-        Real64 WindDir;
-        Real64 WindSpeed;
-        Real64 TotalSkyCover;
-        Real64 OpaqueSkyCover;
-        Real64 Visibility;
-        Real64 CeilHeight;
-        Real64 PrecipWater;
-        Real64 AerosolOptDepth;
-        Real64 SnowDepth;
-        Real64 DaysSinceLastSnow;
-        Real64 Albedo;
-        Real64 LiquidPrecip;
+        Nandle DryBulb;
+        Nandle DewPoint;
+        Nandle RelHum;
+        Nandle AtmPress;
+        Nandle ETHoriz;
+        Nandle ETDirect;
+        Nandle IRHoriz;
+        Nandle GLBHoriz;
+        Nandle DirectRad;
+        Nandle DiffuseRad;
+        Nandle GLBHorizIllum;
+        Nandle DirectNrmIllum;
+        Nandle DiffuseHorizIllum;
+        Nandle ZenLum;
+        Nandle WindDir;
+        Nandle WindSpeed;
+        Nandle TotalSkyCover;
+        Nandle OpaqueSkyCover;
+        Nandle Visibility;
+        Nandle CeilHeight;
+        Nandle PrecipWater;
+        Nandle AerosolOptDepth;
+        Nandle SnowDepth;
+        Nandle DaysSinceLastSnow;
+        Nandle Albedo;
+        Nandle LiquidPrecip;
         int PresWeathObs;
         Array1D_int PresWeathConds(9);
 
-        Real64 totalDB = 0.0;
+        Nandle totalDB = 0.0;
         int count = 0;
         std::string WeatherDataLine;
 
@@ -630,9 +630,9 @@ namespace HeatBalanceKivaManager {
             kivaWeather.dryBulb.push_back(DryBulb);
             kivaWeather.windSpeed.push_back(WindSpeed);
 
-            Real64 OSky = OpaqueSkyCover;
-            Real64 TDewK = min(DryBulb, DewPoint) + DataGlobals::KelvinConv;
-            Real64 ESky =
+            Nandle OSky = OpaqueSkyCover;
+            Nandle TDewK = min(DryBulb, DewPoint) + DataGlobals::KelvinConv;
+            Nandle ESky =
                 (0.787 + 0.764 * std::log(TDewK / DataGlobals::KelvinConv)) * (1.0 + 0.0224 * OSky - 0.0035 * pow_2(OSky) + 0.00028 * pow_3(OSky));
 
             kivaWeather.skyEmissivity.push_back(ESky);
@@ -696,7 +696,7 @@ namespace HeatBalanceKivaManager {
 
                 bool userSetExposedPerimeter = false;
                 bool useDetailedExposedPerimeter = false;
-                Real64 exposedFraction = 0.0;
+                Nandle exposedFraction = 0.0;
 
                 auto &expPerimMap = SurfaceGeometry::exposedFoundationPerimeter.surfaceMap;
                 if (expPerimMap.count(surfNum) == 1) {
@@ -735,7 +735,7 @@ namespace HeatBalanceKivaManager {
                     }
                 }
 
-                Real64 totalPerimeter = 0.0;
+                Nandle totalPerimeter = 0.0;
                 for (std::size_t i = 0; i < surface.Vertex.size(); ++i) {
                     std::size_t iNext;
                     if (i == surface.Vertex.size() - 1) {
@@ -749,8 +749,8 @@ namespace HeatBalanceKivaManager {
                 }
 
                 if (useDetailedExposedPerimeter) {
-                    Real64 total2DPerimeter = 0.0;
-                    Real64 exposed2DPerimeter = 0.0;
+                    Nandle total2DPerimeter = 0.0;
+                    Nandle exposed2DPerimeter = 0.0;
                     for (std::size_t i = 0; i < floorPolygon.outer().size(); ++i) {
                         std::size_t iNext;
                         if (i == floorPolygon.outer().size() - 1) {
@@ -760,7 +760,7 @@ namespace HeatBalanceKivaManager {
                         }
                         auto &p = floorPolygon.outer()[i];
                         auto &pNext = floorPolygon.outer()[iNext];
-                        Real64 perim = Kiva::getDistance(p, pNext);
+                        Nandle perim = Kiva::getDistance(p, pNext);
                         total2DPerimeter += perim;
                         if (isExposedPerimeter[i]) {
                             exposed2DPerimeter += perim;
@@ -771,16 +771,16 @@ namespace HeatBalanceKivaManager {
                     exposedFraction = std::min(exposed2DPerimeter / total2DPerimeter, 1.0);
                 }
 
-                Real64 totalExposedPerimeter = exposedFraction * totalPerimeter;
+                Nandle totalExposedPerimeter = exposedFraction * totalPerimeter;
 
                 // Remaining exposed perimeter will be alloted to each instance as appropriate
-                Real64 remainingExposedPerimeter = totalExposedPerimeter;
+                Nandle remainingExposedPerimeter = totalExposedPerimeter;
 
                 // Get combinations of wall constructions and wall heights -- each different
                 // combination gets its own Kiva instance. Combination map points each set
                 // of construction and wall height to the associated exposed perimeter and
                 // list of wall surface numbers.
-                std::map<std::pair<int, Real64>, WallGroup> combinationMap;
+                std::map<std::pair<int, Nandle>, WallGroup> combinationMap;
 
                 if (wallSurfaces.size() != 0) {
                     for (auto &wl : wallSurfaces) {
@@ -802,7 +802,7 @@ namespace HeatBalanceKivaManager {
                         std::vector<int> coplanarPoints = Vectors::PointsInPlane(
                             Surfaces(surfNum).Vertex, Surfaces(surfNum).Sides, Surfaces(wl).Vertex, Surfaces(wl).Sides, ErrorsFound);
 
-                        Real64 perimeter = 0.0;
+                        Nandle perimeter = 0.0;
 
                         // if there are two consecutive coplanar points, add the distance
                         // between them to the overall perimeter for this wall
@@ -832,7 +832,7 @@ namespace HeatBalanceKivaManager {
                             perimeter = distance(v[zs[0]], v[zs[1]]);
                         }
 
-                        Real64 surfHeight = Surfaces(wl).get_average_height();
+                        Nandle surfHeight = Surfaces(wl).get_average_height();
                         // round to avoid numerical precision differences
                         surfHeight = std::round((surfHeight)*1000.0) / 1000.0;
 
@@ -856,8 +856,8 @@ namespace HeatBalanceKivaManager {
                 auto comb = combinationMap.begin();
                 while (assignKivaInstances) {
                     int constructionNum;
-                    Real64 wallHeight;
-                    Real64 perimeter;
+                    Nandle wallHeight;
+                    Nandle perimeter;
                     std::vector<int> wallIDs;
                     if (comb != combinationMap.end()) {
                         // Loop through wall combinations first
@@ -872,7 +872,7 @@ namespace HeatBalanceKivaManager {
                         perimeter = remainingExposedPerimeter;
                     }
 
-                    Real64 floorWeight;
+                    Nandle floorWeight;
 
                     if (totalExposedPerimeter > 0.001) {
                         floorWeight = perimeter / totalExposedPerimeter;
@@ -975,7 +975,7 @@ namespace HeatBalanceKivaManager {
                         fnd.inputBlocks.push_back(footing);
                     }
 
-                    Real64 initDeepGroundDepth = fnd.deepGroundDepth;
+                    Nandle initDeepGroundDepth = fnd.deepGroundDepth;
                     for (auto &block : fnd.inputBlocks) {
                         // Change temporary zero depth indicators to default foundation depth
                         if (block.depth == 0.0) {
@@ -1234,7 +1234,7 @@ namespace HeatBalanceKivaManager {
         defFnd.grade.roughness = settings.groundRoughness;
         defFnd.farFieldWidth = settings.farFieldWidth;
 
-        Real64 waterTableDepth = 0.1022 * DataEnvironment::Elevation;
+        Nandle waterTableDepth = 0.1022 * DataEnvironment::Elevation;
 
         if (settings.deepGroundBoundary == Settings::AUTO) {
             if (waterTableDepth <= 40.) {

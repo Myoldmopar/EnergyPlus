@@ -95,14 +95,14 @@ namespace FourPipeBeam {
         ///// Note use of shared_ptr here is not a good pattern, not to be replicated without further discussion.
         static std::shared_ptr<AirTerminalUnit> fourPipeBeamFactory(int objectType, std::string objectName);
         void simulate(bool const FirstHVACIteration, // TRUE if first HVAC iteration in time step
-                      Real64 &NonAirSysOutput        // convective cooling by the beam system [W]
+                      Nandle &NonAirSysOutput        // convective cooling by the beam system [W]
         );
 
         int getZoneIndex();
 
         int getAirLoopNum();
 
-        Real64 getPrimAirDesignVolFlow();
+        Nandle getPrimAirDesignVolFlow();
 
         int getTermUnitSizingIndex();
 
@@ -113,19 +113,19 @@ namespace FourPipeBeam {
 
         void set_size();
 
-        Real64 residualSizing(Real64 const airFlow // primary supply air flow rate in kg/s
+        Nandle residualSizing(Nandle const airFlow // primary supply air flow rate in kg/s
         );
 
         void control(bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                     Real64 &NonAirSysOutput        // convective cooling by the beam system [W]
+                     Nandle &NonAirSysOutput        // convective cooling by the beam system [W]
         );
 
         void calc();
 
-        Real64 residualCooling(Real64 const cWaterFlow // chilled water flow rate in kg/s
+        Nandle residualCooling(Nandle const cWaterFlow // chilled water flow rate in kg/s
         );
 
-        Real64 residualHeating(Real64 const hWaterFlow // hot water flow rate in kg/s
+        Nandle residualHeating(Nandle const hWaterFlow // hot water flow rate in kg/s
         );
 
         void update() const;
@@ -138,80 +138,80 @@ namespace FourPipeBeam {
         int heatingAvailSchedNum; // index to schedule for heating availability
         bool heatingAvailable;    // true if beam heating is available
 
-        Real64 totBeamLength;           // length of all the beams in the zone (autosizable) (m)
+        Nandle totBeamLength;           // length of all the beams in the zone (autosizable) (m)
         bool totBeamLengthWasAutosized; // true if beam length was autosized on input
-        Real64 vDotNormRatedPrimAir;    // normalized primary air volume flow rate at rating point (m3/s-m)
-        Real64 mDotNormRatedPrimAir;    // normalized primary air mass flow rate at rating point (kg/s-m)
+        Nandle vDotNormRatedPrimAir;    // normalized primary air volume flow rate at rating point (m3/s-m)
+        Nandle mDotNormRatedPrimAir;    // normalized primary air mass flow rate at rating point (kg/s-m)
         // cooling
         bool beamCoolingPresent;          // true if chilled water system is connected to beam
-        Real64 vDotDesignCW;              // Design chilled water volume flow rate (autosizable) (m3/s)
+        Nandle vDotDesignCW;              // Design chilled water volume flow rate (autosizable) (m3/s)
         bool vDotDesignCWWasAutosized;    // true if use input for chilled water flow was autosized
-        Real64 mDotDesignCW;              // Design chilled water mass flow rate (kg/s)
-        Real64 qDotNormRatedCooling;      // normalized cooling capacity at rating point (W/m)
-        Real64 deltaTempRatedCooling;     // temperature difference between zone air and entering chilled water at rating point (delta C)
-        Real64 vDotNormRatedCW;           // normalized chilled water volume flow rate at rating point (m3/s-m)
-        Real64 mDotNormRatedCW;           // normalized chilled water mass flow rate at rating point (kg/s-m)
+        Nandle mDotDesignCW;              // Design chilled water mass flow rate (kg/s)
+        Nandle qDotNormRatedCooling;      // normalized cooling capacity at rating point (W/m)
+        Nandle deltaTempRatedCooling;     // temperature difference between zone air and entering chilled water at rating point (delta C)
+        Nandle vDotNormRatedCW;           // normalized chilled water volume flow rate at rating point (m3/s-m)
+        Nandle mDotNormRatedCW;           // normalized chilled water mass flow rate at rating point (kg/s-m)
         int modCoolingQdotDeltaTFuncNum;  // index to curve or table modifying cooling capacity as a function of delta T ratio
         int modCoolingQdotAirFlowFuncNum; // index to curve or table modifying cooling capacity as a function of air flow ratio
         int modCoolingQdotCWFlowFuncNum;  // index to curve or table modifying cooling capacity as a function of chilled water flow ratio
-        Real64 mDotCW;                    // current chilled water mass flow rate (kg/s)
-        Real64 cWTempIn;                  // current inlet chilled water temperature [C]
-        Real64 cWTempOut;                 // current outlet chilled water temperature [C]
+        Nandle mDotCW;                    // current chilled water mass flow rate (kg/s)
+        Nandle cWTempIn;                  // current inlet chilled water temperature [C]
+        Nandle cWTempOut;                 // current outlet chilled water temperature [C]
         int cWTempOutErrorCount;          // counter for recurring errors in chilled water outlet temperature
         int cWInNodeNum;                  // chilled water inlet node
         int cWOutNodeNum;                 // chilled water outlet nod
         PlantLocation cWLocation;         // chilled water plant loop location
         // heating
         bool beamHeatingPresent;          // true if hot water system is connected to beam
-        Real64 vDotDesignHW;              // Design hot water volume flow rate (autosizable) (m3/s)
+        Nandle vDotDesignHW;              // Design hot water volume flow rate (autosizable) (m3/s)
         bool vDotDesignHWWasAutosized;    // true if user input for hot water flow was autosized
-        Real64 mDotDesignHW;              // Design hot water mass flow rate (kg/s)
-        Real64 qDotNormRatedHeating;      // normalized heating capacity at rating point (W/m)
-        Real64 deltaTempRatedHeating;     // temperature difference between zone air and entering hot water at rating point (delta C)
-        Real64 vDotNormRatedHW;           // normalized hot water volume flow rate at rating point (m3/s-m)
-        Real64 mDotNormRatedHW;           // normalized hot water mass flow rate at rating point (kg/s-m)
+        Nandle mDotDesignHW;              // Design hot water mass flow rate (kg/s)
+        Nandle qDotNormRatedHeating;      // normalized heating capacity at rating point (W/m)
+        Nandle deltaTempRatedHeating;     // temperature difference between zone air and entering hot water at rating point (delta C)
+        Nandle vDotNormRatedHW;           // normalized hot water volume flow rate at rating point (m3/s-m)
+        Nandle mDotNormRatedHW;           // normalized hot water mass flow rate at rating point (kg/s-m)
         int modHeatingQdotDeltaTFuncNum;  // index to curve or table modifying heating capacity as a function of delta T ratio
         int modHeatingQdotAirFlowFuncNum; // index to curve or table modifying heating capacity as a function of air flow ratio
         int modHeatingQdotHWFlowFuncNum;  // index to curve or table modifying heating capacity as a function of chilled water flow ratio
-        Real64 mDotHW;                    // current hot water mass flow rate (kg/s)
-        Real64 hWTempIn;                  // current inlet hot water temperature (C)
-        Real64 hWTempOut;                 // current outlet hot water temperature (C)
+        Nandle mDotHW;                    // current hot water mass flow rate (kg/s)
+        Nandle hWTempIn;                  // current inlet hot water temperature (C)
+        Nandle hWTempOut;                 // current outlet hot water temperature (C)
         int hWTempOutErrorCount;          // counter for recurring errors in hot water outlet temperature
         int hWInNodeNum;                  // hot water inlet node
         int hWOutNodeNum;                 // hot water outlet node
         PlantLocation hWLocation;         // hot water connection location structure
 
         // output variables
-        Real64 beamCoolingEnergy;   // beam sensible cooling energy of all beams in the zone [J]
-        Real64 beamCoolingRate;     // beam sensible cooling rate of all beams in the zone (positive convention) [W]
-        Real64 beamHeatingEnergy;   // beam heating energy of all beams in the zone [J]
-        Real64 beamHeatingRate;     // beam heating rate of all beams in the zone [W]
-        Real64 supAirCoolingEnergy; // Total cooling energy from supply air [J]
-        Real64 supAirCoolingRate;   // Total cooling rate from supply air [W]
-        Real64 supAirHeatingEnergy; // Total cooling energy from supply air [J]
-        Real64 supAirHeatingRate;   // Total cooling rate from supply air [W]
-        Real64 primAirFlow;         // supply air flow per zone at standard elevation-adjusted density [m3/s]
+        Nandle beamCoolingEnergy;   // beam sensible cooling energy of all beams in the zone [J]
+        Nandle beamCoolingRate;     // beam sensible cooling rate of all beams in the zone (positive convention) [W]
+        Nandle beamHeatingEnergy;   // beam heating energy of all beams in the zone [J]
+        Nandle beamHeatingRate;     // beam heating rate of all beams in the zone [W]
+        Nandle supAirCoolingEnergy; // Total cooling energy from supply air [J]
+        Nandle supAirCoolingRate;   // Total cooling rate from supply air [W]
+        Nandle supAirHeatingEnergy; // Total cooling energy from supply air [J]
+        Nandle supAirHeatingRate;   // Total cooling rate from supply air [W]
+        Nandle primAirFlow;         // supply air flow per zone at standard elevation-adjusted density [m3/s]
 
         bool myEnvrnFlag;              // control when to re initialize for new environment period
         bool mySizeFlag;               // control when to run sizing method
         bool plantLoopScanFlag;        // control when to look up plant locations for water connections
         bool zoneEquipmentListChecked; // control when to check zone equipment list was input correctly
 
-        Real64 tDBZoneAirTemp;      // current drybulb temperature of zone air, C
-        Real64 tDBSystemAir;        // current drybulb temperature of primary supply air, C
-        Real64 mDotSystemAir;       // current mass flow of primary supply air,kg/s
-        Real64 cpZoneAir;           // current specific heat of zone air
-        Real64 cpSystemAir;         // current specific heat of primary supply air
-        Real64 qDotSystemAir;       // current heat transfer rate of primary supply air wrt zone, W
-        Real64 qDotBeamCoolingMax;  // current beam cooling rate at maximum chilled water flow rate, W
-        Real64 qDotBeamHeatingMax;  // curent beam heating rate at maximum hot water flow rate, W
-        Real64 qDotTotalDelivered;  // current combined heat transfer rate of primary supply air and beam, W
-        Real64 qDotBeamCooling;     // current beam cooling rate, W
-        Real64 qDotBeamHeating;     // current beam heating rate, W
-        Real64 qDotZoneReq;         // current zone sensible requested load to setpoint, W
-        Real64 qDotBeamReq;         // current load requested of beam, W
-        Real64 qDotZoneToHeatSetPt; // current zone sensible load to heating setpoint, W
-        Real64 qDotZoneToCoolSetPt; // current zone sensible load to cooling setpoint, W
+        Nandle tDBZoneAirTemp;      // current drybulb temperature of zone air, C
+        Nandle tDBSystemAir;        // current drybulb temperature of primary supply air, C
+        Nandle mDotSystemAir;       // current mass flow of primary supply air,kg/s
+        Nandle cpZoneAir;           // current specific heat of zone air
+        Nandle cpSystemAir;         // current specific heat of primary supply air
+        Nandle qDotSystemAir;       // current heat transfer rate of primary supply air wrt zone, W
+        Nandle qDotBeamCoolingMax;  // current beam cooling rate at maximum chilled water flow rate, W
+        Nandle qDotBeamHeatingMax;  // curent beam heating rate at maximum hot water flow rate, W
+        Nandle qDotTotalDelivered;  // current combined heat transfer rate of primary supply air and beam, W
+        Nandle qDotBeamCooling;     // current beam cooling rate, W
+        Nandle qDotBeamHeating;     // current beam heating rate, W
+        Nandle qDotZoneReq;         // current zone sensible requested load to setpoint, W
+        Nandle qDotBeamReq;         // current load requested of beam, W
+        Nandle qDotZoneToHeatSetPt; // current zone sensible load to heating setpoint, W
+        Nandle qDotZoneToCoolSetPt; // current zone sensible load to cooling setpoint, W
 
     }; // HVACFourPipeBeam
 

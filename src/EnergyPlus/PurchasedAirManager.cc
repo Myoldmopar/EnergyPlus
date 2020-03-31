@@ -169,7 +169,7 @@ namespace PurchasedAirManager {
     int const DeadBand(3);
     // Delta humidity ratio limit, 0.00025 equals delta between 45F dewpoint and 46F dewpoint
     // used to prevent dividing by near zero
-    Real64 const SmallDeltaHumRat(0.00025);
+    Nandle const SmallDeltaHumRat(0.00025);
 
     // DERIVED TYPE DEFINITIONS:
 
@@ -204,8 +204,8 @@ namespace PurchasedAirManager {
     } // namespace
 
     void SimPurchasedAir(std::string const &PurchAirName,
-                         Real64 &SysOutputProvided,
-                         Real64 &MoistOutputProvided, // Moisture output provided (kg/s), dehumidification = negative
+                         Nandle &SysOutputProvided,
+                         Nandle &MoistOutputProvided, // Moisture output provided (kg/s), dehumidification = negative
                          bool const FirstHVACIteration,
                          int const ControlledZoneNum,
                          int const ActualZoneNum,
@@ -1398,18 +1398,18 @@ namespace PurchasedAirManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool IsAutoSize;               // Indicator to autosize
-        Real64 MaxHeatVolFlowRateDes;  // Autosized maximum heating air flow for reporting
-        Real64 MaxHeatVolFlowRateUser; // Hardsized maximum heating air flow for reporting
-        Real64 MaxCoolVolFlowRateDes;  // Autosized maximum cooling air flow for reporting
-        Real64 MaxCoolVolFlowRateUser; // Hardsized maximum cooling air flow for reporting
-        Real64 MaxHeatSensCapDes;      // Autosized maximum sensible heating capacity for reporting
-        Real64 MaxHeatSensCapUser;     // Hardsized maximum sensible heating capacity for reporting
-        Real64 MaxCoolTotCapDes;       // Autosized maximum sensible cooling capacity for reporting
-        Real64 MaxCoolTotCapUser;      // Hardsized maximum sensible cooling capacity for reporting
+        Nandle MaxHeatVolFlowRateDes;  // Autosized maximum heating air flow for reporting
+        Nandle MaxHeatVolFlowRateUser; // Hardsized maximum heating air flow for reporting
+        Nandle MaxCoolVolFlowRateDes;  // Autosized maximum cooling air flow for reporting
+        Nandle MaxCoolVolFlowRateUser; // Hardsized maximum cooling air flow for reporting
+        Nandle MaxHeatSensCapDes;      // Autosized maximum sensible heating capacity for reporting
+        Nandle MaxHeatSensCapUser;     // Hardsized maximum sensible heating capacity for reporting
+        Nandle MaxCoolTotCapDes;       // Autosized maximum sensible cooling capacity for reporting
+        Nandle MaxCoolTotCapUser;      // Hardsized maximum sensible cooling capacity for reporting
         std::string CompName;          // component name
         std::string CompType;          // component type
         std::string SizingString;      // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;               // autosized value of coil input field
+        Nandle TempSize;               // autosized value of coil input field
         int FieldNum = 2;              // IDD numeric field number where input field description is found
         int SizingMethod;  // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                            // HeatingCapacitySizing, etc.)
@@ -1419,8 +1419,8 @@ namespace PurchasedAirManager {
                            // FractionOfAutosizedHeatingAirflow ...)
         int CapSizingMethod(0); // capacity sizing methods (HeatingDesignCapacity, CapacityPerFloorArea, FractionOfAutosizedCoolingCapacity, and
                                 // FractionOfAutosizedHeatingCapacity )
-        Real64 CoolingAirVolFlowDes(0.0); // cooling supply air flow rate
-        Real64 HeatingAirVolFlowDes(0.0); // heating supply air flow rate
+        Nandle CoolingAirVolFlowDes(0.0); // cooling supply air flow rate
+        Nandle HeatingAirVolFlowDes(0.0); // heating supply air flow rate
 
         IsAutoSize = false;
         MaxHeatVolFlowRateDes = 0.0;
@@ -1920,8 +1920,8 @@ namespace PurchasedAirManager {
     }
 
     void CalcPurchAirLoads(int const PurchAirNum,
-                           Real64 &SysOutputProvided,   // Sensible output provided [W] cooling = negative
-                           Real64 &MoistOutputProvided, // Moisture output provided [kg/s] dehumidification = negative
+                           Nandle &SysOutputProvided,   // Sensible output provided [W] cooling = negative
+                           Nandle &MoistOutputProvided, // Moisture output provided [kg/s] dehumidification = negative
                            int const ControlledZoneNum,
                            int const ActualZoneNum)
     {
@@ -1977,42 +1977,42 @@ namespace PurchasedAirManager {
         int OANodeNum;                     // Outdoor air inlet node
         int RecircNodeNum;                 // Return air or zone exhaust node
         int OperatingMode;                 // current operating mode, Off, Heat, Cool, or DeadBand
-        Real64 SupplyMassFlowRate;         // System supply air mass flow rate [kg/s]
-        Real64 SupplyMassFlowRateForHumid; // System supply air mass flow rate required to meet humdification load [kg/s]
-        Real64 SupplyMassFlowRateForDehum; // System supply air mass flow rate required to meet dehumidification load [kg/s]
-        Real64 SupplyMassFlowRateForCool;  // System supply air mass flow rate required to meet sensible cooling load[kg/s]
-        Real64 SupplyMassFlowRateForHeat;  // System supply air mass flow rate required to meet sensible heating load[kg/s]
-        Real64 SupplyHumRatForHumid;       // Supply air humidity ratio require to meet the humidification load [kgWater/kgDryAir]
-        Real64 SupplyHumRatForDehum;       // Supply air humidity ratio require to meet the dehumidification load [kgWater/kgDryAir]
-        Real64 OAMassFlowRate;             // Outdoor air mass flow rate [kg/s]
-        Real64 OAVolFlowRate;              // Outdoor air volume flow rate at standard density [m3/s]
-        Real64 MinOASensOutput;            // Minimum Outdoor air sensible output [W], <0 means OA is cooler than zone air
-        Real64 MinOALatOutput;             // Minimum Outdoor air moisture load [kg/s]
-        Real64 SensOutput;                 // Sensible output [W] (psitive means heating, negative means cooling)
-        Real64 HeatSensOutput;             // Heating sensible output [W]
-        Real64 CoolSensOutput;             // Cooling sensible output [W] (positive value menas cooling)
-        Real64 LatOutput;                  // Latent output [W] (positive value means hudmification, negative means dehumidification)
-        Real64 CoolLatOutput;              // Cooling latent output [W] (positive value means dehumidification)
-        Real64 CoolTotOutput;              // Cooling total output [W] (positive value means cooling)
-        Real64 DeltaT;                     // Delta temperature - reused in multiple places
-        Real64 DeltaHumRat;                // Delta humidity ratio - reused in multiple places
-        Real64 QZnHeatSP;                  // Load required to meet heating setpoint [W] (>0 is a heating load)
-        Real64 QZnCoolSP;                  // Load required to meet cooling setpoint [W] (<0 is a cooling load)
-        Real64 MdotZnHumidSP;              // Load required to meet humidifying setpoint [kgWater/s] (>0 = a humidify load)
-        Real64 MdotZnDehumidSP;            // Load required to meet dehumidifying setpoint [kgWater/s] (<0 = a dehumidify load)
+        Nandle SupplyMassFlowRate;         // System supply air mass flow rate [kg/s]
+        Nandle SupplyMassFlowRateForHumid; // System supply air mass flow rate required to meet humdification load [kg/s]
+        Nandle SupplyMassFlowRateForDehum; // System supply air mass flow rate required to meet dehumidification load [kg/s]
+        Nandle SupplyMassFlowRateForCool;  // System supply air mass flow rate required to meet sensible cooling load[kg/s]
+        Nandle SupplyMassFlowRateForHeat;  // System supply air mass flow rate required to meet sensible heating load[kg/s]
+        Nandle SupplyHumRatForHumid;       // Supply air humidity ratio require to meet the humidification load [kgWater/kgDryAir]
+        Nandle SupplyHumRatForDehum;       // Supply air humidity ratio require to meet the dehumidification load [kgWater/kgDryAir]
+        Nandle OAMassFlowRate;             // Outdoor air mass flow rate [kg/s]
+        Nandle OAVolFlowRate;              // Outdoor air volume flow rate at standard density [m3/s]
+        Nandle MinOASensOutput;            // Minimum Outdoor air sensible output [W], <0 means OA is cooler than zone air
+        Nandle MinOALatOutput;             // Minimum Outdoor air moisture load [kg/s]
+        Nandle SensOutput;                 // Sensible output [W] (psitive means heating, negative means cooling)
+        Nandle HeatSensOutput;             // Heating sensible output [W]
+        Nandle CoolSensOutput;             // Cooling sensible output [W] (positive value menas cooling)
+        Nandle LatOutput;                  // Latent output [W] (positive value means hudmification, negative means dehumidification)
+        Nandle CoolLatOutput;              // Cooling latent output [W] (positive value means dehumidification)
+        Nandle CoolTotOutput;              // Cooling total output [W] (positive value means cooling)
+        Nandle DeltaT;                     // Delta temperature - reused in multiple places
+        Nandle DeltaHumRat;                // Delta humidity ratio - reused in multiple places
+        Nandle QZnHeatSP;                  // Load required to meet heating setpoint [W] (>0 is a heating load)
+        Nandle QZnCoolSP;                  // Load required to meet cooling setpoint [W] (<0 is a cooling load)
+        Nandle MdotZnHumidSP;              // Load required to meet humidifying setpoint [kgWater/s] (>0 = a humidify load)
+        Nandle MdotZnDehumidSP;            // Load required to meet dehumidifying setpoint [kgWater/s] (<0 = a dehumidify load)
         bool UnitOn;
         bool HeatOn;             // Flag for heating and humidification availbility schedule, true if heating is on
         bool CoolOn;             // Flag for cooling and dehumidification availbility schedule, true if cooling is on
         bool EconoOn;            // Flag for economizer operation, true if economizer is on
-        Real64 SupplyTemp;       // Supply inlet to zone dry bulb temperature [C]
-        Real64 SupplyHumRat;     // Supply inlet to zone humidity ratio [kgWater/kgDryAir]
-        Real64 SupplyHumRatOrig; // Supply inlet to zone humidity ratio before saturation check [kgWater/kgDryAir]
-        Real64 SupplyHumRatSat;  // Supply inlet to zone humidity ratio saturation at SupplyTemp [kgWater/kgDryAir]
-        Real64 SupplyEnthalpy;   // Supply inlet to zone enthalpy [J/kg]
-        Real64 MixedAirTemp;     // Mixed air dry bulb temperature [C]
-        Real64 MixedAirHumRat;   // Mixed air humidity ratio [kgWater/kgDryAir]
-        Real64 MixedAirEnthalpy; // Mixed air enthalpy [J/kg]
-        Real64 CpAir;            // Specific heat [J/kg-C] reused in multiple places
+        Nandle SupplyTemp;       // Supply inlet to zone dry bulb temperature [C]
+        Nandle SupplyHumRat;     // Supply inlet to zone humidity ratio [kgWater/kgDryAir]
+        Nandle SupplyHumRatOrig; // Supply inlet to zone humidity ratio before saturation check [kgWater/kgDryAir]
+        Nandle SupplyHumRatSat;  // Supply inlet to zone humidity ratio saturation at SupplyTemp [kgWater/kgDryAir]
+        Nandle SupplyEnthalpy;   // Supply inlet to zone enthalpy [J/kg]
+        Nandle MixedAirTemp;     // Mixed air dry bulb temperature [C]
+        Nandle MixedAirHumRat;   // Mixed air humidity ratio [kgWater/kgDryAir]
+        Nandle MixedAirEnthalpy; // Mixed air enthalpy [J/kg]
+        Nandle CpAir;            // Specific heat [J/kg-C] reused in multiple places
         //         REAL(r64) :: SpecHumOut   ! Specific humidity ratio of outlet air (kg moisture / kg moist air)
         //         REAL(r64) :: SpecHumIn    ! Specific humidity ratio of inlet [zone] air (kg moisture / kg moist air)
 
@@ -2741,7 +2741,7 @@ namespace PurchasedAirManager {
 
     void CalcPurchAirMinOAMassFlow(int const PurchAirNum,   // index to ideal loads unit
                                    int const ActualZoneNum, // index to actual zone number
-                                   Real64 &OAMassFlowRate   // outside air mass flow rate [kg/s] from volume flow using std density
+                                   Nandle &OAMassFlowRate   // outside air mass flow rate [kg/s] from volume flow using std density
     )
     {
 
@@ -2780,7 +2780,7 @@ namespace PurchasedAirManager {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         bool UseOccSchFlag;      // TRUE = use actual occupancy, FALSE = use total zone people
-        Real64 OAVolumeFlowRate; // outside air flow rate (m3/s)
+        Nandle OAVolumeFlowRate; // outside air flow rate (m3/s)
 
         if (PurchAir(PurchAirNum).OutdoorAir) {
 
@@ -2807,11 +2807,11 @@ namespace PurchasedAirManager {
     }
 
     void CalcPurchAirMixedAir(int const PurchAirNum,           // index to ideal loads unit
-                              Real64 const OAMassFlowRate,     // outside air mass flow rate [kg/s]
-                              Real64 const SupplyMassFlowRate, // supply air mass flow rate [kg/s]
-                              Real64 &MixedAirTemp,            // Mixed air dry bulb temperature [C]
-                              Real64 &MixedAirHumRat,          // Mixed air humidity ratio [kgWater/kgDryAir]
-                              Real64 &MixedAirEnthalpy,        // Mixed air enthalpy [J/kg]
+                              Nandle const OAMassFlowRate,     // outside air mass flow rate [kg/s]
+                              Nandle const SupplyMassFlowRate, // supply air mass flow rate [kg/s]
+                              Nandle &MixedAirTemp,            // Mixed air dry bulb temperature [C]
+                              Nandle &MixedAirHumRat,          // Mixed air humidity ratio [kgWater/kgDryAir]
+                              Nandle &MixedAirEnthalpy,        // Mixed air enthalpy [J/kg]
                               int const OperatingMode          // current operating mode, Off, Heating, Cooling, or DeadBand
     )
     {
@@ -2848,18 +2848,18 @@ namespace PurchasedAirManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int RecircNodeNum;           // Zone return air node
         int OANodeNum;               // Outdoor air inlet node
-        Real64 RecircTemp;           // Recirculated air from zone dry bulb temperature [C]
-        Real64 RecircHumRat;         // Recirculated air from zone humidity ratio [kgWater/kgDryAir]
-        Real64 RecircEnthalpy;       // Recirculated air from zone enthalpy [J/kg]
-        Real64 RecircMassFlowRate;   // Recirculated air mass flow rate [kg/s]
-        Real64 OAInletTemp;          // Outdoor air inlet dry bulb temperature [C]
-        Real64 OAInletHumRat;        // Outdoor air inlet humidity ratio [kgWater/kgDryAir]
-        Real64 OAInletEnthalpy;      // Outdoor air inlet enthalpy [J/kg]
-        Real64 OAAfterHtRecTemp;     // Outdoor air after heat recovery to mixing box dry bulb temperature [C]
-        Real64 OAAfterHtRecHumRat;   // Outdoor air after heat recovery to mixing box humidity ratio [kgWater/kgDryAir]
-        Real64 OAAfterHtRecEnthalpy; // Outdoor air after heat recovery to mixing box enthalpy [J/kg]
+        Nandle RecircTemp;           // Recirculated air from zone dry bulb temperature [C]
+        Nandle RecircHumRat;         // Recirculated air from zone humidity ratio [kgWater/kgDryAir]
+        Nandle RecircEnthalpy;       // Recirculated air from zone enthalpy [J/kg]
+        Nandle RecircMassFlowRate;   // Recirculated air mass flow rate [kg/s]
+        Nandle OAInletTemp;          // Outdoor air inlet dry bulb temperature [C]
+        Nandle OAInletHumRat;        // Outdoor air inlet humidity ratio [kgWater/kgDryAir]
+        Nandle OAInletEnthalpy;      // Outdoor air inlet enthalpy [J/kg]
+        Nandle OAAfterHtRecTemp;     // Outdoor air after heat recovery to mixing box dry bulb temperature [C]
+        Nandle OAAfterHtRecHumRat;   // Outdoor air after heat recovery to mixing box humidity ratio [kgWater/kgDryAir]
+        Nandle OAAfterHtRecEnthalpy; // Outdoor air after heat recovery to mixing box enthalpy [J/kg]
         bool HeatRecOn;
-        Real64 CpAir; // Specific heat [J/kg-C] reused in multiple places
+        Nandle CpAir; // Specific heat [J/kg-C] reused in multiple places
 
         // Initializations
         OANodeNum = PurchAir(PurchAirNum).OutdoorAirNodeNum;
@@ -3013,7 +3013,7 @@ namespace PurchasedAirManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         // Sort out heating and cooling rates
         PurchAir(PurchAirNum).SenHeatRate = max(PurchAir(PurchAirNum).SenCoilLoad, 0.0);
@@ -3095,7 +3095,7 @@ namespace PurchasedAirManager {
         PurchAir(PurchAirNum).HtRecTotCoolEnergy = PurchAir(PurchAirNum).HtRecTotCoolRate * ReportingConstant;
     }
 
-    Real64 GetPurchasedAirOutAirMassFlow(int const PurchAirNum)
+    Nandle GetPurchasedAirOutAirMassFlow(int const PurchAirNum)
     {
 
         // FUNCTION INFORMATION:
@@ -3118,7 +3118,7 @@ namespace PurchasedAirManager {
         // na
 
         // Return value
-        Real64 OutAirMassFlow;
+        Nandle OutAirMassFlow;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -3248,7 +3248,7 @@ namespace PurchasedAirManager {
         return GetPurchasedAirReturnAirNode;
     }
 
-    Real64 GetPurchasedAirMixedAirTemp(int const PurchAirNum)
+    Nandle GetPurchasedAirMixedAirTemp(int const PurchAirNum)
     {
 
         // FUNCTION INFORMATION:
@@ -3271,7 +3271,7 @@ namespace PurchasedAirManager {
         // na
 
         // Return value
-        Real64 MixedAirTemp;
+        Nandle MixedAirTemp;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -3297,7 +3297,7 @@ namespace PurchasedAirManager {
         return MixedAirTemp;
     }
 
-    Real64 GetPurchasedAirMixedAirHumRat(int const PurchAirNum)
+    Nandle GetPurchasedAirMixedAirHumRat(int const PurchAirNum)
     {
 
         // FUNCTION INFORMATION:
@@ -3320,7 +3320,7 @@ namespace PurchasedAirManager {
         // na
 
         // Return value
-        Real64 MixedAirHumRat;
+        Nandle MixedAirHumRat;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:

@@ -65,23 +65,23 @@ TEST(WindowRoutines, EffectiveOpennessHorizontalVenetianBlind_0_deg)
     EnergyPlus::ShowMessage("Begin Test: Effective openness, horizontal venetian blind 0 deg slat.");
     {
         int const nlayer = 1;
-        Real64 const width = 1;
-        Real64 const height = 1;
+        Nandle const width = 1;
+        Nandle const height = 1;
         Array1D_int LayerType(nlayer);
 
-        Array1D<Real64> Atop_eff(nlayer, 0.0);
-        Array1D<Real64> Abot_eff(nlayer, 0.0);
-        Array1D<Real64> Al_eff(nlayer, 0.0);
-        Array1D<Real64> Ar_eff(nlayer, 0.0);
-        Array1D<Real64> Ah_eff(nlayer, 0.0);
+        Array1D<Nandle> Atop_eff(nlayer, 0.0);
+        Array1D<Nandle> Abot_eff(nlayer, 0.0);
+        Array1D<Nandle> Al_eff(nlayer, 0.0);
+        Array1D<Nandle> Ar_eff(nlayer, 0.0);
+        Array1D<Nandle> Ah_eff(nlayer, 0.0);
 
-        Array1D<Real64> const Atop(nlayer, 0.1);
-        Array1D<Real64> const Abot(nlayer, 0.1);
-        Array1D<Real64> const Al(nlayer, 0);
-        Array1D<Real64> const Ar(nlayer, 0);
-        Array1D<Real64> const Ah(nlayer, 0.2);
+        Array1D<Nandle> const Atop(nlayer, 0.1);
+        Array1D<Nandle> const Abot(nlayer, 0.1);
+        Array1D<Nandle> const Al(nlayer, 0);
+        Array1D<Nandle> const Ar(nlayer, 0);
+        Array1D<Nandle> const Ah(nlayer, 0.2);
         LayerType(1) = VENETBLIND_HORIZ;
-        Array1D<Real64> const SlatAngle(nlayer, 0);
+        Array1D<Nandle> const SlatAngle(nlayer, 0);
 
         updateEffectiveMultipliers(nlayer, width, height, Atop, Abot, Al, Ar, Ah, Atop_eff, Abot_eff, Al_eff, Ar_eff, Ah_eff, LayerType, SlatAngle);
 
@@ -98,23 +98,23 @@ TEST(WindowRoutines, EffectiveOpennessVerticalVenetianBlind_0_deg)
     EnergyPlus::ShowMessage("Begin Test: Effective openness, vertical venetian blind 0 deg slat.");
     {
         int const nlayer = 1;
-        Real64 const width = 1;
-        Real64 const height = 1;
+        Nandle const width = 1;
+        Nandle const height = 1;
         Array1D_int LayerType(nlayer);
 
-        Array1D<Real64> Atop_eff(nlayer, 0.0);
-        Array1D<Real64> Abot_eff(nlayer, 0.0);
-        Array1D<Real64> Al_eff(nlayer, 0.0);
-        Array1D<Real64> Ar_eff(nlayer, 0.0);
-        Array1D<Real64> Ah_eff(nlayer, 0.0);
+        Array1D<Nandle> Atop_eff(nlayer, 0.0);
+        Array1D<Nandle> Abot_eff(nlayer, 0.0);
+        Array1D<Nandle> Al_eff(nlayer, 0.0);
+        Array1D<Nandle> Ar_eff(nlayer, 0.0);
+        Array1D<Nandle> Ah_eff(nlayer, 0.0);
 
-        Array1D<Real64> const Atop(nlayer, 0.1);
-        Array1D<Real64> const Abot(nlayer, 0.1);
-        Array1D<Real64> const Al(nlayer, 0);
-        Array1D<Real64> const Ar(nlayer, 0);
-        Array1D<Real64> const Ah(nlayer, 0.2);
+        Array1D<Nandle> const Atop(nlayer, 0.1);
+        Array1D<Nandle> const Abot(nlayer, 0.1);
+        Array1D<Nandle> const Al(nlayer, 0);
+        Array1D<Nandle> const Ar(nlayer, 0);
+        Array1D<Nandle> const Ah(nlayer, 0.2);
         LayerType(1) = VENETBLIND_VERT;
-        Array1D<Real64> const SlatAngle(nlayer, 0);
+        Array1D<Nandle> const SlatAngle(nlayer, 0);
 
         updateEffectiveMultipliers(nlayer, width, height, Atop, Abot, Al, Ar, Ah, Atop_eff, Abot_eff, Al_eff, Ar_eff, Ah_eff, LayerType, SlatAngle);
 
@@ -131,23 +131,23 @@ TEST(WindowRoutines, EffectiveOpennessHorizontalVenetianBlind_45_deg)
     EnergyPlus::ShowMessage("Begin Test: Effective openness, horizontal venetian blind 45 deg slat.");
     {
         int const nlayer = 1;
-        Real64 const width = 1;
-        Real64 const height = 1;
+        Nandle const width = 1;
+        Nandle const height = 1;
         Array1D_int LayerType(nlayer);
 
-        Array1D<Real64> Atop_eff(nlayer, 0.0);
-        Array1D<Real64> Abot_eff(nlayer, 0.0);
-        Array1D<Real64> Al_eff(nlayer, 0.0);
-        Array1D<Real64> Ar_eff(nlayer, 0.0);
-        Array1D<Real64> Ah_eff(nlayer, 0.0);
+        Array1D<Nandle> Atop_eff(nlayer, 0.0);
+        Array1D<Nandle> Abot_eff(nlayer, 0.0);
+        Array1D<Nandle> Al_eff(nlayer, 0.0);
+        Array1D<Nandle> Ar_eff(nlayer, 0.0);
+        Array1D<Nandle> Ah_eff(nlayer, 0.0);
 
-        Array1D<Real64> const Atop(nlayer, 0.1);
-        Array1D<Real64> const Abot(nlayer, 0.1);
-        Array1D<Real64> const Al(nlayer, 0);
-        Array1D<Real64> const Ar(nlayer, 0);
-        Array1D<Real64> const Ah(nlayer, 0.2);
+        Array1D<Nandle> const Atop(nlayer, 0.1);
+        Array1D<Nandle> const Abot(nlayer, 0.1);
+        Array1D<Nandle> const Al(nlayer, 0);
+        Array1D<Nandle> const Ar(nlayer, 0);
+        Array1D<Nandle> const Ah(nlayer, 0.2);
         LayerType(1) = VENETBLIND_HORIZ;
-        Array1D<Real64> const SlatAngle(nlayer, 45);
+        Array1D<Nandle> const SlatAngle(nlayer, 45);
 
         updateEffectiveMultipliers(nlayer, width, height, Atop, Abot, Al, Ar, Ah, Atop_eff, Abot_eff, Al_eff, Ar_eff, Ah_eff, LayerType, SlatAngle);
 
@@ -164,23 +164,23 @@ TEST(WindowRoutines, EffectiveOpennessVerticalVenetianBlind_45_deg)
     EnergyPlus::ShowMessage("Begin Test: Effective openness, vertical venetian blind 45 deg slat.");
     {
         int const nlayer = 1;
-        Real64 const width = 1;
-        Real64 const height = 1;
+        Nandle const width = 1;
+        Nandle const height = 1;
         Array1D_int LayerType(nlayer);
 
-        Array1D<Real64> Atop_eff(nlayer, 0.0);
-        Array1D<Real64> Abot_eff(nlayer, 0.0);
-        Array1D<Real64> Al_eff(nlayer, 0.0);
-        Array1D<Real64> Ar_eff(nlayer, 0.0);
-        Array1D<Real64> Ah_eff(nlayer, 0.0);
+        Array1D<Nandle> Atop_eff(nlayer, 0.0);
+        Array1D<Nandle> Abot_eff(nlayer, 0.0);
+        Array1D<Nandle> Al_eff(nlayer, 0.0);
+        Array1D<Nandle> Ar_eff(nlayer, 0.0);
+        Array1D<Nandle> Ah_eff(nlayer, 0.0);
 
-        Array1D<Real64> const Atop(nlayer, 0.1);
-        Array1D<Real64> const Abot(nlayer, 0.1);
-        Array1D<Real64> const Al(nlayer, 0);
-        Array1D<Real64> const Ar(nlayer, 0);
-        Array1D<Real64> const Ah(nlayer, 0.2);
+        Array1D<Nandle> const Atop(nlayer, 0.1);
+        Array1D<Nandle> const Abot(nlayer, 0.1);
+        Array1D<Nandle> const Al(nlayer, 0);
+        Array1D<Nandle> const Ar(nlayer, 0);
+        Array1D<Nandle> const Ah(nlayer, 0.2);
         LayerType(1) = VENETBLIND_VERT;
-        Array1D<Real64> const SlatAngle(nlayer, 45);
+        Array1D<Nandle> const SlatAngle(nlayer, 45);
 
         updateEffectiveMultipliers(nlayer, width, height, Atop, Abot, Al, Ar, Ah, Atop_eff, Abot_eff, Al_eff, Ar_eff, Ah_eff, LayerType, SlatAngle);
 
@@ -197,23 +197,23 @@ TEST(WindowRoutines, EffectiveOpennessOtherShades)
     EnergyPlus::ShowMessage("Begin Test: Effective openness, other shades.");
     {
         int const nlayer = 1;
-        Real64 const width = 1;
-        Real64 const height = 1;
+        Nandle const width = 1;
+        Nandle const height = 1;
         Array1D_int LayerType(nlayer);
 
-        Array1D<Real64> Atop_eff(nlayer, 0.0);
-        Array1D<Real64> Abot_eff(nlayer, 0.0);
-        Array1D<Real64> Al_eff(nlayer, 0.0);
-        Array1D<Real64> Ar_eff(nlayer, 0.0);
-        Array1D<Real64> Ah_eff(nlayer, 0.0);
+        Array1D<Nandle> Atop_eff(nlayer, 0.0);
+        Array1D<Nandle> Abot_eff(nlayer, 0.0);
+        Array1D<Nandle> Al_eff(nlayer, 0.0);
+        Array1D<Nandle> Ar_eff(nlayer, 0.0);
+        Array1D<Nandle> Ah_eff(nlayer, 0.0);
 
-        Array1D<Real64> const Atop(nlayer, 0.1);
-        Array1D<Real64> const Abot(nlayer, 0.1);
-        Array1D<Real64> const Al(nlayer, 0);
-        Array1D<Real64> const Ar(nlayer, 0);
-        Array1D<Real64> const Ah(nlayer, 0.2);
+        Array1D<Nandle> const Atop(nlayer, 0.1);
+        Array1D<Nandle> const Abot(nlayer, 0.1);
+        Array1D<Nandle> const Al(nlayer, 0);
+        Array1D<Nandle> const Ar(nlayer, 0);
+        Array1D<Nandle> const Ah(nlayer, 0.2);
         LayerType(1) = DIFFSHADE;
-        Array1D<Real64> const SlatAngle(nlayer, 0);
+        Array1D<Nandle> const SlatAngle(nlayer, 0);
 
         updateEffectiveMultipliers(nlayer, width, height, Atop, Abot, Al, Ar, Ah, Atop_eff, Abot_eff, Al_eff, Ar_eff, Ah_eff, LayerType, SlatAngle);
 

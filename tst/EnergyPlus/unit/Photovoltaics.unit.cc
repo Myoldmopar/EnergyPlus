@@ -65,9 +65,9 @@ TEST_F(EnergyPlusFixture, PV_Sandia_AirMassAtHighZenith)
     // unit test for issue #5528, test behavior of function AbsoluteAirMass at zenith angle above 89.9 degrees.
 
     // first check above the degree threshold, compare to side calc
-    Real64 zenithAngleDeg = 90.0;
-    Real64 altitude = 1;
-    Real64 airMass = Photovoltaics::AbsoluteAirMass(zenithAngleDeg, altitude);
+    Nandle zenithAngleDeg = 90.0;
+    Nandle altitude = 1;
+    Nandle airMass = Photovoltaics::AbsoluteAirMass(zenithAngleDeg, altitude);
     EXPECT_NE(airMass, 999); // would have been true before fix
     EXPECT_NEAR(airMass, 36.31531, 0.1);
 

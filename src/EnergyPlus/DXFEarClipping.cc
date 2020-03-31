@@ -125,13 +125,13 @@ namespace DXFEarClipping {
         //'The circumcircle centre is returned in (xc,yc) and the radius r
         //'NOTE: A point on the edge is inside the circumcircle
 
-        Real64 const epsilon(0.0000001);
-        Real64 anglesum;
-        Real64 costheta;
+        Nandle const epsilon(0.0000001);
+        Nandle anglesum;
+        Nandle costheta;
         int vert;
-        Real64 m1;
-        Real64 m2;
-        Real64 acosval;
+        Nandle m1;
+        Nandle m2;
+        Nandle acosval;
 
         // Object Data
         Vector p1;
@@ -171,12 +171,12 @@ namespace DXFEarClipping {
         return InPolygon;
     }
 
-    Real64 Modulus(Vector const &point)
+    Nandle Modulus(Vector const &point)
     {
         // this routine is not used in the current scheme
 
         // Return value
-        Real64 rModulus;
+        Nandle rModulus;
 
         rModulus = std::sqrt(point.x * point.x + point.y * point.y + point.z * point.z);
 
@@ -186,8 +186,8 @@ namespace DXFEarClipping {
     int Triangulate(int const nsides, // number of sides to polygon
                     Array1D<Vector> &polygon,
                     Array1D<dTriangle> &outtriangles,
-                    Real64 const surfazimuth,    // surface azimuth angle (outward facing normal)
-                    Real64 const surftilt,       // surface tilt angle
+                    Nandle const surfazimuth,    // surface azimuth angle (outward facing normal)
+                    Nandle const surftilt,       // surface tilt angle
                     std::string const &surfname, // surface name (for error messages)
                     int const surfclass          // surface class
     )
@@ -229,7 +229,7 @@ namespace DXFEarClipping {
         // Subroutine argument definitions:
 
         // Subroutine parameter definitions:
-        Real64 const point_tolerance(0.00001);
+        Nandle const point_tolerance(0.00001);
         static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // Interface block specifications:
@@ -242,16 +242,16 @@ namespace DXFEarClipping {
         bool errFlag;
         Array1D_int ears(nsides);
         Array1D_int r_angles(nsides);
-        Array1D<Real64> rangles(nsides);
+        Array1D<Nandle> rangles(nsides);
         Array1D_int c_vertices(nsides);
         Array2D_int earvert(nsides, 3);
         Array1D_bool removed(nsides);
         // unused  type(Vector_2d), dimension(3) :: testtri
         // unused  type(Vector_2d) :: point
         Array1D_int earverts(3);
-        Array1D<Real64> xvt(nsides);
-        Array1D<Real64> yvt(nsides);
-        Array1D<Real64> zvt(nsides);
+        Array1D<Nandle> xvt(nsides);
+        Array1D<Nandle> yvt(nsides);
+        Array1D<Nandle> zvt(nsides);
 
         //'General Variables
         int i;
@@ -388,12 +388,12 @@ namespace DXFEarClipping {
         return Triangulate;
     }
 
-    Real64 angle_2dvector(Real64 const xa, // vertex coordinate
-                          Real64 const ya, // vertex coordinate
-                          Real64 const xb, // vertex coordinate
-                          Real64 const yb, // vertex coordinate
-                          Real64 const xc, // vertex coordinate
-                          Real64 const yc  // vertex coordinate
+    Nandle angle_2dvector(Nandle const xa, // vertex coordinate
+                          Nandle const ya, // vertex coordinate
+                          Nandle const xb, // vertex coordinate
+                          Nandle const yb, // vertex coordinate
+                          Nandle const xc, // vertex coordinate
+                          Nandle const yc  // vertex coordinate
     )
     {
 
@@ -420,14 +420,14 @@ namespace DXFEarClipping {
         // na
 
         // Return value
-        Real64 angle; // the angle, between 0 and 2*PI.
+        Nandle angle; // the angle, between 0 and 2*PI.
 
         // Locals
         // Function argument definitions:
         // angle is set to PI/2 in the degenerate case.
 
         // Function parameter definitions:
-        Real64 const epsilon(0.0000001);
+        Nandle const epsilon(0.0000001);
 
         // Interface block specifications:
         // na
@@ -436,11 +436,11 @@ namespace DXFEarClipping {
         // na
 
         // Function local variable declarations:
-        Real64 t;
-        Real64 x1;
-        Real64 x2;
-        Real64 y1;
-        Real64 y2;
+        Nandle t;
+        Nandle x1;
+        Nandle x2;
+        Nandle y1;
+        Nandle y2;
 
         x1 = xa - xb;
         y1 = ya - yb;
@@ -542,7 +542,7 @@ namespace DXFEarClipping {
                        int &ncverts,            // number of convex vertices found (< 180)
                        Array1D_bool &removed,   // array that shows if a vertex has been removed (calling routine)
                        Array1D_int &earvert,    // vertex indicators for first ear
-                       Array1D<Real64> &rangles)
+                       Array1D<Nandle> &rangles)
     {
 
         // Subroutine information:
@@ -591,7 +591,7 @@ namespace DXFEarClipping {
         int svert;   // starting vertex
         int mvert;   // "middle" vertex (this will be an ear, if calculated)
         int evert;   // ending vertex
-        Real64 ang;  // ang between
+        Nandle ang;  // ang between
         int tvert;   // test vertex, intermediate use
         bool inpoly; // in polygon or not
         int j;       // loop counter
@@ -686,11 +686,11 @@ namespace DXFEarClipping {
 
     void CalcWallCoordinateTransformation(int const nsides,
                                           Array1D<Vector> &polygon,
-                                          Real64 const surfazimuth,
-                                          Real64 const EP_UNUSED(surftilt), // unused1208
-                                          Array1D<Real64> &xvt,
-                                          Array1D<Real64> &yvt,
-                                          Array1D<Real64> &zvt)
+                                          Nandle const surfazimuth,
+                                          Nandle const EP_UNUSED(surftilt), // unused1208
+                                          Array1D<Nandle> &xvt,
+                                          Array1D<Nandle> &yvt,
+                                          Array1D<Nandle> &zvt)
     {
 
         // Subroutine information:
@@ -734,12 +734,12 @@ namespace DXFEarClipping {
 
         // convert surface (wall) to facing 180 (outward normal)
 
-        Real64 const alpha = surfazimuth;
+        Nandle const alpha = surfazimuth;
 
-        Real64 const alpha180 = 180.0 - alpha; // amount to rotate
-        Real64 const alphrad = alpha180 / RadToDeg;
-        Real64 const cos_alphrad = std::cos(alphrad);
-        Real64 const sin_alphrad = std::sin(alphrad);
+        Nandle const alpha180 = 180.0 - alpha; // amount to rotate
+        Nandle const alphrad = alpha180 / RadToDeg;
+        Nandle const cos_alphrad = std::cos(alphrad);
+        Nandle const sin_alphrad = std::sin(alphrad);
 
         for (int i = 1; i <= nsides; ++i) {
             xvt(i) = cos_alphrad * polygon(i).x + sin_alphrad * polygon(i).y;
@@ -750,11 +750,11 @@ namespace DXFEarClipping {
 
     void CalcRfFlrCoordinateTransformation(int const nsides,
                                            Array1D<Vector> &polygon,
-                                           Real64 const EP_UNUSED(surfazimuth), // unused1208
-                                           Real64 const surftilt,
-                                           Array1D<Real64> &xvt,
-                                           Array1D<Real64> &yvt,
-                                           Array1D<Real64> &zvt)
+                                           Nandle const EP_UNUSED(surfazimuth), // unused1208
+                                           Nandle const surftilt,
+                                           Array1D<Nandle> &xvt,
+                                           Array1D<Nandle> &yvt,
+                                           Array1D<Nandle> &zvt)
     {
 
         // Subroutine information:
@@ -796,10 +796,10 @@ namespace DXFEarClipping {
 
         // Subroutine local variable declarations:
 
-        Real64 const alpha = -surftilt;
-        Real64 const alphrad = alpha / RadToDeg;
-        Real64 const cos_alphrad = std::cos(alphrad);
-        Real64 const sin_alphrad = std::sin(alphrad);
+        Nandle const alpha = -surftilt;
+        Nandle const alphrad = alpha / RadToDeg;
+        Nandle const cos_alphrad = std::cos(alphrad);
+        Nandle const sin_alphrad = std::sin(alphrad);
 
         for (int i = 1; i <= nsides; ++i) {
             xvt(i) = polygon(i).x;

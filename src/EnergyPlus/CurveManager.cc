@@ -259,13 +259,13 @@ namespace CurveManager {
         }
     }
 
-    Real64 CurveValue(int const CurveIndex,        // index of curve in curve array
-                      Real64 const Var1,           // 1st independent variable
-                      Optional<Real64 const> Var2, // 2nd independent variable
-                      Optional<Real64 const> Var3, // 3rd independent variable
-                      Optional<Real64 const> Var4, // 4th independent variable
-                      Optional<Real64 const> Var5, // 5th independent variable
-                      Optional<Real64 const> Var6  // 6th independent variable
+    Nandle CurveValue(int const CurveIndex,        // index of curve in curve array
+                      Nandle const Var1,           // 1st independent variable
+                      Optional<Nandle const> Var2, // 2nd independent variable
+                      Optional<Nandle const> Var3, // 3rd independent variable
+                      Optional<Nandle const> Var4, // 4th independent variable
+                      Optional<Nandle const> Var5, // 5th independent variable
+                      Optional<Nandle const> Var6  // 6th independent variable
     )
     {
 
@@ -289,7 +289,7 @@ namespace CurveManager {
         using DataGlobals::BeginEnvrnFlag;
 
         // Return value
-        Real64 CurveValue(0.0);
+        Nandle CurveValue(0.0);
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -410,7 +410,7 @@ namespace CurveManager {
         int CurveIndex;                  // do loop index
         int CurveNum;                    // current curve number
         Array1D_string Alphas(14);       // Alpha items for object
-        Array1D<Real64> Numbers(10000);  // Numeric items for object
+        Array1D<Nandle> Numbers(10000);  // Numeric items for object
         int NumAlphas;                   // Number of Alphas for each GetObjectItem call
         int NumNumbers;                  // Number of Numbers for each GetObjectItem call
         int IOStatus;                    // Used in GetObjectItem
@@ -1687,10 +1687,10 @@ namespace CurveManager {
 
                 std::string wpcName = Alphas(1); // Name of CP array
                 int numWindDir = NumNumbers;
-                std::vector<Real64> windDirs(numWindDir);
+                std::vector<Nandle> windDirs(numWindDir);
 
-                Real64 dirMin = 0;
-                Real64 dirMax = 0;
+                Nandle dirMin = 0;
+                Nandle dirMax = 0;
                 for (int j = 1; j <= NumNumbers; ++j) { // Wind direction
                     windDirs[j - 1] = Numbers(j);
                     dirMin = std::min(dirMin, Numbers(j));
@@ -1914,7 +1914,7 @@ namespace CurveManager {
 
                         varListLimits[varListName].push_back({min_val,max_val});
 
-                        Real64 normalizationRefValue;
+                        Nandle normalizationRefValue;
                         if (indVarInstance.count("normalization_reference_value")) {
                             normalizationRefValue = indVarInstance.at("normalization_reference_value");
                         } else {
@@ -2014,7 +2014,7 @@ namespace CurveManager {
                 }
 
                 // Normalize data
-                Real64 normalizationDivisor = 1.0;
+                Nandle normalizationDivisor = 1.0;
                 enum NormalizationMethod {NM_NONE, NM_DIVISOR_ONLY, NM_AUTO_WITH_DIVISOR};
                 NormalizationMethod normalizeMethod = NM_NONE;
                 if (fields.count("normalization_method")) {
@@ -2056,7 +2056,7 @@ namespace CurveManager {
 
                 } else if (fields.count("values")) {
                     for (auto value : fields.at("values")) {
-                        lookupValues.push_back(value.at("output_value").get<Real64>() / normalizationDivisor);
+                        lookupValues.push_back(value.at("output_value").get<Nandle>() / normalizationDivisor);
                     }
                 } else {
                     ShowSevereError(contextString + ": No values defined.");
@@ -2353,11 +2353,11 @@ namespace CurveManager {
         }
     }
 
-    Real64 PerformanceCurveObject(int const CurveIndex,        // index of curve in curve array
-                                  Real64 const Var1,           // 1st independent variable
-                                  Optional<Real64 const> Var2, // 2nd independent variable
-                                  Optional<Real64 const> Var3, // 3rd independent variable
-                                  Optional<Real64 const> Var4  // 4th independent variable
+    Nandle PerformanceCurveObject(int const CurveIndex,        // index of curve in curve array
+                                  Nandle const Var1,           // 1st independent variable
+                                  Optional<Nandle const> Var2, // 2nd independent variable
+                                  Optional<Nandle const> Var3, // 3rd independent variable
+                                  Optional<Nandle const> Var4  // 4th independent variable
     )
     {
 
@@ -2385,7 +2385,7 @@ namespace CurveManager {
         // na
 
         // Return value
-        Real64 CurveValue;
+        Nandle CurveValue;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2401,20 +2401,20 @@ namespace CurveManager {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        static Real64 const sqrt_2_inv(1.0 / std::sqrt(2.0));
+        static Nandle const sqrt_2_inv(1.0 / std::sqrt(2.0));
 
-        Real64 CoeffZ1;         // cpw22Aug2010 Coefficient Z1 in exponential skew normal curve
-        Real64 CoeffZ2;         // cpw22Aug2010 Coefficient Z2 in exponential skew normal curve
-        Real64 CoeffZ3;         // cpw22Aug2010 Coefficient Z3 in exponential skew normal curve
-        Real64 CurveValueNumer; // cpw22Aug2010 Numerator in in exponential skew normal curve
-        Real64 CurveValueDenom; // cpw22Aug2010 Numerator in in exponential skew normal curve
-        Real64 CurveValueExp;   // cpw22Aug2010 Exponential term in sigmoid curve
+        Nandle CoeffZ1;         // cpw22Aug2010 Coefficient Z1 in exponential skew normal curve
+        Nandle CoeffZ2;         // cpw22Aug2010 Coefficient Z2 in exponential skew normal curve
+        Nandle CoeffZ3;         // cpw22Aug2010 Coefficient Z3 in exponential skew normal curve
+        Nandle CurveValueNumer; // cpw22Aug2010 Numerator in in exponential skew normal curve
+        Nandle CurveValueDenom; // cpw22Aug2010 Numerator in in exponential skew normal curve
+        Nandle CurveValueExp;   // cpw22Aug2010 Exponential term in sigmoid curve
         auto const &Curve(PerfCurve(CurveIndex));
 
-        Real64 const V1(max(min(Var1, Curve.Var1Max), Curve.Var1Min));                        // 1st independent variable after limits imposed
-        Real64 const V2(Var2.present() ? max(min(Var2, Curve.Var2Max), Curve.Var2Min) : 0.0); // 2nd independent variable after limits imposed
-        Real64 const V3(Var3.present() ? max(min(Var3, Curve.Var3Max), Curve.Var3Min) : 0.0); // 3rd independent variable after limits imposed
-        Real64 const V4(Var4.present() ? max(min(Var4, Curve.Var4Max), Curve.Var4Min) : 0.0); // 4th independent variable after limits imposed
+        Nandle const V1(max(min(Var1, Curve.Var1Max), Curve.Var1Min));                        // 1st independent variable after limits imposed
+        Nandle const V2(Var2.present() ? max(min(Var2, Curve.Var2Max), Curve.Var2Min) : 0.0); // 2nd independent variable after limits imposed
+        Nandle const V3(Var3.present() ? max(min(Var3, Curve.Var3Max), Curve.Var3Min) : 0.0); // 3rd independent variable after limits imposed
+        Nandle const V4(Var4.present() ? max(min(Var4, Curve.Var4Max), Curve.Var4Min) : 0.0); // 4th independent variable after limits imposed
 
         {
             auto const SELECT_CASE_var(Curve.CurveType);
@@ -2496,17 +2496,17 @@ namespace CurveManager {
         return CurveValue;
     }
 
-    Real64 BtwxtTableInterpolation(int const CurveIndex,        // index of curve in curve array
-                                   Real64 const Var1,           // 1st independent variable
-                                   Optional<Real64 const> Var2, // 2nd independent variable
-                                   Optional<Real64 const> Var3, // 3rd independent variable
-                                   Optional<Real64 const> Var4, // 4th independent variable
-                                   Optional<Real64 const> Var5, // 5th independent variable
-                                   Optional<Real64 const> Var6  // 6th independent variable
+    Nandle BtwxtTableInterpolation(int const CurveIndex,        // index of curve in curve array
+                                   Nandle const Var1,           // 1st independent variable
+                                   Optional<Nandle const> Var2, // 2nd independent variable
+                                   Optional<Nandle const> Var3, // 3rd independent variable
+                                   Optional<Nandle const> Var4, // 4th independent variable
+                                   Optional<Nandle const> Var5, // 5th independent variable
+                                   Optional<Nandle const> Var6  // 6th independent variable
     )
     {
       // TODO: Generalize for N-dims
-      Real64 var = Var1;
+      Nandle var = Var1;
       var = max(min(var, PerfCurve(CurveIndex).Var1Max), PerfCurve(CurveIndex).Var1Min);
       std::vector<double> target{var};
       if (present(Var2)) {
@@ -2537,7 +2537,7 @@ namespace CurveManager {
 
       std::string contextString = "Table:Lookup \"" + PerfCurve(CurveIndex).Name + "\"";
       Btwxt::setMessageCallback(BtwxtMessageCallback, &contextString);
-      Real64 TableValue = btwxtManager.getGridValue(PerfCurve(CurveIndex).TableIndex,PerfCurve(CurveIndex).GridValueIndex,target);
+      Nandle TableValue = btwxtManager.getGridValue(PerfCurve(CurveIndex).TableIndex,PerfCurve(CurveIndex).GridValueIndex,target);
 
       if (PerfCurve(CurveIndex).CurveMinPresent) TableValue = max(TableValue, PerfCurve(CurveIndex).CurveMin);
       if (PerfCurve(CurveIndex).CurveMaxPresent) TableValue = min(TableValue, PerfCurve(CurveIndex).CurveMax);
@@ -2784,12 +2784,12 @@ namespace CurveManager {
     }
 
     void GetCurveMinMaxValues(int const CurveIndex,     // index of curve in curve array
-                              Real64 &Var1Min,          // Minimum values of 1st independent variable
-                              Real64 &Var1Max,          // Maximum values of 1st independent variable
-                              Optional<Real64> Var2Min, // Minimum values of 2nd independent variable
-                              Optional<Real64> Var2Max, // Maximum values of 2nd independent variable
-                              Optional<Real64> Var3Min, // Minimum values of 2nd independent variable
-                              Optional<Real64> Var3Max  // Maximum values of 2nd independent variable
+                              Nandle &Var1Min,          // Minimum values of 1st independent variable
+                              Nandle &Var1Max,          // Maximum values of 1st independent variable
+                              Optional<Nandle> Var2Min, // Minimum values of 2nd independent variable
+                              Optional<Nandle> Var2Max, // Maximum values of 2nd independent variable
+                              Optional<Nandle> Var3Min, // Minimum values of 2nd independent variable
+                              Optional<Nandle> Var3Max  // Maximum values of 2nd independent variable
     )
     {
 
@@ -2834,8 +2834,8 @@ namespace CurveManager {
 
     void SetCurveOutputMinMaxValues(int const CurveIndex,            // index of curve in curve array
                                     bool &ErrorsFound,               // TRUE when errors occur
-                                    Optional<Real64 const> CurveMin, // Minimum value of curve output
-                                    Optional<Real64 const> CurveMax  // Maximum values of curve output
+                                    Optional<Nandle const> CurveMin, // Minimum value of curve output
+                                    Optional<Nandle const> CurveMax  // Maximum values of curve output
     )
     {
 
@@ -2916,7 +2916,7 @@ namespace CurveManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumPressure;
         Array1D_string Alphas(1);     // Alpha items for object
-        Array1D<Real64> Numbers(5);   // Numeric items for object
+        Array1D<Nandle> Numbers(5);   // Numeric items for object
         int NumAlphas;                // Number of Alphas for each GetObjectItem call
         int NumNumbers;               // Number of Numbers for each GetObjectItem call
         int IOStatus;                 // Used in GetObjectItem
@@ -3053,7 +3053,7 @@ namespace CurveManager {
         return;
     }
 
-    Real64 PressureCurveValue(int const PressureCurveIndex, Real64 const MassFlow, Real64 const Density, Real64 const Viscosity)
+    Nandle PressureCurveValue(int const PressureCurveIndex, Nandle const MassFlow, Nandle const Density, Nandle const Viscosity)
     {
 
         // FUNCTION INFORMATION:
@@ -3076,7 +3076,7 @@ namespace CurveManager {
         using DataGlobals::Pi;
 
         // Return value
-        Real64 PressureCurveValue;
+        Nandle PressureCurveValue;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -3091,17 +3091,17 @@ namespace CurveManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 Diameter;
-        Real64 MinorLossCoeff;
-        Real64 Length;
-        Real64 Roughness;
+        Nandle Diameter;
+        Nandle MinorLossCoeff;
+        Nandle Length;
+        Nandle Roughness;
         bool IsConstFPresent;
-        Real64 ConstantF;
-        Real64 FrictionFactor;
-        Real64 CrossSectArea;
-        Real64 Velocity;
-        Real64 ReynoldsNumber;
-        Real64 RoughnessRatio;
+        Nandle ConstantF;
+        Nandle FrictionFactor;
+        Nandle CrossSectArea;
+        Nandle Velocity;
+        Nandle ReynoldsNumber;
+        Nandle RoughnessRatio;
 
         // Retrieve data from structure
         Diameter = PressureCurve(PressureCurveIndex).EquivDiameter;
@@ -3147,7 +3147,7 @@ namespace CurveManager {
         return PressureCurveValue;
     }
 
-    Real64 CalculateMoodyFrictionFactor(Real64 const ReynoldsNumber, Real64 const RoughnessRatio)
+    Nandle CalculateMoodyFrictionFactor(Nandle const ReynoldsNumber, Nandle const RoughnessRatio)
     {
 
         // FUNCTION INFORMATION:
@@ -3170,7 +3170,7 @@ namespace CurveManager {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 CalculateMoodyFrictionFactor;
+        Nandle CalculateMoodyFrictionFactor;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -3185,9 +3185,9 @@ namespace CurveManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 Term1;
-        Real64 Term2;
-        Real64 Term3;
+        Nandle Term1;
+        Nandle Term2;
+        Nandle Term3;
         std::string RR;
         std::string Re;
         static bool FrictionFactorErrorHasOccurred(false);
@@ -3232,11 +3232,11 @@ namespace CurveManager {
                                      int const curveIndex,                // index to curve object
                                      std::string const cFieldName,        // object field name
                                      std::string const cFieldValue,       // user input curve name
-                                     Real64 const Var1,                   // required 1st independent variable
-                                     Optional<Real64 const> Var2,         // 2nd independent variable
-                                     Optional<Real64 const> Var3,         // 3rd independent variable
-                                     Optional<Real64 const> Var4,         // 4th independent variable
-                                     Optional<Real64 const> Var5          // 5th independent variable
+                                     Nandle const Var1,                   // required 1st independent variable
+                                     Optional<Nandle const> Var2,         // 2nd independent variable
+                                     Optional<Nandle const> Var3,         // 3rd independent variable
+                                     Optional<Nandle const> Var4,         // 4th independent variable
+                                     Optional<Nandle const> Var5          // 5th independent variable
     )
     {
 
@@ -3248,7 +3248,7 @@ namespace CurveManager {
         // checks that curve output is within 10% of 1 at curve rating point
 
         // Locals
-        Real64 CurveVal;
+        Nandle CurveVal;
 
         if (curveIndex > 0) {
             CurveVal = CurveValue(curveIndex, Var1, Var2, Var3, Var4, Var5);

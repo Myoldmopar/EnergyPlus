@@ -260,22 +260,22 @@ namespace ZoneTempPredictorCorrector {
         bool InitZoneAirSetPointsOneTimeFlag(true);
         bool SetupOscillationOutputFlag(true);
     } // namespace
-    Array1D<Real64> ZoneSetPointLast;
-    Array1D<Real64> TempIndZnLd;
-    Array1D<Real64> TempDepZnLd;
-    Array1D<Real64> ZoneAirRelHum; // Zone relative humidity in percent
+    Array1D<Nandle> ZoneSetPointLast;
+    Array1D<Nandle> TempIndZnLd;
+    Array1D<Nandle> TempDepZnLd;
+    Array1D<Nandle> ZoneAirRelHum; // Zone relative humidity in percent
 
     // Zone temperature history - used only for oscillation test
-    Array2D<Real64> ZoneTempHist;
-    Array1D<Real64> ZoneTempOscillate;
-    Array1D<Real64> ZoneTempOscillateDuringOccupancy;
-    Array1D<Real64> ZoneTempOscillateInDeadband;
-    Real64 AnyZoneTempOscillate;
-    Real64 AnyZoneTempOscillateDuringOccupancy;
-    Real64 AnyZoneTempOscillateInDeadband;
-    Real64 AnnualAnyZoneTempOscillate(0.0);
-    Real64 AnnualAnyZoneTempOscillateDuringOccupancy(0.0);
-    Real64 AnnualAnyZoneTempOscillateInDeadband(0.0);
+    Array2D<Nandle> ZoneTempHist;
+    Array1D<Nandle> ZoneTempOscillate;
+    Array1D<Nandle> ZoneTempOscillateDuringOccupancy;
+    Array1D<Nandle> ZoneTempOscillateInDeadband;
+    Nandle AnyZoneTempOscillate;
+    Nandle AnyZoneTempOscillateDuringOccupancy;
+    Nandle AnyZoneTempOscillateInDeadband;
+    Nandle AnnualAnyZoneTempOscillate(0.0);
+    Nandle AnnualAnyZoneTempOscillateDuringOccupancy(0.0);
+    Nandle AnnualAnyZoneTempOscillateInDeadband(0.0);
     bool OscillationVariablesNeeded(false);
 
 
@@ -292,7 +292,7 @@ namespace ZoneTempPredictorCorrector {
     Array1D<ZoneComfortFangerControlType> SetPointSingleHeatCoolFanger;
     Array1D<ZoneComfortFangerControlType> SetPointDualHeatCoolFanger;
     AdaptiveComfortDailySetPointSchedule AdapComfortDailySetPointSchedule;
-    Array1D<Real64> AdapComfortSetPointSummerDesDay(7, -1);
+    Array1D<Nandle> AdapComfortSetPointSummerDesDay(7, -1);
 
     // Functions
     void clear_state()
@@ -341,10 +341,10 @@ namespace ZoneTempPredictorCorrector {
     }
 
     void ManageZoneAirUpdates(int const UpdateType,   // Can be iGetZoneSetPoints, iPredictStep, iCorrectStep
-                              Real64 &ZoneTempChange, // Temp change in zone air btw previous and current timestep
+                              Nandle &ZoneTempChange, // Temp change in zone air btw previous and current timestep
                               bool const ShortenTimeStepSys,
                               bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                              Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                              Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     )
     {
 
@@ -1793,10 +1793,10 @@ namespace ZoneTempPredictorCorrector {
         GetHybridModelZone();
 
         // Default multiplier values
-        Real64 ZoneVolCapMultpSens = 1.0;
-        Real64 ZoneVolCapMultpMoist = 1.0;
-        Real64 ZoneVolCapMultpCO2 = 1.0;
-        Real64 ZoneVolCapMultpGenContam = 1.0;
+        Nandle ZoneVolCapMultpSens = 1.0;
+        Nandle ZoneVolCapMultpMoist = 1.0;
+        Nandle ZoneVolCapMultpCO2 = 1.0;
+        Nandle ZoneVolCapMultpGenContam = 1.0;
 
         // Get the Zone Air Capacitance Multiplier for use in the Predictor-Corrector Procedure
         cCurrentModuleObject = "ZoneCapacitanceMultiplier:ResearchSpecial";
@@ -1877,10 +1877,10 @@ namespace ZoneTempPredictorCorrector {
 
             // Calculate the average multiplier value from all zones
             {
-                Real64 ZoneVolCapMultpSens_temp = 0.0;
-                Real64 ZoneVolCapMultpMoist_temp = 0.0;
-                Real64 ZoneVolCapMultpCO2_temp = 0.0;
-                Real64 ZoneVolCapMultpGenContam_temp = 0.0;
+                Nandle ZoneVolCapMultpSens_temp = 0.0;
+                Nandle ZoneVolCapMultpMoist_temp = 0.0;
+                Nandle ZoneVolCapMultpCO2_temp = 0.0;
+                Nandle ZoneVolCapMultpGenContam_temp = 0.0;
 
                 for (int ZoneNum = 1; ZoneNum <= NumOfZones; ZoneNum++) {
                     ZoneVolCapMultpSens_temp += Zone(ZoneNum).ZoneVolCapMultpSens;
@@ -1991,8 +1991,8 @@ namespace ZoneTempPredictorCorrector {
                                     TempControlledZone(TempControlledZoneNum).AdaptiveComfortModelTypeIndex =
                                         UtilityRoutines::FindItem(cAlphaArgs(4), AdaptiveComfortModelTypes, AdaptiveComfortModelTypes.isize());
                                     if (!AdapComfortDailySetPointSchedule.initialized) {
-                                        Array1D<Real64> runningAverageASH(NumDaysInYear, 0.0);
-                                        Array1D<Real64> runningAverageCEN(NumDaysInYear, 0.0);
+                                        Array1D<Nandle> runningAverageASH(NumDaysInYear, 0.0);
+                                        Array1D<Nandle> runningAverageCEN(NumDaysInYear, 0.0);
                                         CalculateMonthlyRunningAverageDryBulb(runningAverageASH, runningAverageCEN);
                                         CalculateAdaptiveComfortSetPointSchl(runningAverageASH, runningAverageCEN);
                                     }
@@ -2083,8 +2083,8 @@ namespace ZoneTempPredictorCorrector {
                                     TempControlledZone(TempControlledZoneNum).AdaptiveComfortModelTypeIndex =
                                         UtilityRoutines::FindItem(cAlphaArgs(4), AdaptiveComfortModelTypes, AdaptiveComfortModelTypes.isize());
                                     if (!AdapComfortDailySetPointSchedule.initialized) {
-                                        Array1D<Real64> runningAverageASH(NumDaysInYear, 0.0);
-                                        Array1D<Real64> runningAverageCEN(NumDaysInYear, 0.0);
+                                        Array1D<Nandle> runningAverageASH(NumDaysInYear, 0.0);
+                                        Array1D<Nandle> runningAverageCEN(NumDaysInYear, 0.0);
                                         CalculateMonthlyRunningAverageDryBulb(runningAverageASH, runningAverageCEN);
                                         CalculateAdaptiveComfortSetPointSchl(runningAverageASH, runningAverageCEN);
                                     }
@@ -2509,7 +2509,7 @@ namespace ZoneTempPredictorCorrector {
         }
     }
 
-    void CalculateMonthlyRunningAverageDryBulb(Array1D<Real64> &runningAverageASH, Array1D<Real64> &runningAverageCEN)
+    void CalculateMonthlyRunningAverageDryBulb(Array1D<Nandle> &runningAverageASH, Array1D<Nandle> &runningAverageCEN)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Xuan Luo
@@ -2538,8 +2538,8 @@ namespace ZoneTempPredictorCorrector {
         std::string lineAvg;
         std::string epwLine;
 
-        Real64 dryBulb;
-        Real64 avgDryBulb;
+        Nandle dryBulb;
+        Nandle avgDryBulb;
 
         int epwFile;
         bool epwFileExists;
@@ -2552,8 +2552,8 @@ namespace ZoneTempPredictorCorrector {
         std::string::size_type pos;
         int ind, i, j;
 
-        Array1D<Real64> adaptiveTemp(NumDaysInYear, 0.0);
-        Array1D<Real64> dailyDryTemp(NumDaysInYear, 0.0);
+        Array1D<Nandle> adaptiveTemp(NumDaysInYear, 0.0);
+        Array1D<Nandle> dailyDryTemp(NumDaysInYear, 0.0);
 
         readStat = 0;
         {
@@ -2652,7 +2652,7 @@ namespace ZoneTempPredictorCorrector {
         }
     }
 
-    void CalculateAdaptiveComfortSetPointSchl(Array1D<Real64> const &runningAverageASH, Array1D<Real64> const &runningAverageCEN)
+    void CalculateAdaptiveComfortSetPointSchl(Array1D<Nandle> const &runningAverageASH, Array1D<Nandle> const &runningAverageCEN)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Xuan Luo
@@ -2673,7 +2673,7 @@ namespace ZoneTempPredictorCorrector {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int const summerDesignDayTypeIndex(9);
-        Real64 GrossApproxAvgDryBulbDesignDay(0.0);
+        Nandle GrossApproxAvgDryBulbDesignDay(0.0);
 
         for (size_t i = 1; i <= DesDayInput.size(); i++) {
             // Summer design day
@@ -3277,7 +3277,7 @@ namespace ZoneTempPredictorCorrector {
 
     void PredictSystemLoads(bool const ShortenTimeStepSys,
                             bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                            Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                            Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     )
     {
 
@@ -3353,30 +3353,30 @@ namespace ZoneTempPredictorCorrector {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SumIntGain; // Zone sum of convective internal gains
-        Real64 SumHA;      // Zone sum of Hc*Area
-        Real64 SumHATsurf; // Zone sum of Hc*Area*Tsurf
-        Real64 SumHATref;  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-        Real64 SumMCp;     // Zone sum of MassFlowRate*Cp
-        Real64 SumMCpT;    // Zone sum of MassFlowRate*Cp*T
-        Real64 SumSysMCp;  // Zone sum of air system MassFlowRate*Cp
-        Real64 SumSysMCpT; // Zone sum of air system MassFlowRate*Cp*
-        Real64 SumIntGainExceptPeople;
-        Real64 TempDepCoef; // Formerly CoefSumha
-        Real64 TempIndCoef; // Formerly CoefSumhat
-        Real64 AirCap;      // Formerly CoefAirrat
+        Nandle SumIntGain; // Zone sum of convective internal gains
+        Nandle SumHA;      // Zone sum of Hc*Area
+        Nandle SumHATsurf; // Zone sum of Hc*Area*Tsurf
+        Nandle SumHATref;  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+        Nandle SumMCp;     // Zone sum of MassFlowRate*Cp
+        Nandle SumMCpT;    // Zone sum of MassFlowRate*Cp*T
+        Nandle SumSysMCp;  // Zone sum of air system MassFlowRate*Cp
+        Nandle SumSysMCpT; // Zone sum of air system MassFlowRate*Cp*
+        Nandle SumIntGainExceptPeople;
+        Nandle TempDepCoef; // Formerly CoefSumha
+        Nandle TempIndCoef; // Formerly CoefSumhat
+        Nandle AirCap;      // Formerly CoefAirrat
         // unused1208  REAL(r64)      :: TimeStepSeconds
-        Real64 TempHistoryTerm;
+        Nandle TempHistoryTerm;
         int ZoneNum;
-        Real64 ZoneT; // Zone temperature at previous time step
+        Nandle ZoneT; // Zone temperature at previous time step
         int RelativeZoneNum;
         int ActualZoneNum;
         int I;
         int Itemp;
-        Real64 SetpointOffset;
+        Nandle SetpointOffset;
         int RoomAirNode;
         int LoopNode;
-        Real64 RAFNFrac;
+        Nandle RAFNFrac;
 
         SumIntGainExceptPeople = 0.0;
 
@@ -3451,8 +3451,8 @@ namespace ZoneTempPredictorCorrector {
 
         // Setpoint revision for onoff thermostat
         if (NumOnOffCtrZone > 0) {
-            Real64 TempTole = 0.02;
-            Real64 Tprev;
+            Nandle TempTole = 0.02;
+            Nandle Tprev;
             for (RelativeZoneNum = 1; RelativeZoneNum <= NumTempControlledZones; ++RelativeZoneNum) {
                 if (TempControlledZone(RelativeZoneNum).DeltaTCutSet > 0.0) {
                     if (ShortenTimeStepSys) {
@@ -3872,9 +3872,9 @@ namespace ZoneTempPredictorCorrector {
         int SetPointTempSchedIndexCold;
         int SchedNameIndex;
         int SchedTypeIndex;
-        Array2D<Real64> DaySPValues; // Day room temp setpoint values - for optimum start
+        Array2D<Nandle> DaySPValues; // Day room temp setpoint values - for optimum start
         int OccStartTime;            // Occupancy start time - for optimum start
-        Real64 DeltaT;               // Temperature difference between cutout and setpoint
+        Nandle DeltaT;               // Temperature difference between cutout and setpoint
 
         // FLOW:
         TempControlType = 0; // Default
@@ -4071,7 +4071,7 @@ namespace ZoneTempPredictorCorrector {
         OverrideAirSetPointsforEMSCntrl();
     }
 
-    void CalcPredictedSystemLoad(int const ZoneNum, Real64 RAFNFrac)
+    void CalcPredictedSystemLoad(int const ZoneNum, Nandle RAFNFrac)
     {
 
         // SUBROUTINE INFORMATION:
@@ -4089,9 +4089,9 @@ namespace ZoneTempPredictorCorrector {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 LoadToHeatingSetPoint;
-        Real64 LoadToCoolingSetPoint;
-        Real64 ZoneSetPoint;
+        Nandle LoadToHeatingSetPoint;
+        Nandle LoadToCoolingSetPoint;
+        Nandle ZoneSetPoint;
 
         // FLOW:
         DeadBandOrSetback(ZoneNum) = false;
@@ -4118,7 +4118,7 @@ namespace ZoneTempPredictorCorrector {
                     if (TempDepZnLd(ZoneNum) == 0.0) { // B=0
                         LoadToHeatingSetPoint = AIRRAT(ZoneNum) * (TempZoneThermostatSetPoint(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                     } else {
-                        Real64 const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
+                        Nandle const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
                         LoadToHeatingSetPoint =
                             TempDepZnLd(ZoneNum) * (TempZoneThermostatSetPoint(ZoneNum) - ZoneT1(ZoneNum) * exp_700_TA) / (1.0 - exp_700_TA) -
                             TempIndZnLd(ZoneNum);
@@ -4144,7 +4144,7 @@ namespace ZoneTempPredictorCorrector {
                     if (TempDepZnLd(ZoneNum) == 0.0) { // B=0
                         LoadToCoolingSetPoint = AIRRAT(ZoneNum) * (TempZoneThermostatSetPoint(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                     } else {
-                        Real64 const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
+                        Nandle const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
                         LoadToCoolingSetPoint =
                             TempDepZnLd(ZoneNum) * (TempZoneThermostatSetPoint(ZoneNum) - ZoneT1(ZoneNum) * exp_700_TA) / (1.0 - exp_700_TA) -
                             TempIndZnLd(ZoneNum);
@@ -4177,7 +4177,7 @@ namespace ZoneTempPredictorCorrector {
                         LoadToHeatingSetPoint = AIRRAT(ZoneNum) * (TempZoneThermostatSetPoint(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                         LoadToCoolingSetPoint = AIRRAT(ZoneNum) * (TempZoneThermostatSetPoint(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                     } else {
-                        Real64 const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
+                        Nandle const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
                         LoadToHeatingSetPoint =
                             TempDepZnLd(ZoneNum) * (TempZoneThermostatSetPoint(ZoneNum) - ZoneT1(ZoneNum) * exp_700_TA) / (1.0 - exp_700_TA) -
                             TempIndZnLd(ZoneNum);
@@ -4258,7 +4258,7 @@ namespace ZoneTempPredictorCorrector {
                         LoadToHeatingSetPoint = AIRRAT(ZoneNum) * (ZoneThermostatSetPointLo(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                         LoadToCoolingSetPoint = AIRRAT(ZoneNum) * (ZoneThermostatSetPointHi(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                     } else {
-                        Real64 const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
+                        Nandle const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
                         LoadToHeatingSetPoint =
                             TempDepZnLd(ZoneNum) * (ZoneThermostatSetPointLo(ZoneNum) - ZoneT1(ZoneNum) * exp_700_TA) / (1.0 - exp_700_TA) -
                             TempIndZnLd(ZoneNum);
@@ -4351,7 +4351,7 @@ namespace ZoneTempPredictorCorrector {
                         if (TempDepZnLd(ZoneNum) == 0.0) { // B=0
                             LoadToCoolingSetPoint = AIRRAT(ZoneNum) * (ZoneThermostatSetPointHi(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                         } else {
-                            Real64 const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
+                            Nandle const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
                             LoadToCoolingSetPoint =
                                 TempDepZnLd(ZoneNum) * (ZoneThermostatSetPointHi(ZoneNum) - ZoneT1(ZoneNum) * exp_700_TA) / (1.0 - exp_700_TA) -
                                 TempIndZnLd(ZoneNum);
@@ -4372,7 +4372,7 @@ namespace ZoneTempPredictorCorrector {
                         if (TempDepZnLd(ZoneNum) == 0.0) { // B=0
                             LoadToHeatingSetPoint = AIRRAT(ZoneNum) * (ZoneThermostatSetPointLo(ZoneNum) - ZoneT1(ZoneNum)) - TempIndZnLd(ZoneNum);
                         } else {
-                            Real64 const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
+                            Nandle const exp_700_TA(std::exp(min(700.0, -TempDepZnLd(ZoneNum) / AIRRAT(ZoneNum))));
                             LoadToHeatingSetPoint =
                                 TempDepZnLd(ZoneNum) * (ZoneThermostatSetPointLo(ZoneNum) - ZoneT1(ZoneNum) * exp_700_TA) / (1.0 - exp_700_TA) -
                                 TempIndZnLd(ZoneNum);
@@ -4427,7 +4427,7 @@ namespace ZoneTempPredictorCorrector {
                 ZoneSysEnergyDemand(ZoneNum).OutputRequiredToCoolingSP; // array assignment
     }
 
-    void CalcPredictedHumidityRatio(int const ZoneNum, Real64 RAFNFrac)
+    void CalcPredictedHumidityRatio(int const ZoneNum, Nandle RAFNFrac)
     {
 
         // SUBROUTINE INFORMATION:
@@ -4461,22 +4461,22 @@ namespace ZoneTempPredictorCorrector {
         static std::string const RoutineName("CalcPredictedHumidityRatio");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 LatentGain; // Zone latent load
-        Real64 RhoAir;
-        Real64 A;
-        Real64 B;
-        Real64 C;
-        Real64 SysTimeStepInSeconds;
-        Real64 H2OHtOfVap;
-        Real64 RHSetPoint; // Relative Humidity in percent
-        Real64 WZoneSetPoint;
+        Nandle LatentGain; // Zone latent load
+        Nandle RhoAir;
+        Nandle A;
+        Nandle B;
+        Nandle C;
+        Nandle SysTimeStepInSeconds;
+        Nandle H2OHtOfVap;
+        Nandle RHSetPoint; // Relative Humidity in percent
+        Nandle WZoneSetPoint;
         int HumidControlledZoneNum;
         bool ControlledHumidZoneFlag;       // This determines whether this is a humidity controlled zone or not
-        Real64 ZoneRHHumidifyingSetPoint;   // Zone humidifying set point (%)
-        Real64 ZoneRHDehumidifyingSetPoint; // Zone dehumidifying set point (%)
-        Real64 LoadToHumidifySetPoint;      // Moisture load at humidifying set point
-        Real64 LoadToDehumidifySetPoint;    // Moisture load at dehumidifying set point
-        Real64 ZoneAirRH;                   // Zone air relative humidity
+        Nandle ZoneRHHumidifyingSetPoint;   // Zone humidifying set point (%)
+        Nandle ZoneRHDehumidifyingSetPoint; // Zone dehumidifying set point (%)
+        Nandle LoadToHumidifySetPoint;      // Moisture load at humidifying set point
+        Nandle LoadToDehumidifySetPoint;    // Moisture load at dehumidifying set point
+        Nandle ZoneAirRH;                   // Zone air relative humidity
         bool SingleSetPoint;                // This determines whether both setpoint are equal or not
         int RoomAirNode;
 
@@ -4697,7 +4697,7 @@ namespace ZoneTempPredictorCorrector {
             // the amount of moisture that must be removed by the system.
             // MoistLoadHumidSetPoint = massflow * HumRat = kgDryAir/s * kgWater/kgDryAir = kgWater/s
             WZoneSetPoint = PsyWFnTdbRhPb(ZT(ZoneNum), (ZoneRHHumidifyingSetPoint / 100.0), OutBaroPress, RoutineName);
-            Real64 exp_700_A_C(0.0);
+            Nandle exp_700_A_C(0.0);
             if (ZoneAirSolutionAlgo == Use3rdOrder) {
                 LoadToHumidifySetPoint = ((11.0 / 6.0) * C + A) * WZoneSetPoint -
                                          (B + C * (3.0 * WZoneTimeMinus1Temp(ZoneNum) - (3.0 / 2.0) * WZoneTimeMinus2Temp(ZoneNum) +
@@ -4778,21 +4778,21 @@ namespace ZoneTempPredictorCorrector {
                 ZoneSysMoistureDemand(ZoneNum).OutputRequiredToDehumidifyingSP; // array assignment
     }
 
-    void ReportMoistLoadsZoneMultiplier(Real64 &TotalLoad,
-                                        Real64 &TotalHumidLoad,
-                                        Real64 &TotalDehumidLoad,
-                                        Real64 &MoistLoadSingleZone,
-                                        Real64 &MoistLoadHumidSingleZone,
-                                        Real64 &MoistLoadDehumidSingleZone,
-                                        Real64 const ZoneMultiplier,
-                                        Real64 const ZoneMultiplierList
+    void ReportMoistLoadsZoneMultiplier(Nandle &TotalLoad,
+                                        Nandle &TotalHumidLoad,
+                                        Nandle &TotalDehumidLoad,
+                                        Nandle &MoistLoadSingleZone,
+                                        Nandle &MoistLoadHumidSingleZone,
+                                        Nandle &MoistLoadDehumidSingleZone,
+                                        Nandle const ZoneMultiplier,
+                                        Nandle const ZoneMultiplierList
     )
     {
         MoistLoadSingleZone = TotalLoad;
         MoistLoadHumidSingleZone = TotalHumidLoad;
         MoistLoadDehumidSingleZone = TotalDehumidLoad;
         
-        Real64 ZoneMultFac = ZoneMultiplier * ZoneMultiplierList;
+        Nandle ZoneMultFac = ZoneMultiplier * ZoneMultiplierList;
         
         TotalLoad *= ZoneMultFac;
         TotalHumidLoad *= ZoneMultFac;
@@ -4800,10 +4800,10 @@ namespace ZoneTempPredictorCorrector {
     }
 
 
-    void CorrectZoneAirTemp(Real64 &ZoneTempChange, // Temperature change in zone air between previous and current timestep
+    void CorrectZoneAirTemp(Nandle &ZoneTempChange, // Temperature change in zone air between previous and current timestep
                             bool const ShortenTimeStepSys,
                             bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step history
-                            Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                            Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     )
     {
 
@@ -4864,28 +4864,28 @@ namespace ZoneTempPredictorCorrector {
         static std::string const RoutineName("CorrectZoneAirTemp");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CpAir;                              // specific heat of air
-        static Real64 SumIntGain(0.0);             // Zone sum of convective internal gains
-        static Real64 SumIntGainExceptPeople(0.0); // Zone sum of convective internal gains except for convective heat from people, HybridModel
-        static Real64 SumHA(0.0);                  // Zone sum of Hc*Area
-        static Real64 SumHATsurf(0.0);             // Zone sum of Hc*Area*Tsurf
-        static Real64 SumHATref(0.0);              // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-        static Real64 SumMCp(0.0);                 // Zone sum of MassFlowRate*Cp
-        static Real64 SumMCpT(0.0);                // Zone sum of MassFlowRate*Cp*T
-        static Real64 SumSysMCp(0.0);              // Zone sum of air system MassFlowRate*Cp
-        static Real64 SumSysMCpT(0.0);             // Zone sum of air system MassFlowRate*Cp*T
-        static Real64 ZoneEnthalpyIn(0.0);         // Zone inlet air enthalpy
-        static Real64 TempDepCoef(0.0);            // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
-        static Real64 TempIndCoef(0.0);            // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
-        static Real64 AirCap(0.0);                 // Formerly CoefAirrat, coef in zone temp eqn with dim of "air power capacity"
-        static Real64 SNLoad(0.0);                 // Sensible load calculated for zone in watts and then loaded in report variables
+        Nandle CpAir;                              // specific heat of air
+        static Nandle SumIntGain(0.0);             // Zone sum of convective internal gains
+        static Nandle SumIntGainExceptPeople(0.0); // Zone sum of convective internal gains except for convective heat from people, HybridModel
+        static Nandle SumHA(0.0);                  // Zone sum of Hc*Area
+        static Nandle SumHATsurf(0.0);             // Zone sum of Hc*Area*Tsurf
+        static Nandle SumHATref(0.0);              // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+        static Nandle SumMCp(0.0);                 // Zone sum of MassFlowRate*Cp
+        static Nandle SumMCpT(0.0);                // Zone sum of MassFlowRate*Cp*T
+        static Nandle SumSysMCp(0.0);              // Zone sum of air system MassFlowRate*Cp
+        static Nandle SumSysMCpT(0.0);             // Zone sum of air system MassFlowRate*Cp*T
+        static Nandle ZoneEnthalpyIn(0.0);         // Zone inlet air enthalpy
+        static Nandle TempDepCoef(0.0);            // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
+        static Nandle TempIndCoef(0.0);            // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
+        static Nandle AirCap(0.0);                 // Formerly CoefAirrat, coef in zone temp eqn with dim of "air power capacity"
+        static Nandle SNLoad(0.0);                 // Sensible load calculated for zone in watts and then loaded in report variables
         static int ZoneNum(0);
         static int ZoneNodeNum(0); // System node number for air flow through zone either by system or as a plenum
 
         //  LOGICAL,SAVE   :: OneTimeFlag = .TRUE.
         // unusd1208  LOGICAL,SAVE   :: MyEnvrnFlag = .TRUE.
-        Real64 TempSupplyAir;
-        Real64 ZoneMult;
+        Nandle TempSupplyAir;
+        Nandle ZoneMult;
         int LoopNode;
         // unused1208  REAL(r64)           :: TimeStepSeconds  ! dt term for denominator under Cz in Seconds
 
@@ -5562,18 +5562,18 @@ namespace ZoneTempPredictorCorrector {
         int ZoneSupPlenumNum;
         bool ZoneRetPlenumAirFlag;
         bool ZoneSupPlenumAirFlag;
-        Real64 LatentGain;             // Zone latent load
-        Real64 LatentGainExceptPeople; // Zone latent load except people -- hybrid model
-        Real64 RhoAir;
-        Real64 A;
-        Real64 B;
-        Real64 C;
-        Real64 WZSat;
-        Real64 MoistureMassFlowRate;
-        Real64 ZoneMassFlowRate;
-        Real64 SysTimeStepInSeconds;
-        Real64 H2OHtOfVap;
-        Real64 ZoneMult;
+        Nandle LatentGain;             // Zone latent load
+        Nandle LatentGainExceptPeople; // Zone latent load except people -- hybrid model
+        Nandle RhoAir;
+        Nandle A;
+        Nandle B;
+        Nandle C;
+        Nandle WZSat;
+        Nandle MoistureMassFlowRate;
+        Nandle ZoneMassFlowRate;
+        Nandle SysTimeStepInSeconds;
+        Nandle H2OHtOfVap;
+        Nandle ZoneMult;
         int ADUListIndex;
         int ADUNum;
         int ADUInNode;
@@ -5734,18 +5734,18 @@ namespace ZoneTempPredictorCorrector {
         }
     }
 
-    void DownInterpolate4HistoryValues(Real64 const OldTimeStep,
-                                       Real64 const NewTimeStep,
-                                       Real64 &oldVal0,
-                                       Real64 &oldVal1,
-                                       Real64 &oldVal2,
-                                       Real64 &EP_UNUSED(oldVal3),
-                                       Real64 &EP_UNUSED(oldVal4),
-                                       Real64 &newVal0,
-                                       Real64 &newVal1,
-                                       Real64 &newVal2,
-                                       Real64 &newVal3, // unused 1208
-                                       Real64 &newVal4  // unused 1208
+    void DownInterpolate4HistoryValues(Nandle const OldTimeStep,
+                                       Nandle const NewTimeStep,
+                                       Nandle &oldVal0,
+                                       Nandle &oldVal1,
+                                       Nandle &oldVal2,
+                                       Nandle &EP_UNUSED(oldVal3),
+                                       Nandle &EP_UNUSED(oldVal4),
+                                       Nandle &newVal0,
+                                       Nandle &newVal1,
+                                       Nandle &newVal2,
+                                       Nandle &newVal3, // unused 1208
+                                       Nandle &newVal4  // unused 1208
     )
     {
         // SUBROUTINE INFORMATION:
@@ -5765,18 +5765,18 @@ namespace ZoneTempPredictorCorrector {
         //  is expected to be roughly integer-valued and near 2.0 or 3.0 or 4.0 or more.
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 oldTime0;
-        Real64 oldTime1;
-        Real64 oldTime2;
-        Real64 oldTime3;
-        Real64 oldTime4;
-        Real64 newTime0;
-        Real64 newTime1;
-        Real64 newTime2;
-        Real64 newTime3;
-        Real64 newTime4;
+        Nandle oldTime0;
+        Nandle oldTime1;
+        Nandle oldTime2;
+        Nandle oldTime3;
+        Nandle oldTime4;
+        Nandle newTime0;
+        Nandle newTime1;
+        Nandle newTime2;
+        Nandle newTime3;
+        Nandle newTime4;
 
-        Real64 DSRatio;
+        Nandle DSRatio;
 
         // first construct data on timestamps for interpolating with later
         oldTime0 = 0.0;
@@ -5820,16 +5820,16 @@ namespace ZoneTempPredictorCorrector {
     }
 
     void InverseModelTemperature(int const ZoneNum,              // Zone number
-                                 Real64 &SumIntGain,             // Zone sum of convective internal gains
-                                 Real64 &SumIntGainExceptPeople, // Zone sum of convective internal gains except for people
-                                 Real64 &SumHA,                  // Zone sum of Hc*Area
-                                 Real64 &SumHATsurf,             // Zone sum of Hc*Area*Tsurf
-                                 Real64 &SumHATref,              // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-                                 Real64 &SumMCp,                 // Zone sum of MassFlowRate*Cp
-                                 Real64 &SumMCpT,                // Zone sum of MassFlowRate*Cp*T
-                                 Real64 &SumSysMCp,              // Zone sum of air system MassFlowRate*Cp
-                                 Real64 &SumSysMCpT,             // Zone sum of air system MassFlowRate*Cp*T
-                                 Real64 &AirCap                  // Formerly CoefAirrat, coef in zone temp eqn with dim of "air power capacity"rd
+                                 Nandle &SumIntGain,             // Zone sum of convective internal gains
+                                 Nandle &SumIntGainExceptPeople, // Zone sum of convective internal gains except for people
+                                 Nandle &SumHA,                  // Zone sum of Hc*Area
+                                 Nandle &SumHATsurf,             // Zone sum of Hc*Area*Tsurf
+                                 Nandle &SumHATref,              // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+                                 Nandle &SumMCp,                 // Zone sum of MassFlowRate*Cp
+                                 Nandle &SumMCpT,                // Zone sum of MassFlowRate*Cp*T
+                                 Nandle &SumSysMCp,              // Zone sum of air system MassFlowRate*Cp
+                                 Nandle &SumSysMCpT,             // Zone sum of air system MassFlowRate*Cp*T
+                                 Nandle &AirCap                  // Formerly CoefAirrat, coef in zone temp eqn with dim of "air power capacity"rd
     )
     {
         // SUBROUTINE INFORMATION:
@@ -5848,40 +5848,40 @@ namespace ZoneTempPredictorCorrector {
         static std::string const RoutineName("InverseModelTemperature");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CpAir;                   // specific heat of air
-        static Real64 TempDepCoef(0.0); // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
-        static Real64 TempIndCoef(0.0); // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
-        static Real64 AirCapHM(0.0);    // Air power capacity for hybrid modeling
+        Nandle CpAir;                   // specific heat of air
+        static Nandle TempDepCoef(0.0); // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
+        static Nandle TempIndCoef(0.0); // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
+        static Nandle AirCapHM(0.0);    // Air power capacity for hybrid modeling
 
-        Real64 AA(0.0);
-        Real64 BB(0.0);
-        Real64 CC(0.0);
-        Real64 DD(0.0);
-        Real64 SumIntGainPeople(0.0); // Inversely solved convectice heat gain from people
-        Real64 SumSysMCp_HM(0.0);
-        Real64 SumSysMCpT_HM(0.0);
-        Real64 NumPeople(0.0);          // Inversely solved number of people in the zone
-        Real64 FractionSensible(0.0);   // Default sensible portion of the total heat from people
-        Real64 FractionRadiation(0.0);  // Default radiation portion of the sensible heat from people
-        Real64 FractionConvection(0.0); // Default convection portion of the sensible heat from people
-        Real64 ActivityLevel(0.0);      // People activity level
-        Real64 UpperBound(0.0);         // Upper bound of number of people
-        Real64 zone_M_T(0.0);
-        Real64 delta_T(0.0);
-        Real64 AirDensity(0.0);
-        Real64 M_inf(0.0);
-        Real64 ACH_inf(0.0);
-        Real64 ZoneMult;
+        Nandle AA(0.0);
+        Nandle BB(0.0);
+        Nandle CC(0.0);
+        Nandle DD(0.0);
+        Nandle SumIntGainPeople(0.0); // Inversely solved convectice heat gain from people
+        Nandle SumSysMCp_HM(0.0);
+        Nandle SumSysMCpT_HM(0.0);
+        Nandle NumPeople(0.0);          // Inversely solved number of people in the zone
+        Nandle FractionSensible(0.0);   // Default sensible portion of the total heat from people
+        Nandle FractionRadiation(0.0);  // Default radiation portion of the sensible heat from people
+        Nandle FractionConvection(0.0); // Default convection portion of the sensible heat from people
+        Nandle ActivityLevel(0.0);      // People activity level
+        Nandle UpperBound(0.0);         // Upper bound of number of people
+        Nandle zone_M_T(0.0);
+        Nandle delta_T(0.0);
+        Nandle AirDensity(0.0);
+        Nandle M_inf(0.0);
+        Nandle ACH_inf(0.0);
+        Nandle ZoneMult;
 
         ZoneMult = Zone(ZoneNum).Multiplier * Zone(ZoneNum).ListMultiplier;
         Zone(ZoneNum).ZoneMeasuredTemperature = GetCurrentScheduleValue(HybridModelZone(ZoneNum).ZoneMeasuredTemperatureSchedulePtr);
 
         // HM calculation only HM calculation period start
         if (DayOfYear >= HybridModelZone(ZoneNum).HybridStartDayOfYear && DayOfYear <= HybridModelZone(ZoneNum).HybridEndDayOfYear) {
-            Real64 HMMultiplierAverage(1.0);
-            Real64 MultpHM(1.0);
+            Nandle HMMultiplierAverage(1.0);
+            Nandle MultpHM(1.0);
 
-            ZT(ZoneNum) = Zone(ZoneNum).ZoneMeasuredTemperature; // Array1D<Real64> ZT -- Zone
+            ZT(ZoneNum) = Zone(ZoneNum).ZoneMeasuredTemperature; // Array1D<Nandle> ZT -- Zone
                                                                  // Air Temperature Averaged over
                                                                  // the System Time Increment
             if (HybridModelZone(ZoneNum).InfiltrationCalc_T && UseZoneTimeStepHistory) {
@@ -5896,7 +5896,7 @@ namespace ZoneTempPredictorCorrector {
                     Zone(ZoneNum).ZoneMeasuredSupplyAirHumidityRatio =
                         GetCurrentScheduleValue(HybridModelZone(ZoneNum).ZoneSupplyAirHumidityRatioSchedulePtr);
                     // Calculate the air humidity ratio at supply air inlet.
-                    Real64 CpAirInlet(0.0);
+                    Nandle CpAirInlet(0.0);
                     CpAirInlet = PsyCpAirFnW(Zone(ZoneNum).ZoneMeasuredSupplyAirHumidityRatio);
 
                     SumSysMCp_HM = Zone(ZoneNum).ZoneMeasuredSupplyAirFlowRate * CpAirInlet;
@@ -5953,7 +5953,7 @@ namespace ZoneTempPredictorCorrector {
                     // PreviousMeasuredZT1(ZoneNum)??
                     AirCapHM = TempIndCoef / (ZT(ZoneNum) - PreviousMeasuredZT1(ZoneNum)); // Inverse equation
                 } else {
-                    Real64 AirCapHM_temp = 0.0;
+                    Nandle AirCapHM_temp = 0.0;
                     if (TempIndCoef == TempDepCoef * ZT(ZoneNum)) {
                         AirCapHM_temp = 0.0; //  This is the denominator.
                     } else {
@@ -6038,7 +6038,7 @@ namespace ZoneTempPredictorCorrector {
                         GetCurrentScheduleValue(HybridModelZone(ZoneNum).ZoneSupplyAirHumidityRatioSchedulePtr);
 
                     // Calculate the air humidity ratio at supply air inlet.
-                    Real64 CpAirInlet(0.0);
+                    Nandle CpAirInlet(0.0);
                     CpAirInlet = PsyCpAirFnW(Zone(ZoneNum).ZoneMeasuredSupplyAirHumidityRatio);
 
                     SumSysMCp_HM = Zone(ZoneNum).ZoneMeasuredSupplyAirFlowRate * CpAirInlet;
@@ -6073,12 +6073,12 @@ namespace ZoneTempPredictorCorrector {
     }
 
     void InverseModelHumidity(int const ZoneNum,              // Zone number
-                              Real64 &LatentGain,             // Zone sum of latent gain
-                              Real64 &LatentGainExceptPeople, // Zone sum of latent gain except for people
-                              Real64 &ZoneMassFlowRate,       // Zone air mass flow rate
-                              Real64 &MoistureMassFlowRate,   // Zone moisture mass flow rate
-                              Real64 &H2OHtOfVap,             // Heat of vaporization of air
-                              Real64 &RhoAir                  // Air density
+                              Nandle &LatentGain,             // Zone sum of latent gain
+                              Nandle &LatentGainExceptPeople, // Zone sum of latent gain except for people
+                              Nandle &ZoneMassFlowRate,       // Zone air mass flow rate
+                              Nandle &MoistureMassFlowRate,   // Zone moisture mass flow rate
+                              Nandle &H2OHtOfVap,             // Heat of vaporization of air
+                              Nandle &RhoAir                  // Air density
     )
     {
         // SUBROUTINE INFORMATION:
@@ -6097,24 +6097,24 @@ namespace ZoneTempPredictorCorrector {
         static std::string const RoutineName("InverseModelHumidity");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AA(0.0);
-        Real64 BB(0.0);
-        Real64 CC(0.0);
-        Real64 DD(0.0);
-        Real64 SumSysM_HM(0.0);
-        Real64 SumSysMHumRat_HM(0.0);
-        Real64 LatentGainPeople(0.0);
-        Real64 NumPeople(0.0);
-        Real64 FractionSensible(0.0);
-        Real64 ActivityLevel(0.0);
-        Real64 UpperBound(0.0);
-        Real64 zone_M_HR(0.0);
-        Real64 delta_HR(0.0);
-        Real64 AirDensity(0.0);
-        Real64 CpAir(0.0);
-        Real64 M_inf(0.0);
-        Real64 ACH_inf(0.0);
-        Real64 SysTimeStepInSeconds(0.0);
+        Nandle AA(0.0);
+        Nandle BB(0.0);
+        Nandle CC(0.0);
+        Nandle DD(0.0);
+        Nandle SumSysM_HM(0.0);
+        Nandle SumSysMHumRat_HM(0.0);
+        Nandle LatentGainPeople(0.0);
+        Nandle NumPeople(0.0);
+        Nandle FractionSensible(0.0);
+        Nandle ActivityLevel(0.0);
+        Nandle UpperBound(0.0);
+        Nandle zone_M_HR(0.0);
+        Nandle delta_HR(0.0);
+        Nandle AirDensity(0.0);
+        Nandle CpAir(0.0);
+        Nandle M_inf(0.0);
+        Nandle ACH_inf(0.0);
+        Nandle SysTimeStepInSeconds(0.0);
         SysTimeStepInSeconds = SecInHour * TimeStepSys;
 
         // Get measured zone humidity ratio
@@ -6231,14 +6231,14 @@ namespace ZoneTempPredictorCorrector {
     }
 
     void CalcZoneSums(int const ZoneNum,  // Zone number
-                      Real64 &SumIntGain, // Zone sum of convective internal gains
-                      Real64 &SumHA,      // Zone sum of Hc*Area
-                      Real64 &SumHATsurf, // Zone sum of Hc*Area*Tsurf
-                      Real64 &SumHATref,  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-                      Real64 &SumMCp,     // Zone sum of MassFlowRate*Cp
-                      Real64 &SumMCpT,    // Zone sum of MassFlowRate*Cp*T
-                      Real64 &SumSysMCp,  // Zone sum of air system MassFlowRate*Cp
-                      Real64 &SumSysMCpT  // Zone sum of air system MassFlowRate*Cp*T
+                      Nandle &SumIntGain, // Zone sum of convective internal gains
+                      Nandle &SumHA,      // Zone sum of Hc*Area
+                      Nandle &SumHATsurf, // Zone sum of Hc*Area*Tsurf
+                      Nandle &SumHATref,  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+                      Nandle &SumMCp,     // Zone sum of MassFlowRate*Cp
+                      Nandle &SumMCpT,    // Zone sum of MassFlowRate*Cp*T
+                      Nandle &SumSysMCp,  // Zone sum of air system MassFlowRate*Cp
+                      Nandle &SumSysMCpT  // Zone sum of air system MassFlowRate*Cp*T
     )
     {
 
@@ -6279,24 +6279,24 @@ namespace ZoneTempPredictorCorrector {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 NodeTemp(0.0); // System node temperature //Autodesk:Init Initialization added to elim poss of use uninitialized
-        Real64 MassFlowRate;  // System node mass flow rate
+        Nandle NodeTemp(0.0); // System node temperature //Autodesk:Init Initialization added to elim poss of use uninitialized
+        Nandle MassFlowRate;  // System node mass flow rate
         int ZoneEquipConfigNum;
         bool ControlledZoneAirFlag;
         int ZoneRetPlenumNum;
         int ZoneSupPlenumNum;
         bool ZoneRetPlenumAirFlag;
         bool ZoneSupPlenumAirFlag;
-        Real64 CpAir;      // Specific heat of air
+        Nandle CpAir;      // Specific heat of air
         int SurfNum;       // Surface number
-        Real64 HA;         // Hc*Area
-        Real64 Area;       // Effective surface area
-        Real64 RefAirTemp; // Reference air temperature for surface convection calculations
-        Real64 ZoneMult;
+        Nandle HA;         // Hc*Area
+        Nandle Area;       // Effective surface area
+        Nandle RefAirTemp; // Reference air temperature for surface convection calculations
+        Nandle ZoneMult;
         int ADUNum;
         int ADUInNode;
         int ADUOutNode;
-        Real64 RetAirGain;
+        Nandle RetAirGain;
 
         // FLOW:
         SumIntGain = 0.0;
@@ -6355,7 +6355,7 @@ namespace ZoneTempPredictorCorrector {
                 MassFlowRate = node.MassFlowRate;
                 CpAir = PsyCpAirFnW(ZoneAirHumRat(ZoneNum));
 
-                Real64 const MassFlowRate_CpAir(MassFlowRate * CpAir);
+                Nandle const MassFlowRate_CpAir(MassFlowRate * CpAir);
                 SumSysMCp += MassFlowRate_CpAir;
                 SumSysMCpT += MassFlowRate_CpAir * NodeTemp;
             } // NodeNum
@@ -6363,7 +6363,7 @@ namespace ZoneTempPredictorCorrector {
         } else if (ZoneRetPlenumAirFlag) {
             ZoneRetPlenumNum = Zone(ZoneNum).PlenumCondNum;
             auto const &zrpc(ZoneRetPlenCond(ZoneRetPlenumNum));
-            Real64 const air_hum_rat(ZoneAirHumRat(ZoneNum));
+            Nandle const air_hum_rat(ZoneAirHumRat(ZoneNum));
             for (int NodeNum = 1, NodeNum_end = zrpc.NumInletNodes; NodeNum <= NodeNum_end; ++NodeNum) {
                 // Get node conditions
                 auto const &node(Node(zrpc.InletNode(NodeNum)));
@@ -6371,7 +6371,7 @@ namespace ZoneTempPredictorCorrector {
                 MassFlowRate = node.MassFlowRate;
                 CpAir = PsyCpAirFnW(air_hum_rat);
 
-                Real64 const MassFlowRate_CpAir(MassFlowRate * CpAir);
+                Nandle const MassFlowRate_CpAir(MassFlowRate * CpAir);
                 SumSysMCp += MassFlowRate_CpAir;
                 SumSysMCpT += MassFlowRate_CpAir * NodeTemp;
             } // NodeNum
@@ -6384,7 +6384,7 @@ namespace ZoneTempPredictorCorrector {
                     NodeTemp = Node(ADUInNode).Temp;
                     MassFlowRate = AirDistUnit(ADUNum).MassFlowRateUpStrLk;
                     CpAir = PsyCpAirFnW(air_hum_rat);
-                    Real64 const MassFlowRate_CpAir(MassFlowRate * CpAir);
+                    Nandle const MassFlowRate_CpAir(MassFlowRate * CpAir);
                     SumSysMCp += MassFlowRate_CpAir;
                     SumSysMCpT += MassFlowRate_CpAir * NodeTemp;
                 }
@@ -6393,7 +6393,7 @@ namespace ZoneTempPredictorCorrector {
                     NodeTemp = Node(ADUOutNode).Temp;
                     MassFlowRate = AirDistUnit(ADUNum).MassFlowRateDnStrLk;
                     CpAir = PsyCpAirFnW(air_hum_rat);
-                    Real64 const MassFlowRate_CpAir(MassFlowRate * CpAir);
+                    Nandle const MassFlowRate_CpAir(MassFlowRate * CpAir);
                     SumSysMCp += MassFlowRate_CpAir;
                     SumSysMCpT += MassFlowRate_CpAir * NodeTemp;
                 }
@@ -6464,14 +6464,14 @@ namespace ZoneTempPredictorCorrector {
                 // Add to the surface convection sums
                 if (SurfaceWindow(SurfNum).FrameArea > 0.0) {
                     // Window frame contribution
-                    Real64 const HA_surf(HConvIn(SurfNum) * SurfaceWindow(SurfNum).FrameArea * (1.0 + SurfaceWindow(SurfNum).ProjCorrFrIn));
+                    Nandle const HA_surf(HConvIn(SurfNum) * SurfaceWindow(SurfNum).FrameArea * (1.0 + SurfaceWindow(SurfNum).ProjCorrFrIn));
                     SumHATsurf += HA_surf * SurfaceWindow(SurfNum).FrameTempSurfIn;
                     HA += HA_surf;
                 }
 
                 if (SurfaceWindow(SurfNum).DividerArea > 0.0 && shading_flag != IntShadeOn && shading_flag != IntBlindOn) {
                     // Window divider contribution (only from shade or blind for window with divider and interior shade or blind)
-                    Real64 const HA_surf(HConvIn(SurfNum) * SurfaceWindow(SurfNum).DividerArea * (1.0 + 2.0 * SurfaceWindow(SurfNum).ProjCorrDivIn));
+                    Nandle const HA_surf(HConvIn(SurfNum) * SurfaceWindow(SurfNum).DividerArea * (1.0 + 2.0 * SurfaceWindow(SurfNum).ProjCorrDivIn));
                     SumHATsurf += HA_surf * SurfaceWindow(SurfNum).DividerTempSurfIn;
                     HA += HA_surf;
                 }
@@ -6517,18 +6517,18 @@ namespace ZoneTempPredictorCorrector {
     }
 
     void CalcZoneComponentLoadSums(int const ZoneNum,        // Zone number
-                                   Real64 const TempDepCoef, // Dependent coefficient
-                                   Real64 const TempIndCoef, // Independent coefficient
-                                   Real64 &SumIntGains,      // Zone sum of convective internal gains
-                                   Real64 &SumHADTsurfs,     // Zone sum of Hc*Area*(Tsurf - Tz)
-                                   Real64 &SumMCpDTzones,    // zone sum of MassFlowRate*cp*(TremotZone - Tz) transfer air from other zone, Mixing
-                                   Real64 &SumMCpDtInfil,    // Zone sum of MassFlowRate*Cp*(Tout - Tz) transfer from outside, ventil, earth tube
-                                   Real64 &SumMCpDTsystem,   // Zone sum of air system MassFlowRate*Cp*(Tsup - Tz)
-                                   Real64 &SumNonAirSystem,  // Zone sum of non air system convective heat gains
-                                   Real64 &CzdTdt,           // Zone air energy storage term.
-                                   Real64 &imBalance,        // put all terms in eq. 5 on RHS , should be zero
-                                   Real64 &SumEnthalpyM,     // Zone sum of phase change material melting enthlpy
-                                   Real64 &SumEnthalpyH      // Zone sum of phase change material freezing enthalpy
+                                   Nandle const TempDepCoef, // Dependent coefficient
+                                   Nandle const TempIndCoef, // Independent coefficient
+                                   Nandle &SumIntGains,      // Zone sum of convective internal gains
+                                   Nandle &SumHADTsurfs,     // Zone sum of Hc*Area*(Tsurf - Tz)
+                                   Nandle &SumMCpDTzones,    // zone sum of MassFlowRate*cp*(TremotZone - Tz) transfer air from other zone, Mixing
+                                   Nandle &SumMCpDtInfil,    // Zone sum of MassFlowRate*Cp*(Tout - Tz) transfer from outside, ventil, earth tube
+                                   Nandle &SumMCpDTsystem,   // Zone sum of air system MassFlowRate*Cp*(Tsup - Tz)
+                                   Nandle &SumNonAirSystem,  // Zone sum of non air system convective heat gains
+                                   Nandle &CzdTdt,           // Zone air energy storage term.
+                                   Nandle &imBalance,        // put all terms in eq. 5 on RHS , should be zero
+                                   Nandle &SumEnthalpyM,     // Zone sum of phase change material melting enthlpy
+                                   Nandle &SumEnthalpyH      // Zone sum of phase change material freezing enthalpy
     )
     {
 
@@ -6572,20 +6572,20 @@ namespace ZoneTempPredictorCorrector {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NodeNum;          // System node number
-        Real64 NodeTemp(0.0); // System node temperature //Autodesk:Init Initialization added to elim poss of use uninitialized
-        Real64 MassFlowRate;  // System node mass flow rate
+        Nandle NodeTemp(0.0); // System node temperature //Autodesk:Init Initialization added to elim poss of use uninitialized
+        Nandle MassFlowRate;  // System node mass flow rate
         int ZoneEquipConfigNum;
         bool ControlledZoneAirFlag;
         int ZoneRetPlenumNum;
         int ZoneSupPlenumNum;
         bool ZoneRetPlenumAirFlag;
         bool ZoneSupPlenumAirFlag;
-        Real64 RhoAir;
-        Real64 CpAir; // Specific heat of air
+        Nandle RhoAir;
+        Nandle CpAir; // Specific heat of air
         int SurfNum;  // Surface number
         // unused  REAL(r64)           :: HA                    ! Hc*Area
-        Real64 Area;       // Effective surface area
-        Real64 RefAirTemp; // Reference air temperature for surface convection calculations
+        Nandle Area;       // Effective surface area
+        Nandle RefAirTemp; // Reference air temperature for surface convection calculations
         // unused  LOGICAL             :: FirstTimeFlag
         // unused  INTEGER             :: Tref           ! Used to check if reference air temp for all surfaces in the zone are the same
         // unused  REAL(r64)           :: ZoneMult
@@ -6593,11 +6593,11 @@ namespace ZoneTempPredictorCorrector {
         int ADUNum;
         int ADUInNode;
         int ADUOutNode;
-        Real64 SumSysMCp;
-        Real64 SumSysMCpT;
-        Real64 Threshold;
-        Real64 SumRetAirGains;
-        Real64 ADUHeatAddRate;
+        Nandle SumSysMCp;
+        Nandle SumSysMCpT;
+        Nandle Threshold;
+        Nandle SumRetAirGains;
+        Nandle ADUHeatAddRate;
 
         SumIntGains = 0.0;    // Zone sum of convective internal gains
         SumHADTsurfs = 0.0;   // Zone sum of Hc*Area*(Tsurf - Tz)
@@ -6939,11 +6939,11 @@ namespace ZoneTempPredictorCorrector {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int iZone;
-        Real64 NegOscillateMagnitude;
+        Nandle NegOscillateMagnitude;
         bool isOscillate;
-        Real64 Diff12;
-        Real64 Diff23;
-        Real64 Diff34;
+        Nandle Diff12;
+        Nandle Diff23;
+        Nandle Diff34;
         /////////// hoisted into namespace ////////////
         // static bool SetupOscillationOutputFlag( true );
         /////////////////////////////////////////////////
@@ -7065,7 +7065,7 @@ namespace ZoneTempPredictorCorrector {
         }
     }
 
-    void AdjustAirSetPointsforOpTempCntrl(int const TempControlledZoneID, int const ActualZoneNum, Real64 &ZoneAirSetPoint)
+    void AdjustAirSetPointsforOpTempCntrl(int const TempControlledZoneID, int const ActualZoneNum, Nandle &ZoneAirSetPoint)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7085,8 +7085,8 @@ namespace ZoneTempPredictorCorrector {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 thisMRT;         // local variable for mean radiant temperature in this zone
-        Real64 thisMRTFraction; // local variable for fraction that MRT is in Op Temp definition
+        Nandle thisMRT;         // local variable for mean radiant temperature in this zone
+        Nandle thisMRTFraction; // local variable for fraction that MRT is in Op Temp definition
 
         if (!(AnyOpTempControl)) return; // do nothing to setpoint
 
@@ -7107,7 +7107,7 @@ namespace ZoneTempPredictorCorrector {
         ZoneAirSetPoint = (ZoneAirSetPoint - thisMRTFraction * thisMRT) / (1.0 - thisMRTFraction);
     }
 
-    void AdjustOperativeSetPointsforAdapComfort(int const TempControlledZoneID, Real64 &ZoneAirSetPoint)
+    void AdjustOperativeSetPointsforAdapComfort(int const TempControlledZoneID, Nandle &ZoneAirSetPoint)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Xuan Luo
@@ -7206,11 +7206,11 @@ namespace ZoneTempPredictorCorrector {
         int SchedTypeIndex;
         int PeopleNum;
         int ObjectCount;
-        Real64 PeopleCount;
-        Real64 SetPointLo;
-        Real64 SetPointHi;
-        Real64 NumberOccupants;
-        Real64 Tset;
+        Nandle PeopleCount;
+        Nandle SetPointLo;
+        Nandle SetPointHi;
+        Nandle NumberOccupants;
+        Nandle Tset;
 
         static bool FirstTimeFlag(true); // Flag set to make sure you get input once
 
@@ -7532,8 +7532,8 @@ namespace ZoneTempPredictorCorrector {
 
     void GetComfortSetPoints(int const PeopleNum,
                              int const ComfortControlNum,
-                             Real64 const PMVSet,
-                             Real64 &Tset // drybulb setpoint temperature for a given PMV value
+                             Nandle const PMVSet,
+                             Nandle &Tset // drybulb setpoint temperature for a given PMV value
     )
     {
 
@@ -7557,16 +7557,16 @@ namespace ZoneTempPredictorCorrector {
         // 0 = Solution; 1 = Set to Min; 2 Set to Max
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const Acc(0.001); // accuracy control for SolveRoot
+        Nandle const Acc(0.001); // accuracy control for SolveRoot
         int const MaxIter(500);  // iteration control for SolveRoot
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Tmin;            // Minimun drybulb setpoint temperature
-        Real64 Tmax;            // Maximun drybulb setpoint temperature
-        Real64 PMVResult;       // Calculated PMV value
-        Real64 PMVMin;          // Minimum allowed PMV value
-        Real64 PMVMax;          // Calculated PMV value
-        Array1D<Real64> Par(2); // Passed parameter for RegularFalsi function
+        Nandle Tmin;            // Minimun drybulb setpoint temperature
+        Nandle Tmax;            // Maximun drybulb setpoint temperature
+        Nandle PMVResult;       // Calculated PMV value
+        Nandle PMVMin;          // Minimum allowed PMV value
+        Nandle PMVMax;          // Calculated PMV value
+        Array1D<Nandle> Par(2); // Passed parameter for RegularFalsi function
         int SolFla;             // feed back flag from SolveRoot
         static int IterLimitExceededNum1(0);
         static int IterLimitErrIndex1(0);
@@ -7620,8 +7620,8 @@ namespace ZoneTempPredictorCorrector {
         }
     }
 
-    Real64 PMVResidual(Real64 const Tset,
-                       Array1D<Real64> const &Par // par(1) = PMV set point
+    Nandle PMVResidual(Nandle const Tset,
+                       Array1D<Nandle> const &Par // par(1) = PMV set point
     )
     {
         // FUNCTION INFORMATION:
@@ -7643,7 +7643,7 @@ namespace ZoneTempPredictorCorrector {
         using ThermalComfort::CalcThermalComfortFanger;
 
         // Return value
-        Real64 PMVResidual;
+        Nandle PMVResidual;
 
         // Argument array dimensioning
 
@@ -7661,7 +7661,7 @@ namespace ZoneTempPredictorCorrector {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int PeopleNum;    // index of people object
-        Real64 PMVresult; // resulting PMV values
+        Nandle PMVresult; // resulting PMV values
 
         PeopleNum = int(Par(2));
         CalcThermalComfortFanger(PeopleNum, Tset, PMVresult);
@@ -7704,10 +7704,10 @@ namespace ZoneTempPredictorCorrector {
         //  na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MaxAllowedOvercoolRange; // Maximum allowed zone overcool range [DeltaC]
-        Real64 RelativeHumidityDiff;    // Difference between zone air relative humidity and dehumidifying setpoint [%RH]
-        Real64 ZoneOvercoolRange;
-        Real64 ZoneOvercoolControlRatio;
+        Nandle MaxAllowedOvercoolRange; // Maximum allowed zone overcool range [DeltaC]
+        Nandle RelativeHumidityDiff;    // Difference between zone air relative humidity and dehumidifying setpoint [%RH]
+        Nandle ZoneOvercoolRange;
+        Nandle ZoneOvercoolControlRatio;
 
         if (!(AnyZoneTempAndHumidityControl)) return; // do nothing to setpoint
 
@@ -7859,8 +7859,8 @@ namespace ZoneTempPredictorCorrector {
         std::vector<int> uniqSch;
         uniqSch.reserve(NumSingleTempHeatingControls + NumSingleTempCoolingControls + NumSingleTempHeatCoolControls +
                         NumDualTempHeatCoolControls * 2);
-        Real64 setPointAt11;
-        Real64 setPointAt23;
+        Nandle setPointAt11;
+        Nandle setPointAt23;
         int numDays;
         std::string monthAssumed;
         std::string monthAssumed2;
@@ -7981,7 +7981,7 @@ namespace ZoneTempPredictorCorrector {
     }
 
     // returns the temperature value from a schedule at a certain time for the first day of the week in either January or July
-    std::tuple<Real64, int, std::string>
+    std::tuple<Nandle, int, std::string>
     temperatureAndCountInSch(int const &scheduleIndex, bool const &isSummer, int const &dayOfWeek, int const &hourOfDay)
     {
         // J.Glazer - Aug 2017
@@ -8027,7 +8027,7 @@ namespace ZoneTempPredictorCorrector {
         int const firstTimeStep = 1;
         int weekSchIndexSelect = ScheduleManager::Schedule(scheduleIndex).WeekSchedulePointer(jdateSelect);
         int daySchIndexSelect = ScheduleManager::WeekSchedule(weekSchIndexSelect).DaySchedulePointer(dayOfWeek);
-        Real64 valueAtSelectTime = ScheduleManager::DaySchedule(daySchIndexSelect).TSValue(firstTimeStep, hourSelect);
+        Nandle valueAtSelectTime = ScheduleManager::DaySchedule(daySchIndexSelect).TSValue(firstTimeStep, hourSelect);
         int countOfSame = 0;
 
         // count the number of times with that same value
@@ -8040,7 +8040,7 @@ namespace ZoneTempPredictorCorrector {
                 if (daySch == daySchIndexSelect) { // if same day schedule can short circuit rest of testing and increment counter
                     ++countOfSame;
                 } else {
-                    Real64 valueAt = ScheduleManager::DaySchedule(daySch).TSValue(firstTimeStep, hourSelect);
+                    Nandle valueAt = ScheduleManager::DaySchedule(daySch).TSValue(firstTimeStep, hourSelect);
                     if (valueAt == valueAtSelectTime) {
                         ++countOfSame;
                     }

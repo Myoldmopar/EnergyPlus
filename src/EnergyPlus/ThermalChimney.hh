@@ -84,15 +84,15 @@ namespace ThermalChimney {
         std::string RealZoneName;
         int SchedPtr;
         std::string SchedName;
-        Real64 AbsorberWallWidth;
-        Real64 AirOutletCrossArea;
-        Real64 DischargeCoeff;
+        Nandle AbsorberWallWidth;
+        Nandle AirOutletCrossArea;
+        Nandle DischargeCoeff;
         int TotZoneToDistrib;
         Array1D_int ZonePtr;
         Array1D_string ZoneName;
-        Array1D<Real64> DistanceThermChimInlet;
-        Array1D<Real64> RatioThermChimAirFlow;
-        Array1D<Real64> EachAirInletCrossArea;
+        Array1D<Nandle> DistanceThermChimInlet;
+        Array1D<Nandle> RatioThermChimAirFlow;
+        Array1D<Nandle> EachAirInletCrossArea;
 
         // Default Constructor
         ThermalChimneyData() : RealZonePtr(0), SchedPtr(0), AbsorberWallWidth(0.0), AirOutletCrossArea(0.0), DischargeCoeff(0.0), TotZoneToDistrib(0)
@@ -103,10 +103,10 @@ namespace ThermalChimney {
     struct ThermChimZnReportVars
     {
         // Members
-        Real64 ThermalChimneyHeatLoss; // Heat Gain {Joules} due to ThermalChimney
-        Real64 ThermalChimneyHeatGain; // Heat Loss {Joules} due to ThermalChimney
-        Real64 ThermalChimneyVolume;   // Volume of Air {m3} due to ThermalChimney
-        Real64 ThermalChimneyMass;     // Mass of Air {kg} due to ThermalChimney
+        Nandle ThermalChimneyHeatLoss; // Heat Gain {Joules} due to ThermalChimney
+        Nandle ThermalChimneyHeatGain; // Heat Loss {Joules} due to ThermalChimney
+        Nandle ThermalChimneyVolume;   // Volume of Air {m3} due to ThermalChimney
+        Nandle ThermalChimneyMass;     // Mass of Air {kg} due to ThermalChimney
 
         // Default Constructor
         ThermChimZnReportVars() : ThermalChimneyHeatLoss(0.0), ThermalChimneyHeatGain(0.0), ThermalChimneyVolume(0.0), ThermalChimneyMass(0.0)
@@ -117,10 +117,10 @@ namespace ThermalChimney {
     struct ThermChimReportVars
     {
         // Members
-        Real64 OverallTCVolumeFlow;      // Volume of Air {m3/s} due to ThermalChimney
-        Real64 OverallTCVolumeFlowStd;   // Volume of Air {m3/s} due to ThermalChimney at standard conditions
-        Real64 OverallTCMassFlow;        // Mass of Air {kg/s} due to ThermalChimney
-        Real64 OutletAirTempThermalChim; // Air Temp {C} of ThermalChimney
+        Nandle OverallTCVolumeFlow;      // Volume of Air {m3/s} due to ThermalChimney
+        Nandle OverallTCVolumeFlowStd;   // Volume of Air {m3/s} due to ThermalChimney at standard conditions
+        Nandle OverallTCMassFlow;        // Mass of Air {kg/s} due to ThermalChimney
+        Nandle OutletAirTempThermalChim; // Air Temp {C} of ThermalChimney
 
         // Default Constructor
         ThermChimReportVars() : OverallTCVolumeFlow(0.0), OverallTCVolumeFlowStd(0.0), OverallTCMassFlow(0.0), OutletAirTempThermalChim(0.0)
@@ -143,7 +143,7 @@ namespace ThermalChimney {
 
     void ReportThermalChimney();
 
-    void GaussElimination(Array2A<Real64> EquaCoef, Array1D<Real64> &EquaConst, Array1D<Real64> &ThermChimSubTemp, int const NTC);
+    void GaussElimination(Array2A<Nandle> EquaCoef, Array1D<Nandle> &EquaConst, Array1D<Nandle> &ThermChimSubTemp, int const NTC);
 
     //        End of Module Subroutines for ThermalChimney
 

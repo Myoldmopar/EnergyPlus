@@ -114,8 +114,8 @@ namespace WeatherManager {
     extern int const GregorianToJulian; // JGDate argument for Gregorian to Julian Date conversion
     extern int const JulianToGregorian; // JGDate argument for Julian to Gregorian Date conversion
 
-    extern Real64 const Sigma;   // Stefan-Boltzmann constant
-    extern Real64 const TKelvin; // conversion from Kelvin to Celsius
+    extern Nandle const Sigma;   // Stefan-Boltzmann constant
+    extern Nandle const TKelvin; // conversion from Kelvin to Celsius
 
     extern Array1D_string const DaysOfWeek;
 
@@ -139,23 +139,23 @@ namespace WeatherManager {
     extern bool LocationGathered;            // flag to show if Location exists on Input File (we assume one is there and
     // correct on weather file)
 
-    extern Real64 WeatherFileLatitude;
-    extern Real64 WeatherFileLongitude;
-    extern Real64 WeatherFileTimeZone;
-    extern Real64 WeatherFileElevation;
+    extern Nandle WeatherFileLatitude;
+    extern Nandle WeatherFileLongitude;
+    extern Nandle WeatherFileTimeZone;
+    extern Nandle WeatherFileElevation;
     extern int WeatherFileUnitNumber;                  // File unit number for the weather file
-    extern Array1D<Real64> GroundTempsFCFromEPWHeader; // F or C factor method
-    extern Array1D<Real64> GroundReflectances;         // User Specified Ground Reflectances
-    extern Real64 SnowGndRefModifier;                  // Modifier to ground reflectance during snow
-    extern Real64 SnowGndRefModifierForDayltg;         // Modifier to ground reflectance during snow for daylighting
+    extern Array1D<Nandle> GroundTempsFCFromEPWHeader; // F or C factor method
+    extern Array1D<Nandle> GroundReflectances;         // User Specified Ground Reflectances
+    extern Nandle SnowGndRefModifier;                  // Modifier to ground reflectance during snow
+    extern Nandle SnowGndRefModifierForDayltg;         // Modifier to ground reflectance during snow for daylighting
     extern int WaterMainsTempsMethod;                  // Water mains temperature calculation method
     extern int WaterMainsTempsSchedule;                // Water mains temperature schedule
-    extern Real64 WaterMainsTempsAnnualAvgAirTemp;     // Annual average outdoor air temperature (C)
-    extern Real64 WaterMainsTempsMaxDiffAirTemp;       // Maximum difference in monthly average outdoor air temperatures (deltaC)
+    extern Nandle WaterMainsTempsAnnualAvgAirTemp;     // Annual average outdoor air temperature (C)
+    extern Nandle WaterMainsTempsMaxDiffAirTemp;       // Maximum difference in monthly average outdoor air temperatures (deltaC)
     extern std::string WaterMainsTempsScheduleName;    // water mains tempeature schedule name
     extern bool wthFCGroundTemps;
-    extern Real64 RainAmount;
-    extern Real64 SnowAmount;
+    extern Nandle RainAmount;
+    extern Nandle SnowAmount;
 
     extern int TotRunPers;    // Total number of Run Periods (Weather data) to Setup
     extern int TotRunDesPers; // Total number of Run Design Periods (Weather data) to Setup
@@ -186,68 +186,68 @@ namespace WeatherManager {
 
     extern Array2D_bool TodayIsRain;             // Rain indicator, true=rain
     extern Array2D_bool TodayIsSnow;             // Snow indicator, true=snow
-    extern Array2D<Real64> TodayRainAmount;      // ficitious indicator of Rain
-    extern Array2D<Real64> TodaySnowAmount;      // ficitious indicator of Snow
-    extern Array2D<Real64> TodayOutDryBulbTemp;  // Dry bulb temperature of outside air
-    extern Array2D<Real64> TodayOutWetBulbTemp;  // Wet bulb temperature of outside air
-    extern Array2D<Real64> TodayOutDewPointTemp; // Dew Point Temperature of outside air
-    extern Array2D<Real64> TodayOutBaroPress;    // Barometric pressure of outside air
-    extern Array2D<Real64> TodayOutHumRat;       // Humidity ratio of outside air
-    extern Array2D<Real64> TodayOutRelHum;       // Relative Humidity of outside air
-    extern Array2D<Real64> TodayWindSpeed;       // Wind speed of outside air
-    extern Array2D<Real64> TodayWindDir;         // Wind direction of outside air
-    extern Array2D<Real64> TodaySkyTemp;         // Sky temperature
-    extern Array2D<Real64> TodayHorizIRSky;      // Horizontal IR from Sky
-    extern Array2D<Real64> TodayBeamSolarRad;    // Direct normal solar irradiance
-    extern Array2D<Real64> TodayDifSolarRad;     // Sky diffuse horizontal solar irradiance
-    extern Array2D<Real64> TodayAlbedo;          // Albedo
-    extern Array2D<Real64> TodayLiquidPrecip;    // Liquid Precipitation Depth (mm)
+    extern Array2D<Nandle> TodayRainAmount;      // ficitious indicator of Rain
+    extern Array2D<Nandle> TodaySnowAmount;      // ficitious indicator of Snow
+    extern Array2D<Nandle> TodayOutDryBulbTemp;  // Dry bulb temperature of outside air
+    extern Array2D<Nandle> TodayOutWetBulbTemp;  // Wet bulb temperature of outside air
+    extern Array2D<Nandle> TodayOutDewPointTemp; // Dew Point Temperature of outside air
+    extern Array2D<Nandle> TodayOutBaroPress;    // Barometric pressure of outside air
+    extern Array2D<Nandle> TodayOutHumRat;       // Humidity ratio of outside air
+    extern Array2D<Nandle> TodayOutRelHum;       // Relative Humidity of outside air
+    extern Array2D<Nandle> TodayWindSpeed;       // Wind speed of outside air
+    extern Array2D<Nandle> TodayWindDir;         // Wind direction of outside air
+    extern Array2D<Nandle> TodaySkyTemp;         // Sky temperature
+    extern Array2D<Nandle> TodayHorizIRSky;      // Horizontal IR from Sky
+    extern Array2D<Nandle> TodayBeamSolarRad;    // Direct normal solar irradiance
+    extern Array2D<Nandle> TodayDifSolarRad;     // Sky diffuse horizontal solar irradiance
+    extern Array2D<Nandle> TodayAlbedo;          // Albedo
+    extern Array2D<Nandle> TodayLiquidPrecip;    // Liquid Precipitation Depth (mm)
 
     extern Array2D_bool TomorrowIsRain;             // Rain indicator, true=rain
     extern Array2D_bool TomorrowIsSnow;             // Snow indicator, true=snow
-    extern Array2D<Real64> TomorrowRainAmount;      // ficitious indicator of Rain
-    extern Array2D<Real64> TomorrowSnowAmount;      // ficitious indicator of Snow
-    extern Array2D<Real64> TomorrowOutDryBulbTemp;  // Dry bulb temperature of outside air
-    extern Array2D<Real64> TomorrowOutDewPointTemp; // Dew Point Temperature of outside air
-    extern Array2D<Real64> TomorrowOutBaroPress;    // Barometric pressure of outside air
-    extern Array2D<Real64> TomorrowOutRelHum;       // Relative Humidity of outside air
-    extern Array2D<Real64> TomorrowWindSpeed;       // Wind speed of outside air
-    extern Array2D<Real64> TomorrowWindDir;         // Wind direction of outside air
-    extern Array2D<Real64> TomorrowSkyTemp;         // Sky temperature
-    extern Array2D<Real64> TomorrowHorizIRSky;      // Horizontal IR from Sky
-    extern Array2D<Real64> TomorrowBeamSolarRad;    // Direct normal solar irradiance
-    extern Array2D<Real64> TomorrowDifSolarRad;     // Sky diffuse horizontal solar irradiance
-    extern Array2D<Real64> TomorrowAlbedo;          // Albedo
-    extern Array2D<Real64> TomorrowLiquidPrecip;    // Liquid Precipitation Depth
+    extern Array2D<Nandle> TomorrowRainAmount;      // ficitious indicator of Rain
+    extern Array2D<Nandle> TomorrowSnowAmount;      // ficitious indicator of Snow
+    extern Array2D<Nandle> TomorrowOutDryBulbTemp;  // Dry bulb temperature of outside air
+    extern Array2D<Nandle> TomorrowOutDewPointTemp; // Dew Point Temperature of outside air
+    extern Array2D<Nandle> TomorrowOutBaroPress;    // Barometric pressure of outside air
+    extern Array2D<Nandle> TomorrowOutRelHum;       // Relative Humidity of outside air
+    extern Array2D<Nandle> TomorrowWindSpeed;       // Wind speed of outside air
+    extern Array2D<Nandle> TomorrowWindDir;         // Wind direction of outside air
+    extern Array2D<Nandle> TomorrowSkyTemp;         // Sky temperature
+    extern Array2D<Nandle> TomorrowHorizIRSky;      // Horizontal IR from Sky
+    extern Array2D<Nandle> TomorrowBeamSolarRad;    // Direct normal solar irradiance
+    extern Array2D<Nandle> TomorrowDifSolarRad;     // Sky diffuse horizontal solar irradiance
+    extern Array2D<Nandle> TomorrowAlbedo;          // Albedo
+    extern Array2D<Nandle> TomorrowLiquidPrecip;    // Liquid Precipitation Depth
 
-    extern Array3D<Real64> DDDBRngModifier;  // Design Day Dry-bulb Temperature Range Modifier
-    extern Array3D<Real64> DDHumIndModifier; // Design Day relative humidity values
+    extern Array3D<Nandle> DDDBRngModifier;  // Design Day Dry-bulb Temperature Range Modifier
+    extern Array3D<Nandle> DDHumIndModifier; // Design Day relative humidity values
     //   or wet-bulb modifiers (per HumIndType)
-    extern Array3D<Real64> DDBeamSolarValues;    // Design Day Beam Solar Values
-    extern Array3D<Real64> DDDiffuseSolarValues; // Design Day Relative Humidity Values
+    extern Array3D<Nandle> DDBeamSolarValues;    // Design Day Beam Solar Values
+    extern Array3D<Nandle> DDDiffuseSolarValues; // Design Day Relative Humidity Values
 
-    extern Array3D<Real64> DDSkyTempScheduleValues; // Sky temperature - DesignDay input
+    extern Array3D<Nandle> DDSkyTempScheduleValues; // Sky temperature - DesignDay input
 
     extern int RptIsRain;  // Rain Report Value
     extern int RptIsSnow;  // Snow Report Value
     extern int RptDayType; // DayType Report Value
 
-    extern Real64 HrAngle;                                       // Current Hour Angle
-    extern Real64 SolarAltitudeAngle;                            // Angle of Solar Altitude (degrees)
-    extern Real64 SolarAzimuthAngle;                             // Angle of Solar Azimuth (degrees)
-    extern Real64 HorizIRSky;                                    // Horizontal Infrared Radiation Intensity (W/m2)
-    extern Real64 TimeStepFraction;                              // Fraction of hour each time step represents
-    extern Array1D<Real64> SPSiteDryBulbRangeModScheduleValue;   // reporting Drybulb Temperature Range Modifier Schedule Value
-    extern Array1D<Real64> SPSiteHumidityConditionScheduleValue; // reporting Humidity Condition Schedule Value
-    extern Array1D<Real64> SPSiteBeamSolarScheduleValue;         // reporting Beam Solar Schedule Value
-    extern Array1D<Real64> SPSiteDiffuseSolarScheduleValue;      // reporting Diffuse Solar Schedule Value
-    extern Array1D<Real64> SPSiteSkyTemperatureScheduleValue;    // reporting SkyTemperature Modifier Schedule Value
+    extern Nandle HrAngle;                                       // Current Hour Angle
+    extern Nandle SolarAltitudeAngle;                            // Angle of Solar Altitude (degrees)
+    extern Nandle SolarAzimuthAngle;                             // Angle of Solar Azimuth (degrees)
+    extern Nandle HorizIRSky;                                    // Horizontal Infrared Radiation Intensity (W/m2)
+    extern Nandle TimeStepFraction;                              // Fraction of hour each time step represents
+    extern Array1D<Nandle> SPSiteDryBulbRangeModScheduleValue;   // reporting Drybulb Temperature Range Modifier Schedule Value
+    extern Array1D<Nandle> SPSiteHumidityConditionScheduleValue; // reporting Humidity Condition Schedule Value
+    extern Array1D<Nandle> SPSiteBeamSolarScheduleValue;         // reporting Beam Solar Schedule Value
+    extern Array1D<Nandle> SPSiteDiffuseSolarScheduleValue;      // reporting Diffuse Solar Schedule Value
+    extern Array1D<Nandle> SPSiteSkyTemperatureScheduleValue;    // reporting SkyTemperature Modifier Schedule Value
     extern Array1D_int SPSiteScheduleNamePtr;                    // SP Site Schedule Name Ptrs
     extern Array1D_string SPSiteScheduleUnits;                   // SP Site Schedule Units
     extern int NumSPSiteScheduleNamePtrs;                        // Number of SP Site Schedules (DesignDay only)
     extern int NumMissing;                                       // Number of hours of missing data
-    extern Array1D<Real64> Interpolation;                        // Interpolation values based on Number of Time Steps in Hour
-    extern Array1D<Real64> SolarInterpolation;                   // Solar Interpolation values based on
+    extern Array1D<Nandle> Interpolation;                        // Interpolation values based on Number of Time Steps in Hour
+    extern Array1D<Nandle> SolarInterpolation;                   // Solar Interpolation values based on
     //      Number of Time Steps in Hour
     extern Array1D_int EndDayOfMonth;
     extern bool ErrorInWeatherFile;           // Set to TRUE when there is a problem with dates
@@ -340,14 +340,14 @@ namespace WeatherManager {
     {
         // Members
         std::string Title;   // Environment name
-        Real64 MaxDryBulb;   // Maximum Dry-Bulb Temperature (C)
-        Real64 DailyDBRange; // Daily Temperature Range (deltaC)
-        Real64 HumIndValue;  // Humidity Indicating Value at Max Dry-bulb Temperature
+        Nandle MaxDryBulb;   // Maximum Dry-Bulb Temperature (C)
+        Nandle DailyDBRange; // Daily Temperature Range (deltaC)
+        Nandle HumIndValue;  // Humidity Indicating Value at Max Dry-bulb Temperature
         int HumIndType;      // Humidity Indicating type  (see Parameters)
-        Real64 PressBarom;   // Atmospheric/Barometric Pressure (Pascals)
-        Real64 WindSpeed;    // Wind Speed (m/s)
-        Real64 WindDir;      // Wind Direction (degrees clockwise from North, N=0, E=90, S=180, W=270)
-        Real64 SkyClear;     // Sky Clearness (0 to 1)
+        Nandle PressBarom;   // Atmospheric/Barometric Pressure (Pascals)
+        Nandle WindSpeed;    // Wind Speed (m/s)
+        Nandle WindDir;      // Wind Direction (degrees clockwise from North, N=0, E=90, S=180, W=270)
+        Nandle SkyClear;     // Sky Clearness (0 to 1)
         int RainInd;         // Rain Indicator (1 = raining and surfaces are wet, else 0)
         int SnowInd;         // Snow Indicator (1 = snow on ground, else  0)
         int DayOfMonth;      // Day of Month ( 1 - 31 )
@@ -361,9 +361,9 @@ namespace WeatherManager {
         //    relative humidity (%) or wet-bulb range multipliers per HumIndType
         int BeamSolarSchPtr;    // Schedule pointer to a day schedule for beam solar
         int DiffuseSolarSchPtr; // Schedule pointer to a day schedule for diffuse solar
-        Real64 TauB;            // beam pseudo optical depth for ASHRAE tau model
-        Real64 TauD;            // diffuse pseudo optical depth for ASHRAE tau model
-        Real64 DailyWBRange;    // daily range of wetbulb (deltaC)
+        Nandle TauB;            // beam pseudo optical depth for ASHRAE tau model
+        Nandle TauD;            // diffuse pseudo optical depth for ASHRAE tau model
+        Nandle DailyWBRange;    // daily range of wetbulb (deltaC)
         bool PressureEntered;   // true if a pressure was entered in design day data
         bool DewPointNeedsSet;  // true if the Dewpoint humidicating value needs to be set (after location determined)
         int maxWarmupDays;        // Maximum warmup days between sizing periods
@@ -429,9 +429,9 @@ namespace WeatherManager {
         int DayOfWeek;              // Day of week for weather data
         int DaylightSavingIndex;    // Daylight Saving Time Period indicator (0=no,1=yes)
         int HolidayIndex;           // Holiday indicator (0=no holiday, non-zero=holiday type)
-        Real64 SinSolarDeclinAngle; // Sine of the solar declination angle
-        Real64 CosSolarDeclinAngle; // Cosine of the solar declination angle
-        Real64 EquationOfTime;      // Value of the equation of time formula
+        Nandle SinSolarDeclinAngle; // Sine of the solar declination angle
+        Nandle CosSolarDeclinAngle; // Cosine of the solar declination angle
+        Nandle EquationOfTime;      // Value of the equation of time formula
 
         // Default Constructor
         DayWeatherVariables()
@@ -514,22 +514,22 @@ namespace WeatherManager {
         // Members
         // for those data elements that would be best replaced
         // with the previous hour's data for missing data.
-        Real64 DryBulb;      // Dry Bulb Temperature (C)
-        Real64 DewPoint;     // Dew Point Temperature (C)
+        Nandle DryBulb;      // Dry Bulb Temperature (C)
+        Nandle DewPoint;     // Dew Point Temperature (C)
         int RelHumid;        // Relative Humidity (%)
-        Real64 StnPres;      // Atmospheric Pressure (Pa)
+        Nandle StnPres;      // Atmospheric Pressure (Pa)
         int WindDir;         // Wind Direction (deg)
-        Real64 WindSpd;      // Wind Speed/Velocity (m/s)
+        Nandle WindSpd;      // Wind Speed/Velocity (m/s)
         int TotSkyCvr;       // Total Sky Cover (tenths)
         int OpaqSkyCvr;      // Opaque Sky Cover (tenths)
-        Real64 Visibility;   // Visibility (km)
+        Nandle Visibility;   // Visibility (km)
         int Ceiling;         // Ceiling Height (m)
         int PrecipWater;     // Precipitable Water (mm)
-        Real64 AerOptDepth;  // Aerosol Optical Depth
+        Nandle AerOptDepth;  // Aerosol Optical Depth
         int SnowDepth;       // Snow Depth (cm)
         int DaysLastSnow;    // Number of Days since last snow
-        Real64 Albedo;       // Albedo
-        Real64 LiquidPrecip; // Rain/Liquid Precipitation (mm)
+        Nandle Albedo;       // Albedo
+        Nandle LiquidPrecip; // Rain/Liquid Precipitation (mm)
 
         // Default Constructor
         MissingData()
@@ -639,7 +639,7 @@ namespace WeatherManager {
     struct UnderwaterBoundary
     {
         std::string Name;
-        Real64 distanceFromLeadingEdge;
+        Nandle distanceFromLeadingEdge;
         int OSCMIndex;
         int WaterTempScheduleIndex;
         int VelocityScheduleIndex;
@@ -697,8 +697,8 @@ namespace WeatherManager {
 
     bool CheckIfAnyUnderwaterBoundaries();
 
-    Real64
-    calculateWaterBoundaryConvectionCoefficient(Real64 const curWaterTemp, Real64 const curWaterVelocity, Real64 const distanceFromLeadingEdge);
+    Nandle
+    calculateWaterBoundaryConvectionCoefficient(Nandle const curWaterTemp, Nandle const curWaterVelocity, Nandle const distanceFromLeadingEdge);
 
     void UpdateUnderwaterBoundaries();
 
@@ -742,7 +742,7 @@ namespace WeatherManager {
                                 bool const BackSpaceAfterRead // True if weather file is to be backspaced after read
     );
 
-    Real64 interpolateWindDirection(Real64 const prevHrWindDir, Real64 const curHrWindDir, Real64 const curHrWeight);
+    Nandle interpolateWindDirection(Nandle const prevHrWindDir, Nandle const curHrWindDir, Nandle const curHrWeight);
 
     void SetDayOfWeekInitialValues(int const EnvironDayOfWeek, // Starting Day of Week for the (Weather) RunPeriod (User Input)
                                    int &CurDayOfWeek,          // Current Day of Week
@@ -756,75 +756,75 @@ namespace WeatherManager {
                                   int &WDay,
                                   int &WHour,
                                   int &WMinute,
-                                  Real64 &RField1,        // DryBulb
-                                  Real64 &RField2,        // DewPoint
-                                  Real64 &RField3,        // RelHum
-                                  Real64 &RField4,        // AtmPress
-                                  Real64 &RField5,        // ETHoriz
-                                  Real64 &RField6,        // ETDirect
-                                  Real64 &RField7,        // IRHoriz
-                                  Real64 &RField8,        // GLBHoriz
-                                  Real64 &RField9,        // DirectRad
-                                  Real64 &RField10,       // DiffuseRad
-                                  Real64 &RField11,       // GLBHorizIllum
-                                  Real64 &RField12,       // DirectNrmIllum
-                                  Real64 &RField13,       // DiffuseHorizIllum
-                                  Real64 &RField14,       // ZenLum
-                                  Real64 &RField15,       // WindDir
-                                  Real64 &RField16,       // WindSpeed
-                                  Real64 &RField17,       // TotalSkyCover
-                                  Real64 &RField18,       // OpaqueSkyCover
-                                  Real64 &RField19,       // Visibility
-                                  Real64 &RField20,       // CeilHeight
+                                  Nandle &RField1,        // DryBulb
+                                  Nandle &RField2,        // DewPoint
+                                  Nandle &RField3,        // RelHum
+                                  Nandle &RField4,        // AtmPress
+                                  Nandle &RField5,        // ETHoriz
+                                  Nandle &RField6,        // ETDirect
+                                  Nandle &RField7,        // IRHoriz
+                                  Nandle &RField8,        // GLBHoriz
+                                  Nandle &RField9,        // DirectRad
+                                  Nandle &RField10,       // DiffuseRad
+                                  Nandle &RField11,       // GLBHorizIllum
+                                  Nandle &RField12,       // DirectNrmIllum
+                                  Nandle &RField13,       // DiffuseHorizIllum
+                                  Nandle &RField14,       // ZenLum
+                                  Nandle &RField15,       // WindDir
+                                  Nandle &RField16,       // WindSpeed
+                                  Nandle &RField17,       // TotalSkyCover
+                                  Nandle &RField18,       // OpaqueSkyCover
+                                  Nandle &RField19,       // Visibility
+                                  Nandle &RField20,       // CeilHeight
                                   int &WObs,              // PresWeathObs
                                   Array1D_int &WCodesArr, // PresWeathConds
-                                  Real64 &RField22,       // PrecipWater
-                                  Real64 &RField23,       // AerosolOptDepth
-                                  Real64 &RField24,       // SnowDepth
-                                  Real64 &RField25,       // DaysSinceLastSnow
-                                  Real64 &RField26,       // Albedo
-                                  Real64 &RField27        // LiquidPrecip
+                                  Nandle &RField22,       // PrecipWater
+                                  Nandle &RField23,       // AerosolOptDepth
+                                  Nandle &RField24,       // SnowDepth
+                                  Nandle &RField25,       // DaysSinceLastSnow
+                                  Nandle &RField26,       // Albedo
+                                  Nandle &RField27        // LiquidPrecip
     );
 
     void SetUpDesignDay(OutputFiles &outputFiles, int const EnvrnNum); // Environment number passed into the routine
 
     //------------------------------------------------------------------------------
 
-    Real64 AirMass(Real64 const CosZen); // COS( solar zenith), 0 - 1
+    Nandle AirMass(Nandle const CosZen); // COS( solar zenith), 0 - 1
 
     //------------------------------------------------------------------------------
 
-    Real64 CalcSkyEmissivity(int Envrn, Real64 OSky, Real64 DryBulb, Real64 DewPoint, Real64 RelHum); // Calculate sky temperature from weather data
+    Nandle CalcSkyEmissivity(int Envrn, Nandle OSky, Nandle DryBulb, Nandle DewPoint, Nandle RelHum); // Calculate sky temperature from weather data
 
     void ASHRAETauModel(int const TauModelType, // ASHRAETau solar model type ASHRAE_Tau or ASHRAE_Tau2017
-                        Real64 const ETR,       // extraterrestrial normal irradiance, W/m2
-                        Real64 const CosZen,    // COS( solar zenith angle), 0 - 1
-                        Real64 const TauB,      // beam tau factor
-                        Real64 const TauD,      // dif tau factor
-                        Real64 &IDirN,          // returned: direct (beam) irradiance on normal surface, W/m2
-                        Real64 &IDifH,          // returned: diffuse irradiance on horiz surface, W/m2
-                        Real64 &IGlbH           // returned: global irradiance on horiz surface, W/m2
+                        Nandle const ETR,       // extraterrestrial normal irradiance, W/m2
+                        Nandle const CosZen,    // COS( solar zenith angle), 0 - 1
+                        Nandle const TauB,      // beam tau factor
+                        Nandle const TauD,      // dif tau factor
+                        Nandle &IDirN,          // returned: direct (beam) irradiance on normal surface, W/m2
+                        Nandle &IDifH,          // returned: diffuse irradiance on horiz surface, W/m2
+                        Nandle &IGlbH           // returned: global irradiance on horiz surface, W/m2
     );
 
     void AllocateWeatherData();
 
     void CalculateDailySolarCoeffs(int const DayOfYear,           // Day of year (1 - 366)
-                                   Real64 &A,                     // ASHRAE "A" - Apparent solar irradiation at air mass = 0 [W/M**2]
-                                   Real64 &B,                     // ASHRAE "B" - Atmospheric extinction coefficient
-                                   Real64 &C,                     // ASHRAE "C" - Diffuse radiation factor
-                                   Real64 &AnnVarSolConstant,     // Annual variation in the solar constant
-                                   Real64 &EquationOfTime,        // Equation of Time
-                                   Real64 &SineSolarDeclination,  // Sine of Solar Declination
-                                   Real64 &CosineSolarDeclination // Cosine of Solar Declination
+                                   Nandle &A,                     // ASHRAE "A" - Apparent solar irradiation at air mass = 0 [W/M**2]
+                                   Nandle &B,                     // ASHRAE "B" - Atmospheric extinction coefficient
+                                   Nandle &C,                     // ASHRAE "C" - Diffuse radiation factor
+                                   Nandle &AnnVarSolConstant,     // Annual variation in the solar constant
+                                   Nandle &EquationOfTime,        // Equation of Time
+                                   Nandle &SineSolarDeclination,  // Sine of Solar Declination
+                                   Nandle &CosineSolarDeclination // Cosine of Solar Declination
     );
 
-    void CalculateSunDirectionCosines(Real64 const TimeValue,    // Current Time of Day
-                                      Real64 const EqOfTime,     // Equation of Time
-                                      Real64 const SinSolDeclin, // Sine of Solar Declination
-                                      Real64 const CosSolDeclin, // Cosine of Solar Declination
-                                      Array1D<Real64> &SUNCOS);
+    void CalculateSunDirectionCosines(Nandle const TimeValue,    // Current Time of Day
+                                      Nandle const EqOfTime,     // Equation of Time
+                                      Nandle const SinSolDeclin, // Sine of Solar Declination
+                                      Nandle const CosSolDeclin, // Cosine of Solar Declination
+                                      Array1D<Nandle> &SUNCOS);
 
-    void DetermineSunUpDown(Array1D<Real64> &SunDirectionCosines);
+    void DetermineSunUpDown(Array1D<Nandle> &SunDirectionCosines);
 
     void OpenWeatherFile(bool &ErrorsFound);
 
@@ -875,20 +875,20 @@ namespace WeatherManager {
 
     void CalcWaterMainsTemp();
 
-    Real64
-    WaterMainsTempFromCorrelation(Real64 const AnnualOAAvgDryBulbTemp,        // annual average OA drybulb temperature
-                                  Real64 const MonthlyOAAvgDryBulbTempMaxDiff // monthly daily average OA drybulb temperature maximum difference
+    Nandle
+    WaterMainsTempFromCorrelation(Nandle const AnnualOAAvgDryBulbTemp,        // annual average OA drybulb temperature
+                                  Nandle const MonthlyOAAvgDryBulbTempMaxDiff // monthly daily average OA drybulb temperature maximum difference
     );
 
     void GetWeatherStation(OutputFiles &outputFiles, bool &ErrorsFound);
 
     void DayltgCurrentExtHorizIllum();
 
-    void DayltgLuminousEfficacy(Real64 &DiffLumEff, // Luminous efficacy of sky diffuse solar radiation (lum/W)
-                                Real64 &DirLumEff   // Luminous efficacy of beam solar radiation (lum/W)
+    void DayltgLuminousEfficacy(Nandle &DiffLumEff, // Luminous efficacy of sky diffuse solar radiation (lum/W)
+                                Nandle &DirLumEff   // Luminous efficacy of beam solar radiation (lum/W)
     );
 
-    Real64 GetSTM(Real64 const Longitude); // Longitude from user input
+    Nandle GetSTM(Nandle const Longitude); // Longitude from user input
 
     void ProcessEPWHeader(std::string const &HeaderString,
                           std::string &Line,
@@ -928,9 +928,9 @@ namespace WeatherManager {
     {
         // Members
         bool OADryBulbWeatherDataProcessed;             // if false stat or weather file OA Dry-bulb temp is not processed yet
-        Real64 AnnualAvgOADryBulbTemp;                  // annual average outdoor air temperature (C)
-        Real64 MonthlyAvgOADryBulbTempMaxDiff;          // monthly daily average OA drybulb temperature maximum difference (deltaC)
-        Array1D<Real64> MonthlyDailyAverageDryBulbTemp; // monthly-daily average outdoor air temperatures (C)
+        Nandle AnnualAvgOADryBulbTemp;                  // annual average outdoor air temperature (C)
+        Nandle MonthlyAvgOADryBulbTempMaxDiff;          // monthly daily average OA drybulb temperature maximum difference (deltaC)
+        Array1D<Nandle> MonthlyDailyAverageDryBulbTemp; // monthly-daily average outdoor air temperatures (C)
 
         // Default Constructor
         AnnualMonthlyDryBulbWeatherData()

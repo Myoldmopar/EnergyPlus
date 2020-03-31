@@ -294,7 +294,7 @@ namespace HVACSingleDuctInduc {
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int NumAlphas(0);         // Number of Alphas for each GetObjectItem call
@@ -526,12 +526,12 @@ namespace HVACSingleDuctInduc {
         int OutletNode;  // unit air outlet node
         int HotConNode;  // hot water control node number
         int ColdConNode; // cold water control node  number
-        Real64 IndRat;   // unit induction ratio
-        Real64 RhoAir;   // air density at outside pressure and standard temperature and humidity
+        Nandle IndRat;   // unit induction ratio
+        Nandle RhoAir;   // air density at outside pressure and standard temperature and humidity
 
         static bool ZoneEquipmentListChecked(false); // True after the Zone Equipment List has been checked for items
         int Loop;                                    // Loop checking control variable
-        Real64 rho;                                  // local fluid density
+        Nandle rho;                                  // local fluid density
         int HWOutletNode;                            // local node index for hot water coil's outlet node
         int CWOutletNode;                            // local node index for cold water coil's outlet node
         bool errFlag(false);
@@ -769,22 +769,22 @@ namespace HVACSingleDuctInduc {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
         int PltSizCoolNum; // index of plant sizing object for 1st cooling loop
-        Real64 DesCoilLoad;
-        Real64 DesPriVolFlow;
-        Real64 RhoAir;
-        Real64 CpAir;
+        Nandle DesCoilLoad;
+        Nandle DesPriVolFlow;
+        Nandle RhoAir;
+        Nandle CpAir;
         static int CoilWaterInletNode(0);
         static int CoilWaterOutletNode(0);
         bool ErrorsFound;
-        Real64 Cp;  // local fluid specific heat
-        Real64 rho; // local fluid density
+        Nandle Cp;  // local fluid specific heat
+        Nandle rho; // local fluid density
         bool IsAutoSize;
-        Real64 MaxTotAirVolFlowDes;     // Desing size maximum air volume flow for reproting
-        Real64 MaxTotAirVolFlowUser;    // User hard-sized maximum air volume flow for reporting
-        Real64 MaxVolHotWaterFlowDes;   // Desing size maximum hot water flow for reproting
-        Real64 MaxVolHotWaterFlowUser;  // User hard-sized maximum hot water flow for reporting
-        Real64 MaxVolColdWaterFlowDes;  // Desing size maximum cold water flow for reproting
-        Real64 MaxVolColdWaterFlowUser; // User hard-sized maximum cold water flow for reporting
+        Nandle MaxTotAirVolFlowDes;     // Desing size maximum air volume flow for reproting
+        Nandle MaxTotAirVolFlowUser;    // User hard-sized maximum air volume flow for reporting
+        Nandle MaxVolHotWaterFlowDes;   // Desing size maximum hot water flow for reproting
+        Nandle MaxVolHotWaterFlowUser;  // User hard-sized maximum hot water flow for reporting
+        Nandle MaxVolColdWaterFlowDes;  // Desing size maximum cold water flow for reproting
+        Nandle MaxVolColdWaterFlowUser; // User hard-sized maximum cold water flow for reporting
 
         PltSizHeatNum = 0;
         PltSizCoolNum = 0;
@@ -1116,29 +1116,29 @@ namespace HVACSingleDuctInduc {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 QZnReq;           // heating or cooling needed by zone [Watts]
-        Real64 QToHeatSetPt;     // [W]  remaining load to heating setpoint
-        Real64 QToCoolSetPt;     // [W]  remaining load to cooling setpoint
-        Real64 PowerMet;         // power supplied
+        Nandle QZnReq;           // heating or cooling needed by zone [Watts]
+        Nandle QToHeatSetPt;     // [W]  remaining load to heating setpoint
+        Nandle QToCoolSetPt;     // [W]  remaining load to cooling setpoint
+        Nandle PowerMet;         // power supplied
         bool UnitOn;             // TRUE if unit is on
-        Real64 MaxHotWaterFlow;  // maximum water flow for heating [kg/s]
-        Real64 MinHotWaterFlow;  // minimum water flow for heating [kg/s]
-        Real64 MaxColdWaterFlow; // maximum water flow for cooling [kg/s]
-        Real64 MinColdWaterFlow; // minimum water flow for cooling [kg/s]
-        Real64 HWFlow;           // hot water flow [kg/s]
-        Real64 CWFlow;           // cold water flow [kg/s]
+        Nandle MaxHotWaterFlow;  // maximum water flow for heating [kg/s]
+        Nandle MinHotWaterFlow;  // minimum water flow for heating [kg/s]
+        Nandle MaxColdWaterFlow; // maximum water flow for cooling [kg/s]
+        Nandle MinColdWaterFlow; // minimum water flow for cooling [kg/s]
+        Nandle HWFlow;           // hot water flow [kg/s]
+        Nandle CWFlow;           // cold water flow [kg/s]
         int PriNode;             // unit primary air inlet node
         int SecNode;             // unit secondary air inlet node
         int OutletNode;          // unit air outlet node
         int HotControlNode;      // hot water coil inlet node
         int ColdControlNode;     // cold water coil inlet node
-        Real64 QPriOnly;         // unit output with no zone coils active
-        Real64 PriAirMassFlow;   // primary air mass flow rate [kg/s]
-        Real64 SecAirMassFlow;   // secondary air mass flow rate [kg/s]
-        Real64 InducRat;         // Induction Ratio
-        Array1D<Real64> Par(7);
+        Nandle QPriOnly;         // unit output with no zone coils active
+        Nandle PriAirMassFlow;   // primary air mass flow rate [kg/s]
+        Nandle SecAirMassFlow;   // secondary air mass flow rate [kg/s]
+        Nandle InducRat;         // Induction Ratio
+        Array1D<Nandle> Par(7);
         int SolFlag;
-        Real64 ErrTolerance;
+        Nandle ErrTolerance;
         int HWOutletNode;
         int CWOutletNode;
 
@@ -1333,9 +1333,9 @@ namespace HVACSingleDuctInduc {
     void CalcFourPipeIndUnit(int const IUNum,               // Unit index
                              bool const FirstHVACIteration, // flag for 1st HVAV iteration in the time step
                              int const ZoneNode,            // zone node number
-                             Real64 const HWFlow,           // hot water flow (kg/s)
-                             Real64 const CWFlow,           // cold water flow (kg/s)
-                             Real64 &LoadMet                // load met by unit (watts)
+                             Nandle const HWFlow,           // hot water flow (kg/s)
+                             Nandle const CWFlow,           // cold water flow (kg/s)
+                             Nandle &LoadMet                // load met by unit (watts)
     )
     {
 
@@ -1377,13 +1377,13 @@ namespace HVACSingleDuctInduc {
         int PriNode;           // unit primary air inlet node
         int HotControlNode;    // the hot water inlet node
         int ColdControlNode;   // the cold water inlet node
-        Real64 PriAirMassFlow; // primary air mass flow rate [kg/s]
-        Real64 SecAirMassFlow; // secondary air mass flow rate [kg/s]
-        Real64 TotAirMassFlow; // total air mass flow rate [kg/s]
-        Real64 InducRat;       // induction ratio
-        Real64 CpAirZn;        // zone air specific heat [J/kg-C]
-        Real64 mdotHW;         // local temporary hot water flow rate [kg/s]
-        Real64 mdotCW;         // local temporary cold water flow rate [kg/s]
+        Nandle PriAirMassFlow; // primary air mass flow rate [kg/s]
+        Nandle SecAirMassFlow; // secondary air mass flow rate [kg/s]
+        Nandle TotAirMassFlow; // total air mass flow rate [kg/s]
+        Nandle InducRat;       // induction ratio
+        Nandle CpAirZn;        // zone air specific heat [J/kg-C]
+        Nandle mdotHW;         // local temporary hot water flow rate [kg/s]
+        Nandle mdotCW;         // local temporary cold water flow rate [kg/s]
         int HWOutletNode;
         int CWOutletNode;
 
@@ -1437,8 +1437,8 @@ namespace HVACSingleDuctInduc {
         LoadMet = TotAirMassFlow * CpAirZn * (Node(OutletNode).Temp - Node(ZoneNode).Temp);
     }
 
-    Real64 FourPipeIUHeatingResidual(Real64 const HWFlow,       // hot water flow rate in kg/s
-                                     Array1D<Real64> const &Par // Par(5) is the requested zone load
+    Nandle FourPipeIUHeatingResidual(Nandle const HWFlow,       // hot water flow rate in kg/s
+                                     Array1D<Nandle> const &Par // Par(5) is the requested zone load
     )
     {
 
@@ -1462,7 +1462,7 @@ namespace HVACSingleDuctInduc {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -1482,8 +1482,8 @@ namespace HVACSingleDuctInduc {
         int IUIndex;
         bool FirstHVACSoln;
         int ZoneNodeIndex;
-        Real64 MinCWFlow;
-        Real64 UnitOutput;
+        Nandle MinCWFlow;
+        Nandle UnitOutput;
 
         IUIndex = int(Par(1));
         FirstHVACSoln = (Par(2) > 0.0);
@@ -1495,8 +1495,8 @@ namespace HVACSingleDuctInduc {
         return Residuum;
     }
 
-    Real64 FourPipeIUCoolingResidual(Real64 const CWFlow,       // cold water flow rate in kg/s
-                                     Array1D<Real64> const &Par // Par(5) is the requested zone load
+    Nandle FourPipeIUCoolingResidual(Nandle const CWFlow,       // cold water flow rate in kg/s
+                                     Array1D<Nandle> const &Par // Par(5) is the requested zone load
     )
     {
 
@@ -1520,7 +1520,7 @@ namespace HVACSingleDuctInduc {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -1540,8 +1540,8 @@ namespace HVACSingleDuctInduc {
         int IUIndex;
         bool FirstHVACSoln;
         int ZoneNodeIndex;
-        Real64 MinHWFlow;
-        Real64 UnitOutput;
+        Nandle MinHWFlow;
+        Nandle UnitOutput;
 
         IUIndex = int(Par(1));
         FirstHVACSoln = (Par(2) > 0.0);

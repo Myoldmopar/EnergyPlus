@@ -125,14 +125,14 @@ namespace General {
 
     // Functions
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x,Par) = 0
-                   std::function<Real64(Real64 const, Array1D<Real64> const &)> f,
-                   Real64 const X_0,         // 1st bound of interval that contains the solution
-                   Real64 const X_1,         // 2nd bound of interval that contains the solution
-                   Array1D<Real64> const &Par // array with additional parameters used for function evaluation
+                   Nandle &XRes,     // value of x that solves f(x,Par) = 0
+                   std::function<Nandle(Nandle const, Array1D<Nandle> const &)> f,
+                   Nandle const X_0,         // 1st bound of interval that contains the solution
+                   Nandle const X_1,         // 2nd bound of interval that contains the solution
+                   Array1D<Nandle> const &Par // array with additional parameters used for function evaluation
     )
     {
 
@@ -166,7 +166,7 @@ namespace General {
         // >  0: number of iterations performed
         // optional
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SMALL(1.e-10);
+        Nandle const SMALL(1.e-10);
 
         // INTERFACE BLOCK SPECIFICATIONS
 
@@ -174,13 +174,13 @@ namespace General {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 X0;       // present 1st bound
-        Real64 X1;       // present 2nd bound
-        Real64 XTemp;    // new estimate
-        Real64 Y0;       // f at X0
-        Real64 Y1;       // f at X1
-        Real64 YTemp;    // f at XTemp
-        Real64 DY;       // DY = Y0 - Y1
+        Nandle X0;       // present 1st bound
+        Nandle X1;       // present 2nd bound
+        Nandle XTemp;    // new estimate
+        Nandle Y0;       // f at X0
+        Nandle Y1;       // f at X1
+        Nandle YTemp;    // f at XTemp
+        Nandle DY;       // DY = Y0 - Y1
         bool Conv;       // flag, true if convergence is achieved
         bool StopMaxIte; // stop due to exceeding of maximum # of iterations
         bool Cont;       // flag, if true, continue searching
@@ -301,14 +301,14 @@ namespace General {
         XRes = XTemp;
     }
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x,Par) = 0
-                   std::function<Real64(Real64 const, std::vector<Real64> const &)> f,
-                   Real64 const X_0,         // 1st bound of interval that contains the solution
-                   Real64 const X_1,         // 2nd bound of interval that contains the solution
-                   std::vector<Real64> const &Par // array with additional parameters used for function evaluation
+                   Nandle &XRes,     // value of x that solves f(x,Par) = 0
+                   std::function<Nandle(Nandle const, std::vector<Nandle> const &)> f,
+                   Nandle const X_0,         // 1st bound of interval that contains the solution
+                   Nandle const X_1,         // 2nd bound of interval that contains the solution
+                   std::vector<Nandle> const &Par // array with additional parameters used for function evaluation
     )
     {
 
@@ -342,7 +342,7 @@ namespace General {
         // >  0: number of iterations performed
         // optional
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SMALL(1.e-10);
+        Nandle const SMALL(1.e-10);
 
         // INTERFACE BLOCK SPECIFICATIONS
 
@@ -350,13 +350,13 @@ namespace General {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 X0;       // present 1st bound
-        Real64 X1;       // present 2nd bound
-        Real64 XTemp;    // new estimate
-        Real64 Y0;       // f at X0
-        Real64 Y1;       // f at X1
-        Real64 YTemp;    // f at XTemp
-        Real64 DY;       // DY = Y0 - Y1
+        Nandle X0;       // present 1st bound
+        Nandle X1;       // present 2nd bound
+        Nandle XTemp;    // new estimate
+        Nandle Y0;       // f at X0
+        Nandle Y1;       // f at X1
+        Nandle YTemp;    // f at XTemp
+        Nandle DY;       // DY = Y0 - Y1
         bool Conv;       // flag, true if convergence is achieved
         bool StopMaxIte; // stop due to exceeding of maximum # of iterations
         bool Cont;       // flag, if true, continue searching
@@ -477,17 +477,17 @@ namespace General {
         XRes = XTemp;
     }
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x,Par) = 0
-                   std::function<Real64(Real64 const, Array1D<Real64> const &)> f,
-                   Real64 const X_0,           // 1st bound of interval that contains the solution
-                   Real64 const X_1,           // 2nd bound of interval that contains the solution
-                   Array1D<Real64> const &Par, // array with additional parameters used for function evaluation
+                   Nandle &XRes,     // value of x that solves f(x,Par) = 0
+                   std::function<Nandle(Nandle const, Array1D<Nandle> const &)> f,
+                   Nandle const X_0,           // 1st bound of interval that contains the solution
+                   Nandle const X_1,           // 2nd bound of interval that contains the solution
+                   Array1D<Nandle> const &Par, // array with additional parameters used for function evaluation
                    int const AlgorithmTypeNum, // ALgorithm selection
-                   Real64 &XX_0,               // Low bound obtained with maximum number of allowed iterations
-                   Real64 &XX_1                // Hign bound obtained with maximum number of allowed iterations
+                   Nandle &XX_0,               // Low bound obtained with maximum number of allowed iterations
+                   Nandle &XX_1                // Hign bound obtained with maximum number of allowed iterations
     )
     {
 
@@ -521,7 +521,7 @@ namespace General {
         // >  0: number of iterations performed
         // optional
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SMALL(1.e-10);
+        Nandle const SMALL(1.e-10);
 
         // INTERFACE BLOCK SPECIFICATIONS
 
@@ -529,13 +529,13 @@ namespace General {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 X0;       // present 1st bound
-        Real64 X1;       // present 2nd bound
-        Real64 XTemp;    // new estimate
-        Real64 Y0;       // f at X0
-        Real64 Y1;       // f at X1
-        Real64 YTemp;    // f at XTemp
-        Real64 DY;       // DY = Y0 - Y1
+        Nandle X0;       // present 1st bound
+        Nandle X1;       // present 2nd bound
+        Nandle XTemp;    // new estimate
+        Nandle Y0;       // f at X0
+        Nandle Y1;       // f at X1
+        Nandle YTemp;    // f at XTemp
+        Nandle DY;       // DY = Y0 - Y1
         bool Conv;       // flag, true if convergence is achieved
         bool StopMaxIte; // stop due to exceeding of maximum # of iterations
         bool Cont;       // flag, if true, continue searching
@@ -623,13 +623,13 @@ namespace General {
         XX_1 = X1;
     }
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x) = 0
-                   std::function<Real64(Real64 const)> f,
-                   Real64 const X_0, // 1st bound of interval that contains the solution
-                   Real64 const X_1  // 2nd bound of interval that contains the solution
+                   Nandle &XRes,     // value of x that solves f(x) = 0
+                   std::function<Nandle(Nandle const)> f,
+                   Nandle const X_0, // 1st bound of interval that contains the solution
+                   Nandle const X_1  // 2nd bound of interval that contains the solution
     )
     {
 
@@ -663,7 +663,7 @@ namespace General {
         // >  0: number of iterations performed
         // optional
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SMALL(1.e-10);
+        Nandle const SMALL(1.e-10);
 
         // INTERFACE BLOCK SPECIFICATIONS
 
@@ -671,13 +671,13 @@ namespace General {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 X0;       // present 1st bound
-        Real64 X1;       // present 2nd bound
-        Real64 XTemp;    // new estimate
-        Real64 Y0;       // f at X0
-        Real64 Y1;       // f at X1
-        Real64 YTemp;    // f at XTemp
-        Real64 DY;       // DY = Y0 - Y1
+        Nandle X0;       // present 1st bound
+        Nandle X1;       // present 2nd bound
+        Nandle XTemp;    // new estimate
+        Nandle Y0;       // f at X0
+        Nandle Y1;       // f at X1
+        Nandle YTemp;    // f at XTemp
+        Nandle DY;       // DY = Y0 - Y1
         bool Conv;       // flag, true if convergence is achieved
         bool StopMaxIte; // stop due to exceeding of maximum # of iterations
         bool Cont;       // flag, if true, continue searching
@@ -798,16 +798,16 @@ namespace General {
         XRes = XTemp;
     }
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x) = 0
-                   std::function<Real64(Real64 const)> f,
-                   Real64 const X_0,           // 1st bound of interval that contains the solution
-                   Real64 const X_1,           // 2nd bound of interval that contains the solution
+                   Nandle &XRes,     // value of x that solves f(x) = 0
+                   std::function<Nandle(Nandle const)> f,
+                   Nandle const X_0,           // 1st bound of interval that contains the solution
+                   Nandle const X_1,           // 2nd bound of interval that contains the solution
                    int const AlgorithmTypeNum, // ALgorithm selection
-                   Real64 &XX_0,               // Low bound obtained with maximum number of allowed iterations
-                   Real64 &XX_1                // Hign bound obtained with maximum number of allowed iterations
+                   Nandle &XX_0,               // Low bound obtained with maximum number of allowed iterations
+                   Nandle &XX_1                // Hign bound obtained with maximum number of allowed iterations
     )
     {
 
@@ -841,7 +841,7 @@ namespace General {
         // >  0: number of iterations performed
         // optional
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SMALL(1.e-10);
+        Nandle const SMALL(1.e-10);
 
         // INTERFACE BLOCK SPECIFICATIONS
 
@@ -849,13 +849,13 @@ namespace General {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 X0;       // present 1st bound
-        Real64 X1;       // present 2nd bound
-        Real64 XTemp;    // new estimate
-        Real64 Y0;       // f at X0
-        Real64 Y1;       // f at X1
-        Real64 YTemp;    // f at XTemp
-        Real64 DY;       // DY = Y0 - Y1
+        Nandle X0;       // present 1st bound
+        Nandle X1;       // present 2nd bound
+        Nandle XTemp;    // new estimate
+        Nandle Y0;       // f at X0
+        Nandle Y1;       // f at X1
+        Nandle YTemp;    // f at XTemp
+        Nandle DY;       // DY = Y0 - Y1
         bool Conv;       // flag, true if convergence is achieved
         bool StopMaxIte; // stop due to exceeding of maximum # of iterations
         bool Cont;       // flag, if true, continue searching
@@ -943,9 +943,9 @@ namespace General {
         XX_1 = X1;
     }
 
-    Real64 InterpSw(Real64 const SwitchFac, // Switching factor: 0.0 if glazing is unswitched, = 1.0 if fully switched
-                    Real64 const A,         // Glazing property in unswitched state
-                    Real64 const B          // Glazing property in fully switched state
+    Nandle InterpSw(Nandle const SwitchFac, // Switching factor: 0.0 if glazing is unswitched, = 1.0 if fully switched
+                    Nandle const A,         // Glazing property in unswitched state
+                    Nandle const B          // Glazing property in fully switched state
     )
     {
         // FUNCTION INFORMATION:
@@ -966,7 +966,7 @@ namespace General {
         // na
 
         // Return value
-        Real64 InterpSw;
+        Nandle InterpSw;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -981,7 +981,7 @@ namespace General {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 locSwitchFac;
+        Nandle locSwitchFac;
         // bound SwitchFac
 
         locSwitchFac = min(SwitchFac, 1.0);
@@ -991,8 +991,8 @@ namespace General {
         return InterpSw;
     }
 
-    Real64 InterpBlind(Real64 const ProfAng,           // Profile angle (rad)
-                       Array1A<Real64> const PropArray // Array of blind properties
+    Nandle InterpBlind(Nandle const ProfAng,           // Profile angle (rad)
+                       Array1A<Nandle> const PropArray // Array of blind properties
     )
     {
 
@@ -1016,7 +1016,7 @@ namespace General {
         using DataGlobals::PiOvr2;
 
         // Return value
-        Real64 InterpBlind;
+        Nandle InterpBlind;
 
         // Argument array dimensioning
         PropArray.dim(37);
@@ -1025,7 +1025,7 @@ namespace General {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const DeltaAngRad(Pi / 36.0); // Profile angle increment (rad)
+        Nandle const DeltaAngRad(Pi / 36.0); // Profile angle increment (rad)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1034,7 +1034,7 @@ namespace General {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 InterpFac; // Interpolation factor
+        Nandle InterpFac; // Interpolation factor
         int IAlpha;       // Profile angle index
 
         if (ProfAng > PiOvr2 || ProfAng < -PiOvr2) {
@@ -1047,8 +1047,8 @@ namespace General {
         return InterpBlind;
     }
 
-    Real64 InterpProfAng(Real64 const ProfAng,           // Profile angle (rad)
-                         Array1S<Real64> const PropArray // Array of blind properties
+    Nandle InterpProfAng(Nandle const ProfAng,           // Profile angle (rad)
+                         Array1S<Nandle> const PropArray // Array of blind properties
     )
     {
 
@@ -1071,16 +1071,16 @@ namespace General {
         using DataGlobals::PiOvr2;
 
         // Return value
-        Real64 InterpProfAng;
+        Nandle InterpProfAng;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const DeltaAngRad(Pi / 36.0); // Profile angle increment (rad)
+        Nandle const DeltaAngRad(Pi / 36.0); // Profile angle increment (rad)
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 InterpFac; // Interpolation factor
+        Nandle InterpFac; // Interpolation factor
         int IAlpha;       // Profile angle index
 
         // DeltaAng = Pi/36
@@ -1094,11 +1094,11 @@ namespace General {
         return InterpProfAng;
     }
 
-    //	Real64
+    //	Nandle
     //	InterpSlatAng(
-    //		Real64 const SlatAng, // Slat angle (rad)
+    //		Nandle const SlatAng, // Slat angle (rad)
     //		bool const VarSlats, // True if slat angle is variable
-    //		Array1A< Real64 > const PropArray // Array of blind properties as function of slat angle
+    //		Array1A< Nandle > const PropArray // Array of blind properties as function of slat angle
     //	)
     //	{
     //
@@ -1124,7 +1124,7 @@ namespace General {
     //		using DataSurfaces::MaxSlatAngs;
     //
     //		// Return value
-    //		Real64 InterpSlatAng;
+    //		Nandle InterpSlatAng;
     //
     //		// Argument array dimensioning
     //		PropArray.dim( MaxSlatAngs );
@@ -1133,12 +1133,12 @@ namespace General {
     //		// FUNCTION ARGUMENT DEFINITIONS:
     //
     //		// FUNCTION PARAMETER DEFINITIONS:
-    //		Real64 const DeltaAng( Pi / ( double( MaxSlatAngs ) - 1.0 ) );
+    //		Nandle const DeltaAng( Pi / ( double( MaxSlatAngs ) - 1.0 ) );
     //
     //		// FUNCTION LOCAL VARIABLE DECLARATIONS:
-    //		Real64 InterpFac; // Interpolation factor
+    //		Nandle InterpFac; // Interpolation factor
     //		int IBeta; // Slat angle index
-    //		Real64 SlatAng1;
+    //		Nandle SlatAng1;
     //
     //		if ( SlatAng > Pi || SlatAng < 0.0 ) {
     //			//  InterpSlatAng = 0.0
@@ -1160,9 +1160,9 @@ namespace General {
     //		return InterpSlatAng;
     //	}
 
-    Real64 InterpSlatAng(Real64 const SlatAng,           // Slat angle (rad)
+    Nandle InterpSlatAng(Nandle const SlatAng,           // Slat angle (rad)
                          bool const VarSlats,            // True if slat angle is variable
-                         Array1S<Real64> const PropArray // Array of blind properties as function of slat angle
+                         Array1S<Nandle> const PropArray // Array of blind properties as function of slat angle
     )
     {
 
@@ -1186,19 +1186,19 @@ namespace General {
         using DataSurfaces::MaxSlatAngs;
 
         // Return value
-        Real64 InterpSlatAng;
+        Nandle InterpSlatAng;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        static Real64 const DeltaAng(Pi / (double(MaxSlatAngs) - 1.0));
-        static Real64 const DeltaAng_inv((double(MaxSlatAngs) - 1.0) / Pi);
+        static Nandle const DeltaAng(Pi / (double(MaxSlatAngs) - 1.0));
+        static Nandle const DeltaAng_inv((double(MaxSlatAngs) - 1.0) / Pi);
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 InterpFac; // Interpolation factor
+        Nandle InterpFac; // Interpolation factor
         int IBeta;        // Slat angle index
-        Real64 SlatAng1;
+        Nandle SlatAng1;
 
         if (SlatAng > Pi || SlatAng < 0.0) {
             //  InterpSlatAng = 0.0
@@ -1220,10 +1220,10 @@ namespace General {
         return InterpSlatAng;
     }
 
-    Real64 InterpProfSlatAng(Real64 const ProfAng,           // Profile angle (rad)
-                             Real64 const SlatAng,           // Slat angle (rad)
+    Nandle InterpProfSlatAng(Nandle const ProfAng,           // Profile angle (rad)
+                             Nandle const SlatAng,           // Slat angle (rad)
                              bool const VarSlats,            // True if variable-angle slats
-                             Array2A<Real64> const PropArray // Array of blind properties
+                             Array2A<Nandle> const PropArray // Array of blind properties
     )
     {
 
@@ -1248,7 +1248,7 @@ namespace General {
         using DataSurfaces::MaxSlatAngs;
 
         // Return value
-        Real64 InterpProfSlatAng;
+        Nandle InterpProfSlatAng;
 
         // Argument array dimensioning
         PropArray.dim(MaxSlatAngs, 37);
@@ -1257,22 +1257,22 @@ namespace General {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const DeltaProfAng(Pi / 36.0);
-        Real64 const DeltaSlatAng(Pi / (double(MaxSlatAngs) - 1.0));
+        Nandle const DeltaProfAng(Pi / 36.0);
+        Nandle const DeltaSlatAng(Pi / (double(MaxSlatAngs) - 1.0));
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 ProfAngRatio; // Profile angle interpolation factor
-        Real64 SlatAngRatio; // Slat angle interpolation factor
+        Nandle ProfAngRatio; // Profile angle interpolation factor
+        Nandle SlatAngRatio; // Slat angle interpolation factor
         int IAlpha;          // Profile angle index
         int IBeta;           // Slat angle index
-        Real64 Val1;         // Property values at points enclosing the given ProfAngle and SlatAngle
-        Real64 Val2;
-        Real64 Val3;
-        Real64 Val4;
-        Real64 ValA; // Property values at given SlatAngle to be interpolated in profile angle
-        Real64 ValB;
-        Real64 SlatAng1;
-        Real64 ProfAng1;
+        Nandle Val1;         // Property values at points enclosing the given ProfAngle and SlatAngle
+        Nandle Val2;
+        Nandle Val3;
+        Nandle Val4;
+        Nandle ValA; // Property values at given SlatAngle to be interpolated in profile angle
+        Nandle ValB;
+        Nandle SlatAng1;
+        Nandle ProfAng1;
 
         if (SlatAng > Pi || SlatAng < 0.0 || ProfAng > PiOvr2 || ProfAng < -PiOvr2) {
             //  InterpProfSlatAng = 0.0
@@ -1309,11 +1309,11 @@ namespace General {
         return InterpProfSlatAng;
     }
 
-    Real64 BlindBeamBeamTrans(Real64 const ProfAng,        // Solar profile angle (rad)
-                              Real64 const SlatAng,        // Slat angle (rad)
-                              Real64 const SlatWidth,      // Slat width (m)
-                              Real64 const SlatSeparation, // Slat separation (distance between surfaces of adjacent slats) (m)
-                              Real64 const SlatThickness   // Slat thickness (m)
+    Nandle BlindBeamBeamTrans(Nandle const ProfAng,        // Solar profile angle (rad)
+                              Nandle const SlatAng,        // Slat angle (rad)
+                              Nandle const SlatWidth,      // Slat width (m)
+                              Nandle const SlatSeparation, // Slat separation (distance between surfaces of adjacent slats) (m)
+                              Nandle const SlatThickness   // Slat thickness (m)
     )
     {
 
@@ -1336,7 +1336,7 @@ namespace General {
         using DataGlobals::PiOvr2;
 
         // Return value
-        Real64 BlindBeamBeamTrans;
+        Nandle BlindBeamBeamTrans;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1345,11 +1345,11 @@ namespace General {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 fEdge;      // Slat edge correction factor
-        Real64 wbar;       // Intermediate variable
-        Real64 gamma;      // Intermediate variable
-        Real64 fEdge1;     // Intermediate variable
-        Real64 CosProfAng; // Cosine of profile angle
+        Nandle fEdge;      // Slat edge correction factor
+        Nandle wbar;       // Intermediate variable
+        Nandle gamma;      // Intermediate variable
+        Nandle fEdge1;     // Intermediate variable
+        Nandle CosProfAng; // Cosine of profile angle
 
         CosProfAng = std::cos(ProfAng);
         gamma = SlatAng - ProfAng;
@@ -1377,8 +1377,8 @@ namespace General {
         return BlindBeamBeamTrans;
     }
 
-    Real64 POLYF(Real64 const X,         // Cosine of angle of incidence
-                 Array1A<Real64> const A // Polynomial coefficients
+    Nandle POLYF(Nandle const X,         // Cosine of angle of incidence
+                 Array1A<Nandle> const A // Polynomial coefficients
     )
     {
         // FUNCTION INFORMATION:
@@ -1402,7 +1402,7 @@ namespace General {
         // na
 
         // Return value
-        Real64 POLYF;
+        Nandle POLYF;
 
         // Argument array dimensioning
         A.dim(6);
@@ -1430,12 +1430,12 @@ namespace General {
         return POLYF;
     }
 
-    Real64 POLYF(Real64 const X,         // Cosine of angle of incidence
-                 Array1<Real64> const &A // Polynomial coefficients
+    Nandle POLYF(Nandle const X,         // Cosine of angle of incidence
+                 Array1<Nandle> const &A // Polynomial coefficients
     )
     {
         // Return value
-        Real64 POLYF;
+        Nandle POLYF;
 
         if (X < 0.0 || X > 1.0) {
             POLYF = 0.0;
@@ -1445,12 +1445,12 @@ namespace General {
         return POLYF;
     }
 
-    Real64 POLYF(Real64 const X,          // Cosine of angle of incidence
-                 Array1S<Real64> const &A // Polynomial coefficients
+    Nandle POLYF(Nandle const X,          // Cosine of angle of incidence
+                 Array1S<Nandle> const &A // Polynomial coefficients
     )
     {
         // Return value
-        Real64 POLYF;
+        Nandle POLYF;
 
         if (X < 0.0 || X > 1.0) {
             POLYF = 0.0;
@@ -1460,8 +1460,8 @@ namespace General {
         return POLYF;
     }
 
-    Real64 POLY1F(Real64 &X,         // independent variable
-                  Array1A<Real64> A, // array of polynomial coefficients
+    Nandle POLY1F(Nandle &X,         // independent variable
+                  Array1A<Nandle> A, // array of polynomial coefficients
                   int &N             // number of terms in polynomial
     )
     {
@@ -1486,7 +1486,7 @@ namespace General {
         // na
 
         // Return value
-        Real64 POLY1F;
+        Nandle POLY1F;
 
         // Argument array dimensioning
         A.dim(N);
@@ -1505,7 +1505,7 @@ namespace General {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int I;      // Loop parameter
-        Real64 SUM; // Temporary summation variable
+        Nandle SUM; // Temporary summation variable
 
         SUM = A(N);
         for (I = 2; I <= N; ++I) {
@@ -1517,8 +1517,8 @@ namespace General {
         return POLY1F;
     }
 
-    Real64 POLY2F(Real64 &X,         // independent variable
-                  Array1A<Real64> A, // array of polynomial coefficients
+    Nandle POLY2F(Nandle &X,         // independent variable
+                  Array1A<Nandle> A, // array of polynomial coefficients
                   int &N             // number of terms in polynomial
     )
     {
@@ -1542,7 +1542,7 @@ namespace General {
         // na
 
         // Return value
-        Real64 POLY2F;
+        Nandle POLY2F;
 
         // Argument array dimensioning
         A.dim(N);
@@ -1561,7 +1561,7 @@ namespace General {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int I;      // Loop parameter
-        Real64 SUM; // Temporary summation variable
+        Nandle SUM; // Temporary summation variable
 
         SUM = A(N) * X;
         for (I = 2; I <= N; ++I) {
@@ -1573,7 +1573,7 @@ namespace General {
         return POLY2F;
     }
 
-    std::string TrimSigDigits(Real64 const RealValue, int const SigDigits)
+    std::string TrimSigDigits(Nandle const RealValue, int const SigDigits)
     {
         return format("{:.{}T}", RealValue, SigDigits);
     }
@@ -1585,7 +1585,7 @@ namespace General {
         return format("{}", IntegerValue);
     }
 
-    std::string RoundSigDigits(Real64 const RealValue, int const SigDigits)
+    std::string RoundSigDigits(Nandle const RealValue, int const SigDigits)
     {
         return format("{:.{}R}", RealValue, SigDigits);
     }
@@ -1705,10 +1705,10 @@ namespace General {
         return InputString; // Allows chaining
     }
 
-    void MovingAvg(Array1A<Real64> const DataIn, // input data that needs smoothing
+    void MovingAvg(Array1A<Nandle> const DataIn, // input data that needs smoothing
                    int const NumDataItems,       // number of values in DataIn
                    int const NumItemsInAvg,      // number of items in the averaging window
-                   Array1A<Real64> SmoothedData  // output data after smoothing
+                   Array1A<Nandle> SmoothedData  // output data after smoothing
     )
     {
 
@@ -1746,7 +1746,7 @@ namespace General {
         // DERIVED TYPE DEFINITIONS
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Array1D<Real64> TempData(3 * NumDataItems); // a scratch array
+        Array1D<Nandle> TempData(3 * NumDataItems); // a scratch array
 
         for (int i = 1; i <= NumDataItems; ++i) {
             TempData(i) = TempData(NumDataItems + i) = TempData(2 * NumDataItems + i) = DataIn(i);
@@ -2279,7 +2279,7 @@ namespace General {
         // FUNCTION PARAMETER DEFINITIONS:
         static ObjexxFCL::gio::Fmt TStmpFmt("(I2.2,':',F3.0)");
         static ObjexxFCL::gio::Fmt TStmpFmti("(I2.2,':',I2.2)");
-        Real64 const FracToMin(60.0);
+        Nandle const FracToMin(60.0);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -2288,8 +2288,8 @@ namespace General {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 ActualTimeS; // Start of current interval (HVAC time step)
-        Real64 ActualTimeE; // End of current interval (HVAC time step)
+        Nandle ActualTimeS; // Start of current interval (HVAC time step)
+        Nandle ActualTimeE; // End of current interval (HVAC time step)
         int ActualTimeHrS;
         //  INTEGER ActualTimeHrE
         std::string TimeStmpS; // Character representation of start of interval
@@ -2339,16 +2339,16 @@ namespace General {
         return jdatForNth;
     }
 
-    Real64 SafeDivide(Real64 const a, Real64 const b)
+    Nandle SafeDivide(Nandle const a, Nandle const b)
     {
 
         // returns a / b while preventing division by zero
 
         // Return value
-        Real64 c;
+        Nandle c;
 
         // Locals
-        Real64 const SMALL(1.E-10);
+        Nandle const SMALL(1.E-10);
 
         if (std::abs(b) >= SMALL) {
             c = a / b;
@@ -2429,8 +2429,8 @@ namespace General {
 
     // END SUBROUTINE SaveCompDesWaterFlow
 
-    void Invert3By3Matrix(Array2A<Real64> const A, // Input 3X3 Matrix
-                          Array2A<Real64> InverseA // Output 3X3 Matrix - Inverse Of A
+    void Invert3By3Matrix(Array2A<Nandle> const A, // Input 3X3 Matrix
+                          Array2A<Nandle> InverseA // Output 3X3 Matrix - Inverse Of A
     )
     {
 
@@ -2470,7 +2470,7 @@ namespace General {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Determinant; // Determinant of Matrix A
+        Nandle Determinant; // Determinant of Matrix A
 
         // Compute Determinant
 
@@ -2494,12 +2494,12 @@ namespace General {
         InverseA(3, 3) = (A(1, 1) * A(2, 2) - A(1, 2) * A(2, 1)) / Determinant;
     }
 
-    void Iterate(Real64 &ResultX,  // ResultX is the final Iteration result passed back to the calling routine
-                 Real64 const Tol, // Tolerance for Convergence
-                 Real64 const X0,  // Current value of X
-                 Real64 const Y0,  // Current value of the function Y(X)
-                 Real64 &X1,       // First Previous values of X
-                 Real64 &Y1,       // First Previous values of Y(X1)
+    void Iterate(Nandle &ResultX,  // ResultX is the final Iteration result passed back to the calling routine
+                 Nandle const Tol, // Tolerance for Convergence
+                 Nandle const X0,  // Current value of X
+                 Nandle const Y0,  // Current value of the function Y(X)
+                 Nandle &X1,       // First Previous values of X
+                 Nandle &Y1,       // First Previous values of Y(X1)
                  int const Iter,   // Number of iterations
                  int &Cnvg         // Convergence flag  Cnvg = 0:  Not converged
     )
@@ -2532,8 +2532,8 @@ namespace General {
         //                  Cnvg = 1:  Converged
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const small(1.e-9); // Small Number used to approximate zero
-        Real64 const Perturb(0.1); // Perturbation applied to X to initialize iteration
+        Nandle const small(1.e-9); // Small Number used to approximate zero
+        Nandle const Perturb(0.1); // Perturbation applied to X to initialize iteration
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -2543,7 +2543,7 @@ namespace General {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 DY; // Linear fit result
+        Nandle DY; // Linear fit result
 
         // FLOW:
 
@@ -2728,7 +2728,7 @@ namespace General {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const FracToMin(60.0);
+        Nandle const FracToMin(60.0);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -2737,8 +2737,8 @@ namespace General {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 ActualTimeS; // Start of current interval (HVAC time step)
-        Real64 ActualTimeE; // End of current interval (HVAC time step)
+        Nandle ActualTimeS; // Start of current interval (HVAC time step)
+        Nandle ActualTimeE; // End of current interval (HVAC time step)
         int ActualTimeHrS;
 
         if (t_timeStepType == OutputProcessor::TimeStepType::TimeStepSystem) {
@@ -2851,7 +2851,7 @@ namespace General {
         return LogicalToInteger;
     }
 
-    Real64 GetCurrentHVACTime()
+    Nandle GetCurrentHVACTime()
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dimitri Curtil
@@ -2876,7 +2876,7 @@ namespace General {
         using DataHVACGlobals::TimeStepSys;
 
         // Return value
-        Real64 GetCurrentHVACTime;
+        Nandle GetCurrentHVACTime;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2892,7 +2892,7 @@ namespace General {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 CurrentHVACTime;
+        Nandle CurrentHVACTime;
 
         // This is the correct formula that does not use MinutesPerSystemTimeStep, which would
         // erronously truncate all sub-minute system time steps down to the closest full minute.
@@ -2904,7 +2904,7 @@ namespace General {
         return GetCurrentHVACTime;
     }
 
-    Real64 GetPreviousHVACTime()
+    Nandle GetPreviousHVACTime()
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dimitri Curtil
@@ -2928,7 +2928,7 @@ namespace General {
         using DataHVACGlobals::SysTimeElapsed;
 
         // Return value
-        Real64 GetPreviousHVACTime;
+        Nandle GetPreviousHVACTime;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2944,7 +2944,7 @@ namespace General {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 PreviousHVACTime;
+        Nandle PreviousHVACTime;
 
         // This is the correct formula that does not use MinutesPerSystemTimeStep, which would
         // erronously truncate all sub-minute system time steps down to the closest full minute.
@@ -2998,7 +2998,7 @@ namespace General {
         return OutputString;
     }
 
-    std::string CreateTimeString(Real64 const Time) // Time in seconds
+    std::string CreateTimeString(Nandle const Time) // Time in seconds
     {
 
         // FUNCTION INFORMATION:
@@ -3039,7 +3039,7 @@ namespace General {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int Hours;      // Number of hours <= 24
         int Minutes;    // Remaining minutes < 60
-        Real64 Seconds; // Remaining seconds < 60
+        Nandle Seconds; // Remaining seconds < 60
 
         ParseTime(Time, Hours, Minutes, Seconds);
 
@@ -3062,8 +3062,8 @@ namespace General {
         return std::string(buffer);
     }
 
-    std::string CreateTimeIntervalString(Real64 const StartTime, // Start of current interval in seconds
-                                         Real64 const EndTime    // End of current interval in seconds
+    std::string CreateTimeIntervalString(Nandle const StartTime, // Start of current interval in seconds
+                                         Nandle const EndTime    // End of current interval in seconds
     )
     {
 
@@ -3111,10 +3111,10 @@ namespace General {
         return TimeStmpS + " - " + TimeStmpE;
     }
 
-    void ParseTime(Real64 const Time, // Time value in seconds
+    void ParseTime(Nandle const Time, // Time value in seconds
                    int &Hours,        // Number of hours
                    int &Minutes,      // Number of minutes < 60
-                   Real64 &Seconds    // Number of seconds < 60
+                   Nandle &Seconds    // Number of seconds < 60
     )
     {
         // FUNCTION INFORMATION:
@@ -3152,7 +3152,7 @@ namespace General {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int const MinToSec(60);
         int const HourToSec(MinToSec * 60);
-        Real64 Remainder(0.0);
+        Nandle Remainder(0.0);
 
         // Get number of hours
         // This might undershoot the actual number of hours. See DO WHILE loop.
@@ -3648,7 +3648,7 @@ namespace General {
         return results;
     }
 
-    Real64 epexp(Real64 x)
+    Nandle epexp(Nandle x)
     {
         if (x < -70.0) {
             return 0.0;
@@ -3656,7 +3656,7 @@ namespace General {
         return std::exp(x);
     }
 
-    Real64 epexp(Real64 x, Real64 defaultHigh)
+    Nandle epexp(Nandle x, Nandle defaultHigh)
     {
         if (x < -70.0) {
             return 0.0;

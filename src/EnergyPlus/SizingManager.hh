@@ -113,7 +113,7 @@ namespace SizingManager {
                                     int const OAIndex,
                                     Array1D_string const &cAlphaArgs,
                                     int &NumAlphas,
-                                    Array1D<Real64> const &rNumericArgs,
+                                    Array1D<Nandle> const &rNumericArgs,
                                     int &NumNumbers,
                                     Array1D_bool const &lNumericFieldBlanks, // Unused
                                     Array1D_bool const &lAlphaFieldBlanks,
@@ -144,27 +144,27 @@ namespace SizingManager {
     void ReportZoneSizing(OutputFiles &outputFiles,
                           std::string const &ZoneName,   // the name of the zone
                           std::string const &LoadType,   // the description of the input variable
-                          Real64 const CalcDesLoad,      // the value from the sizing calculation [W]
-                          Real64 const UserDesLoad,      // the value from the sizing calculation modified by user input [W]
-                          Real64 const CalcDesFlow,      // calculated design air flow rate [m3/s]
-                          Real64 const UserDesFlow,      // user input or modified design air flow rate [m3/s]
+                          Nandle const CalcDesLoad,      // the value from the sizing calculation [W]
+                          Nandle const UserDesLoad,      // the value from the sizing calculation modified by user input [W]
+                          Nandle const CalcDesFlow,      // calculated design air flow rate [m3/s]
+                          Nandle const UserDesFlow,      // user input or modified design air flow rate [m3/s]
                           std::string const &DesDayName, // the name of the design day that produced the peak
                           std::string const &PeakHrMin,  // time stamp of the peak
-                          Real64 const PeakTemp,         // temperature at peak [C]
-                          Real64 const PeakHumRat,       // humidity ratio at peak [kg water/kg dry air]
-                          Real64 const FloorArea,        // zone floor area [m2]
-                          Real64 const TotOccs,          // design number of occupants for the zone
-                          Real64 const MinOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
-                          Real64 const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
+                          Nandle const PeakTemp,         // temperature at peak [C]
+                          Nandle const PeakHumRat,       // humidity ratio at peak [kg water/kg dry air]
+                          Nandle const FloorArea,        // zone floor area [m2]
+                          Nandle const TotOccs,          // design number of occupants for the zone
+                          Nandle const MinOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
+                          Nandle const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
     );
 
     void ReportSysSizing(OutputFiles &outputFiles,
                          std::string const &SysName,      // the name of the zone
                          std::string const &LoadType,     // either "Cooling" or "Heating"
                          std::string const &PeakLoadType, // either "Sensible" or "Total"
-                         Real64 const &UserDesCap,        // User  Design Capacity
-                         Real64 const &CalcDesVolFlow,    // Calculated  Design Air Flow Rate
-                         Real64 const &UserDesVolFlow,    // User Design Air Flow Rate
+                         Nandle const &UserDesCap,        // User  Design Capacity
+                         Nandle const &CalcDesVolFlow,    // Calculated  Design Air Flow Rate
+                         Nandle const &UserDesVolFlow,    // User Design Air Flow Rate
                          std::string const &DesDayName,   // the name of the design day that produced the peak
                          std::string const &DesDayDate,   // the date that produced the peak
                          int const &TimeStepIndex         // time step of the peak

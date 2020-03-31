@@ -119,33 +119,33 @@ namespace CurveManager {
     {
         // Members
         // this structure is for 27 coefficient full triquadratic (!)
-        Real64 CoeffA0;
-        Real64 CoeffA1;
-        Real64 CoeffA2;
-        Real64 CoeffA3;
-        Real64 CoeffA4;
-        Real64 CoeffA5;
-        Real64 CoeffA6;
-        Real64 CoeffA7;
-        Real64 CoeffA8;
-        Real64 CoeffA9;
-        Real64 CoeffA10;
-        Real64 CoeffA11;
-        Real64 CoeffA12;
-        Real64 CoeffA13;
-        Real64 CoeffA14;
-        Real64 CoeffA15;
-        Real64 CoeffA16;
-        Real64 CoeffA17;
-        Real64 CoeffA18;
-        Real64 CoeffA19;
-        Real64 CoeffA20;
-        Real64 CoeffA21;
-        Real64 CoeffA22;
-        Real64 CoeffA23;
-        Real64 CoeffA24;
-        Real64 CoeffA25;
-        Real64 CoeffA26;
+        Nandle CoeffA0;
+        Nandle CoeffA1;
+        Nandle CoeffA2;
+        Nandle CoeffA3;
+        Nandle CoeffA4;
+        Nandle CoeffA5;
+        Nandle CoeffA6;
+        Nandle CoeffA7;
+        Nandle CoeffA8;
+        Nandle CoeffA9;
+        Nandle CoeffA10;
+        Nandle CoeffA11;
+        Nandle CoeffA12;
+        Nandle CoeffA13;
+        Nandle CoeffA14;
+        Nandle CoeffA15;
+        Nandle CoeffA16;
+        Nandle CoeffA17;
+        Nandle CoeffA18;
+        Nandle CoeffA19;
+        Nandle CoeffA20;
+        Nandle CoeffA21;
+        Nandle CoeffA22;
+        Nandle CoeffA23;
+        Nandle CoeffA24;
+        Nandle CoeffA25;
+        Nandle CoeffA26;
 
         // Default Constructor
         TriQuadraticCurveDataStruct()
@@ -171,33 +171,33 @@ namespace CurveManager {
         int X1SortOrder;                                  // sort order for table data for X1
         int X2SortOrder;                                  // sort order for table data for X2
         int GridValueIndex;                               // Index of output within RGI for new Table:Lookup
-        Real64 NormalizationValue;                        // normalization value (TODO: Move from Table object)
-        Real64 Coeff1;                                    // constant coefficient
-        Real64 Coeff2;                                    // linear coeff (1st independent variable)
-        Real64 Coeff3;                                    // quadratic coeff (1st independent variable)
-        Real64 Coeff4;                                    // linear coeff (2nd ind var) or cubic coeff
-        Real64 Coeff5;                                    // quadratic coeff (2nd independent variable)
-        Real64 Coeff6;                                    // cross coeff (1st & 2nd ind var)
-        Real64 Coeff7;                                    // cubic coeff for bicubic (1st ind var)
-        Real64 Coeff8;                                    // cubic coeff for bicubic (2nd ind var)
-        Real64 Coeff9;                                    // cross coeff for bicubic (1st quadratic & 2nd linear)
-        Real64 Coeff10;                                   // cross coeff for bicubic (1st linear & 2nd quadratic)
-        Real64 Coeff11;                                   // cross coeff
-        Real64 Coeff12;                                   // cross coeff
-        Real64 Var1Max;                                   // maximum of 1st independent variable
-        Real64 Var1Min;                                   // minimum of 1st independent variable
-        Real64 Var2Max;                                   // maximum of 2nd independent variable
-        Real64 Var2Min;                                   // minimum of 2nd independent variable
-        Real64 Var3Max;                                   // maximum of 3rd independent variable
-        Real64 Var3Min;                                   // minimum of 3rd independent variable
-        Real64 Var4Max;                                   // maximum of 4th independent variable
-        Real64 Var4Min;                                   // minimum of 4th independent variable
-        Real64 Var5Max;                                   // maximum of 5th independent variable
-        Real64 Var5Min;                                   // minimum of 5th independent variable
-        Real64 Var6Max;                                   // maximum of 6th independent variable
-        Real64 Var6Min;                                   // minimum of 6th independent variable
-        Real64 CurveMin;                                  // minimum value of curve output
-        Real64 CurveMax;                                  // maximum value of curve output
+        Nandle NormalizationValue;                        // normalization value (TODO: Move from Table object)
+        Nandle Coeff1;                                    // constant coefficient
+        Nandle Coeff2;                                    // linear coeff (1st independent variable)
+        Nandle Coeff3;                                    // quadratic coeff (1st independent variable)
+        Nandle Coeff4;                                    // linear coeff (2nd ind var) or cubic coeff
+        Nandle Coeff5;                                    // quadratic coeff (2nd independent variable)
+        Nandle Coeff6;                                    // cross coeff (1st & 2nd ind var)
+        Nandle Coeff7;                                    // cubic coeff for bicubic (1st ind var)
+        Nandle Coeff8;                                    // cubic coeff for bicubic (2nd ind var)
+        Nandle Coeff9;                                    // cross coeff for bicubic (1st quadratic & 2nd linear)
+        Nandle Coeff10;                                   // cross coeff for bicubic (1st linear & 2nd quadratic)
+        Nandle Coeff11;                                   // cross coeff
+        Nandle Coeff12;                                   // cross coeff
+        Nandle Var1Max;                                   // maximum of 1st independent variable
+        Nandle Var1Min;                                   // minimum of 1st independent variable
+        Nandle Var2Max;                                   // maximum of 2nd independent variable
+        Nandle Var2Min;                                   // minimum of 2nd independent variable
+        Nandle Var3Max;                                   // maximum of 3rd independent variable
+        Nandle Var3Min;                                   // minimum of 3rd independent variable
+        Nandle Var4Max;                                   // maximum of 4th independent variable
+        Nandle Var4Min;                                   // minimum of 4th independent variable
+        Nandle Var5Max;                                   // maximum of 5th independent variable
+        Nandle Var5Min;                                   // minimum of 5th independent variable
+        Nandle Var6Max;                                   // maximum of 6th independent variable
+        Nandle Var6Min;                                   // minimum of 6th independent variable
+        Nandle CurveMin;                                  // minimum value of curve output
+        Nandle CurveMax;                                  // maximum value of curve output
         bool CurveMinPresent;                             // If TRUE, then cap minimum curve output
         bool CurveMaxPresent;                             // if TRUE, then cap maximum curve output
         bool Var1MinPresent;                              // uses data set limit to set Var1Min if false
@@ -214,14 +214,14 @@ namespace CurveManager {
         bool Var6MaxPresent;                              // uses data set limit to set Var6Max if false
         Array1D<TriQuadraticCurveDataStruct> Tri2ndOrder; // structure for triquadratic curve data
         bool EMSOverrideOn;                               // if TRUE, then EMS is calling to override curve value
-        Real64 EMSOverrideCurveValue;                     // Value of curve result EMS is directing to use
-        Real64 CurveOutput; // curve output or result
-        Real64 CurveInput1; // curve input #1 (e.g., x or X1 variable)
-        Real64 CurveInput2; // curve input #2 (e.g., y or X2 variable)
-        Real64 CurveInput3; // curve input #3 (e.g., z or X3 variable)
-        Real64 CurveInput4; // curve input #4 (e.g., X4 variable)
-        Real64 CurveInput5; // curve input #5 (e.g., X5 variable)
-        Real64 CurveInput6; // curve input #6 (e.g., X6 variable)
+        Nandle EMSOverrideCurveValue;                     // Value of curve result EMS is directing to use
+        Nandle CurveOutput; // curve output or result
+        Nandle CurveInput1; // curve input #1 (e.g., x or X1 variable)
+        Nandle CurveInput2; // curve input #2 (e.g., y or X2 variable)
+        Nandle CurveInput3; // curve input #3 (e.g., z or X3 variable)
+        Nandle CurveInput4; // curve input #4 (e.g., X4 variable)
+        Nandle CurveInput5; // curve input #5 (e.g., X5 variable)
+        Nandle CurveInput6; // curve input #6 (e.g., X6 variable)
 
         // Default Constructor
         PerfomanceCurveData()
@@ -299,13 +299,13 @@ namespace CurveManager {
 
     void ResetPerformanceCurveOutput();
 
-    Real64 CurveValue(int const CurveIndex,            // index of curve in curve array
-                      Real64 const Var1,               // 1st independent variable
-                      Optional<Real64 const> Var2 = _, // 2nd independent variable
-                      Optional<Real64 const> Var3 = _, // 3rd independent variable
-                      Optional<Real64 const> Var4 = _, // 4th independent variable
-                      Optional<Real64 const> Var5 = _, // 5th independent variable
-                      Optional<Real64 const> Var6 = _  // 6th independent variable
+    Nandle CurveValue(int const CurveIndex,            // index of curve in curve array
+                      Nandle const Var1,               // 1st independent variable
+                      Optional<Nandle const> Var2 = _, // 2nd independent variable
+                      Optional<Nandle const> Var3 = _, // 3rd independent variable
+                      Optional<Nandle const> Var4 = _, // 4th independent variable
+                      Optional<Nandle const> Var5 = _, // 5th independent variable
+                      Optional<Nandle const> Var6 = _  // 6th independent variable
     );
 
     void GetCurveInput();
@@ -314,20 +314,20 @@ namespace CurveManager {
 
     void InitCurveReporting();
 
-    Real64 PerformanceCurveObject(int const CurveIndex,            // index of curve in curve array
-                                  Real64 const Var1,               // 1st independent variable
-                                  Optional<Real64 const> Var2 = _, // 2nd independent variable
-                                  Optional<Real64 const> Var3 = _, // 3rd independent variable
-                                  Optional<Real64 const> Var4 = _  // 4th independent variable
+    Nandle PerformanceCurveObject(int const CurveIndex,            // index of curve in curve array
+                                  Nandle const Var1,               // 1st independent variable
+                                  Optional<Nandle const> Var2 = _, // 2nd independent variable
+                                  Optional<Nandle const> Var3 = _, // 3rd independent variable
+                                  Optional<Nandle const> Var4 = _  // 4th independent variable
     );
 
-    Real64 BtwxtTableInterpolation(int const CurveIndex,            // index of curve in curve array
-                                   Real64 const Var1,               // 1st independent variable
-                                   Optional<Real64 const> Var2 = _, // 2nd independent variable
-                                   Optional<Real64 const> Var3 = _, // 3rd independent variable
-                                   Optional<Real64 const> Var4 = _, // 4th independent variable
-                                   Optional<Real64 const> Var5 = _, // 5th independent variable
-                                   Optional<Real64 const> Var6 = _);
+    Nandle BtwxtTableInterpolation(int const CurveIndex,            // index of curve in curve array
+                                   Nandle const Var1,               // 1st independent variable
+                                   Optional<Nandle const> Var2 = _, // 2nd independent variable
+                                   Optional<Nandle const> Var3 = _, // 3rd independent variable
+                                   Optional<Nandle const> Var4 = _, // 4th independent variable
+                                   Optional<Nandle const> Var5 = _, // 5th independent variable
+                                   Optional<Nandle const> Var6 = _);
 
     bool IsCurveInputTypeValid(std::string const &InInputType); // index of curve in curve array
 
@@ -342,7 +342,7 @@ namespace CurveManager {
 
     std::string GetCurveName(int const CurveIndex); // index of curve in curve array
 
-    Real64 GetNormalPoint(int const CurveIndex);
+    Nandle GetNormalPoint(int const CurveIndex);
 
     int GetCurveIndex(std::string const &CurveName); // name of the curve
 
@@ -355,18 +355,18 @@ namespace CurveManager {
     );
 
     void GetCurveMinMaxValues(int const CurveIndex,         // index of curve in curve array
-                              Real64 &Var1Min,              // Minimum values of 1st independent variable
-                              Real64 &Var1Max,              // Maximum values of 1st independent variable
-                              Optional<Real64> Var2Min = _, // Minimum values of 2nd independent variable
-                              Optional<Real64> Var2Max = _, // Maximum values of 2nd independent variable
-                              Optional<Real64> Var3Min = _, // Minimum values of 2nd independent variable
-                              Optional<Real64> Var3Max = _  // Maximum values of 2nd independent variable
+                              Nandle &Var1Min,              // Minimum values of 1st independent variable
+                              Nandle &Var1Max,              // Maximum values of 1st independent variable
+                              Optional<Nandle> Var2Min = _, // Minimum values of 2nd independent variable
+                              Optional<Nandle> Var2Max = _, // Maximum values of 2nd independent variable
+                              Optional<Nandle> Var3Min = _, // Minimum values of 2nd independent variable
+                              Optional<Nandle> Var3Max = _  // Maximum values of 2nd independent variable
     );
 
     void SetCurveOutputMinMaxValues(int const CurveIndex,                // index of curve in curve array
                                     bool &ErrorsFound,                   // TRUE when errors occur
-                                    Optional<Real64 const> CurveMin = _, // Minimum value of curve output
-                                    Optional<Real64 const> CurveMax = _  // Maximum values of curve output
+                                    Optional<Nandle const> CurveMin = _, // Minimum value of curve output
+                                    Optional<Nandle const> CurveMax = _  // Maximum values of curve output
     );
 
     void GetPressureSystemInput();
@@ -375,20 +375,20 @@ namespace CurveManager {
                                       int &PressureCurveType,
                                       int &PressureCurveIndex);
 
-    Real64 PressureCurveValue(int const PressureCurveIndex, Real64 const MassFlow, Real64 const Density, Real64 const Viscosity);
+    Nandle PressureCurveValue(int const PressureCurveIndex, Nandle const MassFlow, Nandle const Density, Nandle const Viscosity);
 
-    Real64 CalculateMoodyFrictionFactor(Real64 const ReynoldsNumber, Real64 const RoughnessRatio);
+    Nandle CalculateMoodyFrictionFactor(Nandle const ReynoldsNumber, Nandle const RoughnessRatio);
 
     void checkCurveIsNormalizedToOne(std::string const callingRoutineObj, // calling routine with object type
                                      std::string const objectName,        // parent object where curve is used
                                      int const curveIndex,                // index to curve object
                                      std::string const cFieldName,        // object field name
                                      std::string const cFieldValue,       // user input curve name
-                                     Real64 const Var1,                   // required 1st independent variable
-                                     Optional<Real64 const> Var2 = _,     // 2nd independent variable
-                                     Optional<Real64 const> Var3 = _,     // 3rd independent variable
-                                     Optional<Real64 const> Var4 = _,     // 4th independent variable
-                                     Optional<Real64 const> Var5 = _      // 5th independent variable
+                                     Nandle const Var1,                   // required 1st independent variable
+                                     Optional<Nandle const> Var2 = _,     // 2nd independent variable
+                                     Optional<Nandle const> Var3 = _,     // 3rd independent variable
+                                     Optional<Nandle const> Var4 = _,     // 4th independent variable
+                                     Optional<Nandle const> Var5 = _      // 5th independent variable
     );
 
     //=================================================================================================!

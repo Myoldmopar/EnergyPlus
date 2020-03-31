@@ -83,7 +83,7 @@ TEST_F(EnergyPlusFixture, RunPeriod_Defaults)
     EXPECT_EQ(2017, runperiod.endYear);
     EXPECT_EQ(2458119, runperiod.endJulianDate);
 
-    std::array<Real64, 12> startDays{{1, 4, 4, 7, 2, 5, 7, 3, 6, 1, 4, 6}};
+    std::array<Nandle, 12> startDays{{1, 4, 4, 7, 2, 5, 7, 3, 6, 1, 4, 6}};
     for (size_t i = 0; i < 12; ++i) {
         EXPECT_EQ(startDays[i], runperiod.monWeekDay[i]);
     }
@@ -222,7 +222,7 @@ TEST_F(EnergyPlusFixture, RunPeriod_YearTests)
     EXPECT_EQ(2457755, WeatherManager::RunPeriodInput[3].startJulianDate);
     EXPECT_EQ(2458119, WeatherManager::RunPeriodInput[3].endJulianDate);
     // This is the default, check that it works properly
-    std::array<Real64, 12> startDays{ {1, 4, 4, 7, 2, 5, 7, 3, 6, 1, 4, 6} };
+    std::array<Nandle, 12> startDays{ {1, 4, 4, 7, 2, 5, 7, 3, 6, 1, 4, 6} };
     for (size_t i = 0; i < 12; ++i) {
         EXPECT_EQ(startDays[i], WeatherManager::RunPeriodInput[3].monWeekDay[i]);
     }

@@ -196,7 +196,7 @@ namespace DaylightingDevices {
     // MODULE VARIABLE TYPE DECLARATIONS: na
 
     // MODULE VARIABLE DECLARATIONS:
-    Array1D<Real64> COSAngle(NumOfAngles); // List of cosines of incident angle
+    Array1D<Nandle> COSAngle(NumOfAngles); // List of cosines of incident angle
 
     // SUBROUTINE SPECIFICATIONS:
 
@@ -238,10 +238,10 @@ namespace DaylightingDevices {
         int AngleNum;
         int TZoneNum;
         int Loop;
-        Real64 Theta;       // Angle of entry in degrees, 0 is parallel to pipe axis
-        Real64 dTheta;      // Angle increment
-        Real64 Reflectance; // Visible or solar reflectance of surface
-        Real64 SumTZoneLengths;
+        Nandle Theta;       // Angle of entry in degrees, 0 is parallel to pipe axis
+        Nandle dTheta;      // Angle increment
+        Nandle Reflectance; // Visible or solar reflectance of surface
+        Nandle SumTZoneLengths;
         bool Found;
         int ShelfNum;  // Daylighting shelf object number
         int ShelfSurf; // Daylighting shelf surface number
@@ -253,9 +253,9 @@ namespace DaylightingDevices {
         struct TDDPipeStoredData
         {
             // Members
-            Real64 AspectRatio;        // Aspect ratio, length / diameter
-            Real64 Reflectance;        // Reflectance of surface
-            Array1D<Real64> TransBeam; // Table of beam transmittance vs. cosine angle
+            Nandle AspectRatio;        // Aspect ratio, length / diameter
+            Nandle Reflectance;        // Reflectance of surface
+            Array1D<Nandle> TransBeam; // Table of beam transmittance vs. cosine angle
 
             // Default Constructor
             TDDPipeStoredData() : AspectRatio(0.0), Reflectance(0.0), TransBeam(NumOfAngles, 0.0)
@@ -501,7 +501,7 @@ namespace DaylightingDevices {
         int SurfNum;           // Dome or diffuser surface
         int TZoneNum;          // Transition zone loop
         std::string TZoneName; // Transition zone name
-        Real64 PipeArea;
+        Nandle PipeArea;
 
         // FLOW:
         cCurrentModuleObject = "DaylightingDevice:Tubular";
@@ -943,9 +943,9 @@ namespace DaylightingDevices {
         }
     }
 
-    Real64 CalcPipeTransBeam(Real64 const R,    // Reflectance of surface, constant (can be made R = f(theta) later)
-                             Real64 const A,    // Aspect ratio, L / d
-                             Real64 const Theta // Angle of entry in radians
+    Nandle CalcPipeTransBeam(Nandle const R,    // Reflectance of surface, constant (can be made R = f(theta) later)
+                             Nandle const A,    // Aspect ratio, L / d
+                             Nandle const Theta // Angle of entry in radians
     )
     {
 
@@ -975,26 +975,26 @@ namespace DaylightingDevices {
         // USE STATEMENTS: na
 
         // Return value
-        Real64 CalcPipeTransBeam;
+        Nandle CalcPipeTransBeam;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const N(100000.0); // Number of integration points
-        Real64 const xTol(150.0); // Tolerance factor to skip iterations where dT is approximately 0
+        Nandle const N(100000.0); // Number of integration points
+        Nandle const xTol(150.0); // Tolerance factor to skip iterations where dT is approximately 0
         // Must be >= 1.0, increase this number to decrease the execution time
-        Real64 const myLocalTiny(TINY(1.0));
+        Nandle const myLocalTiny(TINY(1.0));
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 i; // Integration interval between points
-        Real64 s; // Entry point
-        Real64 dT;
-        Real64 T; // Beam transmittance for collimated solar real
-        Real64 x; // Intermediate variables for speed optimization
-        Real64 c1;
-        Real64 c2;
-        Real64 xLimit; // Limiting x value to prevent floating point underflow
+        Nandle i; // Integration interval between points
+        Nandle s; // Entry point
+        Nandle dT;
+        Nandle T; // Beam transmittance for collimated solar real
+        Nandle x; // Intermediate variables for speed optimization
+        Nandle c1;
+        Nandle c2;
+        Nandle xLimit; // Limiting x value to prevent floating point underflow
 
         // FLOW:
         CalcPipeTransBeam = 0.0;
@@ -1026,7 +1026,7 @@ namespace DaylightingDevices {
         return CalcPipeTransBeam;
     }
 
-    Real64 CalcTDDTransSolIso(int const PipeNum) // TDD pipe object number
+    Nandle CalcTDDTransSolIso(int const PipeNum) // TDD pipe object number
     {
 
         // SUBROUTINE INFORMATION:
@@ -1052,7 +1052,7 @@ namespace DaylightingDevices {
         // USE STATEMENTS: na
 
         // Return value
-        Real64 CalcTDDTransSolIso;
+        Nandle CalcTDDTransSolIso;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1061,21 +1061,21 @@ namespace DaylightingDevices {
         int const NPH(1000); // Number of altitude integration points
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 FluxInc = 0.0;   // Incident solar flux
-        Real64 FluxTrans = 0.0; // Transmitted solar flux
-        Real64 trans;           // Total beam solar transmittance of TDD
-        Real64 COSI;            // Cosine of incident angle
-        Real64 SINI;            // Sine of incident angle
+        Nandle FluxInc = 0.0;   // Incident solar flux
+        Nandle FluxTrans = 0.0; // Transmitted solar flux
+        Nandle trans;           // Total beam solar transmittance of TDD
+        Nandle COSI;            // Cosine of incident angle
+        Nandle SINI;            // Sine of incident angle
 
-        Real64 const dPH = 90.0 * DegToRadians / NPH; // Altitude angle of sky element
-        Real64 PH = 0.5 * dPH;                        // Altitude angle increment
+        Nandle const dPH = 90.0 * DegToRadians / NPH; // Altitude angle of sky element
+        Nandle PH = 0.5 * dPH;                        // Altitude angle increment
 
         // Integrate from 0 to Pi/2 altitude
         for (int N = 1; N <= NPH; ++N) {
             COSI = std::cos(PiOvr2 - PH);
             SINI = std::sin(PiOvr2 - PH);
 
-            Real64 P = COSI; // Angular distribution function: P = COS(Incident Angle) for diffuse isotropic
+            Nandle P = COSI; // Angular distribution function: P = COS(Incident Angle) for diffuse isotropic
 
             // Calculate total TDD transmittance for given angle
             trans = TransTDD(PipeNum, COSI, SolarBeam);
@@ -1091,7 +1091,7 @@ namespace DaylightingDevices {
         return CalcTDDTransSolIso;
     }
 
-    Real64 CalcTDDTransSolHorizon(int const PipeNum) // TDD pipe object number
+    Nandle CalcTDDTransSolHorizon(int const PipeNum) // TDD pipe object number
     {
 
         // SUBROUTINE INFORMATION:
@@ -1117,7 +1117,7 @@ namespace DaylightingDevices {
         using namespace DataSurfaces;
 
         // Return value
-        Real64 CalcTDDTransSolHorizon;
+        Nandle CalcTDDTransSolHorizon;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1126,27 +1126,27 @@ namespace DaylightingDevices {
         int const NTH(18); // Number of azimuth integration points
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 FluxInc = 0.0;   // Incident solar flux
-        Real64 FluxTrans = 0.0; // Transmitted solar flux
-        Real64 CosPhi;          // Cosine of TDD:DOME altitude angle
-        Real64 Theta;           // TDD:DOME azimuth angle
+        Nandle FluxInc = 0.0;   // Incident solar flux
+        Nandle FluxTrans = 0.0; // Transmitted solar flux
+        Nandle CosPhi;          // Cosine of TDD:DOME altitude angle
+        Nandle Theta;           // TDD:DOME azimuth angle
 
         CosPhi = std::cos(PiOvr2 - Surface(TDDPipe(PipeNum).Dome).Tilt * DegToRadians);
         Theta = Surface(TDDPipe(PipeNum).Dome).Azimuth * DegToRadians;
 
         if (CosPhi > 0.01) { // Dome has a view of the horizon
             // Integrate over the semicircle
-            Real64 const THMIN = Theta - PiOvr2; // Minimum azimuth integration limit
-            // Real64 const THMAX = Theta + PiOvr2; // Maximum azimuth integration limit
-            Real64 const dTH = 180.0 * DegToRadians / NTH; // Azimuth angle increment
-            Real64 TH = THMIN + 0.5 * dTH;                 // Azimuth angle of sky horizon element
+            Nandle const THMIN = Theta - PiOvr2; // Minimum azimuth integration limit
+            // Nandle const THMAX = Theta + PiOvr2; // Maximum azimuth integration limit
+            Nandle const dTH = 180.0 * DegToRadians / NTH; // Azimuth angle increment
+            Nandle TH = THMIN + 0.5 * dTH;                 // Azimuth angle of sky horizon element
 
             for (int N = 1; N <= NTH; ++N) {
                 // Calculate incident angle between dome outward normal and horizon element
-                Real64 COSI = CosPhi * std::cos(TH - Theta); // Cosine of the incident angle
+                Nandle COSI = CosPhi * std::cos(TH - Theta); // Cosine of the incident angle
 
                 // Calculate total TDD transmittance for given angle
-                Real64 trans = TransTDD(PipeNum, COSI, SolarBeam); // Total beam solar transmittance of TDD
+                Nandle trans = TransTDD(PipeNum, COSI, SolarBeam); // Total beam solar transmittance of TDD
 
                 FluxInc += COSI * dTH;
                 FluxTrans += trans * COSI * dTH;
@@ -1163,8 +1163,8 @@ namespace DaylightingDevices {
         return CalcTDDTransSolHorizon;
     }
 
-    Real64 CalcTDDTransSolAniso(int const PipeNum, // TDD pipe object number
-                                Real64 const COSI  // Cosine of the incident angle
+    Nandle CalcTDDTransSolAniso(int const PipeNum, // TDD pipe object number
+                                Nandle const COSI  // Cosine of the incident angle
     )
     {
 
@@ -1208,17 +1208,17 @@ namespace DaylightingDevices {
         using DataSystemVariables::DetailedSkyDiffuseAlgorithm;
 
         // Return value
-        Real64 CalcTDDTransSolAniso;
+        Nandle CalcTDDTransSolAniso;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int DomeSurf;           // TDD:DOME surface number
-        Real64 IsoSkyRad;       // Isotropic sky radiation component
-        Real64 CircumSolarRad;  // Circumsolar sky radiation component
-        Real64 HorizonRad;      // Horizon sky radiation component
-        Real64 AnisoSkyTDDMult; // Anisotropic sky multiplier for TDD
+        Nandle IsoSkyRad;       // Isotropic sky radiation component
+        Nandle CircumSolarRad;  // Circumsolar sky radiation component
+        Nandle HorizonRad;      // Horizon sky radiation component
+        Nandle AnisoSkyTDDMult; // Anisotropic sky multiplier for TDD
 
         // FLOW:
         DomeSurf = TDDPipe(PipeNum).Dome;
@@ -1244,8 +1244,8 @@ namespace DaylightingDevices {
         return CalcTDDTransSolAniso;
     }
 
-    Real64 TransTDD(int const PipeNum,      // TDD pipe object number
-                    Real64 const COSI,      // Cosine of the incident angle
+    Nandle TransTDD(int const PipeNum,      // TDD pipe object number
+                    Nandle const COSI,      // Cosine of the incident angle
                     int const RadiationType // Radiation type flag
     )
     {
@@ -1279,7 +1279,7 @@ namespace DaylightingDevices {
         using General::POLYF;
 
         // Return value
-        Real64 TransTDD;
+        Nandle TransTDD;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1287,9 +1287,9 @@ namespace DaylightingDevices {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int constDome; // Construction object number for TDD:DOME
         int constDiff; // Construction object number for TDD:DIFFUSER
-        Real64 transDome;
-        Real64 transPipe;
-        Real64 transDiff;
+        Nandle transDome;
+        Nandle transPipe;
+        Nandle transDiff;
 
         // FLOW:
         TransTDD = 0.0;
@@ -1327,8 +1327,8 @@ namespace DaylightingDevices {
         return TransTDD;
     }
 
-    Real64 InterpolatePipeTransBeam(Real64 const COSI,               // Cosine of the incident angle
-                                    const Array1D<Real64> &transBeam // Table of beam transmittance vs. cosine angle
+    Nandle InterpolatePipeTransBeam(Nandle const COSI,               // Cosine of the incident angle
+                                    const Array1D<Nandle> &transBeam // Table of beam transmittance vs. cosine angle
     )
     {
 
@@ -1348,7 +1348,7 @@ namespace DaylightingDevices {
         using FluidProperties::FindArrayIndex; // USEd code could be copied here to eliminate dependence on FluidProperties
 
         // Return value
-        Real64 InterpolatePipeTransBeam;
+        Nandle InterpolatePipeTransBeam;
 
         // Argument array dimensioning
         EP_SIZE_CHECK(transBeam, NumOfAngles);
@@ -1359,8 +1359,8 @@ namespace DaylightingDevices {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int Lo;
         int Hi;
-        Real64 m;
-        Real64 b;
+        Nandle m;
+        Nandle b;
 
         // FLOW:
         InterpolatePipeTransBeam = 0.0;
@@ -1466,9 +1466,9 @@ namespace DaylightingDevices {
         int DiffSurf; // Surface number of TDD:DIFFUSER
         int TZoneNum; // Transition zone index
         //  INTEGER :: ActualZone     ! Actual transition zone number
-        Real64 transDiff;      // Diffuse transmittance of TDD:DIFFUSER
-        Real64 QRefl;          // Diffuse radiation reflected back up the pipe
-        Real64 TotTDDPipeGain; // Total absorbed solar gain in the tubular daylighting device pipe
+        Nandle transDiff;      // Diffuse transmittance of TDD:DIFFUSER
+        Nandle QRefl;          // Diffuse radiation reflected back up the pipe
+        Nandle TotTDDPipeGain; // Total absorbed solar gain in the tubular daylighting device pipe
 
         // FLOW:
         for (PipeNum = 1; PipeNum <= NumOfTDDPipes; ++PipeNum) {
@@ -1525,15 +1525,15 @@ namespace DaylightingDevices {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 W; // Width, height, and length of window/shelf geometry
-        Real64 H;
-        Real64 L;
-        Real64 M; // Intermediate variables
-        Real64 N;
-        Real64 E1; // Intermediate equations
-        Real64 E2;
-        Real64 E3;
-        Real64 E4;
+        Nandle W; // Width, height, and length of window/shelf geometry
+        Nandle H;
+        Nandle L;
+        Nandle M; // Intermediate variables
+        Nandle N;
+        Nandle E1; // Intermediate equations
+        Nandle E2;
+        Nandle E3;
+        Nandle E4;
         int VWin; // Vertex indices
         int VShelf;
         int NumMatch; // Number of vertices matched

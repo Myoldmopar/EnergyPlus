@@ -71,9 +71,9 @@ TEST_F(EnergyPlusFixture, HeatBalanceMovableInsulation_EvalOutsideMovableInsulat
 {
 
     int SurfNum;
-    Real64 HMovInsul;
+    Nandle HMovInsul;
     int RoughIndexMovInsul;
-    Real64 AbsExt;
+    Nandle AbsExt;
 
     SurfNum = 1;
     DataSurfaces::Surface.allocate(SurfNum);
@@ -107,8 +107,8 @@ TEST_F(EnergyPlusFixture, HeatBalanceMovableInsulation_EvalInsideMovableInsulati
 {
 
     int SurfNum;
-    Real64 HMovInsul;
-    Real64 AbsExt;
+    Nandle HMovInsul;
+    Nandle AbsExt;
 
     SurfNum = 1;
     DataSurfaces::Surface.allocate(SurfNum);

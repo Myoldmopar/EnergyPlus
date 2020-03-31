@@ -207,7 +207,7 @@ TEST_F(EnergyPlusFixture, WaterToAirHeatPumpSimple_TestWaterFlowControl)
     GetSimpleWatertoAirHPInput();
 
     int HPNum(1);
-    Real64 DesignAirflow(2.0);
+    Nandle DesignAirflow(2.0);
     DataLoopNode::Node(SimpleWatertoAirHP(HPNum).WaterInletNodeNum).Temp = 5.0;
     DataLoopNode::Node(SimpleWatertoAirHP(HPNum).WaterInletNodeNum).Enthalpy = 44650.0;
 
@@ -246,14 +246,14 @@ TEST_F(EnergyPlusFixture, WaterToAirHeatPumpSimple_TestWaterFlowControl)
     int CompOp(1);
     int CyclingScheme(1);
     bool FirstHVACIteration(true);
-    Real64 MaxONOFFCyclesperHour(4.0);
-    Real64 HPTimeConstant(0.1);
-    Real64 FanDelayTime(60.0);
-    Real64 SensLoad(38000.0);
-    Real64 LatentLoad(0.0);
-    Real64 PartLoadRatio(1.0);
-    Real64 RuntimeFrac(1.0);
-    Real64 OnOffAirFlowRatio(1.0);
+    Nandle MaxONOFFCyclesperHour(4.0);
+    Nandle HPTimeConstant(0.1);
+    Nandle FanDelayTime(60.0);
+    Nandle SensLoad(38000.0);
+    Nandle LatentLoad(0.0);
+    Nandle PartLoadRatio(1.0);
+    Nandle RuntimeFrac(1.0);
+    Nandle OnOffAirFlowRatio(1.0);
     SimpleWatertoAirHP(HPNum).LoopNum = 1;
 
     DataEnvironment::OutBaroPress = 101325.0;

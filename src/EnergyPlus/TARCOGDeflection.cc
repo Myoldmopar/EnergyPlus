@@ -90,20 +90,20 @@ namespace TARCOGDeflection {
     // Functions
 
     void PanesDeflection(int const DeflectionStandard,
-                         Real64 const W,
-                         Real64 const H,
+                         Nandle const W,
+                         Nandle const H,
                          int const nlayer,
-                         Real64 const Pa,
-                         Real64 const Pini,
-                         Real64 const Tini,
-                         const Array1D<Real64> &PaneThickness,
-                         const Array1D<Real64> &NonDeflectedGapWidth,
-                         Array1D<Real64> &DeflectedGapWidthMax,
-                         Array1D<Real64> &DeflectedGapWidthMean,
-                         const Array1D<Real64> &PanelTemps,
-                         const Array1D<Real64> &YoungsMod,
-                         const Array1D<Real64> &PoissonsRat,
-                         Array1D<Real64> &LayerDeflection,
+                         Nandle const Pa,
+                         Nandle const Pini,
+                         Nandle const Tini,
+                         const Array1D<Nandle> &PaneThickness,
+                         const Array1D<Nandle> &NonDeflectedGapWidth,
+                         Array1D<Nandle> &DeflectedGapWidthMax,
+                         Array1D<Nandle> &DeflectedGapWidthMean,
+                         const Array1D<Nandle> &PanelTemps,
+                         const Array1D<Nandle> &YoungsMod,
+                         const Array1D<Nandle> &PoissonsRat,
+                         Array1D<Nandle> &LayerDeflection,
                          int &nperr,
                          std::string &ErrorMessage)
     {
@@ -128,7 +128,7 @@ namespace TARCOGDeflection {
         // OUTPUT
 
         // Localy used
-        Array1D<Real64> DCoeff(maxlay);
+        Array1D<Nandle> DCoeff(maxlay);
         int i;
 
         i = 0;
@@ -165,17 +165,17 @@ namespace TARCOGDeflection {
     }
 
     void DeflectionTemperatures(int const nlayer,
-                                Real64 const W,
-                                Real64 const H,
-                                Real64 const Pa,
-                                Real64 const Pini,
-                                Real64 const Tini,
-                                const Array1D<Real64> &NonDeflectedGapWidth,
-                                Array1D<Real64> &DeflectedGapWidthMax,
-                                Array1D<Real64> &DeflectedGapWidthMean,
-                                const Array1D<Real64> &PanelTemps,
-                                Array1D<Real64> &DCoeff,
-                                Array1D<Real64> &LayerDeflection,
+                                Nandle const W,
+                                Nandle const H,
+                                Nandle const Pa,
+                                Nandle const Pini,
+                                Nandle const Tini,
+                                const Array1D<Nandle> &NonDeflectedGapWidth,
+                                Array1D<Nandle> &DeflectedGapWidthMax,
+                                Array1D<Nandle> &DeflectedGapWidthMean,
+                                const Array1D<Nandle> &PanelTemps,
+                                Array1D<Nandle> &DCoeff,
+                                Array1D<Nandle> &LayerDeflection,
                                 int &nperr,
                                 std::string &ErrorMessage)
     {
@@ -197,17 +197,17 @@ namespace TARCOGDeflection {
         // OUTPUT
 
         // Static constants
-        static Real64 const Pi_6(pow_6(Pi));
+        static Nandle const Pi_6(pow_6(Pi));
 
         // localy used
-        Array1D<Real64> DPressure(maxlay); // delta pressure at each glazing layer
-        Array1D<Real64> Vini(MaxGap);
-        Array1D<Real64> Vgap(MaxGap);
-        Array1D<Real64> Pgap(MaxGap);
-        Array1D<Real64> Tgap(MaxGap);
-        Real64 MaxLDSum;
-        Real64 MeanLDSum;
-        Real64 Ratio;
+        Array1D<Nandle> DPressure(maxlay); // delta pressure at each glazing layer
+        Array1D<Nandle> Vini(MaxGap);
+        Array1D<Nandle> Vgap(MaxGap);
+        Array1D<Nandle> Pgap(MaxGap);
+        Array1D<Nandle> Tgap(MaxGap);
+        Nandle MaxLDSum;
+        Nandle MeanLDSum;
+        Nandle Ratio;
         int i;
         int j;
 
@@ -227,7 +227,7 @@ namespace TARCOGDeflection {
         Ratio = MeanLDSum / MaxLDSum;
 
         // calculate Vgap for each gap
-        Real64 const W_H_Ratio(W * H * Ratio);
+        Nandle const W_H_Ratio(W * H * Ratio);
         for (i = 1; i <= nlayer - 1; ++i) {
             Vgap(i) = Vini(i) + W_H_Ratio * (LayerDeflection(i) - LayerDeflection(i + 1));
         } // do i = 1, nlayer
@@ -251,7 +251,7 @@ namespace TARCOGDeflection {
             DPressure(i) = Pgap(i) - Pgap(i - 1);
         } // do i = 1, nlayer
 
-        Real64 const deflection_fac(DeflectionRelaxation * MaxLDSum * 16);
+        Nandle const deflection_fac(DeflectionRelaxation * MaxLDSum * 16);
         for (i = 1; i <= nlayer; ++i) {
             LayerDeflection(i) += deflection_fac * DPressure(i) / (Pi_6 * DCoeff(i));
         }
@@ -270,13 +270,13 @@ namespace TARCOGDeflection {
     }
 
     void DeflectionWidths(int const nlayer,
-                          Real64 const W,
-                          Real64 const H,
-                          Array1D<Real64> &DCoeff,
-                          const Array1D<Real64> &NonDeflectedGapWidth,
-                          const Array1D<Real64> &DeflectedGapWidthMax,
-                          Array1D<Real64> &DeflectedGapWidthMean,
-                          Array1D<Real64> &LayerDeflection)
+                          Nandle const W,
+                          Nandle const H,
+                          Array1D<Nandle> &DCoeff,
+                          const Array1D<Nandle> &NonDeflectedGapWidth,
+                          const Array1D<Nandle> &DeflectedGapWidthMax,
+                          Array1D<Nandle> &DeflectedGapWidthMean,
+                          Array1D<Nandle> &LayerDeflection)
     {
         // INPUT
 
@@ -295,12 +295,12 @@ namespace TARCOGDeflection {
         // LOCALS
         int i;
         int j;
-        Real64 nominator;
-        Real64 denominator;
-        Real64 SumL;
-        Real64 MaxLDSum;
-        Real64 MeanLDSum;
-        Real64 Ratio;
+        Nandle nominator;
+        Nandle denominator;
+        Nandle SumL;
+        Nandle MaxLDSum;
+        Nandle MeanLDSum;
+        Nandle Ratio;
 
         i = 0;
         j = 0;

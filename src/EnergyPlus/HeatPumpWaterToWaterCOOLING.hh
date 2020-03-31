@@ -76,30 +76,30 @@ namespace HeatPumpWaterToWaterCOOLING {
         int WWHPPlantTypeOfNum;
         bool Available;                  // need an array of logicals--load identifiers of available equipment
         bool ON;                         // simulate the machine at it's operating part load ratio
-        Real64 COP;                      // Coefficeint of Performance of the machine
-        Real64 NomCap;                   // Nomial Capcity of the HeatPump
-        Real64 MinPartLoadRat;           // Minimum operating Part Load Ratio
-        Real64 MaxPartLoadRat;           // Maximum operating Part Load Ratio
-        Real64 OptPartLoadRat;           // Optimal operating Part Load Ratio
-        Real64 LoadSideVolFlowRate;      // Design Flow Rate on the Load side
-        Real64 LoadSideDesignMassFlow;   // Design flow rate (kg/s)
-        Real64 SourceSideVolFlowRate;    // Design Flow Rate on th Source Side
-        Real64 SourceSideDesignMassFlow; // Design flow rate (kg/s)
+        Nandle COP;                      // Coefficeint of Performance of the machine
+        Nandle NomCap;                   // Nomial Capcity of the HeatPump
+        Nandle MinPartLoadRat;           // Minimum operating Part Load Ratio
+        Nandle MaxPartLoadRat;           // Maximum operating Part Load Ratio
+        Nandle OptPartLoadRat;           // Optimal operating Part Load Ratio
+        Nandle LoadSideVolFlowRate;      // Design Flow Rate on the Load side
+        Nandle LoadSideDesignMassFlow;   // Design flow rate (kg/s)
+        Nandle SourceSideVolFlowRate;    // Design Flow Rate on th Source Side
+        Nandle SourceSideDesignMassFlow; // Design flow rate (kg/s)
         int SourceSideInletNodeNum;      // Node number on the inlet side of the plant
         int SourceSideOutletNodeNum;     // Node number on the outlet side of the plant
         int LoadSideInletNodeNum;        // Node number on the inlet side of the Load Side
         int LoadSideOutletNodeNum;       // Node number on the outlet side of the Load Side
-        Real64 SourceSideUACoeff;        // Source Side heat transfer coeff
-        Real64 LoadSideUACoeff;          // Load Side heat transfer coeff
-        Real64 CompPistonDisp;           // compressor piston displacement
-        Real64 CompClearanceFactor;      // compressor clearance factor
-        Real64 CompSucPressDrop;         // deltap ,  compressor suction and discharge pressure drop
-        Real64 SuperheatTemp;            // deltatsh , super heating
-        Real64 PowerLosses;              // constant part of electro mechanical power losses
-        Real64 LossFactor;               // loss factor used ot define the electro mechanical loss
+        Nandle SourceSideUACoeff;        // Source Side heat transfer coeff
+        Nandle LoadSideUACoeff;          // Load Side heat transfer coeff
+        Nandle CompPistonDisp;           // compressor piston displacement
+        Nandle CompClearanceFactor;      // compressor clearance factor
+        Nandle CompSucPressDrop;         // deltap ,  compressor suction and discharge pressure drop
+        Nandle SuperheatTemp;            // deltatsh , super heating
+        Nandle PowerLosses;              // constant part of electro mechanical power losses
+        Nandle LossFactor;               // loss factor used ot define the electro mechanical loss
         //  that is supposed to be proportional to the theoretical power
-        Real64 HighPressCutoff; // Maximum Design Pressure on the Load Side
-        Real64 LowPressCutoff;  // Minimum Design Pressure on the Source Side
+        Nandle HighPressCutoff; // Maximum Design Pressure on the Load Side
+        Nandle LowPressCutoff;  // Minimum Design Pressure on the Source Side
         // Added by Arun 6-27-02
         // to implement cycletime - removed 9/10/2013 LKL
         bool IsOn;
@@ -116,20 +116,20 @@ namespace HeatPumpWaterToWaterCOOLING {
         int CondMassFlowIndex; // index for criteria in PullCompInterconnectTrigger
 
         // Members
-        Real64 Power;                     // Power Consumption Watts
-        Real64 Energy;                    // Energy Consumption Joules
-        Real64 QLoad;                     // Load Side heat transfer rate Watts
-        Real64 QLoadEnergy;               // Load Side heat transfer Joules
-        Real64 QSource;                   // Source Side heat transfer rate Watts
-        Real64 QSourceEnergy;             // Source Side heat transfer Joules
-        Real64 LoadSideWaterInletTemp;    // Load Side outlet temperature °C
-        Real64 SourceSideWaterInletTemp;  // Source Side outlet temperature °C
-        Real64 LoadSideWaterOutletTemp;   // Load Side outlet temperature °C
-        Real64 SourceSideWaterOutletTemp; // Source Side outlet temperature °C
+        Nandle Power;                     // Power Consumption Watts
+        Nandle Energy;                    // Energy Consumption Joules
+        Nandle QLoad;                     // Load Side heat transfer rate Watts
+        Nandle QLoadEnergy;               // Load Side heat transfer Joules
+        Nandle QSource;                   // Source Side heat transfer rate Watts
+        Nandle QSourceEnergy;             // Source Side heat transfer Joules
+        Nandle LoadSideWaterInletTemp;    // Load Side outlet temperature °C
+        Nandle SourceSideWaterInletTemp;  // Source Side outlet temperature °C
+        Nandle LoadSideWaterOutletTemp;   // Load Side outlet temperature °C
+        Nandle SourceSideWaterOutletTemp; // Source Side outlet temperature °C
         int Running;                      // On reporting Flag
 
-        Real64 LoadSideWaterMassFlowRate;
-        Real64 SourceSideWaterMassFlowRate;
+        Nandle LoadSideWaterMassFlowRate;
+        Nandle SourceSideWaterMassFlowRate;
 
         bool plantScanFlag;
         bool beginEnvironFlag;
@@ -152,19 +152,19 @@ namespace HeatPumpWaterToWaterCOOLING {
 
         static PlantComponent *factory(const std::string& objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad,
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad,
                       bool RunFlag) override;
 
         void getDesignCapacities(const PlantLocation &calledFromLocation,
-                                 Real64 &MaxLoad,
-                                 Real64 &MinLoad,
-                                 Real64 &OptLoad) override;
+                                 Nandle &MaxLoad,
+                                 Nandle &MinLoad,
+                                 Nandle &OptLoad) override;
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 
         void initialize();
 
-        void calculate(Real64 &MyLoad);
+        void calculate(Nandle &MyLoad);
 
         void update();
     };

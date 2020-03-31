@@ -95,13 +95,13 @@ namespace DataPlant {
         int LoopSideNumPtr;                    // pointer to the comp location in the data structure
         int BranchNumPtr;                      // pointer to the comp location in the data structure
         int CompNumPtr;                        // pointer to the comp location in the data structure
-        Real64 SetPointFlowRate;               // COMP SETPOINT CTRL ONLY--load calculation comp flow rate
+        Nandle SetPointFlowRate;               // COMP SETPOINT CTRL ONLY--load calculation comp flow rate
         std::string DemandNodeName;            // COMP SETPOINT CTRL ONLY--The name of each item in the list
         int DemandNodeNum;                     // COMP SETPOINT CTRL ONLY--The 'keyWord' identifying each item in list
         std::string SetPointNodeName;          // COMP SETPOINT CTRL ONLY--The name of each item in the list
         int SetPointNodeNum;                   // COMP SETPOINT CTRL ONLY--The 'keyWord' identifying each item in list
-        Real64 EMSIntVarRemainingLoadValue;    // EMS internal variable remaining load, neg cooling [W]
-        Real64 EMSActuatorDispatchedLoadValue; // EMS actuator for dispatched load, neg= cooling [W]
+        Nandle EMSIntVarRemainingLoadValue;    // EMS internal variable remaining load, neg cooling [W]
+        Nandle EMSActuatorDispatchedLoadValue; // EMS actuator for dispatched load, neg= cooling [W]
 
         // Default Constructor
         EquipListCompData() : TypeOf_Num(0), SetPointFlowRate(0.0), EMSIntVarRemainingLoadValue(0.0), EMSActuatorDispatchedLoadValue(0.0)
@@ -113,8 +113,8 @@ namespace DataPlant {
     {
         // Members
         std::string Name;                // The name of each item in the list
-        Real64 RangeUpperLimit;          // for range based controls
-        Real64 RangeLowerLimit;          // for range based controls
+        Nandle RangeUpperLimit;          // for range based controls
+        Nandle RangeLowerLimit;          // for range based controls
         int NumComps;                    // ALLOCATABLE to the schedule (for valid schedules)
         Array1D<EquipListCompData> Comp; // Component type list
 
@@ -141,7 +141,7 @@ namespace DataPlant {
         int ReferenceNodeNumber;        // DELTA CTRL ONLY--for calculation of delta Temp
         int ErlSimProgramMngr;          // EMS:ProgramManager to always run when this model is called
         int ErlInitProgramMngr;         // EMS:ProgramManager to run when this model is initialized and setup
-        Real64 EMSIntVarLoopDemandRate; // EMS internal variable for loop-level demand rate, neg cooling [W]
+        Nandle EMSIntVarLoopDemandRate; // EMS internal variable for loop-level demand rate, neg cooling [W]
         bool MyEnvrnFlag;
 
         // Default Constructor

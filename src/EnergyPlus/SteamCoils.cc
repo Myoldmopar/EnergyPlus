@@ -175,10 +175,10 @@ namespace SteamCoils {
     void SimulateSteamCoilComponents(std::string const &CompName,
                                      bool const FirstHVACIteration,
                                      int &CompIndex,
-                                     Optional<Real64 const> QCoilReq, // coil load to be met
-                                     Optional<Real64> QCoilActual,    // coil load actually delivered returned to calling component
+                                     Optional<Nandle const> QCoilReq, // coil load to be met
+                                     Optional<Nandle> QCoilActual,    // coil load actually delivered returned to calling component
                                      Optional_int_const FanOpMode,
-                                     Optional<Real64 const> PartLoadRatio)
+                                     Optional<Nandle const> PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -194,11 +194,11 @@ namespace SteamCoils {
         using General::TrimSigDigits;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 QCoilActualTemp; // coil load actually delivered returned to calling component
+        Nandle QCoilActualTemp; // coil load actually delivered returned to calling component
         int CoilNum;            // The SteamCoil that you are currently loading input into
         int OpMode;             // fan operating mode
-        Real64 PartLoadFrac;    // part-load fraction of heating coil
-        Real64 QCoilReqLocal;   // local required heating load optional
+        Nandle PartLoadFrac;    // part-load fraction of heating coil
+        Nandle QCoilReqLocal;   // local required heating load optional
 
         // Obtains and Allocates SteamCoil related parameters from input file
         if (GetSteamCoilsInputFlag) { // First time subroutine has been entered
@@ -296,7 +296,7 @@ namespace SteamCoils {
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int TotalArgs(0);         // Total number of alpha and numeric arguments (max) for a
@@ -514,8 +514,8 @@ namespace SteamCoils {
         int SteamInletNode;
         int ControlNode;
         int AirOutletNode;
-        Real64 SteamDensity;
-        Real64 StartEnthSteam;
+        Nandle SteamDensity;
+        Nandle StartEnthSteam;
         static Array1D_bool MyEnvrnFlag;
         static Array1D_bool MyPlantScanFlag;
         bool errFlag;
@@ -713,29 +713,29 @@ namespace SteamCoils {
         int PltSizNum;      // do loop index for plant sizing
         int PltSizSteamNum; // index of plant sizing object for 1st steam loop
         bool ErrorsFound;   // If errors detected in input
-        Real64 CoilInTemp;
-        Real64 CoilOutTemp;
-        Real64 CoilOutHumRat;
-        Real64 CoilInHumRat;
-        Real64 DesCoilLoad;
-        Real64 DesMassFlow;
-        Real64 DesVolFlow;
-        Real64 MinFlowFrac;
-        Real64 OutAirFrac;
-        Real64 TempSteamIn(100.0);
-        Real64 EnthSteamInDry;
-        Real64 EnthSteamOutWet;
-        Real64 LatentHeatSteam;
-        Real64 SteamDensity;
-        Real64 RhoAirStd; // density of air at standard conditions
-        Real64 CpAirStd;  // specific heat of air at std conditions
-        Real64 CpWater;   // specific heat of water (condensed steam)
+        Nandle CoilInTemp;
+        Nandle CoilOutTemp;
+        Nandle CoilOutHumRat;
+        Nandle CoilInHumRat;
+        Nandle DesCoilLoad;
+        Nandle DesMassFlow;
+        Nandle DesVolFlow;
+        Nandle MinFlowFrac;
+        Nandle OutAirFrac;
+        Nandle TempSteamIn(100.0);
+        Nandle EnthSteamInDry;
+        Nandle EnthSteamOutWet;
+        Nandle LatentHeatSteam;
+        Nandle SteamDensity;
+        Nandle RhoAirStd; // density of air at standard conditions
+        Nandle CpAirStd;  // specific heat of air at std conditions
+        Nandle CpWater;   // specific heat of water (condensed steam)
 
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
         bool bPRINT = false;      // TRUE if sizing is reported to output (eio)
-        Real64 TempSize;          // autosized value
+        Nandle TempSize;          // autosized value
 
         ErrorsFound = false;
         PltSizSteamNum = 0;
@@ -1022,10 +1022,10 @@ namespace SteamCoils {
     // Begin Algorithm Section of the Module
 
     void CalcSteamAirCoil(int const CoilNum,
-                          Real64 const QCoilRequested, // requested coil load
-                          Real64 &QCoilActual,         // coil load actually delivered
+                          Nandle const QCoilRequested, // requested coil load
+                          Nandle &QCoilActual,         // coil load actually delivered
                           int const FanOpMode,         // fan operating mode
-                          Real64 const PartLoadRatio   // part-load ratio of heating coil
+                          Nandle const PartLoadRatio   // part-load ratio of heating coil
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1070,31 +1070,31 @@ namespace SteamCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 SteamMassFlowRate(0.0);
-        static Real64 AirMassFlow(0.0); // [kg/sec]
-        static Real64 TempAirIn(0.0);   // [C]
-        static Real64 TempAirOut(0.0);  // [C]
-        static Real64 Win(0.0);
-        static Real64 TempSteamIn(0.0);
-        static Real64 TempWaterOut(0.0);
-        static Real64 CapacitanceAir(0.0);
-        static Real64 HeatingCoilLoad(0.0);
-        static Real64 CoilPress(0.0);
-        static Real64 EnthSteamInDry(0.0);
-        static Real64 EnthSteamOutWet(0.0);
-        static Real64 LatentHeatSteam(0.0);
-        static Real64 SubcoolDeltaTemp(0.0);
-        static Real64 TempSetPoint(0.0);
-        static Real64 QCoilReq(0.0);
-        static Real64 QCoilCap(0.0);
-        static Real64 QSteamCoilMaxHT(0.0);
-        static Real64 TempWaterAtmPress(0.0);
-        static Real64 TempLoopOutToPump(0.0);
-        static Real64 EnergyLossToEnvironment(0.0);
-        static Real64 EnthCoilOutlet(0.0);
-        static Real64 EnthPumpInlet(0.0);
-        static Real64 EnthAtAtmPress(0.0);
-        static Real64 CpWater(0.0);
+        static Nandle SteamMassFlowRate(0.0);
+        static Nandle AirMassFlow(0.0); // [kg/sec]
+        static Nandle TempAirIn(0.0);   // [C]
+        static Nandle TempAirOut(0.0);  // [C]
+        static Nandle Win(0.0);
+        static Nandle TempSteamIn(0.0);
+        static Nandle TempWaterOut(0.0);
+        static Nandle CapacitanceAir(0.0);
+        static Nandle HeatingCoilLoad(0.0);
+        static Nandle CoilPress(0.0);
+        static Nandle EnthSteamInDry(0.0);
+        static Nandle EnthSteamOutWet(0.0);
+        static Nandle LatentHeatSteam(0.0);
+        static Nandle SubcoolDeltaTemp(0.0);
+        static Nandle TempSetPoint(0.0);
+        static Nandle QCoilReq(0.0);
+        static Nandle QCoilCap(0.0);
+        static Nandle QSteamCoilMaxHT(0.0);
+        static Nandle TempWaterAtmPress(0.0);
+        static Nandle TempLoopOutToPump(0.0);
+        static Nandle EnergyLossToEnvironment(0.0);
+        static Nandle EnthCoilOutlet(0.0);
+        static Nandle EnthPumpInlet(0.0);
+        static Nandle EnthAtAtmPress(0.0);
+        static Nandle CpWater(0.0);
 
         QCoilReq = QCoilRequested;
         TempAirIn = SteamCoil(CoilNum).InletAirTemp;
@@ -1628,7 +1628,7 @@ namespace SteamCoils {
         return IndexNum;
     }
 
-    void CheckSteamCoilSchedule(std::string const &EP_UNUSED(CompType), std::string const &CompName, Real64 &Value, int &CompIndex)
+    void CheckSteamCoilSchedule(std::string const &EP_UNUSED(CompType), std::string const &CompName, Nandle &Value, int &CompIndex)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1674,7 +1674,7 @@ namespace SteamCoils {
         }
     }
 
-    Real64 GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
                                    std::string const &CoilName, // must match coil names for the coil type
                                    bool &ErrorsFound            // set to true if problem
     )
@@ -1692,7 +1692,7 @@ namespace SteamCoils {
         // as negative.
 
         // Return value
-        Real64 MaxWaterFlowRate; // returned max water flow rate of matched coil
+        Nandle MaxWaterFlowRate; // returned max water flow rate of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;
@@ -1724,7 +1724,7 @@ namespace SteamCoils {
         return MaxWaterFlowRate;
     }
 
-    Real64 GetCoilMaxSteamFlowRate(int const CoilIndex, // must match coil types in this module
+    Nandle GetCoilMaxSteamFlowRate(int const CoilIndex, // must match coil types in this module
                                    bool &ErrorsFound    // set to true if problem
     )
     {
@@ -1741,7 +1741,7 @@ namespace SteamCoils {
         // as zero.
 
         // Return value
-        Real64 MaxSteamFlowRate; // returned max steam flow rate of matched coil
+        Nandle MaxSteamFlowRate; // returned max steam flow rate of matched coil
 
         // Obtains and Allocates SteamCoil related parameters from input file
         if (GetSteamCoilsInputFlag) { // First time subroutine has been entered
@@ -2068,7 +2068,7 @@ namespace SteamCoils {
         return NodeNumber;
     }
 
-    Real64 GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
                            std::string const &CoilName, // must match coil names for the coil type
                            bool &ErrorsFound            // set to true if problem
     )
@@ -2086,7 +2086,7 @@ namespace SteamCoils {
         // as zero.
 
         // Return value
-        Real64 Capacity; // returned operating capacity of matched coil (W)
+        Nandle Capacity; // returned operating capacity of matched coil (W)
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;

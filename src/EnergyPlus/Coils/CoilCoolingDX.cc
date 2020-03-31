@@ -429,7 +429,7 @@ void CoilCoolingDX::getFixedData(int &_evapInletNodeIndex,
                             int &_condInletNodeIndex,
                             int &_normalModeNumSpeeds,
                             CoilCoolingDXCurveFitPerformance::CapControlMethod &_capacityControlMethod,
-                            Real64 &_minOutdoorDryBulb)
+                            Nandle &_minOutdoorDryBulb)
 {
     _evapInletNodeIndex = this->evapInletNodeIndex;
     _evapOutletNodeIndex = this->evapOutletNodeIndex;
@@ -439,10 +439,10 @@ void CoilCoolingDX::getFixedData(int &_evapInletNodeIndex,
     _minOutdoorDryBulb = this->performance.minOutdoorDrybulb;
 }
 
-void CoilCoolingDX::getDataAfterSizing(Real64 &_normalModeRatedEvapAirFlowRate,
-                                 Real64 &_normalModeRatedCapacity,
-                                 std::vector<Real64> &_normalModeFlowRates,
-                                 std::vector<Real64> &_normalModeRatedCapacities)
+void CoilCoolingDX::getDataAfterSizing(Nandle &_normalModeRatedEvapAirFlowRate,
+                                 Nandle &_normalModeRatedCapacity,
+                                 std::vector<Nandle> &_normalModeFlowRates,
+                                 std::vector<Nandle> &_normalModeRatedCapacities)
 {
     _normalModeRatedEvapAirFlowRate = this->performance.normalMode.ratedEvapAirFlowRate;
     _normalModeFlowRates.clear();
@@ -458,7 +458,7 @@ void CoilCoolingDX::size() {
     this->performance.size();
 }
 
-void CoilCoolingDX::simulate(int useAlternateMode, Real64 PLR, int speedNum, Real64 speedRatio, int fanOpMode, Real64 LoadSHR)
+void CoilCoolingDX::simulate(int useAlternateMode, Nandle PLR, int speedNum, Nandle speedRatio, int fanOpMode, Nandle LoadSHR)
 {
     if (this->myOneTimeInitFlag) {
         this->oneTimeInit();
@@ -489,17 +489,17 @@ void CoilCoolingDX::simulate(int useAlternateMode, Real64 PLR, int speedNum, Rea
     }
 
     // calculate energy conversion factor
-    Real64 reportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+    Nandle reportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
     // update condensate collection tank
     if (this->condensateTankIndex > 0) {
         if (speedNum > 0) {
             // calculate and report condensation rates  (how much water extracted from the air stream)
             // water flow of water in m3/s for water system interactions
-            Real64 averageTemp = (evapInletNode.Temp - evapOutletNode.Temp) / 2.0;
-            Real64 waterDensity = Psychrometrics::RhoH2O(averageTemp);
-            Real64 inHumidityRatio = evapInletNode.HumRat;
-            Real64 outHumidityRatio = evapOutletNode.HumRat;
+            Nandle averageTemp = (evapInletNode.Temp - evapOutletNode.Temp) / 2.0;
+            Nandle waterDensity = Psychrometrics::RhoH2O(averageTemp);
+            Nandle inHumidityRatio = evapInletNode.HumRat;
+            Nandle outHumidityRatio = evapOutletNode.HumRat;
             this->condensateVolumeFlow = max(0.0, (evapInletNode.MassFlowRate * (inHumidityRatio - outHumidityRatio) / waterDensity));
             this->condensateVolumeConsumption = this->condensateVolumeFlow * reportingConstant;
             DataWater::WaterStorage(this->condensateTankIndex).VdotAvailSupply(this->condensateTankSupplyARRID) = this->condensateVolumeFlow;
@@ -513,13 +513,13 @@ void CoilCoolingDX::simulate(int useAlternateMode, Real64 PLR, int speedNum, Rea
     // update requests for evaporative condenser tank
     if (this->evaporativeCondSupplyTankIndex > 0) {
         if (speedNum > 0) {
-            Real64 condInletTemp =
+            Nandle condInletTemp =
                 DataEnvironment::OutWetBulbTemp + (DataEnvironment::OutDryBulbTemp - DataEnvironment::OutWetBulbTemp) *
                                                       (1.0 - this->performance.normalMode.speeds[speedNum - 1].evap_condenser_effectiveness);
-            Real64 condInletHumRat = Psychrometrics::PsyWFnTdbTwbPb(condInletTemp, DataEnvironment::OutWetBulbTemp, DataEnvironment::OutBaroPress);
-            Real64 outdoorHumRat = DataEnvironment::OutHumRat;
-            Real64 condAirMassFlow = condInletNode.MassFlowRate; // TODO: How is this getting a value?
-            Real64 waterDensity = Psychrometrics::RhoH2O(DataEnvironment::OutDryBulbTemp);
+            Nandle condInletHumRat = Psychrometrics::PsyWFnTdbTwbPb(condInletTemp, DataEnvironment::OutWetBulbTemp, DataEnvironment::OutBaroPress);
+            Nandle outdoorHumRat = DataEnvironment::OutHumRat;
+            Nandle condAirMassFlow = condInletNode.MassFlowRate; // TODO: How is this getting a value?
+            Nandle waterDensity = Psychrometrics::RhoH2O(DataEnvironment::OutDryBulbTemp);
             this->evaporativeCondSupplyTankVolumeFlow = (condInletHumRat - outdoorHumRat) * condAirMassFlow / waterDensity;
             if (useAlternateMode == coilNormalMode) {
                 this->evapCondPumpElecPower = this->performance.normalMode.getCurrentEvapCondPumpPower(speedNum);
@@ -540,7 +540,7 @@ void CoilCoolingDX::simulate(int useAlternateMode, Real64 PLR, int speedNum, Rea
 
     this->totalCoolingEnergyRate = evapOutletNode.MassFlowRate * (evapInletNode.Enthalpy - evapOutletNode.Enthalpy);
     this->totalCoolingEnergy = this->totalCoolingEnergyRate * reportingConstant;
-    Real64 minAirHumRat = min(evapInletNode.HumRat, evapOutletNode.HumRat);
+    Nandle minAirHumRat = min(evapInletNode.HumRat, evapOutletNode.HumRat);
     this->sensCoolingEnergyRate = evapOutletNode.MassFlowRate * (Psychrometrics::PsyHFnTdbW(evapInletNode.Temp, minAirHumRat) -
                                                                  Psychrometrics::PsyHFnTdbW(evapOutletNode.Temp, minAirHumRat));
     this->sensCoolingEnergy = this->sensCoolingEnergyRate * reportingConstant;

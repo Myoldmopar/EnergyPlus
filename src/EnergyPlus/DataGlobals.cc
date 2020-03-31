@@ -112,32 +112,32 @@ namespace DataGlobals {
     int const ksHVACSizeRunPeriodDesign(5); // a weather period design day run during HVAC Sizing Simulation
     int const ksReadAllWeatherData(6);      // a weather period for reading all weather data prior to the simulation
 
-    Real64 const MaxEXPArg(709.78);       // maximum exponent in EXP() function
-    Real64 const Pi(3.14159265358979324); // Pi 3.1415926535897932384626435
-    Real64 const PiOvr2(Pi / 2.0);        // Pi/2
-    Real64 const TwoPi(2.0 * Pi);         // 2*Pi 6.2831853071795864769252868
-    Real64 const GravityConstant(9.807);
-    Real64 const DegToRadians(Pi / 180.0);           // Conversion for Degrees to Radians
-    Real64 const RadToDeg(180.0 / Pi);               // Conversion for Radians to Degrees
-    Real64 const SecInHour(3600.0);                  // Conversion for hours to seconds
-    Real64 const HoursInDay(24.0);                   // Number of Hours in Day
-    Real64 const SecsInDay(SecInHour *HoursInDay);   // Number of seconds in Day
-    Real64 const BigNumber(HUGE_(1.0));              // Max Number real used for initializations
-    Real64 const rTinyValue(EPSILON(1.0));           // Tiny value to replace use of TINY(x)
+    Nandle const MaxEXPArg(709.78);       // maximum exponent in EXP() function
+    Nandle const Pi(3.14159265358979324); // Pi 3.1415926535897932384626435
+    Nandle const PiOvr2(Pi / 2.0);        // Pi/2
+    Nandle const TwoPi(2.0 * Pi);         // 2*Pi 6.2831853071795864769252868
+    Nandle const GravityConstant(9.807);
+    Nandle const DegToRadians(Pi / 180.0);           // Conversion for Degrees to Radians
+    Nandle const RadToDeg(180.0 / Pi);               // Conversion for Radians to Degrees
+    Nandle const SecInHour(3600.0);                  // Conversion for hours to seconds
+    Nandle const HoursInDay(24.0);                   // Number of Hours in Day
+    Nandle const SecsInDay(SecInHour *HoursInDay);   // Number of seconds in Day
+    Nandle const BigNumber(HUGE_(1.0));              // Max Number real used for initializations
+    Nandle const rTinyValue(EPSILON(1.0));           // Tiny value to replace use of TINY(x)
     std::string::size_type const MaxNameLength(100); // Maximum Name Length in Characters -- should be the same
     // as MaxAlphaArgLength in InputProcessor module
 
-    Real64 const KelvinConv(273.15);       // Conversion factor for C to K and K to C
-    Real64 const InitConvTemp(5.05);       // [deg C], standard init vol to mass flow conversion temp
-    Real64 const AutoCalculate(-99999.0);  // automatically calculate some fields.
-    Real64 const CWInitConvTemp(5.05);     // [deg C], standard init chilled water vol to mass flow conversion temp
-    Real64 const HWInitConvTemp(60.0);     // [deg C], standard init hot water vol to mass flow conversion temp
-    Real64 const SteamInitConvTemp(100.0); // [deg C], standard init steam vol to mass flow conversion temp
+    Nandle const KelvinConv(273.15);       // Conversion factor for C to K and K to C
+    Nandle const InitConvTemp(5.05);       // [deg C], standard init vol to mass flow conversion temp
+    Nandle const AutoCalculate(-99999.0);  // automatically calculate some fields.
+    Nandle const CWInitConvTemp(5.05);     // [deg C], standard init chilled water vol to mass flow conversion temp
+    Nandle const HWInitConvTemp(60.0);     // [deg C], standard init hot water vol to mass flow conversion temp
+    Nandle const SteamInitConvTemp(100.0); // [deg C], standard init steam vol to mass flow conversion temp
 
-    Real64 const StefanBoltzmann(5.6697E-8);     // Stefan-Boltzmann constant in W/(m2*K4)
-    Real64 const UniversalGasConst(8314.462175); // (J/mol*K)
+    Nandle const StefanBoltzmann(5.6697E-8);     // Stefan-Boltzmann constant in W/(m2*K4)
+    Nandle const UniversalGasConst(8314.462175); // (J/mol*K)
 
-    Real64 const convertJtoGJ(1.0E-9); // Conversion factor for J to GJ
+    Nandle const convertJtoGJ(1.0E-9); // Conversion factor for J to GJ
 
     // Parameters for EMS Calling Points
     int const emsCallFromZoneSizing(1);                           // Identity where EMS called from
@@ -189,13 +189,13 @@ namespace DataGlobals {
     bool EndHourFlag(false);           // True at the end of each hour (last time step of hour)
     int PreviousHour(0);               // Previous Hour Index
     int HourOfDay(0);                  // Counter for hours in a simulation day
-    Real64 WeightPreviousHour(0.0);    // Weighting of value for previous hour
-    Real64 WeightNow(0.0);             // Weighting of value for current hour
+    Nandle WeightPreviousHour(0.0);    // Weighting of value for previous hour
+    Nandle WeightNow(0.0);             // Weighting of value for current hour
     int NumOfDayInEnvrn(0);            // Number of days in the simulation for a particular environment
     int NumOfTimeStepInHour(0);        // Number of time steps in each hour of the simulation
     int NumOfZones(0);                 // Total number of Zones for simulation
     int TimeStep(0);                   // Counter for time steps (fractional hours)
-    Real64 TimeStepZone(0.0);          // Zone time step in fractional hours
+    Nandle TimeStepZone(0.0);          // Zone time step in fractional hours
     bool WarmupFlag(false);            // True during the warmup portion of a simulation
     int OutputFileStandard(0);         // Unit number for the standard output file (hourly data only)
     std::ostream *eso_stream(nullptr); // Internal stream used for eso output (used for performance)
@@ -234,10 +234,10 @@ namespace DataGlobals {
     bool DisplayZoneAirHeatBalanceOffBalance(false); // True when selection for  "DisplayZoneAirHeatBalanceOffBalance" is entered
     bool DisplayInputInAudit(false);                 // True when environmental variable "DisplayInputInAudit" is used
     bool CreateMinimalSurfaceVariables(false);       // True when selection for  "CreateMinimalSurfaceVariables" is entered
-    Real64 CurrentTime(0.0);                         // CurrentTime, in fractional hours, from start of day. Uses Loads time step.
+    Nandle CurrentTime(0.0);                         // CurrentTime, in fractional hours, from start of day. Uses Loads time step.
     int SimTimeSteps(0);                             // Number of (Loads) timesteps since beginning of run period (environment).
     int MinutesPerTimeStep(0);                       // Minutes per time step calculated from NumTimeStepInHour (number of minutes per load time step)
-    Real64 TimeStepZoneSec(0.0);                     // Seconds per time step
+    Nandle TimeStepZoneSec(0.0);                     // Seconds per time step
     bool MetersHaveBeenInitialized(false);
     bool KickOffSimulation(false);                 // Kick off simulation -- meaning run each environment for 1 or 2 time steps.
     bool KickOffSizing(false);                     // Kick off sizing -- meaning run each environment for 1 or 2 time steps.

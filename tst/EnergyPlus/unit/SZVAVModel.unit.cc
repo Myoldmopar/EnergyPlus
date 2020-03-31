@@ -246,11 +246,11 @@ TEST_F(EnergyPlusFixture, SZVAV_PTUnit_Testing)
     bool FirstHVACIteration = true;
     bool CoolingLoad = true;
     bool HeatingLoad = false;
-    Real64 QZnReq = -200.0;
-    Real64 OnOffAirFlowRatio = 1.0;
+    Nandle QZnReq = -200.0;
+    Nandle OnOffAirFlowRatio = 1.0;
     bool HXUnitOn = false;
     int AirLoopNum = 0;
-    Real64 PLR = 0.0;
+    Nandle PLR = 0.0;
     int CompressorOnFlag = 0;
     auto &SZVAVModel(PTUnit(1));
     // first pass through will get objects and reset node data
@@ -293,11 +293,11 @@ TEST_F(EnergyPlusFixture, SZVAV_PTUnit_Testing)
 
     EXPECT_NEAR(DataLoopNode::Node(1).MassFlowRate, thisUnit.MaxNoCoolHeatAirMassFlow, 0.00000001); // low speed air flow rate
     EXPECT_LT(DataLoopNode::Node(4).Temp, DataLoopNode::Node(1).Temp);                              // active cooling
-    Real64 AirMassFlow = thisUnit.MaxNoCoolHeatAirMassFlow;
-    Real64 MinHumRat = min(DataLoopNode::Node(4).HumRat, DataLoopNode::Node(1).HumRat);
-    Real64 OutletTemp = DataLoopNode::Node(4).Temp;
-    Real64 InletTemp = DataLoopNode::Node(1).Temp;
-    Real64 LoadMet = AirMassFlow * (Psychrometrics::PsyHFnTdbW(OutletTemp, MinHumRat) - Psychrometrics::PsyHFnTdbW(InletTemp, MinHumRat));
+    Nandle AirMassFlow = thisUnit.MaxNoCoolHeatAirMassFlow;
+    Nandle MinHumRat = min(DataLoopNode::Node(4).HumRat, DataLoopNode::Node(1).HumRat);
+    Nandle OutletTemp = DataLoopNode::Node(4).Temp;
+    Nandle InletTemp = DataLoopNode::Node(1).Temp;
+    Nandle LoadMet = AirMassFlow * (Psychrometrics::PsyHFnTdbW(OutletTemp, MinHumRat) - Psychrometrics::PsyHFnTdbW(InletTemp, MinHumRat));
     EXPECT_NEAR(LoadMet, QZnReq, 0.0001);
     EXPECT_NEAR(LoadMet, -200.0, 0.0001);
 

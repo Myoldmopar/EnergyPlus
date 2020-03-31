@@ -355,7 +355,7 @@ namespace DataSurfaces {
     // False means relative coordinates
     extern int MaxRecPts;       // Max number of receiving points on a surface for solar reflection calc
     extern int MaxReflRays;     // Max number of rays from a receiving surface for solar reflection calc
-    extern Real64 GroundLevelZ; // Z value of ground level for solar refl calc (m)
+    extern Nandle GroundLevelZ; // Z value of ground level for solar refl calc (m)
     extern bool AirflowWindows; // TRUE if one or more airflow windows
 
     extern bool ShadingTransmittanceVaries; // overall, shading transmittance varies for the building
@@ -368,115 +368,115 @@ namespace DataSurfaces {
     // 0 otherwise
     extern Array1D_int AdjacentZoneToSurface; // Array of adjacent zones to each surface
 
-    extern Array1D<Real64> X0;     // X-component of translation vector
-    extern Array1D<Real64> Y0;     // Y-component of translation vector
-    extern Array1D<Real64> Z0;     // Z-component of translation vector
-    extern Array1D<Real64> DSZone; // Factor for sky diffuse solar radiation into a zone
-    extern Array1D<Real64> DGZone; // Factor for ground diffuse solar radiation into a zone
-    extern Array1D<Real64> DBZone; // Factor for diffuse radiation in a zone from
+    extern Array1D<Nandle> X0;     // X-component of translation vector
+    extern Array1D<Nandle> Y0;     // Y-component of translation vector
+    extern Array1D<Nandle> Z0;     // Z-component of translation vector
+    extern Array1D<Nandle> DSZone; // Factor for sky diffuse solar radiation into a zone
+    extern Array1D<Nandle> DGZone; // Factor for ground diffuse solar radiation into a zone
+    extern Array1D<Nandle> DBZone; // Factor for diffuse radiation in a zone from
                                    // beam reflecting from inside surfaces
-    extern Array1D<Real64>
+    extern Array1D<Nandle>
         DBZoneSSG; // Factor for diffuse radiation in a zone from beam reflecting from inside surfaces. Used only for scheduled surface gains
-    extern Array1D<Real64> CBZone; // Factor for beam solar absorbed by interior shades
-    extern Array1D<Real64> AISurf; // Time step value of factor for beam
+    extern Array1D<Nandle> CBZone; // Factor for beam solar absorbed by interior shades
+    extern Array1D<Nandle> AISurf; // Time step value of factor for beam
     // absorbed on inside of opaque surface
-    extern Array1D<Real64> AOSurf; // Time step value of factor for beam
+    extern Array1D<Nandle> AOSurf; // Time step value of factor for beam
     // absorbed on outside of opaque surface
-    extern Array1D<Real64> BmToBmReflFacObs; // Factor for incident solar from specular beam refl
+    extern Array1D<Nandle> BmToBmReflFacObs; // Factor for incident solar from specular beam refl
     // from obstructions (W/m2)/(W/m2)
-    extern Array1D<Real64> BmToDiffReflFacObs; // Factor for incident solar from diffuse beam refl
+    extern Array1D<Nandle> BmToDiffReflFacObs; // Factor for incident solar from diffuse beam refl
     // from obstructions (W/m2)/(W/m2)
-    extern Array1D<Real64> BmToDiffReflFacGnd; // Factor for incident solar from diffuse beam refl from ground
+    extern Array1D<Nandle> BmToDiffReflFacGnd; // Factor for incident solar from diffuse beam refl from ground
 
-    extern Array2D<Real64> AWinSurf; // Time step value of factor for beam
+    extern Array2D<Nandle> AWinSurf; // Time step value of factor for beam
     // absorbed in window glass layers
 
     // Time step value of factor for diffuse absorbed in window layers
-    extern Array2D<Real64> AWinSurfDiffFront;
-    extern Array2D<Real64> AWinSurfDiffBack;
+    extern Array2D<Nandle> AWinSurfDiffFront;
+    extern Array2D<Nandle> AWinSurfDiffBack;
 
-    extern Array2D<Real64> AWinCFOverlap; // Time step value of factor for beam
+    extern Array2D<Nandle> AWinCFOverlap; // Time step value of factor for beam
     // absorbed in window glass layers which comes from other windows
     // It happens sometimes that beam enters one window and hits back of
     // second window. It is used in complex fenestration only
 
-    extern Array1D<Real64> AirSkyRadSplit; // Fractional split between the air and
+    extern Array1D<Nandle> AirSkyRadSplit; // Fractional split between the air and
     // the sky for radiation from the surface
     // Fraction of sky IR coming from sky itself; 1-AirSkyRadSplit comes from the atmosphere.
 
-    extern Array1D<Real64> WinTransSolar; // Exterior beam plus diffuse solar transmitted through window, or
+    extern Array1D<Nandle> WinTransSolar; // Exterior beam plus diffuse solar transmitted through window, or
     // window plus shade/blind, into zone (W)
-    extern Array1D<Real64> WinBmSolar; // Exterior beam solar transmitted through window, or
+    extern Array1D<Nandle> WinBmSolar; // Exterior beam solar transmitted through window, or
     // window plus blind, into zone (W)
 
-    extern Array1D<Real64> WinBmBmSolar; // Exterior beam-to-beam solar transmitted through window, or
+    extern Array1D<Nandle> WinBmBmSolar; // Exterior beam-to-beam solar transmitted through window, or
     // window plus blind, into zone (W)
-    extern Array1D<Real64> WinBmDifSolar; // Exterior beam-to-diffuse solar transmitted through window, or
+    extern Array1D<Nandle> WinBmDifSolar; // Exterior beam-to-diffuse solar transmitted through window, or
     // window plus blind, into zone (W)
 
-    extern Array1D<Real64> WinDifSolar; // Exterior diffuse solar transmitted through window, or
+    extern Array1D<Nandle> WinDifSolar; // Exterior diffuse solar transmitted through window, or
     // window plus shade/blind, into zone (W)
-    extern Array1D<Real64> WinDirSolTransAtIncAngle; // Window's beam-beam solar transmittance at current timestep's
+    extern Array1D<Nandle> WinDirSolTransAtIncAngle; // Window's beam-beam solar transmittance at current timestep's
     // angle of incidence
-    extern Array1D<Real64> WinHeatGain; // Total heat gain from window = WinTransSolar + (IR and convection from
+    extern Array1D<Nandle> WinHeatGain; // Total heat gain from window = WinTransSolar + (IR and convection from
     // glazing, or, if interior shade, IR and convection from
     // zone-side of shade plus gap air convection to zone) + (IR and
     // convection from frame) + (IR and convection from divider if no
     // interior shade) (W)
-    extern Array1D<Real64> WinHeatTransfer; // Total heat transfer through the window = WinTransSolar + conduction
+    extern Array1D<Nandle> WinHeatTransfer; // Total heat transfer through the window = WinTransSolar + conduction
     // through glazing and frame
-    extern Array1D<Real64> WinHeatGainRep; // Equals WinHeatGain when WinHeatGain >= 0.0
-    extern Array1D<Real64> WinHeatLossRep; // Equals -WinHeatGain when WinHeatGain < 0.0
+    extern Array1D<Nandle> WinHeatGainRep; // Equals WinHeatGain when WinHeatGain >= 0.0
+    extern Array1D<Nandle> WinHeatLossRep; // Equals -WinHeatGain when WinHeatGain < 0.0
 
-    extern Array1D<Real64> WinGainConvGlazToZoneRep;        // component of WinHeatGain convect to zone from glazing (W)
-    extern Array1D<Real64> WinGainIRGlazToZoneRep;          // component of WinHeatGain net IR to zone from glazing (W)
-    extern Array1D<Real64> WinLossSWZoneToOutWinRep;        // component of WinHeatGain shortwave transmit back out (W)
-    extern Array1D<Real64> WinGainFrameDividerToZoneRep;    // component of WinHeatGain to zone from frame/divider (W)
-    extern Array1D<Real64> WinGainConvGlazShadGapToZoneRep; // component of WinHeatGain convection to zone from
+    extern Array1D<Nandle> WinGainConvGlazToZoneRep;        // component of WinHeatGain convect to zone from glazing (W)
+    extern Array1D<Nandle> WinGainIRGlazToZoneRep;          // component of WinHeatGain net IR to zone from glazing (W)
+    extern Array1D<Nandle> WinLossSWZoneToOutWinRep;        // component of WinHeatGain shortwave transmit back out (W)
+    extern Array1D<Nandle> WinGainFrameDividerToZoneRep;    // component of WinHeatGain to zone from frame/divider (W)
+    extern Array1D<Nandle> WinGainConvGlazShadGapToZoneRep; // component of WinHeatGain convection to zone from
     // the gap between the inner most glazing and the shade   (W)
-    extern Array1D<Real64> WinGainConvShadeToZoneRep; // component of WinHeatGain convect to zone from front shade (W)
-    extern Array1D<Real64> WinGainIRShadeToZoneRep;   // component of WinHeatGain net IR to zone from front shade (W)
-    extern Array1D<Real64>
+    extern Array1D<Nandle> WinGainConvShadeToZoneRep; // component of WinHeatGain convect to zone from front shade (W)
+    extern Array1D<Nandle> WinGainIRShadeToZoneRep;   // component of WinHeatGain net IR to zone from front shade (W)
+    extern Array1D<Nandle>
         OtherConvGainInsideFaceToZoneRep; // net imbalance of convection heat gain from equivalent Layer window inside face to zone air
 
-    extern Array1D<Real64> WinGapConvHtFlowRep; // Convective heat flow from gap in airflow window (W)
+    extern Array1D<Nandle> WinGapConvHtFlowRep; // Convective heat flow from gap in airflow window (W)
     // REAL(r64), ALLOCATABLE, DIMENSION(:) :: OpaqSurfInsFaceCondGainRep !Equals Opaq Surf Ins Face Cond
     //                                                                   ! when Opaq Surf Ins Face Cond >= 0
     // REAL(r64), ALLOCATABLE, DIMENSION(:) :: OpaqSurfInsFaceCondLossRep !Equals -Opaq Surf Ins Face Cond
     //                                                                   ! when Opaq Surf Ins Face Cond  < 0
-    extern Array1D<Real64> WinShadingAbsorbedSolar; // Exterior beam plus diffuse solar absorbed by
+    extern Array1D<Nandle> WinShadingAbsorbedSolar; // Exterior beam plus diffuse solar absorbed by
     //  window shading device (W)
-    extern Array1D<Real64> WinSysSolTransmittance; // Effective solar transmittance of window + shading device,
+    extern Array1D<Nandle> WinSysSolTransmittance; // Effective solar transmittance of window + shading device,
     // if present
-    extern Array1D<Real64> WinSysSolReflectance; // Effective solar reflectance of window + shading device,
+    extern Array1D<Nandle> WinSysSolReflectance; // Effective solar reflectance of window + shading device,
     // if present
-    extern Array1D<Real64> WinSysSolAbsorptance; // Effective solar absorptance of window + shading device,
+    extern Array1D<Nandle> WinSysSolAbsorptance; // Effective solar absorptance of window + shading device,
                                                  // if present
-    extern Array2D<Real64>
+    extern Array2D<Nandle>
         SUNCOSHR; // Hourly values of SUNCOS (solar direction cosines) //Autodesk:Init Zero-initialization added to avoid use uninitialized
-    extern Array2D<Real64> ReflFacBmToDiffSolObs;
-    extern Array2D<Real64> ReflFacBmToDiffSolGnd;
-    extern Array2D<Real64> ReflFacBmToBmSolObs;
-    extern Array1D<Real64> ReflFacSkySolObs;
-    extern Array1D<Real64> ReflFacSkySolGnd;
-    extern Array2D<Real64> CosIncAveBmToBmSolObs;
-    extern Array1D<Real64> DBZoneIntWin; // Value of factor for beam solar entering a zone through interior windows
+    extern Array2D<Nandle> ReflFacBmToDiffSolObs;
+    extern Array2D<Nandle> ReflFacBmToDiffSolGnd;
+    extern Array2D<Nandle> ReflFacBmToBmSolObs;
+    extern Array1D<Nandle> ReflFacSkySolObs;
+    extern Array1D<Nandle> ReflFacSkySolGnd;
+    extern Array2D<Nandle> CosIncAveBmToBmSolObs;
+    extern Array1D<Nandle> DBZoneIntWin; // Value of factor for beam solar entering a zone through interior windows
     // (considered to contribute to diffuse in zone)
-    extern Array1D<Real64> SurfSunlitArea; // Sunlit area by surface number
-    extern Array1D<Real64> SurfSunlitFrac; // Sunlit fraction by surface number
+    extern Array1D<Nandle> SurfSunlitArea; // Sunlit area by surface number
+    extern Array1D<Nandle> SurfSunlitFrac; // Sunlit fraction by surface number
     // energy
-    extern Array1D<Real64> WinTransSolarEnergy; // Energy of WinTransSolar [J]
-    extern Array1D<Real64> WinBmSolarEnergy;    // Energy of WinBmSolar [J]
+    extern Array1D<Nandle> WinTransSolarEnergy; // Energy of WinTransSolar [J]
+    extern Array1D<Nandle> WinBmSolarEnergy;    // Energy of WinBmSolar [J]
 
-    extern Array1D<Real64> WinBmBmSolarEnergy;  // Beam-to-beam energy of WinBmSolar [J]
-    extern Array1D<Real64> WinBmDifSolarEnergy; // Beam-to-diffuse energy of WinBmSolar [J]
+    extern Array1D<Nandle> WinBmBmSolarEnergy;  // Beam-to-beam energy of WinBmSolar [J]
+    extern Array1D<Nandle> WinBmDifSolarEnergy; // Beam-to-diffuse energy of WinBmSolar [J]
 
-    extern Array1D<Real64> WinDifSolarEnergy;             // Energy of WinDifSolar [J]
-    extern Array1D<Real64> WinHeatGainRepEnergy;          // Energy of WinHeatGainRep [J]
-    extern Array1D<Real64> WinHeatLossRepEnergy;          // Energy of WinHeatLossRep [J]
-    extern Array1D<Real64> WinShadingAbsorbedSolarEnergy; // Energy of WinShadingAbsorbedSolar [J]
-    extern Array1D<Real64> WinGapConvHtFlowRepEnergy;     // Energy of WinGapConvHtFlowRep [J]
-    extern Array1D<Real64> WinHeatTransferRepEnergy;      // Energy of WinHeatTransfer [J]
+    extern Array1D<Nandle> WinDifSolarEnergy;             // Energy of WinDifSolar [J]
+    extern Array1D<Nandle> WinHeatGainRepEnergy;          // Energy of WinHeatGainRep [J]
+    extern Array1D<Nandle> WinHeatLossRepEnergy;          // Energy of WinHeatLossRep [J]
+    extern Array1D<Nandle> WinShadingAbsorbedSolarEnergy; // Energy of WinShadingAbsorbedSolar [J]
+    extern Array1D<Nandle> WinGapConvHtFlowRepEnergy;     // Energy of WinGapConvHtFlowRep [J]
+    extern Array1D<Nandle> WinHeatTransferRepEnergy;      // Energy of WinHeatTransfer [J]
 
     extern std::vector<int> AllHTSurfaceList;          // List of all heat transfer surfaces
     extern std::vector<int> AllIZSurfaceList;          // List of all interzone heat transfer surfaces
@@ -495,22 +495,22 @@ namespace DataSurfaces {
     {
 
     public: // Types
-        using Vertex = ObjexxFCL::Vector2<Real64>;
+        using Vertex = ObjexxFCL::Vector2<Nandle>;
         using Vertices = ObjexxFCL::Array1D<Vertex>;
         using Edge = Vertices::size_type; // The Surface2D vertex and edge index
-        using EdgeXY = Real64;            // The edge x/y inverse slope
+        using EdgeXY = Nandle;            // The edge x/y inverse slope
         using Edges = std::vector<Edge>;
         using EdgesXY = std::vector<EdgeXY>;
 
     public: // Creation
             // Constructor
-        Surface2DSlab(Real64 const yl, Real64 const yu) : xl(0.0), xu(0.0), yl(yl), yu(yu)
+        Surface2DSlab(Nandle const yl, Nandle const yu) : xl(0.0), xu(0.0), yl(yl), yu(yu)
         {
         }
 
     public:              // Data
-        Real64 xl, xu;   // Lower and upper x coordinates of slab bounding box
-        Real64 yl, yu;   // Lower and upper y coordinates of slab
+        Nandle xl, xu;   // Lower and upper x coordinates of slab bounding box
+        Nandle yl, yu;   // Lower and upper y coordinates of slab
         Edges edges;     // Left-to-right ordered edges crossing the slab
         EdgesXY edgesXY; // Edge x/y inverse slopes
 
@@ -521,14 +521,14 @@ namespace DataSurfaces {
     {
 
     public: // Types
-        using Vector2D = Vector2<Real64>;
+        using Vector2D = Vector2<Nandle>;
         using Edge = Vector2D;
         using Vertices = Array1D<Vector2D>;
         using Vectors = Array1D<Vector2D>;
         using Edges = Vectors;
         using Slab = Surface2DSlab;
         using Slabs = std::vector<Surface2DSlab>;
-        using SlabYs = std::vector<Real64>;
+        using SlabYs = std::vector<Nandle>;
         using size_type = Vertices::size_type;
 
     public: // Creation
@@ -567,7 +567,7 @@ namespace DataSurfaces {
         Vertices vertices;                               // Vertices
         Vector2D vl = Vector2D(0.0), vu = Vector2D(0.0); // Bounding box lower and upper corner vertices
         Vectors edges;                                   // Edge vectors around the vertices
-        Real64 s1 = 0.0, s3 = 0.0;                       // Rectangle side widths squared
+        Nandle s1 = 0.0, s3 = 0.0;                       // Rectangle side widths squared
         SlabYs slabYs;                                   // Y coordinates of slabs
         Slabs slabs;                                     // Y slice slabs for fast nonconvex and many vertex intersections
 
@@ -578,7 +578,7 @@ namespace DataSurfaces {
 
         // Types
         using Vertices = Array1D<Vector>;
-        using Plane = Vector4<Real64>;
+        using Plane = Vector4<Nandle>;
 
         // Members
         std::string Name;                 // User supplied name of the surface (must be unique)
@@ -593,20 +593,20 @@ namespace DataSurfaces {
         //                Rectangular Left Fin=6,Rectangular Right Fin=7,
         //                Triangular Window=8)
         int Sides;                // Number of side/vertices for this surface (based on Shape)
-        Real64 Area;              // Surface area of the surface (less any subsurfaces) {m2}
-        Real64 GrossArea;         // Surface area of the surface (including subsurfaces) {m2}
-        Real64 NetAreaShadowCalc; // Area of a wall/floor/ceiling less subsurfaces assuming
+        Nandle Area;              // Surface area of the surface (less any subsurfaces) {m2}
+        Nandle GrossArea;         // Surface area of the surface (including subsurfaces) {m2}
+        Nandle NetAreaShadowCalc; // Area of a wall/floor/ceiling less subsurfaces assuming
         //  all windows, if present, have unity multiplier.
         // Wall/floor/ceiling/roof areas that include windows include
         //  frame (unity) areas.
         // Areas of Windows including divider (unity) area.
         // These areas are used in shadowing / sunlit area calculations.
-        Real64 Perimeter; // Perimeter length of the surface {m}
-        Real64 Azimuth;   // Direction the surface outward normal faces (degrees) or FACING
-        Real64 Height;    // Height of the surface (m)
-        Real64 Reveal;    // Depth of the window reveal (m) if this surface is a window
-        Real64 Tilt;      // Angle (deg) between the ground outward normal and the surface outward normal
-        Real64 Width;     // Width of the surface (m)
+        Nandle Perimeter; // Perimeter length of the surface {m}
+        Nandle Azimuth;   // Direction the surface outward normal faces (degrees) or FACING
+        Nandle Height;    // Height of the surface (m)
+        Nandle Reveal;    // Depth of the window reveal (m) if this surface is a window
+        Nandle Tilt;      // Angle (deg) between the ground outward normal and the surface outward normal
+        Nandle Width;     // Width of the surface (m)
         // Boundary conditions and interconnections
         bool HeatTransSurf;                // True if surface is a heat transfer surface,
         int OutsideHeatSourceTermSchedule; // Pointer to the schedule of additional source of heat flux rate applied to the outside surface
@@ -640,18 +640,18 @@ namespace DataSurfaces {
         int IntConvCoeff; // Interior Convection Coefficient pointer (different data structure)
         // when being overridden
         bool EMSOverrideIntConvCoef;   // if true, EMS is calling to override interior convection coefficeint
-        Real64 EMSValueForIntConvCoef; // Value EMS is calling to use for interior convection coefficient [W/m2-K]
+        Nandle EMSValueForIntConvCoef; // Value EMS is calling to use for interior convection coefficient [W/m2-K]
         int ExtConvCoeff;              // Exterior Convection Coefficient pointer (different data structure)
         // when being overridden
         bool EMSOverrideExtConvCoef;   // if true, EMS is calling to override exterior convection coefficeint
-        Real64 EMSValueForExtConvCoef; // Value EMS is calling to use for exterior convection coefficient [W/m2-K]
-        Real64 ViewFactorGround;       // View factor to the ground from the exterior of the surface
+        Nandle EMSValueForExtConvCoef; // Value EMS is calling to use for exterior convection coefficient [W/m2-K]
+        Nandle ViewFactorGround;       // View factor to the ground from the exterior of the surface
         //   for diffuse solar radiation
-        Real64 ViewFactorSky; // View factor to the sky from the exterior of the surface
+        Nandle ViewFactorSky; // View factor to the sky from the exterior of the surface
         //   for diffuse solar radiation
-        Real64 ViewFactorGroundIR; // View factor to the ground and shadowing surfaces from the
+        Nandle ViewFactorGroundIR; // View factor to the ground and shadowing surfaces from the
         //    exterior of the surface for IR radiation
-        Real64 ViewFactorSkyIR; // View factor to the sky from the exterior of the surface for IR radiation
+        Nandle ViewFactorSkyIR; // View factor to the sky from the exterior of the surface for IR radiation
         // Special/optional other side coefficients (OSC)
         int OSCPtr;  // Pointer to OSC data structure
         int OSCMPtr; // "Pointer" to OSCM data structure (other side conditions from a model)
@@ -660,11 +660,11 @@ namespace DataSurfaces {
         bool ShadowSurfSchedVaries; // true if the scheduling (transmittance) on a shading surface varies.
         bool ShadowingSurf;         // True if a surface is a shadowing surface
         bool IsTransparent;         // True if the schedule values are always 1.0 (or the minimum is 1.0)
-        Real64 SchedMinValue;       // Schedule minimum value.
+        Nandle SchedMinValue;       // Schedule minimum value.
         // Optional parameters specific to solar reflection from surfaces
-        Real64 ShadowSurfDiffuseSolRefl;    // Diffuse solar reflectance of opaque portion
-        Real64 ShadowSurfDiffuseVisRefl;    // Diffuse visible reflectance of opaque portion
-        Real64 ShadowSurfGlazingFrac;       // Glazing fraction
+        Nandle ShadowSurfDiffuseSolRefl;    // Diffuse solar reflectance of opaque portion
+        Nandle ShadowSurfDiffuseVisRefl;    // Diffuse visible reflectance of opaque portion
+        Nandle ShadowSurfGlazingFrac;       // Glazing fraction
         int ShadowSurfGlazingConstruct;     // Glazing construction number
         bool ShadowSurfPossibleObstruction; // True if a surface can be an exterior obstruction
         bool ShadowSurfPossibleReflector;   // True if a surface can be an exterior reflector, not used!
@@ -685,11 +685,11 @@ namespace DataSurfaces {
         Vector lcsz;
         Vector NewellAreaVector;
         Vector NewellSurfaceNormalVector; // same as OutNormVec in vector notation
-        Array1D<Real64> OutNormVec;       // Direction cosines (outward normal vector) for surface
-        Real64 SinAzim;                   // Sine of surface azimuth angle
-        Real64 CosAzim;                   // Cosine of surface azimuth angle
-        Real64 SinTilt;                   // Sine of surface tilt angle
-        Real64 CosTilt;                   // Cosine of surface tilt angle
+        Array1D<Nandle> OutNormVec;       // Direction cosines (outward normal vector) for surface
+        Nandle SinAzim;                   // Sine of surface azimuth angle
+        Nandle CosAzim;                   // Cosine of surface azimuth angle
+        Nandle SinTilt;                   // Sine of surface tilt angle
+        Nandle CosTilt;                   // Cosine of surface tilt angle
         bool IsConvex;                    // true if the surface is convex.
         bool IsDegenerate;                // true if the surface is degenerate.
         // Precomputed parameters for PierceSurface performance
@@ -703,7 +703,7 @@ namespace DataSurfaces {
         int StormWinConstruction;       // Construction with storm window (windows only)
         int StormWinShadedConstruction; // Shaded construction with storm window (windows only)
         int FrameDivider;               // Pointer to frame and divider information (windows only)
-        Real64 Multiplier;              // Multiplies glazed area, frame area and divider area (windows only)
+        Nandle Multiplier;              // Multiplies glazed area, frame area and divider area (windows only)
         // Daylighting pointers
         int Shelf;   // Pointer to daylighting shelf
         int TAirRef; // Flag for reference air temperature
@@ -714,20 +714,20 @@ namespace DataSurfaces {
         // ZoneSupplyAirTemp = 3 = supply air temperature => for mixing air model with inlet-dependent algo
         // Default value is 'ZoneMeanAirTemp' and value for each particular surface will be changed only if
         // the inlet-dependent convection algorithm and/or nodal and zonal air models are used.
-        Real64 OutDryBulbTemp;                 // Surface outside dry bulb air temperature, for surface heat balance (C)
+        Nandle OutDryBulbTemp;                 // Surface outside dry bulb air temperature, for surface heat balance (C)
         bool OutDryBulbTempEMSOverrideOn;      // if true, EMS is calling to override the surface's outdoor air temp
-        Real64 OutDryBulbTempEMSOverrideValue; // value to use for EMS override of outdoor air drybulb temp (C)
-        Real64 OutWetBulbTemp;                 // Surface outside wet bulb air temperature, for surface heat balance (C)
+        Nandle OutDryBulbTempEMSOverrideValue; // value to use for EMS override of outdoor air drybulb temp (C)
+        Nandle OutWetBulbTemp;                 // Surface outside wet bulb air temperature, for surface heat balance (C)
         bool OutWetBulbTempEMSOverrideOn;      // if true, EMS is calling to override the surface's outdoor wetbulb
-        Real64 OutWetBulbTempEMSOverrideValue; // value to use for EMS override of outdoor air wetbulb temp (C)
-        Real64 WindSpeed;                      // Surface outside wind speed, for surface heat balance (m/s)
+        Nandle OutWetBulbTempEMSOverrideValue; // value to use for EMS override of outdoor air wetbulb temp (C)
+        Nandle WindSpeed;                      // Surface outside wind speed, for surface heat balance (m/s)
         bool WindSpeedEMSOverrideOn;
-        Real64 WindSpeedEMSOverrideValue;
+        Nandle WindSpeedEMSOverrideValue;
 
         // XL added 7/19/2017
-        Real64 WindDir;                 // Surface outside wind direction, for surface heat balance and ventilation(degree)
+        Nandle WindDir;                 // Surface outside wind direction, for surface heat balance and ventilation(degree)
         bool WindDirEMSOverrideOn;      // if true, EMS is calling to override the surface's outside wind direction
-        Real64 WindDirEMSOverrideValue; // value to use for EMS override of the surface's outside wind speed
+        Nandle WindDirEMSOverrideValue; // value to use for EMS override of the surface's outside wind speed
 
         // XL added 7/25/2017
 
@@ -760,19 +760,19 @@ namespace DataSurfaces {
         int OutConvHfUserCurveIndex;     // current index to user forced convection model if used
         int OutConvHnModelEq;            // current Convection model for natural convection at outside face
         int OutConvHnUserCurveIndex;     // current index to user natural convection model if used
-        Real64 OutConvFaceArea;          // area of larger building envelope facade that surface is a part of
-        Real64 OutConvFacePerimeter;     // perimeter of larger building envelope facade that surface is a part of
-        Real64 OutConvFaceHeight;        // height of larger building envelope facade that surface is a part of
-        Real64 IntConvZoneWallHeight;    // [m] height of larger inside building wall element that surface is a part of
-        Real64 IntConvZonePerimLength;   // [m] length of perimeter zone's exterior wall
-        Real64 IntConvZoneHorizHydrDiam; // [m] hydraulic diameter, usually 4 times the zone floor area div by perimeter
-        Real64 IntConvWindowWallRatio;   // [-] area of windows over area of exterior wall for zone
+        Nandle OutConvFaceArea;          // area of larger building envelope facade that surface is a part of
+        Nandle OutConvFacePerimeter;     // perimeter of larger building envelope facade that surface is a part of
+        Nandle OutConvFaceHeight;        // height of larger building envelope facade that surface is a part of
+        Nandle IntConvZoneWallHeight;    // [m] height of larger inside building wall element that surface is a part of
+        Nandle IntConvZonePerimLength;   // [m] length of perimeter zone's exterior wall
+        Nandle IntConvZoneHorizHydrDiam; // [m] hydraulic diameter, usually 4 times the zone floor area div by perimeter
+        Nandle IntConvWindowWallRatio;   // [-] area of windows over area of exterior wall for zone
         int IntConvWindowLocation;       // relative location of window in zone for interior Hc models
         bool IntConvSurfGetsRadiantHeat;
         bool IntConvSurfHasActiveInIt;
         bool PartOfVentSlabOrRadiantSurface; // surface cannot be part of both a radiant surface & ventilated slab group
         // LG added 1/6/12
-        Real64 GenericContam; // [ppm] Surface generic contaminant as a storage term for
+        Nandle GenericContam; // [ppm] Surface generic contaminant as a storage term for
         // Air boundaries
         int SolarEnclIndex;     // Pointer to solar enclosure this surface belongs to
         int SolarEnclSurfIndex; //  Pointer to solar enclosure surface data, ZoneSolarInfo(n).SurfacePtr(RadEnclSurfIndex) points to this surface
@@ -820,27 +820,27 @@ namespace DataSurfaces {
 
         void SetOutBulbTempAt();
 
-        void SetWindDirAt(Real64 const fac);
+        void SetWindDirAt(Nandle const fac);
 
-        void SetWindSpeedAt(Real64 const fac);
+        void SetWindSpeedAt(Nandle const fac);
 
-        Real64 getInsideAirTemperature(const int t_SurfNum) const;
+        Nandle getInsideAirTemperature(const int t_SurfNum) const;
 
-        static Real64 getInsideIR(const int t_SurfNum);
+        static Nandle getInsideIR(const int t_SurfNum);
 
-        Real64 getOutsideAirTemperature(const int t_SurfNum) const;
+        Nandle getOutsideAirTemperature(const int t_SurfNum) const;
 
-        Real64 getOutsideIR(const int t_SurfNum) const;
+        Nandle getOutsideIR(const int t_SurfNum) const;
 
-        static Real64 getSWIncident(const int t_SurfNum);
+        static Nandle getSWIncident(const int t_SurfNum);
 
-        static Real64 getSWBeamIncident(const int t_SurfNum);
+        static Nandle getSWBeamIncident(const int t_SurfNum);
 
-        static Real64 getSWDiffuseIncident(const int t_SurfNum);
+        static Nandle getSWDiffuseIncident(const int t_SurfNum);
 
         int getTotLayers() const;
 
-        Real64 get_average_height() const;
+        Nandle get_average_height() const;
 
     private: // Methods
              // Computed Shape Category
@@ -857,71 +857,71 @@ namespace DataSurfaces {
     {
         // Members
 
-        Real64 FrameQRadOutAbs;    // Radiation absorbed by outside of frame (solar) (W/m2)
-        Real64 FrameQRadInAbs;     // Radiation absorbed by inside of frame (short-wave from solar
+        Nandle FrameQRadOutAbs;    // Radiation absorbed by outside of frame (solar) (W/m2)
+        Nandle FrameQRadInAbs;     // Radiation absorbed by inside of frame (short-wave from solar
         //   and lights; long-wave from internal gains) (W/m2)
-        Real64 DividerQRadOutAbs;          // Radiation absorbed by outside of divider (solar) (W/m2)
-        Real64 DividerQRadInAbs;     // Radiation absorbed by inside of divider (short-wave from solar
+        Nandle DividerQRadOutAbs;          // Radiation absorbed by outside of divider (solar) (W/m2)
+        Nandle DividerQRadInAbs;     // Radiation absorbed by inside of divider (short-wave from solar
         //   and lights; long-wave from internal gains) (W/m2)
-        Real64 ExtBeamAbsByShade;        // Exterior beam solar absorbed by window shade (W/m2)
-        Real64 ExtDiffAbsByShade;        // Exterior diffuse solar absorbed by window shade (W/m2)
-        Real64 IntBeamAbsByShade;        // Interior beam solar absorbed by window shade (W/m2)
-        Real64 IntSWAbsByShade;          // Interior diffuse solar plus short-wave from lights absorbed by window shade (W/m2)
-        Real64 InitialDifSolAbsByShade;  // Initial diffuse solar from ext and int windows absorbed by window shade (W/m2)
-        Real64 IntLWAbsByShade;          // Interior long-wave from zone lights and equipment absorbed by window shade (W/m2)
-        Real64 ConvHeatFlowNatural;      // Convective heat flow from gap between glass and interior shade or blind (W)
-        Real64 ConvHeatGainToZoneAir;    // Convective heat gain to zone air from window gap airflow (W)
-        Real64 RetHeatGainToZoneAir;     // Convective heat gain to return air sent to zone [W]
-        Real64 DividerHeatGain;
-        Real64 BlTsolBmBm;                      // Time-step value of blind beam-beam solar transmittance (-)
-        Real64 BlTsolBmDif;                     // Time-step value of blind beam-diffuse solar transmittance (-)
-        Real64 BlTsolDifDif;                    // Time-step value of blind diffuse-diffuse solar transmittance (-)
-        Real64 BlGlSysTsolBmBm;                 // Time-step value of blind/glass system beam-beam solar transmittance (-)
-        Real64 BlGlSysTsolDifDif;               // Time-step value of blind/glass system diffuse-diffuse solar transmittance (-)
-        Real64 ScTsolBmBm;                      // Time-step value of screen beam-beam solar transmittance (-)
-        Real64 ScTsolBmDif;                     // Time-step value of screen beam-diffuse solar transmittance (-)
-        Real64 ScTsolDifDif;                    // Time-step value of screen diffuse-diffuse solar transmittance (-)
-        Real64 ScGlSysTsolBmBm;                 // Time-step value of screen/glass system beam-beam solar transmittance (-)
-        Real64 ScGlSysTsolDifDif;               // Time-step value of screen/glass system diffuse-diffuse solar transmittance (-)
-        Real64 GlTsolBmBm;                      // Time-step value of glass beam-beam solar transmittance (-)
-        Real64 GlTsolBmDif;                     // Time-step value of glass beam-diffuse solar transmittance (-)
-        Real64 GlTsolDifDif;                    // Time-step value of glass diffuse-diffuse solar transmittance (-)
-        Real64 BmSolTransThruIntWinRep;         // Beam solar transmitted through interior window [W]
-        Real64 BmSolAbsdOutsReveal;             // Multiplied by BeamSolarRad, gives beam solar absorbed by
+        Nandle ExtBeamAbsByShade;        // Exterior beam solar absorbed by window shade (W/m2)
+        Nandle ExtDiffAbsByShade;        // Exterior diffuse solar absorbed by window shade (W/m2)
+        Nandle IntBeamAbsByShade;        // Interior beam solar absorbed by window shade (W/m2)
+        Nandle IntSWAbsByShade;          // Interior diffuse solar plus short-wave from lights absorbed by window shade (W/m2)
+        Nandle InitialDifSolAbsByShade;  // Initial diffuse solar from ext and int windows absorbed by window shade (W/m2)
+        Nandle IntLWAbsByShade;          // Interior long-wave from zone lights and equipment absorbed by window shade (W/m2)
+        Nandle ConvHeatFlowNatural;      // Convective heat flow from gap between glass and interior shade or blind (W)
+        Nandle ConvHeatGainToZoneAir;    // Convective heat gain to zone air from window gap airflow (W)
+        Nandle RetHeatGainToZoneAir;     // Convective heat gain to return air sent to zone [W]
+        Nandle DividerHeatGain;
+        Nandle BlTsolBmBm;                      // Time-step value of blind beam-beam solar transmittance (-)
+        Nandle BlTsolBmDif;                     // Time-step value of blind beam-diffuse solar transmittance (-)
+        Nandle BlTsolDifDif;                    // Time-step value of blind diffuse-diffuse solar transmittance (-)
+        Nandle BlGlSysTsolBmBm;                 // Time-step value of blind/glass system beam-beam solar transmittance (-)
+        Nandle BlGlSysTsolDifDif;               // Time-step value of blind/glass system diffuse-diffuse solar transmittance (-)
+        Nandle ScTsolBmBm;                      // Time-step value of screen beam-beam solar transmittance (-)
+        Nandle ScTsolBmDif;                     // Time-step value of screen beam-diffuse solar transmittance (-)
+        Nandle ScTsolDifDif;                    // Time-step value of screen diffuse-diffuse solar transmittance (-)
+        Nandle ScGlSysTsolBmBm;                 // Time-step value of screen/glass system beam-beam solar transmittance (-)
+        Nandle ScGlSysTsolDifDif;               // Time-step value of screen/glass system diffuse-diffuse solar transmittance (-)
+        Nandle GlTsolBmBm;                      // Time-step value of glass beam-beam solar transmittance (-)
+        Nandle GlTsolBmDif;                     // Time-step value of glass beam-diffuse solar transmittance (-)
+        Nandle GlTsolDifDif;                    // Time-step value of glass diffuse-diffuse solar transmittance (-)
+        Nandle BmSolTransThruIntWinRep;         // Beam solar transmitted through interior window [W]
+        Nandle BmSolAbsdOutsReveal;             // Multiplied by BeamSolarRad, gives beam solar absorbed by
         //  outside reveal surfaces (m2)
-        Real64 BmSolRefldOutsRevealReport;      // Beam solar reflected by outside reveal surfaces, for reporting (m2)
-        Real64 BmSolAbsdInsReveal;  // Multiplied by BeamSolarRad, gives beam solar absorbed
+        Nandle BmSolRefldOutsRevealReport;      // Beam solar reflected by outside reveal surfaces, for reporting (m2)
+        Nandle BmSolAbsdInsReveal;  // Multiplied by BeamSolarRad, gives beam solar absorbed
         //  by inside reveal surfaces (m2)
-        Real64 BmSolRefldInsReveal; // Multiplied by BeamSolarRad, gives beam solar reflected
+        Nandle BmSolRefldInsReveal; // Multiplied by BeamSolarRad, gives beam solar reflected
         //  by inside reveal surfaces (m2)
-        Real64 BmSolRefldInsRevealReport;  // Beam solar reflected by inside reveal surfaces, for reporting (W)
-        Real64 OutsRevealDiffOntoGlazing; // Multiplied by BeamSolarRad, gives diffuse from beam reflection from
+        Nandle BmSolRefldInsRevealReport;  // Beam solar reflected by inside reveal surfaces, for reporting (W)
+        Nandle OutsRevealDiffOntoGlazing; // Multiplied by BeamSolarRad, gives diffuse from beam reflection from
         //  outside reveal that is incident on the glazing per m2 of glazing (-)
-        Real64 InsRevealDiffOntoGlazing; // Multiplied by BeamSolarRad, gives diffuse from beam reflection
+        Nandle InsRevealDiffOntoGlazing; // Multiplied by BeamSolarRad, gives diffuse from beam reflection
         //  from inside reveal that is incident on the glazing per m2 of glazing (-)
-        Real64 InsRevealDiffIntoZone; // Multiplied by BeamSolarRad, gives diffuse from beam reflection
+        Nandle InsRevealDiffIntoZone; // Multiplied by BeamSolarRad, gives diffuse from beam reflection
         //  from inside reveal that goes into zone directly or reflected from glazing (m2)
-        Real64 OutsRevealDiffOntoFrame; // Multiplied by BeamSolarRad, gives diffuse from beam reflection from outside reveal
+        Nandle OutsRevealDiffOntoFrame; // Multiplied by BeamSolarRad, gives diffuse from beam reflection from outside reveal
         //  that is incident on the outside of the frame per m2 of frame (-)
-        Real64 InsRevealDiffOntoFrame; // Multiplied by BeamSolarRad, gives diffuse from beam reflection from inside reveal
+        Nandle InsRevealDiffOntoFrame; // Multiplied by BeamSolarRad, gives diffuse from beam reflection from inside reveal
         //  that is incident on the outside of the frame per m2 of frame (-)
         //  added for debugging CR 7596. TH 5/26/2009
-        Real64 InsRevealDiffOntoGlazingReport; // Diffuse solar from beam reflection
+        Nandle InsRevealDiffOntoGlazingReport; // Diffuse solar from beam reflection
         //  from inside reveal that is incident on the glazing (W)
-        Real64 InsRevealDiffIntoZoneReport; // Diffuse from beam reflection
+        Nandle InsRevealDiffIntoZoneReport; // Diffuse from beam reflection
         //  from inside reveal that goes into zone directly or reflected from glazing (W)
-        Real64 InsRevealDiffOntoFrameReport; // Diffuse from beam reflection from inside reveal
+        Nandle InsRevealDiffOntoFrameReport; // Diffuse from beam reflection from inside reveal
         //  that is incident on the frame (W)
-        Real64 BmSolAbsdInsRevealReport;      // Beam solar absorbed by inside reveal (W)
+        Nandle BmSolAbsdInsRevealReport;      // Beam solar absorbed by inside reveal (W)
         //  energy
-        Real64 BmSolTransThruIntWinRepEnergy; // energy of BmSolTransThruIntWinRep [J]
-        Real64 BmSolRefldOutsRevealRepEnergy; // energy of BmSolRefldOutsRevealReport [J]
-        Real64 BmSolRefldInsRevealRepEnergy;  // energy of BmSolRefldInsRevealReport [J]
-        Real64 ProfileAngHor;       // Horizontal beam solar profile angle (degrees)
-        Real64 ProfileAngVert;      // Vertical beam solar profile angle (degrees)
-        Real64 SkySolarInc;                     // Incident diffuse solar from sky; if CalcSolRefl is true, includes
+        Nandle BmSolTransThruIntWinRepEnergy; // energy of BmSolTransThruIntWinRep [J]
+        Nandle BmSolRefldOutsRevealRepEnergy; // energy of BmSolRefldOutsRevealReport [J]
+        Nandle BmSolRefldInsRevealRepEnergy;  // energy of BmSolRefldInsRevealReport [J]
+        Nandle ProfileAngHor;       // Horizontal beam solar profile angle (degrees)
+        Nandle ProfileAngVert;      // Vertical beam solar profile angle (degrees)
+        Nandle SkySolarInc;                     // Incident diffuse solar from sky; if CalcSolRefl is true, includes
         //  reflection of sky diffuse and beam solar from exterior obstructions [W/m2]
-        Real64 GndSolarInc; // Incident diffuse solar from ground; if CalcSolRefl is true, accounts
+        Nandle GndSolarInc; // Incident diffuse solar from ground; if CalcSolRefl is true, accounts
         //  for shadowing of ground by building and obstructions [W/m2]
 
         int ShadingFlag; // -1: window has no shading device
@@ -954,7 +954,7 @@ namespace DataSurfaces {
         //   0: Window has storm window but it is off
         //   1: Window has storm window and it is on
         int StormWinFlagPrevDay;        // Previous time step value of StormWinFlag
-        Real64 FracTimeShadingDeviceOn; // For a single time step, = 0.0 if no shading device or shading device is off,
+        Nandle FracTimeShadingDeviceOn; // For a single time step, = 0.0 if no shading device or shading device is off,
         //                         = 1.0 if shading device is on;
         // For time intervals longer than a time step, = fraction of time that shading
         // device is on.
@@ -963,153 +963,153 @@ namespace DataSurfaces {
         int ShadedConstruction;             // For windows with shading, the construction with shading
         bool HasShadeOrBlindLayer;          // mark as true if the window construction has a shade or a blind layer
         bool SurfDayLightInit;              // surface has been initialized for following 5 arrays
-        Array1D<Real64> SolidAngAtRefPt;    // Solid angle subtended by window from daylit ref points 1 and 2
-        Array1D<Real64> SolidAngAtRefPtWtd; // Solid angle subtended by window from
+        Array1D<Nandle> SolidAngAtRefPt;    // Solid angle subtended by window from daylit ref points 1 and 2
+        Array1D<Nandle> SolidAngAtRefPtWtd; // Solid angle subtended by window from
         // ref pts weighted by glare pos factor
-        Array2D<Real64> IllumFromWinAtRefPt; // Illuminance from window at ref pts for window
+        Array2D<Nandle> IllumFromWinAtRefPt; // Illuminance from window at ref pts for window
         // with and w/o shade (lux)
-        Array2D<Real64> BackLumFromWinAtRefPt; // Window background luminance from window wrt ref pts (cd/m2)
+        Array2D<Nandle> BackLumFromWinAtRefPt; // Window background luminance from window wrt ref pts (cd/m2)
         // with and w/o shade (cd/m2)
-        Array2D<Real64> SourceLumFromWinAtRefPt; // Window luminance at ref pts for window
+        Array2D<Nandle> SourceLumFromWinAtRefPt; // Window luminance at ref pts for window
         // with and w/o shade (cd/m2)
         int DaylFacPoint;          // Pointer to daylight factors for the window
-        Real64 VisTransSelected;   // Window vis trans at normal incidence selected for use in dayltg calculation
-        Real64 SwitchingFactor;    // Window switching factor (0.0 = unswitched; 1.0 = fully switched)
-        Array1D<Real64> WinCenter; // X,Y,Z coordinates of window center point in building coord system
-        Real64 Theta;              // Azimuth of window normal (rad)
-        Real64 Phi;                // Altitude of window normal (rad)
-        Real64 RhoCeilingWall;     // Average interior reflectance seen by light moving up across horizontal
+        Nandle VisTransSelected;   // Window vis trans at normal incidence selected for use in dayltg calculation
+        Nandle SwitchingFactor;    // Window switching factor (0.0 = unswitched; 1.0 = fully switched)
+        Array1D<Nandle> WinCenter; // X,Y,Z coordinates of window center point in building coord system
+        Nandle Theta;              // Azimuth of window normal (rad)
+        Nandle Phi;                // Altitude of window normal (rad)
+        Nandle RhoCeilingWall;     // Average interior reflectance seen by light moving up across horizontal
         //  plane thru center of window
-        Real64 RhoFloorWall;    // Same as above, but for light moving down
-        Real64 FractionUpgoing; // Fraction light entering window that goes upward
-        Real64 VisTransRatio;   // For windows with switchable glazing, ratio of normal transmittance
+        Nandle RhoFloorWall;    // Same as above, but for light moving down
+        Nandle FractionUpgoing; // Fraction light entering window that goes upward
+        Nandle VisTransRatio;   // For windows with switchable glazing, ratio of normal transmittance
         //  in switched state to that in unswitched state
-        Array1D<Real64> ThetaFace; // Face temperatures of window layers (K)
-        Real64 IRfromParentZone;   // Incident IR from parent zone (W/m2)
+        Array1D<Nandle> ThetaFace; // Face temperatures of window layers (K)
+        Nandle IRfromParentZone;   // Incident IR from parent zone (W/m2)
         int IRErrCount;            // For recurring error counts
         int IRErrCountC;           // For recurring error counts (continuation)
-        Real64 FrameArea;          // Frame projected area (m2)
-        Real64 FrameConductance;   // Frame conductance [no air films] (W/m2-K)
-        Real64 FrameSolAbsorp;     // Frame solar absorptance (assumed same inside and outside)
-        Real64 FrameVisAbsorp;     // Frame visible absorptance (assumed same inside and outside)
-        Real64 FrameEmis;          // Frame thermal emissivity (thermal absorptance) (assumed same
+        Nandle FrameArea;          // Frame projected area (m2)
+        Nandle FrameConductance;   // Frame conductance [no air films] (W/m2-K)
+        Nandle FrameSolAbsorp;     // Frame solar absorptance (assumed same inside and outside)
+        Nandle FrameVisAbsorp;     // Frame visible absorptance (assumed same inside and outside)
+        Nandle FrameEmis;          // Frame thermal emissivity (thermal absorptance) (assumed same
         //   inside and outside)
-        Real64 FrameAreaXEmiss;           // Frame area times thermal emissivity (m2)
-        Real64 FrameRadExchangeFactor;    // Frame IR radiant exchange factor
-        Real64 FrameHRadLinIn;            // Frame linearized inside IR radiation conductance (W/m2-K)
-        Real64 FrameRadThermalFluxRec;    // Frame inside IR flux received (W/m2)
-        Real64 FrameRadThermalFluxRecOld; // Previous value of frame inside IR flux received (W/m2)
-        Real64 FrEdgeToCenterGlCondRatio; // Ratio of frame edge of glass conductance (without air films) to
+        Nandle FrameAreaXEmiss;           // Frame area times thermal emissivity (m2)
+        Nandle FrameRadExchangeFactor;    // Frame IR radiant exchange factor
+        Nandle FrameHRadLinIn;            // Frame linearized inside IR radiation conductance (W/m2-K)
+        Nandle FrameRadThermalFluxRec;    // Frame inside IR flux received (W/m2)
+        Nandle FrameRadThermalFluxRecOld; // Previous value of frame inside IR flux received (W/m2)
+        Nandle FrEdgeToCenterGlCondRatio; // Ratio of frame edge of glass conductance (without air films) to
         // center of glass conductance (without air films)
-        Real64 FrameEdgeArea;      // Area of glass near frame (m2)
-        Real64 FrameTempSurfIn;    // Frame inside surface temperature (C)
-        Real64 FrameTempSurfInOld; // Previous value of frame inside surface temperature (C)
-        Real64 FrameTempSurfOut;   // Frame outside surface temperature (C)
+        Nandle FrameEdgeArea;      // Area of glass near frame (m2)
+        Nandle FrameTempSurfIn;    // Frame inside surface temperature (C)
+        Nandle FrameTempSurfInOld; // Previous value of frame inside surface temperature (C)
+        Nandle FrameTempSurfOut;   // Frame outside surface temperature (C)
         
         
 
-        Real64 ProjCorrFrOut;      // Correction factor to absorbed radiation due to frame outside projection
-        Real64 ProjCorrFrIn;       // Correction factor to absorbed radiation due to frame inside projection
+        Nandle ProjCorrFrOut;      // Correction factor to absorbed radiation due to frame outside projection
+        Nandle ProjCorrFrIn;       // Correction factor to absorbed radiation due to frame inside projection
         int DividerType;           // Divider type (1=DividedLite, 2=Suspended (between-pane))
-        Real64 DividerArea;        // Divider projected area (m2)
-        Real64 DividerConductance; // Divider conductance [no air films] (W/m2-K)
-        Real64 DividerSolAbsorp;   // Divider solar absorptance (assumed same inside and outside)
-        Real64 DividerVisAbsorp;   // Divider visible absorptance (assumed same inside and outside)
-        Real64 DividerEmis;        // Divider thermal emissivity (thermal absorptance) (assumed same
+        Nandle DividerArea;        // Divider projected area (m2)
+        Nandle DividerConductance; // Divider conductance [no air films] (W/m2-K)
+        Nandle DividerSolAbsorp;   // Divider solar absorptance (assumed same inside and outside)
+        Nandle DividerVisAbsorp;   // Divider visible absorptance (assumed same inside and outside)
+        Nandle DividerEmis;        // Divider thermal emissivity (thermal absorptance) (assumed same
         //   inside and outside)
-        Real64 DividerAreaXEmiss;           // Divider area times thermal emissivity (m2)
-        Real64 DividerRadExchangeFactor;    // Divider IR radiant exchange factor
-        Real64 DividerHRadLinIn;            // Divider linearized inside IR radiation conductance (W/m2-K)
-        Real64 DividerRadThermalFluxRec;    // Divider inside IR flux received (W/m2)
-        Real64 DividerRadThermalFluxRecOld; // Previous value of divider inside IR flux received (W/m2)
-        Real64 DivEdgeToCenterGlCondRatio;  // Ratio of divider edge of glass conductance (without air films) to
+        Nandle DividerAreaXEmiss;           // Divider area times thermal emissivity (m2)
+        Nandle DividerRadExchangeFactor;    // Divider IR radiant exchange factor
+        Nandle DividerHRadLinIn;            // Divider linearized inside IR radiation conductance (W/m2-K)
+        Nandle DividerRadThermalFluxRec;    // Divider inside IR flux received (W/m2)
+        Nandle DividerRadThermalFluxRecOld; // Previous value of divider inside IR flux received (W/m2)
+        Nandle DivEdgeToCenterGlCondRatio;  // Ratio of divider edge of glass conductance (without air films) to
         // center of glass conductance (without air films)
-        Real64 DividerEdgeArea;      // Area of glass near dividers (m2)
-        Real64 DividerTempSurfIn;    // Divider inside surface temperature (C)
-        Real64 DividerTempSurfInOld; // Previous value of divider inside surface temperature (C)
-        Real64 DividerTempSurfOut;   // Divider outside surface temperature (C)
-        Real64 ProjCorrDivOut;             // Correction factor to absorbed radiation due to divider outside projection
-        Real64 ProjCorrDivIn;              // Correction factor to absorbed radiation due to divider inside projection
-        Real64 GlazedFrac;                 // (Glazed area)/(Glazed area + divider area)
-        Array1D<Real64> OutProjSLFracMult; // Multiplier on sunlit fraction due to shadowing of glass by frame
+        Nandle DividerEdgeArea;      // Area of glass near dividers (m2)
+        Nandle DividerTempSurfIn;    // Divider inside surface temperature (C)
+        Nandle DividerTempSurfInOld; // Previous value of divider inside surface temperature (C)
+        Nandle DividerTempSurfOut;   // Divider outside surface temperature (C)
+        Nandle ProjCorrDivOut;             // Correction factor to absorbed radiation due to divider outside projection
+        Nandle ProjCorrDivIn;              // Correction factor to absorbed radiation due to divider inside projection
+        Nandle GlazedFrac;                 // (Glazed area)/(Glazed area + divider area)
+        Array1D<Nandle> OutProjSLFracMult; // Multiplier on sunlit fraction due to shadowing of glass by frame
         // and divider outside projections
-        Array1D<Real64> InOutProjSLFracMult; // Multiplier on sunlit fraction due to shadowing of glass by frame
+        Array1D<Nandle> InOutProjSLFracMult; // Multiplier on sunlit fraction due to shadowing of glass by frame
         // and divider inside and outside projections
-        Real64 CenterGlArea;  // Center of glass area (m2); area of glass where 1-D conduction dominates
-        Real64 EdgeGlCorrFac; // Correction factor to center-of-glass conductance to account for
+        Nandle CenterGlArea;  // Center of glass area (m2); area of glass where 1-D conduction dominates
+        Nandle EdgeGlCorrFac; // Correction factor to center-of-glass conductance to account for
         //  2-D glass conduction thermal bridging effects near frame and divider
         int OriginalClass; // 0 or if entered originally as:
         // Window - SurfaceClass_Window
         // Glass Door - SurfaceClass_GlassDoor
         // tubular daylighting device dome - SurfaceClass_TDD_Dome
         // tubular daylighting device diffuser - SurfaceClass_TDD_Diffuser
-        Array1D<Real64> ShadeAbsFacFace; // Fraction of short-wave radiation incident on face 1 that is
+        Array1D<Nandle> ShadeAbsFacFace; // Fraction of short-wave radiation incident on face 1 that is
         //  absorbed by face 1 and by the other face (face 2) when total absorbed
         //  radiation is apportioned to the two faces
-        Real64 ConvCoeffWithShade; // Convection coefficient from glass or shade to gap air when
+        Nandle ConvCoeffWithShade; // Convection coefficient from glass or shade to gap air when
         //  interior or exterior shade is present (W/m2-K)
-        Real64 OtherConvHeatGain;        // other convective = total conv - standard model prediction for EQL window model (W)
+        Nandle OtherConvHeatGain;        // other convective = total conv - standard model prediction for EQL window model (W)
         int BlindNumber;                 // Blind number for a window with a blind
-        Array1D<Real64> EffShBlindEmiss; // Effective emissivity of interior blind or shade
-        Array1D<Real64> EffGlassEmiss;   // Effective emissivity of glass adjacent to interior blind or shade
-        Real64 EffInsSurfTemp;           // Effective inside surface temperature for window with interior blind or
+        Array1D<Nandle> EffShBlindEmiss; // Effective emissivity of interior blind or shade
+        Array1D<Nandle> EffGlassEmiss;   // Effective emissivity of glass adjacent to interior blind or shade
+        Nandle EffInsSurfTemp;           // Effective inside surface temperature for window with interior blind or
         //  shade; combination of shade/blind and glass temperatures (C)
         bool MovableSlats;               // True if window has a blind with movable slats
-        Real64 SlatAngThisTS;            // Slat angle this time step for window with blind on (radians)
-        Real64 SlatAngThisTSDeg;         // Slat angle this time step for window with blind on (deg)
+        Nandle SlatAngThisTS;            // Slat angle this time step for window with blind on (radians)
+        Nandle SlatAngThisTSDeg;         // Slat angle this time step for window with blind on (deg)
         bool SlatAngThisTSDegEMSon;      // flag that indicate EMS system is actuating SlatAngThisTSDeg
-        Real64 SlatAngThisTSDegEMSValue; // value that EMS sets for slat angle in degrees
+        Nandle SlatAngThisTSDegEMSValue; // value that EMS sets for slat angle in degrees
         bool SlatsBlockBeam;             // True if blind slats block incident beam solar
-        Real64 BlindAirFlowPermeability; // Blind air-flow permeability for calculation of convective flow
+        Nandle BlindAirFlowPermeability; // Blind air-flow permeability for calculation of convective flow
         //  in gap between blind and glass
-        Real64 TotGlazingThickness; // Total glazing thickness from outside of outer glass to inside of inner glass (m)
-        Real64 TanProfileAngHor;    // Tangent of horizontal profile angle
-        Real64 TanProfileAngVert;   // Tangent of vertical profile angle
-        Real64 InsideSillDepth;     // Depth of inside sill (m)
-        Real64 InsideReveal;        // Depth of inside reveal (m)
-        Real64 InsideSillSolAbs;    // Solar absorptance of inside sill
-        Real64 InsideRevealSolAbs;  // Solar absorptance of inside reveal
-        Real64 OutsideRevealSolAbs; // Solar absorptance of outside reveal
+        Nandle TotGlazingThickness; // Total glazing thickness from outside of outer glass to inside of inner glass (m)
+        Nandle TanProfileAngHor;    // Tangent of horizontal profile angle
+        Nandle TanProfileAngVert;   // Tangent of vertical profile angle
+        Nandle InsideSillDepth;     // Depth of inside sill (m)
+        Nandle InsideReveal;        // Depth of inside reveal (m)
+        Nandle InsideSillSolAbs;    // Solar absorptance of inside sill
+        Nandle InsideRevealSolAbs;  // Solar absorptance of inside reveal
+        Nandle OutsideRevealSolAbs; // Solar absorptance of outside reveal
 
         int ScreenNumber;                       // Screen number for a window with a screen (do not confuse with material number)
         int AirflowSource;                      // Source of gap airflow (INSIDEAIR, OUTSIDEAIR, etc.)
         int AirflowDestination;                 // Destination of gap airflow (INSIDEAIR, OUTSIDEAIR, etc.)
         int AirflowReturnNodePtr;               // Return node pointer for destination = ReturnAir
-        Real64 MaxAirflow;                      // Maximum gap airflow (m3/s per m of glazing width)
+        Nandle MaxAirflow;                      // Maximum gap airflow (m3/s per m of glazing width)
         int AirflowControlType;                 // Gap airflow control type (ALWAYSONATMAXFLOW, etc.)
         bool AirflowHasSchedule;                // True if gap airflow is scheduled
         int AirflowSchedulePtr;                 // Gap airflow schedule pointer
-        Real64 AirflowThisTS;                   // Gap airflow this timestep (m3/s per m of glazing width)
-        Real64 TAirflowGapOutlet;               // Temperature of air leaving airflow gap between glass panes (C)
+        Nandle AirflowThisTS;                   // Gap airflow this timestep (m3/s per m of glazing width)
+        Nandle TAirflowGapOutlet;               // Temperature of air leaving airflow gap between glass panes (C)
         int WindowCalcIterationsRep;            // Number of iterations in window heat balance calculation
-        Real64 VentingOpenFactorRep;            // Window/door venting open factor, for reporting
-        Real64 VentingOpenFactorMultRep;        // Window/door opening modulation multiplier on venting open factor, for reporting
-        Real64 InsideTempForVentingRep;         // Inside air temp used to control window/door venting, for reporting (C)
-        Real64 VentingAvailabilityRep;          // Venting availability schedule value (0.0/1.0 = no venting allowed/not allowed)
-        Array1D<Real64> IllumFromWinAtRefPtRep; // Illuminance from window at reference point N [lux]
-        Array1D<Real64> LumWinFromRefPtRep;     // Window luminance as viewed from reference point N [cd/m2]
+        Nandle VentingOpenFactorRep;            // Window/door venting open factor, for reporting
+        Nandle VentingOpenFactorMultRep;        // Window/door opening modulation multiplier on venting open factor, for reporting
+        Nandle InsideTempForVentingRep;         // Inside air temp used to control window/door venting, for reporting (C)
+        Nandle VentingAvailabilityRep;          // Venting availability schedule value (0.0/1.0 = no venting allowed/not allowed)
+        Array1D<Nandle> IllumFromWinAtRefPtRep; // Illuminance from window at reference point N [lux]
+        Array1D<Nandle> LumWinFromRefPtRep;     // Window luminance as viewed from reference point N [cd/m2]
         // for shadowing of ground by building and obstructions [W/m2]
-        Real64 SkyGndSolarInc; // Incident diffuse solar from ground-reflected sky radiation; used for
+        Nandle SkyGndSolarInc; // Incident diffuse solar from ground-reflected sky radiation; used for
         // Complex Fen; if CalcSolRefl is true, accounts for shadowing of ground by building and obstructions [W/m2]
-        Real64 BmGndSolarInc; // Incident diffuse solar from ground-reflected beam radiation; used for
+        Nandle BmGndSolarInc; // Incident diffuse solar from ground-reflected beam radiation; used for
         // Complex Fen; if CalcSolRefl is true, accounts for shadowing of ground by building and obstructions [W/m2]
-        Array1D<Real64> ZoneAreaMinusThisSurf; // Zone inside surface area minus this surface and its subsurfaces
+        Array1D<Nandle> ZoneAreaMinusThisSurf; // Zone inside surface area minus this surface and its subsurfaces
         // for floor/wall/ceiling (m2)
-        Array1D<Real64> ZoneAreaReflProdMinusThisSurf; // Zone product of inside surface area times vis reflectance
+        Array1D<Nandle> ZoneAreaReflProdMinusThisSurf; // Zone product of inside surface area times vis reflectance
         // minus this surface and its subsurfaces,
         // for floor/wall/ceiling (m2)
-        Real64 LightWellEff; // Light well efficiency (multiplier on exterior window vis trans
+        Nandle LightWellEff; // Light well efficiency (multiplier on exterior window vis trans
         //  due to light well losses)
         bool SolarDiffusing; // True if exterior window with a construction that contains a
         //  diffusing glass layer
 
         // Reporting
-        Real64 FrameHeatGain;
-        Real64 FrameHeatLoss;
-        Real64 DividerHeatLoss;
+        Nandle FrameHeatGain;
+        Nandle FrameHeatLoss;
+        Nandle DividerHeatLoss;
         // Added TH for thermochromic windows. 12/22/2008
-        Real64 TCLayerTemp; // The temperature of the thermochromic layer of the window
-        Real64 SpecTemp;    // The specification temperature of the TC layer glass
+        Nandle TCLayerTemp; // The temperature of the thermochromic layer of the window
+        Nandle SpecTemp;    // The specification temperature of the TC layer glass
         // Added for W6 integration June 2010
         int WindowModelType;           // if set to WindowBSDFModel, then uses BSDF methods
         BSDFWindowDescript ComplexFen; // Data for complex fenestration, see DataBSDFWindow.cc for declaration
@@ -1212,57 +1212,57 @@ namespace DataSurfaces {
             GndSolarInc = 0.0;
         }
 
-        Real64 AbsorptanceFromExteriorFrontSide() const;
+        Nandle AbsorptanceFromExteriorFrontSide() const;
 
-        Real64 AbsorptanceFromInteriorFrontSide() const;
+        Nandle AbsorptanceFromInteriorFrontSide() const;
 
-        Real64 AbsFrontSide() const;
+        Nandle AbsFrontSide() const;
 
-        Real64 AbsorptanceFromExteriorBackSide() const;
+        Nandle AbsorptanceFromExteriorBackSide() const;
 
-        Real64 AbsorptanceFromInteriorBackSide() const;
+        Nandle AbsorptanceFromInteriorBackSide() const;
 
-        Real64 AbsBackSide() const;
+        Nandle AbsBackSide() const;
     };
 
     struct FrameDividerProperties
     {
         // Members
         std::string Name;          // Name of frame/divider
-        Real64 FrameWidth;         // Average width of frame in plane of window {m}
-        Real64 FrameProjectionOut; // Distance normal to window between outside face of outer pane
+        Nandle FrameWidth;         // Average width of frame in plane of window {m}
+        Nandle FrameProjectionOut; // Distance normal to window between outside face of outer pane
         //  and outside of frame {m}
-        Real64 FrameProjectionIn; // Distance normal to window between inside face of inner pane
+        Nandle FrameProjectionIn; // Distance normal to window between inside face of inner pane
         //  and inside of frame {m}
-        Real64 FrameConductance;          // Effective conductance of frame (no air films) {W/m2-K}
-        Real64 FrameEdgeWidth;            // default 2.5 in ! Width of glass edge region near frame {m}
-        Real64 FrEdgeToCenterGlCondRatio; // Ratio of frame edge of glass conductance (without air films) to
+        Nandle FrameConductance;          // Effective conductance of frame (no air films) {W/m2-K}
+        Nandle FrameEdgeWidth;            // default 2.5 in ! Width of glass edge region near frame {m}
+        Nandle FrEdgeToCenterGlCondRatio; // Ratio of frame edge of glass conductance (without air films) to
         // center of glass conductance (without air films)
-        Real64 FrameSolAbsorp;       // Solar absorptance of frame corrected for self-shading
-        Real64 FrameVisAbsorp;       // Visible absorptance of frame corrected for self-shading
-        Real64 FrameEmis;            // Thermal emissivity of frame
+        Nandle FrameSolAbsorp;       // Solar absorptance of frame corrected for self-shading
+        Nandle FrameVisAbsorp;       // Visible absorptance of frame corrected for self-shading
+        Nandle FrameEmis;            // Thermal emissivity of frame
         int DividerType;             // Type of divider {DividedLite or Suspended (between-glass}
-        Real64 DividerWidth;         // Average width of divider in plane of window {m}
+        Nandle DividerWidth;         // Average width of divider in plane of window {m}
         int HorDividers;             // Number of horizontal dividers
         int VertDividers;            // Number of vertical dividers
-        Real64 DividerProjectionOut; // Distance normal to window between outside face of outer pane
+        Nandle DividerProjectionOut; // Distance normal to window between outside face of outer pane
         //  and outside of divider {m}
-        Real64 DividerProjectionIn; // Distance normal to window between inside face of inner pane
+        Nandle DividerProjectionIn; // Distance normal to window between inside face of inner pane
         //  and inside of divider {m}
-        Real64 DividerEdgeWidth;           // default 2.5 in ! Width of glass edge region near divider
-        Real64 DividerConductance;         // Effective conductance of divider (no air films) {W/m2-K}
-        Real64 DivEdgeToCenterGlCondRatio; // Ratio of divider edge of glass conductance (without air films) to
+        Nandle DividerEdgeWidth;           // default 2.5 in ! Width of glass edge region near divider
+        Nandle DividerConductance;         // Effective conductance of divider (no air films) {W/m2-K}
+        Nandle DivEdgeToCenterGlCondRatio; // Ratio of divider edge of glass conductance (without air films) to
         // center of glass conductance (without air films)
-        Real64 DividerSolAbsorp; // Solar absorptance of divider corrected for self-shading
-        Real64 DividerVisAbsorp; // Visible absorptance of divider corrected for self-shading
-        Real64 DividerEmis;      // Thermal emissivity of divider
+        Nandle DividerSolAbsorp; // Solar absorptance of divider corrected for self-shading
+        Nandle DividerVisAbsorp; // Visible absorptance of divider corrected for self-shading
+        Nandle DividerEmis;      // Thermal emissivity of divider
         int MullionOrientation;  // Horizontal or Vertical; used only for windows with two glazing systems
         //  divided by a mullion; obtained from Window5 data file.
-        Real64 OutsideRevealSolAbs; // Solar absorptance of outside reveal
-        Real64 InsideSillDepth;     // Inside sill depth (m)
-        Real64 InsideReveal;        // Inside reveal (m)
-        Real64 InsideSillSolAbs;    // Solar absorptance of inside sill
-        Real64 InsideRevealSolAbs;  // Solar absorptance of inside reveal
+        Nandle OutsideRevealSolAbs; // Solar absorptance of outside reveal
+        Nandle InsideSillDepth;     // Inside sill depth (m)
+        Nandle InsideReveal;        // Inside reveal (m)
+        Nandle InsideSillSolAbs;    // Solar absorptance of inside sill
+        Nandle InsideRevealSolAbs;  // Solar absorptance of inside reveal
 
         // Default Constructor
         FrameDividerProperties()
@@ -1280,7 +1280,7 @@ namespace DataSurfaces {
         // Members
         int BaseWindowNum;       // Surface number of associated exterior window
         int StormWinMaterialNum; // Material number of storm window glass
-        Real64 StormWinDistance; // Distance between storm window glass and adjacent glass (m)
+        Nandle StormWinDistance; // Distance between storm window glass and adjacent glass (m)
         int DateOn;              // Date (julian) storm window is put on
         int MonthOn;             // Month storm window is put on
         int DayOfMonthOn;        // Day of month storm window is put on
@@ -1356,13 +1356,13 @@ namespace DataSurfaces {
         int Schedule; // Pointer to schedule of 0 and 1 values: 0 => window is not shaded;
         //  1 => window is shaded if Type=Schedule or Type = ScheduleAnd...
         // and setpoint is exceeded.
-        Real64 SetPoint; // Control setpoint (dimension depends on Trigger:
+        Nandle SetPoint; // Control setpoint (dimension depends on Trigger:
         //  W/m2 of window area for solar on window,
         //  W/m2 of ground area for horizontal solar,
         //  deg C for air temp, W for zone heating and
         //  cooling rate). Not used for Shading Control Type =
         //  MeetDaylightIlluminanceSetpoint or OnIfHighGlare.
-        Real64 SetPoint2; // Second control setpoint for control types that take two setpoints.
+        Nandle SetPoint2; // Second control setpoint for control types that take two setpoints.
         //   Dimension is deg C or W/m2.
         bool ShadingControlIsScheduled; // True if shading control has a schedule
         bool GlareControlIsActive;      // True if shading control to reduce daylight glare is active
@@ -1398,24 +1398,24 @@ namespace DataSurfaces {
     {
         // Members
         std::string Name;                  // Name of OSC
-        Real64 ConstTemp;                  // User selected constant temperature (degrees C)
-        Real64 ConstTempCoef;              // Coefficient modifying the user selected constant temperature
-        Real64 ExtDryBulbCoef;             // Coefficient modifying the external dry bulb temperature
-        Real64 GroundTempCoef;             // Coefficient modifying the ground temperature
-        Real64 SurfFilmCoef;               // Combined convective/radiative film coefficient if >0, else use other coefficients
-        Real64 WindSpeedCoef;              // Coefficient modifying the wind speed term (s/m)
-        Real64 ZoneAirTempCoef;            // Coefficient modifying the zone air temperature part of the equation
+        Nandle ConstTemp;                  // User selected constant temperature (degrees C)
+        Nandle ConstTempCoef;              // Coefficient modifying the user selected constant temperature
+        Nandle ExtDryBulbCoef;             // Coefficient modifying the external dry bulb temperature
+        Nandle GroundTempCoef;             // Coefficient modifying the ground temperature
+        Nandle SurfFilmCoef;               // Combined convective/radiative film coefficient if >0, else use other coefficients
+        Nandle WindSpeedCoef;              // Coefficient modifying the wind speed term (s/m)
+        Nandle ZoneAirTempCoef;            // Coefficient modifying the zone air temperature part of the equation
         std::string ConstTempScheduleName; // Schedule name for scheduled outside temp
         int ConstTempScheduleIndex;        // Index for scheduled outside temp.
         bool SinusoidalConstTempCoef;      // If true then ConstTempCoef varies by sine wave
-        Real64 SinusoidPeriod;             // period of sine wave variation  (hr)
-        Real64 TPreviousCoef;              // Coefficient modifying the OSC temp from the previous timestep (dimensionless)
-        Real64 TOutsideSurfPast;           // Ouside surface temperature from previous timestep {C}
-        Real64 MinTempLimit;               // Minimum limit on OSC temp {deg C}
-        Real64 MaxTempLimit;               // Maximum limit on OSC temp {deg C}
+        Nandle SinusoidPeriod;             // period of sine wave variation  (hr)
+        Nandle TPreviousCoef;              // Coefficient modifying the OSC temp from the previous timestep (dimensionless)
+        Nandle TOutsideSurfPast;           // Ouside surface temperature from previous timestep {C}
+        Nandle MinTempLimit;               // Minimum limit on OSC temp {deg C}
+        Nandle MaxTempLimit;               // Maximum limit on OSC temp {deg C}
         bool MinLimitPresent;              // If TRUE then apply minimum limit on calculated OSC temp
         bool MaxLimitPresent;              // If TRUE then apply maximum limit on calculated OSC temp
-        Real64 OSCTempCalc;                // Result of calculated temperature using OSC (degrees C)
+        Nandle OSCTempCalc;                // Result of calculated temperature using OSC (degrees C)
 
         // Default Constructor
         OSCData()
@@ -1431,18 +1431,18 @@ namespace DataSurfaces {
         // Members
         std::string Name;             // Name of OSCM
         std::string Class;            // type of Model for OSCM
-        Real64 TConv;                 // Temperature of bulk air at other side face (degrees C)
+        Nandle TConv;                 // Temperature of bulk air at other side face (degrees C)
         bool EMSOverrideOnTConv;      // if true then EMS calling for convection bulk air temp override
-        Real64 EMSOverrideTConvValue; // value for convection air temp when overridden
-        Real64 HConv;                 // Convection coefficient (W/m2-K)
+        Nandle EMSOverrideTConvValue; // value for convection air temp when overridden
+        Nandle HConv;                 // Convection coefficient (W/m2-K)
         bool EMSOverrideOnHConv;      // if true then EMS calling for convection coef override
-        Real64 EMSOverrideHConvValue; // value to use for convection coef when overridden
-        Real64 TRad;                  // Effective temperature of surfaces exposed to other side face (degrees C)
+        Nandle EMSOverrideHConvValue; // value to use for convection coef when overridden
+        Nandle TRad;                  // Effective temperature of surfaces exposed to other side face (degrees C)
         bool EMSOverrideOnTRad;       // if true then EMS calling for radiation temp override
-        Real64 EMSOverrideTRadValue;  // value to use for rad temp when overridden
-        Real64 HRad;                  // Linearized Radiation coefficient (W/m2-K)
+        Nandle EMSOverrideTRadValue;  // value to use for rad temp when overridden
+        Nandle HRad;                  // Linearized Radiation coefficient (W/m2-K)
         bool EMSOverrideOnHrad;       // if true then EMS calling for radiation coef override
-        Real64 EMSOverrideHradValue;  // value to use for rad coef when overridden
+        Nandle EMSOverrideHradValue;  // value to use for rad coef when overridden
 
         // Default Constructor
         OSCMData()
@@ -1458,7 +1458,7 @@ namespace DataSurfaces {
         int WhichSurface;         // Which surface number this is applied to
         std::string SurfaceName;  // Which surface (name)
         int OverrideType;         // Override type, 1=value, 2=schedule, 3=model, 4=user curve
-        Real64 OverrideValue;     // User specified value
+        Nandle OverrideValue;     // User specified value
         std::string ScheduleName; // Which surface (name)
         int ScheduleIndex;        // if type="schedule" is used
         int UserCurveIndex;       // if type=UserCurve is used
@@ -1474,9 +1474,9 @@ namespace DataSurfaces {
     {
         // Members
         int NVert;
-        Array1D<Real64> XV;
-        Array1D<Real64> YV;
-        Array1D<Real64> ZV;
+        Array1D<Nandle> XV;
+        Array1D<Nandle> YV;
+        Array1D<Nandle> ZV;
 
         // Default Constructor
         ShadingVertexData()
@@ -1491,37 +1491,37 @@ namespace DataSurfaces {
         std::string Name;
         std::string OSCMName; // OtherSideConditionsModel
         int OSCMPtr;          // OtherSideConditionsModel index
-        Real64 Porosity;      // fraction of absorber plate [--]
-        Real64 LWEmitt;       // Thermal Emissivity of Baffle Surface [dimensionless]
-        Real64 SolAbsorp;     // Solar Absorbtivity of Baffle Surface [dimensionless]
+        Nandle Porosity;      // fraction of absorber plate [--]
+        Nandle LWEmitt;       // Thermal Emissivity of Baffle Surface [dimensionless]
+        Nandle SolAbsorp;     // Solar Absorbtivity of Baffle Surface [dimensionless]
         int BaffleRoughness;  // surface roughness for exterior convection calcs.
-        Real64 PlenGapThick;  // Depth of Plenum Behind Baffle [m]
+        Nandle PlenGapThick;  // Depth of Plenum Behind Baffle [m]
         int NumSurfs;         // a single baffle can have multiple surfaces underneath it
         Array1D_int SurfPtrs; // = 0  ! array of pointers for participating underlying surfaces
-        Real64 HdeltaNPL;     // Height scale for Cavity bouyancy  [m]
-        Real64 AreaRatio;     // Ratio of actual surface are to projected surface area [dimensionless]
-        Real64 Cv;            // volume-based effectiveness of openings for wind-driven vent when Passive
-        Real64 Cd;            // discharge coefficient of openings for bouyancy-driven vent when Passive
+        Nandle HdeltaNPL;     // Height scale for Cavity bouyancy  [m]
+        Nandle AreaRatio;     // Ratio of actual surface are to projected surface area [dimensionless]
+        Nandle Cv;            // volume-based effectiveness of openings for wind-driven vent when Passive
+        Nandle Cd;            // discharge coefficient of openings for bouyancy-driven vent when Passive
         // data from elswhere and calculated
-        Real64 ActualArea;  // Overall Area of Collect with surface corrugations.
-        Real64 ProjArea;    // Overall Area of Collector projected, as if flat [m2]
+        Nandle ActualArea;  // Overall Area of Collect with surface corrugations.
+        Nandle ProjArea;    // Overall Area of Collector projected, as if flat [m2]
         Vector Centroid;    // computed centroid
-        Real64 TAirCav;     // modeled drybulb temperature for air between baffle and wall [C]
-        Real64 Tbaffle;     // modeled surface temperature for baffle[C]
-        Real64 TairLast;    // Old Value for modeled drybulb temp of air between baffle and wall [C]
-        Real64 TbaffleLast; // Old value for modeled surface temperature for baffle [C]
-        Real64 HrPlen;      // Modeled radiation coef for OSCM [W/m2-C]
-        Real64 HcPlen;      // Modeled Convection coef for OSCM [W/m2-C]
-        Real64 MdotVent;    // air mass flow exchanging with ambient when passive.
-        Real64 Tilt;        // Tilt from area weighted average of underlying surfaces
-        Real64 Azimuth;     // Azimuth from area weighted average of underlying surfaces
-        Real64 QdotSource;  // Source/sink term
+        Nandle TAirCav;     // modeled drybulb temperature for air between baffle and wall [C]
+        Nandle Tbaffle;     // modeled surface temperature for baffle[C]
+        Nandle TairLast;    // Old Value for modeled drybulb temp of air between baffle and wall [C]
+        Nandle TbaffleLast; // Old value for modeled surface temperature for baffle [C]
+        Nandle HrPlen;      // Modeled radiation coef for OSCM [W/m2-C]
+        Nandle HcPlen;      // Modeled Convection coef for OSCM [W/m2-C]
+        Nandle MdotVent;    // air mass flow exchanging with ambient when passive.
+        Nandle Tilt;        // Tilt from area weighted average of underlying surfaces
+        Nandle Azimuth;     // Azimuth from area weighted average of underlying surfaces
+        Nandle QdotSource;  // Source/sink term
         // reporting data
-        Real64 Isc;              // total incident solar on baffle [W]
-        Real64 PassiveACH;       // air changes per hour when passive [1/hr]
-        Real64 PassiveMdotVent;  // Total Nat Vent air change rate  [kg/s]
-        Real64 PassiveMdotWind;  // Nat Vent air change rate from Wind-driven [kg/s]
-        Real64 PassiveMdotTherm; // Nat. Vent air change rate from bouyancy-driven flow [kg/s]
+        Nandle Isc;              // total incident solar on baffle [W]
+        Nandle PassiveACH;       // air changes per hour when passive [1/hr]
+        Nandle PassiveMdotVent;  // Total Nat Vent air change rate  [kg/s]
+        Nandle PassiveMdotWind;  // Nat Vent air change rate from Wind-driven [kg/s]
+        Nandle PassiveMdotTherm; // Nat. Vent air change rate from bouyancy-driven flow [kg/s]
 
         // Default Constructor
         ExtVentedCavityStruct()
@@ -1581,7 +1581,7 @@ namespace DataSurfaces {
     {
         // Members
         std::string Name;
-        Real64 ViewFactor;
+        Nandle ViewFactor;
         int TempSchNum; // schedule pointer
                         // Default Constructor
         SurroundingSurfProperty() : ViewFactor(0.0), TempSchNum(0)
@@ -1593,9 +1593,9 @@ namespace DataSurfaces {
     {
         // Members
         std::string Name;
-        Real64 SkyViewFactor;
+        Nandle SkyViewFactor;
         int SkyTempSchNum; // schedule pointer
-        Real64 GroundViewFactor;
+        Nandle GroundViewFactor;
         int GroundTempSchNum;      // schedule pointer
         int TotSurroundingSurface; // Total number of surrounding surfaces defined for an exterior surface
         Array1D<SurroundingSurfProperty> SurroundingSurfs;
@@ -1614,7 +1614,7 @@ namespace DataSurfaces {
         int ZoneOrZoneListPtr;          // pointer to a zone list
         int NumOfZones;                 // number of zones in a zone list
         int Construction;               // pointer to contruction object
-        Real64 GrossArea;               // internal surface area, [m2]
+        Nandle GrossArea;               // internal surface area, [m2]
         bool ZoneListActive;            // flag to a list
 
         // Default Constructor

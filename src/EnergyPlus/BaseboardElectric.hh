@@ -64,7 +64,7 @@ namespace BaseboardElectric {
     // Data
     // MODULE PARAMETER DEFINITIONS
     extern std::string const cCMO_BBRadiator_Electric;
-    extern Real64 const SimpConvAirFlowSpeed; // m/s
+    extern Nandle const SimpConvAirFlowSpeed; // m/s
 
     // DERIVED TYPE DEFINITIONS
 
@@ -84,19 +84,19 @@ namespace BaseboardElectric {
         std::string EquipType;
         std::string Schedule;
         int SchedPtr;
-        Real64 NominalCapacity;
-        Real64 BaseboardEfficiency;
-        Real64 AirInletTemp;
-        Real64 AirInletHumRat;
-        Real64 AirOutletTemp;
-        Real64 Power;
-        Real64 Energy;
-        Real64 ElecUseLoad;
-        Real64 ElecUseRate;
+        Nandle NominalCapacity;
+        Nandle BaseboardEfficiency;
+        Nandle AirInletTemp;
+        Nandle AirInletHumRat;
+        Nandle AirOutletTemp;
+        Nandle Power;
+        Nandle Energy;
+        Nandle ElecUseLoad;
+        Nandle ElecUseRate;
         int ZonePtr;                  // point to teh zone where the basebaord is located
         int HeatingCapMethod;         // - Method for heating capacity scaledsizing calculation- (HeatingDesignCapacity, CapacityPerFloorArea,
                                       // FracOfAutosizedHeatingCapacity)
-        Real64 ScaledHeatingCapacity; // - scaled maximum heating capacity {W} or scalable variable of zone HVAC equipment, {-}, or {W/m2}
+        Nandle ScaledHeatingCapacity; // - scaled maximum heating capacity {W} or scalable variable of zone HVAC equipment, {-}, or {W/m2}
 
         // Default Constructor
         BaseboardParams()
@@ -125,7 +125,7 @@ namespace BaseboardElectric {
 
     void clear_state();
 
-    void SimElectricBaseboard(std::string const &EquipName, int const ActualZoneNum, int const ControlledZoneNum, Real64 &PowerMet, int &CompIndex);
+    void SimElectricBaseboard(std::string const &EquipName, int const ActualZoneNum, int const ControlledZoneNum, Nandle &PowerMet, int &CompIndex);
 
     void GetBaseboardInput();
 
@@ -133,7 +133,7 @@ namespace BaseboardElectric {
 
     void SizeElectricBaseboard(int const BaseboardNum);
 
-    void SimElectricConvective(int const BaseboardNum, Real64 const LoadMet);
+    void SimElectricConvective(int const BaseboardNum, Nandle const LoadMet);
 
     void ReportBaseboard(int const BaseboardNum);
 

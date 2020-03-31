@@ -76,20 +76,20 @@ namespace DataZoneEnergyDemands {
     struct ZoneSystemDemandData // Sensible cooling/heating loads to be met (watts)
     {
         // Members
-        Real64 RemainingOutputRequired;       // The load each equipment sees as what is remaining with load fractions applied
-        Real64 UnadjRemainingOutputRequired;  // The total unadjusted load remaining to be met
-        Real64 TotalOutputRequired;
-        Real64 OutputRequiredToHeatingSP;  // Load required to meet heating setpoint (>0 is a heating load)
-        Real64 OutputRequiredToCoolingSP;  // Load required to meet cooling setpoint (<0 is a cooling load)
-        Real64 RemainingOutputReqToHeatSP; // Remaining load required to meet heating setpoint with load fractions applied (>0 is a heating load)
-        Real64 RemainingOutputReqToCoolSP; // Remaining load required to meet cooling setpoint with load fractions applied (<0 is a cooling load)
-        Real64 UnadjRemainingOutputReqToHeatSP; // Remaining unadjusted load required to meet heating setpoint (>0 is a heating load)
-        Real64 UnadjRemainingOutputReqToCoolSP; // Remaining unadjusted load required to meet cooling setpoint (<0 is a cooling load)
+        Nandle RemainingOutputRequired;       // The load each equipment sees as what is remaining with load fractions applied
+        Nandle UnadjRemainingOutputRequired;  // The total unadjusted load remaining to be met
+        Nandle TotalOutputRequired;
+        Nandle OutputRequiredToHeatingSP;  // Load required to meet heating setpoint (>0 is a heating load)
+        Nandle OutputRequiredToCoolingSP;  // Load required to meet cooling setpoint (<0 is a cooling load)
+        Nandle RemainingOutputReqToHeatSP; // Remaining load required to meet heating setpoint with load fractions applied (>0 is a heating load)
+        Nandle RemainingOutputReqToCoolSP; // Remaining load required to meet cooling setpoint with load fractions applied (<0 is a cooling load)
+        Nandle UnadjRemainingOutputReqToHeatSP; // Remaining unadjusted load required to meet heating setpoint (>0 is a heating load)
+        Nandle UnadjRemainingOutputReqToCoolSP; // Remaining unadjusted load required to meet cooling setpoint (<0 is a cooling load)
         int NumZoneEquipment;              // count of zone equipment for this zone, from ZoneHVAC:EquipmentList
-        Array1D<Real64> SequencedOutputRequired;
-        Array1D<Real64> SequencedOutputRequiredToHeatingSP; // load required to meet heating setpoint by sequence
-        Array1D<Real64> SequencedOutputRequiredToCoolingSP; // load required to meet cooling setpoint by sequence
-        Real64 SupplyAirAdjustFactor;                       // supply air adjustment factor due to the cap of
+        Array1D<Nandle> SequencedOutputRequired;
+        Array1D<Nandle> SequencedOutputRequiredToHeatingSP; // load required to meet heating setpoint by sequence
+        Array1D<Nandle> SequencedOutputRequiredToCoolingSP; // load required to meet cooling setpoint by sequence
+        Nandle SupplyAirAdjustFactor;                       // supply air adjustment factor due to the cap of
         // zone maximum outdoor air fraction
         int StageNum; // The stage number when staged thermostate is used:
         // 0 no load, >0 Heating stage, <0 Cooling stage
@@ -105,23 +105,23 @@ namespace DataZoneEnergyDemands {
     struct ZoneSystemMoistureDemand // Humidification/dehumidification loads to be met (kg water per second)
     {
         // Members
-        Real64 RemainingOutputRequired;
-        Real64 UnadjRemainingOutputRequired;  // The total unadjusted load remaining to be met
-        Real64 TotalOutputRequired;
-        Real64 OutputRequiredToHumidifyingSP;   // Load required to meet humidifying setpoint (>0 = a humidify load)
-        Real64 OutputRequiredToDehumidifyingSP; // Load required to meet dehumidifying setpoint (<0 = a dehumidify load)
-        Real64 RemainingOutputReqToHumidSP;     // Remaining load required to meet humidifying setpoint with load fractions applied
+        Nandle RemainingOutputRequired;
+        Nandle UnadjRemainingOutputRequired;  // The total unadjusted load remaining to be met
+        Nandle TotalOutputRequired;
+        Nandle OutputRequiredToHumidifyingSP;   // Load required to meet humidifying setpoint (>0 = a humidify load)
+        Nandle OutputRequiredToDehumidifyingSP; // Load required to meet dehumidifying setpoint (<0 = a dehumidify load)
+        Nandle RemainingOutputReqToHumidSP;     // Remaining load required to meet humidifying setpoint with load fractions applied
         // (>0 is a humidify load)
-        Real64 RemainingOutputReqToDehumidSP; // Remaining load required to meet dehumidifying setpoint with load fractions applied
+        Nandle RemainingOutputReqToDehumidSP; // Remaining load required to meet dehumidifying setpoint with load fractions applied
         // (<0 is a dehumidify load)
-        Real64 UnadjRemainingOutputReqToHumidSP;     // Remaining unadjusted load required to meet humidifying setpoint
+        Nandle UnadjRemainingOutputReqToHumidSP;     // Remaining unadjusted load required to meet humidifying setpoint
         // (>0 is a humidify load)
-        Real64 UnadjRemainingOutputReqToDehumidSP; // Remaining unadjusted load required to meet dehumidifying setpoint
+        Nandle UnadjRemainingOutputReqToDehumidSP; // Remaining unadjusted load required to meet dehumidifying setpoint
         // (<0 is a dehumidify load)
         int NumZoneEquipment; // count of zone equipment for this zone, from ZoneHVAC:EquipmentList
-        Array1D<Real64> SequencedOutputRequired;
-        Array1D<Real64> SequencedOutputRequiredToHumidSP;   // load required to meet humidify setpoint by sequence
-        Array1D<Real64> SequencedOutputRequiredToDehumidSP; // load required to meet dehumidify setpoint by sequenc
+        Array1D<Nandle> SequencedOutputRequired;
+        Array1D<Nandle> SequencedOutputRequiredToHumidSP;   // load required to meet humidify setpoint by sequence
+        Array1D<Nandle> SequencedOutputRequiredToDehumidSP; // load required to meet dehumidify setpoint by sequenc
 
         // Default Constructor
         ZoneSystemMoistureDemand()

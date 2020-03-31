@@ -201,12 +201,12 @@ TEST(PierceSurfaceTest, Triangular)
 TEST(PierceSurfaceTest, ConvexOctagonal)
 {
     int const N(8); // Number of vertices and edges
-    Real64 const TwoPi(8.0 * std::atan(1.0));
-    Real64 const wedge(TwoPi / N);
+    Nandle const TwoPi(8.0 * std::atan(1.0));
+    Nandle const wedge(TwoPi / N);
     DataSurfaces::SurfaceData floor;
     floor.Vertex.reserve(N);
     for (int i = 0; i < N; ++i) {
-        Real64 const angle(i * wedge);
+        Nandle const angle(i * wedge);
         floor.Vertex.push_back(Vector(std::cos(angle), std::sin(angle), 0.0));
     }
     floor.IsConvex = true;
@@ -324,12 +324,12 @@ TEST(PierceSurfaceTest, Convex8Sides)
 TEST(PierceSurfaceTest, ConvexNGon)
 {
     int const N(32); // Number of vertices and edges
-    Real64 const TwoPi(8.0 * std::atan(1.0));
-    Real64 const wedge(TwoPi / N);
+    Nandle const TwoPi(8.0 * std::atan(1.0));
+    Nandle const wedge(TwoPi / N);
     DataSurfaces::SurfaceData floor;
     floor.Vertex.reserve(N);
     for (int i = 0; i < N; ++i) {
-        Real64 const angle(i * wedge);
+        Nandle const angle(i * wedge);
         floor.Vertex.push_back(Vector(std::cos(angle), std::sin(angle), 0.0));
     }
     floor.IsConvex = true;

@@ -70,19 +70,19 @@ namespace DataViewFactorInformation {
         std::vector<std::string> ZoneNames; // Zone names which are part of this enclosure
         std::vector<int> ZoneNums;          // Zones which are part of this enclosure
         int NumOfSurfaces;                  // Number of surfaces in the enclosure
-        Array2D<Real64> F;                  // View Factors
-        Array2D<Real64> ScriptF;            // Hottel's Script F //Tuned Transposed
-        Array1D<Real64> Area;               // Surface area
-        Array1D<Real64> Emissivity;         // Surface emissivity
-        Array1D<Real64> Azimuth;            // Azimuth angle of the surface (in degrees)
-        Array1D<Real64> Tilt;               // Tilt angle of the surface (in degrees)
-        Array1D<Real64> FMRT;               // Mean Radiant Temperature "View Factor" used in Carroll method
-        Array1D<Real64> Fp;                 // F' (Oppenheim surface resistance used in Carroll method)
+        Array2D<Nandle> F;                  // View Factors
+        Array2D<Nandle> ScriptF;            // Hottel's Script F //Tuned Transposed
+        Array1D<Nandle> Area;               // Surface area
+        Array1D<Nandle> Emissivity;         // Surface emissivity
+        Array1D<Nandle> Azimuth;            // Azimuth angle of the surface (in degrees)
+        Array1D<Nandle> Tilt;               // Tilt angle of the surface (in degrees)
+        Array1D<Nandle> FMRT;               // Mean Radiant Temperature "View Factor" used in Carroll method
+        Array1D<Nandle> Fp;                 // F' (Oppenheim surface resistance used in Carroll method)
         Array1D_int SurfacePtr;             // Surface number for surfaces in this enclosure
-        Real64 FloorArea;                   // Floor area of zone(s) in enclosure
-        Real64 ExtWindowArea;               // Exterior window area
-        Real64 TotalSurfArea;               // Total surface area
-        Array1D<Real64> SolAbsorptance;     // Surface solar absorptance
+        Nandle FloorArea;                   // Floor area of zone(s) in enclosure
+        Nandle ExtWindowArea;               // Exterior window area
+        Nandle TotalSurfArea;               // Total surface area
+        Array1D<Nandle> SolAbsorptance;     // Surface solar absorptance
         int TotalEnclosureDaylRefPoints;    // Total number of daylighting reference points in enclosure
 
         // Default Constructor

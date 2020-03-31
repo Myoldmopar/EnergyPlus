@@ -184,8 +184,8 @@ namespace LowTempRadiantSystem {
     std::string const OnePerSurf("OnePerSurface");
     std::string const CalcFromLength("CalculateFromCircuitLength");
     // Limit temperatures to indicate that a system cannot heat or cannot cool
-    Real64 LowTempHeating(-200.0); // Used to indicate that a user does not have a heating control temperature
-    Real64 HighTempCooling(200.0); // Used to indicate that a user does not have a cooling control temperature
+    Nandle LowTempHeating(-200.0); // Used to indicate that a user does not have a heating control temperature
+    Nandle HighTempCooling(200.0); // Used to indicate that a user does not have a cooling control temperature
 
     static std::string const fluidNameWater("WATER");
     static std::string const BlankString;
@@ -204,13 +204,13 @@ namespace LowTempRadiantSystem {
     int MaxCloNumOfSurfaces(0);           // Used to set allocate size in CalcClo routine
     bool VarOffCond(false);               // Set to true when in cooling for constant flow system + variable off condensation predicted
     bool FirstTimeInit(true);             // Set to true for first pass through init routine then set to false
-    Real64 LoopReqTemp(0.0);              // Temperature required at the inlet of the pump (from the loop) to meet control logic
-    Array1D<Real64> QRadSysSrcAvg;        // Average source over the time step for a particular radiant surface
-    Array1D<Real64> ZeroSourceSumHATsurf; // Equal to SumHATsurf for all the walls in a zone with no source
+    Nandle LoopReqTemp(0.0);              // Temperature required at the inlet of the pump (from the loop) to meet control logic
+    Array1D<Nandle> QRadSysSrcAvg;        // Average source over the time step for a particular radiant surface
+    Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to SumHATsurf for all the walls in a zone with no source
     // Record keeping variables used to calculate QRadSysSrcAvg locally
-    Array1D<Real64> LastQRadSysSrc;     // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastQRadSysSrc;     // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     // Autosizing variables
     Array1D_bool MySizeFlagHydr;
     Array1D_bool MySizeFlagCFlo;
@@ -263,7 +263,7 @@ namespace LowTempRadiantSystem {
 
     void SimLowTempRadiantSystem(std::string const &CompName,   // name of the low temperature radiant system
                                  bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                                 Real64 &LoadMet,               // load met by the radiant system, in Watts
+                                 Nandle &LoadMet,               // load met by the radiant system, in Watts
                                  int &CompIndex)
     {
 
@@ -375,7 +375,7 @@ namespace LowTempRadiantSystem {
         using namespace DataSurfaceLists;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MinThrottlingRange(0.5); // Smallest throttling range allowed in degrees Celsius
+        Nandle const MinThrottlingRange(0.5); // Smallest throttling range allowed in degrees Celsius
         static std::string const MeanAirTemperature("MeanAirTemperature");
         static std::string const MeanRadiantTemperature("MeanRadiantTemperature");
         static std::string const OperativeTemperature("OperativeTemperature");
@@ -405,7 +405,7 @@ namespace LowTempRadiantSystem {
         int Item;                              // Item to be "gotten"
         int MaxAlphas;                         // Maximum number of alphas for these input keywords
         int MaxNumbers;                        // Maximum number of numbers for these input keywords
-        Array1D<Real64> Numbers; // Numeric items for object
+        Array1D<Nandle> Numbers; // Numeric items for object
         int NumAlphas;           // Number of Alphas for each GetObjectItem call
         int NumArgs;             // Unused variable that is part of a subroutine call
         int NumNumbers;          // Number of Numbers for each GetObjectItem call
@@ -1673,17 +1673,17 @@ namespace LowTempRadiantSystem {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const ZeroTol(0.0000001); // Smallest non-zero value allowed
+        Nandle const ZeroTol(0.0000001); // Smallest non-zero value allowed
         static std::string const RoutineName("InitLowTempRadiantSystem");
         static ObjexxFCL::gio::Fmt fmtF102("(F10.2)");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CurrentFlowSchedule; // Schedule value for flow fraction in a constant flow radiant system
+        Nandle CurrentFlowSchedule; // Schedule value for flow fraction in a constant flow radiant system
         std::string Errout;         // Message for errors
         int RadNum;                 // Number of the radiant system (DO loop counter)
         int RadSurfNum;             // Number of the radiant system surface (DO loop counter)
         int SurfNum;                // Intermediate variable for keeping track of the surface number
-        Real64 TotalEffic;          // Intermediate calculation variable for total pump efficiency
+        Nandle TotalEffic;          // Intermediate calculation variable for total pump efficiency
         int ZoneNum;                // Intermediate variable for keeping track of the zone number
         static Array1D_bool MyEnvrnFlagHydr;
         static Array1D_bool MyEnvrnFlagCFlo;
@@ -1694,8 +1694,8 @@ namespace LowTempRadiantSystem {
         static bool MyOneTimeFlag(true); // Initialization flag
         static Array1D_bool MyPlantScanFlagHydr;
         static Array1D_bool MyPlantScanFlagCFlo;
-        Real64 mdot; // local fluid mass flow rate
-        Real64 rho;  // local fluid density
+        Nandle mdot; // local fluid mass flow rate
+        Nandle rho;  // local fluid density
         bool errFlag;
 
         InitErrorsFound = false;
@@ -2297,30 +2297,30 @@ namespace LowTempRadiantSystem {
         int PltSizCoolNum(0);    // index of plant sizing object for 1st cooling loop
         int SurfNum;             // surface index in radiant system data structure
         bool ErrorsFound(false); // If errors detected in input
-        Real64 rho;
-        Real64 Cp;
+        Nandle rho;
+        Nandle Cp;
         bool IsAutoSize(false); // Indicator to autosize
-        Real64 WaterVolFlowMaxHeatDes(0.0);  // Design hot water flow for reproting
-        Real64 WaterVolFlowMaxHeatUser(0.0); // User hard-sized hot water flow for
-        Real64 WaterVolFlowMaxCoolDes(0.0);  // Design chilled water flow for reproting
-        Real64 WaterVolFlowMaxCoolUser(0.0); // User hard-sized chilled water flow for reproting
-        Real64 TubeLengthDes(0.0);           // Design tube length for reproting
-        Real64 TubeLengthUser(0.0);          // User hard-sized tube length for reproting
+        Nandle WaterVolFlowMaxHeatDes(0.0);  // Design hot water flow for reproting
+        Nandle WaterVolFlowMaxHeatUser(0.0); // User hard-sized hot water flow for
+        Nandle WaterVolFlowMaxCoolDes(0.0);  // Design chilled water flow for reproting
+        Nandle WaterVolFlowMaxCoolUser(0.0); // User hard-sized chilled water flow for reproting
+        Nandle TubeLengthDes(0.0);           // Design tube length for reproting
+        Nandle TubeLengthUser(0.0);          // User hard-sized tube length for reproting
         std::string CompName;                // component name
         std::string CompType;                // component type
         std::string SizingString;            // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;                     // autosized value of coil input field
+        Nandle TempSize;                     // autosized value of coil input field
         int FieldNum = 1;                    // IDD numeric field number where input field description is found
         int SizingMethod;                    // Integer representation of sizing method name (e.g. CoolingCapacitySizing, HeatingCapacitySizing)
         bool PrintFlag;                      // TRUE when sizing information is reported in the eio file
         int CapSizingMethod(0);     // capacity sizing methods (HeatingDesignCapacity, CapacityPerFloorArea, FractionOfAutosizedCoolingCapacity, and
                                     // FractionOfAutosizedHeatingCapacity )
-        Real64 DesCoilLoad;         // design autosized or user specified capacity
+        Nandle DesCoilLoad;         // design autosized or user specified capacity
         int OpMode(1);              // System operating mode
         int HeatNode;               // Hot water inlet node to determine system operating mode
         int CoolNode;               // Chilled water inlet node to determine system operating mode
-        Real64 WaterVolFlowMaxDes;  // Design water volume flow rate for reproting
-        Real64 WaterVolFlowMaxUser; // User hard-sized water volume flow rate for reproting
+        Nandle WaterVolFlowMaxDes;  // Design water volume flow rate for reproting
+        Nandle WaterVolFlowMaxUser; // User hard-sized water volume flow rate for reproting
 
         DesCoilLoad = 0.0;
         DataScalableCapSizingON = false;
@@ -2971,7 +2971,7 @@ namespace LowTempRadiantSystem {
         }
     }
 
-    Real64 SizeRadSysTubeLength(int const RadSysType, // type of system (hydronic or constant flow)
+    Nandle SizeRadSysTubeLength(int const RadSysType, // type of system (hydronic or constant flow)
                                 int const RadSysNum   // index number for radiant system
     )
     {
@@ -2987,10 +2987,10 @@ namespace LowTempRadiantSystem {
         // surface could use a different spacing.
 
         // Return value
-        Real64 SizeRadSysTubeLength;
+        Nandle SizeRadSysTubeLength;
 
         int SurfNum;       // index for counting through the surfaces that are part of this radiant system
-        Real64 TubeLength; // temporary holding place for the function calculation
+        Nandle TubeLength; // temporary holding place for the function calculation
 
         // HydrRadSys( RadNum ).TotalSurfaceArea = 0.0;
         // for ( SurfNum = 1; SurfNum <= HydrRadSys( RadNum ).NumOfSurfaces; ++SurfNum ) {
@@ -3031,7 +3031,7 @@ namespace LowTempRadiantSystem {
     }
 
     void CalcLowTempHydrRadiantSystem(int const RadSysNum, // name of the low temperature radiant system
-                                      Real64 &LoadMet      // load met by the radiant system, in Watts
+                                      Nandle &LoadMet      // load met by the radiant system, in Watts
     )
     {
 
@@ -3072,18 +3072,18 @@ namespace LowTempRadiantSystem {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ActWaterFlow; // actual water flow for heating or cooling [kg/sec]
+        Nandle ActWaterFlow; // actual water flow for heating or cooling [kg/sec]
         int ControlNode;     // the hot water or cold water inlet node
-        Real64 ControlTemp;  // temperature of whatever is controlling the radiant system
-        Real64 MassFlowFrac; // fraction of the maximum water flow rate as determined by the control algorithm
-        Real64 MaxWaterFlow; // maximum water flow for heating or cooling [kg/sec]
-        Real64 OffTempCool;  // temperature at which the flow rate throttles back to zero for cooling
-        Real64 OffTempHeat;  // temperature at which the flow rate throttles back to zero for heating
-        Real64 SetPointTemp; // temperature "goal" for the radiant system [Celsius]
+        Nandle ControlTemp;  // temperature of whatever is controlling the radiant system
+        Nandle MassFlowFrac; // fraction of the maximum water flow rate as determined by the control algorithm
+        Nandle MaxWaterFlow; // maximum water flow for heating or cooling [kg/sec]
+        Nandle OffTempCool;  // temperature at which the flow rate throttles back to zero for cooling
+        Nandle OffTempHeat;  // temperature at which the flow rate throttles back to zero for heating
+        Nandle SetPointTemp; // temperature "goal" for the radiant system [Celsius]
         int SurfNum;         // Surface number in the Surface derived type for a radiant system surface
         int SurfNum2;        // Surface number in the Surface derived type for a radiant system surface
         int ZoneNum;         // number of zone being served
-        Real64 mdot;         // local temporary for fluid mass flow rate
+        Nandle mdot;         // local temporary for fluid mass flow rate
         bool SysRunning;     // True when system is running
 
         ControlNode = 0;
@@ -3218,7 +3218,7 @@ namespace LowTempRadiantSystem {
     }
 
     void CalcLowTempHydrRadSysComps(int const RadSysNum, // Index for the low temperature radiant system under consideration
-                                    Real64 &LoadMet      // Load met by the low temperature radiant system, in Watts
+                                    Nandle &LoadMet      // Load met by the low temperature radiant system, in Watts
     )
     {
 
@@ -3269,36 +3269,36 @@ namespace LowTempRadiantSystem {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CondSurfNum;          // Surface number (in radiant array) of
         int ConstrNum;            // Index for construction number in Construct derived type
-        Real64 DewPointTemp;      // Dew-point temperature based on the zone air conditions
-        Real64 EpsMdotCp;         // Epsilon (heat exchanger terminology) times water mass flow rate times water specific heat
-        Real64 FullWaterMassFlow; // Original water mass flow rate before reducing the flow for condensation concerns
-        Real64 LowestRadSurfTemp; // Lowest surface temperature of a radiant system (when condensation is a concern)
-        Real64 PredictedCondTemp; // Temperature at which condensation is predicted (includes user parameter)
+        Nandle DewPointTemp;      // Dew-point temperature based on the zone air conditions
+        Nandle EpsMdotCp;         // Epsilon (heat exchanger terminology) times water mass flow rate times water specific heat
+        Nandle FullWaterMassFlow; // Original water mass flow rate before reducing the flow for condensation concerns
+        Nandle LowestRadSurfTemp; // Lowest surface temperature of a radiant system (when condensation is a concern)
+        Nandle PredictedCondTemp; // Temperature at which condensation is predicted (includes user parameter)
         int RadSurfNum;           // DO loop counter for the surfaces that comprise a particular radiant system
         int RadSurfNum2;          // DO loop counter for the surfaces that comprise a particular radiant system
         int RadSurfNum3;          // DO loop counter for the surfaces that comprise a particular radiant system
-        Real64 ReductionFrac;     // Fraction that the flow should be reduced to avoid condensation
+        Nandle ReductionFrac;     // Fraction that the flow should be reduced to avoid condensation
         int SurfNum;              // Index for radiant surface in Surface derived type
         int SurfNum2;             // Index for radiant surface in Surface derived type
-        Real64 SysWaterMassFlow;  // System level water mass flow rate (includes effect of zone multiplier)
-        Real64 WaterMassFlow;     // Water mass flow rate in the radiant system, kg/s
+        Nandle SysWaterMassFlow;  // System level water mass flow rate (includes effect of zone multiplier)
+        Nandle WaterMassFlow;     // Water mass flow rate in the radiant system, kg/s
         int WaterNodeIn;          // Node number of the water entering the radiant system
-        Real64 WaterTempIn;       // Temperature of the water entering the radiant system, in C
-        Real64 ZeroFlowSurfTemp;  // Temperature of radiant surface when flow is zero
+        Nandle WaterTempIn;       // Temperature of the water entering the radiant system, in C
+        Nandle ZeroFlowSurfTemp;  // Temperature of radiant surface when flow is zero
         int ZoneNum;              // Zone pointer for this radiant system
 
-        Real64 Ca; // Coefficients to relate the inlet water temperature to the heat source
-        Real64 Cb;
-        Real64 Cc;
-        Real64 Cd;
-        Real64 Ce;
-        Real64 Cf;
-        Real64 Cg;
-        Real64 Ch;
-        Real64 Ci;
-        Real64 Cj;
-        Real64 Ck;
-        Real64 Cl;
+        Nandle Ca; // Coefficients to relate the inlet water temperature to the heat source
+        Nandle Cb;
+        Nandle Cc;
+        Nandle Cd;
+        Nandle Ce;
+        Nandle Cf;
+        Nandle Cg;
+        Nandle Ch;
+        Nandle Ci;
+        Nandle Cj;
+        Nandle Ck;
+        Nandle Cl;
         // For more info on Ca through Cl, see comments below
 
         // First, apply heat exchanger logic to find the heat source/sink to the system.
@@ -3725,7 +3725,7 @@ namespace LowTempRadiantSystem {
     }
 
     void CalcLowTempCFloRadiantSystem(int const RadSysNum, // name of the low temperature radiant system
-                                      Real64 &LoadMet      // load met by the radiant system, in Watts
+                                      Nandle &LoadMet      // load met by the radiant system, in Watts
     )
     {
 
@@ -3773,31 +3773,31 @@ namespace LowTempRadiantSystem {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const LowCpFluidValue(100.0); // lowest allowed Cp fluid value (to avoid dividing by zero) [J/kg-K]
+        Nandle const LowCpFluidValue(100.0); // lowest allowed Cp fluid value (to avoid dividing by zero) [J/kg-K]
         static std::string const RoutineName("CalcLowTempCFloRadiantSystem");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CpFluid;         // Specific heat of the fluid in the radiant system
-        Real64 InjectFlowRate;  // Calculated injection flow rate that will meet the inlet temperature requirement
+        Nandle CpFluid;         // Specific heat of the fluid in the radiant system
+        Nandle InjectFlowRate;  // Calculated injection flow rate that will meet the inlet temperature requirement
         bool Iteration;         // FALSE when a normal solution, TRUE when it is a solution where we must also find the inlet temp
         int LoopInNode;         // Node on the loop that is the inlet to the constant flow radiant system
-        Real64 OffTempCool;     // temperature at which the cooling shuts down
-        Real64 OffTempHeat;     // temperature at which the heating shuts down
-        Real64 PumpPartLoadRat; // Pump part load ratio (based on user schedule, or 1.0 for no schedule)
-        Real64 PumpTempRise;    // Temperature rise of the fluid as it passes through the pump
-        Real64 RadInTemp;       // "Desired" radiant system water inlet temperature [Celsius]
-        Real64 SetPointTemp;    // temperature that will be used to control the radiant system [Celsius]
-        Real64 SetPointTempHi;  // Current high point in setpoint temperature range
-        Real64 SetPointTempLo;  // Current low point in setpoint temperature range
-        Real64 ShaftPower;      // Amount of power expended at the pump shaft
+        Nandle OffTempCool;     // temperature at which the cooling shuts down
+        Nandle OffTempHeat;     // temperature at which the heating shuts down
+        Nandle PumpPartLoadRat; // Pump part load ratio (based on user schedule, or 1.0 for no schedule)
+        Nandle PumpTempRise;    // Temperature rise of the fluid as it passes through the pump
+        Nandle RadInTemp;       // "Desired" radiant system water inlet temperature [Celsius]
+        Nandle SetPointTemp;    // temperature that will be used to control the radiant system [Celsius]
+        Nandle SetPointTempHi;  // Current high point in setpoint temperature range
+        Nandle SetPointTempLo;  // Current low point in setpoint temperature range
+        Nandle ShaftPower;      // Amount of power expended at the pump shaft
         int SurfNum;            // Surface number in the Surface derived type for a radiant system surface
         int SurfNum2;           // Surface number in the Surface derived type for a radiant system surface
         bool SysRunning;        // TRUE when the system is running
-        Real64 SysWaterInTemp;  // Fluid temperature supplied from the loop
-        Real64 WaterTempHi;     // Current high point in water temperature range
-        Real64 WaterTempLo;     // Current low point in water temperature range
+        Nandle SysWaterInTemp;  // Fluid temperature supplied from the loop
+        Nandle WaterTempHi;     // Current high point in water temperature range
+        Nandle WaterTempLo;     // Current low point in water temperature range
         int ZoneNum;            // number of zone being served
-        Real64 mdot;            // local temporary for water mass flow rate kg/s
+        Nandle mdot;            // local temporary for water mass flow rate kg/s
 
         // initialize local variables
         ZoneNum = CFloRadSys(RadSysNum).ZonePtr;
@@ -4268,7 +4268,7 @@ namespace LowTempRadiantSystem {
     void CalcLowTempCFloRadSysComps(int const RadSysNum,      // Index for the low temperature radiant system under consideration
                                     int const MainLoopNodeIn, // Node number on main loop of the inlet node to the radiant system
                                     bool const Iteration,     // FALSE for the regular solution, TRUE when we had to loop back
-                                    Real64 &LoadMet           // Load met by the low temperature radiant system, in Watts
+                                    Nandle &LoadMet           // Load met by the low temperature radiant system, in Watts
     )
     {
 
@@ -4320,51 +4320,51 @@ namespace LowTempRadiantSystem {
         using PlantUtilities::SetComponentFlowRate;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const TempCheckLimit(0.1); // Maximum allowed temperature difference between outlet temperature calculations
-        Real64 const ZeroSystemResp(0.1); // Response below which the system response is really zero
+        Nandle const TempCheckLimit(0.1); // Maximum allowed temperature difference between outlet temperature calculations
+        Nandle const ZeroSystemResp(0.1); // Response below which the system response is really zero
         static std::string const RoutineName("CalcLowTempCFloRadSysComps");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ConstrNum;                // Index for construction number in Construct derived type
-        Real64 Cp;                    // Intermediate calculational variable for specific heat of water
-        Real64 DewPointTemp;          // Dew-point temperature based on the zone air conditions
-        Real64 EpsMdotCp;             // Epsilon (heat exchanger terminology) times water mass flow rate times water specific heat
-        Real64 LoopTerm;              // Intermeidate calculation variable for determining the water inlet temperature
-        Real64 Mdot;                  // Intermediate calculation variable for mass flow rate in a surface within the radiant system
+        Nandle Cp;                    // Intermediate calculational variable for specific heat of water
+        Nandle DewPointTemp;          // Dew-point temperature based on the zone air conditions
+        Nandle EpsMdotCp;             // Epsilon (heat exchanger terminology) times water mass flow rate times water specific heat
+        Nandle LoopTerm;              // Intermeidate calculation variable for determining the water inlet temperature
+        Nandle Mdot;                  // Intermediate calculation variable for mass flow rate in a surface within the radiant system
         int RadSurfNum;               // DO loop counter for the surfaces that comprise a particular radiant system
         int RadSurfNum2;              // DO loop counter for the surfaces that comprise a particular radiant system
         int RadSurfNum3;              // DO loop counter for the surfaces that comprise a particular radiant system
-        Real64 RecircTerm;            // Intermeidate calculation variable for determining the water inlet temperature
-        Real64 SumFlowFracCkCm;       // Summation of surface flow fraction, Ck, and Cm product for each surface in the system
-        Real64 SumFlowFracOneMinusCm; // Summation of surface flow fraction times (1-Cm) for each surface in the radiant system
+        Nandle RecircTerm;            // Intermeidate calculation variable for determining the water inlet temperature
+        Nandle SumFlowFracCkCm;       // Summation of surface flow fraction, Ck, and Cm product for each surface in the system
+        Nandle SumFlowFracOneMinusCm; // Summation of surface flow fraction times (1-Cm) for each surface in the radiant system
         int SurfNum;                  // Index for radiant surface in Surface derived type
         int SurfNum2;                 // Index for radiant surface in Surface derived type
-        Real64 TotalRadSysPower;      // Total heat source/sink to radiant system
-        Real64 TwiCoeff;              // Intermeidate calculation variable for determining the water inlet temperature
-        Real64 WaterMassFlow;         // Water mass flow rate in the radiant system, kg/s
+        Nandle TotalRadSysPower;      // Total heat source/sink to radiant system
+        Nandle TwiCoeff;              // Intermeidate calculation variable for determining the water inlet temperature
+        Nandle WaterMassFlow;         // Water mass flow rate in the radiant system, kg/s
         int WaterNodeIn;              // Node number of the water entering the radiant system
-        Real64 WaterOutletTempCheck;  // Radiant system water outlet temperature (calculated from mixing all outlet streams together)
-        Real64 WaterTempIn;           // Temperature of the water entering the radiant system, in C
+        Nandle WaterOutletTempCheck;  // Radiant system water outlet temperature (calculated from mixing all outlet streams together)
+        Nandle WaterTempIn;           // Temperature of the water entering the radiant system, in C
         int ZoneNum;                  // number of zone being served
-        Real64 ZoneMult;              // Zone multiplier for this system
+        Nandle ZoneMult;              // Zone multiplier for this system
 
-        Real64 Ca; // Coefficients to relate the inlet water temperature to the heat source
-        Real64 Cb;
-        Real64 Cc;
-        Real64 Cd;
-        Real64 Ce;
-        Real64 Cf;
-        Real64 Cg;
-        Real64 Ch;
-        Real64 Ci;
-        Real64 Cj;
-        Real64 Ck;
-        Real64 Cl;
+        Nandle Ca; // Coefficients to relate the inlet water temperature to the heat source
+        Nandle Cb;
+        Nandle Cc;
+        Nandle Cd;
+        Nandle Ce;
+        Nandle Cf;
+        Nandle Cg;
+        Nandle Ch;
+        Nandle Ci;
+        Nandle Cj;
+        Nandle Ck;
+        Nandle Cl;
         // For more info on Ca through Cl, see comments below
 
-        static Array1D<Real64> Ckj; // Coefficients for individual surfaces within a radiant system
-        static Array1D<Real64> Cmj;
-        static Array1D<Real64> WaterTempOut; // Array of outlet water temperatures for
+        static Array1D<Nandle> Ckj; // Coefficients for individual surfaces within a radiant system
+        static Array1D<Nandle> Cmj;
+        static Array1D<Nandle> WaterTempOut; // Array of outlet water temperatures for
                                              // each surface in the radiant system
 
         static bool FirstTimeFlag(true); // for setting size of Ckj, Cmj, WaterTempOut arrays
@@ -4792,7 +4792,7 @@ namespace LowTempRadiantSystem {
     }
 
     void CalcLowTempElecRadiantSystem(int const RadSysNum, // name of the low temperature radiant system
-                                      Real64 &LoadMet      // load met by the radiant system, in Watts
+                                      Nandle &LoadMet      // load met by the radiant system, in Watts
     )
     {
 
@@ -4832,11 +4832,11 @@ namespace LowTempRadiantSystem {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ControlTemp; // Temperature of the parameter that is controlling the radiant system
-        Real64 HeatFrac;    // fraction of maximum electrical heat input to radiant system [dimensionless]
-        Real64 OffTemp;     // Temperature above which the radiant system should be completely off [C]
+        Nandle ControlTemp; // Temperature of the parameter that is controlling the radiant system
+        Nandle HeatFrac;    // fraction of maximum electrical heat input to radiant system [dimensionless]
+        Nandle OffTemp;     // Temperature above which the radiant system should be completely off [C]
         int RadSurfNum;     // number of surface that is the radiant system
-        Real64 SetPtTemp;   // Setpoint temperature [C]
+        Nandle SetPtTemp;   // Setpoint temperature [C]
         int SurfNum;        // intermediate variable for surface number in Surface derived type
         int ZoneNum;        // number of zone being served
 
@@ -4956,16 +4956,16 @@ namespace LowTempRadiantSystem {
         static std::string const RoutineName("UpdateLowTempRadiantSystem");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 BypassMassFlow;  // Local bypass for a constant flow radiant system (could have recirculation and/or bypass)
-        Real64 CpWater;         // Specific heat of water
+        Nandle BypassMassFlow;  // Local bypass for a constant flow radiant system (could have recirculation and/or bypass)
+        Nandle CpWater;         // Specific heat of water
         int RadSurfNum;         // DO loop counter for radiant surfaces in the system
         int SurfNum(0);         // Surface index number for the current radiant system
         int WaterInletNode;     // Node number for the water side inlet of the radiant system
-        Real64 TotalHeatSource; // Total heat source or sink for a particular radiant system (sum of all surface source/sinks)
+        Nandle TotalHeatSource; // Total heat source or sink for a particular radiant system (sum of all surface source/sinks)
         int TotRadSurfaces(0);  // Total number of radiant surfaces in this system
-        Real64 WaterMassFlow;   // Flow rate of water in the radiant system
+        Nandle WaterMassFlow;   // Flow rate of water in the radiant system
         int WaterOutletNode;    // Node number for the water side outlet of the radiant system
-        Real64 ZoneMult;        // Zone multiplier
+        Nandle ZoneMult;        // Zone multiplier
         int ZoneNum;            // Zone for this radiant system
 
         {
@@ -5160,7 +5160,7 @@ namespace LowTempRadiantSystem {
     }
 
     void CheckForOutOfRangeTempResult(
-        int const SystemType, int const RadSysNum, Real64 const outletTemp, Real64 const inletTemp, Real64 const EP_UNUSED(mdot))
+        int const SystemType, int const RadSysNum, Nandle const outletTemp, Nandle const inletTemp, Nandle const EP_UNUSED(mdot))
     {
 
         // SUBROUTINE INFORMATION:
@@ -5174,8 +5174,8 @@ namespace LowTempRadiantSystem {
         using General::RoundSigDigits;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const UpperRangeLimit(500.0);  // high error trigger limit for when model is not working
-        Real64 const LowerRangeLimit(-300.0); // Low error trigger limit for when model is not working
+        Nandle const UpperRangeLimit(500.0);  // high error trigger limit for when model is not working
+        Nandle const LowerRangeLimit(-300.0); // Low error trigger limit for when model is not working
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static bool WarnTooLow(false);
@@ -5268,14 +5268,14 @@ namespace LowTempRadiantSystem {
         }
     }
 
-    Real64 CalcRadSysHXEffectTerm(int const RadSysNum,        // Index number of radiant system under consideration !unused1208
+    Nandle CalcRadSysHXEffectTerm(int const RadSysNum,        // Index number of radiant system under consideration !unused1208
                                   int const SystemType,       // Type of radiant system: hydronic, constant flow, or electric
-                                  Real64 const Temperature,   // Temperature of water entering the radiant system, in C
-                                  Real64 const WaterMassFlow, // Mass flow rate of water in the radiant system, in kg/s
-                                  Real64 const FlowFraction,  // Mass flow rate fraction for this surface in the radiant system
-                                  Real64 const NumCircs,      // Number of fluid circuits in this surface
-                                  Real64 const TubeLength,    // Length of tubing in the radiant system, in m
-                                  Real64 const TubeDiameter,  // Inside diameter of the tubing in the radiant system, in m
+                                  Nandle const Temperature,   // Temperature of water entering the radiant system, in C
+                                  Nandle const WaterMassFlow, // Mass flow rate of water in the radiant system, in kg/s
+                                  Nandle const FlowFraction,  // Mass flow rate fraction for this surface in the radiant system
+                                  Nandle const NumCircs,      // Number of fluid circuits in this surface
+                                  Nandle const TubeLength,    // Length of tubing in the radiant system, in m
+                                  Nandle const TubeDiameter,  // Inside diameter of the tubing in the radiant system, in m
                                   int &EP_UNUSED(GlycolIndex) // Index for the fluid used in this radiant system
     )
     {
@@ -5311,15 +5311,15 @@ namespace LowTempRadiantSystem {
         using FluidProperties::GetSpecificHeatGlycol;
 
         // Return value
-        Real64 CalcRadSysHXEffectTerm;
+        Nandle CalcRadSysHXEffectTerm;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MaxLaminarRe(2300.0); // Maximum Reynolds number for laminar flow
+        Nandle const MaxLaminarRe(2300.0); // Maximum Reynolds number for laminar flow
         int const NumOfPropDivisions(13);
-        Real64 const MaxExpPower(50.0); // Maximum power after which EXP argument would be zero for DP variables
-        static Array1D<Real64> const Temps(
+        Nandle const MaxExpPower(50.0); // Maximum power after which EXP argument would be zero for DP variables
+        static Array1D<Nandle> const Temps(
             NumOfPropDivisions, {1.85, 6.85, 11.85, 16.85, 21.85, 26.85, 31.85, 36.85, 41.85, 46.85, 51.85, 56.85, 61.85}); // Temperature, in C
-        static Array1D<Real64> const Mu(NumOfPropDivisions,
+        static Array1D<Nandle> const Mu(NumOfPropDivisions,
                                         {0.001652,
                                          0.001422,
                                          0.001225,
@@ -5333,23 +5333,23 @@ namespace LowTempRadiantSystem {
                                          0.000528,
                                          0.000489,
                                          0.000453}); // Viscosity, in Ns/m2
-        static Array1D<Real64> const Conductivity(
+        static Array1D<Nandle> const Conductivity(
             NumOfPropDivisions, {0.574, 0.582, 0.590, 0.598, 0.606, 0.613, 0.620, 0.628, 0.634, 0.640, 0.645, 0.650, 0.656}); // Conductivity, in W/mK
-        static Array1D<Real64> const Pr(
+        static Array1D<Nandle> const Pr(
             NumOfPropDivisions, {12.22, 10.26, 8.81, 7.56, 6.62, 5.83, 5.20, 4.62, 4.16, 3.77, 3.42, 3.15, 2.88}); // Prandtl number (dimensionless)
         static std::string const RoutineName("CalcRadSysHXEffectTerm");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Index;
-        Real64 InterpFrac;
-        Real64 NuD;
-        Real64 ReD;
-        Real64 NTU;
-        Real64 CpWater(0.0);
-        Real64 Kactual;
-        Real64 MUactual;
-        Real64 PRactual;
-        Real64 Eff; // HX effectiveness
+        Nandle InterpFrac;
+        Nandle NuD;
+        Nandle ReD;
+        Nandle NTU;
+        Nandle CpWater(0.0);
+        Nandle Kactual;
+        Nandle MUactual;
+        Nandle PRactual;
+        Nandle Eff; // HX effectiveness
 
         // First find out where we are in the range of temperatures
         Index = 1;
@@ -5469,7 +5469,7 @@ namespace LowTempRadiantSystem {
         // one or more of the radiant systems was running.
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CloseEnough(0.01); // Some arbitrarily small value to avoid zeros and numbers that are almost the same
+        Nandle const CloseEnough(0.01); // Some arbitrarily small value to avoid zeros and numbers that are almost the same
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // DO loop counter for surface index
@@ -5504,7 +5504,7 @@ namespace LowTempRadiantSystem {
         }
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
 
         // FUNCTION INFORMATION:
@@ -5522,11 +5522,11 @@ namespace LowTempRadiantSystem {
         using namespace DataHeatBalSurface;
 
         // Return value
-        Real64 SumHATsurf;
+        Nandle SumHATsurf;
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // Surface number
-        Real64 Area; // Effective surface area
+        Nandle Area; // Effective surface area
 
         SumHATsurf = 0.0;
 
@@ -5583,11 +5583,11 @@ namespace LowTempRadiantSystem {
         static std::string const RoutineName("ReportLowTempRadiantSystem");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CpFluid;          // Specific heat of the fluid in the radiant system
+        Nandle CpFluid;          // Specific heat of the fluid in the radiant system
         int RadSurfNum;          // DO loop counter for radiant surfaces in the system
         int SurfNum;             // Surface number (index) in Surface derived type
-        Real64 TotalRadSysPower; // Total source/sink power for the radiant system (sum of all surfaces of the system)
-        Real64 ZoneMult;         // Total zone multiplier to apply to the system level variables
+        Nandle TotalRadSysPower; // Total source/sink power for the radiant system (sum of all surfaces of the system)
+        Nandle ZoneMult;         // Total zone multiplier to apply to the system level variables
 
         TotalRadSysPower = 0.0;
         ZoneMult = 1.0;

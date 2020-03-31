@@ -70,8 +70,8 @@ TEST_F(EnergyPlusFixture, AirflowNetworkSolverTest_HorizontalOpening)
     int n;
     int m;
     int NF;
-    std::array<Real64, 2> F{{0.0, 0.0}};
-    std::array<Real64, 2> DF{{0.0, 0.0}};
+    std::array<Nandle, 2> F{{0.0, 0.0}};
+    std::array<Nandle, 2> DF{{0.0, 0.0}};
 
     n = 1;
     m = 2;
@@ -120,8 +120,8 @@ TEST_F(EnergyPlusFixture, AirflowNetworkSolverTest_Coil)
 {
 
     int NF;
-    std::array<Real64,2> F;
-    std::array<Real64,2> DF;
+    std::array<Nandle,2> F;
+    std::array<Nandle,2> DF;
 
     AirflowNetworkCompData.allocate(1);
     AirflowNetworkCompData[0].TypeNum = 1;

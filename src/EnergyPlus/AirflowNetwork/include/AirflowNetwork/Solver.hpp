@@ -62,12 +62,12 @@ namespace AirflowNetwork {
 
     struct AirProperties
     {
-        Real64 temperature{20.0};
-        // Real64 pressure;      //{0.0}; // gage pressure
-        Real64 humidityRatio{0.0};
-        Real64 density{AIRDENSITY(20.0, 101325.0, 0.0)};
-        Real64 sqrtDensity{sqrt(AIRDENSITY(20.0, 101325.0, 0.0))};
-        Real64 viscosity{AIRDYNAMICVISCOSITY(20.0)};
+        Nandle temperature{20.0};
+        // Nandle pressure;      //{0.0}; // gage pressure
+        Nandle humidityRatio{0.0};
+        Nandle density{AIRDENSITY(20.0, 101325.0, 0.0)};
+        Nandle sqrtDensity{sqrt(AIRDENSITY(20.0, 101325.0, 0.0))};
+        Nandle viscosity{AIRDYNAMICVISCOSITY(20.0)};
     };
 
     struct Solver
@@ -80,38 +80,38 @@ namespace AirflowNetwork {
         int const NrInt; // Number of intervals for a large opening
 
         // Common block AFEDAT
-        Array1D<Real64> AFECTL;
-        Array1D<Real64> AFLOW2;
-        Array1D<Real64> AFLOW;
-        Array1D<Real64> PS;
-        Array1D<Real64> PW;
+        Array1D<Nandle> AFECTL;
+        Array1D<Nandle> AFLOW2;
+        Array1D<Nandle> AFLOW;
+        Array1D<Nandle> PS;
+        Array1D<Nandle> PW;
 
         // Common block CONTRL
-        Real64 PB;
+        Nandle PB;
         int LIST;
 
         // Common block ZONL
-        // extern Array1D<Real64> RHOZ;
-        // extern Array1D<Real64> SQRTDZ;
-        // extern Array1D<Real64> VISCZ;
-        Array1D<Real64> SUMAF;
-        // extern Array1D<Real64> TZ; // Temperature [C]
-        // extern Array1D<Real64> WZ; // Humidity ratio [kg/kg]
-        Array1D<Real64> PZ; // Pressure [Pa]
+        // extern Array1D<Nandle> RHOZ;
+        // extern Array1D<Nandle> SQRTDZ;
+        // extern Array1D<Nandle> VISCZ;
+        Array1D<Nandle> SUMAF;
+        // extern Array1D<Nandle> TZ; // Temperature [C]
+        // extern Array1D<Nandle> WZ; // Humidity ratio [kg/kg]
+        Array1D<Nandle> PZ; // Pressure [Pa]
 
         // Other array variables
         Array1D_int ID;
         Array1D_int IK;
-        Array1D<Real64> AD;
-        Array1D<Real64> AU;
+        Array1D<Nandle> AD;
+        Array1D<Nandle> AU;
 
 #ifdef SKYLINE_MATRIX_REMOVE_ZERO_COLUMNS
         Array1D_int newIK;     // noel
-        Array1D<Real64> newAU; // noel
+        Array1D<Nandle> newAU; // noel
 #endif
 
         // REAL(r64), ALLOCATABLE, DIMENSION(:) :: AL
-        Array1D<Real64> SUMF;
+        Array1D<Nandle> SUMF;
     };
 
     extern std::vector<AirProperties> properties;
@@ -123,46 +123,46 @@ namespace AirflowNetwork {
     extern int const NrInt; // Number of intervals for a large opening
 
     // Common block AFEDAT
-    extern Array1D<Real64> AFECTL;
-    extern Array1D<Real64> AFLOW2;
-    extern Array1D<Real64> AFLOW;
-    extern Array1D<Real64> PS;
-    extern Array1D<Real64> PW;
+    extern Array1D<Nandle> AFECTL;
+    extern Array1D<Nandle> AFLOW2;
+    extern Array1D<Nandle> AFLOW;
+    extern Array1D<Nandle> PS;
+    extern Array1D<Nandle> PW;
 
     // Common block CONTRL
-    extern Real64 PB;
+    extern Nandle PB;
     extern int LIST;
 
     // Common block ZONL
-    // extern Array1D<Real64> RHOZ;
-    // extern Array1D<Real64> SQRTDZ;
-    // extern Array1D<Real64> VISCZ;
-    extern Array1D<Real64> SUMAF;
-    // extern Array1D<Real64> TZ; // Temperature [C]
-    // extern Array1D<Real64> WZ; // Humidity ratio [kg/kg]
-    extern Array1D<Real64> PZ; // Pressure [Pa]
+    // extern Array1D<Nandle> RHOZ;
+    // extern Array1D<Nandle> SQRTDZ;
+    // extern Array1D<Nandle> VISCZ;
+    extern Array1D<Nandle> SUMAF;
+    // extern Array1D<Nandle> TZ; // Temperature [C]
+    // extern Array1D<Nandle> WZ; // Humidity ratio [kg/kg]
+    extern Array1D<Nandle> PZ; // Pressure [Pa]
 
     // Other array variables
     extern Array1D_int ID;
     extern Array1D_int IK;
-    extern Array1D<Real64> AD;
-    extern Array1D<Real64> AU;
+    extern Array1D<Nandle> AD;
+    extern Array1D<Nandle> AU;
 
 #ifdef SKYLINE_MATRIX_REMOVE_ZERO_COLUMNS
     extern Array1D_int newIK;     // noel
-    extern Array1D<Real64> newAU; // noel
+    extern Array1D<Nandle> newAU; // noel
 #endif
 
     // REAL(r64), ALLOCATABLE, DIMENSION(:) :: AL
-    extern Array1D<Real64> SUMF;
+    extern Array1D<Nandle> SUMF;
     extern int Unit11;
     extern int Unit21;
 
     // Large opening variables
-    extern Array1D<Real64> DpProf;   // Differential pressure profile for Large Openings [Pa]
-    extern Array1D<Real64> RhoProfF; // Density profile in FROM zone [kg/m3]
-    extern Array1D<Real64> RhoProfT; // Density profile in TO zone [kg/m3]
-    extern Array2D<Real64> DpL;      // Array of stack pressures in link
+    extern Array1D<Nandle> DpProf;   // Differential pressure profile for Large Openings [Pa]
+    extern Array1D<Nandle> RhoProfF; // Density profile in FROM zone [kg/m3]
+    extern Array1D<Nandle> RhoProfT; // Density profile in TO zone [kg/m3]
+    extern Array2D<Nandle> DpL;      // Array of stack pressures in link
 
     // Functions
 
@@ -175,8 +175,8 @@ namespace AirflowNetwork {
     void AIRMOV();
 
     void SOLVZP(Array1D_int &IK,     // pointer to the top of column/row "K"
-                Array1D<Real64> &AD, // the main diagonal of [A] before and after factoring
-                Array1D<Real64> &AU, // the upper triangle of [A] before and after factoring
+                Array1D<Nandle> &AD, // the main diagonal of [A] before and after factoring
+                Array1D<Nandle> &AU, // the upper triangle of [A] before and after factoring
                 int &ITER            // number of iterations
     );
 
@@ -186,140 +186,140 @@ namespace AirflowNetwork {
 
     int AFEFAN(int const JA,               // Component number
                bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-               Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+               Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                int const i,                // Linkage number
                const AirProperties &propN, // Node 1 properties
                const AirProperties &propM, // Node 2 properties
-               std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-               std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+               std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+               std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     );
 
     // The above subroutine is not used. Leave it for the time being and revise later.
 
     int AFECPF(int const j,                // Component number
                bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-               Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+               Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                int const i,                // Linkage number
                const AirProperties &propN, // Node 1 properties
                const AirProperties &propM, // Node 2 properties
-               std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-               std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+               std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+               std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     );
 
     // Leave it for the time being and revise later. Or drop this component ???????????
 
     int AFEREL(int const j,                // Component number
                bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-               Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+               Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                int const i,                // Linkage number
                const AirProperties &propN, // Node 1 properties
                const AirProperties &propM, // Node 2 properties
-               std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-               std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+               std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+               std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     );
 
-    int GenericCrack(Real64 &coef,               // Flow coefficient
-                     Real64 const expn,          // Flow exponent
+    int GenericCrack(Nandle &coef,               // Flow coefficient
+                     Nandle const expn,          // Flow exponent
                      bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                     Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                     Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                      const AirProperties &propN, // Node 1 properties
                      const AirProperties &propM, // Node 2 properties
-                     std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                     std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                     std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                     std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     );
 
-    int GenericDuct(Real64 const Length,        // Duct length
-                    Real64 const Diameter,      // Duct diameter
+    int GenericDuct(Nandle const Length,        // Duct length
+                    Nandle const Diameter,      // Duct diameter
                     bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                    Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                    Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                     const AirProperties &propN, // Node 1 properties
                     const AirProperties &propM, // Node 2 properties
-                    std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                    std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                    std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                    std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     );
 
-    void FACSKY(Array1D<Real64> &AU,   // the upper triangle of [A] before and after factoring
-                Array1D<Real64> &AD,   // the main diagonal of [A] before and after factoring
-                Array1D<Real64> &AL,   // the lower triangle of [A] before and after factoring
+    void FACSKY(Array1D<Nandle> &AU,   // the upper triangle of [A] before and after factoring
+                Array1D<Nandle> &AD,   // the main diagonal of [A] before and after factoring
+                Array1D<Nandle> &AL,   // the lower triangle of [A] before and after factoring
                 const Array1D_int &IK, // pointer to the top of column/row "K"
                 int const NEQ,         // number of equations
                 int const NSYM         // symmetry:  0 = symmetric matrix, 1 = non-symmetric
     );
 
-    void SLVSKY(const Array1D<Real64> &AU, // the upper triangle of [A] before and after factoring
-                const Array1D<Real64> &AD, // the main diagonal of [A] before and after factoring
-                const Array1D<Real64> &AL, // the lower triangle of [A] before and after factoring
-                Array1D<Real64> &B,        // "B" vector (input); "X" vector (output).
+    void SLVSKY(const Array1D<Nandle> &AU, // the upper triangle of [A] before and after factoring
+                const Array1D<Nandle> &AD, // the main diagonal of [A] before and after factoring
+                const Array1D<Nandle> &AL, // the lower triangle of [A] before and after factoring
+                Array1D<Nandle> &B,        // "B" vector (input); "X" vector (output).
                 const Array1D_int &IK,     // pointer to the top of column/row "K"
                 int const NEQ,             // number of equations
                 int const NSYM             // symmetry:  0 = symmetric matrix, 1 = non-symmetric
     );
 
-    void FILSKY(const Array1D<Real64> &X,    // element array (row-wise sequence)
+    void FILSKY(const Array1D<Nandle> &X,    // element array (row-wise sequence)
                 std::array<int, 2> const LM, // location matrix
                 const Array1D_int &IK,       // pointer to the top of column/row "K"
-                Array1D<Real64> &AU,         // the upper triangle of [A] before and after factoring
-                Array1D<Real64> &AD,         // the main diagonal of [A] before and after factoring
+                Array1D<Nandle> &AU,         // the upper triangle of [A] before and after factoring
+                Array1D<Nandle> &AD,         // the main diagonal of [A] before and after factoring
                 int const FLAG               // mode of operation
     );
 
     void DUMPVD(std::string const &S,     // Description
-                const Array1D<Real64> &V, // Output values
+                const Array1D<Nandle> &V, // Output values
                 int const n,              // Array size
                 int const UOUT            // Output file unit
     );
 
     void DUMPVR(std::string const &S,     // Description
-                const Array1D<Real64> &V, // Output values
+                const Array1D<Nandle> &V, // Output values
                 int const n,              // Array size
                 int const UOUT            // Output file unit
     );
 
     int AFEDOP(int const j,                // Component number
                bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-               Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+               Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                int const IL,               // Linkage number
                const AirProperties &propN, // Node 1 properties
                const AirProperties &propM, // Node 2 properties
-               std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-               std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+               std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+               std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     );
 
     void PresProfile(int const il,                  // Linkage number
                      int const Pprof,               // Opening number
-                     Real64 const G,                // gravitation field strength [N/kg]
-                     const Array1D<Real64> &DpF,    // Stack pressures at start heights of Layers
-                     const Array1D<Real64> &DpT,    // Stack pressures at start heights of Layers
-                     const Array1D<Real64> &BetaF,  // Density gradients in the FROM zone (starting at linkheight) [Kg/m3/m]
-                     const Array1D<Real64> &BetaT,  // Density gradients in the TO zone (starting at linkheight) [Kg/m3/m]
-                     const Array1D<Real64> &RhoStF, // Density at the start heights of Layers in the FROM zone
-                     const Array1D<Real64> &RhoStT, // Density at the start heights of Layers in the TO zone
+                     Nandle const G,                // gravitation field strength [N/kg]
+                     const Array1D<Nandle> &DpF,    // Stack pressures at start heights of Layers
+                     const Array1D<Nandle> &DpT,    // Stack pressures at start heights of Layers
+                     const Array1D<Nandle> &BetaF,  // Density gradients in the FROM zone (starting at linkheight) [Kg/m3/m]
+                     const Array1D<Nandle> &BetaT,  // Density gradients in the TO zone (starting at linkheight) [Kg/m3/m]
+                     const Array1D<Nandle> &RhoStF, // Density at the start heights of Layers in the FROM zone
+                     const Array1D<Nandle> &RhoStT, // Density at the start heights of Layers in the TO zone
                      int const From,                // Number of FROM zone
                      int const To,                  // Number of To zone
-                     Real64 const ActLh,            // Actual height of opening [m]
-                     Real64 const OwnHeightFactor   // Cosine of deviation angle of the opening plane from the vertical direction
+                     Nandle const ActLh,            // Actual height of opening [m]
+                     Nandle const OwnHeightFactor   // Cosine of deviation angle of the opening plane from the vertical direction
     );
 
     void PStack();
 
-    Real64 psz(Real64 const Pz0,  // Pressure at altitude z0 [Pa]
-               Real64 const Rho0, // density at altitude z0 [kg/m3]
-               Real64 const beta, // density gradient [kg/m4]
-               Real64 const z0,   // reference altitude [m]
-               Real64 const z,    // altitude[m]
-               Real64 const g     // gravity field strength [N/kg]
+    Nandle psz(Nandle const Pz0,  // Pressure at altitude z0 [Pa]
+               Nandle const Rho0, // density at altitude z0 [kg/m3]
+               Nandle const beta, // density gradient [kg/m4]
+               Nandle const z0,   // reference altitude [m]
+               Nandle const z,    // altitude[m]
+               Nandle const g     // gravity field strength [N/kg]
     );
 
-    void LClimb(Real64 const G,   // gravity field strength [N/kg]
-                Real64 &Rho,      // Density link level (initialized with rho zone) [kg/m3]
-                Real64 const Z,   // Height of the link above the zone reference [m]
-                Real64 &T,        // temperature at link level [C]
-                Real64 &X,        // absolute humidity at link level [kg/kg]
-                Real64 &Dp,       // Stackpressure to the linklevel [Pa]
+    void LClimb(Nandle const G,   // gravity field strength [N/kg]
+                Nandle &Rho,      // Density link level (initialized with rho zone) [kg/m3]
+                Nandle const Z,   // Height of the link above the zone reference [m]
+                Nandle &T,        // temperature at link level [C]
+                Nandle &X,        // absolute humidity at link level [kg/kg]
+                Nandle &Dp,       // Stackpressure to the linklevel [Pa]
                 int const zone,   // Zone number
-                Real64 const PZ,  // Zone Pressure (reflevel) [Pa]
-                Real64 const Pbz, // Barometric pressure at entrance level [Pa]
-                Real64 &RhoDr     // Air density of dry air on the link level used
+                Nandle const PZ,  // Zone Pressure (reflevel) [Pa]
+                Nandle const Pbz, // Barometric pressure at entrance level [Pa]
+                Nandle &RhoDr     // Air density of dry air on the link level used
     );
 
     //*****************************************************************************************

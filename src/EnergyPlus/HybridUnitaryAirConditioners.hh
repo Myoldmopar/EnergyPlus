@@ -69,8 +69,8 @@ namespace HybridUnitaryAirConditioners {
     // MODULE PARAMETER DEFINITIONS
     void SimZoneHybridUnitaryAirConditioners(std::string const &CompName,    // name of the packaged terminal heat pump
                                              int const ZoneNum,              // number of zone being served
-                                             Real64 &SensibleOutputProvided, // sensible capacity delivered to zone
-                                             Real64 &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
+                                             Nandle &SensibleOutputProvided, // sensible capacity delivered to zone
+                                             Nandle &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
                                              int &CompIndex                  // index to zone hvac unit
     );
 
@@ -82,8 +82,8 @@ namespace HybridUnitaryAirConditioners {
 
     void CalcZoneHybridUnitaryAirConditioners(int const UnitNum,              // unit number
                                               int const ZoneNum,              // number of zone being served
-                                              Real64 &SensibleOutputProvided, // sensible capacity delivered to zone
-                                              Real64 &LatentOutputProvided    // Latent add/removal  (kg/s), dehumid = negative
+                                              Nandle &SensibleOutputProvided, // sensible capacity delivered to zone
+                                              Nandle &LatentOutputProvided    // Latent add/removal  (kg/s), dehumid = negative
     );
 
     void ReportZoneHybridUnitaryAirConditioners(int const UnitNum);

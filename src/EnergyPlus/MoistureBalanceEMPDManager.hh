@@ -64,15 +64,15 @@ namespace MoistureBalanceEMPDManager {
 
     struct EMPDReportVarsData
     {
-        Real64 rv_surface;
-        Real64 RH_surface_layer;
-        Real64 RH_deep_layer;
-        Real64 w_surface_layer;
-        Real64 w_deep_layer;
-        Real64 mass_flux_zone;
-        Real64 mass_flux_deep;
-        Real64 u_surface_layer;
-        Real64 u_deep_layer;
+        Nandle rv_surface;
+        Nandle RH_surface_layer;
+        Nandle RH_deep_layer;
+        Nandle w_surface_layer;
+        Nandle w_deep_layer;
+        Nandle mass_flux_zone;
+        Nandle mass_flux_deep;
+        Nandle u_surface_layer;
+        Nandle u_deep_layer;
 
         // Default constructor
         EMPDReportVarsData()
@@ -88,7 +88,7 @@ namespace MoistureBalanceEMPDManager {
     // SUBROUTINE SPECIFICATION FOR MODULE MoistureBalanceEMPDManager
 
     // Functions
-    Real64 CalcDepthFromPeriod(Real64 const period,                           // in seconds
+    Nandle CalcDepthFromPeriod(Nandle const period,                           // in seconds
                                DataHeatBalance::MaterialProperties const &mat // material
     );
 
@@ -97,9 +97,9 @@ namespace MoistureBalanceEMPDManager {
     void InitMoistureBalanceEMPD();
 
     void CalcMoistureBalanceEMPD(int const SurfNum,
-                                 Real64 const TempSurfIn, // INSIDE SURFACE TEMPERATURE at current time step
-                                 Real64 const TempZone,   // Zone temperature at current time step.
-                                 Real64 &TempSat          // Satutare surface temperature.
+                                 Nandle const TempSurfIn, // INSIDE SURFACE TEMPERATURE at current time step
+                                 Nandle const TempZone,   // Zone temperature at current time step.
+                                 Nandle &TempSat          // Satutare surface temperature.
     );
 
     void clear_state();

@@ -72,23 +72,23 @@ namespace ChillerAbsorption {
     struct ReportVars
     {
         // Members
-        Real64 PumpingPower;    // reporting: electric pumping power
-        Real64 QGenerator;      // reporting: steam heat transfer rate
-        Real64 QEvap;           // reporting: evaporator heat transfer rate
-        Real64 QCond;           // reporting: condenser heat transfer rate
-        Real64 PumpingEnergy;   // reporting: electric pumping power
-        Real64 GeneratorEnergy; // reporting: steam heat transfer rate
-        Real64 EvapEnergy;      // reporting: evaporator heat transfer rate
-        Real64 CondEnergy;      // reporting: condenser heat transfer rate
-        Real64 CondInletTemp;   // reporting: condenser inlet temperature
-        Real64 EvapInletTemp;   // reporting: evaporator inlet temperature
-        Real64 CondOutletTemp;  // reporting: condenser outlet temperature
-        Real64 EvapOutletTemp;  // reporting: evaporator outlet temperature
-        Real64 Evapmdot;        // reporting: evaporator mass flow rate
-        Real64 Condmdot;        // reporting: condenser mass flow rate
-        Real64 Genmdot;         // reporting: generator mass flow rate when connected to plant
-        Real64 SteamMdot;       // reporting: steam mass flow rate
-        Real64 ActualCOP;       // reporting: coefficient of performance = QEvap/QGenerator
+        Nandle PumpingPower;    // reporting: electric pumping power
+        Nandle QGenerator;      // reporting: steam heat transfer rate
+        Nandle QEvap;           // reporting: evaporator heat transfer rate
+        Nandle QCond;           // reporting: condenser heat transfer rate
+        Nandle PumpingEnergy;   // reporting: electric pumping power
+        Nandle GeneratorEnergy; // reporting: steam heat transfer rate
+        Nandle EvapEnergy;      // reporting: evaporator heat transfer rate
+        Nandle CondEnergy;      // reporting: condenser heat transfer rate
+        Nandle CondInletTemp;   // reporting: condenser inlet temperature
+        Nandle EvapInletTemp;   // reporting: evaporator inlet temperature
+        Nandle CondOutletTemp;  // reporting: condenser outlet temperature
+        Nandle EvapOutletTemp;  // reporting: evaporator outlet temperature
+        Nandle Evapmdot;        // reporting: evaporator mass flow rate
+        Nandle Condmdot;        // reporting: condenser mass flow rate
+        Nandle Genmdot;         // reporting: generator mass flow rate when connected to plant
+        Nandle SteamMdot;       // reporting: steam mass flow rate
+        Nandle ActualCOP;       // reporting: coefficient of performance = QEvap/QGenerator
 
         // Default Constructor
         ReportVars()
@@ -105,42 +105,42 @@ namespace ChillerAbsorption {
         std::string Name;                 // user identifier
         bool Available;                   // need an array of logicals--load identifiers of available equipment
         bool ON;                          // simulate the machine at it's operating part load ratio
-        Real64 NomCap;                    // W - design nominal capacity of Absorber
+        Nandle NomCap;                    // W - design nominal capacity of Absorber
         bool NomCapWasAutoSized;          // true if Nominal capacity was autosize on input
-        Real64 NomPumpPower;              // W - design nominal capacity of Absorber
+        Nandle NomPumpPower;              // W - design nominal capacity of Absorber
         bool NomPumpPowerWasAutoSized;    // true if nominal pump power was autosize on input
         int FlowMode;                     // one of 3 modes for componet flow during operation
         bool ModulatedFlowSetToLoop;      // True if the setpoint is missing at the outlet node
         bool ModulatedFlowErrDone;        // true if setpoint warning issued
-        Real64 EvapVolFlowRate;           // m3/s - design water volumetric flow rate through the evaporator
+        Nandle EvapVolFlowRate;           // m3/s - design water volumetric flow rate through the evaporator
         bool EvapVolFlowRateWasAutoSized; // true if evaporator flow rate was autosize on input
-        Real64 CondVolFlowRate;           // m3/s - design water volumetric flow rate through the condenser
+        Nandle CondVolFlowRate;           // m3/s - design water volumetric flow rate through the condenser
         bool CondVolFlowRateWasAutoSized; // true if condenser flow rate was autosize on input
-        Real64 EvapMassFlowRateMax;       // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
-        Real64 CondMassFlowRateMax;       // Max Design Condeneser Mass Flow Rate [kg/s]
-        Real64 GenMassFlowRateMax;        // Max Design Generator Mass Flow Rate converted from Volume Flow Rate
-        Real64 SizFac;                    // Sizing factor
+        Nandle EvapMassFlowRateMax;       // Max Design Evaporator Mass Flow Rate converted from Volume Flow Rate
+        Nandle CondMassFlowRateMax;       // Max Design Condeneser Mass Flow Rate [kg/s]
+        Nandle GenMassFlowRateMax;        // Max Design Generator Mass Flow Rate converted from Volume Flow Rate
+        Nandle SizFac;                    // Sizing factor
         int EvapInletNodeNum;             // Node number on the inlet side of the plant
         int EvapOutletNodeNum;            // Node number on the outlet side of the plant
         int CondInletNodeNum;             // Node number on the inlet side of the condenser
         int CondOutletNodeNum;            // Node number on the outlet side of the condenser
         int GeneratorInletNodeNum;        // absorber steam inlet node number, water side
         int GeneratorOutletNodeNum;       // absorber steam outlet node number, water side
-        Real64 MinPartLoadRat;            // (BLAST MIN) min allowed operating frac full load
-        Real64 MaxPartLoadRat;            // (BLAST MAX) max allowed operating frac full load
-        Real64 OptPartLoadRat;            // (BLAST BEST) optimal operating frac full load
-        Real64 TempDesCondIn;             // C - (BLAST ADJTC(1)The design secondary loop fluid
+        Nandle MinPartLoadRat;            // (BLAST MIN) min allowed operating frac full load
+        Nandle MaxPartLoadRat;            // (BLAST MAX) max allowed operating frac full load
+        Nandle OptPartLoadRat;            // (BLAST BEST) optimal operating frac full load
+        Nandle TempDesCondIn;             // C - (BLAST ADJTC(1)The design secondary loop fluid
         // temperature at the Absorber condenser side inlet
-        Array1D<Real64> SteamLoadCoef;         // (BLAST RPWRC() ) coeff of full load poly. fit
-        Array1D<Real64> PumpPowerCoef;         // coeff of pumping power poly. fit
-        Real64 TempLowLimitEvapOut;            // C - low temperature shut off
+        Array1D<Nandle> SteamLoadCoef;         // (BLAST RPWRC() ) coeff of full load poly. fit
+        Array1D<Nandle> PumpPowerCoef;         // coeff of pumping power poly. fit
+        Nandle TempLowLimitEvapOut;            // C - low temperature shut off
         int ErrCount2;                         // error counter
         int GenHeatSourceType;                 // Generator heat source type, NodeType_Steam=3 or NodeType_Water=2
-        Real64 GeneratorVolFlowRate;           // m3/s - hot water volumetric flow rate through generator
+        Nandle GeneratorVolFlowRate;           // m3/s - hot water volumetric flow rate through generator
         bool GeneratorVolFlowRateWasAutoSized; // true if hot water flow was autosize on input
-        Real64 GeneratorSubcool;               // amount of subcooling in steam generator
+        Nandle GeneratorSubcool;               // amount of subcooling in steam generator
         int SteamFluidIndex;                   // index to generator fluid type
-        Real64 GeneratorDeltaTemp;             // C - generator fluid temperature difference (water only)
+        Nandle GeneratorDeltaTemp;             // C - generator fluid temperature difference (water only)
         bool GeneratorDeltaTempWasAutoSized;   // true if generator delta T was autosize on input
         int CWLoopNum;                         // chilled water plant loop index number
         int CWLoopSideNum;                     // chilled water plant loop side index
@@ -156,23 +156,23 @@ namespace ChillerAbsorption {
         int GenCompNum;                        // generator water plant loop component index
         bool FaultyChillerSWTFlag;             // True if the chiller has SWT sensor fault
         int FaultyChillerSWTIndex;             // Index of the fault object corresponding to the chiller
-        Real64 FaultyChillerSWTOffset;         // Chiller SWT sensor offset
+        Nandle FaultyChillerSWTOffset;         // Chiller SWT sensor offset
         bool PossibleSubcooling;               // flag to indicate chiller is doing less cooling that requested
-        Real64 CondMassFlowRate;               // Kg/s - condenser mass flow rate, water side
-        Real64 EvapMassFlowRate;               // Kg/s - evaporator mass flow rate, water side
-        Real64 SteamMassFlowRate;              // Kg/s - steam mass flow rate, water side
-        Real64 CondOutletTemp;                 // C - condenser outlet temperature, water side
-        Real64 EvapOutletTemp;                 // C - evaporator outlet temperature, water side
-        Real64 GenOutletTemp;                  // C - generator fluid outlet temperature
-        Real64 SteamOutletEnthalpy;            // J/kg - generator fluid outlet enthalpy
-        Real64 PumpingPower;                   // W - rate of Absorber energy use
-        Real64 PumpingEnergy;                  // J - Absorber energy use
-        Real64 QGenerator;                     // W - rate of Absorber steam use
-        Real64 GeneratorEnergy;                // J - Absorber steam use
-        Real64 QEvaporator;                    // W - rate of heat transfer to the evaporator coil
-        Real64 EvaporatorEnergy;               // J - heat transfer to the evaporator coil
-        Real64 QCondenser;                     // W - rate of heat transfer to the condenser coil
-        Real64 CondenserEnergy;                // J - heat transfer to the condenser coil
+        Nandle CondMassFlowRate;               // Kg/s - condenser mass flow rate, water side
+        Nandle EvapMassFlowRate;               // Kg/s - evaporator mass flow rate, water side
+        Nandle SteamMassFlowRate;              // Kg/s - steam mass flow rate, water side
+        Nandle CondOutletTemp;                 // C - condenser outlet temperature, water side
+        Nandle EvapOutletTemp;                 // C - evaporator outlet temperature, water side
+        Nandle GenOutletTemp;                  // C - generator fluid outlet temperature
+        Nandle SteamOutletEnthalpy;            // J/kg - generator fluid outlet enthalpy
+        Nandle PumpingPower;                   // W - rate of Absorber energy use
+        Nandle PumpingEnergy;                  // J - Absorber energy use
+        Nandle QGenerator;                     // W - rate of Absorber steam use
+        Nandle GeneratorEnergy;                // J - Absorber steam use
+        Nandle QEvaporator;                    // W - rate of heat transfer to the evaporator coil
+        Nandle EvaporatorEnergy;               // J - heat transfer to the evaporator coil
+        Nandle QCondenser;                     // W - rate of heat transfer to the condenser coil
+        Nandle CondenserEnergy;                // J - heat transfer to the condenser coil
         bool MyOneTimeFlag;
         bool MyEnvrnFlag;
         bool GenInputOutputNodesUsed;
@@ -199,25 +199,25 @@ namespace ChillerAbsorption {
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void getDesignTemperatures(Real64 &tempDesCondIn, Real64 &TempDesEvapOut) override;
+        void getDesignTemperatures(Nandle &tempDesCondIn, Nandle &TempDesEvapOut) override;
 
-        void getSizingFactor(Real64 &sizFac) override;
+        void getSizingFactor(Nandle &sizFac) override;
 
-        void initialize(bool RunFlag, Real64 MyLoad);
+        void initialize(bool RunFlag, Nandle MyLoad);
 
         void setupOutputVars();
 
         void sizeChiller();
 
-        void calculate(Real64 &MyLoad, bool RunFlag);
+        void calculate(Nandle &MyLoad, bool RunFlag);
 
-        void updateRecords(Real64 MyLoad, bool RunFlag);
+        void updateRecords(Nandle MyLoad, bool RunFlag);
     };
 
     // Object Data

@@ -377,7 +377,7 @@ namespace DataSurfaces {
     // False means relative coordinates
     int MaxRecPts(0);           // Max number of receiving points on a surface for solar reflection calc
     int MaxReflRays(0);         // Max number of rays from a receiving surface for solar reflection calc
-    Real64 GroundLevelZ(0.0);   // Z value of ground level for solar refl calc (m)
+    Nandle GroundLevelZ(0.0);   // Z value of ground level for solar refl calc (m)
     bool AirflowWindows(false); // TRUE if one or more airflow windows
 
     bool ShadingTransmittanceVaries(false); // overall, shading transmittance varies for the building
@@ -390,114 +390,114 @@ namespace DataSurfaces {
     // 0 otherwise
     Array1D_int AdjacentZoneToSurface; // Array of adjacent zones to each surface
 
-    Array1D<Real64> X0;     // X-component of translation vector
-    Array1D<Real64> Y0;     // Y-component of translation vector
-    Array1D<Real64> Z0;     // Z-component of translation vector
-    Array1D<Real64> DSZone; // Factor for sky diffuse solar radiation into a zone
-    Array1D<Real64> DGZone; // Factor for ground diffuse solar radiation into a zone
-    Array1D<Real64> DBZone; // Factor for diffuse radiation in a zone from
+    Array1D<Nandle> X0;     // X-component of translation vector
+    Array1D<Nandle> Y0;     // Y-component of translation vector
+    Array1D<Nandle> Z0;     // Z-component of translation vector
+    Array1D<Nandle> DSZone; // Factor for sky diffuse solar radiation into a zone
+    Array1D<Nandle> DGZone; // Factor for ground diffuse solar radiation into a zone
+    Array1D<Nandle> DBZone; // Factor for diffuse radiation in a zone from
                             // beam reflecting from inside surfaces
-    Array1D<Real64>
+    Array1D<Nandle>
         DBZoneSSG;          // Factor for diffuse radiation in a zone from beam reflecting from inside surfaces. Used only for scheduled surface gains
-    Array1D<Real64> CBZone; // Factor for beam solar absorbed by interior shades
-    Array1D<Real64> AISurf; // Time step value of factor for beam
+    Array1D<Nandle> CBZone; // Factor for beam solar absorbed by interior shades
+    Array1D<Nandle> AISurf; // Time step value of factor for beam
     // absorbed on inside of opaque surface
-    Array1D<Real64> AOSurf; // Time step value of factor for beam
+    Array1D<Nandle> AOSurf; // Time step value of factor for beam
     // absorbed on outside of opaque surface
-    Array1D<Real64> BmToBmReflFacObs; // Factor for incident solar from specular beam refl
+    Array1D<Nandle> BmToBmReflFacObs; // Factor for incident solar from specular beam refl
     // from obstructions (W/m2)/(W/m2)
-    Array1D<Real64> BmToDiffReflFacObs; // Factor for incident solar from diffuse beam refl
+    Array1D<Nandle> BmToDiffReflFacObs; // Factor for incident solar from diffuse beam refl
     // from obstructions (W/m2)/(W/m2)
-    Array1D<Real64> BmToDiffReflFacGnd; // Factor for incident solar from diffuse beam refl from ground
+    Array1D<Nandle> BmToDiffReflFacGnd; // Factor for incident solar from diffuse beam refl from ground
 
-    Array2D<Real64> AWinSurf; // Time step value of factor for beam
+    Array2D<Nandle> AWinSurf; // Time step value of factor for beam
     // absorbed in window glass layers
 
     // Time step value of factor for diffuse absorbed in window layers
-    Array2D<Real64> AWinSurfDiffFront;
-    Array2D<Real64> AWinSurfDiffBack;
+    Array2D<Nandle> AWinSurfDiffFront;
+    Array2D<Nandle> AWinSurfDiffBack;
 
-    Array2D<Real64> AWinCFOverlap; // Time step value of factor for beam
+    Array2D<Nandle> AWinCFOverlap; // Time step value of factor for beam
     // absorbed in window glass layers which comes from other windows
     // It happens sometimes that beam enters one window and hits back of
     // second window. It is used in complex fenestration only
 
-    Array1D<Real64> AirSkyRadSplit; // Fractional split between the air and
+    Array1D<Nandle> AirSkyRadSplit; // Fractional split between the air and
     // the sky for radiation from the surface
     // Fraction of sky IR coming from sky itself; 1-AirSkyRadSplit comes from the atmosphere.
 
-    Array1D<Real64> WinTransSolar; // Exterior beam plus diffuse solar transmitted through window, or
+    Array1D<Nandle> WinTransSolar; // Exterior beam plus diffuse solar transmitted through window, or
     // window plus shade/blind, into zone (W)
-    Array1D<Real64> WinBmSolar; // Exterior beam solar transmitted through window, or
+    Array1D<Nandle> WinBmSolar; // Exterior beam solar transmitted through window, or
     // window plus blind, into zone (W)
 
-    Array1D<Real64> WinBmBmSolar; // Exterior beam-to-beam solar transmitted through window, or
+    Array1D<Nandle> WinBmBmSolar; // Exterior beam-to-beam solar transmitted through window, or
     // window plus blind, into zone (W)
-    Array1D<Real64> WinBmDifSolar; // Exterior beam-to-diffuse solar transmitted through window, or
+    Array1D<Nandle> WinBmDifSolar; // Exterior beam-to-diffuse solar transmitted through window, or
     // window plus blind, into zone (W)
 
-    Array1D<Real64> WinDifSolar; // Exterior diffuse solar transmitted through window, or
+    Array1D<Nandle> WinDifSolar; // Exterior diffuse solar transmitted through window, or
     // window plus shade/blind, into zone (W)
-    Array1D<Real64> WinDirSolTransAtIncAngle; // Window's beam-beam solar transmittance at current timestep's
+    Array1D<Nandle> WinDirSolTransAtIncAngle; // Window's beam-beam solar transmittance at current timestep's
     // angle of incidence
-    Array1D<Real64> WinHeatGain; // Total heat gain from window = WinTransSolar + (IR and convection from
+    Array1D<Nandle> WinHeatGain; // Total heat gain from window = WinTransSolar + (IR and convection from
     // glazing, or, if interior shade, IR and convection from
     // zone-side of shade plus gap air convection to zone) + (IR and
     // convection from frame) + (IR and convection from divider if no
     // interior shade) (W)
-    Array1D<Real64> WinHeatTransfer; // Total heat transfer through the window = WinTransSolar + conduction
+    Array1D<Nandle> WinHeatTransfer; // Total heat transfer through the window = WinTransSolar + conduction
     // through glazing and frame
-    Array1D<Real64> WinHeatGainRep; // Equals WinHeatGain when WinHeatGain >= 0.0
-    Array1D<Real64> WinHeatLossRep; // Equals -WinHeatGain when WinHeatGain < 0.0
+    Array1D<Nandle> WinHeatGainRep; // Equals WinHeatGain when WinHeatGain >= 0.0
+    Array1D<Nandle> WinHeatLossRep; // Equals -WinHeatGain when WinHeatGain < 0.0
 
-    Array1D<Real64> WinGainConvGlazToZoneRep;        // component of WinHeatGain convect to zone from glazing (W)
-    Array1D<Real64> WinGainIRGlazToZoneRep;          // component of WinHeatGain net IR to zone from glazing (W)
-    Array1D<Real64> WinLossSWZoneToOutWinRep;        // component of WinHeatGain shortwave transmit back out (W)
-    Array1D<Real64> WinGainFrameDividerToZoneRep;    // component of WinHeatGain to zone from frame/divider (W)
-    Array1D<Real64> WinGainConvGlazShadGapToZoneRep; // component of WinHeatGain convection to zone from
+    Array1D<Nandle> WinGainConvGlazToZoneRep;        // component of WinHeatGain convect to zone from glazing (W)
+    Array1D<Nandle> WinGainIRGlazToZoneRep;          // component of WinHeatGain net IR to zone from glazing (W)
+    Array1D<Nandle> WinLossSWZoneToOutWinRep;        // component of WinHeatGain shortwave transmit back out (W)
+    Array1D<Nandle> WinGainFrameDividerToZoneRep;    // component of WinHeatGain to zone from frame/divider (W)
+    Array1D<Nandle> WinGainConvGlazShadGapToZoneRep; // component of WinHeatGain convection to zone from
     // the gap between the inner most glazing and the shade   (W)
-    Array1D<Real64> WinGainConvShadeToZoneRep;        // component of WinHeatGain convect to zone from front shade (W)
-    Array1D<Real64> WinGainIRShadeToZoneRep;          // component of WinHeatGain net IR to zone from front shade (W)
-    Array1D<Real64> OtherConvGainInsideFaceToZoneRep; // net imbalance of convection heat gain from equivalent Layer window inside face to zone air
+    Array1D<Nandle> WinGainConvShadeToZoneRep;        // component of WinHeatGain convect to zone from front shade (W)
+    Array1D<Nandle> WinGainIRShadeToZoneRep;          // component of WinHeatGain net IR to zone from front shade (W)
+    Array1D<Nandle> OtherConvGainInsideFaceToZoneRep; // net imbalance of convection heat gain from equivalent Layer window inside face to zone air
 
-    Array1D<Real64> WinGapConvHtFlowRep; // Convective heat flow from gap in airflow window (W)
+    Array1D<Nandle> WinGapConvHtFlowRep; // Convective heat flow from gap in airflow window (W)
     // REAL(r64), ALLOCATABLE, DIMENSION(:) :: OpaqSurfInsFaceCondGainRep !Equals Opaq Surf Ins Face Cond
     //                                                                   ! when Opaq Surf Ins Face Cond >= 0
     // REAL(r64), ALLOCATABLE, DIMENSION(:) :: OpaqSurfInsFaceCondLossRep !Equals -Opaq Surf Ins Face Cond
     //                                                                   ! when Opaq Surf Ins Face Cond  < 0
-    Array1D<Real64> WinShadingAbsorbedSolar; // Exterior beam plus diffuse solar absorbed by
+    Array1D<Nandle> WinShadingAbsorbedSolar; // Exterior beam plus diffuse solar absorbed by
     //  window shading device (W)
-    Array1D<Real64> WinSysSolTransmittance; // Effective solar transmittance of window + shading device,
+    Array1D<Nandle> WinSysSolTransmittance; // Effective solar transmittance of window + shading device,
     // if present
-    Array1D<Real64> WinSysSolReflectance; // Effective solar reflectance of window + shading device,
+    Array1D<Nandle> WinSysSolReflectance; // Effective solar reflectance of window + shading device,
     // if present
-    Array1D<Real64> WinSysSolAbsorptance; // Effective solar absorptance of window + shading device,
+    Array1D<Nandle> WinSysSolAbsorptance; // Effective solar absorptance of window + shading device,
                                           // if present
-    Array2D<Real64> SUNCOSHR(
+    Array2D<Nandle> SUNCOSHR(
         24, 3, 0.0); // Hourly values of SUNCOS (solar direction cosines) //Autodesk:Init Zero-initialization added to avoid use uninitialized
-    Array2D<Real64> ReflFacBmToDiffSolObs;
-    Array2D<Real64> ReflFacBmToDiffSolGnd;
-    Array2D<Real64> ReflFacBmToBmSolObs;
-    Array1D<Real64> ReflFacSkySolObs;
-    Array1D<Real64> ReflFacSkySolGnd;
-    Array2D<Real64> CosIncAveBmToBmSolObs;
-    Array1D<Real64> DBZoneIntWin; // Value of factor for beam solar entering a zone through interior windows
+    Array2D<Nandle> ReflFacBmToDiffSolObs;
+    Array2D<Nandle> ReflFacBmToDiffSolGnd;
+    Array2D<Nandle> ReflFacBmToBmSolObs;
+    Array1D<Nandle> ReflFacSkySolObs;
+    Array1D<Nandle> ReflFacSkySolGnd;
+    Array2D<Nandle> CosIncAveBmToBmSolObs;
+    Array1D<Nandle> DBZoneIntWin; // Value of factor for beam solar entering a zone through interior windows
     // (considered to contribute to diffuse in zone)
-    Array1D<Real64> SurfSunlitArea; // Sunlit area by surface number
-    Array1D<Real64> SurfSunlitFrac; // Sunlit fraction by surface number
+    Array1D<Nandle> SurfSunlitArea; // Sunlit area by surface number
+    Array1D<Nandle> SurfSunlitFrac; // Sunlit fraction by surface number
     // energy
-    Array1D<Real64> WinTransSolarEnergy; // Energy of WinTransSolar [J]
-    Array1D<Real64> WinBmSolarEnergy;    // Energy of WinBmSolar [J]
+    Array1D<Nandle> WinTransSolarEnergy; // Energy of WinTransSolar [J]
+    Array1D<Nandle> WinBmSolarEnergy;    // Energy of WinBmSolar [J]
 
-    Array1D<Real64> WinBmBmSolarEnergy;  // Beam-to-beam energy of WinBmSolar [J]
-    Array1D<Real64> WinBmDifSolarEnergy; // Beam-to-diffuse energy of WinBmSolar [J]
+    Array1D<Nandle> WinBmBmSolarEnergy;  // Beam-to-beam energy of WinBmSolar [J]
+    Array1D<Nandle> WinBmDifSolarEnergy; // Beam-to-diffuse energy of WinBmSolar [J]
 
-    Array1D<Real64> WinDifSolarEnergy;             // Energy of WinDifSolar [J]
-    Array1D<Real64> WinHeatGainRepEnergy;          // Energy of WinHeatGainRep [J]
-    Array1D<Real64> WinHeatLossRepEnergy;          // Energy of WinHeatLossRep [J]
-    Array1D<Real64> WinShadingAbsorbedSolarEnergy; // Energy of WinShadingAbsorbedSolar [J]
-    Array1D<Real64> WinGapConvHtFlowRepEnergy;     // Energy of WinGapConvHtFlowRep [J]
-    Array1D<Real64> WinHeatTransferRepEnergy;      // Energy of WinHeatTransfer [J]
+    Array1D<Nandle> WinDifSolarEnergy;             // Energy of WinDifSolar [J]
+    Array1D<Nandle> WinHeatGainRepEnergy;          // Energy of WinHeatGainRep [J]
+    Array1D<Nandle> WinHeatLossRepEnergy;          // Energy of WinHeatLossRep [J]
+    Array1D<Nandle> WinShadingAbsorbedSolarEnergy; // Energy of WinShadingAbsorbedSolar [J]
+    Array1D<Nandle> WinGapConvHtFlowRepEnergy;     // Energy of WinGapConvHtFlowRep [J]
+    Array1D<Nandle> WinHeatTransferRepEnergy;      // Energy of WinHeatTransfer [J]
 
     std::vector<int> AllHTSurfaceList;          // List of all heat transfer surfaces
     std::vector<int> AllIZSurfaceList;          // List of all interzone heat transfer surfaces
@@ -538,7 +538,7 @@ namespace DataSurfaces {
 
         // Reverse vertices order if clockwise
         // If sorting by y for slab method can detect clockwise faster by just comparing edges at bottom or top-most vertex
-        Real64 area(0.0); // Actually 2x the signed area
+        Nandle area(0.0); // Actually 2x the signed area
         for (Vertices::size_type i = 0; i < n; ++i) {
             Vector2D const &v(vertices[i]);
             Vector2D const &w(vertices[(i + 1) % n]);
@@ -565,13 +565,13 @@ namespace DataSurfaces {
             slabYs.erase(iClip, slabYs.end());
             slabYs.shrink_to_fit();
             for (size_type iSlab = 0, iSlab_end = slabYs.size() - 1; iSlab < iSlab_end; ++iSlab) { // Create slabs
-                Real64 xl(std::numeric_limits<Real64>::max());
-                Real64 xu(std::numeric_limits<Real64>::lowest());
-                Real64 const yl(slabYs[iSlab]);
-                Real64 const yu(slabYs[iSlab + 1]);
+                Nandle xl(std::numeric_limits<Nandle>::max());
+                Nandle xu(std::numeric_limits<Nandle>::lowest());
+                Nandle const yl(slabYs[iSlab]);
+                Nandle const yu(slabYs[iSlab + 1]);
                 slabs.push_back(Slab(yl, yu));
                 Slab &slab(slabs.back());
-                using CrossEdge = std::tuple<Real64, Real64, size_type>;
+                using CrossEdge = std::tuple<Nandle, Nandle, size_type>;
                 using CrossEdges = std::vector<CrossEdge>;
                 CrossEdges crossEdges;
                 for (size_type i = 0; i < n; ++i) { // Find edges crossing slab
@@ -582,9 +582,9 @@ namespace DataSurfaces {
                     {
                         Edge const &e(edges[i]);
                         assert(e.y != 0.0);
-                        Real64 const exy(e.x / e.y);
-                        Real64 const xb(v.x + (yl - v.y) * exy); // x_bot coordinate where edge intersects yl
-                        Real64 const xt(v.x + (yu - v.y) * exy); // x_top coordinate where edge intersects yu
+                        Nandle const exy(e.x / e.y);
+                        Nandle const xb(v.x + (yl - v.y) * exy); // x_bot coordinate where edge intersects yl
+                        Nandle const xt(v.x + (yu - v.y) * exy); // x_top coordinate where edge intersects yu
                         xl = std::min(xl, std::min(xb, xt));
                         xu = std::max(xu, std::max(xb, xt));
                         crossEdges.push_back(std::make_tuple(xb, xt, i));
@@ -601,12 +601,12 @@ namespace DataSurfaces {
                                      std::get<0>(e2) + std::get<1>(e2); // Sort edges by x_mid: x_bot or x_top could have repeats with shared vertex
                           });
 #ifndef NDEBUG // Check x_bot and x_top are also sorted
-                Real64 xb(std::get<0>(crossEdges[0]));
-                Real64 xt(std::get<1>(crossEdges[0]));
-                Real64 const tol(1.0e-9 * std::max(std::abs(xl), std::abs(xu))); // EnergyPlus vertex precision is not tight so tolerance isn't either
+                Nandle xb(std::get<0>(crossEdges[0]));
+                Nandle xt(std::get<1>(crossEdges[0]));
+                Nandle const tol(1.0e-9 * std::max(std::abs(xl), std::abs(xu))); // EnergyPlus vertex precision is not tight so tolerance isn't either
                 for (auto const &edge : crossEdges) {                            // Detect non-simple polygon with crossing edges
-                    Real64 const xbe(std::get<0>(edge));
-                    Real64 const xte(std::get<1>(edge));
+                    Nandle const xbe(std::get<0>(edge));
+                    Nandle const xte(std::get<1>(edge));
                     assert(xb <= xbe + tol);
                     assert(xt <= xte + tol);
                     xb = xbe;
@@ -658,10 +658,10 @@ namespace DataSurfaces {
             OutWetBulbTemp = DataEnvironment::OutWetBulbTemp;
         } else {
             // Base temperatures at Z = 0 (C)
-            Real64 const BaseDryTemp(DataEnvironment::OutDryBulbTemp + WeatherFileTempModCoeff);
-            Real64 const BaseWetTemp(DataEnvironment::OutWetBulbTemp + WeatherFileTempModCoeff);
+            Nandle const BaseDryTemp(DataEnvironment::OutDryBulbTemp + WeatherFileTempModCoeff);
+            Nandle const BaseWetTemp(DataEnvironment::OutWetBulbTemp + WeatherFileTempModCoeff);
 
-            Real64 const Z(Centroid.z); // Centroid value
+            Nandle const Z(Centroid.z); // Centroid value
             if (Z <= 0.0) {
                 OutDryBulbTemp = BaseDryTemp;
                 OutWetBulbTemp = BaseWetTemp;
@@ -672,7 +672,7 @@ namespace DataSurfaces {
         }
     }
 
-    void SurfaceData::SetWindSpeedAt(Real64 const fac)
+    void SurfaceData::SetWindSpeedAt(Nandle const fac)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Linda Lawrie
@@ -689,7 +689,7 @@ namespace DataSurfaces {
         if (SiteWindExp == 0.0) {
             WindSpeed = DataEnvironment::WindSpeed;
         } else {
-            Real64 const Z(Centroid.z); // Centroid value
+            Nandle const Z(Centroid.z); // Centroid value
             if (Z <= 0.0) {
                 WindSpeed = 0.0;
             } else {
@@ -701,7 +701,7 @@ namespace DataSurfaces {
         }
     }
 
-    void SurfaceData::SetWindDirAt(Real64 const fac)
+    void SurfaceData::SetWindDirAt(Nandle const fac)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         X Luo
@@ -716,7 +716,7 @@ namespace DataSurfaces {
         WindDir = fac;
     }
 
-    Real64 SurfaceData::getInsideAirTemperature(const int t_SurfNum) const
+    Nandle SurfaceData::getInsideAirTemperature(const int t_SurfNum) const
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -735,7 +735,7 @@ namespace DataSurfaces {
         //       is part of SurfaceData structure and instead of calling TempEffBulkAir( SurfNum ) it should
         //       be called Surface( SurfNum ).TempEffBulkAir (Simon Vidanovic)
 
-        Real64 RefAirTemp = 0;
+        Nandle RefAirTemp = 0;
 
         // determine reference air temperature for this surface
         {
@@ -755,12 +755,12 @@ namespace DataSurfaces {
                     // return;
                 }
                 // determine supply air conditions
-                Real64 SumSysMCp = 0;
-                Real64 SumSysMCpT = 0;
+                Nandle SumSysMCp = 0;
+                Nandle SumSysMCpT = 0;
                 for (int NodeNum = 1; NodeNum <= ZoneEquipConfig(Zone).NumInletNodes; ++NodeNum) {
-                    Real64 NodeTemp = Node(ZoneEquipConfig(Zone).InletNode(NodeNum)).Temp;
-                    Real64 MassFlowRate = Node(ZoneEquipConfig(Zone).InletNode(NodeNum)).MassFlowRate;
-                    Real64 CpAir = PsyCpAirFnW(ZoneAirHumRat(Zone));
+                    Nandle NodeTemp = Node(ZoneEquipConfig(Zone).InletNode(NodeNum)).Temp;
+                    Nandle MassFlowRate = Node(ZoneEquipConfig(Zone).InletNode(NodeNum)).MassFlowRate;
+                    Nandle CpAir = PsyCpAirFnW(ZoneAirHumRat(Zone));
                     SumSysMCp += MassFlowRate * CpAir;
                     SumSysMCpT += MassFlowRate * CpAir * NodeTemp;
                 }
@@ -775,15 +775,15 @@ namespace DataSurfaces {
         return RefAirTemp;
     }
 
-    Real64 SurfaceData::getInsideIR(const int t_SurfNum)
+    Nandle SurfaceData::getInsideIR(const int t_SurfNum)
     {
         auto &window(SurfaceWindow(t_SurfNum));
-        const Real64 value = window.IRfromParentZone + QHTRadSysSurf(t_SurfNum) + QHWBaseboardSurf(t_SurfNum) + QSteamBaseboardSurf(t_SurfNum) +
+        const Nandle value = window.IRfromParentZone + QHTRadSysSurf(t_SurfNum) + QHWBaseboardSurf(t_SurfNum) + QSteamBaseboardSurf(t_SurfNum) +
                              QElecBaseboardSurf(t_SurfNum);
         return value;
     }
 
-    Real64 SurfaceData::getOutsideAirTemperature(const int t_SurfNum) const
+    Nandle SurfaceData::getOutsideAirTemperature(const int t_SurfNum) const
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -797,7 +797,7 @@ namespace DataSurfaces {
         //
         // NOTE: This routine has been copy/pasted in the past in several different modules with slight
         //       modifications at some of those places. Exterior/interior surface air temperature is tied to surface.
-        Real64 temperature = 0;
+        Nandle temperature = 0;
 
         if (ExtBoundCond > 0) // Interzone window
         {
@@ -821,7 +821,7 @@ namespace DataSurfaces {
         return temperature;
     }
 
-    Real64 SurfaceData::getOutsideIR(const int t_SurfNum) const
+    Nandle SurfaceData::getOutsideIR(const int t_SurfNum) const
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -831,12 +831,12 @@ namespace DataSurfaces {
 
         // PURPOSE OF THIS SUBROUTINE:
         // Calculates outside infrared radiation
-        Real64 value = 0;
+        Nandle value = 0;
         if (ExtBoundCond > 0) {
             value = SurfaceWindow(ExtBoundCond).IRfromParentZone + QHTRadSysSurf(ExtBoundCond) + QHWBaseboardSurf(ExtBoundCond) +
                     QSteamBaseboardSurf(ExtBoundCond) + QElecBaseboardSurf(ExtBoundCond);
         } else {
-            Real64 tout = getOutsideAirTemperature(t_SurfNum) + KelvinConv;
+            Nandle tout = getOutsideAirTemperature(t_SurfNum) + KelvinConv;
             value = sigma * pow_4(tout);
             value = ViewFactorSkyIR * (AirSkyRadSplit(t_SurfNum) * sigma * pow_4(SkyTempKelvin) + (1.0 - AirSkyRadSplit(t_SurfNum)) * value) +
                     ViewFactorGroundIR * value;
@@ -844,7 +844,7 @@ namespace DataSurfaces {
         return value;
     }
 
-    Real64 SurfaceData::getSWIncident(const int t_SurfNum)
+    Nandle SurfaceData::getSWIncident(const int t_SurfNum)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -858,7 +858,7 @@ namespace DataSurfaces {
         return QRadSWOutIncident(t_SurfNum) + QS(Surface(t_SurfNum).SolarEnclIndex);
     }
 
-    Real64 SurfaceData::getSWBeamIncident(const int t_SurfNum)
+    Nandle SurfaceData::getSWBeamIncident(const int t_SurfNum)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -872,7 +872,7 @@ namespace DataSurfaces {
         return QRadSWOutIncidentBeam(t_SurfNum);
     }
 
-    Real64 SurfaceData::getSWDiffuseIncident(const int t_SurfNum)
+    Nandle SurfaceData::getSWDiffuseIncident(const int t_SurfNum)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -933,7 +933,7 @@ namespace DataSurfaces {
         Vertices::size_type const n(Vertex.size());
         assert(n >= 3);
         Vector center(0.0);                           // Center (vertex average) point (not mass centroid)
-        Real64 a(0.0), b(0.0), c(0.0), d(0.0);        // Plane coefficients
+        Nandle a(0.0), b(0.0), c(0.0), d(0.0);        // Plane coefficients
         for (Vertices::size_type i = 0; i < n; ++i) { // Newell's method for robustness (not speed)
             Vector const &v(Vertex[i]);
             Vector const &w(Vertex[(i + 1) % n]);
@@ -953,21 +953,21 @@ namespace DataSurfaces {
         Vertices::size_type const n(Vertex.size());
         assert(n >= 3);
         assert(plane == computed_plane()); // Set plane first
-        using Vertex2D = ObjexxFCL::Vector2<Real64>;
+        using Vertex2D = ObjexxFCL::Vector2<Nandle>;
         using Vertices2D = ObjexxFCL::Array1D<Vertex2D>;
 
         // Select axis to project along
-        Real64 const a(std::abs(plane.x));                                       // Plane normal x coordinate magnitude
-        Real64 const b(std::abs(plane.y));                                       // Plane normal y coordinate magnitude
-        Real64 const c(std::abs(plane.z));                                       // Plane normal z coordinate magnitude
+        Nandle const a(std::abs(plane.x));                                       // Plane normal x coordinate magnitude
+        Nandle const b(std::abs(plane.y));                                       // Plane normal y coordinate magnitude
+        Nandle const c(std::abs(plane.z));                                       // Plane normal z coordinate magnitude
         int const axis(a >= std::max(b, c) ? 0 : (b >= std::max(a, c) ? 1 : 2)); // Project along plane's normal's largest magnitude coordinate
 
         // Set up 2D surface
         Vertices2D v2d(n);
         Vector const &v0(Vertex[0]);
         if (axis == 0) {               // Use y,z for 2D surface
-            Real64 yl(v0.y), yu(v0.y); // y coordinate ranges
-            Real64 zl(v0.z), zu(v0.z); // z coordinate ranges
+            Nandle yl(v0.y), yu(v0.y); // y coordinate ranges
+            Nandle zl(v0.z), zu(v0.z); // z coordinate ranges
             for (Vertices::size_type i = 0; i < n; ++i) {
                 Vector const &v(Vertex[i]);
                 v2d[i] = Vertex2D(v.y, v.z);
@@ -978,8 +978,8 @@ namespace DataSurfaces {
             }
             return Surface2D(shapeCat, axis, v2d, Vertex2D(yl, zl), Vertex2D(yu, zu));
         } else if (axis == 1) {        // Use x,z for 2D surface
-            Real64 xl(v0.x), xu(v0.x); // x coordinate ranges
-            Real64 zl(v0.z), zu(v0.z); // z coordinate ranges
+            Nandle xl(v0.x), xu(v0.x); // x coordinate ranges
+            Nandle zl(v0.z), zu(v0.z); // z coordinate ranges
             for (Vertices::size_type i = 0; i < n; ++i) {
                 Vector const &v(Vertex[i]);
                 v2d[i] = Vertex2D(v.x, v.z);
@@ -990,8 +990,8 @@ namespace DataSurfaces {
             }
             return Surface2D(shapeCat, axis, v2d, Vertex2D(xl, zl), Vertex2D(xu, zu));
         } else {                       // Use x,y for 2D surface
-            Real64 xl(v0.x), xu(v0.x); // x coordinate ranges
-            Real64 yl(v0.y), yu(v0.y); // y coordinate ranges
+            Nandle xl(v0.x), xu(v0.x); // x coordinate ranges
+            Nandle yl(v0.y), yu(v0.y); // y coordinate ranges
             for (Vertices::size_type i = 0; i < n; ++i) {
                 Vector const &v(Vertex[i]);
                 v2d[i] = Vertex2D(v.x, v.y);
@@ -1004,12 +1004,12 @@ namespace DataSurfaces {
         }
     }
 
-    Real64 SurfaceData::get_average_height() const
+    Nandle SurfaceData::get_average_height() const
     {
         if (std::abs(SinTilt) < 1.e-4) {
             return 0.0;
         }
-        using Vertex2D = ObjexxFCL::Vector2<Real64>;
+        using Vertex2D = ObjexxFCL::Vector2<Nandle>;
         using Vertices2D = ObjexxFCL::Array1D<Vertex2D>;
         Vertices::size_type const n(Vertex.size());
         assert(n >= 3);
@@ -1017,10 +1017,10 @@ namespace DataSurfaces {
         Vertices2D v2d(n);
 
         // project onto 2D vertical plane
-        Real64 xRef = Vertex[0].x;
-        Real64 yRef = Vertex[0].y;
-        Real64 const &saz(SinAzim);
-        Real64 const &caz(CosAzim);
+        Nandle xRef = Vertex[0].x;
+        Nandle yRef = Vertex[0].y;
+        Nandle const &saz(SinAzim);
+        Nandle const &caz(CosAzim);
         for (Vertices::size_type i = 0; i < n; ++i) {
             Vector const &v(Vertex[i]);
             v2d[i] = Vertex2D(-(v.x - xRef) * caz + (v.y - yRef) * saz, v.z);
@@ -1029,13 +1029,13 @@ namespace DataSurfaces {
         // piecewise linear integration
 
         // Get total width of polygon
-        Real64 minX(v2d[0].x), maxX(v2d[0].x);
+        Nandle minX(v2d[0].x), maxX(v2d[0].x);
         for (Vertices::size_type i = 0; i < n; ++i) {
             Vertex2D const &v(v2d[i]);
             minX = std::min(minX, v.x);
             maxX = std::max(maxX, v.x);
         }
-        Real64 totalWidth = maxX - minX;
+        Nandle totalWidth = maxX - minX;
 
         if (totalWidth == 0.0) {
             // This should never happen, but if it does, print a somewhat meaningful fatal error
@@ -1043,7 +1043,7 @@ namespace DataSurfaces {
             ShowFatalError("Calculated projected surface width is zero for surface=\"" + Name + "\"");
         }
 
-        Real64 averageHeight = 0.0;
+        Nandle averageHeight = 0.0;
         for (Vertices::size_type i = 0; i < n; ++i) {
             Vertex2D const &v(v2d[i]);
 
@@ -1193,7 +1193,7 @@ namespace DataSurfaces {
         // Using/Aliasing
         using DataEnvironment::SetOutBulbTempAt_error;
 
-        Real64 minBulb = 0.0;
+        Nandle minBulb = 0.0;
         for (auto &surface : Surface) {
             minBulb = min(minBulb, surface.OutDryBulbTemp, surface.OutWetBulbTemp);
             if (minBulb < -100.0) SetOutBulbTempAt_error("Surface", surface.Centroid.z, surface.Name);
@@ -1207,7 +1207,7 @@ namespace DataSurfaces {
         using DataEnvironment::SiteWindExp;
         using DataEnvironment::WeatherFileWindModCoeff;
 
-        Real64 const fac(DataEnvironment::WindSpeed * WeatherFileWindModCoeff * std::pow(SiteWindBLHeight, -SiteWindExp));
+        Nandle const fac(DataEnvironment::WindSpeed * WeatherFileWindModCoeff * std::pow(SiteWindBLHeight, -SiteWindExp));
         for (auto &surface : Surface) {
             surface.SetWindSpeedAt(fac);
         }
@@ -1307,32 +1307,32 @@ namespace DataSurfaces {
         return ClassName;
     }
 
-    Real64 SurfaceWindowCalc::AbsorptanceFromInteriorFrontSide() const
+    Nandle SurfaceWindowCalc::AbsorptanceFromInteriorFrontSide() const
     {
         return (IntBeamAbsByShade + IntSWAbsByShade) * ShadeAbsFacFace(2);
     }
 
-    Real64 SurfaceWindowCalc::AbsorptanceFromExteriorFrontSide() const
+    Nandle SurfaceWindowCalc::AbsorptanceFromExteriorFrontSide() const
     {
         return (ExtBeamAbsByShade + ExtDiffAbsByShade) * ShadeAbsFacFace(1);
     }
 
-    Real64 SurfaceWindowCalc::AbsFrontSide() const
+    Nandle SurfaceWindowCalc::AbsFrontSide() const
     {
         return AbsorptanceFromExteriorFrontSide() + AbsorptanceFromInteriorFrontSide();
     }
 
-    Real64 SurfaceWindowCalc::AbsorptanceFromInteriorBackSide() const
+    Nandle SurfaceWindowCalc::AbsorptanceFromInteriorBackSide() const
     {
         return (IntBeamAbsByShade + IntSWAbsByShade) * ShadeAbsFacFace(1);
     }
 
-    Real64 SurfaceWindowCalc::AbsorptanceFromExteriorBackSide() const
+    Nandle SurfaceWindowCalc::AbsorptanceFromExteriorBackSide() const
     {
         return (ExtBeamAbsByShade + ExtDiffAbsByShade) * ShadeAbsFacFace(2);
     }
 
-    Real64 SurfaceWindowCalc::AbsBackSide() const
+    Nandle SurfaceWindowCalc::AbsBackSide() const
     {
         return AbsorptanceFromExteriorBackSide() + AbsorptanceFromInteriorBackSide();
     }

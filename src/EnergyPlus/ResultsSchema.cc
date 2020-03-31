@@ -680,7 +680,7 @@ namespace ResultsFramework {
 
         Array1D_string alphas(5);
         int numAlphas;
-        Array1D<Real64> numbers(2);
+        Array1D<Nandle> numbers(2);
         int numNumbers;
         int status;
         inputProcessor->getObjectItem("Output:JSON", 1, alphas, numAlphas, numbers, numNumbers, status);

@@ -155,21 +155,21 @@ namespace SurfaceGeometry {
         // This is purposefully in an anonymous namespace so nothing outside this implementation file can use it.
         bool ProcessSurfaceVerticesOneTimeFlag(true);
         int checkSubSurfAzTiltNormErrCount(0);
-        Array1D<Real64> Xpsv;
-        Array1D<Real64> Ypsv;
-        Array1D<Real64> Zpsv;
+        Array1D<Nandle> Xpsv;
+        Array1D<Nandle> Ypsv;
+        Array1D<Nandle> Zpsv;
 
         bool GetSurfaceDataOneTimeFlag(false);
         std::unordered_map<std::string, std::string> UniqueSurfaceNames;
     } // namespace
 
     // Following are used only during getting vertices, so are module variables here.
-    Real64 CosBldgRelNorth(0.0);     // Cosine of the building rotation (relative north) (includes appendix G rotation)
-    Real64 SinBldgRelNorth(0.0);     // Sine of the building rotation (relative north)   (includes appendix G rotation)
-    Real64 CosBldgRotAppGonly(0.0);  // Cosine of the building rotation for appendix G only(relative north)
-    Real64 SinBldgRotAppGonly(0.0);  // Sine of the building rotation for appendix G only (relative north)
-    Array1D<Real64> CosZoneRelNorth; // Cosine of the zone rotation (relative north)
-    Array1D<Real64> SinZoneRelNorth; // Sine of the zone rotation (relative north)
+    Nandle CosBldgRelNorth(0.0);     // Cosine of the building rotation (relative north) (includes appendix G rotation)
+    Nandle SinBldgRelNorth(0.0);     // Sine of the building rotation (relative north)   (includes appendix G rotation)
+    Nandle CosBldgRotAppGonly(0.0);  // Cosine of the building rotation for appendix G only(relative north)
+    Nandle SinBldgRotAppGonly(0.0);  // Sine of the building rotation for appendix G only (relative north)
+    Array1D<Nandle> CosZoneRelNorth; // Cosine of the zone rotation (relative north)
+    Array1D<Nandle> SinZoneRelNorth; // Sine of the zone rotation (relative north)
 
     bool NoGroundTempObjWarning(true); // This will cause a warning to be issued if surfaces with "Ground"
     // outside environment are used but no ground temperature object was input.
@@ -243,26 +243,26 @@ namespace SurfaceGeometry {
         static ObjexxFCL::gio::Fmt fmtA("(A)");
         static std::string const RoutineName("SetUpZoneGeometry: ");
 
-        Real64 AverageHeight; // Used to keep track of average height of a surface/zone
+        Nandle AverageHeight; // Used to keep track of average height of a surface/zone
         int SurfNum;          // Surface number (DO loop counter)
         int ZoneNum;          // Zone number for current surface and DO loop counter
-        Real64 ZMax;          // Maximum Z of a surface (detailed outside coefficient calculation)
-        Real64 ZMin;          // Minimum Z of a surface (detailed outside coefficient calculation)
-        Real64 ZCeilAvg;
-        Real64 CeilCount;
-        Real64 ZFlrAvg;
-        Real64 FloorCount;
-        Real64 TotSurfArea;
-        Real64 Z1;
-        Real64 Z2;
+        Nandle ZMax;          // Maximum Z of a surface (detailed outside coefficient calculation)
+        Nandle ZMin;          // Minimum Z of a surface (detailed outside coefficient calculation)
+        Nandle ZCeilAvg;
+        Nandle CeilCount;
+        Nandle ZFlrAvg;
+        Nandle FloorCount;
+        Nandle TotSurfArea;
+        Nandle Z1;
+        Nandle Z2;
         std::string String1;
         std::string String2;
         std::string String3;
         int Count; // To count wall surfaces for ceiling height calculation
         Array1D_bool ZoneCeilingHeightEntered;
-        Array1D<Real64> ZoneCeilingArea;
+        Array1D<Nandle> ZoneCeilingArea;
         static int ErrCount(0);
-        Real64 NominalUwithConvCoeffs;
+        Nandle NominalUwithConvCoeffs;
         std::string cNominalU;
         std::string cNominalUwithConvCoeffs;
         bool isWithConvCoefValid;
@@ -949,8 +949,8 @@ namespace SurfaceGeometry {
         int NVert;
         int Vert;
         int n;
-        Real64 SurfWorldAz;
-        Real64 SurfTilt;
+        Nandle SurfWorldAz;
+        Nandle SurfTilt;
 
         int MultFound;
         int MultSurfNum;
@@ -970,7 +970,7 @@ namespace SurfaceGeometry {
         int WinShadingControlPtr;
         int ShadingType;
         int ErrCount;
-        Real64 diffp;
+        Nandle diffp;
         bool izConstDiff;    // differences in construction for IZ surfaces
         bool izConstDiffMsg; // display message about hb diffs only once.
 
@@ -2115,8 +2115,8 @@ namespace SurfaceGeometry {
     {
         bool sameSurfNormal(false); // True if surface has the same surface normal within tolerance
         bool baseSurfHoriz(false);  // True if base surface is near horizontal
-        Real64 const warningTolerance(30.0);
-        Real64 const errorTolerance(90.0);
+        Nandle const warningTolerance(30.0);
+        Nandle const errorTolerance(90.0);
 
         surfaceError = false;
 
@@ -2246,7 +2246,7 @@ namespace SurfaceGeometry {
         int NumStmt;
         Array1D_string GAlphas(5);
         int NAlphas;
-        Array1D<Real64> GNum(1);
+        Array1D<Nandle> GNum(1);
         int NNum;
         int IOStat;
         bool OK;
@@ -2501,8 +2501,8 @@ namespace SurfaceGeometry {
         int ItemsToGet;
         int ClassItem;
         int numSides;
-        Real64 SchedMinValue;
-        Real64 SchedMaxValue;
+        Nandle SchedMinValue;
+        Nandle SchedMaxValue;
 
         if ((TotDetachedFixed + TotDetachedBldg) > 0 && SolarDistribution == MinimalShadowing) {
             ShowWarningError("Detached shading effects are ignored when Solar Distribution = MinimalShadowing");
@@ -3586,11 +3586,11 @@ namespace SurfaceGeometry {
     }
 
     void MakeRectangularVertices(int const SurfNum,
-                                 Real64 const XCoord,
-                                 Real64 const YCoord,
-                                 Real64 const ZCoord,
-                                 Real64 const Length,
-                                 Real64 const Height,
+                                 Nandle const XCoord,
+                                 Nandle const YCoord,
+                                 Nandle const ZCoord,
+                                 Nandle const Length,
+                                 Nandle const Height,
                                  bool const SurfWorldCoordSystem)
     {
 
@@ -3625,20 +3625,20 @@ namespace SurfaceGeometry {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SurfAzimuth; // Surface Azimuth/Facing (same as Base Surface)
-        Real64 SurfTilt;    // Tilt (same as Base Surface)
-        Real64 XLLC;
-        Real64 YLLC;
-        Real64 ZLLC;
-        Real64 CosSurfAzimuth;
-        Real64 SinSurfAzimuth;
-        Real64 CosSurfTilt;
-        Real64 SinSurfTilt;
-        Array1D<Real64> XX(4);
-        Array1D<Real64> YY(4);
-        Real64 Xb;
-        Real64 Yb;
-        Real64 Perimeter;
+        Nandle SurfAzimuth; // Surface Azimuth/Facing (same as Base Surface)
+        Nandle SurfTilt;    // Tilt (same as Base Surface)
+        Nandle XLLC;
+        Nandle YLLC;
+        Nandle ZLLC;
+        Nandle CosSurfAzimuth;
+        Nandle SinSurfAzimuth;
+        Nandle CosSurfTilt;
+        Nandle SinSurfTilt;
+        Array1D<Nandle> XX(4);
+        Array1D<Nandle> YY(4);
+        Nandle Xb;
+        Nandle Yb;
+        Nandle Perimeter;
         int n;
         int Vrt;
 
@@ -4483,7 +4483,7 @@ namespace SurfaceGeometry {
         int MatGap1;        // Material number of gap to left (outer side) of between-glass shade/blind
         int MatGap2;        // Material number of gap to right (inner side) of between-glass shade/blind
         int MatSh;          // Between-glass shade/blind material number
-        Real64 MatGapCalc;  // Calculated MatGap diff for shaded vs non-shaded constructions
+        Nandle MatGapCalc;  // Calculated MatGap diff for shaded vs non-shaded constructions
 
         // If WindowShadingControl has been specified for this window --
         // Set shaded construction number if shaded construction was specified in WindowShadingControl.
@@ -4839,10 +4839,10 @@ namespace SurfaceGeometry {
 
     void MakeRelativeRectangularVertices(int const BaseSurfNum, // Base surface
                                          int const SurfNum,
-                                         Real64 const XCoord,
-                                         Real64 const ZCoord,
-                                         Real64 const Length,
-                                         Real64 const Height)
+                                         Nandle const XCoord,
+                                         Nandle const ZCoord,
+                                         Nandle const Length,
+                                         Nandle const Height)
     {
 
         // SUBROUTINE INFORMATION:
@@ -4876,22 +4876,22 @@ namespace SurfaceGeometry {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SurfAzimuth; // Surface Azimuth/Facing (same as Base Surface)
-        Real64 SurfTilt;    // Tilt (same as Base Surface)
-        Real64 XLLC;
-        Real64 YLLC;
-        Real64 ZLLC;
-        Real64 CosSurfAzimuth;
-        Real64 SinSurfAzimuth;
-        Real64 CosSurfTilt;
-        Real64 SinSurfTilt;
-        Real64 BaseCosSurfAzimuth;
-        Real64 BaseSinSurfAzimuth;
-        Real64 BaseCosSurfTilt;
-        Real64 BaseSinSurfTilt;
-        Array1D<Real64> XX(4);
-        Array1D<Real64> YY(4);
-        Real64 Perimeter;
+        Nandle SurfAzimuth; // Surface Azimuth/Facing (same as Base Surface)
+        Nandle SurfTilt;    // Tilt (same as Base Surface)
+        Nandle XLLC;
+        Nandle YLLC;
+        Nandle ZLLC;
+        Nandle CosSurfAzimuth;
+        Nandle SinSurfAzimuth;
+        Nandle CosSurfTilt;
+        Nandle SinSurfTilt;
+        Nandle BaseCosSurfAzimuth;
+        Nandle BaseSinSurfAzimuth;
+        Nandle BaseCosSurfTilt;
+        Nandle BaseSinSurfTilt;
+        Array1D<Nandle> XX(4);
+        Array1D<Nandle> YY(4);
+        Nandle Perimeter;
         int n;
         int Vrt;
 
@@ -5064,8 +5064,8 @@ namespace SurfaceGeometry {
         int NumNumbers; // Number of properties being passed
         int Found;      // For matching interzone surfaces
         int Loop;
-        Real64 SchedMinValue;
-        Real64 SchedMaxValue;
+        Nandle SchedMinValue;
+        Nandle SchedMaxValue;
 
         if (TotShdSubs > 0 && SolarDistribution == MinimalShadowing) {
             ShowWarningError("Shading effects of Fins and Overhangs are ignored when Solar Distribution = MinimalShadowing");
@@ -5244,15 +5244,15 @@ namespace SurfaceGeometry {
         int NumNumbers;
         int IOStat; // IO Status when calling get input subroutine
         int Found;  // For matching base surfaces
-        Real64 Depth;
-        Real64 Length;
-        Real64 Xp;
-        Real64 Yp;
-        Real64 Zp;
-        Real64 XLLC;
-        Real64 YLLC;
+        Nandle Depth;
+        Nandle Length;
+        Nandle Xp;
+        Nandle Yp;
+        Nandle Zp;
+        Nandle XLLC;
+        Nandle YLLC;
         int BaseSurfNum;
-        Real64 TiltAngle;
+        Nandle TiltAngle;
         bool MakeFin;
 
         if ((TotOverhangs + TotOverhangsProjection + TotFins + TotFinsProjection) > 0 && SolarDistribution == MinimalShadowing) {
@@ -5979,8 +5979,8 @@ namespace SurfaceGeometry {
         int AlphaOffset; // local temp var
         std::string Roughness;
         int ThisSurf;      // do loop counter
-        Real64 AvgAzimuth; // temp for error checking
-        Real64 AvgTilt;    // temp for error checking
+        Nandle AvgAzimuth; // temp for error checking
+        Nandle AvgTilt;    // temp for error checking
         int SurfID;        // local surface "pointer"
         bool IsBlank;
         bool ErrorInName;
@@ -6113,7 +6113,7 @@ namespace SurfaceGeometry {
             // now that we should have all the surfaces, do some preperations and checks.
 
             // are they all similar tilt and azimuth? Issue warnings so people can do it if they really want
-            Real64 const surfaceArea(sum_sub(Surface, &SurfaceData::Area, ExtVentedCavity(Item).SurfPtrs));
+            Nandle const surfaceArea(sum_sub(Surface, &SurfaceData::Area, ExtVentedCavity(Item).SurfPtrs));
             //			AvgAzimuth = sum( Surface( ExtVentedCavity( Item ).SurfPtrs ).Azimuth * Surface( ExtVentedCavity( Item ).SurfPtrs
             //).Area
             //)
@@ -7224,7 +7224,7 @@ namespace SurfaceGeometry {
 
     void GetVertices(int const SurfNum,             // Current surface number
                      int const NSides,              // Number of sides to figure
-                     Array1S<Real64> const Vertices // Vertices, in specified order
+                     Array1S<Nandle> const Vertices // Vertices, in specified order
     )
     {
 
@@ -7271,21 +7271,21 @@ namespace SurfaceGeometry {
         int n;    // Loop counter
         int NSrc; // Used for CW -> CCW transformation
         int NTar; // Used for CW -> CCW transformation
-        Real64 SurfWorldAz;
-        Real64 SurfTilt;
-        Real64 Perimeter; // Perimeter length of the surface
+        Nandle SurfWorldAz;
+        Nandle SurfTilt;
+        Nandle Perimeter; // Perimeter length of the surface
         int Vrt;          // Used for calculating perimeter
-        Real64 Xb;        // Intermediate calculation
-        Real64 Yb;        // Intermediate calculation
+        Nandle Xb;        // Intermediate calculation
+        Nandle Yb;        // Intermediate calculation
         int ZoneNum;
         int ThisCorner;
         std::string TiltString;
-        Real64 ThisWidth;
-        Real64 ThisHeight;
-        Real64 DistanceCheck;
+        Nandle ThisWidth;
+        Nandle ThisHeight;
+        Nandle DistanceCheck;
         // unused    REAL(r64) :: ccwtest
         // unused    LOGICAL   :: SurfaceCCW
-        Real64 dotp;
+        Nandle dotp;
 
         // Object Data
         Vector const TestVector(0.0, 0.0, 1.0);
@@ -7567,8 +7567,8 @@ namespace SurfaceGeometry {
 
     void ReverseAndRecalculate(int const SurfNum,   // Surface number for the surface
                                int const NSides,    // number of sides to surface
-                               Real64 &SurfAzimuth, // Surface Facing angle (will be 0 for roofs/floors)
-                               Real64 &SurfTilt     // Surface tilt (
+                               Nandle &SurfAzimuth, // Surface Facing angle (will be 0 for roofs/floors)
+                               Nandle &SurfTilt     // Surface tilt (
     )
     {
 
@@ -7688,8 +7688,8 @@ namespace SurfaceGeometry {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Vert;
         int NVert;
-        Real64 SurfWorldAz;
-        Real64 SurfTilt;
+        Nandle SurfWorldAz;
+        Nandle SurfTilt;
         int n;
         //  TYPE(Vector) :: temp1
 
@@ -9849,15 +9849,15 @@ namespace SurfaceGeometry {
         static ObjexxFCL::gio::Fmt VolFmt("(F20.2)");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SumAreas;  // Sum of the Zone surface areas that are not "internal mass"
-        Real64 SurfCount; // Surface Count
+        Nandle SumAreas;  // Sum of the Zone surface areas that are not "internal mass"
+        Nandle SurfCount; // Surface Count
         int SurfNum;      // Loop counter for surfaces
         int ZoneNum;      // Loop counter for Zones
         Array1D_int surfacenotused;
         int notused;
         int NFaces;
         int NActFaces;
-        Real64 CalcVolume;
+        Nandle CalcVolume;
         bool initmsg;
         int iside;
         static bool ShowZoneSurfaces(false);
@@ -9926,8 +9926,8 @@ namespace SurfaceGeometry {
             bool isCeilingHorizontal;
             bool areWallsVertical;
             std::tie(isFloorHorizontal, isCeilingHorizontal, areWallsVertical) = areSurfaceHorizAndVert(ZoneStruct);
-            Real64 oppositeWallArea;
-            Real64 distanceBetweenOppositeWalls;
+            Nandle oppositeWallArea;
+            Nandle distanceBetweenOppositeWalls;
 
             bool areWallsSameHeight = areWallHeightSame(ZoneStruct);
 
@@ -10407,12 +10407,12 @@ namespace SurfaceGeometry {
         // test if all the wall heights are the same (all walls have the same maximum z-coordinate
 
         bool areWlHgtSame = true;
-        Real64 wallHeightZ = -1.0E50;
+        Nandle wallHeightZ = -1.0E50;
         bool foundWallHeight = false;
         for (int iFace = 1; iFace <= zonePoly.NumSurfaceFaces; ++iFace) {
             int curSurfNum = zonePoly.SurfaceFace(iFace).SurfNum;
             if (Surface(curSurfNum).Class == SurfaceClass_Wall) {
-                Real64 maxZ = -1.0E50;
+                Nandle maxZ = -1.0E50;
                 for (int jVertex = 1; jVertex <= zonePoly.SurfaceFace(iFace).NSides; ++jVertex) {
                     Vector curVertex = zonePoly.SurfaceFace(iFace).FacePoints(jVertex);
                     if (maxZ < curVertex.z) {
@@ -10464,8 +10464,8 @@ namespace SurfaceGeometry {
     // tests whether a pair of walls in the zone are the same except offset from one another and facing the opposite direction and also
     // returns the wall area and distance between
     bool areOppositeWallsSame(DataVectorTypes::Polyhedron const &zonePoly,
-                              Real64 &oppositeWallArea,            // return the area of the wall that has an opposite wall
-                              Real64 &distanceBetweenOppositeWalls // returns distance
+                              Nandle &oppositeWallArea,            // return the area of the wall that has an opposite wall
+                              Nandle &distanceBetweenOppositeWalls // returns distance
     )
     {
         // J. Glazer - March 2017
@@ -10503,7 +10503,7 @@ namespace SurfaceGeometry {
     }
 
     // provides a list of indices of polyhedron faces that are facing a specific azimuth
-    std::vector<int> listOfFacesFacingAzimuth(DataVectorTypes::Polyhedron const &zonePoly, Real64 const &azimuth)
+    std::vector<int> listOfFacesFacingAzimuth(DataVectorTypes::Polyhedron const &zonePoly, Nandle const &azimuth)
     {
         // J. Glazer - March 2017
 
@@ -10525,9 +10525,9 @@ namespace SurfaceGeometry {
         // J. Glazer - March 2017
 
         int selectedSurNum = zonePoly.SurfaceFace(faceIndex).SurfNum;
-        Real64 selectedAzimuth = Surface(selectedSurNum).Azimuth;
-        Real64 oppositeAzimuth = fmod(selectedAzimuth + 180., 360.);
-        Real64 selectedArea = Surface(selectedSurNum).Area;
+        Nandle selectedAzimuth = Surface(selectedSurNum).Azimuth;
+        Nandle oppositeAzimuth = fmod(selectedAzimuth + 180., 360.);
+        Nandle selectedArea = Surface(selectedSurNum).Area;
         int selectedNumCorners = zonePoly.SurfaceFace(faceIndex).NSides;
         int found = -1;
 
@@ -10543,17 +10543,17 @@ namespace SurfaceGeometry {
     }
 
     // tests if the corners of one face of the polyhedron are the same distance from corners of another face
-    bool areCornersEquidistant(DataVectorTypes::Polyhedron const &zonePoly, int const &faceIndex, int const &opFaceIndex, Real64 &distanceBetween)
+    bool areCornersEquidistant(DataVectorTypes::Polyhedron const &zonePoly, int const &faceIndex, int const &opFaceIndex, Nandle &distanceBetween)
     {
         // J. Glazer - March 2017
 
-        Real64 tol = 0.0127; //  1.27 cm = 1/2 inch
+        Nandle tol = 0.0127; //  1.27 cm = 1/2 inch
         bool allAreEquidistant = true;
-        Real64 firstDistance = -99.;
+        Nandle firstDistance = -99.;
         if (zonePoly.SurfaceFace(faceIndex).NSides == zonePoly.SurfaceFace(opFaceIndex).NSides) { // double check that the number of sides match
             for (int iVertex = 1; iVertex <= zonePoly.SurfaceFace(faceIndex).NSides; ++iVertex) {
                 int iVertexOpp = 1 + zonePoly.SurfaceFace(faceIndex).NSides - iVertex; // count backwards for opposite face
-                Real64 curDistBetwCorners =
+                Nandle curDistBetwCorners =
                     distance(zonePoly.SurfaceFace(faceIndex).FacePoints(iVertex), zonePoly.SurfaceFace(opFaceIndex).FacePoints(iVertexOpp));
                 if (iVertex == 1) {
                     firstDistance = curDistBetwCorners;
@@ -10576,7 +10576,7 @@ namespace SurfaceGeometry {
     {
         // J. Glazer - March 2017
 
-        Real64 tol = 0.0127; //  1.27 cm = 1/2 inch
+        Nandle tol = 0.0127; //  1.27 cm = 1/2 inch
         return ((std::abs(v1.x - v2.x) < tol) && (std::abs(v1.y - v2.y) < tol) && (std::abs(v1.z - v2.z) < tol));
     }
 
@@ -10585,7 +10585,7 @@ namespace SurfaceGeometry {
     {
         // J. Glazer - March 2017
 
-        Real64 tol = 0.0127; //  1.27 cm = 1/2 inch
+        Nandle tol = 0.0127; //  1.27 cm = 1/2 inch
         return ((std::abs(v1.x - v2.x) < tol) && (std::abs(v1.y - v2.y) < tol));
     }
 
@@ -10594,7 +10594,7 @@ namespace SurfaceGeometry {
     {
         // J. Glazer - March 2017
 
-        Real64 tol = 0.0127; //  1.27 cm = 1/2 inch
+        Nandle tol = 0.0127; //  1.27 cm = 1/2 inch
         return ((std::abs(v1.x - v2.x) < tol) && (std::abs(v1.y - v2.y) < tol));
     }
 
@@ -10612,7 +10612,7 @@ namespace SurfaceGeometry {
     }
 
     // returns the distance between two points in space
-    Real64 distance(DataVectorTypes::Vector v1, DataVectorTypes::Vector v2)
+    Nandle distance(DataVectorTypes::Vector v1, DataVectorTypes::Vector v2)
     {
         // J. Glazer - March 2017
 
@@ -10624,7 +10624,7 @@ namespace SurfaceGeometry {
     {
         // J. Glazer - March 2017
 
-        Real64 tol = 0.0127; //  1.27 cm = 1/2 inch
+        Nandle tol = 0.0127; //  1.27 cm = 1/2 inch
         return (std::abs((distance(start, end) - (distance(start, test) + distance(test, end)))) < tol);
     }
 
@@ -10678,9 +10678,9 @@ namespace SurfaceGeometry {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         //////////// hoisted into namespace
         // static bool OneTimeFlag( true ); // now ProcessSurfaceVerticesOneTimeFlag
-        // static Array1D< Real64 > X; // now Xpsv (to avoid conflicts with CheckConvexity)
-        // static Array1D< Real64 > Y; // now Ypsv
-        // static Array1D< Real64 > Z; // now Zpsv
+        // static Array1D< Nandle > X; // now Xpsv (to avoid conflicts with CheckConvexity)
+        // static Array1D< Nandle > Y; // now Ypsv
+        // static Array1D< Nandle > Z; // now Zpsv
         ////////////////////////////////////////////////
 
         // LOCAL VARIABLES
@@ -10689,30 +10689,30 @@ namespace SurfaceGeometry {
         //  REAL(r64) :: Z00    ! Intermediate Result
         //  REAL(r64) :: A(3,3) ! Surface Rotation Matrix
         //  REAL(r64), SAVE :: B(3,3) ! Inverse Of Rotation Matrix
-        Real64 X1;            // Intermediate Result
-        Real64 Y1;            // Intermediate Result
-        Real64 Z1;            // Intermediate Result
-        static Real64 XSHIFT; // Shift of X to Lower Left Corner
-        static Real64 YSHIFT; // Shift of Y to Lower Left Corner
-        Real64 XLLC;          // X-coordinate of lower left corner
-        Real64 YLLC;          // Y-coordinate of lower left corner
-        Real64 ZLLC;          // Z-coordinate of lower left corner
+        Nandle X1;            // Intermediate Result
+        Nandle Y1;            // Intermediate Result
+        Nandle Z1;            // Intermediate Result
+        static Nandle XSHIFT; // Shift of X to Lower Left Corner
+        static Nandle YSHIFT; // Shift of Y to Lower Left Corner
+        Nandle XLLC;          // X-coordinate of lower left corner
+        Nandle YLLC;          // Y-coordinate of lower left corner
+        Nandle ZLLC;          // Z-coordinate of lower left corner
         //  INTEGER :: I  ! Loop Control
         //  INTEGER :: J  ! Loop Control
         int n;               // Vertex Number in Loop
         int ThisBaseSurface; // Current base surface
-        Real64 Xp;
-        Real64 Yp;
-        Real64 Zp;
-        static Real64 BaseCosAzimuth;
-        static Real64 BaseCosTilt;
-        static Real64 BaseSinAzimuth;
-        static Real64 BaseSinTilt;
-        static Real64 BaseXLLC;
-        static Real64 BaseYLLC;
-        static Real64 BaseZLLC;
-        Real64 SurfWorldAz; // Surface Azimuth (facing)
-        Real64 SurfTilt;    // Surface Tilt
+        Nandle Xp;
+        Nandle Yp;
+        Nandle Zp;
+        static Nandle BaseCosAzimuth;
+        static Nandle BaseCosTilt;
+        static Nandle BaseSinAzimuth;
+        static Nandle BaseSinTilt;
+        static Nandle BaseXLLC;
+        static Nandle BaseYLLC;
+        static Nandle BaseZLLC;
+        Nandle SurfWorldAz; // Surface Azimuth (facing)
+        Nandle SurfTilt;    // Surface Tilt
         //  TYPE(PlaneEq) PlanarEQ
         //  TYPE(Vector), dimension(3) :: TriVect
         //  REAL(r64) testval
@@ -10720,22 +10720,22 @@ namespace SurfaceGeometry {
         //  INTEGER vloop
         SurfaceShape ThisShape(SurfaceShape::None);
         bool BaseSurface; // True if a base surface or a detached shading surface
-        Real64 ThisSurfAz;
-        Real64 ThisSurfTilt;
-        Real64 ThisReveal;
-        Real64 ThisWidth;
-        Real64 ThisHeight;
+        Nandle ThisSurfAz;
+        Nandle ThisSurfTilt;
+        Nandle ThisReveal;
+        Nandle ThisWidth;
+        Nandle ThisHeight;
         int FrDivNum;        // Frame/divider number
-        Real64 FrWidth;      // Frame width for exterior windows (m)
-        Real64 FrArea;       // Frame area for exterior windows(m2)
-        Real64 DivWidth;     // Divider width for exterior windows (m)
-        Real64 DivArea;      // Divider area for exterior windows (m2)
-        Real64 DivFrac;      // Fraction of divider area without overlaps
+        Nandle FrWidth;      // Frame width for exterior windows (m)
+        Nandle FrArea;       // Frame area for exterior windows(m2)
+        Nandle DivWidth;     // Divider width for exterior windows (m)
+        Nandle DivArea;      // Divider area for exterior windows (m2)
+        Nandle DivFrac;      // Fraction of divider area without overlaps
         bool ErrorInSurface; // false/true, depending on pass through routine
         bool SError;         // Bool used for return value of calls to PlaneEquation
         bool HeatTransSurf;
         bool IsCoPlanar;
-        Real64 OutOfLine;
+        Nandle OutOfLine;
         int LastVertexInError;
 
         // Object Data
@@ -11229,8 +11229,8 @@ namespace SurfaceGeometry {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int I;        // Loop Control
-        Real64 Gamma; // Intermediate Result
-        Real64 DotSelfX23;
+        Nandle Gamma; // Intermediate Result
+        Nandle DotSelfX23;
         static std::string ErrLineOut; // Character string for producing error messages
 
         // Object Data
@@ -11691,11 +11691,11 @@ namespace SurfaceGeometry {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // unused1208  INTEGER :: TotSurfacesPrev                 ! Total number of surfaces before splitting window
         // unused1208  INTEGER :: loop                            ! DO loop index
-        Real64 H; // Height and width of original window (m)
-        Real64 W;
+        Nandle H; // Height and width of original window (m)
+        Nandle W;
         // unused1208  REAL(r64)    :: MulWidth                        ! Mullion width (m)
-        Real64 h1; // height and width of first glazing system (m)
-        Real64 w1;
+        Nandle h1; // height and width of first glazing system (m)
+        Nandle w1;
         // unused1208  REAL(r64)    :: h2,w2                           ! height and width of second glazing system (m)
         // unused1208  type (rectangularwindow) :: NewCoord
         int IConst;             // Construction number of first glazing system
@@ -11845,25 +11845,25 @@ namespace SurfaceGeometry {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int loop; // DO loop index
-        Real64 H; // Height and width of original window (m)
-        Real64 W;
-        Real64 MulWidth; // Mullion width (m)
-        Real64 h1;       // height and width of first glazing system (m)
-        Real64 w1;
-        Real64 h2; // height and width of second glazing system (m)
-        Real64 w2;
-        Real64 xa; // Vertex intermediate variables (m)
-        Real64 ya;
-        Real64 za;
-        Real64 xb;
-        Real64 yb;
-        Real64 zb;
-        Real64 dx; // Vertex displacements from original window (m)
-        Real64 dy;
+        Nandle H; // Height and width of original window (m)
+        Nandle W;
+        Nandle MulWidth; // Mullion width (m)
+        Nandle h1;       // height and width of first glazing system (m)
+        Nandle w1;
+        Nandle h2; // height and width of second glazing system (m)
+        Nandle w2;
+        Nandle xa; // Vertex intermediate variables (m)
+        Nandle ya;
+        Nandle za;
+        Nandle xb;
+        Nandle yb;
+        Nandle zb;
+        Nandle dx; // Vertex displacements from original window (m)
+        Nandle dy;
         int IConst;             // Construction number of first glazing system
         int IConst2;            // Construction number of second glazing system
         std::string Const2Name; // Name of construction of second glazing system
-        Real64 AreaNew;         // Sum of areas of the two glazing systems (m2)
+        Nandle AreaNew;         // Sum of areas of the two glazing systems (m2)
 
         struct rectangularwindow
         {
@@ -12283,22 +12283,22 @@ namespace SurfaceGeometry {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Array1D_string cAlphas(1);
-        Array1D<Real64> rNumerics(2);
+        Array1D<Nandle> rNumerics(2);
         int NAlphas;
         int NNum;
         int IOStat;
-        static Real64 OldAspectRatio;
-        static Real64 NewAspectRatio;
+        static Nandle OldAspectRatio;
+        static Nandle NewAspectRatio;
         static bool firstTime(true);
         static bool noTransform(true);
         static std::string transformPlane;
         int n;
-        Real64 Xo;
-        Real64 XnoRot;
-        Real64 Xtrans;
-        Real64 Yo;
-        Real64 YnoRot;
-        Real64 Ytrans;
+        Nandle Xo;
+        Nandle XnoRot;
+        Nandle Xtrans;
+        Nandle Yo;
+        Nandle YnoRot;
+        Nandle Ytrans;
         // begin execution
         // get user input...
 
@@ -12439,7 +12439,7 @@ namespace SurfaceGeometry {
                     Triangle2(3) = vertex(4);
 
                     // get total Area of quad.
-                    Real64 TotalArea(surface.GrossArea);
+                    Nandle TotalArea(surface.GrossArea);
                     if (TotalArea <= 0.0) {
                         // catch a problem....
                         ShowWarningError("CalcSurfaceCentroid: zero area surface, for surface=" + surface.Name);
@@ -12447,8 +12447,8 @@ namespace SurfaceGeometry {
                     }
 
                     // get area fraction of triangles.
-                    Real64 Tri1Area(AreaPolygon(3, Triangle1) / TotalArea);
-                    Real64 Tri2Area(AreaPolygon(3, Triangle2) / TotalArea);
+                    Nandle Tri1Area(AreaPolygon(3, Triangle1) / TotalArea);
+                    Nandle Tri2Area(AreaPolygon(3, Triangle2) / TotalArea);
 
                     // check if sum of fractions are slightly greater than 1.0 which is a symptom of the triangles for a non-convex
                     // quadralateral using the wrong two triangles
@@ -12464,8 +12464,8 @@ namespace SurfaceGeometry {
                         Triangle2(3) = vertex(4);
 
                         // get area fraction of triangles.
-                        Real64 AreaTriangle1 = AreaPolygon(3, Triangle1);
-                        Real64 AreaTriangle2 = AreaPolygon(3, Triangle2);
+                        Nandle AreaTriangle1 = AreaPolygon(3, Triangle1);
+                        Nandle AreaTriangle2 = AreaPolygon(3, Triangle2);
                         TotalArea = AreaTriangle1 + AreaTriangle2;
                         Tri1Area = AreaTriangle1 / TotalArea;
                         Tri2Area = AreaTriangle2 / TotalArea;
@@ -12846,7 +12846,7 @@ namespace SurfaceGeometry {
                             DataHeatBalance::AirBoundaryMixingZone1.push_back(zoneNum1);
                             DataHeatBalance::AirBoundaryMixingZone2.push_back(zoneNum2);
                             DataHeatBalance::AirBoundaryMixingSched.push_back(DataHeatBalance::Construct(surf.Construction).AirBoundaryMixingSched);
-                            Real64 mixingVol = Construct(surf.Construction).AirBoundaryACH * min(Zone(zoneNum1).Volume, Zone(zoneNum2).Volume) /
+                            Nandle mixingVol = Construct(surf.Construction).AirBoundaryACH * min(Zone(zoneNum1).Volume, Zone(zoneNum2).Volume) /
                                                DataGlobals::SecInHour;
                             DataHeatBalance::AirBoundaryMixingVol.push_back(mixingVol);
                         }
@@ -12949,7 +12949,7 @@ namespace SurfaceGeometry {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const TurnThreshold(0.000001); // Sensitivity of convexity test, in radians
+        Nandle const TurnThreshold(0.000001); // Sensitivity of convexity test, in radians
         static ObjexxFCL::gio::Fmt ErrFmt("(' (',F8.3,',',F8.3,',',F8.3,')')");
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -12962,28 +12962,28 @@ namespace SurfaceGeometry {
         int n;                    // Loop index
         int Np1;                  // Loop index
         int Np2;                  // Loop index
-        Real64 Det;               // Determinant for picking projection plane
-        Real64 DotProd;           // Dot product for determining angle
-        Real64 Theta;             // Angle between edge vectors
-        Real64 LastTheta;         // Angle between edge vectors
-        Real64 V1len;             // Edge vector length
-        Real64 V2len;             // Edge vector length
+        Nandle Det;               // Determinant for picking projection plane
+        Nandle DotProd;           // Dot product for determining angle
+        Nandle Theta;             // Angle between edge vectors
+        Nandle LastTheta;         // Angle between edge vectors
+        Nandle V1len;             // Edge vector length
+        Nandle V2len;             // Edge vector length
         bool SignFlag;            // Direction of edge turn : true is right, false is left
         bool PrevSignFlag(false); // Container for the sign of the previous iteration's edge turn
-        static Array1D<Real64> X; // containers for x,y,z vertices of the surface
-        static Array1D<Real64> Y;
-        static Array1D<Real64> Z;
-        static Array1D<Real64> A; // containers for convexity test
-        static Array1D<Real64> B;
+        static Array1D<Nandle> X; // containers for x,y,z vertices of the surface
+        static Array1D<Nandle> Y;
+        static Array1D<Nandle> Z;
+        static Array1D<Nandle> A; // containers for convexity test
+        static Array1D<Nandle> B;
         static Array1D_int SurfCollinearVerts; // Array containing indices of collinear vertices
         static int VertSize;                   // size of X,Y,Z,A,B arrays
-        Real64 cosarg;
+        Nandle cosarg;
         int M;   // Array index for SurfCollinearVerts container
         int J;   // Loop index
         int K;   // Loop index
         int Ind; // Location of surface vertex to be removed
         static bool firstTime(true);
-        static Real64 ACosZero; // set on firstTime
+        static Nandle ACosZero; // set on firstTime
         bool SurfCollinearWarning;
         static std::string ErrLineOut; // Character string for producing error messages
 
@@ -13185,10 +13185,10 @@ namespace SurfaceGeometry {
 
         using namespace Vectors;
 
-        Real64 Diagonal1;                                      // Length of diagonal of 4-sided figure from vertex 1 to vertex 3 (m)
-        Real64 Diagonal2;                                      // Length of diagonal of 4-sided figure from vertex 2 to vertex 4 (m)
-        Real64 DotProd;                                        // Dot product of two adjacent sides - to test for right angle
-        Real64 const cos89deg = std::cos(89.0 * DegToRadians); // tolerance for right angle
+        Nandle Diagonal1;                                      // Length of diagonal of 4-sided figure from vertex 1 to vertex 3 (m)
+        Nandle Diagonal2;                                      // Length of diagonal of 4-sided figure from vertex 2 to vertex 4 (m)
+        Nandle DotProd;                                        // Dot product of two adjacent sides - to test for right angle
+        Nandle const cos89deg = std::cos(89.0 * DegToRadians); // tolerance for right angle
         Vector Vect32;                                         // normalized vector from vertex 3 to vertex 2
         Vector Vect21;                                         // normalized vector from vertex 2 to vertex 1
 
@@ -13245,24 +13245,24 @@ namespace SurfaceGeometry {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 BaseCosAzimuth;
-        static Real64 BaseCosTilt;
-        static Real64 BaseSinAzimuth;
-        static Real64 BaseSinTilt;
-        static Real64 SurfWorldAz;
-        static Real64 SurfTilt;
-        Real64 AspectRatio;  // Aspect ratio
-        Real64 NumSurfSides; // Number of surface sides
-        Real64 WidthEff;     // Effective width of the surface
-        Real64 WidthMax;     // X difference between the vertex on the most left and the one on the most right
-        Real64 HeightEff;    // Effective height of the surface
-        Real64 HeightMax;    // Y difference between the lowest and toppest vertices
-        Real64 Xp;
-        Real64 Yp;
-        Real64 Zp;
-        Real64 XLLC;
-        Real64 YLLC;
-        Real64 ZLLC;
+        static Nandle BaseCosAzimuth;
+        static Nandle BaseCosTilt;
+        static Nandle BaseSinAzimuth;
+        static Nandle BaseSinTilt;
+        static Nandle SurfWorldAz;
+        static Nandle SurfTilt;
+        Nandle AspectRatio;  // Aspect ratio
+        Nandle NumSurfSides; // Number of surface sides
+        Nandle WidthEff;     // Effective width of the surface
+        Nandle WidthMax;     // X difference between the vertex on the most left and the one on the most right
+        Nandle HeightEff;    // Effective height of the surface
+        Nandle HeightMax;    // Y difference between the lowest and toppest vertices
+        Nandle Xp;
+        Nandle Yp;
+        Nandle Zp;
+        Nandle XLLC;
+        Nandle YLLC;
+        Nandle ZLLC;
 
         if (SurfNum == 0) {
             // invalid surface
@@ -13339,7 +13339,7 @@ namespace SurfaceGeometry {
                 (revMatLay.Group == GlassEquivalentLayer)) {
                 // If not point to the same layer, check to see if this is window glass which might need to have
                 // front and back material properties reversed.
-                Real64 const SmallDiff = 0.0001;
+                Nandle const SmallDiff = 0.0001;
                 if ((thisMatLay.Group == WindowGlass) && (revMatLay.Group == WindowGlass)) {
                     // Both layers are window glass, so need to check to see if the properties are reversed
                     if ((abs(thisMatLay.Thickness - revMatLay.Thickness) > SmallDiff) ||

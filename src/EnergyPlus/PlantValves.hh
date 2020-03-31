@@ -75,11 +75,11 @@ namespace PlantValves {
         int PltPumpOutletNodeNum = 0; // node number for the pump outlet (for flow rate)
         // Calculated and from elsewhere
         bool environmentInit = true;                // flag for initializationL true means do the initializations
-        Real64 FlowDivFract = 0.0;      // Fraction of flow sent down diversion path
-        Real64 Stream2SourceTemp = 0.0; // Temperature [C] of stream 2 being mixed
-        Real64 InletTemp = 0.0;         // Temperature [C] of inlet to valve
-        Real64 SetPointTemp = 0.0;      // setpoint Temperatures [C] at control node.
-        Real64 MixedMassFlowRate = 0.0; // Flow rate downstream of mixer [kg/s]
+        Nandle FlowDivFract = 0.0;      // Fraction of flow sent down diversion path
+        Nandle Stream2SourceTemp = 0.0; // Temperature [C] of stream 2 being mixed
+        Nandle InletTemp = 0.0;         // Temperature [C] of inlet to valve
+        Nandle SetPointTemp = 0.0;      // setpoint Temperatures [C] at control node.
+        Nandle MixedMassFlowRate = 0.0; // Flow rate downstream of mixer [kg/s]
         // loop topology variables
         int LoopNum = 0;
         int LoopSideNum = 0;
@@ -93,13 +93,13 @@ namespace PlantValves {
 
         static PlantComponent *factory(std::string objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad,
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad,
                       bool RunFlag) override;
 
         void getDesignCapacities(const PlantLocation &calledFromLocation,
-                                 Real64 &MaxLoad,
-                                 Real64 &MinLoad,
-                                 Real64 &OptLoad) override;
+                                 Nandle &MaxLoad,
+                                 Nandle &MinLoad,
+                                 Nandle &OptLoad) override;
 
         void initialize();
 

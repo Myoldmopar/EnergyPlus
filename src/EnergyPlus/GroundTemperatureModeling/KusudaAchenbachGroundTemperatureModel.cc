@@ -117,17 +117,17 @@ std::shared_ptr<KusudaGroundTempsModel> KusudaGroundTempsModel::KusudaGTMFactory
                 int monthsInYear(12);
                 int avgDaysInMonth(30);
                 int monthOfMinSurfTemp(0);
-                Real64 averageGroundTemp(0);
-                Real64 amplitudeOfGroundTemp(0);
-                Real64 phaseShiftOfMinGroundTempDays(0);
-                Real64 minSurfTemp(100);  // Set high month 1 temp will be lower and actually get updated
-                Real64 maxSurfTemp(-100); // Set low initially but will get updated
+                Nandle averageGroundTemp(0);
+                Nandle amplitudeOfGroundTemp(0);
+                Nandle phaseShiftOfMinGroundTempDays(0);
+                Nandle minSurfTemp(100);  // Set high month 1 temp will be lower and actually get updated
+                Nandle maxSurfTemp(-100); // Set low initially but will get updated
 
                 std::shared_ptr<BaseGroundTempsModel> shallowObj =
                     GetGroundTempModelAndInit(CurrentModuleObjects(objectType_SiteShallowGroundTemp), "");
 
                 for (int monthIndex = 1; monthIndex <= 12; ++monthIndex) {
-                    Real64 currMonthTemp = shallowObj->getGroundTempAtTimeInMonths(0.0, monthIndex);
+                    Nandle currMonthTemp = shallowObj->getGroundTempAtTimeInMonths(0.0, monthIndex);
 
                     // Calculate Average Ground Temperature for all 12 months of the year:
                     averageGroundTemp += currMonthTemp;
@@ -171,7 +171,7 @@ std::shared_ptr<KusudaGroundTempsModel> KusudaGroundTempsModel::KusudaGTMFactory
 
 //******************************************************************************
 
-Real64 KusudaGroundTempsModel::getGroundTemp()
+Nandle KusudaGroundTempsModel::getGroundTemp()
 {
     // AUTHOR         Matt Mitchell
     // DATE WRITTEN   June 2015
@@ -190,10 +190,10 @@ Real64 KusudaGroundTempsModel::getGroundTemp()
     using WeatherManager::NumDaysInYear;
 
     // FUNCTION LOCAL VARIABLE DECLARATIONS:
-    Real64 term1;
-    Real64 term2;
-    Real64 secsInYear;
-    Real64 retVal;
+    Nandle term1;
+    Nandle term2;
+    Nandle secsInYear;
+    Nandle retVal;
 
     secsInYear = SecsInDay * NumDaysInYear;
 
@@ -207,7 +207,7 @@ Real64 KusudaGroundTempsModel::getGroundTemp()
 
 //******************************************************************************
 
-Real64 KusudaGroundTempsModel::getGroundTempAtTimeInSeconds(Real64 const _depth, Real64 const _seconds)
+Nandle KusudaGroundTempsModel::getGroundTempAtTimeInSeconds(Nandle const _depth, Nandle const _seconds)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -223,7 +223,7 @@ Real64 KusudaGroundTempsModel::getGroundTempAtTimeInSeconds(Real64 const _depth,
     using WeatherManager::NumDaysInYear;
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 secondsInYear = NumDaysInYear * SecsInDay;
+    Nandle secondsInYear = NumDaysInYear * SecsInDay;
 
     depth = _depth;
 
@@ -239,7 +239,7 @@ Real64 KusudaGroundTempsModel::getGroundTempAtTimeInSeconds(Real64 const _depth,
 
 //******************************************************************************
 
-Real64 KusudaGroundTempsModel::getGroundTempAtTimeInMonths(Real64 const _depth, int const _month)
+Nandle KusudaGroundTempsModel::getGroundTempAtTimeInMonths(Nandle const _depth, int const _month)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -255,8 +255,8 @@ Real64 KusudaGroundTempsModel::getGroundTempAtTimeInMonths(Real64 const _depth, 
     // Returns the ground temperature when input time is in months
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 const aveSecondsInMonth = (NumDaysInYear / 12) * SecsInDay;
-    Real64 const secondsPerYear = NumDaysInYear * SecsInDay;
+    Nandle const aveSecondsInMonth = (NumDaysInYear / 12) * SecsInDay;
+    Nandle const secondsPerYear = NumDaysInYear * SecsInDay;
 
     depth = _depth;
 

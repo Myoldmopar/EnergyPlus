@@ -53,7 +53,7 @@
 namespace EnergyPlus {
 namespace DataPlant {
 
-    Real64 BranchData::DetermineBranchFlowRequest() {
+    Nandle BranchData::DetermineBranchFlowRequest() {
 
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Edwin Lee
@@ -79,7 +79,7 @@ namespace DataPlant {
 
         int const BranchInletNodeNum = this->NodeNumIn;
         int const BranchOutletNodeNum = this->NodeNumOut;
-        Real64 OverallFlowRequest = 0.0;
+        Nandle OverallFlowRequest = 0.0;
 
         if (this->ControlType != DataBranchAirLoopPlant::ControlType_SeriesActive) {
             OverallFlowRequest = DataLoopNode::Node(BranchInletNodeNum).MassFlowRateRequest;

@@ -67,7 +67,7 @@ namespace EnergyPlus {
 TEST_F(EnergyPlusFixture, SetCoolingPanelControlTemp)
 {
 
-    Real64 ControlTemp;  // Temperature that is controlling the panel
+    Nandle ControlTemp;  // Temperature that is controlling the panel
     int CoolingPanelNum; // Cooling panel number
     int ZoneNum;         // Zone number for the cooling panel
 

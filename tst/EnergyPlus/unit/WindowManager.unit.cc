@@ -221,10 +221,10 @@ TEST_F(EnergyPlusFixture, WindowFrameTest)
         }
     }
 
-    Real64 T_in = 21.0;
-    Real64 T_out = -18.0;
-    Real64 I_s = 0.0;
-    Real64 v_ws = 5.5;
+    Nandle T_in = 21.0;
+    Nandle T_out = -18.0;
+    Nandle I_s = 0.0;
+    Nandle v_ws = 5.5;
 
     // Overrides for testing
     DataHeatBalance::CosIncAng.dimension(1, 1, 3, 1.0);
@@ -240,11 +240,11 @@ TEST_F(EnergyPlusFixture, WindowFrameTest)
 
     // initial guess temperatures
     int numTemps = 2 + 2 * DataHeatBalance::Construct(cNum).TotGlassLayers;
-    Real64 inSurfTemp = T_in - (1.0 / (numTemps - 1)) * (T_in - T_out);
-    Real64 outSurfTemp = T_out + (1.0 / (numTemps - 1)) * (T_in - T_out);
+    Nandle inSurfTemp = T_in - (1.0 / (numTemps - 1)) * (T_in - T_out);
+    Nandle outSurfTemp = T_out + (1.0 / (numTemps - 1)) * (T_in - T_out);
 
-    Real64 h_exterior_f = 4 + v_ws * 4;
-    Real64 h_exterior;
+    Nandle h_exterior_f = 4 + v_ws * 4;
+    Nandle h_exterior;
 
     DataEnvironment::BeamSolarRad = I_s;
 
@@ -256,17 +256,17 @@ TEST_F(EnergyPlusFixture, WindowFrameTest)
     SolarShading::CalcInteriorSolarDistribution();
 
     // Calculate heat balance (iteratively solve for surface temperatures)
-    Real64 outSurfTempPrev = outSurfTemp;
-    Real64 inSurfTempPrev = inSurfTemp;
+    Nandle outSurfTempPrev = outSurfTemp;
+    Nandle inSurfTempPrev = inSurfTemp;
 
-    Real64 outSurfTempDiff;
-    Real64 inSurfTempDiff;
+    Nandle outSurfTempDiff;
+    Nandle inSurfTempDiff;
 
     int maxIterations = 20;
-    Real64 tolerance = 0.1; // deg C
+    Nandle tolerance = 0.1; // deg C
 
     // Save tilt information for natural convection calculations
-    Real64 tiltSave = DataSurfaces::Surface(winNum).Tilt;
+    Nandle tiltSave = DataSurfaces::Surface(winNum).Tilt;
 
     for (int i = 0; i < maxIterations; i++) {
 
@@ -306,18 +306,18 @@ TEST_F(EnergyPlusFixture, WindowFrameTest)
 TEST_F(EnergyPlusFixture, WindowManager_TransAndReflAtPhi)
 {
 
-    Real64 const cs = 0.86603; // Cosine of incidence angle
-    Real64 const tf0 = 0.8980; // Transmittance at zero incidence angle
-    Real64 const rf0 = 0.0810; // Front reflectance at zero incidence angle
-    Real64 const rb0 = 0.0810; // Back reflectance at zero incidence angle
+    Nandle const cs = 0.86603; // Cosine of incidence angle
+    Nandle const tf0 = 0.8980; // Transmittance at zero incidence angle
+    Nandle const rf0 = 0.0810; // Front reflectance at zero incidence angle
+    Nandle const rb0 = 0.0810; // Back reflectance at zero incidence angle
 
-    Real64 tfp = 0.; // Transmittance at cs
-    Real64 rfp = 0.; // Front reflectance at cs
-    Real64 rbp = 0.; // Back reflectance at cs
+    Nandle tfp = 0.; // Transmittance at cs
+    Nandle rfp = 0.; // Front reflectance at cs
+    Nandle rbp = 0.; // Back reflectance at cs
 
     bool const SimpleGlazingSystem = false; // .TRUE. if simple block model being used
-    Real64 const SimpleGlazingSHGC = 0.;    // SHGC value to use in alternate model for simple glazing system
-    Real64 const SimpleGlazingU = 0.;       // U-factor value to use in alternate model for simple glazing system
+    Nandle const SimpleGlazingSHGC = 0.;    // SHGC value to use in alternate model for simple glazing system
+    Nandle const SimpleGlazingU = 0.;       // U-factor value to use in alternate model for simple glazing system
 
     TransAndReflAtPhi(cs, tf0, rf0, rb0, tfp, rfp, rbp, SimpleGlazingSystem, SimpleGlazingSHGC, SimpleGlazingU);
 
@@ -557,8 +557,8 @@ TEST_F(EnergyPlusFixture, WindowManager_RefAirTempTest)
     DataSurfaces::WinTransSolar = 0.0;
     DataHeatBalance::QS = 0.0;
 
-    Real64 inSurfTemp;
-    Real64 outSurfTemp;
+    Nandle inSurfTemp;
+    Nandle outSurfTemp;
 
     // Claculate temperature based on supply flow rate
     WindowManager::CalcWindowHeatBalance(2, DataHeatBalance::HConvIn(2), inSurfTemp, outSurfTemp);
@@ -2502,18 +2502,18 @@ TEST_F(EnergyPlusFixture, SpectralAngularPropertyTest)
     WindowManager::InitGlassOpticalCalculations();
 
     int NumAngles = 10; // Number of incident angles
-    Real64 sum;
+    Nandle sum;
     // total transmittance
-    Array1D<Real64> correctT(
+    Array1D<Nandle> correctT(
         NumAngles, {0.529017128, 0.472866571, 0.414862350, 0.355230972, 0.294204731, 0.232087506, 0.169331950, 0.10672958, 0.04626078, 0.0});
     // total reflectance
-    Array1D<Real64> correctR(
+    Array1D<Nandle> correctR(
         NumAngles, {0.097222311, 0.194253146, 0.29213968, 0.39110239, 0.491349618, 0.59297952, 0.695822715, 0.79917258, 0.90138662, 1.00000000});
     // Layer 1 absortance
-    Array1D<Real64> correctabs1(
+    Array1D<Nandle> correctabs1(
         NumAngles, {0.242079608, 0.214464137, 0.187033583, 0.159840540, 0.132932950, 0.10633161, 0.079994699, 0.053758780, 0.027261664, 0.0});
     // Layer 2 absortance
-    Array1D<Real64> correctabs2(
+    Array1D<Nandle> correctabs2(
         NumAngles, {0.131680954, 0.118416146, 0.105964377, 0.093826087, 0.08151269, 0.068601358, 0.054850634, 0.040339052, 0.025090929, 0.0});
 
     for (int i = 1; i <= NumAngles; i++) {
@@ -2784,10 +2784,10 @@ TEST_F(EnergyPlusFixture, WindowManager_SrdLWRTest)
     DataSurfaces::WinTransSolar = 0.0;
     DataHeatBalance::QS = 0.0;
 
-    Real64 inSurfTemp;
-    Real64 outSurfTemp;
-    Real64 const StefanBoltzmann(5.6697E-8);
-    Real64 const KelvinConv(273.15);
+    Nandle inSurfTemp;
+    Nandle outSurfTemp;
+    Nandle const StefanBoltzmann(5.6697E-8);
+    Nandle const KelvinConv(273.15);
     ScheduleManager::Schedule(1).CurrentValue = 25.0; // Srd Srfs Temp
     // Claculate temperature based on supply flow rate
 

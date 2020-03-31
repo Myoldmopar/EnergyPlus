@@ -72,18 +72,18 @@ namespace WindowManager {
 
     bool isSurfaceHit(const int t_SurfNum, const Vector &t_Ray)
     {
-        Real64 DotProd = dot(t_Ray, Surface(t_SurfNum).NewellSurfaceNormalVector);
+        Nandle DotProd = dot(t_Ray, Surface(t_SurfNum).NewellSurfaceNormalVector);
         return (DotProd > 0);
     }
 
-    std::pair<Real64, Real64> getWCECoordinates(int const t_SurfNum, Vector const &t_Ray, const BSDFHemisphere t_Direction)
+    std::pair<Nandle, Nandle> getWCECoordinates(int const t_SurfNum, Vector const &t_Ray, const BSDFHemisphere t_Direction)
     {
-        Real64 Theta = 0;
-        Real64 Phi = 0;
+        Nandle Theta = 0;
+        Nandle Phi = 0;
 
         // get window tilt and azimuth
-        Real64 Gamma = DegToRadians * Surface(t_SurfNum).Tilt;
-        Real64 Alpha = DegToRadians * Surface(t_SurfNum).Azimuth;
+        Nandle Gamma = DegToRadians * Surface(t_SurfNum).Tilt;
+        Nandle Alpha = DegToRadians * Surface(t_SurfNum).Azimuth;
 
         int RadType = Front_Incident;
 
@@ -100,7 +100,7 @@ namespace WindowManager {
         return std::make_pair(Theta, Phi);
     }
 
-    std::pair<Real64, Real64> getSunWCEAngles(const int t_SurfNum, const BSDFHemisphere t_Direction)
+    std::pair<Nandle, Nandle> getSunWCEAngles(const int t_SurfNum, const BSDFHemisphere t_Direction)
     {
         return getWCECoordinates(t_SurfNum, DataBSDFWindow::SUNCOSTS(TimeStep, HourOfDay, {1, 3}), t_Direction);
     }
@@ -163,10 +163,10 @@ namespace WindowManager {
         auto spectralData = SpectralData(t_SampleDataPtr);
         int numOfWl = spectralData.NumOfWavelengths;
         for (auto i = 1; i <= numOfWl; ++i) {
-            Real64 wl = spectralData.WaveLength(i);
-            Real64 T = spectralData.Trans(i);
-            Real64 Rf = spectralData.ReflFront(i);
-            Real64 Rb = spectralData.ReflBack(i);
+            Nandle wl = spectralData.WaveLength(i);
+            Nandle T = spectralData.Trans(i);
+            Nandle Rf = spectralData.ReflFront(i);
+            Nandle Rb = spectralData.ReflBack(i);
             aSampleData->addRecord(wl, T, Rf, Rb);
         }
 
@@ -176,21 +176,21 @@ namespace WindowManager {
     ///////////////////////////////////////////////////////////////////////////////
     std::shared_ptr<CSpectralSampleData> CWCESpecturmProperties::getSpectralSample(MaterialProperties const &t_MaterialProperties)
     {
-        Real64 Tsol = t_MaterialProperties.Trans;
-        Real64 Rfsol = t_MaterialProperties.ReflectSolBeamFront;
-        Real64 Rbsol = t_MaterialProperties.ReflectSolBeamBack;
+        Nandle Tsol = t_MaterialProperties.Trans;
+        Nandle Rfsol = t_MaterialProperties.ReflectSolBeamFront;
+        Nandle Rbsol = t_MaterialProperties.ReflectSolBeamBack;
         std::shared_ptr<CMaterial> aSolMat = std::make_shared<CMaterialSingleBand>(Tsol, Tsol, Rfsol, Rbsol, 0.3, 2.5);
 
-        Real64 Tvis = t_MaterialProperties.TransVis;
-        Real64 Rfvis = t_MaterialProperties.ReflectVisBeamFront;
-        Real64 Rbvis = t_MaterialProperties.ReflectVisBeamBack;
+        Nandle Tvis = t_MaterialProperties.TransVis;
+        Nandle Rfvis = t_MaterialProperties.ReflectVisBeamFront;
+        Nandle Rbvis = t_MaterialProperties.ReflectVisBeamBack;
         std::shared_ptr<CMaterial> aVisMat = std::make_shared<CMaterialSingleBand>(Tvis, Tvis, Rfvis, Rbvis, 0.38, 0.78);
 
         CMaterialDualBand aMat = CMaterialDualBand(aVisMat, aSolMat, 0.49);
-        std::vector<Real64> aWl = aMat.getBandWavelengths();
-        std::vector<Real64> aTf = aMat.getBandProperties(Property::T, Side::Front);
-        std::vector<Real64> aRf = aMat.getBandProperties(Property::R, Side::Front);
-        std::vector<Real64> aRb = aMat.getBandProperties(Property::R, Side::Back);
+        std::vector<Nandle> aWl = aMat.getBandWavelengths();
+        std::vector<Nandle> aTf = aMat.getBandProperties(Property::T, Side::Front);
+        std::vector<Nandle> aRf = aMat.getBandProperties(Property::R, Side::Front);
+        std::vector<Nandle> aRb = aMat.getBandProperties(Property::R, Side::Back);
         std::shared_ptr<CSpectralSampleData> aSampleData = std::make_shared<CSpectralSampleData>();
         for (size_t i = 0; i < aWl.size(); ++i) {
             aSampleData->addRecord(aWl[i], aTf[i], aRf[i], aRb[i]);

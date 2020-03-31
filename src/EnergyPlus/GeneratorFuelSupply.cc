@@ -147,7 +147,7 @@ namespace GeneratorFuelSupply {
         int NumNums;                    // Number of elements in the numeric array
         int IOStat;                     // IO Status when calling get input subroutine
         Array1D_string AlphArray(25);   // character string data
-        Array1D<Real64> NumArray(200);  // numeric data TODO deal with allocatable for extensible
+        Array1D<Nandle> NumArray(200);  // numeric data TODO deal with allocatable for extensible
         static bool ErrorsFound(false); // error flag
         int FuelSupNum;
         static bool MyOneTimeFlag(true);
@@ -281,20 +281,20 @@ namespace GeneratorFuelSupply {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumHardCodedConstituents; // number of gases included in data
-        Real64 LHVfuel;               // lower heating value of fuel, working var
-        Real64 HHVfuel;               // higher heating value of fuel, working var
-        Real64 O2Stoic;               // stochiometric oxygen coef in chemical equation (15)
-        Real64 CO2ProdStoic;          // product gases carbon dioxide coeff
-        Real64 H2OProdStoic;          // product gases water coeff
+        Nandle LHVfuel;               // lower heating value of fuel, working var
+        Nandle HHVfuel;               // higher heating value of fuel, working var
+        Nandle O2Stoic;               // stochiometric oxygen coef in chemical equation (15)
+        Nandle CO2ProdStoic;          // product gases carbon dioxide coeff
+        Nandle H2OProdStoic;          // product gases water coeff
         int i;                        // loop index
         std::string thisName;         // working string var
         int thisGasID;                // working index in Gas phase data structure
         int CO2dataID;                // hard wired to CO2 index in gas data struct
         int WaterDataID;              // hard wired to Water index in gas data struct
-        Real64 LHVi;                  // working var for lower heating value calc
-        Real64 HHVi;                  // working var for higher heating value calc
+        Nandle LHVi;                  // working var for lower heating value calc
+        Nandle HHVi;                  // working var for higher heating value calc
         //  INTEGER   :: thisConstituent
-        Real64 MWfuel;
+        Nandle MWfuel;
         // unused  REAL(r64) :: DelfHfuel
         // unused  REAL(r64) :: h_i
         // unused  REAL(r64) :: LHV

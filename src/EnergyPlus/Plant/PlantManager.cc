@@ -336,7 +336,7 @@ namespace EnergyPlus {
             int PlantLoopNum;
             int CondLoopNum;
             Array1D_string Alpha(18); // dimension to num of alpha fields in input
-            Array1D<Real64> Num(30);  // dimension to num of numeric data fields in input
+            Array1D<Nandle> Num(30);  // dimension to num of numeric data fields in input
             static bool ErrorsFound(false);
             std::string LoadingScheme;
             bool ErrFound;
@@ -2429,20 +2429,20 @@ namespace EnergyPlus {
             using ScheduleManager::GetCurrentScheduleValue;
 
             // SUBROUTINE PARAMETER DEFINITIONS:
-            Real64 const StartQuality(1.0);
-            Real64 const StartHumRat(0.0);
+            Nandle const StartQuality(1.0);
+            Nandle const StartHumRat(0.0);
             static std::string const RoutineNameAlt("InitializeLoops");
             static std::string const RoutineName("PlantManager:InitializeLoop");
 
             // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
             int LoopNum; // plant loop counter
-            Real64 LoopMaxMassFlowRate;       // maximum allowable loop mass flow rate
-            Real64 LoopSetPointTemp;          // the loop control or setpoint temperature
-            Real64 LoopMaxTemp;               // maximum allowable loop temperature
-            Real64 LoopMinTemp;               // minimum allowable loop temperature
-            Real64 LoopSetPointTempLo;        // the loop control or setpoint temperature
-            Real64 LoopSetPointTempHi;        // the loop control or setpoint temperature
-            Real64 SecondaryLoopSetPointTemp; // loop setpoint temperature for common pipes with different secondary setpt
+            Nandle LoopMaxMassFlowRate;       // maximum allowable loop mass flow rate
+            Nandle LoopSetPointTemp;          // the loop control or setpoint temperature
+            Nandle LoopMaxTemp;               // maximum allowable loop temperature
+            Nandle LoopMinTemp;               // minimum allowable loop temperature
+            Nandle LoopSetPointTempLo;        // the loop control or setpoint temperature
+            Nandle LoopSetPointTempHi;        // the loop control or setpoint temperature
+            Nandle SecondaryLoopSetPointTemp; // loop setpoint temperature for common pipes with different secondary setpt
             int LoopSideNum;
             int BranchNum;       // branch loop counter
             int OpNum;           // operation scheme counter
@@ -2451,14 +2451,14 @@ namespace EnergyPlus {
             int ComponentInlet;  // component inlet node number
             int ComponentOutlet; // component outlet node number
             static bool MyEnvrnFlag(true);
-            Real64 LoopMinMassFlowRate; // minimum allowable loop mass flow rate
-            Real64 SteamDensity;
-            Real64 SteamTemp;
-            Real64 StartEnthalpy;
-            Real64 Cp;
-            Real64 rho;
-            Real64 LoopSetPointTemperatureHi;
-            Real64 LoopSetPointTemperatureLo;
+            Nandle LoopMinMassFlowRate; // minimum allowable loop mass flow rate
+            Nandle SteamDensity;
+            Nandle SteamTemp;
+            Nandle StartEnthalpy;
+            Nandle Cp;
+            Nandle rho;
+            Nandle LoopSetPointTemperatureHi;
+            Nandle LoopSetPointTemperatureLo;
 
             //*****************************************************************
             // BEGIN ENVIRONMENT INITS
@@ -3016,13 +3016,13 @@ namespace EnergyPlus {
             int SupNodeNum;          // component inlet water node number
             int WaterCompNum;        // DO loop counter for cycling through all the components that demand water
             bool ErrorsFound(false); // If errors detected in input
-            Real64 LoopSizFac(0.0);
-            Real64 AvLoopSizFac;
-            Real64 PlantSizFac(1.0);
-            Real64 MaxSizFac(0.0);
-            Real64 BranchSizFac;
-            Real64 NumBrSizFac(0.0);
-            Real64 FluidDensity(0.0); // local value from glycol routine
+            Nandle LoopSizFac(0.0);
+            Nandle AvLoopSizFac;
+            Nandle PlantSizFac(1.0);
+            Nandle MaxSizFac(0.0);
+            Nandle BranchSizFac;
+            Nandle NumBrSizFac(0.0);
+            Nandle FluidDensity(0.0); // local value from glycol routine
             bool Finalize(OkayToFinish);
 
             if (PlantLoop(LoopNum).PlantSizNum > 0) {
@@ -3254,9 +3254,9 @@ namespace EnergyPlus {
             int WaterCompNum;        // DO loop counter for cycling through all the components that demand water
             bool ErrorsFound(false); // If errors detected in input
 
-            Real64 FluidDensity(0.0); // local value from glycol routine
+            Nandle FluidDensity(0.0); // local value from glycol routine
 
-            Real64 PlantSizeFac = 0.0;
+            Nandle PlantSizeFac = 0.0;
 
             PlantSizNum = PlantLoop(LoopNum).PlantSizNum;
 

@@ -200,14 +200,14 @@ namespace CoolTower {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const CurrentModuleObject("ZoneCoolTower:Shower");
-        Real64 const MaximumWaterFlowRate(0.016667); // Maximum limit of water flow rate in m3/s (1000 l/min)
-        Real64 const MinimumWaterFlowRate(0.0);      // Minimum limit of water flow rate
-        Real64 const MaxHeight(30.0);                // Maximum effective tower height in m
-        Real64 const MinHeight(1.0);                 // Minimum effective tower height in m
-        Real64 const MaxValue(100.0);                // Maximum limit of outlet area, airflow, and temperature
-        Real64 const MinValue(0.0);                  // Minimum limit of outlet area, airflow, and temperature
-        Real64 const MaxFrac(1.0);                   // Maximum fraction
-        Real64 const MinFrac(0.0);                   // Minimum fraction
+        Nandle const MaximumWaterFlowRate(0.016667); // Maximum limit of water flow rate in m3/s (1000 l/min)
+        Nandle const MinimumWaterFlowRate(0.0);      // Minimum limit of water flow rate
+        Nandle const MaxHeight(30.0);                // Maximum effective tower height in m
+        Nandle const MinHeight(1.0);                 // Minimum effective tower height in m
+        Nandle const MaxValue(100.0);                // Maximum limit of outlet area, airflow, and temperature
+        Nandle const MinValue(0.0);                  // Minimum limit of outlet area, airflow, and temperature
+        Nandle const MaxFrac(1.0);                   // Maximum fraction
+        Nandle const MinFrac(0.0);                   // Minimum fraction
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -225,7 +225,7 @@ namespace CoolTower {
         Array1D_string cAlphaArgs;     // Alpha input items for object
         Array1D_string cAlphaFields;   // Alpha field names
         Array1D_string cNumericFields; // Numeric field names
-        Array1D<Real64> rNumericArgs;  // Numeric input items for object
+        Array1D<Nandle> rNumericArgs;  // Numeric input items for object
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;   // Logical array, numeric field input BLANK = .TRUE.
 
@@ -615,9 +615,9 @@ namespace CoolTower {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MinWindSpeed(0.1);  // Minimum limit of outdoor air wind speed in m/s
-        Real64 const MaxWindSpeed(30.0); // Maximum limit of outdoor air wind speed in m/s
-        Real64 const UCFactor(60000.0);  // Unit conversion factor m3/s to l/min
+        Nandle const MinWindSpeed(0.1);  // Minimum limit of outdoor air wind speed in m/s
+        Nandle const MaxWindSpeed(30.0); // Maximum limit of outdoor air wind speed in m/s
+        Nandle const UCFactor(60000.0);  // Unit conversion factor m3/s to l/min
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -628,19 +628,19 @@ namespace CoolTower {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneNum;            // Number of zone being served
         int CoolTowerNum;       // Number of coolter being served
-        Real64 CVF_ZoneNum;     // Design flow rate in m3/s
-        Real64 AirMassFlowRate; // Actual air mass flow rate in kg/s
-        Real64 AirSpecHeat;     // Specific heat of air
-        Real64 AirDensity;      // Density of air
-        Real64 RhoWater;        // Density of water
-        Real64 PumpPartLoadRat; // Pump part load ratio (based on user schedule, or 1.0 for no schedule)
-        Real64 WaterFlowRate;   // Calculated water flow rate in m3/s
-        Real64 AirVolFlowRate;  // Calculated air volume flow rate in m3/s
-        Real64 InletHumRat;     // Humidity ratio of outdoor air
+        Nandle CVF_ZoneNum;     // Design flow rate in m3/s
+        Nandle AirMassFlowRate; // Actual air mass flow rate in kg/s
+        Nandle AirSpecHeat;     // Specific heat of air
+        Nandle AirDensity;      // Density of air
+        Nandle RhoWater;        // Density of water
+        Nandle PumpPartLoadRat; // Pump part load ratio (based on user schedule, or 1.0 for no schedule)
+        Nandle WaterFlowRate;   // Calculated water flow rate in m3/s
+        Nandle AirVolFlowRate;  // Calculated air volume flow rate in m3/s
+        Nandle InletHumRat;     // Humidity ratio of outdoor air
         // unused1208REAL(r64) :: InletEnthalpy      ! Enthalpy of outdoor air
-        Real64 OutletHumRat; // Humidity ratio of air at the cooltower outlet
-        Real64 OutletTemp;   // Dry bulb temperature of air at the cooltower outlet
-        Real64 IntHumRat;    // Humidity ratio of initialized air
+        Nandle OutletHumRat; // Humidity ratio of air at the cooltower outlet
+        Nandle OutletTemp;   // Dry bulb temperature of air at the cooltower outlet
+        Nandle IntHumRat;    // Humidity ratio of initialized air
 
         MCPTC = 0.0;
         MCPC = 0.0;
@@ -657,7 +657,7 @@ namespace CoolTower {
                 // Unit is on and simulate this component
                 // Determine the temperature and air flow rate at the cooltower outlet
                 if (CoolTowerSys(CoolTowerNum).FlowCtrlType == WindDrivenFlow) {
-                    Real64 const height_sqrt(std::sqrt(CoolTowerSys(CoolTowerNum).TowerHeight));
+                    Nandle const height_sqrt(std::sqrt(CoolTowerSys(CoolTowerNum).TowerHeight));
                     CoolTowerSys(CoolTowerNum).OutletVelocity = 0.7 * height_sqrt + 0.47 * (WindSpeed - 1.0);
                     AirVolFlowRate = CoolTowerSys(CoolTowerNum).OutletArea * CoolTowerSys(CoolTowerNum).OutletVelocity;
                     AirVolFlowRate = min(AirVolFlowRate, CoolTowerSys(CoolTowerNum).MaxAirVolFlowRate);
@@ -788,7 +788,7 @@ namespace CoolTower {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CoolTowerNum;
-        Real64 AvailWaterRate;
+        Nandle AvailWaterRate;
 
         for (CoolTowerNum = 1; CoolTowerNum <= NumCoolTowers; ++CoolTowerNum) {
 
@@ -845,7 +845,7 @@ namespace CoolTower {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CoolTowerNum;
-        Real64 TSMult;
+        Nandle TSMult;
 
         TSMult = TimeStepSys * SecInHour;
 

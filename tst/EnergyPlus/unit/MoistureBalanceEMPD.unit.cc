@@ -140,7 +140,7 @@ TEST_F(EnergyPlusFixture, CheckEMPDCalc)
     DataMoistureBalanceEMPD::RVSurfLayerOld(1) = 0.007038850125652322;
 
     // Do calcs
-    Real64 Tsat(0.0);
+    Nandle Tsat(0.0);
     MoistureBalanceEMPDManager::CalcMoistureBalanceEMPD(1, 19.907302679986064, 19.901185713164697, Tsat);
 
     auto const &report_vars = MoistureBalanceEMPDManager::EMPDReportVars(1);
@@ -266,7 +266,7 @@ TEST_F(EnergyPlusFixture, EMPDRcoating)
     DataMoistureBalanceEMPD::RVSurfLayerOld(1) = 0.007038850125652322;
 
     // Do calcs
-    Real64 Tsat(0.0);
+    Nandle Tsat(0.0);
     MoistureBalanceEMPDManager::CalcMoistureBalanceEMPD(1, 19.907302679986064, 19.901185713164697, Tsat);
 
     auto const &report_vars = MoistureBalanceEMPDManager::EMPDReportVars(1);
@@ -363,27 +363,27 @@ TEST_F(EnergyPlusFixture, CheckEMPDCalc_Slope)
 
     auto const &material(Material(1));
 
-    Real64 Tsat(0.0);
-    Real64 const KelvinConv(273.15);
+    Nandle Tsat(0.0);
+    Nandle const KelvinConv(273.15);
     DataHeatBalSurface::TempSurfIn.allocate(surfNum);
     DataHeatBalSurface::TempSurfIn(surfNum) = 20.0;
     
     // Calculate average vapor density [kg/m^3]
-    Real64 Taver = DataHeatBalSurface::TempSurfIn(surfNum);
+    Nandle Taver = DataHeatBalSurface::TempSurfIn(surfNum);
     // Calculate RH for use in material property calculations.
-    Real64 RV_Deep_Old = DataMoistureBalanceEMPD::RVdeepOld( surfNum );
-    Real64 RVaver = DataMoistureBalanceEMPD::RVSurfLayerOld(surfNum);
-    Real64 RHaver = RVaver * 461.52 * (Taver + KelvinConv) * std::exp(-23.7093 + 4111.0 / (Taver + 237.7));
-    Real64 dU_dRH = material.MoistACoeff * material.MoistBCoeff * pow(RHaver, material.MoistBCoeff - 1) +
+    Nandle RV_Deep_Old = DataMoistureBalanceEMPD::RVdeepOld( surfNum );
+    Nandle RVaver = DataMoistureBalanceEMPD::RVSurfLayerOld(surfNum);
+    Nandle RHaver = RVaver * 461.52 * (Taver + KelvinConv) * std::exp(-23.7093 + 4111.0 / (Taver + 237.7));
+    Nandle dU_dRH = material.MoistACoeff * material.MoistBCoeff * pow(RHaver, material.MoistBCoeff - 1) +
                     material.MoistCCoeff * material.MoistDCoeff * pow(RHaver, material.MoistDCoeff - 1);
 
     // Convert stored vapor density to RH.
-    Real64 RH_deep_layer_old = PsyRhFnTdbRhov(Taver, RV_Deep_Old);
-    Real64 RH_surf_layer_old = PsyRhFnTdbRhov(Taver, RVaver);
-    Real64 mass_flux_surf_deep_max = material.EMPDDeepDepth * material.Density * dU_dRH * (RH_surf_layer_old - RH_deep_layer_old) / (DataGlobals::TimeStepZone * 3600.0);
+    Nandle RH_deep_layer_old = PsyRhFnTdbRhov(Taver, RV_Deep_Old);
+    Nandle RH_surf_layer_old = PsyRhFnTdbRhov(Taver, RVaver);
+    Nandle mass_flux_surf_deep_max = material.EMPDDeepDepth * material.Density * dU_dRH * (RH_surf_layer_old - RH_deep_layer_old) / (DataGlobals::TimeStepZone * 3600.0);
 
-    Real64 hm_deep_layer = 6.9551289450635225e-05;
-    Real64 mass_flux_surf_deep_result = hm_deep_layer * (RVaver - RV_Deep_Old);
+    Nandle hm_deep_layer = 6.9551289450635225e-05;
+    Nandle mass_flux_surf_deep_result = hm_deep_layer * (RVaver - RV_Deep_Old);
     if (std::abs(mass_flux_surf_deep_max) < std::abs(mass_flux_surf_deep_result)) {
         mass_flux_surf_deep_result = mass_flux_surf_deep_max;
     }

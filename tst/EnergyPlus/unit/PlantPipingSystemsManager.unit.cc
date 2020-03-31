@@ -1748,7 +1748,7 @@ TEST_F(EnergyPlusFixture, PipingSystemFullSimulation) {
     // second call, turn off initLoopEquip so it tries to do a simulation
     initLoopEquip = false;
     EnergyPlus::PlantLocation myLocation = EnergyPlus::PlantLocation(1, 2, 1, 1);
-    Real64 curLoad = 0.0;
+    Nandle curLoad = 0.0;
     thisCircuit->simulate(myLocation, true, curLoad, true);
 
     // we can also try to call from the Domain side
@@ -1891,7 +1891,7 @@ TEST_F(EnergyPlusFixture, PipingSystem_SiteGroundDomainUsingNoMassMatTest) {
     
     bool TestResult;
     bool ExpectedResult;
-    Real64 Thickness;
+    Nandle Thickness;
     int MaterialIndex;
 
     DataHeatBalance::Material.allocate(1);

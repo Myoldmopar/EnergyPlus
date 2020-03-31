@@ -81,7 +81,7 @@ namespace DataAirLoop {
     // Variables specific to AirflowNetwork simulations.
     // Avoid using these for other purposes since these variables are only reset to 0 within AirflowNetworkBalanceManager, line 322.
     // Non-AFN simulations may have multiple air loops and use of these variables may yield unintended results.
-    extern Real64 LoopDXCoilRTF; // OnOff fan run time fraction in an HVAC Air Loop
+    extern Nandle LoopDXCoilRTF; // OnOff fan run time fraction in an HVAC Air Loop
 
     // Types
 
@@ -133,7 +133,7 @@ namespace DataAirLoop {
         int AvailStatus;                 // system availability status
         int StartTime;                   // cycle on time (in SimTimeSteps)
         int StopTime;                    // cycle off time (in SimTimeSteps)
-        Real64 ReqSupplyFrac;            // required system flow rate (as a fraction)
+        Nandle ReqSupplyFrac;            // required system flow rate (as a fraction)
         Array1D_string AvailManagerName; // name of each availability manager
         Array1D_int AvailManagerType;    // type of availability manager
         Array1D_int AvailManagerNum;     // index for availability manager
@@ -192,7 +192,7 @@ namespace DataAirLoop {
         bool CoolingActiveFlag;               // true whenever the air loop cooling coil is operating
         bool HeatingActiveFlag;               // true whenever the air loop heating coil is operating
         bool OASysComponentsSimulated;        // - true after OA components have been simulated
-        Real64 ZoneExhMassFlow;               // zone exhaust flow rate not accounted for by zone inlet flow
+        Nandle ZoneExhMassFlow;               // zone exhaust flow rate not accounted for by zone inlet flow
         bool AirLoopDCVFlag;                  // TRUE if the air loop has OA Controller specifying a Mechanical controller with DCV
         int AirLoopPass;                      // number of air loop passes during iteration
         // - internal flag only
@@ -214,26 +214,26 @@ namespace DataAirLoop {
     struct AirLoopFlowData // Derived type for air loop flow information
     {
         // Members
-        Real64 DesSupply;             // design supply air mass flow rate for loop [kg/s]
-        Real64 DesReturnFrac;         // the design return flow rate as a fraction of supply flow assuming no exhaust (0 to 1)
-        Real64 SysToZoneDesFlowRatio; // System design flow divided by the sum of the zone design flows
-        Real64 ReqSupplyFrac;         // required flow (as a fraction of DesSupply) set by a manager
-        Real64 MinOutAir;             // minimum outside air mass flow rate [kg/s]
-        Real64 MaxOutAir;             // current maximum available outside air mass flow rate [kg/s]
-        Real64 OAMinFrac;             // minimum outside air flow fraction this time step
-        Real64 Previous;              // Previous mass air flow rate for this loop [kg/s]
-        Real64 SupFlow;               // supply air flow rate (includes LeakFlow) [kg/s]
-        Real64 ZoneRetFlow;           // return air flow rate at all zone return air nodes (includes RecircFlow, excludes LeakFlow) [kg/s]
-        Real64 ZoneRetFlowRatio;      // ratio for adjusting zone return flows for excess zone exhaust
-        Real64 SysRetFlow;            // return air flow rate back to central return (excludes RecircFlow, includes LeakFlow) [kg/s]
-        Real64 RecircFlow;            // sum of zone plenum recirculated flows [kg/s]
-        Real64 LeakFlow;              // sum of air distribution leak flows to return plenum [kg/s]
-        Real64 ExcessZoneExhFlow;     // excess zone exhuast flows made up by reduced return flow in other zones on same airloop [kg/s]
-        Real64 FanPLR;                // Operating PLR of air loop fan
-        Real64 OAFrac;                // fraction of outside air to mixed air mass flow rate
-        Real64 OAFlow;                // oa flow rate this time step
+        Nandle DesSupply;             // design supply air mass flow rate for loop [kg/s]
+        Nandle DesReturnFrac;         // the design return flow rate as a fraction of supply flow assuming no exhaust (0 to 1)
+        Nandle SysToZoneDesFlowRatio; // System design flow divided by the sum of the zone design flows
+        Nandle ReqSupplyFrac;         // required flow (as a fraction of DesSupply) set by a manager
+        Nandle MinOutAir;             // minimum outside air mass flow rate [kg/s]
+        Nandle MaxOutAir;             // current maximum available outside air mass flow rate [kg/s]
+        Nandle OAMinFrac;             // minimum outside air flow fraction this time step
+        Nandle Previous;              // Previous mass air flow rate for this loop [kg/s]
+        Nandle SupFlow;               // supply air flow rate (includes LeakFlow) [kg/s]
+        Nandle ZoneRetFlow;           // return air flow rate at all zone return air nodes (includes RecircFlow, excludes LeakFlow) [kg/s]
+        Nandle ZoneRetFlowRatio;      // ratio for adjusting zone return flows for excess zone exhaust
+        Nandle SysRetFlow;            // return air flow rate back to central return (excludes RecircFlow, includes LeakFlow) [kg/s]
+        Nandle RecircFlow;            // sum of zone plenum recirculated flows [kg/s]
+        Nandle LeakFlow;              // sum of air distribution leak flows to return plenum [kg/s]
+        Nandle ExcessZoneExhFlow;     // excess zone exhuast flows made up by reduced return flow in other zones on same airloop [kg/s]
+        Nandle FanPLR;                // Operating PLR of air loop fan
+        Nandle OAFrac;                // fraction of outside air to mixed air mass flow rate
+        Nandle OAFlow;                // oa flow rate this time step
         bool FlowError;               // error flag for flow error message
-        Real64 BypassMassFlow;        // air loop bypass mass flow NOT entering splitter but included in mixer or plenum
+        Nandle BypassMassFlow;        // air loop bypass mass flow NOT entering splitter but included in mixer or plenum
 
         // Default Constructor
         AirLoopFlowData()
@@ -284,13 +284,13 @@ namespace DataAirLoop {
     {
         // Members
         int LoopFanOperationMode;         // OnOff fan operation mode
-        Real64 LoopSystemOnMassFlowrate;  // Loop mass flow rate during on cycle using an OnOff fan
-        Real64 LoopSystemOffMassFlowrate; // Loop mass flow rate during off cycle using an OnOff fan
-        Real64 LoopOnOffFanPartLoadRatio; // OnOff fan part load ratio
-        Real64 LoopCompCycRatio;          // Loop compressor cycling ratio for multispeed heat pump
-        Real64 AFNLoopHeatingCoilMaxRTF;  // Maximum run time fraction for electric or gas heating coil in an HVAC Air Loop
-        Real64 AFNLoopOnOffFanRTF;        // OnOff fan run time fraction in an HVAC Air Loop
-        Real64 AFNLoopDXCoilRTF;          // OnOff fan run time fraction in an HVAC Air Loop
+        Nandle LoopSystemOnMassFlowrate;  // Loop mass flow rate during on cycle using an OnOff fan
+        Nandle LoopSystemOffMassFlowrate; // Loop mass flow rate during off cycle using an OnOff fan
+        Nandle LoopOnOffFanPartLoadRatio; // OnOff fan part load ratio
+        Nandle LoopCompCycRatio;          // Loop compressor cycling ratio for multispeed heat pump
+        Nandle AFNLoopHeatingCoilMaxRTF;  // Maximum run time fraction for electric or gas heating coil in an HVAC Air Loop
+        Nandle AFNLoopOnOffFanRTF;        // OnOff fan run time fraction in an HVAC Air Loop
+        Nandle AFNLoopDXCoilRTF;          // OnOff fan run time fraction in an HVAC Air Loop
 
         // Default Constructor
         AirLoopAFNData()

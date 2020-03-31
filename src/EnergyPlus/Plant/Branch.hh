@@ -58,9 +58,9 @@ namespace DataPlant {
         // Members
         std::string Name; // Name of the branch
         int ControlType;
-        Real64 RequestedMassFlow;
+        Nandle RequestedMassFlow;
         bool HasConstantSpeedBranchPump;    // true if branch has a constant speed branch pump
-        Real64 ConstantSpeedBranchMassFlow; // nominal flow rate if constant speed branch pump on
+        Nandle ConstantSpeedBranchMassFlow; // nominal flow rate if constant speed branch pump on
         int BranchLevel;
         int FlowErrCount;    // For recurring error counting
         int FlowErrIndex;    // For recurring error index
@@ -69,15 +69,15 @@ namespace DataPlant {
         int NodeNumOut;      // Component outlet node number
         bool IsBypass;
         int PumpIndex;
-        Real64 PumpSizFac;
+        Nandle PumpSizFac;
         bool EMSCtrlOverrideOn;      // if true, EMS is calling to override branch operation avail
-        Real64 EMSCtrlOverrideValue; // value set by EMS system for branch override controls
+        Nandle EMSCtrlOverrideValue; // value set by EMS system for branch override controls
         Array1D<CompData> Comp;      // Component type list
         bool HasPressureComponents;
-        Real64 PressureDrop;
+        Nandle PressureDrop;
         int PressureCurveType;  // Either none, pressure curve, or generic curve
         int PressureCurveIndex; // Curve: index for pressure drop calculations
-        Real64 PressureEffectiveK;
+        Nandle PressureEffectiveK;
         bool disableOverrideForCSBranchPumping;
         int lastComponentSimulated;
 
@@ -91,16 +91,16 @@ namespace DataPlant {
         }
 
         // Max abs of Comp array MyLoad values //Autodesk:Tuned For replacement of any( abs( Comp.MyLoad() > SmallLoad ) usage
-        Real64 max_abs_Comp_MyLoad() const
+        Nandle max_abs_Comp_MyLoad() const
         {
-            Real64 load(0.0); // Return value
+            Nandle load(0.0); // Return value
             for (int i = Comp.l(), e = Comp.u(); i <= e; ++i) {
                 load = max(load, std::abs(Comp(i).MyLoad));
             }
             return load;
         }
 
-        Real64 DetermineBranchFlowRequest();
+        Nandle DetermineBranchFlowRequest();
     };
 
 } // namespace DataPlant

@@ -90,18 +90,18 @@ TEST_F(EnergyPlusFixture, FiniteDiffGroundTempModelTest)
     // Setting weather data manually here
     thisModel->weatherDataArray.dimension(NumDaysInYear);
 
-    Real64 drybulb_minTemp = 5;
-    Real64 drybulb_amp = 10;
-    Real64 relHum_const = 0.5;
-    Real64 windSpeed_const = 3.0;
-    Real64 solar_min = 100;
-    Real64 solar_amp = 100;
+    Nandle drybulb_minTemp = 5;
+    Nandle drybulb_amp = 10;
+    Nandle relHum_const = 0.5;
+    Nandle windSpeed_const = 3.0;
+    Nandle solar_min = 100;
+    Nandle solar_amp = 100;
 
     for (int day = 1; day <= NumDaysInYear; ++day) {
         auto &tdwd = thisModel->weatherDataArray(day); // "This day weather data"
 
-        Real64 theta = 2 * Pi * day / NumDaysInYear;
-        Real64 omega = 2 * Pi * 130 / NumDaysInYear; // Shifts min to around the end of Jan
+        Nandle theta = 2 * Pi * day / NumDaysInYear;
+        Nandle omega = 2 * Pi * 130 / NumDaysInYear; // Shifts min to around the end of Jan
 
         tdwd.dryBulbTemp = drybulb_amp * std::sin(theta - omega) + (drybulb_minTemp + drybulb_amp);
         tdwd.relativeHumidity = relHum_const;

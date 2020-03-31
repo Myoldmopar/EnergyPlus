@@ -83,39 +83,39 @@ namespace WaterUse {
         std::string Name; // Name of DHW
         std::string EndUseSubcatName;
         int Connections;          // Index for WATER USE CONNECTIONS object
-        Real64 PeakVolFlowRate;   // Peak volumetric flow rate, also water consumption rate (m3/s)
+        Nandle PeakVolFlowRate;   // Peak volumetric flow rate, also water consumption rate (m3/s)
         int FlowRateFracSchedule; // Pointer to schedule object
-        Real64 ColdVolFlowRate;
-        Real64 HotVolFlowRate;
-        Real64 TotalVolFlowRate; // Volumetric flow rate, also water consumption rate (m3/s)
-        Real64 ColdMassFlowRate;
-        Real64 HotMassFlowRate;
-        Real64 TotalMassFlowRate; // Mass flow rate (kg/s)
-        Real64 DrainMassFlowRate;
+        Nandle ColdVolFlowRate;
+        Nandle HotVolFlowRate;
+        Nandle TotalVolFlowRate; // Volumetric flow rate, also water consumption rate (m3/s)
+        Nandle ColdMassFlowRate;
+        Nandle HotMassFlowRate;
+        Nandle TotalMassFlowRate; // Mass flow rate (kg/s)
+        Nandle DrainMassFlowRate;
         int ColdTempSchedule;   // Index for schedule object
         int HotTempSchedule;    // Index for schedule object
         int TargetTempSchedule; // Index for schedule object
-        Real64 ColdTemp;        // Cold supply water temperature (C)
-        Real64 HotTemp;         // Hot supply water temperature (C)
-        Real64 TargetTemp;      // Target (mixed) water temperature (C)
-        Real64 MixedTemp;       // Actual outlet (mixed) water temperature (C)
-        Real64 DrainTemp;
+        Nandle ColdTemp;        // Cold supply water temperature (C)
+        Nandle HotTemp;         // Hot supply water temperature (C)
+        Nandle TargetTemp;      // Target (mixed) water temperature (C)
+        Nandle MixedTemp;       // Actual outlet (mixed) water temperature (C)
+        Nandle DrainTemp;
         int Zone;                 // Index for zone object
         int SensibleFracSchedule; // Pointer to schedule object
-        Real64 SensibleRate;
-        Real64 SensibleEnergy;
-        Real64 SensibleRateNoMultiplier;
+        Nandle SensibleRate;
+        Nandle SensibleEnergy;
+        Nandle SensibleRateNoMultiplier;
         int LatentFracSchedule; // Pointer to schedule object
-        Real64 LatentRate;
-        Real64 LatentEnergy;
-        Real64 LatentRateNoMultiplier;
-        Real64 MoistureRate;
-        Real64 MoistureMass;
-        Real64 ColdVolume;  // Water consumption (m3)
-        Real64 HotVolume;   // Water consumption (m3)
-        Real64 TotalVolume; // Water consumption (m3)
-        Real64 Power;       // Heating rate required to meet the mixed water temperature (W)
-        Real64 Energy;      // Heating energy required to meet the mixed water temperature (J)
+        Nandle LatentRate;
+        Nandle LatentEnergy;
+        Nandle LatentRateNoMultiplier;
+        Nandle MoistureRate;
+        Nandle MoistureMass;
+        Nandle ColdVolume;  // Water consumption (m3)
+        Nandle HotVolume;   // Water consumption (m3)
+        Nandle TotalVolume; // Water consumption (m3)
+        Nandle Power;       // Heating rate required to meet the mixed water temperature (W)
+        Nandle Energy;      // Heating energy required to meet the mixed water temperature (J)
         bool setupMyOutputVars;
 
         WaterEquipmentType()
@@ -162,44 +162,44 @@ namespace WaterUse {
         bool HeatRecovery;
         HeatRecoveryHXEnum HeatRecoveryHX;
         HeatRecoveryConfigEnum HeatRecoveryConfig;
-        Real64 HXUA;
-        Real64 Effectiveness;
-        Real64 RecoveryRate;
-        Real64 RecoveryEnergy;
-        Real64 MainsMassFlowRate; // Mass flow rate (kg/s)
-        Real64 TankMassFlowRate;  // Mass flow rate (kg/s)
-        Real64 ColdMassFlowRate;  // Mass flow rate (kg/s)  cold = mains + tank
-        Real64 HotMassFlowRate;   // Mass flow rate (kg/s)
-        Real64 TotalMassFlowRate; // Mass flow rate (kg/s) total = cold + hot
-        Real64 DrainMassFlowRate;
-        Real64 RecoveryMassFlowRate;
-        Real64 PeakVolFlowRate;  // Volumetric flow rate, also water consumption rate (m3/s)
-        Real64 MainsVolFlowRate; // Volumetric flow rate, also water consumption rate (m3/s)
-        Real64 TankVolFlowRate;  // Volumetric flow rate, also water consumption rate (m3/s)
-        Real64 ColdVolFlowRate;  // Volumetric flow rate, also water consumption rate (m3/s)
-        Real64 HotVolFlowRate;   // Volumetric flow rate, also water consumption rate (m3/s)
-        Real64 TotalVolFlowRate; // Volumetric flow rate, also water consumption rate (m3/s)
-        Real64 DrainVolFlowRate;
-        Real64 PeakMassFlowRate; // Peak Mass flow rate for MassFlowRateMax
+        Nandle HXUA;
+        Nandle Effectiveness;
+        Nandle RecoveryRate;
+        Nandle RecoveryEnergy;
+        Nandle MainsMassFlowRate; // Mass flow rate (kg/s)
+        Nandle TankMassFlowRate;  // Mass flow rate (kg/s)
+        Nandle ColdMassFlowRate;  // Mass flow rate (kg/s)  cold = mains + tank
+        Nandle HotMassFlowRate;   // Mass flow rate (kg/s)
+        Nandle TotalMassFlowRate; // Mass flow rate (kg/s) total = cold + hot
+        Nandle DrainMassFlowRate;
+        Nandle RecoveryMassFlowRate;
+        Nandle PeakVolFlowRate;  // Volumetric flow rate, also water consumption rate (m3/s)
+        Nandle MainsVolFlowRate; // Volumetric flow rate, also water consumption rate (m3/s)
+        Nandle TankVolFlowRate;  // Volumetric flow rate, also water consumption rate (m3/s)
+        Nandle ColdVolFlowRate;  // Volumetric flow rate, also water consumption rate (m3/s)
+        Nandle HotVolFlowRate;   // Volumetric flow rate, also water consumption rate (m3/s)
+        Nandle TotalVolFlowRate; // Volumetric flow rate, also water consumption rate (m3/s)
+        Nandle DrainVolFlowRate;
+        Nandle PeakMassFlowRate; // Peak Mass flow rate for MassFlowRateMax
         int ColdTempSchedule;    // Index for schedule object
         int HotTempSchedule;     // Index for schedule object
-        Real64 MainsTemp;        // Cold supply water temperature (C)
-        Real64 TankTemp;         // Cold supply water temperature (C)
-        Real64 ColdSupplyTemp;   // cold from mains, schedule, or tank, depending
-        Real64 ColdTemp;         // Cold supply water temperature (C)  actual cold (could be reheated)
-        Real64 HotTemp;          // Hot supply water temperature (C)
-        Real64 DrainTemp;
-        Real64 RecoveryTemp;
-        Real64 ReturnTemp;
-        Real64 WasteTemp;
-        Real64 TempError;
-        Real64 MainsVolume; // Water consumption (m3)
-        Real64 TankVolume;  // Water consumption (m3)
-        Real64 ColdVolume;  // Water consumption (m3)
-        Real64 HotVolume;   // Water consumption (m3)
-        Real64 TotalVolume; // Water consumption (m3)
-        Real64 Power;       // Heating rate required to raise temperature from cold to hot (W)
-        Real64 Energy;      // Heating energy required to raise temperature from cold to hot (J)
+        Nandle MainsTemp;        // Cold supply water temperature (C)
+        Nandle TankTemp;         // Cold supply water temperature (C)
+        Nandle ColdSupplyTemp;   // cold from mains, schedule, or tank, depending
+        Nandle ColdTemp;         // Cold supply water temperature (C)  actual cold (could be reheated)
+        Nandle HotTemp;          // Hot supply water temperature (C)
+        Nandle DrainTemp;
+        Nandle RecoveryTemp;
+        Nandle ReturnTemp;
+        Nandle WasteTemp;
+        Nandle TempError;
+        Nandle MainsVolume; // Water consumption (m3)
+        Nandle TankVolume;  // Water consumption (m3)
+        Nandle ColdVolume;  // Water consumption (m3)
+        Nandle HotVolume;   // Water consumption (m3)
+        Nandle TotalVolume; // Water consumption (m3)
+        Nandle Power;       // Heating rate required to raise temperature from cold to hot (W)
+        Nandle Energy;      // Heating energy required to raise temperature from cold to hot (J)
         int NumWaterEquipment;
         int MaxIterationsErrorIndex; // recurring error index
         Array1D_int myWaterEquipArr;
@@ -226,7 +226,7 @@ namespace WaterUse {
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void InitConnections();
 

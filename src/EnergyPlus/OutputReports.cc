@@ -372,32 +372,32 @@ void DXFOut(std::string &PolygonAction,
     // na
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    static Array1D<Real64> StemX(4, -10.0);
-    static Array1D<Real64> StemY(4, {3.0, 3.0, 0.0, 0.0});
-    static Array1D<Real64> StemZ(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> Head1X(4, {-10.0, -10.0, -10.5, -10.5});
-    static Array1D<Real64> Head1Y(4, {3.0, 3.0, 2.133975, 2.133975});
-    static Array1D<Real64> Head1Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> Head2X(4, {-10.0, -10.0, -9.5, -9.5});
-    static Array1D<Real64> Head2Y(4, {3.0, 3.0, 2.133975, 2.133975});
-    static Array1D<Real64> Head2Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide1X(4, -10.5);
-    static Array1D<Real64> NSide1Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide1Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide2X(4, {-10.5, -10.5, -9.5, -9.5});
-    static Array1D<Real64> NSide2Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide2Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide3X(4, -9.5);
-    static Array1D<Real64> NSide3Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide3Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> StemX(4, -10.0);
+    static Array1D<Nandle> StemY(4, {3.0, 3.0, 0.0, 0.0});
+    static Array1D<Nandle> StemZ(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> Head1X(4, {-10.0, -10.0, -10.5, -10.5});
+    static Array1D<Nandle> Head1Y(4, {3.0, 3.0, 2.133975, 2.133975});
+    static Array1D<Nandle> Head1Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> Head2X(4, {-10.0, -10.0, -9.5, -9.5});
+    static Array1D<Nandle> Head2Y(4, {3.0, 3.0, 2.133975, 2.133975});
+    static Array1D<Nandle> Head2Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide1X(4, -10.5);
+    static Array1D<Nandle> NSide1Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide1Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide2X(4, {-10.5, -10.5, -9.5, -9.5});
+    static Array1D<Nandle> NSide2Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide2Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide3X(4, -9.5);
+    static Array1D<Nandle> NSide3Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide3Z(4, {0.1, 0.0, 0.0, 0.1});
     //  integer, dimension(7) :: colorno=(/3,4,5,6,2,8,9/)
     int unit;       // Unit number on which to write file
     int surf;       // Loop variable for surfaces
     int vert;       // Loop counter
     int colorindex; // color index by surface type
-    Real64 minx;    // minimum x in surface data
-    Real64 miny;    // minimum y in surface data
-    Real64 minz;    // minimum z in surface data (for polygon output)
+    Nandle minx;    // minimum x in surface data
+    Nandle miny;    // minimum y in surface data
+    Nandle minz;    // minimum z in surface data (for polygon output)
     int zones;      // loop counter for zone loop
     std::string ZoneNum;
     std::string TempZoneName;
@@ -925,32 +925,32 @@ void DXFOutLines(std::string const &ColorScheme)
     // na
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    static Array1D<Real64> StemX(4, -10.0);
-    static Array1D<Real64> StemY(4, {3.0, 3.0, 0.0, 0.0});
-    static Array1D<Real64> StemZ(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> Head1X(4, {-10.0, -10.0, -10.5, -10.5});
-    static Array1D<Real64> Head1Y(4, {3.0, 3.0, 2.133975, 2.133975});
-    static Array1D<Real64> Head1Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> Head2X(4, {-10.0, -10.0, -9.5, -9.5});
-    static Array1D<Real64> Head2Y(4, {3.0, 3.0, 2.133975, 2.133975});
-    static Array1D<Real64> Head2Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide1X(4, -10.5);
-    static Array1D<Real64> NSide1Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide1Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide2X(4, {-10.5, -10.5, -9.5, -9.5});
-    static Array1D<Real64> NSide2Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide2Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide3X(4, -9.5);
-    static Array1D<Real64> NSide3Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide3Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> StemX(4, -10.0);
+    static Array1D<Nandle> StemY(4, {3.0, 3.0, 0.0, 0.0});
+    static Array1D<Nandle> StemZ(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> Head1X(4, {-10.0, -10.0, -10.5, -10.5});
+    static Array1D<Nandle> Head1Y(4, {3.0, 3.0, 2.133975, 2.133975});
+    static Array1D<Nandle> Head1Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> Head2X(4, {-10.0, -10.0, -9.5, -9.5});
+    static Array1D<Nandle> Head2Y(4, {3.0, 3.0, 2.133975, 2.133975});
+    static Array1D<Nandle> Head2Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide1X(4, -10.5);
+    static Array1D<Nandle> NSide1Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide1Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide2X(4, {-10.5, -10.5, -9.5, -9.5});
+    static Array1D<Nandle> NSide2Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide2Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide3X(4, -9.5);
+    static Array1D<Nandle> NSide3Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide3Z(4, {0.1, 0.0, 0.0, 0.1});
     //  integer, dimension(7) :: colorno=(/3,4,5,6,2,8,9/)
     int unit;       // Unit number on which to write file
     int surf;       // Loop variable for surfaces
     int vert;       // Loop counter
     int colorindex; // color index by surface type
-    Real64 minx;    // minimum x in surface data
-    Real64 miny;    // minimum y in surface data
-    Real64 minz;    // minimum z in surface data (for polygon output)
+    Nandle minx;    // minimum x in surface data
+    Nandle miny;    // minimum y in surface data
+    Nandle minz;    // minimum z in surface data (for polygon output)
     int zones;      // loop counter for zone loop
     std::string ZoneNum;
     std::string TempZoneName;
@@ -1369,32 +1369,32 @@ void DXFOutWireFrame(std::string const &ColorScheme)
     // na
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    static Array1D<Real64> StemX(4, -10.0);
-    static Array1D<Real64> StemY(4, {3.0, 3.0, 0.0, 0.0});
-    static Array1D<Real64> StemZ(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> Head1X(4, {-10.0, -10.0, -10.5, -10.5});
-    static Array1D<Real64> Head1Y(4, {3.0, 3.0, 2.133975, 2.133975});
-    static Array1D<Real64> Head1Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> Head2X(4, {-10.0, -10.0, -9.5, -9.5});
-    static Array1D<Real64> Head2Y(4, {3.0, 3.0, 2.133975, 2.133975});
-    static Array1D<Real64> Head2Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide1X(4, -10.5);
-    static Array1D<Real64> NSide1Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide1Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide2X(4, {-10.5, -10.5, -9.5, -9.5});
-    static Array1D<Real64> NSide2Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide2Z(4, {0.1, 0.0, 0.0, 0.1});
-    static Array1D<Real64> NSide3X(4, -9.5);
-    static Array1D<Real64> NSide3Y(4, {4.5, 4.5, 3.5, 3.5});
-    static Array1D<Real64> NSide3Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> StemX(4, -10.0);
+    static Array1D<Nandle> StemY(4, {3.0, 3.0, 0.0, 0.0});
+    static Array1D<Nandle> StemZ(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> Head1X(4, {-10.0, -10.0, -10.5, -10.5});
+    static Array1D<Nandle> Head1Y(4, {3.0, 3.0, 2.133975, 2.133975});
+    static Array1D<Nandle> Head1Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> Head2X(4, {-10.0, -10.0, -9.5, -9.5});
+    static Array1D<Nandle> Head2Y(4, {3.0, 3.0, 2.133975, 2.133975});
+    static Array1D<Nandle> Head2Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide1X(4, -10.5);
+    static Array1D<Nandle> NSide1Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide1Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide2X(4, {-10.5, -10.5, -9.5, -9.5});
+    static Array1D<Nandle> NSide2Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide2Z(4, {0.1, 0.0, 0.0, 0.1});
+    static Array1D<Nandle> NSide3X(4, -9.5);
+    static Array1D<Nandle> NSide3Y(4, {4.5, 4.5, 3.5, 3.5});
+    static Array1D<Nandle> NSide3Z(4, {0.1, 0.0, 0.0, 0.1});
     //  integer, dimension(7) :: colorno=(/3,4,5,6,2,8,9/)
     int unit;       // Unit number on which to write file
     int surf;       // Loop variable for surfaces
     int vert;       // Loop counter
     int colorindex; // color index by surface type
-    Real64 minx;    // minimum x in surface data
-    Real64 miny;    // minimum y in surface data
-    Real64 minz;    // minimum z in surface data (for polygon output)
+    Nandle minx;    // minimum x in surface data
+    Nandle miny;    // minimum y in surface data
+    Nandle minz;    // minimum z in surface data (for polygon output)
     int zones;      // loop counter for zone loop
     std::string ZoneNum;
     std::string TempZoneName;
@@ -1796,7 +1796,7 @@ void DetailsForSurfaces(int const RptType) // (1=Vertices only, 10=Details only,
     std::string ScheduleName;
     std::string IntConvCoeffCalc;
     std::string ExtConvCoeffCalc;
-    Real64 NominalUwithConvCoeffs;
+    Nandle NominalUwithConvCoeffs;
     std::string cNominalU;
     std::string cNominalUwithConvCoeffs;
     std::string cSchedMin;

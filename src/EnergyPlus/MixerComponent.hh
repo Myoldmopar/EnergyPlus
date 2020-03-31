@@ -63,7 +63,7 @@ namespace MixerComponent {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    extern Real64 const MassFlowTol;
+    extern Nandle const MassFlowTol;
 
     // DERIVED TYPE DEFINITIONS
 
@@ -81,24 +81,24 @@ namespace MixerComponent {
     {
         // Members
         std::string MixerName; // Name of the Mixer
-        Real64 OutletTemp;
-        Real64 OutletHumRat;
-        Real64 OutletEnthalpy;
-        Real64 OutletPressure;
+        Nandle OutletTemp;
+        Nandle OutletHumRat;
+        Nandle OutletEnthalpy;
+        Nandle OutletPressure;
         int OutletNode;
-        Real64 OutletMassFlowRate;         // MassFlow through the Mixer being Simulated [kg/Sec]
-        Real64 OutletMassFlowRateMaxAvail; // [kg/Sec]
-        Real64 OutletMassFlowRateMinAvail; // [kg/Sec]
+        Nandle OutletMassFlowRate;         // MassFlow through the Mixer being Simulated [kg/Sec]
+        Nandle OutletMassFlowRateMaxAvail; // [kg/Sec]
+        Nandle OutletMassFlowRateMinAvail; // [kg/Sec]
         bool InitFlag;
         int NumInletNodes;
         Array1D_int InletNode;
-        Array1D<Real64> InletMassFlowRate;
-        Array1D<Real64> InletMassFlowRateMaxAvail;
-        Array1D<Real64> InletMassFlowRateMinAvail;
-        Array1D<Real64> InletTemp;
-        Array1D<Real64> InletHumRat;
-        Array1D<Real64> InletEnthalpy;
-        Array1D<Real64> InletPressure;
+        Array1D<Nandle> InletMassFlowRate;
+        Array1D<Nandle> InletMassFlowRateMaxAvail;
+        Array1D<Nandle> InletMassFlowRateMinAvail;
+        Array1D<Nandle> InletTemp;
+        Array1D<Nandle> InletHumRat;
+        Array1D<Nandle> InletEnthalpy;
+        Array1D<Nandle> InletPressure;
 
         // Default Constructor
         MixerConditions()

@@ -562,8 +562,8 @@ TEST_F(EnergyPlusFixture, ZoneEquipmentManager_CalcZoneMassBalanceTest2)
     Node(returnNode2).MassFlowRate = 0.32;
     Node(returnNode3).MassFlowRate = 0.45;
 
-    Real64 StdTotalReturnMassFlow = 0.0;
-    Real64 FinalTotalReturnMassFlow = 0.0;
+    Nandle StdTotalReturnMassFlow = 0.0;
+    Nandle FinalTotalReturnMassFlow = 0.0;
 
     CalcZoneReturnFlows(ZoneNum, StdTotalReturnMassFlow, FinalTotalReturnMassFlow);
     EXPECT_EQ(FinalTotalReturnMassFlow, 0.0);
@@ -803,8 +803,8 @@ TEST_F(EnergyPlusFixture, ZoneEquipmentManager_CalcZoneMassBalanceTest4)
     Node(returnNode2).MassFlowRate = 0.32;
     Node(returnNode3).MassFlowRate = 0.45;
 
-    Real64 StdTotalReturnMassFlow = 0.0;
-    Real64 FinalTotalReturnMassFlow = 0.0;
+    Nandle StdTotalReturnMassFlow = 0.0;
+    Nandle FinalTotalReturnMassFlow = 0.0;
 
     CalcZoneReturnFlows(ZoneNum, StdTotalReturnMassFlow, FinalTotalReturnMassFlow);
     EXPECT_EQ(FinalTotalReturnMassFlow, 0.0);
@@ -1336,16 +1336,16 @@ TEST_F(EnergyPlusFixture, ZoneEquipmentManager_DistributeUniformPLR)
     thisZEqList.HeatingCapacity(1) = 2000.0;
     thisZEqList.HeatingCapacity(2) = 1000.0;
     thisZEqList.HeatingCapacity(3) = 500.0;
-    Real64 totHeatingCapcity = thisZEqList.HeatingCapacity(1) + thisZEqList.HeatingCapacity(2) + thisZEqList.HeatingCapacity(3);
+    Nandle totHeatingCapcity = thisZEqList.HeatingCapacity(1) + thisZEqList.HeatingCapacity(2) + thisZEqList.HeatingCapacity(3);
     // For zone equipment list, cooling capacity is negative
     thisZEqList.CoolingCapacity(1) = -1200.0;
     thisZEqList.CoolingCapacity(2) = -800.0;
     thisZEqList.CoolingCapacity(3) = -500.0;
-    Real64 totCoolingCapcity = thisZEqList.CoolingCapacity(1) + thisZEqList.CoolingCapacity(2); // only include the first two equipment for cooling
+    Nandle totCoolingCapcity = thisZEqList.CoolingCapacity(1) + thisZEqList.CoolingCapacity(2); // only include the first two equipment for cooling
 
     // UniformPLR Test 1 - Heating, FirstHVACIteration = true
     energy.TotalOutputRequired = 1000.0;
-    Real64 plr = energy.TotalOutputRequired / totHeatingCapcity;
+    Nandle plr = energy.TotalOutputRequired / totHeatingCapcity;
     energy.OutputRequiredToHeatingSP = 1000.0;
     energy.OutputRequiredToCoolingSP = 2000.0;
     bool firstHVACIteration = true;
@@ -1556,16 +1556,16 @@ TEST_F(EnergyPlusFixture, ZoneEquipmentManager_DistributeSequentialUniformPLR)
     thisZEqList.HeatingCapacity(1) = 2000.0;
     thisZEqList.HeatingCapacity(2) = 1000.0;
     thisZEqList.HeatingCapacity(3) = 500.0;
-    Real64 totHeatingCapcity = thisZEqList.HeatingCapacity(1) + thisZEqList.HeatingCapacity(2) + thisZEqList.HeatingCapacity(3);
+    Nandle totHeatingCapcity = thisZEqList.HeatingCapacity(1) + thisZEqList.HeatingCapacity(2) + thisZEqList.HeatingCapacity(3);
     // For zone equipment list, cooling capacity is negative
     thisZEqList.CoolingCapacity(1) = -1200.0;
     thisZEqList.CoolingCapacity(2) = -800.0;
     thisZEqList.CoolingCapacity(3) = -500.0;
-    Real64 totCoolingCapcity = thisZEqList.CoolingCapacity(1) + thisZEqList.CoolingCapacity(2); // only include the first two equipment for cooling
+    Nandle totCoolingCapcity = thisZEqList.CoolingCapacity(1) + thisZEqList.CoolingCapacity(2); // only include the first two equipment for cooling
 
     // SequentialUniformPLR Test 1 - Heating, FirstHVACIteration = true
     energy.TotalOutputRequired = 1000.0;
-    Real64 plr = energy.TotalOutputRequired / totHeatingCapcity;
+    Nandle plr = energy.TotalOutputRequired / totHeatingCapcity;
     energy.OutputRequiredToHeatingSP = 1000.0;
     energy.OutputRequiredToCoolingSP = 2000.0;
     bool firstHVACIteration = true;
@@ -1929,14 +1929,14 @@ TEST_F(EnergyPlusFixture, ZoneEquipmentManager_DistributeSequentialLoad_MixedEqu
     SetZoneEquipSimOrder(ZoneNum, ZoneNum);
     DistributeSystemOutputRequired(ZoneNum, firstHVACIteration);
     // Equipment 1 provides 100W of heating
-    Real64 SysOutputProvided = 100.0;
-    Real64 LatOutputProvided = 0.0;
+    Nandle SysOutputProvided = 100.0;
+    Nandle LatOutputProvided = 0.0;
     int EquipNum = 1;
     UpdateSystemOutputRequired(ZoneNum, SysOutputProvided, LatOutputProvided, EquipNum);
 
     // Expect next sequenced load #2 to be Total minus SysOutputProvided here, others unchanged
-    Real64 expectedHeatLoad = energy.OutputRequiredToHeatingSP - SysOutputProvided;
-    Real64 expectedCoolLoad = energy.OutputRequiredToCoolingSP - SysOutputProvided;
+    Nandle expectedHeatLoad = energy.OutputRequiredToHeatingSP - SysOutputProvided;
+    Nandle expectedCoolLoad = energy.OutputRequiredToCoolingSP - SysOutputProvided;
     EXPECT_EQ(energy.SequencedOutputRequired(1), energy.TotalOutputRequired);
     EXPECT_EQ(energy.SequencedOutputRequired(2), expectedHeatLoad);
     EXPECT_EQ(energy.SequencedOutputRequired(3), energy.TotalOutputRequired);
@@ -2160,14 +2160,14 @@ TEST_F(EnergyPlusFixture, ZoneEquipmentManager_DistributeSequentialLoad_MixedEqu
     firstHVACIteration = false;
     InitSystemOutputRequired(ZoneNum, firstHVACIteration, true);
     // Equipment 1 provides 100W of heating
-    Real64 SysOutputProvided = 100.0;
-    Real64 LatOutputProvided = 0.0;
+    Nandle SysOutputProvided = 100.0;
+    Nandle LatOutputProvided = 0.0;
     int EquipNum = 1;
     UpdateSystemOutputRequired(ZoneNum, SysOutputProvided, LatOutputProvided, EquipNum);
 
     // Expect next sequenced load fractions to be applied here on the first and second equipments
-    Real64 expectedHeatLoad = energy.UnadjRemainingOutputReqToHeatSP * 0.6;
-    Real64 expectedCoolLoad = energy.UnadjRemainingOutputReqToCoolSP * 0.6;
+    Nandle expectedHeatLoad = energy.UnadjRemainingOutputReqToHeatSP * 0.6;
+    Nandle expectedCoolLoad = energy.UnadjRemainingOutputReqToCoolSP * 0.6;
     EXPECT_DOUBLE_EQ(energy.SequencedOutputRequired(1), energy.TotalOutputRequired * 0.4);
     EXPECT_DOUBLE_EQ(energy.SequencedOutputRequired(2), expectedHeatLoad);
     EXPECT_DOUBLE_EQ(energy.SequencedOutputRequiredToHeatingSP(1), energy.OutputRequiredToHeatingSP * 0.4);

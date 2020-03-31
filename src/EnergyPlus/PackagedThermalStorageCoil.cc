@@ -173,7 +173,7 @@ namespace PackagedThermalStorageCoil {
                     int &CompIndex,
                     int const FanOpMode, // allows parent object to control fan mode
                     int &TESOpMode,
-                    Optional<Real64 const> PartLoadRatio // part load ratio (for single speed cycling unit)
+                    Optional<Nandle const> PartLoadRatio // part load ratio (for single speed cycling unit)
     )
     {
 
@@ -278,10 +278,10 @@ namespace PackagedThermalStorageCoil {
         int NumNumbers;                 // Number of numeric items in input
         int IOStatus;                   // Input status returned from GetObjectItem
         static bool ErrorsFound(false); // Set to true if errors in input, fatal at end of routine
-        Real64 TminRho;
-        Real64 TmaxRho;
-        Real64 TminCp;
-        Real64 TmaxCp;
+        Nandle TminRho;
+        Nandle TmaxRho;
+        Nandle TminCp;
+        Nandle TmaxCp;
         int ZoneIndexTrial;
 
         cCurrentModuleObject = "Coil:Cooling:DX:SingleSpeed:ThermalStorage";
@@ -1860,7 +1860,7 @@ namespace PackagedThermalStorageCoil {
         int lsnum;
         int brnum;
         int cpnum;
-        Real64 tmpSchedValue;
+        Nandle tmpSchedValue;
 
         if (MyOneTimeFlag) {
             // initialize the environment and sizing flags
@@ -2111,27 +2111,27 @@ namespace PackagedThermalStorageCoil {
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("SizeTESCoil ");
         static std::string const calcTESWaterStorageTank("CalcTESWaterStorageTank");
-        Real64 const FluidTankSizingDeltaT(10.0);
+        Nandle const FluidTankSizingDeltaT(10.0);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MixTemp;
-        Real64 MixHumRat;
-        Real64 MixEnth;
-        Real64 MixWetBulb;
-        Real64 SupTemp;
-        Real64 SupHumRat;
-        Real64 SupEnth;
-        Real64 OutTemp;
-        Real64 OutAirFrac;
-        Real64 VolFlowRate;
-        Real64 CoolCapAtPeak;
-        Real64 TotCapTempModFac;
+        Nandle MixTemp;
+        Nandle MixHumRat;
+        Nandle MixEnth;
+        Nandle MixWetBulb;
+        Nandle SupTemp;
+        Nandle SupHumRat;
+        Nandle SupEnth;
+        Nandle OutTemp;
+        Nandle OutAirFrac;
+        Nandle VolFlowRate;
+        Nandle CoolCapAtPeak;
+        Nandle TotCapTempModFac;
         int TimeStepNumAtMax;
         int DDNum;
-        Real64 rhoair;
-        Real64 rho;
-        Real64 deltaT;
-        Real64 Cp;
+        Nandle rhoair;
+        Nandle rho;
+        Nandle deltaT;
+        Nandle Cp;
 
         if (TESCoil(TESCoilNum).RatedEvapAirVolFlowRate == AutoSize) {
 
@@ -2410,7 +2410,7 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 StandbyAncillaryPower;
+        Nandle StandbyAncillaryPower;
 
         // coil is off; just pass through conditions
         if (GetCurrentScheduleValue(TESCoil(TESCoilNum).AvailSchedNum) != 0.0) {
@@ -2458,7 +2458,7 @@ namespace PackagedThermalStorageCoil {
         }
     }
 
-    void CalcTESCoilCoolingOnlyMode(int const TESCoilNum, int const EP_UNUSED(FanOpMode), Real64 const PartLoadRatio)
+    void CalcTESCoilCoolingOnlyMode(int const TESCoilNum, int const EP_UNUSED(FanOpMode), Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2485,8 +2485,8 @@ namespace PackagedThermalStorageCoil {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIter(30);
-        Real64 const RelaxationFactor(0.4);
-        Real64 const Tolerance(0.1);
+        Nandle const RelaxationFactor(0.4);
+        Nandle const Tolerance(0.1);
         static std::string const RoutineName("CalcTESCoilCoolingOnlyMode");
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -2496,57 +2496,57 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
+        Nandle CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
         // Outdoor Wetbulb +(1 - effectiveness)*(outdoor drybulb - outdoor wetbulb) for evap condenser.
-        Real64 CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
+        Nandle CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
         // For evap condenser, its the humidity ratio of the air leaving the evap cooling pads.
-        Real64 CondAirMassFlow;           // Condenser air mass flow rate [kg/s]
-        Real64 CondInletEnthalpy;         // condenser inlet enthalpy [J/kg]
-        Real64 CondAirSidePressure;       // Outdoor barometric pressure at condenser (Pa)
-        Real64 QdotCond;                  // condenser total heat rejection rate [W]
-        Real64 CondOutletEnthalpy;        // condesner outlet enthalpy [J/kg]
-        Real64 OutdoorDryBulb;            // outdoor air dry bulb local variable [C]
-        Real64 OutdoorHumRat;             // outdoor air humidity ratio local [kg/kg]
-        Real64 OutdoorWetBulb;            // outdoor air wetbulb local [C]
-        Real64 EvapAirMassFlow;           // local for evaporator air mass flow [kg/s]
-        Real64 EvapInletDryBulb;          // evaporator inlet air drybulb [C]
-        Real64 EvapInletHumRat;           // evaporator inlet air humidity ratio [kg/kg]
-        Real64 EvapInletWetBulb;          // evaporator inlet air wetbulb [C]
-        Real64 EvapInletEnthalpy;         // evaporator inlet air enthalpy [J/kg]
-        Real64 AirMassFlowRatio;          // evaporator inlet air mass flow divided by design mass flow [ ]
-        Real64 TotCapTempModFac;          // total coolin capacity modification factor due to temps []
-        Real64 TotCapFlowModFac;          // Total cooling capacity modification factor due to flow []
-        Real64 TotCap;                    // total cooling capacity
-        Real64 SHRTempFac;                // sensible heat ratio modification factor due to temps []
-        Real64 SHRFlowFac;                // sensible heat ratio modification factor due to flow []
-        Real64 SHR;                       // sensible heat ratio
-        Real64 PLF;                       // part load factor
-        Real64 RuntimeFraction;           // compressor running time divided by full time of timestep.
-        Real64 FullLoadOutAirEnth;        // evaporator outlet full load enthalpy [J/kg]
-        Real64 hTinwout;                  // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
-        Real64 FullLoadOutAirHumRat;      // evaporator outlet humidity ratio at full load
-        Real64 FullLoadOutAirTemp;        // evaporator outlet air temperature at full load [C]
-        Real64 EvapOutletAirEnthalpy;     // evaporator outlet air enthalpy [J/kg]
-        Real64 EvapOutletAirHumRat;       // evaporator outlet air humidity ratio [kg/kg]
-        Real64 EvapOutletAirTemp;         // evaporator outlet drybulb [C]
-        Real64 EIRTempModFac;             // energy input ratio modification factor due to temperatures []
-        Real64 EIRFlowModFac;             // energy input ratio modification factor due to flow []
-        Real64 EIR;                       // energy input ratio
-        Real64 ElecCoolingPower;          // compressor electric power
-        Real64 MinAirHumRat;              // minimum air humidity ratio
-        Real64 PartLoadOutAirEnth;        // local leaving enthalpy at part load
-        Real64 PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
+        Nandle CondAirMassFlow;           // Condenser air mass flow rate [kg/s]
+        Nandle CondInletEnthalpy;         // condenser inlet enthalpy [J/kg]
+        Nandle CondAirSidePressure;       // Outdoor barometric pressure at condenser (Pa)
+        Nandle QdotCond;                  // condenser total heat rejection rate [W]
+        Nandle CondOutletEnthalpy;        // condesner outlet enthalpy [J/kg]
+        Nandle OutdoorDryBulb;            // outdoor air dry bulb local variable [C]
+        Nandle OutdoorHumRat;             // outdoor air humidity ratio local [kg/kg]
+        Nandle OutdoorWetBulb;            // outdoor air wetbulb local [C]
+        Nandle EvapAirMassFlow;           // local for evaporator air mass flow [kg/s]
+        Nandle EvapInletDryBulb;          // evaporator inlet air drybulb [C]
+        Nandle EvapInletHumRat;           // evaporator inlet air humidity ratio [kg/kg]
+        Nandle EvapInletWetBulb;          // evaporator inlet air wetbulb [C]
+        Nandle EvapInletEnthalpy;         // evaporator inlet air enthalpy [J/kg]
+        Nandle AirMassFlowRatio;          // evaporator inlet air mass flow divided by design mass flow [ ]
+        Nandle TotCapTempModFac;          // total coolin capacity modification factor due to temps []
+        Nandle TotCapFlowModFac;          // Total cooling capacity modification factor due to flow []
+        Nandle TotCap;                    // total cooling capacity
+        Nandle SHRTempFac;                // sensible heat ratio modification factor due to temps []
+        Nandle SHRFlowFac;                // sensible heat ratio modification factor due to flow []
+        Nandle SHR;                       // sensible heat ratio
+        Nandle PLF;                       // part load factor
+        Nandle RuntimeFraction;           // compressor running time divided by full time of timestep.
+        Nandle FullLoadOutAirEnth;        // evaporator outlet full load enthalpy [J/kg]
+        Nandle hTinwout;                  // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
+        Nandle FullLoadOutAirHumRat;      // evaporator outlet humidity ratio at full load
+        Nandle FullLoadOutAirTemp;        // evaporator outlet air temperature at full load [C]
+        Nandle EvapOutletAirEnthalpy;     // evaporator outlet air enthalpy [J/kg]
+        Nandle EvapOutletAirHumRat;       // evaporator outlet air humidity ratio [kg/kg]
+        Nandle EvapOutletAirTemp;         // evaporator outlet drybulb [C]
+        Nandle EIRTempModFac;             // energy input ratio modification factor due to temperatures []
+        Nandle EIRFlowModFac;             // energy input ratio modification factor due to flow []
+        Nandle EIR;                       // energy input ratio
+        Nandle ElecCoolingPower;          // compressor electric power
+        Nandle MinAirHumRat;              // minimum air humidity ratio
+        Nandle PartLoadOutAirEnth;        // local leaving enthalpy at part load
+        Nandle PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
         bool CoilMightBeDry;
         int Counter;
         bool Converged;
-        Real64 DryCoilTestEvapInletHumRat;
-        Real64 DryCoilTestEvapInletWetBulb;
-        Real64 hADP;
-        Real64 tADP;
-        Real64 wADP;
-        Real64 hTinwADP;
-        Real64 SHRadp;
-        Real64 werror;
+        Nandle DryCoilTestEvapInletHumRat;
+        Nandle DryCoilTestEvapInletWetBulb;
+        Nandle hADP;
+        Nandle tADP;
+        Nandle wADP;
+        Nandle hTinwADP;
+        Nandle SHRadp;
+        Nandle werror;
 
         // first deal with condenser
         if (TESCoil(TESCoilNum).CondenserType == AirCooled) {
@@ -2764,7 +2764,7 @@ namespace PackagedThermalStorageCoil {
         }
     }
 
-    void CalcTESCoilCoolingAndChargeMode(int const TESCoilNum, int const EP_UNUSED(FanOpMode), Real64 const PartLoadRatio)
+    void CalcTESCoilCoolingAndChargeMode(int const TESCoilNum, int const EP_UNUSED(FanOpMode), Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2793,8 +2793,8 @@ namespace PackagedThermalStorageCoil {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIter(30);
-        Real64 const RelaxationFactor(0.4);
-        Real64 const Tolerance(0.1);
+        Nandle const RelaxationFactor(0.4);
+        Nandle const Tolerance(0.1);
         static std::string const RoutineName("CalcTESCoilCoolingAndChargeMode");
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -2804,71 +2804,71 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
+        Nandle CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
         // Outdoor Wetbulb +(1 - effectiveness)*(outdoor drybulb - outdoor wetbulb) for evap condenser.
-        Real64 CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
+        Nandle CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
         // For evap condenser, its the humidity ratio of the air leaving the evap cooling pads.
-        Real64 CondAirMassFlow;       // Condenser air mass flow rate [kg/s]
-        Real64 CondInletEnthalpy;     // condenser inlet enthalpy [J/kg]
-        Real64 CondAirSidePressure;   // Outdoor barometric pressure at condenser (Pa)
-        Real64 QdotCond;              // condenser total heat rejection rate [W]
-        Real64 CondOutletEnthalpy;    // condesner outlet enthalpy [J/kg]
-        Real64 OutdoorDryBulb;        // outdoor air dry bulb local variable [C]
-        Real64 OutdoorHumRat;         // outdoor air humidity ratio local [kg/kg]
-        Real64 OutdoorWetBulb;        // outdoor air wetbulb local [C]
-        Real64 EvapAirMassFlow;       // local for evaporator air mass flow [kg/s]
-        Real64 EvapInletDryBulb;      // evaporator inlet air drybulb [C]
-        Real64 EvapInletHumRat;       // evaporator inlet air humidity ratio [kg/kg]
-        Real64 EvapInletWetBulb;      // evaporator inlet air wetbulb [C]
-        Real64 EvapInletEnthalpy;     // evaporator inlet air enthalpy [J/kg]
-        Real64 AirMassFlowRatio;      // evaporator inlet air mass flow divided by design mass flow [ ]
-        Real64 EvapTotCapTempModFac;  // total coolin capacity modification factor due to temps []
-        Real64 EvapTotCapFlowModFac;  // Total cooling capacity modification factor due to flow []
-        Real64 EvapTotCap;            // total cooling capacity
-        Real64 SHRTempFac(0.0);       // sensible heat ratio modification factor due to temps []
-        Real64 SHRFlowFac;            // sensible heat ratio modification factor due to flow []
-        Real64 SHR;                   // sensible heat ratio
-        Real64 PLF;                   // part load factor
-        Real64 EvapRuntimeFraction;   // compressor running time divided by full time of timestep.
-        Real64 FullLoadOutAirEnth;    // evaporator outlet full load enthalpy [J/kg]
-        Real64 hTinwout;              // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
-        Real64 FullLoadOutAirHumRat;  // evaporator outlet humidity ratio at full load
-        Real64 FullLoadOutAirTemp;    // evaporator outlet air temperature at full load [C]
-        Real64 EvapOutletAirEnthalpy; // evaporator outlet air enthalpy [J/kg]
-        Real64 EvapOutletAirHumRat;   // evaporator outlet air humidity ratio [kg/kg]
-        Real64 EvapOutletAirTemp;     // evaporator outlet drybulb [C]
-        Real64 EIRTempModFac;         // energy input ratio modification factor due to temperatures []
-        Real64 EIRFlowModFac;         // energy input ratio modification factor due to flow []
-        Real64 EIR;                   // energy input ratio
-        Real64 EvapElecCoolingPower;  // compressor electric power
-        Real64 MinAirHumRat;          // minimum air humidity ratio
-        Real64 sTES;                  // stat of Thermal energy storage [C or fraction of ice]
+        Nandle CondAirMassFlow;       // Condenser air mass flow rate [kg/s]
+        Nandle CondInletEnthalpy;     // condenser inlet enthalpy [J/kg]
+        Nandle CondAirSidePressure;   // Outdoor barometric pressure at condenser (Pa)
+        Nandle QdotCond;              // condenser total heat rejection rate [W]
+        Nandle CondOutletEnthalpy;    // condesner outlet enthalpy [J/kg]
+        Nandle OutdoorDryBulb;        // outdoor air dry bulb local variable [C]
+        Nandle OutdoorHumRat;         // outdoor air humidity ratio local [kg/kg]
+        Nandle OutdoorWetBulb;        // outdoor air wetbulb local [C]
+        Nandle EvapAirMassFlow;       // local for evaporator air mass flow [kg/s]
+        Nandle EvapInletDryBulb;      // evaporator inlet air drybulb [C]
+        Nandle EvapInletHumRat;       // evaporator inlet air humidity ratio [kg/kg]
+        Nandle EvapInletWetBulb;      // evaporator inlet air wetbulb [C]
+        Nandle EvapInletEnthalpy;     // evaporator inlet air enthalpy [J/kg]
+        Nandle AirMassFlowRatio;      // evaporator inlet air mass flow divided by design mass flow [ ]
+        Nandle EvapTotCapTempModFac;  // total coolin capacity modification factor due to temps []
+        Nandle EvapTotCapFlowModFac;  // Total cooling capacity modification factor due to flow []
+        Nandle EvapTotCap;            // total cooling capacity
+        Nandle SHRTempFac(0.0);       // sensible heat ratio modification factor due to temps []
+        Nandle SHRFlowFac;            // sensible heat ratio modification factor due to flow []
+        Nandle SHR;                   // sensible heat ratio
+        Nandle PLF;                   // part load factor
+        Nandle EvapRuntimeFraction;   // compressor running time divided by full time of timestep.
+        Nandle FullLoadOutAirEnth;    // evaporator outlet full load enthalpy [J/kg]
+        Nandle hTinwout;              // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
+        Nandle FullLoadOutAirHumRat;  // evaporator outlet humidity ratio at full load
+        Nandle FullLoadOutAirTemp;    // evaporator outlet air temperature at full load [C]
+        Nandle EvapOutletAirEnthalpy; // evaporator outlet air enthalpy [J/kg]
+        Nandle EvapOutletAirHumRat;   // evaporator outlet air humidity ratio [kg/kg]
+        Nandle EvapOutletAirTemp;     // evaporator outlet drybulb [C]
+        Nandle EIRTempModFac;         // energy input ratio modification factor due to temperatures []
+        Nandle EIRFlowModFac;         // energy input ratio modification factor due to flow []
+        Nandle EIR;                   // energy input ratio
+        Nandle EvapElecCoolingPower;  // compressor electric power
+        Nandle MinAirHumRat;          // minimum air humidity ratio
+        Nandle sTES;                  // stat of Thermal energy storage [C or fraction of ice]
         bool TESCanBeCharged;
-        Real64 rho;
-        Real64 TankMass;        // Mass of fluid in tank (kg)
-        Real64 CpTank;          // Specific heat of water in tank (J/kg K)
-        Real64 QdotChargeLimit; // limit for charge cooling power to hit limit of storage.
-        Real64 ChargeCapModFac;
-        Real64 ChargeCapPLRModFac;
-        Real64 TotChargeCap;
-        Real64 ChargeEIRTempModFac;
-        Real64 ChargeEIRFlowModFac;
-        Real64 ChargeEIR;
-        Real64 ChargeElectricCoolingPower;
-        Real64 ChargeRuntimeFraction;
-        Real64 PartLoadOutAirEnth;        // local leaving enthalpy at part load
-        Real64 PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
+        Nandle rho;
+        Nandle TankMass;        // Mass of fluid in tank (kg)
+        Nandle CpTank;          // Specific heat of water in tank (J/kg K)
+        Nandle QdotChargeLimit; // limit for charge cooling power to hit limit of storage.
+        Nandle ChargeCapModFac;
+        Nandle ChargeCapPLRModFac;
+        Nandle TotChargeCap;
+        Nandle ChargeEIRTempModFac;
+        Nandle ChargeEIRFlowModFac;
+        Nandle ChargeEIR;
+        Nandle ChargeElectricCoolingPower;
+        Nandle ChargeRuntimeFraction;
+        Nandle PartLoadOutAirEnth;        // local leaving enthalpy at part load
+        Nandle PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
         bool CoilMightBeDry;
         int Counter;
         bool Converged;
-        Real64 DryCoilTestEvapInletHumRat;
-        Real64 DryCoilTestEvapInletWetBulb;
-        Real64 hADP;
-        Real64 tADP;
-        Real64 wADP;
-        Real64 hTinwADP;
-        Real64 SHRadp;
-        Real64 werror;
+        Nandle DryCoilTestEvapInletHumRat;
+        Nandle DryCoilTestEvapInletWetBulb;
+        Nandle hADP;
+        Nandle tADP;
+        Nandle wADP;
+        Nandle hTinwADP;
+        Nandle SHRadp;
+        Nandle werror;
 
         // first deal with condenser
         if (TESCoil(TESCoilNum).CondenserType == AirCooled) {
@@ -3195,7 +3195,7 @@ namespace PackagedThermalStorageCoil {
         }
     }
 
-    void CalcTESCoilCoolingAndDischargeMode(int const TESCoilNum, int const EP_UNUSED(FanOpMode), Real64 const PartLoadRatio)
+    void CalcTESCoilCoolingAndDischargeMode(int const TESCoilNum, int const EP_UNUSED(FanOpMode), Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3225,8 +3225,8 @@ namespace PackagedThermalStorageCoil {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIter(30);
-        Real64 const RelaxationFactor(0.4);
-        Real64 const Tolerance(0.1);
+        Nandle const RelaxationFactor(0.4);
+        Nandle const Tolerance(0.1);
         static std::string const RoutineName("CalcTESCoilCoolingAndDischargeMode");
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -3236,73 +3236,73 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
+        Nandle CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
         // Outdoor Wetbulb +(1 - effectiveness)*(outdoor drybulb - outdoor wetbulb) for evap condenser.
-        Real64 CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
+        Nandle CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
         // For evap condenser, its the humidity ratio of the air leaving the evap cooling pads.
-        Real64 CondAirMassFlow;     // Condenser air mass flow rate [kg/s]
-        Real64 CondInletEnthalpy;   // condenser inlet enthalpy [J/kg]
-        Real64 CondAirSidePressure; // Outdoor barometric pressure at condenser (Pa)
-        Real64 CondOutletEnthalpy;  // condesner outlet enthalpy [J/kg]
-        Real64 OutdoorDryBulb;      // outdoor air dry bulb local variable [C]
-        Real64 OutdoorHumRat;       // outdoor air humidity ratio local [kg/kg]
-        Real64 OutdoorWetBulb;      // outdoor air wetbulb local [C]
-        Real64 EvapAirMassFlow;     // local for evaporator air mass flow [kg/s]
-        Real64 EvapInletDryBulb;    // evaporator inlet air drybulb [C]
-        Real64 EvapInletHumRat;     // evaporator inlet air humidity ratio [kg/kg]
-        Real64 EvapInletWetBulb;    // evaporator inlet air wetbulb [C]
-        Real64 EvapInletEnthalpy;   // evaporator inlet air enthalpy [J/kg]
-        Real64 sTES;                // stat of Thermal energy storage [C or fraction of ice]
+        Nandle CondAirMassFlow;     // Condenser air mass flow rate [kg/s]
+        Nandle CondInletEnthalpy;   // condenser inlet enthalpy [J/kg]
+        Nandle CondAirSidePressure; // Outdoor barometric pressure at condenser (Pa)
+        Nandle CondOutletEnthalpy;  // condesner outlet enthalpy [J/kg]
+        Nandle OutdoorDryBulb;      // outdoor air dry bulb local variable [C]
+        Nandle OutdoorHumRat;       // outdoor air humidity ratio local [kg/kg]
+        Nandle OutdoorWetBulb;      // outdoor air wetbulb local [C]
+        Nandle EvapAirMassFlow;     // local for evaporator air mass flow [kg/s]
+        Nandle EvapInletDryBulb;    // evaporator inlet air drybulb [C]
+        Nandle EvapInletHumRat;     // evaporator inlet air humidity ratio [kg/kg]
+        Nandle EvapInletWetBulb;    // evaporator inlet air wetbulb [C]
+        Nandle EvapInletEnthalpy;   // evaporator inlet air enthalpy [J/kg]
+        Nandle sTES;                // stat of Thermal energy storage [C or fraction of ice]
         bool TESHasSomeCharge;      // some charge available for discharge
-        Real64 rho;
-        Real64 TankMass;             // Mass of fluid in tank (kg)
-        Real64 CpTank;               // Specific heat of water in tank (J/kg K)
-        Real64 QdotDischargeLimit;   // limit for charge cooling power to hit limit of storage.
-        Real64 AirMassFlowRatio;     // evaporator inlet air mass flow divided by design mass flow [ ]
-        Real64 EvapTotCapTempModFac; // total coolin capacity modification factor due to temps []
-        Real64 EvapTotCapFlowModFac; // Total cooling capacity modification factor due to flow []
-        Real64 EvapTotCap;           // total cooling capacity
-        Real64 SHRTempFac(0.0);      // sensible heat ratio modification factor due to temps []
-        Real64 SHRFlowFac;           // sensible heat ratio modification factor due to flow []
-        Real64 SHR;                  // sensible heat ratio
-        Real64 PLF;                  // part load factor
-        Real64 EvapRuntimeFraction;  // compressor running time divided by full time of timestep.
-        Real64 EIRTempModFac;        // energy input ratio modification factor due to temperatures []
-        Real64 EIRFlowModFac;        // energy input ratio modification factor due to flow []
-        Real64 EIR;                  // energy input ratio
-        Real64 DischargePLF;
-        Real64 DischargeRuntimeFraction;
-        Real64 TotDischargeCap;
-        Real64 DischargeCapTempModFac;
-        Real64 DischargeCapFlowModFac;
-        Real64 DischargeEIRTempModFac;
-        Real64 DischargeEIRFlowModFac;
-        Real64 DischargeEIR;
-        Real64 EvapElecCoolingPower; // compressor electric power
-        Real64 DischargeElectricCoolingPower;
-        Real64 TotCap;
-        Real64 FullLoadOutAirEnth;        // evaporator outlet full load enthalpy [J/kg]
-        Real64 hTinwout;                  // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
-        Real64 FullLoadOutAirHumRat;      // evaporator outlet humidity ratio at full load
-        Real64 FullLoadOutAirTemp;        // evaporator outlet air temperature at full load [C]
-        Real64 EvapOutletAirEnthalpy;     // evaporator outlet air enthalpy [J/kg]
-        Real64 EvapOutletAirHumRat;       // evaporator outlet air humidity ratio [kg/kg]
-        Real64 EvapOutletAirTemp;         // evaporator outlet drybulb [C]
-        Real64 QdotCond;                  // heat rejection rate at condenser [W]
-        Real64 MinAirHumRat;              // minimum air humidity ratio
-        Real64 PartLoadOutAirEnth;        // local leaving enthalpy at part load
-        Real64 PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
+        Nandle rho;
+        Nandle TankMass;             // Mass of fluid in tank (kg)
+        Nandle CpTank;               // Specific heat of water in tank (J/kg K)
+        Nandle QdotDischargeLimit;   // limit for charge cooling power to hit limit of storage.
+        Nandle AirMassFlowRatio;     // evaporator inlet air mass flow divided by design mass flow [ ]
+        Nandle EvapTotCapTempModFac; // total coolin capacity modification factor due to temps []
+        Nandle EvapTotCapFlowModFac; // Total cooling capacity modification factor due to flow []
+        Nandle EvapTotCap;           // total cooling capacity
+        Nandle SHRTempFac(0.0);      // sensible heat ratio modification factor due to temps []
+        Nandle SHRFlowFac;           // sensible heat ratio modification factor due to flow []
+        Nandle SHR;                  // sensible heat ratio
+        Nandle PLF;                  // part load factor
+        Nandle EvapRuntimeFraction;  // compressor running time divided by full time of timestep.
+        Nandle EIRTempModFac;        // energy input ratio modification factor due to temperatures []
+        Nandle EIRFlowModFac;        // energy input ratio modification factor due to flow []
+        Nandle EIR;                  // energy input ratio
+        Nandle DischargePLF;
+        Nandle DischargeRuntimeFraction;
+        Nandle TotDischargeCap;
+        Nandle DischargeCapTempModFac;
+        Nandle DischargeCapFlowModFac;
+        Nandle DischargeEIRTempModFac;
+        Nandle DischargeEIRFlowModFac;
+        Nandle DischargeEIR;
+        Nandle EvapElecCoolingPower; // compressor electric power
+        Nandle DischargeElectricCoolingPower;
+        Nandle TotCap;
+        Nandle FullLoadOutAirEnth;        // evaporator outlet full load enthalpy [J/kg]
+        Nandle hTinwout;                  // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
+        Nandle FullLoadOutAirHumRat;      // evaporator outlet humidity ratio at full load
+        Nandle FullLoadOutAirTemp;        // evaporator outlet air temperature at full load [C]
+        Nandle EvapOutletAirEnthalpy;     // evaporator outlet air enthalpy [J/kg]
+        Nandle EvapOutletAirHumRat;       // evaporator outlet air humidity ratio [kg/kg]
+        Nandle EvapOutletAirTemp;         // evaporator outlet drybulb [C]
+        Nandle QdotCond;                  // heat rejection rate at condenser [W]
+        Nandle MinAirHumRat;              // minimum air humidity ratio
+        Nandle PartLoadOutAirEnth;        // local leaving enthalpy at part load
+        Nandle PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
         bool CoilMightBeDry;
         int Counter;
         bool Converged;
-        Real64 DryCoilTestEvapInletHumRat;
-        Real64 DryCoilTestEvapInletWetBulb;
-        Real64 hADP;
-        Real64 tADP;
-        Real64 wADP;
-        Real64 hTinwADP;
-        Real64 SHRadp;
-        Real64 werror;
+        Nandle DryCoilTestEvapInletHumRat;
+        Nandle DryCoilTestEvapInletWetBulb;
+        Nandle hADP;
+        Nandle tADP;
+        Nandle wADP;
+        Nandle hTinwADP;
+        Nandle SHRadp;
+        Nandle werror;
 
         // first deal with condenser
         if (TESCoil(TESCoilNum).CondenserType == AirCooled) {
@@ -3620,29 +3620,29 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 sTES;          // local state of Thermal Energy Storage (C or ice fraction)
-        Real64 CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
+        Nandle sTES;          // local state of Thermal Energy Storage (C or ice fraction)
+        Nandle CondInletTemp; // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
         // Outdoor Wetbulb +(1 - effectiveness)*(outdoor drybulb - outdoor wetbulb) for evap condenser.
-        Real64 CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
+        Nandle CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
         // For evap condenser, its the humidity ratio of the air leaving the evap cooling pads.
-        Real64 CondAirMassFlow;      // Condenser air mass flow rate [kg/s]
-        Real64 CondInletEnthalpy;    // condenser inlet enthalpy [J/kg]
-        Real64 CondAirSidePressure;  // Outdoor barometric pressure at condenser (Pa)
-        Real64 QdotCond;             // condenser total heat rejection rate [W]
-        Real64 CondOutletEnthalpy;   // condesner outlet enthalpy [J/kg]
-        Real64 OutdoorDryBulb;       // outdoor air dry bulb local variable [C]
-        Real64 OutdoorHumRat;        // outdoor air humidity ratio local [kg/kg]
-        Real64 OutdoorWetBulb;       // outdoor air wetbulb local [C]
-        Real64 CapModFac;            // local capacity modifying factor
-        Real64 TotCap;               // total cooling (charging) capacity
-        Real64 EIRModFac;            // local energy input ratio modifying factor
-        Real64 EIR;                  // energy input ratio
-        Real64 ElecCoolingPower;     // compressor electric power
+        Nandle CondAirMassFlow;      // Condenser air mass flow rate [kg/s]
+        Nandle CondInletEnthalpy;    // condenser inlet enthalpy [J/kg]
+        Nandle CondAirSidePressure;  // Outdoor barometric pressure at condenser (Pa)
+        Nandle QdotCond;             // condenser total heat rejection rate [W]
+        Nandle CondOutletEnthalpy;   // condesner outlet enthalpy [J/kg]
+        Nandle OutdoorDryBulb;       // outdoor air dry bulb local variable [C]
+        Nandle OutdoorHumRat;        // outdoor air humidity ratio local [kg/kg]
+        Nandle OutdoorWetBulb;       // outdoor air wetbulb local [C]
+        Nandle CapModFac;            // local capacity modifying factor
+        Nandle TotCap;               // total cooling (charging) capacity
+        Nandle EIRModFac;            // local energy input ratio modifying factor
+        Nandle EIR;                  // energy input ratio
+        Nandle ElecCoolingPower;     // compressor electric power
         bool TESCanBeCharged(false); // true if room for tank to be charged.
-        Real64 QdotChargeLimit;      // limit for charge cooling power to hit limit of storage.
-        Real64 rho;                  // density of fluid in tank (kg/m3)
-        Real64 TankMass;             // Mass of fluid in tank (kg)
-        Real64 CpTank;               // Specific heat of water in tank (J/kg K)
+        Nandle QdotChargeLimit;      // limit for charge cooling power to hit limit of storage.
+        Nandle rho;                  // density of fluid in tank (kg/m3)
+        Nandle TankMass;             // Mass of fluid in tank (kg)
+        Nandle CpTank;               // Specific heat of water in tank (J/kg K)
 
         // nothing happens at Evaporator
         Node(TESCoil(TESCoilNum).EvapAirOutletNodeNum).Temp = Node(TESCoil(TESCoilNum).EvapAirInletNodeNum).Temp;
@@ -3768,7 +3768,7 @@ namespace PackagedThermalStorageCoil {
         }
     }
 
-    void CalcTESCoilDischargeOnlyMode(int const TESCoilNum, Real64 const PartLoadRatio)
+    void CalcTESCoilDischargeOnlyMode(int const TESCoilNum, Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3797,8 +3797,8 @@ namespace PackagedThermalStorageCoil {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIter(30);
-        Real64 const RelaxationFactor(0.4);
-        Real64 const Tolerance(0.1);
+        Nandle const RelaxationFactor(0.4);
+        Nandle const Tolerance(0.1);
         static std::string const RoutineName("CalcTESCoilDischargeOnlyMode");
         static std::string const StorageTankName("CalcTESWaterStorageTank");
 
@@ -3809,54 +3809,54 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlowRatio;      // evaporator inlet air mass flow divided by design mass flow [ ]
-        Real64 EvapAirMassFlow;       // local for evaporator air mass flow [kg/s]
-        Real64 EvapInletDryBulb;      // evaporator inlet air drybulb [C]
-        Real64 EvapInletHumRat;       // evaporator inlet air humidity ratio [kg/kg]
-        Real64 EvapInletWetBulb;      // evaporator inlet air wetbulb [C]
-        Real64 EvapInletEnthalpy;     // evaporator inlet air enthalpy [J/kg]
-        Real64 sTES;                  // state of charge of Thermal Energy Storage
-        Real64 TotCapTempModFac;      // total coolin capacity modification factor due to temps []
-        Real64 TotCapFlowModFac;      // Total cooling capacity modification factor due to flow []
-        Real64 TotCap;                // total cooling capacity
-        Real64 SHRTempFac(0.0);       // sensible heat ratio modification factor due to temps []
-        Real64 SHRFlowFac;            // sensible heat ratio modification factor due to flow []
-        Real64 SHR;                   // sensible heat ratio
-        Real64 PLF;                   // part load factor
-        Real64 PLR;                   // part load ratio
-        Real64 RuntimeFraction;       // compressor running time divided by full time of timestep.
-        Real64 FullLoadOutAirEnth;    // evaporator outlet full load enthalpy [J/kg]
-        Real64 FullLoadOutAirHumRat;  // evaporator outlet humidity ratio at full load
-        Real64 FullLoadOutAirTemp;    // evaporator outlet air temperature at full load [C]
-        Real64 hTinwout;              // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
-        Real64 EvapOutletAirEnthalpy; // evaporator outlet air enthalpy [J/kg]
-        Real64 EvapOutletAirHumRat;   // evaporator outlet air humidity ratio [kg/kg]
-        Real64 EvapOutletAirTemp;     // evaporator outlet drybulb [C]
-        Real64 EIRTempModFac;         // energy input ratio modification factor due to temperatures []
-        Real64 EIRFlowModFac;         // energy input ratio modification factor due to flow []
-        Real64 EIR;                   // energy input ratio
-        Real64 ElecCoolingPower;      // compressor electric power
-        Real64 MinAirHumRat;          // minimum air humidity ratio
+        Nandle AirMassFlowRatio;      // evaporator inlet air mass flow divided by design mass flow [ ]
+        Nandle EvapAirMassFlow;       // local for evaporator air mass flow [kg/s]
+        Nandle EvapInletDryBulb;      // evaporator inlet air drybulb [C]
+        Nandle EvapInletHumRat;       // evaporator inlet air humidity ratio [kg/kg]
+        Nandle EvapInletWetBulb;      // evaporator inlet air wetbulb [C]
+        Nandle EvapInletEnthalpy;     // evaporator inlet air enthalpy [J/kg]
+        Nandle sTES;                  // state of charge of Thermal Energy Storage
+        Nandle TotCapTempModFac;      // total coolin capacity modification factor due to temps []
+        Nandle TotCapFlowModFac;      // Total cooling capacity modification factor due to flow []
+        Nandle TotCap;                // total cooling capacity
+        Nandle SHRTempFac(0.0);       // sensible heat ratio modification factor due to temps []
+        Nandle SHRFlowFac;            // sensible heat ratio modification factor due to flow []
+        Nandle SHR;                   // sensible heat ratio
+        Nandle PLF;                   // part load factor
+        Nandle PLR;                   // part load ratio
+        Nandle RuntimeFraction;       // compressor running time divided by full time of timestep.
+        Nandle FullLoadOutAirEnth;    // evaporator outlet full load enthalpy [J/kg]
+        Nandle FullLoadOutAirHumRat;  // evaporator outlet humidity ratio at full load
+        Nandle FullLoadOutAirTemp;    // evaporator outlet air temperature at full load [C]
+        Nandle hTinwout;              // Enthalpy at inlet dry-bulb and outlet humidity ratio [J/kg]
+        Nandle EvapOutletAirEnthalpy; // evaporator outlet air enthalpy [J/kg]
+        Nandle EvapOutletAirHumRat;   // evaporator outlet air humidity ratio [kg/kg]
+        Nandle EvapOutletAirTemp;     // evaporator outlet drybulb [C]
+        Nandle EIRTempModFac;         // energy input ratio modification factor due to temperatures []
+        Nandle EIRFlowModFac;         // energy input ratio modification factor due to flow []
+        Nandle EIR;                   // energy input ratio
+        Nandle ElecCoolingPower;      // compressor electric power
+        Nandle MinAirHumRat;          // minimum air humidity ratio
         bool TESHasSomeCharge;        // true when there is something avaiable in storage
-        Real64 QdotDischargeLimit;    // limit for how much storage can be discharged without overshooting
-        Real64 rho;                   // density of water in tank (kg/m3)
-        Real64 TankMass;              // Mass of water in tank (kg)
-        Real64 CpTank;                // Specific heat of water in tank (J/kg K)
-        Real64 QdotTEStest;
-        Real64 RuntimeFractionLimit;
-        Real64 PartLoadOutAirEnth;        // local leaving enthalpy at part load
-        Real64 PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
+        Nandle QdotDischargeLimit;    // limit for how much storage can be discharged without overshooting
+        Nandle rho;                   // density of water in tank (kg/m3)
+        Nandle TankMass;              // Mass of water in tank (kg)
+        Nandle CpTank;                // Specific heat of water in tank (J/kg K)
+        Nandle QdotTEStest;
+        Nandle RuntimeFractionLimit;
+        Nandle PartLoadOutAirEnth;        // local leaving enthalpy at part load
+        Nandle PartLoadDryCoilOutAirTemp; // local leaving drybulb if coil were dry
         bool CoilMightBeDry;
         int Counter;
         bool Converged;
-        Real64 DryCoilTestEvapInletHumRat;
-        Real64 DryCoilTestEvapInletWetBulb;
-        Real64 hADP;
-        Real64 tADP;
-        Real64 wADP;
-        Real64 hTinwADP;
-        Real64 SHRadp;
-        Real64 werror;
+        Nandle DryCoilTestEvapInletHumRat;
+        Nandle DryCoilTestEvapInletWetBulb;
+        Nandle hADP;
+        Nandle tADP;
+        Nandle wADP;
+        Nandle hTinwADP;
+        Nandle SHRadp;
+        Nandle werror;
 
         PLR = PartLoadRatio;
 
@@ -4078,9 +4078,9 @@ namespace PackagedThermalStorageCoil {
                                       int CoilIndex,                    // child object coil index
                                       std::string SystemType,           // parent object system type
                                       int const FanOpMode,              // parent object fan operating mode
-                                      Real64 const DesiredOutletTemp,   // desired outlet temperature [C]
-                                      Real64 const DesiredOutletHumRat, // desired outlet humidity ratio [kg/kg]
-                                      Real64 &PartLoadFrac, // value based on coil operation, if possible, as PLR required to meet T or w set point
+                                      Nandle const DesiredOutletTemp,   // desired outlet temperature [C]
+                                      Nandle const DesiredOutletHumRat, // desired outlet humidity ratio [kg/kg]
+                                      Nandle &PartLoadFrac, // value based on coil operation, if possible, as PLR required to meet T or w set point
                                       int &TESOpMode,       // value determined in InitTESCoil and passed back to parent for use in iteration routines
                                       int &ControlType,     // parent object dehumidification control type (e.g., None, Multimode, CoolReheat)
                                       int &SensPLRIter,     // iteration number of Sensible PLR Iteration warning message
@@ -4121,8 +4121,8 @@ namespace PackagedThermalStorageCoil {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);         // Maximum number of iterations for solver
-        Real64 const Acc(1.e-3);       // Accuracy of solver result
-        Real64 const HumRatAcc(1.e-6); // Accuracy of solver result
+        Nandle const Acc(1.e-3);       // Accuracy of solver result
+        Nandle const HumRatAcc(1.e-6); // Accuracy of solver result
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -4133,14 +4133,14 @@ namespace PackagedThermalStorageCoil {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int InletNode;
         int OutletNode;
-        Real64 NoOutput;
-        Real64 NoLoadHumRatOut;
-        Real64 FullOutput;
-        Real64 FullLoadHumRatOut;
-        Real64 ReqOutput;
-        Real64 OutletHumRatDXCoil;
+        Nandle NoOutput;
+        Nandle NoLoadHumRatOut;
+        Nandle FullOutput;
+        Nandle FullLoadHumRatOut;
+        Nandle ReqOutput;
+        Nandle OutletHumRatDXCoil;
         int SolFlag;            // return flag from RegulaFalsi for sensible load
-        Array1D<Real64> Par(5); // Parameter array passed to solver
+        Array1D<Nandle> Par(5); // Parameter array passed to solver
 
         InletNode = TESCoil(CoilIndex).EvapAirInletNodeNum;
         OutletNode = TESCoil(CoilIndex).EvapAirOutletNodeNum;
@@ -4307,8 +4307,8 @@ namespace PackagedThermalStorageCoil {
         }
     }
 
-    Real64 TESCoilResidualFunction(Real64 const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                   Array1D<Real64> const &Par  // par(1) = DX coil number
+    Nandle TESCoilResidualFunction(Nandle const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                   Array1D<Nandle> const &Par  // par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -4335,7 +4335,7 @@ namespace PackagedThermalStorageCoil {
         //		using PackagedThermalStorageCoil::CalcTESCoilDischargeOnlyMode;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -4357,7 +4357,7 @@ namespace PackagedThermalStorageCoil {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;        // index of this coil
-        Real64 OutletAirTemp; // outlet air temperature [C]
+        Nandle OutletAirTemp; // outlet air temperature [C]
         int FanOpMode;        // Supply air fan operating mode
         int TESOpMode;
         int OutletNodeNum;
@@ -4386,8 +4386,8 @@ namespace PackagedThermalStorageCoil {
         return Residuum;
     }
 
-    Real64 TESCoilHumRatResidualFunction(Real64 const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                         Array1D<Real64> const &Par  // par(1) = DX coil number
+    Nandle TESCoilHumRatResidualFunction(Nandle const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                         Array1D<Nandle> const &Par  // par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -4414,7 +4414,7 @@ namespace PackagedThermalStorageCoil {
         //		using PackagedThermalStorageCoil::CalcTESCoilDischargeOnlyMode;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -4436,7 +4436,7 @@ namespace PackagedThermalStorageCoil {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;          // index of this coil
-        Real64 OutletAirHumRat; // outlet air humidity ratio [kgWater/kgDryAir]
+        Nandle OutletAirHumRat; // outlet air humidity ratio [kgWater/kgDryAir]
         int FanOpMode;          // Supply air fan operating mode
         int TESOpMode;
         int OutletNodeNum;
@@ -4552,24 +4552,24 @@ namespace PackagedThermalStorageCoil {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 TimeElapsed;        // Fraction of the current hour that has elapsed (h)
-        Real64 AmbientTemp;        // Current ambient air temperature around tank (C)
-        Real64 TankMass;           // Mass of water in tank (kg)
-        Real64 LossCoeff;          // Loss coefficient to ambient environment (W/K)
-        Real64 TankTemp;           // Instantaneous tank temperature (C)
-        Real64 NewTankTemp;        // Predicted new tank temperature (C)
-        Real64 CpTank;             // Specific heat of water in tank (J/kg K)
-        Real64 UseInletTemp;       // Use side inlet temperature (C)
-        Real64 UseMassFlowRate;    // Use side flow rate, including effectiveness factor (kg/s)
-        Real64 SourceInletTemp;    // Source side inlet temperature (C)
-        Real64 SourceMassFlowRate; // Source side flow rate, including effectiveness factor (kg/s)
-        Real64 TimeRemaining;      // Time remaining in the current timestep (s)
-        Real64 CpPlantConnection;  // Specific heat of fluid in plant connection (J/kg K)
-        Real64 deltaTsum;          // Change in integrated tank temperature, dividing by time gives the average (C s)
-        Real64 SecInTimeStep;      // Seconds in one timestep (s)
-        Real64 rho;                // density of water in tank (kg/m3)
-        Real64 QdotTES;            // heat exchange directly into tank from charging system [W]
-        Real64 NewOutletTemp;      // calculated new tankoutlet temp (C)
+        Nandle TimeElapsed;        // Fraction of the current hour that has elapsed (h)
+        Nandle AmbientTemp;        // Current ambient air temperature around tank (C)
+        Nandle TankMass;           // Mass of water in tank (kg)
+        Nandle LossCoeff;          // Loss coefficient to ambient environment (W/K)
+        Nandle TankTemp;           // Instantaneous tank temperature (C)
+        Nandle NewTankTemp;        // Predicted new tank temperature (C)
+        Nandle CpTank;             // Specific heat of water in tank (J/kg K)
+        Nandle UseInletTemp;       // Use side inlet temperature (C)
+        Nandle UseMassFlowRate;    // Use side flow rate, including effectiveness factor (kg/s)
+        Nandle SourceInletTemp;    // Source side inlet temperature (C)
+        Nandle SourceMassFlowRate; // Source side flow rate, including effectiveness factor (kg/s)
+        Nandle TimeRemaining;      // Time remaining in the current timestep (s)
+        Nandle CpPlantConnection;  // Specific heat of fluid in plant connection (J/kg K)
+        Nandle deltaTsum;          // Change in integrated tank temperature, dividing by time gives the average (C s)
+        Nandle SecInTimeStep;      // Seconds in one timestep (s)
+        Nandle rho;                // density of water in tank (kg/m3)
+        Nandle QdotTES;            // heat exchange directly into tank from charging system [W]
+        Nandle NewOutletTemp;      // calculated new tankoutlet temp (C)
 
         SecInTimeStep = TimeStepSys * SecInHour;
         TimeRemaining = SecInTimeStep;
@@ -4679,7 +4679,7 @@ namespace PackagedThermalStorageCoil {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 FreezingTemp(0.0); // zero degrees C
+        static Nandle FreezingTemp(0.0); // zero degrees C
         static std::string const RoutineName("CalcTESIceStorageTank");
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -4689,10 +4689,10 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Cp;            // local specific heat
-        Real64 QdotIce;       // local rate of heat transfer to ice (negative cooling) [W]
-        Real64 TimeElapsed;   // Fraction of the current hour that has elapsed (h)
-        Real64 NewOutletTemp; // calculated new tankoutlet temp (C)
+        Nandle Cp;            // local specific heat
+        Nandle QdotIce;       // local rate of heat transfer to ice (negative cooling) [W]
+        Nandle TimeElapsed;   // Fraction of the current hour that has elapsed (h)
+        Nandle NewOutletTemp; // calculated new tankoutlet temp (C)
 
         TimeElapsed = HourOfDay + TimeStep * TimeStepZone + SysTimeElapsed;
 
@@ -4832,7 +4832,7 @@ namespace PackagedThermalStorageCoil {
         TESCoil(TESCoilNum).ElectEvapCondBasinHeaterEnergy = TESCoil(TESCoilNum).ElectEvapCondBasinHeaterPower * TimeStepSys * SecInHour;
     }
 
-    void UpdateEvaporativeCondenserWaterUse(int const TESCoilNum, Real64 const HumRatAfterEvap, int const InletNodeNum)
+    void UpdateEvaporativeCondenserWaterUse(int const TESCoilNum, Nandle const HumRatAfterEvap, int const InletNodeNum)
     {
 
         // SUBROUTINE INFORMATION:
@@ -4866,8 +4866,8 @@ namespace PackagedThermalStorageCoil {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AvailWaterRate;
-        Real64 RhoWater;
+        Nandle AvailWaterRate;
+        Nandle RhoWater;
 
         RhoWater = RhoH2O(Node(InletNodeNum).Temp);
         TESCoil(TESCoilNum).EvapWaterConsumpRate =
@@ -5005,7 +5005,7 @@ namespace PackagedThermalStorageCoil {
         }
     }
 
-    void GetTESCoilCoolingCapacity(std::string const &CoilName, Real64 &CoilCoolCapacity, bool &ErrorsFound, std::string const &CurrentModuleObject)
+    void GetTESCoilCoolingCapacity(std::string const &CoilName, Nandle &CoilCoolCapacity, bool &ErrorsFound, std::string const &CurrentModuleObject)
     {
 
         // SUBROUTINE INFORMATION:
@@ -5050,7 +5050,7 @@ namespace PackagedThermalStorageCoil {
         }
     }
 
-    void GetTESCoilCoolingAirFlowRate(std::string const &CoilName, Real64 &CoilCoolAirFlow, bool &ErrorsFound, std::string const &CurrentModuleObject)
+    void GetTESCoilCoolingAirFlowRate(std::string const &CoilName, Nandle &CoilCoolAirFlow, bool &ErrorsFound, std::string const &CurrentModuleObject)
     {
 
         // SUBROUTINE INFORMATION:

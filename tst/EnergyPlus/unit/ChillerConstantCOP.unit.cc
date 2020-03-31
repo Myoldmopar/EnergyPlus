@@ -142,7 +142,7 @@ TEST_F(EnergyPlusFixture, ChillerConstantCOP_WaterCooled_Autosize)
     DataPlant::PlantFinalSizesOkayToReport = true;
 
     bool RunFlag(true);
-    Real64 MyLoad(-20000.0);
+    Nandle MyLoad(-20000.0);
 
     Psychrometrics::InitializePsychRoutines();
     ConstCOPChiller(1).initialize(RunFlag, MyLoad);

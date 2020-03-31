@@ -61,16 +61,16 @@ void ControlCompOutput(std::string const &CompName,               // the compone
                        std::string const &CompType,               // Type of component
                        int &CompNum,                              // Index of component in component array
                        bool const FirstHVACIteration,             // flag for 1st HVAV iteration in the time step
-                       Real64 const QZnReq,                       // zone load to be met
+                       Nandle const QZnReq,                       // zone load to be met
                        int const ActuatedNode,                    // node that controls unit output
-                       Real64 const MaxFlow,                      // maximum water flow
-                       Real64 const MinFlow,                      // minimum water flow
-                       Real64 const ControlOffset,                // really the tolerance
+                       Nandle const MaxFlow,                      // maximum water flow
+                       Nandle const MinFlow,                      // minimum water flow
+                       Nandle const ControlOffset,                // really the tolerance
                        int &ControlCompTypeNum,                   // Internal type num for CompType
                        int &CompErrIndex,                         // for Recurring error call
                        Optional_int_const TempInNode = _,         // inlet node for output calculation
                        Optional_int_const TempOutNode = _,        // outlet node for output calculation
-                       Optional<Real64 const> AirMassFlow = _,    // air mass flow rate
+                       Optional<Nandle const> AirMassFlow = _,    // air mass flow rate
                        Optional_int_const Action = _,             // 1=reverse; 2=normal
                        Optional_int_const EquipIndex = _,         // Identifier for equipment of Outdoor Air Unit "ONLY"
                        Optional_int_const LoopNum = _,            // for plant components, plant loop index
@@ -79,7 +79,7 @@ void ControlCompOutput(std::string const &CompName,               // the compone
                        Optional_int_const ControlledZoneIndex = _ // controlled zone index for the zone containing the component
 );
 
-bool BBConvergeCheck(int const SimCompNum, Real64 const MaxFlow, Real64 const MinFlow);
+bool BBConvergeCheck(int const SimCompNum, Nandle const MaxFlow, Nandle const MinFlow);
 
 void CheckSysSizing(std::string const &CompType, // Component Type (e.g. Chiller:Electric)
                     std::string const &CompName  // Component Name (e.g. Big Chiller)
@@ -108,40 +108,40 @@ void ValidateComponent(std::string const &CompType,    // Component Type (e.g. C
 );
 
 void CalcPassiveExteriorBaffleGap(const Array1D_int &SurfPtrARR, // Array of indexes pointing to Surface structure in DataSurfaces
-                                  Real64 const VentArea,        // Area available for venting the gap [m2]
-                                  Real64 const Cv,              // Oriface coefficient for volume-based discharge, wind-driven [--]
-                                  Real64 const Cd,              // oriface coefficient for discharge,  bouyancy-driven [--]
-                                  Real64 const HdeltaNPL,       // Height difference from neutral pressure level [m]
-                                  Real64 const SolAbs,          // solar absorptivity of baffle [--]
-                                  Real64 const AbsExt,          // thermal absorptance/emittance of baffle material [--]
-                                  Real64 const Tilt,            // Tilt of gap [Degrees]
-                                  Real64 const AspRat,          // aspect ratio of gap  Height/gap [--]
-                                  Real64 const GapThick,        // Thickness of air space between baffle and underlying heat transfer surface
+                                  Nandle const VentArea,        // Area available for venting the gap [m2]
+                                  Nandle const Cv,              // Oriface coefficient for volume-based discharge, wind-driven [--]
+                                  Nandle const Cd,              // oriface coefficient for discharge,  bouyancy-driven [--]
+                                  Nandle const HdeltaNPL,       // Height difference from neutral pressure level [m]
+                                  Nandle const SolAbs,          // solar absorptivity of baffle [--]
+                                  Nandle const AbsExt,          // thermal absorptance/emittance of baffle material [--]
+                                  Nandle const Tilt,            // Tilt of gap [Degrees]
+                                  Nandle const AspRat,          // aspect ratio of gap  Height/gap [--]
+                                  Nandle const GapThick,        // Thickness of air space between baffle and underlying heat transfer surface
                                   int const Roughness,          // Roughness index (1-6), see DataHeatBalance parameters
-                                  Real64 const QdotSource,      // Source/sink term, e.g. electricity exported from solar cell [W]
-                                  Real64 &TsBaffle,             // Temperature of baffle (both sides) use lagged value on input [C]
-                                  Real64 &TaGap,                // Temperature of air gap (assumed mixed) use lagged value on input [C]
-                                  Optional<Real64> HcGapRpt = _,
-                                  Optional<Real64> HrGapRpt = _,
-                                  Optional<Real64> IscRpt = _,
-                                  Optional<Real64> MdotVentRpt = _,
-                                  Optional<Real64> VdotWindRpt = _,
-                                  Optional<Real64> VdotBouyRpt = _);
+                                  Nandle const QdotSource,      // Source/sink term, e.g. electricity exported from solar cell [W]
+                                  Nandle &TsBaffle,             // Temperature of baffle (both sides) use lagged value on input [C]
+                                  Nandle &TaGap,                // Temperature of air gap (assumed mixed) use lagged value on input [C]
+                                  Optional<Nandle> HcGapRpt = _,
+                                  Optional<Nandle> HrGapRpt = _,
+                                  Optional<Nandle> IscRpt = _,
+                                  Optional<Nandle> MdotVentRpt = _,
+                                  Optional<Nandle> VdotWindRpt = _,
+                                  Optional<Nandle> VdotBouyRpt = _);
 
 //****************************************************************************
 
-void PassiveGapNusseltNumber(Real64 const AspRat, // Aspect Ratio of Gap height to gap width
-                             Real64 const Tilt,   // Tilt of gap, degrees
-                             Real64 const Tso,    // Temperature of gap surface closest to outside (K)
-                             Real64 const Tsi,    // Temperature of gap surface closest to zone (K)
-                             Real64 const Gr,     // Gap gas Grashof number
-                             Real64 &gNu          // Gap gas Nusselt number
+void PassiveGapNusseltNumber(Nandle const AspRat, // Aspect Ratio of Gap height to gap width
+                             Nandle const Tilt,   // Tilt of gap, degrees
+                             Nandle const Tso,    // Temperature of gap surface closest to outside (K)
+                             Nandle const Tsi,    // Temperature of gap surface closest to zone (K)
+                             Nandle const Gr,     // Gap gas Grashof number
+                             Nandle &gNu          // Gap gas Nusselt number
 );
 
-void CalcBasinHeaterPower(Real64 const Capacity,     // Basin heater capacity per degree C below setpoint (W/C)
+void CalcBasinHeaterPower(Nandle const Capacity,     // Basin heater capacity per degree C below setpoint (W/C)
                           int const SchedulePtr,     // Pointer to basin heater schedule
-                          Real64 const SetPointTemp, // setpoint temperature for basin heater operation (C)
-                          Real64 &Power              // Basin heater power (W)
+                          Nandle const SetPointTemp, // setpoint temperature for basin heater operation (C)
+                          Nandle &Power              // Basin heater power (W)
 );
 
 void TestAirPathIntegrity(bool &ErrFound);

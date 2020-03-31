@@ -75,7 +75,7 @@ namespace HVACControllers {
     // Data
     // MODULE PARAMETER DEFINITIONS
     // Number of significant digits to display in error messages for floating-point numbers
-    extern Real64 const SomeFloatingPoint;
+    extern Nandle const SomeFloatingPoint;
     extern int const NumSigDigits;
 
     // Parameters for controls used here
@@ -137,7 +137,7 @@ namespace HVACControllers {
     {
         // Members
         bool DefinedFlag;     // Flag set to TRUE when tracker is up-to-date. FALSE otherwise.
-        Real64 ActuatedValue; // Actuated value
+        Nandle ActuatedValue; // Actuated value
         int Mode;             // Operational model of controller
 
         // Default Constructor
@@ -180,25 +180,25 @@ namespace HVACControllers {
         // --------------------
         // Operational limits at min/max avail values for actuated variable and the corresponding sensed values
         // --------------------
-        Real64 MaxAvailActuated; // kg/s, The maximum actuated variable currently available.
+        Nandle MaxAvailActuated; // kg/s, The maximum actuated variable currently available.
         // Reset by simulation at each HVAC iteration
-        Real64 MaxAvailSensed;   // Sensed value at maximum available actuated variable
-        Real64 MinAvailActuated; // kg/s, The minimum actuated variable currently available.
+        Nandle MaxAvailSensed;   // Sensed value at maximum available actuated variable
+        Nandle MinAvailActuated; // kg/s, The minimum actuated variable currently available.
         // Reset by simulation at each HVAC iteration
-        Real64 MinAvailSensed; // Sensed value at maximum available actuated variable
+        Nandle MinAvailSensed; // Sensed value at maximum available actuated variable
         // --------------------
         // User input min/max values for actuated variable
         // --------------------
-        Real64 MaxVolFlowActuated; // m3/s, From User input the Max amount for the actuated variable
-        Real64 MinVolFlowActuated; // m3/s, From User input the Min amount for the actuated variable
-        Real64 MaxActuated;        // kg/s, From User input the Max amount for the actuated variable
-        Real64 MinActuated;        // kg/s, From User input the Min amount for the actuated variable
+        Nandle MaxVolFlowActuated; // m3/s, From User input the Max amount for the actuated variable
+        Nandle MinVolFlowActuated; // m3/s, From User input the Min amount for the actuated variable
+        Nandle MaxActuated;        // kg/s, From User input the Max amount for the actuated variable
+        Nandle MinActuated;        // kg/s, From User input the Min amount for the actuated variable
         // --------------------
         // Actuated variable
         // --------------------
         int ActuatedNode;                   // The node that is acted upon by the controller
-        Real64 ActuatedValue;               // Value of actuated variable before change by the controller
-        Real64 NextActuatedValue;           // The new control actuated value
+        Nandle ActuatedValue;               // Value of actuated variable before change by the controller
+        Nandle NextActuatedValue;           // The new control actuated value
         int ActuatedNodePlantLoopNum;       // the plant loop index for the actuated node DSU3
         int ActuatedNodePlantLoopSide;      // the plant loop side for the actuated node DSU3
         int ActuatedNodePlantLoopBranchNum; // the plant loop branch num for actuated node DSU3
@@ -208,17 +208,17 @@ namespace HVACControllers {
         int SensedNode;             // The sensed node number from the grid
         bool IsSetPointDefinedFlag; // If TRUE indicates that the setpoint has been defined and can
         // be used to compute DeltaSensed
-        Real64 SetPointValue; // Desired setpoint; set in the SetPoint Manager or computed in Init() routine
-        Real64 SensedValue;   // The sensed control variable of any type
-        Real64 DeltaSensed;   // Difference of sensed to setpoint value for calculating proportional gain
-        Real64 Offset;        // This is the tolerance or droop from the error
+        Nandle SetPointValue; // Desired setpoint; set in the SetPoint Manager or computed in Init() routine
+        Nandle SensedValue;   // The sensed control variable of any type
+        Nandle DeltaSensed;   // Difference of sensed to setpoint value for calculating proportional gain
+        Nandle Offset;        // This is the tolerance or droop from the error
         int HumRatCntrlType;  // iCtrlVarType_HumRat=4,iCtrlVarType_MaxHumRat=5,iCtrlVarType_MinHumRat=6
         // --------------------
         // Other controller inputs, not yet used
         // --------------------
         std::string LimitType; // Limit type as in HIGH or LOW
-        Real64 Range;          // The range or hysteresis of the control limit
-        Real64 Limit;          // The Limit value for a Limit Controller
+        Nandle Range;          // The range or hysteresis of the control limit
+        Nandle Limit;          // The Limit value for a Limit Controller
         // --------------------
         // Trace mechanism
         // --------------------
@@ -229,7 +229,7 @@ namespace HVACControllers {
         // Fault model for water coil supply air temperature sensor offset
         bool FaultyCoilSATFlag;     // True if the coil has SAT sensor fault
         int FaultyCoilSATIndex;     // Index of the fault object corresponding to the coil
-        Real64 FaultyCoilSATOffset; // Coil SAT sensor offset
+        Nandle FaultyCoilSATOffset; // Coil SAT sensor offset
         bool BypassControllerCalc;  // set true for OA sys water coils
         int AirLoopControllerIndex; // index to controller on specific air loop
 
@@ -366,7 +366,7 @@ namespace HVACControllers {
     //        End of Update subroutines for the Controller Module
     // *****************************************************************************
 
-    void ExitCalcController(int const ControlNum, Real64 const NextActuatedValue, int const Mode, bool &IsConvergedFlag, bool &IsUpToDateFlag);
+    void ExitCalcController(int const ControlNum, Nandle const NextActuatedValue, int const Mode, bool &IsConvergedFlag, bool &IsUpToDateFlag);
 
     // Beginning of Statistics subroutines for the Controller Module
     // *****************************************************************************

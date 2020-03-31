@@ -183,8 +183,8 @@ namespace HVACStandAloneERV {
     void SimStandAloneERV(std::string const &CompName,   // name of the Stand Alone ERV unit
                           int const ZoneNum,             // number of zone being served unused1208
                           bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                          Real64 &SensLoadMet,           // net sensible load supplied by the ERV unit to the zone (W)
-                          Real64 &LatLoadMet,            // net latent load supplied by ERV unit to the zone (kg/s),
+                          Nandle &SensLoadMet,           // net sensible load supplied by the ERV unit to the zone (W)
+                          Nandle &LatLoadMet,            // net latent load supplied by ERV unit to the zone (kg/s),
                           int &CompIndex                 // pointer to correct component
     )
     {
@@ -287,7 +287,7 @@ namespace HVACStandAloneERV {
         int StandAloneERVIndex;  // loop index
         int StandAloneERVNum;    // current Stand Alone ERV number
         Array1D_string Alphas;   // Alpha items for object
-        Array1D<Real64> Numbers; // Numeric items for object
+        Array1D<Nandle> Numbers; // Numeric items for object
         Array1D_string cAlphaFields;
         Array1D_string cNumericFields;
         Array1D_bool lAlphaBlanks;
@@ -309,7 +309,7 @@ namespace HVACStandAloneERV {
         int NumERVCtrlrs;                 // total number of CONTROLLER:STAND ALONE ERV objects
         int ERVControllerNum;             // index to ERV controller
         int WhichERV;                     // used in controller GetInput
-        Real64 AirFlowRate;               // used to find zone with humidistat
+        Nandle AirFlowRate;               // used to find zone with humidistat
         int NodeNumber;                   // used to find zone with humidistat
         int HStatZoneNum;                 // used to find zone with humidistat
         int NumHstatZone;                 // index to humidity controlled zones
@@ -317,10 +317,10 @@ namespace HVACStandAloneERV {
         static bool ZoneNodeFound(false); // used to find zone with humidistat
         static bool HStatFound(false);    // used to find zone with humidistat
         bool errFlag;                     // Error flag used in mining calls
-        Real64 SAFanVolFlowRate;          // supply air fan volumetric flow rate [m3/s]
-        Real64 EAFanVolFlowRate;          // exhaust air fan volumetric flow rate [m3/s]
-        Real64 HXSupAirFlowRate;          // HX supply air flow rate [m3/s]
-        Real64 HighRHOARatio;             // local variable for HighRHOAFlowRatio
+        Nandle SAFanVolFlowRate;          // supply air fan volumetric flow rate [m3/s]
+        Nandle EAFanVolFlowRate;          // exhaust air fan volumetric flow rate [m3/s]
+        Nandle HXSupAirFlowRate;          // HX supply air flow rate [m3/s]
+        Nandle HighRHOARatio;             // local variable for HighRHOAFlowRatio
         bool ZoneInletNodeFound;          // used for warning when zone node not listed in equipment connections
         bool ZoneExhaustNodeFound;        // used for warning when zone node not listed in equipment connections
         int ZoneInletCZN;                 // used for warning when zone node not listed in equipment connections
@@ -1230,7 +1230,7 @@ namespace HVACStandAloneERV {
         int SupInNode;    // supply air inlet node number
         int ExhInNode;    // exhaust air inlet node number
         int SupInletNode; // supply air inlet node number for Stand Alone ERV 'StandAloneERVNum'
-        Real64 RhoAir;    // air density at SupInNode, standard conditions (dry air @ 20C,actual elevation pressure)
+        Nandle RhoAir;    // air density at SupInNode, standard conditions (dry air @ 20C,actual elevation pressure)
         static bool MyOneTimeFlag(true);
         static Array1D_bool MyEnvrnFlag;
         static Array1D_bool MyZoneEqFlag;            // used to set up zone equipment availability managers
@@ -1411,19 +1411,19 @@ namespace HVACStandAloneERV {
         int ZoneNum;                       // Index to zone object
         int ActualZoneNum;                 // Actual zone number
         std::string ZoneName;              // Name of zone
-        Real64 ZoneMult;                   // Zone multiplier
+        Nandle ZoneMult;                   // Zone multiplier
         int PeopleNum;                     // Index to people object
-        Real64 NumberOfPeople;             // Maximum number of people in zone
+        Nandle NumberOfPeople;             // Maximum number of people in zone
         int PeopleSchPtr;                  // Pointer to people schedule
-        Real64 MaxPeopleSch;               // maximum people schedule value
-        Real64 FloorArea;                  // Floor area of zone (m2)
+        Nandle MaxPeopleSch;               // maximum people schedule value
+        Nandle FloorArea;                  // Floor area of zone (m2)
         bool IsAutoSize;                   // Indicator to autosize
-        Real64 SupplyAirVolFlowDes;        // Autosized supply air flow for reporting
-        Real64 SupplyAirVolFlowUser;       // Hardsized supply air flow for reporting
-        Real64 DesignSAFanVolFlowRateDes;  // Autosized supply air fan flow for reporting
-        Real64 DesignSAFanVolFlowRateUser; // Hardsized supply air fan flow for reporting
-        Real64 ExhaustAirVolFlowDes;       // Autosized exhaust air flow for reporting
-        Real64 ExhaustAirVolFlowUser;      // Hardsized exhaust air flow for reporting
+        Nandle SupplyAirVolFlowDes;        // Autosized supply air flow for reporting
+        Nandle SupplyAirVolFlowUser;       // Hardsized supply air flow for reporting
+        Nandle DesignSAFanVolFlowRateDes;  // Autosized supply air fan flow for reporting
+        Nandle DesignSAFanVolFlowRateUser; // Hardsized supply air fan flow for reporting
+        Nandle ExhaustAirVolFlowDes;       // Autosized exhaust air flow for reporting
+        Nandle ExhaustAirVolFlowUser;      // Hardsized exhaust air flow for reporting
 
         IsAutoSize = false;
         SupplyAirVolFlowDes = 0.0;
@@ -1476,7 +1476,7 @@ namespace HVACStandAloneERV {
             }
 
             // Size ERV supply flow rate
-            Real64 TempSize = StandAloneERV(StandAloneERVNum).SupplyAirVolFlow;
+            Nandle TempSize = StandAloneERV(StandAloneERVNum).SupplyAirVolFlow;
             std::string SizingString = "Supply Air Flow Rate [m3/s]";
             if (IsAutoSize) {
                 DataSizing::DataConstantUsedForSizing = SupplyAirVolFlowDes;
@@ -1512,7 +1512,7 @@ namespace HVACStandAloneERV {
             }
 
             std::string SizingString = "Exhaust Air Flow Rate [m3/s]";
-            Real64 TempSize = StandAloneERV(StandAloneERVNum).ExhaustAirVolFlow;
+            Nandle TempSize = StandAloneERV(StandAloneERVNum).ExhaustAirVolFlow;
             if (IsAutoSize) {
                 TempSize = ExhaustAirVolFlowDes;
                 DataSizing::DataConstantUsedForSizing = ExhaustAirVolFlowDes;
@@ -1576,8 +1576,8 @@ namespace HVACStandAloneERV {
 
     void CalcStandAloneERV(int const StandAloneERVNum,    // Unit index in ERV data structure
                            bool const FirstHVACIteration, // flag for 1st HVAC iteration in the time step
-                           Real64 &SensLoadMet,           // sensible zone load met by unit (W)
-                           Real64 &LatentMassLoadMet      // latent zone load met by unit (kg/s), dehumid = negative
+                           Nandle &SensLoadMet,           // sensible zone load met by unit (W)
+                           Nandle &LatentMassLoadMet      // latent zone load met by unit (kg/s), dehumid = negative
     )
     {
 
@@ -1622,11 +1622,11 @@ namespace HVACStandAloneERV {
         int SupOutletNode;    // unit supply air outlet node
         int ExhaustInletNode; // unit exhaust air inlet node
         int SupInletNode;     // unit supply air inlet node
-        Real64 AirMassFlow;   // total mass flow through supply side of the ERV (supply air outlet node)
-        Real64 MinHumRatio;   // minimum humidity ratio for calculating sensible load met
+        Nandle AirMassFlow;   // total mass flow through supply side of the ERV (supply air outlet node)
+        Nandle MinHumRatio;   // minimum humidity ratio for calculating sensible load met
         // (so enthalpy routines work without error)
-        Real64 TotLoadMet;    // total zone load met by unit (W)
-        Real64 LatLoadMet;    // latent zone load met by unit (W)
+        Nandle TotLoadMet;    // total zone load met by unit (W)
+        Nandle LatLoadMet;    // latent zone load met by unit (W)
         bool HXUnitOn;        // flag to operate heat exchanger heat recovery
         bool EconomizerFlag;  // economizer signal from OA controller
         bool HighHumCtrlFlag; // high humditiy control signal from OA controller
@@ -1634,8 +1634,8 @@ namespace HVACStandAloneERV {
         //  INTEGER :: ExhaustNodeNum    ! index to exhaust nodes in controlled zones
         //  INTEGER :: SupplyNodeNum     ! index to supply nodes in controlled zone
         //  LOGICAL :: ExhaustNodeFound  ! used in controlled zone exhaust node search
-        Real64 TotalExhaustMassFlow; // total exhaust air mass flow rate in controlled zone
-        Real64 TotalSupplyMassFlow;  // total supply air mass flow rate in controlled zone
+        Nandle TotalExhaustMassFlow; // total exhaust air mass flow rate in controlled zone
+        Nandle TotalSupplyMassFlow;  // total supply air mass flow rate in controlled zone
 
         SupInletNode = StandAloneERV(StandAloneERVNum).SupplyAirInletNode;
         SupOutletNode = StandAloneERV(StandAloneERVNum).SupplyAirOutletNode;
@@ -1809,7 +1809,7 @@ namespace HVACStandAloneERV {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         ReportingConstant = TimeStepSys * SecInHour;
         StandAloneERV(StandAloneERVNum).ElecUseEnergy = StandAloneERV(StandAloneERVNum).ElecUseRate * ReportingConstant;
@@ -1831,7 +1831,7 @@ namespace HVACStandAloneERV {
 
     //        Utility subroutines/functions for the HeatingCoil Module
 
-    Real64 GetSupplyAirFlowRate(std::string const &ERVType,     // must be "ZoneHVAC:EnergyRecoveryVentilator"
+    Nandle GetSupplyAirFlowRate(std::string const &ERVType,     // must be "ZoneHVAC:EnergyRecoveryVentilator"
                                 std::string const &ERVCtrlName, // must match a controller name in the ERV data structure
                                 bool &ErrorsFound               // set to true if problem
     )
@@ -1849,7 +1849,7 @@ namespace HVACStandAloneERV {
         // and supply air flow rate as negative.
 
         // Return value
-        Real64 AirFlowRate; // returned supply air flow rate of the ERV unit
+        Nandle AirFlowRate; // returned supply air flow rate of the ERV unit
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichERV;

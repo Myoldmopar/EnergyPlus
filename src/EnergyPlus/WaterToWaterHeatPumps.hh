@@ -56,7 +56,7 @@ namespace EnergyPlus {
 
         ~BasePlantLoopHeatPump()=default;
 
-        // void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad, bool const RunFlag) = 0;
+        // void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad, bool const RunFlag) = 0;
 
     };
 

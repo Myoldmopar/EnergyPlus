@@ -158,12 +158,12 @@ namespace Pumps {
 
     // simulation and reporting variables
     //  REAL(r64)           :: OutletTemp                   = 0.0d0  ! pump outlet temperature
-    Real64 PumpMassFlowRate(0.0); // mass flow rate at pump inlet node
+    Nandle PumpMassFlowRate(0.0); // mass flow rate at pump inlet node
     //  REAL(r64)           :: PumpPress                    = 0.0d0  ! For Passing around the steam loops
     //  REAL(r64)           :: PumpQuality                  = 0.0d0  ! For Passing around the steam loops=0.0 here
-    Real64 PumpHeattoFluid(0.0); // Pump Power dissipated in fluid stream
-    Real64 Power(0.0);           // Pump Electric power
-    Real64 ShaftPower(0.0);      // Power passing through pump shaft
+    Nandle PumpHeattoFluid(0.0); // Pump Power dissipated in fluid stream
+    Nandle Power(0.0);           // Pump Electric power
+    Nandle ShaftPower(0.0);      // Power passing through pump shaft
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE PrimaryPlantLoops
 
@@ -192,10 +192,10 @@ namespace Pumps {
 
     void SimPumps(std::string const &PumpName, // Name of pump to be managed
                   int const LoopNum,           // Plant loop number
-                  Real64 const FlowRequest,    // requested flow from adjacent demand side
+                  Nandle const FlowRequest,    // requested flow from adjacent demand side
                   bool &PumpRunning,           // .TRUE. if the loop pump is actually operating
                   int &PumpIndex,
-                  Real64 &PumpHeat)
+                  Nandle &PumpHeat)
     {
 
         // SUBROUTINE INFORMATION:
@@ -326,7 +326,7 @@ namespace Pumps {
         using ScheduleManager::GetScheduleIndex;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const StartTemp(100.0); // Standard Temperature across code to calculated Steam density
+        Nandle const StartTemp(100.0); // Standard Temperature across code to calculated Steam density
         static std::string const RoutineName("GetPumpInput: ");
         static std::string const RoutineNameNoColon("GetPumpInput");
 
@@ -348,8 +348,8 @@ namespace Pumps {
         int NumPumpBankSimpleConst;
         int NumVarPumpBankSimple;
         int NumConstPumpBankSimple;
-        Real64 SteamDensity;
-        Real64 TempWaterDensity;
+        Nandle SteamDensity;
+        Nandle TempWaterDensity;
         static int DummyWaterIndex(1);
 
         ErrorsFound = false;
@@ -1303,20 +1303,20 @@ namespace Pumps {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const StartTemp(100.0); // Standard Temperature across code to calculated Steam density
-        Real64 const ZeroPowerTol(0.0000001);
+        Nandle const StartTemp(100.0); // Standard Temperature across code to calculated Steam density
+        Nandle const ZeroPowerTol(0.0000001);
         static std::string const RoutineName("PlantPumps::InitializePumps ");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int InletNode;  // pump inlet node number
         int OutletNode; // pump outlet node number
-        Real64 TotalEffic;
-        Real64 SteamDensity; // Density of working fluid
+        Nandle TotalEffic;
+        Nandle SteamDensity; // Density of working fluid
         static int DummyWaterIndex(1);
-        Real64 TempWaterDensity;
+        Nandle TempWaterDensity;
         bool errFlag;
-        Real64 mdotMax; // local fluid mass flow rate maximum
-        Real64 mdotMin; // local fluid mass flow rate minimum
+        Nandle mdotMax; // local fluid mass flow rate maximum
+        Nandle mdotMin; // local fluid mass flow rate minimum
         int plloopnum;
         int lsnum;
         int brnum;
@@ -1560,14 +1560,14 @@ namespace Pumps {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int InletNode;  // pump inlet node number
         int OutletNode; // pump outlet node number
-        Real64 InletNodeMax;
-        Real64 InletNodeMin;
-        Real64 PumpMassFlowRateMax; // max allowable flow rate at the pump
-        Real64 PumpMassFlowRateMin; // min allowable flow rate at the pump
-        Real64 PumpSchedFraction;
-        Real64 PumpOverridableMaxLimit;
-        Real64 PumpMassFlowRateMinLimit;
-        Real64 PumpSchedRPM; // Pump RPM Optional Input
+        Nandle InletNodeMax;
+        Nandle InletNodeMin;
+        Nandle PumpMassFlowRateMax; // max allowable flow rate at the pump
+        Nandle PumpMassFlowRateMin; // min allowable flow rate at the pump
+        Nandle PumpSchedFraction;
+        Nandle PumpOverridableMaxLimit;
+        Nandle PumpMassFlowRateMinLimit;
+        Nandle PumpSchedRPM; // Pump RPM Optional Input
 
         // Inlet/Outlet Node Numbers
         InletNode = PumpEquip(PumpNum).InletNodeNum;
@@ -1713,7 +1713,7 @@ namespace Pumps {
 
     //*************************************************************************!
 
-    void CalcPumps(int const PumpNum, Real64 const FlowRequest, bool &PumpRunning)
+    void CalcPumps(int const PumpNum, Nandle const FlowRequest, bool &PumpRunning)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1758,21 +1758,21 @@ namespace Pumps {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int InletNode;
         int OutletNode;
-        Real64 LoopDensity;
+        Nandle LoopDensity;
         //  INTEGER   :: DummyWaterIndex = 1
-        Real64 VolFlowRate;
-        Real64 PartLoadRatio;
-        Real64 FracFullLoadPower;
-        Real64 FullLoadVolFlowRate;
-        Real64 PartLoadVolFlowRate;
-        Real64 FullLoadPower;
-        Real64 FullLoadPowerRatio;
-        Real64 TotalEffic;
+        Nandle VolFlowRate;
+        Nandle PartLoadRatio;
+        Nandle FracFullLoadPower;
+        Nandle FullLoadVolFlowRate;
+        Nandle PartLoadVolFlowRate;
+        Nandle FullLoadPower;
+        Nandle FullLoadPowerRatio;
+        Nandle TotalEffic;
         int PumpType;
-        Real64 RotSpeed_Min;
-        Real64 RotSpeed_Max;
-        Real64 PumpActualRPMValueOne;
-        Real64 PumpActualRPMValueTwo;
+        Nandle RotSpeed_Min;
+        Nandle RotSpeed_Max;
+        Nandle PumpActualRPMValueOne;
+        Nandle PumpActualRPMValueTwo;
 
         InletNode = PumpEquip(PumpNum).InletNodeNum;
         OutletNode = PumpEquip(PumpNum).OutletNodeNum;
@@ -2020,7 +2020,7 @@ namespace Pumps {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const StartTemp(100.0); // Standard Temperature across code to calculated Steam density
+        Nandle const StartTemp(100.0); // Standard Temperature across code to calculated Steam density
         static std::string const RoutineName("PlantPumps::InitSimVars ");
         static std::string const RoutineNameSizePumps("SizePumps");
 
@@ -2033,15 +2033,15 @@ namespace Pumps {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PlantSizNum; // index of Plant Sizing array
         bool ErrorsFound;
-        Real64 TotalEffic; // pump total efficiency
+        Nandle TotalEffic; // pump total efficiency
         int Side;          // half loop index
         int BranchNum;     // index of branch
         int CompNum;       // index of component on branch
-        Real64 PumpSizFac; // pump sizing factor
-        Real64 SteamDensity;
-        Real64 TempWaterDensity;
+        Nandle PumpSizFac; // pump sizing factor
+        Nandle SteamDensity;
+        Nandle TempWaterDensity;
         static int DummyWaterIndex(1);
-        Real64 DesVolFlowRatePerBranch; // local temporary for split of branch pumps
+        Nandle DesVolFlowRatePerBranch; // local temporary for split of branch pumps
 
         // Calculate density at InitConvTemp once here, to remove RhoH2O calls littered throughout
         if (PumpEquip(PumpNum).LoopNum > 0) {
@@ -2354,10 +2354,10 @@ namespace Pumps {
 
     void GetRequiredMassFlowRate(int const LoopNum,
                                  int const PumpNum,
-                                 Real64 const InletNodeMassFlowRate,
-                                 Real64 &ActualFlowRate,
-                                 Real64 &PumpMinMassFlowRateVFDRange,
-                                 Real64 &PumpMaxMassFlowRateVFDRange)
+                                 Nandle const InletNodeMassFlowRate,
+                                 Nandle &ActualFlowRate,
+                                 Nandle &PumpMinMassFlowRateVFDRange,
+                                 Nandle &PumpMaxMassFlowRateVFDRange)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR
@@ -2391,12 +2391,12 @@ namespace Pumps {
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
-        static Real64 PumpMassFlowRateMaxPress(0.0); // Maximum mass flow rate associated with maximum pressure limit
-        static Real64 PumpMassFlowRateMinPress(0.0); // Minimum mass flow rate associated with minimum pressure limit
-        static Real64 RotSpeed_Max(0.0);             // Maximum rotaional speed in rps
-        static Real64 RotSpeed_Min(0.0);             // Minimum rotaional speed in rps
-        static Real64 MinPress(0.0);                 // Minimum pressure
-        static Real64 MaxPress(0.0);                 // Maximum pressure
+        static Nandle PumpMassFlowRateMaxPress(0.0); // Maximum mass flow rate associated with maximum pressure limit
+        static Nandle PumpMassFlowRateMinPress(0.0); // Minimum mass flow rate associated with minimum pressure limit
+        static Nandle RotSpeed_Max(0.0);             // Maximum rotaional speed in rps
+        static Nandle RotSpeed_Min(0.0);             // Minimum rotaional speed in rps
+        static Nandle MinPress(0.0);                 // Minimum pressure
+        static Nandle MaxPress(0.0);                 // Maximum pressure
 
         RotSpeed_Min = GetCurrentScheduleValue(PumpEquip(PumpNum).VFD.MinRPMSchedIndex);
         RotSpeed_Max = GetCurrentScheduleValue(PumpEquip(PumpNum).VFD.MaxRPMSchedIndex);

@@ -125,58 +125,58 @@ namespace FluidProperties {
         // Members
         std::string Name;            // Name of the refrigerant
         int NumPsPoints;             // Number of saturation pressure
-        Real64 PsLowTempValue;       // Low Temperature Value for Ps (>0.0)
-        Real64 PsHighTempValue;      // High Temperature Value for Ps (max in tables)
+        Nandle PsLowTempValue;       // Low Temperature Value for Ps (>0.0)
+        Nandle PsHighTempValue;      // High Temperature Value for Ps (max in tables)
         int PsLowTempIndex;          // Low Temperature Min Index for Ps (>0.0)
         int PsHighTempIndex;         // High Temperature Max Index for Ps (>0.0)
-        Real64 PsLowPresValue;       // Low Pressure Value for Ps (>0.0)
-        Real64 PsHighPresValue;      // High Pressure Value for Ps (max in tables)
+        Nandle PsLowPresValue;       // Low Pressure Value for Ps (>0.0)
+        Nandle PsHighPresValue;      // High Pressure Value for Ps (max in tables)
         int PsLowPresIndex;          // Low Pressure Min Index for Ps (>0.0)
         int PsHighPresIndex;         // High Pressure Max Index for Ps (>0.0)
-        Array1D<Real64> PsTemps;     // Temperatures for saturation pressures
-        Array1D<Real64> PsValues;    // Saturation pressures at PsTemps
+        Array1D<Nandle> PsTemps;     // Temperatures for saturation pressures
+        Array1D<Nandle> PsValues;    // Saturation pressures at PsTemps
         int NumHPoints;              // Number of enthalpy points
-        Real64 HfLowTempValue;       // Low Temperature Value for Hf (>0.0)
-        Real64 HfHighTempValue;      // High Temperature Value for Hf (max in tables)
+        Nandle HfLowTempValue;       // Low Temperature Value for Hf (>0.0)
+        Nandle HfHighTempValue;      // High Temperature Value for Hf (max in tables)
         int HfLowTempIndex;          // Low Temperature Min Index for Hf (>0.0)
         int HfHighTempIndex;         // High Temperature Max Index for Hf (>0.0)
-        Real64 HfgLowTempValue;      // Low Temperature Value for Hfg (>0.0)
-        Real64 HfgHighTempValue;     // High Temperature Value for Hfg (max in tables)
+        Nandle HfgLowTempValue;      // Low Temperature Value for Hfg (>0.0)
+        Nandle HfgHighTempValue;     // High Temperature Value for Hfg (max in tables)
         int HfgLowTempIndex;         // Low Temperature Min Index for Hfg (>0.0)
         int HfgHighTempIndex;        // High Temperature Max Index for Hfg (>0.0)
-        Array1D<Real64> HTemps;      // Temperatures for enthalpy points
-        Array1D<Real64> HfValues;    // Enthalpy of saturated fluid at HTemps
-        Array1D<Real64> HfgValues;   // Enthalpy of saturated fluid/gas at HTemps
+        Array1D<Nandle> HTemps;      // Temperatures for enthalpy points
+        Array1D<Nandle> HfValues;    // Enthalpy of saturated fluid at HTemps
+        Array1D<Nandle> HfgValues;   // Enthalpy of saturated fluid/gas at HTemps
         int NumCpPoints;             // Number of specific heat of fluid points
-        Real64 CpfLowTempValue;      // Low Temperature Value for Cpf (>0.0)
-        Real64 CpfHighTempValue;     // High Temperature Value for Cpf (max in tables)
+        Nandle CpfLowTempValue;      // Low Temperature Value for Cpf (>0.0)
+        Nandle CpfHighTempValue;     // High Temperature Value for Cpf (max in tables)
         int CpfLowTempIndex;         // Low Temperature Min Index for Cpf (>0.0)
         int CpfHighTempIndex;        // High Temperature Max Index for Cpf (>0.0)
-        Real64 CpfgLowTempValue;     // Low Temperature Value for Cpfg (>0.0)
-        Real64 CpfgHighTempValue;    // High Temperature Value for Cpfg (max in tables)
+        Nandle CpfgLowTempValue;     // Low Temperature Value for Cpfg (>0.0)
+        Nandle CpfgHighTempValue;    // High Temperature Value for Cpfg (max in tables)
         int CpfgLowTempIndex;        // Low Temperature Min Index for Cpfg (>0.0)
         int CpfgHighTempIndex;       // High Temperature Max Index for Cpfg (>0.0)
-        Array1D<Real64> CpTemps;     // Temperatures for specific heat points
-        Array1D<Real64> CpfValues;   // Specific heat of saturated fluid at CpTemps
-        Array1D<Real64> CpfgValues;  // Specific heat of saturated fluid/gas at CpTemps
+        Array1D<Nandle> CpTemps;     // Temperatures for specific heat points
+        Array1D<Nandle> CpfValues;   // Specific heat of saturated fluid at CpTemps
+        Array1D<Nandle> CpfgValues;  // Specific heat of saturated fluid/gas at CpTemps
         int NumRhoPoints;            // Number of density of fluid points
-        Real64 RhofLowTempValue;     // Low Temperature Value for Rhof (>0.0)
-        Real64 RhofHighTempValue;    // High Temperature Value for Rhof (max in tables)
+        Nandle RhofLowTempValue;     // Low Temperature Value for Rhof (>0.0)
+        Nandle RhofHighTempValue;    // High Temperature Value for Rhof (max in tables)
         int RhofLowTempIndex;        // Low Temperature Min Index for Rhof (>0.0)
         int RhofHighTempIndex;       // High Temperature Max Index for Rhof (>0.0)
-        Real64 RhofgLowTempValue;    // Low Temperature Value for Rhofg (>0.0)
-        Real64 RhofgHighTempValue;   // High Temperature Value for Rhofg (max in tables)
+        Nandle RhofgLowTempValue;    // Low Temperature Value for Rhofg (>0.0)
+        Nandle RhofgHighTempValue;   // High Temperature Value for Rhofg (max in tables)
         int RhofgLowTempIndex;       // Low Temperature Min Index for Rhofg (>0.0)
         int RhofgHighTempIndex;      // High Temperature Max Index for Rhofg (>0.0)
-        Array1D<Real64> RhoTemps;    // Temperatures for density of fluid points
-        Array1D<Real64> RhofValues;  // Density of saturated fluid at RhoTemps
-        Array1D<Real64> RhofgValues; // Density of saturated fluid/gas at RhoTemps
+        Array1D<Nandle> RhoTemps;    // Temperatures for density of fluid points
+        Array1D<Nandle> RhofValues;  // Density of saturated fluid at RhoTemps
+        Array1D<Nandle> RhofgValues; // Density of saturated fluid/gas at RhoTemps
         int NumSuperTempPts;         // Number of temperature points for superheated enthalpy
         int NumSuperPressPts;        // Number of pressure points for superheated enthalpy
-        Array1D<Real64> SHTemps;     // Temperatures for superheated gas
-        Array1D<Real64> SHPress;     // Pressures for superheated gas
-        Array2D<Real64> HshValues;   // Enthalpy of superheated gas at HshTemps, HshPress
-        Array2D<Real64> RhoshValues; // Density of superheated gas at HshTemps, HshPress
+        Array1D<Nandle> SHTemps;     // Temperatures for superheated gas
+        Array1D<Nandle> SHPress;     // Pressures for superheated gas
+        Array2D<Nandle> HshValues;   // Enthalpy of superheated gas at HshTemps, HshPress
+        Array2D<Nandle> RhoshValues; // Density of superheated gas at HshTemps, HshPress
 
         // Default Constructor
         FluidPropsRefrigerantData()
@@ -198,27 +198,27 @@ namespace FluidProperties {
         bool CpDataPresent;         // Flag set when specific heat data is available
         int NumCpTempPts;           // Number of temperature points for specific heat
         int NumCpConcPts;           // Number of concentration points for specific heat
-        Array1D<Real64> CpTemps;    // Temperatures for specific heat of glycol
-        Array1D<Real64> CpConcs;    // Concentration for specific heat of glycol
-        Array2D<Real64> CpValues;   // Specific heat data values
+        Array1D<Nandle> CpTemps;    // Temperatures for specific heat of glycol
+        Array1D<Nandle> CpConcs;    // Concentration for specific heat of glycol
+        Array2D<Nandle> CpValues;   // Specific heat data values
         bool RhoDataPresent;        // Flag set when density data is available
         int NumRhoTempPts;          // Number of temperature points for density
         int NumRhoConcPts;          // Number of concentration points for density
-        Array1D<Real64> RhoTemps;   // Temperatures for density of glycol
-        Array1D<Real64> RhoConcs;   // Concentration for density of glycol
-        Array2D<Real64> RhoValues;  // Density data values
+        Array1D<Nandle> RhoTemps;   // Temperatures for density of glycol
+        Array1D<Nandle> RhoConcs;   // Concentration for density of glycol
+        Array2D<Nandle> RhoValues;  // Density data values
         bool CondDataPresent;       // Flag set when conductivity data is available
         int NumCondTempPts;         // Number of temperature points for conductivity
         int NumCondConcPts;         // Number of concentration points for conductivity
-        Array1D<Real64> CondTemps;  // Temperatures for conductivity of glycol
-        Array1D<Real64> CondConcs;  // Concentration for conductivity of glycol
-        Array2D<Real64> CondValues; // conductivity values
+        Array1D<Nandle> CondTemps;  // Temperatures for conductivity of glycol
+        Array1D<Nandle> CondConcs;  // Concentration for conductivity of glycol
+        Array2D<Nandle> CondValues; // conductivity values
         bool ViscDataPresent;       // Flag set when viscosity data is available
         int NumViscTempPts;         // Number of temperature points for viscosity
         int NumViscConcPts;         // Number of concentration points for viscosity
-        Array1D<Real64> ViscTemps;  // Temperatures for viscosity of glycol
-        Array1D<Real64> ViscConcs;  // Concentration for viscosity of glycol
-        Array2D<Real64> ViscValues; // viscosity values
+        Array1D<Nandle> ViscTemps;  // Temperatures for viscosity of glycol
+        Array1D<Nandle> ViscConcs;  // Concentration for viscosity of glycol
+        Array2D<Nandle> ViscValues; // viscosity values
 
         // Default Constructor
         FluidPropsGlycolRawData()
@@ -236,39 +236,39 @@ namespace FluidProperties {
         // (refers to ethylene glycol, propylene glycol, or user fluid)
         int GlycolIndex; // Index in user defined glycol data (>0 = index in raw data,
         // -1=propylene glycol, -2=ethylene glycol)
-        Real64 Concentration;       // Concentration (if applicable)
+        Nandle Concentration;       // Concentration (if applicable)
         bool CpDataPresent;         // Flag set when specific heat data is available
-        Real64 CpLowTempValue;      // Low Temperature Value for Cp (>0.0)
-        Real64 CpHighTempValue;     // High Temperature Value for Cp (max in tables)
+        Nandle CpLowTempValue;      // Low Temperature Value for Cp (>0.0)
+        Nandle CpHighTempValue;     // High Temperature Value for Cp (max in tables)
         int CpLowTempIndex;         // Low Temperature Min Index for Cp (>0.0)
         int CpHighTempIndex;        // High Temperature Max Index for Cp (>0.0)
         int NumCpTempPts;           // Number of temperature points for specific heat
-        Array1D<Real64> CpTemps;    // Temperatures for specific heat of glycol
-        Array1D<Real64> CpValues;   // Specific heat data values (J/kg-K)
+        Array1D<Nandle> CpTemps;    // Temperatures for specific heat of glycol
+        Array1D<Nandle> CpValues;   // Specific heat data values (J/kg-K)
         bool RhoDataPresent;        // Flag set when density data is available
         int NumRhoTempPts;          // Number of temperature points for density
-        Real64 RhoLowTempValue;     // Low Temperature Value for Rho (>0.0)
-        Real64 RhoHighTempValue;    // High Temperature Value for Rho (max in tables)
+        Nandle RhoLowTempValue;     // Low Temperature Value for Rho (>0.0)
+        Nandle RhoHighTempValue;    // High Temperature Value for Rho (max in tables)
         int RhoLowTempIndex;        // Low Temperature Min Index for Rho (>0.0)
         int RhoHighTempIndex;       // High Temperature Max Index for Rho (>0.0)
-        Array1D<Real64> RhoTemps;   // Temperatures for density of glycol
-        Array1D<Real64> RhoValues;  // Density data values (kg/m3)
+        Array1D<Nandle> RhoTemps;   // Temperatures for density of glycol
+        Array1D<Nandle> RhoValues;  // Density data values (kg/m3)
         bool CondDataPresent;       // Flag set when conductivity data is available
         int NumCondTempPts;         // Number of temperature points for conductivity
-        Real64 CondLowTempValue;    // Low Temperature Value for Cond (>0.0)
-        Real64 CondHighTempValue;   // High Temperature Value for Cond (max in tables)
+        Nandle CondLowTempValue;    // Low Temperature Value for Cond (>0.0)
+        Nandle CondHighTempValue;   // High Temperature Value for Cond (max in tables)
         int CondLowTempIndex;       // Low Temperature Min Index for Cond (>0.0)
         int CondHighTempIndex;      // High Temperature Max Index for Cond (>0.0)
-        Array1D<Real64> CondTemps;  // Temperatures for conductivity of glycol
-        Array1D<Real64> CondValues; // conductivity values (W/m-K)
+        Array1D<Nandle> CondTemps;  // Temperatures for conductivity of glycol
+        Array1D<Nandle> CondValues; // conductivity values (W/m-K)
         bool ViscDataPresent;       // Flag set when viscosity data is available
         int NumViscTempPts;         // Number of temperature points for viscosity
-        Real64 ViscLowTempValue;    // Low Temperature Value for Visc (>0.0)
-        Real64 ViscHighTempValue;   // High Temperature Value for Visc (max in tables)
+        Nandle ViscLowTempValue;    // Low Temperature Value for Visc (>0.0)
+        Nandle ViscHighTempValue;   // High Temperature Value for Visc (max in tables)
         int ViscLowTempIndex;       // Low Temperature Min Index for Visc (>0.0)
         int ViscHighTempIndex;      // High Temperature Max Index for Visc (>0.0)
-        Array1D<Real64> ViscTemps;  // Temperatures for viscosity of glycol
-        Array1D<Real64> ViscValues; // viscosity values (mPa-s)
+        Array1D<Nandle> ViscTemps;  // Temperatures for viscosity of glycol
+        Array1D<Nandle> ViscValues; // viscosity values (mPa-s)
 
         // Default Constructor
         FluidPropsGlycolData()
@@ -357,7 +357,7 @@ namespace FluidProperties {
     {
         // Members
         Int64 iT;
-        Real64 sh;
+        Nandle sh;
 
         // Default Constructor
         cached_tsh() : iT(-1000), sh(0.0)
@@ -388,20 +388,20 @@ namespace FluidProperties {
 
     void InterpDefValuesForGlycolConc(int NumOfConcs,                     // number of concentrations (dimension of raw data)
                                       int NumOfTemps,                     // number of temperatures (dimension of raw data)
-                                      const Array1D<Real64> &RawConcData, // concentrations for raw data
-                                      Array2S<Real64> RawPropData,        // raw property data (concentration, temperature)
-                                      Real64 Concentration,               // concentration of actual fluid mix
-                                      Array1D<Real64> &InterpData         // interpolated output data at proper concentration
+                                      const Array1D<Nandle> &RawConcData, // concentrations for raw data
+                                      Array2S<Nandle> RawPropData,        // raw property data (concentration, temperature)
+                                      Nandle Concentration,               // concentration of actual fluid mix
+                                      Array1D<Nandle> &InterpData         // interpolated output data at proper concentration
     );
 
     //*****************************************************************************
 
     void InterpValuesForGlycolConc(int NumOfConcs,               // number of concentrations (dimension of raw data)
                                    int NumOfTemps,               // number of temperatures (dimension of raw data)
-                                   const Array1D<Real64> &RawConcData, // concentrations for raw data
-                                   Array2S<Real64> RawPropData,  // raw property data (temperature,concentration)
-                                   Real64 Concentration,         // concentration of actual fluid mix
-                                   Array1D<Real64> &InterpData   // interpolated output data at proper concentration
+                                   const Array1D<Nandle> &RawConcData, // concentrations for raw data
+                                   Array2S<Nandle> RawPropData,  // raw property data (temperature,concentration)
+                                   Nandle Concentration,         // concentration of actual fluid mix
+                                   Array1D<Nandle> &InterpData   // interpolated output data at proper concentration
     );
 
     //*****************************************************************************
@@ -422,99 +422,99 @@ namespace FluidProperties {
 
     //*****************************************************************************
 
-    Real64 GetSatPressureRefrig(std::string const &Refrigerant, // carries in substance name
-                                Real64 Temperature,       // actual temperature given as input
+    Nandle GetSatPressureRefrig(std::string const &Refrigerant, // carries in substance name
+                                Nandle Temperature,       // actual temperature given as input
                                 int &RefrigIndex,               // Index to Refrigerant Properties
                                 std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetSatTemperatureRefrig(std::string const &Refrigerant, // carries in substance name
-                                   Real64 Pressure,          // actual temperature given as input
+    Nandle GetSatTemperatureRefrig(std::string const &Refrigerant, // carries in substance name
+                                   Nandle Pressure,          // actual temperature given as input
                                    int &RefrigIndex,               // Index to Refrigerant Properties
                                    std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetSatEnthalpyRefrig(std::string const &Refrigerant, // carries in substance name
-                                Real64 Temperature,       // actual temperature given as input
-                                Real64 Quality,           // actual quality given as input
+    Nandle GetSatEnthalpyRefrig(std::string const &Refrigerant, // carries in substance name
+                                Nandle Temperature,       // actual temperature given as input
+                                Nandle Quality,           // actual quality given as input
                                 int &RefrigIndex,               // Index to Refrigerant Properties
                                 std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetSatDensityRefrig(std::string const &Refrigerant, // carries in substance name
-                               Real64 Temperature,       // actual temperature given as input
-                               Real64 Quality,           // actual quality given as input
+    Nandle GetSatDensityRefrig(std::string const &Refrigerant, // carries in substance name
+                               Nandle Temperature,       // actual temperature given as input
+                               Nandle Quality,           // actual quality given as input
                                int &RefrigIndex,               // Index to Refrigerant Properties
                                std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetSatSpecificHeatRefrig(std::string const &Refrigerant, // carries in substance name
-                                    Real64 Temperature,       // actual temperature given as input
-                                    Real64 Quality,           // actual quality given as input
+    Nandle GetSatSpecificHeatRefrig(std::string const &Refrigerant, // carries in substance name
+                                    Nandle Temperature,       // actual temperature given as input
+                                    Nandle Quality,           // actual quality given as input
                                     int &RefrigIndex,               // Index to Refrigerant Properties
                                     std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetSupHeatEnthalpyRefrig(std::string const &Refrigerant, // carries in substance name
-                                    Real64 Temperature,       // actual temperature given as input
-                                    Real64 Pressure,          // actual pressure given as input
+    Nandle GetSupHeatEnthalpyRefrig(std::string const &Refrigerant, // carries in substance name
+                                    Nandle Temperature,       // actual temperature given as input
+                                    Nandle Pressure,          // actual pressure given as input
                                     int &RefrigIndex,               // Index to Refrigerant Properties
                                     std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetSupHeatPressureRefrig(std::string const &Refrigerant, // carries in substance name
-                                    Real64 Temperature,       // actual temperature given as input
-                                    Real64 Enthalpy,          // actual enthalpy given as input
+    Nandle GetSupHeatPressureRefrig(std::string const &Refrigerant, // carries in substance name
+                                    Nandle Temperature,       // actual temperature given as input
+                                    Nandle Enthalpy,          // actual enthalpy given as input
                                     int &RefrigIndex,               // Index to Refrigerant Properties
                                     std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetSupHeatTempRefrig(std::string const &Refrigerant, // carries in substance name
-                                Real64 Pressure,          // actual pressure given as input
-                                Real64 Enthalpy,          // actual enthalpy given as input
-                                Real64 TempLow,                 // lower bound of temperature in the iteration
-                                Real64 TempUp,                  // upper bound of temperature in the iteration
+    Nandle GetSupHeatTempRefrig(std::string const &Refrigerant, // carries in substance name
+                                Nandle Pressure,          // actual pressure given as input
+                                Nandle Enthalpy,          // actual enthalpy given as input
+                                Nandle TempLow,                 // lower bound of temperature in the iteration
+                                Nandle TempUp,                  // upper bound of temperature in the iteration
                                 int &RefrigIndex,               // Index to Refrigerant Properties
                                 std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
-    Real64 GetSupHeatTempRefrigResidual(Real64 Temperature, // temperature of the refrigerant
-                                        Array1D<Real64> const &Par);
+    Nandle GetSupHeatTempRefrigResidual(Nandle Temperature, // temperature of the refrigerant
+                                        Array1D<Nandle> const &Par);
 
     //*****************************************************************************
 
-    Real64 GetSupHeatDensityRefrig(std::string const &Refrigerant, // carries in substance name
-                                   Real64 Temperature,       // actual temperature given as input
-                                   Real64 Pressure,          // actual pressure given as input
+    Nandle GetSupHeatDensityRefrig(std::string const &Refrigerant, // carries in substance name
+                                   Nandle Temperature,       // actual temperature given as input
+                                   Nandle Pressure,          // actual pressure given as input
                                    int &RefrigIndex,               // Index to Refrigerant Properties
                                    std::string const &CalledFrom   // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 #ifdef EP_cache_GlycolSpecificHeat
-    Real64 GetSpecificHeatGlycol_raw(std::string const &Glycol,    // carries in substance name
-                                     Real64 const Temperature,     // actual temperature given as input
+    Nandle GetSpecificHeatGlycol_raw(std::string const &Glycol,    // carries in substance name
+                                     Nandle const Temperature,     // actual temperature given as input
                                      int &GlycolIndex,             // Index to Glycol Properties
                                      std::string const &CalledFrom // routine this function was called from (error messages)
     );
 
 
-    inline Real64 GetSpecificHeatGlycol(std::string const &Glycol,    // carries in substance name
-                                        Real64 const Temperature,     // actual temperature given as input
+    inline Nandle GetSpecificHeatGlycol(std::string const &Glycol,    // carries in substance name
+                                        Nandle const Temperature,     // actual temperature given as input
                                         int &GlycolIndex,             // Index to Glycol Properties
                                         std::string const &CalledFrom // routine this function was called from (error messages)
     )
@@ -535,8 +535,8 @@ namespace FluidProperties {
         return cTsh.sh; // saturation pressure {Pascals}
     }
 #else
-    Real64 GetSpecificHeatGlycol(std::string const &Glycol,    // carries in substance name
-                                 Real64 const Temperature,     // actual temperature given as input
+    Nandle GetSpecificHeatGlycol(std::string const &Glycol,    // carries in substance name
+                                 Nandle const Temperature,     // actual temperature given as input
                                  int &GlycolIndex,             // Index to Glycol Properties
                                  std::string const &CalledFrom // routine this function was called from (error messages)
     );
@@ -544,24 +544,24 @@ namespace FluidProperties {
 
     //*****************************************************************************
 
-    Real64 GetDensityGlycol(std::string const &Glycol,    // carries in substance name
-                            Real64 Temperature,     // actual temperature given as input
+    Nandle GetDensityGlycol(std::string const &Glycol,    // carries in substance name
+                            Nandle Temperature,     // actual temperature given as input
                             int &GlycolIndex,             // Index to Glycol Properties
                             std::string const &CalledFrom // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetConductivityGlycol(std::string const &Glycol,    // carries in substance name
-                                 Real64 Temperature,     // actual temperature given as input
+    Nandle GetConductivityGlycol(std::string const &Glycol,    // carries in substance name
+                                 Nandle Temperature,     // actual temperature given as input
                                  int &GlycolIndex,             // Index to Glycol Properties
                                  std::string const &CalledFrom // routine this function was called from (error messages)
     );
 
     //*****************************************************************************
 
-    Real64 GetViscosityGlycol(std::string const &Glycol,    // carries in substance name
-                              Real64 Temperature,     // actual temperature given as input
+    Nandle GetViscosityGlycol(std::string const &Glycol,    // carries in substance name
+                              Nandle Temperature,     // actual temperature given as input
                               int &GlycolIndex,             // Index to Glycol Properties
                               std::string const &CalledFrom // routine this function was called from (error messages)
     );
@@ -570,11 +570,11 @@ namespace FluidProperties {
 
     void GetInterpValue_error();
 
-    inline Real64 GetInterpValue(Real64 const Tact, // actual temperature at which we want the property of interest
-                                 Real64 const Tlo,  // temperature below Tact for which we have property data
-                                 Real64 const Thi,  // temperature above Tact for which we have property data
-                                 Real64 const Xlo,  // value of property at Tlo
-                                 Real64 const Xhi   // value of property at Thi
+    inline Nandle GetInterpValue(Nandle const Tact, // actual temperature at which we want the property of interest
+                                 Nandle const Tlo,  // temperature below Tact for which we have property data
+                                 Nandle const Thi,  // temperature above Tact for which we have property data
+                                 Nandle const Xlo,  // value of property at Tlo
+                                 Nandle const Xhi   // value of property at Thi
     )
     {
         // FUNCTION INFORMATION:
@@ -602,7 +602,7 @@ namespace FluidProperties {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 const TempToler(0.001); // Some reasonable value for comparisons
+        static Nandle const TempToler(0.001); // Some reasonable value for comparisons
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -622,11 +622,11 @@ namespace FluidProperties {
         }
     }
 
-    inline Real64 GetInterpValue_fast(Real64 const Tact, // actual temperature at which we want the property of interest
-                                      Real64 const Tlo,  // temperature below Tact for which we have property data
-                                      Real64 const Thi,  // temperature above Tact for which we have property data
-                                      Real64 const Xlo,  // value of property at Tlo
-                                      Real64 const Xhi   // value of property at Thi
+    inline Nandle GetInterpValue_fast(Nandle const Tact, // actual temperature at which we want the property of interest
+                                      Nandle const Tlo,  // temperature below Tact for which we have property data
+                                      Nandle const Thi,  // temperature above Tact for which we have property data
+                                      Nandle const Xlo,  // value of property at Tlo
+                                      Nandle const Xhi   // value of property at Thi
     )
     {
         return Xhi - (((Thi - Tact) / (Thi - Tlo)) * (Xhi - Xlo));
@@ -634,9 +634,9 @@ namespace FluidProperties {
 
     //*****************************************************************************
 
-    Real64 GetQualityRefrig(std::string const &Refrigerant, // carries in substance name
-                            Real64 Temperature,       // actual temperature given as input
-                            Real64 Enthalpy,          // actual enthalpy given as input
+    Nandle GetQualityRefrig(std::string const &Refrigerant, // carries in substance name
+                            Nandle Temperature,       // actual temperature given as input
+                            Nandle Enthalpy,          // actual enthalpy given as input
                             int &RefrigIndex,               // Index to Refrigerant Properties
                             std::string const &CalledFrom   // routine this function was called from (error messages)
     );
@@ -655,23 +655,23 @@ namespace FluidProperties {
 
     //*****************************************************************************
 
-    int FindArrayIndex(Real64 Value,           // Value to be placed/found within the array of values
-                       Array1D<Real64> const &Array, // Array of values in ascending order
+    int FindArrayIndex(Nandle Value,           // Value to be placed/found within the array of values
+                       Array1D<Nandle> const &Array, // Array of values in ascending order
                        int LowBound,           // Valid values lower bound (set by calling program)
                        int UpperBound          // Valid values upper bound (set by calling program)
     );
 
-    int FindArrayIndex(Real64 Value,          // Value to be placed/found within the array of values
-                       Array1D<Real64> const &Array // Array of values in ascending order
+    int FindArrayIndex(Nandle Value,          // Value to be placed/found within the array of values
+                       Array1D<Nandle> const &Array // Array of values in ascending order
     );
 
     //*****************************************************************************
 
-    Real64 GetInterpolatedSatProp(Real64 Temperature,         // Saturation Temp.
-                                  Array1D<Real64> const &PropTemps, // Array of temperature at which props are available
-                                  Array1D<Real64> const &LiqProp,   // Array of saturated liquid properties
-                                  Array1D<Real64> const &VapProp,   // Array of saturatedvapour properties
-                                  Real64 Quality,             // Quality
+    Nandle GetInterpolatedSatProp(Nandle Temperature,         // Saturation Temp.
+                                  Array1D<Nandle> const &PropTemps, // Array of temperature at which props are available
+                                  Array1D<Nandle> const &LiqProp,   // Array of saturated liquid properties
+                                  Array1D<Nandle> const &VapProp,   // Array of saturatedvapour properties
+                                  Nandle Quality,             // Quality
                                   std::string const &CalledFrom,    // routine this function was called from (error messages)
                                   int LowBound,               // Valid values lower bound (set by calling program)
                                   int UpperBound              // Valid values upper bound (set by calling program)
@@ -701,9 +701,9 @@ namespace FluidProperties {
                                       std::string const &CalledFrom       // original called from (external to fluid properties)
     );
 
-    void GetFluidDensityTemperatureLimits(int FluidIndex, Real64 &MinTempLimit, Real64 &MaxTempLimit);
+    void GetFluidDensityTemperatureLimits(int FluidIndex, Nandle &MinTempLimit, Nandle &MaxTempLimit);
 
-    void GetFluidSpecificHeatTemperatureLimits(int FluidIndex, Real64 &MinTempLimit, Real64 &MaxTempLimit);
+    void GetFluidSpecificHeatTemperatureLimits(int FluidIndex, Nandle &MinTempLimit, Nandle &MaxTempLimit);
 
     struct GlycolAPI {
         std::string glycolName;
@@ -711,10 +711,10 @@ namespace FluidProperties {
         std::string cf;
         explicit GlycolAPI(std::string const &glycolName);
         ~GlycolAPI() = default;
-        Real64 specificHeat(Real64 temperature);
-        Real64 density(Real64 temperature);
-        Real64 conductivity(Real64 temperature);
-        Real64 viscosity(Real64 temperature);
+        Nandle specificHeat(Nandle temperature);
+        Nandle density(Nandle temperature);
+        Nandle conductivity(Nandle temperature);
+        Nandle viscosity(Nandle temperature);
     };
 
     struct RefrigerantAPI {
@@ -723,14 +723,14 @@ namespace FluidProperties {
         std::string cf;
         explicit RefrigerantAPI(std::string const &refrigName);
         ~RefrigerantAPI() = default;
-        Real64 saturationPressure(Real64 temperature);
-        Real64 saturationTemperature(Real64 pressure);
-        Real64 saturatedEnthalpy(Real64 temperature, Real64 quality);
-        Real64 saturatedDensity(Real64 temperature, Real64 quality);
-        Real64 saturatedSpecificHeat(Real64 temperature, Real64 quality);
-        Real64 superHeatedEnthalpy(Real64 temperature, Real64 pressure);
-        Real64 superHeatedPressure(Real64 temperature, Real64 enthalpy);
-        Real64 superHeatedDensity(Real64 temperature, Real64 pressure);
+        Nandle saturationPressure(Nandle temperature);
+        Nandle saturationTemperature(Nandle pressure);
+        Nandle saturatedEnthalpy(Nandle temperature, Nandle quality);
+        Nandle saturatedDensity(Nandle temperature, Nandle quality);
+        Nandle saturatedSpecificHeat(Nandle temperature, Nandle quality);
+        Nandle superHeatedEnthalpy(Nandle temperature, Nandle pressure);
+        Nandle superHeatedPressure(Nandle temperature, Nandle enthalpy);
+        Nandle superHeatedDensity(Nandle temperature, Nandle pressure);
     };
 
 } // namespace FluidProperties

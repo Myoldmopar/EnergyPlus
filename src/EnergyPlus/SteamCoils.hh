@@ -106,39 +106,39 @@ namespace SteamCoils {
         int SteamCoilType_Num;
         std::string Schedule;             // SteamCoil Operation Schedule
         int SchedPtr;                     // Pointer to the correct schedule
-        Real64 InletAirMassFlowRate;      // MassFlow through the SteamCoil being Simulated [kg/s]
-        Real64 OutletAirMassFlowRate;     // MassFlow throught the SteamCoil being Simulated[kg/s]
-        Real64 InletAirTemp;              // Inlet Air Temperature Operating Condition [C]
-        Real64 OutletAirTemp;             // Outlet Air Temperature Operating Condition [C]
-        Real64 InletAirHumRat;            // Inlet Air Humidity Ratio Operating Condition
-        Real64 OutletAirHumRat;           // Outlet Air Humidity Ratio Calculated Condition
-        Real64 InletAirEnthalpy;          // Inlet Air enthalpy [J/kg]
-        Real64 OutletAirEnthalpy;         // Outlet Air enthalpy [J/kg]
-        Real64 TotSteamCoilLoad;          // Total Load on the Coil [W]
-        Real64 SenSteamCoilLoad;          // Sensible Load on the Coil [W]
-        Real64 TotSteamHeatingCoilEnergy; // Total Heating Coil energy of the Coil [J]
-        Real64 TotSteamCoolingCoilEnergy; // Total Cooling Coil energy of the Coil [J]
-        Real64 SenSteamCoolingCoilEnergy; // Sensible Cooling Coil energy of the Coil [J]
-        Real64 TotSteamHeatingCoilRate;   // Total Heating Coil Rate on the Coil [W]
-        Real64 LoopLoss;                  // Loss in loop due to cond return to atm pressure
-        Real64 TotSteamCoolingCoilRate;   // Total Cooling Coil Rate on the Coil [W]
-        Real64 SenSteamCoolingCoilRate;   // Sensible Cooling Coil Rate on the Coil [W]
-        Real64 LeavingRelHum;             // Simple Coil Latent Model requires User input for leaving RH
-        Real64 DesiredOutletTemp;         // Temp desired at the outlet (C)
-        Real64 DesiredOutletHumRat;       // Humudity Ratio desired at outlet (C)
-        Real64 InletSteamTemp;            // Inlet Steam Temperature [C]
-        Real64 OutletSteamTemp;           // Outlet Steam Temperature [C]
-        Real64 InletSteamMassFlowRate;    // Inlet Steam Mass Flow Rate [Kg/s]
-        Real64 OutletSteamMassFlowRate;   // Outlet Steam Mass Flow Rate [Kg/s]
-        Real64 MaxSteamVolFlowRate;       // Maximum water Volume flow rate [m3/s]
-        Real64 MaxSteamMassFlowRate;      // Maximum water mass flow rate [Kg/s]
-        Real64 InletSteamEnthalpy;        // Inlet Water Enthalpy (J/Kg)
-        Real64 OutletWaterEnthalpy;       // Outlet Water Enthalpy (J/kg)
-        Real64 InletSteamPress;           // Pressure at steam inlet (Pa)
-        Real64 InletSteamQuality;         // Quality of steam at inlet
-        Real64 OutletSteamQuality;        // Quality of steam at outlet
-        Real64 DegOfSubcooling;
-        Real64 LoopSubcoolReturn;
+        Nandle InletAirMassFlowRate;      // MassFlow through the SteamCoil being Simulated [kg/s]
+        Nandle OutletAirMassFlowRate;     // MassFlow throught the SteamCoil being Simulated[kg/s]
+        Nandle InletAirTemp;              // Inlet Air Temperature Operating Condition [C]
+        Nandle OutletAirTemp;             // Outlet Air Temperature Operating Condition [C]
+        Nandle InletAirHumRat;            // Inlet Air Humidity Ratio Operating Condition
+        Nandle OutletAirHumRat;           // Outlet Air Humidity Ratio Calculated Condition
+        Nandle InletAirEnthalpy;          // Inlet Air enthalpy [J/kg]
+        Nandle OutletAirEnthalpy;         // Outlet Air enthalpy [J/kg]
+        Nandle TotSteamCoilLoad;          // Total Load on the Coil [W]
+        Nandle SenSteamCoilLoad;          // Sensible Load on the Coil [W]
+        Nandle TotSteamHeatingCoilEnergy; // Total Heating Coil energy of the Coil [J]
+        Nandle TotSteamCoolingCoilEnergy; // Total Cooling Coil energy of the Coil [J]
+        Nandle SenSteamCoolingCoilEnergy; // Sensible Cooling Coil energy of the Coil [J]
+        Nandle TotSteamHeatingCoilRate;   // Total Heating Coil Rate on the Coil [W]
+        Nandle LoopLoss;                  // Loss in loop due to cond return to atm pressure
+        Nandle TotSteamCoolingCoilRate;   // Total Cooling Coil Rate on the Coil [W]
+        Nandle SenSteamCoolingCoilRate;   // Sensible Cooling Coil Rate on the Coil [W]
+        Nandle LeavingRelHum;             // Simple Coil Latent Model requires User input for leaving RH
+        Nandle DesiredOutletTemp;         // Temp desired at the outlet (C)
+        Nandle DesiredOutletHumRat;       // Humudity Ratio desired at outlet (C)
+        Nandle InletSteamTemp;            // Inlet Steam Temperature [C]
+        Nandle OutletSteamTemp;           // Outlet Steam Temperature [C]
+        Nandle InletSteamMassFlowRate;    // Inlet Steam Mass Flow Rate [Kg/s]
+        Nandle OutletSteamMassFlowRate;   // Outlet Steam Mass Flow Rate [Kg/s]
+        Nandle MaxSteamVolFlowRate;       // Maximum water Volume flow rate [m3/s]
+        Nandle MaxSteamMassFlowRate;      // Maximum water mass flow rate [Kg/s]
+        Nandle InletSteamEnthalpy;        // Inlet Water Enthalpy (J/Kg)
+        Nandle OutletWaterEnthalpy;       // Outlet Water Enthalpy (J/kg)
+        Nandle InletSteamPress;           // Pressure at steam inlet (Pa)
+        Nandle InletSteamQuality;         // Quality of steam at inlet
+        Nandle OutletSteamQuality;        // Quality of steam at outlet
+        Nandle DegOfSubcooling;
+        Nandle LoopSubcoolReturn;
         int AirInletNodeNum;            // Inlet node number at air side
         int AirOutletNodeNum;           // Outlet node number at air side
         int SteamInletNodeNum;          // SteamInletNodeNum
@@ -151,15 +151,15 @@ namespace SteamCoils {
         int BranchNum;                  // index for plant branch for steam coil
         int CompNum;                    // index for plant component for steam coil
         int Coil_PlantTypeNum;          // plant level index for coil type
-        Real64 OperatingCapacity;       // capacity of steam coil at operating conditions (W)
+        Nandle OperatingCapacity;       // capacity of steam coil at operating conditions (W)
         bool DesiccantRegenerationCoil; // true if it is a regeneration air heating coil defined in Desiccant Dehumidifier system
         int DesiccantDehumNum;          // index to desiccant dehumidifier object
         bool FaultyCoilSATFlag;         // True if the coil has SAT sensor fault
         int FaultyCoilSATIndex;         // Index of the fault object corresponding to the coil
-        Real64 FaultyCoilSATOffset;     // Coil SAT sensor offset
+        Nandle FaultyCoilSATOffset;     // Coil SAT sensor offset
         bool reportCoilFinalSizes;      // one time report of sizes to coil selection report
-        Real64 DesCoilCapacity;         // store design load
-        Real64 DesAirVolFlow;           // store design air flow
+        Nandle DesCoilCapacity;         // store design load
+        Nandle DesAirVolFlow;           // store design air flow
 
         // Default Constructor
         SteamCoilEquipConditions()
@@ -186,10 +186,10 @@ namespace SteamCoils {
     void SimulateSteamCoilComponents(std::string const &CompName,
                                      bool const FirstHVACIteration,
                                      int &CompIndex,
-                                     Optional<Real64 const> QCoilReq = _, // coil load to be met
-                                     Optional<Real64> QCoilActual = _,    // coil load actually delivered returned to calling component
+                                     Optional<Nandle const> QCoilReq = _, // coil load to be met
+                                     Optional<Nandle> QCoilActual = _,    // coil load actually delivered returned to calling component
                                      Optional_int_const FanOpMode = _,
-                                     Optional<Real64 const> PartLoadRatio = _);
+                                     Optional<Nandle const> PartLoadRatio = _);
 
     // Get Input Section of the Module
 
@@ -208,10 +208,10 @@ namespace SteamCoils {
     // Begin Algorithm Section of the Module
 
     void CalcSteamAirCoil(int const CoilNum,
-                          Real64 const QCoilRequested, // requested coil load
-                          Real64 &QCoilActual,         // coil load actually delivered
+                          Nandle const QCoilRequested, // requested coil load
+                          Nandle &QCoilActual,         // coil load actually delivered
                           int const FanOpMode,         // fan operating mode
-                          Real64 const PartLoadRatio   // part-load ratio of heating coil
+                          Nandle const PartLoadRatio   // part-load ratio of heating coil
     );
 
     // Beginning of Update subroutines for the SteamCoil Module
@@ -233,14 +233,14 @@ namespace SteamCoils {
                           bool &ErrorsFound            // set to true if problem
     );
 
-    void CheckSteamCoilSchedule(std::string const &CompType, std::string const &CompName, Real64 &Value, int &CompIndex);
+    void CheckSteamCoilSchedule(std::string const &CompType, std::string const &CompName, Nandle &Value, int &CompIndex);
 
-    Real64 GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
                                    std::string const &CoilName, // must match coil names for the coil type
                                    bool &ErrorsFound            // set to true if problem
     );
 
-    Real64 GetCoilMaxSteamFlowRate(int const CoilIndex, // must match coil types in this module
+    Nandle GetCoilMaxSteamFlowRate(int const CoilIndex, // must match coil types in this module
                                    bool &ErrorsFound    // set to true if problem
     );
 
@@ -279,7 +279,7 @@ namespace SteamCoils {
                                bool &ErrorsFound            // set to true if problem
     );
 
-    Real64 GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
                            std::string const &CoilName, // must match coil names for the coil type
                            bool &ErrorsFound            // set to true if problem
     );

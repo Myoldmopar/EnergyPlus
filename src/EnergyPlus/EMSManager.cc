@@ -441,7 +441,7 @@ namespace EMSManager {
         int InternVarAvailNum;  // local index
         int SensorNum;          // local loop and index
         int ErlVariableNum;     // local index
-        Real64 tmpReal;         // temporary local integer
+        Nandle tmpReal;         // temporary local integer
 
         if (GetEMSUserInput) {
             SetupZoneInfoAsInternalDataAvail();
@@ -605,7 +605,7 @@ namespace EMSManager {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         int VarType;
         int VarIndex;
@@ -1634,7 +1634,7 @@ namespace EMSManager {
         static int TrendNum(0); // local loop counter
         static int ErlVarNum(0);
         static int TrendDepth(0);
-        static Real64 currentVal(0.0);
+        static Nandle currentVal(0.0);
 
         // checks with quick return if no updates needed.
         if (!AnyEnergyManagementSystemInModel) return;
@@ -2263,7 +2263,7 @@ void SetupEMSActuator(std::string const &cComponentTypeName,
                       std::string const &cControlTypeName,
                       std::string const &cUnits,
                       bool &lEMSActuated,
-                      Real64 &rValue)
+                      Nandle &rValue)
 {
 
     // SUBROUTINE INFORMATION:
@@ -2426,7 +2426,7 @@ void SetupEMSActuator(std::string const &cComponentTypeName,
     }
 }
 
-void SetupEMSInternalVariable(std::string const &cDataTypeName, std::string const &cUniqueIDName, std::string const &cUnits, Real64 &rValue)
+void SetupEMSInternalVariable(std::string const &cDataTypeName, std::string const &cUniqueIDName, std::string const &cUnits, Nandle &rValue)
 {
 
     // SUBROUTINE INFORMATION:

@@ -116,28 +116,28 @@ ENERGYPLUSLIB_API void glycolDelete(Glycol glycol);
 /// \returns Fluid specific heat, in J/kgK
 /// \see Glycol
 /// \see glycolNew
-ENERGYPLUSLIB_API Real64 glycolSpecificHeat(Glycol glycol, Real64 temperature);
+ENERGYPLUSLIB_API Nandle glycolSpecificHeat(Glycol glycol, Nandle temperature);
 /// \brief Returns the fluid density for the given Glycol instance at the specified temperature.
 /// \param[in] glycol An instance of a Glycol class, which can be created by calling `glycolNew`.
 /// \param[in] temperature The fluid temperature for property evaluation, in degrees Celsius.
 /// \returns Fluid density, in kg/m3
 /// \see Glycol
 /// \see glycolNew
-ENERGYPLUSLIB_API Real64 glycolDensity(Glycol glycol, Real64 temperature);
+ENERGYPLUSLIB_API Nandle glycolDensity(Glycol glycol, Nandle temperature);
 /// \brief Returns the fluid thermal conductivity for the given Glycol instance at the specified temperature.
 /// \param[in] glycol An instance of a Glycol class, which can be created by calling `glycolNew`.
 /// \param[in] temperature The fluid temperature for property evaluation, in degrees Celsius.
 /// \returns Fluid thermal conductivity, in W/mK
 /// \see Glycol
 /// \see glycolNew
-ENERGYPLUSLIB_API Real64 glycolConductivity(Glycol glycol, Real64 temperature);
+ENERGYPLUSLIB_API Nandle glycolConductivity(Glycol glycol, Nandle temperature);
 /// \brief Returns the fluid dynamic viscosity for the given Glycol instance at the specified temperature.
 /// \param[in] glycol An instance of a Glycol class, which can be created by calling `glycolNew`.
 /// \param[in] temperature The fluid temperature for property evaluation, in degrees Celsius.
 /// \returns Fluid dynamic viscosity, in Pa-s (or kg/m-s)
 /// \see Glycol
 /// \see glycolNew
-ENERGYPLUSLIB_API Real64 glycolViscosity(Glycol glycol, Real64 temperature);
+ENERGYPLUSLIB_API Nandle glycolViscosity(Glycol glycol, Nandle temperature);
 
 
 /// \brief This typedef is a convenient pointer to an internal refrigerant property class inside EnergyPlus.
@@ -168,14 +168,14 @@ ENERGYPLUSLIB_API void refrigerantDelete(Refrigerant refrigerant);
 /// \returns Refrigerant saturation pressure, in Pa
 /// \see Refrigerant
 /// \see refrigerantNew
-ENERGYPLUSLIB_API Real64 refrigerantSaturationPressure(Refrigerant refrigerant, Real64 temperature);
+ENERGYPLUSLIB_API Nandle refrigerantSaturationPressure(Refrigerant refrigerant, Nandle temperature);
 /// \brief Returns the refrigerant saturation temperature for the given Refrigerant instance at the specified pressure.
 /// \param[in] refrigerant An instance of a Refrigerant class, which can be created by calling `refrigerantNew`.
 /// \param[in] pressure The refrigerant pressure for property evaluation, in Pa.
 /// \returns Refrigerant saturation temperature, in C
 /// \see Refrigerant
 /// \see refrigerantNew
-ENERGYPLUSLIB_API Real64 refrigerantSaturationTemperature(Refrigerant refrigerant, Real64 pressure);
+ENERGYPLUSLIB_API Nandle refrigerantSaturationTemperature(Refrigerant refrigerant, Nandle pressure);
 /// \brief Returns the refrigerant saturated enthalpy for the given Refrigerant instance at the specified temperature and quality.
 /// \param[in] refrigerant An instance of a Refrigerant class, which can be created by calling `refrigerantNew`.
 /// \param[in] temperature The refrigerant temperature for property evaluation, in C.
@@ -183,7 +183,7 @@ ENERGYPLUSLIB_API Real64 refrigerantSaturationTemperature(Refrigerant refrigeran
 /// \returns Refrigerant saturated enthalpy in J/kg
 /// \see Refrigerant
 /// \see refrigerantNew
-ENERGYPLUSLIB_API Real64 refrigerantSaturatedEnthalpy(Refrigerant refrigerant, Real64 temperature, Real64 quality);
+ENERGYPLUSLIB_API Nandle refrigerantSaturatedEnthalpy(Refrigerant refrigerant, Nandle temperature, Nandle quality);
 /// \brief Returns the refrigerant saturated density for the given Refrigerant instance at the specified temperature and quality.
 /// \param[in] refrigerant An instance of a Refrigerant class, which can be created by calling `refrigerantNew`.
 /// \param[in] temperature The refrigerant temperature for property evaluation, in C.
@@ -191,7 +191,7 @@ ENERGYPLUSLIB_API Real64 refrigerantSaturatedEnthalpy(Refrigerant refrigerant, R
 /// \returns Refrigerant saturated density in kg/m3
 /// \see Refrigerant
 /// \see refrigerantNew
-ENERGYPLUSLIB_API Real64 refrigerantSaturatedDensity(Refrigerant refrigerant, Real64 temperature, Real64 quality);
+ENERGYPLUSLIB_API Nandle refrigerantSaturatedDensity(Refrigerant refrigerant, Nandle temperature, Nandle quality);
 /// \brief Returns the refrigerant saturated specific heat for the given Refrigerant instance at the specified temperature and quality.
 /// \param[in] refrigerant An instance of a Refrigerant class, which can be created by calling `refrigerantNew`.
 /// \param[in] temperature The refrigerant temperature for property evaluation, in C.
@@ -199,10 +199,10 @@ ENERGYPLUSLIB_API Real64 refrigerantSaturatedDensity(Refrigerant refrigerant, Re
 /// \returns Refrigerant saturated enthalpy in J/kg-K
 /// \see Refrigerant
 /// \see refrigerantNew
-ENERGYPLUSLIB_API Real64 refrigerantSaturatedSpecificHeat(Refrigerant refrigerant, Real64 temperature, Real64 quality);
-//ENERGYPLUSLIB_API Real64 refrigerantSuperHeatedEnthalpy(Refrigerant, Real64 temperature, Real64 pressure);
-//ENERGYPLUSLIB_API Real64 refrigerantSuperHeatedPressure(Refrigerant, Real64 temperature, Real64 enthalpy);
-//ENERGYPLUSLIB_API Real64 refrigerantSuperHeatedDensity(Refrigerant, Real64 temperature, Real64 pressure);
+ENERGYPLUSLIB_API Nandle refrigerantSaturatedSpecificHeat(Refrigerant refrigerant, Nandle temperature, Nandle quality);
+//ENERGYPLUSLIB_API Nandle refrigerantSuperHeatedEnthalpy(Refrigerant, Nandle temperature, Nandle pressure);
+//ENERGYPLUSLIB_API Nandle refrigerantSuperHeatedPressure(Refrigerant, Nandle temperature, Nandle enthalpy);
+//ENERGYPLUSLIB_API Nandle refrigerantSuperHeatedDensity(Refrigerant, Nandle temperature, Nandle pressure);
 
 
 /// \brief Returns the psychrometric density at given conditions.
@@ -210,111 +210,111 @@ ENERGYPLUSLIB_API Real64 refrigerantSaturatedSpecificHeat(Refrigerant refrigeran
 /// \param[in] tdb Dry bulb temperature, in Celsius
 /// \param[in] dw Humidity ratio, in kgWater/kgDryAir
 /// \returns Psychrometric density, in kg/m3
-ENERGYPLUSLIB_API Real64 psyRhoFnPbTdbW(Real64 pb, Real64 tdb, Real64 dw);
+ENERGYPLUSLIB_API Nandle psyRhoFnPbTdbW(Nandle pb, Nandle tdb, Nandle dw);
 /// \brief Returns the psychrometric latent energy of air at given conditions.
 /// \param[in] T Dry bulb temperature, in Celsius
 /// \returns Psychrometric latent energy of air, in J/kg
-ENERGYPLUSLIB_API Real64 psyHfgAirFnWTdb(Real64 T);
+ENERGYPLUSLIB_API Nandle psyHfgAirFnWTdb(Nandle T);
 /// \brief Returns the psychrometric latent energy of the moisture as a gas in the air at given conditions.
 /// \param[in] T Dry bulb temperature, in Celsius
 /// \returns Psychrometric latent energy of the moisture as a gas in the air, in J/kg
-ENERGYPLUSLIB_API Real64 psyHgAirFnWTdb(Real64 T);
+ENERGYPLUSLIB_API Nandle psyHgAirFnWTdb(Nandle T);
 /// \brief Returns the psychrometric enthalpy at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \returns Psychrometric enthalpy, in J/kg
-ENERGYPLUSLIB_API Real64 psyHFnTdbW(Real64 TDB, Real64 W);
+ENERGYPLUSLIB_API Nandle psyHFnTdbW(Nandle TDB, Nandle W);
 /// \brief Returns the psychrometric specific heat at given conditions.
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \returns Psychrometric specific heat, in J/kg-K
-ENERGYPLUSLIB_API Real64 psyCpAirFnW(Real64 W);
+ENERGYPLUSLIB_API Nandle psyCpAirFnW(Nandle W);
 /// \brief Returns the psychrometric dry bulb temperature at given conditions.
 /// \param[in] H Enthalpy, in J/kg
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \returns Psychrometric dry bulb temperature, in Celsius
-ENERGYPLUSLIB_API Real64 psyTdbFnHW(Real64 H, Real64 W);
+ENERGYPLUSLIB_API Nandle psyTdbFnHW(Nandle H, Nandle W);
 /// \brief Returns the psychrometric vapor density at given conditions.
 /// \param[in] Tdb Dry bulb temperature, in Celsius
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric vapor density, in kg/m3
-ENERGYPLUSLIB_API Real64 psyRhovFnTdbWPb(Real64 Tdb, Real64 W, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyRhovFnTdbWPb(Nandle Tdb, Nandle W, Nandle PB);
 /// \brief Returns the psychrometric wet bulb temperature at given conditions.
 /// \param[in] Tdb Dry bulb temperature, in Celsius
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric wet bulb temperature, in Celsius
-ENERGYPLUSLIB_API Real64 psyTwbFnTdbWPb(Real64 Tdb, Real64 W, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyTwbFnTdbWPb(Nandle Tdb, Nandle W, Nandle PB);
 /// \brief Returns the psychrometric specific volume at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric specific volume, in m3/kg
-ENERGYPLUSLIB_API Real64 psyVFnTdbWPb(Real64 TDB, Real64 W, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyVFnTdbWPb(Nandle TDB, Nandle W, Nandle PB);
 /// \brief Returns the psychrometric humidity ratio at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] H Enthalpy, in J/kg
 /// \returns Psychrometric humidity ratio, in kgWater/kgDryAir
-ENERGYPLUSLIB_API Real64 psyWFnTdbH(Real64 TDB, Real64 H);
+ENERGYPLUSLIB_API Nandle psyWFnTdbH(Nandle TDB, Nandle H);
 /// \brief Returns the psychrometric saturation pressure at given conditions.
 /// \param[in] T Dry bulb temperature, in Celsius
 /// \returns Psychrometric saturation pressure, in Pascals
-ENERGYPLUSLIB_API Real64 psyPsatFnTemp(Real64 T);
+ENERGYPLUSLIB_API Nandle psyPsatFnTemp(Nandle T);
 /// \brief Returns the psychrometric saturation temperature at given conditions.
 /// \param[in] H Enthalpy, in J/kg
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric saturation temperature, in Celsius
-ENERGYPLUSLIB_API Real64 psyTsatFnHPb(Real64 H, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyTsatFnHPb(Nandle H, Nandle PB);
 /// \brief Returns the psychrometric vapor density at given conditions.
 /// \param[in] Tdb Dry bulb temperature, in Celsius
 /// \param[in] RH Relative humidity, as a fraction from 0.0 to 1.0
 /// \returns Psychrometric vapor density, in kg/m3
-ENERGYPLUSLIB_API Real64 psyRhovFnTdbRh(Real64 Tdb, Real64 RH);
+ENERGYPLUSLIB_API Nandle psyRhovFnTdbRh(Nandle Tdb, Nandle RH);
 /// \brief Returns the psychrometric relative humidity at given conditions.
 /// \param[in] Tdb Dry bulb temperature, in Celsius
 /// \param[in] Rhovapor Vapor density, in kg/m3
 /// \returns Psychrometric relative humidity, as a fraction from 0.0 to 1.0
-ENERGYPLUSLIB_API Real64 psyRhFnTdbRhov(Real64 Tdb, Real64 Rhovapor);
+ENERGYPLUSLIB_API Nandle psyRhFnTdbRhov(Nandle Tdb, Nandle Rhovapor);
 /// \brief Returns the psychrometric relative humidity at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric relative humidity, as a fraction from 0.0 to 1.0
-ENERGYPLUSLIB_API Real64 psyRhFnTdbWPb(Real64 TDB, Real64 W, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyRhFnTdbWPb(Nandle TDB, Nandle W, Nandle PB);
 /// \brief Returns the psychrometric humidity ratio at given conditions.
 /// \param[in] TDP Dew point temperature, in Celsius
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric humidity ratio, in kgWater/kgDryAir
-ENERGYPLUSLIB_API Real64 psyWFnTdpPb(Real64 TDP, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyWFnTdpPb(Nandle TDP, Nandle PB);
 /// \brief Returns the psychrometric humidity ratio at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] RH Relative humidity ratio, as a fraction from 0.0 to 1.0
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric humidity ratio, in kgWater/kgDryAir
-ENERGYPLUSLIB_API Real64 psyWFnTdbRhPb(Real64 TDB, Real64 RH, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyWFnTdbRhPb(Nandle TDB, Nandle RH, Nandle PB);
 /// \brief Returns the psychrometric humidity ratio at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] TWB Wet bulb temperature, in Celsius
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric humidity ratio, in kgWater/kgDryAir
-ENERGYPLUSLIB_API Real64 psyWFnTdbTwbPb(Real64 TDB, Real64 TWB, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyWFnTdbTwbPb(Nandle TDB, Nandle TWB, Nandle PB);
 /// \brief Returns the psychrometric enthalpy at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] RH Relative humidity ratio, as a fraction from 0.0 to 1.0
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric enthalpy, in J/kg
-ENERGYPLUSLIB_API Real64 psyHFnTdbRhPb(Real64 TDB, Real64 RH, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyHFnTdbRhPb(Nandle TDB, Nandle RH, Nandle PB);
 /// \brief Returns the psychrometric dew point temperature at given conditions.
 /// \param[in] W Humidity ratio, in kgWater/kgDryAir
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric dew point temperature, in Celsius
-ENERGYPLUSLIB_API Real64 psyTdpFnWPb(Real64 W, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyTdpFnWPb(Nandle W, Nandle PB);
 /// \brief Returns the psychrometric dew point temperature at given conditions.
 /// \param[in] TDB Dry bulb temperature, in Celsius
 /// \param[in] TWB Wet bulb temperature, in Celsius
 /// \param[in] PB Barometric pressure, in Pascals
 /// \returns Psychrometric dew point temperature, in Celsius
-ENERGYPLUSLIB_API Real64 psyTdpFnTdbTwbPb(Real64 TDB, Real64 TWB, Real64 PB);
+ENERGYPLUSLIB_API Nandle psyTdpFnTdbTwbPb(Nandle TDB, Nandle TWB, Nandle PB);
 
 #ifdef __cplusplus
 }

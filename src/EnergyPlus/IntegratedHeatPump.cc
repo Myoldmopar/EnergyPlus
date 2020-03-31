@@ -95,18 +95,18 @@ namespace IntegratedHeatPump {
     void SimIHP(std::string const &CompName,              // Coil Name
                 int &CompIndex,                           // Index for Component name
                 int const CyclingScheme,                  // Continuous fan OR cycling compressor
-                Real64 &MaxONOFFCyclesperHour,            // Maximum cycling rate of heat pump [cycles/hr]
-                Real64 &HPTimeConstant,                   // Heat pump time constant [s]
-                Real64 &FanDelayTime,                     // Fan delay time, time delay for the HP's fan to
+                Nandle &MaxONOFFCyclesperHour,            // Maximum cycling rate of heat pump [cycles/hr]
+                Nandle &HPTimeConstant,                   // Heat pump time constant [s]
+                Nandle &FanDelayTime,                     // Fan delay time, time delay for the HP's fan to
                 int const CompOp,                         // compressor on/off. 0 = off; 1= on
-                Real64 const PartLoadFrac,                // part load fraction
+                Nandle const PartLoadFrac,                // part load fraction
                 int const SpeedNum,                       // compressor speed number
-                Real64 const SpeedRatio,                  // compressor speed ratio
-                Real64 const SensLoad,                    // Sensible demand load [W]
-                Real64 const LatentLoad,                  // Latent demand load [W]
+                Nandle const SpeedRatio,                  // compressor speed ratio
+                Nandle const SensLoad,                    // Sensible demand load [W]
+                Nandle const LatentLoad,                  // Latent demand load [W]
                 bool const IsCallbyWH,                    // whether the call from the water heating loop or air loop, true = from water heating loop
                 bool const EP_UNUSED(FirstHVACIteration), // TRUE if First iteration of simulation
-                Optional<Real64 const> OnOffAirFlowRat    // ratio of comp on to comp off air flow rate
+                Optional<Nandle const> OnOffAirFlowRat    // ratio of comp on to comp off air flow rate
     )
     {
 
@@ -125,8 +125,8 @@ namespace IntegratedHeatPump {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int DXCoilNum(0); // The IHP No that you are currently dealing with
-        Real64 waterMassFlowRate(0);
-        Real64 airMassFlowRate(0);
+        Nandle waterMassFlowRate(0);
+        Nandle airMassFlowRate(0);
 
         // Obtains and Allocates ASIHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered
@@ -1128,7 +1128,7 @@ namespace IntegratedHeatPump {
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 
@@ -1931,7 +1931,7 @@ namespace IntegratedHeatPump {
         using VariableSpeedCoils::VarSpeedCoil;
 
         static bool ErrorsFound(false); // If errors detected in input
-        Real64 RatedCapacity(0.0);      // rated building cooling load
+        Nandle RatedCapacity(0.0);      // rated building cooling load
 
         // Obtains and Allocates AS-IHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered
@@ -2081,8 +2081,8 @@ namespace IntegratedHeatPump {
         using VariableSpeedCoils::VarSpeedCoil;
 
         int VSCoilIndex(0);
-        Real64 ReportingConstant(0.0);
-        Real64 TotalDelivery(0.0);
+        Nandle ReportingConstant(0.0);
+        Nandle TotalDelivery(0.0);
 
         // Obtains and Allocates AS-IHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered
@@ -2184,8 +2184,8 @@ namespace IntegratedHeatPump {
     }
 
     void DecideWorkMode(int const DXCoilNum,
-                        Real64 const SensLoad,  // Sensible demand load [W]
-                        Real64 const LatentLoad // Latent demand load [W]
+                        Nandle const SensLoad,  // Sensible demand load [W]
+                        Nandle const LatentLoad // Latent demand load [W]
                         )                       // shall be called from a air loop parent
     {
         //       AUTHOR         Bo Shen, ORNL
@@ -2203,9 +2203,9 @@ namespace IntegratedHeatPump {
         using General::TrimSigDigits;
         using WaterThermalTanks::GetWaterThermalTankInput;
 
-        Real64 MyLoad(0.0);
-        Real64 WHHeatTimeSav(0.0); // time accumulation for water heating
-        Real64 WHHeatVolSave(0.0); // volume accumulation for water heating
+        Nandle MyLoad(0.0);
+        Nandle WHHeatTimeSav(0.0); // time accumulation for water heating
+        Nandle WHHeatVolSave(0.0); // volume accumulation for water heating
 
         // Obtains and Allocates AS-IHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered
@@ -2335,7 +2335,7 @@ namespace IntegratedHeatPump {
         using General::TrimSigDigits;
         using VariableSpeedCoils::SimVariableSpeedCoils;
 
-        Real64 EMP1(0.0), EMP2(0.0), EMP3(0.0); // place holder to calling clear up function
+        Nandle EMP1(0.0), EMP2(0.0), EMP3(0.0); // place holder to calling clear up function
         int CycFanCycCoil(1);                   // fan cycl manner place holder
 
         // Obtains and Allocates WatertoAirHP related parameters from input file
@@ -2617,7 +2617,7 @@ namespace IntegratedHeatPump {
         return PLRNumber;
     }
 
-    Real64 GetDWHCoilCapacityIHP(std::string const &CoilType,            // must match coil types in this module
+    Nandle GetDWHCoilCapacityIHP(std::string const &CoilType,            // must match coil types in this module
                                  std::string const &CoilName,            // must match coil names for the coil type
                                  IHPOperationMode const EP_UNUSED(Mode), // mode coil type
                                  bool &ErrorsFound                       // set to true if problem
@@ -2639,7 +2639,7 @@ namespace IntegratedHeatPump {
         using VariableSpeedCoils::GetCoilCapacityVariableSpeed;
 
         // Return value
-        Real64 CoilCapacity; // returned capacity of matched coil
+        Nandle CoilCapacity; // returned capacity of matched coil
 
         // Obtains and Allocates WatertoAirHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered
@@ -2774,9 +2774,9 @@ namespace IntegratedHeatPump {
         return (SpeedNum);
     }
 
-    Real64 GetAirVolFlowRateIHP(int const DXCoilNum,
+    Nandle GetAirVolFlowRateIHP(int const DXCoilNum,
                                 int const SpeedNum,
-                                Real64 const SpeedRatio,
+                                Nandle const SpeedRatio,
                                 bool const IsCallbyWH // whether the call from the water heating loop or air loop, true = from water heating loop
     )
     {
@@ -2784,8 +2784,8 @@ namespace IntegratedHeatPump {
         using VariableSpeedCoils::VarSpeedCoil;
 
         int IHPCoilIndex(0);
-        Real64 AirVolFlowRate(0.0);
-        Real64 FlowScale(1.0);
+        Nandle AirVolFlowRate(0.0);
+        Nandle FlowScale(1.0);
         bool IsResultFlow(false); // IsResultFlow = true, the air flow rate will be from a simultaneous mode, won't be re-calculated
 
         // Obtains and Allocates WatertoAirHP related parameters from input file
@@ -2881,10 +2881,10 @@ namespace IntegratedHeatPump {
         return (AirVolFlowRate);
     }
 
-    Real64 GetWaterVolFlowRateIHP(
+    Nandle GetWaterVolFlowRateIHP(
         int const DXCoilNum,
         int const SpeedNum,
-        Real64 const SpeedRatio,
+        Nandle const SpeedRatio,
         bool const EP_UNUSED(IsCallbyWH) // whether the call from the water heating loop or air loop, true = from water heating loop
     )
     {
@@ -2892,7 +2892,7 @@ namespace IntegratedHeatPump {
         using VariableSpeedCoils::VarSpeedCoil;
 
         int IHPCoilIndex(0);
-        Real64 WaterVolFlowRate(0.0);
+        Nandle WaterVolFlowRate(0.0);
 
         // Obtains and Allocates WatertoAirHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered
@@ -2959,9 +2959,9 @@ namespace IntegratedHeatPump {
         return (WaterVolFlowRate);
     }
 
-    Real64 GetAirMassFlowRateIHP(int const DXCoilNum,
+    Nandle GetAirMassFlowRateIHP(int const DXCoilNum,
                                  int const SpeedNum,
-                                 Real64 const SpeedRatio,
+                                 Nandle const SpeedRatio,
                                  bool const IsCallbyWH // whether the call from the water heating loop or air loop, true = from water heating loop
     )
     {
@@ -2969,10 +2969,10 @@ namespace IntegratedHeatPump {
         using VariableSpeedCoils::VarSpeedCoil;
 
         int IHPCoilIndex(0);
-        Real64 AirMassFlowRate(0.0);
-        Real64 FlowScale(1.0);
+        Nandle AirMassFlowRate(0.0);
+        Nandle FlowScale(1.0);
         bool IsResultFlow(false);   // IsResultFlow = true, the air flow rate will be from a simultaneous mode, won't be re-calculated
-        Real64 WaterDensity(986.0); // standard water density at 60 C
+        Nandle WaterDensity(986.0); // standard water density at 60 C
 
         // Obtains and Allocates WatertoAirHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered

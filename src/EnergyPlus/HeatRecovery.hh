@@ -64,8 +64,8 @@ namespace HeatRecovery {
 
     // Data
     // MODULE PARAMETER DEFINITIONS:
-    extern Real64 const KELVZERO;
-    extern Real64 const SMALL;
+    extern Nandle const KELVZERO;
+    extern Nandle const SMALL;
 
     // Heat exchanger performance data type
     extern int const BALANCEDHX_PERFDATATYPE1;
@@ -92,9 +92,9 @@ namespace HeatRecovery {
     extern int NumAirToAirGenericExchs;     // number of air to air generic heat exchangers
     extern int NumDesiccantBalancedExchs;   // number of desiccant balanced heat exchangers
     extern int NumDesBalExchsPerfDataType1; // number of desiccant balanced heat exchanger performance data maps
-    extern Real64 FullLoadOutAirTemp;       // Used with desiccant HX empirical model, water coils use inlet node condition
+    extern Nandle FullLoadOutAirTemp;       // Used with desiccant HX empirical model, water coils use inlet node condition
     // DX coils use DXCoilFullLoadOutAirTemp when coil is ON otherwise inlet node
-    extern Real64 FullLoadOutAirHumRat; // Used with desiccant HX empirical model, water coils use inlet node condition
+    extern Nandle FullLoadOutAirHumRat; // Used with desiccant HX empirical model, water coils use inlet node condition
     // DX coils use DXCoilFullLoadOutAirHumRat when coil is ON otherwise inlet node
     extern bool GetInputFlag;           // First time, input is "gotten"
     extern bool CalledFromParentObject; // Indicates that HX is called from parent object (this object is not on a branch)
@@ -131,84 +131,84 @@ namespace HeatRecovery {
         // 2: PARALLEL_FLOW
         // 3: CROSS_FLOW_BOTH_UNMIXED
         int EconoLockOut;        // 1: Yes;  0: No
-        Real64 hARatio;          // ratio of supply side h*A to secondary side h*A
-        Real64 NomSupAirVolFlow; // nominal supply air volume flow rate (m3/s)
-        Real64 NomSupAirInTemp;  // nominal supply air inlet temperature (C)
-        Real64 NomSupAirOutTemp; // nominal supply air outlet temperature (C)
-        Real64 NomSecAirVolFlow; // nominal secondary air volume flow rate (m3/s)
-        Real64 NomSecAirInTemp;  // nominal secondary air inlet temperature (C)
-        Real64 NomElecPower;     // nominal electric power consumption [W]
+        Nandle hARatio;          // ratio of supply side h*A to secondary side h*A
+        Nandle NomSupAirVolFlow; // nominal supply air volume flow rate (m3/s)
+        Nandle NomSupAirInTemp;  // nominal supply air inlet temperature (C)
+        Nandle NomSupAirOutTemp; // nominal supply air outlet temperature (C)
+        Nandle NomSecAirVolFlow; // nominal secondary air volume flow rate (m3/s)
+        Nandle NomSecAirInTemp;  // nominal secondary air inlet temperature (C)
+        Nandle NomElecPower;     // nominal electric power consumption [W]
         // values describing nominal condition (derived from input parameters)
-        Real64 UA0;               // (Uavg*A) at nominal condition
-        Real64 mTSup0;            // product mDot*Tabs, supply  air, nominal cond.
-        Real64 mTSec0;            // product mDot*Tabs, exhaust air, nominal cond
-        Real64 NomSupAirMassFlow; // nominal supply air mass flow rate (kg/s)
-        Real64 NomSecAirMassFlow; // nominal secondary air mass flow rate (kg/s)
+        Nandle UA0;               // (Uavg*A) at nominal condition
+        Nandle mTSup0;            // product mDot*Tabs, supply  air, nominal cond.
+        Nandle mTSec0;            // product mDot*Tabs, exhaust air, nominal cond
+        Nandle NomSupAirMassFlow; // nominal supply air mass flow rate (kg/s)
+        Nandle NomSecAirMassFlow; // nominal secondary air mass flow rate (kg/s)
         // Nodes
         int SupInletNode;  // supply air inlet node number
         int SupOutletNode; // supply air outlet node number
         int SecInletNode;  // secondary air inlet node number
         int SecOutletNode; // secondary air outlet node number
         // inlet conditions
-        Real64 SupInTemp;     // supply air inlet temperature (C)
-        Real64 SupInHumRat;   // supply air inlet humidity ratio (kg water/kg dry air)
-        Real64 SupInEnth;     // supply air inlet enthalpy (J/kg)
-        Real64 SupInMassFlow; // supply air inlet mass flow rate (kg/s)
-        Real64 SecInTemp;     // secondary air inlet temperature (C)
-        Real64 SecInHumRat;   // secondary air inlet humidity ratio (kg water/kg dry air)
-        Real64 SecInEnth;     // secondary air inlet enthalpy (J/kg)
-        Real64 SecInMassFlow; // secondary air inlet mass flow rate (kg/s)
+        Nandle SupInTemp;     // supply air inlet temperature (C)
+        Nandle SupInHumRat;   // supply air inlet humidity ratio (kg water/kg dry air)
+        Nandle SupInEnth;     // supply air inlet enthalpy (J/kg)
+        Nandle SupInMassFlow; // supply air inlet mass flow rate (kg/s)
+        Nandle SecInTemp;     // secondary air inlet temperature (C)
+        Nandle SecInHumRat;   // secondary air inlet humidity ratio (kg water/kg dry air)
+        Nandle SecInEnth;     // secondary air inlet enthalpy (J/kg)
+        Nandle SecInMassFlow; // secondary air inlet mass flow rate (kg/s)
         // balanced desiccant inputs
         int PerfDataIndex;          // Performance data index allocating performance data number to heat exchanger
-        Real64 FaceArea;            // face area of balanced desiccant heat exchangers to determine face velocity [m2]
+        Nandle FaceArea;            // face area of balanced desiccant heat exchangers to determine face velocity [m2]
         bool UnbalancedWarningFlag; // Used to print one-time warning when unbalanced flow exists (then set to FALSE)
         // generic hx performance inputs
-        Real64 HeatEffectSensible100; // heating sensible effectiveness at 100% rated air flow
-        Real64 HeatEffectSensible75;  // heating sensible effectiveness at 75% rated air flow
-        Real64 HeatEffectLatent100;   // heating latent effectiveness at 100% rated air flow
-        Real64 HeatEffectLatent75;    // heating latent effectiveness at 75% rated air flow
-        Real64 CoolEffectSensible100; // cooling sensible effectiveness at 100% rated air flow
-        Real64 CoolEffectSensible75;  // cooling sensible effectiveness at 75% rated air flow
-        Real64 CoolEffectLatent100;   // cooling latent effectiveness at 100% rated air flow
-        Real64 CoolEffectLatent75;    // cooling latent effectiveness at 75% rated air flow
+        Nandle HeatEffectSensible100; // heating sensible effectiveness at 100% rated air flow
+        Nandle HeatEffectSensible75;  // heating sensible effectiveness at 75% rated air flow
+        Nandle HeatEffectLatent100;   // heating latent effectiveness at 100% rated air flow
+        Nandle HeatEffectLatent75;    // heating latent effectiveness at 75% rated air flow
+        Nandle CoolEffectSensible100; // cooling sensible effectiveness at 100% rated air flow
+        Nandle CoolEffectSensible75;  // cooling sensible effectiveness at 75% rated air flow
+        Nandle CoolEffectLatent100;   // cooling latent effectiveness at 100% rated air flow
+        Nandle CoolEffectLatent75;    // cooling latent effectiveness at 75% rated air flow
         int HeatExchEconoMode;        // generic heat exchanger economize mode option
         // 1 = None, 2 = Bypass, 3 = Stop Rotary HX Rotation
         int ExchConfigNum; // parameter equivalent of HX configuration, plate or rotary
         // frost control parameters
         std::string FrostControlType;      // type of frost control used if any
-        Real64 ThresholdTemperature;       // threshold temperature for frost control
-        Real64 InitialDefrostTime;         // initial defrost time
-        Real64 RateofDefrostTimeIncrease;  // rate of change of defrost time
-        Real64 DefrostFraction;            // fraction of time HX is in frost control mode
+        Nandle ThresholdTemperature;       // threshold temperature for frost control
+        Nandle InitialDefrostTime;         // initial defrost time
+        Nandle RateofDefrostTimeIncrease;  // rate of change of defrost time
+        Nandle DefrostFraction;            // fraction of time HX is in frost control mode
         bool ControlToTemperatureSetPoint; // temperature control flag for generic HX
         // outlet conditions
-        Real64 SupOutTemp;     // supply air outlet temperature (C)
-        Real64 SupOutHumRat;   // supply air outlet humidity ratio (kg water/kg dry air)
-        Real64 SupOutEnth;     // supply air outlet enthalpy (J/kg)
-        Real64 SupOutMassFlow; // supply air outlet mass flow rate (kg/s)
-        Real64 SecOutTemp;     // secondary air outlet temperature (C)
-        Real64 SecOutHumRat;   // secondary air outlet humidity ratio (kg water/kg dry air)
-        Real64 SecOutEnth;     // secondary air outlet enthalpy (J/kg)
-        Real64 SecOutMassFlow; // secondary air outlet mass flow rate (kg/s)
+        Nandle SupOutTemp;     // supply air outlet temperature (C)
+        Nandle SupOutHumRat;   // supply air outlet humidity ratio (kg water/kg dry air)
+        Nandle SupOutEnth;     // supply air outlet enthalpy (J/kg)
+        Nandle SupOutMassFlow; // supply air outlet mass flow rate (kg/s)
+        Nandle SecOutTemp;     // secondary air outlet temperature (C)
+        Nandle SecOutHumRat;   // secondary air outlet humidity ratio (kg water/kg dry air)
+        Nandle SecOutEnth;     // secondary air outlet enthalpy (J/kg)
+        Nandle SecOutMassFlow; // secondary air outlet mass flow rate (kg/s)
         // report values
-        Real64 SensHeatingRate;   // rate of sensible heat being added to the supply (primary) air [W]
-        Real64 SensHeatingEnergy; // sensible heat added to the supply (primary) air [J]
-        Real64 LatHeatingRate;    // rate of latent heat being added to the supply (primary) air [W]
-        Real64 LatHeatingEnergy;  // latent heat added to the supply (primary) air [J]
-        Real64 TotHeatingRate;    // rate of total heat being added to the supply (primary) air [W]
-        Real64 TotHeatingEnergy;  // total heat added to the supply (primary) air [J]
-        Real64 SensCoolingRate;   // rate of sensible heat being removed from the supply (primary) air [W]
-        Real64 SensCoolingEnergy; // sensible heat removed from the supply (primary) air [J]
-        Real64 LatCoolingRate;    // rate of latent heat being removed from the supply (primary) air [W]
-        Real64 LatCoolingEnergy;  // latent heat removed from the supply (primary) air [J]
-        Real64 TotCoolingRate;    // rate of total heat being removed from the supply (primary) air [W]
-        Real64 TotCoolingEnergy;  // total heat removed from the supply (primary) air [J]
-        Real64 ElecUseEnergy;     // electricity consumption [J]
-        Real64 ElecUseRate;       // electricity consumption rate [W]
-        Real64 SensEffectiveness; // heat exchanger sensible effectiveness [-]
-        Real64 LatEffectiveness;  // heat exchanger latent effectiveness [-]
-        Real64 SupBypassMassFlow; // supply air mass flow rate bypassing the heat exchanger [kg/s]
-        Real64 SecBypassMassFlow; // secondary air mass flow rate bypassing the heat exchanger [kg/s]
+        Nandle SensHeatingRate;   // rate of sensible heat being added to the supply (primary) air [W]
+        Nandle SensHeatingEnergy; // sensible heat added to the supply (primary) air [J]
+        Nandle LatHeatingRate;    // rate of latent heat being added to the supply (primary) air [W]
+        Nandle LatHeatingEnergy;  // latent heat added to the supply (primary) air [J]
+        Nandle TotHeatingRate;    // rate of total heat being added to the supply (primary) air [W]
+        Nandle TotHeatingEnergy;  // total heat added to the supply (primary) air [J]
+        Nandle SensCoolingRate;   // rate of sensible heat being removed from the supply (primary) air [W]
+        Nandle SensCoolingEnergy; // sensible heat removed from the supply (primary) air [J]
+        Nandle LatCoolingRate;    // rate of latent heat being removed from the supply (primary) air [W]
+        Nandle LatCoolingEnergy;  // latent heat removed from the supply (primary) air [J]
+        Nandle TotCoolingRate;    // rate of total heat being removed from the supply (primary) air [W]
+        Nandle TotCoolingEnergy;  // total heat removed from the supply (primary) air [J]
+        Nandle ElecUseEnergy;     // electricity consumption [J]
+        Nandle ElecUseRate;       // electricity consumption rate [W]
+        Nandle SensEffectiveness; // heat exchanger sensible effectiveness [-]
+        Nandle LatEffectiveness;  // heat exchanger latent effectiveness [-]
+        Nandle SupBypassMassFlow; // supply air mass flow rate bypassing the heat exchanger [kg/s]
+        Nandle SecBypassMassFlow; // secondary air mass flow rate bypassing the heat exchanger [kg/s]
         int LowFlowErrCount;      // Counter for recurring warning message
         int LowFlowErrIndex;      // Index to recurring warning message
         int UnBalancedErrCount;   // Counter for recurring warning message
@@ -240,59 +240,59 @@ namespace HeatRecovery {
         // User Input data
         std::string Name;         // unique name of balanced desiccant performance data type object
         std::string PerfType;     // Type of performance data set
-        Real64 NomSupAirVolFlow;  // nominal supply air volumetric flow rate m^3/s
-        Real64 NomProcAirFaceVel; // nominal process air face velocity m/s
-        Real64 NomElecPower;      // nominal electric power consumption [W]
+        Nandle NomSupAirVolFlow;  // nominal supply air volumetric flow rate m^3/s
+        Nandle NomProcAirFaceVel; // nominal process air face velocity m/s
+        Nandle NomElecPower;      // nominal electric power consumption [W]
         // regeneration outlet temperature equation coefficients and limits
-        Real64 B1;                    // constant coefficient for outlet regeneration temprature equation
-        Real64 B2;                    // regen inlet humrat coeff for outlet regen temperature equation
-        Real64 B3;                    // regen inlet temp coeff for outlet regen temprature equation
-        Real64 B4;                    // (regen in humrat/regen in temp) coeff for outlet regen temp eq
-        Real64 B5;                    // process inlet humrat coeff for outlet regen temp equation
-        Real64 B6;                    // process inlet temp coeff for outlet regen temp equation
-        Real64 B7;                    // (process in humrat/proc in temp) coeff for outlet regen temp eq
-        Real64 B8;                    // process, regen face velocity coeff for outlet regen temp eq
-        Real64 T_MinRegenAirInTemp;   // min allowable regen inlet air temperature [C]
-        Real64 T_MaxRegenAirInTemp;   // max allowable regen inlet air temperature [C]
-        Real64 T_MinRegenAirInHumRat; // min allowable regen inlet air humidity ratio [kg water / kg air]
-        Real64 T_MaxRegenAirInHumRat; // max allowable regen inlet air humidity ratio [kg water / kg air]
-        Real64 T_MinProcAirInTemp;    // min allowable process inlet air temperature [C]
-        Real64 T_MaxProcAirInTemp;    // max allowable process inlet air temperature [C]
-        Real64 T_MinProcAirInHumRat;  // min allowable process inlet air humidity ratio [kg water/kg air]
-        Real64 T_MaxProcAirInHumRat;  // max allowable process inlet air humidity ratio [kg water/kg air]
-        Real64 T_MinFaceVel;          // min allowable process, regen face velocity [m/s]
-        Real64 T_MaxFaceVel;          // max allowable process, regen face velocity [m/s]
-        Real64 MinRegenAirOutTemp;    // min allowable regen outlet air temperature [C]
-        Real64 MaxRegenAirOutTemp;    // max allowable regen outlet air temperature [C]
-        Real64 T_MinRegenAirInRelHum; // min allowable regen inlet air relative humidity [%]
-        Real64 T_MaxRegenAirInRelHum; // max allowable regen inlet air relative humidity [%]
-        Real64 T_MinProcAirInRelHum;  // min allowable process inlet air relative humidity [%]
-        Real64 T_MaxProcAirInRelHum;  // max allowable process inlet air relative humidity [%]
+        Nandle B1;                    // constant coefficient for outlet regeneration temprature equation
+        Nandle B2;                    // regen inlet humrat coeff for outlet regen temperature equation
+        Nandle B3;                    // regen inlet temp coeff for outlet regen temprature equation
+        Nandle B4;                    // (regen in humrat/regen in temp) coeff for outlet regen temp eq
+        Nandle B5;                    // process inlet humrat coeff for outlet regen temp equation
+        Nandle B6;                    // process inlet temp coeff for outlet regen temp equation
+        Nandle B7;                    // (process in humrat/proc in temp) coeff for outlet regen temp eq
+        Nandle B8;                    // process, regen face velocity coeff for outlet regen temp eq
+        Nandle T_MinRegenAirInTemp;   // min allowable regen inlet air temperature [C]
+        Nandle T_MaxRegenAirInTemp;   // max allowable regen inlet air temperature [C]
+        Nandle T_MinRegenAirInHumRat; // min allowable regen inlet air humidity ratio [kg water / kg air]
+        Nandle T_MaxRegenAirInHumRat; // max allowable regen inlet air humidity ratio [kg water / kg air]
+        Nandle T_MinProcAirInTemp;    // min allowable process inlet air temperature [C]
+        Nandle T_MaxProcAirInTemp;    // max allowable process inlet air temperature [C]
+        Nandle T_MinProcAirInHumRat;  // min allowable process inlet air humidity ratio [kg water/kg air]
+        Nandle T_MaxProcAirInHumRat;  // max allowable process inlet air humidity ratio [kg water/kg air]
+        Nandle T_MinFaceVel;          // min allowable process, regen face velocity [m/s]
+        Nandle T_MaxFaceVel;          // max allowable process, regen face velocity [m/s]
+        Nandle MinRegenAirOutTemp;    // min allowable regen outlet air temperature [C]
+        Nandle MaxRegenAirOutTemp;    // max allowable regen outlet air temperature [C]
+        Nandle T_MinRegenAirInRelHum; // min allowable regen inlet air relative humidity [%]
+        Nandle T_MaxRegenAirInRelHum; // max allowable regen inlet air relative humidity [%]
+        Nandle T_MinProcAirInRelHum;  // min allowable process inlet air relative humidity [%]
+        Nandle T_MaxProcAirInRelHum;  // max allowable process inlet air relative humidity [%]
         // regeneration outlet humidity ratio equation coefficients and limits
-        Real64 C1;                    // constant coeff for outlet regen humidity ratio equation
-        Real64 C2;                    // regen inlet humrat coeff for outlet regen humidity ratio eq
-        Real64 C3;                    // regen inlet temp coeff for outlet regen humidity ratio equation
-        Real64 C4;                    // (regen in humrat/regen in temp) coeff for outlet regen humrat eq
-        Real64 C5;                    // process inlet humrat coeff for outlet regen humidity ratio eq
-        Real64 C6;                    // process inlet temp coeff for outlet regen humidity ratio eq
-        Real64 C7;                    // (proc in humrat/proc in temp) coeff for outlet regen humrat eq
-        Real64 C8;                    // process, regen face velocity coeff for outlet regen humrat eq
-        Real64 H_MinRegenAirInTemp;   // min allowable regen inlet air temperature [C]
-        Real64 H_MaxRegenAirInTemp;   // max allowable regen inlet air temperature [C]
-        Real64 H_MinRegenAirInHumRat; // min allowable regen inlet air humidity ratio [kg water / kg air]
-        Real64 H_MaxRegenAirInHumRat; // max allowable regen inlet air humidity ratio [kg water / kg air]
-        Real64 H_MinProcAirInTemp;    // min allowable process inlet air temperature [C]
-        Real64 H_MaxProcAirInTemp;    // max allowable process inlet air temperature [C]
-        Real64 H_MinProcAirInHumRat;  // min allowable process inlet air humidity ratio [kg water/kg air]
-        Real64 H_MaxProcAirInHumRat;  // max allowable process inlet air humidity ratio [kg water/kg air]
-        Real64 H_MinFaceVel;          // min allowable process, regen face velocity [m/s]
-        Real64 H_MaxFaceVel;          // max allowable process, regen face velocity [m/s]
-        Real64 MinRegenAirOutHumRat;  // min allowable regen outlet air temperature [C]
-        Real64 MaxRegenAirOutHumRat;  // max allowable regen outlet air temperature [C]
-        Real64 H_MinRegenAirInRelHum; // min allowable regen inlet air relative humidity [%]
-        Real64 H_MaxRegenAirInRelHum; // max allowable regen inlet air relative humidity [%]
-        Real64 H_MinProcAirInRelHum;  // min allowable process inlet air relative humidity [%]
-        Real64 H_MaxProcAirInRelHum;  // max allowable process inlet air relative humidity [%]
+        Nandle C1;                    // constant coeff for outlet regen humidity ratio equation
+        Nandle C2;                    // regen inlet humrat coeff for outlet regen humidity ratio eq
+        Nandle C3;                    // regen inlet temp coeff for outlet regen humidity ratio equation
+        Nandle C4;                    // (regen in humrat/regen in temp) coeff for outlet regen humrat eq
+        Nandle C5;                    // process inlet humrat coeff for outlet regen humidity ratio eq
+        Nandle C6;                    // process inlet temp coeff for outlet regen humidity ratio eq
+        Nandle C7;                    // (proc in humrat/proc in temp) coeff for outlet regen humrat eq
+        Nandle C8;                    // process, regen face velocity coeff for outlet regen humrat eq
+        Nandle H_MinRegenAirInTemp;   // min allowable regen inlet air temperature [C]
+        Nandle H_MaxRegenAirInTemp;   // max allowable regen inlet air temperature [C]
+        Nandle H_MinRegenAirInHumRat; // min allowable regen inlet air humidity ratio [kg water / kg air]
+        Nandle H_MaxRegenAirInHumRat; // max allowable regen inlet air humidity ratio [kg water / kg air]
+        Nandle H_MinProcAirInTemp;    // min allowable process inlet air temperature [C]
+        Nandle H_MaxProcAirInTemp;    // max allowable process inlet air temperature [C]
+        Nandle H_MinProcAirInHumRat;  // min allowable process inlet air humidity ratio [kg water/kg air]
+        Nandle H_MaxProcAirInHumRat;  // max allowable process inlet air humidity ratio [kg water/kg air]
+        Nandle H_MinFaceVel;          // min allowable process, regen face velocity [m/s]
+        Nandle H_MaxFaceVel;          // max allowable process, regen face velocity [m/s]
+        Nandle MinRegenAirOutHumRat;  // min allowable regen outlet air temperature [C]
+        Nandle MaxRegenAirOutHumRat;  // max allowable regen outlet air temperature [C]
+        Nandle H_MinRegenAirInRelHum; // min allowable regen inlet air relative humidity [%]
+        Nandle H_MaxRegenAirInRelHum; // max allowable regen inlet air relative humidity [%]
+        Nandle H_MinProcAirInRelHum;  // min allowable process inlet air relative humidity [%]
+        Nandle H_MaxProcAirInRelHum;  // max allowable process inlet air relative humidity [%]
         // for model bound checking
         // regen inlet relative humidity for temperature equation
         bool PrintRegenInRelHumTempMess;      // - flag to print regen in RH error message for temp eq
@@ -301,7 +301,7 @@ namespace HeatRecovery {
         std::string RegenInRelHumTempBuffer1; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string RegenInRelHumTempBuffer2; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string RegenInRelHumTempBuffer3; // - buffer for RegenOutHumRat warn mess on following timstep
-        Real64 RegenInRelHumTempLast;         // - last value of regen outlet humidity ratio
+        Nandle RegenInRelHumTempLast;         // - last value of regen outlet humidity ratio
         // process inlet relative humidity for temperature equation
         bool PrintProcInRelHumTempMess;      // - flag to print regen in RH error message for temp eq
         int ProcInRelHumTempErrIndex;        // - index to recurring error struc for regen outlet hum rat
@@ -309,7 +309,7 @@ namespace HeatRecovery {
         std::string ProcInRelHumTempBuffer1; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string ProcInRelHumTempBuffer2; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string ProcInRelHumTempBuffer3; // - buffer for RegenOutHumRat warn mess on following timstep
-        Real64 ProcInRelHumTempLast;         // - last value of regen outlet humidity ratio
+        Nandle ProcInRelHumTempLast;         // - last value of regen outlet humidity ratio
         // regen inlet relative humidity for humidity ratio equation
         bool PrintRegenInRelHumHumRatMess;      // - flag to print regen in RH error message for temp eq
         int RegenInRelHumHumRatErrIndex;        // - index to recurring error struc for regen outlet hum rat
@@ -317,7 +317,7 @@ namespace HeatRecovery {
         std::string RegenInRelHumHumRatBuffer1; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string RegenInRelHumHumRatBuffer2; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string RegenInRelHumHumRatBuffer3; // - buffer for RegenOutHumRat warn mess on following timstep
-        Real64 RegenInRelHumHumRatLast;         // - last value of regen outlet humidity ratio
+        Nandle RegenInRelHumHumRatLast;         // - last value of regen outlet humidity ratio
         // process inlet relative humidity for humidity ratio equation
         bool PrintProcInRelHumHumRatMess;      // - flag to print regen in RH error message for temp eq
         int ProcInRelHumHumRatErrIndex;        // - index to recurring error struc for regen outlet hum rat
@@ -325,7 +325,7 @@ namespace HeatRecovery {
         std::string ProcInRelHumHumRatBuffer1; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string ProcInRelHumHumRatBuffer2; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string ProcInRelHumHumRatBuffer3; // - buffer for RegenOutHumRat warn mess on following timstep
-        Real64 ProcInRelHumHumRatLast;         // - last value of regen outlet humidity ratio
+        Nandle ProcInRelHumHumRatLast;         // - last value of regen outlet humidity ratio
         // regen outlet temp variables
         bool PrintT_RegenInTempMessage;      // - flag to print regen in temp error message for temp eq
         bool PrintT_RegenInHumRatMessage;    // - flag to print regen in humrat err message for temp eq
@@ -349,7 +349,7 @@ namespace HeatRecovery {
         std::string RegenOutHumRatFailedBuffer1; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string RegenOutHumRatFailedBuffer2; // - buffer for RegenOutHumRat warn mess on following timstep
         std::string RegenOutHumRatFailedBuffer3; // - buffer for RegenOutHumRat warn mess on following timstep
-        Real64 RegenOutHumRatFailedLast;         // - last value of regen outlet humidity ratio
+        Nandle RegenOutHumRatFailedLast;         // - last value of regen outlet humidity ratio
         // used when regen and process mass flow rates are not equal to within 2%
         bool PrintImbalancedMassFlowMess;      // - flag for imbalanced regen and process mass flow rate
         int ImbalancedFlowErrIndex;            // - index to recurring error struc for imbalanced flow
@@ -357,7 +357,7 @@ namespace HeatRecovery {
         std::string ImbalancedMassFlowBuffer1; // - buffer for imbalanced regen and process mass flow rate
         std::string ImbalancedMassFlowBuffer2; // - buffer for imbalanced regen and process mass flow rate
         std::string ImbalancedMassFlowBuffer3; // - buffer for imbalanced regen and process mass flow rate
-        Real64 ABSImbalancedFlow;              // - last value of heat exchanger mass flow rate imbalance
+        Nandle ABSImbalancedFlow;              // - last value of heat exchanger mass flow rate imbalance
         // regen outlet temp eqn
         int T_RegenInTempErrorCount;   // - counter if regen inlet temp limits are exceeded
         int T_RegenInHumRatErrorCount; // - counter if regen inlet hum rat limits are exceeded
@@ -377,7 +377,7 @@ namespace HeatRecovery {
         std::string RegenOutTempFailedBuffer1; // - buffer for RegenOutTemp warn messages on following timestep
         std::string RegenOutTempFailedBuffer2; // - buffer for RegenOutTemp warn messages on following timestep
         std::string RegenOutTempFailedBuffer3; // - buffer for RegenOutTemp warn messages on following timestep
-        Real64 RegenOutTempFailedLast;         // - last value of regen outlet temp
+        Nandle RegenOutTempFailedLast;         // - last value of regen outlet temp
         // regen outlet hum rat eqn
         int H_RegenInTempErrorCount;   // - counter if regen inlet temp limits are exceeded
         int H_RegenInHumRatErrorCount; // - counter if regen inlet hum rat limits are exceeded
@@ -397,62 +397,62 @@ namespace HeatRecovery {
         std::string T_RegenInTempBuffer1; // - buffer for T_RegenInTemp warn message on following timestep
         std::string T_RegenInTempBuffer2; // - buffer for T_RegenInTemp warn message on following timestep
         std::string T_RegenInTempBuffer3; // - buffer for T_RegenInTemp warn message on following timestep
-        Real64 T_RegenInTempLast;         // - last value of regen inlet temp
+        Nandle T_RegenInTempLast;         // - last value of regen inlet temp
         //- T_RegenInHumRat = Regen inlet humidity ratio
         std::string T_RegenInHumRatBuffer1; // - buffer for T_RegenInHumRat warn messag on following timestep
         std::string T_RegenInHumRatBuffer2; // - buffer for T_RegenInHumRat warn messag on following timestep
         std::string T_RegenInHumRatBuffer3; // - buffer for T_RegenInHumRat warn messag on following timestep
-        Real64 T_RegenInHumRatLast;         // - last value of regen inlet humidity ratio
+        Nandle T_RegenInHumRatLast;         // - last value of regen inlet humidity ratio
         //- T_ProcInTemp = Process inlet temperature
         std::string T_ProcInTempBuffer1; // - buffer for T_ProcInTemp warning messag on following timestep
         std::string T_ProcInTempBuffer2; // - buffer for T_ProcInTemp warning messag on following timestep
         std::string T_ProcInTempBuffer3; // - buffer for T_ProcInTemp warning messag on following timestep
-        Real64 T_ProcInTempLast;         // - last value of process inlet temp
+        Nandle T_ProcInTempLast;         // - last value of process inlet temp
         //- T_ProcInHumRat = Process inlet humidity ratio
         std::string T_ProcInHumRatBuffer1; // - buffer for T_ProcInHumRat warn message on following timestep
         std::string T_ProcInHumRatBuffer2; // - buffer for T_ProcInHumRat warn message on following timestep
         std::string T_ProcInHumRatBuffer3; // - buffer for T_ProcInHumRat warn message on following timestep
-        Real64 T_ProcInHumRatLast;         // - last value of process inlet humidity ratio
+        Nandle T_ProcInHumRatLast;         // - last value of process inlet humidity ratio
         //- T_FaceVel = Process and regen face velocity
         std::string T_FaceVelBuffer1; // - buffer for T_FaceVel warning messages on following time step
         std::string T_FaceVelBuffer2; // - buffer for T_FaceVel warning messages on following time step
         std::string T_FaceVelBuffer3; // - buffer for T_FaceVel warning messages on following time step
-        Real64 T_FaceVelLast;         // - last value of process and regen face velocity
+        Nandle T_FaceVelLast;         // - last value of process and regen face velocity
         //- T_RegenOutTemp = Regen outlet temperature
         std::string RegenOutTempBuffer1; // - buffer for RegenOutTemp warn messages on following timestep
         std::string RegenOutTempBuffer2; // - buffer for RegenOutTemp warn messages on following timestep
         std::string RegenOutTempBuffer3; // - buffer for RegenOutTemp warn messages on following timestep
-        Real64 RegenOutTempLast;         // - last value of regen outlet temp
+        Nandle RegenOutTempLast;         // - last value of regen outlet temp
         // regen outlet humidity ratio variables                         !- H_RegenInTemp = Regen inlet temperature
         std::string H_RegenInTempBuffer1; // - buffer for H_RegenInTemp warn message on following time step
         std::string H_RegenInTempBuffer2; // - buffer for H_RegenInTemp warn message on following time step
         std::string H_RegenInTempBuffer3; // - buffer for H_RegenInTemp warn message on following time step
-        Real64 H_RegenInTempLast;         // - last value of regen inlet temp
+        Nandle H_RegenInTempLast;         // - last value of regen inlet temp
         //- H_RegenInHumRat = Regen inlet humidity ratio
         std::string H_RegenInHumRatBuffer1; // - buffer for H_RegenInHumRat warn messag on following timestep
         std::string H_RegenInHumRatBuffer2; // - buffer for H_RegenInHumRat warn messag on following timestep
         std::string H_RegenInHumRatBuffer3; // - buffer for H_RegenInHumRat warn messag on following timestep
-        Real64 H_RegenInHumRatLast;         // - last value of regen inlet humidity ratio
+        Nandle H_RegenInHumRatLast;         // - last value of regen inlet humidity ratio
         //- H_ProcInTemp = Process inlet temperature
         std::string H_ProcInTempBuffer1; // - buffer for H_ProcInTemp warn messages on following time step
         std::string H_ProcInTempBuffer2; // - buffer for H_ProcInTemp warn messages on following time step
         std::string H_ProcInTempBuffer3; // - buffer for H_ProcInTemp warn messages on following time step
-        Real64 H_ProcInTempLast;         // - last value of process inlet temp
+        Nandle H_ProcInTempLast;         // - last value of process inlet temp
         //- H_ProcInHumRat = Process inlet humidity ratio
         std::string H_ProcInHumRatBuffer1; // - buffer for H_ProcInHumRat warn message on following timestep
         std::string H_ProcInHumRatBuffer2; // - buffer for H_ProcInHumRat warn message on following timestep
         std::string H_ProcInHumRatBuffer3; // - buffer for H_ProcInHumRat warn message on following timestep
-        Real64 H_ProcInHumRatLast;         // - last value of process inlet humidity ratio
+        Nandle H_ProcInHumRatLast;         // - last value of process inlet humidity ratio
         //- H_FaceVel = Process and regen face velocity
         std::string H_FaceVelBuffer1; // - buffer for H_FaceVel warning messages on following time step
         std::string H_FaceVelBuffer2; // - buffer for H_FaceVel warning messages on following time step
         std::string H_FaceVelBuffer3; // - buffer for H_FaceVel warning messages on following time step
-        Real64 H_FaceVelLast;         // - last value of process and regen face velocity
+        Nandle H_FaceVelLast;         // - last value of process and regen face velocity
         //- H_RegenOutTemp = Regen outlet temperature
         std::string RegenOutHumRatBuffer1; // - buffer for RegenOutHumRat warn message on following timestep
         std::string RegenOutHumRatBuffer2; // - buffer for RegenOutHumRat warn message on following timestep
         std::string RegenOutHumRatBuffer3; // - buffer for RegenOutHumRat warn message on following timestep
-        Real64 RegenOutHumRatLast;         // - last value of regen outlet humidity ratio
+        Nandle RegenOutHumRatLast;         // - last value of regen outlet humidity ratio
 
         // Default Constructor
         BalancedDesDehumPerfData()
@@ -523,7 +523,7 @@ namespace HeatRecovery {
                          bool const FirstHVACIteration,               // TRUE if 1st HVAC simulation of system timestep
                          int &CompIndex,                              // Pointer to Component
                          int const FanOpMode,                         // Supply air fan operating mode
-                         Optional<Real64 const> HXPartLoadRatio = _,  // Part load ratio requested of DX compressor
+                         Optional<Nandle const> HXPartLoadRatio = _,  // Part load ratio requested of DX compressor
                          Optional_bool_const HXUnitEnable = _,        // Flag to operate heat exchanger
                          Optional_int_const CompanionCoilIndex = _,   // index of companion cooling coil
                          Optional_bool_const RegenInletIsOANode = _,  // flag to determine if supply inlet is OA node, if so air flow cycles
@@ -552,14 +552,14 @@ namespace HeatRecovery {
                                      int const FanOpMode,                       // Supply air fan operating mode (1=cycling, 2=constant)
                                      Optional_bool_const EconomizerFlag = _,    // economizer flag pass by air loop or OA sys
                                      Optional_bool_const HighHumCtrlFlag = _,   // high humidity control flag passed by airloop or OA sys
-                                     Optional<Real64 const> HXPartLoadRatio = _ //
+                                     Optional<Nandle const> HXPartLoadRatio = _ //
     );
 
     void CalcDesiccantBalancedHeatExch(int const ExNum,               // number of the current heat exchanger being simulated
                                        bool const HXUnitOn,           // flag to simulate heat exchager heat recovery
                                        bool const FirstHVACIteration, // First HVAC iteration flag
                                        int const FanOpMode,           // Supply air fan operating mode (1=cycling, 2=constant)
-                                       Real64 const PartLoadRatio,    // Part load ratio requested of DX compressor
+                                       Nandle const PartLoadRatio,    // Part load ratio requested of DX compressor
                                        int const CompanionCoilIndex,  // index of companion cooling coil
                                        bool const RegenInletIsOANode, // Flag to determine if regen side inlet is OANode, if so this air stream cycles
                                        Optional_bool_const EconomizerFlag = _, // economizer flag pass by air loop or OA sys
@@ -572,78 +572,78 @@ namespace HeatRecovery {
 
     void ReportHeatRecovery(int const ExNum); // number of the current heat exchanger being simulated
 
-    Real64 SafeDiv(Real64 const a, Real64 const b);
+    Nandle SafeDiv(Nandle const a, Nandle const b);
 
-    void CalculateEpsFromNTUandZ(Real64 const NTU,  // number of transfer units
-                                 Real64 const Z,    // capacity rate ratio
+    void CalculateEpsFromNTUandZ(Nandle const NTU,  // number of transfer units
+                                 Nandle const Z,    // capacity rate ratio
                                  int const FlowArr, // flow arrangement
-                                 Real64 &Eps        // heat exchanger effectiveness
+                                 Nandle &Eps        // heat exchanger effectiveness
     );
 
-    void CalculateNTUfromEpsAndZ(Real64 &NTU,       // number of transfer units
+    void CalculateNTUfromEpsAndZ(Nandle &NTU,       // number of transfer units
                                  int &Err,          // error indicator
-                                 Real64 const Z,    // capacity rate ratio
+                                 Nandle const Z,    // capacity rate ratio
                                  int const FlowArr, // flow arrangement
-                                 Real64 const Eps   // heat exchanger effectiveness
+                                 Nandle const Eps   // heat exchanger effectiveness
     );
 
-    Real64 GetNTUforCrossFlowBothUnmixed(Real64 const Eps, // heat exchanger effectiveness
-                                         Real64 const Z    // capacity rate ratio
+    Nandle GetNTUforCrossFlowBothUnmixed(Nandle const Eps, // heat exchanger effectiveness
+                                         Nandle const Z    // capacity rate ratio
     );
 
-    Real64 GetResidCrossFlowBothUnmixed(Real64 const NTU,          // number of transfer units
-                                        Array1D<Real64> const &Par // par(1) = Eps, par(2) = Z
+    Nandle GetResidCrossFlowBothUnmixed(Nandle const NTU,          // number of transfer units
+                                        Array1D<Nandle> const &Par // par(1) = Eps, par(2) = Z
     );
 
     void CheckModelBoundsTempEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                Real64 &T_RegenInTemp,        // current regen inlet temperature (C) for regen outlet temp eqn
-                                Real64 &T_RegenInHumRat,      // current regen inlet hum rat for regen outlet temp eqn
-                                Real64 &T_ProcInTemp,         // current process inlet temperature (C) for regen outlet temp eqn
-                                Real64 &T_ProcInHumRat,       // current process inlet hum rat for regen outlet temp eqn
-                                Real64 &T_FaceVel,            // current process and regen face velocity (m/s)
+                                Nandle &T_RegenInTemp,        // current regen inlet temperature (C) for regen outlet temp eqn
+                                Nandle &T_RegenInHumRat,      // current regen inlet hum rat for regen outlet temp eqn
+                                Nandle &T_ProcInTemp,         // current process inlet temperature (C) for regen outlet temp eqn
+                                Nandle &T_ProcInHumRat,       // current process inlet hum rat for regen outlet temp eqn
+                                Nandle &T_FaceVel,            // current process and regen face velocity (m/s)
                                 bool const FirstHVACIteration // First HVAC iteration flag
     );
 
     void CheckModelBoundsHumRatEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                  Real64 &H_RegenInTemp,        // current regen inlet temperature (C) for regen outlet hum rat eqn
-                                  Real64 &H_RegenInHumRat,      // current regen inlet hum rat for regen outlet hum rat eqn
-                                  Real64 &H_ProcInTemp,         // current process inlet temperature (C) for regen outlet hum rat eqn
-                                  Real64 &H_ProcInHumRat,       // current process inlet hum rat for regen outlet hum rat eqn
-                                  Real64 &H_FaceVel,            // current process and regen face velocity (m/s)
+                                  Nandle &H_RegenInTemp,        // current regen inlet temperature (C) for regen outlet hum rat eqn
+                                  Nandle &H_RegenInHumRat,      // current regen inlet hum rat for regen outlet hum rat eqn
+                                  Nandle &H_ProcInTemp,         // current process inlet temperature (C) for regen outlet hum rat eqn
+                                  Nandle &H_ProcInHumRat,       // current process inlet hum rat for regen outlet hum rat eqn
+                                  Nandle &H_FaceVel,            // current process and regen face velocity (m/s)
                                   bool const FirstHVACIteration // First HVAC iteration flag
     );
 
     void CheckModelBoundOutput_Temp(int const ExchNum,            // number of the current heat exchanger being simulated
-                                    Real64 const RegenInTemp,     // current regen inlet temp passed to eqn
-                                    Real64 &RegenOutTemp,         // current regen outlet temp from eqn
+                                    Nandle const RegenInTemp,     // current regen inlet temp passed to eqn
+                                    Nandle &RegenOutTemp,         // current regen outlet temp from eqn
                                     bool const FirstHVACIteration // First HVAC iteration flag
     );
 
     void CheckModelBoundOutput_HumRat(int const ExchNum,            // number of the current heat exchanger being simulated
-                                      Real64 const RegenInHumRat,   // current regen inlet hum rat passed to eqn
-                                      Real64 &RegenOutHumRat,       // current regen outlet hum rat from eqn
+                                      Nandle const RegenInHumRat,   // current regen inlet hum rat passed to eqn
+                                      Nandle &RegenOutHumRat,       // current regen outlet hum rat from eqn
                                       bool const FirstHVACIteration // First HVAC iteration flag
     );
 
     void CheckModelBoundsRH_TempEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                   Real64 const T_RegenInTemp,   // current regen inlet temperature passed to eqn
-                                   Real64 const T_RegenInHumRat, // current regen inlet hum rat passed to eqn
-                                   Real64 const T_ProcInTemp,    // current process inlet temperature passed to eqn
-                                   Real64 const T_ProcInHumRat,  // current regen outlet hum rat from eqn
+                                   Nandle const T_RegenInTemp,   // current regen inlet temperature passed to eqn
+                                   Nandle const T_RegenInHumRat, // current regen inlet hum rat passed to eqn
+                                   Nandle const T_ProcInTemp,    // current process inlet temperature passed to eqn
+                                   Nandle const T_ProcInHumRat,  // current regen outlet hum rat from eqn
                                    bool const FirstHVACIteration // first HVAC iteration flag
     );
 
     void CheckModelBoundsRH_HumRatEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                     Real64 const H_RegenInTemp,   // current regen inlet temperature passed to eqn
-                                     Real64 const H_RegenInHumRat, // current regen inlet hum rat passed to eqn
-                                     Real64 const H_ProcInTemp,    // current process inlet temperature passed to eqn
-                                     Real64 const H_ProcInHumRat,  // current process inlet hum rat passed to eqn
+                                     Nandle const H_RegenInTemp,   // current regen inlet temperature passed to eqn
+                                     Nandle const H_RegenInHumRat, // current regen inlet hum rat passed to eqn
+                                     Nandle const H_ProcInTemp,    // current process inlet temperature passed to eqn
+                                     Nandle const H_ProcInHumRat,  // current process inlet hum rat passed to eqn
                                      bool const FirstHVACIteration // first HVAC iteration flag
     );
 
     void CheckForBalancedFlow(int const ExchNum,              // number of the current heat exchanger being simulated
-                              Real64 const ProcessInMassFlow, // current process inlet air mass flow rate (m3/s)
-                              Real64 const RegenInMassFlow,   // current regeneration inlet air mass flow rate (m3/s)
+                              Nandle const ProcessInMassFlow, // current process inlet air mass flow rate (m3/s)
+                              Nandle const RegenInMassFlow,   // current regeneration inlet air mass flow rate (m3/s)
                               bool const FirstHVACIteration   // first HVAC iteration flag
     );
 
@@ -663,7 +663,7 @@ namespace HeatRecovery {
                                bool &ErrorsFound          // set to true if problem
     );
 
-    Real64 GetSupplyAirFlowRate(std::string const &HXName, // must match HX names for the ExchCond type
+    Nandle GetSupplyAirFlowRate(std::string const &HXName, // must match HX names for the ExchCond type
                                 bool &ErrorsFound          // set to true if problem
     );
 
@@ -674,8 +674,8 @@ namespace HeatRecovery {
     void SetHeatExchangerData(int const HXNum,                         // Index of HX
                               bool &ErrorsFound,                       // Set to true if certain errors found
                               std::string const &HXName,               // Name of HX
-                              Optional<Real64> SupplyAirVolFlow = _,   // HX supply air flow rate    [m3/s]
-                              Optional<Real64> SecondaryAirVolFlow = _ // HX secondary air flow rate [m3/s]
+                              Optional<Nandle> SupplyAirVolFlow = _,   // HX supply air flow rate    [m3/s]
+                              Optional<Nandle> SecondaryAirVolFlow = _ // HX secondary air flow rate [m3/s]
     );
 
 } // namespace HeatRecovery

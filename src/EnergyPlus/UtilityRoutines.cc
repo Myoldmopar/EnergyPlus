@@ -108,7 +108,7 @@ namespace UtilityRoutines {
         appendPerfLog_valuesRow = "";
     }
 
-    Real64 ProcessNumber(std::string const &String, bool &ErrorFlag)
+    Nandle ProcessNumber(std::string const &String, bool &ErrorFlag)
     {
 
         // FUNCTION INFORMATION:
@@ -136,7 +136,7 @@ namespace UtilityRoutines {
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const ValidNumerics("0123456789.+-EeDd");
 
-        Real64 rProcessNumber = 0.0;
+        Nandle rProcessNumber = 0.0;
         //  Make sure the string has all what we think numerics should have
         std::string const PString(stripped(String));
         std::string::size_type const StringLen(PString.length());
@@ -551,7 +551,7 @@ int AbortEnergyPlus()
     std::string Elapsed;
     int Hours;      // Elapsed Time Hour Reporting
     int Minutes;    // Elapsed Time Minute Reporting
-    Real64 Seconds; // Elapsed Time Second Reporting
+    Nandle Seconds; // Elapsed Time Second Reporting
     bool ErrFound;
     bool TerminalError;
     int write_stat;
@@ -867,7 +867,7 @@ int EndEnergyPlus()
     std::string Elapsed;
     int Hours;      // Elapsed Time Hour Reporting
     int Minutes;    // Elapsed Time Minute Reporting
-    Real64 Seconds; // Elapsed Time Second Reporting
+    Nandle Seconds; // Elapsed Time Second Reporting
     int write_stat;
 
     if (sqlite) {
@@ -1694,9 +1694,9 @@ void ShowWarningMessage(std::string const &ErrorMessage, Optional_int OutUnit1, 
 
 void ShowRecurringSevereErrorAtEnd(std::string const &Message,         // Message automatically written to "error file" at end of simulation
                                    int &MsgIndex,                      // Recurring message index, if zero, next available index is assigned
-                                   Optional<Real64 const> ReportMaxOf, // Track and report the max of the values passed to this argument
-                                   Optional<Real64 const> ReportMinOf, // Track and report the min of the values passed to this argument
-                                   Optional<Real64 const> ReportSumOf, // Track and report the sum of the values passed to this argument
+                                   Optional<Nandle const> ReportMaxOf, // Track and report the max of the values passed to this argument
+                                   Optional<Nandle const> ReportMinOf, // Track and report the min of the values passed to this argument
+                                   Optional<Nandle const> ReportSumOf, // Track and report the sum of the values passed to this argument
                                    std::string const &ReportMaxUnits,  // optional char string (<=15 length) of units for max value
                                    std::string const &ReportMinUnits,  // optional char string (<=15 length) of units for min value
                                    std::string const &ReportSumUnits   // optional char string (<=15 length) of units for sum value
@@ -1749,9 +1749,9 @@ void ShowRecurringSevereErrorAtEnd(std::string const &Message,         // Messag
 
 void ShowRecurringWarningErrorAtEnd(std::string const &Message,         // Message automatically written to "error file" at end of simulation
                                     int &MsgIndex,                      // Recurring message index, if zero, next available index is assigned
-                                    Optional<Real64 const> ReportMaxOf, // Track and report the max of the values passed to this argument
-                                    Optional<Real64 const> ReportMinOf, // Track and report the min of the values passed to this argument
-                                    Optional<Real64 const> ReportSumOf, // Track and report the sum of the values passed to this argument
+                                    Optional<Nandle const> ReportMaxOf, // Track and report the max of the values passed to this argument
+                                    Optional<Nandle const> ReportMinOf, // Track and report the min of the values passed to this argument
+                                    Optional<Nandle const> ReportSumOf, // Track and report the sum of the values passed to this argument
                                     std::string const &ReportMaxUnits,  // optional char string (<=15 length) of units for max value
                                     std::string const &ReportMinUnits,  // optional char string (<=15 length) of units for min value
                                     std::string const &ReportSumUnits   // optional char string (<=15 length) of units for sum value
@@ -1804,9 +1804,9 @@ void ShowRecurringWarningErrorAtEnd(std::string const &Message,         // Messa
 
 void ShowRecurringContinueErrorAtEnd(std::string const &Message,         // Message automatically written to "error file" at end of simulation
                                      int &MsgIndex,                      // Recurring message index, if zero, next available index is assigned
-                                     Optional<Real64 const> ReportMaxOf, // Track and report the max of the values passed to this argument
-                                     Optional<Real64 const> ReportMinOf, // Track and report the min of the values passed to this argument
-                                     Optional<Real64 const> ReportSumOf, // Track and report the sum of the values passed to this argument
+                                     Optional<Nandle const> ReportMaxOf, // Track and report the max of the values passed to this argument
+                                     Optional<Nandle const> ReportMinOf, // Track and report the min of the values passed to this argument
+                                     Optional<Nandle const> ReportSumOf, // Track and report the sum of the values passed to this argument
                                      std::string const &ReportMaxUnits,  // optional char string (<=15 length) of units for max value
                                      std::string const &ReportMinUnits,  // optional char string (<=15 length) of units for min value
                                      std::string const &ReportSumUnits   // optional char string (<=15 length) of units for sum value
@@ -1858,9 +1858,9 @@ void ShowRecurringContinueErrorAtEnd(std::string const &Message,         // Mess
 
 void StoreRecurringErrorMessage(std::string const &ErrorMessage,         // Message automatically written to "error file" at end of simulation
                                 int &ErrorMsgIndex,                      // Recurring message index, if zero, next available index is assigned
-                                Optional<Real64 const> ErrorReportMaxOf, // Track and report the max of the values passed to this argument
-                                Optional<Real64 const> ErrorReportMinOf, // Track and report the min of the values passed to this argument
-                                Optional<Real64 const> ErrorReportSumOf, // Track and report the sum of the values passed to this argument
+                                Optional<Nandle const> ErrorReportMaxOf, // Track and report the max of the values passed to this argument
+                                Optional<Nandle const> ErrorReportMinOf, // Track and report the min of the values passed to this argument
+                                Optional<Nandle const> ErrorReportSumOf, // Track and report the sum of the values passed to this argument
                                 std::string const &ErrorReportMaxUnits,  // Units for "max" reporting
                                 std::string const &ErrorReportMinUnits,  // Units for "min" reporting
                                 std::string const &ErrorReportSumUnits   // Units for "sum" reporting

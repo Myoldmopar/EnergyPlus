@@ -64,7 +64,7 @@ namespace HVACDXHeatPumpSystem {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    extern Real64 const MinAirMassFlow;
+    extern Nandle const MinAirMassFlow;
     // Compressor operation
     extern int const On;  // normal compressor operation
     extern int const Off; // signal DXCoil that compressor shouldn't run
@@ -101,11 +101,11 @@ namespace HVACDXHeatPumpSystem {
         int DXHeatPumpCoilInletNodeNum;
         int DXHeatPumpCoilOutletNodeNum;
         int DXSystemControlNodeNum; // the node number of the node with the set point
-        Real64 DesiredOutletTemp;   // the temperature at the unit outlet node needed
+        Nandle DesiredOutletTemp;   // the temperature at the unit outlet node needed
         // to meet the supply air set point.
-        Real64 PartLoadFrac; // part load fraction for current time step (single speed)
-        Real64 SpeedRatio;   // current compressor speed ratio (variable speed)
-        Real64 CycRatio;     // cycling part load ratio (variable speed)
+        Nandle PartLoadFrac; // part load fraction for current time step (single speed)
+        Nandle SpeedRatio;   // current compressor speed ratio (variable speed)
+        Nandle CycRatio;     // cycling part load ratio (variable speed)
         int FanOpMode;       // Fan operating mode (see parameter above)
         // Warning message variables
         int DXCoilSensPLRIter;      // used in DXCoil calculations
@@ -113,13 +113,13 @@ namespace HVACDXHeatPumpSystem {
         int DXCoilSensPLRFail;      // used in DXCoil calculations
         int DXCoilSensPLRFailIndex; // used in DXCoil calculations
         // When the Dx system is a part of Outdoor Air Unit
-        Real64 OAUnitSetTemp; // set
+        Nandle OAUnitSetTemp; // set
         // variable-speed coil
         int SpeedNum; // select speed number for variable-speed coil
         // Fault model of coil SAT sensor
         bool FaultyCoilSATFlag;     // True if the coil has SAT sensor fault
         int FaultyCoilSATIndex;     // Index of the fault object corresponding to the coil
-        Real64 FaultyCoilSATOffset; // Coil SAT sensor offset
+        Nandle FaultyCoilSATOffset; // Coil SAT sensor offset
 
         // Default Constructor
         DXHeatPumpSystemStruct()
@@ -143,8 +143,8 @@ namespace HVACDXHeatPumpSystem {
                              int const AirLoopNum,                      // Primary air loop number
                              int &CompIndex,                            // Index to CoilSystem:Heating:DX object
                              Optional_int_const OAUnitNum = _,          // If the system is an equipment of OutdoorAirUnit
-                             Optional<Real64 const> OAUCoilOutTemp = _, // the coil inlet temperature of OutdoorAirUnit
-                             Optional<Real64> QTotOut = _               // the total cooling output of unit
+                             Optional<Nandle const> OAUCoilOutTemp = _, // the coil inlet temperature of OutdoorAirUnit
+                             Optional<Nandle> QTotOut = _               // the total cooling output of unit
     );
 
     // Get Input Section of the Module
@@ -161,7 +161,7 @@ namespace HVACDXHeatPumpSystem {
     void InitDXHeatPumpSystem(int const DXSystemNum,                    // number of the current DX Sys being simulated
                               int const AirLoopNum,                     // number of the current air loop being simulated
                               Optional_int_const OAUnitNum = _,         // number of the current outdoor air unit being simulated
-                              Optional<Real64 const> OAUCoilOutTemp = _ // the coil inlet temperature of OutdoorAirUnit
+                              Optional<Nandle const> OAUCoilOutTemp = _ // the coil inlet temperature of OutdoorAirUnit
     );
 
     // End of Initialization subroutines for the Module
@@ -174,20 +174,20 @@ namespace HVACDXHeatPumpSystem {
                                 bool const FirstHVACIteration // First HVAC iteration flag
     );
 
-    Real64 DXHeatingCoilResidual(Real64 const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                 Array1D<Real64> const &Par // par(1) = DX coil number
+    Nandle DXHeatingCoilResidual(Nandle const PartLoadFrac, // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                 Array1D<Nandle> const &Par // par(1) = DX coil number
     );
 
     //******************************************************************************
 
-    Real64 VSCoilCyclingResidual(Real64 const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                 Array1D<Real64> const &Par  // par(1) = DX coil number
+    Nandle VSCoilCyclingResidual(Nandle const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                 Array1D<Nandle> const &Par  // par(1) = DX coil number
     );
 
     //******************************************************************************
 
-    Real64 VSCoilSpeedResidual(Real64 const SpeedRatio,   // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                               Array1D<Real64> const &Par // par(1) = DX coil number
+    Nandle VSCoilSpeedResidual(Nandle const SpeedRatio,   // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                               Array1D<Nandle> const &Par // par(1) = DX coil number
     );
 
     int GetHeatingCoilInletNodeNum(std::string const &DXCoilSysName, bool &InletNodeErrFlag);

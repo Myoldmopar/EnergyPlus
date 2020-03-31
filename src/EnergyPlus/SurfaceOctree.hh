@@ -84,7 +84,7 @@ class SurfaceOctreeCube
 {
 
 public: // Types
-    using Real = Real64;
+    using Real = Nandle;
     using Surface = DataSurfaces::SurfaceData;
     using Vertex = ObjexxFCL::Vector3<Real>;
     using Surfaces = std::vector<Surface *>;

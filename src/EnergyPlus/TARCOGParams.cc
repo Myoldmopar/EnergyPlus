@@ -83,11 +83,11 @@ namespace TARCOGParams {
     // Data
     // REAL(r64), parameter :: StefanBoltzmannConst    = 5.6697d-8     ! Stefan-Boltzman constant (5.6697e-8 [W/m^2K^4])
     // REAL(r64), parameter :: GravityConstant = 9.807d0
-    Real64 const e(2.718281828459);
+    Nandle const e(2.718281828459);
     // REAL(r64), parameter :: MaxHr = 100  ! used in iterations in case temperatures on surfaces reaches identical values
-    Real64 const DeflectionRelaxation(0.005); // Deflection relaxation parameter
+    Nandle const DeflectionRelaxation(0.005); // Deflection relaxation parameter
     int const DeflectionMaxIterations(400);   // maximum number of deflection iterations
-    Real64 const DeflectionErrorMargin(0.01); // maximum temperature difference on layers for deflection iterations
+    Nandle const DeflectionErrorMargin(0.01); // maximum temperature difference on layers for deflection iterations
     // pi is moved to gasses since it is used there now
     // REAL(r64), parameter :: pi       = 3.14159265358979323846d0
 
@@ -167,18 +167,18 @@ namespace TARCOGParams {
     // (or decrease relaxation parameter)
     int const NumOfTries(5);
     // integer, parameter :: NewtonIterations = 75 ! shows when to swith to Newton
-    Real64 const RelaxationStart(0.6);    // Has to be between 0 and 1
-    Real64 const RelaxationDecrease(0.1); // Step for which relaxation parameter will decrease
+    Nandle const RelaxationStart(0.6);    // Has to be between 0 and 1
+    Nandle const RelaxationDecrease(0.1); // Step for which relaxation parameter will decrease
 
     // Convergence parameters
-    Real64 const tempCorrection(1e-10);      // used in case outside or inside temperature approaches tamb or troom
-    Real64 const ConvergenceTolerance(1e-2); // tolerance used within iterations
+    Nandle const tempCorrection(1e-10);      // used in case outside or inside temperature approaches tamb or troom
+    Nandle const ConvergenceTolerance(1e-2); // tolerance used within iterations
 
     // Airflow iterations
-    Real64 const AirflowConvergenceTolerance(1e-2);
-    Real64 const AirflowRelaxationParameter(0.9);
+    Nandle const AirflowConvergenceTolerance(1e-2);
+    Nandle const AirflowRelaxationParameter(0.9);
 
-    Real64 const TemperatureQuessDiff(1.0); // in case outside and inside temperatures are identical
+    Nandle const TemperatureQuessDiff(1.0); // in case outside and inside temperatures are identical
 
     // Coefficients for new airflow algorithm.
     // Robert Hart, Howdy Goudey & D. Charlie Curcija (2017): Experimental
@@ -186,20 +186,20 @@ namespace TARCOGParams {
     // and horizontal louvred blind systems, Journal of Building Performance Simulation, DOI:
     // 10.1080/19401493.2017.1323010
 
-    Real64 const C1_VENET_HORIZONTAL(0.016);
-    Real64 const C2_VENET_HORIZONTAL(-0.63);
-    Real64 const C3_VENET_HORIZONTAL(0.53);
-    Real64 const C4_VENET_HORIZONTAL(0.043);
+    Nandle const C1_VENET_HORIZONTAL(0.016);
+    Nandle const C2_VENET_HORIZONTAL(-0.63);
+    Nandle const C3_VENET_HORIZONTAL(0.53);
+    Nandle const C4_VENET_HORIZONTAL(0.043);
 
-    Real64 const C1_VENET_VERTICAL(0.041);
-    Real64 const C2_VENET_VERTICAL(0.000);
-    Real64 const C3_VENET_VERTICAL(0.270);
-    Real64 const C4_VENET_VERTICAL(0.012);
+    Nandle const C1_VENET_VERTICAL(0.041);
+    Nandle const C2_VENET_VERTICAL(0.000);
+    Nandle const C3_VENET_VERTICAL(0.270);
+    Nandle const C4_VENET_VERTICAL(0.012);
 
-    Real64 const C1_SHADE(0.05);
-    Real64 const C2_SHADE(1.08);
-    Real64 const C3_SHADE(0.79);
-    Real64 const C4_SHADE(0.50);
+    Nandle const C1_SHADE(0.05);
+    Nandle const C2_SHADE(1.08);
+    Nandle const C3_SHADE(0.79);
+    Nandle const C4_SHADE(0.50);
 
 } // namespace TARCOGParams
 

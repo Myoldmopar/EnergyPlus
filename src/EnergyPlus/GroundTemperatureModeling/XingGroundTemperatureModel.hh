@@ -60,22 +60,22 @@ namespace EnergyPlus {
 class XingGroundTempsModel : public BaseGroundTempsModel
 {
 public:
-    Real64 depth;
-    Real64 groundThermalDiffisivity;
-    Real64 simTimeInDays;
-    Real64 aveGroundTemp;
-    Real64 surfTempAmplitude_1;
-    Real64 phaseShift_1;
-    Real64 surfTempAmplitude_2;
-    Real64 phaseShift_2;
+    Nandle depth;
+    Nandle groundThermalDiffisivity;
+    Nandle simTimeInDays;
+    Nandle aveGroundTemp;
+    Nandle surfTempAmplitude_1;
+    Nandle phaseShift_1;
+    Nandle surfTempAmplitude_2;
+    Nandle phaseShift_2;
 
     static std::shared_ptr<XingGroundTempsModel> XingGTMFactory(int objectType, std::string objectName);
 
-    Real64 getGroundTemp() override;
+    Nandle getGroundTemp() override;
 
-    Real64 getGroundTempAtTimeInSeconds(Real64 const depth, Real64 const timeInSecondsOfSim) override;
+    Nandle getGroundTempAtTimeInSeconds(Nandle const depth, Nandle const timeInSecondsOfSim) override;
 
-    Real64 getGroundTempAtTimeInMonths(Real64 const depth, int const monthOfSim) override;
+    Nandle getGroundTempAtTimeInMonths(Nandle const depth, int const monthOfSim) override;
 };
 
 } // namespace EnergyPlus

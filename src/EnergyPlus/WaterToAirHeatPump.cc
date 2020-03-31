@@ -154,18 +154,18 @@ namespace WaterToAirHeatPump {
 
     void SimWatertoAirHP(std::string const &CompName,   // component name
                          int &CompIndex,                // Index for Component name
-                         Real64 const DesignAirflow,    // design air flow rate
+                         Nandle const DesignAirflow,    // design air flow rate
                          int const CyclingScheme,       // cycling scheme--either continuous fan/cycling compressor or
                          bool const FirstHVACIteration, // first iteration flag
-                         Real64 const RuntimeFrac,      // compressor run time fraction
-                         Real64 &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
-                         Real64 &HPTimeConstant,        // Heat pump time constant [s]
-                         Real64 &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
+                         Nandle const RuntimeFrac,      // compressor run time fraction
+                         Nandle &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
+                         Nandle &HPTimeConstant,        // Heat pump time constant [s]
+                         Nandle &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
                          bool const InitFlag,           // initialization flag used to suppress property routine errors
-                         Real64 const SensLoad,         // sensible load
-                         Real64 const LatentLoad,       // latent load
+                         Nandle const SensLoad,         // sensible load
+                         Nandle const LatentLoad,       // latent load
                          int const CompOp,
-                         Real64 const PartLoadRatio)
+                         Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -283,7 +283,7 @@ namespace WaterToAirHeatPump {
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 
@@ -817,13 +817,13 @@ namespace WaterToAirHeatPump {
 
     void InitWatertoAirHP(int const HPNum, // index to main heat pump data structure
                           bool const InitFlag,
-                          Real64 const MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
-                          Real64 const HPTimeConstant,        // Heat pump time constant [s]
-                          Real64 const FanDelayTime,          // Fan delay time, time delay for the HP's fan to
-                          Real64 const SensLoad,
-                          Real64 const LatentLoad,
-                          Real64 const DesignAirFlow,
-                          Real64 const PartLoadRatio)
+                          Nandle const MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
+                          Nandle const HPTimeConstant,        // Heat pump time constant [s]
+                          Nandle const FanDelayTime,          // Fan delay time, time delay for the HP's fan to
+                          Nandle const SensLoad,
+                          Nandle const LatentLoad,
+                          Nandle const DesignAirFlow,
+                          Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -874,8 +874,8 @@ namespace WaterToAirHeatPump {
         static bool MyOneTimeFlag(true);
         static Array1D_bool MyPlantScanFlag;
         static Array1D_bool MyEnvrnFlag;
-        Real64 rho; // local fluid density
-        Real64 Cp;  // local fluid specific heat
+        Nandle rho; // local fluid density
+        Nandle Cp;  // local fluid specific heat
         bool errFlag;
 
         if (MyOneTimeFlag) {
@@ -1091,11 +1091,11 @@ namespace WaterToAirHeatPump {
     void CalcWatertoAirHPCooling(int const HPNum,               // heat pump number
                                  int const CyclingScheme,       // fan/compressor cycling scheme indicator
                                  bool const FirstHVACIteration, // first iteration flag
-                                 Real64 const RuntimeFrac,
+                                 Nandle const RuntimeFrac,
                                  bool const EP_UNUSED(InitFlag), // suppress property errors if true
-                                 Real64 const SensDemand,
+                                 Nandle const SensDemand,
                                  int const CompOp,
-                                 Real64 const PartLoadRatio)
+                                 Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1122,11 +1122,11 @@ namespace WaterToAirHeatPump {
         using Psychrometrics::PsyWFnTdbH;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CpWater(4210.0);         // Specific heat of water J/kg_C
-        Real64 const DegreeofSuperheat(80.0); // Initial guess of degree of superheat
-        Real64 const gamma(1.114);            // Expansion Coefficient
-        Real64 const ERR(0.01);               // Error Value
-        Real64 const PB(1.013e5);             // Barometric Pressure (Pa)
+        Nandle const CpWater(4210.0);         // Specific heat of water J/kg_C
+        Nandle const DegreeofSuperheat(80.0); // Initial guess of degree of superheat
+        Nandle const gamma(1.114);            // Expansion Coefficient
+        Nandle const ERR(0.01);               // Error Value
+        Nandle const PB(1.013e5);             // Barometric Pressure (Pa)
 
         int const STOP1(1000); // Iteration stopper1
         int const STOP2(1000); // Iteration stopper2
@@ -1153,106 +1153,106 @@ namespace WaterToAirHeatPump {
         std::string SourceSideFluidName; // Name of source side fluid
         std::string Refrigerant;         // Name of refrigerant
         //      CHARACTER(len=25) :: CErrCount
-        Real64 NominalCoolingCapacity; // Nominal Cooling Capacity (W)
-        Real64 LoadSideTotalUA;        // Load Side Total Heat Transfer coefficient [W/C]
-        Real64 LoadSideoutsideUA;      // Load Side Outside Heat Transfer coefficient [W/C]
-        Real64 SourceSideUA;           // Source Side Heat Transfer coefficient [W/C]
-        Real64 PressureDrop;           // Suction or Discharge Pressure Drop [Pa]
-        Real64 ClearanceFactor;        // Compressor Clearance Factor
-        Real64 PistonDisp;             // Compressor Piston Displacement [m3/s]
-        Real64 ShTemp;                 // Superheat Temperature [C]
-        Real64 LosFac;                 // Compressor Power Loss Factor
-        Real64 PowerLos;               // Constant Part of Power Losses [kW]
-        Real64 RefVolFlowRate;         // Refrigerant Volume Flow rate at the beginning
-        Real64 VolumeRatio;            // Built-in-volume ratio [~]
-        Real64 LeakRateCoeff;          // Coefficient for the relationship between
+        Nandle NominalCoolingCapacity; // Nominal Cooling Capacity (W)
+        Nandle LoadSideTotalUA;        // Load Side Total Heat Transfer coefficient [W/C]
+        Nandle LoadSideoutsideUA;      // Load Side Outside Heat Transfer coefficient [W/C]
+        Nandle SourceSideUA;           // Source Side Heat Transfer coefficient [W/C]
+        Nandle PressureDrop;           // Suction or Discharge Pressure Drop [Pa]
+        Nandle ClearanceFactor;        // Compressor Clearance Factor
+        Nandle PistonDisp;             // Compressor Piston Displacement [m3/s]
+        Nandle ShTemp;                 // Superheat Temperature [C]
+        Nandle LosFac;                 // Compressor Power Loss Factor
+        Nandle PowerLos;               // Constant Part of Power Losses [kW]
+        Nandle RefVolFlowRate;         // Refrigerant Volume Flow rate at the beginning
+        Nandle VolumeRatio;            // Built-in-volume ratio [~]
+        Nandle LeakRateCoeff;          // Coefficient for the relationship between
         // Pressure Ratio and Leakage Rate [~]
-        Real64 SourceSideHTRes1; // Source Side Heat Transfer Resistance coefficient 1 [~]
-        Real64 SourceSideHTRes2; // Source Side Heat Transfer Resistance coefficient 2 [K/kW]
-        Real64 HighPressCutoff;  // High Pressure Cut-off [Pa]
-        Real64 LowPressCutoff;   // Low Pressure Cut-off [Pa]
+        Nandle SourceSideHTRes1; // Source Side Heat Transfer Resistance coefficient 1 [~]
+        Nandle SourceSideHTRes2; // Source Side Heat Transfer Resistance coefficient 2 [K/kW]
+        Nandle HighPressCutoff;  // High Pressure Cut-off [Pa]
+        Nandle LowPressCutoff;   // Low Pressure Cut-off [Pa]
 
-        Real64 Quality;                  // Quality of Refrigerant
-        Real64 SourceSideMassFlowRate;   // Source Side Mass Flow Rate [kg/s]
-        Real64 SourceSideInletTemp;      // Source Side Inlet Temperature [C]
-        Real64 SourceSideWaterInletEnth; // Source Side Outlet Enthalpy [J/kg]
-        Real64 SourceSideOutletTemp;     // Source Side Outlet Temperature [C]
-        Real64 SourceSideVolFlowRate;    // Source Side Volumetric Flow Rate [m3/s]
-        Real64 DegradFactor;             // Degradation Factor [~]
-        Real64 CpFluid;                  // Specific heat of source side fluid(J/kg)
-        Real64 LoadSideMassFlowRate;     // Load Side Mass Flow Rate [kg/s]
-        Real64 LoadSideInletWBTemp;      // Wet-bulb temperature of indoor inlet air [C]
-        Real64 LoadSideInletDBTemp;      // Load Side Inlet Dry Bulb Temp [C]
-        Real64 LoadSideInletHumRat;      // Load Side Inlet Humidity Ratio [kg/kg]
-        Real64 LoadSideOutletDBTemp;     // Load Side Outlet Dry Bulb Temperature [C]
-        Real64 LoadSideOutletHumRat;     // Load Side Outlet Humidity Ratio [kg/kg]
-        Real64 LoadSideAirInletEnth;     // Load Side Inlet Enthalpy [J/kg]
-        Real64 LoadSideAirOutletEnth;    // Load Side Outlet Enthalpy [J/kg]
+        Nandle Quality;                  // Quality of Refrigerant
+        Nandle SourceSideMassFlowRate;   // Source Side Mass Flow Rate [kg/s]
+        Nandle SourceSideInletTemp;      // Source Side Inlet Temperature [C]
+        Nandle SourceSideWaterInletEnth; // Source Side Outlet Enthalpy [J/kg]
+        Nandle SourceSideOutletTemp;     // Source Side Outlet Temperature [C]
+        Nandle SourceSideVolFlowRate;    // Source Side Volumetric Flow Rate [m3/s]
+        Nandle DegradFactor;             // Degradation Factor [~]
+        Nandle CpFluid;                  // Specific heat of source side fluid(J/kg)
+        Nandle LoadSideMassFlowRate;     // Load Side Mass Flow Rate [kg/s]
+        Nandle LoadSideInletWBTemp;      // Wet-bulb temperature of indoor inlet air [C]
+        Nandle LoadSideInletDBTemp;      // Load Side Inlet Dry Bulb Temp [C]
+        Nandle LoadSideInletHumRat;      // Load Side Inlet Humidity Ratio [kg/kg]
+        Nandle LoadSideOutletDBTemp;     // Load Side Outlet Dry Bulb Temperature [C]
+        Nandle LoadSideOutletHumRat;     // Load Side Outlet Humidity Ratio [kg/kg]
+        Nandle LoadSideAirInletEnth;     // Load Side Inlet Enthalpy [J/kg]
+        Nandle LoadSideAirOutletEnth;    // Load Side Outlet Enthalpy [J/kg]
         //      REAL(r64)        :: EffectiveSurfaceTemp1    ! Effective Surface Temperature Guess #1 [C]
         //      REAL(r64)        :: EffectiveSurfaceTemp2    ! Effective Surface Temperature Guess #2 [C]
-        static Real64 EffectiveSurfaceTemp; // Effective Surface Temperature [C]
-        Real64 EffectiveSatEnth;            // Saturated Enthalpy of Air Corresponding to the Effective Surface
+        static Nandle EffectiveSurfaceTemp; // Effective Surface Temperature [C]
+        Nandle EffectiveSatEnth;            // Saturated Enthalpy of Air Corresponding to the Effective Surface
         // Temperature [J/kg]
         //      REAL(r64)        :: EffectiveSatEnth1        ! Guess of the Saturated Enthalpy of Air Corresponding to the
         //                                                   ! Effective Surface Temperature [J/kg]
-        Real64 QSource;    // Source Side Heat Transfer Rate [W]
-        Real64 QLoadTotal; // Load Side Total Heat Transfer Rate [W]
-        Real64 QSensible;  // Load Side Sensible Heat Transfer Rate [W]
-        Real64 Power;      // Power Consumption [W]
+        Nandle QSource;    // Source Side Heat Transfer Rate [W]
+        Nandle QLoadTotal; // Load Side Total Heat Transfer Rate [W]
+        Nandle QSensible;  // Load Side Sensible Heat Transfer Rate [W]
+        Nandle Power;      // Power Consumption [W]
         //      REAL(r64)        :: EvapTemp1                ! Evaporating Temperature Guess #1 [C]
         //      REAL(r64)        :: EvapTemp2                ! Evaporating Temperature Guess #2 [C]
-        static Real64 EvapTemp; // Evaporating Temperature [C]
-        Real64 ANTUWET;         // Number of Transfer Unit for Wet Condition
-        Real64 EffectWET;       // Load Side Heat Exchanger Effectiveness
-        Real64 EvapSatEnth;     // Saturated Enthalpy of Air Corresponding to the Evaporating
+        static Nandle EvapTemp; // Evaporating Temperature [C]
+        Nandle ANTUWET;         // Number of Transfer Unit for Wet Condition
+        Nandle EffectWET;       // Load Side Heat Exchanger Effectiveness
+        Nandle EvapSatEnth;     // Saturated Enthalpy of Air Corresponding to the Evaporating
         // Temperature [J/kg]
         //      REAL(r64)        :: EvapSatEnth1             ! Guess of the Saturated Enthalpy of Air Corresponding to the
         //                                                   ! Evaporating Temperature [J/kg]
-        Real64 SourceSideEffect;         // Source Side Heat Exchanger Effectiveness
-        Real64 SourceSideTemp;           // Source Side Saturated Refrigerant Temperature [C]
-        Real64 LoadSideTemp;             // Load Side Saturated Refrigerant Temperature [C]
-        Real64 SourceSidePressure;       // Source Side Saturated Refrigerant Pressure [Pa]
-        Real64 LoadSidePressure;         // Load Side Saturated Refrigerant Pressure [Pa]
-        Real64 SuctionPr;                // Compressor Suction Pressure [Pa]
-        Real64 DischargePr;              // Compressor Discharge Pressure [Pa]
-        Real64 CompressInletTemp;        // Temperature of the Refrigerant Entering the Compressor [C]
-        Real64 MassRef;                  // Mass Flow Rate of Refrigerant [kg/s]
-        Real64 SourceSideOutletEnth;     // Enthalpy of Refrigerant leaving the Source Side Heat Exchanger [J/kg]
-        Real64 LoadSideOutletEnth;       // Enthalpy of Refrigerant leaving the Load Side Heat Exchanger [J/kg]
-        Real64 CpAir;                    // Specific Heat of Air [J/kg_C]
-        static Real64 initialQSource;    // Guess Source Side Heat Transfer Rate [W]
-        static Real64 initialQLoadTotal; // Guess Load Side Heat Transfer rate [W]
-        Real64 SuperHeatEnth;            // Enthalpy of the Superheated Refrigerant [J/kg]
-        Real64 CompSuctionTemp1;         // Guess of the Temperature of the Refrigerant Entering the
+        Nandle SourceSideEffect;         // Source Side Heat Exchanger Effectiveness
+        Nandle SourceSideTemp;           // Source Side Saturated Refrigerant Temperature [C]
+        Nandle LoadSideTemp;             // Load Side Saturated Refrigerant Temperature [C]
+        Nandle SourceSidePressure;       // Source Side Saturated Refrigerant Pressure [Pa]
+        Nandle LoadSidePressure;         // Load Side Saturated Refrigerant Pressure [Pa]
+        Nandle SuctionPr;                // Compressor Suction Pressure [Pa]
+        Nandle DischargePr;              // Compressor Discharge Pressure [Pa]
+        Nandle CompressInletTemp;        // Temperature of the Refrigerant Entering the Compressor [C]
+        Nandle MassRef;                  // Mass Flow Rate of Refrigerant [kg/s]
+        Nandle SourceSideOutletEnth;     // Enthalpy of Refrigerant leaving the Source Side Heat Exchanger [J/kg]
+        Nandle LoadSideOutletEnth;       // Enthalpy of Refrigerant leaving the Load Side Heat Exchanger [J/kg]
+        Nandle CpAir;                    // Specific Heat of Air [J/kg_C]
+        static Nandle initialQSource;    // Guess Source Side Heat Transfer Rate [W]
+        static Nandle initialQLoadTotal; // Guess Load Side Heat Transfer rate [W]
+        Nandle SuperHeatEnth;            // Enthalpy of the Superheated Refrigerant [J/kg]
+        Nandle CompSuctionTemp1;         // Guess of the Temperature of the Refrigerant Entering the
         // Compressor #1 [C]
-        Real64 CompSuctionTemp2; // Guess of the Temperature of the Refrigerant Entering the
+        Nandle CompSuctionTemp2; // Guess of the Temperature of the Refrigerant Entering the
         // Compressor #2 [C]
-        static Real64 CompSuctionTemp; // Temperature of the Refrigerant Entering the Compressor [C]
-        Real64 CompSuctionEnth;        // Enthalpy of the Refrigerant Entering the Compressor [J/kg]
-        Real64 CompSuctionDensity;     // Density of the Refrigerant Entering the Compressorkg/m3
-        Real64 CompSuctionSatTemp;     // Temperature of Saturated Refrigerant at Compressor Suction Pressure [C]
-        Real64 Twet_Rated;             // Twet at rated conditions (coil air flow rate and air temperatures), sec
-        Real64 Gamma_Rated;            // Gamma at rated conditions (coil air flow rate and air temperatures)
+        static Nandle CompSuctionTemp; // Temperature of the Refrigerant Entering the Compressor [C]
+        Nandle CompSuctionEnth;        // Enthalpy of the Refrigerant Entering the Compressor [J/kg]
+        Nandle CompSuctionDensity;     // Density of the Refrigerant Entering the Compressorkg/m3
+        Nandle CompSuctionSatTemp;     // Temperature of Saturated Refrigerant at Compressor Suction Pressure [C]
+        Nandle Twet_Rated;             // Twet at rated conditions (coil air flow rate and air temperatures), sec
+        Nandle Gamma_Rated;            // Gamma at rated conditions (coil air flow rate and air temperatures)
         bool LatDegradModelSimFlag;    // Latent degradation model simulation flag
         bool StillSimulatingFlag;      // Final Simulation Flag
         bool Converged;                // overall convergence Flag
 
-        Real64 QLatRated;       // Qlatent at rated conditions of indoor(TDB,TWB)=(26.7C,19.4C)
-        Real64 QLatActual;      // Qlatent at actual operating conditions
-        Real64 SHRss;           // Sensible heat ratio at steady state
-        Real64 SHReff;          // Effective sensible heat ratio at part-load condition
-        Array1D<Real64> Par(4); // Parameter array passed to RegulaFalsi function
+        Nandle QLatRated;       // Qlatent at rated conditions of indoor(TDB,TWB)=(26.7C,19.4C)
+        Nandle QLatActual;      // Qlatent at actual operating conditions
+        Nandle SHRss;           // Sensible heat ratio at steady state
+        Nandle SHReff;          // Effective sensible heat ratio at part-load condition
+        Array1D<Nandle> Par(4); // Parameter array passed to RegulaFalsi function
         int SolFlag;            // Solution flag returned from RegulaFalsi function
         static bool firstTime(true);
-        static Real64 LoadSideInletDBTemp_Init;  // rated conditions
-        static Real64 LoadSideInletHumRat_Init;  // rated conditions
-        static Real64 LoadSideAirInletEnth_Init; // rated conditions
-        Real64 LoadSideInletDBTemp_Unit;         // calc conditions for unit
-        Real64 LoadSideInletHumRat_Unit;         // calc conditions for unit
-        Real64 LoadSideAirInletEnth_Unit;        // calc conditions for unit
-        Real64 LoadResidual;                     // loop convergence criteria
-        Real64 SourceResidual;                   // loop convergence criteria
-        Real64 RelaxParam(0.5);                  // Relaxation Parameter
+        static Nandle LoadSideInletDBTemp_Init;  // rated conditions
+        static Nandle LoadSideInletHumRat_Init;  // rated conditions
+        static Nandle LoadSideAirInletEnth_Init; // rated conditions
+        Nandle LoadSideInletDBTemp_Unit;         // calc conditions for unit
+        Nandle LoadSideInletHumRat_Unit;         // calc conditions for unit
+        Nandle LoadSideAirInletEnth_Unit;        // calc conditions for unit
+        Nandle LoadResidual;                     // loop convergence criteria
+        Nandle SourceResidual;                   // loop convergence criteria
+        Nandle RelaxParam(0.5);                  // Relaxation Parameter
 
         if (firstTime) {
             // Set indoor air conditions to the rated condition
@@ -1343,11 +1343,11 @@ namespace WaterToAirHeatPump {
         }
 
         // Tuned Hoisted quantities out of nested loop that don't change
-        Real64 const LoadSideMassFlowRate_CpAir_inv(1.0 / (LoadSideMassFlowRate * CpAir));
-        Real64 const LoadSideEffec(
+        Nandle const LoadSideMassFlowRate_CpAir_inv(1.0 / (LoadSideMassFlowRate * CpAir));
+        Nandle const LoadSideEffec(
             1.0 -
             std::exp(-LoadSideoutsideUA * LoadSideMassFlowRate_CpAir_inv)); // Load Side Effectiveness based on Outside Heat Transfer Coefficient
-        Real64 const LoadSideEffec_MassFlowRate_inv(1.0 / (LoadSideEffec * LoadSideMassFlowRate));
+        Nandle const LoadSideEffec_MassFlowRate_inv(1.0 / (LoadSideEffec * LoadSideMassFlowRate));
         ANTUWET = LoadSideTotalUA * LoadSideMassFlowRate_CpAir_inv;
         EffectWET = 1.0 - std::exp(-ANTUWET);
 
@@ -1697,8 +1697,8 @@ namespace WaterToAirHeatPump {
         WatertoAirHP(HPNum).OutletWaterEnthalpy = SourceSideWaterInletEnth + QSource / SourceSideMassFlowRate;
     }
 
-    Real64 CalcCompSuctionTempResidual(Real64 const CompSuctionTemp, // HP compressor suction temperature (C)
-                                       Array1D<Real64> const &Par    // Function parameters
+    Nandle CalcCompSuctionTempResidual(Nandle const CompSuctionTemp, // HP compressor suction temperature (C)
+                                       Array1D<Nandle> const &Par    // Function parameters
     )
     {
 
@@ -1722,7 +1722,7 @@ namespace WaterToAirHeatPump {
         using FluidProperties::GetSupHeatEnthalpyRefrig;
 
         // Return value
-        Real64 Residuum; // Result (force to 0)
+        Nandle Residuum; // Result (force to 0)
 
         // Argument array dimensioning
 
@@ -1742,9 +1742,9 @@ namespace WaterToAirHeatPump {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string Refrigerant; // Name of refrigerant
-        Real64 SuctionPr;
-        Real64 CompSuctionEnth;
-        Real64 SuperHeatEnth;
+        Nandle SuctionPr;
+        Nandle CompSuctionEnth;
+        Nandle SuperHeatEnth;
 
         // Convert parameters to usable variables
         SuctionPr = Par(1);
@@ -1762,11 +1762,11 @@ namespace WaterToAirHeatPump {
     void CalcWatertoAirHPHeating(int const HPNum,               // heat pump number
                                  int const CyclingScheme,       // fan/compressor cycling scheme indicator
                                  bool const FirstHVACIteration, // first iteration flag
-                                 Real64 const RuntimeFrac,
+                                 Nandle const RuntimeFrac,
                                  bool const EP_UNUSED(InitFlag), // first iteration flag
-                                 Real64 const SensDemand,
+                                 Nandle const SensDemand,
                                  int const CompOp,
-                                 Real64 const PartLoadRatio)
+                                 Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1795,11 +1795,11 @@ namespace WaterToAirHeatPump {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CpWater(4210.0);         // Specific heat of water J/kg_C
-        Real64 const DegreeofSuperheat(80.0); // Initial guess of degree of superheat
-        Real64 const gamma(1.114);            // Expnasion Coefficient
-        Real64 RelaxParam(0.5);               // Relaxation Parameter
-        Real64 const ERR(0.01);               // Error Value
+        Nandle const CpWater(4210.0);         // Specific heat of water J/kg_C
+        Nandle const DegreeofSuperheat(80.0); // Initial guess of degree of superheat
+        Nandle const gamma(1.114);            // Expnasion Coefficient
+        Nandle RelaxParam(0.5);               // Relaxation Parameter
+        Nandle const ERR(0.01);               // Error Value
         int const STOP1(1000);                // Iteration stopper1
         int const STOP2(1000);                // Iteration stopper2
         int const STOP3(1000);                // Iteration stopper3
@@ -1828,72 +1828,72 @@ namespace WaterToAirHeatPump {
         std::string SourceSideFluidName; // Name of source side fluid
         std::string Refrigerant;         // Name of refrigerant
         //      CHARACTER(len=25) :: CErrCount
-        Real64 NominalHeatingCapacity; // Nominal Heating Capacity(W)
-        Real64 LoadSideUA;             // Load Side Heat Transfer coefficient [W/C]
-        Real64 SourceSideUA;           // Source Side Heat Transfer coefficient [W/C]
-        Real64 PressureDrop;           // Suction or Discharge Pressure Drop [Pa]
-        Real64 ClearanceFactor;        // Compressor Clearance Factor
-        Real64 PistonDisp;             // Compressor Piston Displacement [m3/s]
-        Real64 ShTemp;                 // Superheat Temperature [C]
-        Real64 LosFac;                 // Compressor Power Loss Factor
-        Real64 PowerLos;               // Constant Part of Power Losses [kW]
-        Real64 RefVolFlowRate;         // Refrigerant Volume Flow rate at the beginning
-        Real64 VolumeRatio;            // Built-in-volume ratio [~]
-        Real64 LeakRateCoeff;          // Coefficient for the relationship between
+        Nandle NominalHeatingCapacity; // Nominal Heating Capacity(W)
+        Nandle LoadSideUA;             // Load Side Heat Transfer coefficient [W/C]
+        Nandle SourceSideUA;           // Source Side Heat Transfer coefficient [W/C]
+        Nandle PressureDrop;           // Suction or Discharge Pressure Drop [Pa]
+        Nandle ClearanceFactor;        // Compressor Clearance Factor
+        Nandle PistonDisp;             // Compressor Piston Displacement [m3/s]
+        Nandle ShTemp;                 // Superheat Temperature [C]
+        Nandle LosFac;                 // Compressor Power Loss Factor
+        Nandle PowerLos;               // Constant Part of Power Losses [kW]
+        Nandle RefVolFlowRate;         // Refrigerant Volume Flow rate at the beginning
+        Nandle VolumeRatio;            // Built-in-volume ratio [~]
+        Nandle LeakRateCoeff;          // Coefficient for the relationship between
         // Pressure Ratio and Leakage Rate [~]
-        Real64 SourceSideHTRes1; // Source Side Heat Transfer Resistance coefficient 1 [~]
-        Real64 SourceSideHTRes2; // Source Side Heat Transfer Resistance coefficient 2 [K/kW]
-        Real64 HighPressCutoff;  // High Pressure Cut-off [Pa]
-        Real64 LowPressCutoff;   // Low Pressure Cut-off [Pa]
+        Nandle SourceSideHTRes1; // Source Side Heat Transfer Resistance coefficient 1 [~]
+        Nandle SourceSideHTRes2; // Source Side Heat Transfer Resistance coefficient 2 [K/kW]
+        Nandle HighPressCutoff;  // High Pressure Cut-off [Pa]
+        Nandle LowPressCutoff;   // Low Pressure Cut-off [Pa]
 
-        Real64 Quality;
-        Real64 SourceSideMassFlowRate;   // Source Side Mass Flow Rate [kg/s]
-        Real64 SourceSideInletTemp;      // Source Side Inlet Temperature [C]
-        Real64 SourceSideWaterInletEnth; // Source Side Inlet Water Enthalpy [J/kg]
-        Real64 SourceSideOutletTemp;     // Source Side Outlet Temperature [C]
-        Real64 SourceSideVolFlowRate;    // Source Side Volumetric Flow Rate [m3/s]
-        Real64 CpFluid;                  // Specific heat of source side fluid(J/kg)
-        Real64 LoadSideMassFlowRate;     // Load Side Mass Flow Rate [kg/s]
-        Real64 LoadSideInletDBTemp;      // Load Side Inlet Dry Bulb Temp [C]
-        Real64 LoadSideInletHumRat;      // Load Side Inlet Humidity Ratio [kg/kg]
-        Real64 LoadSideOutletDBTemp;     // Load Side Outlet Dry Bulb Temperature [C]
-        Real64 LoadSideOutletHumRat;     // Load Side Outlet Humidity Ratio [kg/kg]
-        Real64 LoadSideAirInletEnth;     // Load Side Inlet Enthalpy [J/kg]
-        Real64 LoadSideAirOutletEnth;    // Load Side Outlet Enthalpy [J/kg]
-        Real64 CpAir;                    // Specific Heat of Air [J/kg_C]
-        Real64 DegradFactor;             // Degradation Factor [~]
-        Real64 QSource;                  // Source Side Heat Transfer Rate [W]
-        Real64 QLoadTotal;               // Load Side Heat Transfer Rate [W]
-        Real64 Power;                    // Power Consumption [W]
+        Nandle Quality;
+        Nandle SourceSideMassFlowRate;   // Source Side Mass Flow Rate [kg/s]
+        Nandle SourceSideInletTemp;      // Source Side Inlet Temperature [C]
+        Nandle SourceSideWaterInletEnth; // Source Side Inlet Water Enthalpy [J/kg]
+        Nandle SourceSideOutletTemp;     // Source Side Outlet Temperature [C]
+        Nandle SourceSideVolFlowRate;    // Source Side Volumetric Flow Rate [m3/s]
+        Nandle CpFluid;                  // Specific heat of source side fluid(J/kg)
+        Nandle LoadSideMassFlowRate;     // Load Side Mass Flow Rate [kg/s]
+        Nandle LoadSideInletDBTemp;      // Load Side Inlet Dry Bulb Temp [C]
+        Nandle LoadSideInletHumRat;      // Load Side Inlet Humidity Ratio [kg/kg]
+        Nandle LoadSideOutletDBTemp;     // Load Side Outlet Dry Bulb Temperature [C]
+        Nandle LoadSideOutletHumRat;     // Load Side Outlet Humidity Ratio [kg/kg]
+        Nandle LoadSideAirInletEnth;     // Load Side Inlet Enthalpy [J/kg]
+        Nandle LoadSideAirOutletEnth;    // Load Side Outlet Enthalpy [J/kg]
+        Nandle CpAir;                    // Specific Heat of Air [J/kg_C]
+        Nandle DegradFactor;             // Degradation Factor [~]
+        Nandle QSource;                  // Source Side Heat Transfer Rate [W]
+        Nandle QLoadTotal;               // Load Side Heat Transfer Rate [W]
+        Nandle Power;                    // Power Consumption [W]
 
-        Real64 SourceSideEffect;      // Source Side Heat Exchanger Effectiveness
-        Real64 SourceSideTemp;        // Source Side Saturated Refrigerant Temperature [C]
-        Real64 LoadSideTemp;          // Load Side Saturated Refrigerant Temperature [C]
-        Real64 SourceSidePressure;    // Source Side Saturated Refrigerant Pressure [Pa]
-        Real64 LoadSidePressure;      // Load Side Saturated Refrigerant Pressure [Pa]
-        Real64 SuctionPr;             // Compressor Suction Pressure [Pa]
-        Real64 DischargePr;           // Compressor Discharge Pressure [Pa]
-        Real64 CompressInletTemp;     // Temperature of the Refrigerant Entering the Compressor [C]
-        Real64 MassRef;               // Mass Flow Rate of Refrigerant [kg/s]
-        Real64 SourceSideOutletEnth;  // Enthalpy of Refrigerant leaving the Source Side Heat Exchanger [J/kg]
-        Real64 LoadSideOutletEnth;    // Enthalpy of Refrigerant leaving the Load Side Heat Exchanger [J/kg]
-        static Real64 initialQSource; // Guess Source Side Heat Transfer Rate [W]
-        static Real64 initialQLoad;   // Guess Load Side Heat Transfer rate [W]
-        Real64 SuperHeatEnth;         // Enthalpy of the Superheated Refrigerant [J/kg]
-        Real64 CompSuctionTemp1;      // Guess of the Temperature of the Refrigerant Entering the
+        Nandle SourceSideEffect;      // Source Side Heat Exchanger Effectiveness
+        Nandle SourceSideTemp;        // Source Side Saturated Refrigerant Temperature [C]
+        Nandle LoadSideTemp;          // Load Side Saturated Refrigerant Temperature [C]
+        Nandle SourceSidePressure;    // Source Side Saturated Refrigerant Pressure [Pa]
+        Nandle LoadSidePressure;      // Load Side Saturated Refrigerant Pressure [Pa]
+        Nandle SuctionPr;             // Compressor Suction Pressure [Pa]
+        Nandle DischargePr;           // Compressor Discharge Pressure [Pa]
+        Nandle CompressInletTemp;     // Temperature of the Refrigerant Entering the Compressor [C]
+        Nandle MassRef;               // Mass Flow Rate of Refrigerant [kg/s]
+        Nandle SourceSideOutletEnth;  // Enthalpy of Refrigerant leaving the Source Side Heat Exchanger [J/kg]
+        Nandle LoadSideOutletEnth;    // Enthalpy of Refrigerant leaving the Load Side Heat Exchanger [J/kg]
+        static Nandle initialQSource; // Guess Source Side Heat Transfer Rate [W]
+        static Nandle initialQLoad;   // Guess Load Side Heat Transfer rate [W]
+        Nandle SuperHeatEnth;         // Enthalpy of the Superheated Refrigerant [J/kg]
+        Nandle CompSuctionTemp1;      // Guess of the Temperature of the Refrigerant Entering the
         // Compressor #1 [C]
-        Real64 CompSuctionTemp2; // Guess of the Temperature of the Refrigerant Entering the
+        Nandle CompSuctionTemp2; // Guess of the Temperature of the Refrigerant Entering the
         // Compressor #2 [C]
-        Real64 CompSuctionTemp;    // Temperature of the Refrigerant Entering the Compressor [C]
-        Real64 CompSuctionEnth;    // Enthalpy of the Refrigerant Entering the Compressor [J/kg]
-        Real64 CompSuctionDensity; // Density of the Refrigerant Entering the Compressorkg/m3
-        Real64 CompSuctionSatTemp; // Temperature of Saturated Refrigerant at Compressor Suction Pressure [C]
+        Nandle CompSuctionTemp;    // Temperature of the Refrigerant Entering the Compressor [C]
+        Nandle CompSuctionEnth;    // Enthalpy of the Refrigerant Entering the Compressor [J/kg]
+        Nandle CompSuctionDensity; // Density of the Refrigerant Entering the Compressorkg/m3
+        Nandle CompSuctionSatTemp; // Temperature of Saturated Refrigerant at Compressor Suction Pressure [C]
         bool StillSimulatingFlag;  // Final Simulation Flag
         bool Converged;            // Overall convergence Flag
-        Array1D<Real64> Par(4);    // Parameter array passed to RegulaFalsi function
+        Array1D<Nandle> Par(4);    // Parameter array passed to RegulaFalsi function
         int SolFlag;               // Solution flag returned from RegulaFalsi function
-        Real64 LoadResidual;       // loop convergence criteria
-        Real64 SourceResidual;     // loop convergence criteria
+        Nandle LoadResidual;       // loop convergence criteria
+        Nandle SourceResidual;     // loop convergence criteria
 
         //  LOAD LOCAL VARIABLES FROM DATA STRUCTURE (for code readability)
 
@@ -1955,10 +1955,10 @@ namespace WaterToAirHeatPump {
         if (initialQSource == 0.0) initialQSource = NominalHeatingCapacity;
 
         // Tuned Hoisted quantities out of nested loop that don't change
-        Real64 const LoadSideMassFlowRate_CpAir_inv(1.0 / (LoadSideMassFlowRate * CpAir));
-        Real64 const LoadSideEffect(
+        Nandle const LoadSideMassFlowRate_CpAir_inv(1.0 / (LoadSideMassFlowRate * CpAir));
+        Nandle const LoadSideEffect(
             1.0 - std::exp(-LoadSideUA * LoadSideMassFlowRate_CpAir_inv)); // Load Side Effectiveness based on Outside Heat Transfer Coefficient
-        Real64 const LoadSideEffect_CpAir_MassFlowRate_inv(1.0 / (LoadSideEffect * CpAir * LoadSideMassFlowRate));
+        Nandle const LoadSideEffect_CpAir_MassFlowRate_inv(1.0 / (LoadSideEffect * CpAir * LoadSideMassFlowRate));
 
         // Outerloop: calculate load side heat transfer
         NumIteration3 = 0;
@@ -2270,7 +2270,7 @@ namespace WaterToAirHeatPump {
         int WaterInletNode;
         int AirOutletNode;
         int WaterOutletNode;
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         ReportingConstant = TimeStepSys * SecInHour;
         // WatertoAirHP(HPNum)%SimFlag=.FALSE.
@@ -2344,14 +2344,14 @@ namespace WaterToAirHeatPump {
     //        End of Update subroutines for the WatertoAirHP Module
     // *****************************************************************************
 
-    Real64 CalcEffectiveSHR(int const HPNum,         // Index number for cooling coil
-                            Real64 const SHRss,      // Steady-state sensible heat ratio
+    Nandle CalcEffectiveSHR(int const HPNum,         // Index number for cooling coil
+                            Nandle const SHRss,      // Steady-state sensible heat ratio
                             int const CyclingScheme, // fan/compressor cycling scheme indicator
-                            Real64 const RTF,        // Compressor run-time fraction
-                            Real64 const QLatRated,  // Rated latent capacity
-                            Real64 const QLatActual, // Actual latent capacity
-                            Real64 const EnteringDB, // Entering air dry-bulb temperature
-                            Real64 const EnteringWB  // Entering air wet-bulb temperature
+                            Nandle const RTF,        // Compressor run-time fraction
+                            Nandle const QLatRated,  // Rated latent capacity
+                            Nandle const QLatActual, // Actual latent capacity
+                            Nandle const EnteringDB, // Entering air dry-bulb temperature
+                            Nandle const EnteringWB  // Entering air wet-bulb temperature
     )
     {
 
@@ -2382,7 +2382,7 @@ namespace WaterToAirHeatPump {
         // USE STATEMENTS:
 
         // Return value
-        Real64 SHReff; // Effective sensible heat ratio, includes degradation due to cycling effects
+        Nandle SHReff; // Effective sensible heat ratio, includes degradation due to cycling effects
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -2397,26 +2397,26 @@ namespace WaterToAirHeatPump {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 Twet; // Nominal time for condensate to begin leaving the coil's condensate drain line
+        Nandle Twet; // Nominal time for condensate to begin leaving the coil's condensate drain line
         //   at the current operating conditions (sec)
-        Real64 Gamma; // Initial moisture evaporation rate divided by steady-state AC latent capacity
+        Nandle Gamma; // Initial moisture evaporation rate divided by steady-state AC latent capacity
         //   at the current operating conditions
-        Real64 Twet_Rated;            // Twet at rated conditions (coil air flow rate and air temperatures), sec
-        Real64 Gamma_Rated;           // Gamma at rated conditions (coil air flow rate and air temperatures)
-        Real64 Twet_max;              // Maximum allowed value for Twet
-        Real64 MaxONOFFCyclesperHour; // Maximum cycling rate of heat pump [cycles/hr]
-        Real64 HPTimeConstant;        // Heat pump time constant [s]
-        Real64 FanDelayTime;          // Fan delay time, time delay for the HP's fan to
+        Nandle Twet_Rated;            // Twet at rated conditions (coil air flow rate and air temperatures), sec
+        Nandle Gamma_Rated;           // Gamma at rated conditions (coil air flow rate and air temperatures)
+        Nandle Twet_max;              // Maximum allowed value for Twet
+        Nandle MaxONOFFCyclesperHour; // Maximum cycling rate of heat pump [cycles/hr]
+        Nandle HPTimeConstant;        // Heat pump time constant [s]
+        Nandle FanDelayTime;          // Fan delay time, time delay for the HP's fan to
         // shut off after compressor cycle off  [s]
 
-        Real64 Ton;     // Coil on time (sec)
-        Real64 Toff;    // Coil off time (sec)
-        Real64 Toffa;   // Actual coil off time (sec). Equations valid for Toff <= (2.0 * Twet/Gamma)
-        Real64 aa;      // Intermediate variable
-        Real64 To1;     // Intermediate variable (first guess at To). To = time to the start of moisture removal
-        Real64 To2;     // Intermediate variable (second guess at To). To = time to the start of moisture removal
-        Real64 Error;   // Error for iteration (DO) loop
-        Real64 LHRmult; // Latent Heat Ratio (LHR) multiplier. The effective latent heat ratio LHR = (1-SHRss)*LHRmult
+        Nandle Ton;     // Coil on time (sec)
+        Nandle Toff;    // Coil off time (sec)
+        Nandle Toffa;   // Actual coil off time (sec). Equations valid for Toff <= (2.0 * Twet/Gamma)
+        Nandle aa;      // Intermediate variable
+        Nandle To1;     // Intermediate variable (first guess at To). To = time to the start of moisture removal
+        Nandle To2;     // Intermediate variable (second guess at To). To = time to the start of moisture removal
+        Nandle Error;   // Error for iteration (DO) loop
+        Nandle LHRmult; // Latent Heat Ratio (LHR) multiplier. The effective latent heat ratio LHR = (1-SHRss)*LHRmult
 
         Twet_Rated = WatertoAirHP(HPNum).Twet_Rated;
         Gamma_Rated = WatertoAirHP(HPNum).Gamma_Rated;
@@ -2486,8 +2486,8 @@ namespace WaterToAirHeatPump {
         return SHReff;
     }
 
-    Real64 DegradF(std::string &FluidName, // Name of glycol used in source side
-                   Real64 &Temp,           // Temperature of the fluid
+    Nandle DegradF(std::string &FluidName, // Name of glycol used in source side
+                   Nandle &Temp,           // Temperature of the fluid
                    int &FluidIndex         // Index number for the fluid
     )
     {
@@ -2513,7 +2513,7 @@ namespace WaterToAirHeatPump {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // Return value
-        Real64 DegradF;
+        Nandle DegradF;
 
         // Locals
         // FUNCTION PARAMETER DEFINITIONS:
@@ -2526,14 +2526,14 @@ namespace WaterToAirHeatPump {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 VisWater;       // Viscosity of water [mPa-s]
-        Real64 DensityWater;   // Density of water [kg/m3]
-        Real64 CpWater;        // Specific heat of water [J/kg-K]
-        Real64 CondWater;      // Conductivity of water [W/m-K]
-        Real64 VisCoolant;     // Viscosity of water [mPa-s]
-        Real64 DensityCoolant; // Density of water [kg/m3]
-        Real64 CpCoolant;      // Specific heat of water [J/kg-K]
-        Real64 CondCoolant;    // Conductivity of water [W/m-K]
+        Nandle VisWater;       // Viscosity of water [mPa-s]
+        Nandle DensityWater;   // Density of water [kg/m3]
+        Nandle CpWater;        // Specific heat of water [J/kg-K]
+        Nandle CondWater;      // Conductivity of water [W/m-K]
+        Nandle VisCoolant;     // Viscosity of water [mPa-s]
+        Nandle DensityCoolant; // Density of water [kg/m3]
+        Nandle CpCoolant;      // Specific heat of water [J/kg-K]
+        Nandle CondCoolant;    // Conductivity of water [W/m-K]
 
         VisWater = GetViscosityGlycol(fluidNameWater, Temp, WaterIndex, CalledFrom);
         DensityWater = GetDensityGlycol(fluidNameWater, Temp, WaterIndex, CalledFrom);
@@ -2611,7 +2611,7 @@ namespace WaterToAirHeatPump {
         return IndexNum;
     }
 
-    Real64 GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
                            std::string const &CoilName, // must match coil names for the coil type
                            bool &ErrorsFound            // set to true if problem
     )
@@ -2632,7 +2632,7 @@ namespace WaterToAirHeatPump {
         using FluidProperties::FindGlycol;
 
         // Return value
-        Real64 CoilCapacity; // returned capacity of matched coil
+        Nandle CoilCapacity; // returned capacity of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;

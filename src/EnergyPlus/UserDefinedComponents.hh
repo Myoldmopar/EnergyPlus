@@ -86,21 +86,21 @@ namespace UserDefinedComponents {
         int OutletNodeNum;           // plant loop outlet node index
         int FlowPriority;            // how component affects overall loop flow determination
         int HowLoadServed;           // nature of component wrt to plant loop's loads
-        Real64 LowOutTempLimit;      // low limit for outlet temp if MEETSLOADWITHNOMINALCAPACITYLOWOUTLIMIT
-        Real64 HiOutTempLimit;       // hi limit for outlet temp if MEETSLOADWITHNOMINALCAPACITYHIOUTLIMIT
-        Real64 MassFlowRateRequest;  // request filled by actuator, might not be satisfied if plant constrained [kg/s]
-        Real64 MassFlowRateMin;      // filled by actuator, reports minimum (hardware) flow rate for component [kg/s]
-        Real64 MassFlowRateMax;      // filled by actuator, reports maximum (hardware) flow rate for component [kg/s]
-        Real64 DesignVolumeFlowRate; // filled by actuator,
-        Real64 MyLoad;               // fills internal variable for user's model to know current load request of supply equip [W]
-        Real64 MinLoad;              // filled by actuator, reports back size for load dispatch routines [W]
-        Real64 MaxLoad;              // filled by actuator, reports back size for load dispatch [W]
-        Real64 OptLoad;              // filled by actuator, reports back size for load dispatch [W]
-        Real64 InletRho;             // fills internal variable, current density for fluid type and inlet temperature [kg/m3]
-        Real64 InletCp;              // fills internal Variable, current specific heat for fluid type and inlet temperature [J/kg-C]
-        Real64 InletTemp;            // fills internal variable, current inlet fluid temperature [C]
-        Real64 InletMassFlowRate;    // fills internal variable, current inlet mass flow rate [kg/s]
-        Real64 OutletTemp;           // filled by actuator, component outlet temperature [C]
+        Nandle LowOutTempLimit;      // low limit for outlet temp if MEETSLOADWITHNOMINALCAPACITYLOWOUTLIMIT
+        Nandle HiOutTempLimit;       // hi limit for outlet temp if MEETSLOADWITHNOMINALCAPACITYHIOUTLIMIT
+        Nandle MassFlowRateRequest;  // request filled by actuator, might not be satisfied if plant constrained [kg/s]
+        Nandle MassFlowRateMin;      // filled by actuator, reports minimum (hardware) flow rate for component [kg/s]
+        Nandle MassFlowRateMax;      // filled by actuator, reports maximum (hardware) flow rate for component [kg/s]
+        Nandle DesignVolumeFlowRate; // filled by actuator,
+        Nandle MyLoad;               // fills internal variable for user's model to know current load request of supply equip [W]
+        Nandle MinLoad;              // filled by actuator, reports back size for load dispatch routines [W]
+        Nandle MaxLoad;              // filled by actuator, reports back size for load dispatch [W]
+        Nandle OptLoad;              // filled by actuator, reports back size for load dispatch [W]
+        Nandle InletRho;             // fills internal variable, current density for fluid type and inlet temperature [kg/m3]
+        Nandle InletCp;              // fills internal Variable, current specific heat for fluid type and inlet temperature [J/kg-C]
+        Nandle InletTemp;            // fills internal variable, current inlet fluid temperature [C]
+        Nandle InletMassFlowRate;    // fills internal variable, current inlet mass flow rate [kg/s]
+        Nandle OutletTemp;           // filled by actuator, component outlet temperature [C]
 
         // Default Constructor
         PlantConnectionStruct()
@@ -117,14 +117,14 @@ namespace UserDefinedComponents {
         // Members
         int InletNodeNum;          // air inlet node index
         int OutletNodeNum;         // air outlet node index
-        Real64 InletRho;           // fills internal variable, current inlet air density [kg/m3]
-        Real64 InletCp;            // fills internal variable, current inlet air specific heat [J/kg-c]
-        Real64 InletTemp;          // fills internal variable, current inlet air temperature [C]
-        Real64 InletHumRat;        // fills internal variable, current inlet air humidity ratio [kg/kg]
-        Real64 InletMassFlowRate;  // fills internal variable, current inlet air mass flow rate [kg/s]
-        Real64 OutletTemp;         // filled by actuator, component outlet temperature [C]
-        Real64 OutletHumRat;       // filled by actuator, component outlet humidity ratio [kg/kg]
-        Real64 OutletMassFlowRate; // filled by actuator, component outlet mass flow rate [kg/s]
+        Nandle InletRho;           // fills internal variable, current inlet air density [kg/m3]
+        Nandle InletCp;            // fills internal variable, current inlet air specific heat [J/kg-c]
+        Nandle InletTemp;          // fills internal variable, current inlet air temperature [C]
+        Nandle InletHumRat;        // fills internal variable, current inlet air humidity ratio [kg/kg]
+        Nandle InletMassFlowRate;  // fills internal variable, current inlet air mass flow rate [kg/s]
+        Nandle OutletTemp;         // filled by actuator, component outlet temperature [C]
+        Nandle OutletHumRat;       // filled by actuator, component outlet humidity ratio [kg/kg]
+        Nandle OutletMassFlowRate; // filled by actuator, component outlet mass flow rate [kg/s]
 
         // Default Constructor
         AirConnectionStruct()
@@ -140,11 +140,11 @@ namespace UserDefinedComponents {
         bool SuppliedByWaterSystem;
         int SupplyTankID;          // index "pointer" to WaterStorage structure
         int SupplyTankDemandARRID; // index "pointer" to demand array inside WaterStorage structure
-        Real64 SupplyVdotRequest;
+        Nandle SupplyVdotRequest;
         bool CollectsToWaterSystem;
         int CollectionTankID;          // index "pointer" to Storage TAnk array WaterStorage
         int CollectionTankSupplyARRID; // index pointe to supply Vdot array in WaterStorage
-        Real64 CollectedVdot;
+        Nandle CollectedVdot;
 
         // Default Constructor
         WaterUseTankConnectionStruct()
@@ -159,13 +159,13 @@ namespace UserDefinedComponents {
         // Members
         bool DeviceHasInternalGains;
         int ZoneNum;
-        Real64 ConvectionGainRate;
-        Real64 ReturnAirConvectionGainRate;
-        Real64 ThermalRadiationGainRate;
-        Real64 LatentGainRate;
-        Real64 ReturnAirLatentGainRate;
-        Real64 CarbonDioxideGainRate;
-        Real64 GenericContamGainRate;
+        Nandle ConvectionGainRate;
+        Nandle ReturnAirConvectionGainRate;
+        Nandle ThermalRadiationGainRate;
+        Nandle LatentGainRate;
+        Nandle ReturnAirLatentGainRate;
+        Nandle CarbonDioxideGainRate;
+        Nandle GenericContamGainRate;
 
         // Default Constructor
         ZoneInternalGainsStruct()
@@ -197,11 +197,11 @@ namespace UserDefinedComponents {
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void initialize(int LoopNum, Real64 MyLoad);
+        void initialize(int LoopNum, Nandle MyLoad);
 
         void report(int LoopNum);
     };
@@ -246,10 +246,10 @@ namespace UserDefinedComponents {
         Array1D<PlantConnectionStruct> Loop; // collect data for each plant loop connection
         WaterUseTankConnectionStruct Water;
         ZoneInternalGainsStruct Zone;         // for skin losses
-        Real64 RemainingOutputToHeatingSP;    // sensible load remaining for device, to heating setpoint [W]
-        Real64 RemainingOutputToCoolingSP;    // sensible load remaining for device, negative means cooling [W]
-        Real64 RemainingOutputReqToHumidSP;   // latent load remaining for device, to humidification setpoint [kg/s]
-        Real64 RemainingOutputReqToDehumidSP; // latent load remaining for device, Negative means dehumidify [kg/s]
+        Nandle RemainingOutputToHeatingSP;    // sensible load remaining for device, to heating setpoint [W]
+        Nandle RemainingOutputToCoolingSP;    // sensible load remaining for device, negative means cooling [W]
+        Nandle RemainingOutputReqToHumidSP;   // latent load remaining for device, to humidification setpoint [kg/s]
+        Nandle RemainingOutputReqToDehumidSP; // latent load remaining for device, Negative means dehumidify [kg/s]
         bool myOneTimeFlag;
 
         // Default Constructor
@@ -280,10 +280,10 @@ namespace UserDefinedComponents {
         Array1D<PlantConnectionStruct> Loop; // collect data for each plant loop connection
         WaterUseTankConnectionStruct Water;
         ZoneInternalGainsStruct Zone;         // for skin losses
-        Real64 RemainingOutputToHeatingSP;    // sensible load remaining for device, to heating setpoint [W]
-        Real64 RemainingOutputToCoolingSP;    // sensible load remaining for device, negative means cooling [W]
-        Real64 RemainingOutputReqToHumidSP;   // latent load remaining for device, to humidification setpoint [kg/s]
-        Real64 RemainingOutputReqToDehumidSP; // latent load remaining for device, Negative means dehumidify [kg/s]
+        Nandle RemainingOutputToHeatingSP;    // sensible load remaining for device, to heating setpoint [W]
+        Nandle RemainingOutputToCoolingSP;    // sensible load remaining for device, negative means cooling [W]
+        Nandle RemainingOutputReqToHumidSP;   // latent load remaining for device, to humidification setpoint [kg/s]
+        Nandle RemainingOutputReqToDehumidSP; // latent load remaining for device, Negative means dehumidify [kg/s]
         bool myOneTimeFlag;
 
         // Default Constructor
@@ -314,8 +314,8 @@ namespace UserDefinedComponents {
 
     void SimZoneAirUserDefined(std::string const &CompName,    // name of the packaged terminal heat pump
                                int ZoneNum,                    // number of zone being served
-                               Real64 &SensibleOutputProvided, // sensible capacity delivered to zone
-                               Real64 &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
+                               Nandle &SensibleOutputProvided, // sensible capacity delivered to zone
+                               Nandle &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
                                int &CompIndex                  // index to zone hvac unit
     );
 

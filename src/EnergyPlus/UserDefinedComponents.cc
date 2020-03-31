@@ -151,7 +151,7 @@ namespace UserDefinedComponents {
     void UserPlantComponentStruct::onInitLoopEquip(const PlantLocation &calledFromLocation)
     {
         bool anyEMSRan;
-        Real64 myLoad = 0.0;
+        Nandle myLoad = 0.0;
         int thisLoop = 0;
 
         this->initialize(calledFromLocation.loopNum, myLoad);
@@ -188,7 +188,7 @@ namespace UserDefinedComponents {
         }
     }
 
-    void UserPlantComponentStruct::getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void UserPlantComponentStruct::getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         int thisLoop = 0;
         for (int loop = 1; loop <= this->NumPlantConnections; ++loop) {
@@ -204,7 +204,7 @@ namespace UserDefinedComponents {
 
     void UserPlantComponentStruct::UserPlantComponentStruct::simulate(const EnergyPlus::PlantLocation &calledFromLocation,
                                                                       bool EP_UNUSED(FirstHVACIteration),
-                                                                      Real64 &CurLoad,
+                                                                      Nandle &CurLoad,
                                                                       bool EP_UNUSED(RunFlag))
     {
         // SUBROUTINE INFORMATION:
@@ -327,9 +327,9 @@ namespace UserDefinedComponents {
             HeatingActive =
                 DataLoopNode::Node(UserCoil(CompNum).Air(1).InletNodeNum).Temp < DataLoopNode::Node(UserCoil(CompNum).Air(1).OutletNodeNum).Temp;
 
-            Real64 EnthInlet = Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(UserCoil(CompNum).Air(1).InletNodeNum).Temp,
+            Nandle EnthInlet = Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(UserCoil(CompNum).Air(1).InletNodeNum).Temp,
                                                           DataLoopNode::Node(UserCoil(CompNum).Air(1).InletNodeNum).HumRat);
-            Real64 EnthOutlet = Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(UserCoil(CompNum).Air(1).OutletNodeNum).Temp,
+            Nandle EnthOutlet = Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(UserCoil(CompNum).Air(1).OutletNodeNum).Temp,
                                                            DataLoopNode::Node(UserCoil(CompNum).Air(1).OutletNodeNum).HumRat);
             CoolingActive = EnthInlet > EnthOutlet;
         }
@@ -337,8 +337,8 @@ namespace UserDefinedComponents {
 
     void SimZoneAirUserDefined(std::string const &CompName,    // name of the packaged terminal heat pump
                                int const ZoneNum,              // number of zone being served
-                               Real64 &SensibleOutputProvided, // sensible capacity delivered to zone
-                               Real64 &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
+                               Nandle &SensibleOutputProvided, // sensible capacity delivered to zone
+                               Nandle &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
                                int &CompIndex                  // index to zone hvac unit
     )
     {
@@ -416,17 +416,17 @@ namespace UserDefinedComponents {
         UserZoneAirHVAC(CompNum).report();
 
         // calculate delivered capacity
-        Real64 AirMassFlow = min(DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.InletNodeNum).MassFlowRate,
+        Nandle AirMassFlow = min(DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.InletNodeNum).MassFlowRate,
                                  DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.OutletNodeNum).MassFlowRate);
         // calculate sensible load met using delta enthalpy at a constant (minimum) humidity ratio)
-        Real64 MinHumRat = min(DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.InletNodeNum).HumRat,
+        Nandle MinHumRat = min(DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.InletNodeNum).HumRat,
                                DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.OutletNodeNum).HumRat);
         SensibleOutputProvided =
             AirMassFlow * (Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.OutletNodeNum).Temp, MinHumRat) -
                            Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.InletNodeNum).Temp, MinHumRat));
 
-        Real64 SpecHumOut = DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.OutletNodeNum).HumRat;
-        Real64 SpecHumIn = DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.InletNodeNum).HumRat;
+        Nandle SpecHumOut = DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.OutletNodeNum).HumRat;
+        Nandle SpecHumIn = DataLoopNode::Node(UserZoneAirHVAC(CompNum).ZoneAir.InletNodeNum).HumRat;
         LatentOutputProvided = AirMassFlow * (SpecHumOut - SpecHumIn); // Latent rate, kg/s (dehumid = negative)
     }
 
@@ -522,7 +522,7 @@ namespace UserDefinedComponents {
         Array1D_string cAlphaFieldNames;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         std::string LoopStr;
         static bool lDummy; // Fix Changed to static: Passed to SetupEMSActuator as source of persistent Reference
@@ -1250,7 +1250,7 @@ namespace UserDefinedComponents {
         Array1D_string cAlphaFieldNames;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         std::string LoopStr;
         static bool lDummy; // Fix Changed to static: Passed to SetupEMSActuator as source of persistent Reference
@@ -2069,7 +2069,7 @@ namespace UserDefinedComponents {
         }
     }
 
-    void UserPlantComponentStruct::initialize(int LoopNum, Real64 MyLoad)
+    void UserPlantComponentStruct::initialize(int LoopNum, Nandle MyLoad)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         <author>

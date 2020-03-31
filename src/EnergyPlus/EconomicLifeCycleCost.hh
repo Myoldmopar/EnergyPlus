@@ -124,16 +124,16 @@ namespace EconomicLifeCycleCost {
     extern std::string LCCname;        // Name
     extern int discountConvension;     // Discounting Convention
     extern int inflationApproach;      // Inflation Approach
-    extern Real64 realDiscountRate;    // Real Discount Rate
-    extern Real64 nominalDiscountRate; // Nominal Discount Rate
-    extern Real64 inflation;           // Inflation
+    extern Nandle realDiscountRate;    // Real Discount Rate
+    extern Nandle nominalDiscountRate; // Nominal Discount Rate
+    extern Nandle inflation;           // Inflation
     extern int baseDateMonth;          // Base Date Month (1=Jan, 12=Dec)
     extern int baseDateYear;           // Base Date Year  1900-2100
     extern int serviceDateMonth;       // Service Date Month (1=Jan, 12=Dec)
     extern int serviceDateYear;        // Service Date Year 1900-2100
     extern int lengthStudyYears;       // Length of Study Period in Years
     extern int lengthStudyTotalMonths; // Length of Study expressed in months (years x 12)
-    extern Real64 taxRate;             // Tax rate
+    extern Nandle taxRate;             // Tax rate
     extern int depreciationMethod;     // Depreciation Method
     // derived
     extern int lastDateMonth; // Last Date Month (the month before the base date month)
@@ -158,21 +158,21 @@ namespace EconomicLifeCycleCost {
     extern int numResourcesUsed;
 
     // present value factors
-    extern Array1D<Real64> SPV;
-    extern Array2D<Real64> energySPV; // yearly equivalent to FEMP UPV* values
+    extern Array1D<Nandle> SPV;
+    extern Array2D<Nandle> energySPV; // yearly equivalent to FEMP UPV* values
 
     // arrays related to computing after tax cashflow and present value
-    extern Array1D<Real64> DepreciatedCapital;
-    extern Array1D<Real64> TaxableIncome;
-    extern Array1D<Real64> Taxes;
-    extern Array1D<Real64> AfterTaxCashFlow;
-    extern Array1D<Real64> AfterTaxPresentValue;
+    extern Array1D<Nandle> DepreciatedCapital;
+    extern Array1D<Nandle> TaxableIncome;
+    extern Array1D<Nandle> Taxes;
+    extern Array1D<Nandle> AfterTaxCashFlow;
+    extern Array1D<Nandle> AfterTaxPresentValue;
 
     extern Array1D_string const MonthNames;
 
     // arrays related to escalated energy costs
-    extern Array1D<Real64> EscalatedTotEnergy; 
-    extern Array2D<Real64> EscalatedEnergy; 
+    extern Array1D<Nandle> EscalatedTotEnergy;
+    extern Array2D<Nandle> EscalatedEnergy;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE <module_name>:
 
@@ -184,7 +184,7 @@ namespace EconomicLifeCycleCost {
         std::string name;            // Name
         std::string lineItem;        // Line Item
         int category;                // Category
-        Real64 cost;                 // Cost
+        Nandle cost;                 // Cost
         int startOfCosts;            // Start of Costs
         int yearsFromStart;          // Years from Start 0 - 100
         int monthsFromStart;         // Months from Start 0 - 11
@@ -192,7 +192,7 @@ namespace EconomicLifeCycleCost {
         int repeatPeriodYears;       // Repeat Period Years 1 - 100
         int repeatPeriodMonths;      // Repeat Period Months 0 - 11
         int totalRepeatPeriodMonths; // Total months (12 x years) + months
-        Real64 annualEscalationRate; // Annual escalation rate
+        Nandle annualEscalationRate; // Annual escalation rate
 
         // Default Constructor
         RecurringCostsType()
@@ -208,7 +208,7 @@ namespace EconomicLifeCycleCost {
         std::string name;         // Name
         std::string lineItem;     // Line Item
         int category;             // Category
-        Real64 cost;              // Cost
+        Nandle cost;              // Cost
         int startOfCosts;         // Start of Costs
         int yearsFromStart;       // Years from Start 0 - 100
         int monthsFromStart;      // Months from Start 0 - 11
@@ -228,7 +228,7 @@ namespace EconomicLifeCycleCost {
         int resource;               // resource like electricity or natural gas (uses definitions from DataGlobalConstants)
         int escalationStartYear;    // Escalation Start Year 1900-2100
         int escalationStartMonth;   // Escalation Start Month 1 to 12
-        Array1D<Real64> Escalation; // Escalation by year, first year is baseDateYear
+        Array1D<Nandle> Escalation; // Escalation by year, first year is baseDateYear
         // last year is baseDateYear + lengthStudyYears - 1
 
         // Default Constructor
@@ -242,7 +242,7 @@ namespace EconomicLifeCycleCost {
         // Members
         std::string name;           // Name
         int resource;               // resource like electricity or natural gas (uses definitions from DataGlobalConstants)
-        Array1D<Real64> Adjustment; // Adjustment by year, first year is baseDateYear
+        Array1D<Nandle> Adjustment; // Adjustment by year, first year is baseDateYear
         // last year is baseDateYear + lengthStudyYears - 1
 
         // Default Constructor
@@ -258,13 +258,13 @@ namespace EconomicLifeCycleCost {
         int SourceKind;           // 1=recurring, 2=nonrecurring, 3=resource
         int Resource;             // resource like electricity or natural gas (uses definitions from DataGlobalConstants)
         int Category;             // uses "costCat" constants above
-        Array1D<Real64> mnAmount; // cashflow dollar amount by month, first year is baseDateYear
+        Array1D<Nandle> mnAmount; // cashflow dollar amount by month, first year is baseDateYear
         // last year is baseDateYear + lengthStudyYears - 1
-        Array1D<Real64> yrAmount;  // cashflow dollar amount by year, first year is baseDateYear
+        Array1D<Nandle> yrAmount;  // cashflow dollar amount by year, first year is baseDateYear
         int pvKind;                // kind of present value 1=energy, 2=non-energy,3=not computed but summed
-        Real64 presentValue;       // total present value for cashflow
-        Real64 orginalCost;        // original cost from recurring, non-recurring or energy cost
-        Array1D<Real64> yrPresVal; // present value by year, first year is baseDateYear
+        Nandle presentValue;       // total present value for cashflow
+        Nandle orginalCost;        // original cost from recurring, non-recurring or energy cost
+        Array1D<Nandle> yrPresVal; // present value by year, first year is baseDateYear
 
         // Default Constructor
         CashFlowType() : SourceKind(0), Resource(0), Category(0), pvKind(0), presentValue(0.), orginalCost(0.)

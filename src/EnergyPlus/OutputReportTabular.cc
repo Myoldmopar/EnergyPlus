@@ -280,7 +280,7 @@ namespace OutputReportTabular {
     Array1D_string del(maxNumStyles);        // the delimiter to use
     Array1D_int TableStyle(maxNumStyles, 0); // see list of parameters
 
-    Real64 timeInYear(0.0);
+    Nandle timeInYear(0.0);
 
     // Flags for predefined tabular reports
     bool displayTabularBEPS(false);
@@ -308,7 +308,7 @@ namespace OutputReportTabular {
     Array1D_int meterNumTotalsSource(numSourceTypes, 0);
     Array1D_bool fuelfactorsused(numSourceTypes, false);
     Array1D_bool ffUsed(numResourceTypes, false);
-    Array1D<Real64> SourceFactors(numResourceTypes, 0.0);
+    Array1D<Nandle> SourceFactors(numResourceTypes, 0.0);
     Array1D_bool ffSchedUsed(numResourceTypes, false);
     Array1D_int ffSchedIndex(numResourceTypes, 0);
     Array2D_int meterNumEndUseBEPS(numResourceTypes, NumEndUses, 0);
@@ -318,87 +318,87 @@ namespace OutputReportTabular {
     Array1D_string sourceTypeNames(numSourceTypes);
     Array1D_string endUseNames(NumEndUses);
     // arrays that hold the actual values for the year
-    Array1D<Real64> gatherTotalsBEPS(numResourceTypes, 0.0);
-    Array1D<Real64> gatherTotalsBySourceBEPS(numResourceTypes, 0.0);
-    Array1D<Real64> gatherTotalsSource(numSourceTypes, 0.0);
-    Array1D<Real64> gatherTotalsBySource(numSourceTypes, 0.0);
-    Array2D<Real64> gatherEndUseBEPS(numResourceTypes, NumEndUses, 0.0);
-    Array2D<Real64> gatherEndUseBySourceBEPS(numResourceTypes, NumEndUses, 0.0);
-    Array3D<Real64> gatherEndUseSubBEPS;
+    Array1D<Nandle> gatherTotalsBEPS(numResourceTypes, 0.0);
+    Array1D<Nandle> gatherTotalsBySourceBEPS(numResourceTypes, 0.0);
+    Array1D<Nandle> gatherTotalsSource(numSourceTypes, 0.0);
+    Array1D<Nandle> gatherTotalsBySource(numSourceTypes, 0.0);
+    Array2D<Nandle> gatherEndUseBEPS(numResourceTypes, NumEndUses, 0.0);
+    Array2D<Nandle> gatherEndUseBySourceBEPS(numResourceTypes, NumEndUses, 0.0);
+    Array3D<Nandle> gatherEndUseSubBEPS;
     Array1D_bool needOtherRowLEED45(NumEndUses);
 
     // arrays the hold the demand values
-    Array1D<Real64> gatherDemandTotal(numResourceTypes, 0.0);
-    Array2D<Real64> gatherDemandEndUse(numResourceTypes, NumEndUses, 0.0);
-    Array2D<Real64> gatherDemandIndEndUse(numResourceTypes, NumEndUses, 0.0);
-    Array3D<Real64> gatherDemandEndUseSub;
-    Array3D<Real64> gatherDemandIndEndUseSub;
+    Array1D<Nandle> gatherDemandTotal(numResourceTypes, 0.0);
+    Array2D<Nandle> gatherDemandEndUse(numResourceTypes, NumEndUses, 0.0);
+    Array2D<Nandle> gatherDemandIndEndUse(numResourceTypes, NumEndUses, 0.0);
+    Array3D<Nandle> gatherDemandEndUseSub;
+    Array3D<Nandle> gatherDemandIndEndUseSub;
     Array1D_int gatherDemandTimeStamp(numResourceTypes, 0);
     // to keep track of hours for the BEPS report gathering
-    Real64 gatherElapsedTimeBEPS(0.0);
+    Nandle gatherElapsedTimeBEPS(0.0);
     // for normalization of results
-    Real64 buildingGrossFloorArea(0.0);
-    Real64 buildingConditionedFloorArea(0.0);
+    Nandle buildingGrossFloorArea(0.0);
+    Nandle buildingConditionedFloorArea(0.0);
     // keep track if schedules are used in fuel factors
     bool fuelFactorSchedulesUsed(false);
     // for electic load components on BEPS report
     int meterNumPowerFuelFireGen(0);
-    Real64 gatherPowerFuelFireGen(0.0);
+    Nandle gatherPowerFuelFireGen(0.0);
     int meterNumPowerPV(0);
-    Real64 gatherPowerPV(0.0);
+    Nandle gatherPowerPV(0.0);
     int meterNumPowerWind(0);
-    Real64 gatherPowerWind(0.0);
-    Real64 OverallNetEnergyFromStorage(0.0);
+    Nandle gatherPowerWind(0.0);
+    Nandle OverallNetEnergyFromStorage(0.0);
     int meterNumPowerHTGeothermal(0);
-    Real64 gatherPowerHTGeothermal(0.0);
+    Nandle gatherPowerHTGeothermal(0.0);
     int meterNumElecProduced(0);
-    Real64 gatherElecProduced(0.0);
+    Nandle gatherElecProduced(0.0);
     int meterNumElecPurchased(0);
-    Real64 gatherElecPurchased(0.0);
+    Nandle gatherElecPurchased(0.0);
     int meterNumElecSurplusSold(0);
-    Real64 gatherElecSurplusSold(0.0);
+    Nandle gatherElecSurplusSold(0.0);
     int meterNumElecStorage = (0);
-    Real64 gatherElecStorage = (0.0);
+    Nandle gatherElecStorage = (0.0);
     int meterNumPowerConversion = (0);
-    Real64 gatherPowerConversion = (0.0);
+    Nandle gatherPowerConversion = (0.0);
     // for on site thermal source components on BEPS report
     int meterNumWaterHeatRecovery(0);
-    Real64 gatherWaterHeatRecovery(0.0);
+    Nandle gatherWaterHeatRecovery(0.0);
     int meterNumAirHeatRecoveryCool(0);
-    Real64 gatherAirHeatRecoveryCool(0.0);
+    Nandle gatherAirHeatRecoveryCool(0.0);
     int meterNumAirHeatRecoveryHeat(0);
-    Real64 gatherAirHeatRecoveryHeat(0.0);
+    Nandle gatherAirHeatRecoveryHeat(0.0);
     int meterNumHeatHTGeothermal(0);
-    Real64 gatherHeatHTGeothermal(0.0);
+    Nandle gatherHeatHTGeothermal(0.0);
     int meterNumHeatSolarWater(0);
-    Real64 gatherHeatSolarWater(0.0);
+    Nandle gatherHeatSolarWater(0.0);
     int meterNumHeatSolarAir(0);
-    Real64 gatherHeatSolarAir(0.0);
+    Nandle gatherHeatSolarAir(0.0);
     // for on site water components on BEPS report
     int meterNumRainWater(0);
-    Real64 gatherRainWater(0.0);
+    Nandle gatherRainWater(0.0);
     int meterNumCondensate(0);
-    Real64 gatherCondensate(0.0);
+    Nandle gatherCondensate(0.0);
     int meterNumGroundwater(0);
-    Real64 gatherWellwater(0.0);
+    Nandle gatherWellwater(0.0);
     int meterNumMains(0);
-    Real64 gatherMains(0.0);
+    Nandle gatherMains(0.0);
     int meterNumWaterEndUseTotal(0);
-    Real64 gatherWaterEndUseTotal(0.0);
+    Nandle gatherWaterEndUseTotal(0.0);
     // for source energy conversion factors on BEPS report
-    Real64 sourceFactorElectric(0.0);
-    Real64 sourceFactorNaturalGas(0.0);
-    Real64 efficiencyDistrictCooling(0.0);
-    Real64 efficiencyDistrictHeating(0.0);
-    Real64 sourceFactorSteam(0.0);
-    Real64 sourceFactorGasoline(0.0);
-    Real64 sourceFactorDiesel(0.0);
-    Real64 sourceFactorCoal(0.0);
-    Real64 sourceFactorFuelOil1(0.0);
-    Real64 sourceFactorFuelOil2(0.0);
-    Real64 sourceFactorPropane(0.0);
-    Real64 sourceFactorOtherFuel1(0.0);
-    Real64 sourceFactorOtherFuel2(0.0);
+    Nandle sourceFactorElectric(0.0);
+    Nandle sourceFactorNaturalGas(0.0);
+    Nandle efficiencyDistrictCooling(0.0);
+    Nandle efficiencyDistrictHeating(0.0);
+    Nandle sourceFactorSteam(0.0);
+    Nandle sourceFactorGasoline(0.0);
+    Nandle sourceFactorDiesel(0.0);
+    Nandle sourceFactorCoal(0.0);
+    Nandle sourceFactorFuelOil1(0.0);
+    Nandle sourceFactorFuelOil2(0.0);
+    Nandle sourceFactorPropane(0.0);
+    Nandle sourceFactorOtherFuel1(0.0);
+    Nandle sourceFactorOtherFuel2(0.0);
 
     Array1D_int td(8);
     //(1)   Current year
@@ -416,52 +416,52 @@ namespace OutputReportTabular {
 
     // arrays related to pulse and load component reporting
     Array2D_int radiantPulseTimestep;
-    Array2D<Real64> radiantPulseReceived;
-    Array3D<Real64> loadConvectedNormal;
-    Array3D<Real64> loadConvectedWithPulse;
-    Array3D<Real64> netSurfRadSeq;
-    Array2D<Real64> decayCurveCool;
-    Array2D<Real64> decayCurveHeat;
-    Array3D<Real64> ITABSFseq; // used for determining the radiant fraction on each surface
-    Array3D<Real64> TMULTseq;  // used for determining the radiant fraction on each surface
+    Array2D<Nandle> radiantPulseReceived;
+    Array3D<Nandle> loadConvectedNormal;
+    Array3D<Nandle> loadConvectedWithPulse;
+    Array3D<Nandle> netSurfRadSeq;
+    Array2D<Nandle> decayCurveCool;
+    Array2D<Nandle> decayCurveHeat;
+    Array3D<Nandle> ITABSFseq; // used for determining the radiant fraction on each surface
+    Array3D<Nandle> TMULTseq;  // used for determining the radiant fraction on each surface
 
-    Array3D<Real64> peopleInstantSeq;
-    Array3D<Real64> peopleLatentSeq;
-    Array3D<Real64> peopleRadSeq;
+    Array3D<Nandle> peopleInstantSeq;
+    Array3D<Nandle> peopleLatentSeq;
+    Array3D<Nandle> peopleRadSeq;
 
-    Array3D<Real64> lightInstantSeq;
-    Array3D<Real64> lightRetAirSeq;
-    Array3D<Real64> lightLWRadSeq; // long wave thermal radiation
-    Array3D<Real64> lightSWRadSeq; // short wave visible radiation
+    Array3D<Nandle> lightInstantSeq;
+    Array3D<Nandle> lightRetAirSeq;
+    Array3D<Nandle> lightLWRadSeq; // long wave thermal radiation
+    Array3D<Nandle> lightSWRadSeq; // short wave visible radiation
 
-    Array3D<Real64> equipInstantSeq;
-    Array3D<Real64> equipLatentSeq;
-    Array3D<Real64> equipRadSeq;
+    Array3D<Nandle> equipInstantSeq;
+    Array3D<Nandle> equipLatentSeq;
+    Array3D<Nandle> equipRadSeq;
 
-    Array3D<Real64> refrigInstantSeq;
-    Array3D<Real64> refrigRetAirSeq;
-    Array3D<Real64> refrigLatentSeq;
+    Array3D<Nandle> refrigInstantSeq;
+    Array3D<Nandle> refrigRetAirSeq;
+    Array3D<Nandle> refrigLatentSeq;
 
-    Array3D<Real64> waterUseInstantSeq;
-    Array3D<Real64> waterUseLatentSeq;
+    Array3D<Nandle> waterUseInstantSeq;
+    Array3D<Nandle> waterUseLatentSeq;
 
-    Array3D<Real64> hvacLossInstantSeq;
-    Array3D<Real64> hvacLossRadSeq;
+    Array3D<Nandle> hvacLossInstantSeq;
+    Array3D<Nandle> hvacLossRadSeq;
 
-    Array3D<Real64> powerGenInstantSeq;
-    Array3D<Real64> powerGenRadSeq;
-    Array3D<Real64> infilInstantSeq;
-    Array3D<Real64> infilLatentSeq;
+    Array3D<Nandle> powerGenInstantSeq;
+    Array3D<Nandle> powerGenRadSeq;
+    Array3D<Nandle> infilInstantSeq;
+    Array3D<Nandle> infilLatentSeq;
 
-    Array3D<Real64> zoneVentInstantSeq;
-    Array3D<Real64> zoneVentLatentSeq;
+    Array3D<Nandle> zoneVentInstantSeq;
+    Array3D<Nandle> zoneVentLatentSeq;
 
-    Array3D<Real64> interZoneMixInstantSeq;
-    Array3D<Real64> interZoneMixLatentSeq;
+    Array3D<Nandle> interZoneMixInstantSeq;
+    Array3D<Nandle> interZoneMixLatentSeq;
 
-    Array3D<Real64> feneCondInstantSeq;
+    Array3D<Nandle> feneCondInstantSeq;
     // REAL(r64), DIMENSION(:,:,:),ALLOCATABLE,PUBLIC  :: feneSolarInstantSeq
-    Array3D<Real64> feneSolarRadSeq;
+    Array3D<Nandle> feneSolarRadSeq;
 
     // These correspond to the columns in the load component table
     int const cSensInst(1);
@@ -596,20 +596,20 @@ namespace OutputReportTabular {
         meterNumTotalsSource = Array1D_int(numSourceTypes, 0);
         fuelfactorsused = Array1D_bool(numSourceTypes, false);
         ffUsed = Array1D_bool(numResourceTypes, false);
-        SourceFactors = Array1D<Real64>(numResourceTypes, 0.0);
+        SourceFactors = Array1D<Nandle>(numResourceTypes, 0.0);
         ffSchedUsed = Array1D_bool(numResourceTypes, false);
         ffSchedIndex = Array1D_int(numResourceTypes, 0);
         meterNumEndUseBEPS = Array2D_int(numResourceTypes, NumEndUses, 0);
         meterNumEndUseSubBEPS.deallocate();
-        gatherTotalsBEPS = Array1D<Real64>(numResourceTypes, 0.0);
-        gatherTotalsBySourceBEPS = Array1D<Real64>(numResourceTypes, 0.0);
-        gatherTotalsSource = Array1D<Real64>(numSourceTypes, 0.0);
-        gatherTotalsBySource = Array1D<Real64>(numSourceTypes, 0.0);
-        gatherEndUseBEPS = Array2D<Real64>(numResourceTypes, NumEndUses, 0.0);
-        gatherEndUseBySourceBEPS = Array2D<Real64>(numResourceTypes, NumEndUses, 0.0);
+        gatherTotalsBEPS = Array1D<Nandle>(numResourceTypes, 0.0);
+        gatherTotalsBySourceBEPS = Array1D<Nandle>(numResourceTypes, 0.0);
+        gatherTotalsSource = Array1D<Nandle>(numSourceTypes, 0.0);
+        gatherTotalsBySource = Array1D<Nandle>(numSourceTypes, 0.0);
+        gatherEndUseBEPS = Array2D<Nandle>(numResourceTypes, NumEndUses, 0.0);
+        gatherEndUseBySourceBEPS = Array2D<Nandle>(numResourceTypes, NumEndUses, 0.0);
         gatherEndUseSubBEPS.deallocate();
-        gatherDemandTotal = Array1D<Real64>(numResourceTypes, 0.0);
-        gatherDemandEndUse = Array2D<Real64>(numResourceTypes, NumEndUses, 0.0);
+        gatherDemandTotal = Array1D<Nandle>(numResourceTypes, 0.0);
+        gatherDemandEndUse = Array2D<Nandle>(numResourceTypes, NumEndUses, 0.0);
         gatherDemandEndUseSub.deallocate();
         gatherDemandIndEndUseSub.deallocate();
         gatherDemandTimeStamp = Array1D_int(numResourceTypes, 0);
@@ -853,7 +853,7 @@ namespace OutputReportTabular {
         int NumAlphas;            // Number of elements in the alpha array
         int NumNums;              // Number of elements in the numeric array
         Array1D_string AlphArray; // character string data
-        Array1D<Real64> NumArray; // numeric data
+        Array1D<Nandle> NumArray; // numeric data
         int IOStat;               // IO Status when calling get input subroutine
         static bool ErrorsFound(false);
 
@@ -1105,7 +1105,7 @@ namespace OutputReportTabular {
         int mColumn;
         int ColumnsRecount;
         int TablesRecount;
-        static Real64 BigNum(0.0);
+        static Nandle BigNum(0.0);
         bool environmentKeyFound;
         static bool VarWarning(true);
         static int ErrCount1(0);
@@ -1564,13 +1564,13 @@ namespace OutputReportTabular {
         int NumAlphas;            // Number of elements in the alpha array
         int NumNums;              // Number of elements in the numeric array
         Array1D_string AlphArray; // character string data
-        Array1D<Real64> NumArray; // numeric data
+        Array1D<Nandle> NumArray; // numeric data
         int IOStat;               // IO Status when calling get input subroutine
         int iTable;
         int firstReport;
         int repIndex;
         int found;
-        Real64 const bigVal(0.0); // used with HUGE: Value doesn't matter, only type: Initialize so compiler doesn't warn about use uninitialized
+        Nandle const bigVal(0.0); // used with HUGE: Value doesn't matter, only type: Initialize so compiler doesn't warn about use uninitialized
 
         Array1D_string objNames;
         Array1D_int objVarIDs;
@@ -1783,7 +1783,7 @@ namespace OutputReportTabular {
         int NumAlphas;            // Number of elements in the alpha array
         int NumNums;              // Number of elements in the numeric array
         Array1D_string AlphArray; // character string data
-        Array1D<Real64> NumArray; // numeric data
+        Array1D<Nandle> NumArray; // numeric data
         int IOStat;               // IO Status when calling get input subroutine
 
         inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, NumParams, NumAlphas, NumNums);
@@ -1972,7 +1972,7 @@ namespace OutputReportTabular {
         int NumAlphas; // Number of elements in the alpha array
         int NumNums;   // Number of elements in the numeric array
         Array1D_string AlphArray;
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
         int IOStat; // IO Status when calling get input subroutine
         int iReport;
         std::string meterName;
@@ -2403,7 +2403,7 @@ namespace OutputReportTabular {
         int NumAlphas; // Number of elements in the alpha array
         int NumNums;   // Number of elements in the numeric array
         Array1D_string AlphArray;
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
         int IOStat; // IO Status when calling get input subroutine
         int iReport;
         bool isFound;
@@ -3276,7 +3276,7 @@ namespace OutputReportTabular {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 curSourceFactor;
+        Nandle curSourceFactor;
         bool fuelFactorUsed;
         bool fFScheduleUsed;
         int ffScheduleIndex;
@@ -3918,18 +3918,18 @@ namespace OutputReportTabular {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int iInObj;
         int jTable;
-        Real64 curValue;
+        Nandle curValue;
         // values of OutputTableBinned array for current index
-        Real64 curIntervalStart;
-        Real64 curIntervalSize;
+        Nandle curIntervalStart;
+        Nandle curIntervalSize;
         int curIntervalCount;
         int curResIndex;
         int curNumTables;
         int curTypeOfVar;
         int curScheduleIndex;
-        Real64 elapsedTime;
+        Nandle elapsedTime;
         bool gatherThisTime;
-        Real64 topValue;
+        Nandle topValue;
         int binNum;
         int repIndex;
         OutputProcessor::TimeStepType curStepType;
@@ -4051,16 +4051,16 @@ namespace OutputReportTabular {
         int iTable;  // loop variable for monthlyTables
         int jColumn; // loop variable for monthlyColumns
         int curCol;
-        Real64 curValue;
+        Nandle curValue;
         int curTypeOfVar;
         int curVarNum;
-        Real64 elapsedTime;
-        Real64 oldResultValue;
+        Nandle elapsedTime;
+        Nandle oldResultValue;
         int oldTimeStamp;
-        Real64 oldDuration;
-        Real64 newResultValue;
+        Nandle oldDuration;
+        Nandle newResultValue;
         int newTimeStamp;
-        Real64 newDuration;
+        Nandle newDuration;
         int timestepTimeStamp;
         bool activeMinMax;
         // LOGICAL,SAVE  :: activeHoursShown=.FALSE.  !fix by LKL addressing CR6482
@@ -4070,10 +4070,10 @@ namespace OutputReportTabular {
         int minuteCalculated;
         int kOtherColumn; // variable used in loop to scan through additional columns
         int scanColumn;
-        Real64 scanValue;
+        Nandle scanValue;
         int scanTypeOfVar;
         int scanVarNum;
-        Real64 oldScanValue;
+        Nandle oldScanValue;
         // local copies of some of the MonthlyColumns array references since
         // profiling showed that they were slow.
 
@@ -4431,7 +4431,7 @@ namespace OutputReportTabular {
         int iResource;
         int jEndUse;
         int kEndUseSub;
-        Real64 curMeterValue;
+        Nandle curMeterValue;
         int curMeterNumber;
 
         // if no beps report is called then skip
@@ -4592,7 +4592,7 @@ namespace OutputReportTabular {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int iResource;
         int jEndUse;
-        Real64 curMeterValue;
+        Nandle curMeterValue;
         int curMeterNumber;
 
         // if no beps by source report is called then skip
@@ -4716,7 +4716,7 @@ namespace OutputReportTabular {
         int iResource;
         int jEndUse;
         int kEndUseSub;
-        Real64 curDemandValue;
+        Nandle curDemandValue;
         int curMeterNumber;
         int minuteCalculated;
         int timestepTimeStamp;
@@ -4850,9 +4850,9 @@ namespace OutputReportTabular {
         static int iTank(0);
         static int iRef(0);
 
-        static Real64 H2OHtOfVap_HVAC = Psychrometrics::PsyHgAirFnWTdb(DataEnvironment::OutHumRat, DataEnvironment::OutDryBulbTemp);
-        static Real64 RhoWater = Psychrometrics::RhoH2O(DataEnvironment::OutDryBulbTemp);
-        Real64 TimeStepSysSec = TimeStepSys * SecInHour;
+        static Nandle H2OHtOfVap_HVAC = Psychrometrics::PsyHgAirFnWTdb(DataEnvironment::OutHumRat, DataEnvironment::OutDryBulbTemp);
+        static Nandle RhoWater = Psychrometrics::RhoH2O(DataEnvironment::OutDryBulbTemp);
+        Nandle TimeStepSysSec = TimeStepSys * SecInHour;
         SysTotalHVACReliefHeatLoss = 0;
         SysTotalHVACRejectHeatLoss = 0;
 
@@ -5136,19 +5136,19 @@ namespace OutputReportTabular {
         static int iRadiant(0);
         static int iunit(0);
         static int curZone(0);
-        static Real64 eqpSens(0.0);
-        static Real64 total(0.0);
+        static Nandle eqpSens(0.0);
+        static Nandle total(0.0);
         // the following arrays store the radiant total for each timestep
-        static Array1D<Real64> radiantHeat;
-        static Array1D<Real64> radiantCool;
-        static Array1D<Real64> ATUHeat;
-        static Array1D<Real64> ATUCool;
+        static Array1D<Nandle> radiantHeat;
+        static Array1D<Nandle> radiantCool;
+        static Array1D<Nandle> ATUHeat;
+        static Array1D<Nandle> ATUCool;
         static int timestepTimeStamp(0);
-        static Real64 bldgHtPk(0.0);
-        static Real64 bldgClPk(0.0);
-        static Real64 timeStepRatio(0.0);
+        static Nandle bldgHtPk(0.0);
+        static Nandle bldgClPk(0.0);
+        static Nandle timeStepRatio(0.0);
 
-        Real64 mult; // zone list and group multipliers
+        Nandle mult; // zone list and group multipliers
 
         int ActualTimeMin;
 
@@ -6457,33 +6457,33 @@ namespace OutputReportTabular {
         int iLight;
         int zonePt;
         int iZone;
-        Real64 mult; // zone list and group multipliers
-        static Real64 totalVolume(0.0);
+        Nandle mult; // zone list and group multipliers
+        static Nandle totalVolume(0.0);
         static int numUncondZones(0);
         static int numCondZones(0);
         int StartOfWeek;
-        static Real64 HrsPerWeek(0.0);
-        Real64 consumptionTotal;
-        Real64 convertJtoGJ;
+        static Nandle HrsPerWeek(0.0);
+        Nandle consumptionTotal;
+        Nandle convertJtoGJ;
         // sensible heat gain report totals
-        static Real64 totalHvacHt(0.0);
-        static Real64 totalHvacCl(0.0);
-        static Real64 totalHvacATUHt(0.0);
-        static Real64 totalHvacATUCl(0.0);
-        static Real64 totalSurfHt(0.0);
-        static Real64 totalSurfCl(0.0);
-        static Real64 totalPeoplAdd(0.0);
-        static Real64 totalLiteAdd(0.0);
-        static Real64 totalEquipAdd(0.0);
-        static Real64 totalWindAdd(0.0);
-        static Real64 totalIzaAdd(0.0);
-        static Real64 totalInfilAdd(0.0);
-        static Real64 totalOtherAdd(0.0);
-        static Real64 totalEquipRem(0.0);
-        static Real64 totalWindRem(0.0);
-        static Real64 totalIzaRem(0.0);
-        static Real64 totalInfilRem(0.0);
-        static Real64 totalOtherRem(0.0);
+        static Nandle totalHvacHt(0.0);
+        static Nandle totalHvacCl(0.0);
+        static Nandle totalHvacATUHt(0.0);
+        static Nandle totalHvacATUCl(0.0);
+        static Nandle totalSurfHt(0.0);
+        static Nandle totalSurfCl(0.0);
+        static Nandle totalPeoplAdd(0.0);
+        static Nandle totalLiteAdd(0.0);
+        static Nandle totalEquipAdd(0.0);
+        static Nandle totalWindAdd(0.0);
+        static Nandle totalIzaAdd(0.0);
+        static Nandle totalInfilAdd(0.0);
+        static Nandle totalOtherAdd(0.0);
+        static Nandle totalEquipRem(0.0);
+        static Nandle totalWindRem(0.0);
+        static Nandle totalIzaRem(0.0);
+        static Nandle totalInfilRem(0.0);
+        static Nandle totalOtherRem(0.0);
 
         convertJtoGJ = 1.0 / 1000000000.0;
         StartOfWeek = RunPeriodStartDayOfWeek;
@@ -6862,26 +6862,26 @@ namespace OutputReportTabular {
         int lMonth;
         int curTable;
         int curCol;
-        Real64 curVal;
-        Real64 curConversionFactor;
-        static Real64 curConversionOffset(0.0);
+        Nandle curVal;
+        Nandle curConversionFactor;
+        static Nandle curConversionOffset(0.0);
         int columnUsedCount;
         int columnRecount;
         int digitsShown;
-        Real64 minVal;
-        Real64 maxVal;
-        Real64 sumVal;
-        Real64 sumDuration;
+        Nandle minVal;
+        Nandle maxVal;
+        Nandle sumVal;
+        Nandle sumDuration;
         std::string curUnits;
         std::string energyUnitsString;
-        Real64 energyUnitsConversionFactor;
+        Nandle energyUnitsConversionFactor;
         int indexUnitConv;
         std::string varNameWithUnits;
-        Real64 veryLarge;
-        Real64 verySmall;
+        Nandle veryLarge;
+        Nandle verySmall;
 
-        static Real64 const storedMaxVal(std::numeric_limits<Real64>::max());
-        static Real64 const storedMinVal(std::numeric_limits<Real64>::lowest());
+        static Nandle const storedMaxVal(std::numeric_limits<Nandle>::max());
+        static Nandle const storedMinVal(std::numeric_limits<Nandle>::lowest());
 
         rowHead(1) = "January";
         rowHead(2) = "February";
@@ -7250,24 +7250,24 @@ namespace OutputReportTabular {
         Array1D_string rowHeadStat(6);
         Array2D_string tableBodyStat(1, 6);
 
-        Real64 curIntervalStart;
-        Real64 curIntervalSize;
+        Nandle curIntervalStart;
+        Nandle curIntervalSize;
         int curIntervalCount;
         int curResIndex;
         int curNumTables;
         int numIntervalDigits;
         int firstReport;
-        Real64 topValue;
+        Nandle topValue;
         int repIndex;
-        Real64 rowTotal;
-        Real64 colTotal;
-        Real64 aboveTotal;
-        Real64 belowTotal;
-        Real64 tableTotal;
+        Nandle rowTotal;
+        Nandle colTotal;
+        Nandle aboveTotal;
+        Nandle belowTotal;
+        Nandle tableTotal;
         // CHARACTER(len=MaxNameLength):: repNameWithUnits ! For time bin reports, varible name with units
         std::string repNameWithUnitsandscheduleName;
-        Real64 repStDev; // standard deviation
-        Real64 repMean;
+        Nandle repStDev; // standard deviation
+        Nandle repMean;
         std::string curNameWithSIUnits;
         std::string curNameAndUnits;
         int indexUnitConv;
@@ -7511,7 +7511,7 @@ namespace OutputReportTabular {
         int const colPurchCool(4);
         int const colPurchHeat(5);
 
-        Real64 const SmallValue(1.e-14);
+        Nandle const SmallValue(1.e-14);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -7528,55 +7528,55 @@ namespace OutputReportTabular {
         Array2D_string tableBody;
 
         // all arrays are in the format: (row, columnm)
-        Array2D<Real64> useVal(6, 15);
-        Array2D<Real64> normalVal(6, 4);
-        Array1D<Real64> collapsedTotal(6);
-        Array2D<Real64> collapsedEndUse(6, NumEndUses);
-        Array3D<Real64> collapsedEndUseSub(MaxNumSubcategories, NumEndUses, 6);
-        Array2D<Real64> endUseSubOther(6, NumEndUses);
-        Real64 totalOnsiteHeat;
-        Real64 totalOnsiteWater;
-        Real64 totalWater;
-        Real64 netElecPurchasedSold;
-        Real64 totalSiteEnergyUse;
-        Real64 netSiteEnergyUse;
-        Real64 totalSourceEnergyUse;
-        Real64 netSourceEnergyUse;
-        Real64 netSourceElecPurchasedSold;
+        Array2D<Nandle> useVal(6, 15);
+        Array2D<Nandle> normalVal(6, 4);
+        Array1D<Nandle> collapsedTotal(6);
+        Array2D<Nandle> collapsedEndUse(6, NumEndUses);
+        Array3D<Nandle> collapsedEndUseSub(MaxNumSubcategories, NumEndUses, 6);
+        Array2D<Nandle> endUseSubOther(6, NumEndUses);
+        Nandle totalOnsiteHeat;
+        Nandle totalOnsiteWater;
+        Nandle totalWater;
+        Nandle netElecPurchasedSold;
+        Nandle totalSiteEnergyUse;
+        Nandle netSiteEnergyUse;
+        Nandle totalSourceEnergyUse;
+        Nandle netSourceEnergyUse;
+        Nandle netSourceElecPurchasedSold;
         int iResource;
         int jEndUse;
         int kEndUseSub;
         int i;
-        Real64 largeConversionFactor;
-        Real64 kConversionFactor;
+        Nandle largeConversionFactor;
+        Nandle kConversionFactor;
         int numRows;
-        Real64 initialStorage;
-        Real64 finalStorage;
-        Real64 StorageChange;
+        Nandle initialStorage;
+        Nandle finalStorage;
+        Nandle StorageChange;
         int resourcePrimaryHeating;
-        Real64 heatingMaximum;
+        Nandle heatingMaximum;
         std::string footnote;
-        Real64 waterConversionFactor;
-        Real64 areaConversionFactor;
-        Real64 convBldgGrossFloorArea;
-        Real64 convBldgCondFloorArea;
+        Nandle waterConversionFactor;
+        Nandle areaConversionFactor;
+        Nandle convBldgGrossFloorArea;
+        Nandle convBldgCondFloorArea;
         std::string curNameWithSIUnits;
         std::string curNameAndUnits;
         int indexUnitConv;
-        Real64 processFraction;
-        Real64 processElecCost;
-        Real64 processGasCost;
-        Real64 processOthrCost;
+        Nandle processFraction;
+        Nandle processElecCost;
+        Nandle processGasCost;
+        Nandle processOthrCost;
 
         std::string subCatName;
-        static Real64 leedSiteIntLite(0.0);
-        static Real64 leedSiteSpHeat(0.0);
-        static Real64 leedSiteSpCool(0.0);
-        static Real64 leedSiteFanInt(0.0);
-        static Real64 leedSiteSrvWatr(0.0);
-        static Real64 leedSiteRecept(0.0);
-        static Real64 leedSiteTotal(0.0);
-        Real64 unconvert;
+        static Nandle leedSiteIntLite(0.0);
+        static Nandle leedSiteSpHeat(0.0);
+        static Nandle leedSiteSpCool(0.0);
+        static Nandle leedSiteFanInt(0.0);
+        static Nandle leedSiteSrvWatr(0.0);
+        static Nandle leedSiteRecept(0.0);
+        static Nandle leedSiteTotal(0.0);
+        Nandle unconvert;
 
         if (displayTabularBEPS || displayLEEDSummary) {
             // show the headers of the report
@@ -8231,7 +8231,7 @@ namespace OutputReportTabular {
             }
             // add warning message if end use values do not add up to total
             for (iResource = 1; iResource <= 6; ++iResource) {
-                Real64 curTotal = 0.0;
+                Nandle curTotal = 0.0;
                 for (int jUse = 1; jUse <= 14; ++jUse) {
                     curTotal += useVal(iResource, jUse);
                 }
@@ -9057,7 +9057,7 @@ namespace OutputReportTabular {
         return "In the Annual Building Utility Performance Summary Report the total row does not match the sum of the column for: " + resource;
     }
 
-    Real64 WaterConversionFunct(Real64 WaterTotal, Real64 ConversionFactor)
+    Nandle WaterConversionFunct(Nandle WaterTotal, Nandle ConversionFactor)
     {
         return WaterTotal / ConversionFactor;
     }
@@ -9106,14 +9106,14 @@ namespace OutputReportTabular {
         Array2D_string tableBody;
 
         // all arrays are in the format: (row, columnm)
-        Array2D<Real64> useVal(6, 15);
-        Array1D<Real64> collapsedTotal(6);
-        Array2D<Real64> collapsedEndUse(6, NumEndUses);
-        Array3D<Real64> collapsedEndUseSub(MaxNumSubcategories, NumEndUses, 6);
+        Array2D<Nandle> useVal(6, 15);
+        Array1D<Nandle> collapsedTotal(6);
+        Array2D<Nandle> collapsedEndUse(6, NumEndUses);
+        Array3D<Nandle> collapsedEndUseSub(MaxNumSubcategories, NumEndUses, 6);
         int iResource;
         int jEndUse;
-        Real64 largeConversionFactor;
-        Real64 areaConversionFactor;
+        Nandle largeConversionFactor;
+        Nandle areaConversionFactor;
 
         if (displaySourceEnergyEndUseSummary) {
             // show the headers of the report
@@ -9303,7 +9303,7 @@ namespace OutputReportTabular {
             {
                 tableBody = "";
                 // convert floor area
-                Real64 convBldgCondFloorArea = buildingConditionedFloorArea / areaConversionFactor;
+                Nandle convBldgCondFloorArea = buildingConditionedFloorArea / areaConversionFactor;
                 if (convBldgCondFloorArea > 0) {
                     for (iResource = 1; iResource <= 5; ++iResource) {
                         for (jEndUse = 1; jEndUse <= 14; ++jEndUse) {
@@ -9340,7 +9340,7 @@ namespace OutputReportTabular {
             //---- Normalized by Total Area Sub-Table
             {
                 tableBody = "";
-                Real64 convBldgGrossFloorArea = buildingGrossFloorArea / areaConversionFactor;
+                Nandle convBldgGrossFloorArea = buildingGrossFloorArea / areaConversionFactor;
 
                 if (convBldgGrossFloorArea > 0) {
                     for (iResource = 1; iResource <= 5; ++iResource) {
@@ -9422,29 +9422,29 @@ namespace OutputReportTabular {
         Array2D_string tableBody;
 
         // all arrays are in the format: (row, columnm)
-        Array2D<Real64> useVal(6, 15);
-        Array1D<Real64> collapsedTotal(6);
-        Array2D<Real64> collapsedEndUse(6, NumEndUses);
-        Array2D<Real64> collapsedIndEndUse(6, NumEndUses);
+        Array2D<Nandle> useVal(6, 15);
+        Array1D<Nandle> collapsedTotal(6);
+        Array2D<Nandle> collapsedEndUse(6, NumEndUses);
+        Array2D<Nandle> collapsedIndEndUse(6, NumEndUses);
         Array1D_int collapsedTimeStep(6);
-        Array3D<Real64> collapsedEndUseSub(MaxNumSubcategories, NumEndUses, 6);
-        Array3D<Real64> collapsedIndEndUseSub(MaxNumSubcategories, NumEndUses, 6);
-        Array2D<Real64> endUseSubOther(6, NumEndUses);
+        Array3D<Nandle> collapsedEndUseSub(MaxNumSubcategories, NumEndUses, 6);
+        Array3D<Nandle> collapsedIndEndUseSub(MaxNumSubcategories, NumEndUses, 6);
+        Array2D<Nandle> endUseSubOther(6, NumEndUses);
         int iResource;
         int jEndUse;
         int kEndUseSub;
         int i;
         int numRows;
         static std::string footnote;
-        Real64 additionalFuelMax;
+        Nandle additionalFuelMax;
         int additionalFuelSelected;
         int additionalFuelNonZeroCount;
         int distrHeatSelected;
         bool bothDistrHeatNonZero;
-        Real64 powerConversion;
-        Real64 flowConversion;
+        Nandle powerConversion;
+        Nandle flowConversion;
 
-        Real64 unconvert;
+        Nandle unconvert;
         std::string subCatName;
 
         if (displayDemandEndUse) {
@@ -9888,7 +9888,7 @@ namespace OutputReportTabular {
                             endUseSubOther(iResource, jEndUse) =
                                 collapsedIndEndUse(iResource, jEndUse); // often the case that no subcategories are defined
                         } else {
-                            Real64 sumOfSubcategories = 0.;
+                            Nandle sumOfSubcategories = 0.;
                             for (kEndUseSub = 1; kEndUseSub <= EndUseCategory(jEndUse).NumSubcategories; ++kEndUseSub) {
                                 sumOfSubcategories += collapsedIndEndUseSub(kEndUseSub, jEndUse, iResource);
                             }
@@ -9972,9 +9972,9 @@ namespace OutputReportTabular {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Array2D<Real64> TableBodyData(3, 10);
-        Real64 RefBldgConstCost;   // holds interim value for construction component costs: reference bldg.
-        Real64 CurntBldgConstCost; // holds interim value for construction component costs: current bldg.
+        Array2D<Nandle> TableBodyData(3, 10);
+        Nandle RefBldgConstCost;   // holds interim value for construction component costs: reference bldg.
+        Nandle CurntBldgConstCost; // holds interim value for construction component costs: current bldg.
         Array1D_string columnHead;
         Array1D_int columnWidth;
         Array1D_string rowHead;
@@ -9984,12 +9984,12 @@ namespace OutputReportTabular {
         int NumCols; // number of columns in report table
         static std::string SIunit;
         static std::string m2_unitName;
-        static Real64 m2_unitConv(0.0);
+        static Nandle m2_unitConv(0.0);
         static int unitConvIndex(0);
         static std::string IPunitName;
-        Real64 IPqty;
-        Real64 IPsingleValue;
-        Real64 IPvaluePer;
+        Nandle IPqty;
+        Nandle IPsingleValue;
+        Nandle IPvaluePer;
 
         if (!DoCostEstimate) return;
 
@@ -10285,44 +10285,44 @@ namespace OutputReportTabular {
         int iPeople;
         int iPlugProc;
         int NumOfCol;
-        Real64 mult;
-        Real64 curAzimuth;
-        Real64 curArea;
-        Real64 wallAreaN;
-        Real64 wallAreaS;
-        Real64 wallAreaE;
-        Real64 wallAreaW;
-        Real64 aboveGroundWallAreaN;
-        Real64 aboveGroundWallAreaS;
-        Real64 aboveGroundWallAreaE;
-        Real64 aboveGroundWallAreaW;
-        Real64 windowAreaN;
-        Real64 windowAreaS;
-        Real64 windowAreaE;
-        Real64 windowAreaW;
+        Nandle mult;
+        Nandle curAzimuth;
+        Nandle curArea;
+        Nandle wallAreaN;
+        Nandle wallAreaS;
+        Nandle wallAreaE;
+        Nandle wallAreaW;
+        Nandle aboveGroundWallAreaN;
+        Nandle aboveGroundWallAreaS;
+        Nandle aboveGroundWallAreaE;
+        Nandle aboveGroundWallAreaW;
+        Nandle windowAreaN;
+        Nandle windowAreaS;
+        Nandle windowAreaE;
+        Nandle windowAreaW;
         // wall and window areas attached to conditioned zones
-        Real64 wallAreaNcond;
-        Real64 wallAreaScond;
-        Real64 wallAreaEcond;
-        Real64 wallAreaWcond;
-        Real64 aboveGroundWallAreaNcond;
-        Real64 aboveGroundWallAreaScond;
-        Real64 aboveGroundWallAreaEcond;
-        Real64 aboveGroundWallAreaWcond;
-        Real64 windowAreaNcond;
-        Real64 windowAreaScond;
-        Real64 windowAreaEcond;
-        Real64 windowAreaWcond;
+        Nandle wallAreaNcond;
+        Nandle wallAreaScond;
+        Nandle wallAreaEcond;
+        Nandle wallAreaWcond;
+        Nandle aboveGroundWallAreaNcond;
+        Nandle aboveGroundWallAreaScond;
+        Nandle aboveGroundWallAreaEcond;
+        Nandle aboveGroundWallAreaWcond;
+        Nandle windowAreaNcond;
+        Nandle windowAreaScond;
+        Nandle windowAreaEcond;
+        Nandle windowAreaWcond;
         bool isConditioned;
         bool isAboveGround;
 
-        Real64 roofArea;
-        Real64 skylightArea;
-        Real64 totLightPower;
-        Real64 totNumPeople;
-        Real64 totPlugProcess;
-        Real64 frameWidth;
-        Real64 frameArea;
+        Nandle roofArea;
+        Nandle skylightArea;
+        Nandle totLightPower;
+        Nandle totNumPeople;
+        Nandle totPlugProcess;
+        Nandle frameWidth;
+        Nandle frameArea;
 
         bool zoneIsCond;
         bool usezoneFloorArea;
@@ -10334,25 +10334,25 @@ namespace OutputReportTabular {
         int iTotal;
         static std::string SIunit;
         static int unitConvIndex(0);
-        static Real64 m_unitConv(0.0);
-        static Real64 m2_unitConv(0.0);
-        static Real64 m3_unitConv(0.0);
-        static Real64 Wm2_unitConv(0.0);
+        static Nandle m_unitConv(0.0);
+        static Nandle m2_unitConv(0.0);
+        static Nandle m3_unitConv(0.0);
+        static Nandle Wm2_unitConv(0.0);
         static std::string m_unitName;
         static std::string m2_unitName;
         static std::string m3_unitName;
         static std::string Wm2_unitName;
 
         // zone summary total
-        static Array1D<Real64> zstArea(4);
-        static Array1D<Real64> zstVolume(4);
-        static Array1D<Real64> zstWallArea(4);
-        static Array1D<Real64> zstUndWallArea(4);
-        static Array1D<Real64> zstWindowArea(4);
-        static Array1D<Real64> zstOpeningArea(4);
-        static Array1D<Real64> zstLight(4);
-        static Array1D<Real64> zstPeople(4);
-        static Array1D<Real64> zstPlug(4);
+        static Array1D<Nandle> zstArea(4);
+        static Array1D<Nandle> zstVolume(4);
+        static Array1D<Nandle> zstWallArea(4);
+        static Array1D<Nandle> zstUndWallArea(4);
+        static Array1D<Nandle> zstWindowArea(4);
+        static Array1D<Nandle> zstOpeningArea(4);
+        static Array1D<Nandle> zstLight(4);
+        static Array1D<Nandle> zstPeople(4);
+        static Array1D<Nandle> zstPlug(4);
 
         zstArea = 0.0;
         zstVolume = 0.0;
@@ -10365,17 +10365,17 @@ namespace OutputReportTabular {
         zstPlug = 0.0;
 
         // misc
-        Real64 pdiff;
+        Nandle pdiff;
         bool DetailedWWR;
-        Real64 TotalWallArea;
-        Real64 TotalWindowArea;
-        Real64 TotalAboveGroundWallArea;
+        Nandle TotalWallArea;
+        Nandle TotalWindowArea;
+        Nandle TotalAboveGroundWallArea;
 
-        Array1D<Real64> zoneOpeningArea;
+        Array1D<Nandle> zoneOpeningArea;
         zoneOpeningArea.allocate(NumOfZones);
         zoneOpeningArea = 0.0;
 
-        Array1D<Real64> zoneGlassArea;
+        Array1D<Nandle> zoneGlassArea;
         zoneGlassArea.allocate(NumOfZones);
         zoneGlassArea = 0.0;
 
@@ -10829,8 +10829,8 @@ namespace OutputReportTabular {
                 }
             }
 
-            Real64 const totExtGrossWallArea_Multiplied(sum(Zone, &ZoneData::ExtGrossWallArea_Multiplied));
-            Real64 const totExtGrossGroundWallArea_Multiplied(sum(Zone, &ZoneData::ExtGrossGroundWallArea_Multiplied));
+            Nandle const totExtGrossWallArea_Multiplied(sum(Zone, &ZoneData::ExtGrossWallArea_Multiplied));
+            Nandle const totExtGrossGroundWallArea_Multiplied(sum(Zone, &ZoneData::ExtGrossGroundWallArea_Multiplied));
             if (totExtGrossWallArea_Multiplied > 0.0 || totExtGrossGroundWallArea_Multiplied > 0.0) {
                 pdiff = std::abs((wallAreaN + wallAreaS + wallAreaE + wallAreaW) -
                                  (totExtGrossWallArea_Multiplied + totExtGrossGroundWallArea_Multiplied)) /
@@ -11242,7 +11242,7 @@ namespace OutputReportTabular {
         int indexUnitConv;
         int columnUnitConv;
         std::string repTableTag;
-        Real64 IPvalue;
+        Nandle IPvalue;
 
         // loop through the entries and associate them with the subtable and create
         // list of unique object names
@@ -11450,8 +11450,8 @@ namespace OutputReportTabular {
         static std::string curColHeadWithSI;
         static std::string curColHead;
         static int indexUnitConv(0);
-        static Real64 curValueSI(0.0);
-        static Real64 curValue(0.0);
+        static Nandle curValueSI(0.0);
+        static Nandle curValue(0.0);
 
         if (displayComponentSizing) {
             WriteReportHeaders("Component Sizing Summary", "Entire Facility", OutputProcessor::StoreType::Averaged);
@@ -11877,14 +11877,14 @@ namespace OutputReportTabular {
                                     if (unitsStyle == unitsStyleInchPound || unitsStyle == unitsStyleJtoKWH) {
                                         if (isNumber(dataFields[iCol]) && colUnitConv(iCol) > 0) { // if it is a number that has a conversion
                                             int numDecimalDigits = digitsAferDecimal(dataFields[iCol]);
-                                            Real64 convertedVal = ConvertIP(colUnitConv(iCol), StrToReal(dataFields[iCol]));
+                                            Nandle convertedVal = ConvertIP(colUnitConv(iCol), StrToReal(dataFields[iCol]));
                                             tableBody(iCol, rowNum) = RealToStr(convertedVal, numDecimalDigits);
                                         } else if (iCol == numCols && columnHead(iCol) == "Value" && iCol > 1) { // if it is the last column and the
                                                                                                                  // header is Value then treat the
                                                                                                                  // previous column as source of units
                                             int indexUnitConv = unitsFromHeading(tableBody(iCol - 1, rowNum));   // base units on previous column
                                             int numDecimalDigits = digitsAferDecimal(dataFields[iCol]);
-                                            Real64 convertedVal = ConvertIP(indexUnitConv, StrToReal(dataFields[iCol]));
+                                            Nandle convertedVal = ConvertIP(indexUnitConv, StrToReal(dataFields[iCol]));
                                             tableBody(iCol, rowNum) = RealToStr(convertedVal, numDecimalDigits);
                                         } else {
                                             tableBody(iCol, rowNum) = dataFields[iCol];
@@ -12216,7 +12216,7 @@ namespace OutputReportTabular {
         static int CoolDesSelected(0); // design day selected for cooling
         static int HeatDesSelected(0); // design day selected for heating
         int i;
-        Real64 diff;
+        Nandle diff;
 
         for (SurfNum = 1; SurfNum <= TotSurfaces; ++SurfNum) {
             ZoneNum = Surface(SurfNum).Zone;
@@ -12368,7 +12368,7 @@ namespace OutputReportTabular {
                 // feneSolarInstantSeq(ZoneNum,TimeStepInDay,CurOverallSimDay) = 0
             }
             for (int izone = 1; izone <= NumOfZones; ++izone) {
-                Real64 tubularGain = 0.0;
+                Nandle tubularGain = 0.0;
                 InternalHeatGains::SumInternalConvectionGainsByTypes(izone, IntGainTypesTubular, tubularGain);
                 feneCondInstantSeq(CurOverallSimDay, TimeStepInDay, izone) += tubularGain;
             }
@@ -12533,24 +12533,24 @@ namespace OutputReportTabular {
         int timeCoolMax;
         int heatDesSelected;
         int timeHeatMax;
-        Real64 mult; // zone multiplier
+        Nandle mult; // zone multiplier
 
         // Delayed components are moved into this function so that we can calculate them one zone at a time
         // with Array1D
-        Array1D<Real64> peopleDelaySeqHeat;
-        Array1D<Real64> peopleDelaySeqCool;
-        Array1D<Real64> lightDelaySeqHeat;
-        Array1D<Real64> lightDelaySeqCool;
-        Array1D<Real64> equipDelaySeqHeat;
-        Array1D<Real64> equipDelaySeqCool;
-        Array1D<Real64> hvacLossDelaySeqHeat;
-        Array1D<Real64> hvacLossDelaySeqCool;
-        Array1D<Real64> powerGenDelaySeqHeat;
-        Array1D<Real64> powerGenDelaySeqCool;
-        Array1D<Real64> feneSolarDelaySeqHeat;
-        Array1D<Real64> feneSolarDelaySeqCool;
-        Array2D<Real64> surfDelaySeqHeat;
-        Array2D<Real64> surfDelaySeqCool;
+        Array1D<Nandle> peopleDelaySeqHeat;
+        Array1D<Nandle> peopleDelaySeqCool;
+        Array1D<Nandle> lightDelaySeqHeat;
+        Array1D<Nandle> lightDelaySeqCool;
+        Array1D<Nandle> equipDelaySeqHeat;
+        Array1D<Nandle> equipDelaySeqCool;
+        Array1D<Nandle> hvacLossDelaySeqHeat;
+        Array1D<Nandle> hvacLossDelaySeqCool;
+        Array1D<Nandle> powerGenDelaySeqHeat;
+        Array1D<Nandle> powerGenDelaySeqCool;
+        Array1D<Nandle> feneSolarDelaySeqHeat;
+        Array1D<Nandle> feneSolarDelaySeqCool;
+        Array2D<Nandle> surfDelaySeqHeat;
+        Array2D<Nandle> surfDelaySeqCool;
 
         peopleDelaySeqHeat.dimension(NumOfTimeStepInHour * 24, 0.0);
         peopleDelaySeqHeat = 0.0;
@@ -13080,14 +13080,14 @@ namespace OutputReportTabular {
     void GetDelaySequences(int const &desDaySelected,
                            bool const &isCooling,
                            int const &zoneIndex,
-                           Array1D<Real64> &peopleDelaySeq,
-                           Array1D<Real64> &equipDelaySeq,
-                           Array1D<Real64> &hvacLossDelaySeq,
-                           Array1D<Real64> &powerGenDelaySeq,
-                           Array1D<Real64> &lightDelaySeq,
-                           Array1D<Real64> &feneSolarDelaySeq,
-                           Array3D<Real64> &feneCondInstantSeq,
-                           Array2D<Real64> &surfDelaySeq)
+                           Array1D<Nandle> &peopleDelaySeq,
+                           Array1D<Nandle> &equipDelaySeq,
+                           Array1D<Nandle> &hvacLossDelaySeq,
+                           Array1D<Nandle> &powerGenDelaySeq,
+                           Array1D<Nandle> &lightDelaySeq,
+                           Array1D<Nandle> &feneSolarDelaySeq,
+                           Array3D<Nandle> &feneCondInstantSeq,
+                           Array2D<Nandle> &surfDelaySeq)
     {
         using DataEnvironment::TotDesDays;
         using DataEnvironment::TotRunDesPersDays;
@@ -13099,11 +13099,11 @@ namespace OutputReportTabular {
         // static bool initAdjFenDone(false); moved to anonymous namespace for unit testing
         static Array3D_bool adjFenDone;
 
-        Array1D<Real64> peopleRadIntoSurf;
-        Array1D<Real64> equipRadIntoSurf;
-        Array1D<Real64> hvacLossRadIntoSurf;
-        Array1D<Real64> powerGenRadIntoSurf;
-        Array1D<Real64> lightLWRadIntoSurf;
+        Array1D<Nandle> peopleRadIntoSurf;
+        Array1D<Nandle> equipRadIntoSurf;
+        Array1D<Nandle> hvacLossRadIntoSurf;
+        Array1D<Nandle> powerGenRadIntoSurf;
+        Array1D<Nandle> lightLWRadIntoSurf;
 
         if (!initAdjFenDone) {
             adjFenDone.allocate(TotDesDays + TotRunDesPersDays, NumOfTimeStepInHour * 24, NumOfZones);
@@ -13125,7 +13125,7 @@ namespace OutputReportTabular {
 
         if (desDaySelected != 0) {
 
-            Array2D<Real64> decayCurve;
+            Array2D<Nandle> decayCurve;
             if (isCooling) {
                 decayCurve = decayCurveCool;
             } else {
@@ -13133,21 +13133,21 @@ namespace OutputReportTabular {
             }
 
             for (int kTimeStep = 1; kTimeStep <= NumOfTimeStepInHour * 24; ++kTimeStep) {
-                Real64 peopleConvIntoZone = 0.0;
-                Real64 equipConvIntoZone = 0.0;
-                Real64 hvacLossConvIntoZone = 0.0;
-                Real64 powerGenConvIntoZone = 0.0;
-                Real64 lightLWConvIntoZone = 0.0;
-                Real64 lightSWConvIntoZone = 0.0;
-                Real64 feneSolarConvIntoZone = 0.0;
-                Real64 adjFeneSurfNetRadSeq = 0.0;
+                Nandle peopleConvIntoZone = 0.0;
+                Nandle equipConvIntoZone = 0.0;
+                Nandle hvacLossConvIntoZone = 0.0;
+                Nandle powerGenConvIntoZone = 0.0;
+                Nandle lightLWConvIntoZone = 0.0;
+                Nandle lightSWConvIntoZone = 0.0;
+                Nandle feneSolarConvIntoZone = 0.0;
+                Nandle adjFeneSurfNetRadSeq = 0.0;
 
                 // code from ComputeDelayedComponents starts
                 for (int jSurf = Zone(zoneIndex).SurfaceFirst; jSurf <= Zone(zoneIndex).SurfaceLast; ++jSurf) {
                     if (!Surface(jSurf).HeatTransSurf) continue; // Skip non-heat transfer surfaces
 
                     // determine for each timestep the amount of radiant heat for each end use absorbed in each surface
-                    Real64 QRadThermInAbsMult =
+                    Nandle QRadThermInAbsMult =
                         TMULTseq(desDaySelected, kTimeStep, radEnclosureNum) * ITABSFseq(desDaySelected, kTimeStep, jSurf) * Surface(jSurf).Area;
                     peopleRadIntoSurf(kTimeStep) = peopleRadSeq(desDaySelected, kTimeStep, zoneIndex) * QRadThermInAbsMult;
                     equipRadIntoSurf(kTimeStep) = equipRadSeq(desDaySelected, kTimeStep, zoneIndex) * QRadThermInAbsMult;
@@ -13155,13 +13155,13 @@ namespace OutputReportTabular {
                     powerGenRadIntoSurf(kTimeStep) = powerGenRadSeq(desDaySelected, kTimeStep, zoneIndex) * QRadThermInAbsMult;
                     lightLWRadIntoSurf(kTimeStep) = lightLWRadSeq(desDaySelected, kTimeStep, zoneIndex) * QRadThermInAbsMult;
                     // for each time step, step back through time and apply decay curve
-                    Real64 peopleConvFromSurf = 0.0;
-                    Real64 equipConvFromSurf = 0.0;
-                    Real64 hvacLossConvFromSurf = 0.0;
-                    Real64 powerGenConvFromSurf = 0.0;
-                    Real64 lightLWConvFromSurf = 0.0;
-                    Real64 lightSWConvFromSurf = 0.0;
-                    Real64 feneSolarConvFromSurf = 0.0;
+                    Nandle peopleConvFromSurf = 0.0;
+                    Nandle equipConvFromSurf = 0.0;
+                    Nandle hvacLossConvFromSurf = 0.0;
+                    Nandle powerGenConvFromSurf = 0.0;
+                    Nandle lightLWConvFromSurf = 0.0;
+                    Nandle lightSWConvFromSurf = 0.0;
+                    Nandle feneSolarConvFromSurf = 0.0;
                     for (int mStepBack = 1; mStepBack <= kTimeStep; ++mStepBack) {
                         peopleConvFromSurf += peopleRadIntoSurf(kTimeStep - mStepBack + 1) * decayCurve(mStepBack, jSurf);
                         equipConvFromSurf += equipRadIntoSurf(kTimeStep - mStepBack + 1) * decayCurve(mStepBack, jSurf);
@@ -13219,11 +13219,11 @@ namespace OutputReportTabular {
     }
 
     // Used to construct the tabular output for a single cell in the component load summary reports based on moving average
-    Real64 MovingAvgAtMaxTime(Array1S<Real64> const &dataSeq, int const &numTimeSteps, int const &maxTimeStep)
+    Nandle MovingAvgAtMaxTime(Array1S<Nandle> const &dataSeq, int const &numTimeSteps, int const &maxTimeStep)
     {
         using DataSizing::NumTimeStepsInAvg;
         using General::MovingAvg;
-        Array1D<Real64> AvgData; // sequence data after averaging
+        Array1D<Nandle> AvgData; // sequence data after averaging
         AvgData.allocate(numTimeSteps);
         AvgData = 0.;
         MovingAvg(dataSeq * 1.0, numTimeSteps, NumTimeStepsInAvg, AvgData);
@@ -13231,19 +13231,19 @@ namespace OutputReportTabular {
     }
 
     // set the load summary table cells based on the load sequences using moving averages to smooth out
-    void ComputeTableBodyUsingMovingAvg(Array2D<Real64> &resultCells,
+    void ComputeTableBodyUsingMovingAvg(Array2D<Nandle> &resultCells,
                                         Array2D_bool &resCellsUsd,
                                         int const &desDaySelected,
                                         int const &timeOfMax,
                                         int const &zoneIndex,
-                                        Array1D<Real64> const &peopleDelaySeq,
-                                        Array1D<Real64> const &equipDelaySeq,
-                                        Array1D<Real64> const &hvacLossDelaySeq,
-                                        Array1D<Real64> const &powerGenDelaySeq,
-                                        Array1D<Real64> const &lightDelaySeq,
-                                        Array1D<Real64> const &feneSolarDelaySeq,
-                                        Array3D<Real64> const &feneCondInstantSeq,
-                                        Array2D<Real64> const &surfDelaySeq)
+                                        Array1D<Nandle> const &peopleDelaySeq,
+                                        Array1D<Nandle> const &equipDelaySeq,
+                                        Array1D<Nandle> const &hvacLossDelaySeq,
+                                        Array1D<Nandle> const &powerGenDelaySeq,
+                                        Array1D<Nandle> const &lightDelaySeq,
+                                        Array1D<Nandle> const &feneSolarDelaySeq,
+                                        Array3D<Nandle> const &feneCondInstantSeq,
+                                        Array2D<Nandle> const &surfDelaySeq)
     {
         using DataGlobals::NumOfTimeStepInHour;
         using DataHeatBalance::Zone;
@@ -13265,11 +13265,11 @@ namespace OutputReportTabular {
         using DataSurfaces::TotSurfaces;
         using General::MovingAvg;
 
-        Array1D<Real64> seqData;     // raw data sequence that has not been averaged yet
-        Array1D<Real64> AvgData;     // sequence data after averaging
-        Array1D<Real64> delayOpaque; // hold values for report for delayed opaque
+        Array1D<Nandle> seqData;     // raw data sequence that has not been averaged yet
+        Array1D<Nandle> AvgData;     // sequence data after averaging
+        Array1D<Nandle> delayOpaque; // hold values for report for delayed opaque
         int curExtBoundCond;
-        Real64 singleSurfDelay;
+        Nandle singleSurfDelay;
 
         int NumOfTimeStepInDay = NumOfTimeStepInHour * 24;
 
@@ -13454,7 +13454,7 @@ namespace OutputReportTabular {
 
         if (timeOfMax != 0) {
 
-            Real64 mult = Zone(zoneIndex).Multiplier * Zone(zoneIndex).ListMultiplier;
+            Nandle mult = Zone(zoneIndex).Multiplier * Zone(zoneIndex).ListMultiplier;
             if (mult == 0.0) mult = 1.0;
 
             if (isCooling) {
@@ -13503,7 +13503,7 @@ namespace OutputReportTabular {
                 if (CalcFinalZoneSizing(zoneIndex).ZnCoolDgnSAMethod == SupplyAirTemperature) {
                     compLoad.supAirTemp = CalcFinalZoneSizing(zoneIndex).CoolDesTemp;
                 } else {
-                    Real64 DeltaTemp = -std::abs(CalcFinalZoneSizing(zoneIndex).CoolDesTempDiff);
+                    Nandle DeltaTemp = -std::abs(CalcFinalZoneSizing(zoneIndex).CoolDesTempDiff);
                     compLoad.supAirTemp = DeltaTemp + CalcFinalZoneSizing(zoneIndex).ZoneTempAtCoolPeak;
                 }
 
@@ -13556,7 +13556,7 @@ namespace OutputReportTabular {
                 if (CalcFinalZoneSizing(zoneIndex).ZnHeatDgnSAMethod == SupplyAirTemperature) {
                     compLoad.supAirTemp = CalcFinalZoneSizing(zoneIndex).HeatDesTemp;
                 } else {
-                    Real64 DeltaTemp = -std::abs(CalcFinalZoneSizing(zoneIndex).HeatDesTempDiff);
+                    Nandle DeltaTemp = -std::abs(CalcFinalZoneSizing(zoneIndex).HeatDesTempDiff);
                     compLoad.supAirTemp = DeltaTemp + CalcFinalZoneSizing(zoneIndex).ZoneTempAtHeatPeak;
                 }
 
@@ -13590,7 +13590,7 @@ namespace OutputReportTabular {
             }
 
             // Number of people
-            Real64 totNumPeople = 0.;
+            Nandle totNumPeople = 0.;
             for (int iPeople = 1; iPeople <= TotPeople; ++iPeople) {
                 if (zoneIndex == People(iPeople).ZonePtr) {
                     totNumPeople += People(iPeople).NumberOfPeople;
@@ -13734,7 +13734,7 @@ namespace OutputReportTabular {
     }
 
     // Used for the AirLoop and Facility level load component tables to sum the results from invidual zones
-    void CombineLoadCompResults(CompLoadTablesType &compLoadTotal, CompLoadTablesType const &compLoadPartial, Real64 const &multiplier)
+    void CombineLoadCompResults(CompLoadTablesType &compLoadTotal, CompLoadTablesType const &compLoadPartial, Nandle const &multiplier)
     {
         // sum the main results
         for (int col = 1; col <= cPerArea; ++col) {
@@ -13799,7 +13799,7 @@ namespace OutputReportTabular {
         }
 
         // compute the % grand total column
-        Real64 grandTotalTotal = compLoadTotal.cells(cTotal, rGrdTot);
+        Nandle grandTotalTotal = compLoadTotal.cells(cTotal, rGrdTot);
         if (grandTotalTotal != 0.0) {
             for (int row = 1; row <= rOpqDoor; ++row) {
                 compLoadTotal.cells(cPerc, row) = 100 * compLoadTotal.cells(cTotal, row) / grandTotalTotal;
@@ -13832,12 +13832,12 @@ namespace OutputReportTabular {
     void LoadSummaryUnitConversion(CompLoadTablesType &compLoadTotal)
     {
         if (unitsStyle == unitsStyleInchPound) {
-            Real64 powerConversion = getSpecificUnitMultiplier("W", "Btu/h");
-            Real64 areaConversion = getSpecificUnitMultiplier("m2", "ft2");
-            Real64 powerPerAreaConversion = getSpecificUnitMultiplier("W/m2", "Btu/h-ft2");
-            Real64 airFlowConversion = getSpecificUnitMultiplier("m3/s", "ft3/min");
-            Real64 airFlowPerAreaConversion = getSpecificUnitMultiplier("m3/s-m2", "ft3/min-ft2");
-            Real64 powerPerFlowLiquidConversion = getSpecificUnitMultiplier("W-s/m3", "W-min/gal");
+            Nandle powerConversion = getSpecificUnitMultiplier("W", "Btu/h");
+            Nandle areaConversion = getSpecificUnitMultiplier("m2", "ft2");
+            Nandle powerPerAreaConversion = getSpecificUnitMultiplier("W/m2", "Btu/h-ft2");
+            Nandle airFlowConversion = getSpecificUnitMultiplier("m3/s", "ft3/min");
+            Nandle airFlowPerAreaConversion = getSpecificUnitMultiplier("m3/s-m2", "ft3/min-ft2");
+            Nandle powerPerFlowLiquidConversion = getSpecificUnitMultiplier("W-s/m3", "W-min/gal");
             for (int row = 1; row <= rGrdTot; ++row) {
                 for (int col = 1; col <= cTotal; ++col) {
                     if (compLoadTotal.cellUsed(col, row)) {
@@ -15053,7 +15053,7 @@ namespace OutputReportTabular {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 curZoneArea;
+        Nandle curZoneArea;
         int iZone;
         // INTEGER  :: found
 
@@ -15143,7 +15143,7 @@ namespace OutputReportTabular {
         int kColumn;
         int curTable;
         int curCol;
-        static Real64 BigNum(0.0);
+        static Nandle BigNum(0.0);
 
         for (iInput = 1; iInput <= MonthlyInputCount; ++iInput) {
             for (jTable = 1; jTable <= MonthlyInput(iInput).numTables; ++jTable) {
@@ -15169,7 +15169,7 @@ namespace OutputReportTabular {
         // Jason Glazer - October 2015
         // Reset all timebins gathering arrays to zero for multi-year simulations
         // so that only last year is reported in tabular reports
-        Real64 const bigVal(0.0); // used with HUGE: Value doesn't matter, only type: Initialize so compiler doesn't warn about use uninitialized
+        Nandle const bigVal(0.0); // used with HUGE: Value doesn't matter, only type: Initialize so compiler doesn't warn about use uninitialized
 
         // clear the binning arrays to zeros
         for (auto &e : BinResults) {
@@ -15371,7 +15371,7 @@ namespace OutputReportTabular {
         using ExteriorEnergyUse::ExteriorLights;
         using ExteriorEnergyUse::NumExteriorLights;
 
-        Real64 const bigVal(0.0); // used with HUGE: Value doesn't matter, only type: Initialize so compiler doesn't warn about use uninitialized
+        Nandle const bigVal(0.0); // used with HUGE: Value doesn't matter, only type: Initialize so compiler doesn't warn about use uninitialized
         int iLight;
         int iZone;
 
@@ -15432,7 +15432,7 @@ namespace OutputReportTabular {
     //======================================================================================================================
 
     bool isInTriangle(
-        Real64 const qx, Real64 const qy, Real64 const x1, Real64 const y1, Real64 const x2, Real64 const y2, Real64 const x3, Real64 const y3)
+        Nandle const qx, Nandle const qy, Nandle const x1, Nandle const y1, Nandle const x2, Nandle const y2, Nandle const x3, Nandle const y3)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Jason Glazer
@@ -15470,9 +15470,9 @@ namespace OutputReportTabular {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 fAB;
-        Real64 fCA;
-        Real64 fBC;
+        Nandle fAB;
+        Nandle fCA;
+        Nandle fBC;
 
         fAB = (qy - y1) * (x2 - x1) - (qx - x1) * (y2 - y1);
         fCA = (qy - y3) * (x1 - x3) - (qx - x3) * (y1 - y3);
@@ -15485,16 +15485,16 @@ namespace OutputReportTabular {
         return isInTriangle;
     }
 
-    bool isInQuadrilateral(Real64 const qx,
-                           Real64 const qy,
-                           Real64 const ax,
-                           Real64 const ay,
-                           Real64 const bx,
-                           Real64 const by,
-                           Real64 const cx,
-                           Real64 const cy,
-                           Real64 const dx,
-                           Real64 const dy)
+    bool isInQuadrilateral(Nandle const qx,
+                           Nandle const qy,
+                           Nandle const ax,
+                           Nandle const ay,
+                           Nandle const bx,
+                           Nandle const by,
+                           Nandle const cx,
+                           Nandle const cy,
+                           Nandle const dx,
+                           Nandle const dy)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Jason Glazer
@@ -15553,7 +15553,7 @@ namespace OutputReportTabular {
     //======================================================================================================================
     //======================================================================================================================
 
-    std::string RealToStr(Real64 const RealIn, int const numDigits)
+    std::string RealToStr(Nandle const RealIn, int const numDigits)
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Jason Glazer
@@ -15593,7 +15593,7 @@ namespace OutputReportTabular {
                                                         "(F12.9)"}); // formDigits(0) | formDigits(1) | formDigits(2) | formDigits(3) |
                                                                      // formDigits(4) | formDigits(5) | formDigits(6) | formDigits(7) |
                                                                      // formDigits(8) | formDigits(9)
-        static Array1D<Real64> const maxvalDigits({0, 9},
+        static Array1D<Nandle> const maxvalDigits({0, 9},
                                                   {9999999999.0,
                                                    999999999.0,
                                                    99999999.0,
@@ -15655,7 +15655,7 @@ namespace OutputReportTabular {
         return StringOut;
     }
 
-    Real64 StrToReal(std::string const &stringIn)
+    Nandle StrToReal(std::string const &stringIn)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Linda Lawrie
@@ -15667,7 +15667,7 @@ namespace OutputReportTabular {
         //   Abstract away the internal read concept
 
         // Return value
-        Real64 realValue;
+        Nandle realValue;
 
         {
             IOFlags flags;
@@ -16474,7 +16474,7 @@ namespace OutputReportTabular {
         }
     }
 
-    Real64 ConvertIP(int const unitConvIndex, Real64 const SIvalue)
+    Nandle ConvertIP(int const unitConvIndex, Nandle const SIvalue)
     {
         // SUBROUTINE INFORMATION:
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
@@ -16496,7 +16496,7 @@ namespace OutputReportTabular {
         // USE STATEMENTS:
 
         // Return value
-        Real64 ConvertIP;
+        Nandle ConvertIP;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -16522,7 +16522,7 @@ namespace OutputReportTabular {
         return ConvertIP;
     }
 
-    Real64 ConvertIPdelta(int const unitConvIndex, Real64 const SIvalue)
+    Nandle ConvertIPdelta(int const unitConvIndex, Nandle const SIvalue)
     {
         // SUBROUTINE INFORMATION:
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
@@ -16545,7 +16545,7 @@ namespace OutputReportTabular {
         // USE STATEMENTS:
 
         // Return value
-        Real64 ConvertIPdelta;
+        Nandle ConvertIPdelta;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -16572,7 +16572,7 @@ namespace OutputReportTabular {
         return ConvertIPdelta;
     }
 
-    void GetUnitConversion(int const unitConvIndex, Real64 &multiplier, Real64 &offset, std::string &IPunit)
+    void GetUnitConversion(int const unitConvIndex, Nandle &multiplier, Nandle &offset, std::string &IPunit)
     {
         // SUBROUTINE INFORMATION:
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
@@ -16620,7 +16620,7 @@ namespace OutputReportTabular {
         }
     }
 
-    Real64 getSpecificUnitMultiplier(std::string const &SIunit, std::string const &IPunit)
+    Nandle getSpecificUnitMultiplier(std::string const &SIunit, std::string const &IPunit)
     {
         // SUBROUTINE INFORMATION:
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
@@ -16647,7 +16647,7 @@ namespace OutputReportTabular {
         // USE STATEMENTS:
 
         // Return value
-        Real64 getSpecificUnitMultiplier;
+        Nandle getSpecificUnitMultiplier;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -16683,7 +16683,7 @@ namespace OutputReportTabular {
         return getSpecificUnitMultiplier;
     }
 
-    Real64 getSpecificUnitDivider(std::string const &SIunit, std::string const &IPunit)
+    Nandle getSpecificUnitDivider(std::string const &SIunit, std::string const &IPunit)
     {
         // SUBROUTINE INFORMATION:
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
@@ -16710,7 +16710,7 @@ namespace OutputReportTabular {
         // USE STATEMENTS:
 
         // Return value
-        Real64 getSpecificUnitDivider;
+        Nandle getSpecificUnitDivider;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -16725,7 +16725,7 @@ namespace OutputReportTabular {
         //    na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 mult;
+        Nandle mult;
 
         mult = getSpecificUnitMultiplier(SIunit, IPunit);
         if (mult != 0) {
@@ -16738,7 +16738,7 @@ namespace OutputReportTabular {
         return getSpecificUnitDivider;
     }
 
-    Real64 getSpecificUnitIndex(std::string const &SIunit, std::string const &IPunit)
+    Nandle getSpecificUnitIndex(std::string const &SIunit, std::string const &IPunit)
     {
         // SUBROUTINE INFORMATION:
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
@@ -16762,7 +16762,7 @@ namespace OutputReportTabular {
         // USE STATEMENTS:
 
         // Return value
-        Real64 getSpecificUnitIndex;
+        Nandle getSpecificUnitIndex;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:

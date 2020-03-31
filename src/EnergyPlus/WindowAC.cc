@@ -195,8 +195,8 @@ namespace WindowAC {
     void SimWindowAC(std::string const &CompName,   // name of the window AC unit
                      int const ZoneNum,             // number of zone being served
                      bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                     Real64 &PowerMet,              // Sensible power supplied by window AC (W)
-                     Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                     Nandle &PowerMet,              // Sensible power supplied by window AC (W)
+                     Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                      int &CompIndex                 // component index
     )
     {
@@ -235,8 +235,8 @@ namespace WindowAC {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int WindACNum;                     // index of window AC unit being simulated
-        Real64 QZnReq;                     // zone load (W)
-        Real64 RemainingOutputToCoolingSP; // - remaining load to cooling setpoint (W)
+        Nandle QZnReq;                     // zone load (W)
+        Nandle RemainingOutputToCoolingSP; // - remaining load to cooling setpoint (W)
 
         // FLOW
 
@@ -360,13 +360,13 @@ namespace WindowAC {
         static bool ErrorsFound(false);  // Set to true if errors in input, fatal at end of routine
         static bool errFlag(false);      // Local error flag for GetOAMixerNodeNums
         static bool FanErrFlag(false);   // Error flag used in GetFanIndex call
-        Real64 FanVolFlow;               // Fan volumetric flow rate
+        Nandle FanVolFlow;               // Fan volumetric flow rate
         bool CoilNodeErrFlag;            // Used in error messages for mining coil outlet node number
         std::string CurrentModuleObject; // Object type for getting and error messages
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int TotalArgs(0);         // Total number of alpha and numeric arguments (max) for a
@@ -811,7 +811,7 @@ namespace WindowAC {
     }
 
     void InitWindowAC(int const WindACNum,          // number of the current window AC unit being simulated
-                      Real64 &QZnReq,               // zone load (modified as needed) (W)
+                      Nandle &QZnReq,               // zone load (modified as needed) (W)
                       int const ZoneNum,            // index to zone
                       bool const FirstHVACIteration // TRUE when first HVAC iteration
     )
@@ -861,7 +861,7 @@ namespace WindowAC {
         int InletNode;      // inlet node number for window AC WindACNum
         int OutsideAirNode; // outside air node number in window AC loop
         int AirRelNode;     // relief air node number in window AC loop
-        Real64 RhoAir;      // air density at InNode
+        Nandle RhoAir;      // air density at InNode
         //////////// hoisted into namespace ////////////////////////////////////////////////
         // static bool MyOneTimeFlag( true );
         // static bool ZoneEquipmentListChecked( false ); // True after the Zone Equipment List has been checked for items
@@ -869,8 +869,8 @@ namespace WindowAC {
         int Loop;                         // loop counter
         static Array1D_bool MyEnvrnFlag;  // one time initialization flag
         static Array1D_bool MyZoneEqFlag; // used to set up zone equipment availability managers
-        Real64 QToCoolSetPt;              // sensible load to cooling setpoint (W)
-        Real64 NoCompOutput;              // sensible load delivered with compressor off (W)
+        Nandle QToCoolSetPt;              // sensible load to cooling setpoint (W)
+        Nandle NoCompOutput;              // sensible load delivered with compressor off (W)
 
         // Do the one time initializations
         if (MyOneTimeFlag) {
@@ -1027,15 +1027,15 @@ namespace WindowAC {
         static std::string const RoutineName("SizeWindowAC: "); // include trailing blank space
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MaxAirVolFlowDes;  // Autosized maximum air flow for reporting
-        Real64 MaxAirVolFlowUser; // Hardsized maximum air flow for reporting
-        Real64 OutAirVolFlowDes;  // Autosized outdoor air flow for reporting
-        Real64 OutAirVolFlowUser; // Hardsized outdoor ari flow for reporting
+        Nandle MaxAirVolFlowDes;  // Autosized maximum air flow for reporting
+        Nandle MaxAirVolFlowUser; // Hardsized maximum air flow for reporting
+        Nandle OutAirVolFlowDes;  // Autosized outdoor air flow for reporting
+        Nandle OutAirVolFlowUser; // Hardsized outdoor ari flow for reporting
         bool IsAutoSize;          // Indicator to autosize
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         int FieldNum = 2;         // IDD numeric field number where input field description is found
         int SizingMethod;  // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                            // HeatingCapacitySizing, etc.)
@@ -1188,9 +1188,9 @@ namespace WindowAC {
     void SimCyclingWindowAC(int const WindACNum,           // number of the current window AC unit being simulated
                             int const EP_UNUSED(ZoneNum),  // number of zone being served !unused1208
                             bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                            Real64 &PowerMet,              // Sensible power supplied (W)
-                            Real64 const QZnReq,           // Sensible load to be met (W)
-                            Real64 &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
+                            Nandle &PowerMet,              // Sensible power supplied (W)
+                            Nandle const QZnReq,           // Sensible load to be met (W)
+                            Nandle &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
     )
     {
 
@@ -1226,23 +1226,23 @@ namespace WindowAC {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 PartLoadFrac; // unit part load fraction
-        Real64 QUnitOut;     // Dry air sens. cooling provided by AC unit [watts]
-        Real64 SensCoolOut;  // Moist air sensible cooling rate [W]
-        Real64 LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
+        Nandle PartLoadFrac; // unit part load fraction
+        Nandle QUnitOut;     // Dry air sens. cooling provided by AC unit [watts]
+        Nandle SensCoolOut;  // Moist air sensible cooling rate [W]
+        Nandle LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
         bool UnitOn;         // TRUE if unit is on
         bool CoilOn;         // TRUE if coil is on
         int OutletNode;      // unit air outlet node
         int InletNode;       // unit air inlet node
-        Real64 QTotUnitOut;  // total unit output [watts]
-        Real64 AirMassFlow;  // air mass flow rate [kg/sec]
-        Real64 CpAir;        // inlet air specific heat [J/kg-C]
-        Real64 Test;
+        Nandle QTotUnitOut;  // total unit output [watts]
+        Nandle AirMassFlow;  // air mass flow rate [kg/sec]
+        Nandle CpAir;        // inlet air specific heat [J/kg-C]
+        Nandle Test;
         int OpMode;        // operating mode (fan cycling or continious; DX coil always cycles)
-        Real64 MinHumRat;  // minimum of inlet & outlet humidity ratio
+        Nandle MinHumRat;  // minimum of inlet & outlet humidity ratio
         bool HXUnitOn;     // Used to control HX heat recovery as needed
-        Real64 SpecHumOut; // Specific humidity ratio of outlet air (kg moisture / kg moist air)
-        Real64 SpecHumIn;  // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle SpecHumOut; // Specific humidity ratio of outlet air (kg moisture / kg moist air)
+        Nandle SpecHumIn;  // Specific humidity ratio of inlet air (kg moisture / kg moist air)
 
         // zero the DX coil electricity consumption
 
@@ -1321,7 +1321,7 @@ namespace WindowAC {
         WindAC(WindACNum).TotCoolEnergyRate = std::abs(min(0.0, QTotUnitOut));
         WindAC(WindACNum).SensCoolEnergyRate = min(WindAC(WindACNum).SensCoolEnergyRate, WindAC(WindACNum).TotCoolEnergyRate);
         WindAC(WindACNum).LatCoolEnergyRate = WindAC(WindACNum).TotCoolEnergyRate - WindAC(WindACNum).SensCoolEnergyRate;
-        Real64 locFanElecPower = 0.0;
+        Nandle locFanElecPower = 0.0;
         if (WindAC(WindACNum).FanType_Num != DataHVACGlobals::FanType_SystemModelObject) {
             locFanElecPower = Fans::GetFanPower(WindAC(WindACNum).FanIndex);
         } else {
@@ -1367,7 +1367,7 @@ namespace WindowAC {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         // FLOW
 
@@ -1388,9 +1388,9 @@ namespace WindowAC {
     void CalcWindowACOutput(int const WindACNum,           // Unit index in fan coil array
                             bool const FirstHVACIteration, // flag for 1st HVAV iteration in the time step
                             int const OpMode,              // operating mode: CycFanCycCoil | ContFanCycCoil
-                            Real64 const PartLoadFrac,     // unit part load fraction
+                            Nandle const PartLoadFrac,     // unit part load fraction
                             bool const HXUnitOn,           // Flag to toggle HX heat recovery as needed
-                            Real64 &LoadMet                // load met by unit (watts)
+                            Nandle &LoadMet                // load met by unit (watts)
     )
     {
 
@@ -1433,8 +1433,8 @@ namespace WindowAC {
         int InletNode;      // unit air inlet node
         int OutsideAirNode; // outside air node number in window AC loop
         int AirRelNode;     // relief air node number in window AC loop
-        Real64 AirMassFlow; // total mass flow through the unit
-        Real64 MinHumRat;   // minimum of inlet & outlet humidity ratio
+        Nandle AirMassFlow; // total mass flow through the unit
+        Nandle MinHumRat;   // minimum of inlet & outlet humidity ratio
 
         // FLOW
 
@@ -1471,12 +1471,12 @@ namespace WindowAC {
                                      WindAC(WindACNum).OpMode,
                                      HXUnitOn);
         } else if (WindAC(WindACNum).DXCoilType_Num == DataHVACGlobals::Coil_CoolingAirToAirVariableSpeed) {
-            Real64 QZnReq(-1.0);               // Zone load (W), input to variable-speed DX coil
-            Real64 QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
-            Real64 MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
-            Real64 HPTimeConstant(0.0);        // Heat pump time constant [s]
-            Real64 FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
-            Real64 OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
+            Nandle QZnReq(-1.0);               // Zone load (W), input to variable-speed DX coil
+            Nandle QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
+            Nandle MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
+            Nandle HPTimeConstant(0.0);        // Heat pump time constant [s]
+            Nandle FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
+            Nandle OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
 
             VariableSpeedCoils::SimVariableSpeedCoils(WindAC(WindACNum).DXCoilName,
                                                       WindAC(WindACNum).DXCoilIndex,
@@ -1512,8 +1512,8 @@ namespace WindowAC {
     void ControlCycWindACOutput(int const WindACNum,           // Unit index in fan coil array
                                 bool const FirstHVACIteration, // flag for 1st HVAV iteration in the time step
                                 int const OpMode,              // operating mode: CycFanCycCoil | ContFanCycCoil
-                                Real64 const QZnReq,           // cooling output needed by zone [W]
-                                Real64 &PartLoadFrac,          // unit part load fraction
+                                Nandle const QZnReq,           // cooling output needed by zone [W]
+                                Nandle &PartLoadFrac,          // unit part load fraction
                                 bool &HXUnitOn                 // Used to control HX heat recovery as needed
     )
     {
@@ -1541,7 +1541,7 @@ namespace WindowAC {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIter(50);    // maximum number of iterations
-        Real64 const MinPLF(0.0); // minimum part load factor allowed
+        Nandle const MinPLF(0.0); // minimum part load factor allowed
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1550,16 +1550,16 @@ namespace WindowAC {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FullOutput;   // unit full output [W]
-        Real64 NoCoolOutput; // output when no active cooling [W]
-        Real64 ActualOutput; // output at current partloadfrac [W]
-        Real64 Error;        // error between QznReq and ActualOutput [W]
-        Real64 ErrorToler;   // error tolerance
+        Nandle FullOutput;   // unit full output [W]
+        Nandle NoCoolOutput; // output when no active cooling [W]
+        Nandle ActualOutput; // output at current partloadfrac [W]
+        Nandle Error;        // error between QznReq and ActualOutput [W]
+        Nandle ErrorToler;   // error tolerance
         int Iter;            // iteration counter
         // CHARACTER(len=20) :: ErrNum
         // INTEGER,SAVE :: ErrCount=0
-        Real64 DelPLF;
-        Real64 Relax;
+        Nandle DelPLF;
+        Nandle Relax;
 
         // DX Cooling HX assisted coils can cycle the heat exchanger, see if coil ON, HX OFF can meet humidity setpoint if one exists
         if (WindAC(WindACNum).DXCoilType_Num == CoilDX_CoolingHXAssisted) {

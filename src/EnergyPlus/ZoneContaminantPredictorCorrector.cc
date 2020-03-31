@@ -158,7 +158,7 @@ namespace ZoneContaminantPredictorCorrector {
     void ManageZoneContaminanUpdates(int const UpdateType, // Can be iGetZoneSetPoints, iPredictStep, iCorrectStep
                                      bool const ShortenTimeStepSys,
                                      bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                                     Real64 const PriorTimeStep // the old value for timestep length is passed for possible use in interpolating
+                                     Nandle const PriorTimeStep // the old value for timestep length is passed for possible use in interpolating
     )
     {
 
@@ -263,9 +263,9 @@ namespace ZoneContaminantPredictorCorrector {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Array1D_string AlphaName;
-        Array1D<Real64> IHGNumbers;
-        Real64 SchMin;
-        Real64 SchMax;
+        Array1D<Nandle> IHGNumbers;
+        Nandle SchMin;
+        Nandle SchMax;
         int NumAlpha;
         int NumNumber;
         int IOStat;
@@ -1369,11 +1369,11 @@ namespace ZoneContaminantPredictorCorrector {
         static bool MyEnvrnFlag(true);
         static bool MyDayFlag(true);
         //  REAL(r64)      :: CO2Gain                  ! Zone CO2 gain
-        Real64 GCGain; // Zone generic contaminant gain
-        Real64 Pi;     // Pressue at zone i
-        Real64 Pj;     // Pressue at zone j
-        Real64 Sch;    // Schedule value
-        Real64 Cs;     // Surface concentration level for the Boundary Layer Diffusion Controlled Model
+        Nandle GCGain; // Zone generic contaminant gain
+        Nandle Pi;     // Pressue at zone i
+        Nandle Pj;     // Pressue at zone j
+        Nandle Sch;    // Schedule value
+        Nandle Cs;     // Surface concentration level for the Boundary Layer Diffusion Controlled Model
         static bool MyConfigOneTimeFlag(true);
         int ContZoneNum;
         int I;
@@ -1731,7 +1731,7 @@ namespace ZoneContaminantPredictorCorrector {
 
     void PredictZoneContaminants(bool const ShortenTimeStepSys,
                                  bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                                 Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                                 Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     )
     {
 
@@ -1769,22 +1769,22 @@ namespace ZoneContaminantPredictorCorrector {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CO2Gain;              // Zone CO2 internal load
-        Real64 RhoAir;               // Zone air density
-        Real64 A;                    // Coefficient of storage term in a zone balance equation
-        Real64 B;                    // Coefficient of variable term in a zone balance equation
-        Real64 C;                    // Coefficient of constnat term in a zone balance equation
-        Real64 SysTimeStepInSeconds; // System time step lenght [s]
+        Nandle CO2Gain;              // Zone CO2 internal load
+        Nandle RhoAir;               // Zone air density
+        Nandle A;                    // Coefficient of storage term in a zone balance equation
+        Nandle B;                    // Coefficient of variable term in a zone balance equation
+        Nandle C;                    // Coefficient of constnat term in a zone balance equation
+        Nandle SysTimeStepInSeconds; // System time step lenght [s]
         bool ControlledCO2ZoneFlag;  // This determines whether this is a CO2 controlled zone or not
-        Real64 LoadToCO2SetPoint;    // CO2 load at CO2 set point
+        Nandle LoadToCO2SetPoint;    // CO2 load at CO2 set point
         int ContControlledZoneNum;   // The Splitter that you are currently loading input into
         int ZoneNum;
         int I;
-        Real64 ZoneAirCO2SetPoint; // Zone CO2 setpoint
-        Real64 LoadToGCSetPoint;   // Generic contaminant load at generic contaminant set point
+        Nandle ZoneAirCO2SetPoint; // Zone CO2 setpoint
+        Nandle LoadToGCSetPoint;   // Generic contaminant load at generic contaminant set point
         bool ControlledGCZoneFlag; // This determines whether this is a generic contaminant controlled zone or not
-        Real64 ZoneAirGCSetPoint;  // Zone generic contaminant setpoint
-        Real64 GCGain;             // Zone generic contaminant internal load
+        Nandle ZoneAirGCSetPoint;  // Zone generic contaminant setpoint
+        Nandle GCGain;             // Zone generic contaminant internal load
                                    //  REAL(r64) :: Temp                      ! Zone generic contaminant internal load
 
         // FLOW:
@@ -2296,11 +2296,11 @@ namespace ZoneContaminantPredictorCorrector {
     }
 
     void InverseModelCO2(int const ZoneNum,           // Zone number
-                         Real64 &CO2Gain,             // Zone total CO2 gain
-                         Real64 &CO2GainExceptPeople, // ZOne total CO2 gain from sources except for people
-                         Real64 &ZoneMassFlowRate,    // Zone air mass flow rate
-                         Real64 &CO2MassFlowRate,     // Zone air CO2 mass flow rate
-                         Real64 &RhoAir               // Air density
+                         Nandle &CO2Gain,             // Zone total CO2 gain
+                         Nandle &CO2GainExceptPeople, // ZOne total CO2 gain from sources except for people
+                         Nandle &ZoneMassFlowRate,    // Zone air mass flow rate
+                         Nandle &CO2MassFlowRate,     // Zone air CO2 mass flow rate
+                         Nandle &RhoAir               // Air density
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2319,25 +2319,25 @@ namespace ZoneContaminantPredictorCorrector {
         static std::string const RoutineName("InverseModelCO2");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AA(0.0);
-        Real64 BB(0.0);
-        Real64 CC(0.0);
-        Real64 DD(0.0);
-        Real64 zone_M_CO2(0.0);
-        Real64 delta_CO2(0.0);
-        Real64 AirDensity(0.0);
-        Real64 CpAir(0.0);
-        Real64 M_inf(0.0);   // Reversely solved infiltration mass flow rate
-        Real64 ACH_inf(0.0); // Reversely solved infiltration air change rate
-        Real64 SumSysM_HM(0.0);
-        Real64 SumSysMxCO2_HM(0.0);
-        Real64 CO2GainPeople(0.0); // Inversely solved convectice heat gain from people (m^3/s)
-        Real64 NumPeople(0.0);     // Inversely solved number of people in the zone
-        Real64 CO2GenRate(0.0);
-        Real64 ActivityLevel(0.0);
-        Real64 UpperBound(0.0); // Upper bound of number of people
+        Nandle AA(0.0);
+        Nandle BB(0.0);
+        Nandle CC(0.0);
+        Nandle DD(0.0);
+        Nandle zone_M_CO2(0.0);
+        Nandle delta_CO2(0.0);
+        Nandle AirDensity(0.0);
+        Nandle CpAir(0.0);
+        Nandle M_inf(0.0);   // Reversely solved infiltration mass flow rate
+        Nandle ACH_inf(0.0); // Reversely solved infiltration air change rate
+        Nandle SumSysM_HM(0.0);
+        Nandle SumSysMxCO2_HM(0.0);
+        Nandle CO2GainPeople(0.0); // Inversely solved convectice heat gain from people (m^3/s)
+        Nandle NumPeople(0.0);     // Inversely solved number of people in the zone
+        Nandle CO2GenRate(0.0);
+        Nandle ActivityLevel(0.0);
+        Nandle UpperBound(0.0); // Upper bound of number of people
 
-        Real64 SysTimeStepInSeconds(0.0);
+        Nandle SysTimeStepInSeconds(0.0);
         SysTimeStepInSeconds = SecInHour * TimeStepSys;
 
         Zone(ZoneNum).ZoneMeasuredCO2Concentration = GetCurrentScheduleValue(HybridModelZone(ZoneNum).ZoneMeasuredCO2ConcentrationSchedulePtr);
@@ -2452,7 +2452,7 @@ namespace ZoneContaminantPredictorCorrector {
 
     void CorrectZoneContaminants(bool const ShortenTimeStepSys,
                                  bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step history
-                                 Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                                 Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     )
     {
 
@@ -2504,18 +2504,18 @@ namespace ZoneContaminantPredictorCorrector {
         int ZoneSupPlenumNum;
         bool ZoneRetPlenumAirFlag;
         bool ZoneSupPlenumAirFlag;
-        Real64 CO2Gain;             // Zone CO2 internal gain
-        Real64 CO2GainExceptPeople; // Added for hybrid model, Zone CO2 internal gain
-        Real64 GCGain;              // Zone generic contaminant internal gain
-        Real64 RhoAir;
-        Real64 A;
-        Real64 B;
-        Real64 C;
-        Real64 CO2MassFlowRate;
-        Real64 GCMassFlowRate;
-        Real64 ZoneMassFlowRate;
-        Real64 SysTimeStepInSeconds;
-        Real64 ZoneMult;
+        Nandle CO2Gain;             // Zone CO2 internal gain
+        Nandle CO2GainExceptPeople; // Added for hybrid model, Zone CO2 internal gain
+        Nandle GCGain;              // Zone generic contaminant internal gain
+        Nandle RhoAir;
+        Nandle A;
+        Nandle B;
+        Nandle C;
+        Nandle CO2MassFlowRate;
+        Nandle GCMassFlowRate;
+        Nandle ZoneMassFlowRate;
+        Nandle SysTimeStepInSeconds;
+        Nandle ZoneMult;
         int ADUListIndex;
         int ADUNum;
         int ADUInNode;

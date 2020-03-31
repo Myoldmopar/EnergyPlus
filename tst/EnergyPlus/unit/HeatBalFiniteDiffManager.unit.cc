@@ -76,11 +76,11 @@ TEST_F(EnergyPlusFixture, HeatBalFiniteDiffManager_CalcNodeHeatFluxTest)
     DataHeatBalSurface::OpaqSurfInsFaceConductionFlux.allocate(1);
     DataGlobals::TimeStepZoneSec = 600.0;
 
-    Real64 expectedResult1(0.0);
-    Real64 expectedResult2(0.0);
-    Real64 expectedResult3(0.0);
-    Real64 expectedResult4(0.0);
-    Real64 expectedResult5(0.0);
+    Nandle expectedResult1(0.0);
+    Nandle expectedResult2(0.0);
+    Nandle expectedResult3(0.0);
+    Nandle expectedResult4(0.0);
+    Nandle expectedResult5(0.0);
 
     // Steady-state case
     DataHeatBalSurface::OpaqSurfInsFaceConductionFlux(SurfNum) = 100.0;
@@ -219,7 +219,7 @@ TEST_F(EnergyPlusFixture, HeatBalFiniteDiffManager_adjustPropertiesForPhaseChang
     material.phaseChange = HysteresisPhaseChange::HysteresisPhaseChange::factory("PCMNAME");
 
     // create local variables to calculate and call the new worker function
-    Real64 newSpecificHeat, newDensity, newThermalConductivity;
+    Nandle newSpecificHeat, newDensity, newThermalConductivity;
     adjustPropertiesForPhaseChange(finiteDiffLayerIndex, surfaceIndex, material, 20.0, 20.1, newSpecificHeat, newDensity, newThermalConductivity);
 
     // check the values are correct

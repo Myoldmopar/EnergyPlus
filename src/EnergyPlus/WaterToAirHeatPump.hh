@@ -101,60 +101,60 @@ namespace WaterToAirHeatPump {
         int WAHPPlantTypeOfNum;       // type of component in plant
         std::string Refrigerant;      // Refrigerant name
         bool SimFlag;
-        Real64 InletAirMassFlowRate;    // Inlet Air Mass Flow through the Water to Air Heat Pump being Simulated [kg/s]
-        Real64 OutletAirMassFlowRate;   // Outlet Air Mass Flow through the Water to Air Heat Pump being Simulated [kg/s]
-        Real64 InletAirDBTemp;          // Inlet Air Dry Bulb Temperature [C]
-        Real64 InletAirHumRat;          // Inlet Air Humidity Ratio [kg/kg]
-        Real64 OutletAirDBTemp;         // Outlet Air Dry Bulb Temperature [C]
-        Real64 OutletAirHumRat;         // Outlet Air Humidity Ratio [kg/kg]
-        Real64 InletAirEnthalpy;        // Inlet Air Enthalpy [J/kg]
-        Real64 OutletAirEnthalpy;       // Outlet Air Enthalpy [J/kg]
-        Real64 InletWaterTemp;          // Inlet Water Temperature [C]
-        Real64 OutletWaterTemp;         // Outlet Water Temperature [C]
-        Real64 InletWaterMassFlowRate;  // Inlet Water Mass Flow Rate [kg/s]
-        Real64 OutletWaterMassFlowRate; // Outlet Water Mass Flow Rate [kg/s]
-        Real64 DesignWaterMassFlowRate; // Design Water Mass Flow Rate [kg/s]
-        Real64 DesignWaterVolFlowRate;  // Design Water Volumetric Flow Rate [m3/s]
-        Real64 InletWaterEnthalpy;      // Inlet Water Enthalpy [J/kg]
-        Real64 OutletWaterEnthalpy;     // Outlet Water Enthalpy [J/kg]
-        Real64 Power;                   // Power Consumption [W]
-        Real64 Energy;                  // Energy Consumption [J]
-        Real64 QSensible;               // Sensible Load Side Heat Transfer Rate [W]
-        Real64 QLatent;                 // Latent Load Side Heat Transfer Rate [W]
-        Real64 QSource;                 // Source Side Heat Transfer Rate [W]
-        Real64 EnergySensible;          // Sensible Load Side Heat Transferred [J]
-        Real64 EnergyLatent;            // Latent Load Side Heat Transferred [J]
-        Real64 EnergySource;            // Source Side Heat Transferred [J]
-        Real64 RunFrac;                 // Duty Factor
-        Real64 PartLoadRatio;           // Part Load Ratio
-        Real64 HeatingCapacity;         // Nominal Heating Capacity
-        Real64 CoolingCapacity;         // Nominal Cooling Capacity
-        Real64 QLoadTotal;              // Load Side Total Heat Transfer Rate [W]
-        Real64 EnergyLoadTotal;         // Load Side Total Heat Transferred [J]
-        Real64 Twet_Rated;              // Nominal Time for Condensate Removal to Begin [s]
-        Real64 Gamma_Rated;             // Ratio of Initial Moisture Evaporation Rate and Steady-state Latent Capacity
-        Real64 MaxONOFFCyclesperHour;   // Maximum cycling rate of heat pump [cycles/hr]
-        Real64 HPTimeConstant;          // Heat pump time constant [s]
-        Real64 FanDelayTime;            // Fan delay time, time delay for the HP's fan to
+        Nandle InletAirMassFlowRate;    // Inlet Air Mass Flow through the Water to Air Heat Pump being Simulated [kg/s]
+        Nandle OutletAirMassFlowRate;   // Outlet Air Mass Flow through the Water to Air Heat Pump being Simulated [kg/s]
+        Nandle InletAirDBTemp;          // Inlet Air Dry Bulb Temperature [C]
+        Nandle InletAirHumRat;          // Inlet Air Humidity Ratio [kg/kg]
+        Nandle OutletAirDBTemp;         // Outlet Air Dry Bulb Temperature [C]
+        Nandle OutletAirHumRat;         // Outlet Air Humidity Ratio [kg/kg]
+        Nandle InletAirEnthalpy;        // Inlet Air Enthalpy [J/kg]
+        Nandle OutletAirEnthalpy;       // Outlet Air Enthalpy [J/kg]
+        Nandle InletWaterTemp;          // Inlet Water Temperature [C]
+        Nandle OutletWaterTemp;         // Outlet Water Temperature [C]
+        Nandle InletWaterMassFlowRate;  // Inlet Water Mass Flow Rate [kg/s]
+        Nandle OutletWaterMassFlowRate; // Outlet Water Mass Flow Rate [kg/s]
+        Nandle DesignWaterMassFlowRate; // Design Water Mass Flow Rate [kg/s]
+        Nandle DesignWaterVolFlowRate;  // Design Water Volumetric Flow Rate [m3/s]
+        Nandle InletWaterEnthalpy;      // Inlet Water Enthalpy [J/kg]
+        Nandle OutletWaterEnthalpy;     // Outlet Water Enthalpy [J/kg]
+        Nandle Power;                   // Power Consumption [W]
+        Nandle Energy;                  // Energy Consumption [J]
+        Nandle QSensible;               // Sensible Load Side Heat Transfer Rate [W]
+        Nandle QLatent;                 // Latent Load Side Heat Transfer Rate [W]
+        Nandle QSource;                 // Source Side Heat Transfer Rate [W]
+        Nandle EnergySensible;          // Sensible Load Side Heat Transferred [J]
+        Nandle EnergyLatent;            // Latent Load Side Heat Transferred [J]
+        Nandle EnergySource;            // Source Side Heat Transferred [J]
+        Nandle RunFrac;                 // Duty Factor
+        Nandle PartLoadRatio;           // Part Load Ratio
+        Nandle HeatingCapacity;         // Nominal Heating Capacity
+        Nandle CoolingCapacity;         // Nominal Cooling Capacity
+        Nandle QLoadTotal;              // Load Side Total Heat Transfer Rate [W]
+        Nandle EnergyLoadTotal;         // Load Side Total Heat Transferred [J]
+        Nandle Twet_Rated;              // Nominal Time for Condensate Removal to Begin [s]
+        Nandle Gamma_Rated;             // Ratio of Initial Moisture Evaporation Rate and Steady-state Latent Capacity
+        Nandle MaxONOFFCyclesperHour;   // Maximum cycling rate of heat pump [cycles/hr]
+        Nandle HPTimeConstant;          // Heat pump time constant [s]
+        Nandle FanDelayTime;            // Fan delay time, time delay for the HP's fan to
         // shut off after compressor cycle off [s]
-        Real64 SourceSideUACoeff;      // Source Side Heat Transfer coefficient [W/C]
-        Real64 LoadSideTotalUACoeff;   // Load Side Total Heat Transfer coefficient [W/C]
-        Real64 LoadSideOutsideUACoeff; // Load Side Outside Heat Transfer coefficient [W/C]
-        Real64 CompPistonDisp;         // Compressor Piston Displacement [m3/s]
-        Real64 CompClearanceFactor;    // Compressor Clearance Factor
-        Real64 CompSucPressDrop;       // Suction Pressure Drop [Pa]
-        Real64 SuperheatTemp;          // Superheat Temperature [C]
-        Real64 PowerLosses;            // Constant Part of the Compressor Power Losses [W]
-        Real64 LossFactor;             // Compressor Power Loss Factor
-        Real64 RefVolFlowRate;         // Refrigerant Volume Flow rate at the beginning
+        Nandle SourceSideUACoeff;      // Source Side Heat Transfer coefficient [W/C]
+        Nandle LoadSideTotalUACoeff;   // Load Side Total Heat Transfer coefficient [W/C]
+        Nandle LoadSideOutsideUACoeff; // Load Side Outside Heat Transfer coefficient [W/C]
+        Nandle CompPistonDisp;         // Compressor Piston Displacement [m3/s]
+        Nandle CompClearanceFactor;    // Compressor Clearance Factor
+        Nandle CompSucPressDrop;       // Suction Pressure Drop [Pa]
+        Nandle SuperheatTemp;          // Superheat Temperature [C]
+        Nandle PowerLosses;            // Constant Part of the Compressor Power Losses [W]
+        Nandle LossFactor;             // Compressor Power Loss Factor
+        Nandle RefVolFlowRate;         // Refrigerant Volume Flow rate at the beginning
         // of the Compression [m3/s]
-        Real64 VolumeRatio;   // Built-in-volume ratio [~]
-        Real64 LeakRateCoeff; // Coefficient for the relationship between
+        Nandle VolumeRatio;   // Built-in-volume ratio [~]
+        Nandle LeakRateCoeff; // Coefficient for the relationship between
         // Pressure Ratio and Leakage Rate [~]
-        Real64 SourceSideHTR1;  // Source Side Heat Transfer Resistance coefficient 1 [~]
-        Real64 SourceSideHTR2;  // Source Side Heat Transfer Resistance coefficient 2 [k/kW]
-        Real64 HighPressCutoff; // High Pressure Cut-off [Pa]
-        Real64 LowPressCutoff;  // Low Pressure Cut-off [Pa]
+        Nandle SourceSideHTR1;  // Source Side Heat Transfer Resistance coefficient 1 [~]
+        Nandle SourceSideHTR2;  // Source Side Heat Transfer Resistance coefficient 2 [k/kW]
+        Nandle HighPressCutoff; // High Pressure Cut-off [Pa]
+        Nandle LowPressCutoff;  // Low Pressure Cut-off [Pa]
         int CompressorType;     // Type of Compressor ie. Reciprocating,Rotary or Scroll
         int AirInletNodeNum;    // air side coil inlet node number
         int AirOutletNodeNum;   // air side coil outlet node number
@@ -193,18 +193,18 @@ namespace WaterToAirHeatPump {
 
     void SimWatertoAirHP(std::string const &CompName,   // component name
                          int &CompIndex,                // Index for Component name
-                         Real64 const DesignAirflow,    // design air flow rate
+                         Nandle const DesignAirflow,    // design air flow rate
                          int const CyclingScheme,       // cycling scheme--either continuous fan/cycling compressor or
                          bool const FirstHVACIteration, // first iteration flag
-                         Real64 const RuntimeFrac,      // compressor run time fraction
-                         Real64 &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
-                         Real64 &HPTimeConstant,        // Heat pump time constant [s]
-                         Real64 &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
+                         Nandle const RuntimeFrac,      // compressor run time fraction
+                         Nandle &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
+                         Nandle &HPTimeConstant,        // Heat pump time constant [s]
+                         Nandle &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
                          bool const InitFlag,           // initialization flag used to suppress property routine errors
-                         Real64 const SensLoad,         // sensible load
-                         Real64 const LatentLoad,       // latent load
+                         Nandle const SensLoad,         // sensible load
+                         Nandle const LatentLoad,       // latent load
                          int const CompOp,
-                         Real64 const PartLoadRatio);
+                         Nandle const PartLoadRatio);
 
     // Get Input Section of the Module
     //******************************************************************************
@@ -219,13 +219,13 @@ namespace WaterToAirHeatPump {
 
     void InitWatertoAirHP(int const HPNum, // index to main heat pump data structure
                           bool const InitFlag,
-                          Real64 const MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
-                          Real64 const HPTimeConstant,        // Heat pump time constant [s]
-                          Real64 const FanDelayTime,          // Fan delay time, time delay for the HP's fan to
-                          Real64 const SensLoad,
-                          Real64 const LatentLoad,
-                          Real64 const DesignAirFlow,
-                          Real64 const PartLoadRatio);
+                          Nandle const MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
+                          Nandle const HPTimeConstant,        // Heat pump time constant [s]
+                          Nandle const FanDelayTime,          // Fan delay time, time delay for the HP's fan to
+                          Nandle const SensLoad,
+                          Nandle const LatentLoad,
+                          Nandle const DesignAirFlow,
+                          Nandle const PartLoadRatio);
 
     // End Initialization Section of the Module
     //******************************************************************************
@@ -236,24 +236,24 @@ namespace WaterToAirHeatPump {
     void CalcWatertoAirHPCooling(int const HPNum,               // heat pump number
                                  int const CyclingScheme,       // fan/compressor cycling scheme indicator
                                  bool const FirstHVACIteration, // first iteration flag
-                                 Real64 const RuntimeFrac,
+                                 Nandle const RuntimeFrac,
                                  bool const InitFlag, // suppress property errors if true
-                                 Real64 const SensDemand,
+                                 Nandle const SensDemand,
                                  int const CompOp,
-                                 Real64 const PartLoadRatio);
+                                 Nandle const PartLoadRatio);
 
-    Real64 CalcCompSuctionTempResidual(Real64 const CompSuctionTemp, // HP compressor suction temperature (C)
-                                       Array1D<Real64> const &Par    // Function parameters
+    Nandle CalcCompSuctionTempResidual(Nandle const CompSuctionTemp, // HP compressor suction temperature (C)
+                                       Array1D<Nandle> const &Par    // Function parameters
     );
 
     void CalcWatertoAirHPHeating(int const HPNum,               // heat pump number
                                  int const CyclingScheme,       // fan/compressor cycling scheme indicator
                                  bool const FirstHVACIteration, // first iteration flag
-                                 Real64 const RuntimeFrac,
+                                 Nandle const RuntimeFrac,
                                  bool const InitFlag, // first iteration flag
-                                 Real64 const SensDemand,
+                                 Nandle const SensDemand,
                                  int const CompOp,
-                                 Real64 const PartLoadRatio);
+                                 Nandle const PartLoadRatio);
 
     // End Algorithm Section of the Module
     // *****************************************************************************
@@ -269,18 +269,18 @@ namespace WaterToAirHeatPump {
     //        End of Update subroutines for the WatertoAirHP Module
     // *****************************************************************************
 
-    Real64 CalcEffectiveSHR(int const HPNum,         // Index number for cooling coil
-                            Real64 const SHRss,      // Steady-state sensible heat ratio
+    Nandle CalcEffectiveSHR(int const HPNum,         // Index number for cooling coil
+                            Nandle const SHRss,      // Steady-state sensible heat ratio
                             int const CyclingScheme, // fan/compressor cycling scheme indicator
-                            Real64 const RTF,        // Compressor run-time fraction
-                            Real64 const QLatRated,  // Rated latent capacity
-                            Real64 const QLatActual, // Actual latent capacity
-                            Real64 const EnteringDB, // Entering air dry-bulb temperature
-                            Real64 const EnteringWB  // Entering air wet-bulb temperature
+                            Nandle const RTF,        // Compressor run-time fraction
+                            Nandle const QLatRated,  // Rated latent capacity
+                            Nandle const QLatActual, // Actual latent capacity
+                            Nandle const EnteringDB, // Entering air dry-bulb temperature
+                            Nandle const EnteringWB  // Entering air wet-bulb temperature
     );
 
-    Real64 DegradF(std::string &FluidName, // Name of glycol used in source side
-                   Real64 &Temp,           // Temperature of the fluid
+    Nandle DegradF(std::string &FluidName, // Name of glycol used in source side
+                   Nandle &Temp,           // Temperature of the fluid
                    int &FluidIndex         // Index number for the fluid
     );
 
@@ -289,7 +289,7 @@ namespace WaterToAirHeatPump {
                      bool &ErrorsFound            // set to true if problem
     );
 
-    Real64 GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
                            std::string const &CoilName, // must match coil names for the coil type
                            bool &ErrorsFound            // set to true if problem
     );

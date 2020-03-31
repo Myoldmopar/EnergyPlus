@@ -91,46 +91,46 @@ namespace WindTurbine {
         int ControlType;         // Control type
         int SchedPtr;            // Schedule
         int NumOfBlade;          // Blade number
-        Real64 RatedRotorSpeed;  // Rated rotor speed in m/s
-        Real64 RotorDiameter;    // Diameter of rotor in m
-        Real64 RotorHeight;      // Overall height of the rotor in m
-        Real64 RatedPower;       // Nominal average power outpout at the rated wind speed in Watts
-        Real64 RatedWindSpeed;   // Rated wind speed showing maximum power output in Watts
-        Real64 CutInSpeed;       // Minimum wind speed for system operation in m/s
-        Real64 CutOutSpeed;      // Maximum wind speed for system operation in m/s
-        Real64 SysEfficiency;    // Overall system efficiency including subsystems and losses
-        Real64 MaxTipSpeedRatio; // Maximum tip speed ratio
-        Real64 MaxPowerCoeff;    // Maximum power coefficient
-        Real64 LocalAnnualAvgWS; // Annual average wind speed locally measured in m/s
-        Real64 AnnualTMYWS;      // Annual average wind speed from stat file in m/s
-        Real64 HeightForLocalWS; // Height of the local station in m
-        Real64 ChordArea;        // Chord area of a single blade for VAWTs in m2
-        Real64 DragCoeff;        // Empirical blade drag coefficient for VAWTs
-        Real64 LiftCoeff;        // Empirical blade lift coefficient for VAWTs
-        Real64 PowerCoeffC1;     // Empirical power coefficient 1 for analytical calculation
-        Real64 PowerCoeffC2;     // Empirical power coefficient 2 for analytical calculation
-        Real64 PowerCoeffC3;     // Empirical power coefficient 3 for analytical calculation
-        Real64 PowerCoeffC4;     // Empirical power coefficient 4 for analytical calculation
-        Real64 PowerCoeffC5;     // Empirical power coefficient 5 for analytical calculation
-        Real64 PowerCoeffC6;     // Empirical power coefficient 6 for analytical calculation
-        Real64 TotPower;         // Maximum power produced from the wind in Watts
-        Real64 Power;            // Actual power wind turbine supplies to the building in Watts
-        Real64 TotEnergy;        // Maximum energy produced from the wind in Joules
-        Real64 Energy;           // Actual energy wind turbine supplies to the building in Joules
-        Real64 LocalWindSpeed;   // Local wind speed estimated at the particular height in m/s
-        Real64 LocalAirDensity;  // Local air density estimated at the particular height kg/m3
-        Real64 PowerCoeff;       // Power coefficient determined
-        Real64 ChordalVel;       // Chordal velocity for VAWTs in m/s
-        Real64 NormalVel;        // Normal velocity for VAWTs in m/s
-        Real64 RelFlowVel;       // Relative flow velocity for VAWTs in m/s
-        Real64 TipSpeedRatio;    // Relative flow velocity for VAWTs in m/s
-        Real64 WSFactor;         // Relative flow velocity for VAWTs in m/s
-        Real64 AngOfAttack;      // Angle of attack in degree
-        Real64 IntRelFlowVel;    // Integral of relative flow velocity
-        Real64 TanForce;         // Tnagential force
-        Real64 NorForce;         // Normal force in N.m
-        Real64 TotTorque;        // Total torque in N.m
-        Real64 AzimuthAng;       // Azimuth angle between blades
+        Nandle RatedRotorSpeed;  // Rated rotor speed in m/s
+        Nandle RotorDiameter;    // Diameter of rotor in m
+        Nandle RotorHeight;      // Overall height of the rotor in m
+        Nandle RatedPower;       // Nominal average power outpout at the rated wind speed in Watts
+        Nandle RatedWindSpeed;   // Rated wind speed showing maximum power output in Watts
+        Nandle CutInSpeed;       // Minimum wind speed for system operation in m/s
+        Nandle CutOutSpeed;      // Maximum wind speed for system operation in m/s
+        Nandle SysEfficiency;    // Overall system efficiency including subsystems and losses
+        Nandle MaxTipSpeedRatio; // Maximum tip speed ratio
+        Nandle MaxPowerCoeff;    // Maximum power coefficient
+        Nandle LocalAnnualAvgWS; // Annual average wind speed locally measured in m/s
+        Nandle AnnualTMYWS;      // Annual average wind speed from stat file in m/s
+        Nandle HeightForLocalWS; // Height of the local station in m
+        Nandle ChordArea;        // Chord area of a single blade for VAWTs in m2
+        Nandle DragCoeff;        // Empirical blade drag coefficient for VAWTs
+        Nandle LiftCoeff;        // Empirical blade lift coefficient for VAWTs
+        Nandle PowerCoeffC1;     // Empirical power coefficient 1 for analytical calculation
+        Nandle PowerCoeffC2;     // Empirical power coefficient 2 for analytical calculation
+        Nandle PowerCoeffC3;     // Empirical power coefficient 3 for analytical calculation
+        Nandle PowerCoeffC4;     // Empirical power coefficient 4 for analytical calculation
+        Nandle PowerCoeffC5;     // Empirical power coefficient 5 for analytical calculation
+        Nandle PowerCoeffC6;     // Empirical power coefficient 6 for analytical calculation
+        Nandle TotPower;         // Maximum power produced from the wind in Watts
+        Nandle Power;            // Actual power wind turbine supplies to the building in Watts
+        Nandle TotEnergy;        // Maximum energy produced from the wind in Joules
+        Nandle Energy;           // Actual energy wind turbine supplies to the building in Joules
+        Nandle LocalWindSpeed;   // Local wind speed estimated at the particular height in m/s
+        Nandle LocalAirDensity;  // Local air density estimated at the particular height kg/m3
+        Nandle PowerCoeff;       // Power coefficient determined
+        Nandle ChordalVel;       // Chordal velocity for VAWTs in m/s
+        Nandle NormalVel;        // Normal velocity for VAWTs in m/s
+        Nandle RelFlowVel;       // Relative flow velocity for VAWTs in m/s
+        Nandle TipSpeedRatio;    // Relative flow velocity for VAWTs in m/s
+        Nandle WSFactor;         // Relative flow velocity for VAWTs in m/s
+        Nandle AngOfAttack;      // Angle of attack in degree
+        Nandle IntRelFlowVel;    // Integral of relative flow velocity
+        Nandle TanForce;         // Tnagential force
+        Nandle NorForce;         // Normal force in N.m
+        Nandle TotTorque;        // Total torque in N.m
+        Nandle AzimuthAng;       // Azimuth angle between blades
 
         // Default Constructor
         WindTurbineParams()
@@ -154,15 +154,15 @@ namespace WindTurbine {
                         std::string const &GeneratorName, // User specified name of Generator
                         int &GeneratorIndex,              // Generator index
                         bool const RunFlag,               // ON or OFF
-                        Real64 const WTLoad               // Electrical load on WT (not used)
+                        Nandle const WTLoad               // Electrical load on WT (not used)
     );
 
     void GetWTGeneratorResults(int const GeneratorType,  // Type of Generator
                                int const GeneratorIndex, // Generator number
-                               Real64 &GeneratorPower,   // Electrical power
-                               Real64 &GeneratorEnergy,  // Electrical energy
-                               Real64 &ThermalPower,
-                               Real64 &ThermalEnergy);
+                               Nandle &GeneratorPower,   // Electrical power
+                               Nandle &GeneratorEnergy,  // Electrical energy
+                               Nandle &ThermalPower,
+                               Nandle &ThermalEnergy);
 
     void GetWindTurbineInput();
 

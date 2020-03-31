@@ -263,7 +263,7 @@ namespace ScheduleManager {
         Array1D_string Alphas;
         Array1D_string cAlphaFields;
         Array1D_string cNumericFields;
-        Array1D<Real64> Numbers;
+        Array1D<Nandle> Numbers;
         Array1D_bool lAlphaBlanks;
         Array1D_bool lNumericBlanks;
         int NumAlphas;
@@ -302,7 +302,7 @@ namespace ScheduleManager {
         int NumCommaFileShading;       // Number of shading csv schedules
         int TS;                        // Counter for Num Of Time Steps in Hour
         int Hr;                        // Hour Counter
-        Array2D<Real64> MinuteValue;   // Temporary for processing interval schedules
+        Array2D<Nandle> MinuteValue;   // Temporary for processing interval schedules
         Array2D_bool SetMinuteValue;   // Temporary for processing interval schedules
         int NumFields;
         int SCount;
@@ -336,9 +336,9 @@ namespace ScheduleManager {
         int kdy;
         bool FileExists;
         // for SCHEDULE:FILE
-        Array1D<Real64> hourlyFileValues;
+        Array1D<Nandle> hourlyFileValues;
         std::map<std::string, int> CSVAllColumnNames;
-        std::map<int, Array1D<Real64>> CSVAllColumnNameAndValues;
+        std::map<int, Array1D<Nandle>> CSVAllColumnNameAndValues;
         int SchdFile;
         int colCnt;
         int rowCnt;
@@ -347,13 +347,13 @@ namespace ScheduleManager {
         std::string::size_type sepPos;
         std::string LineIn;
         std::string subString;
-        Real64 columnValue;
+        Nandle columnValue;
         int read_stat;
         int iDay;
         int hDay;
         int jHour;
         int kDayType;
-        Real64 curHrVal;
+        Nandle curHrVal;
         bool errFlag;
         std::string::size_type sPos;
         std::string CurrentModuleObject; // for ease in getting objects
@@ -645,7 +645,7 @@ namespace ScheduleManager {
                             }
                             if (!errFlag) {
                                 NumCSVAllColumnsSchedules++;
-                                Array1D<Real64> timestepColumnValues;
+                                Array1D<Nandle> timestepColumnValues;
                                 timestepColumnValues.allocate(rowLimitCount);
                                 // {column header: column number - 1}
                                 CSVAllColumnNames[subString] = colCnt - 1;
@@ -1997,7 +1997,7 @@ namespace ScheduleManager {
         }
 
         std::string curName;
-        Array1D<Real64> timestepColumnValues;
+        Array1D<Nandle> timestepColumnValues;
         for (auto &NameValue : CSVAllColumnNames) {
             curName = NameValue.first + "_shading";
             timestepColumnValues = CSVAllColumnNameAndValues[NameValue.second];
@@ -2704,7 +2704,7 @@ namespace ScheduleManager {
         RoundTSValue.deallocate();
     }
 
-    Real64 GetCurrentScheduleValue(int const ScheduleIndex)
+    Nandle GetCurrentScheduleValue(int const ScheduleIndex)
     {
 
         // FUNCTION INFORMATION:
@@ -2855,7 +2855,7 @@ namespace ScheduleManager {
         }
     }
 
-    Real64 LookUpScheduleValue(int const ScheduleIndex,
+    Nandle LookUpScheduleValue(int const ScheduleIndex,
                                int const ThisHour,    // Negative => unspecified
                                int const ThisTimeStep // Negative => unspecified
     )
@@ -2881,7 +2881,7 @@ namespace ScheduleManager {
         using DataEnvironment::DayOfYear_Schedule;
 
         // Return value
-        Real64 LookUpScheduleValue(0.0);
+        Nandle LookUpScheduleValue(0.0);
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -3128,7 +3128,7 @@ namespace ScheduleManager {
         return GetDayScheduleIndex;
     }
 
-    void GetScheduleValuesForDay(int const ScheduleIndex, Array2S<Real64> DayValues, Optional_int_const JDay, Optional_int_const CurDayofWeek)
+    void GetScheduleValuesForDay(int const ScheduleIndex, Array2S<Nandle> DayValues, Optional_int_const JDay, Optional_int_const CurDayofWeek)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3205,7 +3205,7 @@ namespace ScheduleManager {
     }
 
     void GetSingleDayScheduleValues(int const DayScheduleIndex, // Index of the DaySchedule for values
-                                    Array2S<Real64> DayValues   // Returned set of values
+                                    Array2S<Nandle> DayValues   // Returned set of values
     )
     {
 
@@ -3254,7 +3254,7 @@ namespace ScheduleManager {
     }
 
     void ExternalInterfaceSetSchedule(int &ScheduleIndex,
-                                      Real64 &Value // The new value for the schedule
+                                      Nandle &Value // The new value for the schedule
     )
     {
         // FUNCTION INFORMATION:
@@ -3305,10 +3305,10 @@ namespace ScheduleManager {
     }
 
     void ProcessIntervalFields(Array1S_string const Untils,
-                               Array1S<Real64> const Numbers,
+                               Array1S<Nandle> const Numbers,
                                int const NumUntils,
                                int const NumNumbers,
-                               Array2A<Real64> MinuteValue,
+                               Array2A<Nandle> MinuteValue,
                                Array2A_bool SetMinuteValue,
                                bool &ErrorsFound,
                                std::string const &DayScheduleName,     // Name (used for errors)
@@ -3365,8 +3365,8 @@ namespace ScheduleManager {
         int EMin; // ending minute
         std::string::size_type sFld;
         int totalMinutes;
-        Real64 incrementPerMinute;
-        Real64 curValue;
+        Nandle incrementPerMinute;
+        Nandle curValue;
 
         MinuteValue = 0.0;
         SetMinuteValue = false;
@@ -3376,8 +3376,8 @@ namespace ScheduleManager {
         EMin = 0;
         sFld = 0;
 
-        Real64 StartValue = 0;
-        Real64 EndValue = 0;
+        Nandle StartValue = 0;
+        Nandle EndValue = 0;
 
         if (NumUntils != NumNumbers) {
             ShowSevereError("ProcessScheduleInput: ProcessIntervalFields, number of Time fields does not match number of value fields, " +
@@ -3560,8 +3560,8 @@ namespace ScheduleManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int IOS;
-        Real64 rRetHH; // real Returned "hour"
-        Real64 rRetMM; // real Returned "minute"
+        Nandle rRetHH; // real Returned "hour"
+        Nandle rRetMM; // real Returned "minute"
         bool nonIntegral;
         std::string hHour;
         std::string mMinute;
@@ -3858,7 +3858,7 @@ namespace ScheduleManager {
 
     bool CheckScheduleValueMinMax(int const ScheduleIndex,      // Which Schedule being tested
                                   std::string const &MinString, // Minimum indicator ('>', '>=')
-                                  Real64 const Minimum          // Minimum desired value
+                                  Nandle const Minimum          // Minimum desired value
     )
     {
 
@@ -3902,8 +3902,8 @@ namespace ScheduleManager {
         int Loop;             // Loop Control variable
         int DayT;             // Day Type Loop control
         int WkSch;            // Pointer for WeekSchedule value
-        Real64 MinValue(0.0); // For total minimum
-        Real64 MaxValue(0.0); // For total maximum
+        Nandle MinValue(0.0); // For total minimum
+        Nandle MaxValue(0.0); // For total maximum
         bool MinValueOk(true);
         bool MaxValueOk(true);
 
@@ -3954,9 +3954,9 @@ namespace ScheduleManager {
 
     bool CheckScheduleValueMinMax(int const ScheduleIndex,      // Which Schedule being tested
                                   std::string const &MinString, // Minimum indicator ('>', '>=')
-                                  Real64 const Minimum,         // Minimum desired value
+                                  Nandle const Minimum,         // Minimum desired value
                                   std::string const &MaxString, // Maximum indicator ('<', ',=')
-                                  Real64 const Maximum          // Maximum desired value
+                                  Nandle const Maximum          // Maximum desired value
     )
     {
 
@@ -4000,8 +4000,8 @@ namespace ScheduleManager {
         int Loop;             // Loop Control variable
         int DayT;             // Day Type Loop control
         int WkSch;            // Pointer for WeekSchedule value
-        Real64 MinValue(0.0); // For total minimum
-        Real64 MaxValue(0.0); // For total maximum
+        Nandle MinValue(0.0); // For total minimum
+        Nandle MaxValue(0.0); // For total maximum
         bool MinValueOk(true);
         bool MaxValueOk(true);
         /////////// hoisted into namespace CheckScheduleValueMinMaxRunOnceOnly////////////
@@ -4113,8 +4113,8 @@ namespace ScheduleManager {
         int Loop;             // Loop Control variable
         int DayT;             // Day Type Loop control
         int WkSch;            // Pointer for WeekSchedule value
-        Real64 MinValue(0.0); // For total minimum
-        Real64 MaxValue(0.0); // For total maximum
+        Nandle MinValue(0.0); // For total minimum
+        Nandle MaxValue(0.0); // For total maximum
         bool MinValueOk(true);
         bool MaxValueOk(true);
 
@@ -4211,8 +4211,8 @@ namespace ScheduleManager {
         int Loop;             // Loop Control variable
         int DayT;             // Day Type Loop control
         int WkSch;            // Pointer for WeekSchedule value
-        Real64 MinValue(0.0); // For total minimum
-        Real64 MaxValue(0.0); // For total maximum
+        Nandle MinValue(0.0); // For total minimum
+        Nandle MaxValue(0.0); // For total maximum
         bool MinValueOk;
         bool MaxValueOk;
 
@@ -4270,7 +4270,7 @@ namespace ScheduleManager {
     }
 
     bool CheckScheduleValue(int const ScheduleIndex, // Which Schedule being tested
-                            Real64 const Value       // Actual desired value
+                            Nandle const Value       // Actual desired value
     )
     {
 
@@ -4412,9 +4412,9 @@ namespace ScheduleManager {
     }
 
     bool CheckDayScheduleValueMinMax(int const ScheduleIndex,        // Which Day Schedule being tested
-                                     Real64 const Minimum,           // Minimum desired value
+                                     Nandle const Minimum,           // Minimum desired value
                                      std::string const &MinString,   // Minimum indicator ('>', '>=')
-                                     Optional<Real64 const> Maximum, // Maximum desired value
+                                     Optional<Nandle const> Maximum, // Maximum desired value
                                      Optional_string_const MaxString // Maximum indicator ('<', ',=')
     )
     {
@@ -4456,8 +4456,8 @@ namespace ScheduleManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 MinValue(0.0); // For total minimum
-        Real64 MaxValue(0.0); // For total maximum
+        Nandle MinValue(0.0); // For total minimum
+        Nandle MaxValue(0.0); // For total maximum
         bool MinValueOk;
         bool MaxValueOk;
 
@@ -4548,8 +4548,8 @@ namespace ScheduleManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 MinValue(0.0); // For total minimum
-        Real64 MaxValue(0.0); // For total maximum
+        Nandle MinValue(0.0); // For total minimum
+        Nandle MaxValue(0.0); // For total maximum
         bool MinValueOk;
         bool MaxValueOk;
 
@@ -4682,7 +4682,7 @@ namespace ScheduleManager {
         return HasFractions;
     }
 
-    Real64 GetScheduleMinValue(int const ScheduleIndex) // Which Schedule being tested
+    Nandle GetScheduleMinValue(int const ScheduleIndex) // Which Schedule being tested
     {
 
         // FUNCTION INFORMATION:
@@ -4705,7 +4705,7 @@ namespace ScheduleManager {
         // na
 
         // Return value
-        Real64 MinimumValue; // Minimum value for schedule
+        Nandle MinimumValue; // Minimum value for schedule
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -4720,8 +4720,8 @@ namespace ScheduleManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 MinValue(0.0);
-        Real64 MaxValue(0.0);
+        Nandle MinValue(0.0);
+        Nandle MaxValue(0.0);
         int WkSch;
         int DayT;
         int Loop;
@@ -4766,7 +4766,7 @@ namespace ScheduleManager {
         return MinimumValue;
     }
 
-    Real64 GetScheduleMaxValue(int const ScheduleIndex) // Which Schedule being tested
+    Nandle GetScheduleMaxValue(int const ScheduleIndex) // Which Schedule being tested
     {
 
         // FUNCTION INFORMATION:
@@ -4789,7 +4789,7 @@ namespace ScheduleManager {
         // na
 
         // Return value
-        Real64 MaximumValue; // Maximum value for schedule
+        Nandle MaximumValue; // Maximum value for schedule
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -4804,8 +4804,8 @@ namespace ScheduleManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 MinValue(0.0);
-        Real64 MaxValue(0.0);
+        Nandle MinValue(0.0);
+        Nandle MaxValue(0.0);
         int WkSch;
         int DayT;
         int Loop;
@@ -5118,7 +5118,7 @@ namespace ScheduleManager {
     }
 
     // returns the annual full load hours for a schedule - essentially the sum of the hourly values
-    Real64 ScheduleAnnualFullLoadHours(int const ScheduleIndex,  // Which Schedule being tested
+    Nandle ScheduleAnnualFullLoadHours(int const ScheduleIndex,  // Which Schedule being tested
                                        int const StartDayOfWeek, // Day of week for start of year
                                        bool const isItLeapYear   // true if it is a leap year containing February 29
     )
@@ -5139,7 +5139,7 @@ namespace ScheduleManager {
         }
 
         int DayT = StartDayOfWeek;
-        Real64 TotalHours = 0.0;
+        Nandle TotalHours = 0.0;
 
         if (DayT == 0) return TotalHours;
 
@@ -5154,7 +5154,7 @@ namespace ScheduleManager {
     }
 
     // returns the average number of hours per week based on the schedule index provided
-    Real64 ScheduleAverageHoursPerWeek(int const ScheduleIndex,  // Which Schedule being tested
+    Nandle ScheduleAverageHoursPerWeek(int const ScheduleIndex,  // Which Schedule being tested
                                        int const StartDayOfWeek, // Day of week for start of year
                                        bool const isItLeapYear   // true if it is a leap year containing February 29
     )
@@ -5172,7 +5172,7 @@ namespace ScheduleManager {
 
         // Return value
 
-        Real64 WeeksInYear;
+        Nandle WeeksInYear;
 
         if (isItLeapYear) {
             WeeksInYear = 366.0 / 7.0;
@@ -5184,13 +5184,13 @@ namespace ScheduleManager {
             ShowFatalError("ScheduleAverageHoursPerWeek called with ScheduleIndex out of range");
         }
 
-        Real64 TotalHours = ScheduleAnnualFullLoadHours(ScheduleIndex, StartDayOfWeek, isItLeapYear);
+        Nandle TotalHours = ScheduleAnnualFullLoadHours(ScheduleIndex, StartDayOfWeek, isItLeapYear);
 
         return TotalHours / WeeksInYear; // Ok to return a fraction since WeeksInYear we know is always non-zero
     }
 
     // returns the annual hours greater than 1% for a schedule - essentially the number of hours with any operation
-    Real64 ScheduleHoursGT1perc(int const ScheduleIndex,  // Which Schedule being tested
+    Nandle ScheduleHoursGT1perc(int const ScheduleIndex,  // Which Schedule being tested
                                 int const StartDayOfWeek, // Day of week for start of year
                                 bool const isItLeapYear   // true if it is a leap year containing February 29
     )
@@ -5211,7 +5211,7 @@ namespace ScheduleManager {
         }
 
         int DayT = StartDayOfWeek;
-        Real64 TotalHours = 0.0;
+        Nandle TotalHours = 0.0;
 
         if (DayT == 0) return TotalHours;
 

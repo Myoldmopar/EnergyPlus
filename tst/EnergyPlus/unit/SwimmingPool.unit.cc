@@ -83,9 +83,9 @@ TEST_F(EnergyPlusFixture, SwimmingPool_CalcSwimmingPoolEvap)
 {
     int SurfNum;
     int PoolNum;
-    Real64 MAT;
-    Real64 HumRat;
-    Real64 EvapRate;
+    Nandle MAT;
+    Nandle HumRat;
+    Nandle EvapRate;
 
     // Tests for CalcSwimmingPoolEvap--Evaporate Rate Calculation for Swimming Pools
     SwimmingPool::clear_state();

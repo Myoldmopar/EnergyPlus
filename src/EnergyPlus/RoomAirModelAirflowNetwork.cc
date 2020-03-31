@@ -290,15 +290,15 @@ namespace RoomAirModelAirflowNetwork {
         // static bool MyOneTimeFlagConf( true ); // one time setup flag for zone configuration // InitRoomAirModelAirflowNetworkOneTimeFlagConf
         // static bool MyEnvrnFlag( true ); // one time setup flag for zone configuration // InitRoomAirModelAirflowNetworkEnvrnFlag
         ////////////////////////////////////////////////////////////////////////////////////
-        Real64 SumLinkMCp;
-        Real64 SumLinkMCpT;
+        Nandle SumLinkMCp;
+        Nandle SumLinkMCpT;
         int linkNum;
-        Real64 LinkInTemp;
-        Real64 CpAir;
-        Real64 LinkInHumRat;
-        Real64 LinkInMdot;
-        Real64 SumLinkM;
-        Real64 SumLinkMW;
+        Nandle LinkInTemp;
+        Nandle CpAir;
+        Nandle LinkInHumRat;
+        Nandle LinkInMdot;
+        Nandle SumLinkM;
+        Nandle SumLinkMW;
         int LoopZone;
         int NumSurfs;
         int LoopAirNode;
@@ -315,8 +315,8 @@ namespace RoomAirModelAirflowNetwork {
         int ISum;
         bool ErrorsFound;
         int I;
-        Array1D<Real64> SupplyFrac;
-        Array1D<Real64> ReturnFrac;
+        Array1D<Nandle> SupplyFrac;
+        Array1D<Nandle> ReturnFrac;
 
         if (InitRoomAirModelAirflowNetworkOneTimeFlag) { // then do one - time setup inits
 
@@ -664,23 +664,23 @@ namespace RoomAirModelAirflowNetwork {
         using Psychrometrics::PsyRhFnTdbWPb;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 H2OHtOfVap;
-        Real64 HumRatTmp;
-        Real64 NodeTempX1;
-        Real64 NodeTempX2;
-        Real64 NodeTempX3;
-        Real64 NodeHumRatX1;
-        Real64 NodeHumRatX2;
-        Real64 NodeHumRatX3;
-        Real64 TempDepCoef;
-        Real64 TempIndCoef;
-        Real64 AirCap;
-        Real64 TempTmp;
-        Real64 A;
-        Real64 B;
-        Real64 C;
-        Real64 AirTempT1;
-        Real64 HumRatW1;
+        Nandle H2OHtOfVap;
+        Nandle HumRatTmp;
+        Nandle NodeTempX1;
+        Nandle NodeTempX2;
+        Nandle NodeTempX3;
+        Nandle NodeHumRatX1;
+        Nandle NodeHumRatX2;
+        Nandle NodeHumRatX3;
+        Nandle TempDepCoef;
+        Nandle TempIndCoef;
+        Nandle AirCap;
+        Nandle TempTmp;
+        Nandle A;
+        Nandle B;
+        Nandle C;
+        Nandle AirTempT1;
+        Nandle HumRatW1;
 
         auto &ThisRAFNNode(RoomAirflowNetworkZoneInfo(ZoneNum).Node(RoomAirNode));
 
@@ -786,10 +786,10 @@ namespace RoomAirModelAirflowNetwork {
         int I;
         int LoopAirNode;
         int EquipLoop;
-        Real64 NodeMass;
-        Real64 SumMass;
-        Real64 SumMassT;
-        Real64 SumMassW;
+        Nandle NodeMass;
+        Nandle SumMass;
+        Nandle SumMassT;
+        Nandle SumMassW;
         int RetNodeNum;
 
         auto &ThisRAFNZone(RoomAirflowNetworkZoneInfo(ZoneNum));
@@ -884,40 +884,40 @@ namespace RoomAirModelAirflowNetwork {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NodeNum;         // System node number
-        Real64 NodeTemp;     // System node temperature
-        Real64 NodeW;        // System node humidity ratio
-        Real64 MassFlowRate; // System node mass flow rate
+        Nandle NodeTemp;     // System node temperature
+        Nandle NodeW;        // System node humidity ratio
+        Nandle MassFlowRate; // System node mass flow rate
         int ZoneEquipConfigNum;
         bool ControlledZoneAirFlag;
         int ZoneRetPlenumNum;
         int ZoneSupPlenumNum;
         bool ZoneRetPlenumAirFlag;
         bool ZoneSupPlenumAirFlag;
-        Real64 CpAir;      // Specific heat of air
+        Nandle CpAir;      // Specific heat of air
         int SurfNum;       // Surface number
-        Real64 HA;         //                     !Hc*Area
-        Real64 Area;       //                   !Effective surface area
-        Real64 RefAirTemp; //             !Reference air temperature for surface convection calculations
-        Real64 ZoneMult;
+        Nandle HA;         //                     !Hc*Area
+        Nandle Area;       //                   !Effective surface area
+        Nandle RefAirTemp; //             !Reference air temperature for surface convection calculations
+        Nandle ZoneMult;
         int ADUListIndex;
         int ADUNum;
         int ADUInNode;
         int ADUOutNode;
-        Real64 SumIntGain; //             !node sum of convective internal gains
-        Real64 SumHA;      // Zone sum of Hc*Area
-        Real64 SumHATsurf; //             !Zone sum of Hc*Area*Tsurf
-        Real64 SumHATref;  //              !Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-        Real64 SumMCp;     //                !Zone sum of MassFlowRate*Cp
-        Real64 SumMCpT;    //                !Zone sum of MassFlowRate*Cp*T
-        Real64 SumSysMCp;  //              !Zone sum of air system MassFlowRate*Cp
-        Real64 SumSysMCpT; //             !Zone sum of air system MassFlowRate*Cp*T
-        Real64 SumSysM;    //                !Zone sum of air system MassFlowRate
-        Real64 SumSysMW;   //               !Zone sum of air system MassFlowRate*W
+        Nandle SumIntGain; //             !node sum of convective internal gains
+        Nandle SumHA;      // Zone sum of Hc*Area
+        Nandle SumHATsurf; //             !Zone sum of Hc*Area*Tsurf
+        Nandle SumHATref;  //              !Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+        Nandle SumMCp;     //                !Zone sum of MassFlowRate*Cp
+        Nandle SumMCpT;    //                !Zone sum of MassFlowRate*Cp*T
+        Nandle SumSysMCp;  //              !Zone sum of air system MassFlowRate*Cp
+        Nandle SumSysMCpT; //             !Zone sum of air system MassFlowRate*Cp*T
+        Nandle SumSysM;    //                !Zone sum of air system MassFlowRate
+        Nandle SumSysMW;   //               !Zone sum of air system MassFlowRate*W
         int EquipLoop;     //              !Index of equipment loop
         int Loop;          //                   !Index of RAFN node
         bool Found;        //
-        Real64 SumLinkM;   //               !Zone sum of MassFlowRate from the AirflowNetwork model
-        Real64 SumLinkMW;  //             !Zone sum of MassFlowRate*W from the AirflowNetwork model
+        Nandle SumLinkM;   //               !Zone sum of MassFlowRate from the AirflowNetwork model
+        Nandle SumLinkMW;  //             !Zone sum of MassFlowRate*W from the AirflowNetwork model
 
         // FLOW
         SumIntGain = 0.0;
@@ -1156,7 +1156,7 @@ namespace RoomAirModelAirflowNetwork {
     } // CalcNodeSums
 
     void RAFNData::CalcSurfaceMoistureSums(
-        int const RoomAirNode, Real64 &SumHmAW, Real64 &SumHmARa, Real64 &SumHmARaW, Array1D<bool> const &EP_UNUSED(SurfMask))
+        int const RoomAirNode, Nandle &SumHmAW, Nandle &SumHmARa, Nandle &SumHmARaW, Array1D<bool> const &EP_UNUSED(SurfMask))
     {
 
         // SUBROUTINE INFORMATION:
@@ -1190,8 +1190,8 @@ namespace RoomAirModelAirflowNetwork {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int SurfNum;
         int Loop;
-        Real64 RhoAirZone;
-        Real64 Wsurf;
+        Nandle RhoAirZone;
+        Nandle Wsurf;
         bool Found;
 
         SumHmAW = 0.0;
@@ -1288,8 +1288,8 @@ namespace RoomAirModelAirflowNetwork {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int I;
-        Real64 SysOutputProvided;
-        Real64 LatOutputProvided;
+        Nandle SysOutputProvided;
+        Nandle LatOutputProvided;
 
         // TODO
         auto &ThisRAFNNode(RoomAirflowNetworkZoneInfo(ZoneNum).Node(RAFNNodeNum));
@@ -1406,8 +1406,8 @@ namespace RoomAirModelAirflowNetwork {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int I;
-        Real64 SysOutputProvided;
-        Real64 LatOutputProvided;
+        Nandle SysOutputProvided;
+        Nandle LatOutputProvided;
         int RoomAirNode;
 
         // TODO

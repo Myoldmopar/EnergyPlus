@@ -80,8 +80,8 @@ TEST_F(EnergyPlusFixture, VentilatedSlab_CalcVentilatedSlabCoilOutputTest)
 {
 
     BeginEnvrnFlag = false;
-    Real64 PowerMet = 0.0;
-    Real64 LatOutputProvided = 0.0;
+    Nandle PowerMet = 0.0;
+    Nandle LatOutputProvided = 0.0;
 
     NumOfVentSlabs = 1;
     VentSlab.allocate(NumOfVentSlabs);

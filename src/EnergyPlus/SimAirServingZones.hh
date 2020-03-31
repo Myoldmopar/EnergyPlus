@@ -194,10 +194,10 @@ namespace SimAirServingZones {
 
     void UpdateSysSizingForScalableInputs(int const AirLoopNum);
 
-    Real64 GetHeatingSATempForSizing(int const IndexAirLoop // air loop index
+    Nandle GetHeatingSATempForSizing(int const IndexAirLoop // air loop index
     );
 
-    Real64 GetHeatingSATempHumRatForSizing(int const IndexAirLoop // air loop index
+    Nandle GetHeatingSATempHumRatForSizing(int const IndexAirLoop // air loop index
     );
 
     // End Algorithm Section of the Module
@@ -212,10 +212,10 @@ namespace SimAirServingZones {
     //        Utility Subroutines for the SimAir Module
     // *****************************************************************************
 
-    void LimitZoneVentEff(Real64 Xs,              // ratio of uncorrected system outdoor air flow rate to the design system supply flow rate
-                          Real64 Voz,             // corrected (divided by distribution efficiency) zone outside air flow rate [m3/s]
+    void LimitZoneVentEff(Nandle Xs,              // ratio of uncorrected system outdoor air flow rate to the design system supply flow rate
+                          Nandle Voz,             // corrected (divided by distribution efficiency) zone outside air flow rate [m3/s]
                           int CtrlZoneNum,        // controlled zone number
-                          Real64 &SystemCoolingEv // system ventilation efficiency
+                          Nandle &SystemCoolingEv // system ventilation efficiency
     );
 
     void CheckWaterCoilIsOnAirLoop(int const CoilTypeNum, std::string const CompType, std::string const CompName, bool &WaterCoilOnAirLoop);

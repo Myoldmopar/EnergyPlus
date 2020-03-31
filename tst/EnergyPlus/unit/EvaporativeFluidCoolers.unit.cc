@@ -93,12 +93,12 @@ protected:
 
 TEST_F(EvapFluidCoolersFixture, EvapFluidCoolerSpecs_getDesignCapacitiesTest)
 {
-    Real64 MaxLoad;
-    Real64 MinLoad;
-    Real64 OptLoad;
-    Real64 ExpectedMaxLoad;
-    Real64 ExpectedMinLoad;
-    Real64 ExpectedOptLoad;
+    Nandle MaxLoad;
+    Nandle MinLoad;
+    Nandle OptLoad;
+    Nandle ExpectedMaxLoad;
+    Nandle ExpectedMinLoad;
+    Nandle ExpectedOptLoad;
 
     // Set up information required to actually run the routines that get called as a result of running this test.
     // In general, values set here attempt to avoid as much code as possible so that only the defect code is run.

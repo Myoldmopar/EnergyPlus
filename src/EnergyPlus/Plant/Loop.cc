@@ -56,8 +56,8 @@ namespace EnergyPlus {
 namespace DataPlant {
 
     void PlantLoopData::UpdateLoopSideReportVars(
-        Real64 const OtherSideDemand,   // This is the 'other side' demand, based on other side flow
-        Real64 const LocalRemLoopDemand // Unmet Demand after equipment has been simulated (report variable)
+        Nandle const OtherSideDemand,   // This is the 'other side' demand, based on other side flow
+        Nandle const LocalRemLoopDemand // Unmet Demand after equipment has been simulated (report variable)
     ) {
 
         // SUBROUTINE INFORMATION:
@@ -119,19 +119,19 @@ namespace DataPlant {
         static std::string const RoutineNameAlt("PlantSupplySide:EvaluateLoopSetPointLoad");
 
         //~ General variables
-        Real64 MassFlowRate;
-        Real64 TargetTemp;
-        Real64 LoopSetPointTemperature;
-        Real64 LoopSetPointTemperatureHi;
-        Real64 LoopSetPointTemperatureLo;
-        Real64 LoadToHeatingSetPoint;
-        Real64 LoadToCoolingSetPoint;
-        Real64 DeltaTemp;
-        Real64 Cp;
-        Real64 EnthalpySteamSatVapor;  // Enthalpy of saturated vapor
-        Real64 EnthalpySteamSatLiquid; // Enthalpy of saturated liquid
-        Real64 LatentHeatSteam;        // Latent heat of steam
-        Real64 LoadToLoopSetPoint;
+        Nandle MassFlowRate;
+        Nandle TargetTemp;
+        Nandle LoopSetPointTemperature;
+        Nandle LoopSetPointTemperatureHi;
+        Nandle LoopSetPointTemperatureLo;
+        Nandle LoadToHeatingSetPoint;
+        Nandle LoadToCoolingSetPoint;
+        Nandle DeltaTemp;
+        Nandle Cp;
+        Nandle EnthalpySteamSatVapor;  // Enthalpy of saturated vapor
+        Nandle EnthalpySteamSatLiquid; // Enthalpy of saturated liquid
+        Nandle LatentHeatSteam;        // Latent heat of steam
+        Nandle LoadToLoopSetPoint;
 
         // Initialize
         LoadToLoopSetPoint = 0.0;

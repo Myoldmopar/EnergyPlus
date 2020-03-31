@@ -74,13 +74,13 @@ namespace PhotovoltaicThermalCollectors {
     {
         // Members
         std::string Name;
-        Real64 ThermalActiveFract;     // fraction of surface area with active thermal collection
+        Nandle ThermalActiveFract;     // fraction of surface area with active thermal collection
         ThermEfficEnum ThermEfficMode; // setting for how therm effic is determined
-        Real64 ThermEffic;             // fixed or current Therm efficiency
+        Nandle ThermEffic;             // fixed or current Therm efficiency
         int ThermEffSchedNum;          // pointer to schedule for therm effic (if any)
-        Real64 SurfEmissivity;         // surface emittance in long wave IR
-        Real64 LastCollectorTemp;      // store previous temperature
-        Real64 CollectorTemp;          // average solar collector temp.
+        Nandle SurfEmissivity;         // surface emittance in long wave IR
+        Nandle LastCollectorTemp;      // store previous temperature
+        Nandle CollectorTemp;          // average solar collector temp.
 
         // Default Constructor
         SimplePVTModelStruct()
@@ -93,15 +93,15 @@ namespace PhotovoltaicThermalCollectors {
     struct PVTReportStruct
     {
         // Members
-        Real64 ThermEfficiency;  // Thermal efficiency of solar energy conversion
-        Real64 ThermPower;       // Heat gain or loss to collector fluid (W)
-        Real64 ThermHeatGain;    // Heat gain to collector fluid (W)
-        Real64 ThermHeatLoss;    // Heat loss from collector fluid (W)
-        Real64 ThermEnergy;      // Energy gained (or lost) to collector fluid (J)
-        Real64 MdotWorkFluid;    // working fluid mass flow rate (kg/s)
-        Real64 TinletWorkFluid;  // working fluid inlet temp (C)
-        Real64 ToutletWorkFluid; // working fluid outlet temp (C)
-        Real64 BypassStatus;     // 0 = no bypass, 1=full bypass
+        Nandle ThermEfficiency;  // Thermal efficiency of solar energy conversion
+        Nandle ThermPower;       // Heat gain or loss to collector fluid (W)
+        Nandle ThermHeatGain;    // Heat gain to collector fluid (W)
+        Nandle ThermHeatLoss;    // Heat loss from collector fluid (W)
+        Nandle ThermEnergy;      // Energy gained (or lost) to collector fluid (J)
+        Nandle MdotWorkFluid;    // working fluid mass flow rate (kg/s)
+        Nandle TinletWorkFluid;  // working fluid inlet temp (C)
+        Nandle ToutletWorkFluid; // working fluid outlet temp (C)
+        Nandle BypassStatus;     // 0 = no bypass, 1=full bypass
 
         // Default Constructor
         PVTReportStruct()
@@ -134,11 +134,11 @@ namespace PhotovoltaicThermalCollectors {
         int PlantOutletNodeNum;
         int HVACInletNodeNum;
         int HVACOutletNodeNum;
-        Real64 DesignVolFlowRate;
+        Nandle DesignVolFlowRate;
         bool DesignVolFlowRateWasAutoSized; // true if design volume flow rate was autosize on input
-        Real64 MaxMassFlowRate;
-        Real64 MassFlowRate;
-        Real64 AreaCol;
+        Nandle MaxMassFlowRate;
+        Nandle MassFlowRate;
+        Nandle AreaCol;
         bool BypassDamperOff;
         bool CoolingUseful;
         bool HeatingUseful;
@@ -161,7 +161,7 @@ namespace PhotovoltaicThermalCollectors {
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void setupReportVars();
 
@@ -186,7 +186,7 @@ namespace PhotovoltaicThermalCollectors {
 
     int getPVTindexFromName(std::string const &name);
 
-    void GetPVTThermalPowerProduction(int PVindex, Real64 &ThermalPower, Real64 &ThermalEnergy);
+    void GetPVTThermalPowerProduction(int PVindex, Nandle &ThermalPower, Nandle &ThermalEnergy);
 
     int GetAirInletNodeNum(std::string const &PVTName, bool &ErrorsFound);
 

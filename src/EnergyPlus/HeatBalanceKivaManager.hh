@@ -72,10 +72,10 @@ namespace HeatBalanceKivaManager {
     public:
         int intervalsPerHour;
 
-        Real64 annualAverageDrybulbTemp;
-        std::vector<Real64> dryBulb;
-        std::vector<Real64> windSpeed;
-        std::vector<Real64> skyEmissivity;
+        Nandle annualAverageDrybulbTemp;
+        std::vector<Nandle> dryBulb;
+        std::vector<Nandle> windSpeed;
+        std::vector<Nandle> skyEmissivity;
     };
 
     class FoundationKiva
@@ -90,26 +90,26 @@ namespace HeatBalanceKivaManager {
         std::string name;
         std::vector<int> surfaces;
         int wallConstructionIndex;
-        Real64 assumedIndoorTemperature;
+        Nandle assumedIndoorTemperature;
     };
 
     class KivaInstanceMap
     {
     public:
         KivaInstanceMap(
-            Kiva::Foundation &foundation, int floorSurface, std::vector<int> wallSurfaces, int zoneNum, Real64 zoneAssumedTemperature, Real64 floorWeight, int constructionNum, class KivaManager* kmPtr = nullptr);
+            Kiva::Foundation &foundation, int floorSurface, std::vector<int> wallSurfaces, int zoneNum, Nandle zoneAssumedTemperature, Nandle floorWeight, int constructionNum, class KivaManager* kmPtr = nullptr);
         Kiva::Instance instance;
         int floorSurface;
         std::vector<int> wallSurfaces;
         int zoneNum;
         int zoneControlType; // Uncontrolled=0, Temperature=1, Operative=2, Comfort=3, HumidityAndTemperature=4
         int zoneControlNum;
-        Real64 zoneAssumedTemperature;
+        Nandle zoneAssumedTemperature;
         void initGround(const KivaWeatherData &kivaWeather);
         void setInitialBoundaryConditions(const KivaWeatherData &kivaWeather, const int date, const int hour, const int timestep);
         void setBoundaryConditions();
         void plotDomain();
-        Real64 floorWeight;
+        Nandle floorWeight;
         int constructionNum;
         class KivaManager* kmPtr;
 
@@ -148,19 +148,19 @@ namespace HeatBalanceKivaManager {
 
         std::map<int, ConvectionAlgorithms> surfaceConvMap;
         std::map<int, Kiva::Aggregator> surfaceMap;
-        Real64 timestep;
+        Nandle timestep;
 
         struct Settings
         {
             Settings();
 
-            Real64 soilK;
-            Real64 soilRho;
-            Real64 soilCp;
-            Real64 groundSolarAbs;
-            Real64 groundThermalAbs;
-            Real64 groundRoughness;
-            Real64 farFieldWidth;
+            Nandle soilK;
+            Nandle soilRho;
+            Nandle soilCp;
+            Nandle groundSolarAbs;
+            Nandle groundThermalAbs;
+            Nandle groundRoughness;
+            Nandle farFieldWidth;
 
             enum DGType
             {
@@ -170,9 +170,9 @@ namespace HeatBalanceKivaManager {
             };
 
             DGType deepGroundBoundary;
-            Real64 deepGroundDepth;
-            Real64 minCellDim;
-            Real64 maxGrowthCoeff;
+            Nandle deepGroundDepth;
+            Nandle minCellDim;
+            Nandle maxGrowthCoeff;
 
             enum TSType
             {
@@ -186,8 +186,8 @@ namespace HeatBalanceKivaManager {
         struct WallGroup
         {
             WallGroup();
-            WallGroup(Real64 exposedPerimeter, std::vector<int> wallIDs);
-            Real64 exposedPerimeter;
+            WallGroup(Nandle exposedPerimeter, std::vector<int> wallIDs);
+            Nandle exposedPerimeter;
             std::vector<int> wallIDs;
         };
 

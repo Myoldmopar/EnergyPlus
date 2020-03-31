@@ -154,7 +154,7 @@ namespace FuelCellElectricGenerator {
     }
 
     void FCDataStruct::SimFuelCellGenerator(bool const RunFlag,  // simulate Generator when TRUE
-                                            Real64 const MyLoad, // demand on electric generator
+                                            Nandle const MyLoad, // demand on electric generator
                                             bool const FirstHVACIteration)
     {
         // SUBROUTINE INFORMATION:
@@ -189,7 +189,7 @@ namespace FuelCellElectricGenerator {
         int NumNums;                   // Number of elements in the numeric array
         int IOStat;                    // IO Status when calling get input subroutine
         Array1D_string AlphArray(25);  // character string data
-        Array1D<Real64> NumArray(200); // numeric data TODO deal with allocatable for extensible
+        Array1D<Nandle> NumArray(200); // numeric data TODO deal with allocatable for extensible
         Array1D_bool lAlphaBlanks(25);
         bool ErrorsFound(false); // error flag
 
@@ -1337,7 +1337,7 @@ namespace FuelCellElectricGenerator {
         }
     }
 
-    void FCDataStruct::CalcFuelCellGeneratorModel(bool const RunFlag, Real64 const MyLoad, bool const EP_UNUSED(FirstHVACIteration))
+    void FCDataStruct::CalcFuelCellGeneratorModel(bool const RunFlag, Nandle const MyLoad, bool const EP_UNUSED(FirstHVACIteration))
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Brent Griffith
@@ -1401,16 +1401,16 @@ namespace FuelCellElectricGenerator {
         }
 
         // Note: MyLoad (input) is Pdemand (electrical Power requested)
-        Real64 Pdemand = MyLoad;
-        Real64 PacAncillariesTotal = 0.0;
-        Real64 PpcuLosses = 0.0;
-        Real64 Pstorage = 0.0;
-        Real64 PgridExtra = 0.0;
-        Real64 PoutofInverter = 0.0;
+        Nandle Pdemand = MyLoad;
+        Nandle PacAncillariesTotal = 0.0;
+        Nandle PpcuLosses = 0.0;
+        Nandle Pstorage = 0.0;
+        Nandle PgridExtra = 0.0;
+        Nandle PoutofInverter = 0.0;
         bool ConstrainedFCPM = false;
         int SolverFlag;
         int iter;
-        Real64 Pel;
+        Nandle Pel;
 
         // BEGIN SEQUENTIAL SUBSTITUTION to handle a lot of inter-related calcs
         for (iter = 1; iter <= 20; ++iter) {
@@ -1432,7 +1432,7 @@ namespace FuelCellElectricGenerator {
 
             // Control step 2: adjust for transient and startup/shut down constraints
 
-            Real64 PelDiff;
+            Nandle PelDiff;
             bool ConstrainedFCPMTrans = false;
             this->FigureTransientConstraints(Pel, ConstrainedFCPMTrans, PelDiff);
 
@@ -1457,7 +1457,7 @@ namespace FuelCellElectricGenerator {
 
             // Calculation Step 1. Determine electrical Efficiency Eel
 
-            Real64 Eel = 0.0;
+            Nandle Eel = 0.0;
             if (this->FCPM.EffMode == DataGenerators::NormalizedCurveMode) {
                 // Equation (8) in FuelCell Spec modified for normalized curve
 
@@ -1475,7 +1475,7 @@ namespace FuelCellElectricGenerator {
             // Calculation Step 2. Determine fuel rate
 
             // fuel flow rate
-            Real64 NdotFuel = Pel / (Eel * DataGenerators::FuelSupply(this->FuelSupNum).LHV * 1000000.0); // Eq. 10 solved for Ndot
+            Nandle NdotFuel = Pel / (Eel * DataGenerators::FuelSupply(this->FuelSupNum).LHV * 1000000.0); // Eq. 10 solved for Ndot
 
             this->FCPM.NdotFuel = NdotFuel;
             if (Pel <= 0.0) {
@@ -1492,7 +1492,7 @@ namespace FuelCellElectricGenerator {
 
             if (this->AirSup.AirSupRateMode == DataGenerators::ConstantStoicsAirRat) { // MEthod 1
                 // molar rate coeff working variable
-                Real64 NdotO2 = DataGenerators::FuelSupply(this->FuelSupNum).StoicOxygenRate * this->FCPM.NdotFuel * this->AirSup.Stoics;
+                Nandle NdotO2 = DataGenerators::FuelSupply(this->FuelSupNum).StoicOxygenRate * this->FCPM.NdotFuel * this->AirSup.Stoics;
 
                 this->FCPM.NdotAir = NdotO2 / this->AirSup.O2fraction;
 
@@ -1525,8 +1525,8 @@ namespace FuelCellElectricGenerator {
             }
 
             //  evaluate  heat capacity at average temperature using shomate
-            Real64 Cp; // temp Heat Capacity, used in thermochemistry units of (J/mol K)
-            Real64 Tavg =
+            Nandle Cp; // temp Heat Capacity, used in thermochemistry units of (J/mol K)
+            Nandle Tavg =
                 (DataGenerators::FuelSupply(this->FuelSupNum).TfuelIntoCompress + DataGenerators::FuelSupply(this->FuelSupNum).TfuelIntoFCPM) / 2.0;
             this->FigureFuelHeatCap(Tavg, Cp); // Cp in (J/mol K)
 
@@ -1553,7 +1553,7 @@ namespace FuelCellElectricGenerator {
             // calculate total fuel enthalpy coming into power module
 
             // (Hmolfuel in KJ/mol)
-            Real64 Hmolfuel; // temp enthalpy of fuel mixture in KJ/mol
+            Nandle Hmolfuel; // temp enthalpy of fuel mixture in KJ/mol
             this->FigureFuelEnthalpy(DataGenerators::FuelSupply(this->FuelSupNum).TfuelIntoFCPM, Hmolfuel);
 
             // units, NdotFuel in kmol/sec. Hmolfule in KJ/mol ,
@@ -1588,7 +1588,7 @@ namespace FuelCellElectricGenerator {
             this->WaterSup.PwaterCompEl = CurveManager::CurveValue(this->WaterSup.PmpPowerCurveID, this->FCPM.NdotLiqwater);
 
             // 75.325  J/mol K Water at 0.1 MPa and 298 K, reference NIST WEBBOOK
-            Real64 CpWater; // heat capacity of water in molar units
+            Nandle CpWater; // heat capacity of water in molar units
             FigureLiquidWaterHeatCap(this->WaterSup.TwaterIntoCompress, CpWater);
 
             if (this->FCPM.NdotLiqwater <= 0.0) { // just pass through, domain probably collapsed in modeling
@@ -1606,7 +1606,7 @@ namespace FuelCellElectricGenerator {
                 this->WaterSup.QskinLoss = 0.0;
             }
 
-            Real64 HLiqWater;                                                    // temp enthalpy of liquid water in KJ/mol   No Formation
+            Nandle HLiqWater;                                                    // temp enthalpy of liquid water in KJ/mol   No Formation
             FigureLiquidWaterEnthalpy(this->WaterSup.TwaterIntoFCPM, HLiqWater); // HLiqWater in KJ/mol
 
             this->FCPM.WaterInEnthalpy = this->FCPM.NdotLiqwater * HLiqWater * 1000.0 * 1000.0;
@@ -1667,7 +1667,7 @@ namespace FuelCellElectricGenerator {
                 this->AirSup.QskinLoss = 0.0;
             }
 
-            Real64 Hmolair;                                              // temp enthalpy of air mixture in KJ/mol
+            Nandle Hmolair;                                              // temp enthalpy of air mixture in KJ/mol
             this->FigureAirEnthalpy(this->AirSup.TairIntoFCPM, Hmolair); // (Hmolair in KJ/mol)
 
             // units, NdotAir in kmol/sec.; Hmolfuel in KJ/mol ,
@@ -1677,15 +1677,15 @@ namespace FuelCellElectricGenerator {
             // calculation Step 8, Figure Product Gases
 
             // figure stoic N dot for air
-            Real64 NdotO2 = DataGenerators::FuelSupply(this->FuelSupNum).StoicOxygenRate * this->FCPM.NdotFuel;
+            Nandle NdotO2 = DataGenerators::FuelSupply(this->FuelSupNum).StoicOxygenRate * this->FCPM.NdotFuel;
 
             // Air in excess of match for fuel
-            Real64 NdotStoicAir = NdotO2 / this->AirSup.O2fraction;
+            Nandle NdotStoicAir = NdotO2 / this->AirSup.O2fraction;
 
             // figure excess air rate
 
             // Air in excess of match for fuel
-            Real64 NdotExcessAir = this->FCPM.NdotAir - NdotStoicAir;
+            Nandle NdotExcessAir = this->FCPM.NdotAir - NdotStoicAir;
 
             if (NdotExcessAir < 0) { // can't meet stoichiometric fuel reaction
 
@@ -1696,17 +1696,17 @@ namespace FuelCellElectricGenerator {
             // figure CO2 and Water rate from products (coefs setup during one-time processing in gas phase library )
 
             // CO2 from reaction
-            Real64 NdotCO2ProdGas = this->FCPM.NdotFuel * DataGenerators::FuelSupply(this->FuelSupNum).CO2ProductGasCoef;
+            Nandle NdotCO2ProdGas = this->FCPM.NdotFuel * DataGenerators::FuelSupply(this->FuelSupNum).CO2ProductGasCoef;
 
             // Water from reaction
-            Real64 NdotH2OProdGas = this->FCPM.NdotFuel * DataGenerators::FuelSupply(this->FuelSupNum).H2OProductGasCoef;
+            Nandle NdotH2OProdGas = this->FCPM.NdotFuel * DataGenerators::FuelSupply(this->FuelSupNum).H2OProductGasCoef;
 
             //  set product gas constituent fractions  (assume five usual components)
-            Real64 NdotCO2 = 0.0; // temp CO2 molar rate coef product gas stream
-            Real64 NdotN2 = 0.0;  // temp Nitrogen rate coef product gas stream
-            Real64 Ndot02 = 0.0;  // temp Oxygen rate coef product gas stream
-            Real64 NdotH2O = 0.0; // temp Water rate coef product gas stream
-            Real64 NdotAr = 0.0;  // temp Argon rate coef product gas stream
+            Nandle NdotCO2 = 0.0; // temp CO2 molar rate coef product gas stream
+            Nandle NdotN2 = 0.0;  // temp Nitrogen rate coef product gas stream
+            Nandle Ndot02 = 0.0;  // temp Oxygen rate coef product gas stream
+            Nandle NdotH2O = 0.0; // temp Water rate coef product gas stream
+            Nandle NdotAr = 0.0;  // temp Argon rate coef product gas stream
 
             // Product gas constituents are fixed (not a user defined thing)
 
@@ -1759,7 +1759,7 @@ namespace FuelCellElectricGenerator {
             this->FCPM.ConstitMolalFract(5) = NdotAr / this->FCPM.NdotProdGas;
 
             // HmolProdGases KJ/mol)
-            Real64 HmolProdGases; // enthalpy of product gas mixture in KJ/mol
+            Nandle HmolProdGases; // enthalpy of product gas mixture in KJ/mol
             this->FigureProductGasesEnthalpy(this->FCPM.TprodGasLeavingFCPM, HmolProdGases);
 
             // units, NdotProdGas in kmol/sec.; HmolProdGases in KJ/mol ,
@@ -1796,7 +1796,7 @@ namespace FuelCellElectricGenerator {
             this->FCPM.DilutionAirOutEnthalpy = this->FCPM.DilutionAirInEnthalpy + this->FCPM.StackHeatLossToDilution;
 
             // calculation Step 12, Calculate Reforming water out enthalpy
-            Real64 HGasWater; // temp enthalpy of gaseous water in KJ/mol  No Formation
+            Nandle HGasWater; // temp enthalpy of gaseous water in KJ/mol  No Formation
             FigureGaseousWaterEnthalpy(this->FCPM.TprodGasLeavingFCPM, HGasWater);
 
             this->FCPM.WaterOutEnthalpy = HGasWater * 1000.0 * this->FCPM.NdotLiqwater * 1000.0;
@@ -1804,7 +1804,7 @@ namespace FuelCellElectricGenerator {
             // calculation Step 13, Calculate Heat balance
             //    move all terms in Equation 7 to RHS and calculate imbalance
 
-            Real64 MagofImbalance = -this->FCPM.TotFuelInEnthalphy - this->FCPM.TotAirInEnthalphy - this->FCPM.WaterInEnthalpy -
+            Nandle MagofImbalance = -this->FCPM.TotFuelInEnthalphy - this->FCPM.TotAirInEnthalphy - this->FCPM.WaterInEnthalpy -
                                     this->FCPM.DilutionAirInEnthalpy -
                                     this->FCPM.NdotFuel * DataGenerators::FuelSupply(this->FuelSupNum).LHV * 1000000.0 - this->FCPM.PelancillariesAC +
                                     this->FCPM.Pel + this->FCPM.TotProdGasEnthalphy + this->FCPM.WaterOutEnthalpy + this->FCPM.QdotStackCool +
@@ -1812,17 +1812,17 @@ namespace FuelCellElectricGenerator {
 
             // Now find a new total prod Gas Enthalphy that would result in an energy balance
             // TODO check signs...
-            Real64 tmpTotProdGasEnthalpy = this->FCPM.TotProdGasEnthalphy - MagofImbalance;
+            Nandle tmpTotProdGasEnthalpy = this->FCPM.TotProdGasEnthalphy - MagofImbalance;
 
             // solve for a new TprodGasLeavingFCPM using regula falsi method
 
-            Real64 Acc = 0.01;      // guessing need to refine
+            Nandle Acc = 0.01;      // guessing need to refine
             int MaxIter = 150;      // guessing need to refine
             SolverFlag = 0;         // init
-            Array1D<Real64> Par(2); // parameters passed in to SolveRoot
+            Array1D<Nandle> Par(2); // parameters passed in to SolveRoot
             Par(1) = tmpTotProdGasEnthalpy;
             Par(2) = this->FCPM.NdotProdGas;
-            Real64 tmpTprodGas = this->FCPM.TprodGasLeavingFCPM;
+            Nandle tmpTprodGas = this->FCPM.TprodGasLeavingFCPM;
             auto boundFunc = std::bind(&FCDataStruct::FuelCellProductGasEnthResidual, this, std::placeholders::_1, std::placeholders::_2);
             General::SolveRoot(
                 Acc, MaxIter, SolverFlag, tmpTprodGas, boundFunc, DataGenerators::MinProductGasTemp, DataGenerators::MaxProductGasTemp, Par);
@@ -1841,7 +1841,7 @@ namespace FuelCellElectricGenerator {
 
             // Control Step 3 determine interaction with electrical storage
             // How much power is really going into inverter?
-            Real64 PintoInverter = Pel + Pstorage; // Back out so we can reapply
+            Nandle PintoInverter = Pel + Pstorage; // Back out so we can reapply
             bool ConstrainedStorage;
             this->ManageElectStorInteractions(Pdemand, PpcuLosses, ConstrainedStorage, Pstorage, PgridExtra);
             PintoInverter = Pel - Pstorage;
@@ -1880,11 +1880,11 @@ namespace FuelCellElectricGenerator {
         this->FCPM.RegulaFalsiIter = SolverFlag;
     }
 
-    void FCDataStruct::ManageElectStorInteractions(Real64 const Pdemand,
-                                                   Real64 const EP_UNUSED(PpcuLosses),
+    void FCDataStruct::ManageElectStorInteractions(Nandle const Pdemand,
+                                                   Nandle const EP_UNUSED(PpcuLosses),
                                                    bool &Constrained,
-                                                   Real64 &Pstorage,
-                                                   Real64 &PgridOverage // electricity that can't be stored and needs to go out
+                                                   Nandle &Pstorage,
+                                                   Nandle &PgridOverage // electricity that can't be stored and needs to go out
     )
     {
 
@@ -1897,8 +1897,8 @@ namespace FuelCellElectricGenerator {
         // PURPOSE OF THIS SUBROUTINE:
         // manage controls and calculations related to electrical storage in FuelCell model
 
-        Real64 tmpPdraw = 0.0;
-        Real64 tmpPcharge = 0.0;
+        Nandle tmpPdraw = 0.0;
+        Nandle tmpPcharge = 0.0;
         bool drawing = false;  // true if drawing power
         bool charging = false; // true if charging
         Constrained = false;
@@ -2038,8 +2038,8 @@ namespace FuelCellElectricGenerator {
         }
     }
 
-    Real64 FCDataStruct::FuelCellProductGasEnthResidual(Real64 const TprodGas,     // temperature, this is "x" being searched
-                                                        Array1D<Real64> const &Par // par(1) = Generator Number
+    Nandle FCDataStruct::FuelCellProductGasEnthResidual(Nandle const TprodGas,     // temperature, this is "x" being searched
+                                                        Array1D<Nandle> const &Par // par(1) = Generator Number
     )
     {
 
@@ -2058,11 +2058,11 @@ namespace FuelCellElectricGenerator {
         // Calculates residual function for product gas enthalpy
         // calls procedure FigureProductGasesEnthalpy
 
-        Real64 Residuum; // F(x)
+        Nandle Residuum; // F(x)
 
-        Real64 thisHmolalProdGases;
-        Real64 desiredHprodGases = Par(1);
-        Real64 NdotProdGases = Par(2);
+        Nandle thisHmolalProdGases;
+        Nandle desiredHprodGases = Par(1);
+        Nandle NdotProdGases = Par(2);
 
         this->FigureProductGasesEnthalpy(TprodGas, thisHmolalProdGases);
 
@@ -2071,7 +2071,7 @@ namespace FuelCellElectricGenerator {
         return Residuum;
     }
 
-    void FCDataStruct::FigureAirHeatCap(Real64 const FluidTemp, Real64 &Cp)
+    void FCDataStruct::FigureAirHeatCap(Nandle const FluidTemp, Nandle &Cp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2090,31 +2090,31 @@ namespace FuelCellElectricGenerator {
         // REFERENCES:
         // NIST Webbook on gas phase thermochemistry
 
-        Real64 A;  // shomate coeff
-        Real64 B;  // shomate coeff
-        Real64 C;  // shomate coeff
-        Real64 D;  // shomate coeff
-        Real64 E;  // shomate coeff
-        Real64 A1; // NASA poly coeff
-        Real64 A2; // NASA poly coeff
-        Real64 A3; // NASA poly coeff
-        Real64 A4; // NASA poly coeff
-        Real64 A5; // NASA poly coeff
+        Nandle A;  // shomate coeff
+        Nandle B;  // shomate coeff
+        Nandle C;  // shomate coeff
+        Nandle D;  // shomate coeff
+        Nandle E;  // shomate coeff
+        Nandle A1; // NASA poly coeff
+        Nandle A2; // NASA poly coeff
+        Nandle A3; // NASA poly coeff
+        Nandle A4; // NASA poly coeff
+        Nandle A5; // NASA poly coeff
 
         // loop through fuel constituents and sum up Cp
 
         // two different themodynamic curve fits might be used
 
-        Real64 tempCp = 0.0;
+        Nandle tempCp = 0.0;
 
-        Real64 const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
 
-        Real64 const pow_2_Tsho(pow_2(Tsho));
-        Real64 const pow_3_Tsho(pow_3(Tsho));
-        Real64 const pow_2_Tkel(pow_2(Tkel));
-        Real64 const pow_3_Tkel(pow_3(Tkel));
-        Real64 const pow_4_Tkel(pow_4(Tkel));
+        Nandle const pow_2_Tsho(pow_2(Tsho));
+        Nandle const pow_3_Tsho(pow_3(Tsho));
+        Nandle const pow_2_Tkel(pow_2(Tkel));
+        Nandle const pow_3_Tkel(pow_3(Tkel));
+        Nandle const pow_4_Tkel(pow_4(Tkel));
 
         for (int thisConstit = 1; thisConstit <= this->AirSup.NumConstituents; ++thisConstit) {
             int gasID = this->AirSup.GasLibID(thisConstit);
@@ -2147,7 +2147,7 @@ namespace FuelCellElectricGenerator {
         Cp = tempCp;
     }
 
-    void FCDataStruct::FigureAirEnthalpy(Real64 const FluidTemp, Real64 &Hair)
+    void FCDataStruct::FigureAirEnthalpy(Nandle const FluidTemp, Nandle &Hair)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2166,33 +2166,33 @@ namespace FuelCellElectricGenerator {
         // REFERENCES:
         // NIST Webbook on gas phase thermochemistry
 
-        Real64 A;  // shomate coeff
-        Real64 B;  // shomate coeff
-        Real64 C;  // shomate coeff
-        Real64 D;  // shomate coeff
-        Real64 E;  // shomate coeff
-        Real64 F;  // shomate coeff
-        Real64 H;  // shomate coeff
-        Real64 A1; // NASA poly coeff
-        Real64 A2; // NASA poly coeff
-        Real64 A3; // NASA poly coeff
-        Real64 A4; // NASA poly coeff
-        Real64 A5; // NASA poly coeff
-        Real64 A6; // NASA poly coeff
+        Nandle A;  // shomate coeff
+        Nandle B;  // shomate coeff
+        Nandle C;  // shomate coeff
+        Nandle D;  // shomate coeff
+        Nandle E;  // shomate coeff
+        Nandle F;  // shomate coeff
+        Nandle H;  // shomate coeff
+        Nandle A1; // NASA poly coeff
+        Nandle A2; // NASA poly coeff
+        Nandle A3; // NASA poly coeff
+        Nandle A4; // NASA poly coeff
+        Nandle A5; // NASA poly coeff
+        Nandle A6; // NASA poly coeff
 
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
-        Real64 const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
 
         // loop through fuel constituents and sum up Cp
 
-        Real64 tempHair = 0.0;
+        Nandle tempHair = 0.0;
 
-        Real64 const pow_2_Tsho(pow_2(Tsho));
-        Real64 const pow_3_Tsho(pow_3(Tsho));
-        Real64 const pow_4_Tsho(pow_4(Tsho));
-        Real64 const pow_2_Tkel(pow_2(Tkel));
-        Real64 const pow_3_Tkel(pow_3(Tkel));
-        Real64 const pow_4_Tkel(pow_4(Tkel));
+        Nandle const pow_2_Tsho(pow_2(Tsho));
+        Nandle const pow_3_Tsho(pow_3(Tsho));
+        Nandle const pow_4_Tsho(pow_4(Tsho));
+        Nandle const pow_2_Tkel(pow_2(Tkel));
+        Nandle const pow_3_Tkel(pow_3(Tkel));
+        Nandle const pow_4_Tkel(pow_4(Tkel));
 
         for (int thisConstit = 1; thisConstit <= this->AirSup.NumConstituents; ++thisConstit) {
             int gasID = this->AirSup.GasLibID(thisConstit);
@@ -2207,7 +2207,7 @@ namespace FuelCellElectricGenerator {
                     F = DataGenerators::GasPhaseThermoChemistryData(gasID).ShomateF;
                     H = DataGenerators::GasPhaseThermoChemistryData(gasID).ShomateH;
 
-                    Real64 HairI = (A * Tsho + B * pow_2_Tsho / 2.0 + C * pow_3_Tsho / 3.0 + D * pow_4_Tsho / 4.0 - E / Tsho + F - H);
+                    Nandle HairI = (A * Tsho + B * pow_2_Tsho / 2.0 + C * pow_3_Tsho / 3.0 + D * pow_4_Tsho / 4.0 - E / Tsho + F - H);
 
                     tempHair += HairI * this->AirSup.ConstitMolalFract(thisConstit);
                 }
@@ -2230,7 +2230,7 @@ namespace FuelCellElectricGenerator {
         Hair = tempHair;
     }
 
-    void FCDataStruct::FigureFuelHeatCap(Real64 const FluidTemp, Real64 &Cp)
+    void FCDataStruct::FigureFuelHeatCap(Nandle const FluidTemp, Nandle &Cp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2249,29 +2249,29 @@ namespace FuelCellElectricGenerator {
         // REFERENCES:
         // NIST Webbook on gas phase thermochemistry
 
-        Real64 A;  // shomate coeff
-        Real64 B;  // shomate coeff
-        Real64 C;  // shomate coeff
-        Real64 D;  // shomate coeff
-        Real64 E;  // shomate coeff
-        Real64 A1; // NASA poly coeff
-        Real64 A2; // NASA poly coeff
-        Real64 A3; // NASA poly coeff
-        Real64 A4; // NASA poly coeff
-        Real64 A5; // NASA poly coeff
+        Nandle A;  // shomate coeff
+        Nandle B;  // shomate coeff
+        Nandle C;  // shomate coeff
+        Nandle D;  // shomate coeff
+        Nandle E;  // shomate coeff
+        Nandle A1; // NASA poly coeff
+        Nandle A2; // NASA poly coeff
+        Nandle A3; // NASA poly coeff
+        Nandle A4; // NASA poly coeff
+        Nandle A5; // NASA poly coeff
 
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
-        Real64 const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
 
         // loop through fuel constituents and sum up Cp
 
-        Real64 tempCp = 0.0;
+        Nandle tempCp = 0.0;
 
-        Real64 const pow_2_Tsho(pow_2(Tsho));
-        Real64 const pow_3_Tsho(pow_3(Tsho));
-        Real64 const pow_2_Tkel(pow_2(Tkel));
-        Real64 const pow_3_Tkel(pow_3(Tkel));
-        Real64 const pow_4_Tkel(pow_4(Tkel));
+        Nandle const pow_2_Tsho(pow_2(Tsho));
+        Nandle const pow_3_Tsho(pow_3(Tsho));
+        Nandle const pow_2_Tkel(pow_2(Tkel));
+        Nandle const pow_3_Tkel(pow_3(Tkel));
+        Nandle const pow_4_Tkel(pow_4(Tkel));
 
         for (int thisConstit = 1; thisConstit <= DataGenerators::FuelSupply(this->FuelSupNum).NumConstituents; ++thisConstit) {
             int gasID = DataGenerators::FuelSupply(this->FuelSupNum).GasLibID(thisConstit);
@@ -2304,7 +2304,7 @@ namespace FuelCellElectricGenerator {
         Cp = tempCp;
     }
 
-    void FCDataStruct::FigureFuelEnthalpy(Real64 const FluidTemp, Real64 &Hfuel)
+    void FCDataStruct::FigureFuelEnthalpy(Nandle const FluidTemp, Nandle &Hfuel)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2323,33 +2323,33 @@ namespace FuelCellElectricGenerator {
         // REFERENCES:
         // NIST Webbook on gas phase thermochemistry
 
-        Real64 A;  // shomate coeff
-        Real64 B;  // shomate coeff
-        Real64 C;  // shomate coeff
-        Real64 D;  // shomate coeff
-        Real64 E;  // shomate coeff
-        Real64 F;  // shomate coeff
-        Real64 H;  // shomate coeff
-        Real64 A1; // NASA poly coeff
-        Real64 A2; // NASA poly coeff
-        Real64 A3; // NASA poly coeff
-        Real64 A4; // NASA poly coeff
-        Real64 A5; // NASA poly coeff
-        Real64 A6; // NASA poly coeff
+        Nandle A;  // shomate coeff
+        Nandle B;  // shomate coeff
+        Nandle C;  // shomate coeff
+        Nandle D;  // shomate coeff
+        Nandle E;  // shomate coeff
+        Nandle F;  // shomate coeff
+        Nandle H;  // shomate coeff
+        Nandle A1; // NASA poly coeff
+        Nandle A2; // NASA poly coeff
+        Nandle A3; // NASA poly coeff
+        Nandle A4; // NASA poly coeff
+        Nandle A5; // NASA poly coeff
+        Nandle A6; // NASA poly coeff
 
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
-        Real64 const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
 
         // loop through fuel constituents and sum up Cp
 
-        Real64 tempHfuel = 0.0;
+        Nandle tempHfuel = 0.0;
 
-        Real64 const pow_2_Tsho(pow_2(Tsho));
-        Real64 const pow_3_Tsho(pow_3(Tsho));
-        Real64 const pow_4_Tsho(pow_4(Tsho));
-        Real64 const pow_2_Tkel(pow_2(Tkel));
-        Real64 const pow_3_Tkel(pow_3(Tkel));
-        Real64 const pow_4_Tkel(pow_4(Tkel));
+        Nandle const pow_2_Tsho(pow_2(Tsho));
+        Nandle const pow_3_Tsho(pow_3(Tsho));
+        Nandle const pow_4_Tsho(pow_4(Tsho));
+        Nandle const pow_2_Tkel(pow_2(Tkel));
+        Nandle const pow_3_Tkel(pow_3(Tkel));
+        Nandle const pow_4_Tkel(pow_4(Tkel));
 
         for (int thisConstit = 1; thisConstit <= DataGenerators::FuelSupply(this->FuelSupNum).NumConstituents; ++thisConstit) {
             int gasID = DataGenerators::FuelSupply(this->FuelSupNum).GasLibID(thisConstit);
@@ -2363,7 +2363,7 @@ namespace FuelCellElectricGenerator {
                     F = DataGenerators::GasPhaseThermoChemistryData(gasID).ShomateF;
                     H = DataGenerators::GasPhaseThermoChemistryData(gasID).ShomateH;
 
-                    Real64 HfuelI = (A * Tsho + B * pow_2_Tsho / 2.0 + C * pow_3_Tsho / 3.0 + D * pow_4_Tsho / 4.0 - E / Tsho + F - H);
+                    Nandle HfuelI = (A * Tsho + B * pow_2_Tsho / 2.0 + C * pow_3_Tsho / 3.0 + D * pow_4_Tsho / 4.0 - E / Tsho + F - H);
 
                     tempHfuel += HfuelI * DataGenerators::FuelSupply(this->FuelSupNum).ConstitMolalFract(thisConstit);
                 }
@@ -2387,7 +2387,7 @@ namespace FuelCellElectricGenerator {
         Hfuel = tempHfuel;
     }
 
-    void FCDataStruct::FigureProductGasesEnthalpy(Real64 const FluidTemp, Real64 &HProdGases)
+    void FCDataStruct::FigureProductGasesEnthalpy(Nandle const FluidTemp, Nandle &HProdGases)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2406,33 +2406,33 @@ namespace FuelCellElectricGenerator {
         // REFERENCES:
         // NIST Webbook on gas phase thermochemistry
 
-        Real64 A;  // shomate coeff
-        Real64 B;  // shomate coeff
-        Real64 C;  // shomate coeff
-        Real64 D;  // shomate coeff
-        Real64 E;  // shomate coeff
-        Real64 F;  // shomate coeff
-        Real64 H;  // shomate coeff
-        Real64 A1; // NASA poly coeff
-        Real64 A2; // NASA poly coeff
-        Real64 A3; // NASA poly coeff
-        Real64 A4; // NASA poly coeff
-        Real64 A5; // NASA poly coeff
-        Real64 A6; // NASA poly coeff
+        Nandle A;  // shomate coeff
+        Nandle B;  // shomate coeff
+        Nandle C;  // shomate coeff
+        Nandle D;  // shomate coeff
+        Nandle E;  // shomate coeff
+        Nandle F;  // shomate coeff
+        Nandle H;  // shomate coeff
+        Nandle A1; // NASA poly coeff
+        Nandle A2; // NASA poly coeff
+        Nandle A3; // NASA poly coeff
+        Nandle A4; // NASA poly coeff
+        Nandle A5; // NASA poly coeff
+        Nandle A6; // NASA poly coeff
 
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
-        Real64 const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
 
         // loop through fuel constituents and sum up Cp
 
-        Real64 tempHprodGases = 0.0;
+        Nandle tempHprodGases = 0.0;
 
-        Real64 const pow_2_Tsho(pow_2(Tsho));
-        Real64 const pow_3_Tsho(pow_3(Tsho));
-        Real64 const pow_4_Tsho(pow_4(Tsho));
-        Real64 const pow_2_Tkel(pow_2(Tkel));
-        Real64 const pow_3_Tkel(pow_3(Tkel));
-        Real64 const pow_4_Tkel(pow_4(Tkel));
+        Nandle const pow_2_Tsho(pow_2(Tsho));
+        Nandle const pow_3_Tsho(pow_3(Tsho));
+        Nandle const pow_4_Tsho(pow_4(Tsho));
+        Nandle const pow_2_Tkel(pow_2(Tkel));
+        Nandle const pow_3_Tkel(pow_3(Tkel));
+        Nandle const pow_4_Tkel(pow_4(Tkel));
 
         for (int thisConstit = 1; thisConstit <= 5; ++thisConstit) {
             int gasID = this->FCPM.GasLibID(thisConstit);
@@ -2468,7 +2468,7 @@ namespace FuelCellElectricGenerator {
         HProdGases = tempHprodGases;
     }
 
-    void FCDataStruct::FigureProductGasHeatCap(Real64 const FluidTemp, Real64 &Cp)
+    void FCDataStruct::FigureProductGasHeatCap(Nandle const FluidTemp, Nandle &Cp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2477,30 +2477,30 @@ namespace FuelCellElectricGenerator {
         //       MODIFIED       na
         //       RE-ENGINEERED  na
 
-        Real64 tempCp;
-        Real64 A;  // shomate coeff
-        Real64 B;  // shomate coeff
-        Real64 C;  // shomate coeff
-        Real64 D;  // shomate coeff
-        Real64 E;  // shomate coeff
-        Real64 A1; // NASA poly coeff
-        Real64 A2; // NASA poly coeff
-        Real64 A3; // NASA poly coeff
-        Real64 A4; // NASA poly coeff
-        Real64 A5; // NASA poly coeff
+        Nandle tempCp;
+        Nandle A;  // shomate coeff
+        Nandle B;  // shomate coeff
+        Nandle C;  // shomate coeff
+        Nandle D;  // shomate coeff
+        Nandle E;  // shomate coeff
+        Nandle A1; // NASA poly coeff
+        Nandle A2; // NASA poly coeff
+        Nandle A3; // NASA poly coeff
+        Nandle A4; // NASA poly coeff
+        Nandle A5; // NASA poly coeff
 
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
-        Real64 const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
 
         // loop through fuel constituents and sum up Cp
 
         tempCp = 0.0;
 
-        Real64 const pow_2_Tsho(pow_2(Tsho));
-        Real64 const pow_3_Tsho(pow_3(Tsho));
-        Real64 const pow_2_Tkel(pow_2(Tkel));
-        Real64 const pow_3_Tkel(pow_3(Tkel));
-        Real64 const pow_4_Tkel(pow_4(Tkel));
+        Nandle const pow_2_Tsho(pow_2(Tsho));
+        Nandle const pow_3_Tsho(pow_3(Tsho));
+        Nandle const pow_2_Tkel(pow_2(Tkel));
+        Nandle const pow_3_Tkel(pow_3(Tkel));
+        Nandle const pow_4_Tkel(pow_4(Tkel));
 
         for (int thisConstit = 1; thisConstit <= isize(this->FCPM.GasLibID); ++thisConstit) {
             int gasID = this->FCPM.GasLibID(thisConstit);
@@ -2532,7 +2532,7 @@ namespace FuelCellElectricGenerator {
         Cp = tempCp;
     }
 
-    void FCDataStruct::FigureAuxilHeatGasHeatCap(Real64 const FluidTemp, Real64 &Cp)
+    void FCDataStruct::FigureAuxilHeatGasHeatCap(Nandle const FluidTemp, Nandle &Cp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2541,30 +2541,30 @@ namespace FuelCellElectricGenerator {
         //       MODIFIED       na
         //       RE-ENGINEERED  na
 
-        Real64 tempCp;
-        Real64 A;  // shomate coeff
-        Real64 B;  // shomate coeff
-        Real64 C;  // shomate coeff
-        Real64 D;  // shomate coeff
-        Real64 E;  // shomate coeff
-        Real64 A1; // NASA poly coeff
-        Real64 A2; // NASA poly coeff
-        Real64 A3; // NASA poly coeff
-        Real64 A4; // NASA poly coeff
-        Real64 A5; // NASA poly coeff
+        Nandle tempCp;
+        Nandle A;  // shomate coeff
+        Nandle B;  // shomate coeff
+        Nandle C;  // shomate coeff
+        Nandle D;  // shomate coeff
+        Nandle E;  // shomate coeff
+        Nandle A1; // NASA poly coeff
+        Nandle A2; // NASA poly coeff
+        Nandle A3; // NASA poly coeff
+        Nandle A4; // NASA poly coeff
+        Nandle A5; // NASA poly coeff
 
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
-        Real64 const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tkel = (FluidTemp + DataGlobals::KelvinConv);          // temp for NASA eq. in Kelvin
 
         // loop through fuel constituents and sum up Cp
 
         tempCp = 0.0;
 
-        Real64 const pow_2_Tsho(pow_2(Tsho));
-        Real64 const pow_3_Tsho(pow_3(Tsho));
-        Real64 const pow_2_Tkel(pow_2(Tkel));
-        Real64 const pow_3_Tkel(pow_3(Tkel));
-        Real64 const pow_4_Tkel(pow_4(Tkel));
+        Nandle const pow_2_Tsho(pow_2(Tsho));
+        Nandle const pow_3_Tsho(pow_3(Tsho));
+        Nandle const pow_2_Tkel(pow_2(Tkel));
+        Nandle const pow_3_Tkel(pow_3(Tkel));
+        Nandle const pow_4_Tkel(pow_4(Tkel));
 
         for (int thisConstit = 1; thisConstit <= isize(this->AuxilHeat.GasLibID); ++thisConstit) {
             int gasID = this->AuxilHeat.GasLibID(thisConstit);
@@ -2596,8 +2596,8 @@ namespace FuelCellElectricGenerator {
         Cp = tempCp;
     }
 
-    void FCDataStruct::FigureGaseousWaterEnthalpy(Real64 const FluidTemp, // degree C
-                                                  Real64 &HGasWater       // kJ/mol
+    void FCDataStruct::FigureGaseousWaterEnthalpy(Nandle const FluidTemp, // degree C
+                                                  Nandle &HGasWater       // kJ/mol
     )
     {
 
@@ -2614,19 +2614,19 @@ namespace FuelCellElectricGenerator {
         // REFERENCES:
         // NIST Webbook on gas phase thermochemistry
 
-        Real64 const A = 29.0373;                                           // shomate coeff
-        Real64 const B = 10.2573;                                           // shomate coeff
-        Real64 const C = 2.81048;                                           // shomate coeff
-        Real64 const D = -0.95914;                                          // shomate coeff
-        Real64 const E = 0.11725;                                           // shomate coeff
-        Real64 const F = -250.569;                                          // shomate coeff
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const A = 29.0373;                                           // shomate coeff
+        Nandle const B = 10.2573;                                           // shomate coeff
+        Nandle const C = 2.81048;                                           // shomate coeff
+        Nandle const D = -0.95914;                                          // shomate coeff
+        Nandle const E = 0.11725;                                           // shomate coeff
+        Nandle const F = -250.569;                                          // shomate coeff
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
 
         HGasWater = A * Tsho + B * pow_2(Tsho) / 2.0 + C * pow_3(Tsho) / 3.0 + D * pow_4(Tsho) / 4.0 - E / Tsho + F; //- H
     }
 
-    void FCDataStruct::FigureLiquidWaterEnthalpy(Real64 const FluidTemp, // degree C
-                                                 Real64 &HLiqWater       // kJ/mol
+    void FCDataStruct::FigureLiquidWaterEnthalpy(Nandle const FluidTemp, // degree C
+                                                 Nandle &HLiqWater       // kJ/mol
     )
     {
 
@@ -2643,20 +2643,20 @@ namespace FuelCellElectricGenerator {
         // REFERENCES:
         // NIST Webbook on gas phase thermochemistry
 
-        Real64 const A = -203.606;  // shomate coeff
-        Real64 const B = 1523.29;   // shomate coeff
-        Real64 const C = -3196.413; // shomate coeff
-        Real64 const D = 2474.455;  // shomate coeff
-        Real64 const E = 3.85533;   // shomate coeff
-        Real64 const F = -256.5478; // shomate coeff
+        Nandle const A = -203.606;  // shomate coeff
+        Nandle const B = 1523.29;   // shomate coeff
+        Nandle const C = -3196.413; // shomate coeff
+        Nandle const D = 2474.455;  // shomate coeff
+        Nandle const E = 3.85533;   // shomate coeff
+        Nandle const F = -256.5478; // shomate coeff
 
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0; // temp for Shomate eq  in (Kelvin/1000)
 
         HLiqWater = A * Tsho + B * pow_2(Tsho) / 2.0 + C * pow_3(Tsho) / 3.0 + D * pow_4(Tsho) / 4.0 - E / Tsho + F; //- H
     }
 
-    void FCDataStruct::FigureLiquidWaterHeatCap(Real64 const FluidTemp, // degree C
-                                                Real64 &Cp              // (J/mol*K)
+    void FCDataStruct::FigureLiquidWaterHeatCap(Nandle const FluidTemp, // degree C
+                                                Nandle &Cp              // (J/mol*K)
     )
     {
 
@@ -2669,17 +2669,17 @@ namespace FuelCellElectricGenerator {
         // PURPOSE OF THIS SUBROUTINE:
         // calculate shomate eq. for pure liquid water
 
-        Real64 const A = -203.606;  // shomate coeff
-        Real64 const B = 1523.29;   // shomate coeff
-        Real64 const C = -3196.413; // shomate coeff
-        Real64 const D = 2474.455;  // shomate coeff
-        Real64 const E = 3.85533;   // shomate coeff
-        Real64 const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0;
+        Nandle const A = -203.606;  // shomate coeff
+        Nandle const B = 1523.29;   // shomate coeff
+        Nandle const C = -3196.413; // shomate coeff
+        Nandle const D = 2474.455;  // shomate coeff
+        Nandle const E = 3.85533;   // shomate coeff
+        Nandle const Tsho = (FluidTemp + DataGlobals::KelvinConv) / 1000.0;
 
         Cp = A + B * Tsho + C * pow_2(Tsho) + D * pow_3(Tsho) + E / pow_2(Tsho);
     }
 
-    void FCDataStruct::FigureACAncillaries(Real64 &PacAncill)
+    void FCDataStruct::FigureACAncillaries(Nandle &PacAncill)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2709,7 +2709,7 @@ namespace FuelCellElectricGenerator {
                     this->WaterSup.PwaterCompEl;
     }
 
-    void FCDataStruct::FigurePowerConditioningLosses(Real64 const Pdemand, Real64 &PpcuLosses)
+    void FCDataStruct::FigurePowerConditioningLosses(Nandle const Pdemand, Nandle &PpcuLosses)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2728,12 +2728,12 @@ namespace FuelCellElectricGenerator {
         if (this->Inverter.EffMode == DataGenerators::InverterEffQuadratic) {
 
             // first use Pdemand instead of Pel to get initial estimate
-            Real64 lastPpcuLosses = Pdemand * (1.0 - CurveManager::CurveValue(this->Inverter.EffQuadraticCurveID, Pdemand)) /
+            Nandle lastPpcuLosses = Pdemand * (1.0 - CurveManager::CurveValue(this->Inverter.EffQuadraticCurveID, Pdemand)) /
                                     CurveManager::CurveValue(this->Inverter.EffQuadraticCurveID, Pdemand);
 
             for (int iter = 1; iter <= 20; ++iter) { // seems like need to iterate (??) Need to investigate number and convergence success here
 
-                Real64 Pel = Pdemand + lastPpcuLosses;
+                Nandle Pel = Pdemand + lastPpcuLosses;
 
                 lastPpcuLosses = (1.0 - CurveManager::CurveValue(this->Inverter.EffQuadraticCurveID, Pel)) * Pel;
             }
@@ -2742,9 +2742,9 @@ namespace FuelCellElectricGenerator {
         }
     }
 
-    void FCDataStruct::FigureTransientConstraints(Real64 &Pel,       // DC power control setting for power module
+    void FCDataStruct::FigureTransientConstraints(Nandle &Pel,       // DC power control setting for power module
                                                   bool &Constrained, // true if transient constraints kick in
-                                                  Real64 &PelDiff    // if constrained then this is the difference, positive
+                                                  Nandle &PelDiff    // if constrained then this is the difference, positive
     )
     {
 
@@ -2754,9 +2754,9 @@ namespace FuelCellElectricGenerator {
         //       MODIFIED       na
         //       RE-ENGINEERED  na
 
-        Real64 PelInput = Pel; // hold initial value of inout var
+        Nandle PelInput = Pel; // hold initial value of inout var
 
-        Real64 CurrentFractionalDay =
+        Nandle CurrentFractionalDay =
             double(DataGlobals::DayOfSim) +
             (int(DataGlobals::CurrentTime) + (DataHVACGlobals::SysTimeElapsed + (DataGlobals::CurrentTime - int(DataGlobals::CurrentTime)))) /
                 DataGlobals::HoursInDay;
@@ -2765,7 +2765,7 @@ namespace FuelCellElectricGenerator {
         if (this->FCPM.DuringStartUp) {
 
             // calculate time for end of start up period
-            Real64 EndingFractionalDay = this->FCPM.FractionalDayofLastStartUp + this->FCPM.StartUpTime / DataGlobals::HoursInDay;
+            Nandle EndingFractionalDay = this->FCPM.FractionalDayofLastStartUp + this->FCPM.StartUpTime / DataGlobals::HoursInDay;
 
             if (CurrentFractionalDay > EndingFractionalDay) {
                 // start up period is now over
@@ -2777,7 +2777,7 @@ namespace FuelCellElectricGenerator {
         if (this->FCPM.DuringShutDown) {
 
             // calculate time for end of shut down period
-            Real64 EndingFractionalDay = this->FCPM.FractionalDayofLastShutDown + this->FCPM.ShutDownTime / DataGlobals::HoursInDay;
+            Nandle EndingFractionalDay = this->FCPM.FractionalDayofLastShutDown + this->FCPM.ShutDownTime / DataGlobals::HoursInDay;
 
             if (CurrentFractionalDay > EndingFractionalDay) {
                 // start up period is now over
@@ -2790,7 +2790,7 @@ namespace FuelCellElectricGenerator {
             // unit is neither starting or stopping and the only constraints would come from transient limits
             if (Pel > this->FCPM.PelLastTimeStep) { // powering up
                 // working variable for max allowed by transient constraint
-                Real64 MaxPel = this->FCPM.PelLastTimeStep + this->FCPM.UpTranLimit * DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+                Nandle MaxPel = this->FCPM.PelLastTimeStep + this->FCPM.UpTranLimit * DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
                 if (MaxPel < Pel) {
                     Pel = MaxPel;
                     Constrained = true;
@@ -2799,7 +2799,7 @@ namespace FuelCellElectricGenerator {
                 }
             } else if (Pel < this->FCPM.PelLastTimeStep) { // powering down
                                                            // working variable for min allowed by transient constraint
-                Real64 MinPel = this->FCPM.PelLastTimeStep - this->FCPM.DownTranLimit * DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+                Nandle MinPel = this->FCPM.PelLastTimeStep - this->FCPM.DownTranLimit * DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
                 if (Pel < MinPel) {
                     Pel = MinPel;
                     Constrained = true;
@@ -2863,27 +2863,27 @@ namespace FuelCellElectricGenerator {
 
             if (SELECT_CASE_var == DataGenerators::FixedEffectiveness) { // Method 1
 
-                Real64 eHX = this->ExhaustHX.HXEffect;
+                Nandle eHX = this->ExhaustHX.HXEffect;
 
-                Real64 MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
-                Real64 NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
-                Real64 TwaterIn = this->ExhaustHX.WaterInletTemp;
+                Nandle MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
+                Nandle NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
+                Nandle TwaterIn = this->ExhaustHX.WaterInletTemp;
 
-                Real64 CpWaterMol;
+                Nandle CpWaterMol;
                 FigureLiquidWaterHeatCap(TwaterIn, CpWaterMol);
 
-                Real64 NdotGas = this->AuxilHeat.NdotAuxMix;
-                Real64 TprodGasIn = this->AuxilHeat.TauxMix;
-                Real64 CpProdGasMol;
+                Nandle NdotGas = this->AuxilHeat.NdotAuxMix;
+                Nandle TprodGasIn = this->AuxilHeat.TauxMix;
+                Nandle CpProdGasMol;
                 this->FigureAuxilHeatGasHeatCap(TprodGasIn, CpProdGasMol); // Cp in (J/mol*K)
                 // factor of 1000.0 for kmol -> mol
-                Real64 NdotCp = min(NdotGas * CpProdGasMol * 1000.0, NdotWater * CpWaterMol * 1000.0);
+                Nandle NdotCp = min(NdotGas * CpProdGasMol * 1000.0, NdotWater * CpWaterMol * 1000.0);
 
                 this->ExhaustHX.qHX = eHX * NdotCp * (TprodGasIn - TwaterIn);
 
                 this->ExhaustHX.THXexh = TprodGasIn - this->ExhaustHX.qHX / (NdotGas * CpProdGasMol * 1000.0);
 
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(
                     DataPlant::PlantLoop(this->CWLoopNum).FluidName, TwaterIn, DataPlant::PlantLoop(this->CWLoopNum).FluidIndex, RoutineName);
 
                 if (this->ExhaustHX.WaterMassFlowRate * Cp <= 0.0) {
@@ -2893,22 +2893,22 @@ namespace FuelCellElectricGenerator {
                 }
 
             } else if (SELECT_CASE_var == DataGenerators::LMTDempiricalUAeff) { // method 2
-                Real64 MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
-                Real64 NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
-                Real64 NdotGas = this->AuxilHeat.NdotAuxMix;
+                Nandle MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
+                Nandle NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
+                Nandle NdotGas = this->AuxilHeat.NdotAuxMix;
 
-                Real64 UAeff = this->ExhaustHX.hxs0 + this->ExhaustHX.hxs1 * NdotWater + this->ExhaustHX.hxs2 * pow_2(NdotWater) +
+                Nandle UAeff = this->ExhaustHX.hxs0 + this->ExhaustHX.hxs1 * NdotWater + this->ExhaustHX.hxs2 * pow_2(NdotWater) +
                                this->ExhaustHX.hxs3 * NdotGas + this->ExhaustHX.hxs4 * pow_2(NdotGas);
 
-                Real64 TauxMix = this->AuxilHeat.TauxMix;
-                Real64 TwaterIn = this->ExhaustHX.WaterInletTemp;
-                Real64 CpWaterMol;
+                Nandle TauxMix = this->AuxilHeat.TauxMix;
+                Nandle TwaterIn = this->ExhaustHX.WaterInletTemp;
+                Nandle CpWaterMol;
                 FigureLiquidWaterHeatCap(TwaterIn, CpWaterMol);
                 // factor of 1000.0 for kmol -> mol
-                Real64 NdotCpWater = NdotWater * CpWaterMol * 1000.0;
-                Real64 CpProdGasMol;
+                Nandle NdotCpWater = NdotWater * CpWaterMol * 1000.0;
+                Nandle CpProdGasMol;
                 this->FigureAuxilHeatGasHeatCap(TauxMix, CpProdGasMol); // Cp in (J/mol*K)
-                Real64 NdotCpAuxMix = NdotGas * CpProdGasMol * 1000.0;
+                Nandle NdotCpAuxMix = NdotGas * CpProdGasMol * 1000.0;
 
                 if ((NdotCpWater != 0.0) && (NdotCpAuxMix != 0.0)) { // trap divide by zero
                     // now evaluate Eq. 44
@@ -2935,24 +2935,24 @@ namespace FuelCellElectricGenerator {
                 }
 
             } else if (SELECT_CASE_var == DataGenerators::LMTDfundementalUAeff) { // method 3
-                Real64 NdotGas = this->AuxilHeat.NdotAuxMix;
-                Real64 MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
-                Real64 NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
+                Nandle NdotGas = this->AuxilHeat.NdotAuxMix;
+                Nandle MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
+                Nandle NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
 
-                Real64 hgas = this->ExhaustHX.h0gas * std::pow(NdotGas / this->ExhaustHX.NdotGasRef, this->ExhaustHX.nCoeff);         // Eq. 48
-                Real64 hwater = this->ExhaustHX.h0Water * std::pow(NdotWater / this->ExhaustHX.NdotWaterRef, this->ExhaustHX.mCoeff); // Eq. 48
+                Nandle hgas = this->ExhaustHX.h0gas * std::pow(NdotGas / this->ExhaustHX.NdotGasRef, this->ExhaustHX.nCoeff);         // Eq. 48
+                Nandle hwater = this->ExhaustHX.h0Water * std::pow(NdotWater / this->ExhaustHX.NdotWaterRef, this->ExhaustHX.mCoeff); // Eq. 48
 
                 // now equation 47
-                Real64 UAeff = 1.0 / (1.0 / (hgas * this->ExhaustHX.AreaGas) + 1.0 / (hwater * this->ExhaustHX.AreaWater) + this->ExhaustHX.Fadjust);
+                Nandle UAeff = 1.0 / (1.0 / (hgas * this->ExhaustHX.AreaGas) + 1.0 / (hwater * this->ExhaustHX.AreaWater) + this->ExhaustHX.Fadjust);
 
-                Real64 TauxMix = this->AuxilHeat.TauxMix;
-                Real64 TwaterIn = this->ExhaustHX.WaterInletTemp;
-                Real64 CpWaterMol;
+                Nandle TauxMix = this->AuxilHeat.TauxMix;
+                Nandle TwaterIn = this->ExhaustHX.WaterInletTemp;
+                Nandle CpWaterMol;
                 FigureLiquidWaterHeatCap(TwaterIn, CpWaterMol);
-                Real64 NdotCpWater = NdotWater * CpWaterMol * 1000.0;
-                Real64 CpProdGasMol;
+                Nandle NdotCpWater = NdotWater * CpWaterMol * 1000.0;
+                Nandle CpProdGasMol;
                 this->FigureAuxilHeatGasHeatCap(TauxMix, CpProdGasMol); // Cp in (J/mol*K)
-                Real64 NdotCpAuxMix = NdotGas * CpProdGasMol * 1000.0;
+                Nandle NdotCpAuxMix = NdotGas * CpProdGasMol * 1000.0;
 
                 if ((NdotCpWater != 0.0) && (NdotCpAuxMix != 0.0)) { // trap divide by zero
                     // now evaluate Eq. 44
@@ -2980,38 +2980,38 @@ namespace FuelCellElectricGenerator {
             } else if (SELECT_CASE_var == DataGenerators::Condensing) { // method 4
                 if (this->ExhaustHX.WaterMassFlowRate != 0.0) {
 
-                    Real64 MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
-                    Real64 NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
-                    Real64 NdotGas = this->AuxilHeat.NdotAuxMix;
+                    Nandle MWwater = DataGenerators::GasPhaseThermoChemistryData(4).MolecularWeight;
+                    Nandle NdotWater = this->ExhaustHX.WaterMassFlowRate / MWwater;
+                    Nandle NdotGas = this->AuxilHeat.NdotAuxMix;
 
-                    Real64 UAeff = this->ExhaustHX.hxs0 + this->ExhaustHX.hxs1 * NdotWater + this->ExhaustHX.hxs2 * pow_2(NdotWater) +
+                    Nandle UAeff = this->ExhaustHX.hxs0 + this->ExhaustHX.hxs1 * NdotWater + this->ExhaustHX.hxs2 * pow_2(NdotWater) +
                                    this->ExhaustHX.hxs3 * NdotGas + this->ExhaustHX.hxs4 * pow_2(NdotGas);
 
-                    Real64 TauxMix = this->AuxilHeat.TauxMix;
-                    Real64 TwaterIn = this->ExhaustHX.WaterInletTemp;
-                    Real64 CpWaterMol;
+                    Nandle TauxMix = this->AuxilHeat.TauxMix;
+                    Nandle TwaterIn = this->ExhaustHX.WaterInletTemp;
+                    Nandle CpWaterMol;
                     FigureLiquidWaterHeatCap(TwaterIn, CpWaterMol);
-                    Real64 NdotCpWater = NdotWater * CpWaterMol * 1000.0;
-                    Real64 CpProdGasMol;
+                    Nandle NdotCpWater = NdotWater * CpWaterMol * 1000.0;
+                    Nandle CpProdGasMol;
                     this->FigureAuxilHeatGasHeatCap(TauxMix, CpProdGasMol); // Cp in (J/mol*K)
-                    Real64 NdotCpAuxMix = NdotGas * CpProdGasMol * 1000.0;
+                    Nandle NdotCpAuxMix = NdotGas * CpProdGasMol * 1000.0;
 
                     // find water fraction in incoming gas stream
                     for (int i = 1; i <= isize(this->AuxilHeat.GasLibID); ++i) {
                         if (this->AuxilHeat.GasLibID(i) == 4) this->ExhaustHX.WaterVaporFractExh = this->AuxilHeat.ConstitMolalFract(i);
                     }
-                    Real64 NdotWaterVapor = this->ExhaustHX.WaterVaporFractExh * NdotGas;
+                    Nandle NdotWaterVapor = this->ExhaustHX.WaterVaporFractExh * NdotGas;
 
-                    Real64 TcondThresh = this->ExhaustHX.CondensationThresholdTemp;
-                    Real64 hxl1 = this->ExhaustHX.l1Coeff;
-                    Real64 hxl2 = this->ExhaustHX.l2Coeff;
+                    Nandle TcondThresh = this->ExhaustHX.CondensationThresholdTemp;
+                    Nandle hxl1 = this->ExhaustHX.l1Coeff;
+                    Nandle hxl2 = this->ExhaustHX.l2Coeff;
 
                     this->ExhaustHX.CondensateRate =
                         (TcondThresh - TwaterIn) * (hxl1 * (NdotWaterVapor / NdotGas) + hxl2 * pow_2(NdotWaterVapor / NdotGas));
 
                     if (this->ExhaustHX.CondensateRate < 0.0) this->ExhaustHX.CondensateRate = 0.0;
 
-                    Real64 hfpwater = 4.4004e+07; // molal heat of vaporization of water J/kmol)
+                    Nandle hfpwater = 4.4004e+07; // molal heat of vaporization of water J/kmol)
 
                     if ((NdotCpWater != 0.0) && (NdotCpAuxMix != 0.0)) { // trap divide by zero
 
@@ -3030,8 +3030,8 @@ namespace FuelCellElectricGenerator {
                             // iterative solution because in condensing case THXexh is function of qSens and qLatent
                             for (int loop = 1; loop <= 5; ++loop) {
 
-                                Real64 qSens;
-                                Real64 qLatent;
+                                Nandle qSens;
+                                Nandle qLatent;
 
                                 if ((this->ExhaustHX.THXexh - TwaterIn) != 0.0 &&
                                     ((TauxMix - this->ExhaustHX.WaterOutletTemp) / (this->ExhaustHX.THXexh - TwaterIn) >
@@ -3096,7 +3096,7 @@ namespace FuelCellElectricGenerator {
         this->ExhaustHX.WaterOutletEnthalpy = DataLoopNode::Node(this->ExhaustHX.WaterInNode).Enthalpy + this->ExhaustHX.qHX;
     }
 
-    void FCDataStruct::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void FCDataStruct::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         MaxLoad = 0.0;
         MinLoad = 0.0;
@@ -3105,7 +3105,7 @@ namespace FuelCellElectricGenerator {
 
     void FCDataStruct::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                 bool FirstHVACIteration,
-                                Real64 &EP_UNUSED(CurLoad),
+                                Nandle &EP_UNUSED(CurLoad),
                                 bool EP_UNUSED(RunFlag))
     {
         if (this->TypeOf == DataPlant::TypeOf_Generator_FCStackCooler) {
@@ -3231,7 +3231,7 @@ namespace FuelCellElectricGenerator {
             this->Inverter.PCUlosses = 0.0;
             this->Inverter.QairIntake = 0.0;
 
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                            DataGenerators::InitHRTemp,
                                                            DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                            RoutineName);
@@ -3266,14 +3266,14 @@ namespace FuelCellElectricGenerator {
         }
 
         // using and elapsed time method rather than FirstHVACIteration here
-        Real64 timeElapsed = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + DataHVACGlobals::SysTimeElapsed;
+        Nandle timeElapsed = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + DataHVACGlobals::SysTimeElapsed;
         if (this->TimeElapsed != timeElapsed) {
 
             this->ElecStorage.LastTimeStepStateOfCharge = this->ElecStorage.ThisTimeStepStateOfCharge;
             this->FCPM.PelLastTimeStep = this->FCPM.Pel;
 
             // intialize flow rate in water loop, this is "requesting" flow
-            Real64 mdot = this->ExhaustHX.WaterMassFlowRateDesign;
+            Nandle mdot = this->ExhaustHX.WaterMassFlowRateDesign;
 
             PlantUtilities::SetComponentFlowRate(mdot,
                                                  this->ExhaustHX.WaterInNode,
@@ -3350,7 +3350,7 @@ namespace FuelCellElectricGenerator {
         // first collect skin losses from different subsystems
         for (int FCnum = 1; FCnum <= NumFuelCellGenerators; ++FCnum) {
             auto &thisFC = FuelCell(FCnum);
-            Real64 TotalZoneHeatGain = thisFC.AirSup.QskinLoss + DataGenerators::FuelSupply(thisFC.FuelSupNum).QskinLoss + thisFC.WaterSup.QskinLoss +
+            Nandle TotalZoneHeatGain = thisFC.AirSup.QskinLoss + DataGenerators::FuelSupply(thisFC.FuelSupNum).QskinLoss + thisFC.WaterSup.QskinLoss +
                                        thisFC.AuxilHeat.QskinLoss + thisFC.FCPM.QdotSkin; // intake Blower losses to zone | fuel compressor losses to
                                                                                           // zone | water pump losses to zone | auxil burner losses to
                                                                                           // zone | power module (stack and reformer) losses to zone

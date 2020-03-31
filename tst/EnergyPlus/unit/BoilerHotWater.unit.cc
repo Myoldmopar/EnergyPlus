@@ -131,16 +131,16 @@ TEST_F(EnergyPlusFixture, Boiler_HotWaterAutoSizeTempTest)
     DataPlant::PlantFirstSizesOkayToFinalize = true;
 
     // calculate nominal capacity at 60.0 C hot water temperature
-    Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(Boiler(1).LoopNum).FluidName,
+    Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(Boiler(1).LoopNum).FluidName,
                                                    60.0,
                                                    DataPlant::PlantLoop(Boiler(1).LoopNum).FluidIndex,
                                                    "Boiler_HotWaterAutoSizeTempTest");
-    Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(Boiler(1).LoopNum).FluidName,
+    Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(Boiler(1).LoopNum).FluidName,
                                                        60.0,
                                                        DataPlant::PlantLoop(Boiler(1).LoopNum).FluidIndex,
                                                        "Boiler_HotWaterAutoSizeTempTest");
 
-    Real64 NomCapBoilerExpected = rho * PlantSizData(1).DesVolFlowRate * Cp * PlantSizData(1).DeltaT * Boiler(1).SizFac;
+    Nandle NomCapBoilerExpected = rho * PlantSizData(1).DesVolFlowRate * Cp * PlantSizData(1).DeltaT * Boiler(1).SizFac;
 
     // now call sizing routine
     Boilers::Boiler(1).SizeBoiler();

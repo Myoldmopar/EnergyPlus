@@ -80,11 +80,11 @@ namespace DataDElight {
     // Thus, all variables in this module must be PUBLIC.
 
     // MODULE PARAMETER DEFINITIONS:
-    Real64 const M2FT(3.280840);       // Length:   Meters * M2FT = Feet
-    Real64 const FT22M2(0.09290304);   // Area:     SquareFeet * FT22M2 = SquareMeter
-    Real64 const M22FT2(1.0 / FT22M2); // Area:     SquareMeter * M22FT2 = SquareFeet
-    Real64 const M32FT3(35.3147);      // Volume:       CubicMeter * M32FT3 = CubicFeet
-    Real64 const LUX2FC(0.09290304);   // Illuminance:  Lux * LUX2FC = Footcandles
+    Nandle const M2FT(3.280840);       // Length:   Meters * M2FT = Feet
+    Nandle const FT22M2(0.09290304);   // Area:     SquareFeet * FT22M2 = SquareMeter
+    Nandle const M22FT2(1.0 / FT22M2); // Area:     SquareMeter * M22FT2 = SquareFeet
+    Nandle const M32FT3(35.3147);      // Volume:       CubicMeter * M32FT3 = CubicFeet
+    Nandle const LUX2FC(0.09290304);   // Illuminance:  Lux * LUX2FC = Footcandles
 
     // INTERFACE BLOCK SPECIFICATIONS
     // na

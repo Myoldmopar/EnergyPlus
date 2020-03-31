@@ -85,19 +85,19 @@ public:
 
 struct GetSpecHeatArgs
 {
-    Real64 previousTemperature;
-    Real64 updatedTemperature;
-    Real64 temperatureReverse;
+    Nandle previousTemperature;
+    Nandle updatedTemperature;
+    Nandle temperatureReverse;
     int previousPhaseChangeState;
     int expectedUpdatedPhaseChangeState;
-    Real64 expectedSpecificHeat;
+    Nandle expectedSpecificHeat;
 
-    GetSpecHeatArgs(Real64 _previousTemperature,
-                    Real64 _updatedTemperature,
-                    Real64 _temperatureReverse,
+    GetSpecHeatArgs(Nandle _previousTemperature,
+                    Nandle _updatedTemperature,
+                    Nandle _temperatureReverse,
                     int _previousPhaseChangeState,
                     int _expectedUpdatedPhaseChangeState,
-                    Real64 _expectedSpecificHeat)
+                    Nandle _expectedSpecificHeat)
         : previousTemperature(_previousTemperature), updatedTemperature(_updatedTemperature), temperatureReverse(_temperatureReverse),
           previousPhaseChangeState(_previousPhaseChangeState), expectedUpdatedPhaseChangeState(_expectedUpdatedPhaseChangeState),
           expectedSpecificHeat(_expectedSpecificHeat)
@@ -186,7 +186,7 @@ TEST_F(HysteresisTest, StraightUpCurve)
     args_list.push_back(GetSpecHeatArgs(26.0, 26.5, -999.000000, -2, -2, 25000.056508));
     for (auto &cp_call : args_list) {
         int calculated_pcm_state = -99;
-        Real64 calculated_cp =
+        Nandle calculated_cp =
             this->ModelA.getCurrentSpecificHeat(cp_call.previousTemperature, cp_call.updatedTemperature, cp_call.temperatureReverse,
                                                 cp_call.previousPhaseChangeState, calculated_pcm_state);
         EXPECT_EQ(cp_call.expectedUpdatedPhaseChangeState, calculated_pcm_state);
@@ -281,7 +281,7 @@ TEST_F(HysteresisTest, StraightDownCurve)
     args_list.push_back(GetSpecHeatArgs(15.0, 14.5, -999.000000, 2, 2, 20000.001035));
     for (auto &cp_call : args_list) {
         int calculated_pcm_state = -99;
-        Real64 calculated_cp =
+        Nandle calculated_cp =
             this->ModelA.getCurrentSpecificHeat(cp_call.previousTemperature, cp_call.updatedTemperature, cp_call.temperatureReverse,
                                                 cp_call.previousPhaseChangeState, calculated_pcm_state);
         EXPECT_EQ(cp_call.expectedUpdatedPhaseChangeState, calculated_pcm_state);
@@ -418,7 +418,7 @@ TEST_F(HysteresisTest, CompletelyThroughMeltingAndBackDown)
     args_list.push_back(GetSpecHeatArgs(14.0, 13.5, -999.000000, 2, 2, 20000.000140));
     for (auto &cp_call : args_list) {
         int calculated_pcm_state = -99;
-        Real64 calculated_cp =
+        Nandle calculated_cp =
             this->ModelA.getCurrentSpecificHeat(cp_call.previousTemperature, cp_call.updatedTemperature, cp_call.temperatureReverse,
                                                 cp_call.previousPhaseChangeState, calculated_pcm_state);
         EXPECT_EQ(cp_call.expectedUpdatedPhaseChangeState, calculated_pcm_state);
@@ -510,7 +510,7 @@ TEST_F(HysteresisTest, IntoMeltingAndBackDown)
     args_list.push_back(GetSpecHeatArgs(14.0, 13.5, -999.000000, 2, 2, 20000.000140));
     for (auto &cp_call : args_list) {
         int calculated_pcm_state = -99;
-        Real64 calculated_cp =
+        Nandle calculated_cp =
             this->ModelA.getCurrentSpecificHeat(cp_call.previousTemperature, cp_call.updatedTemperature, cp_call.temperatureReverse,
                                                 cp_call.previousPhaseChangeState, calculated_pcm_state);
         EXPECT_EQ(cp_call.expectedUpdatedPhaseChangeState, calculated_pcm_state);

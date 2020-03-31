@@ -310,7 +310,7 @@ TEST_F(EnergyPlusFixture, SysAvailManager_NightCycle_ZoneOutOfTolerance)
     DataHeatBalFanSys::ZoneThermostatSetPointHi(4) = 25.0;
     DataHeatBalFanSys::ZoneThermostatSetPointLo(4) = 20.0;
 
-    Real64 TempTol = 0.5;
+    Nandle TempTol = 0.5;
     Array1D_int ZoneNumList;
     ZoneNumList.allocate(NumZones);
     ZoneNumList(1) = 3;

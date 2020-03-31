@@ -82,39 +82,39 @@ namespace RootFinder {
     void SetupRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
                          int const SlopeType,                // Either iSlopeIncreasing or iSlopeDecreasing
                          int const MethodType,               // Any of the iMethod<name> code but iMethodNone
-                         Real64 const TolX,                  // Relative tolerance for X variables
-                         Real64 const ATolX,                 // Absolute tolerance for X variables
-                         Real64 const ATolY                  // Absolute tolerance for Y variables
+                         Nandle const TolX,                  // Relative tolerance for X variables
+                         Nandle const ATolX,                 // Absolute tolerance for X variables
+                         Nandle const ATolY                  // Absolute tolerance for Y variables
     );
 
     void ResetRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                         Real64 const XMin,                  // Minimum X value allowed
-                         Real64 const XMax                   // Maximum X value allowed
+                         Nandle const XMin,                  // Minimum X value allowed
+                         Nandle const XMax                   // Maximum X value allowed
     );
 
     void InitializeRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                              Real64 const XMin,                  // Minimum X value allowed
-                              Real64 const XMax                   // Maximum X value allowed
+                              Nandle const XMin,                  // Minimum X value allowed
+                              Nandle const XMax                   // Maximum X value allowed
     );
 
     void IterateRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                           Real64 const X,                     // X value of current iterate
-                           Real64 const Y,                     // Y value of current iterate
+                           Nandle const X,                     // X value of current iterate
+                           Nandle const Y,                     // Y value of current iterate
                            Optional_bool IsDoneFlag = _        // If TRUE indicates that the iteration should be stopped
     );
 
     int CheckInternalConsistency(RootFinderDataType const &RootFinderData); // Data used by root finding algorithm
 
     bool CheckRootFinderCandidate(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                  Real64 const X                            // X value for current iterate
+                                  Nandle const X                            // X value for current iterate
     );
 
     bool CheckMinMaxRange(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                          Real64 const X                            // X value for current iterate
+                          Nandle const X                            // X value for current iterate
     );
 
     bool CheckLowerUpperBracket(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                Real64 const X                            // X value for current iterate
+                                Nandle const X                            // X value for current iterate
     );
 
     bool CheckSlope(RootFinderDataType const &RootFinderData); // Data used by root finding algorithm
@@ -126,33 +126,33 @@ namespace RootFinder {
     bool CheckMaxConstraint(RootFinderDataType const &RootFinderData); // Data used by root finding algorithm
 
     bool CheckRootFinderConvergence(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                    Real64 const Y                            // Y value for current iterate
+                                    Nandle const Y                            // Y value for current iterate
     );
 
     bool CheckIncrementRoundOff(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                                Real64 const X                            // X value for current iterate
+                                Nandle const X                            // X value for current iterate
     );
 
     bool CheckBracketRoundOff(RootFinderDataType const &RootFinderData); // Data used by root finding algorithm
 
     void UpdateMinMax(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                      Real64 const X,                     // X value for current iterate
-                      Real64 const Y                      // Y value for current iterate, F(X)=Y
+                      Nandle const X,                     // X value for current iterate
+                      Nandle const Y                      // Y value for current iterate, F(X)=Y
     );
 
     void UpdateBracket(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                       Real64 const X,                     // X value for current iterate
-                       Real64 const Y                      // Y value for current iterate, F(X)=Y
+                       Nandle const X,                     // X value for current iterate
+                       Nandle const Y                      // Y value for current iterate, F(X)=Y
     );
 
     void UpdateHistory(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                       Real64 const X,                     // X value for current iterate
-                       Real64 const Y                      // Y value for current iterate, F(X)=Y
+                       Nandle const X,                     // X value for current iterate
+                       Nandle const Y                      // Y value for current iterate, F(X)=Y
     );
 
     void UpdateRootFinder(RootFinderDataType &RootFinderData, // Data used by root finding algorithm
-                          Real64 const X,                     // X value for current iterate
-                          Real64 const Y                      // Y value for current iterate, F(X)=Y
+                          Nandle const X,                     // X value for current iterate
+                          Nandle const Y                      // Y value for current iterate, F(X)=Y
     );
 
     void SortHistory(int const N,                // Number of points to sort in history array
@@ -162,20 +162,20 @@ namespace RootFinder {
     void AdvanceRootFinder(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
 
     bool BracketRoot(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                     Real64 &XNext                             // Next value
+                     Nandle &XNext                             // Next value
     );
 
-    Real64 BisectionMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
+    Nandle BisectionMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
 
-    Real64 FalsePositionMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
+    Nandle FalsePositionMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
 
-    Real64 SecantMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
+    Nandle SecantMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
 
     bool SecantFormula(RootFinderDataType const &RootFinderData, // Data used by root finding algorithm
-                       Real64 &XNext                             // Result from Secant formula if possible to compute
+                       Nandle &XNext                             // Result from Secant formula if possible to compute
     );
 
-    Real64 BrentMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
+    Nandle BrentMethod(RootFinderDataType &RootFinderData); // Data used by root finding algorithm
 
     void WriteRootFinderTraceHeader(int const TraceFileUnit); // Unit for trace file
 

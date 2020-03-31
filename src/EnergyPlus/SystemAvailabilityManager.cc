@@ -221,9 +221,9 @@ namespace SystemAvailabilityManager {
     int NumOptStartSysAvailMgrs(0);
     bool BeginOfDayResetFlag(true);
 
-    Real64 CurrentEndTime(0.0);     // Current end time
-    Real64 CurrentEndTimeLast(0.0); // last end time
-    Real64 TimeStepSysLast(0.0);    // last system time step
+    Nandle CurrentEndTime(0.0);     // Current end time
+    Nandle CurrentEndTimeLast(0.0); // last end time
+    Nandle TimeStepSysLast(0.0);    // last system time step
 
     namespace {
         // These were static variables within different functions. They were pulled out into the namespace
@@ -233,8 +233,8 @@ namespace SystemAvailabilityManager {
         // This is purposefully in an anonymous namespace so nothing outside this implementation file can use it.
         bool InitSysAvailManagers_MyOneTimeFlag(true);
         bool CalcNCycSysAvailMgr_OneTimeFlag(true);
-        Array1D<Real64> OptStart_AdaTempGradTrdHeat; // Heating temp gradient for previous days - used in CalcOptStartSysAvailMgr
-        Array1D<Real64> OptStart_AdaTempGradTrdCool; // Cooling temp gradient for previous days - used in CalcOptStartSysAvailMgr
+        Array1D<Nandle> OptStart_AdaTempGradTrdHeat; // Heating temp gradient for previous days - used in CalcOptStartSysAvailMgr
+        Array1D<Nandle> OptStart_AdaTempGradTrdCool; // Cooling temp gradient for previous days - used in CalcOptStartSysAvailMgr
     }                                                // namespace
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE
@@ -518,7 +518,7 @@ namespace SystemAvailabilityManager {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         int NumAlphas;                  // Number of Alphas for each GetObjectItem call
         int NumNumbers;                 // Number of Numbers for each GetObjectItem call
@@ -1425,7 +1425,7 @@ namespace SystemAvailabilityManager {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         int NumAlphas;
         int NumNumbers;
@@ -2269,7 +2269,7 @@ namespace SystemAvailabilityManager {
         int ZoneInSysNum;
         int CtrldZoneNum;
         int ZoneNum;
-        Real64 TempTol;
+        Nandle TempTol;
         static Array1D_bool ZoneCompNCControlType;
         int CyclingRunTimeControlType;
 
@@ -2536,7 +2536,7 @@ namespace SystemAvailabilityManager {
 
     bool CoolingZoneOutOfTolerance(Array1D_int const ZonePtrList, // list of controlled zone pointers
                                    int const NumZones,            // number of zones in list
-                                   Real64 const TempTolerance     // temperature tolerance
+                                   Nandle const TempTolerance     // temperature tolerance
     )
     {
         // Check if any zone temperature is above the cooling setpoint plus tolerance
@@ -2561,7 +2561,7 @@ namespace SystemAvailabilityManager {
 
     bool HeatingZoneOutOfTolerance(Array1D_int const ZonePtrList, // list of controlled zone pointers
                                    int const NumZones,            // number of zones in list
-                                   Real64 const TempTolerance     // temperature tolerance
+                                   Nandle const TempTolerance     // temperature tolerance
     )
     {
         // Check if any zone temperature is below the heating setpoint less tolerance
@@ -2622,40 +2622,40 @@ namespace SystemAvailabilityManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         int ScheduleIndex;
-        Array2D<Real64> DayValues;
-        Array2D<Real64> DayValuesTmr;
+        Array2D<Nandle> DayValues;
+        Array2D<Nandle> DayValuesTmr;
         int JDay;
         int TmrJDay;
         int TmrDayOfWeek;
         int ZoneNum;
-        Real64 FanStartTime;
-        Real64 FanStartTimeTmr;
-        Real64 PreStartTime;
-        Real64 PreStartTimeTmr;
-        Real64 DeltaTime;
+        Nandle FanStartTime;
+        Nandle FanStartTimeTmr;
+        Nandle PreStartTime;
+        Nandle PreStartTimeTmr;
+        Nandle DeltaTime;
         int I;
         int J;
-        Real64 TempDiff;
-        Real64 TempDiffHi;
-        Real64 TempDiffLo;
+        Nandle TempDiff;
+        Nandle TempDiffHi;
+        Nandle TempDiffLo;
         bool FirstTimeATGFlag(true);
         bool OverNightStartFlag(false); // Flag to indicate the optimum start starts before mid night.
         bool CycleOnFlag(false);
         bool OSReportVarFlag(true);
         int NumPreDays;
         int NumOfZonesInList;
-        Real64 AdaTempGradHeat;
-        Real64 AdaTempGradCool;
-        Real64 ATGUpdateTime1(0.0);
-        Real64 ATGUpdateTime2(0.0);
-        Real64 ATGUpdateTemp1(0.0);
-        Real64 ATGUpdateTemp2(0.0);
+        Nandle AdaTempGradHeat;
+        Nandle AdaTempGradCool;
+        Nandle ATGUpdateTime1(0.0);
+        Nandle ATGUpdateTime2(0.0);
+        Nandle ATGUpdateTemp1(0.0);
+        Nandle ATGUpdateTemp2(0.0);
         bool ATGUpdateFlag1(false);
         bool ATGUpdateFlag2(false);
         int ATGCounter;
         int ATGWCZoneNumHi;
         int ATGWCZoneNumLo;
-        Real64 NumHoursBeforeOccupancy; // Variable to store the number of hours before occupancy in optimum start period
+        Nandle NumHoursBeforeOccupancy; // Variable to store the number of hours before occupancy in optimum start period
         bool exitLoop;                  // exit loop on found data
 
         auto &OptStartMgr(OptStartSysAvailMgrData(SysAvailNum));
@@ -3760,7 +3760,7 @@ namespace SystemAvailabilityManager {
         bool TempCheck;     // TRUE if one zone's temperature is above the value of the vent temp sched
         bool DelTCheck;     // TRUE if the control zone temperature - outside temperature > VentDelT
         bool LowLimCheck;   // TRUE if one zones's air temperature is below this value
-        Real64 VentTemp;    // value of the ventilation temperature schedule
+        Nandle VentTemp;    // value of the ventilation temperature schedule
         int ControlZoneNum; // actual zone number of the control zone
 
         TempCheck = false;
@@ -3849,7 +3849,7 @@ namespace SystemAvailabilityManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 DeltaTemp;
+        Nandle DeltaTemp;
 
         // FLOW:
         DeltaTemp = Node(DiffTSysAvailMgrData(SysAvailNum).HotNode).Temp - Node(DiffTSysAvailMgrData(SysAvailNum).ColdNode).Temp;
@@ -4145,11 +4145,11 @@ namespace SystemAvailabilityManager {
         int IOStatus;                   // Used in GetObjectItem
         static bool ErrorsFound(false); // Set to true if errors in input, fatal at end of routine
         int SysAvailNum;                // DO loop index for all System Availability Managers
-        Real64 SchedMin;                // Minimum value specified in a schedule
-        Real64 SchedMax;                // Maximum value specified in a schedule
-        Real64 CurveMin;                // Minimum value specified in a curve
-        Real64 CurveMax;                // Maximum value specified in a curve
-        Real64 CurveVal;                // Curve value
+        Nandle SchedMin;                // Minimum value specified in a schedule
+        Nandle SchedMax;                // Maximum value specified in a schedule
+        Nandle CurveMin;                // Minimum value specified in a curve
+        Nandle CurveMax;                // Maximum value specified in a curve
+        Nandle CurveVal;                // Curve value
 
         // Get the number of occurrences of each type of System Availability Manager
         cCurrentModuleObject = "AvailabilityManager:HybridVentilation";
@@ -4659,7 +4659,7 @@ namespace SystemAvailabilityManager {
         int AirLoopNum;                 // Air loop number
         int ControlMode;                // Hybrid control mode
         int AirLoopCount;               // Air loop name count
-        Real64 SchedMax;                // Maximum value specified in a schedule
+        Nandle SchedMax;                // Maximum value specified in a schedule
         int SysAvailIndex;              // Hybrid Ventilation Sys Avail Manager index
         int ZoneEquipType;
         int HybridVentNum;
@@ -4926,24 +4926,24 @@ namespace SystemAvailabilityManager {
         int ZoneNum;            // actual zone number of the control zone
         int ControlMode;        // Hybrid control mode
         int HStatZoneNum;       // Humidity control zone number
-        Real64 ZoneAirEnthalpy; // Zone air enthalpy
-        Real64 ZoneAirDewPoint; // Zone air dew point temperature
-        Real64 ZoneAirRH;       // Zone air relative humidity
-        Real64 TempExt;         // Outdoor dry bulb temperature at zone height
-        Real64 WindExt;         // Outdoor wind spped at zone height
+        Nandle ZoneAirEnthalpy; // Zone air enthalpy
+        Nandle ZoneAirDewPoint; // Zone air dew point temperature
+        Nandle ZoneAirRH;       // Zone air relative humidity
+        Nandle TempExt;         // Outdoor dry bulb temperature at zone height
+        Nandle WindExt;         // Outdoor wind spped at zone height
         // unused  REAL(r64)    :: RHSetPoint      ! RH setpoint from a given schedule
-        Real64 WSetPoint;                   // Humidity ratio setpoint from a given RH setpoint schedule
-        Real64 OASetPoint;                  // Outdoor air setpoint from a given OA setpoint schedule
-        Real64 ACH;                         // Zone air change per hour
+        Nandle WSetPoint;                   // Humidity ratio setpoint from a given RH setpoint schedule
+        Nandle OASetPoint;                  // Outdoor air setpoint from a given OA setpoint schedule
+        Nandle ACH;                         // Zone air change per hour
         bool found;                         // Used for humidistat object
         bool HybridVentModeOA;              // USed to check whether HybridVentModeOA is allowed
-        Real64 ZoneRHHumidifyingSetPoint;   // Zone humidifying setpoint (%)
-        Real64 ZoneRHDehumidifyingSetPoint; // Zone dehumidifying setpoint (%)
+        Nandle ZoneRHHumidifyingSetPoint;   // Zone humidifying setpoint (%)
+        Nandle ZoneRHDehumidifyingSetPoint; // Zone dehumidifying setpoint (%)
         int ControlledZoneNum;              // Index into the ZoneEquipConfig array
         int SimpleControlType;              // Simple control type from a schedule: 0 individual, 1 global
         int i;                              // Array index
-        Real64 minAdaTem;                   // minimum adaptive temperature for adaptive temperature control
-        Real64 maxAdaTem;                   // maximum adaptive temperature for adaptive temperature control
+        Nandle minAdaTem;                   // minimum adaptive temperature for adaptive temperature control
+        Nandle maxAdaTem;                   // maximum adaptive temperature for adaptive temperature control
         bool KeepStatus;                    // true, if minimum time operation is needed
         int ZoneEquipType;
         int ZoneCompNum;

@@ -100,10 +100,10 @@ TEST_F(EnergyPlusFixture, HeatRecovery_HRTest)
     bool EconomizerFlag = false;
     bool HighHumCtrlFlag = false;
     int FanOpMode = 2; // 1 = cycling fan, 2 = constant fan
-    Real64 Toutlet = 0.0;
-    Real64 Tnode = 0.0;
-    Real64 SetPointTemp = 19.0;
-    Real64 PartLoadRatio = 0.25;
+    Nandle Toutlet = 0.0;
+    Nandle Tnode = 0.0;
+    Nandle SetPointTemp = 19.0;
+    Nandle PartLoadRatio = 0.25;
     int BalDesDehumPerfDataIndex = 1;
 
     CurZoneEqNum = 0;
@@ -488,7 +488,7 @@ TEST_F(EnergyPlusFixture, HeatRecoveryHXOnManinBranch_GetInputTest)
 
 TEST_F(EnergyPlusFixture, HeatRecoveryHXOnMainBranch_SimHeatRecoveryTest)
 {
-    Real64 Qhr_HeatingRateTot(0.0);
+    Nandle Qhr_HeatingRateTot(0.0);
     int InletNode(0);  // Heat Recovery primary air inlet node number
     int OutletNode(0); // Heat Recovery primary air outlet node number
 
@@ -3834,8 +3834,8 @@ TEST_F(EnergyPlusFixture, SizeHeatRecovery)
 
     int ExchNum(1);
     int BalDesDehumPerfDataIndex(1);
-    Real64 FaceVelocity;
-    Real64 SysVolFlow;
+    Nandle FaceVelocity;
+    Nandle SysVolFlow;
 
     SysSizingRunDone = true;
     DataSizing::NumSysSizInput = 1;

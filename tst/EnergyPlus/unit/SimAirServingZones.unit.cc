@@ -167,20 +167,20 @@ TEST_F(EnergyPlusFixture, SimAirServingZones_LimitZoneVentEff)
     TermUnitFinalZoneSizing.allocate(1);
 
     // Test case 1, low OA, low zoneventilationeff, no change in SysCoolingEv
-    Real64 StartingDesCoolVolFlow = 1.0;
-    Real64 StartingDesCoolVolFlowMin = 0.2;
-    Real64 UncorrectedOAFlow = 0.1;
+    Nandle StartingDesCoolVolFlow = 1.0;
+    Nandle StartingDesCoolVolFlowMin = 0.2;
+    Nandle UncorrectedOAFlow = 0.1;
     TermUnitFinalZoneSizing(CtrlZoneNum).DesCoolVolFlow = StartingDesCoolVolFlow;
     TermUnitFinalZoneSizing(CtrlZoneNum).DesCoolVolFlowMin = StartingDesCoolVolFlowMin;
     TermUnitFinalZoneSizing(CtrlZoneNum).ZoneSecondaryRecirculation = 0.0;
     TermUnitFinalZoneSizing(CtrlZoneNum).ZoneVentilationEff = 0.5;
-    Real64 Xs = 0.25;                                                  // uncorrected system outdoor air fraction
-    Real64 VozClg = UncorrectedOAFlow;                                 // corrected (for ventilation efficiency) zone outside air flow rate [m3/s]
-    Real64 ZoneOAFrac = UncorrectedOAFlow / StartingDesCoolVolFlowMin; // zone OA fraction
+    Nandle Xs = 0.25;                                                  // uncorrected system outdoor air fraction
+    Nandle VozClg = UncorrectedOAFlow;                                 // corrected (for ventilation efficiency) zone outside air flow rate [m3/s]
+    Nandle ZoneOAFrac = UncorrectedOAFlow / StartingDesCoolVolFlowMin; // zone OA fraction
 
-    Real64 SysCoolingEv = 1.0 + Xs - ZoneOAFrac; // System level ventilation effectiveness for cooling (from SimAirServingZone::UpdateSysSizing right
+    Nandle SysCoolingEv = 1.0 + Xs - ZoneOAFrac; // System level ventilation effectiveness for cooling (from SimAirServingZone::UpdateSysSizing right
                                                  // before call to LimitZoneVentEff)
-    Real64 StartingSysCoolingEv = SysCoolingEv;
+    Nandle StartingSysCoolingEv = SysCoolingEv;
     LimitZoneVentEff(Xs, VozClg, CtrlZoneNum, SysCoolingEv);
     EXPECT_EQ(StartingSysCoolingEv, SysCoolingEv);
     EXPECT_EQ(StartingDesCoolVolFlow, TermUnitFinalZoneSizing(CtrlZoneNum).DesCoolVolFlow);
@@ -232,8 +232,8 @@ TEST_F(EnergyPlusFixture, SizingSystem_FlowPerCapacityMethodTest1)
     // this unit test is related to issue #5835
     // when system capacit is hard sized user input
     int AirLoopNum(0);                    // index of air loops
-    Real64 ScaledCoolDesignFlowRate(0.0); // system cooling design flow rate
-    Real64 ScaledHeatDesignFlowRate(0.0); // system heating design flow rate
+    Nandle ScaledCoolDesignFlowRate(0.0); // system cooling design flow rate
+    Nandle ScaledHeatDesignFlowRate(0.0); // system heating design flow rate
 
     AirLoopNum = 1;
     CalcSysSizing.allocate(AirLoopNum);
@@ -269,10 +269,10 @@ TEST_F(EnergyPlusFixture, SizingSystem_FlowPerCapacityMethodTest2)
     // this unit test is related to issue #5835
     // when system capacity is scaled using floor area
     int AirLoopNum(0);                    // index of air loops
-    Real64 ScaledCoolDesignFlowRate(0.0); // system cooling design flow rate
-    Real64 ScaledHeatDesignFlowRate(0.0); // system heating design flow rate
-    Real64 ScaledCoolDesignCapacity(0.0); // system cooling design capacity
-    Real64 ScaledHeatDesignCapacity(0.0); // system heating design capacity
+    Nandle ScaledCoolDesignFlowRate(0.0); // system cooling design flow rate
+    Nandle ScaledHeatDesignFlowRate(0.0); // system heating design flow rate
+    Nandle ScaledCoolDesignCapacity(0.0); // system cooling design capacity
+    Nandle ScaledHeatDesignCapacity(0.0); // system heating design capacity
 
     AirLoopNum = 1;
     CalcSysSizing.allocate(AirLoopNum);

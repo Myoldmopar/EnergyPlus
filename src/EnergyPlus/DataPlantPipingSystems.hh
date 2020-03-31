@@ -146,9 +146,9 @@ namespace DataPlantPipingSystems {
     struct BaseThermalPropertySet
     {
         // Members
-        Real64 Conductivity; // W/mK
-        Real64 Density;      // kg/m3
-        Real64 SpecificHeat; // J/kgK
+        Nandle Conductivity; // W/mK
+        Nandle Density;      // kg/m3
+        Nandle SpecificHeat; // J/kgK
 
         // Default Constructor
         BaseThermalPropertySet() : Conductivity(0.0), Density(0.0), SpecificHeat(0.0)
@@ -156,9 +156,9 @@ namespace DataPlantPipingSystems {
         }
 
         // Member Constructor
-        BaseThermalPropertySet(Real64 const Conductivity, // W/mK
-                               Real64 const Density,      // kg/m3
-                               Real64 const SpecificHeat  // J/kgK
+        BaseThermalPropertySet(Nandle const Conductivity, // W/mK
+                               Nandle const Density,      // kg/m3
+                               Nandle const SpecificHeat  // J/kgK
                                )
             : Conductivity(Conductivity), Density(Density), SpecificHeat(SpecificHeat)
         {
@@ -169,8 +169,8 @@ namespace DataPlantPipingSystems {
     {
         // Members
         BaseThermalPropertySet MyBase;
-        Real64 Viscosity; // kg/m-s
-        Real64 Prandtl;   // -
+        Nandle Viscosity; // kg/m-s
+        Nandle Prandtl;   // -
 
         // Default Constructor
         ExtendedFluidProperties()
@@ -179,8 +179,8 @@ namespace DataPlantPipingSystems {
 
         // Member Constructor
         ExtendedFluidProperties(BaseThermalPropertySet const &MyBase,
-                                Real64 const Viscosity, // kg/m-s
-                                Real64 const Prandtl    // -
+                                Nandle const Viscosity, // kg/m-s
+                                Nandle const Prandtl    // -
                                 )
             : MyBase(MyBase), Viscosity(Viscosity), Prandtl(Prandtl)
         {
@@ -190,10 +190,10 @@ namespace DataPlantPipingSystems {
     struct BaseCell
     {
         // Members
-        Real64 Temperature;               // C
-        Real64 Temperature_PrevIteration; // C
-        Real64 Temperature_PrevTimeStep;  // C
-        Real64 Beta;                      // K/W
+        Nandle Temperature;               // C
+        Nandle Temperature_PrevIteration; // C
+        Nandle Temperature_PrevTimeStep;  // C
+        Nandle Beta;                      // K/W
         BaseThermalPropertySet Properties;
 
         // Default Constructor
@@ -206,9 +206,9 @@ namespace DataPlantPipingSystems {
     {
         // Members
         BaseCell MyBase;
-        Real64 RadialCentroid;
-        Real64 InnerRadius;
-        Real64 OuterRadius;
+        Nandle RadialCentroid;
+        Nandle InnerRadius;
+        Nandle OuterRadius;
 
         // Default Constructor
         RadialCellInformation()
@@ -220,8 +220,8 @@ namespace DataPlantPipingSystems {
     {
         // Members
         BaseCell MyBase;
-        Real64 PipeInnerRadius;
-        Real64 Volume;
+        Nandle PipeInnerRadius;
+        Nandle Volume;
         ExtendedFluidProperties Properties;
 
         // Default Constructor
@@ -237,8 +237,8 @@ namespace DataPlantPipingSystems {
         RadialCellInformation Insulation;
         RadialCellInformation Pipe;
         FluidCellInformation Fluid;
-        Real64 RadialSliceWidth;
-        Real64 InterfaceVolume;
+        Nandle RadialSliceWidth;
+        Nandle InterfaceVolume;
 
         // Default Constructor
         CartesianPipeCellInformation()
@@ -266,8 +266,8 @@ namespace DataPlantPipingSystems {
     struct PointF
     {
         // Members
-        Real64 X;
-        Real64 Y;
+        Nandle X;
+        Nandle Y;
 
         // Default Constructor
         PointF()
@@ -275,7 +275,7 @@ namespace DataPlantPipingSystems {
         }
 
         // Member Constructor
-        PointF(Real64 const X, Real64 const Y) : X(X), Y(Y)
+        PointF(Nandle const X, Nandle const Y) : X(X), Y(Y)
         {
         }
     };
@@ -301,9 +301,9 @@ namespace DataPlantPipingSystems {
     struct Point3DReal
     {
         // Members
-        Real64 X;
-        Real64 Y;
-        Real64 Z;
+        Nandle X;
+        Nandle Y;
+        Nandle Z;
 
         // Default Constructor
         Point3DReal()
@@ -311,7 +311,7 @@ namespace DataPlantPipingSystems {
         }
 
         // Member Constructor
-        Point3DReal(Real64 const X, Real64 const Y, Real64 const Z) : X(X), Y(Y), Z(Z)
+        Point3DReal(Nandle const X, Nandle const Y, Nandle const Z) : X(X), Y(Y), Z(Z)
         {
         }
     };
@@ -338,9 +338,9 @@ namespace DataPlantPipingSystems {
     struct MeshPartition
     {
         // Members
-        Real64 rDimension;
+        Nandle rDimension;
         int PartitionType; // From Enum: ParitionType
-        Real64 TotalWidth;
+        Nandle TotalWidth;
 
         // Default Constructor
         MeshPartition()
@@ -348,9 +348,9 @@ namespace DataPlantPipingSystems {
         }
 
         // Member Constructor
-        MeshPartition(Real64 const rDimension,
+        MeshPartition(Nandle const rDimension,
                       int const PartitionType, // From Enum: ParitionType
-                      Real64 const TotalWidth)
+                      Nandle const TotalWidth)
             : rDimension(rDimension), PartitionType(PartitionType), TotalWidth(TotalWidth)
         {
         }
@@ -359,10 +359,10 @@ namespace DataPlantPipingSystems {
     struct GridRegion
     {
         // Members
-        Real64 Min;
-        Real64 Max;
+        Nandle Min;
+        Nandle Max;
         int RegionType; // From Enum: RegionType
-        Array1D<Real64> CellWidths;
+        Array1D<Nandle> CellWidths;
 
         // Default Constructor
         GridRegion()
@@ -373,8 +373,8 @@ namespace DataPlantPipingSystems {
     struct TempGridRegionData
     {
         // Members
-        Real64 Min;
-        Real64 Max;
+        Nandle Min;
+        Nandle Max;
         int RegionType; // From Enum: RegionType
 
         // Default Constructor
@@ -383,8 +383,8 @@ namespace DataPlantPipingSystems {
         }
 
         // Member Constructor
-        TempGridRegionData(Real64 const Min,
-                           Real64 const Max,
+        TempGridRegionData(Nandle const Min,
+                           Nandle const Max,
                            int const RegionType // From Enum: RegionType
                            )
             : Min(Min), Max(Max), RegionType(RegionType)
@@ -395,10 +395,10 @@ namespace DataPlantPipingSystems {
     struct RectangleF
     {
         // Members
-        Real64 X_min;
-        Real64 Y_min;
-        Real64 Width;
-        Real64 Height;
+        Nandle X_min;
+        Nandle Y_min;
+        Nandle Width;
+        Nandle Height;
 
         // Default Constructor
         RectangleF()
@@ -406,7 +406,7 @@ namespace DataPlantPipingSystems {
         }
 
         // Member Constructor
-        RectangleF(Real64 const X_min, Real64 const Y_min, Real64 const Width, Real64 const Height)
+        RectangleF(Nandle const X_min, Nandle const Y_min, Nandle const Width, Nandle const Height)
             : X_min(X_min), Y_min(Y_min), Width(Width), Height(Height)
         {
         }
@@ -415,10 +415,10 @@ namespace DataPlantPipingSystems {
     struct NeighborInformation
     {
         // Members
-        Real64 ThisCentroidToNeighborCentroid;
-        Real64 ThisCentroidToNeighborWall;
-        Real64 ThisWallToNeighborCentroid;
-        Real64 ConductionResistance;
+        Nandle ThisCentroidToNeighborCentroid;
+        Nandle ThisCentroidToNeighborWall;
+        Nandle ThisWallToNeighborCentroid;
+        Nandle ConductionResistance;
         Point3DInteger NeighborCellIndeces;
 
         // Default Constructor
@@ -430,8 +430,8 @@ namespace DataPlantPipingSystems {
     struct RadialSizing
     {
         // Members
-        Real64 InnerDia;
-        Real64 OuterDia;
+        Nandle InnerDia;
+        Nandle OuterDia;
 
         // Default Constructor
         RadialSizing()
@@ -458,12 +458,12 @@ namespace DataPlantPipingSystems {
         int X_index;
         int Y_index;
         int Z_index;
-        Real64 X_min;
-        Real64 X_max;
-        Real64 Y_min;
-        Real64 Y_max;
-        Real64 Z_min;
-        Real64 Z_max;
+        Nandle X_min;
+        Nandle X_max;
+        Nandle Y_min;
+        Nandle Y_max;
+        Nandle Z_min;
+        Nandle Z_max;
         Point3DReal Centroid;
         int CellType; // From Enum: CellType
         int PipeIndex;
@@ -479,9 +479,9 @@ namespace DataPlantPipingSystems {
     struct MeshExtents
     {
         // Members
-        Real64 Xmax;
-        Real64 Ymax;
-        Real64 Zmax;
+        Nandle Xmax;
+        Nandle Ymax;
+        Nandle Zmax;
 
         // Default Constructor
         MeshExtents() : Xmax(0.0), Ymax(0.0), Zmax(0.0)
@@ -489,7 +489,7 @@ namespace DataPlantPipingSystems {
         }
 
         // Member Constructor
-        MeshExtents(Real64 const Xmax, Real64 const Ymax, Real64 const Zmax) : Xmax(Xmax), Ymax(Ymax), Zmax(Zmax)
+        MeshExtents(Nandle const Xmax, Nandle const Ymax, Nandle const Zmax) : Xmax(Xmax), Ymax(Ymax), Zmax(Zmax)
         {
         }
     };
@@ -499,7 +499,7 @@ namespace DataPlantPipingSystems {
         // Members
         int MeshDistribution; // From Enum: MeshDistribution
         int RegionMeshCount;
-        Real64 GeometricSeriesCoefficient;
+        Nandle GeometricSeriesCoefficient;
 
         // Default Constructor
         DistributionStructure() : MeshDistribution(0), RegionMeshCount(0), GeometricSeriesCoefficient(0.0)
@@ -523,9 +523,9 @@ namespace DataPlantPipingSystems {
     struct SimulationControl
     {
         // Members
-        Real64 MinimumTemperatureLimit;
-        Real64 MaximumTemperatureLimit;
-        Real64 Convergence_CurrentToPrevIteration;
+        Nandle MinimumTemperatureLimit;
+        Nandle MaximumTemperatureLimit;
+        Nandle Convergence_CurrentToPrevIteration;
         int MaxIterationsPerTS;
 
         // Default Constructor
@@ -544,9 +544,9 @@ namespace DataPlantPipingSystems {
     struct BasementZoneInfo
     {
         // Members
-        Real64 Depth;  // m
-        Real64 Width;  // m
-        Real64 Length; // m
+        Nandle Depth;  // m
+        Nandle Width;  // m
+        Nandle Length; // m
         bool ShiftPipesByWidth;
         std::string WallBoundaryOSCMName;
         int WallBoundaryOSCMIndex;
@@ -569,7 +569,7 @@ namespace DataPlantPipingSystems {
     {
         // Members
         int Direction; // From Enum: Direction
-        Real64 Value;
+        Nandle Value;
 
         // Default Constructor
         DirectionReal_Dictionary() : Direction(0), Value(0.0)
@@ -581,15 +581,15 @@ namespace DataPlantPipingSystems {
     {
         // Members
         Array1D<DirectionReal_Dictionary> SurfaceHeatTransfer;
-        Real64 TotalBoundaryHeatTransfer;
-        Real64 EnergyStoredInCells;
-        Real64 AverageSurfaceTemperature;
-        Real64 PipeCircuitHeatTransferMCpDT;
-        Real64 PipeCircuitHeatTransferUADT;
-        Real64 BasementWallHeatTransfer;
-        Real64 BasementFloorHeatTransfer;
-        Real64 AverageBasementFloorTemperature;
-        Real64 AverageBasementWallTemperature;
+        Nandle TotalBoundaryHeatTransfer;
+        Nandle EnergyStoredInCells;
+        Nandle AverageSurfaceTemperature;
+        Nandle PipeCircuitHeatTransferMCpDT;
+        Nandle PipeCircuitHeatTransferUADT;
+        Nandle BasementWallHeatTransfer;
+        Nandle BasementFloorHeatTransfer;
+        Nandle AverageBasementFloorTemperature;
+        Nandle AverageBasementWallTemperature;
 
         // Default Constructor
         ReportingInformation()
@@ -616,9 +616,9 @@ namespace DataPlantPipingSystems {
     struct MoistureInfo
     {
         // Members
-        Real64 Theta_liq; // volumetric moisture content of the soil
-        Real64 Theta_sat; // volumetric moisture content of soil at saturation
-        Real64 GroundCoverCoefficient;
+        Nandle Theta_liq; // volumetric moisture content of the soil
+        Nandle Theta_sat; // volumetric moisture content of soil at saturation
+        Nandle GroundCoverCoefficient;
 
         // Default Constructor
         MoistureInfo() : Theta_liq(0.3), Theta_sat(0.5), GroundCoverCoefficient(0.408)
@@ -630,14 +630,14 @@ namespace DataPlantPipingSystems {
     {
         // Members
         // Simulation conditions
-        Real64 PrevSimTimeSeconds;
-        Real64 CurSimTimeSeconds;
-        Real64 CurSimTimeStepSize;
+        Nandle PrevSimTimeSeconds;
+        Nandle CurSimTimeSeconds;
+        Nandle CurSimTimeStepSize;
         // Environmental conditions
-        Real64 CurAirTemp;
-        Real64 CurWindSpeed;
-        Real64 CurIncidentSolar;
-        Real64 CurRelativeHumidity;
+        Nandle CurAirTemp;
+        Nandle CurWindSpeed;
+        Nandle CurIncidentSolar;
+        Nandle CurRelativeHumidity;
 
         // Default Constructor
         CurSimConditionsInfo()
@@ -659,9 +659,9 @@ namespace DataPlantPipingSystems {
         // Pointer to parent pipe circuit
         int ParentCircuitIndex;
         // Reporting variables
-        Real64 InletTemperature;
-        Real64 OutletTemperature;
-        Real64 FluidHeatLoss;
+        Nandle InletTemperature;
+        Nandle OutletTemperature;
+        Nandle FluidHeatLoss;
         // Error handling flags
         bool PipeCellCoordinatesSet;
         // Other flags
@@ -695,11 +695,11 @@ namespace DataPlantPipingSystems {
         // Misc inputs
         RadialSizing PipeSize;
         RadialSizing InsulationSize;
-        Real64 RadialMeshThickness;
+        Nandle RadialMeshThickness;
         bool HasInsulation;
-        Real64 DesignVolumeFlowRate;
-        Real64 DesignMassFlowRate;
-        Real64 Convergence_CurrentToPrevIteration;
+        Nandle DesignVolumeFlowRate;
+        Nandle DesignMassFlowRate;
+        Nandle Convergence_CurrentToPrevIteration;
         int MaxIterationsPerTS;
         int NumRadialCells;
         BaseThermalPropertySet PipeProperties;
@@ -716,20 +716,20 @@ namespace DataPlantPipingSystems {
         int BranchNum;
         int CompNum;
         // Current fluid property values
-        Real64 CurFluidDensity;
-        Real64 CurFluidViscosity;
-        Real64 CurFluidConductivity;
-        Real64 CurFluidPrandtl;
-        Real64 CurFluidSpecificHeat;
+        Nandle CurFluidDensity;
+        Nandle CurFluidViscosity;
+        Nandle CurFluidConductivity;
+        Nandle CurFluidPrandtl;
+        Nandle CurFluidSpecificHeat;
         ExtendedFluidProperties CurFluidPropertySet;
         // Variables used to pass information from INIT-type routines to CALC-type routines
-        Real64 CurCircuitInletTemp;
-        Real64 CurCircuitFlowRate;
-        Real64 CurCircuitConvectionCoefficient;
+        Nandle CurCircuitInletTemp;
+        Nandle CurCircuitFlowRate;
+        Nandle CurCircuitConvectionCoefficient;
         // Reporting variables
-        Real64 InletTemperature;
-        Real64 OutletTemperature;
-        Real64 FluidHeatLoss;
+        Nandle InletTemperature;
+        Nandle OutletTemperature;
+        Nandle FluidHeatLoss;
 
         // Default Constructor
         PipeCircuitInfo()
@@ -750,14 +750,14 @@ namespace DataPlantPipingSystems {
         std::string Name;
         // Surface data
         int IndexInSurfaceArray;
-        Real64 SurfaceArea;
-        Real64 Width;
-        Real64 Length;
-        Real64 Depth;
-        Real64 Conductivity;
-        Real64 Density;
-        Real64 InsulationConductivity;
-        Real64 InsulationDensity;
+        Nandle SurfaceArea;
+        Nandle Width;
+        Nandle Length;
+        Nandle Depth;
+        Nandle Conductivity;
+        Nandle Density;
+        Nandle InsulationConductivity;
+        Nandle InsulationDensity;
 
         // Default Constructor
         ZoneCoupledSurfaceData()
@@ -807,33 +807,33 @@ namespace DataPlantPipingSystems {
         // Zone coupled variables
         Array1D<ZoneCoupledSurfaceData> ZoneCoupledSurfaces;
         int ZoneCoupledOSCMIndex;
-        Real64 PerimeterOffset;
+        Nandle PerimeterOffset;
         bool SlabInGradeFlag;
         int SlabMaterialNum;
-        Real64 SlabWidth;
-        Real64 SlabLength;
-        Real64 SlabThickness;
-        Real64 XIndex;
-        Real64 YIndex;
-        Real64 ZIndex;
+        Nandle SlabWidth;
+        Nandle SlabLength;
+        Nandle SlabThickness;
+        Nandle XIndex;
+        Nandle YIndex;
+        Nandle ZIndex;
         bool HorizInsPresentFlag;
         int HorizInsMaterialNum;
-        Real64 HorizInsThickness;
-        Real64 HorizInsWidth;
-        Real64 HeatFlux;
-        Real64 WallHeatFlux;
-        Real64 FloorHeatFlux;
-        Real64 AggregateHeatFlux;
-        Real64 AggregateWallHeatFlux;
-        Real64 AggregateFloorHeatFlux;
+        Nandle HorizInsThickness;
+        Nandle HorizInsWidth;
+        Nandle HeatFlux;
+        Nandle WallHeatFlux;
+        Nandle FloorHeatFlux;
+        Nandle AggregateHeatFlux;
+        Nandle AggregateWallHeatFlux;
+        Nandle AggregateFloorHeatFlux;
         int NumHeatFlux;
         bool ResetHeatFluxFlag;
-        Real64 ConvCoeff;
+        Nandle ConvCoeff;
         bool FullHorizInsPresent;
         bool VertInsPresentFlag;
         int VertInsMaterialNum;
-        Real64 VertInsThickness;
-        Real64 VertInsDepth;
+        Nandle VertInsThickness;
+        Nandle VertInsDepth;
         int XWallIndex;
         int YFloorIndex;
         int ZWallIndex;
@@ -842,9 +842,9 @@ namespace DataPlantPipingSystems {
         int InsulationZIndex;
         bool SimTimestepFlag;
         bool SimHourlyFlag;
-        Real64 ZoneCoupledSurfaceTemp;
-        Real64 BasementWallTemp;
-        Real64 BasementFloorTemp;
+        Nandle ZoneCoupledSurfaceTemp;
+        Nandle BasementWallTemp;
+        Nandle BasementFloorTemp;
         int NumDomainCells;
         int NumGroundSurfCells;
         int NumInsulationCells;

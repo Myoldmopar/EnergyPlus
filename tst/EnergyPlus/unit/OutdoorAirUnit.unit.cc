@@ -108,8 +108,8 @@ TEST_F(EnergyPlusFixture, OutdoorAirUnit_AutoSize)
     int OAUnitNum(1);              // index to ZoneHVAC:OutdoorAirUnit
     int EquipPtr(1);               // index to equipment list
     int CurZoneNum(1);             // index to zone
-    Real64 SysOutputProvided(0.0); // function returns sensible capacity [W]
-    Real64 LatOutputProvided(0.0); // function returns latent capacity [W]
+    Nandle SysOutputProvided(0.0); // function returns sensible capacity [W]
+    Nandle LatOutputProvided(0.0); // function returns latent capacity [W]
     int ZoneInletNode(0);
 
     std::string const idf_objects = delimited_string({
@@ -350,8 +350,8 @@ TEST_F(EnergyPlusFixture, OutdoorAirUnit_AutoSize)
     EXPECT_DOUBLE_EQ(FinalZoneSizing(CurZoneEqNum).MinOA * StdRhoAir, OutAirUnit(OAUnitNum).ExtAirMassFlow);
 
     // test that both fans are included in OA unit fan power report
-    Real64 SAFanPower = Fans::Fan(1).FanPower;
-    Real64 EAFanPower = Fans::Fan(2).FanPower;
+    Nandle SAFanPower = Fans::Fan(1).FanPower;
+    Nandle EAFanPower = Fans::Fan(2).FanPower;
     EXPECT_DOUBLE_EQ(SAFanPower, 75.0);
     EXPECT_DOUBLE_EQ(EAFanPower, 75.0);
     EXPECT_DOUBLE_EQ(SAFanPower + EAFanPower, OutAirUnit(OAUnitNum).ElecFanRate);
@@ -664,18 +664,18 @@ TEST_F(EnergyPlusFixture, OutdoorAirUnit_WaterCoolingCoilAutoSizeTest)
     DataSizing::DataFanEnumType = DataAirSystems::objectVectorOOFanSystemModel;
     DataSizing::DataFanIndex = 0;
     DataSizing::DataAirFlowUsedForSizing = FinalZoneSizing(CurZoneEqNum).DesCoolVolFlow;
-    Real64 FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, DataAirFlowUsedForSizing);
+    Nandle FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, DataAirFlowUsedForSizing);
 
     // do water flow rate sizing calculation
-    Real64 DesAirMassFlow = FinalZoneSizing(CurZoneEqNum).DesCoolMassFlow;
-    Real64 EnthalpyAirIn = PsyHFnTdbW(FinalZoneSizing(CurZoneEqNum).DesCoolCoilInTemp, FinalZoneSizing(CurZoneEqNum).DesCoolCoilInHumRat);
-    Real64 EnthalpyAirOut = PsyHFnTdbW(FinalZoneSizing(CurZoneEqNum).CoolDesTemp, FinalZoneSizing(CurZoneEqNum).CoolDesHumRat);
+    Nandle DesAirMassFlow = FinalZoneSizing(CurZoneEqNum).DesCoolMassFlow;
+    Nandle EnthalpyAirIn = PsyHFnTdbW(FinalZoneSizing(CurZoneEqNum).DesCoolCoilInTemp, FinalZoneSizing(CurZoneEqNum).DesCoolCoilInHumRat);
+    Nandle EnthalpyAirOut = PsyHFnTdbW(FinalZoneSizing(CurZoneEqNum).CoolDesTemp, FinalZoneSizing(CurZoneEqNum).CoolDesHumRat);
 
-    Real64 DesWaterCoolingCoilLoad = DesAirMassFlow * (EnthalpyAirIn - EnthalpyAirOut) + FanCoolLoad;
-    Real64 CoilDesWaterDeltaT = PlantSizData(1).DeltaT;
-    Real64 Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, " ");
-    Real64 rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, " ");
-    Real64 DesCoolingCoilWaterVolFlowRate = DesWaterCoolingCoilLoad / (CoilDesWaterDeltaT * Cp * rho);
+    Nandle DesWaterCoolingCoilLoad = DesAirMassFlow * (EnthalpyAirIn - EnthalpyAirOut) + FanCoolLoad;
+    Nandle CoilDesWaterDeltaT = PlantSizData(1).DeltaT;
+    Nandle Cp = GetSpecificHeatGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, " ");
+    Nandle rho = GetDensityGlycol(PlantLoop(1).FluidName, DataGlobals::CWInitConvTemp, PlantLoop(1).FluidIndex, " ");
+    Nandle DesCoolingCoilWaterVolFlowRate = DesWaterCoolingCoilLoad / (CoilDesWaterDeltaT * Cp * rho);
     // check water coil water flow rate calc
     EXPECT_EQ(DesWaterCoolingCoilLoad, WaterCoil(1).DesWaterCoolingCoilRate);
     EXPECT_EQ(DesCoolingCoilWaterVolFlowRate, WaterCoil(1).MaxWaterVolFlowRate);
@@ -965,21 +965,21 @@ TEST_F(EnergyPlusFixture, OutdoorAirUnit_SteamHeatingCoilAutoSizeTest)
     InitOutdoorAirUnit(OAUnitNum, ZoneNum, FirstHVACIteration);
     EXPECT_EQ(SteamCoil(1).MaxSteamVolFlowRate, OutAirUnit(OAUnitNum).OAEquip(1).MaxVolWaterFlow);
 
-    Real64 DesCoilInTemp = FinalZoneSizing(CurZoneEqNum).DesHeatCoilInTemp;
-    Real64 DesCoilOutTemp = FinalZoneSizing(CurZoneEqNum).HeatDesTemp;
-    Real64 DesCoilOutHumRat = FinalZoneSizing(CurZoneEqNum).HeatDesHumRat;
-    Real64 DesAirMassFlow = FinalZoneSizing(CurZoneEqNum).DesHeatMassFlow;
+    Nandle DesCoilInTemp = FinalZoneSizing(CurZoneEqNum).DesHeatCoilInTemp;
+    Nandle DesCoilOutTemp = FinalZoneSizing(CurZoneEqNum).HeatDesTemp;
+    Nandle DesCoilOutHumRat = FinalZoneSizing(CurZoneEqNum).HeatDesHumRat;
+    Nandle DesAirMassFlow = FinalZoneSizing(CurZoneEqNum).DesHeatMassFlow;
     // DesVolFlow = DesMassFlow / RhoAirStd;
-    Real64 CpAirAvg = PsyCpAirFnW(DesCoilOutHumRat);
-    Real64 DesSteamCoilLoad = DesAirMassFlow * CpAirAvg * (DesCoilOutTemp - DesCoilInTemp);
+    Nandle CpAirAvg = PsyCpAirFnW(DesCoilOutHumRat);
+    Nandle DesSteamCoilLoad = DesAirMassFlow * CpAirAvg * (DesCoilOutTemp - DesCoilInTemp);
 
     // do steam flow rate sizing calculation
-    Real64 EnthSteamIn = GetSatEnthalpyRefrig("STEAM", DataGlobals::SteamInitConvTemp, 1.0, SteamCoil(1).FluidIndex, "");
-    Real64 EnthSteamOut = GetSatEnthalpyRefrig("STEAM", DataGlobals::SteamInitConvTemp, 0.0, SteamCoil(1).FluidIndex, "");
-    Real64 SteamDensity = GetSatDensityRefrig("STEAM", DataGlobals::SteamInitConvTemp, 1.0, SteamCoil(1).FluidIndex, "");
-    Real64 CpOfCondensate = GetSatSpecificHeatRefrig("STEAM", DataGlobals::SteamInitConvTemp, 0.0, SteamCoil(1).FluidIndex, "");
-    Real64 LatentHeatChange = EnthSteamIn - EnthSteamOut;
-    Real64 DesMaxSteamVolFlowRate = DesSteamCoilLoad / (SteamDensity * (LatentHeatChange + SteamCoil(1).DegOfSubcooling * CpOfCondensate));
+    Nandle EnthSteamIn = GetSatEnthalpyRefrig("STEAM", DataGlobals::SteamInitConvTemp, 1.0, SteamCoil(1).FluidIndex, "");
+    Nandle EnthSteamOut = GetSatEnthalpyRefrig("STEAM", DataGlobals::SteamInitConvTemp, 0.0, SteamCoil(1).FluidIndex, "");
+    Nandle SteamDensity = GetSatDensityRefrig("STEAM", DataGlobals::SteamInitConvTemp, 1.0, SteamCoil(1).FluidIndex, "");
+    Nandle CpOfCondensate = GetSatSpecificHeatRefrig("STEAM", DataGlobals::SteamInitConvTemp, 0.0, SteamCoil(1).FluidIndex, "");
+    Nandle LatentHeatChange = EnthSteamIn - EnthSteamOut;
+    Nandle DesMaxSteamVolFlowRate = DesSteamCoilLoad / (SteamDensity * (LatentHeatChange + SteamCoil(1).DegOfSubcooling * CpOfCondensate));
 
     // check water coil water flow rate calc
     EXPECT_EQ(DesSteamCoilLoad, SteamCoil(1).DesCoilCapacity);

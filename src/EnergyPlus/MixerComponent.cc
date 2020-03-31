@@ -99,7 +99,7 @@ namespace MixerComponent {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    Real64 const MassFlowTol(0.001);
+    Nandle const MassFlowTol(0.001);
 
     // DERIVED TYPE DEFINITIONS
 
@@ -239,7 +239,7 @@ namespace MixerComponent {
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 

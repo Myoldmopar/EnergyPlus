@@ -140,109 +140,109 @@ namespace ThermalComfort {
     }                                            // namespace
 
     // MODULE PARAMETER DEFINITIONS
-    Real64 const TAbsConv(KelvinConv); // Converter for absolute temperature
-    Real64 const ActLevelConv(58.2);   // Converter for activity level (1Met = 58.2 W/m2)
-    Real64 const BodySurfArea(1.8);    // Dubois body surface area of the human body (m2)
-    Real64 const RadSurfEff(0.72);     // Fraction of surface effective for radiation
-    Real64 const StefanBoltz(5.67e-8); // Stefan-Boltzmann constant (W/m2K4)
+    Nandle const TAbsConv(KelvinConv); // Converter for absolute temperature
+    Nandle const ActLevelConv(58.2);   // Converter for activity level (1Met = 58.2 W/m2)
+    Nandle const BodySurfArea(1.8);    // Dubois body surface area of the human body (m2)
+    Nandle const RadSurfEff(0.72);     // Fraction of surface effective for radiation
+    Nandle const StefanBoltz(5.67e-8); // Stefan-Boltzmann constant (W/m2K4)
 
     static std::string const BlankString;
 
     // MODULE VARIABLE DECLARATIONS:
-    Real64 AbsAirTemp(0.0);                // Absolute air temperature; K
-    Real64 AbsCloSurfTemp(0.0);            // Absolute clothing surface temperature; K
-    Real64 AbsRadTemp(0.0);                // Absolute radiant temperature; K
-    Real64 AcclPattern(0.0);               // The pattern of acclimation
-    Real64 ActLevel(0.0);                  // Metabolic rate; w/m2
-    Real64 AirVel(0.0);                    // Air velocity; m/s
-    Real64 AirTemp(0.0);                   // Air temperature; C
-    Real64 CloBodyRat(0.0);                // Ratio of clothed body
-    Real64 CloInsul(0.0);                  // Clothing insulation
-    Real64 CloPermeatEff(0.0);             // Clothing permeation efficiency
-    Real64 CloSurfTemp(0.0);               // Clothing surface temperature; K
-    Real64 CloThermEff(0.0);               // The Burton thermal efficiency factor for clothing
-    Real64 CloUnit(0.0);                   // Clothing unit; CLO
-    Real64 ConvHeatLoss(0.0);              // Convective heat loss
-    Real64 CoreTempChange(0.0);            // Temperature change of core in 1 minute
-    Real64 CoreTemp(0.0);                  // Body core temperature
-    Real64 CoreTempNeut(0.0);              // Body core temperature of neutral state
-    Real64 CoreThermCap(0.0);              // Thermal capacity of core
-    Real64 DryHeatLoss(0.0);               // Heat loss from clothing surface due to both convection and radiation
-    Real64 DryRespHeatLoss(0.0);           // Dry respiration heat loss
-    Real64 EvapHeatLoss(0.0);              // Evaporative heat loss from skin
-    Real64 EvapHeatLossDiff(0.0);          // Evaporative heat loss due to moisture diffusion through skin
-    Real64 EvapHeatLossMax(0.0);           // Maximum evaporative heat loss
-    Real64 EvapHeatLossRegComf(0.0);       // Evaporative heat loss due to regulatory sweating at the state of comfort
-    Real64 EvapHeatLossRegSweat(0.0);      // Evaporative heat loss from regulatory sweating
-    Real64 EvapHeatLossSweat(0.0);         // Evaporative heat loss from the sweat secreted
-    Real64 EvapHeatLossSweatPrev(0.0);     // Old value of evaporative heat loss from the sweat secreted (KSU)
-    Real64 H(0.0);                         // Combined heat transfer coefficient
-    Real64 Hc(0.0);                        // Convective heat transfer coeffiency
-    Real64 HcFor(0.0);                     // Convective heat transfer coeffiency - Forced
-    Real64 HcNat(0.0);                     // Convective heat transfer coeffiency - Natural
-    Real64 HeatFlow(0.0);                  // Heat flow from core to skin
-    Real64 Hr(0.0);                        // Radiant heat transfer coeffiency
-    Real64 IntHeatProd(0.0);               // Internal heat production
+    Nandle AbsAirTemp(0.0);                // Absolute air temperature; K
+    Nandle AbsCloSurfTemp(0.0);            // Absolute clothing surface temperature; K
+    Nandle AbsRadTemp(0.0);                // Absolute radiant temperature; K
+    Nandle AcclPattern(0.0);               // The pattern of acclimation
+    Nandle ActLevel(0.0);                  // Metabolic rate; w/m2
+    Nandle AirVel(0.0);                    // Air velocity; m/s
+    Nandle AirTemp(0.0);                   // Air temperature; C
+    Nandle CloBodyRat(0.0);                // Ratio of clothed body
+    Nandle CloInsul(0.0);                  // Clothing insulation
+    Nandle CloPermeatEff(0.0);             // Clothing permeation efficiency
+    Nandle CloSurfTemp(0.0);               // Clothing surface temperature; K
+    Nandle CloThermEff(0.0);               // The Burton thermal efficiency factor for clothing
+    Nandle CloUnit(0.0);                   // Clothing unit; CLO
+    Nandle ConvHeatLoss(0.0);              // Convective heat loss
+    Nandle CoreTempChange(0.0);            // Temperature change of core in 1 minute
+    Nandle CoreTemp(0.0);                  // Body core temperature
+    Nandle CoreTempNeut(0.0);              // Body core temperature of neutral state
+    Nandle CoreThermCap(0.0);              // Thermal capacity of core
+    Nandle DryHeatLoss(0.0);               // Heat loss from clothing surface due to both convection and radiation
+    Nandle DryRespHeatLoss(0.0);           // Dry respiration heat loss
+    Nandle EvapHeatLoss(0.0);              // Evaporative heat loss from skin
+    Nandle EvapHeatLossDiff(0.0);          // Evaporative heat loss due to moisture diffusion through skin
+    Nandle EvapHeatLossMax(0.0);           // Maximum evaporative heat loss
+    Nandle EvapHeatLossRegComf(0.0);       // Evaporative heat loss due to regulatory sweating at the state of comfort
+    Nandle EvapHeatLossRegSweat(0.0);      // Evaporative heat loss from regulatory sweating
+    Nandle EvapHeatLossSweat(0.0);         // Evaporative heat loss from the sweat secreted
+    Nandle EvapHeatLossSweatPrev(0.0);     // Old value of evaporative heat loss from the sweat secreted (KSU)
+    Nandle H(0.0);                         // Combined heat transfer coefficient
+    Nandle Hc(0.0);                        // Convective heat transfer coeffiency
+    Nandle HcFor(0.0);                     // Convective heat transfer coeffiency - Forced
+    Nandle HcNat(0.0);                     // Convective heat transfer coeffiency - Natural
+    Nandle HeatFlow(0.0);                  // Heat flow from core to skin
+    Nandle Hr(0.0);                        // Radiant heat transfer coeffiency
+    Nandle IntHeatProd(0.0);               // Internal heat production
     int IterNum(0);                        // Number of iteration
-    Real64 LatRespHeatLoss(0.0);           // Latent respiration heat loss
+    Nandle LatRespHeatLoss(0.0);           // Latent respiration heat loss
     int MaxZoneNum(0);                     // Number of zones
     int MRTCalcType(0);                    // The type of MRT calculation (ZoneAveraged or SurfaceWeighted)
-    Real64 OpTemp(0.0);                    // Operative temperature
+    Nandle OpTemp(0.0);                    // Operative temperature
     int PeopleNum(0);                      // People number
-    Real64 RadHeatLoss(0.0);               // Radiant heat loss
-    Real64 RadTemp(0.0);                   // Radiant temperature; C
-    Real64 RelHum(0.0);                    // Relative humidity; Fraction
-    Real64 RespHeatLoss(0.0);              // The rate of respiratory heat loss
-    Real64 SatSkinVapPress(0.0);           // Saturated vapor pressure at skin temperature
-    Real64 ShivResponse(0.0);              // Metalbolic heat production due to shivering
-    Real64 SkinComfTemp(0.0);              // Skin temperature required to achieve thermal comfort; C
-    Real64 SkinComfVPress(0.0);            // Saturated water vapor pressure at required skin temperature; Torr
-    Real64 SkinTemp(0.0);                  // Skin temperature
-    Real64 SkinTempChange(0.0);            // Temperature change of skin in 1 minute
-    Real64 SkinTempNeut(0.0);              // Skin temperature at neutral state
-    Real64 SkinThermCap(0.0);              // Thermal capacity of Skin
-    Real64 SkinWetDiff(0.0);               // Skin wettedness for nonsweating portion of skin
-    Real64 SkinWetSweat(0.0);              // Skin wettedness required to evaporate regulatory sweat
-    Real64 SkinWetTot(0.0);                // Total skin wettedness
-    Real64 SkinVapPress(0.0);              // Vapor pressure at skin
-    Real64 SurfaceTemp(0.0);               // Surface temperature when MRTType is 'SurfaceWeighted'
-    Real64 ThermCndct(0.0);                // Thermal conductance of skin
-    Real64 ThermSensTransCoef(0.0);        // Theraml sensation coefficient for PMV
-    Real64 Time(0.0);                      // Time, hr
-    Real64 TimeChange(0.0);                // Change of time, hr
-    Real64 VapPress(0.0);                  // Vapor pressure; Torr  ?? BG Oct 2005 humm, this should be kPa
-    Real64 VasoconstrictFac(0.0);          // Constriction factor of blood vessel
-    Real64 VasodilationFac(0.0);           // Dilation factor of blood vessel
-    Real64 WorkEff(0.0);                   // Energy cosumption by external work; w/m2
+    Nandle RadHeatLoss(0.0);               // Radiant heat loss
+    Nandle RadTemp(0.0);                   // Radiant temperature; C
+    Nandle RelHum(0.0);                    // Relative humidity; Fraction
+    Nandle RespHeatLoss(0.0);              // The rate of respiratory heat loss
+    Nandle SatSkinVapPress(0.0);           // Saturated vapor pressure at skin temperature
+    Nandle ShivResponse(0.0);              // Metalbolic heat production due to shivering
+    Nandle SkinComfTemp(0.0);              // Skin temperature required to achieve thermal comfort; C
+    Nandle SkinComfVPress(0.0);            // Saturated water vapor pressure at required skin temperature; Torr
+    Nandle SkinTemp(0.0);                  // Skin temperature
+    Nandle SkinTempChange(0.0);            // Temperature change of skin in 1 minute
+    Nandle SkinTempNeut(0.0);              // Skin temperature at neutral state
+    Nandle SkinThermCap(0.0);              // Thermal capacity of Skin
+    Nandle SkinWetDiff(0.0);               // Skin wettedness for nonsweating portion of skin
+    Nandle SkinWetSweat(0.0);              // Skin wettedness required to evaporate regulatory sweat
+    Nandle SkinWetTot(0.0);                // Total skin wettedness
+    Nandle SkinVapPress(0.0);              // Vapor pressure at skin
+    Nandle SurfaceTemp(0.0);               // Surface temperature when MRTType is 'SurfaceWeighted'
+    Nandle ThermCndct(0.0);                // Thermal conductance of skin
+    Nandle ThermSensTransCoef(0.0);        // Theraml sensation coefficient for PMV
+    Nandle Time(0.0);                      // Time, hr
+    Nandle TimeChange(0.0);                // Change of time, hr
+    Nandle VapPress(0.0);                  // Vapor pressure; Torr  ?? BG Oct 2005 humm, this should be kPa
+    Nandle VasoconstrictFac(0.0);          // Constriction factor of blood vessel
+    Nandle VasodilationFac(0.0);           // Dilation factor of blood vessel
+    Nandle WorkEff(0.0);                   // Energy cosumption by external work; w/m2
     int ZoneNum(0);                        // Zone number
-    Real64 TemporarySixAMTemperature(0.0); // Temperature at 6am
+    Nandle TemporarySixAMTemperature(0.0); // Temperature at 6am
 
     // time that any zone is not comfortable based on simple ASHRAE 55 using summer clothes
-    Real64 AnyZoneTimeNotSimpleASH55Summer(0.0);
+    Nandle AnyZoneTimeNotSimpleASH55Summer(0.0);
     // time that any zone is not comfortable based on simple ASHRAE 55 using winter clothes
-    Real64 AnyZoneTimeNotSimpleASH55Winter(0.0);
+    Nandle AnyZoneTimeNotSimpleASH55Winter(0.0);
     // time that any zone is not comfortable based on simple ASHRAE 55 using summer or winter clothes
-    Real64 AnyZoneTimeNotSimpleASH55Either(0.0);
+    Nandle AnyZoneTimeNotSimpleASH55Either(0.0);
 
     // time that any zone has unmet met loads
-    Real64 AnyZoneNotMetHeating(0.0);
-    Real64 AnyZoneNotMetCooling(0.0);
-    Real64 AnyZoneNotMetHeatingOccupied(0.0);
-    Real64 AnyZoneNotMetCoolingOccupied(0.0);
-    Real64 AnyZoneNotMetOccupied(0.0);
+    Nandle AnyZoneNotMetHeating(0.0);
+    Nandle AnyZoneNotMetCooling(0.0);
+    Nandle AnyZoneNotMetHeatingOccupied(0.0);
+    Nandle AnyZoneNotMetCoolingOccupied(0.0);
+    Nandle AnyZoneNotMetOccupied(0.0);
     // total time from beginning of simulation AnyZoneTimeNotSimpleASH55
-    Real64 TotalAnyZoneTimeNotSimpleASH55Summer(0.0);
-    Real64 TotalAnyZoneTimeNotSimpleASH55Winter(0.0);
-    Real64 TotalAnyZoneTimeNotSimpleASH55Either(0.0);
+    Nandle TotalAnyZoneTimeNotSimpleASH55Summer(0.0);
+    Nandle TotalAnyZoneTimeNotSimpleASH55Winter(0.0);
+    Nandle TotalAnyZoneTimeNotSimpleASH55Either(0.0);
     // total time from beginning of simulation any zone not met
-    Real64 TotalAnyZoneNotMetHeating(0.0);
-    Real64 TotalAnyZoneNotMetCooling(0.0);
-    Real64 TotalAnyZoneNotMetHeatingOccupied(0.0);
-    Real64 TotalAnyZoneNotMetCoolingOccupied(0.0);
-    Real64 TotalAnyZoneNotMetOccupied(0.0);
-    Array1D<Real64> ZoneOccHrs;
+    Nandle TotalAnyZoneNotMetHeating(0.0);
+    Nandle TotalAnyZoneNotMetCooling(0.0);
+    Nandle TotalAnyZoneNotMetHeatingOccupied(0.0);
+    Nandle TotalAnyZoneNotMetCoolingOccupied(0.0);
+    Nandle TotalAnyZoneNotMetOccupied(0.0);
+    Array1D<Nandle> ZoneOccHrs;
     bool useEpwData(false);
-    Array1D<Real64> DailyAveOutTemp(30, 0.0);
+    Array1D<Nandle> DailyAveOutTemp(30, 0.0);
 
     // Subroutine Specifications for the Thermal Comfort module
 
@@ -252,7 +252,7 @@ namespace ThermalComfort {
     Array1D<ThermalComfortDataType> ThermalComfortData;
     Array1D<AngleFactorData> AngleFactorList; // Angle Factor List data for each Angle Factor List
 
-    Real64 runningAverageASH(0.0);
+    Nandle runningAverageASH(0.0);
 
     // Functions
     void clear_state()
@@ -663,8 +663,8 @@ namespace ThermalComfort {
     }
 
     void CalcThermalComfortFanger(Optional_int_const PNum,     // People number for thermal comfort control
-                                  Optional<Real64 const> Tset, // Temperature setpoint for thermal comfort control
-                                  Optional<Real64> PMVResult   // PMV value for thermal comfort control
+                                  Optional<Nandle const> Tset, // Temperature setpoint for thermal comfort control
+                                  Optional<Nandle> PMVResult   // PMV value for thermal comfort control
     )
     {
 
@@ -696,18 +696,18 @@ namespace ThermalComfort {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIter(150);             // Limit of iteration
-        Real64 const StopIterCrit(0.00015); // Stop criteria for iteration
+        Nandle const StopIterCrit(0.00015); // Stop criteria for iteration
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 P1; // Intermediate variables to calculate clothed body ratio and clothing temperature
-        Real64 P2; // Intermediate variables to calculate clothed body ratio and clothing temperature
-        Real64 P3; // Intermediate variables to calculate clothed body ratio and clothing temperature
-        Real64 P4; // Intermediate variables to calculate clothed body ratio and clothing temperature
-        Real64 XF; // Intermediate variables to calculate clothed body ratio and clothing temperature
-        Real64 XN; // Intermediate variables to calculate clothed body ratio and clothing temperature
-        Real64 IntermediateClothing;
-        Real64 PMV; // temporary variable to store calculated Fanger PMV value
-        Real64 PPD; // temporary variable to store calculated Fanger PPD value
+        Nandle P1; // Intermediate variables to calculate clothed body ratio and clothing temperature
+        Nandle P2; // Intermediate variables to calculate clothed body ratio and clothing temperature
+        Nandle P3; // Intermediate variables to calculate clothed body ratio and clothing temperature
+        Nandle P4; // Intermediate variables to calculate clothed body ratio and clothing temperature
+        Nandle XF; // Intermediate variables to calculate clothed body ratio and clothing temperature
+        Nandle XN; // Intermediate variables to calculate clothed body ratio and clothing temperature
+        Nandle IntermediateClothing;
+        Nandle PMV; // temporary variable to store calculated Fanger PMV value
+        Nandle PPD; // temporary variable to store calculated Fanger PPD value
 
         for (PeopleNum = 1; PeopleNum <= TotPeople; ++PeopleNum) {
 
@@ -914,7 +914,7 @@ namespace ThermalComfort {
 
             // Calculate the Fanger PPD (Predicted Percentage of Dissatisfied), as a %
 
-            Real64 expTest1 = -0.03353 * pow_4(PMV) - 0.2179 * pow_2(PMV);
+            Nandle expTest1 = -0.03353 * pow_4(PMV) - 0.2179 * pow_2(PMV);
             if (expTest1 > EXP_LowerLimit) {
                 PPD = 100.0 - 95.0 * std::exp(expTest1);
             } else {
@@ -952,71 +952,71 @@ namespace ThermalComfort {
         // Maloney, Dan, M.S. Thesis, University of Illinois at Urbana-Champaign
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CloFac(0.25);              // Clothing factor determined experimentally
-        Real64 const EvapEff(0.9);              // Evaporative efficiency
-        Real64 const MaxSkinBloodFlow(90.0);    // Max. value of skin blood flow
-        Real64 const RegSweatMax(670.0);        // Max. value of regulatory sweating; w/m2
-        Real64 const SkinBloodFlowConst(200.0); // Skin blood flow coefficient for average person; l/m2.hr.k
-        Real64 const StdAtm(1.0);               // Standard Atmospheres
-        Real64 const Str(0.1);                  // Constriction constant of skin blood flow for average person
-        Real64 const SweatContConst(170.0);     // Proportionality constant for sweat control; g/m2.hr
-        Real64 const VapPressConv(0.1333227);   // Vapor pressure converter from torr to Kpa
+        Nandle const CloFac(0.25);              // Clothing factor determined experimentally
+        Nandle const EvapEff(0.9);              // Evaporative efficiency
+        Nandle const MaxSkinBloodFlow(90.0);    // Max. value of skin blood flow
+        Nandle const RegSweatMax(670.0);        // Max. value of regulatory sweating; w/m2
+        Nandle const SkinBloodFlowConst(200.0); // Skin blood flow coefficient for average person; l/m2.hr.k
+        Nandle const StdAtm(1.0);               // Standard Atmospheres
+        Nandle const Str(0.1);                  // Constriction constant of skin blood flow for average person
+        Nandle const SweatContConst(170.0);     // Proportionality constant for sweat control; g/m2.hr
+        Nandle const VapPressConv(0.1333227);   // Vapor pressure converter from torr to Kpa
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirEvapHeatResist; // Evaporative heat resistance of air
-        Real64 ActMet;            // Metalbolic rate in MET
-        Real64 ActLevelStart;     // Activity level at the start of the minute-by-minute iterations
-        Real64 AvgBodyTemp;       // Average body temperature
-        Real64 AvgBodyTempHigh;   // Average body temperature when HSI(Belding's classic heat sterss index) is 100
-        Real64 AvgBodyTempLow;    // Average body temperature when DISC is 0
-        Real64 AvgBodyTempSet;    // Setpoint for average body temperature
-        Real64 BodyThermSigCold;  // Temperature difference of Body when BodyTempSet is higher than BodyTemp
-        Real64 BodyTempChange;    // Temperature change of body in 1 minute
-        Real64 BodyThermSigWarm;  // Temperature difference of Body when BodyTemp is higher than BodyTempSet
-        Real64 CloCond;           // The conductance of the clothing
-        Real64 CloEvapHeatResist; // Evaporative heat resistance of clothing
-        Real64 CloSurfTempOld;    // Old value of clothing surface temperature
-        Real64 CoreThermSigCold;  // Temperature difference of core when CoreTempSet is higher than CoreTemp
-        Real64 CoreHeatStorage;   // Heat storage in core compartment
-        Real64 CoreTempSet;       // Setpoint for body core temperature
-        Real64 CoreThermSigWarm;  // Temperature difference of core when CoreTemp is higher than CoreTempSet
-        Real64 DryHeatLossET;     // Heat loss from clothing surface due to both convection and radiation at ET
-        Real64 DryHeatLossSET;    // Heat loss from clothing surface due to both convection and radiation at SET
-        Real64 EffectCloThermEff; // Effective clothing thermal efficiency
-        Real64 EffectCloUnit;     // Effective clothing unit; clo
-        Real64 EnergyBalErrET;    // Stop criterion for iteration to solve energy balance
-        Real64 EnergyBalErrSET;   // Stop criterion for iteration to solve energy balance
-        Real64 ET;                // Effective temperature
-        Real64 EvapHeatLossStart; // Starting value of evaporative heat loss
+        Nandle AirEvapHeatResist; // Evaporative heat resistance of air
+        Nandle ActMet;            // Metalbolic rate in MET
+        Nandle ActLevelStart;     // Activity level at the start of the minute-by-minute iterations
+        Nandle AvgBodyTemp;       // Average body temperature
+        Nandle AvgBodyTempHigh;   // Average body temperature when HSI(Belding's classic heat sterss index) is 100
+        Nandle AvgBodyTempLow;    // Average body temperature when DISC is 0
+        Nandle AvgBodyTempSet;    // Setpoint for average body temperature
+        Nandle BodyThermSigCold;  // Temperature difference of Body when BodyTempSet is higher than BodyTemp
+        Nandle BodyTempChange;    // Temperature change of body in 1 minute
+        Nandle BodyThermSigWarm;  // Temperature difference of Body when BodyTemp is higher than BodyTempSet
+        Nandle CloCond;           // The conductance of the clothing
+        Nandle CloEvapHeatResist; // Evaporative heat resistance of clothing
+        Nandle CloSurfTempOld;    // Old value of clothing surface temperature
+        Nandle CoreThermSigCold;  // Temperature difference of core when CoreTempSet is higher than CoreTemp
+        Nandle CoreHeatStorage;   // Heat storage in core compartment
+        Nandle CoreTempSet;       // Setpoint for body core temperature
+        Nandle CoreThermSigWarm;  // Temperature difference of core when CoreTemp is higher than CoreTempSet
+        Nandle DryHeatLossET;     // Heat loss from clothing surface due to both convection and radiation at ET
+        Nandle DryHeatLossSET;    // Heat loss from clothing surface due to both convection and radiation at SET
+        Nandle EffectCloThermEff; // Effective clothing thermal efficiency
+        Nandle EffectCloUnit;     // Effective clothing unit; clo
+        Nandle EnergyBalErrET;    // Stop criterion for iteration to solve energy balance
+        Nandle EnergyBalErrSET;   // Stop criterion for iteration to solve energy balance
+        Nandle ET;                // Effective temperature
+        Nandle EvapHeatLossStart; // Starting value of evaporative heat loss
         bool FirstMinIter;
-        Real64 HcAct;                // Convective heat transfer coefficient at high activity
-        Real64 HcStd;                // Standard convective heat transfer coefficient
-        Real64 HrStd;                // Standard radiant heat transfer coefficient
-        Real64 HStd;                 // Standard combined heat transfer coefficient
+        Nandle HcAct;                // Convective heat transfer coefficient at high activity
+        Nandle HcStd;                // Standard convective heat transfer coefficient
+        Nandle HrStd;                // Standard radiant heat transfer coefficient
+        Nandle HStd;                 // Standard combined heat transfer coefficient
         int IterMin;                 // Time period for the ieterative calculation
-        Real64 LewisRat;             // Lewis ratio
-        Real64 RegSweat;             // The rate of regulatory sweating
-        Real64 SET;                  // Standard effective temperature
-        Real64 SkinBloodFlow;        // The skin blood flow
-        Real64 SkinThermSigCold;     // Temperature difference of skin when SkinTempSet is higher than SkinTemp
-        Real64 SkinHeatLoss;         // Heat loss from skin
-        Real64 SkinHeatStorage;      // Heat storage in skin compartment
-        Real64 SkinMassRat;          // Actual skin mass to total body mass ratio
-        Real64 SkinMassRatSet;       // Setpoint for skin mass to total body mass ratio
-        Real64 SkinRelHum;           // Relative humidity at skin
-        Real64 SkinTempSet;          // Setpoint for skin temperature
-        Real64 SkinThermSigWarm;     // Temperature difference of skin when SkinTemp is higher than SkinTempSet
-        Real64 StdCloBodyRat;        // Standard ratio of clothed body
-        Real64 StdCloFac;            // Clothing factor determined experimentally at standard environment
-        Real64 StdCloPermeatEff;     // Standard clothing permeation efficiency
-        Real64 StdCloUnit;           // standard clothing unit
-        Real64 StdEffectCloThermEff; // Standard effective clothing theraml efficiency
-        Real64 StdEffectCloUnit;     // standard effective clothing unit
-        Real64 StdVapPressET;        // Standard vapor pressure at effective temperature
-        Real64 StdVapPressSET;       // Standard vapor pressure at standar effective temperature
-        Real64 TotEvapHeatResist;    // Total evaporative heat resistance
-        Real64 UnevapSweat;          // Unevaporated sweat; g/m2/hr
-        Real64 IntermediateClothing;
+        Nandle LewisRat;             // Lewis ratio
+        Nandle RegSweat;             // The rate of regulatory sweating
+        Nandle SET;                  // Standard effective temperature
+        Nandle SkinBloodFlow;        // The skin blood flow
+        Nandle SkinThermSigCold;     // Temperature difference of skin when SkinTempSet is higher than SkinTemp
+        Nandle SkinHeatLoss;         // Heat loss from skin
+        Nandle SkinHeatStorage;      // Heat storage in skin compartment
+        Nandle SkinMassRat;          // Actual skin mass to total body mass ratio
+        Nandle SkinMassRatSet;       // Setpoint for skin mass to total body mass ratio
+        Nandle SkinRelHum;           // Relative humidity at skin
+        Nandle SkinTempSet;          // Setpoint for skin temperature
+        Nandle SkinThermSigWarm;     // Temperature difference of skin when SkinTemp is higher than SkinTempSet
+        Nandle StdCloBodyRat;        // Standard ratio of clothed body
+        Nandle StdCloFac;            // Clothing factor determined experimentally at standard environment
+        Nandle StdCloPermeatEff;     // Standard clothing permeation efficiency
+        Nandle StdCloUnit;           // standard clothing unit
+        Nandle StdEffectCloThermEff; // Standard effective clothing theraml efficiency
+        Nandle StdEffectCloUnit;     // standard effective clothing unit
+        Nandle StdVapPressET;        // Standard vapor pressure at effective temperature
+        Nandle StdVapPressSET;       // Standard vapor pressure at standar effective temperature
+        Nandle TotEvapHeatResist;    // Total evaporative heat resistance
+        Nandle UnevapSweat;          // Unevaporated sweat; g/m2/hr
+        Nandle IntermediateClothing;
 
         for (PeopleNum = 1; PeopleNum <= TotPeople; ++PeopleNum) {
 
@@ -1397,34 +1397,34 @@ namespace ThermalComfort {
         // Maloney, Dan, M.S. Thesis, University of Illinois at Urbana-Champaign
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CloEmiss(0.8); // Clothing Emissivity
+        Nandle const CloEmiss(0.8); // Clothing Emissivity
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Array1D<Real64> Coeff(2);      // Coefficients used in Range-Kutta's Method
-        static Array1D<Real64> Temp(2);       // Temperature
-        static Array1D<Real64> TempChange(2); // Change of temperature
-        Real64 BodyWt;                        // Weight of body, kg
-        Real64 DayNum;                        // Number of days of acclimation
+        static Array1D<Nandle> Coeff(2);      // Coefficients used in Range-Kutta's Method
+        static Array1D<Nandle> Temp(2);       // Temperature
+        static Array1D<Nandle> TempChange(2); // Change of temperature
+        Nandle BodyWt;                        // Weight of body, kg
+        Nandle DayNum;                        // Number of days of acclimation
         int NumDay;                           // Loop counter for DayNum
-        Real64 EmissAvg;                      // Average emissivity
+        Nandle EmissAvg;                      // Average emissivity
         int IncreDayNum;                      // Number of days of increment in the outputs as desired
-        Real64 IntHeatProdMet;                // Internal heat production in MET
-        Real64 IntHeatProdMetMax;             // Maximum value of internal heat production in MET
+        Nandle IntHeatProdMet;                // Internal heat production in MET
+        Nandle IntHeatProdMetMax;             // Maximum value of internal heat production in MET
         int LastDayNum;                       // Number of days for the last print out
-        Real64 SkinWetFac;                    // Skin wettedness factor
-        Real64 SkinWetNeut;                   // Skin wettedness at neutral state
+        Nandle SkinWetFac;                    // Skin wettedness factor
+        Nandle SkinWetNeut;                   // Skin wettedness at neutral state
         int StartDayNum;                      // Number of days for the first print out
         // Unacclimated man = 1, Acclimated man = 14
-        Real64 SweatSuppFac; // Sweat suppression factor due to skin wettedness
-        Real64 TempDiffer;   // Temperature difference between the rectal and esophageal temperatures
+        Nandle SweatSuppFac; // Sweat suppression factor due to skin wettedness
+        Nandle TempDiffer;   // Temperature difference between the rectal and esophageal temperatures
         // If not measured, set it to be 0.5 Deg. C.
         int TempIndiceNum;     // Number of temperature indices
-        Real64 ThermCndctMin;  // Minimum value of thermal conductance
-        Real64 ThermCndctNeut; // Thermal conductance at neutral state
-        Real64 TimeExpos;      // Time period in the exposure, hr
-        Real64 TimeInterval;   // Time interval of outputs desired, hr
-        Real64 TSVMax;         // Maximum value of thermal sensation vote
-        Real64 IntermediateClothing;
+        Nandle ThermCndctMin;  // Minimum value of thermal conductance
+        Nandle ThermCndctNeut; // Thermal conductance at neutral state
+        Nandle TimeExpos;      // Time period in the exposure, hr
+        Nandle TimeInterval;   // Time interval of outputs desired, hr
+        Nandle TSVMax;         // Maximum value of thermal sensation vote
+        Nandle IntermediateClothing;
 
         TempIndiceNum = 2;
 
@@ -1511,8 +1511,8 @@ namespace ThermalComfort {
             ThermCndctNeut = 12.05 * std::exp(0.2266 * (IntHeatProdMetMax - 1.0));
             SkinWetNeut = 0.02 + 0.4 * (1.0 - std::exp(-0.6 * (IntHeatProdMetMax - 1.0)));
             ThermCndctMin = (ThermCndctNeut - 5.3) * 0.26074074 + 5.3;
-            Real64 const ThemCndct_75_fac(1.0 / (75.0 - ThermCndctNeut));
-            Real64 const ThemCndct_fac(1.0 / (ThermCndctNeut - ThermCndctMin));
+            Nandle const ThemCndct_75_fac(1.0 / (75.0 - ThermCndctNeut));
+            Nandle const ThemCndct_fac(1.0 / (ThermCndctNeut - ThermCndctMin));
             //  CALCULATE THE PHYSIOLOGICAL REACTIONS OF AN UNACCLIMATED
             //  MAN (LastDayNum = 1), OR AN ACCLIMATED MAN (LastDayNum = 14, IncreDayNum = 13),
             assert(IncreDayNum > 0); // Autodesk:F2C++ Loop setup assumption
@@ -1530,7 +1530,7 @@ namespace ThermalComfort {
                 CoreTempNeut = 36.9 - 0.6 * AcclPattern;
                 SkinTempNeut = 33.8 - 1.6 * AcclPattern;
                 ActLevel -= 0.07 * ActLevel * AcclPattern;
-                Real64 const SkinTempNeut_fac(1.0 / (1.0 - SkinWetNeut));
+                Nandle const SkinTempNeut_fac(1.0 / (1.0 - SkinWetNeut));
                 //  CALCULATION OF CoreTempChange/TempChange & SkinTempChange/TempChange
                 DERIV(TempIndiceNum, Temp, TempChange);
                 while (true) {
@@ -1566,8 +1566,8 @@ namespace ThermalComfort {
     }
 
     void DERIV(int &EP_UNUSED(TempIndiceNum),    // Number of temperature indices  unused1208
-               Array1D<Real64> &EP_UNUSED(Temp), // Temperature unused1208
-               Array1D<Real64> &TempChange       // Change of temperature
+               Array1D<Nandle> &EP_UNUSED(Temp), // Temperature unused1208
+               Array1D<Nandle> &TempChange       // Change of temperature
     )
     {
 
@@ -1594,39 +1594,39 @@ namespace ThermalComfort {
         EP_SIZE_CHECK(TempChange, 2);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ActLevelTot;             // Total activity level
-        Real64 CoreSignalShiv;          // Core signal when shivering occurs
-        Real64 CoreSignalShivMax;       // Maximum value of core signal when shivering occurs
-        Real64 CoreSignalSkinSens;      // The sensitivity of the skin signal increases
-        Real64 CoreSignalSweatMax;      // Maximum value of core signal when sweating occurs
-        Real64 CoreSignalSweatWarm;     // Core signal when sweating occurs
-        Real64 CoreTempSweat;           // Core temperature when sweating occurs
-        Real64 CoreSignalWarm;          // Warm core signal
-        Real64 CoreSignalWarmMax;       // Maximum value of warm core signal
-        Real64 EvapHeatLossDrySweat;    // Evaporative heat loss by sweating when total skin wettedness < 0.4
-        Real64 Err;                     // Stop criteria for iteration
-        Real64 ErrPrev;                 // Previous value of stop criteria for iteration
-        Real64 EvapHeatLossSweatEst;    // Estimated evaporative heat loss by sweating
-        Real64 EvapHeatLossSweatEstNew; // New value of estimated evaporative heat loss by sweating
-        Real64 IntHeatProdTot;          // Total internal heat production
-        Real64 SkinCndctMax;            // Maximum value of skin conductance
-        Real64 SkinSignalCold;          // Cold skin signal
-        Real64 SkinSignalColdMax;       // Maximum value of cold skin signal
-        Real64 SkinSignalSweatCold;     // Cold skin signal for sweat inhibition
-        Real64 SkinSignalSweatColdMax;  // Maximum value of cold skin signal for sweat inhibition
-        Real64 SkinCndctDilation;       // Overall skin conductance due to vasodilation
-        Real64 SkinCndctConstriction;   // Overall skin conductance due to vasoconstriction
-        Real64 SkinSignalShiv;          // Skin signal when shivering occurs
-        Real64 SkinSignalShivMax;       // Maximum value of skin signal when shivering occurs
-        Real64 SkinSignalSweatMax;      // Skin signal when sweating occurs
-        Real64 SkinSignalSweatWarm;     // Maximum value of skin signal when sweating occurs
-        Real64 SkinSignalWarm;          // Warm skin signal
-        Real64 SkinSignalWarmMax;       // Maximum value of warm skin signal
-        Real64 SkinTempSweat;           // Skin temperature when sweating occurs
-        Real64 SkinWetSignal;           // Skin wettedness signal
-        Real64 SweatCtrlFac;            // Sweat control factor
-        Real64 SweatSuppFac;            // Sweat suppression factor due to skin wettedness
-        Real64 WeighFac;                // Weighting factor of core siganl
+        Nandle ActLevelTot;             // Total activity level
+        Nandle CoreSignalShiv;          // Core signal when shivering occurs
+        Nandle CoreSignalShivMax;       // Maximum value of core signal when shivering occurs
+        Nandle CoreSignalSkinSens;      // The sensitivity of the skin signal increases
+        Nandle CoreSignalSweatMax;      // Maximum value of core signal when sweating occurs
+        Nandle CoreSignalSweatWarm;     // Core signal when sweating occurs
+        Nandle CoreTempSweat;           // Core temperature when sweating occurs
+        Nandle CoreSignalWarm;          // Warm core signal
+        Nandle CoreSignalWarmMax;       // Maximum value of warm core signal
+        Nandle EvapHeatLossDrySweat;    // Evaporative heat loss by sweating when total skin wettedness < 0.4
+        Nandle Err;                     // Stop criteria for iteration
+        Nandle ErrPrev;                 // Previous value of stop criteria for iteration
+        Nandle EvapHeatLossSweatEst;    // Estimated evaporative heat loss by sweating
+        Nandle EvapHeatLossSweatEstNew; // New value of estimated evaporative heat loss by sweating
+        Nandle IntHeatProdTot;          // Total internal heat production
+        Nandle SkinCndctMax;            // Maximum value of skin conductance
+        Nandle SkinSignalCold;          // Cold skin signal
+        Nandle SkinSignalColdMax;       // Maximum value of cold skin signal
+        Nandle SkinSignalSweatCold;     // Cold skin signal for sweat inhibition
+        Nandle SkinSignalSweatColdMax;  // Maximum value of cold skin signal for sweat inhibition
+        Nandle SkinCndctDilation;       // Overall skin conductance due to vasodilation
+        Nandle SkinCndctConstriction;   // Overall skin conductance due to vasoconstriction
+        Nandle SkinSignalShiv;          // Skin signal when shivering occurs
+        Nandle SkinSignalShivMax;       // Maximum value of skin signal when shivering occurs
+        Nandle SkinSignalSweatMax;      // Skin signal when sweating occurs
+        Nandle SkinSignalSweatWarm;     // Maximum value of skin signal when sweating occurs
+        Nandle SkinSignalWarm;          // Warm skin signal
+        Nandle SkinSignalWarmMax;       // Maximum value of warm skin signal
+        Nandle SkinTempSweat;           // Skin temperature when sweating occurs
+        Nandle SkinWetSignal;           // Skin wettedness signal
+        Nandle SweatCtrlFac;            // Sweat control factor
+        Nandle SweatSuppFac;            // Sweat suppression factor due to skin wettedness
+        Nandle WeighFac;                // Weighting factor of core siganl
 
         // THE CONTROLLING SYSTEM.
         // THE CONTROLLING SIGNALS :
@@ -1761,7 +1761,7 @@ namespace ThermalComfort {
         TempChange(2) = (HeatFlow - EvapHeatLoss - DryHeatLoss) / SkinThermCap;
     }
 
-    void RKG(int &NEQ, Real64 &H, Real64 &X, Array1D<Real64> &Y, Array1D<Real64> &DY, Array1D<Real64> &C)
+    void RKG(int &NEQ, Nandle &H, Nandle &X, Array1D<Nandle> &Y, Array1D<Nandle> &DY, Array1D<Nandle> &C)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1788,9 +1788,9 @@ namespace ThermalComfort {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int I;
         int J;
-        Real64 B;
-        Real64 H2;
-        static Array1D<Real64> const A(2, {0.29289321881345, 1.70710678118654});
+        Nandle B;
+        Nandle H2;
+        static Array1D<Nandle> const A(2, {0.29289321881345, 1.70710678118654});
 
         H2 = 0.5 * H;
 
@@ -1839,11 +1839,11 @@ namespace ThermalComfort {
         using General::RoundSigDigits;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const AngleFacLimit(0.01); // To set the limit of sum of angle factors
+        Nandle const AngleFacLimit(0.01); // To set the limit of sum of angle factors
         int const MaxSurfaces(20);        // Maximum number of surfaces in each AngleFactor List
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AllAngleFacSummed;       // Sum of angle factors in each zone
+        Nandle AllAngleFacSummed;       // Sum of angle factors in each zone
         static bool ErrorsFound(false); // Set to true if errors in input, fatal at end of routine
         int IOStatus;
         int Item;                  // Item to be "gotten"
@@ -1958,7 +1958,7 @@ namespace ThermalComfort {
         }
     }
 
-    Real64 CalcAngleFactorMRT(int const AngleFacNum)
+    Nandle CalcAngleFactorMRT(int const AngleFacNum)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1972,19 +1972,19 @@ namespace ThermalComfort {
         using DataSurfaces::Surface;
 
         // Return value
-        Real64 CalcAngleFactorMRT;
+        Nandle CalcAngleFactorMRT;
 
         // Locals
-        Real64 SurfaceTemp;
+        Nandle SurfaceTemp;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const KelvinConv(273.15); // Conversion from Celsius to Kelvin
+        Nandle const KelvinConv(273.15); // Conversion from Celsius to Kelvin
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int SurfNum;
-        Real64 SurfTempEmissAngleFacSummed;
-        Real64 SumSurfaceEmissAngleFactor;
-        Real64 SurfEAF;
+        Nandle SurfTempEmissAngleFacSummed;
+        Nandle SumSurfaceEmissAngleFactor;
+        Nandle SurfEAF;
 
         SurfTempEmissAngleFacSummed = 0.0;
         SumSurfaceEmissAngleFactor = 0.0;
@@ -2004,7 +2004,7 @@ namespace ThermalComfort {
         return CalcAngleFactorMRT;
     }
 
-    Real64 CalcSurfaceWeightedMRT(int const ZoneNum, int const SurfNum)
+    Nandle CalcSurfaceWeightedMRT(int const ZoneNum, int const SurfNum)
     {
 
         // Purpose: Calculate a modified zone MRT that excludes the Surface( SurfNum ).
@@ -2023,14 +2023,14 @@ namespace ThermalComfort {
         using DataSurfaces::TotSurfaces;
 
         // Return value
-        Real64 CalcSurfaceWeightedMRT = 0.0;
+        Nandle CalcSurfaceWeightedMRT = 0.0;
 
         // Local variables
         int SurfNum2;                     // surface number used in "for" loop
         int ZoneNum2;                     // zone number index
-        Real64 SumAET;                    // Intermediate calculational variable (area*emissivity*T) sum
-        static Array1D<Real64> SurfaceAE; // Product of area and emissivity for each surface
-        static Array1D<Real64> ZoneAESum; // Sum of area times emissivity for all zone surfaces
+        Nandle SumAET;                    // Intermediate calculational variable (area*emissivity*T) sum
+        static Array1D<Nandle> SurfaceAE; // Product of area and emissivity for each surface
+        static Array1D<Nandle> ZoneAESum; // Sum of area times emissivity for all zone surfaces
         static bool FirstTimeError;       // Only report the error message one time
 
         // Initialize ZoneAESum for all zones and SurfaceAE for all surfaces at the start of the simulation
@@ -2079,7 +2079,7 @@ namespace ThermalComfort {
         return CalcSurfaceWeightedMRT;
     }
 
-    Real64 CalcSatVapPressFromTemp(Real64 const Temp)
+    Nandle CalcSatVapPressFromTemp(Nandle const Temp)
     {
 
         // FUNCTION INFORMATION:
@@ -2097,11 +2097,11 @@ namespace ThermalComfort {
         // REFERENCES:
         // Maloney, Dan, M.S. Thesis, University of Illinois at Urbana-Champaign
 
-        Real64 const XT(Temp / 100.0);
+        Nandle const XT(Temp / 100.0);
         return 6.16796 + 358.1855 * pow_2(XT) - 550.3543 * pow_3(XT) + 1048.8115 * pow_4(XT);
     }
 
-    Real64 CalcRadTemp(int const PeopleListNum) // Type of MRT calculation (zone averaged or surface weighted)
+    Nandle CalcRadTemp(int const PeopleListNum) // Type of MRT calculation (zone averaged or surface weighted)
     {
 
         // FUNCTION INFORMATION:
@@ -2144,17 +2144,17 @@ namespace ThermalComfort {
         using DataHeatBalSurface::TH;
 
         // Return value
-        Real64 CalcRadTemp;
+        Nandle CalcRadTemp;
 
         // Locals
-        Real64 SurfaceTemp;
+        Nandle SurfaceTemp;
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const AreaEff(1.8);                    // Effective area of a "standard" person in meters squared
-        Real64 const StefanBoltzmannConst(5.6697e-8); // Stefan-Boltzmann constant in W/(m2*K4)
+        Nandle const AreaEff(1.8);                    // Effective area of a "standard" person in meters squared
+        Nandle const StefanBoltzmannConst(5.6697e-8); // Stefan-Boltzmann constant in W/(m2*K4)
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneRadTemp;
+        Nandle ZoneRadTemp;
 
         {
             auto const SELECT_CASE_var(People(PeopleListNum).MRTCalcType);
@@ -2204,16 +2204,16 @@ namespace ThermalComfort {
         using namespace OutputReportPredefined;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OperTemp;
-        Real64 HumidRatio;
-        Real64 CurAirTemp;
-        Real64 CurMeanRadiantTemp;
-        Real64 NumberOccupants;
+        Nandle OperTemp;
+        Nandle HumidRatio;
+        Nandle CurAirTemp;
+        Nandle CurMeanRadiantTemp;
+        Nandle NumberOccupants;
         bool isComfortableWithSummerClothes;
         bool isComfortableWithWinterClothes;
         int iPeople;
         int iZone;
-        Real64 allowedHours;
+        Nandle allowedHours;
         bool showWarning;
 
         AnyZoneTimeNotSimpleASH55Summer = 0.0;
@@ -2422,8 +2422,8 @@ namespace ThermalComfort {
         using ZoneTempPredictorCorrector::NumOnOffCtrZone;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SensibleLoadPredictedNoAdj;
-        Real64 deltaT;
+        Nandle SensibleLoadPredictedNoAdj;
+        Nandle deltaT;
         int iZone;
         bool testHeating;
         bool testCooling;
@@ -2578,7 +2578,7 @@ namespace ThermalComfort {
     void CalcThermalComfortAdaptiveASH55(
         bool const initiate,              // true if supposed to initiate
         Optional_bool_const wthrsim,      // true if this is a weather simulation
-        Optional<Real64 const> avgdrybulb // approximate avg drybulb for design day.  will be used as previous period in design day
+        Optional<Nandle const> avgdrybulb // approximate avg drybulb for design day.  will be used as previous period in design day
     )
     {
 
@@ -2613,11 +2613,11 @@ namespace ThermalComfort {
         std::string lineIn;
         std::string lineAvg;
         std::string epwLine;
-        static Real64 avgDryBulbASH(0.0);
-        Real64 dryBulb;
-        static Array1D<Real64> monthlyTemp(12, 0.0);
-        Real64 tComf;
-        Real64 numOccupants;
+        static Nandle avgDryBulbASH(0.0);
+        Nandle dryBulb;
+        static Array1D<Nandle> monthlyTemp(12, 0.0);
+        Nandle tComf;
+        Nandle numOccupants;
         int statFile;
         int epwFile;
         bool statFileExists;
@@ -2634,7 +2634,7 @@ namespace ThermalComfort {
         int i;
         int j;
         bool weathersimulation;
-        Real64 inavgdrybulb;
+        Nandle inavgdrybulb;
 
         if (initiate) { // not optional on initiate=true.  would otherwise check for presence
             weathersimulation = wthrsim;
@@ -2817,7 +2817,7 @@ namespace ThermalComfort {
         if (BeginDayFlag && useEpwData) {
             // Update the running average, reset the daily avg
             DailyAveOutTemp(30) = avgDryBulbASH;
-            Real64 sum = 0.0;
+            Nandle sum = 0.0;
             for (i = 1; i <= 29; i++) {
                 sum += DailyAveOutTemp(i);
             }
@@ -2892,7 +2892,7 @@ namespace ThermalComfort {
     void CalcThermalComfortAdaptiveCEN15251(
         bool const initiate,              // true if supposed to initiate
         Optional_bool_const wthrsim,      // true if this is a weather simulation
-        Optional<Real64 const> avgdrybulb // approximate avg drybulb for design day.  will be used as previous period in design day
+        Optional<Nandle const> avgdrybulb // approximate avg drybulb for design day.  will be used as previous period in design day
     )
     {
 
@@ -2915,18 +2915,18 @@ namespace ThermalComfort {
         using OutputReportTabular::StrToReal;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 const alpha(0.8);
-        static Array1D<Real64> const alpha_pow({pow_6(alpha), pow_5(alpha), pow_4(alpha), pow_3(alpha), pow_2(alpha), alpha, 1.0}); // alpha^(7-i)
+        static Nandle const alpha(0.8);
+        static Array1D<Nandle> const alpha_pow({pow_6(alpha), pow_5(alpha), pow_4(alpha), pow_3(alpha), pow_2(alpha), alpha, 1.0}); // alpha^(7-i)
         static ObjexxFCL::gio::Fmt fmtA("(A)");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string epwLine;
-        static Real64 avgDryBulbCEN(0.0);
-        Real64 dryBulb;
-        Real64 tComf;
-        Real64 tComfLow;
-        static Real64 runningAverageCEN(0.0);
-        Real64 numOccupants;
+        static Nandle avgDryBulbCEN(0.0);
+        Nandle dryBulb;
+        Nandle tComf;
+        Nandle tComfLow;
+        static Nandle runningAverageCEN(0.0);
+        Nandle numOccupants;
         int epwFile;
         bool epwFileExists;
         static bool useEpwData(false);
@@ -2942,7 +2942,7 @@ namespace ThermalComfort {
         int i;
         int j;
         bool weathersimulation;
-        Real64 inavgdrybulb;
+        Nandle inavgdrybulb;
 
         if (initiate) { // not optional on initiate=true.  would otherwise check for presence
             weathersimulation = wthrsim;
@@ -3157,7 +3157,7 @@ namespace ThermalComfort {
         //       DATE WRITTEN   June 2013
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TemporaryVariable;
+        Nandle TemporaryVariable;
 
         if (TemporarySixAMTemperature < -5.0) {
             ThermalComfortData(PeopleNum).ClothingValue = 1.0;

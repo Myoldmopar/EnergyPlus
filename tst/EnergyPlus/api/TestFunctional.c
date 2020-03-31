@@ -60,11 +60,11 @@ int main() {
     Glycol glycol = NULL;
     glycol = glycolNew("WatEr");
     for (int temp=5; temp<35; temp+=10) {
-        Real64 thisTemp = (float)temp;
-        Real64 specificHeat = glycolSpecificHeat(glycol, thisTemp);
-        Real64 density = glycolDensity(glycol, thisTemp);
-        Real64 conductivity = glycolConductivity(glycol, thisTemp);
-        Real64 viscosity = glycolViscosity(glycol, thisTemp);
+        Nandle thisTemp = (float)temp;
+        Nandle specificHeat = glycolSpecificHeat(glycol, thisTemp);
+        Nandle density = glycolDensity(glycol, thisTemp);
+        Nandle conductivity = glycolConductivity(glycol, thisTemp);
+        Nandle viscosity = glycolViscosity(glycol, thisTemp);
         printf("C API Test: Calculated props at T=%4.1f: %8.4f, %8.4f, %8.4f, %8.4f \n", thisTemp, specificHeat, density, conductivity, viscosity);
     }
     glycolDelete(glycol);
@@ -72,26 +72,26 @@ int main() {
     // REFRIGERANTS
     Refrigerant refrig = NULL;
     refrig = refrigerantNew("SteaM");
-    Real64 temperature = 100.0;
-    Real64 satPress = refrigerantSaturationPressure(refrig, temperature); // expecting about 100,000 Pa
-    Real64 thisPress = 100000;
-    Real64 satTemp = refrigerantSaturationTemperature(refrig, thisPress); // expecting about 100 degC
+    Nandle temperature = 100.0;
+    Nandle satPress = refrigerantSaturationPressure(refrig, temperature); // expecting about 100,000 Pa
+    Nandle thisPress = 100000;
+    Nandle satTemp = refrigerantSaturationTemperature(refrig, thisPress); // expecting about 100 degC
     printf("C API Test: Saturated Properties: At 100C, Psat=%8.4f; at 100000Pa, Tsat=%8.4f\n", satPress, satTemp);
-    Real64 satLiqDens = refrigerantSaturatedDensity(refrig, temperature, 0.0); // liq = 958 kg/m3
-    Real64 satLiqCp = refrigerantSaturatedSpecificHeat(refrig, temperature, 0.0); // liq = 4,216 J/kgK
-    Real64 satLiqEnth = refrigerantSaturatedEnthalpy(refrig, temperature, 0.0);
+    Nandle satLiqDens = refrigerantSaturatedDensity(refrig, temperature, 0.0); // liq = 958 kg/m3
+    Nandle satLiqCp = refrigerantSaturatedSpecificHeat(refrig, temperature, 0.0); // liq = 4,216 J/kgK
+    Nandle satLiqEnth = refrigerantSaturatedEnthalpy(refrig, temperature, 0.0);
     printf("C API Test: Sat Liq at 100C: rho=%8.4f, Cp=%8.4f, h=%8.4f\n", satLiqDens, satLiqCp, satLiqEnth);
-    Real64 satVapDens = refrigerantSaturatedDensity(refrig, temperature, 1.0); // vap = 1/1.6718 ~~ 0.59 kg/m3
-    Real64 satVapCp = refrigerantSaturatedSpecificHeat(refrig, temperature, 1.0); // vap = 2,080 J/kgK
-    Real64 satVapEnth = refrigerantSaturatedEnthalpy(refrig, temperature, 1.0);
+    Nandle satVapDens = refrigerantSaturatedDensity(refrig, temperature, 1.0); // vap = 1/1.6718 ~~ 0.59 kg/m3
+    Nandle satVapCp = refrigerantSaturatedSpecificHeat(refrig, temperature, 1.0); // vap = 2,080 J/kgK
+    Nandle satVapEnth = refrigerantSaturatedEnthalpy(refrig, temperature, 1.0);
     printf("C API Test: Sat Vap at 100C: rho=%8.4f, Cp=%8.4f, h=%8.4f\n", satVapDens, satVapCp, satVapEnth);
-    Real64 enthDifference = satVapEnth - satLiqEnth; // vap-liq = 2,675,570-419,170 ~ 2,256,400 J/kg
+    Nandle enthDifference = satVapEnth - satLiqEnth; // vap-liq = 2,675,570-419,170 ~ 2,256,400 J/kg
     // superheated properties aren't working, I think there is a bug in the FluidProperties module
     //    temperature = 150;
-    //    Real64 supEnth = refrigerantSuperHeatedEnthalpy(refrig, temperature, thisPress);
-    //    Real64 thisEnth = 303;
-    //    Real64 supPress = refrigerantSuperHeatedPressure(refrig, temperature, thisEnth);
-    //    Real64 supDensity = refrigerantSuperHeatedDensity(refrig, temperature, thisPress);
+    //    Nandle supEnth = refrigerantSuperHeatedEnthalpy(refrig, temperature, thisPress);
+    //    Nandle thisEnth = 303;
+    //    Nandle supPress = refrigerantSuperHeatedPressure(refrig, temperature, thisEnth);
+    //    Nandle supDensity = refrigerantSuperHeatedDensity(refrig, temperature, thisPress);
     refrigerantDelete(refrig);
 
     // PSYCHROMETRICS
@@ -110,45 +110,45 @@ int main() {
     //   Vapor Density: 0.0107 kg/m3
     //   Specific Heat: ~1007 J/kgK
     printf("C API Test: Psych props, test point is about 101325Pa, 24C, 50%% humidity:\n");
-    Real64 db = psyTdbFnHW(48000, 0.009);
+    Nandle db = psyTdbFnHW(48000, 0.009);
     printf("C API Test: Expected DB ~ 24 C; Calculated: %8.4f\n", db);
-    Real64 rh = psyRhFnTdbRhov(24, 0.0107);
-    Real64 rh2 = psyRhFnTdbWPb(24, 0.009, 101325);
+    Nandle rh = psyRhFnTdbRhov(24, 0.0107);
+    Nandle rh2 = psyRhFnTdbWPb(24, 0.009, 101325);
     printf("C API Test: Expected RH ~ 0.5; Calculated: %8.4f, %8.4f\n", rh, rh2);
-    Real64 hr = psyWFnTdbH(24, 48000);
-    Real64 hr2 = psyWFnTdpPb(13, 101325);
-    Real64 hr3 = psyWFnTdbRhPb(24, 0.5, 101325);
-    Real64 hr4 = psyWFnTdbTwbPb(24, 17, 101325);
+    Nandle hr = psyWFnTdbH(24, 48000);
+    Nandle hr2 = psyWFnTdpPb(13, 101325);
+    Nandle hr3 = psyWFnTdbRhPb(24, 0.5, 101325);
+    Nandle hr4 = psyWFnTdbTwbPb(24, 17, 101325);
     printf("C API Test: Expected HumRat ~ 0.009; Calculated: %8.4f, %8.4f, %8.4f, %8.4f\n", hr, hr2, hr3, hr4);
-    Real64 tSat = psyTsatFnHPb(48000, 101325);
+    Nandle tSat = psyTsatFnHPb(48000, 101325);
     printf("C API Test: Expected Tsat ~ 17 C; Calculated: %8.4f\n", tSat);
-    Real64 pSat = psyPsatFnTemp(24);
+    Nandle pSat = psyPsatFnTemp(24);
     printf("C API Test: Expected Psat ~ 2985 Pa; Calculated: %8.4f\n", pSat);
-    Real64 h = psyHFnTdbW(24, 0.009);
-    Real64 h2 = psyHFnTdbRhPb(24, 0.5, 101325);
+    Nandle h = psyHFnTdbW(24, 0.009);
+    Nandle h2 = psyHFnTdbRhPb(24, 0.5, 101325);
     printf("C API Test: Expected Enth ~ 48000 J/kg; Calculated: %8.4f, %8.4f\n", h, h2);
-    Real64 volume = psyVFnTdbWPb(24, 0.009, 101325);
+    Nandle volume = psyVFnTdbWPb(24, 0.009, 101325);
     printf("C API Test: Expected v ~ 0.855 m3/kg; Calculated: %8.4f\n", volume);
-    Real64 density = psyRhoFnPbTdbW(101325, 24, 0.009);
+    Nandle density = psyRhoFnPbTdbW(101325, 24, 0.009);
     printf("C API Test: Expected rho ~ 1.17 kg/m3; Calculated: %8.4f\n", density);
-    Real64 wb = psyTwbFnTdbWPb(24, 0.009, 101325);
+    Nandle wb = psyTwbFnTdbWPb(24, 0.009, 101325);
     printf("C API Test: Expected WB ~ 17 C; Calculated: %8.4f\n", wb);
-    Real64 dp = psyTdpFnWPb(0.009, 101325);
-    Real64 dp2 = psyTdpFnTdbTwbPb(24, 17, 101325);
+    Nandle dp = psyTdpFnWPb(0.009, 101325);
+    Nandle dp2 = psyTdpFnTdbTwbPb(24, 17, 101325);
     printf("C API Test: Expected DP ~ 13 C; Calculated: %8.4f, %8.4f\n", dp, dp2);
-    Real64 vaporDensity = psyRhovFnTdbWPb(24, 0.009, 101325);
-    Real64 vaporDensity_2 = psyRhovFnTdbRh(24, 0.5);
+    Nandle vaporDensity = psyRhovFnTdbWPb(24, 0.009, 101325);
+    Nandle vaporDensity_2 = psyRhovFnTdbRh(24, 0.5);
     printf("C API Test: Expected VapDensity ~ 0.0107 kg/m3; Calculated: %8.4f, %8.4f\n", vaporDensity, vaporDensity_2);
-    Real64 cp = psyCpAirFnW(0.009);
+    Nandle cp = psyCpAirFnW(0.009);
     printf("C API Test: Expected Cp ~ 1007 J/kgK; Calculated: %8.4f\n", cp);
-    Real64 energy = psyHfgAirFnWTdb(24);
+    Nandle energy = psyHfgAirFnWTdb(24);
     printf("C API Test: Calculated energy: %8.4f\n", energy);
-    Real64 moisture_energy = psyHgAirFnWTdb(24);
+    Nandle moisture_energy = psyHgAirFnWTdb(24);
     printf("C API Test: Calculated energy of moisture: %8.4f\n", moisture_energy);
 
     // check that we get error messages back:
     registerErrorCallback(errorHandler);
-    Real64 dpErroneous = psyTdpFnTdbTwbPb(16, 17, 101325);
+    Nandle dpErroneous = psyTdpFnTdbTwbPb(16, 17, 101325);
     printf("C API Test: Got back erroneous value of dew point: %8.4f\n", dpErroneous);
     if (errorsOccurred > 0) {
         printf("C API Test: Errors were caught during dew point calculation, good!\n");

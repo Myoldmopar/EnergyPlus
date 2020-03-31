@@ -104,11 +104,11 @@ namespace WindowManager {
 
     // Converts world coordinates (E+) into local surface coordinates that suites better for
     // WCE operations. Return values are angles Theta and Phi that are used to define WCE direction
-    std::pair<Real64, Real64>
+    std::pair<Nandle, Nandle>
     getWCECoordinates(const int t_SurfNum, const DataVectorTypes::Vector &t_Ray, const SingleLayerOptics::BSDFHemisphere t_Direction);
 
     // Returns Theta and Phi coordinates of surface BSDF for current Sun position
-    std::pair<Real64, Real64> getSunWCEAngles(const int t_SurfNum, const SingleLayerOptics::BSDFHemisphere t_Direction);
+    std::pair<Nandle, Nandle> getSunWCEAngles(const int t_SurfNum, const SingleLayerOptics::BSDFHemisphere t_Direction);
 
     ///////////////////////////////////////////////////////////////////////////////
     //   CWCESpecturmProperties

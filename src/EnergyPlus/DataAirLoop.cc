@@ -86,7 +86,7 @@ namespace DataAirLoop {
     // MODULE VARIABLE DECLARATIONS:
 
     int NumOASystems(0);                   // Number of Outdoor Air Systems
-    Real64 LoopDXCoilRTF(0.0); // OnOff fan run time fraction in an HVAC Air Loop
+    Nandle LoopDXCoilRTF(0.0); // OnOff fan run time fraction in an HVAC Air Loop
     bool AirLoopInputsFilled(false);       // Set to TRUE after first pass through air loop
 
     // Object Data

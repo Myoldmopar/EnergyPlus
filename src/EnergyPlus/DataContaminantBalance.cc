@@ -78,89 +78,89 @@ namespace DataContaminantBalance {
 
     // MODULE VARIABLE Type DECLARATIONS:
 
-    Array1D<Real64> ZoneCO2SetPoint;
-    Array1D<Real64> CO2PredictedRate;
+    Array1D<Nandle> ZoneCO2SetPoint;
+    Array1D<Nandle> CO2PredictedRate;
 
-    Array1D<Real64> ZoneCO2Gain;             // CO2 gain from each Zone (People, equipment)
-    Array1D<Real64> ZoneCO2GainFromPeople;   // CO2 gain from each Zone (From People only)
-    Array1D<Real64> ZoneCO2GainExceptPeople; // Added for hybrid model, CO2 gain from each Zone (except People)
+    Array1D<Nandle> ZoneCO2Gain;             // CO2 gain from each Zone (People, equipment)
+    Array1D<Nandle> ZoneCO2GainFromPeople;   // CO2 gain from each Zone (From People only)
+    Array1D<Nandle> ZoneCO2GainExceptPeople; // Added for hybrid model, CO2 gain from each Zone (except People)
 
     // Zone Air Contaminant conditions variables
-    Array1D<Real64> ZoneAirCO2Avg;       // AIR CO2 averaged over the zone time step
-    Array1D<Real64> ZoneAirCO2;          // AIR CO2
-    Array1D<Real64> CO2ZoneTimeMinus1;   // CO2 history terms for 3rd order derivative
-    Array1D<Real64> CO2ZoneTimeMinus2;   // Time Minus 2 Zone Time Steps Term
-    Array1D<Real64> CO2ZoneTimeMinus3;   // Time Minus 3 Zone Time Steps Term
-    Array1D<Real64> CO2ZoneTimeMinus4;   // Time Minus 4 Zone Time Steps Term
-    Array1D<Real64> DSCO2ZoneTimeMinus1; // DownStepped CO2 history terms for 3rd order derivative
-    Array1D<Real64> DSCO2ZoneTimeMinus2; // DownStepped Time Minus 2 Zone Time Steps Term
-    Array1D<Real64> DSCO2ZoneTimeMinus3; // DownStepped Time Minus 3 Zone Time Steps Term
-    Array1D<Real64> DSCO2ZoneTimeMinus4; // DownStepped Time Minus 4 Zone Time Steps Term
+    Array1D<Nandle> ZoneAirCO2Avg;       // AIR CO2 averaged over the zone time step
+    Array1D<Nandle> ZoneAirCO2;          // AIR CO2
+    Array1D<Nandle> CO2ZoneTimeMinus1;   // CO2 history terms for 3rd order derivative
+    Array1D<Nandle> CO2ZoneTimeMinus2;   // Time Minus 2 Zone Time Steps Term
+    Array1D<Nandle> CO2ZoneTimeMinus3;   // Time Minus 3 Zone Time Steps Term
+    Array1D<Nandle> CO2ZoneTimeMinus4;   // Time Minus 4 Zone Time Steps Term
+    Array1D<Nandle> DSCO2ZoneTimeMinus1; // DownStepped CO2 history terms for 3rd order derivative
+    Array1D<Nandle> DSCO2ZoneTimeMinus2; // DownStepped Time Minus 2 Zone Time Steps Term
+    Array1D<Nandle> DSCO2ZoneTimeMinus3; // DownStepped Time Minus 3 Zone Time Steps Term
+    Array1D<Nandle> DSCO2ZoneTimeMinus4; // DownStepped Time Minus 4 Zone Time Steps Term
 
-    Array1D<Real64> ZoneAirCO2Temp;        // Temp zone air CO2 at time plus 1
-    Array1D<Real64> CO2ZoneTimeMinus1Temp; // Zone air CO2 at previous timestep
-    Array1D<Real64> CO2ZoneTimeMinus2Temp; // Zone air CO2 at timestep T-2
-    Array1D<Real64> CO2ZoneTimeMinus3Temp; // Zone air CO2 at timestep T-3
-    Array1D<Real64> ZoneAirCO2Old;         // Last Time Steps Zone AIR Humidity Ratio
+    Array1D<Nandle> ZoneAirCO2Temp;        // Temp zone air CO2 at time plus 1
+    Array1D<Nandle> CO2ZoneTimeMinus1Temp; // Zone air CO2 at previous timestep
+    Array1D<Nandle> CO2ZoneTimeMinus2Temp; // Zone air CO2 at timestep T-2
+    Array1D<Nandle> CO2ZoneTimeMinus3Temp; // Zone air CO2 at timestep T-3
+    Array1D<Nandle> ZoneAirCO2Old;         // Last Time Steps Zone AIR Humidity Ratio
 
-    Array1D<Real64> ZoneCO2MX; // TEMPORARY ZONE CO2 TO TEST CONVERGENCE in Exact and Euler method
-    Array1D<Real64> ZoneCO2M2; // TEMPORARY ZONE CO2 at timestep t-2 in Exact and Euler method
-    Array1D<Real64> ZoneCO21;  // Zone CO2 at the previous time step used in Exact and Euler method
+    Array1D<Nandle> ZoneCO2MX; // TEMPORARY ZONE CO2 TO TEST CONVERGENCE in Exact and Euler method
+    Array1D<Nandle> ZoneCO2M2; // TEMPORARY ZONE CO2 at timestep t-2 in Exact and Euler method
+    Array1D<Nandle> ZoneCO21;  // Zone CO2 at the previous time step used in Exact and Euler method
 
-    Array1D<Real64> CONTRAT; // Zone CO2 at the previous time step used in Exact and Euler method
+    Array1D<Nandle> CONTRAT; // Zone CO2 at the previous time step used in Exact and Euler method
 
-    Array1D<Real64> MixingMassFlowCO2; // Mixing MASS FLOW * CO2
+    Array1D<Nandle> MixingMassFlowCO2; // Mixing MASS FLOW * CO2
 
     int NumContControlledZones(0);
 
-    Real64 OutdoorCO2(0.0); // Outdoor CO2 level
+    Nandle OutdoorCO2(0.0); // Outdoor CO2 level
 
-    Array1D<Real64> ZoneAirDensityCO; // Mixing MASS FLOW * CO2
-    Array1D<Real64> AZ;
-    Array1D<Real64> BZ;
-    Array1D<Real64> CZ;
+    Array1D<Nandle> ZoneAirDensityCO; // Mixing MASS FLOW * CO2
+    Array1D<Nandle> AZ;
+    Array1D<Nandle> BZ;
+    Array1D<Nandle> CZ;
 
     // Generic contaminant
 
-    Array1D<Real64> ZoneGCSetPoint;
-    Array1D<Real64> GCPredictedRate;
+    Array1D<Nandle> ZoneGCSetPoint;
+    Array1D<Nandle> GCPredictedRate;
 
-    Array1D<Real64> ZoneGCGain; // Generic contaminant gain from each Zone (People, equipment)
+    Array1D<Nandle> ZoneGCGain; // Generic contaminant gain from each Zone (People, equipment)
 
     // Zone Air Contaminant conditions variables
-    Array1D<Real64> ZoneAirGCAvg;       // AIR generic contaminant averaged over the zone time step
-    Array1D<Real64> ZoneAirGC;          // AIR generic contaminant
-    Array1D<Real64> GCZoneTimeMinus1;   // Generic contaminant history terms for 3rd order derivative
-    Array1D<Real64> GCZoneTimeMinus2;   // Time Minus 2 Zone Time Steps Term
-    Array1D<Real64> GCZoneTimeMinus3;   // Time Minus 3 Zone Time Steps Term
-    Array1D<Real64> GCZoneTimeMinus4;   // Time Minus 4 Zone Time Steps Term
-    Array1D<Real64> DSGCZoneTimeMinus1; // DownStepped generic contaminant history terms for 3rd order
+    Array1D<Nandle> ZoneAirGCAvg;       // AIR generic contaminant averaged over the zone time step
+    Array1D<Nandle> ZoneAirGC;          // AIR generic contaminant
+    Array1D<Nandle> GCZoneTimeMinus1;   // Generic contaminant history terms for 3rd order derivative
+    Array1D<Nandle> GCZoneTimeMinus2;   // Time Minus 2 Zone Time Steps Term
+    Array1D<Nandle> GCZoneTimeMinus3;   // Time Minus 3 Zone Time Steps Term
+    Array1D<Nandle> GCZoneTimeMinus4;   // Time Minus 4 Zone Time Steps Term
+    Array1D<Nandle> DSGCZoneTimeMinus1; // DownStepped generic contaminant history terms for 3rd order
     // derivative
-    Array1D<Real64> DSGCZoneTimeMinus2; // DownStepped Time Minus 2 Zone Time Steps Term
-    Array1D<Real64> DSGCZoneTimeMinus3; // DownStepped Time Minus 3 Zone Time Steps Term
-    Array1D<Real64> DSGCZoneTimeMinus4; // DownStepped Time Minus 4 Zone Time Steps Term
+    Array1D<Nandle> DSGCZoneTimeMinus2; // DownStepped Time Minus 2 Zone Time Steps Term
+    Array1D<Nandle> DSGCZoneTimeMinus3; // DownStepped Time Minus 3 Zone Time Steps Term
+    Array1D<Nandle> DSGCZoneTimeMinus4; // DownStepped Time Minus 4 Zone Time Steps Term
 
-    Array1D<Real64> ZoneAirGCTemp;        // Temp zone air generic contaminant at time plus 1
-    Array1D<Real64> GCZoneTimeMinus1Temp; // Zone air generic contaminant at previous timestep
-    Array1D<Real64> GCZoneTimeMinus2Temp; // Zone air generic contaminant at timestep T-2
-    Array1D<Real64> GCZoneTimeMinus3Temp; // Zone air generic contaminant at timestep T-3
-    Array1D<Real64> ZoneAirGCOld;         // Last Time Steps Zone AIR generic contaminant
+    Array1D<Nandle> ZoneAirGCTemp;        // Temp zone air generic contaminant at time plus 1
+    Array1D<Nandle> GCZoneTimeMinus1Temp; // Zone air generic contaminant at previous timestep
+    Array1D<Nandle> GCZoneTimeMinus2Temp; // Zone air generic contaminant at timestep T-2
+    Array1D<Nandle> GCZoneTimeMinus3Temp; // Zone air generic contaminant at timestep T-3
+    Array1D<Nandle> ZoneAirGCOld;         // Last Time Steps Zone AIR generic contaminant
 
-    Array1D<Real64> ZoneGCMX; // TEMPORARY ZONE CO2 TO TEST CONVERGENCE in Exact and Euler method
-    Array1D<Real64> ZoneGCM2; // TEMPORARY ZONE CO2 at timestep t-2 in Exact and Euler method
-    Array1D<Real64> ZoneGC1;  // Zone CO2 at the previous time step used in Exact and Euler method
+    Array1D<Nandle> ZoneGCMX; // TEMPORARY ZONE CO2 TO TEST CONVERGENCE in Exact and Euler method
+    Array1D<Nandle> ZoneGCM2; // TEMPORARY ZONE CO2 at timestep t-2 in Exact and Euler method
+    Array1D<Nandle> ZoneGC1;  // Zone CO2 at the previous time step used in Exact and Euler method
 
-    Array1D<Real64> CONTRATGC; // Zone generic contaminant at the previous time step used in
+    Array1D<Nandle> CONTRATGC; // Zone generic contaminant at the previous time step used in
     // Exact and Euler method
 
-    Array1D<Real64> MixingMassFlowGC; // Mixing MASS FLOW * generic contaminant
+    Array1D<Nandle> MixingMassFlowGC; // Mixing MASS FLOW * generic contaminant
 
-    Real64 OutdoorGC(0.0); // Outdoor generic contaminant level
+    Nandle OutdoorGC(0.0); // Outdoor generic contaminant level
 
-    Array1D<Real64> ZoneAirDensityGC; // Mixing MASS FLOW * generic contaminant
-    Array1D<Real64> AZGC;
-    Array1D<Real64> BZGC;
-    Array1D<Real64> CZGC;
+    Array1D<Nandle> ZoneAirDensityGC; // Mixing MASS FLOW * generic contaminant
+    Array1D<Nandle> AZGC;
+    Array1D<Nandle> BZGC;
+    Array1D<Nandle> CZGC;
 
     // Object Data
     Array1D<ZoneSystemContaminantDemandData> ZoneSysContDemand;

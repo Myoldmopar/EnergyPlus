@@ -117,9 +117,9 @@ namespace DataAirSystems {
         AirSysSubSubCompToPlant.deallocate(); // Connections
     }
 
-    Real64 calcFanDesignHeatGain(int const &dataFanEnumType, int const &dataFanIndex, Real64 const &desVolFlow)
+    Nandle calcFanDesignHeatGain(int const &dataFanEnumType, int const &dataFanIndex, Nandle const &desVolFlow)
     {
-        Real64 fanDesHeatLoad = 0.0; // design fan heat load (W)
+        Nandle fanDesHeatLoad = 0.0; // design fan heat load (W)
 
         if (dataFanEnumType < 0 || dataFanIndex < 0 || desVolFlow == 0.0) return fanDesHeatLoad;
 

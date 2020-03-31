@@ -67,21 +67,21 @@ namespace DataPlant {
         // Loop Operating Setpoints and Limits
         int TempSetPointNodeNum;         // Node Number for Loop Temp SP associated with SP manager
         int MaxBranch;                   // Max branches in the loop
-        Real64 MinTemp;                  // Minimum temperature allowed in the loop
-        Real64 MaxTemp;                  // Maximum temperature allowed in the loop
+        Nandle MinTemp;                  // Minimum temperature allowed in the loop
+        Nandle MaxTemp;                  // Maximum temperature allowed in the loop
         int MinTempErrIndex;             // for recurring too cold errors
         int MaxTempErrIndex;             // for recurring too hot errors
-        Real64 MinVolFlowRate;           // Minimum flow rate allowed in the loop
-        Real64 MaxVolFlowRate;           // Maximum flow rate allowed in the loop
+        Nandle MinVolFlowRate;           // Minimum flow rate allowed in the loop
+        Nandle MaxVolFlowRate;           // Maximum flow rate allowed in the loop
         bool MaxVolFlowRateWasAutoSized; // true if previous was set to autosized in the input
-        Real64 MinMassFlowRate;          // Minimum flow rate allowed in the loop
-        Real64 MaxMassFlowRate;          // Maximum flow rate allowed in the loop
-        Real64 Volume;                   // Volume of the fluid in the loop
+        Nandle MinMassFlowRate;          // Minimum flow rate allowed in the loop
+        Nandle MaxMassFlowRate;          // Maximum flow rate allowed in the loop
+        Nandle Volume;                   // Volume of the fluid in the loop
         bool VolumeWasAutoSized;         // true if Volume was set to autocalculate
-        Real64 CirculationTime;          // Loop circulation time [minutes] used to autocalculate loop volume, default is 2 minutes
-        Real64 Mass;                     // Mass of the fluid in the loop
+        Nandle CirculationTime;          // Loop circulation time [minutes] used to autocalculate loop volume, default is 2 minutes
+        Nandle Mass;                     // Mass of the fluid in the loop
         bool EMSCtrl;
-        Real64 EMSValue;
+        Nandle EMSValue;
         // Loop Inlet and Outlet Nodes
         Array1D<HalfLoopData> LoopSide;  // Half loop data (Demand side or Supply Side)
         std::string OperationScheme;     // Operation scheme name for the loop
@@ -97,24 +97,24 @@ namespace DataPlant {
         int EconPlacement;                       // DSU review, should move these out of here
         int EconBranch;                          // DSU review, should move these out of here
         int EconComp;                            // DSU review, should move these out of here
-        Real64 EconControlTempDiff;              // DSU review, should move these out of here
+        Nandle EconControlTempDiff;              // DSU review, should move these out of here
         bool LoopHasConnectionComp;
         int TypeOfLoop;
         int PressureSimType;
         bool HasPressureComponents;
-        Real64 PressureDrop;
+        Nandle PressureDrop;
         bool UsePressureForPumpCalcs;
-        Real64 PressureEffectiveK;
+        Nandle PressureEffectiveK;
         // report variables
-        Real64 CoolingDemand;       // Plant Loop Cooling Demand, W
-        Real64 HeatingDemand;       // Plant Loop Heating Demand[W]
-        Real64 DemandNotDispatched; // Plant Loop Demand that was not distributed [W]
-        Real64 UnmetDemand;         // Plant Loop Unmet Demand [W]
-        Real64 BypassFrac;            // Debug Variable
-        Real64 InletNodeFlowrate;     // Debug Variable
-        Real64 InletNodeTemperature;  // Debug Variable
-        Real64 OutletNodeFlowrate;    // Debug Variable
-        Real64 OutletNodeTemperature; // Debug Variable
+        Nandle CoolingDemand;       // Plant Loop Cooling Demand, W
+        Nandle HeatingDemand;       // Plant Loop Heating Demand[W]
+        Nandle DemandNotDispatched; // Plant Loop Demand that was not distributed [W]
+        Nandle UnmetDemand;         // Plant Loop Unmet Demand [W]
+        Nandle BypassFrac;            // Debug Variable
+        Nandle InletNodeFlowrate;     // Debug Variable
+        Nandle InletNodeTemperature;  // Debug Variable
+        Nandle OutletNodeFlowrate;    // Debug Variable
+        Nandle OutletNodeTemperature; // Debug Variable
         int LastLoopSideSimulated;
 
         // Default Constructor
@@ -133,7 +133,7 @@ namespace DataPlant {
         }
 
 
-        void UpdateLoopSideReportVars(Real64 OtherSideDemand, Real64 LocalRemLoopDemand);
+        void UpdateLoopSideReportVars(Nandle OtherSideDemand, Nandle LocalRemLoopDemand);
 
         void CheckLoopExitNode(bool FirstHVACIteration);
 

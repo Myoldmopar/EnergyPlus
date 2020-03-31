@@ -836,15 +836,15 @@ TEST_F(EnergyPlusFixture, ZoneTempPredictorCorrector_AdaptiveThermostat)
     DesDayInput(Envrn).DayType = summerDesignDayTypeIndex;
     DesDayInput(Envrn).MaxDryBulb = 30.0;
     DesDayInput(Envrn).DailyDBRange = 10.0;
-    Real64 ZoneAirSetPoint = 0.0;
+    Nandle ZoneAirSetPoint = 0.0;
 
     bool ErrorsFound(false); // If errors detected in input
     GetZoneData(ErrorsFound);
     ASSERT_FALSE(ErrorsFound);                                  // Tstat should show if there is error in zone processing
     ASSERT_FALSE(AdapComfortDailySetPointSchedule.initialized); // Tstat should show there adaptive model is not initialized
 
-    Array1D<Real64> runningAverageASH_1(365, 0.0);
-    Array1D<Real64> runningAverageCEN_1(365, 0.0);
+    Array1D<Nandle> runningAverageASH_1(365, 0.0);
+    Array1D<Nandle> runningAverageCEN_1(365, 0.0);
     CalculateAdaptiveComfortSetPointSchl(runningAverageASH_1, runningAverageCEN_1);
     // Tstat should show flage that adaptive comfort is not applicable (-1)
     ASSERT_EQ(-1, AdapComfortDailySetPointSchedule.ThermalComfortAdaptiveASH55_Central(DayOfYear));
@@ -855,8 +855,8 @@ TEST_F(EnergyPlusFixture, ZoneTempPredictorCorrector_AdaptiveThermostat)
     ASSERT_EQ(-1, AdapComfortDailySetPointSchedule.ThermalComfortAdaptiveCEN15251_Upper_II(DayOfYear));
     ASSERT_EQ(-1, AdapComfortDailySetPointSchedule.ThermalComfortAdaptiveCEN15251_Upper_III(DayOfYear));
 
-    Array1D<Real64> runningAverageASH_2(365, 40.0);
-    Array1D<Real64> runningAverageCEN_2(365, 40.0);
+    Array1D<Nandle> runningAverageASH_2(365, 40.0);
+    Array1D<Nandle> runningAverageCEN_2(365, 40.0);
     CalculateAdaptiveComfortSetPointSchl(runningAverageASH_2, runningAverageCEN_2);
     // Tstat should show flage that adaptive comfort is not applicable (-1)
     ASSERT_EQ(-1, AdapComfortDailySetPointSchedule.ThermalComfortAdaptiveASH55_Central(DayOfYear));
@@ -867,8 +867,8 @@ TEST_F(EnergyPlusFixture, ZoneTempPredictorCorrector_AdaptiveThermostat)
     ASSERT_EQ(-1, AdapComfortDailySetPointSchedule.ThermalComfortAdaptiveCEN15251_Upper_II(DayOfYear));
     ASSERT_EQ(-1, AdapComfortDailySetPointSchedule.ThermalComfortAdaptiveCEN15251_Upper_III(DayOfYear));
 
-    Array1D<Real64> runningAverageASH(365, 25.0);
-    Array1D<Real64> runningAverageCEN(365, 25.0);
+    Array1D<Nandle> runningAverageASH(365, 25.0);
+    Array1D<Nandle> runningAverageCEN(365, 25.0);
     CalculateAdaptiveComfortSetPointSchl(runningAverageASH, runningAverageCEN);
     ASSERT_TRUE(AdapComfortDailySetPointSchedule.initialized); // Tstat should show there adaptive model is initialized
     ASSERT_EQ(
@@ -930,14 +930,14 @@ TEST_F(EnergyPlusFixture, ZoneTempPredictorCorrector_CalcZoneSums_SurfConvection
     // #5906 Adaptive convection resulting in extremely low zone temperature which causes fatal error
 
     int ZoneNum = 1;         // Zone number
-    Real64 SumIntGain = 0.0; // Zone sum of convective internal gains
-    Real64 SumHA = 0.0;      // Zone sum of Hc*Area
-    Real64 SumHATsurf = 0.0; // Zone sum of Hc*Area*Tsurf
-    Real64 SumHATref = 0.0;  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
-    Real64 SumMCp = 0.0;     // Zone sum of MassFlowRate*Cp
-    Real64 SumMCpT = 0.0;    // Zone sum of MassFlowRate*Cp*T
-    Real64 SumSysMCp = 0.0;  // Zone sum of air system MassFlowRate*Cp
-    Real64 SumSysMCpT = 0.0; // Zone sum of air system MassFlowRate*Cp*T
+    Nandle SumIntGain = 0.0; // Zone sum of convective internal gains
+    Nandle SumHA = 0.0;      // Zone sum of Hc*Area
+    Nandle SumHATsurf = 0.0; // Zone sum of Hc*Area*Tsurf
+    Nandle SumHATref = 0.0;  // Zone sum of Hc*Area*Tref, for ceiling diffuser convection correlation
+    Nandle SumMCp = 0.0;     // Zone sum of MassFlowRate*Cp
+    Nandle SumMCpT = 0.0;    // Zone sum of MassFlowRate*Cp*T
+    Nandle SumSysMCp = 0.0;  // Zone sum of air system MassFlowRate*Cp
+    Nandle SumSysMCpT = 0.0; // Zone sum of air system MassFlowRate*Cp*T
 
     DataHeatBalance::ZoneIntGain.allocate(ZoneNum);
     DataHeatBalFanSys::SumConvHTRadSys.allocate(ZoneNum);
@@ -1148,7 +1148,7 @@ TEST_F(EnergyPlusFixture, temperatureAndCountInSch_test)
     DataGlobals::MinutesPerTimeStep = 15;
     DataEnvironment::CurrentYearIsLeapYear = false;
 
-    Real64 valueAtTime;
+    Nandle valueAtTime;
     int numDays;
     std::string monthAssumed;
     const int wednesday = 4;
@@ -1474,16 +1474,16 @@ TEST_F(EnergyPlusFixture, TempAtPrevTimeStepWithCutoutDeltaT_test)
 
 TEST_F(EnergyPlusFixture, ReportMoistLoadsZoneMultiplier_Test)
 {
-    Real64 TotOutReq;
-    Real64 OutReqToHumSP;
-    Real64 OutReqToDehumSP;
-    Real64 SingleZoneTotRate;
-    Real64 SingleZoneHumRate;
-    Real64 SingleZoneDehRate;
-    Real64 ZoneMultiplier;
-    Real64 ZoneMultiplierList;
-    Real64 ExpectedResult;
-    Real64 AcceptableTolerance = 0.00001;
+    Nandle TotOutReq;
+    Nandle OutReqToHumSP;
+    Nandle OutReqToDehumSP;
+    Nandle SingleZoneTotRate;
+    Nandle SingleZoneHumRate;
+    Nandle SingleZoneDehRate;
+    Nandle ZoneMultiplier;
+    Nandle ZoneMultiplierList;
+    Nandle ExpectedResult;
+    Nandle AcceptableTolerance = 0.00001;
 
     // Test 1: Zone Multipliers are all unity (1.0).  So, single zone loads should be the same as total loads
     TotOutReq = 1000.0;

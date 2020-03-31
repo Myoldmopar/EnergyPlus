@@ -155,7 +155,7 @@ SiteFCFactorMethodGroundTemps::FCFactorGTMFactory(OutputFiles &outputFiles, int 
 
 //******************************************************************************
 
-Real64 SiteFCFactorMethodGroundTemps::getGroundTemp()
+Nandle SiteFCFactorMethodGroundTemps::getGroundTemp()
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -171,7 +171,7 @@ Real64 SiteFCFactorMethodGroundTemps::getGroundTemp()
 
 //******************************************************************************
 
-Real64 SiteFCFactorMethodGroundTemps::getGroundTempAtTimeInSeconds(Real64 const EP_UNUSED(_depth), Real64 const _seconds)
+Nandle SiteFCFactorMethodGroundTemps::getGroundTempAtTimeInSeconds(Nandle const EP_UNUSED(_depth), Nandle const _seconds)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -187,7 +187,7 @@ Real64 SiteFCFactorMethodGroundTemps::getGroundTempAtTimeInSeconds(Real64 const 
     using WeatherManager::NumDaysInYear;
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 secPerMonth = NumDaysInYear * SecsInDay / 12;
+    Nandle secPerMonth = NumDaysInYear * SecsInDay / 12;
 
     // Convert secs to months
     int month = ceil(_seconds / secPerMonth);
@@ -204,7 +204,7 @@ Real64 SiteFCFactorMethodGroundTemps::getGroundTempAtTimeInSeconds(Real64 const 
 
 //******************************************************************************
 
-Real64 SiteFCFactorMethodGroundTemps::getGroundTempAtTimeInMonths(Real64 const EP_UNUSED(_depth), int const _month)
+Nandle SiteFCFactorMethodGroundTemps::getGroundTempAtTimeInMonths(Nandle const EP_UNUSED(_depth), int const _month)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell

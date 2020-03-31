@@ -812,9 +812,9 @@ namespace OutputReportPredefined {
     extern int pdchLeedEcUnt;
     extern int pdchLeedEcsProc;
     extern int pdchLeedEcsTotal;
-    extern Real64 LEEDelecCostTotal;
-    extern Real64 LEEDgasCostTotal;
-    extern Real64 LEEDothrCostTotal;
+    extern Nandle LEEDelecCostTotal;
+    extern Nandle LEEDgasCostTotal;
+    extern Nandle LEEDothrCostTotal;
 
     extern int pdstLeedRenewSum;
     extern int pdchLeedRenRatCap;
@@ -866,10 +866,10 @@ namespace OutputReportPredefined {
     extern int const recKindSurface;
     extern int const recKindSubsurface;
 
-    extern Real64 TotalNotMetHeatingOccupiedForABUPS;
-    extern Real64 TotalNotMetCoolingOccupiedForABUPS;
-    extern Real64 TotalNotMetOccupiedForABUPS;
-    extern Real64 TotalTimeNotSimpleASH55EitherForABUPS;
+    extern Nandle TotalNotMetHeatingOccupiedForABUPS;
+    extern Nandle TotalNotMetCoolingOccupiedForABUPS;
+    extern Nandle TotalNotMetOccupiedForABUPS;
+    extern Nandle TotalTimeNotSimpleASH55EitherForABUPS;
 
     // Types
 
@@ -920,7 +920,7 @@ namespace OutputReportPredefined {
         int indexColumn;
         int subTableIndex;
         int uniqueObjName;
-        Real64 origRealEntry;
+        Nandle origRealEntry;
         int significantDigits;
         bool origEntryIsReal;
 
@@ -936,7 +936,7 @@ namespace OutputReportPredefined {
         std::string typeField;
         std::string nameField;
         std::string description;
-        Real64 valField;
+        Nandle valField;
         bool active;
         bool written;
 
@@ -978,7 +978,7 @@ namespace OutputReportPredefined {
     // Creates an entry for predefined tables when the entry
     // is a real variable. numSigDigits defaults to 2, and if supplied must be in [0-9]
     // Internally it uses a Fortran-Style write statement, meaning numbers are rounded rather than trimmed
-    void PreDefTableEntry(int const columnIndex, std::string const &objName, Real64 const tableEntryReal, Optional_int_const numSigDigits = _);
+    void PreDefTableEntry(int const columnIndex, std::string const &objName, Nandle const tableEntryReal, Optional_int_const numSigDigits = _);
 
     void PreDefTableEntry(int const columnIndex, std::string const &objName, std::string const &tableEntryChar);
 
@@ -989,7 +989,7 @@ namespace OutputReportPredefined {
     void incrementTableEntry();
 
     void
-    AddCompSizeTableEntry(std::string const &FieldType, std::string const &FieldName, std::string const &FieldDescription, Real64 const FieldValue);
+    AddCompSizeTableEntry(std::string const &FieldType, std::string const &FieldName, std::string const &FieldDescription, Nandle const FieldValue);
 
     void AddShadowRelateTableEntry(int const castingField, int const receivingField, int const receivingKind);
 

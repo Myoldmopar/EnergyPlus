@@ -130,8 +130,8 @@ TEST_F(DistributePlantLoadTest, DistributePlantLoad_Sequential)
 
     // Loop demand 550W
     DistributePlantLoadTest::ResetLoads();
-    Real64 loopDemand = 550.0;
-    Real64 remainingLoopDemand = 0.0;
+    Nandle loopDemand = 550.0;
+    Nandle remainingLoopDemand = 0.0;
 
     PlantCondLoopOperation::DistributePlantLoad(1, 1, 1, 1, loopDemand, remainingLoopDemand);
     EXPECT_EQ(thisBranch.Comp(1).MyLoad, 100.0);
@@ -299,8 +299,8 @@ TEST_F(DistributePlantLoadTest, DistributePlantLoad_Uniform)
 
     // Loop demand 550W
     DistributePlantLoadTest::ResetLoads();
-    Real64 remainingLoopDemand = 0.0;
-    Real64 loopDemand = 550.0;
+    Nandle remainingLoopDemand = 0.0;
+    Nandle loopDemand = 550.0;
 
     PlantCondLoopOperation::DistributePlantLoad(1, 1, 1, 1, loopDemand, remainingLoopDemand);
     EXPECT_EQ(thisBranch.Comp(1).MyLoad, 100.0);
@@ -422,8 +422,8 @@ TEST_F(DistributePlantLoadTest, DistributePlantLoad_Optimal)
 
     // Loop demand 550W
     DistributePlantLoadTest::ResetLoads();
-    Real64 remainingLoopDemand = 0.0;
-    Real64 loopDemand = 550.0;
+    Nandle remainingLoopDemand = 0.0;
+    Nandle loopDemand = 550.0;
 
     PlantCondLoopOperation::DistributePlantLoad(1, 1, 1, 1, loopDemand, remainingLoopDemand);
     EXPECT_EQ(thisBranch.Comp(1).MyLoad, 100.0);
@@ -552,8 +552,8 @@ TEST_F(DistributePlantLoadTest, DistributePlantLoad_UniformPLR)
 
     // Loop demand 550W
     DistributePlantLoadTest::ResetLoads();
-    Real64 loopDemand = 550.0;
-    Real64 remainingLoopDemand = 0.0;
+    Nandle loopDemand = 550.0;
+    Nandle remainingLoopDemand = 0.0;
 
     PlantCondLoopOperation::DistributePlantLoad(1, 1, 1, 1, loopDemand, remainingLoopDemand);
     EXPECT_EQ(thisBranch.Comp(1).MyLoad, 100.0);
@@ -675,8 +675,8 @@ TEST_F(DistributePlantLoadTest, DistributePlantLoad_SequentialUniformPLR)
 
     // Loop demand 550W
     DistributePlantLoadTest::ResetLoads();
-    Real64 remainingLoopDemand = 0.0;
-    Real64 loopDemand = 550.0;
+    Nandle remainingLoopDemand = 0.0;
+    Nandle loopDemand = 550.0;
 
     PlantCondLoopOperation::DistributePlantLoad(1, 1, 1, 1, loopDemand, remainingLoopDemand);
     EXPECT_EQ(thisBranch.Comp(1).MyLoad, 100.0);

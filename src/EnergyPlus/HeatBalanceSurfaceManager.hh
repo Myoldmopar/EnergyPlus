@@ -155,7 +155,7 @@ namespace HeatBalanceSurfaceManager {
 
     void CalcHeatBalanceOutsideSurf(Optional_int_const ZoneToResimulate = _); // if passed in, then only calculate surfaces that have this zone
 
-    Real64 GetQdotConvOutRepPerArea(int const SurfNum);
+    Nandle GetQdotConvOutRepPerArea(int const SurfNum);
 
     void CalcHeatBalanceInsideSurf(Optional_int_const ZoneToResimulate = _); // if passed in, then only calculate surfaces that have this zone
 
@@ -165,13 +165,13 @@ namespace HeatBalanceSurfaceManager {
                                     const std::vector<int> &HTWindowSurfs,    // Window heat transfer surfaces to simulate
                                     Optional_int_const ZoneToResimulate = _);
 
-    void TestSurfTempCalcHeatBalanceInsideSurf(Real64 TH12, DataSurfaces::SurfaceData &surface, DataHeatBalance::ZoneData &zone, int WarmupSurfTemp);
+    void TestSurfTempCalcHeatBalanceInsideSurf(Nandle TH12, DataSurfaces::SurfaceData &surface, DataHeatBalance::ZoneData &zone, int WarmupSurfTemp);
 
     void CalcOutsideSurfTemp(int const SurfNum,      // Surface number DO loop counter
                              int const ZoneNum,      // Zone number the current surface is attached to
                              int const ConstrNum,    // Construction index for the current surface
-                             Real64 const HMovInsul, // "Convection" coefficient of movable insulation
-                             Real64 const TempExt,   // Exterior temperature boundary condition
+                             Nandle const HMovInsul, // "Convection" coefficient of movable insulation
+                             Nandle const TempExt,   // Exterior temperature boundary condition
                              bool &ErrorFlag         // Error flag for movable insulation problem
     );
 

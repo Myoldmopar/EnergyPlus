@@ -931,7 +931,7 @@ ElectPowerLoadCenter::ElectPowerLoadCenter( // constructor
         // Make sure only Generator::PVWatts are used with Inverter:PVWatts
         // Add up the total DC capacity and pass it to the inverter.
         if (inverterObj->modelType() == DCtoACInverter::InverterModelType::pvWatts) {
-            Real64 totalDCCapacity = 0.0;
+            Nandle totalDCCapacity = 0.0;
             for (const auto &generatorController : elecGenCntrlObj) {
                 if (generatorController->generatorType != GeneratorController::GeneratorType::pvWatts) {
                     errorsFound = true;
@@ -1007,7 +1007,7 @@ ElectPowerLoadCenter::ElectPowerLoadCenter( // constructor
     }
 }
 
-void ElectPowerLoadCenter::manageElecLoadCenter(bool const firstHVACIteration, Real64 &remainingWholePowerDemand)
+void ElectPowerLoadCenter::manageElecLoadCenter(bool const firstHVACIteration, Nandle &remainingWholePowerDemand)
 {
     //
     subpanelFeedInRequest = remainingWholePowerDemand;
@@ -1047,7 +1047,7 @@ void ElectPowerLoadCenter::manageElecLoadCenter(bool const firstHVACIteration, R
 }
 
 void ElectPowerLoadCenter::dispatchGenerators(bool const firstHVACIteration,
-                                              Real64 &remainingWholePowerDemand // power request in, remaining unmet request out
+                                              Nandle &remainingWholePowerDemand // power request in, remaining unmet request out
 )
 {
 
@@ -1060,9 +1060,9 @@ void ElectPowerLoadCenter::dispatchGenerators(bool const firstHVACIteration,
     // be available for storage or sell back to the power company.
 
     // Both the Demand Limit and Track Electrical schemes will sequentially load the available generators.  All demand
-    Real64 loadCenterElectricLoad = 0.0;
-    Real64 remainingLoad = 0.0;
-    Real64 customMeterDemand = 0.0;
+    Nandle loadCenterElectricLoad = 0.0;
+    Nandle remainingLoad = 0.0;
+    Nandle customMeterDemand = 0.0;
 
     switch (genOperationScheme_) {
 
@@ -1323,8 +1323,8 @@ void ElectPowerLoadCenter::dispatchGenerators(bool const firstHVACIteration,
     }
     case GeneratorOpScheme::thermalFollow: {
         // Turn thermal load into an electrical load for cogenerators controlled to follow heat loads
-        Real64 remainingThermalLoad = calcLoadCenterThermalLoad();
-        Real64 loadCenterThermalLoad = remainingThermalLoad;
+        Nandle remainingThermalLoad = calcLoadCenterThermalLoad();
+        Nandle loadCenterThermalLoad = remainingThermalLoad;
         for (auto &g : elecGenCntrlObj) {
 
             if (ScheduleManager::GetCurrentScheduleValue(g->availSchedPtr) > 0.0 && remainingThermalLoad > 0.0) {
@@ -1365,7 +1365,7 @@ void ElectPowerLoadCenter::dispatchGenerators(bool const firstHVACIteration,
                 totalPowerRequest_ += (max(g->eMSPowerRequest, 0.0));
             } else {
                 if (totalThermalPowerRequest_ < loadCenterThermalLoad && g->powerRequestThisTimestep > 0.0) {
-                    Real64 excessThermalPowerRequest = totalThermalPowerRequest_ + g->maxPowerOut * g->nominalThermElectRatio - loadCenterThermalLoad;
+                    Nandle excessThermalPowerRequest = totalThermalPowerRequest_ + g->maxPowerOut * g->nominalThermElectRatio - loadCenterThermalLoad;
                     if (excessThermalPowerRequest < 0.0) {
                         totalThermalPowerRequest_ += g->maxPowerOut * g->nominalThermElectRatio;
                         totalPowerRequest_ += g->maxPowerOut;
@@ -1386,11 +1386,11 @@ void ElectPowerLoadCenter::dispatchGenerators(bool const firstHVACIteration,
     case GeneratorOpScheme::thermalFollowLimitElectrical: {
         //  Turn a thermal load into an electrical load for cogenerators controlled to follow heat loads.
         //  Add intitialization of RemainingThermalLoad as in the ThermalFollow operating scheme above.
-        Real64 remainingThermalLoad = calcLoadCenterThermalLoad();
+        Nandle remainingThermalLoad = calcLoadCenterThermalLoad();
         // Total current electrical demand for the building is a secondary limit.
         remainingLoad = remainingWholePowerDemand;
         loadCenterElectricLoad = remainingWholePowerDemand;
-        Real64 loadCenterThermalLoad = remainingThermalLoad;
+        Nandle loadCenterThermalLoad = remainingThermalLoad;
         for (auto &g : elecGenCntrlObj) {
             if ((ScheduleManager::GetCurrentScheduleValue(g->availSchedPtr) > 0.0) && (remainingThermalLoad > 0.0) && (remainingLoad > 0.0)) {
                 if (g->nominalThermElectRatio > 0.0) {
@@ -1428,7 +1428,7 @@ void ElectPowerLoadCenter::dispatchGenerators(bool const firstHVACIteration,
                 totalPowerRequest_ += (max(g->eMSPowerRequest, 0.0));
             } else {
                 if (totalThermalPowerRequest_ < loadCenterThermalLoad && g->powerRequestThisTimestep > 0.0) {
-                    Real64 excessThermalPowerRequest = totalThermalPowerRequest_ + g->maxPowerOut * g->nominalThermElectRatio - loadCenterThermalLoad;
+                    Nandle excessThermalPowerRequest = totalThermalPowerRequest_ + g->maxPowerOut * g->nominalThermElectRatio - loadCenterThermalLoad;
                     if (excessThermalPowerRequest < 0.0) {
                         totalThermalPowerRequest_ += g->maxPowerOut * g->nominalThermElectRatio;
                         totalPowerRequest_ += g->maxPowerOut;
@@ -1463,7 +1463,7 @@ void ElectPowerLoadCenter::dispatchGenerators(bool const firstHVACIteration,
     }
 }
 
-void ElectPowerLoadCenter::dispatchStorage(Real64 const originalFeedInRequest // whole building remaining electric demand for this load center
+void ElectPowerLoadCenter::dispatchStorage(Nandle const originalFeedInRequest // whole building remaining electric demand for this load center
 )
 {
 
@@ -1491,8 +1491,8 @@ void ElectPowerLoadCenter::dispatchStorage(Real64 const originalFeedInRequest //
     } // end switch buss type
 
     // 2.  determine subpanel feed in and draw requests based on storage operation control scheme
-    Real64 subpanelFeedInRequest = 0.0;
-    Real64 subpanelDrawRequest = 0.0;
+    Nandle subpanelFeedInRequest = 0.0;
+    Nandle subpanelDrawRequest = 0.0;
     switch (storageScheme_) {
     case StorageOpScheme::notYetSet: {
         // do nothing
@@ -1515,9 +1515,9 @@ void ElectPowerLoadCenter::dispatchStorage(Real64 const originalFeedInRequest //
         break;
     }
     case StorageOpScheme::facilityDemandLeveling: {
-        Real64 demandTarget = facilityDemandTarget_ * ScheduleManager::GetCurrentScheduleValue(facilityDemandTargetModSchedIndex_);
+        Nandle demandTarget = facilityDemandTarget_ * ScheduleManager::GetCurrentScheduleValue(facilityDemandTargetModSchedIndex_);
         // compare target to
-        Real64 deltaLoad = originalFeedInRequest - demandTarget;
+        Nandle deltaLoad = originalFeedInRequest - demandTarget;
         if (deltaLoad >= 0.0) {
             // subpanel should feed main panel
             subpanelFeedInRequest = deltaLoad;
@@ -1532,8 +1532,8 @@ void ElectPowerLoadCenter::dispatchStorage(Real64 const originalFeedInRequest //
     }
 
     // 3. adjust feed in and draw rates from subpanel to storage operation control volume
-    Real64 adjustedFeedInRequest = 0.0; // account for any inverter or transformer losses
-    Real64 adjustedDrawRequest = 0.0;   // account for any converer or transformer losses
+    Nandle adjustedFeedInRequest = 0.0; // account for any inverter or transformer losses
+    Nandle adjustedDrawRequest = 0.0;   // account for any converer or transformer losses
 
     switch (bussType) {
     case ElectricBussType::notYetSet:
@@ -1616,7 +1616,7 @@ void ElectPowerLoadCenter::dispatchStorage(Real64 const originalFeedInRequest //
     case StorageOpScheme::chargeDischargeSchedules: {
         storOpCVChargeRate = designStorageChargePower_ * ScheduleManager::GetCurrentScheduleValue(storageChargeModSchedIndex_);
         storOpCVDischargeRate = designStorageDischargePower_ * ScheduleManager::GetCurrentScheduleValue(storageDischargeModSchedIndex_);
-        Real64 genAndStorSum = storOpCVGenRate + storOpCVDischargeRate - storOpCVChargeRate;
+        Nandle genAndStorSum = storOpCVGenRate + storOpCVDischargeRate - storOpCVChargeRate;
         if (genAndStorSum >= 0.0) { // power to feed toward main panel
             storOpCVDrawRate = 0.0;
             storOpCVFeedInRate = genAndStorSum;
@@ -1724,7 +1724,7 @@ void ElectPowerLoadCenter::dispatchStorage(Real64 const originalFeedInRequest //
         storOpCVChargeRate, storOpCVDischargeRate, storOpIsCharging, storOpIsDischarging, maxStorageSOCFraction_, minStorageSOCFraction_);
 
     // rebalance with final charge and discharge rates
-    Real64 genAndStorSum = storOpCVGenRate + storOpCVDischargeRate - storOpCVChargeRate;
+    Nandle genAndStorSum = storOpCVGenRate + storOpCVDischargeRate - storOpCVChargeRate;
     if (genAndStorSum >= 0.0) { // power to feed toward main panel
         storOpCVDrawRate = 0.0;
         storOpCVFeedInRate = genAndStorSum;
@@ -1928,7 +1928,7 @@ void ElectPowerLoadCenter::updateLoadCenterGeneratorRecords()
     }
 }
 
-Real64 ElectPowerLoadCenter::calcLoadCenterThermalLoad()
+Nandle ElectPowerLoadCenter::calcLoadCenterThermalLoad()
 {
     if (myCoGenSetupFlag_) {
         bool plantNotFound = false;
@@ -1952,7 +1952,7 @@ Real64 ElectPowerLoadCenter::calcLoadCenterThermalLoad()
     } // cogen setup
 
     // sum up "MyLoad" for all generators on this load center from plant structure
-    Real64 thermalLoad = 0.0;
+    Nandle thermalLoad = 0.0;
     for (auto &g : elecGenCntrlObj) {
         if (g->plantInfoFound) {
             thermalLoad += DataPlant::PlantLoop(g->cogenLocation.loopNum)
@@ -1967,9 +1967,9 @@ Real64 ElectPowerLoadCenter::calcLoadCenterThermalLoad()
 
 GeneratorController::GeneratorController(std::string const &objectName,
                                          std::string const &objectType,
-                                         Real64 ratedElecPowerOutput,
+                                         Nandle ratedElecPowerOutput,
                                          std::string const &availSchedName,
-                                         Real64 thermalToElectRatio)
+                                         Nandle thermalToElectRatio)
     : compGenTypeOf_Num(0), compPlantTypeOf_Num(0), generatorType(GeneratorType::notYetSet), generatorIndex(0), maxPowerOut(0.0), availSchedPtr(0),
       powerRequestThisTimestep(0.0), onThisTimestep(false), eMSPowerRequest(0.0), eMSRequestOn(false), plantInfoFound(false),
       cogenLocation(PlantLocation(0, 0, 0, 0)), nominalThermElectRatio(0.0), dCElectricityProd(0.0), dCElectProdRate(0.0), electricityProd(0.0),
@@ -2049,7 +2049,7 @@ GeneratorController::GeneratorController(std::string const &objectName,
                 int NumNums;   // Number of PV Array numeric parameters are being passed
                 int IOStat;
                 Array1D_string Alphas(5);       // Alpha items for object
-                Array1D<Real64> Numbers(2);     // Numeric items for object
+                Array1D<Nandle> Numbers(2);     // Numeric items for object
                 inputProcessor->getObjectItem(objectType,
                                               PVNum,
                                               Alphas,
@@ -2087,10 +2087,10 @@ void GeneratorController::reinitAtBeginEnvironment()
 }
 
 void GeneratorController::simGeneratorGetPowerOutput(bool const runFlag,
-                                                     Real64 const myElecLoadRequest,
+                                                     Nandle const myElecLoadRequest,
                                                      bool const FirstHVACIteration, // Unused 2010 JANUARY
-                                                     Real64 &electricPowerOutput,   // Actual generator electric power output
-                                                     Real64 &thermalPowerOutput     // Actual generator thermal power output
+                                                     Nandle &electricPowerOutput,   // Actual generator electric power output
+                                                     Nandle &thermalPowerOutput     // Actual generator thermal power output
 )
 {
     // Select and call models and also collect results for load center power conditioning and reporting
@@ -2101,7 +2101,7 @@ void GeneratorController::simGeneratorGetPowerOutput(bool const runFlag,
 
         // dummy vars
         PlantLocation L(0,0,0,0);
-        Real64 tempLoad = myElecLoadRequest;
+        Nandle tempLoad = myElecLoadRequest;
 
         // simulate
         dynamic_cast<ICEngineElectricGenerator::ICEngineGeneratorSpecs*> (thisICE)->InitICEngineGenerators(runFlag, FirstHVACIteration);
@@ -2120,7 +2120,7 @@ void GeneratorController::simGeneratorGetPowerOutput(bool const runFlag,
         auto thisCTE = CTElectricGenerator::CTGeneratorData::factory(name);
         // dummy vars
         PlantLocation L(0,0,0,0);
-        Real64 tempLoad = myElecLoadRequest;
+        Nandle tempLoad = myElecLoadRequest;
 
         // simulate
         thisCTE->simulate(L, FirstHVACIteration, tempLoad, runFlag);
@@ -2190,7 +2190,7 @@ void GeneratorController::simGeneratorGetPowerOutput(bool const runFlag,
 
         // dummy vars
         PlantLocation L(0,0,0,0);
-        Real64 tempLoad = myElecLoadRequest;
+        Nandle tempLoad = myElecLoadRequest;
 
         // simulate
         dynamic_cast<MicroturbineElectricGenerator::MTGeneratorSpecs*> (thisMTG)->InitMTGenerators(runFlag, tempLoad, FirstHVACIteration);
@@ -2480,7 +2480,7 @@ void DCtoACInverter::reinitZoneGainsAtBeginEnvironment()
     qdotRadZone_ = 0.0;
 }
 
-void DCtoACInverter::setPVWattsDCCapacity(const Real64 dcCapacity)
+void DCtoACInverter::setPVWattsDCCapacity(const Nandle dcCapacity)
 {
     if (modelType_ != InverterModelType::pvWatts) {
         ShowFatalError("Setting the DC Capacity for the inverter only works with PVWatts Inverters.");
@@ -2488,22 +2488,22 @@ void DCtoACInverter::setPVWattsDCCapacity(const Real64 dcCapacity)
     ratedPower_ = dcCapacity / pvWattsDCtoACSizeRatio_;
 }
 
-Real64 DCtoACInverter::pvWattsDCCapacity()
+Nandle DCtoACInverter::pvWattsDCCapacity()
 {
     return ratedPower_ * pvWattsDCtoACSizeRatio_;
 }
 
-Real64 DCtoACInverter::thermLossRate() const
+Nandle DCtoACInverter::thermLossRate() const
 {
     return thermLossRate_;
 }
 
-Real64 DCtoACInverter::aCPowerOut() const
+Nandle DCtoACInverter::aCPowerOut() const
 {
     return aCPowerOut_;
 }
 
-Real64 DCtoACInverter::aCEnergyOut() const
+Nandle DCtoACInverter::aCEnergyOut() const
 {
     return aCEnergyOut_;
 }
@@ -2518,7 +2518,7 @@ std::string const &DCtoACInverter::name() const
     return name_;
 }
 
-Real64 DCtoACInverter::getLossRateForOutputPower(Real64 const powerOutOfInverter)
+Nandle DCtoACInverter::getLossRateForOutputPower(Nandle const powerOutOfInverter)
 {
 
     // need to invert, find a dCPowerIn that produces the desired AC power out
@@ -2545,7 +2545,7 @@ void DCtoACInverter::calcEfficiency()
     switch (modelType_) {
     case InverterModelType::cECLookUpTableModel: {
         // we don't model voltage, so use nominal voltage
-        Real64 normalizedPower = dCPowerIn_ / ratedPower_;
+        Nandle normalizedPower = dCPowerIn_ / ratedPower_;
 
         // get efficiency
         if (normalizedPower <= 0.1) {
@@ -2583,7 +2583,7 @@ void DCtoACInverter::calcEfficiency()
     }
     case InverterModelType::curveFuncOfPower: {
 
-        Real64 normalizedPower = dCPowerIn_ / ratedPower_;
+        Nandle normalizedPower = dCPowerIn_ / ratedPower_;
         efficiency_ = CurveManager::CurveValue(curveNum_, normalizedPower);
         efficiency_ = max(efficiency_, minEfficiency_);
         efficiency_ = min(efficiency_, maxEfficiency_);
@@ -2591,17 +2591,17 @@ void DCtoACInverter::calcEfficiency()
         break;
     }
     case InverterModelType::pvWatts: {
-        Real64 const etaref = 0.9637;
-        Real64 const A = -0.0162;
-        Real64 const B = -0.0059;
-        Real64 const C = 0.9858;
-        Real64 const pdc0 = ratedPower_ / pvWattsInverterEfficiency_;
-        Real64 const plr = dCPowerIn_ / pdc0;
-        Real64 ac = 0;
+        Nandle const etaref = 0.9637;
+        Nandle const A = -0.0162;
+        Nandle const B = -0.0059;
+        Nandle const C = 0.9858;
+        Nandle const pdc0 = ratedPower_ / pvWattsInverterEfficiency_;
+        Nandle const plr = dCPowerIn_ / pdc0;
+        Nandle ac = 0;
 
         if (plr > 0) {
             // normal operation
-            Real64 eta = (A * plr + B / plr + C) * pvWattsInverterEfficiency_ / etaref;
+            Nandle eta = (A * plr + B / plr + C) * pvWattsInverterEfficiency_ / etaref;
             ac = dCPowerIn_ * eta;
             if (ac > ratedPower_) {
                 // clipping
@@ -2621,7 +2621,7 @@ void DCtoACInverter::calcEfficiency()
     } // end switch
 }
 
-void DCtoACInverter::simulate(Real64 const powerIntoInverter)
+void DCtoACInverter::simulate(Nandle const powerIntoInverter)
 {
     dCPowerIn_ = powerIntoInverter;
     dCEnergyIn_ = dCPowerIn_ * (DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour);
@@ -2818,27 +2818,27 @@ void ACtoDCConverter::reinitZoneGainsAtBeginEnvironment()
     qdotRadZone_ = 0.0;
 }
 
-Real64 ACtoDCConverter::thermLossRate() const
+Nandle ACtoDCConverter::thermLossRate() const
 {
     return thermLossRate_;
 }
 
-Real64 ACtoDCConverter::dCPowerOut() const
+Nandle ACtoDCConverter::dCPowerOut() const
 {
     return dCPowerOut_;
 }
 
-Real64 ACtoDCConverter::dCEnergyOut() const
+Nandle ACtoDCConverter::dCEnergyOut() const
 {
     return dCEnergyOut_;
 }
 
-Real64 ACtoDCConverter::aCPowerIn() const
+Nandle ACtoDCConverter::aCPowerIn() const
 {
     return aCPowerIn_;
 }
 
-Real64 ACtoDCConverter::getLossRateForInputPower(Real64 const powerIntoConverter)
+Nandle ACtoDCConverter::getLossRateForInputPower(Nandle const powerIntoConverter)
 {
     aCPowerIn_ = powerIntoConverter;
     calcEfficiency();
@@ -2858,14 +2858,14 @@ void ACtoDCConverter::calcEfficiency()
         break;
     }
     case ConverterModelType::curveFuncOfPower: {
-        Real64 normalizedPower = aCPowerIn_ / maxPower_;
+        Nandle normalizedPower = aCPowerIn_ / maxPower_;
         efficiency_ = CurveManager::CurveValue(curveNum_, normalizedPower);
         break;
     }
     } // end switch
 }
 
-void ACtoDCConverter::simulate(Real64 const powerOutFromConverter)
+void ACtoDCConverter::simulate(Nandle const powerOutFromConverter)
 {
     // need to invert, find an aCPowerIn that produces the desired DC power out
 
@@ -3219,7 +3219,7 @@ void ElectricStorage::reinitAtBeginEnvironment()
     thisTimeStepStateOfCharge_ = startingEnergyStored_;
 
     if (storageModelMode_ == StorageModelType::kiBaMBattery) {
-        Real64 initialCharge = maxAhCapacity_ * startingSOC_;
+        Nandle initialCharge = maxAhCapacity_ * startingSOC_;
         lastTwoTimeStepAvailable_ = initialCharge * availableFrac_;
         lastTwoTimeStepBound_ = initialCharge * (1.0 - availableFrac_);
         lastTimeStepAvailable_ = initialCharge * availableFrac_;
@@ -3256,7 +3256,7 @@ void ElectricStorage::reinitAtEndWarmup()
     lastTimeStepStateOfCharge_ = startingEnergyStored_;
     thisTimeStepStateOfCharge_ = startingEnergyStored_;
     if (storageModelMode_ == StorageModelType::kiBaMBattery) {
-        Real64 initialCharge = maxAhCapacity_ * startingSOC_;
+        Nandle initialCharge = maxAhCapacity_ * startingSOC_;
         lastTwoTimeStepAvailable_ = initialCharge * availableFrac_;
         lastTwoTimeStepBound_ = initialCharge * (1.0 - availableFrac_);
         lastTimeStepAvailable_ = initialCharge * availableFrac_;
@@ -3288,7 +3288,7 @@ void ElectricStorage::timeCheckAndUpdate()
         reinitAtEndWarmup();
     }
 
-    Real64 timeElapsedLoc = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + DataHVACGlobals::SysTimeElapsed;
+    Nandle timeElapsedLoc = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + DataHVACGlobals::SysTimeElapsed;
     if (timeElapsed_ != timeElapsedLoc) { // time changed, update last with "current" result from previous time
         if (storageModelMode_ == StorageModelType::kiBaMBattery && lifeCalculation_ == BatteyDegredationModelType::lifeCalculationYes) {
             //    At this point, the current values, last time step values and last two time step values have not been updated, hence:
@@ -3297,11 +3297,11 @@ void ElectricStorage::timeCheckAndUpdate()
             //    "LastTwoTimeStep" actually points to the previous three time steps
 
             //      Calculate the fractional SOC change between the "current" time step and the "previous one" time step
-            Real64 deltaSOC1 = thisTimeStepAvailable_ + thisTimeStepBound_ - lastTimeStepAvailable_ - lastTimeStepBound_;
+            Nandle deltaSOC1 = thisTimeStepAvailable_ + thisTimeStepBound_ - lastTimeStepAvailable_ - lastTimeStepBound_;
             deltaSOC1 /= maxAhCapacity_;
 
             //      Calculate the fractional SOC change between the "previous one" time step and the "previous two" time steps
-            Real64 deltaSOC2 = lastTimeStepAvailable_ + lastTimeStepBound_ - lastTwoTimeStepAvailable_ - lastTwoTimeStepBound_;
+            Nandle deltaSOC2 = lastTimeStepAvailable_ + lastTimeStepBound_ - lastTwoTimeStepAvailable_ - lastTwoTimeStepBound_;
             deltaSOC2 /= maxAhCapacity_;
 
             //     DeltaSOC2 = 0 may occur at the begining of each simulation environment.
@@ -3310,7 +3310,7 @@ void ElectricStorage::timeCheckAndUpdate()
             if ((deltaSOC2 == 0) || ((deltaSOC1 * deltaSOC2) < 0)) {
                 //     Because we cannot determine whehter "ThisTimeStep" is a peak or valley (next time step is unknown yet), we
                 //     use the "LastTimeStep" value for battery life calculation.
-                Real64 input0 = (lastTimeStepAvailable_ + lastTimeStepBound_) / maxAhCapacity_;
+                Nandle input0 = (lastTimeStepAvailable_ + lastTimeStepBound_) / maxAhCapacity_;
                 b10_[count0_] = input0;
 
                 //        The arrary size needs to be increased when count = MaxRainflowArrayBounds. Please note that (MaxRainflowArrayBounds +1)
@@ -3342,12 +3342,12 @@ void ElectricStorage::timeCheckAndUpdate()
     } // end if time changed
 }
 
-void ElectricStorage::simulate(Real64 &powerCharge,
-                               Real64 &powerDischarge,
+void ElectricStorage::simulate(Nandle &powerCharge,
+                               Nandle &powerDischarge,
                                bool &charging,
                                bool &discharging,
-                               Real64 const controlSOCMaxFracLimit,
-                               Real64 const controlSOCMinFracLimit)
+                               Nandle const controlSOCMaxFracLimit,
+                               Nandle const controlSOCMinFracLimit)
 {
     // pass thru to constrain function depending on storage model type
     if (ScheduleManager::GetCurrentScheduleValue(availSchedPtr_) == 0.0) { // storage not available
@@ -3369,12 +3369,12 @@ std::string const &ElectricStorage::name() const
     return name_;
 }
 
-void ElectricStorage::simulateSimpleBucketModel(Real64 &powerCharge,
-                                                Real64 &powerDischarge,
+void ElectricStorage::simulateSimpleBucketModel(Nandle &powerCharge,
+                                                Nandle &powerDischarge,
                                                 bool &charging,
                                                 bool &discharging,
-                                                Real64 const controlSOCMaxFracLimit,
-                                                Real64 const controlSOCMinFracLimit)
+                                                Nandle const controlSOCMaxFracLimit,
+                                                Nandle const controlSOCMinFracLimit)
 {
     // given arguments for how the storage operation would like to run storage charge or discharge
     // apply model constraints and adjust arguments accordingly
@@ -3451,28 +3451,28 @@ void ElectricStorage::simulateSimpleBucketModel(Real64 &powerCharge,
     }
 }
 
-void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
-                                                  Real64 &powerDischarge,
+void ElectricStorage::simulateKineticBatteryModel(Nandle &powerCharge,
+                                                  Nandle &powerDischarge,
                                                   bool &charging,
                                                   bool &discharging,
-                                                  Real64 const controlSOCMaxFracLimit,
-                                                  Real64 const controlSOCMinFracLimit)
+                                                  Nandle const controlSOCMaxFracLimit,
+                                                  Nandle const controlSOCMinFracLimit)
 {
 
     // initialize locals
-    Real64 I0 = 0.0;
-    Real64 Volt = 0.0;
+    Nandle I0 = 0.0;
+    Nandle Volt = 0.0;
 
-    Real64 T0 = 0.0;
-    Real64 E0c = 0.0;
-    Real64 k = 0.0;
-    Real64 c = 0.0;
-    Real64 qmaxf = 0.0;
-    Real64 Ef = 0.0;
-    Real64 qmax = 0.0;
-    Real64 Pactual = 0.0;
-    Real64 q0 = 0.0;
-    Real64 E0d = 0.0;
+    Nandle T0 = 0.0;
+    Nandle E0c = 0.0;
+    Nandle k = 0.0;
+    Nandle c = 0.0;
+    Nandle qmaxf = 0.0;
+    Nandle Ef = 0.0;
+    Nandle qmax = 0.0;
+    Nandle Pactual = 0.0;
+    Nandle q0 = 0.0;
+    Nandle E0d = 0.0;
 
     qmax = maxAhCapacity_;
     E0c = chargedOCV_;
@@ -3485,7 +3485,7 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
         //*************************************************
         // The sign of power and current is negative in charging
         //*************************************************
-        Real64 Pw = -powerCharge / numBattery_;
+        Nandle Pw = -powerCharge / numBattery_;
         q0 = lastTimeStepAvailable_ + lastTimeStepBound_;
         if (q0 > qmax * controlSOCMaxFracLimit) {
             // stop charging with controller signal for max state of charge
@@ -3504,18 +3504,18 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
         I0 = 1.0;                                                                                       // Initial assumption
         T0 = std::abs(qmax / I0);                                                                       // Initial Assumption
         qmaxf = qmax * k * c * T0 / (1.0 - std::exp(-k * T0) + c * (k * T0 - 1.0 + std::exp(-k * T0))); // Initial calculation of a function qmax(I)
-        Real64 Xf = q0 / qmaxf;
+        Nandle Xf = q0 / qmaxf;
         Ef = E0d + CurveManager::CurveValue(chargeCurveNum_, Xf); // E0d+Ac*Xf+Cc*Xf/(Dc-Xf) (use curve)
         Volt = Ef - I0 * internalR_;
-        Real64 Inew = 0.0;
+        Nandle Inew = 0.0;
         if (Volt != 0.0) {
             Inew = Pw / Volt;
         }
-        Real64 Tnew = 0.0;
+        Nandle Tnew = 0.0;
         if (Inew != 0.0) {
             Tnew = qmaxf / std::abs(Inew);
         }
-        Real64 error = 1.0;
+        Nandle error = 1.0;
 
         while (error > 0.0001) { // Iteration process to get converged current(I)
             I0 = Inew;
@@ -3529,11 +3529,11 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
             error = std::abs(Inew - I0);
         }
 
-        Real64 dividend = -k * c * qmax + k * lastTimeStepAvailable_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
+        Nandle dividend = -k * c * qmax + k * lastTimeStepAvailable_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
                           q0 * k * c * (1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys));
-        Real64 divisor = 1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys) +
+        Nandle divisor = 1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys) +
                          c * (k * DataHVACGlobals::TimeStepSys - 1 + std::exp(-k * DataHVACGlobals::TimeStepSys));
-        Real64 Imax = dividend / divisor;
+        Nandle Imax = dividend / divisor;
         // Below: This is the limit of charging current from Charge Rate Limit (input)
         Imax = max(Imax, -(qmax - q0) * maxChargeRate_);
 
@@ -3546,7 +3546,7 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
             error = 10.0; // Initial assumption ...
             while (error > 0.001) {
                 // *** I0(current) should be positive for this calculation
-                Real64 RHS = (qmax * k * c * qmaxf / std::abs(I0)) /
+                Nandle RHS = (qmax * k * c * qmaxf / std::abs(I0)) /
                              (1.0 - std::exp(-k * qmaxf / std::abs(I0)) + c * (k * qmaxf / std::abs(I0) - 1.0 + std::exp(-k * qmaxf / std::abs(I0))));
                 error = std::abs(qmaxf - RHS);
                 qmaxf = RHS;
@@ -3559,7 +3559,7 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
         // The sign of power and current is positive in discharging
         //**********************************************
 
-        Real64 Pw = powerDischarge / numBattery_;
+        Nandle Pw = powerDischarge / numBattery_;
         q0 = lastTimeStepAvailable_ + lastTimeStepBound_;
 
         if (q0 < qmax * controlSOCMinFracLimit) {
@@ -3583,11 +3583,11 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
             // issue #5301, need more diagnostics for this.
         }
 
-        Real64 dividend = k * lastTimeStepAvailable_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
+        Nandle dividend = k * lastTimeStepAvailable_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
                           q0 * k * c * (1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys));
-        Real64 divisor = 1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys) +
+        Nandle divisor = 1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys) +
                          c * (k * DataHVACGlobals::TimeStepSys - 1.0 + std::exp(-k * DataHVACGlobals::TimeStepSys));
-        Real64 Imax = dividend / divisor;
+        Nandle Imax = dividend / divisor;
         Imax = min(Imax, maxDischargeI_);
         if (std::abs(I0) <= Imax) {
             I0 = Pw / Volt;
@@ -3595,13 +3595,13 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
         } else {
             I0 = Imax;
             qmaxf = 10.0;        // Initial assumption to solve the equation using iterative method
-            Real64 error = 10.0; // Initial assumption ...
+            Nandle error = 10.0; // Initial assumption ...
             while (error > 0.001) {
-                Real64 RHS = (qmax * k * c * qmaxf / I0) / (1.0 - std::exp(-k * qmaxf / I0) + c * (k * qmaxf / I0 - 1 + std::exp(-k * qmaxf / I0)));
+                Nandle RHS = (qmax * k * c * qmaxf / I0) / (1.0 - std::exp(-k * qmaxf / I0) + c * (k * qmaxf / I0 - 1 + std::exp(-k * qmaxf / I0)));
                 error = std::abs(qmaxf - RHS);
                 qmaxf = RHS;
             }
-            Real64 Xf = (qmax - q0) / qmaxf;
+            Nandle Xf = (qmax - q0) / qmaxf;
             Ef = E0c + CurveManager::CurveValue(dischargeCurveNum_, Xf);
             Volt = Ef - I0 * internalR_;
         }
@@ -3617,10 +3617,10 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
         Volt = 0.0;
         q0 = lastTimeStepAvailable_ + lastTimeStepBound_;
     } else {
-        Real64 newAvailable = lastTimeStepAvailable_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
+        Nandle newAvailable = lastTimeStepAvailable_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
                               (q0 * k * c - I0) * (1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys)) / k -
                               I0 * c * (k * DataHVACGlobals::TimeStepSys - 1.0 + std::exp(-k * DataHVACGlobals::TimeStepSys)) / k;
-        Real64 newBound = lastTimeStepBound_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
+        Nandle newBound = lastTimeStepBound_ * std::exp(-k * DataHVACGlobals::TimeStepSys) +
                           q0 * (1.0 - c) * (1.0 - std::exp(-k * DataHVACGlobals::TimeStepSys)) -
                           I0 * (1.0 - c) * (k * DataHVACGlobals::TimeStepSys - 1.0 + std::exp(-k * DataHVACGlobals::TimeStepSys)) / k;
         thisTimeStepAvailable_ = max(0.0, newAvailable);
@@ -3628,7 +3628,7 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
     }
 
     Pactual = I0 * Volt;
-    Real64 TotalSOC = thisTimeStepAvailable_ + thisTimeStepBound_;
+    Nandle TotalSOC = thisTimeStepAvailable_ + thisTimeStepBound_;
 
     // output1
     if (TotalSOC > q0) {
@@ -3672,48 +3672,48 @@ void ElectricStorage::simulateKineticBatteryModel(Real64 &powerCharge,
     powerDischarge = drawnPower_;
 }
 
-Real64 ElectricStorage::drawnPower() const
+Nandle ElectricStorage::drawnPower() const
 {
     return drawnPower_;
 }
 
-Real64 ElectricStorage::storedPower() const
+Nandle ElectricStorage::storedPower() const
 {
     return storedPower_;
 }
 
-Real64 ElectricStorage::drawnEnergy() const
+Nandle ElectricStorage::drawnEnergy() const
 {
     return drawnEnergy_;
 }
 
-Real64 ElectricStorage::storedEnergy() const
+Nandle ElectricStorage::storedEnergy() const
 {
     return storedEnergy_;
 }
 
-bool ElectricStorage::determineCurrentForBatteryDischarge(Real64 &curI0,
-                                                          Real64 &curT0,
-                                                          Real64 &curVolt,
-                                                          Real64 const Pw, // Power withdraw from each module,
-                                                          Real64 const q0, // available charge last timestep, sum of available and bound
+bool ElectricStorage::determineCurrentForBatteryDischarge(Nandle &curI0,
+                                                          Nandle &curT0,
+                                                          Nandle &curVolt,
+                                                          Nandle const Pw, // Power withdraw from each module,
+                                                          Nandle const q0, // available charge last timestep, sum of available and bound
                                                           int const CurveNum,
-                                                          Real64 const k,
-                                                          Real64 const c,
-                                                          Real64 const qmax,
-                                                          Real64 const E0c,
-                                                          Real64 const InternalR)
+                                                          Nandle const k,
+                                                          Nandle const c,
+                                                          Nandle const qmax,
+                                                          Nandle const E0c,
+                                                          Nandle const InternalR)
 {
     curI0 = 10.0;         // Initial assumption
     curT0 = qmax / curI0; // Initial Assumption
-    Real64 qmaxf = qmax * k * c * curT0 /
+    Nandle qmaxf = qmax * k * c * curT0 /
                    (1.0 - std::exp(-k * curT0) + c * (k * curT0 - 1.0 + std::exp(-k * curT0))); // Initial calculation of a function qmax(I)
-    Real64 Xf = (qmax - q0) / qmaxf;
-    Real64 Ef = E0c + CurveManager::CurveValue(CurveNum, Xf); // E0d+Ac*Xf+Cc*X/(Dc-Xf)
+    Nandle Xf = (qmax - q0) / qmaxf;
+    Nandle Ef = E0c + CurveManager::CurveValue(CurveNum, Xf); // E0d+Ac*Xf+Cc*X/(Dc-Xf)
     curVolt = Ef - curI0 * InternalR;
-    Real64 Inew = Pw / curVolt;
-    Real64 Tnew = qmaxf / Inew;
-    Real64 error = 1.0;
+    Nandle Inew = Pw / curVolt;
+    Nandle Tnew = qmaxf / Inew;
+    Nandle error = 1.0;
     int countForIteration = 0;
     bool exceedIterationLimit = false;
 
@@ -3778,12 +3778,12 @@ bool ElectricStorage::determineCurrentForBatteryDischarge(Real64 &curI0,
 }
 
 void ElectricStorage::rainflow(int const numbin,           // numbin = constant value
-                               Real64 const input,         // input = input value from other object (battery model)
-                               std::vector<Real64> &B1,    // stores values of points, calculated here - stored for next timestep
-                               std::vector<Real64> &X,     // stores values of two data point difference, calculated here - stored for next timestep
+                               Nandle const input,         // input = input value from other object (battery model)
+                               std::vector<Nandle> &B1,    // stores values of points, calculated here - stored for next timestep
+                               std::vector<Nandle> &X,     // stores values of two data point difference, calculated here - stored for next timestep
                                int &count,                 // calculated here - stored for next timestep in main loop
-                               std::vector<Real64> &Nmb,   // calculated here - stored for next timestep in main loop
-                               std::vector<Real64> &OneNmb // calculated here - stored for next timestep in main loop
+                               std::vector<Nandle> &Nmb,   // calculated here - stored for next timestep in main loop
+                               std::vector<Nandle> &OneNmb // calculated here - stored for next timestep in main loop
 )
 {
     // SUBROUTINE INFORMATION:
@@ -3868,7 +3868,7 @@ void ElectricStorage::rainflow(int const numbin,           // numbin = constant 
                   // OneNmb is used to show the current output only.
 }
 
-void ElectricStorage::shift(std::vector<Real64> &A, int const m, int const n, std::vector<Real64> &B)
+void ElectricStorage::shift(std::vector<Nandle> &A, int const m, int const n, std::vector<Nandle> &B)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Y. KyungTae & W. Wang
@@ -4124,33 +4124,33 @@ ElectricTransformer::ElectricTransformer(std::string const &objectName)
     }
 }
 
-Real64 ElectricTransformer::getLossRateForOutputPower(Real64 const powerOutOfTransformer)
+Nandle ElectricTransformer::getLossRateForOutputPower(Nandle const powerOutOfTransformer)
 {
     manageTransformers(powerOutOfTransformer);
     return totalLossRate_;
 }
 
-Real64 ElectricTransformer::getLossRateForInputPower(Real64 const powerIntoTransformer)
+Nandle ElectricTransformer::getLossRateForInputPower(Nandle const powerIntoTransformer)
 {
     manageTransformers(powerIntoTransformer);
     return totalLossRate_;
 }
 
-void ElectricTransformer::manageTransformers(Real64 const surplusPowerOutFromLoadCenters)
+void ElectricTransformer::manageTransformers(Nandle const surplusPowerOutFromLoadCenters)
 {
-    Real64 const ambTempRef = 20.0; // reference ambient temperature (C)
+    Nandle const ambTempRef = 20.0; // reference ambient temperature (C)
     if (myOneTimeFlag_) {
         // calculate rated no load losses and rated load losses if the performance input method is based on
         // nominal efficiency. This calculation is done only once
 
         if (performanceInputMode_ == TransformerPerformanceInput::efficiencyMethod) {
 
-            Real64 resRef = factorTempCoeff_ + tempRise_ + ambTempRef;
-            Real64 resSpecified = factorTempCoeff_ + ratedTemp_;
-            Real64 resRatio = resSpecified / resRef;
-            Real64 factorTempCorr = (1.0 - eddyFrac_) * resRatio + eddyFrac_ * (1.0 / resRatio);
-            Real64 numerator = ratedCapacity_ * ratedPUL_ * (1.0 - ratedEfficiency_);
-            Real64 denominator = ratedEfficiency_ * (1.0 + pow_2(ratedPUL_ / maxPUL_));
+            Nandle resRef = factorTempCoeff_ + tempRise_ + ambTempRef;
+            Nandle resSpecified = factorTempCoeff_ + ratedTemp_;
+            Nandle resRatio = resSpecified / resRef;
+            Nandle factorTempCorr = (1.0 - eddyFrac_) * resRatio + eddyFrac_ * (1.0 / resRatio);
+            Nandle numerator = ratedCapacity_ * ratedPUL_ * (1.0 - ratedEfficiency_);
+            Nandle denominator = ratedEfficiency_ * (1.0 + pow_2(ratedPUL_ / maxPUL_));
 
             ratedNL_ = numerator / denominator;
             ratedLL_ = ratedNL_ / (factorTempCorr * pow_2(maxPUL_));
@@ -4158,8 +4158,8 @@ void ElectricTransformer::manageTransformers(Real64 const surplusPowerOutFromLoa
         myOneTimeFlag_ = false;
     }
 
-    Real64 elecLoad = 0.0;     // transformer load which may be power in or out depending on the usage mode
-    Real64 pastElecLoad = 0.0; // transformer load at the previous timestep
+    Nandle elecLoad = 0.0;     // transformer load which may be power in or out depending on the usage mode
+    Nandle pastElecLoad = 0.0; // transformer load at the previous timestep
     switch (usageMode_) {
     case TransformerUse::powerInFromGrid: {
         for (std::size_t meterNum = 0; meterNum < wiredMeterPtrs_.size(); ++meterNum) {
@@ -4208,7 +4208,7 @@ void ElectricTransformer::manageTransformers(Real64 const surplusPowerOutFromLoa
     // check availability schedule
     if (ratedCapacity_ > 0.0 && ScheduleManager::GetCurrentScheduleValue(availSchedPtr_) > 0.0) {
 
-        Real64 pUL = elecLoad / ratedCapacity_;
+        Nandle pUL = elecLoad / ratedCapacity_;
 
         if (pUL > 1.0) {
             pUL = 1.0;
@@ -4226,8 +4226,8 @@ void ElectricTransformer::manageTransformers(Real64 const surplusPowerOutFromLoa
             ShowRecurringSevereErrorAtEnd("Transformer Overloaded: Entered in ElectricLoadCenter:Transformer =" + name_, overloadErrorIndex_);
         }
 
-        Real64 tempChange = std::pow(pUL, 1.6) * tempRise_;
-        Real64 ambTemp = 20.0;
+        Nandle tempChange = std::pow(pUL, 1.6) * tempRise_;
+        Nandle ambTemp = 20.0;
         if (heatLossesDestination_ == ThermalLossDestination::zoneGains) {
 
             ambTemp = DataHeatBalance::ZnAirRpt(zoneNum_).MeanAirTemp;
@@ -4235,10 +4235,10 @@ void ElectricTransformer::manageTransformers(Real64 const surplusPowerOutFromLoa
             ambTemp = 20.0;
         }
 
-        Real64 resRef = factorTempCoeff_ + tempRise_ + ambTempRef;
-        Real64 resSpecified = factorTempCoeff_ + tempChange + ambTemp;
-        Real64 resRatio = resSpecified / resRef;
-        Real64 factorTempCorr = (1.0 - eddyFrac_) * resRatio + eddyFrac_ * (1.0 / resRatio);
+        Nandle resRef = factorTempCoeff_ + tempRise_ + ambTempRef;
+        Nandle resSpecified = factorTempCoeff_ + tempChange + ambTemp;
+        Nandle resRatio = resSpecified / resRef;
+        Nandle factorTempCorr = (1.0 - eddyFrac_) * resRatio + eddyFrac_ * (1.0 / resRatio);
 
         loadLossRate_ = ratedLL_ * pow_2(pUL) * factorTempCorr;
         noLoadLossRate_ = ratedNL_;

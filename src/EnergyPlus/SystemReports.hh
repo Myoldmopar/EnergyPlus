@@ -70,80 +70,80 @@ namespace SystemReports {
 
     // MODULE VARIABLE DECLARATIONS:
     // Ventilation Report Variables
-    extern Array1D<Real64> MaxCoolingLoadMetByVent;
-    extern Array1D<Real64> MaxCoolingLoadAddedByVent;
-    extern Array1D<Real64> MaxOvercoolingByVent;
-    extern Array1D<Real64> MaxHeatingLoadMetByVent;
-    extern Array1D<Real64> MaxHeatingLoadAddedByVent;
-    extern Array1D<Real64> MaxOverheatingByVent;
-    extern Array1D<Real64> MaxNoLoadHeatingByVent;
-    extern Array1D<Real64> MaxNoLoadCoolingByVent;
+    extern Array1D<Nandle> MaxCoolingLoadMetByVent;
+    extern Array1D<Nandle> MaxCoolingLoadAddedByVent;
+    extern Array1D<Nandle> MaxOvercoolingByVent;
+    extern Array1D<Nandle> MaxHeatingLoadMetByVent;
+    extern Array1D<Nandle> MaxHeatingLoadAddedByVent;
+    extern Array1D<Nandle> MaxOverheatingByVent;
+    extern Array1D<Nandle> MaxNoLoadHeatingByVent;
+    extern Array1D<Nandle> MaxNoLoadCoolingByVent;
 
-    extern Array1D<Real64> RemMaxCoolingLoadMetByVent;
-    extern Array1D<Real64> RemMaxCoolingLoadAddedByVent;
-    extern Array1D<Real64> RemMaxOvercoolingByVent;
-    extern Array1D<Real64> RemMaxHeatingLoadMetByVent;
-    extern Array1D<Real64> RemMaxHeatingLoadAddedByVent;
-    extern Array1D<Real64> RemMaxOverheatingByVent;
-    extern Array1D<Real64> RemMaxNoLoadHeatingByVent;
-    extern Array1D<Real64> RemMaxNoLoadCoolingByVent;
+    extern Array1D<Nandle> RemMaxCoolingLoadMetByVent;
+    extern Array1D<Nandle> RemMaxCoolingLoadAddedByVent;
+    extern Array1D<Nandle> RemMaxOvercoolingByVent;
+    extern Array1D<Nandle> RemMaxHeatingLoadMetByVent;
+    extern Array1D<Nandle> RemMaxHeatingLoadAddedByVent;
+    extern Array1D<Nandle> RemMaxOverheatingByVent;
+    extern Array1D<Nandle> RemMaxNoLoadHeatingByVent;
+    extern Array1D<Nandle> RemMaxNoLoadCoolingByVent;
 
-    extern Array1D<Real64> LastMaxCoolingLoadMetByVent;
-    extern Array1D<Real64> LastMaxCoolingLoadAddedByVent;
-    extern Array1D<Real64> LastMaxOvercoolingByVent;
-    extern Array1D<Real64> LastMaxHeatingLoadMetByVent;
-    extern Array1D<Real64> LastMaxHeatingLoadAddedByVent;
-    extern Array1D<Real64> LastMaxOverheatingByVent;
-    extern Array1D<Real64> LastMaxNoLoadHeatingByVent;
-    extern Array1D<Real64> LastMaxNoLoadCoolingByVent;
+    extern Array1D<Nandle> LastMaxCoolingLoadMetByVent;
+    extern Array1D<Nandle> LastMaxCoolingLoadAddedByVent;
+    extern Array1D<Nandle> LastMaxOvercoolingByVent;
+    extern Array1D<Nandle> LastMaxHeatingLoadMetByVent;
+    extern Array1D<Nandle> LastMaxHeatingLoadAddedByVent;
+    extern Array1D<Nandle> LastMaxOverheatingByVent;
+    extern Array1D<Nandle> LastMaxNoLoadHeatingByVent;
+    extern Array1D<Nandle> LastMaxNoLoadCoolingByVent;
 
-    extern Array1D<Real64> SysTotZoneLoadHTNG;
-    extern Array1D<Real64> SysTotZoneLoadCLNG;
-    extern Array1D<Real64> SysOALoadHTNG;
-    extern Array1D<Real64> SysOALoadCLNG;
-    extern Array1D<Real64> SysTotHTNG;
-    extern Array1D<Real64> SysTotCLNG;
+    extern Array1D<Nandle> SysTotZoneLoadHTNG;
+    extern Array1D<Nandle> SysTotZoneLoadCLNG;
+    extern Array1D<Nandle> SysOALoadHTNG;
+    extern Array1D<Nandle> SysOALoadCLNG;
+    extern Array1D<Nandle> SysTotHTNG;
+    extern Array1D<Nandle> SysTotCLNG;
 
-    extern Array1D<Real64> SysTotH2OHOT;
-    extern Array1D<Real64> SysTotH2OCOLD;
-    extern Array1D<Real64> SysTotElec;
-    extern Array1D<Real64> SysTotGas;
-    extern Array1D<Real64> SysTotSteam;
+    extern Array1D<Nandle> SysTotH2OHOT;
+    extern Array1D<Nandle> SysTotH2OCOLD;
+    extern Array1D<Nandle> SysTotElec;
+    extern Array1D<Nandle> SysTotGas;
+    extern Array1D<Nandle> SysTotSteam;
 
-    extern Array1D<Real64> SysHumidHTNG;
-    extern Array1D<Real64> SysHumidElec;
-    extern Array1D<Real64> SysHumidGas;
-    extern Array1D<Real64> SysEvapCLNG;
-    extern Array1D<Real64> SysEvapElec;
-    extern Array1D<Real64> SysHeatExHTNG;
-    extern Array1D<Real64> SysHeatExCLNG;
-    extern Array1D<Real64> DesDehumidCLNG;
-    extern Array1D<Real64> DesDehumidElec;
-    extern Array1D<Real64> SysSolarCollectHeating;
-    extern Array1D<Real64> SysSolarCollectCooling;
-    extern Array1D<Real64> SysUserDefinedTerminalHeating;
-    extern Array1D<Real64> SysUserDefinedTerminalCooling;
+    extern Array1D<Nandle> SysHumidHTNG;
+    extern Array1D<Nandle> SysHumidElec;
+    extern Array1D<Nandle> SysHumidGas;
+    extern Array1D<Nandle> SysEvapCLNG;
+    extern Array1D<Nandle> SysEvapElec;
+    extern Array1D<Nandle> SysHeatExHTNG;
+    extern Array1D<Nandle> SysHeatExCLNG;
+    extern Array1D<Nandle> DesDehumidCLNG;
+    extern Array1D<Nandle> DesDehumidElec;
+    extern Array1D<Nandle> SysSolarCollectHeating;
+    extern Array1D<Nandle> SysSolarCollectCooling;
+    extern Array1D<Nandle> SysUserDefinedTerminalHeating;
+    extern Array1D<Nandle> SysUserDefinedTerminalCooling;
 
-    extern Array1D<Real64> SysFANCompHTNG;
-    extern Array1D<Real64> SysFANCompElec;
-    extern Array1D<Real64> SysCCCompCLNG;
-    extern Array1D<Real64> SysCCCompH2OCOLD;
-    extern Array1D<Real64> SysCCCompElec;
-    extern Array1D<Real64> SysHCCompH2OHOT;
-    extern Array1D<Real64> SysHCCompElec;
-    extern Array1D<Real64> SysHCCompElecRes;
-    extern Array1D<Real64> SysHCCompHTNG;
-    extern Array1D<Real64> SysHCCompGas;
-    extern Array1D<Real64> SysHCCompSteam;
-    extern Array1D<Real64> SysDomesticH2O;
+    extern Array1D<Nandle> SysFANCompHTNG;
+    extern Array1D<Nandle> SysFANCompElec;
+    extern Array1D<Nandle> SysCCCompCLNG;
+    extern Array1D<Nandle> SysCCCompH2OCOLD;
+    extern Array1D<Nandle> SysCCCompElec;
+    extern Array1D<Nandle> SysHCCompH2OHOT;
+    extern Array1D<Nandle> SysHCCompElec;
+    extern Array1D<Nandle> SysHCCompElecRes;
+    extern Array1D<Nandle> SysHCCompHTNG;
+    extern Array1D<Nandle> SysHCCompGas;
+    extern Array1D<Nandle> SysHCCompSteam;
+    extern Array1D<Nandle> SysDomesticH2O;
 
-    extern Array1D<Real64> ZoneOAMassFlow;       // zone mech vent mass flow rate {kg/s}
-    extern Array1D<Real64> ZoneOAMass;           // zone mech vent total mass for time {kg}
-    extern Array1D<Real64> ZoneOAVolFlowStdRho;  // zone mech vent volume flow rate at standard density {m3/s}
-    extern Array1D<Real64> ZoneOAVolStdRho;      // zone mech vent total volume OA at standard density {m3/s}
-    extern Array1D<Real64> ZoneOAVolFlowCrntRho; // zone mech vent volume flow rate at current density {m3/s}
-    extern Array1D<Real64> ZoneOAVolCrntRho;     // zone mech vent total volume OA at current density {m3/s}
-    extern Array1D<Real64> ZoneMechACH;          // zone mech vent air changes per hour {ACH}
+    extern Array1D<Nandle> ZoneOAMassFlow;       // zone mech vent mass flow rate {kg/s}
+    extern Array1D<Nandle> ZoneOAMass;           // zone mech vent total mass for time {kg}
+    extern Array1D<Nandle> ZoneOAVolFlowStdRho;  // zone mech vent volume flow rate at standard density {m3/s}
+    extern Array1D<Nandle> ZoneOAVolStdRho;      // zone mech vent total volume OA at standard density {m3/s}
+    extern Array1D<Nandle> ZoneOAVolFlowCrntRho; // zone mech vent volume flow rate at current density {m3/s}
+    extern Array1D<Nandle> ZoneOAVolCrntRho;     // zone mech vent total volume OA at current density {m3/s}
+    extern Array1D<Nandle> ZoneMechACH;          // zone mech vent air changes per hour {ACH}
 
     extern bool AirLoopLoadsReportEnabled;
     extern bool VentLoadsReportEnabled;
@@ -175,11 +175,11 @@ namespace SystemReports {
     struct Energy
     {
         // Members
-        Real64 TotDemand;
-        Real64 Elec;
-        Real64 Gas;
-        Real64 Purch;
-        Real64 Other;
+        Nandle TotDemand;
+        Nandle Elec;
+        Nandle Gas;
+        Nandle Purch;
+        Nandle Other;
 
         // Default Constructor
         Energy() : TotDemand(0.0), Elec(0.0), Gas(0.0), Purch(0.0), Other(0.0)
@@ -300,8 +300,8 @@ namespace SystemReports {
                              int const AirLoopNum,
                              std::string const &CompType,
                              int const EnergyType,
-                             Real64 const CompLoad,
-                             Real64 const CompEnergy);
+                             Nandle const CompLoad,
+                             Nandle const CompEnergy);
 
     void ReportMaxVentilationLoads();
 

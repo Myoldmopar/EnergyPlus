@@ -102,7 +102,7 @@ namespace IceThermalStorage {
         enum ITSType ITSType_Num;      // Storage Type as number (IceOnCoilInternal,IceOnCoilExternal)
         int MapNum;           // Number to Map structure
         int UratePtr;         // Charging/Discharging SchedulePtr: u value schedule
-        Real64 ITSNomCap;     // Design nominal capacity of Ice Thermal Storage [J] (user input in GJ)
+        Nandle ITSNomCap;     // Design nominal capacity of Ice Thermal Storage [J] (user input in GJ)
         int PltInletNodeNum;  // Node number on the inlet side of the plant
         int PltOutletNodeNum; // Node number on the outlet side of the plant
         // loop topology variables
@@ -110,32 +110,32 @@ namespace IceThermalStorage {
         int LoopSideNum;
         int BranchNum;
         int CompNum;
-        Real64 DesignMassFlowRate;
-        Real64 FreezeTemp;
+        Nandle DesignMassFlowRate;
+        Nandle FreezeTemp;
         bool ResetXForITSFlag;
         bool MyEnvrnFlag;
-        Real64 UAIceCh;
-        Real64 UAIceDisCh;
-        Real64 HLoss;
-        Real64 XCurIceFrac;
-        Real64 ITSMassFlowRate;
-        Real64 ITSInletTemp;
-        Real64 ITSOutletTemp;
-        Real64 ITSOutletSetPointTemp;
-        Real64 ITSCoolingRate;
-        Real64 ITSCoolingEnergy;
+        Nandle UAIceCh;
+        Nandle UAIceDisCh;
+        Nandle HLoss;
+        Nandle XCurIceFrac;
+        Nandle ITSMassFlowRate;
+        Nandle ITSInletTemp;
+        Nandle ITSOutletTemp;
+        Nandle ITSOutletSetPointTemp;
+        Nandle ITSCoolingRate;
+        Nandle ITSCoolingEnergy;
         bool CheckEquipName;
 
-        Real64 MyLoad;            // load requested by plant [W]
-        Real64 Urate;             // [fraction]
-        Real64 IceFracRemain;     // Fraction of ice remaining in storage [fraction]
-        Real64 ITSChargingRate;   // [W]
-        Real64 ITSChargingEnergy; // [J]
-        Real64 ITSmdot;           // [kg/s]
+        Nandle MyLoad;            // load requested by plant [W]
+        Nandle Urate;             // [fraction]
+        Nandle IceFracRemain;     // Fraction of ice remaining in storage [fraction]
+        Nandle ITSChargingRate;   // [W]
+        Nandle ITSChargingEnergy; // [J]
+        Nandle ITSmdot;           // [kg/s]
 
         // Duplicated reporting vars for now. Investigate diffs when time to remove.
-        Real64 ITSCoolingRate_rep;   // [W]
-        Real64 ITSCoolingEnergy_rep; // [J]
+        Nandle ITSCoolingRate_rep;   // [W]
+        Nandle ITSCoolingEnergy_rep; // [J]
 
         bool MyPlantScanFlag;
         bool MyEnvrnFlag2;
@@ -152,29 +152,29 @@ namespace IceThermalStorage {
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void InitSimpleIceStorage();
 
         void CalcIceStorageDormant();
 
-        void CalcIceStorageCapacity(Real64 &MaxCap, Real64 &MinCap, Real64 &OptCap);
+        void CalcIceStorageCapacity(Nandle &MaxCap, Nandle &MinCap, Nandle &OptCap);
 
-        void CalcIceStorageDischarge(Real64 myLoad, bool RunFlag, Real64 MaxCap);
+        void CalcIceStorageDischarge(Nandle myLoad, bool RunFlag, Nandle MaxCap);
 
-        void CalcQiceDischageMax(Real64 &QiceMin);
+        void CalcQiceDischageMax(Nandle &QiceMin);
 
         void CalcIceStorageCharge();
 
-        void CalcQiceChargeMaxByChiller(Real64 &QiceMaxByChiller);
+        void CalcQiceChargeMaxByChiller(Nandle &QiceMaxByChiller);
 
-        void CalcQiceChargeMaxByITS(Real64 chillerOutletTemp, Real64 &QiceMaxByITS);
+        void CalcQiceChargeMaxByITS(Nandle chillerOutletTemp, Nandle &QiceMaxByITS);
 
-        void CalcUAIce(Real64 XCurIceFrac_loc, Real64 &UAIceCh_loc, Real64 &UAIceDisCh_loc, Real64 &HLoss_loc);
+        void CalcUAIce(Nandle XCurIceFrac_loc, Nandle &UAIceCh_loc, Nandle &UAIceDisCh_loc, Nandle &HLoss_loc);
 
-        void UpdateNode(Real64 myLoad, bool RunFlag);
+        void UpdateNode(Nandle myLoad, bool RunFlag);
 
-        void RecordOutput(Real64 myLoad, bool RunFlag);
+        void RecordOutput(Nandle myLoad, bool RunFlag);
 
         void setupOutputVars();
     };
@@ -184,7 +184,7 @@ namespace IceThermalStorage {
         std::string Name;         // User identifier
         std::string ScheduleName; // User identifier
         int ScheduleIndex;        // Plant inlet node number for ice storage unit
-        Real64 NomCapacity;       // Design storage capacity of Ice Thermal Storage system [W-hr]
+        Nandle NomCapacity;       // Design storage capacity of Ice Thermal Storage system [W-hr]
         // (User input for this parameter in GJ--need to convert to W-hr)
         int PlantInNodeNum;  // Plant inlet node number for ice storage unit
         int PlantOutNodeNum; // Plant outlet node number for ice storage unit
@@ -192,7 +192,7 @@ namespace IceThermalStorage {
         int PlantLoopSideNum;
         int PlantBranchNum;
         int PlantCompNum;
-        Real64 DesignMassFlowRate;
+        Nandle DesignMassFlowRate;
         int MapNum;                     // Number to Map structure
         std::string DischargeCurveName; // Curve name for discharging (used to find the curve index)
         int DischargeCurveNum;          // Curve index for discharging
@@ -200,32 +200,32 @@ namespace IceThermalStorage {
         std::string ChargeCurveName;    // Curve name for charging (used to find the curve index)
         int ChargeCurveNum;             // Curve index for charging
         enum CurveVars ChargeCurveTypeNum;       // Integer version of charging curve independent variables type
-        Real64 CurveFitTimeStep;        // Time step used to generate performance data [hours]
-        Real64 DischargeParaElecLoad;   // Parasitic electric load duing discharging [dimensionless]
+        Nandle CurveFitTimeStep;        // Time step used to generate performance data [hours]
+        Nandle DischargeParaElecLoad;   // Parasitic electric load duing discharging [dimensionless]
         // (This is multiplied by the tank capacity to obtain elec consump)
-        Real64 ChargeParaElecLoad; // Parasitic electric load duing charging [dimensionless]
+        Nandle ChargeParaElecLoad; // Parasitic electric load duing charging [dimensionless]
         // (This is multiplied by the tank capacity to obtain elec consump)
-        Real64 TankLossCoeff; // Fraction of total storage capacity lost per hour [1/hours]
-        Real64 FreezingTemp;  // Freezing/melting temperature of ice storage unit [C]
+        Nandle TankLossCoeff; // Fraction of total storage capacity lost per hour [1/hours]
+        Nandle FreezingTemp;  // Freezing/melting temperature of ice storage unit [C]
         // Reporting data
-        Real64 CompLoad;                  // load requested by plant [W]
-        Real64 IceFracChange;             // Change in fraction of ice stored during the time step [fraction]
-        Real64 IceFracRemaining;          // Fraction of ice remaining in storage [fraction]
+        Nandle CompLoad;                  // load requested by plant [W]
+        Nandle IceFracChange;             // Change in fraction of ice stored during the time step [fraction]
+        Nandle IceFracRemaining;          // Fraction of ice remaining in storage [fraction]
         std::string ThawProcessIndicator; // User input determining whether system is inside or outside melt
         enum DetIce ThawProcessIndex;             // Conversion of thaw process indicator to integer index
-        Real64 IceFracOnCoil;             // Fraction of ice on the coil (affects charging) [fraction]
-        Real64 DischargingRate;           // Rate at which energy is being added (thawing) to ice unit [W]
-        Real64 DischargingEnergy;         // Total energy added to the ice storage unit [J]
-        Real64 ChargingRate;              // Rate at which energy is removed (freezing) to ice unit [W]
-        Real64 ChargingEnergy;            // Total energy removed from ice storage unit [J]
-        Real64 MassFlowRate;              // Total mass flow rate to component [kg/s]
-        Real64 BypassMassFlowRate;        // Mass flow rate that bypasses the ice unit locally [kg/s]
-        Real64 TankMassFlowRate;          // Mass flow rate through the ice storage unit [kg/s]
-        Real64 InletTemp;                 // Component inlet temperature (same as bypass temperature) [C]
-        Real64 OutletTemp;                // Component outlet temperature (blended) [C]
-        Real64 TankOutletTemp;            // Ice storage unit outlet temperature [C]
-        Real64 ParasiticElecRate;         // Parasitic electrical energy rate consumed by ice storage [W]
-        Real64 ParasiticElecEnergy;       // Total parasitic electrical energy consumed by ice storage [J]
+        Nandle IceFracOnCoil;             // Fraction of ice on the coil (affects charging) [fraction]
+        Nandle DischargingRate;           // Rate at which energy is being added (thawing) to ice unit [W]
+        Nandle DischargingEnergy;         // Total energy added to the ice storage unit [J]
+        Nandle ChargingRate;              // Rate at which energy is removed (freezing) to ice unit [W]
+        Nandle ChargingEnergy;            // Total energy removed from ice storage unit [J]
+        Nandle MassFlowRate;              // Total mass flow rate to component [kg/s]
+        Nandle BypassMassFlowRate;        // Mass flow rate that bypasses the ice unit locally [kg/s]
+        Nandle TankMassFlowRate;          // Mass flow rate through the ice storage unit [kg/s]
+        Nandle InletTemp;                 // Component inlet temperature (same as bypass temperature) [C]
+        Nandle OutletTemp;                // Component outlet temperature (blended) [C]
+        Nandle TankOutletTemp;            // Ice storage unit outlet temperature [C]
+        Nandle ParasiticElecRate;         // Parasitic electrical energy rate consumed by ice storage [W]
+        Nandle ParasiticElecEnergy;       // Total parasitic electrical energy consumed by ice storage [J]
         int DischargeIterErrors;          // Number of max iterations exceeded errors during discharging
         int DischargeErrorCount;          // Index for error counting routine
         int ChargeIterErrors;             // Number of max iterations exceeded errors during charging
@@ -251,7 +251,7 @@ namespace IceThermalStorage {
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void InitDetailedIceStorage();
 
@@ -273,21 +273,21 @@ namespace IceThermalStorage {
 
     void GetIceStorageInput();
 
-    Real64 CalcDetIceStorLMTDstar(Real64 Tin,  // ice storage unit inlet temperature
-                                  Real64 Tout, // ice storage unit outlet (setpoint) temperature
-                                  Real64 Tfr   // freezing temperature
+    Nandle CalcDetIceStorLMTDstar(Nandle Tin,  // ice storage unit inlet temperature
+                                  Nandle Tout, // ice storage unit outlet (setpoint) temperature
+                                  Nandle Tfr   // freezing temperature
     );
 
-    Real64 CalcQstar(int CurveIndex,      // curve index
+    Nandle CalcQstar(int CurveIndex,      // curve index
                      enum CurveVars CurveIndVarType, // independent variable type for ice storage
-                     Real64 FracCharged,  // fraction charged for ice storage unit
-                     Real64 LMTDstar,     // normalized log mean temperature difference across the ice storage unit
-                     Real64 MassFlowstar  // normalized mass flow rate through the ice storage unit
+                     Nandle FracCharged,  // fraction charged for ice storage unit
+                     Nandle LMTDstar,     // normalized log mean temperature difference across the ice storage unit
+                     Nandle MassFlowstar  // normalized mass flow rate through the ice storage unit
     );
 
-    Real64 TempSItoIP(Real64 Temp);
+    Nandle TempSItoIP(Nandle Temp);
 
-    Real64 TempIPtoSI(Real64 Temp);
+    Nandle TempIPtoSI(Nandle Temp);
 
     void UpdateIceFractions();
 

@@ -155,7 +155,7 @@ namespace UnitHeater {
 
     bool HCoilOn;       // TRUE if the heating coil (gas or electric especially) should be running
     int NumOfUnitHeats; // Number of unit heaters in the input file
-    Real64 QZnReq;      // heating or cooling needed by zone [watts]
+    Nandle QZnReq;      // heating or cooling needed by zone [watts]
     Array1D_bool MySizeFlag;
     Array1D_bool CheckEquipName;
 
@@ -183,8 +183,8 @@ namespace UnitHeater {
     void SimUnitHeater(std::string const &CompName,   // name of the fan coil unit
                        int const ZoneNum,             // number of zone being served
                        bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                       Real64 &PowerMet,              // Sensible power supplied (W)
-                       Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                       Nandle &PowerMet,              // Sensible power supplied (W)
+                       Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                        int &CompIndex)
     {
 
@@ -305,10 +305,10 @@ namespace UnitHeater {
         int NumFields;                                                // Total number of fields in object
         int UnitHeatNum;                                              // Item to be "gotten"
         static std::string const RoutineName("GetUnitHeaterInput: "); // include trailing blank space
-        Real64 FanVolFlow;                                            // Fan volumetric flow rate
+        Nandle FanVolFlow;                                            // Fan volumetric flow rate
         std::string CurrentModuleObject;
         Array1D_string Alphas;         // Alpha items for object
-        Array1D<Real64> Numbers;       // Numeric items for object
+        Array1D<Nandle> Numbers;       // Numeric items for object
         Array1D_string cAlphaFields;   // Alpha field names
         Array1D_string cNumericFields; // Numeric field names
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.
@@ -751,10 +751,10 @@ namespace UnitHeater {
         int HotConNode; // hot water control node number in unit heater loop
         int InNode;     // inlet node number in unit heater loop
         int OutNode;    // outlet node number in unit heater loop
-        Real64 RhoAir;  // air density at InNode
-        Real64 TempSteamIn;
-        Real64 SteamDensity;
-        Real64 rho; // local fluid density
+        Nandle RhoAir;  // air density at InNode
+        Nandle TempSteamIn;
+        Nandle SteamDensity;
+        Nandle rho; // local fluid density
         bool errFlag;
         static bool SetMassFlowRateToZero(false); // TRUE when mass flow rates need to be set to zero
         // FLOW:
@@ -984,30 +984,30 @@ namespace UnitHeater {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
         bool ErrorsFound;
-        Real64 DesCoilLoad;
-        Real64 TempSteamIn;
-        Real64 EnthSteamInDry;
-        Real64 EnthSteamOutWet;
-        Real64 LatentHeatSteam;
-        Real64 SteamDensity;
+        Nandle DesCoilLoad;
+        Nandle TempSteamIn;
+        Nandle EnthSteamInDry;
+        Nandle EnthSteamOutWet;
+        Nandle LatentHeatSteam;
+        Nandle SteamDensity;
         static int RefrigIndex(0);
         static int CoilWaterInletNode(0);
         static int CoilWaterOutletNode(0);
         static int CoilSteamInletNode(0);
         static int CoilSteamOutletNode(0);
-        Real64 Cp;                     // local temporary for fluid specific heat
-        Real64 rho;                    // local temporary for fluid density
+        Nandle Cp;                     // local temporary for fluid specific heat
+        Nandle rho;                    // local temporary for fluid density
         bool IsAutoSize;               // Indicator to autosize
-        Real64 MaxAirVolFlowDes;       // Autosized maximum air flow for reporting
-        Real64 MaxAirVolFlowUser;      // Hardsized maximum air flow for reporting
-        Real64 MaxVolHotWaterFlowDes;  // Autosized maximum hot water flow for reporting
-        Real64 MaxVolHotWaterFlowUser; // Hardsized maximum hot water flow for reporting
-        Real64 MaxVolHotSteamFlowDes;  // Autosized maximum hot steam flow for reporting
-        Real64 MaxVolHotSteamFlowUser; // Hardsized maximum hot steam flow for reporting
+        Nandle MaxAirVolFlowDes;       // Autosized maximum air flow for reporting
+        Nandle MaxAirVolFlowUser;      // Hardsized maximum air flow for reporting
+        Nandle MaxVolHotWaterFlowDes;  // Autosized maximum hot water flow for reporting
+        Nandle MaxVolHotWaterFlowUser; // Hardsized maximum hot water flow for reporting
+        Nandle MaxVolHotSteamFlowDes;  // Autosized maximum hot steam flow for reporting
+        Nandle MaxVolHotSteamFlowUser; // Hardsized maximum hot steam flow for reporting
         std::string CompName;          // component name
         std::string CompType;          // component type
         std::string SizingString;      // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;               // autosized value of coil input field
+        Nandle TempSize;               // autosized value of coil input field
         int FieldNum = 1;              // IDD numeric field number where input field description is found
         int SizingMethod;  // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                            // HeatingCapacitySizing, etc.)
@@ -1018,7 +1018,7 @@ namespace UnitHeater {
         int CapSizingMethod(0); // capacity sizing methods (HeatingDesignCapacity, CapacityPerFloorArea, FractionOfAutosizedCoolingCapacity, and
                                 // FractionOfAutosizedHeatingCapacity )
         bool DoWaterCoilSizing = false; // if TRUE do water coil sizing calculation
-        Real64 WaterCoilSizDeltaT;      // water coil deltaT for design water flow rate autosizing
+        Nandle WaterCoilSizDeltaT;      // water coil deltaT for design water flow rate autosizing
         int CoilNum;                    // index of water coil object
 
         PltSizHeatNum = 0;
@@ -1363,8 +1363,8 @@ namespace UnitHeater {
     void CalcUnitHeater(int &UnitHeatNum,              // number of the current fan coil unit being simulated
                         int const ZoneNum,             // number of zone being served
                         bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                        Real64 &PowerMet,              // Sensible power supplied (W)
-                        Real64 &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
+                        Nandle &PowerMet,              // Sensible power supplied (W)
+                        Nandle &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
     )
     {
 
@@ -1424,19 +1424,19 @@ namespace UnitHeater {
         int ControlNode;        // the hot water inlet node
         int InletNode;          // unit air inlet node
         int OutletNode;         // unit air outlet node
-        Real64 ControlOffset;   // tolerance for output control
-        Real64 MaxWaterFlow;    // maximum water flow for heating or cooling [kg/sec]
-        Real64 MinWaterFlow;    // minimum water flow for heating or cooling [kg/sec]
-        Real64 QUnitOut;        // heating or sens. cooling provided by fan coil unit [watts]
-        Real64 LatentOutput;    // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
-        Real64 SpecHumOut;      // Specific humidity ratio of outlet air (kg moisture / kg moist air)
-        Real64 SpecHumIn;       // Specific humidity ratio of inlet air (kg moisture / kg moist air)
-        Real64 mdot;            // local temporary for fluid mass flow rate
-        Array1D<Real64> Par(3); // parameters passed to RegulaFalsi function
+        Nandle ControlOffset;   // tolerance for output control
+        Nandle MaxWaterFlow;    // maximum water flow for heating or cooling [kg/sec]
+        Nandle MinWaterFlow;    // minimum water flow for heating or cooling [kg/sec]
+        Nandle QUnitOut;        // heating or sens. cooling provided by fan coil unit [watts]
+        Nandle LatentOutput;    // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
+        Nandle SpecHumOut;      // Specific humidity ratio of outlet air (kg moisture / kg moist air)
+        Nandle SpecHumIn;       // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle mdot;            // local temporary for fluid mass flow rate
+        Array1D<Nandle> Par(3); // parameters passed to RegulaFalsi function
         int OpMode;
-        Real64 PartLoadFrac;
-        Real64 NoOutput;
-        Real64 FullOutput;
+        Nandle PartLoadFrac;
+        Nandle NoOutput;
+        Nandle FullOutput;
         int SolFlag; // return flag from RegulaFalsi for sensible load
         bool UnitOn;
 
@@ -1670,9 +1670,9 @@ namespace UnitHeater {
 
     void CalcUnitHeaterComponents(int const UnitHeatNum,               // Unit index in unit heater array
                                   bool const FirstHVACIteration,       // flag for 1st HVAV iteration in the time step
-                                  Real64 &LoadMet,                     // load met by unit (watts)
+                                  Nandle &LoadMet,                     // load met by unit (watts)
                                   Optional_int_const OpMode,           // fan operating mode
-                                  Optional<Real64 const> PartLoadRatio // part-load ratio
+                                  Optional<Nandle const> PartLoadRatio // part-load ratio
     )
     {
 
@@ -1717,15 +1717,15 @@ namespace UnitHeater {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow;  // total mass flow through the unit
-        Real64 CpAirZn;      // specific heat of dry air at zone conditions (zone conditions same as unit inlet)
+        Nandle AirMassFlow;  // total mass flow through the unit
+        Nandle CpAirZn;      // specific heat of dry air at zone conditions (zone conditions same as unit inlet)
         int HCoilInAirNode;  // inlet node number for fan exit/coil inlet
         int InletNode;       // unit air inlet node
         int OutletNode;      // unit air outlet node
-        Real64 QCoilReq;     // Heat addition required from an electric/gas heating coil
-        Real64 mdot;         // local temporary for fluid mass flow rate
+        Nandle QCoilReq;     // Heat addition required from an electric/gas heating coil
+        Nandle mdot;         // local temporary for fluid mass flow rate
         int FanOpMode;       // Fan operting mode or fan type
-        Real64 PartLoadFrac; // part-load ratio
+        Nandle PartLoadFrac; // part-load ratio
         // FLOW:
 
         InletNode = UnitHeat(UnitHeatNum).AirInNode;
@@ -1930,8 +1930,8 @@ namespace UnitHeater {
         }
     }
 
-    Real64 CalcUnitHeaterResidual(Real64 const PartLoadRatio, // heating coil part load ratio
-                                  Array1D<Real64> const &Par  // Function parameters
+    Nandle CalcUnitHeaterResidual(Nandle const PartLoadRatio, // heating coil part load ratio
+                                  Array1D<Nandle> const &Par  // Function parameters
     )
     {
 
@@ -1954,7 +1954,7 @@ namespace UnitHeater {
         // na
 
         // Return value
-        Real64 Residuum(0.0); // Result (force to 0)
+        Nandle Residuum(0.0); // Result (force to 0)
 
         // Argument array dimensioning
 
@@ -1979,7 +1979,7 @@ namespace UnitHeater {
         int UnitHeaterNum;       // Index to this UnitHeater
         bool FirstHVACIteration; // FirstHVACIteration flag
         int OpMode;              // Cycling fan or constant fan
-        Real64 QUnitOut;         // heating provided by unit heater [watts]
+        Nandle QUnitOut;         // heating provided by unit heater [watts]
 
         // Convert parameters to usable variables
         UnitHeaterNum = int(Par(1)); // Autodesk:OPTIONAL Par used without PRESENT check

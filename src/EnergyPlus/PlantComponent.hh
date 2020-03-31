@@ -59,20 +59,20 @@ class PlantComponent
 {
 
 public:
-    virtual void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) = 0;
+    virtual void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) = 0;
 
     virtual void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation),
-                                     Real64 &EP_UNUSED(MaxLoad),
-                                     Real64 &EP_UNUSED(MinLoad),
-                                     Real64 &EP_UNUSED(OptLoad))
+                                     Nandle &EP_UNUSED(MaxLoad),
+                                     Nandle &EP_UNUSED(MinLoad),
+                                     Nandle &EP_UNUSED(OptLoad))
     {
     }
 
-    virtual void getDesignTemperatures(Real64 &EP_UNUSED(TempDesCondIn), Real64 &EP_UNUSED(TempDesEvapOut))
+    virtual void getDesignTemperatures(Nandle &EP_UNUSED(TempDesCondIn), Nandle &EP_UNUSED(TempDesEvapOut))
     {
     }
 
-    virtual void getSizingFactor(Real64 &EP_UNUSED(SizFac))
+    virtual void getSizingFactor(Nandle &EP_UNUSED(SizFac))
     {
     }
 

@@ -259,17 +259,17 @@ TEST_F(EnergyPlusFixture, DXCoils_Test1)
     DataLoopNode::Node.allocate(1);
     DXCoil(CoilIndex).AirOutNode = 1;
 
-    Real64 SpeedRatio = 0.0;
-    Real64 CycRatio = 1.0;
+    Nandle SpeedRatio = 0.0;
+    Nandle CycRatio = 1.0;
     int SpeedNum = 2;
     int FanOpMode = 1;
     int CompOp = 1;
     int SingleMode = 0;
     CalcMultiSpeedDXCoilCooling(CoilIndex, SpeedRatio, CycRatio, SpeedNum, FanOpMode, CompOp, SingleMode);
 
-    Real64 TdbAtOutlet = PsyTdbFnHW(DXCoil(CoilIndex).OutletAirEnthalpy, DXCoil(CoilIndex).OutletAirHumRat);
-    Real64 tSatAtOutlet = PsyTsatFnHPb(DXCoil(CoilIndex).OutletAirEnthalpy, OutBaroPress);
-    Real64 rhAtOutlet = PsyRhFnTdbWPb(DXCoil(CoilIndex).OutletAirTemp, DXCoil(CoilIndex).OutletAirHumRat, OutBaroPress);
+    Nandle TdbAtOutlet = PsyTdbFnHW(DXCoil(CoilIndex).OutletAirEnthalpy, DXCoil(CoilIndex).OutletAirHumRat);
+    Nandle tSatAtOutlet = PsyTsatFnHPb(DXCoil(CoilIndex).OutletAirEnthalpy, OutBaroPress);
+    Nandle rhAtOutlet = PsyRhFnTdbWPb(DXCoil(CoilIndex).OutletAirTemp, DXCoil(CoilIndex).OutletAirHumRat, OutBaroPress);
 
     // air outlet condition is right next to the saturation curve
     EXPECT_DOUBLE_EQ(TdbAtOutlet, tSatAtOutlet); // Tdb higher than TSat by 1.8E-15 C
@@ -682,16 +682,16 @@ TEST_F(EnergyPlusFixture, TestMultiSpeedDefrostCOP)
     Coil.InletAirEnthalpy = PsyHFnTdbW(Coil.InletAirTemp, Coil.InletAirHumRat);
 
     // Test high speed
-    Real64 SpeedRatio = 1.0;
-    Real64 CycRatio = 1.0;
+    Nandle SpeedRatio = 1.0;
+    Nandle CycRatio = 1.0;
     int SpeedNum = 2;
     int const FanOpMode = ContFanCycCoil;
 
     // Defroster on
     OutDryBulbTemp = -5.0; // cold
     CalcMultiSpeedDXCoilHeating(DXCoilNum, SpeedRatio, CycRatio, SpeedNum, FanOpMode, 0);
-    Real64 COPwoDefrost = Coil.MSRatedCOP(SpeedNum) / (CurveValue(nEIRfT2, Coil.InletAirTemp, OutDryBulbTemp) * CurveValue(nEIRfFF2, 1));
-    Real64 COPwDefrost = Coil.TotalHeatingEnergyRate / Coil.ElecHeatingPower;
+    Nandle COPwoDefrost = Coil.MSRatedCOP(SpeedNum) / (CurveValue(nEIRfT2, Coil.InletAirTemp, OutDryBulbTemp) * CurveValue(nEIRfFF2, 1));
+    Nandle COPwDefrost = Coil.TotalHeatingEnergyRate / Coil.ElecHeatingPower;
     EXPECT_LT(COPwDefrost, COPwoDefrost);
 
     // Defroster off
@@ -719,10 +719,10 @@ TEST_F(EnergyPlusFixture, TestMultiSpeedDefrostCOP)
     EXPECT_DOUBLE_EQ(COPwoDefrost, COPwDefrost);
 
     // Now test that coil output at Speed = 1, CyclingRatio = 1 is the same as Speed = 2 and SpeedRatio = 0
-    Real64 DXCoilOutletNodeTemp = Coil.OutletAirTemp;
-    Real64 DXCoilOutletNodeHumRat = Coil.OutletAirHumRat;
-    Real64 DXCoilOutletNodeEnthalpy = Coil.OutletAirEnthalpy;
-    Real64 DXCoilHeatingCapacity = Coil.TotalHeatingEnergyRate;
+    Nandle DXCoilOutletNodeTemp = Coil.OutletAirTemp;
+    Nandle DXCoilOutletNodeHumRat = Coil.OutletAirHumRat;
+    Nandle DXCoilOutletNodeEnthalpy = Coil.OutletAirEnthalpy;
+    Nandle DXCoilHeatingCapacity = Coil.TotalHeatingEnergyRate;
 
     SpeedRatio = 0.0;
     CycRatio = 1.0;
@@ -730,10 +730,10 @@ TEST_F(EnergyPlusFixture, TestMultiSpeedDefrostCOP)
 
     CalcMultiSpeedDXCoilHeating(DXCoilNum, SpeedRatio, CycRatio, SpeedNum, FanOpMode, 0);
 
-    Real64 DXCoilOutletNodeTemp2 = Coil.OutletAirTemp;
-    Real64 DXCoilOutletNodeHumRat2 = Coil.OutletAirHumRat;
-    Real64 DXCoilOutletNodeEnthalpy2 = Coil.OutletAirEnthalpy;
-    Real64 DXCoilHeatingCapacity2 = Coil.TotalHeatingEnergyRate;
+    Nandle DXCoilOutletNodeTemp2 = Coil.OutletAirTemp;
+    Nandle DXCoilOutletNodeHumRat2 = Coil.OutletAirHumRat;
+    Nandle DXCoilOutletNodeEnthalpy2 = Coil.OutletAirEnthalpy;
+    Nandle DXCoilHeatingCapacity2 = Coil.TotalHeatingEnergyRate;
 
     EXPECT_DOUBLE_EQ(DXCoilOutletNodeTemp, DXCoilOutletNodeTemp2);
     EXPECT_DOUBLE_EQ(DXCoilOutletNodeHumRat, DXCoilOutletNodeHumRat2);
@@ -928,13 +928,13 @@ TEST_F(EnergyPlusFixture, TestSingleSpeedDefrostCOP)
     Coil.InletAirEnthalpy = PsyHFnTdbW(Coil.InletAirTemp, Coil.InletAirHumRat);
 
     int const FanOpMode = ContFanCycCoil;
-    Real64 const PLR = 1.0;
+    Nandle const PLR = 1.0;
 
     // Defrost Off
     OutDryBulbTemp = -5.0; // cold
     CalcDXHeatingCoil(DXCoilNum, PLR, FanOpMode);
-    Real64 COPwoDefrost = Coil.RatedCOP(1) / (CurveValue(nEIRfT2, Coil.InletAirTemp, OutDryBulbTemp) * CurveValue(nEIRfFF2, 1));
-    Real64 COPwDefrost = Coil.TotalHeatingEnergyRate / Coil.ElecHeatingPower;
+    Nandle COPwoDefrost = Coil.RatedCOP(1) / (CurveValue(nEIRfT2, Coil.InletAirTemp, OutDryBulbTemp) * CurveValue(nEIRfFF2, 1));
+    Nandle COPwDefrost = Coil.TotalHeatingEnergyRate / Coil.ElecHeatingPower;
     EXPECT_LT(COPwDefrost, COPwoDefrost);
 
     // Defrost On
@@ -950,15 +950,15 @@ TEST_F(EnergyPlusFixture, TestCalcCBF)
     using DataEnvironment::StdPressureSeaLevel;
     const std::string CoilType("Coil:WaterHeating:AirToWaterHeatPump:Wrapped");
     const std::string CoilName("The Coil");
-    Real64 InletDBTemp(19.722222222222221);
-    Real64 InletWBTemp(13.078173565729553);
-    Real64 InletAirHumRat;
-    const Real64 TotalCap(1303.5987246916557);
-    const Real64 AirVolFlowRate(0.085422486640000003);
-    const Real64 SHR(0.88);
-    Real64 AirPressure;
-    Real64 CBF_expected;
-    Real64 CBF_calculated;
+    Nandle InletDBTemp(19.722222222222221);
+    Nandle InletWBTemp(13.078173565729553);
+    Nandle InletAirHumRat;
+    const Nandle TotalCap(1303.5987246916557);
+    const Nandle AirVolFlowRate(0.085422486640000003);
+    const Nandle SHR(0.88);
+    Nandle AirPressure;
+    Nandle CBF_expected;
+    Nandle CBF_calculated;
 
     AirPressure = StdPressureSeaLevel;
     InletAirHumRat = Psychrometrics::PsyWFnTdbTwbPb(InletDBTemp, InletWBTemp, AirPressure);
@@ -1484,11 +1484,11 @@ TEST_F(EnergyPlusFixture, DXCoil_ValidateADPFunction)
 
     SizeDXCoil(1); // normal sizing
 
-    Real64 const RatedInletAirTemp(26.6667);   // 26.6667C or 80F
-    Real64 const RatedInletAirHumRat(0.01125); // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
+    Nandle const RatedInletAirTemp(26.6667);   // 26.6667C or 80F
+    Nandle const RatedInletAirHumRat(0.01125); // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
     std::string const CallingRoutine("DXCoil_ValidateADPFunction");
 
-    Real64 CBF_calculated = CalcCBF(DXCoil(1).DXCoilType,
+    Nandle CBF_calculated = CalcCBF(DXCoil(1).DXCoilType,
                                     DXCoil(1).Name,
                                     RatedInletAirTemp,
                                     RatedInletAirHumRat,
@@ -1863,7 +1863,7 @@ TEST_F(EnergyPlusFixture, CurveOutputLimitWarning)
     // TODO: FIXME: Should this still have cerr output?
     // EXPECT_TRUE( has_cerr_output() ); // capacity as a function of temperature inputs will give output above 1.0 +- 10% and trip warning message
 
-    Real64 CurveVal = CurveValue(DXCoil(1).CCapFTemp(1), RatedInletWetBulbTemp, RatedOutdoorAirTemp);
+    Nandle CurveVal = CurveValue(DXCoil(1).CCapFTemp(1), RatedInletWetBulbTemp, RatedOutdoorAirTemp);
     ASSERT_EQ(CurveVal, 1.1001); // anything over 1.1 will trip warning message for capacity as a function of temperature
 }
 
@@ -2243,23 +2243,23 @@ TEST_F(SQLiteFixture, DXCoils_TestComponentSizingOutput_TwoSpeed)
     // SizeDXCoil is the one doing the sizing AND the reporting
     DXCoils::SizeDXCoil(1);
     // Ensure we have a RatedTotCap size to begin with
-    Real64 ratedTotCap = DXCoils::DXCoil(1).RatedTotCap(1);
+    Nandle ratedTotCap = DXCoils::DXCoil(1).RatedTotCap(1);
     EXPECT_GT(ratedTotCap, 0.0);
 
     // High Speed Condenser Air Flow = RatedTotCap * 0.000114 m3/s/W (850 CFM/ton)
-    Real64 highSpeedCondAirFlow = DXCoils::DXCoil(1).RatedTotCap(1) * 0.000114;
+    Nandle highSpeedCondAirFlow = DXCoils::DXCoil(1).RatedTotCap(1) * 0.000114;
     EXPECT_NEAR(highSpeedCondAirFlow, DXCoils::DXCoil(1).EvapCondAirFlow(1), 0.1);
 
     // Low Speed Condenser Air Flow: 1/3 Total Capacity * 0.000114 m3/s/w (850 cfm/ton)
-    Real64 lowSpeedCondAirFlow = DXCoils::DXCoil(1).RatedTotCap(1) * 0.000114 * 0.3333;
+    Nandle lowSpeedCondAirFlow = DXCoils::DXCoil(1).RatedTotCap(1) * 0.000114 * 0.3333;
     EXPECT_NEAR(lowSpeedCondAirFlow, DXCoils::DXCoil(1).EvapCondAirFlow2, 0.1);
 
     // High Speed Condenser Pump Power = Total Capacity * 0.004266 W/W (15 W/ton)
-    Real64 highSpeedCondPumpPower = DXCoils::DXCoil(1).RatedTotCap(1) * 0.004266;
+    Nandle highSpeedCondPumpPower = DXCoils::DXCoil(1).RatedTotCap(1) * 0.004266;
     EXPECT_NEAR(highSpeedCondPumpPower, DXCoils::DXCoil(1).EvapCondPumpElecNomPower(1), 0.1);
 
     // Low Speed Condenser Pump Power = Total Capacity * 0.004266 W/W (15 W/ton) * 1/3
-    Real64 lowSpeedCondPumpPower = DXCoils::DXCoil(1).RatedTotCap(1) * 0.004266 * 0.3333;
+    Nandle lowSpeedCondPumpPower = DXCoils::DXCoil(1).RatedTotCap(1) * 0.004266 * 0.3333;
     EXPECT_NEAR(lowSpeedCondPumpPower, DXCoils::DXCoil(1).EvapCondPumpElecNomPower2, 0.1);
 
     // Write the EIO Table we need
@@ -2273,13 +2273,13 @@ TEST_F(SQLiteFixture, DXCoils_TestComponentSizingOutput_TwoSpeed)
     EXPECT_EQ(compName, "MAIN COOLING COIL 1");
 
     struct TestQuery {
-        TestQuery(std::string t_description, std::string t_units, Real64 t_value)
+        TestQuery(std::string t_description, std::string t_units, Nandle t_value)
             : description(t_description), units(t_units), expectedValue(t_value),
               displayString("Description='" + description + "'; Units='" + units + "'") {};
 
         const std::string description;
         const std::string units;
-        const Real64 expectedValue;
+        const Nandle expectedValue;
         const std::string displayString;
     };
 
@@ -2300,7 +2300,7 @@ TEST_F(SQLiteFixture, DXCoils_TestComponentSizingOutput_TwoSpeed)
                           "  AND Units = '" + testQuery.units + "'");
 
         // execAndReturnFirstDouble returns -10000.0 if not found
-        Real64 return_val = SQLiteFixture::execAndReturnFirstDouble(query);
+        Nandle return_val = SQLiteFixture::execAndReturnFirstDouble(query);
 
         if (return_val < 0) {
             EXPECT_TRUE(false) << "Query returned nothing for " << testQuery.displayString;
@@ -2465,15 +2465,15 @@ TEST_F(SQLiteFixture, DXCoils_TestComponentSizingOutput_SingleSpeed)
     // SizeDXCoil is the one doing the sizing AND the reporting
     DXCoils::SizeDXCoil(1);
     // Ensure we have a RatedTotCap size to begin with
-    Real64 ratedTotCap = DXCoils::DXCoil(1).RatedTotCap(1);
+    Nandle ratedTotCap = DXCoils::DXCoil(1).RatedTotCap(1);
     EXPECT_GT(ratedTotCap, 0.0);
 
     // Condenser Air Flow = RatedTotCap * 0.000114 m3/s/W (850 CFM/ton)
-    Real64 condAirFlow = DXCoils::DXCoil(1).RatedTotCap(1) * 0.000114;
+    Nandle condAirFlow = DXCoils::DXCoil(1).RatedTotCap(1) * 0.000114;
     EXPECT_NEAR(condAirFlow, DXCoils::DXCoil(1).EvapCondAirFlow(1), 0.1);
 
     // Condenser Pump Power = Total Capacity * 0.004266 W/W (15 W/ton)
-    Real64 condPumpPower = DXCoils::DXCoil(1).RatedTotCap(1) * 0.004266;
+    Nandle condPumpPower = DXCoils::DXCoil(1).RatedTotCap(1) * 0.004266;
     EXPECT_NEAR(condPumpPower, DXCoils::DXCoil(1).EvapCondPumpElecNomPower(1), 0.1);
 
     // Write the EIO Table we need
@@ -2487,13 +2487,13 @@ TEST_F(SQLiteFixture, DXCoils_TestComponentSizingOutput_SingleSpeed)
     EXPECT_EQ(compName, "FURNACE ACDXCOIL 1");
 
     struct TestQuery {
-        TestQuery(std::string t_description, std::string t_units, Real64 t_value)
+        TestQuery(std::string t_description, std::string t_units, Nandle t_value)
             : description(t_description), units(t_units), expectedValue(t_value),
               displayString("Description='" + description + "'; Units='" + units + "'") {};
 
         const std::string description;
         const std::string units;
-        const Real64 expectedValue;
+        const Nandle expectedValue;
         const std::string displayString;
     };
 
@@ -2512,7 +2512,7 @@ TEST_F(SQLiteFixture, DXCoils_TestComponentSizingOutput_SingleSpeed)
                           "  AND Units = '" + testQuery.units + "'");
 
         // execAndReturnFirstDouble returns -10000.0 if not found
-        Real64 return_val = SQLiteFixture::execAndReturnFirstDouble(query);
+        Nandle return_val = SQLiteFixture::execAndReturnFirstDouble(query);
 
         if (return_val < 0) {
             EXPECT_TRUE(false) << "Query returned nothing for " << testQuery.displayString;
@@ -3134,7 +3134,7 @@ TEST_F(EnergyPlusFixture, TestMultiSpeedCoolingCoilTabularReporting)
     // check multi-speed DX cooling coil rated capacity
     EXPECT_EQ(14067.4113682534, DXCoil(1).RatedTotCap(1));
     EXPECT_EQ(0.727729571918817, DXCoil(1).RatedSHR(1));
-    Real64 RatedSensCapacity = DXCoil(1).RatedTotCap(1) * DXCoil(1).RatedSHR(1);
+    Nandle RatedSensCapacity = DXCoil(1).RatedTotCap(1) * DXCoil(1).RatedSHR(1);
     EXPECT_EQ(10237.271253024948, RatedSensCapacity);
     // check tabular outputs
     PreDefTableEntry(pdch2CoilFinalTotalCap, "Coil Final Gross Total Capacity [W]", DXCoil(1).RatedTotCap(1), 3);
@@ -3942,14 +3942,14 @@ TEST_F(EnergyPlusFixture, DXCoils_GetDXCoilCapFTCurveIndexTest)
     DataTotCapCurveIndex = DXCoils::GetDXCoilCapFTCurveIndex( CoilIndex, ErrorsFound );
     EXPECT_EQ(2, DataTotCapCurveIndex);
     // evaluate dx cooling coil curves to show impacts of incorrect curve index
-    Real64 TotCapTempModFac_lowestSpeed = CurveValue(1, 19.4, 30.0);
-    Real64 TotCapTempModFac_designSpeed = CurveValue(DataTotCapCurveIndex, 19.4, 30.0);
+    Nandle TotCapTempModFac_lowestSpeed = CurveValue(1, 19.4, 30.0);
+    Nandle TotCapTempModFac_designSpeed = CurveValue(DataTotCapCurveIndex, 19.4, 30.0);
     EXPECT_DOUBLE_EQ(1.0503539775151995, TotCapTempModFac_lowestSpeed);
     EXPECT_DOUBLE_EQ(1.0333316291120003, TotCapTempModFac_designSpeed);
     // apply dx cooling coil capacity curve correction
-    Real64 PeakCoilCoolingLoad = 10000.0;
-    Real64 NominalCoolingDesignCapacity_lowestSpeed = PeakCoilCoolingLoad / TotCapTempModFac_lowestSpeed;
-    Real64 NominalCoolingDesignCapacity_designSpeed = PeakCoilCoolingLoad / TotCapTempModFac_designSpeed;
+    Nandle PeakCoilCoolingLoad = 10000.0;
+    Nandle NominalCoolingDesignCapacity_lowestSpeed = PeakCoilCoolingLoad / TotCapTempModFac_lowestSpeed;
+    Nandle NominalCoolingDesignCapacity_designSpeed = PeakCoilCoolingLoad / TotCapTempModFac_designSpeed;
     EXPECT_DOUBLE_EQ(9520.5999254239905, NominalCoolingDesignCapacity_lowestSpeed);
     EXPECT_DOUBLE_EQ(9677.4353153145621, NominalCoolingDesignCapacity_designSpeed);
 
@@ -3964,9 +3964,9 @@ TEST_F(EnergyPlusFixture, DXCoils_GetDXCoilCapFTCurveIndexTest)
     EXPECT_DOUBLE_EQ(1.1411265269999999, TotCapTempModFac_lowestSpeed);
     EXPECT_DOUBLE_EQ(1.1178750099999999, TotCapTempModFac_designSpeed);
     // apply dx heating coil capacity curve correction
-    Real64 PeakCoilHeatingLoad = 10000.0;
-    Real64 NominalHeatingDesignCapacity_lowestSpeed = PeakCoilHeatingLoad / TotCapTempModFac_lowestSpeed;
-    Real64 NominalHeatingDesignCapacity_designSpeed = PeakCoilHeatingLoad / TotCapTempModFac_designSpeed;
+    Nandle PeakCoilHeatingLoad = 10000.0;
+    Nandle NominalHeatingDesignCapacity_lowestSpeed = PeakCoilHeatingLoad / TotCapTempModFac_lowestSpeed;
+    Nandle NominalHeatingDesignCapacity_designSpeed = PeakCoilHeatingLoad / TotCapTempModFac_designSpeed;
     EXPECT_DOUBLE_EQ(8763.2701224550547, NominalHeatingDesignCapacity_lowestSpeed);
     EXPECT_DOUBLE_EQ(8945.5439208717980, NominalHeatingDesignCapacity_designSpeed);
 }

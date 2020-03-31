@@ -82,7 +82,7 @@ namespace PipeHeatTransfer {
     extern int const CurrentTimeIndex;
     extern int const TentativeTimeIndex;
 
-    extern Real64 const InnerDeltaTime; // one minute time step in seconds
+    extern Nandle const InnerDeltaTime; // one minute time step in seconds
 
     // DERIVED TYPE DEFINITIONS
 
@@ -93,14 +93,14 @@ namespace PipeHeatTransfer {
     extern int nsvInletNodeNum;         // module variable for inlet node number
     extern int nsvOutletNodeNum;        // module variable for outlet node number
     extern int nsvPipeHTNum;            // object index
-    extern Real64 nsvMassFlowRate;      // pipe mass flow rate
-    extern Real64 nsvVolumeFlowRate;    // pipe volumetric flow rate
-    extern Real64 nsvDeltaTime;         // time change from last update
-    extern Real64 nsvInletTemp;         // pipe inlet temperature
-    extern Real64 nsvOutletTemp;        // pipe outlet temperature
-    extern Real64 nsvEnvironmentTemp;   // environmental temperature (surrounding pipe)
-    extern Real64 nsvEnvHeatLossRate;   // heat loss rate from pipe to the environment
-    extern Real64 nsvFluidHeatLossRate; // overall heat loss from fluid to pipe
+    extern Nandle nsvMassFlowRate;      // pipe mass flow rate
+    extern Nandle nsvVolumeFlowRate;    // pipe volumetric flow rate
+    extern Nandle nsvDeltaTime;         // time change from last update
+    extern Nandle nsvInletTemp;         // pipe inlet temperature
+    extern Nandle nsvOutletTemp;        // pipe outlet temperature
+    extern Nandle nsvEnvironmentTemp;   // environmental temperature (surrounding pipe)
+    extern Nandle nsvEnvHeatLossRate;   // heat loss rate from pipe to the environment
+    extern Nandle nsvFluidHeatLossRate; // overall heat loss from fluid to pipe
     extern int nsvNumInnerTimeSteps;    // the number of "inner" time steps for our model
 
     extern bool GetPipeInputFlag; // First time, input is "gotten"
@@ -125,8 +125,8 @@ namespace PipeHeatTransfer {
         std::string EnvrVelSchedule; // temperature schedule for environmental temp
         std::string EnvrZone;        // zone providing environmental temp
         std::string EnvrAirNode;     // outside air node providing environmental temp
-        Real64 Length;               // total pipe length [m]
-        Real64 PipeID;               // pipe inside diameter [m]
+        Nandle Length;               // total pipe length [m]
+        Nandle PipeID;               // pipe inside diameter [m]
         std::string InletNode;       // inlet node name
         std::string OutletNode;      // outlet node name
         int InletNodeNum;            // inlet node number
@@ -140,65 +140,65 @@ namespace PipeHeatTransfer {
         int EnvrZonePtr;               // pointer to zone number used to set environmental temp
         int EnvrAirNodeNum;            // pointer to outside air node used to set environmental temp
         int NumSections;               // total number of nodes along pipe length
-        Real64 FluidSpecHeat;          // fluid Cp [J/kg.K]
-        Real64 FluidDensity;           // density [kg/m3]
-        Real64 MaxFlowRate;            // max flow rate (from loop/node data)
-        Real64 FluidSectionVol;        // volume of each pipe section (node) [m^3]
-        Real64 InsideArea;             // pipe section inside surface area [m^2]
-        Real64 OutsideArea;            // pipe section outside surface area [m^2]
-        Real64 SectionArea;            // cross sectional area [m^2]
-        Real64 PipeHeatCapacity;       // heat capacity of pipe section [J/m.K]
-        Real64 PipeOD;                 // pipe outside diameter [m]
-        Real64 PipeCp;                 // pipe materail Cp [J/kg.K]
-        Real64 PipeDensity;            // pipe material density [kg/m3]
-        Real64 PipeConductivity;       // pipe material thermal conductivity [W/m.K]
-        Real64 InsulationOD;           // insulation outside diameter [m]
-        Real64 InsulationCp;           // insulation  specific heat [J/kg.K]
-        Real64 InsulationDensity;      // insulation density [kg/m3]
-        Real64 InsulationConductivity; // insulation conductivity [W/m.K]
-        Real64 InsulationThickness;    // insulation thickness [m]
-        Real64 InsulationResistance;   // Insulation thermal resistance [m2.K/W]
-        Real64 CurrentSimTime;         // Current simulation time [hr]
-        Real64 PreviousSimTime;        // simulation time the report data was last updated
-        Array1D<Real64> TentativeFluidTemp;
-        Array1D<Real64> FluidTemp; // arrays for fluid and pipe temperatures at each node
-        Array1D<Real64> PreviousFluidTemp;
-        Array1D<Real64> TentativePipeTemp;
-        Array1D<Real64> PipeTemp;
-        Array1D<Real64> PreviousPipeTemp;
+        Nandle FluidSpecHeat;          // fluid Cp [J/kg.K]
+        Nandle FluidDensity;           // density [kg/m3]
+        Nandle MaxFlowRate;            // max flow rate (from loop/node data)
+        Nandle FluidSectionVol;        // volume of each pipe section (node) [m^3]
+        Nandle InsideArea;             // pipe section inside surface area [m^2]
+        Nandle OutsideArea;            // pipe section outside surface area [m^2]
+        Nandle SectionArea;            // cross sectional area [m^2]
+        Nandle PipeHeatCapacity;       // heat capacity of pipe section [J/m.K]
+        Nandle PipeOD;                 // pipe outside diameter [m]
+        Nandle PipeCp;                 // pipe materail Cp [J/kg.K]
+        Nandle PipeDensity;            // pipe material density [kg/m3]
+        Nandle PipeConductivity;       // pipe material thermal conductivity [W/m.K]
+        Nandle InsulationOD;           // insulation outside diameter [m]
+        Nandle InsulationCp;           // insulation  specific heat [J/kg.K]
+        Nandle InsulationDensity;      // insulation density [kg/m3]
+        Nandle InsulationConductivity; // insulation conductivity [W/m.K]
+        Nandle InsulationThickness;    // insulation thickness [m]
+        Nandle InsulationResistance;   // Insulation thermal resistance [m2.K/W]
+        Nandle CurrentSimTime;         // Current simulation time [hr]
+        Nandle PreviousSimTime;        // simulation time the report data was last updated
+        Array1D<Nandle> TentativeFluidTemp;
+        Array1D<Nandle> FluidTemp; // arrays for fluid and pipe temperatures at each node
+        Array1D<Nandle> PreviousFluidTemp;
+        Array1D<Nandle> TentativePipeTemp;
+        Array1D<Nandle> PipeTemp;
+        Array1D<Nandle> PreviousPipeTemp;
         int NumDepthNodes;            // number of soil grid points in the depth direction
         int PipeNodeDepth;            // soil depth grid point where pipe is located
         int PipeNodeWidth;            // soil width grid point where pipe is located
-        Real64 PipeDepth;             // pipe burial depth [m]
-        Real64 DomainDepth;           // soil grid depth [m]
-        Real64 dSregular;             // grid spacing in cartesian domain [m]
-        Real64 OutdoorConvCoef;       // soil to air convection coefficient [W/m2.K]
+        Nandle PipeDepth;             // pipe burial depth [m]
+        Nandle DomainDepth;           // soil grid depth [m]
+        Nandle dSregular;             // grid spacing in cartesian domain [m]
+        Nandle OutdoorConvCoef;       // soil to air convection coefficient [W/m2.K]
         std::string SoilMaterial;     // name of soil material:regular object
         int SoilMaterialNum;          // soil material index in material data structure
         int MonthOfMinSurfTemp;       // month of minimum ground surface temperature
-        Real64 MinSurfTemp;           // minimum annual surface temperature [C]
-        Real64 SoilDensity;           // density of soil [kg/m3]
-        Real64 SoilDepth;             // thickness of soil [m]
-        Real64 SoilCp;                // specific heat of soil [J/kg.K]
-        Real64 SoilConductivity;      // thermal conductivity of soil [W/m.K]
-        Real64 SoilRoughness;         // ground surface roughness
-        Real64 SoilThermAbs;          // ground surface thermal absorptivity
-        Real64 SoilSolarAbs;          // ground surface solar absorptivity
-        Real64 CoefS1;                // soil surface finite difference coefficient
-        Real64 CoefS2;                // soil surface finite difference coefficient
-        Real64 CoefA1;                // soil finite difference coefficient
-        Real64 CoefA2;                // soil finite difference coefficient
-        Real64 FourierDS;             // soil Fourier number based on grid spacing
-        Real64 SoilDiffusivity;       // soil thermal diffusivity [m2/s]
-        Real64 SoilDiffusivityPerDay; // soil thermal diffusivity [m2/day]
-        Array4D<Real64> T;            // soil temperature array
+        Nandle MinSurfTemp;           // minimum annual surface temperature [C]
+        Nandle SoilDensity;           // density of soil [kg/m3]
+        Nandle SoilDepth;             // thickness of soil [m]
+        Nandle SoilCp;                // specific heat of soil [J/kg.K]
+        Nandle SoilConductivity;      // thermal conductivity of soil [W/m.K]
+        Nandle SoilRoughness;         // ground surface roughness
+        Nandle SoilThermAbs;          // ground surface thermal absorptivity
+        Nandle SoilSolarAbs;          // ground surface solar absorptivity
+        Nandle CoefS1;                // soil surface finite difference coefficient
+        Nandle CoefS2;                // soil surface finite difference coefficient
+        Nandle CoefA1;                // soil finite difference coefficient
+        Nandle CoefA2;                // soil finite difference coefficient
+        Nandle FourierDS;             // soil Fourier number based on grid spacing
+        Nandle SoilDiffusivity;       // soil thermal diffusivity [m2/s]
+        Nandle SoilDiffusivityPerDay; // soil thermal diffusivity [m2/day]
+        Array4D<Nandle> T;            // soil temperature array
         bool BeginSimInit;            // begin sim and begin environment flag
         bool BeginSimEnvrn;           // begin sim and begin environment flag
         bool FirstHVACupdateFlag;
         bool BeginEnvrnupdateFlag;
         bool SolarExposed;       // Flag to determine if solar is included at ground surface
-        Real64 SumTK;            // Sum of thickness/conductivity over all material layers
-        Real64 ZoneHeatGainRate; // Lagged energy summation for zone heat gain {W}
+        Nandle SumTK;            // Sum of thickness/conductivity over all material layers
+        Nandle ZoneHeatGainRate; // Lagged energy summation for zone heat gain {W}
         int LoopNum;             // PlantLoop index where this pipe lies
         int LoopSideNum;         // PlantLoop%LoopSide index where this pipe lies
         int BranchNum;           // ..LoopSide%Branch index where this pipe lies
@@ -208,16 +208,16 @@ namespace PipeHeatTransfer {
         bool OneTimeInit;
 
         // Report data
-        Real64 FluidInletTemp;          // inlet temperature [C]
-        Real64 FluidOutletTemp;         // outlet temperature [C]
-        Real64 MassFlowRate;            // mass flow rate [kg/s]
-        Real64 FluidHeatLossRate;       // overall heat transfer rate from fluid to pipe [W]
-        Real64 FluidHeatLossEnergy;     // energy transferred from fluid to pipe [J]
-        Real64 PipeInletTemp;           // pipe temperature at inlet [C]
-        Real64 PipeOutletTemp;          // pipe temperature at Oulet [C]
-        Real64 EnvironmentHeatLossRate; // overall heat transfer rate from pipe to environment [W]
-        Real64 EnvHeatLossEnergy;       // energy transferred from pipe to environment [J]
-        Real64 VolumeFlowRate;
+        Nandle FluidInletTemp;          // inlet temperature [C]
+        Nandle FluidOutletTemp;         // outlet temperature [C]
+        Nandle MassFlowRate;            // mass flow rate [kg/s]
+        Nandle FluidHeatLossRate;       // overall heat transfer rate from fluid to pipe [W]
+        Nandle FluidHeatLossEnergy;     // energy transferred from fluid to pipe [J]
+        Nandle PipeInletTemp;           // pipe temperature at inlet [C]
+        Nandle PipeOutletTemp;          // pipe temperature at Oulet [C]
+        Nandle EnvironmentHeatLossRate; // overall heat transfer rate from pipe to environment [W]
+        Nandle EnvHeatLossEnergy;       // energy transferred from pipe to environment [J]
+        Nandle VolumeFlowRate;
 
         // Default Constructor
         PipeHTData()
@@ -241,26 +241,26 @@ namespace PipeHeatTransfer {
 
         void clear_state();
 
-        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad, bool const RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad, bool const RunFlag) override;
 
         void PushInnerTimeStepArrays();
 
         void InitPipesHeatTransfer(bool const FirstHVACIteration // component number
         );
 
-        Real64 TBND(Real64 const z,       // Current Depth
-                    Real64 const DayOfSim // Current Simulation Day
+        Nandle TBND(Nandle const z,       // Current Depth
+                    Nandle const DayOfSim // Current Simulation Day
         );
 
         void CalcBuriedPipeSoil();
 
         void CalcPipesHeatTransfer(Optional_int_const LengthIndex = _);
 
-        Real64 OutsidePipeHeatTransCoef();
+        Nandle OutsidePipeHeatTransCoef();
 
-        Real64 CalcPipeHeatTransCoef(Real64 const Temperature,  // Temperature of water entering the surface, in C
-                                     Real64 const MassFlowRate, // Mass flow rate, in kg/s
-                                     Real64 const Diameter      // Pipe diameter, m
+        Nandle CalcPipeHeatTransCoef(Nandle const Temperature,  // Temperature of water entering the surface, in C
+                                     Nandle const MassFlowRate, // Mass flow rate, in kg/s
+                                     Nandle const Diameter      // Pipe diameter, m
         );
 
         void ReportPipesHeatTransfer(); // Index for the surface under consideration

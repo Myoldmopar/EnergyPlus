@@ -115,15 +115,15 @@ namespace VariableSpeedCoils {
     // Data
     // MODULE PARAMETER DEFINITIONS
 
-    Real64 const RatedInletAirTemp(26.6667);     // 26.6667C or 80F
-    Real64 const RatedInletWetBulbTemp(19.44);   // 19.44 or 67F, cooling mode
-    Real64 const RatedInletAirHumRat(0.01125);   // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
-    Real64 const RatedInletWaterTemp(29.4);      // 85 F cooling mode
-    Real64 const RatedAmbAirTemp(35.0);          // 95 F cooling mode
-    Real64 const RatedInletAirTempHeat(21.11);   // 21.11C or 70F, heating mode
-    Real64 const RatedInletWaterTempHeat(21.11); // 21.11C or 70F, heating mode
-    Real64 const RatedAmbAirTempHeat(8.33);      // 8.33 or 47F, heating mode
-    Real64 const RatedAmbAirWBHeat(6.11);        // 8.33 or 43F, heating mode, rated wet bulb temperature
+    Nandle const RatedInletAirTemp(26.6667);     // 26.6667C or 80F
+    Nandle const RatedInletWetBulbTemp(19.44);   // 19.44 or 67F, cooling mode
+    Nandle const RatedInletAirHumRat(0.01125);   // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
+    Nandle const RatedInletWaterTemp(29.4);      // 85 F cooling mode
+    Nandle const RatedAmbAirTemp(35.0);          // 95 F cooling mode
+    Nandle const RatedInletAirTempHeat(21.11);   // 21.11C or 70F, heating mode
+    Nandle const RatedInletWaterTempHeat(21.11); // 21.11C or 70F, heating mode
+    Nandle const RatedAmbAirTempHeat(8.33);      // 8.33 or 47F, heating mode
+    Nandle const RatedAmbAirWBHeat(6.11);        // 8.33 or 43F, heating mode, rated wet bulb temperature
 
     // Water Systems
     int const CondensateDiscarded(1001); // default mode where water is "lost"
@@ -160,27 +160,27 @@ namespace VariableSpeedCoils {
     bool GetCoilsInputFlag(true); // Flag set to make sure you get input once
     // LOGICAL, ALLOCATABLE, DIMENSION(:) :: MySizeFlag
 
-    Real64 SourceSideMassFlowRate(0.0); // Source Side Mass flow rate [Kg/s]
-    Real64 SourceSideInletTemp(0.0);    // Source Side Inlet Temperature [C]
-    Real64 SourceSideInletEnth(0.0);    // Source Side Inlet Enthalpy [J/kg]
-    Real64 LoadSideMassFlowRate(0.0);   // Load Side Mass flow rate [Kg/s]
-    Real64 LoadSideInletDBTemp(0.0);    // Load Side Inlet Dry Bulb Temp [C]
-    Real64 LoadSideInletWBTemp(0.0);    // Load Side Inlet Wet Bulb Temp [C]
-    Real64 LoadSideInletHumRat(0.0);    // Load Side Outlet Humidity ratio
-    Real64 LoadSideInletEnth(0.0);      // Load Side Inlet Enthalpy [J/kg]
-    Real64 LoadSideOutletDBTemp(0.0);   // Load Side Outlet Dry Bulb Temp [C]
-    Real64 LoadSideOutletHumRat(0.0);   // Load Side Outlet Humidity ratio
-    Real64 LoadSideOutletEnth(0.0);     // Load Side Outlet Enthalpy [J/kg]
-    Real64 QSensible(0.0);              // Load side sensible heat transfer rate [W]
-    Real64 QLoadTotal(0.0);             // Load side total heat transfer rate [W]
-    Real64 QLatRated(0.0);              // Latent Capacity [W] rated at entering air conditions [Tdb=26.7C Twb=19.4C]
-    Real64 QLatActual(0.0);             // Actual Latent Capacity [W]
-    Real64 QSource(0.0);                // Source side heat transfer rate [W]
-    Real64 Winput(0.0);                 // Power Consumption [W]
-    Real64 PLRCorrLoadSideMdot(0.0);    // Load Side Mdot corrected for Part Load Ratio of the unit
+    Nandle SourceSideMassFlowRate(0.0); // Source Side Mass flow rate [Kg/s]
+    Nandle SourceSideInletTemp(0.0);    // Source Side Inlet Temperature [C]
+    Nandle SourceSideInletEnth(0.0);    // Source Side Inlet Enthalpy [J/kg]
+    Nandle LoadSideMassFlowRate(0.0);   // Load Side Mass flow rate [Kg/s]
+    Nandle LoadSideInletDBTemp(0.0);    // Load Side Inlet Dry Bulb Temp [C]
+    Nandle LoadSideInletWBTemp(0.0);    // Load Side Inlet Wet Bulb Temp [C]
+    Nandle LoadSideInletHumRat(0.0);    // Load Side Outlet Humidity ratio
+    Nandle LoadSideInletEnth(0.0);      // Load Side Inlet Enthalpy [J/kg]
+    Nandle LoadSideOutletDBTemp(0.0);   // Load Side Outlet Dry Bulb Temp [C]
+    Nandle LoadSideOutletHumRat(0.0);   // Load Side Outlet Humidity ratio
+    Nandle LoadSideOutletEnth(0.0);     // Load Side Outlet Enthalpy [J/kg]
+    Nandle QSensible(0.0);              // Load side sensible heat transfer rate [W]
+    Nandle QLoadTotal(0.0);             // Load side total heat transfer rate [W]
+    Nandle QLatRated(0.0);              // Latent Capacity [W] rated at entering air conditions [Tdb=26.7C Twb=19.4C]
+    Nandle QLatActual(0.0);             // Actual Latent Capacity [W]
+    Nandle QSource(0.0);                // Source side heat transfer rate [W]
+    Nandle Winput(0.0);                 // Power Consumption [W]
+    Nandle PLRCorrLoadSideMdot(0.0);    // Load Side Mdot corrected for Part Load Ratio of the unit
 
-    Real64 VSHPWHHeatingCapacity(0.0); // Used by Heat Pump:Water Heater object as total water heating capacity [W]
-    Real64 VSHPWHHeatingCOP(0.0);      // Used by Heat Pump:Water Heater object as water heating COP [W/W]
+    Nandle VSHPWHHeatingCapacity(0.0); // Used by Heat Pump:Water Heater object as total water heating capacity [W]
+    Nandle VSHPWHHeatingCOP(0.0);      // Used by Heat Pump:Water Heater object as water heating COP [W/W]
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE
 
@@ -294,16 +294,16 @@ namespace VariableSpeedCoils {
     void SimVariableSpeedCoils(std::string const &CompName,   // Coil Name
                                int &CompIndex,                // Index for Component name
                                int const CyclingScheme,       // Continuous fan OR cycling compressor
-                               Real64 &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
-                               Real64 &HPTimeConstant,        // Heat pump time constant [s]
-                               Real64 &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
+                               Nandle &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
+                               Nandle &HPTimeConstant,        // Heat pump time constant [s]
+                               Nandle &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
                                int const CompOp,              // compressor on/off. 0 = off; 1= on
-                               Real64 const PartLoadFrac,
+                               Nandle const PartLoadFrac,
                                int const SpeedNum,                    // compressor speed number
-                               Real64 const SpeedRatio,               // compressor speed ratio
-                               Real64 const SensLoad,                 // Sensible demand load [W]
-                               Real64 const LatentLoad,               // Latent demand load [W]
-                               Optional<Real64 const> OnOffAirFlowRat // ratio of comp on to comp off air flow rate
+                               Nandle const SpeedRatio,               // compressor speed ratio
+                               Nandle const SensLoad,                 // Sensible demand load [W]
+                               Nandle const LatentLoad,               // Latent demand load [W]
+                               Optional<Nandle const> OnOffAirFlowRat // ratio of comp on to comp off air flow rate
     )
     {
 
@@ -322,8 +322,8 @@ namespace VariableSpeedCoils {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int DXCoilNum;            // The WatertoAirHP that you are currently loading input into
-        Real64 OnOffAirFlowRatio; // ratio of comp on to comp off air flow rate
-        Real64 RuntimeFrac;       // run time fraction
+        Nandle OnOffAirFlowRatio; // ratio of comp on to comp off air flow rate
+        Nandle RuntimeFrac;       // run time fraction
         int SpeedCal;             // variable for error proof speed input
 
         // Obtains and Allocates WatertoAirHP related parameters from input file
@@ -466,14 +466,14 @@ namespace VariableSpeedCoils {
         int IOStat;
         int AlfaFieldIncre;              // increment number of Alfa field
         static bool ErrorsFound(false);  // If errors detected in input
-        Real64 CurveVal;                 // Used to verify modifier curves equal 1 at rated conditions
-        Real64 WHInletAirTemp;           // Used to pass proper inlet air temp to HPWH DX coil performance curves
-        Real64 WHInletWaterTemp;         // Used to pass proper inlet water temp to HPWH DX coil performance curves
+        Nandle CurveVal;                 // Used to verify modifier curves equal 1 at rated conditions
+        Nandle WHInletAirTemp;           // Used to pass proper inlet air temp to HPWH DX coil performance curves
+        Nandle WHInletWaterTemp;         // Used to pass proper inlet water temp to HPWH DX coil performance curves
         std::string CurrentModuleObject; // for ease in getting objects
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 
@@ -3178,14 +3178,14 @@ namespace VariableSpeedCoils {
     //******************************************************************************
 
     void InitVarSpeedCoil(int const DXCoilNum,                       // Current DXCoilNum under simulation
-                          Real64 const MaxONOFFCyclesperHour,        // Maximum cycling rate of heat pump [cycles/hr]
-                          Real64 const HPTimeConstant,               // Heat pump time constant [s]
-                          Real64 const FanDelayTime,                 // Fan delay time, time delay for the HP's fan to
-                          Real64 const SensLoad,                     // Control zone sensible load[W]
-                          Real64 const LatentLoad,                   // Control zone latent load[W]
+                          Nandle const MaxONOFFCyclesperHour,        // Maximum cycling rate of heat pump [cycles/hr]
+                          Nandle const HPTimeConstant,               // Heat pump time constant [s]
+                          Nandle const FanDelayTime,                 // Fan delay time, time delay for the HP's fan to
+                          Nandle const SensLoad,                     // Control zone sensible load[W]
+                          Nandle const LatentLoad,                   // Control zone latent load[W]
                           int const CyclingScheme,                   // fan operating mode
-                          Real64 const EP_UNUSED(OnOffAirFlowRatio), // ratio of compressor on flow to average flow over time step
-                          Real64 const SpeedRatio,                   // compressor speed ratio
+                          Nandle const EP_UNUSED(OnOffAirFlowRatio), // ratio of compressor on flow to average flow over time step
+                          Nandle const SpeedRatio,                   // compressor speed ratio
                           int const SpeedNum                         // compressor speed number
     )
     {
@@ -3233,16 +3233,16 @@ namespace VariableSpeedCoils {
         static Array1D_bool MyEnvrnFlag; // used for initializations each begin environment flag
         static Array1D_bool MySizeFlag;  // used for sizing PTHP inputs one time
         static Array1D_bool MyPlantScanFlag;
-        Real64 rho;   // local fluid density
-        Real64 Cp;    // local fluid specific heat
+        Nandle rho;   // local fluid density
+        Nandle Cp;    // local fluid specific heat
         int SpeedCal; // calculated speed level
         bool errFlag;
         static bool ErrorsFound(false);    // TRUE when errors found, air loop initialization error
-        Real64 RatedVolFlowPerRatedTotCap; // Rated Air Volume Flow Rate divided by Rated Total Capacity [m3/s-W)
+        Nandle RatedVolFlowPerRatedTotCap; // Rated Air Volume Flow Rate divided by Rated Total Capacity [m3/s-W)
         int Mode;                          // Performance mode for MultiMode DX coil; Always 1 for other coil types
-        Real64 RatedHeatPumpIndoorAirTemp; // Indoor dry-bulb temperature to heat pump evaporator at rated conditions [C]
-        Real64 RatedHeatPumpIndoorHumRat;  // Inlet humidity ratio to heat pump evaporator at rated conditions [kg/kg]
-        Real64 WaterFlowScale;             // water flow scaling factor match rated flow rate
+        Nandle RatedHeatPumpIndoorAirTemp; // Indoor dry-bulb temperature to heat pump evaporator at rated conditions [C]
+        Nandle RatedHeatPumpIndoorHumRat;  // Inlet humidity ratio to heat pump evaporator at rated conditions [kg/kg]
+        Nandle WaterFlowScale;             // water flow scaling factor match rated flow rate
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("InitVarSpeedCoil");
@@ -3365,11 +3365,11 @@ namespace VariableSpeedCoils {
                                                                                                     RatedInletAirTemp,
                                                                                                     VarSpeedCoil(DXCoilNum).InletAirHumRat);
                 // store environment data fill back in after rating point calc is over
-                Real64 holdOutDryBulbTemp = DataEnvironment::OutDryBulbTemp;
-                Real64 holdOutHumRat = DataEnvironment::OutHumRat;
-                Real64 holdOutWetBulb = DataEnvironment::OutWetBulbTemp;
-                Real64 holdOutBaroPress = DataEnvironment::OutBaroPress;
-                Real64 ratedOutdoorAirWetBulb = 23.9; // from I/O ref. more precise value?
+                Nandle holdOutDryBulbTemp = DataEnvironment::OutDryBulbTemp;
+                Nandle holdOutHumRat = DataEnvironment::OutHumRat;
+                Nandle holdOutWetBulb = DataEnvironment::OutWetBulbTemp;
+                Nandle holdOutBaroPress = DataEnvironment::OutBaroPress;
+                Nandle ratedOutdoorAirWetBulb = 23.9; // from I/O ref. more precise value?
 
                 DataEnvironment::OutDryBulbTemp = RatedAmbAirTemp;
                 DataEnvironment::OutWetBulbTemp = ratedOutdoorAirWetBulb;
@@ -3386,7 +3386,7 @@ namespace VariableSpeedCoils {
                     DataHVACGlobals::Coil_CoolingWaterToAirHPVSEquationFit) { // need to set water info for WSHP
                     VarSpeedCoil(DXCoilNum).WaterMassFlowRate = VarSpeedCoil(DXCoilNum).MSRatedWaterMassFlowRate(VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                     VarSpeedCoil(DXCoilNum).InletWaterTemp = RatedInletWaterTemp; // 85 F cooling mode
-                    Real64 CpSource = GetSpecificHeatGlycol(PlantLoop(VarSpeedCoil(DXCoilNum).LoopNum).FluidName,
+                    Nandle CpSource = GetSpecificHeatGlycol(PlantLoop(VarSpeedCoil(DXCoilNum).LoopNum).FluidName,
                                                             SourceSideInletTemp,
                                                             PlantLoop(VarSpeedCoil(DXCoilNum).LoopNum).FluidIndex,
                                                             RoutineName);
@@ -3394,7 +3394,7 @@ namespace VariableSpeedCoils {
                 }
 
                 // calculate coil model at rating point
-                Real64 runtimeFrac(1.0);
+                Nandle runtimeFrac(1.0);
                 VarSpeedCoil(DXCoilNum).DesignAirMassFlowRate = VarSpeedCoil(DXCoilNum).MSRatedAirMassFlowRate(VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                 VarSpeedCoil(DXCoilNum).DesignAirVolFlowRate = VarSpeedCoil(DXCoilNum).MSRatedAirVolFlowRate(VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                 VarSpeedCoil(DXCoilNum).DesignWaterMassFlowRate =
@@ -3403,7 +3403,7 @@ namespace VariableSpeedCoils {
 
                 CalcVarSpeedCoilCooling(DXCoilNum, 2.0, runtimeFrac, SensLoad, LatentLoad, 1, 1.0, 1.0, 1.0, VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                 // coil outlets
-                Real64 RatedOutletWetBulb(0.0);
+                Nandle RatedOutletWetBulb(0.0);
                 RatedOutletWetBulb = Psychrometrics::PsyTwbFnTdbWPb(VarSpeedCoil(DXCoilNum).OutletAirDBTemp,
                                                                     VarSpeedCoil(DXCoilNum).OutletAirHumRat,
                                                                     DataEnvironment::StdPressureSeaLevel,
@@ -3469,10 +3469,10 @@ namespace VariableSpeedCoils {
                                                                                                     RatedInletAirTempHeat,
                                                                                                     VarSpeedCoil(DXCoilNum).InletAirHumRat);
                 // store environment data fill back in after rating point calc is over
-                Real64 holdOutDryBulbTemp = DataEnvironment::OutDryBulbTemp;
-                Real64 holdOutHumRat = DataEnvironment::OutHumRat;
-                Real64 holdOutWetBulb = DataEnvironment::OutWetBulbTemp;
-                Real64 holdOutBaroPress = DataEnvironment::OutBaroPress;
+                Nandle holdOutDryBulbTemp = DataEnvironment::OutDryBulbTemp;
+                Nandle holdOutHumRat = DataEnvironment::OutHumRat;
+                Nandle holdOutWetBulb = DataEnvironment::OutWetBulbTemp;
+                Nandle holdOutBaroPress = DataEnvironment::OutBaroPress;
 
                 DataEnvironment::OutDryBulbTemp = RatedAmbAirTempHeat;
                 DataEnvironment::OutWetBulbTemp = RatedAmbAirWBHeat;
@@ -3490,7 +3490,7 @@ namespace VariableSpeedCoils {
                     DataHVACGlobals::Coil_HeatingWaterToAirHPVSEquationFit) { // need to set water info for WSHP
                     VarSpeedCoil(DXCoilNum).WaterMassFlowRate = VarSpeedCoil(DXCoilNum).MSRatedWaterMassFlowRate(VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                     VarSpeedCoil(DXCoilNum).InletWaterTemp = RatedInletWaterTempHeat; // 21.11C or 70F, heating mode
-                    Real64 CpSource = GetSpecificHeatGlycol(PlantLoop(VarSpeedCoil(DXCoilNum).LoopNum).FluidName,
+                    Nandle CpSource = GetSpecificHeatGlycol(PlantLoop(VarSpeedCoil(DXCoilNum).LoopNum).FluidName,
                                                             SourceSideInletTemp,
                                                             PlantLoop(VarSpeedCoil(DXCoilNum).LoopNum).FluidIndex,
                                                             RoutineName);
@@ -3498,7 +3498,7 @@ namespace VariableSpeedCoils {
                 }
 
                 // calculate coil model at rating point
-                Real64 runtimeFrac(1.0);
+                Nandle runtimeFrac(1.0);
                 VarSpeedCoil(DXCoilNum).DesignAirMassFlowRate = VarSpeedCoil(DXCoilNum).MSRatedAirMassFlowRate(VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                 VarSpeedCoil(DXCoilNum).DesignAirVolFlowRate = VarSpeedCoil(DXCoilNum).MSRatedAirVolFlowRate(VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                 VarSpeedCoil(DXCoilNum).DesignWaterMassFlowRate =
@@ -3506,7 +3506,7 @@ namespace VariableSpeedCoils {
                 VarSpeedCoil(DXCoilNum).DesignWaterVolFlowRate = VarSpeedCoil(DXCoilNum).MSRatedWaterVolFlowRate(VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                 CalcVarSpeedCoilHeating(DXCoilNum, 2.0, runtimeFrac, SensLoad, 1, 1.0, 1.0, 1.0, VarSpeedCoil(DXCoilNum).NumOfSpeeds);
                 // coil outlets
-                Real64 RatedOutletWetBulb(0.0);
+                Nandle RatedOutletWetBulb(0.0);
                 RatedOutletWetBulb = Psychrometrics::PsyTwbFnTdbWPb(VarSpeedCoil(DXCoilNum).OutletAirDBTemp,
                                                                     VarSpeedCoil(DXCoilNum).OutletAirHumRat,
                                                                     DataEnvironment::StdPressureSeaLevel,
@@ -3817,7 +3817,7 @@ namespace VariableSpeedCoils {
         using FluidProperties::GetSpecificHeatGlycol;
 
         // Locals
-        Real64 QLoadTotal; // placeholder for calculating SHR
+        Nandle QLoadTotal; // placeholder for calculating SHR
 
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
@@ -3832,19 +3832,19 @@ namespace VariableSpeedCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 rhoair;
-        Real64 MixTemp = -999.0;
-        Real64 MixHumRat = -999.0;
-        Real64 MixEnth = -999.0;
-        Real64 MixWetBulb = -999.0;
-        Real64 SupTemp = -999.0;
-        Real64 SupHumRat = -999.0;
-        Real64 SupEnth = -999.0;
-        Real64 OutTemp = -999.0;
-        Real64 OutAirFrac = -999.0;
-        Real64 VolFlowRate = -999.0;
-        Real64 CoolCapAtPeak = -999.0;
-        Real64 TotCapTempModFac = -999.0;
+        Nandle rhoair;
+        Nandle MixTemp = -999.0;
+        Nandle MixHumRat = -999.0;
+        Nandle MixEnth = -999.0;
+        Nandle MixWetBulb = -999.0;
+        Nandle SupTemp = -999.0;
+        Nandle SupHumRat = -999.0;
+        Nandle SupEnth = -999.0;
+        Nandle OutTemp = -999.0;
+        Nandle OutAirFrac = -999.0;
+        Nandle VolFlowRate = -999.0;
+        Nandle CoolCapAtPeak = -999.0;
+        Nandle TotCapTempModFac = -999.0;
         int TimeStepNumAtMax;
         int DDNum;
         int PltSizNum;
@@ -3854,45 +3854,45 @@ namespace VariableSpeedCoils {
         bool RatedAirFlowAutoSized;
         bool RatedWaterFlowAutoSized;
         bool ErrorsFound;
-        Real64 SystemCapacity;
-        Real64 rho;
-        Real64 cp;
+        Nandle SystemCapacity;
+        Nandle rho;
+        Nandle cp;
         int NormSpeed;                       // norminal speed level
         int UpperSpeed;                      // highest speed level
         int Mode;                            // speed level
-        Real64 rhoW;                         // water density
-        Real64 rhoA;                         // air density
-        Real64 SHR;                          // sensible heat transfer ratio
-        Real64 RatedAirMassFlowRate;         // rated air mass flow rate
-        Real64 CBFRated;                     // bypass factor at the rated condition, considering difference in flow rates
-        Real64 RatedInletEnth;               // rated inlet air enthalpy
-        Real64 QLoadTotal1;                  // placeholder for calculating SHR
-        Real64 QLoadTotal2;                  // placeholder for calculating SHR
-        Real64 AirMassFlowRatio;             // air mass flow ratio
-        Real64 WaterMassFlowRatio;           // water mass flow rate
-        Real64 RatedSourceTempCool;          // rated source temperature, space cooling mode
+        Nandle rhoW;                         // water density
+        Nandle rhoA;                         // air density
+        Nandle SHR;                          // sensible heat transfer ratio
+        Nandle RatedAirMassFlowRate;         // rated air mass flow rate
+        Nandle CBFRated;                     // bypass factor at the rated condition, considering difference in flow rates
+        Nandle RatedInletEnth;               // rated inlet air enthalpy
+        Nandle QLoadTotal1;                  // placeholder for calculating SHR
+        Nandle QLoadTotal2;                  // placeholder for calculating SHR
+        Nandle AirMassFlowRatio;             // air mass flow ratio
+        Nandle WaterMassFlowRatio;           // water mass flow rate
+        Nandle RatedSourceTempCool;          // rated source temperature, space cooling mode
         std::string CurrentObjSubfix;        // Object subfix type for printing
         bool IsAutoSize;                     // Indicator to autosize
         bool HardSizeNoDesRun;               // Indicator to hardsize withouth sizing runs
         bool HardSizeNoDesRunAirFlow;        // Indicator to hardsize withouth sizing runs for rated air flow field
-        Real64 RatedAirVolFlowRateDes;       // Autosized rated air flow for reporting
-        Real64 RatedAirVolFlowRateUser;      // Hardsized rated air flow for reporting
-        Real64 RatedCapCoolTotalDes;         // Autosized rated total cooling capacity for reporting
-        Real64 RatedCapCoolTotalUser;        // Hardsized rated total cooling capacity for reporting
-        Real64 RatedCapHeatDes;              // Autosized rated heating capacity for reporting
-        Real64 RatedCapHeatUser;             // Hardsized rated heating capacity for reporting
-        Real64 RatedWaterVolFlowRateDes;     // Autosized rated water flow for reporting
-        Real64 RatedWaterVolFlowRateUser;    // Hardsized rated water flow for reporting
-        Real64 RatedCapCoolSensDes;          // Autosized rated sensible cooling capacity for reporting
-        Real64 RatedCapCoolSensUser;         // Hardsized rated sensible cooling capacity for reporting
-        Real64 EvapCondPumpElecNomPowerDes;  // Autosized evaporative condenser pump power for reporting
-        Real64 EvapCondPumpElecNomPowerUser; // Hardsized evaporative condenser pump power for reporting
-        Real64 DefrostCapacityDes;           // Autosized resistive defrost heater capacity for reporting
-        Real64 DefrostCapacityUser;          // Hardsized resistive defrost heater capacity for reporting
+        Nandle RatedAirVolFlowRateDes;       // Autosized rated air flow for reporting
+        Nandle RatedAirVolFlowRateUser;      // Hardsized rated air flow for reporting
+        Nandle RatedCapCoolTotalDes;         // Autosized rated total cooling capacity for reporting
+        Nandle RatedCapCoolTotalUser;        // Hardsized rated total cooling capacity for reporting
+        Nandle RatedCapHeatDes;              // Autosized rated heating capacity for reporting
+        Nandle RatedCapHeatUser;             // Hardsized rated heating capacity for reporting
+        Nandle RatedWaterVolFlowRateDes;     // Autosized rated water flow for reporting
+        Nandle RatedWaterVolFlowRateUser;    // Hardsized rated water flow for reporting
+        Nandle RatedCapCoolSensDes;          // Autosized rated sensible cooling capacity for reporting
+        Nandle RatedCapCoolSensUser;         // Hardsized rated sensible cooling capacity for reporting
+        Nandle EvapCondPumpElecNomPowerDes;  // Autosized evaporative condenser pump power for reporting
+        Nandle EvapCondPumpElecNomPowerUser; // Hardsized evaporative condenser pump power for reporting
+        Nandle DefrostCapacityDes;           // Autosized resistive defrost heater capacity for reporting
+        Nandle DefrostCapacityUser;          // Hardsized resistive defrost heater capacity for reporting
         bool SizingDesRunThisAirSys;         // true if a particular air system had a Sizing:System object and system sizing done
         bool SizingDesRunThisZone;           // true if a particular zone had a Sizing:Zone object and zone sizing was done
-        Real64 HPInletAirHumRat;             // Rated inlet air humidity ratio for heat pump water heater [kgWater/kgDryAir]
-        Real64 HPWHCoolCapacity;             // estimate cooling capacity in HPWH
+        Nandle HPInletAirHumRat;             // Rated inlet air humidity ratio for heat pump water heater [kgWater/kgDryAir]
+        Nandle HPWHCoolCapacity;             // estimate cooling capacity in HPWH
 
         UpperSpeed = VarSpeedCoil(DXCoilNum).NumOfSpeeds;
         NormSpeed = VarSpeedCoil(DXCoilNum).NormSpedLevel;
@@ -4070,9 +4070,9 @@ namespace VariableSpeedCoils {
                     SupEnth = PsyHFnTdbW(SupTemp, SupHumRat);
 
                     // design fan heat will be added to coil load
-                    Real64 FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, VolFlowRate);
+                    Nandle FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, VolFlowRate);
                     // inlet/outlet temp is adjusted after enthalpy is calculcated so fan heat is not double counted
-                    Real64 CpAir = PsyCpAirFnW(MixHumRat);
+                    Nandle CpAir = PsyCpAirFnW(MixHumRat);
                     if (PrimaryAirSystem(CurSysNum).supFanLocation == DataAirSystems::fanPlacement::BlowThru) {
                         MixTemp += FanCoolLoad / (CpAir * rhoair * VolFlowRate);
                     } else if (PrimaryAirSystem(CurSysNum).supFanLocation == DataAirSystems::fanPlacement::DrawThru) {
@@ -4140,9 +4140,9 @@ namespace VariableSpeedCoils {
                     SupEnth = PsyHFnTdbW(SupTemp, SupHumRat);
 
                     // design fan heat will be added to coil load
-                    Real64 FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, VolFlowRate);
+                    Nandle FanCoolLoad = DataAirSystems::calcFanDesignHeatGain(DataFanEnumType, DataFanIndex, VolFlowRate);
                     // inlet/outlet temp is adjusted after enthalpy is calculcated so fan heat is not double counted
-                    Real64 CpAir = PsyCpAirFnW(MixHumRat);
+                    Nandle CpAir = PsyCpAirFnW(MixHumRat);
 
                     if (DataSizing::DataFanPlacement == DataSizing::zoneFanPlacement::zoneBlowThru) {
                         MixTemp += FanCoolLoad / (CpAir * rhoair * VolFlowRate);
@@ -4792,7 +4792,7 @@ namespace VariableSpeedCoils {
                 WaterMassFlowRatio = 1.0;
             }
 
-            Real64 TempInletWetBulb = RatedInletWetBulbTemp;
+            Nandle TempInletWetBulb = RatedInletWetBulbTemp;
             CalcTotCapSHR_VSWSHP(RatedInletAirTemp,
                                  RatedInletAirHumRat,
                                  RatedInletEnth,
@@ -5005,13 +5005,13 @@ namespace VariableSpeedCoils {
 
     void CalcVarSpeedCoilCooling(int const DXCoilNum,                       // Heat Pump Number
                                  int const CyclingScheme,                   // Fan/Compressor cycling scheme indicator
-                                 Real64 &RuntimeFrac,                       // Runtime Fraction of compressor or percent on time (on-time/cycle time)
-                                 Real64 const EP_UNUSED(SensDemand),        // Cooling Sensible Demand [W] !unused1208
-                                 Real64 const EP_UNUSED(LatentDemand),      // Cooling Latent Demand [W]
+                                 Nandle &RuntimeFrac,                       // Runtime Fraction of compressor or percent on time (on-time/cycle time)
+                                 Nandle const EP_UNUSED(SensDemand),        // Cooling Sensible Demand [W] !unused1208
+                                 Nandle const EP_UNUSED(LatentDemand),      // Cooling Latent Demand [W]
                                  int const CompOp,                          // compressor operation flag
-                                 Real64 const PartLoadRatio,                // compressor part load ratio
-                                 Real64 const EP_UNUSED(OnOffAirFlowRatio), // ratio of compressor on flow to average flow over time step
-                                 Real64 const SpeedRatio,                   // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
+                                 Nandle const PartLoadRatio,                // compressor part load ratio
+                                 Nandle const EP_UNUSED(OnOffAirFlowRatio), // ratio of compressor on flow to average flow over time step
+                                 Nandle const SpeedRatio,                   // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
                                  int const SpeedNum                         // Speed number, high bound
     )
     {
@@ -5065,70 +5065,70 @@ namespace VariableSpeedCoils {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 Twet_Rated;  // Twet at rated conditions (coil air flow rate and air temperatures), sec
-        Real64 Gamma_Rated; // Gamma at rated conditions (coil air flow rate and air temperatures)
+        Nandle Twet_Rated;  // Twet at rated conditions (coil air flow rate and air temperatures), sec
+        Nandle Gamma_Rated; // Gamma at rated conditions (coil air flow rate and air temperatures)
 
-        Real64 SHRss;    // Sensible heat ratio at steady state
-        Real64 SHReff;   // Effective sensible heat ratio at part-load condition
-        Real64 CpSource; // Specific heat of water [J/kg_C]
-        Real64 CpAir;    // Specific heat of air [J/kg_C]
-        Real64 ReportingConstant;
+        Nandle SHRss;    // Sensible heat ratio at steady state
+        Nandle SHReff;   // Effective sensible heat ratio at part-load condition
+        Nandle CpSource; // Specific heat of water [J/kg_C]
+        Nandle CpAir;    // Specific heat of air [J/kg_C]
+        Nandle ReportingConstant;
 
         bool LatDegradModelSimFlag; // Latent degradation model simulation flag
         int NumIteration;           // Iteration Counter
         static int Count(0);        // No idea what this is for.
         static bool firstTime(true);
-        static Real64 LoadSideInletDBTemp_Init; // rated conditions
-        static Real64 LoadSideInletWBTemp_Init; // rated conditions
-        static Real64 LoadSideInletHumRat_Init; // rated conditions
-        static Real64 LoadSideInletEnth_Init;   // rated conditions
-        static Real64 CpAir_Init;               // rated conditions
-        Real64 LoadSideInletDBTemp_Unit;        // calc conditions for unit
-        Real64 LoadSideInletWBTemp_Unit;        // calc conditions for unit
-        Real64 LoadSideInletHumRat_Unit;        // calc conditions for unit
-        Real64 LoadSideInletEnth_Unit;          // calc conditions for unit
-        Real64 CpAir_Unit;                      // calc conditions for unit
-        Real64 AirMassFlowRatio;                // airflow ratio at low speed
-        Real64 WaterMassFlowRatio;              // airflow ratio at high speed
-        Real64 EIRAirFFModFac;                  // air flow fraction modification
-        Real64 EIRWaterFFModFac;                // water flow fraction modification
-        Real64 EIRTempModFac;                   // total capacity temperature correctio fraction
-        Real64 CBFSpeed;                        // total capacity temperature correctio fraction
-        Real64 SHR;                             // total capacity temperature correctio fraction
-        Real64 EIR;                             // total capacity temperature correctio fraction
+        static Nandle LoadSideInletDBTemp_Init; // rated conditions
+        static Nandle LoadSideInletWBTemp_Init; // rated conditions
+        static Nandle LoadSideInletHumRat_Init; // rated conditions
+        static Nandle LoadSideInletEnth_Init;   // rated conditions
+        static Nandle CpAir_Init;               // rated conditions
+        Nandle LoadSideInletDBTemp_Unit;        // calc conditions for unit
+        Nandle LoadSideInletWBTemp_Unit;        // calc conditions for unit
+        Nandle LoadSideInletHumRat_Unit;        // calc conditions for unit
+        Nandle LoadSideInletEnth_Unit;          // calc conditions for unit
+        Nandle CpAir_Unit;                      // calc conditions for unit
+        Nandle AirMassFlowRatio;                // airflow ratio at low speed
+        Nandle WaterMassFlowRatio;              // airflow ratio at high speed
+        Nandle EIRAirFFModFac;                  // air flow fraction modification
+        Nandle EIRWaterFFModFac;                // water flow fraction modification
+        Nandle EIRTempModFac;                   // total capacity temperature correctio fraction
+        Nandle CBFSpeed;                        // total capacity temperature correctio fraction
+        Nandle SHR;                             // total capacity temperature correctio fraction
+        Nandle EIR;                             // total capacity temperature correctio fraction
         int MaxSpeed;                           // maximum speed level
         int SpeedCal;                           // calculated speed level
-        Real64 AoEff;                           // effective air side surface area
-        Real64 QLoadTotal1;                     // total capacity at low speed
-        Real64 QLoadTotal2;                     // total capacity at high speed
-        Real64 Winput1;                         // power consumption at low speed
-        Real64 Winput2;                         // power consumption at high speed
-        Real64 QWasteHeat;                      // recoverable waste heat
-        Real64 QWasteHeat1;                     // recoverable waste heat at low speed
-        Real64 QWasteHeat2;                     // recoverable waste heat at high speed
-        Real64 PLF;                             // part-load function
-        Real64 MaxHumRat;                       // max possible humidity
-        Real64 MaxOutletEnth;                   // max possible outlet enthalpy
+        Nandle AoEff;                           // effective air side surface area
+        Nandle QLoadTotal1;                     // total capacity at low speed
+        Nandle QLoadTotal2;                     // total capacity at high speed
+        Nandle Winput1;                         // power consumption at low speed
+        Nandle Winput2;                         // power consumption at high speed
+        Nandle QWasteHeat;                      // recoverable waste heat
+        Nandle QWasteHeat1;                     // recoverable waste heat at low speed
+        Nandle QWasteHeat2;                     // recoverable waste heat at high speed
+        Nandle PLF;                             // part-load function
+        Nandle MaxHumRat;                       // max possible humidity
+        Nandle MaxOutletEnth;                   // max possible outlet enthalpy
 
         // ADDED VARIABLES FOR air source coil
-        static Real64 OutdoorDryBulb(0.0);        // Outdoor dry-bulb temperature at condenser (C)
-        static Real64 OutdoorWetBulb(0.0);        // Outdoor wet-bulb temperature at condenser (C)
-        static Real64 OutdoorHumRat(0.0);         // Outdoor humidity ratio at condenser (kg/kg)
-        static Real64 OutdoorPressure(0.0);       // Outdoor barometric pressure at condenser (Pa)
-        static Real64 CrankcaseHeatingPower(0.0); // power due to crankcase heater
-        static Real64 CompAmbTemp(0.0);           // Ambient temperature at compressor
-        Real64 CondInletTemp;                     // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
+        static Nandle OutdoorDryBulb(0.0);        // Outdoor dry-bulb temperature at condenser (C)
+        static Nandle OutdoorWetBulb(0.0);        // Outdoor wet-bulb temperature at condenser (C)
+        static Nandle OutdoorHumRat(0.0);         // Outdoor humidity ratio at condenser (kg/kg)
+        static Nandle OutdoorPressure(0.0);       // Outdoor barometric pressure at condenser (Pa)
+        static Nandle CrankcaseHeatingPower(0.0); // power due to crankcase heater
+        static Nandle CompAmbTemp(0.0);           // Ambient temperature at compressor
+        Nandle CondInletTemp;                     // Condenser inlet temperature (C). Outdoor dry-bulb temp for air-cooled condenser.
         // Outdoor Wetbulb +(1 - effectiveness)*(outdoor drybulb - outdoor wetbulb) for evap condenser.
-        Real64 CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
+        Nandle CondInletHumRat; // Condenser inlet humidity ratio (kg/kg). Zero for air-cooled condenser.
         // For evap condenser, its the humidity ratio of the air leaving the evap cooling pads.
-        Real64 CondAirMassFlow;    // Condenser air mass flow rate [kg/s]
-        Real64 RhoSourceAir;       // Density of air [kg/m3]
-        Real64 RhoEvapCondWater;   // Density of water used for evaporative condenser [kg/m3]
-        Real64 EvapCondEffectSped; // condenser evaporative effectiveness at the speed level
-        Real64 RhoWater;           // condensed water density
-        Real64 SpecHumIn;          // inlet air specific humidity
-        Real64 SpecHumOut;         // outlet air specific humidity
-        Real64 rhoair(0);          // entering air density
+        Nandle CondAirMassFlow;    // Condenser air mass flow rate [kg/s]
+        Nandle RhoSourceAir;       // Density of air [kg/m3]
+        Nandle RhoEvapCondWater;   // Density of water used for evaporative condenser [kg/m3]
+        Nandle EvapCondEffectSped; // condenser evaporative effectiveness at the speed level
+        Nandle RhoWater;           // condensed water density
+        Nandle SpecHumIn;          // inlet air specific humidity
+        Nandle SpecHumOut;         // outlet air specific humidity
+        Nandle rhoair(0);          // entering air density
 
         if (firstTime) {
             // Set indoor air conditions to the rated condition
@@ -5662,9 +5662,9 @@ namespace VariableSpeedCoils {
     }
 
     void CalcVarSpeedHPWH(int const DXCoilNum,        // the number of the DX coil to be simulated
-                          Real64 &RuntimeFrac,        // Runtime Fraction of compressor or percent on time (on-time/cycle time)
-                          Real64 const PartLoadRatio, // sensible water heating load / full load sensible water heating capacity
-                          Real64 const SpeedRatio,    // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
+                          Nandle &RuntimeFrac,        // Runtime Fraction of compressor or percent on time (on-time/cycle time)
+                          Nandle const PartLoadRatio, // sensible water heating load / full load sensible water heating capacity
+                          Nandle const SpeedRatio,    // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
                           int const SpeedNum,         // Speed number, high bound
                           int const CyclingScheme     // Continuous fan OR cycling compressor
     )
@@ -5706,59 +5706,59 @@ namespace VariableSpeedCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OperatingHeatingCapacity; // Water heating operating capacity including the impact of capacity and COP curves (W)
-        Real64 OperatingHeatingCOP;      // Water heating operating COP including the impact of capacity and COP curves (W/W)
-        Real64 OperatingHeatingPower;    // Water heating operating Power (W)
-        Real64 CompressorPower;          // Power consumed by compressor only (W)
+        Nandle OperatingHeatingCapacity; // Water heating operating capacity including the impact of capacity and COP curves (W)
+        Nandle OperatingHeatingCOP;      // Water heating operating COP including the impact of capacity and COP curves (W/W)
+        Nandle OperatingHeatingPower;    // Water heating operating Power (W)
+        Nandle CompressorPower;          // Power consumed by compressor only (W)
 
-        Real64 TotalTankHeatingCapacity; // Water heating capacity corrected for condenser water pump heat (W)
-        Real64 TankHeatingCOP;           // Water heating COP corrected for fan and condenser water pump power (W/W)
+        Nandle TotalTankHeatingCapacity; // Water heating capacity corrected for condenser water pump heat (W)
+        Nandle TankHeatingCOP;           // Water heating COP corrected for fan and condenser water pump power (W/W)
         // (these previous 2 variables also include the impact of capacity and COP curves)
-        Real64 EvapCoolingCapacity;   // Air cooling capacity corrected for evap fan and cond water pump heat (W)
-        Real64 InletWaterTemp;        // Condenser water inlet temperature (C)
-        Real64 OutletWaterTemp;       // Condenser water outlet temperature (C)
-        Real64 EvapInletMassFlowRate; // Evaporator air inlet mass flow rate (m3/s)
-        Real64 CondInletMassFlowRate; // Condenser water inlet mass flow rate (m3/s)
-        Real64 CpWater;               // Specific heat of condenser inlet water (J/Kg/k)
-        Real64 InletAirTemp;          // HPWH inlet air temperature (dry-bulb or wet-bulb) (C)
-        Real64 AirMassFlowRatio;      // Ratio of evaporator inlet air mass flow rate to rated mass flow rate
-        Real64 WaterMassFlowRatio;    // Ratio of evaporator inlet water mass flow rate to rated mass flow rate
-        Real64 PumpHeatToWater;       // Amount of pump heat attributed to heating water
-        Real64 HPRTF;                 // Heat pump run time fraction
-        Real64 PLF;                   // part-load function
-        Real64 CBFSpeed;              // bypass factor as individual speed level
-        Real64 COPAirFFModFac;        // air flow fraction modification
-        Real64 COPWaterFFModFac;      // water flow fraction modification
-        Real64 COPTempModFac;         // total capacity temperature correctio fraction
-        Real64 TOTCAPAirFFModFac;     // air flow fraction modification
-        Real64 TOTCAPWaterFFModFac;   // water flow fraction modification
-        Real64 TOTCAPTempModFac;      // total capacity temperature correctio fraction
-        Real64 SHR;                   // total capacity temperature correctio fraction
-        Real64 COP;                   // total capacity temperature correctio fraction
-        Real64 AoEff;                 // effective air side surface area
-        Real64 Winput1;               // power consumption at low speed
-        Real64 Winput2;               // power consumption at high speed
-        Real64 LoadPressure;          // evaporator inlet pressure
-        Real64 CrankcaseHeatingPower; // power due to crankcase heater
-        Real64 hDelta;                // Change in air enthalpy across the cooling coil [J/kg]
-        Real64 hADP;                  // Apparatus dew point enthalpy [J/kg]
-        Real64 tADP;                  // Apparatus dew point temperature [C]
-        Real64 wADP;                  // Apparatus dew point humidity ratio [kg/kg]
-        Real64 hTinwADP;              // Enthalpy at inlet dry-bulb and wADP [J/kg]
-        Real64 WHCAP1;                // total heating capacity at low speed [W]
-        Real64 WHCAP2;                // total heating capacity at high speed [W]
-        Real64 CpAir;                 // Specific heat of air [J/kg_C]
-        Real64 MaxHumRat;             // max possible humidity
-        Real64 MaxOutletEnth;         // max possible outlet enthalpy
-        Real64 ReportingConstant;
+        Nandle EvapCoolingCapacity;   // Air cooling capacity corrected for evap fan and cond water pump heat (W)
+        Nandle InletWaterTemp;        // Condenser water inlet temperature (C)
+        Nandle OutletWaterTemp;       // Condenser water outlet temperature (C)
+        Nandle EvapInletMassFlowRate; // Evaporator air inlet mass flow rate (m3/s)
+        Nandle CondInletMassFlowRate; // Condenser water inlet mass flow rate (m3/s)
+        Nandle CpWater;               // Specific heat of condenser inlet water (J/Kg/k)
+        Nandle InletAirTemp;          // HPWH inlet air temperature (dry-bulb or wet-bulb) (C)
+        Nandle AirMassFlowRatio;      // Ratio of evaporator inlet air mass flow rate to rated mass flow rate
+        Nandle WaterMassFlowRatio;    // Ratio of evaporator inlet water mass flow rate to rated mass flow rate
+        Nandle PumpHeatToWater;       // Amount of pump heat attributed to heating water
+        Nandle HPRTF;                 // Heat pump run time fraction
+        Nandle PLF;                   // part-load function
+        Nandle CBFSpeed;              // bypass factor as individual speed level
+        Nandle COPAirFFModFac;        // air flow fraction modification
+        Nandle COPWaterFFModFac;      // water flow fraction modification
+        Nandle COPTempModFac;         // total capacity temperature correctio fraction
+        Nandle TOTCAPAirFFModFac;     // air flow fraction modification
+        Nandle TOTCAPWaterFFModFac;   // water flow fraction modification
+        Nandle TOTCAPTempModFac;      // total capacity temperature correctio fraction
+        Nandle SHR;                   // total capacity temperature correctio fraction
+        Nandle COP;                   // total capacity temperature correctio fraction
+        Nandle AoEff;                 // effective air side surface area
+        Nandle Winput1;               // power consumption at low speed
+        Nandle Winput2;               // power consumption at high speed
+        Nandle LoadPressure;          // evaporator inlet pressure
+        Nandle CrankcaseHeatingPower; // power due to crankcase heater
+        Nandle hDelta;                // Change in air enthalpy across the cooling coil [J/kg]
+        Nandle hADP;                  // Apparatus dew point enthalpy [J/kg]
+        Nandle tADP;                  // Apparatus dew point temperature [C]
+        Nandle wADP;                  // Apparatus dew point humidity ratio [kg/kg]
+        Nandle hTinwADP;              // Enthalpy at inlet dry-bulb and wADP [J/kg]
+        Nandle WHCAP1;                // total heating capacity at low speed [W]
+        Nandle WHCAP2;                // total heating capacity at high speed [W]
+        Nandle CpAir;                 // Specific heat of air [J/kg_C]
+        Nandle MaxHumRat;             // max possible humidity
+        Nandle MaxOutletEnth;         // max possible outlet enthalpy
+        Nandle ReportingConstant;
         int EvapInletNode;    // Evaporator air inlet node number
         int EvapOutletNode;   // Evaporator air outlet node number
         int CondInletNode;    // Condenser water inlet node number
         int CondOutletNode;   // Condenser water outlet node number
         int MaxSpeed;         // maximum speed level
         int SpeedCal;         // calculated speed level
-        Real64 rhoair(0.0);   // entering air density
-        Real64 RhoWater(0.0); // water density
+        Nandle rhoair(0.0);   // entering air density
+        Nandle RhoWater(0.0); // water density
 
         // note: load side is the evaporator side, and source side is the condenser side
 
@@ -5875,7 +5875,7 @@ namespace VariableSpeedCoils {
             SpeedCal = SpeedNum;
         }
 
-        Real64 locFanElecPower = 0.0; // local for fan electric power
+        Nandle locFanElecPower = 0.0; // local for fan electric power
         if (VarSpeedCoil(DXCoilNum).SupplyFan_TypeNum == DataHVACGlobals::FanType_SystemModelObject) {
             if (VarSpeedCoil(DXCoilNum).SupplyFanIndex > -1) {
                 locFanElecPower = HVACFan::fanObjs[VarSpeedCoil(DXCoilNum).SupplyFanIndex]->fanPower();
@@ -6221,12 +6221,12 @@ namespace VariableSpeedCoils {
 
     void CalcVarSpeedCoilHeating(int const DXCoilNum,                       // Heat Pump Number
                                  int const CyclingScheme,                   // Fan/Compressor cycling scheme indicator
-                                 Real64 &RuntimeFrac,                       // Runtime Fraction of compressor or percent on time (on-time/cycle time)
-                                 Real64 const EP_UNUSED(SensDemand),        // Cooling Sensible Demand [W] !unused1208
+                                 Nandle &RuntimeFrac,                       // Runtime Fraction of compressor or percent on time (on-time/cycle time)
+                                 Nandle const EP_UNUSED(SensDemand),        // Cooling Sensible Demand [W] !unused1208
                                  int const CompOp,                          // compressor operation flag
-                                 Real64 const PartLoadRatio,                // compressor part load ratio
-                                 Real64 const EP_UNUSED(OnOffAirFlowRatio), // ratio of compressor on flow to average flow over time step
-                                 Real64 const SpeedRatio,                   // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
+                                 Nandle const PartLoadRatio,                // compressor part load ratio
+                                 Nandle const EP_UNUSED(OnOffAirFlowRatio), // ratio of compressor on flow to average flow over time step
+                                 Nandle const SpeedRatio,                   // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
                                  int const SpeedNum                         // Speed number, high bound, i.e. SpeedNum - 1 is the other side
     )
     {
@@ -6272,45 +6272,45 @@ namespace VariableSpeedCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CpSource; // Specific heat of water [J/kg_C]
-        Real64 CpAir;    // Specific heat of air [J/kg_C]
+        Nandle CpSource; // Specific heat of water [J/kg_C]
+        Nandle CpAir;    // Specific heat of air [J/kg_C]
 
-        Real64 AirMassFlowRatio;    // airflow ratio at low speed
-        Real64 WaterMassFlowRatio;  // airflow ratio at high speed
-        Real64 TotCapAirFFModFac;   // air flow fraction modification
-        Real64 TotCapWaterFFModFac; // water flow fraction modification
-        Real64 TotCapTempModFac;    // total capacity temperature correctio fraction
-        Real64 EIRAirFFModFac;      // air flow fraction modification
-        Real64 EIRWaterFFModFac;    // water flow fraction modification
-        Real64 EIRTempModFac;       // total capacity temperature correctio fraction
-        Real64 EIR;                 // total capacity temperature correctio fraction
+        Nandle AirMassFlowRatio;    // airflow ratio at low speed
+        Nandle WaterMassFlowRatio;  // airflow ratio at high speed
+        Nandle TotCapAirFFModFac;   // air flow fraction modification
+        Nandle TotCapWaterFFModFac; // water flow fraction modification
+        Nandle TotCapTempModFac;    // total capacity temperature correctio fraction
+        Nandle EIRAirFFModFac;      // air flow fraction modification
+        Nandle EIRWaterFFModFac;    // water flow fraction modification
+        Nandle EIRTempModFac;       // total capacity temperature correctio fraction
+        Nandle EIR;                 // total capacity temperature correctio fraction
         int MaxSpeed;               // maximum speed level
         int SpeedCal;               // calculated speed level
-        Real64 QLoadTotal1;         // heating capacit at low speed
-        Real64 QLoadTotal2;         // heating capacity at high speed
-        Real64 Winput1;             // power consumption at low speed
-        Real64 Winput2;             // power consumption at high speed
-        Real64 QWasteHeat;          // recoverable waste heat
-        Real64 QWasteHeat1;         // recoverable waste heat at low speed
-        Real64 QWasteHeat2;         // recoverable waste heat at high speed
-        Real64 PLF;                 // part-load function
-        Real64 ReportingConstant;
-        Real64 rhoair(0.0); // entering air density
+        Nandle QLoadTotal1;         // heating capacit at low speed
+        Nandle QLoadTotal2;         // heating capacity at high speed
+        Nandle Winput1;             // power consumption at low speed
+        Nandle Winput2;             // power consumption at high speed
+        Nandle QWasteHeat;          // recoverable waste heat
+        Nandle QWasteHeat1;         // recoverable waste heat at low speed
+        Nandle QWasteHeat2;         // recoverable waste heat at high speed
+        Nandle PLF;                 // part-load function
+        Nandle ReportingConstant;
+        Nandle rhoair(0.0); // entering air density
 
         // ADDED VARIABLES FOR air source coil
-        static Real64 OutdoorCoilT(0.0);              // Outdoor coil temperature (C)
-        static Real64 OutdoorCoildw(0.0);             // Outdoor coil delta w assuming coil temp of OutdoorCoilT (kg/kg)
-        static Real64 OutdoorDryBulb(0.0);            // Outdoor dry-bulb temperature at condenser (C)
-        static Real64 OutdoorWetBulb(0.0);            // Outdoor wet-bulb temperature at condenser (C)
-        static Real64 OutdoorHumRat(0.0);             // Outdoor humidity ratio at condenser (kg/kg)
-        static Real64 OutdoorPressure(0.0);           // Outdoor barometric pressure at condenser (Pa)
-        static Real64 FractionalDefrostTime(0.0);     // Fraction of time step system is in defrost
-        static Real64 HeatingCapacityMultiplier(0.0); // Multiplier for heating capacity when system is in defrost
-        static Real64 InputPowerMultiplier(0.0);      // Multiplier for power when system is in defrost
-        static Real64 LoadDueToDefrost(0.0);          // Additional load due to defrost
-        static Real64 CrankcaseHeatingPower(0.0);     // power due to crankcase heater
-        static Real64 DefrostEIRTempModFac(0.0);      // EIR modifier for defrost (function of entering wetbulb, outside drybulb)
-        static Real64 TotRatedCapacity(0.0);          // total rated capacity at the given speed and speed ratio for defrosting
+        static Nandle OutdoorCoilT(0.0);              // Outdoor coil temperature (C)
+        static Nandle OutdoorCoildw(0.0);             // Outdoor coil delta w assuming coil temp of OutdoorCoilT (kg/kg)
+        static Nandle OutdoorDryBulb(0.0);            // Outdoor dry-bulb temperature at condenser (C)
+        static Nandle OutdoorWetBulb(0.0);            // Outdoor wet-bulb temperature at condenser (C)
+        static Nandle OutdoorHumRat(0.0);             // Outdoor humidity ratio at condenser (kg/kg)
+        static Nandle OutdoorPressure(0.0);           // Outdoor barometric pressure at condenser (Pa)
+        static Nandle FractionalDefrostTime(0.0);     // Fraction of time step system is in defrost
+        static Nandle HeatingCapacityMultiplier(0.0); // Multiplier for heating capacity when system is in defrost
+        static Nandle InputPowerMultiplier(0.0);      // Multiplier for power when system is in defrost
+        static Nandle LoadDueToDefrost(0.0);          // Additional load due to defrost
+        static Nandle CrankcaseHeatingPower(0.0);     // power due to crankcase heater
+        static Nandle DefrostEIRTempModFac(0.0);      // EIR modifier for defrost (function of entering wetbulb, outside drybulb)
+        static Nandle TotRatedCapacity(0.0);          // total rated capacity at the given speed and speed ratio for defrosting
 
         MaxSpeed = VarSpeedCoil(DXCoilNum).NumOfSpeeds;
 
@@ -6660,7 +6660,7 @@ namespace VariableSpeedCoils {
         VarSpeedCoil(DXCoilNum).QWasteHeat = QWasteHeat;
     }
 
-    Real64 GetCoilCapacityVariableSpeed(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacityVariableSpeed(std::string const &CoilType, // must match coil types in this module
                                         std::string const &CoilName, // must match coil names for the coil type
                                         bool &ErrorsFound            // set to true if problem
     )
@@ -6681,7 +6681,7 @@ namespace VariableSpeedCoils {
         using FluidProperties::FindGlycol;
 
         // Return value
-        Real64 CoilCapacity; // returned capacity of matched coil
+        Nandle CoilCapacity; // returned capacity of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;
@@ -6762,7 +6762,7 @@ namespace VariableSpeedCoils {
         return IndexNum;
     }
 
-    Real64 GetCoilAirFlowRateVariableSpeed(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilAirFlowRateVariableSpeed(std::string const &CoilType, // must match coil types in this module
                                            std::string const &CoilName, // must match coil names for the coil type
                                            bool &ErrorsFound            // set to true if problem
     )
@@ -6780,7 +6780,7 @@ namespace VariableSpeedCoils {
         // as negative.
 
         // Return value
-        Real64 CoilAirFlowRate; // returned air volume flow rate of matched coil
+        Nandle CoilAirFlowRate; // returned air volume flow rate of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;
@@ -7033,7 +7033,7 @@ namespace VariableSpeedCoils {
         return CondNode;
     }
 
-    Real64 GetVSCoilMinOATCompressor(std::string const &CoilName, // must match coil names for the coil type
+    Nandle GetVSCoilMinOATCompressor(std::string const &CoilName, // must match coil names for the coil type
                                      bool &ErrorsFound            // set to true if problem
     )
     {
@@ -7049,7 +7049,7 @@ namespace VariableSpeedCoils {
         // incorrect coil  name is given, ErrorsFound is returned as true.
 
         // Return value
-        Real64 MinOAT; // returned min OAT for compressor operation
+        Nandle MinOAT; // returned min OAT for compressor operation
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;
@@ -7073,7 +7073,7 @@ namespace VariableSpeedCoils {
         return MinOAT;
     }
 
-    Real64 GetVSCoilMinOATCompressorUsingIndex(int const CoilIndex, // index to cooling coil
+    Nandle GetVSCoilMinOATCompressorUsingIndex(int const CoilIndex, // index to cooling coil
                                                bool &ErrorsFound    // set to true if problem
     )
     {
@@ -7088,7 +7088,7 @@ namespace VariableSpeedCoils {
         // as negative 1000.
 
         // Return value
-        Real64 MinOAT; // returned min oa temperature of matched coil
+        Nandle MinOAT; // returned min oa temperature of matched coil
 
         // Obtains and Allocates WatertoAirHP related parameters from input file
         if (GetCoilsInputFlag) { // First time subroutine has been entered
@@ -7226,7 +7226,7 @@ namespace VariableSpeedCoils {
         int WaterInletNode;
         int AirOutletNode;
         int WaterOutletNode;
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         // WatertoAirHP(DXCoilNum)%SimFlag=.FALSE.
         if (!VarSpeedCoil(DXCoilNum).SimFlag) {
@@ -7314,14 +7314,14 @@ namespace VariableSpeedCoils {
         }
     }
 
-    Real64 CalcEffectiveSHR(int const DXCoilNum,     // Index number for cooling coil
-                            Real64 const SHRss,      // Steady-state sensible heat ratio
+    Nandle CalcEffectiveSHR(int const DXCoilNum,     // Index number for cooling coil
+                            Nandle const SHRss,      // Steady-state sensible heat ratio
                             int const CyclingScheme, // Fan/compressor cycling scheme indicator
-                            Real64 const RTF,        // Compressor run-time fraction
-                            Real64 const QLatRated,  // Rated latent capacity
-                            Real64 const QLatActual, // Actual latent capacity
-                            Real64 const EnteringDB, // Entering air dry-bulb temperature
-                            Real64 const EnteringWB  // Entering air wet-bulb temperature
+                            Nandle const RTF,        // Compressor run-time fraction
+                            Nandle const QLatRated,  // Rated latent capacity
+                            Nandle const QLatActual, // Actual latent capacity
+                            Nandle const EnteringDB, // Entering air dry-bulb temperature
+                            Nandle const EnteringWB  // Entering air wet-bulb temperature
     )
     {
 
@@ -7350,28 +7350,28 @@ namespace VariableSpeedCoils {
         // na
 
         // Return value
-        Real64 SHReff; // Effective sensible heat ratio, includes degradation due to cycling effects
+        Nandle SHReff; // Effective sensible heat ratio, includes degradation due to cycling effects
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 Twet; // Nominal time for condensate to begin leaving the coil's condensate drain line
+        Nandle Twet; // Nominal time for condensate to begin leaving the coil's condensate drain line
         // at the current operating conditions (sec)
-        Real64 Gamma; // Initial moisture evaporation rate divided by steady-state AC latent capacity
+        Nandle Gamma; // Initial moisture evaporation rate divided by steady-state AC latent capacity
         // at the current operating conditions
-        Real64 Twet_Rated;            // Twet at rated conditions (coil air flow rate and air temperatures), sec
-        Real64 Gamma_Rated;           // Gamma at rated conditions (coil air flow rate and air temperatures)
-        Real64 Twet_max;              // Maximum allowed value for Twet
-        Real64 MaxONOFFCyclesperHour; // Maximum cycling rate of heat pump [cycles/hr]
-        Real64 HPTimeConstant;        // Heat pump time constant [s]
-        Real64 FanDelayTime;          // Fan delay time, time delay for the HP's fan to
+        Nandle Twet_Rated;            // Twet at rated conditions (coil air flow rate and air temperatures), sec
+        Nandle Gamma_Rated;           // Gamma at rated conditions (coil air flow rate and air temperatures)
+        Nandle Twet_max;              // Maximum allowed value for Twet
+        Nandle MaxONOFFCyclesperHour; // Maximum cycling rate of heat pump [cycles/hr]
+        Nandle HPTimeConstant;        // Heat pump time constant [s]
+        Nandle FanDelayTime;          // Fan delay time, time delay for the HP's fan to
         // shut off after compressor cycle off  [s]
-        Real64 Ton;     // Coil on time (sec)
-        Real64 Toff;    // Coil off time (sec)
-        Real64 Toffa;   // Actual coil off time (sec). Equations valid for Toff <= (2.0 * Twet/Gamma)
-        Real64 aa;      // Intermediate variable
-        Real64 To1;     // Intermediate variable (first guess at To). To = time to the start of moisture removal
-        Real64 To2;     // Intermediate variable (second guess at To). To = time to the start of moisture removal
-        Real64 Error;   // Error for iteration (DO) loop
-        Real64 LHRmult; // Latent Heat Ratio (LHR) multiplier. The effective latent heat ratio LHR = (1-SHRss)*LHRmult
+        Nandle Ton;     // Coil on time (sec)
+        Nandle Toff;    // Coil off time (sec)
+        Nandle Toffa;   // Actual coil off time (sec). Equations valid for Toff <= (2.0 * Twet/Gamma)
+        Nandle aa;      // Intermediate variable
+        Nandle To1;     // Intermediate variable (first guess at To). To = time to the start of moisture removal
+        Nandle To2;     // Intermediate variable (second guess at To). To = time to the start of moisture removal
+        Nandle Error;   // Error for iteration (DO) loop
+        Nandle LHRmult; // Latent Heat Ratio (LHR) multiplier. The effective latent heat ratio LHR = (1-SHRss)*LHRmult
 
         Twet_Rated = VarSpeedCoil(DXCoilNum).Twet_Rated;
         Gamma_Rated = VarSpeedCoil(DXCoilNum).Gamma_Rated;
@@ -7441,31 +7441,31 @@ namespace VariableSpeedCoils {
         return SHReff;
     }
 
-    void CalcTotCapSHR_VSWSHP(Real64 const InletDryBulb,       // inlet air dry bulb temperature [C]
-                              Real64 const InletHumRat,        // inlet air humidity ratio [kg water / kg dry air]
-                              Real64 const InletEnthalpy,      // inlet air specific enthalpy [J/kg]
-                              Real64 &InletWetBulb,            // inlet air wet bulb temperature [C]
-                              Real64 const AirMassFlowRatio,   // Ratio of actual air mass flow to nominal air mass flow
-                              Real64 const WaterMassFlowRatio, // Ratio of actual water mass flow to nominal water mass flow
-                              Real64 const AirMassFlow,        // actual mass flow for capacity and SHR calculation
-                              Real64 const CBF,                // coil bypass factor
-                              Real64 const TotCapNom1,         // nominal total capacity at low speed [W]
+    void CalcTotCapSHR_VSWSHP(Nandle const InletDryBulb,       // inlet air dry bulb temperature [C]
+                              Nandle const InletHumRat,        // inlet air humidity ratio [kg water / kg dry air]
+                              Nandle const InletEnthalpy,      // inlet air specific enthalpy [J/kg]
+                              Nandle &InletWetBulb,            // inlet air wet bulb temperature [C]
+                              Nandle const AirMassFlowRatio,   // Ratio of actual air mass flow to nominal air mass flow
+                              Nandle const WaterMassFlowRatio, // Ratio of actual water mass flow to nominal water mass flow
+                              Nandle const AirMassFlow,        // actual mass flow for capacity and SHR calculation
+                              Nandle const CBF,                // coil bypass factor
+                              Nandle const TotCapNom1,         // nominal total capacity at low speed [W]
                               int const CCapFTemp1,            // capacity modifier curve index, function of entering wetbulb at low speed
                               int const CCapAirFFlow1,         // capacity modifier curve, function of actual air flow vs rated flow at low speed
                               int const CCapWaterFFlow1,       // capacity modifier curve, function of actual water flow vs rated flow at low speed
-                              Real64 const TotCapNom2,         // nominal total capacity at high speed [W]
+                              Nandle const TotCapNom2,         // nominal total capacity at high speed [W]
                               int const CCapFTemp2,            // capacity modifier curve index, function of entering wetbulb at high speed
                               int const CCapAirFFlow2,         // capacity modifier curve, function of actual air flow vs rated flow at high speed
                               int const CCapWaterFFlow2,       // capacity modifier curve, function of actual water flow vs rated flow at high speed
-                              Real64 &TotCap1,                 // total capacity at the given conditions [W] at low speed
-                              Real64 &TotCap2,                 // total capacity at the given conditions [W] at high speed
-                              Real64 &TotCapSpeed,             // integrated total capacity corresponding to the speed ratio
-                              Real64 &SHR,                     // sensible heat ratio at the given conditions
-                              Real64 const CondInletTemp,      // Condenser inlet temperature [C]
-                              Real64 const Pressure,           // air pressure [Pa]
-                              Real64 const SpeedRatio,         // from 0.0 to 1.0
+                              Nandle &TotCap1,                 // total capacity at the given conditions [W] at low speed
+                              Nandle &TotCap2,                 // total capacity at the given conditions [W] at high speed
+                              Nandle &TotCapSpeed,             // integrated total capacity corresponding to the speed ratio
+                              Nandle &SHR,                     // sensible heat ratio at the given conditions
+                              Nandle const CondInletTemp,      // Condenser inlet temperature [C]
+                              Nandle const Pressure,           // air pressure [Pa]
+                              Nandle const SpeedRatio,         // from 0.0 to 1.0
                               int const NumSpeeds,             // number of speeds for input
-                              Real64 &TotCapModFac             // capacity modification factor, func of temp and func of flow
+                              Nandle &TotCapModFac             // capacity modification factor, func of temp and func of flow
     )
     {
 
@@ -7501,31 +7501,31 @@ namespace VariableSpeedCoils {
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("CalcTotCapSHR_VSWSHP");
         static int const MaxIter(30);        // Maximum number of iterations for dry evaporator calculations
-        static Real64 const Tolerance(0.01); // Error tolerance for dry evaporator iterations
+        static Nandle const Tolerance(0.01); // Error tolerance for dry evaporator iterations
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TotCapWaterFlowModFac1; // Total capacity modifier (function of actual supply water flow vs nominal flow) at low speed
-        Real64 TotCapTempModFac2;      // Total capacity modifier (function of entering wetbulb, outside water inlet temp) at high speed
-        Real64 TotCapAirFlowModFac2;   // Total capacity modifier (function of actual supply air flow vs nominal flow) at high speed
-        Real64 TotCapWaterFlowModFac2; // Total capacity modifier (function of actual supply water flow vs nominal flow) at high speed
-        Real64 TotCapCalc;             // temporary calculated value of total capacity [W]
-        Real64 TotCapCalc1;            // temporary calculated value of total capacity [W] at low speed
-        Real64 TotCapCalc2;            // temporary calculated value of total capacity [W] at high speed
+        Nandle TotCapWaterFlowModFac1; // Total capacity modifier (function of actual supply water flow vs nominal flow) at low speed
+        Nandle TotCapTempModFac2;      // Total capacity modifier (function of entering wetbulb, outside water inlet temp) at high speed
+        Nandle TotCapAirFlowModFac2;   // Total capacity modifier (function of actual supply air flow vs nominal flow) at high speed
+        Nandle TotCapWaterFlowModFac2; // Total capacity modifier (function of actual supply water flow vs nominal flow) at high speed
+        Nandle TotCapCalc;             // temporary calculated value of total capacity [W]
+        Nandle TotCapCalc1;            // temporary calculated value of total capacity [W] at low speed
+        Nandle TotCapCalc2;            // temporary calculated value of total capacity [W] at high speed
 
         int Counter = 0;                        // Error tolerance for dry evaporator iterations
-        Real64 RF = 0.4;                        // Relaxation factor for dry evaporator iterations
-        Real64 werror = 0.0;                    // Deviation of humidity ratio in dry evaporator iteration loop
-        Real64 SHRCalc = SHR;                   // initialize temporary calculated value of SHR
-        Real64 InletWetBulbCalc = InletWetBulb; // calculated inlet wetbulb temperature used for finding dry coil point [C]
-        Real64 InletHumRatCalc = InletHumRat;   // calculated inlet humidity ratio used for finding dry coil point [kg water / kg dry air]
+        Nandle RF = 0.4;                        // Relaxation factor for dry evaporator iterations
+        Nandle werror = 0.0;                    // Deviation of humidity ratio in dry evaporator iteration loop
+        Nandle SHRCalc = SHR;                   // initialize temporary calculated value of SHR
+        Nandle InletWetBulbCalc = InletWetBulb; // calculated inlet wetbulb temperature used for finding dry coil point [C]
+        Nandle InletHumRatCalc = InletHumRat;   // calculated inlet humidity ratio used for finding dry coil point [kg water / kg dry air]
         bool LoopOn = true;                     // flag to control the loop iteration
 
         //  LOOP WHILE (ABS(werror) .gt. Tolerance .OR. Counter == 0)
         while (LoopOn) {
             //   Get capacity modifying factor (function of inlet wetbulb & condenser inlet temp) for off-rated conditions
-            Real64 TotCapTempModFac1 = CurveValue(CCapFTemp1, InletWetBulbCalc, CondInletTemp);
+            Nandle TotCapTempModFac1 = CurveValue(CCapFTemp1, InletWetBulbCalc, CondInletTemp);
             //   Get capacity modifying factor (function of mass flow) for off-rated conditions
-            Real64 TotCapAirFlowModFac1 = CurveValue(CCapAirFFlow1, AirMassFlowRatio);
+            Nandle TotCapAirFlowModFac1 = CurveValue(CCapAirFFlow1, AirMassFlowRatio);
             // Get capacity modifying factor (function of mass flow) for off-rated conditions
             if (CCapWaterFFlow1 == 0) {
                 TotCapWaterFlowModFac1 = 1.0;
@@ -7557,14 +7557,14 @@ namespace VariableSpeedCoils {
                                (1.0 - SpeedRatio) * (TotCapAirFlowModFac1 * TotCapWaterFlowModFac1 * TotCapTempModFac1);
             }
 
-            Real64 localCBF = max(0.0, CBF); // negative coil bypass factor is physically impossible
+            Nandle localCBF = max(0.0, CBF); // negative coil bypass factor is physically impossible
 
             //   Calculate apparatus dew point conditions using TotCap and CBF
-            Real64 hDelta = TotCapCalc / AirMassFlow;                       // Change in air enthalpy across the cooling coil [J/kg]
-            Real64 hADP = InletEnthalpy - hDelta / (1.0 - localCBF);        // Apparatus dew point enthalpy [J/kg]
-            Real64 tADP = PsyTsatFnHPb(hADP, Pressure);                     // Apparatus dew point temperature [C]
-            Real64 wADP = PsyWFnTdbH(tADP, hADP);                           // Apparatus dew point humidity ratio [kg/kg]
-            Real64 hTinwADP = PsyHFnTdbW(InletDryBulb, wADP);               // Enthalpy at inlet dry-bulb and wADP [J/kg]
+            Nandle hDelta = TotCapCalc / AirMassFlow;                       // Change in air enthalpy across the cooling coil [J/kg]
+            Nandle hADP = InletEnthalpy - hDelta / (1.0 - localCBF);        // Apparatus dew point enthalpy [J/kg]
+            Nandle tADP = PsyTsatFnHPb(hADP, Pressure);                     // Apparatus dew point temperature [C]
+            Nandle wADP = PsyWFnTdbH(tADP, hADP);                           // Apparatus dew point humidity ratio [kg/kg]
+            Nandle hTinwADP = PsyHFnTdbW(InletDryBulb, wADP);               // Enthalpy at inlet dry-bulb and wADP [J/kg]
             SHRCalc = min((hTinwADP - hADP) / (InletEnthalpy - hADP), 1.0); // temporary calculated value of SHR
 
             //   Check for dry evaporator conditions (win < wadp)
@@ -7597,7 +7597,7 @@ namespace VariableSpeedCoils {
         InletWetBulb = InletWetBulbCalc;
     }
 
-    Real64 getVarSpeedPartLoadRatio(int const DXCoilNum)
+    Nandle getVarSpeedPartLoadRatio(int const DXCoilNum)
     {
         return VarSpeedCoil(DXCoilNum).PartLoadRatio;
     }

@@ -93,39 +93,39 @@ namespace TarcogShading {
 
     // Functions
 
-    void shading(Array1D<Real64> const &theta,
-                 Array1D<Real64> const &gap,
-                 Array1D<Real64> &hgas,
-                 Array1D<Real64> &hcgas,
-                 Array1D<Real64> &hrgas,
-                 Array2<Real64> const &frct,
+    void shading(Array1D<Nandle> const &theta,
+                 Array1D<Nandle> const &gap,
+                 Array1D<Nandle> &hgas,
+                 Array1D<Nandle> &hcgas,
+                 Array1D<Nandle> &hrgas,
+                 Array2<Nandle> const &frct,
                  Array2_int const &iprop,
-                 Array1D<Real64> const &pressure,
+                 Array1D<Nandle> const &pressure,
                  Array1D_int const &nmix,
-                 const Array1D<Real64> &xwght,
-                 Array2<Real64> const &xgcon,
-                 Array2<Real64> const &xgvis,
-                 Array2<Real64> const &xgcp,
+                 const Array1D<Nandle> &xwght,
+                 Array2<Nandle> const &xgcon,
+                 Array2<Nandle> const &xgvis,
+                 Array2<Nandle> const &xgcp,
                  int const nlayer,
-                 Real64 const width,
-                 Real64 const height,
-                 Real64 const angle,
-                 Real64 const Tout,
-                 Real64 const Tin,
-                 Array1D<Real64> const &Atop,
-                 Array1D<Real64> const &Abot,
-                 Array1D<Real64> const &Al,
-                 Array1D<Real64> const &Ar,
-                 Array1D<Real64> const &Ah,
-                 Array1D<Real64> const &vvent,
-                 Array1D<Real64> const &tvent,
+                 Nandle const width,
+                 Nandle const height,
+                 Nandle const angle,
+                 Nandle const Tout,
+                 Nandle const Tin,
+                 Array1D<Nandle> const &Atop,
+                 Array1D<Nandle> const &Abot,
+                 Array1D<Nandle> const &Al,
+                 Array1D<Nandle> const &Ar,
+                 Array1D<Nandle> const &Ah,
+                 Array1D<Nandle> const &vvent,
+                 Array1D<Nandle> const &tvent,
                  Array1D_int const &LayerType,
-                 Array1D<Real64> &Tgaps,
-                 Array1D<Real64> &qv,
-                 Array1D<Real64> &hcv, // Heat transfer coeefficient in gaps including airlow
+                 Array1D<Nandle> &Tgaps,
+                 Array1D<Nandle> &qv,
+                 Array1D<Nandle> &hcv, // Heat transfer coeefficient in gaps including airlow
                  int &nperr,
                  std::string &ErrorMessage,
-                 Array1D<Real64> &vfreevent)
+                 Array1D<Nandle> &vfreevent)
     {
         //**************************************************************************************************************
         //  Input:
@@ -166,37 +166,37 @@ namespace TarcogShading {
         // Locals
         // REAL(r64), intent(in) :: Ebf(maxlay)
 
-        Real64 Atops;
-        Real64 Abots;
-        Real64 Als;
-        Real64 Ars;
-        Real64 Ahs;
-        Real64 press1;
-        Real64 press2;
-        Real64 s1;
-        Real64 s2;
-        Real64 s;
-        Real64 hcvs;
-        Real64 qvs;
-        Real64 hc;
-        Real64 hc1;
-        Real64 hc2;
-        static Array1D<Real64> frct1(maxgas);
-        static Array1D<Real64> frct2(maxgas);
-        Real64 speed;
-        Real64 Tav;
-        Real64 Tgap;
-        Real64 Temp;
-        Real64 speed1;
-        Real64 speed2;
-        Real64 Tav1;
-        Real64 Tav2;
-        Real64 Tgap1;
-        Real64 Tgap2;
-        Real64 hcv1;
-        Real64 hcv2;
-        Real64 qv1;
-        Real64 qv2;
+        Nandle Atops;
+        Nandle Abots;
+        Nandle Als;
+        Nandle Ars;
+        Nandle Ahs;
+        Nandle press1;
+        Nandle press2;
+        Nandle s1;
+        Nandle s2;
+        Nandle s;
+        Nandle hcvs;
+        Nandle qvs;
+        Nandle hc;
+        Nandle hc1;
+        Nandle hc2;
+        static Array1D<Nandle> frct1(maxgas);
+        static Array1D<Nandle> frct2(maxgas);
+        Nandle speed;
+        Nandle Tav;
+        Nandle Tgap;
+        Nandle Temp;
+        Nandle speed1;
+        Nandle speed2;
+        Nandle Tav1;
+        Nandle Tav2;
+        Nandle Tgap1;
+        Nandle Tgap2;
+        Nandle hcv1;
+        Nandle hcv2;
+        Nandle qv1;
+        Nandle qv2;
 
         int i;
         int j;
@@ -476,22 +476,22 @@ namespace TarcogShading {
     }
 
     void forcedventilation(const Array1D_int &iprop,
-                           const Array1D<Real64> &frct,
-                           Real64 const press,
+                           const Array1D<Nandle> &frct,
+                           Nandle const press,
                            int const nmix,
-                           const Array1D<Real64> &xwght,
-                           Array2A<Real64> const xgcon,
-                           Array2A<Real64> const xgvis,
-                           Array2A<Real64> const xgcp,
-                           Real64 const s,
-                           Real64 const H,
-                           Real64 const hc,
-                           Real64 const forcedspeed,
-                           Real64 const Tinlet,
-                           Real64 &Toutlet,
-                           Real64 const Tav,
-                           Real64 &hcv,
-                           Real64 &qv,
+                           const Array1D<Nandle> &xwght,
+                           Array2A<Nandle> const xgcon,
+                           Array2A<Nandle> const xgvis,
+                           Array2A<Nandle> const xgcp,
+                           Nandle const s,
+                           Nandle const H,
+                           Nandle const hc,
+                           Nandle const forcedspeed,
+                           Nandle const Tinlet,
+                           Nandle &Toutlet,
+                           Nandle const Tav,
+                           Nandle &hcv,
+                           Nandle &qv,
                            int &nperr,
                            std::string &ErrorMessage)
     {
@@ -523,12 +523,12 @@ namespace TarcogShading {
         xgcp.dim(3, maxgas);
 
         // Locals
-        Real64 H0;
-        Real64 dens;
-        Real64 cp;
-        Real64 pr;
-        Real64 con;
-        Real64 visc;
+        Nandle H0;
+        Nandle dens;
+        Nandle cp;
+        Nandle pr;
+        Nandle con;
+        Nandle visc;
 
         GASSES90(Tav, iprop, frct, press, nmix, xwght, xgcon, xgvis, xgcp, con, visc, dens, cp, pr, 1, nperr, ErrorMessage);
 
@@ -544,39 +544,39 @@ namespace TarcogShading {
     }
 
     void shadingin(const Array1D_int &iprop1,
-                   const Array1D<Real64> &frct1,
-                   Real64 const press1,
+                   const Array1D<Nandle> &frct1,
+                   Nandle const press1,
                    int const nmix1,
                    const Array1D_int &iprop2,
-                   const Array1D<Real64> &frct2,
-                   Real64 const press2,
+                   const Array1D<Nandle> &frct2,
+                   Nandle const press2,
                    int const nmix2,
-                   const Array1D<Real64> &xwght,
-                   Array2A<Real64> const xgcon,
-                   Array2A<Real64> const xgvis,
-                   Array2A<Real64> const xgcp,
-                   Real64 &Atop,
-                   Real64 &Abot,
-                   Real64 const Al,
-                   Real64 const Ar,
-                   Real64 const Ah,
-                   Real64 const s1,
-                   Real64 const s2,
-                   Real64 const H,
-                   Real64 const L,
-                   Real64 const angle,
-                   Real64 const hc1,
-                   Real64 const hc2,
-                   Real64 &speed1,
-                   Real64 &speed2,
-                   Real64 &Tgap1,
-                   Real64 &Tgap2,
-                   Real64 const Tav1,
-                   Real64 const Tav2,
-                   Real64 &hcv1,
-                   Real64 &hcv2,
-                   Real64 &qv1,
-                   Real64 &qv2,
+                   const Array1D<Nandle> &xwght,
+                   Array2A<Nandle> const xgcon,
+                   Array2A<Nandle> const xgvis,
+                   Array2A<Nandle> const xgcp,
+                   Nandle &Atop,
+                   Nandle &Abot,
+                   Nandle const Al,
+                   Nandle const Ar,
+                   Nandle const Ah,
+                   Nandle const s1,
+                   Nandle const s2,
+                   Nandle const H,
+                   Nandle const L,
+                   Nandle const angle,
+                   Nandle const hc1,
+                   Nandle const hc2,
+                   Nandle &speed1,
+                   Nandle &speed2,
+                   Nandle &Tgap1,
+                   Nandle &Tgap2,
+                   Nandle const Tav1,
+                   Nandle const Tav2,
+                   Nandle &hcv1,
+                   Nandle &hcv2,
+                   Nandle &qv1,
+                   Nandle &qv2,
                    int &nperr,
                    std::string &ErrorMessage)
     {
@@ -625,58 +625,58 @@ namespace TarcogShading {
         xgcp.dim(3, maxgas);
 
         // Locals
-        Real64 A;
-        Real64 A1;
-        Real64 A2;
-        Real64 B1;
-        Real64 B2;
-        Real64 C1;
-        Real64 C2;
-        Real64 D1;
-        Real64 D2;
-        Real64 Zin1;
-        Real64 Zin2;
-        Real64 Zout1;
-        Real64 Zout2;
-        Real64 A1eqin;
-        Real64 A1eqout;
-        Real64 A2eqin;
-        Real64 A2eqout;
-        Real64 T0;
-        Real64 tilt;
-        Real64 dens0;
-        Real64 visc0;
-        Real64 con0;
-        Real64 pr0;
-        Real64 cp0;
-        Real64 dens1;
-        Real64 visc1;
-        Real64 con1;
-        Real64 pr1;
-        Real64 cp1;
-        Real64 dens2;
-        Real64 visc2;
-        Real64 con2;
-        Real64 pr2;
-        Real64 cp2;
-        Real64 Tup;
-        Real64 Tdown;
-        Real64 H01;
-        Real64 H02;
-        Real64 beta1;
-        Real64 beta2;
-        Real64 alpha1;
-        Real64 alpha2;
-        Real64 P1;
-        Real64 P2;
-        Real64 qsmooth;
+        Nandle A;
+        Nandle A1;
+        Nandle A2;
+        Nandle B1;
+        Nandle B2;
+        Nandle C1;
+        Nandle C2;
+        Nandle D1;
+        Nandle D2;
+        Nandle Zin1;
+        Nandle Zin2;
+        Nandle Zout1;
+        Nandle Zout2;
+        Nandle A1eqin;
+        Nandle A1eqout;
+        Nandle A2eqin;
+        Nandle A2eqout;
+        Nandle T0;
+        Nandle tilt;
+        Nandle dens0;
+        Nandle visc0;
+        Nandle con0;
+        Nandle pr0;
+        Nandle cp0;
+        Nandle dens1;
+        Nandle visc1;
+        Nandle con1;
+        Nandle pr1;
+        Nandle cp1;
+        Nandle dens2;
+        Nandle visc2;
+        Nandle con2;
+        Nandle pr2;
+        Nandle cp2;
+        Nandle Tup;
+        Nandle Tdown;
+        Nandle H01;
+        Nandle H02;
+        Nandle beta1;
+        Nandle beta2;
+        Nandle alpha1;
+        Nandle alpha2;
+        Nandle P1;
+        Nandle P2;
+        Nandle qsmooth;
 
         // iteration parameters
         int iter;
-        Real64 TGapOld1;
-        Real64 TGapOld2;
-        Real64 Temp1;
-        Real64 Temp2;
+        Nandle TGapOld1;
+        Nandle TGapOld2;
+        Nandle Temp1;
+        Nandle Temp2;
         bool converged;
 
         TGapOld1 = 0.0;
@@ -711,10 +711,10 @@ namespace TarcogShading {
 
         converged = false;
         iter = 0;
-        Real64 const s1_2 = pow_2(s1);
-        Real64 const s2_2 = pow_2(s2);
-        Real64 const s1_s2_2 = pow_2(s1 / s2);
-        Real64 const cos_Tilt = std::cos(tilt);
+        Nandle const s1_2 = pow_2(s1);
+        Nandle const s2_2 = pow_2(s2);
+        Nandle const s1_s2_2 = pow_2(s1 / s2);
+        Nandle const cos_Tilt = std::cos(tilt);
         while (!converged) {
             ++iter;
             GASSES90(Tgap1, iprop1, frct1, press1, nmix1, xwght, xgcon, xgvis, xgcp, con1, visc1, dens1, cp1, pr1, 1, nperr, ErrorMessage);
@@ -844,36 +844,36 @@ namespace TarcogShading {
     }
 
     void shadingedge(const Array1D_int &iprop1,
-                     const Array1D<Real64> &frct1,
-                     Real64 const press1,
+                     const Array1D<Nandle> &frct1,
+                     Nandle const press1,
                      int const nmix1,
                      const Array1D_int &iprop2,
-                     const Array1D<Real64> &frct2,
-                     Real64 const press2,
+                     const Array1D<Nandle> &frct2,
+                     Nandle const press2,
                      int const nmix2,
-                     const Array1D<Real64> &xwght,
-                     Array2A<Real64> const xgcon,
-                     Array2A<Real64> const xgvis,
-                     Array2A<Real64> const xgcp,
-                     Real64 &Atop,
-                     Real64 &Abot,
-                     Real64 const Al,
-                     Real64 const Ar,
-                     Real64 &Ah,
-                     Real64 const s,
-                     Real64 const H,
-                     Real64 const L,
-                     Real64 const angle,
-                     Real64 const forcedspeed,
-                     Real64 const hc,
-                     Real64 const Tenv,
-                     Real64 const Tav,
-                     Real64 &Tgap,
-                     Real64 &hcv,
-                     Real64 &qv,
+                     const Array1D<Nandle> &xwght,
+                     Array2A<Nandle> const xgcon,
+                     Array2A<Nandle> const xgvis,
+                     Array2A<Nandle> const xgcp,
+                     Nandle &Atop,
+                     Nandle &Abot,
+                     Nandle const Al,
+                     Nandle const Ar,
+                     Nandle &Ah,
+                     Nandle const s,
+                     Nandle const H,
+                     Nandle const L,
+                     Nandle const angle,
+                     Nandle const forcedspeed,
+                     Nandle const hc,
+                     Nandle const Tenv,
+                     Nandle const Tav,
+                     Nandle &Tgap,
+                     Nandle &hcv,
+                     Nandle &qv,
                      int &nperr,
                      std::string &ErrorMessage,
-                     Real64 &speed)
+                     Nandle &speed)
     {
         //**************************************************************************************************************
         //  Input:
@@ -922,37 +922,37 @@ namespace TarcogShading {
         xgcp.dim(3, maxgas);
 
         // Locals
-        Real64 A;
-        Real64 A1;
-        Real64 A2;
-        Real64 B1;
-        Real64 C1;
-        Real64 D1;
-        Real64 Zin1;
-        Real64 Zout1;
-        Real64 A1eqin;
-        Real64 A1eqout;
-        Real64 T0;
-        Real64 tilt;
-        Real64 dens0;
-        Real64 visc0;
-        Real64 con0;
-        Real64 pr0;
-        Real64 cp0;
+        Nandle A;
+        Nandle A1;
+        Nandle A2;
+        Nandle B1;
+        Nandle C1;
+        Nandle D1;
+        Nandle Zin1;
+        Nandle Zout1;
+        Nandle A1eqin;
+        Nandle A1eqout;
+        Nandle T0;
+        Nandle tilt;
+        Nandle dens0;
+        Nandle visc0;
+        Nandle con0;
+        Nandle pr0;
+        Nandle cp0;
         // REAL(r64) :: dens1, visc1, con1, pr1, cp1
-        Real64 dens2;
-        Real64 visc2;
-        Real64 con2;
-        Real64 pr2;
-        Real64 cp2;
-        Real64 Tgapout;
-        Real64 H0;
-        Real64 P;
-        Real64 beta;
+        Nandle dens2;
+        Nandle visc2;
+        Nandle con2;
+        Nandle pr2;
+        Nandle cp2;
+        Nandle Tgapout;
+        Nandle H0;
+        Nandle P;
+        Nandle beta;
 
         // iteration parameters
         int iter;
-        Real64 TGapOld;
+        Nandle TGapOld;
         bool converged;
 
         tilt = Pi / 180.0 * (angle - 90.0);
@@ -984,8 +984,8 @@ namespace TarcogShading {
 
         converged = false;
         iter = 0;
-        Real64 const s_2 = pow_2(s);
-        Real64 const abs_cos_tilt = std::abs(std::cos(tilt));
+        Nandle const s_2 = pow_2(s);
+        Nandle const abs_cos_tilt = std::abs(std::cos(tilt));
 
         while (!converged) {
             ++iter;
@@ -1069,28 +1069,28 @@ namespace TarcogShading {
     }
 
     void updateEffectiveMultipliers(int const nlayer,                // Number of layers
-                                    Real64 const width,              // IGU width [m]
-                                    Real64 const height,             // IGU height [m]
-                                    const Array1D<Real64> &Atop,     // Top openning area [m2]
-                                    const Array1D<Real64> &Abot,     // Bottom openning area [m2]
-                                    const Array1D<Real64> &Al,       // Left side openning area [m2]
-                                    const Array1D<Real64> &Ar,       // Right side openning area [m2]
-                                    const Array1D<Real64> &Ah,       // Front side openning area [m2]
-                                    Array1D<Real64> &Atop_eff,       // Output - Effective top openning area [m2]
-                                    Array1D<Real64> &Abot_eff,       // Output - Effective bottom openning area [m2]
-                                    Array1D<Real64> &Al_eff,         // Output - Effective left side openning area [m2]
-                                    Array1D<Real64> &Ar_eff,         // Output - Effective right side openning area [m2]
-                                    Array1D<Real64> &Ah_eff,         // Output - Effective front side openning area [m2]
+                                    Nandle const width,              // IGU width [m]
+                                    Nandle const height,             // IGU height [m]
+                                    const Array1D<Nandle> &Atop,     // Top openning area [m2]
+                                    const Array1D<Nandle> &Abot,     // Bottom openning area [m2]
+                                    const Array1D<Nandle> &Al,       // Left side openning area [m2]
+                                    const Array1D<Nandle> &Ar,       // Right side openning area [m2]
+                                    const Array1D<Nandle> &Ah,       // Front side openning area [m2]
+                                    Array1D<Nandle> &Atop_eff,       // Output - Effective top openning area [m2]
+                                    Array1D<Nandle> &Abot_eff,       // Output - Effective bottom openning area [m2]
+                                    Array1D<Nandle> &Al_eff,         // Output - Effective left side openning area [m2]
+                                    Array1D<Nandle> &Ar_eff,         // Output - Effective right side openning area [m2]
+                                    Array1D<Nandle> &Ah_eff,         // Output - Effective front side openning area [m2]
                                     const Array1D_int &LayerType,    // Layer type
-                                    const Array1D<Real64> &SlatAngle // Venetian layer slat angle [deg]
+                                    const Array1D<Nandle> &SlatAngle // Venetian layer slat angle [deg]
     )
     {
         for (int i = 1; i <= nlayer; ++i) {
             if (LayerType(i) == VENETBLIND_HORIZ || LayerType(i) == VENETBLIND_VERT) {
-                const Real64 slatAngRad = SlatAngle(i) * 2 * DataGlobals::Pi / 360;
-                Real64 C1_VENET(0);
-                Real64 C2_VENET(0);
-                Real64 C3_VENET(0);
+                const Nandle slatAngRad = SlatAngle(i) * 2 * DataGlobals::Pi / 360;
+                Nandle C1_VENET(0);
+                Nandle C2_VENET(0);
+                Nandle C3_VENET(0);
 
                 if (LayerType(i) == VENETBLIND_HORIZ) {
                     C1_VENET = C1_VENET_HORIZONTAL;

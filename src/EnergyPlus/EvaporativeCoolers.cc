@@ -193,7 +193,7 @@ namespace EvaporativeCoolers {
 
     // Functions
 
-    void SimEvapCooler(std::string const &CompName, int &CompIndex, Real64 const ZoneEvapCoolerPLR)
+    void SimEvapCooler(std::string const &CompName, int &CompIndex, Nandle const ZoneEvapCoolerPLR)
     {
 
         // SUBROUTINE INFORMATION:
@@ -963,7 +963,7 @@ namespace EvaporativeCoolers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int InletNode;
         int SecInletNode; // local index for secondary inlet node.
-        Real64 RhoAir;    // Air Density
+        Nandle RhoAir;    // Air Density
         int ControlNode;
         int OutNode;
         int EvapUnitNum;
@@ -1119,16 +1119,16 @@ namespace EvaporativeCoolers {
         static int BranchComp(0);
         bool HardSizeNoDesRun;          // Indicator to a hard-sized field with no design sizing data
         bool IsAutoSize;                // Indicator to autosize
-        Real64 IndirectVolFlowRateDes;  // Autosized volume flow rate for reporting
-        Real64 IndirectVolFlowRateUser; // Hardsized volume flow rate for reporting
+        Nandle IndirectVolFlowRateDes;  // Autosized volume flow rate for reporting
+        Nandle IndirectVolFlowRateUser; // Hardsized volume flow rate for reporting
         bool SizingDesRunThisAirSys;    // true if a particular air system had a Sizing:System object and system sizing done
         bool SizingDesRunThisZone;      // true if a particular zone had a Sizing:Zone object and zone sizing was done
-        Real64 PadAreaDes;              // Autosized celdek pad area for reporting
-        Real64 PadAreaUser;             // Hardsized celdek pad area for reporting
-        Real64 PadDepthDes;             // Autosized celdek pad depth for reporting
-        Real64 PadDepthUser;            // Hardsized celdek pad depth for reporting
+        Nandle PadAreaDes;              // Autosized celdek pad area for reporting
+        Nandle PadAreaUser;             // Hardsized celdek pad area for reporting
+        Nandle PadDepthDes;             // Autosized celdek pad depth for reporting
+        Nandle PadDepthUser;            // Hardsized celdek pad depth for reporting
 
-        Real64 volFlowRateDes; // Autosized volume flow rate for reporting
+        Nandle volFlowRateDes; // Autosized volume flow rate for reporting
         std::string CompType;  // for ease in getting objects
 
         // inits
@@ -1647,7 +1647,7 @@ namespace EvaporativeCoolers {
     // Begin Algorithm Section of the Module
     //******************************************************************************
 
-    void CalcDirectEvapCooler(int &EvapCoolNum, Real64 const PartLoadRatio)
+    void CalcDirectEvapCooler(int &EvapCoolNum, Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1682,12 +1682,12 @@ namespace EvaporativeCoolers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // REAL(r64) Variables
-        Real64 PadDepth; // EvapCooler Pad Depth in Meters as input by the User
-        Real64 SatEff;   // Saturation Efficiency of the CelDek Pad
-        Real64 AirVel;   // The Calculated Air Velocity through the Pad
-        Real64 TEDB;     // Entering Dry Bulb Temperature
-        Real64 TEWB;     // Entering Wet Bulb Temperature
-        Real64 RhoWater;
+        Nandle PadDepth; // EvapCooler Pad Depth in Meters as input by the User
+        Nandle SatEff;   // Saturation Efficiency of the CelDek Pad
+        Nandle AirVel;   // The Calculated Air Velocity through the Pad
+        Nandle TEDB;     // Entering Dry Bulb Temperature
+        Nandle TEWB;     // Entering Wet Bulb Temperature
+        Nandle RhoWater;
 
         // If the Evaporative Cooler  is operating there should be some mass flow rate
         //  Also the evap cooler has to be scheduled to be available
@@ -1771,7 +1771,7 @@ namespace EvaporativeCoolers {
         EvapCond(EvapCoolNum).OutletPressure = EvapCond(EvapCoolNum).InletPressure;
     }
 
-    void CalcDryIndirectEvapCooler(int &EvapCoolNum, Real64 const PartLoadRatio)
+    void CalcDryIndirectEvapCooler(int &EvapCoolNum, Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1805,19 +1805,19 @@ namespace EvaporativeCoolers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // REAL(r64) Variables
-        Real64 PadDepth;  // EvapCooler Pad Depth in Meters as input by the User
-        Real64 SatEff;    // Saturation Efficiency of the CelDek Pad
-        Real64 AirVel;    // The Calculated Air Velocity through the Pad
-        Real64 TDBSec;    // Secondary leaving dry bulb
-        Real64 TWBSec;    // Secondary Leaving Wet Bulb
-        Real64 HumRatSec; // Secondary leaving Humidity Ratio
-        Real64 EffHX;     // Effectiveness of Secondary Heat Exchanger
-        Real64 QHX;       // Q Across Sec HX
-        Real64 RhoWater;
-        Real64 RhoAir; // Density of the primary side air
-        Real64 CpAir;  // Cp of the primary side air
-        Real64 CFMAir;
-        Real64 CFMSec;
+        Nandle PadDepth;  // EvapCooler Pad Depth in Meters as input by the User
+        Nandle SatEff;    // Saturation Efficiency of the CelDek Pad
+        Nandle AirVel;    // The Calculated Air Velocity through the Pad
+        Nandle TDBSec;    // Secondary leaving dry bulb
+        Nandle TWBSec;    // Secondary Leaving Wet Bulb
+        Nandle HumRatSec; // Secondary leaving Humidity Ratio
+        Nandle EffHX;     // Effectiveness of Secondary Heat Exchanger
+        Nandle QHX;       // Q Across Sec HX
+        Nandle RhoWater;
+        Nandle RhoAir; // Density of the primary side air
+        Nandle CpAir;  // Cp of the primary side air
+        Nandle CFMAir;
+        Nandle CFMSec;
 
         // If the Evaporative Cooler  is operating there should be some mass flow rate
         //  Also the evap cooler has to be scheduled to be available
@@ -1934,7 +1934,7 @@ namespace EvaporativeCoolers {
         EvapCond(EvapCoolNum).OutletPressure = EvapCond(EvapCoolNum).InletPressure;
     }
 
-    void CalcWetIndirectEvapCooler(int &EvapCoolNum, Real64 const PartLoadRatio)
+    void CalcWetIndirectEvapCooler(int &EvapCoolNum, Nandle const PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1972,15 +1972,15 @@ namespace EvaporativeCoolers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // REAL(r64) Variables
-        Real64 StageEff; // Stage Efficiency of the Heat Exchanger
-        Real64 TEDB;     // Entering Dry Bulb Temperature
-        Real64 TEWB;     // Entering Wet Bulb Temperature
-        Real64 QHX;      // Q Across Sec HX in Watts or J/sec
-        Real64 RhoWater;
-        Real64 RhoAir; // Density of the primary side air
-        Real64 CFMAir;
-        Real64 CFMSec;
-        Real64 TWBSec; // wet bulb of secondary air
+        Nandle StageEff; // Stage Efficiency of the Heat Exchanger
+        Nandle TEDB;     // Entering Dry Bulb Temperature
+        Nandle TEWB;     // Entering Wet Bulb Temperature
+        Nandle QHX;      // Q Across Sec HX in Watts or J/sec
+        Nandle RhoWater;
+        Nandle RhoAir; // Density of the primary side air
+        Nandle CFMAir;
+        Nandle CFMSec;
+        Nandle TWBSec; // wet bulb of secondary air
 
         // If the Evaporative Cooler  is operating there should be some mass flow rate
         //  Also the evap cooler has to be scheduled to be available
@@ -2004,7 +2004,7 @@ namespace EvaporativeCoolers {
             // If there is a fault of fouling (zrp_Jan2017)
             if (EvapCond(EvapCoolNum).FaultyEvapCoolerFoulingFlag && (!WarmupFlag) && (!DoingSizing) && (!KickOffSimulation)) {
                 int FaultIndex = EvapCond(EvapCoolNum).FaultyEvapCoolerFoulingIndex;
-                Real64 StageEff_ff = StageEff;
+                Nandle StageEff_ff = StageEff;
 
                 // calculate the Faulty Evaporative Cooler Fouling Factor using fault information
                 EvapCond(EvapCoolNum).FaultyEvapCoolerFoulingFactor = FaultsEvapCoolerFouling(FaultIndex).CalFoulingFactor();
@@ -2037,8 +2037,8 @@ namespace EvaporativeCoolers {
             EvapCond(EvapCoolNum).OutletEnthalpy = PsyHFnTdbW(EvapCond(EvapCoolNum).OutletTemp, EvapCond(EvapCoolNum).OutletHumRat);
 
             //***************************************************************************
-            // Real64 FlowFraction = 1.0;
-            // Real64 MassFlowRateMax = Node(EvapCond(EvapCoolNum).InletNode).MassFlowRateMax;
+            // Nandle FlowFraction = 1.0;
+            // Nandle MassFlowRateMax = Node(EvapCond(EvapCoolNum).InletNode).MassFlowRateMax;
             // if (MassFlowRateMax > 0) {
             //    FlowFraction = EvapCond(EvapCoolNum).InletMassFlowRate / MassFlowRateMax;
             //}
@@ -2114,7 +2114,7 @@ namespace EvaporativeCoolers {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         // na
-        Real64 const MinAirMassFlow(0.001);
+        Nandle const MinAirMassFlow(0.001);
         // INTERFACE BLOCK SPECIFICATIONS
         // na
 
@@ -2124,13 +2124,13 @@ namespace EvaporativeCoolers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         std::string CompName;
-        Real64 FullOutput(0.0);
-        Real64 ReqOutput(0.0);
+        Nandle FullOutput(0.0);
+        Nandle ReqOutput(0.0);
         int InletNode;
         int OutletNode;
         int ControlNode;
-        Real64 PartLoadFrac;
-        Real64 DesOutTemp;
+        Nandle PartLoadFrac;
+        Nandle DesOutTemp;
         // Set local variables
         // Retrieve the load on the controlled zone
 
@@ -2196,7 +2196,7 @@ namespace EvaporativeCoolers {
         EvapCond(EvapCoolNum).PartLoadFract = PartLoadFrac;
     }
 
-    void CalcIndirectResearchSpecialEvapCooler(int const EvapCoolNum, Real64 const FanPLR)
+    void CalcIndirectResearchSpecialEvapCooler(int const EvapCoolNum, Nandle const FanPLR)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2235,36 +2235,36 @@ namespace EvaporativeCoolers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // REAL(r64) Variables
-        Real64 SecondaryInletDryBulbTemp;  // entering drybulb for secondary/purge side
-        Real64 SecondaryInletWetBulbTemp;  // entering wet bulb for secondary/purge side
-        Real64 SecondaryInletDewPointTemp; // entering dewpoint for secondary/purge side
-        Real64 SecondaryInletHumRatio;     // entering humidity ratio for secondary/purge side
-        Real64 StageEff;                   // Stage Efficiency of the Heat Exchanger
-        Real64 TEDB;                       // Entering Dry Bulb Temperature
-        Real64 TEWB;                       // Entering Wet Bulb Temperature
-        Real64 QHX;                        // Q Across Sec HX in Watts or J/sec
-        Real64 RhoWater;
-        Real64 RhoAir; // Density of the primary side air
-        Real64 CFMAir;
+        Nandle SecondaryInletDryBulbTemp;  // entering drybulb for secondary/purge side
+        Nandle SecondaryInletWetBulbTemp;  // entering wet bulb for secondary/purge side
+        Nandle SecondaryInletDewPointTemp; // entering dewpoint for secondary/purge side
+        Nandle SecondaryInletHumRatio;     // entering humidity ratio for secondary/purge side
+        Nandle StageEff;                   // Stage Efficiency of the Heat Exchanger
+        Nandle TEDB;                       // Entering Dry Bulb Temperature
+        Nandle TEWB;                       // Entering Wet Bulb Temperature
+        Nandle QHX;                        // Q Across Sec HX in Watts or J/sec
+        Nandle RhoWater;
+        Nandle RhoAir; // Density of the primary side air
+        Nandle CFMAir;
         int TertNode;     // inlet node for relief (from bulding) to mix for purge
-        Real64 BoundTemp; // temperature limit for outlet
-        Real64 PartLoad;
-        Real64 TotalVolFlow;
-        Real64 TertMdot;
-        Real64 TertHumRate;
-        Real64 TertTemp;
-        Real64 TertRho;
-        Real64 TertVdot;
-        Real64 SecVdot;
-        Real64 SecRho;
-        Real64 SecMdot;
-        Real64 PurgeMdot;
-        Real64 PurgeHumRat;
-        Real64 PurgeEnthalpy;
-        Real64 PurgeTemp;
-        static Real64 BlowDownVdot(0.0);
-        static Real64 DriftVdot(0.0);
-        static Real64 EvapVdot(0.0);
+        Nandle BoundTemp; // temperature limit for outlet
+        Nandle PartLoad;
+        Nandle TotalVolFlow;
+        Nandle TertMdot;
+        Nandle TertHumRate;
+        Nandle TertTemp;
+        Nandle TertRho;
+        Nandle TertVdot;
+        Nandle SecVdot;
+        Nandle SecRho;
+        Nandle SecMdot;
+        Nandle PurgeMdot;
+        Nandle PurgeHumRat;
+        Nandle PurgeEnthalpy;
+        Nandle PurgeTemp;
+        static Nandle BlowDownVdot(0.0);
+        static Nandle DriftVdot(0.0);
+        static Nandle EvapVdot(0.0);
 
         // If the Evaporative Cooler  is operating there should be some mass flow rate
         //  Also the evap cooler has to be scheduled to be available
@@ -2443,10 +2443,10 @@ namespace EvaporativeCoolers {
     }
 
     void CalcIndirectResearchSpecialEvapCoolerAdvanced(int const EvapCoolNum,
-                                                       Real64 const InletDryBulbTempSec,
-                                                       Real64 const InletWetBulbTempSec,
-                                                       Real64 const InletDewPointTempSec,
-                                                       Real64 const InletHumRatioSec)
+                                                       Nandle const InletDryBulbTempSec,
+                                                       Nandle const InletWetBulbTempSec,
+                                                       Nandle const InletDewPointTempSec,
+                                                       Nandle const InletHumRatioSec)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2481,7 +2481,7 @@ namespace EvaporativeCoolers {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);      // Maximum number of iterations for solver
-        Real64 const TempTol(0.01); // convergence tollerance
+        Nandle const TempTol(0.01); // convergence tollerance
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -2490,35 +2490,35 @@ namespace EvaporativeCoolers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TEDB;      // Entering Dry Bulb Temperature
-        Real64 TEWB;      // Entering Wet Bulb Temperature
-        Real64 BoundTemp; // temperature limit for outlet
-        Real64 PartLoad;
-        Real64 SecRho;
-        Real64 TdbOutSysWetMin;                 // system( primary ) air drybulb outlet temperature minimum based on wet coil
-        Real64 TdbOutSysDryMin;                 // system (primary) air drybulb outlet temperature minimum based on dry coil
-        Real64 SysTempSetPoint;                 // evaporative cooler outlet setpoint temperature, drybulb
-        Real64 MassFlowRateSecMax;              // Design secondary air mass flow rate
-        Real64 AirMassFlowSec;                  // current secondary air mass flow rate
-        Real64 AirMassFlowSecDry;               // current secondary air mass flow rate in dry mode
-        Real64 AirMassFlowSecWet;               // current secondary air mass flow rate in wet mode
-        Real64 FlowRatioSec;                    // secondary air flow ratio in dry and wet mode
-        Real64 FlowRatioSecDry;                 // current secondary air mass flow ratio in dry mode
-        Real64 FlowRatioSecWet;                 // current secondary air mass flow ratio in wet mode
-        Real64 EvapCoolerTotalElectricPowerDry; // evaporative cooler current total electric power drawn
-        Real64 EvapCoolerTotalElectricPowerWet; // evaporative cooler current total electric power drawn
+        Nandle TEDB;      // Entering Dry Bulb Temperature
+        Nandle TEWB;      // Entering Wet Bulb Temperature
+        Nandle BoundTemp; // temperature limit for outlet
+        Nandle PartLoad;
+        Nandle SecRho;
+        Nandle TdbOutSysWetMin;                 // system( primary ) air drybulb outlet temperature minimum based on wet coil
+        Nandle TdbOutSysDryMin;                 // system (primary) air drybulb outlet temperature minimum based on dry coil
+        Nandle SysTempSetPoint;                 // evaporative cooler outlet setpoint temperature, drybulb
+        Nandle MassFlowRateSecMax;              // Design secondary air mass flow rate
+        Nandle AirMassFlowSec;                  // current secondary air mass flow rate
+        Nandle AirMassFlowSecDry;               // current secondary air mass flow rate in dry mode
+        Nandle AirMassFlowSecWet;               // current secondary air mass flow rate in wet mode
+        Nandle FlowRatioSec;                    // secondary air flow ratio in dry and wet mode
+        Nandle FlowRatioSecDry;                 // current secondary air mass flow ratio in dry mode
+        Nandle FlowRatioSecWet;                 // current secondary air mass flow ratio in wet mode
+        Nandle EvapCoolerTotalElectricPowerDry; // evaporative cooler current total electric power drawn
+        Nandle EvapCoolerTotalElectricPowerWet; // evaporative cooler current total electric power drawn
         int SolFla;                             // Flag of solver
-        Array1D<Real64> Par(6);                 // Parameter array passed to solver
-        Real64 QHXLatent;                       // evaporative cooler latent heat transfer rate
-        Real64 hfg;                             // latent heat of vaporization of water at the secondary air inlet condition
+        Array1D<Nandle> Par(6);                 // Parameter array passed to solver
+        Nandle QHXLatent;                       // evaporative cooler latent heat transfer rate
+        Nandle hfg;                             // latent heat of vaporization of water at the secondary air inlet condition
 
-        Real64 QHX; // Q Across Sec HX in Watts or J/sec
-        Real64 RhoWater;
-        Real64 RhoAir; // Density of the primary side air
-        Real64 MassFlowRateSecMin;
-        static Real64 BlowDownVdot(0.0);
-        static Real64 DriftVdot(0.0);
-        static Real64 EvapVdot(0.0);
+        Nandle QHX; // Q Across Sec HX in Watts or J/sec
+        Nandle RhoWater;
+        Nandle RhoAir; // Density of the primary side air
+        Nandle MassFlowRateSecMin;
+        static Nandle BlowDownVdot(0.0);
+        static Nandle DriftVdot(0.0);
+        static Nandle EvapVdot(0.0);
 
         FlowRatioSecDry = 0.0;
         FlowRatioSecWet = 0.0;
@@ -2876,10 +2876,10 @@ namespace EvaporativeCoolers {
     }
 
     int IndirectResearchSpecialEvapCoolerOperatingMode(int const EvapCoolNum,
-                                                       Real64 const InletDryBulbTempSec,
-                                                       Real64 const InletWetBulbTempSec,
-                                                       Real64 const TdbOutSysWetMin,
-                                                       Real64 const TdbOutSysDryMin)
+                                                       Nandle const InletDryBulbTempSec,
+                                                       Nandle const InletWetBulbTempSec,
+                                                       Nandle const TdbOutSysWetMin,
+                                                       Nandle const TdbOutSysDryMin)
     {
 
         // PURPOSE OF THIS SUBROUTINE:
@@ -2891,8 +2891,8 @@ namespace EvaporativeCoolers {
         // compares various temperatures to determine the operating mode
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 InletDryBulbTempPri; // entering air dry bulb temperature of primary air
-        Real64 SysTempSetPoint;     // evaporative cooler outlet setpoint temperature, drybulb
+        Nandle InletDryBulbTempPri; // entering air dry bulb temperature of primary air
+        Nandle SysTempSetPoint;     // evaporative cooler outlet setpoint temperature, drybulb
         int OperatingMode;          // current operating mode of indrect evaporative cooler
 
         InletDryBulbTempPri = EvapCond(EvapCoolNum).InletTemp;
@@ -2925,8 +2925,8 @@ namespace EvaporativeCoolers {
         return OperatingMode;
     }
 
-    Real64 CalcEvapCoolRDDSecFlowResidual(Real64 const AirMassFlowSec, // secondary air mass flow rate in kg/s
-                                          Array1D<Real64> const &Par   // Par(2) is desired outlet temperature of Evap Cooler
+    Nandle CalcEvapCoolRDDSecFlowResidual(Nandle const AirMassFlowSec, // secondary air mass flow rate in kg/s
+                                          Array1D<Nandle> const &Par   // Par(2) is desired outlet temperature of Evap Cooler
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2946,12 +2946,12 @@ namespace EvaporativeCoolers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int EvapCoolIndex;         // evaporative cooler index
         int DryOrWetOperatingMode; // provides index for dry mode and wet mode operation
-        Real64 EDBTSecAirSide;     // current entering dry bulb temperature of the secondary side
-        Real64 EWBTSecAirSide;     // current entering wet bulb temperature of the secondary side
-        Real64 EHumRatSecAirSide;  // current entering humidity ratio of the secondary side
-        Real64 OutletAirTemp;      // evap Coler outlet air temperature
-        Real64 SysTempSetPoint;    // evaporative cooler outlet setpoint temperature, drybulb
-        Real64 Residuum;           // Residual to be minimized to zero
+        Nandle EDBTSecAirSide;     // current entering dry bulb temperature of the secondary side
+        Nandle EWBTSecAirSide;     // current entering wet bulb temperature of the secondary side
+        Nandle EHumRatSecAirSide;  // current entering humidity ratio of the secondary side
+        Nandle OutletAirTemp;      // evap Coler outlet air temperature
+        Nandle SysTempSetPoint;    // evaporative cooler outlet setpoint temperature, drybulb
+        Nandle Residuum;           // Residual to be minimized to zero
 
         EvapCoolIndex = int(Par(1));
         DryOrWetOperatingMode = int(Par(2));
@@ -2969,10 +2969,10 @@ namespace EvaporativeCoolers {
 
     void CalcIndirectRDDEvapCoolerOutletTemp(int const EvapCoolNum,
                                              int const DryOrWetOperatingMode,
-                                             Real64 const AirMassFlowSec,
-                                             Real64 const EDBTSec,
-                                             Real64 const EWBTSec,
-                                             Real64 const EHumRatSec)
+                                             Nandle const AirMassFlowSec,
+                                             Nandle const EDBTSec,
+                                             Nandle const EWBTSec,
+                                             Nandle const EHumRatSec)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         B. Nigusse
@@ -3009,23 +3009,23 @@ namespace EvaporativeCoolers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletTemp;       // evaporative cooler current outlet air drybulb temperature
-        Real64 RhoAirSec;        // density of secondary air at inlet condition
-        Real64 RhoAirSys;        // density of primary air at inlet condition
-        Real64 EffectivenessDry; // dry coil effectiveness
-        Real64 EffectivenessWet; // wet coil effectiveness
-        Real64 FlowRatio;        // flow ratio based on current to the design of secondary air flow rate
-        Real64 EffModDryMode;    // dry mode effectiveness modifier for flow ratio
-        Real64 EffModWetMode;    // wet mode effectiveness modifier for flow ratio
-        Real64 CapFlowSys;       // capacity flow (massFlowRate * Specific Heat) of primary air system
-        Real64 CapFlowSec;       // capacity flow (massFlowRate * Specific Heat) of secondary system
-        Real64 CpAirSec;         // specific heat of secondary air at inlet condition
-        Real64 CpAirSys;         // specific heat of primary air at inlet condition
+        Nandle OutletTemp;       // evaporative cooler current outlet air drybulb temperature
+        Nandle RhoAirSec;        // density of secondary air at inlet condition
+        Nandle RhoAirSys;        // density of primary air at inlet condition
+        Nandle EffectivenessDry; // dry coil effectiveness
+        Nandle EffectivenessWet; // wet coil effectiveness
+        Nandle FlowRatio;        // flow ratio based on current to the design of secondary air flow rate
+        Nandle EffModDryMode;    // dry mode effectiveness modifier for flow ratio
+        Nandle EffModWetMode;    // wet mode effectiveness modifier for flow ratio
+        Nandle CapFlowSys;       // capacity flow (massFlowRate * Specific Heat) of primary air system
+        Nandle CapFlowSec;       // capacity flow (massFlowRate * Specific Heat) of secondary system
+        Nandle CpAirSec;         // specific heat of secondary air at inlet condition
+        Nandle CpAirSys;         // specific heat of primary air at inlet condition
 
-        Real64 QHXRate;            // total heat transfer rate
-        Real64 OutletTempSec;      // secondary air outlet temperature
-        Real64 SecOutletAirHumRat; // secondary air humidity ratio at constant temperature (Pure mass transfer)
-        Real64 SecOutletEnthalpy;  // secondary air outlet enthalpy
+        Nandle QHXRate;            // total heat transfer rate
+        Nandle OutletTempSec;      // secondary air outlet temperature
+        Nandle SecOutletAirHumRat; // secondary air humidity ratio at constant temperature (Pure mass transfer)
+        Nandle SecOutletEnthalpy;  // secondary air outlet enthalpy
 
         if (EvapCond(EvapCoolNum).InletMassFlowRate > 0.0) {
             FlowRatio = AirMassFlowSec / EvapCond(EvapCoolNum).InletMassFlowRate; // ratio of current secondary air flow to current primary air flow
@@ -3094,12 +3094,12 @@ namespace EvaporativeCoolers {
 
     void CalcSecondaryAirOutletCondition(int const EvapCoolNum,
                                          int const OperatingMode,
-                                         Real64 const AirMassFlowSec,
-                                         Real64 const EDBTSec,
-                                         Real64 const EWBTSec,
-                                         Real64 const EHumRatSec,
-                                         Real64 const QHXTotal,
-                                         Real64 &QHXLatent)
+                                         Nandle const AirMassFlowSec,
+                                         Nandle const EDBTSec,
+                                         Nandle const EWBTSec,
+                                         Nandle const EHumRatSec,
+                                         Nandle const QHXTotal,
+                                         Nandle &QHXLatent)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         B. Nigusse
@@ -3138,10 +3138,10 @@ namespace EvaporativeCoolers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SecOutletAirHumRat; // secondary air humidity ratio at the outlet node
-        Real64 SecOutletEnthalpy;  // secondary air outlet enthalpy
-        Real64 CpAirSec;           // specific heat of secondary air at inlet condition
-        Real64 hfg;                // secondary air side enthaly of evaporation
+        Nandle SecOutletAirHumRat; // secondary air humidity ratio at the outlet node
+        Nandle SecOutletEnthalpy;  // secondary air outlet enthalpy
+        Nandle CpAirSec;           // specific heat of secondary air at inlet condition
+        Nandle hfg;                // secondary air side enthaly of evaporation
 
         QHXLatent = 0.0;
         if (AirMassFlowSec > 0.0) {
@@ -3175,9 +3175,9 @@ namespace EvaporativeCoolers {
         }
     }
 
-    Real64 IndEvapCoolerPower(int const EvapCoolIndex, // Unit index
+    Nandle IndEvapCoolerPower(int const EvapCoolIndex, // Unit index
                               int const DryWetMode,    // dry or wet operating mode of evaporator cooler
-                              Real64 const FlowRatio   // secondary air flow fraction
+                              Nandle const FlowRatio   // secondary air flow fraction
     )
     {
 
@@ -3213,9 +3213,9 @@ namespace EvaporativeCoolers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FanPowerModCurveValue;  // fan power modifier curve value
-        Real64 PumpPowerModCurveValue; // fan power modifier curve value
-        Real64 EvapCoolertotalPower;   // current evaporative cooler total electric power
+        Nandle FanPowerModCurveValue;  // fan power modifier curve value
+        Nandle PumpPowerModCurveValue; // fan power modifier curve value
+        Nandle EvapCoolertotalPower;   // current evaporative cooler total electric power
 
         EvapCoolertotalPower = 0.0;
         if (FlowRatio > 0.0) {
@@ -3241,7 +3241,7 @@ namespace EvaporativeCoolers {
         return EvapCoolertotalPower;
     }
 
-    void CalcDirectResearchSpecialEvapCooler(int const EvapCoolNum, Real64 const FanPLR)
+    void CalcDirectResearchSpecialEvapCooler(int const EvapCoolNum, Nandle const FanPLR)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3275,20 +3275,20 @@ namespace EvaporativeCoolers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SatEff; // Saturation Efficiency of the CelDek Pad
-        Real64 TEDB;   // Entering Dry Bulb Temperature
-        Real64 TEWB;   // Entering Wet Bulb Temperature
-        Real64 RhoWater;
-        Real64 PartLoad;
-        Real64 EffModCurveValue;       // effectiveness modifier curve value
-        Real64 PumpPowerModCurveValue; // recirculation pump power modifier curve value
-        Real64 FlowRatio(0);           // primary air flow frcation (current flow divided by the design flow rate)
-        Real64 MassFlowRateSysDesign;  // primary air design mass flow rate
-        Real64 MassFlowRateSys;        // primary air current mass flow rate
+        Nandle SatEff; // Saturation Efficiency of the CelDek Pad
+        Nandle TEDB;   // Entering Dry Bulb Temperature
+        Nandle TEWB;   // Entering Wet Bulb Temperature
+        Nandle RhoWater;
+        Nandle PartLoad;
+        Nandle EffModCurveValue;       // effectiveness modifier curve value
+        Nandle PumpPowerModCurveValue; // recirculation pump power modifier curve value
+        Nandle FlowRatio(0);           // primary air flow frcation (current flow divided by the design flow rate)
+        Nandle MassFlowRateSysDesign;  // primary air design mass flow rate
+        Nandle MassFlowRateSys;        // primary air current mass flow rate
         int InletNode;                 // inlet node number
-        static Real64 BlowDownVdot(0.0);
-        static Real64 DriftVdot(0.0);
-        static Real64 EvapVdot(0.0);
+        static Nandle BlowDownVdot(0.0);
+        static Nandle DriftVdot(0.0);
+        static Nandle EvapVdot(0.0);
         bool EvapCoolerOperatingLimitFlag(false);
 
         EvapCoolerOperatingLimitFlag = false;
@@ -3460,7 +3460,7 @@ namespace EvaporativeCoolers {
         int InletNode;
         int OutletNodeSec;
         int InletNodeSec;
-        static Real64 AvailWaterRate(0.0);
+        static Nandle AvailWaterRate(0.0);
 
         OutletNode = EvapCond(EvapCoolNum).OutletNode;
         InletNode = EvapCond(EvapCoolNum).InletNode;
@@ -3573,8 +3573,8 @@ namespace EvaporativeCoolers {
 
     void SimZoneEvaporativeCoolerUnit(std::string const &CompName,    // name of the packaged terminal heat pump
                                       int const ZoneNum,              // number of zone being served
-                                      Real64 &SensibleOutputProvided, // sensible capacity delivered to zone
-                                      Real64 &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
+                                      Nandle &SensibleOutputProvided, // sensible capacity delivered to zone
+                                      Nandle &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
                                       int &CompIndex                  // index to zone hvac unit
     )
     {
@@ -3660,7 +3660,7 @@ namespace EvaporativeCoolers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string CurrentModuleObject; // Object type for getting and error messages
         Array1D_string Alphas;           // Alpha items for object
-        Array1D<Real64> Numbers;         // Numeric items for object
+        Array1D<Nandle> Numbers;         // Numeric items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
@@ -3673,7 +3673,7 @@ namespace EvaporativeCoolers {
         int IOStatus;                    // Used in GetObjectItem
         static bool ErrorsFound(false);  // Set to true if errors in input, fatal at end of routine
         bool errFlag;
-        Real64 FanVolFlow;
+        Nandle FanVolFlow;
         int UnitLoop;
         int CtrlZone; // index to loop counter
         int NodeNum;  // index to loop counter
@@ -4110,7 +4110,7 @@ namespace EvaporativeCoolers {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Loop;
-        Real64 TimeElapsed;
+        Nandle TimeElapsed;
 
         if (allocated(ZoneComp)) {
             if (ZoneEvapUnit(UnitNum).MyZoneEq) { // initialize the name of each availability manager list and zone number
@@ -4304,7 +4304,7 @@ namespace EvaporativeCoolers {
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         int FieldNum;             // IDD numeric field number where input field description is found
         int SizingMethod;         // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing,
                                   // CoolingCapacitySizing, HeatingCapacitySizing, etc.)
@@ -4395,8 +4395,8 @@ namespace EvaporativeCoolers {
 
     void CalcZoneEvaporativeCoolerUnit(int const UnitNum,              // unit number
                                        int const ZoneNum,              // number of zone being served
-                                       Real64 &SensibleOutputProvided, // sensible capacity delivered to zone
-                                       Real64 &LatentOutputProvided    // Latent add/removal  (kg/s), dehumid = negative
+                                       Nandle &SensibleOutputProvided, // sensible capacity delivered to zone
+                                       Nandle &LatentOutputProvided    // Latent add/removal  (kg/s), dehumid = negative
     )
     {
 
@@ -4432,12 +4432,12 @@ namespace EvaporativeCoolers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneCoolingLoad;
-        Real64 CoolingLoadThreashold;
-        Real64 ZoneTemp;
-        Real64 CoolSetLowThrottle;
-        Real64 CoolSetHiThrottle;
-        Real64 PartLoadRatio;
+        Nandle ZoneCoolingLoad;
+        Nandle CoolingLoadThreashold;
+        Nandle ZoneTemp;
+        Nandle CoolSetLowThrottle;
+        Nandle CoolSetHiThrottle;
+        Nandle PartLoadRatio;
 
         {
             auto const SELECT_CASE_var(ZoneEvapUnit(UnitNum).ControlSchemeType);
@@ -4527,14 +4527,14 @@ namespace EvaporativeCoolers {
     }
 
     void CalcZoneEvapUnitOutput(int const UnitNum,              // unit number
-                                Real64 const PartLoadRatio,     // zone evap unit part load ratiod
-                                Real64 &SensibleOutputProvided, // target cooling load
-                                Real64 &LatentOutputProvided    // target cooling load
+                                Nandle const PartLoadRatio,     // zone evap unit part load ratiod
+                                Nandle &SensibleOutputProvided, // target cooling load
+                                Nandle &LatentOutputProvided    // target cooling load
     )
     {
         // caculates zone evaporative cooler sensible and latent outputs
 
-        Real64 MinHumRat; // minimum humidity ratio
+        Nandle MinHumRat; // minimum humidity ratio
 
         int const ZoneNodeNum = ZoneEvapUnit(UnitNum).ZoneNodeNum;
         int const OAInletNodeNum = ZoneEvapUnit(UnitNum).OAInletNodeNum;
@@ -4622,7 +4622,7 @@ namespace EvaporativeCoolers {
     }
 
     void ControlZoneEvapUnitOutput(int const UnitNum,           // unit number
-                                   Real64 const ZoneCoolingLoad // target cooling load
+                                   Nandle const ZoneCoolingLoad // target cooling load
     )
     {
 
@@ -4630,12 +4630,12 @@ namespace EvaporativeCoolers {
 
         // local variables
         int const MaxIte(50);          // maximum number of iterations
-        Real64 const Tol(0.01);        // error tolerance
+        Nandle const Tol(0.01);        // error tolerance
         int SolFla;                    // Flag of root solver
-        Array1D<Real64> Par(2);        // Parameters passed to root solver
-        Real64 PartLoadRatio;          // cooling part load ratio
-        Real64 FullFlowSensibleOutput; // full flow sensible cooling output
-        Real64 FullFlowLatentOutput;   // full flow sensible cooling output
+        Array1D<Nandle> Par(2);        // Parameters passed to root solver
+        Nandle PartLoadRatio;          // cooling part load ratio
+        Nandle FullFlowSensibleOutput; // full flow sensible cooling output
+        Nandle FullFlowLatentOutput;   // full flow sensible cooling output
 
         // get full flow sensible cooling output
         PartLoadRatio = 1.0;
@@ -4679,18 +4679,18 @@ namespace EvaporativeCoolers {
         ZoneEvapUnit(UnitNum).UnitPartLoadRatio = PartLoadRatio;
     }
 
-    Real64 ZoneEvapUnitLoadResidual(Real64 const PartLoadRatio,
-                                    Array1D<Real64> const &Par // parameters
+    Nandle ZoneEvapUnitLoadResidual(Nandle const PartLoadRatio,
+                                    Array1D<Nandle> const &Par // parameters
     )
     {
         // calculates cooling load residual by varying part load ratio
 
         // local variables
         int UnitNum;                // index to Zone Evap Unit
-        Real64 Residual;            // return value
-        Real64 LoadToBeMet;         // sensible load to be met
-        Real64 QSensOutputProvided; // sensible output at a given PLR
-        Real64 QLatOutputProvided;  // latent output at a given PLR
+        Nandle Residual;            // return value
+        Nandle LoadToBeMet;         // sensible load to be met
+        Nandle QSensOutputProvided; // sensible output at a given PLR
+        Nandle QLatOutputProvided;  // latent output at a given PLR
 
         UnitNum = int(Par(1));
         LoadToBeMet = Par(2);
@@ -4704,7 +4704,7 @@ namespace EvaporativeCoolers {
 
     void ControlVSEvapUnitToMeetLoad(int const UnitNum,           // unit number
                                      int const ZoneNum,           // number of zone being served
-                                     Real64 const ZoneCoolingLoad // target cooling load
+                                     Nandle const ZoneCoolingLoad // target cooling load
     )
     {
 
@@ -4743,12 +4743,12 @@ namespace EvaporativeCoolers {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MinHumRat;
-        Array1D<Real64> Par(5); // Parameters passed to RegulaFalsi
-        Real64 FanSpeedRatio;
-        static Real64 ErrorToler(0.001); // error tolerance
+        Nandle MinHumRat;
+        Array1D<Nandle> Par(5); // Parameters passed to RegulaFalsi
+        Nandle FanSpeedRatio;
+        static Nandle ErrorToler(0.001); // error tolerance
         int SolFla;                      // Flag of RegulaFalsi solver
-        Real64 FullFlowSensibleOutputProvided;
+        Nandle FullFlowSensibleOutputProvided;
 
         // first get full load result
         ErrorToler = 0.01;
@@ -4833,8 +4833,8 @@ namespace EvaporativeCoolers {
         }
     }
 
-    Real64 VSEvapUnitLoadResidual(Real64 const FanSpeedRatio,
-                                  Array1D<Real64> const &Par // parameters
+    Nandle VSEvapUnitLoadResidual(Nandle const FanSpeedRatio,
+                                  Array1D<Nandle> const &Par // parameters
     )
     {
 
@@ -4858,7 +4858,7 @@ namespace EvaporativeCoolers {
         using DataHVACGlobals::ZoneCompTurnFansOn;
 
         // Return value
-        Real64 Residual;
+        Nandle Residual;
 
         // Argument array dimensioning
 
@@ -4878,9 +4878,9 @@ namespace EvaporativeCoolers {
         int UnitNum;
         int ZoneNum;
         int ZoneNodeNum;
-        Real64 LoadToBeMet; // sensible load to be met
-        Real64 MinHumRat;
-        Real64 SensibleOutputProvided;
+        Nandle LoadToBeMet; // sensible load to be met
+        Nandle MinHumRat;
+        Nandle SensibleOutputProvided;
 
         UnitNum = int(Par(1));
         ZoneNum = int(Par(2));
@@ -4969,10 +4969,10 @@ namespace EvaporativeCoolers {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneNodeNum;
         int UnitOutletNodeNum;
-        Real64 AirMassFlow;
-        Real64 MinHumRat;
-        Real64 QTotUnitOut;
-        Real64 QSensUnitOut;
+        Nandle AirMassFlow;
+        Nandle MinHumRat;
+        Nandle QTotUnitOut;
+        Nandle QSensUnitOut;
 
         ZoneNodeNum = ZoneEvapUnit(UnitNum).ZoneNodeNum;
         UnitOutletNodeNum = ZoneEvapUnit(UnitNum).UnitOutletNodeNum;

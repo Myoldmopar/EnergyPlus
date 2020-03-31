@@ -370,13 +370,13 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTAC_ATMInletSide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int PTUnitNum(1);
 
@@ -699,14 +699,14 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTAC_ATMSupplySide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 ATMixerOutletMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle ATMixerOutletMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int PTUnitNum(1);
 
@@ -1033,13 +1033,13 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTHP_ATMInletSide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int PTUnitNum(1);
 
@@ -1444,14 +1444,14 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTHP_ATMSupplySide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 ATMixerOutletMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle ATMixerOutletMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int PTUnitNum(1);
 
@@ -1860,13 +1860,13 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimVRF_ATMInletSide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOutVRFTU(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOutVRFTU(0.0);
+    Nandle QZnReq(0.0);
     int VRFNum(1);
     int VRFTUNum(1);
 
@@ -2538,14 +2538,14 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimVRF_ATMSupplySide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 ATMixerOutletMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOutVRFTU(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle ATMixerOutletMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOutVRFTU(0.0);
+    Nandle QZnReq(0.0);
     int VRFNum(1);
     int VRFTUNum(1);
 
@@ -3216,13 +3216,13 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimVRFfluidCntrl_ATMInletSi
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOutVRFTU(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOutVRFTU(0.0);
+    Nandle QZnReq(0.0);
     int VRFNum(1);
     int VRFTUNum(1);
 
@@ -4969,14 +4969,14 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimVRFfluidCntrl_ATMSupplyS
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 ATMixerOutletMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOutVRFTU(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle ATMixerOutletMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOutVRFTU(0.0);
+    Nandle QZnReq(0.0);
     int VRFNum(1);
     int VRFTUNum(1);
 
@@ -6721,12 +6721,12 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimUnitVent_ATMInletSide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int UnitVentNum(1);
 
@@ -6957,13 +6957,13 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimUnitVent_ATMSupplySide)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 ATMixerOutletMassFlowRate(0.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle ATMixerOutletMassFlowRate(0.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int UnitVentNum(1);
 
@@ -7517,13 +7517,13 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimFCU_ATMInletSideTest)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 SecondaryAirMassFlowRate(0.0);
-    Real64 DesignHeatAirVolFlow(0.50);
-    Real64 DesignCoolAirVolFlow(0.60);
-    Real64 QUnitOut(0.0);
-    Real64 QLatOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle SecondaryAirMassFlowRate(0.0);
+    Nandle DesignHeatAirVolFlow(0.50);
+    Nandle DesignCoolAirVolFlow(0.60);
+    Nandle QUnitOut(0.0);
+    Nandle QLatOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int FanCoilNum(1);
 

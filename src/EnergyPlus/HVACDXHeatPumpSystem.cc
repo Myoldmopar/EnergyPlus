@@ -106,7 +106,7 @@ namespace HVACDXHeatPumpSystem {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    Real64 const MinAirMassFlow(0.001);
+    Nandle const MinAirMassFlow(0.001);
     // Compressor operation
     int const On(1);  // normal compressor operation
     int const Off(0); // signal DXCoil that compressor shouldn't run
@@ -150,8 +150,8 @@ namespace HVACDXHeatPumpSystem {
                              int const AirLoopNum,                    // Primary air loop number
                              int &CompIndex,                          // Index to CoilSystem:Heating:DX object
                              Optional_int_const OAUnitNum,            // If the system is an equipment of OutdoorAirUnit
-                             Optional<Real64 const> OAUCoilOutTemp,   // the coil inlet temperature of OutdoorAirUnit
-                             Optional<Real64> QTotOut                 // the total cooling output of unit
+                             Optional<Nandle const> OAUCoilOutTemp,   // the coil inlet temperature of OutdoorAirUnit
+                             Optional<Nandle> QTotOut                 // the total cooling output of unit
     )
     {
 
@@ -175,16 +175,16 @@ namespace HVACDXHeatPumpSystem {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string CompName; // Name of CoilSystem:Heating:DX object
         int DXSystemNum;      // Index to CoilSystem:Heating:DX object
-        Real64 AirMassFlow;   // DX System air mass flow rate
+        Nandle AirMassFlow;   // DX System air mass flow rate
         int InletNodeNum;     // DX System inlet node number
         int OutletNodeNum;    // DX System outlet node number
         // local variables for calling variable speed coil
-        static Real64 QZnReq(0.001);              // Zone load (W), input to variable-speed DX coil
-        static Real64 QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
-        static Real64 MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
-        static Real64 HPTimeConstant(0.0);        // Heat pump time constant [s]
-        static Real64 FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
-        static Real64 OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
+        static Nandle QZnReq(0.001);              // Zone load (W), input to variable-speed DX coil
+        static Nandle QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
+        static Nandle MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
+        static Nandle HPTimeConstant(0.0);        // Heat pump time constant [s]
+        static Nandle FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
+        static Nandle OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
 
         // Obtains and Allocates DX Cooling System related parameters from input file
         if (GetInputFlag) { // First time subroutine has been entered
@@ -323,7 +323,7 @@ namespace HVACDXHeatPumpSystem {
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int TotalArgs(0);         // Total number of alpha and numeric arguments (max) for a
@@ -469,7 +469,7 @@ namespace HVACDXHeatPumpSystem {
     void InitDXHeatPumpSystem(int const DXSystemNum,                // number of the current DX Sys being simulated
                               int const AirLoopNum,                 // number of the current air loop being simulated
                               Optional_int_const OAUnitNum,         // number of the current outdoor air unit being simulated
-                              Optional<Real64 const> OAUCoilOutTemp // the coil inlet temperature of OutdoorAirUnit
+                              Optional<Nandle const> OAUCoilOutTemp // the coil inlet temperature of OutdoorAirUnit
     )
     {
 
@@ -512,7 +512,7 @@ namespace HVACDXHeatPumpSystem {
         //  LOGICAL,SAVE        :: MyOneTimeFlag = .TRUE.
         static bool MySetPointCheckFlag(true);
         int OutdoorAirUnitNum;    // "ONLY" for ZoneHVAC:OutdoorAirUnit
-        Real64 OAUCoilOutletTemp; // "ONLY" for zoneHVAC:OutdoorAirUnit
+        Nandle OAUCoilOutletTemp; // "ONLY" for zoneHVAC:OutdoorAirUnit
         // FLOW:
 
         //  IF (MyOneTimeFlag) THEN
@@ -609,39 +609,39 @@ namespace HVACDXHeatPumpSystem {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);   // Maximum number of iterations for solver
-        Real64 const Acc(1.e-3); // Accuracy of solver result
+        Nandle const Acc(1.e-3); // Accuracy of solver result
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string CompName; // Name of the DX cooling coil
-        Real64 NoOutput;      // Sensible capacity (outlet - inlet) when the compressor is off
-        Real64 FullOutput;    // Sensible capacity (outlet - inlet) when the compressor is on
-        Real64 ReqOutput;     // Sensible capacity (outlet - inlet) required to meet load or set point temperature
+        Nandle NoOutput;      // Sensible capacity (outlet - inlet) when the compressor is off
+        Nandle FullOutput;    // Sensible capacity (outlet - inlet) when the compressor is on
+        Nandle ReqOutput;     // Sensible capacity (outlet - inlet) required to meet load or set point temperature
         int InletNode;        // Inlet node number of the DX cooling coil
         int OutletNode;       // Outlet node number of the DX cooling coil
         int ControlNode;      // The node number where a set point is placed to control the DX cooling coil
-        Real64 PartLoadFrac;  // The part-load fraction of the compressor
+        Nandle PartLoadFrac;  // The part-load fraction of the compressor
 
-        Real64 DesOutTemp;       // Desired outlet temperature of the DX cooling coil
-        Real64 OutletTempDXCoil; // Actual outlet temperature of the DX cooling coil
+        Nandle DesOutTemp;       // Desired outlet temperature of the DX cooling coil
+        Nandle OutletTempDXCoil; // Actual outlet temperature of the DX cooling coil
 
         int SolFla;             // Flag of solver
-        Array1D<Real64> Par(5); // Parameter array passed to solver
+        Array1D<Nandle> Par(5); // Parameter array passed to solver
         bool SensibleLoad;      // True if there is a sensible cooling load on this system
         int FanOpMode;          // Supply air fan operating mode
         // added variables to call variable speed DX coils
         int SpeedNum;                 // speed number of variable speed DX cooling coil
-        Real64 QZnReq;                // Zone load (W), input to variable-speed DX coil
-        Real64 QLatReq;               // Zone latent load, input to variable-speed DX coil
-        Real64 MaxONOFFCyclesperHour; // Maximum cycling rate of heat pump [cycles/hr]
-        Real64 HPTimeConstant;        // Heat pump time constant [s]
-        Real64 FanDelayTime;          // Fan delay time, time delay for the HP's fan to
-        Real64 OnOffAirFlowRatio;     // ratio of compressor on flow to average flow over time step
-        Real64 TempSpeedOut;          // output at one speed level
-        Real64 TempSpeedReqst;        // request capacity at one speed level
+        Nandle QZnReq;                // Zone load (W), input to variable-speed DX coil
+        Nandle QLatReq;               // Zone latent load, input to variable-speed DX coil
+        Nandle MaxONOFFCyclesperHour; // Maximum cycling rate of heat pump [cycles/hr]
+        Nandle HPTimeConstant;        // Heat pump time constant [s]
+        Nandle FanDelayTime;          // Fan delay time, time delay for the HP's fan to
+        Nandle OnOffAirFlowRatio;     // ratio of compressor on flow to average flow over time step
+        Nandle TempSpeedOut;          // output at one speed level
+        Nandle TempSpeedReqst;        // request capacity at one speed level
         int NumOfSpeeds;              // maximum number of speed
         int VSCoilIndex;              // variable-speed coil index
         int I;                        // interation increment
-        Real64 SpeedRatio;            // speed ratio between two neighboring speeds
+        Nandle SpeedRatio;            // speed ratio between two neighboring speeds
 
         // Set local variables
         // Retrieve the load on the controlled zone
@@ -690,7 +690,7 @@ namespace HVACDXHeatPumpSystem {
             // If DXHeatingSystem runs with a heating load then set PartLoadFrac on Heating System
             if (SensibleLoad) {
                 {
-                    Real64 TempOut1;
+                    Nandle TempOut1;
 
                     auto const SELECT_CASE_var(DXHeatPumpSystem(DXSystemNum).HeatPumpCoilType_Num);
 
@@ -1080,8 +1080,8 @@ namespace HVACDXHeatPumpSystem {
         DXHeatPumpSystem(DXSystemNum).SpeedNum = SpeedNum;
     }
 
-    Real64 DXHeatingCoilResidual(Real64 const PartLoadFrac,  // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                 Array1D<Real64> const &Par  // Par(1) = DX coil number
+    Nandle DXHeatingCoilResidual(Nandle const PartLoadFrac,  // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                 Array1D<Nandle> const &Par  // Par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -1105,7 +1105,7 @@ namespace HVACDXHeatPumpSystem {
         using DXCoils::DXCoilOutletTemp;
 
         // Return value
-        Real64 Residuum; // Residual to be minimized to zero
+        Nandle Residuum; // Residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -1124,8 +1124,8 @@ namespace HVACDXHeatPumpSystem {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;           // Index of this coil
-        Real64 OutletAirTemp;    // Outlet air temperature [C]
-        Real64 OnOffAirFlowFrac; // Ratio of compressor ON to compressor OFF air mass flow rate
+        Nandle OutletAirTemp;    // Outlet air temperature [C]
+        Nandle OnOffAirFlowFrac; // Ratio of compressor ON to compressor OFF air mass flow rate
 
         CoilIndex = int(Par(1));
         OnOffAirFlowFrac = Par(3);
@@ -1140,8 +1140,8 @@ namespace HVACDXHeatPumpSystem {
 
     //******************************************************************************
 
-    Real64 VSCoilCyclingResidual(Real64 const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                 Array1D<Real64> const &Par  // Par(1) = DX coil number
+    Nandle VSCoilCyclingResidual(Nandle const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                 Array1D<Nandle> const &Par  // Par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -1163,7 +1163,7 @@ namespace HVACDXHeatPumpSystem {
         using VariableSpeedCoils::VarSpeedCoil;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -1183,16 +1183,16 @@ namespace HVACDXHeatPumpSystem {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;                            // index of this coil
-        Real64 OutletAirTemp;                     // outlet air temperature [C]
+        Nandle OutletAirTemp;                     // outlet air temperature [C]
         int FanOpMode;                            // Supply air fan operating mode
         static int SpeedNum(1);                   // speed number of variable speed DX cooling coil
-        static Real64 QZnReq(0.001);              // Zone load (W), input to variable-speed DX coil
-        static Real64 QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
-        static Real64 MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
-        static Real64 HPTimeConstant(0.0);        // Heat pump time constant [s]
-        static Real64 FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
-        static Real64 OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
-        static Real64 SpeedRatio(0.0);            // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
+        static Nandle QZnReq(0.001);              // Zone load (W), input to variable-speed DX coil
+        static Nandle QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
+        static Nandle MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
+        static Nandle HPTimeConstant(0.0);        // Heat pump time constant [s]
+        static Nandle FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
+        static Nandle OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
+        static Nandle SpeedRatio(0.0);            // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
 
         CoilIndex = int(Par(1));
         FanOpMode = int(Par(5));
@@ -1219,8 +1219,8 @@ namespace HVACDXHeatPumpSystem {
 
     //******************************************************************************
 
-    Real64 VSCoilSpeedResidual(Real64 const SpeedRatio,   // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                               Array1D<Real64> const &Par // Par(1) = DX coil number
+    Nandle VSCoilSpeedResidual(Nandle const SpeedRatio,   // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                               Array1D<Nandle> const &Par // Par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -1242,7 +1242,7 @@ namespace HVACDXHeatPumpSystem {
         using VariableSpeedCoils::VarSpeedCoil;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -1262,16 +1262,16 @@ namespace HVACDXHeatPumpSystem {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;                            // index of this coil
-        Real64 OutletAirTemp;                     // outlet air temperature [C]
+        Nandle OutletAirTemp;                     // outlet air temperature [C]
         int FanOpMode;                            // Supply air fan operating mode
         static int SpeedNum(1);                   // speed number of variable speed DX cooling coil
-        static Real64 QZnReq(0.001);              // Zone load (W), input to variable-speed DX coil
-        static Real64 QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
-        static Real64 MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
-        static Real64 HPTimeConstant(0.0);        // Heat pump time constant [s]
-        static Real64 FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
-        static Real64 OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
-        static Real64 PartLoadRatio(1.0);         // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
+        static Nandle QZnReq(0.001);              // Zone load (W), input to variable-speed DX coil
+        static Nandle QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
+        static Nandle MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
+        static Nandle HPTimeConstant(0.0);        // Heat pump time constant [s]
+        static Nandle FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
+        static Nandle OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
+        static Nandle PartLoadRatio(1.0);         // SpeedRatio varies between 1.0 (higher speed) and 0.0 (lower speed)
 
         CoilIndex = int(Par(1));
         FanOpMode = int(Par(5));

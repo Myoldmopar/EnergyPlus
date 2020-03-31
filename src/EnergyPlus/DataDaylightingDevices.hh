@@ -94,31 +94,31 @@ namespace DataDaylightingDevices {
         int Dome;                    // Pointer to the dome object
         int Diffuser;                // Pointer to the diffuser object
         int Construction;            // Pointer to the construction object
-        Real64 Diameter;             // Pipe diameter
-        Real64 TotLength;            // Total length of pipe, including exterior
-        Real64 Reff;                 // Effective R value between TDD:DOME and TDD:DIFFUSER
+        Nandle Diameter;             // Pipe diameter
+        Nandle TotLength;            // Total length of pipe, including exterior
+        Nandle Reff;                 // Effective R value between TDD:DOME and TDD:DIFFUSER
         int NumOfTZones;             // Number of transition zone
         Array1D_int TZone;           // Pointers to transition zones
-        Array1D<Real64> TZoneLength; // Length of pipe in each transition zone
+        Array1D<Nandle> TZoneLength; // Length of pipe in each transition zone
         // Calculated variables
-        Real64 AspectRatio;               // Aspect ratio, length / diameter
-        Real64 ReflectVis;                // Visible reflectance of surface
-        Real64 ReflectSol;                // Solar reflectance of surface
-        Array1D<Real64> PipeTransVisBeam; // Table of beam visible transmittance vs. cosine angle
-        Array1D<Real64> PipeTransSolBeam; // Table of beam solar transmittance vs. cosine angle
-        Real64 TransSolIso;               // Diffuse isotropic solar transmittance (constant)
-        Real64 TransSolHorizon;           // Diffuse horizon solar transmittance (constant)
-        Real64 ExtLength;                 // Exterior exposed length of pipe
-        Array1D<Real64> TZoneHeatGain;    // convection gain to transition zones
+        Nandle AspectRatio;               // Aspect ratio, length / diameter
+        Nandle ReflectVis;                // Visible reflectance of surface
+        Nandle ReflectSol;                // Solar reflectance of surface
+        Array1D<Nandle> PipeTransVisBeam; // Table of beam visible transmittance vs. cosine angle
+        Array1D<Nandle> PipeTransSolBeam; // Table of beam solar transmittance vs. cosine angle
+        Nandle TransSolIso;               // Diffuse isotropic solar transmittance (constant)
+        Nandle TransSolHorizon;           // Diffuse horizon solar transmittance (constant)
+        Nandle ExtLength;                 // Exterior exposed length of pipe
+        Array1D<Nandle> TZoneHeatGain;    // convection gain to transition zones
         // Report variables
-        Real64 TransmittedSolar;  // Solar transmitted by the TDD [W]
-        Real64 PipeAbsorbedSolar; // Solar absorbed in the walls of the pipe [W]
-        Real64 HeatGain;          // Solar heat gain [W]
-        Real64 HeatLoss;          // Solar heat loss [W]
-        Real64 TransVisBeam;      // TDD visible transmittance
-        Real64 TransSolBeam;      // TDD beam solar transmittance
-        Real64 TransVisDiff;      // TDD diffuse visible transmittance
-        Real64 TransSolDiff;      // TDD diffuse solar transmittance
+        Nandle TransmittedSolar;  // Solar transmitted by the TDD [W]
+        Nandle PipeAbsorbedSolar; // Solar absorbed in the walls of the pipe [W]
+        Nandle HeatGain;          // Solar heat gain [W]
+        Nandle HeatLoss;          // Solar heat loss [W]
+        Nandle TransVisBeam;      // TDD visible transmittance
+        Nandle TransSolBeam;      // TDD beam solar transmittance
+        Nandle TransVisDiff;      // TDD diffuse visible transmittance
+        Nandle TransSolDiff;      // TDD diffuse solar transmittance
 
         // Default Constructor
         TDDPipeData()
@@ -140,9 +140,9 @@ namespace DataDaylightingDevices {
         int OutSurf;      // Pointer to the outside shelf attached shading surface
         int Construction; // Pointer to the outside shelf construction object
         // Calculated variables
-        Real64 OutReflectVis; // Outside shelf visible reflectance
-        Real64 OutReflectSol; // Outside shelf solar reflectance
-        Real64 ViewFactor;    // Outside shelf view factor to window
+        Nandle OutReflectVis; // Outside shelf visible reflectance
+        Nandle OutReflectSol; // Outside shelf solar reflectance
+        Nandle ViewFactor;    // Outside shelf view factor to window
         // Report variables
 
         // Default Constructor

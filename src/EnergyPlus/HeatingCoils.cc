@@ -135,7 +135,7 @@ namespace HeatingCoils {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    Real64 const MinAirMassFlow(0.001);
+    Nandle const MinAirMassFlow(0.001);
     int NumDesuperheaterCoil; // Total number of desuperheater heating coil objects in input
     int NumElecCoil;
     int NumElecCoilMultiStage;
@@ -190,14 +190,14 @@ namespace HeatingCoils {
 
     void SimulateHeatingCoilComponents(std::string const &CompName,
                                        bool const FirstHVACIteration,
-                                       Optional<Real64 const> QCoilReq, // coil load to be met
+                                       Optional<Nandle const> QCoilReq, // coil load to be met
                                        Optional_int CompIndex,
-                                       Optional<Real64> QCoilActual,         // coil load actually delivered returned to calling component
+                                       Optional<Nandle> QCoilActual,         // coil load actually delivered returned to calling component
                                        Optional_bool_const SuppHeat,         // True if current heating coil is a supplemental heating coil
                                        Optional_int_const FanOpMode,         // fan operating mode, CycFanCycCoil or ContFanCycCoil
-                                       Optional<Real64 const> PartLoadRatio, // part-load ratio of heating coil
+                                       Optional<Nandle const> PartLoadRatio, // part-load ratio of heating coil
                                        Optional_int StageNum,
-                                       Optional<Real64 const> SpeedRatio // Speed ratio of MultiStage heating coil
+                                       Optional<Nandle const> SpeedRatio // Speed ratio of MultiStage heating coil
     )
     {
 
@@ -219,10 +219,10 @@ namespace HeatingCoils {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CoilNum(0);       // The HeatingCoil that you are currently loading input into
-        Real64 QCoilActual2;  // coil load actually delivered returned from specific coil
+        Nandle QCoilActual2;  // coil load actually delivered returned from specific coil
         int OpMode;           // fan operating mode
-        Real64 PartLoadFrac;  // part-load fraction of heating coil
-        Real64 QCoilRequired; // local variable for optional argument
+        Nandle PartLoadFrac;  // part-load fraction of heating coil
+        Nandle QCoilRequired; // local variable for optional argument
 
         // FLOW:
         // Obtains and Allocates HeatingCoil related parameters from input file
@@ -359,7 +359,7 @@ namespace HeatingCoils {
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int MaxNums(0);           // Maximum number of numeric input fields
@@ -1223,7 +1223,7 @@ namespace HeatingCoils {
     // Beginning Initialization Section of the Module
     //******************************************************************************
 
-    void InitHeatingCoil(int const CoilNum, bool const FirstHVACIteration, Real64 const QCoilRequired)
+    void InitHeatingCoil(int const CoilNum, bool const FirstHVACIteration, Nandle const QCoilRequired)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1522,14 +1522,14 @@ namespace HeatingCoils {
         bool IsAutoSize;            // Indicator to autosize for reporting
         bool bPRINT = true;         // TRUE if sizing is reported to output (eio)
         bool ThisStageAutoSize;     // Indicator to autosize at each stage for reporting
-        Real64 NominalCapacityDes;  // Autosized nominal capacity for reporting
-        Real64 NominalCapacityUser; // Hardsized nominal capacity for reporting
-        Real64 TempCap;             // autosized capacity of heating coil [W]
+        Nandle NominalCapacityDes;  // Autosized nominal capacity for reporting
+        Nandle NominalCapacityUser; // Hardsized nominal capacity for reporting
+        Nandle TempCap;             // autosized capacity of heating coil [W]
         int StageNum;               // actual stage of multi-stage heating coil
         int NumOfStages;            // total number of stages of multi-stage heating coil
         int FieldNum = 2;           // IDD numeric field number where input field description is found
         int NumCoilsSized = 0;      // counter used to deallocate temporary string array after all coils have been sized
-        Real64 TempSize;            // sizing variable temp value
+        Nandle TempSize;            // sizing variable temp value
 
         if (HeatingCoil(CoilNum).HCoilType_Num == Coil_HeatingElectric_MultiStage) {
             FieldNum = 1 + (HeatingCoil(CoilNum).NumOfStages * 2);
@@ -1680,10 +1680,10 @@ namespace HeatingCoils {
     //******************************************************************************
 
     void CalcElectricHeatingCoil(int const CoilNum, // index to heating coil
-                                 Real64 &QCoilReq,
-                                 Real64 &QCoilActual,       // coil load actually delivered (W)
+                                 Nandle &QCoilReq,
+                                 Nandle &QCoilActual,       // coil load actually delivered (W)
                                  int const FanOpMode,       // fan operating mode
-                                 Real64 const PartLoadRatio // part-load ratio of heating coil
+                                 Nandle const PartLoadRatio // part-load ratio of heating coil
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1721,15 +1721,15 @@ namespace HeatingCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow; // [kg/sec]
-        Real64 TempAirIn;   // [C]
-        Real64 TempAirOut;  // [C]
-        Real64 Win;
-        Real64 Effic;
-        Real64 CapacitanceAir;
-        Real64 HeatingCoilLoad;
-        Real64 QCoilCap;
-        Real64 TempSetPoint;
+        Nandle AirMassFlow; // [kg/sec]
+        Nandle TempAirIn;   // [C]
+        Nandle TempAirOut;  // [C]
+        Nandle Win;
+        Nandle Effic;
+        Nandle CapacitanceAir;
+        Nandle HeatingCoilLoad;
+        Nandle QCoilCap;
+        Nandle TempSetPoint;
         int Control;
 
         Effic = HeatingCoil(CoilNum).Efficiency;
@@ -1849,8 +1849,8 @@ namespace HeatingCoils {
     }
 
     void CalcMultiStageElectricHeatingCoil(int &CoilNum,            // the number of the electric heating coil to be simulated
-                                           Real64 const SpeedRatio, // SpeedRatio varies between 1.0 (maximum speed) and 0.0 (minimum speed)
-                                           Real64 const CycRatio,   // cycling part load ratio
+                                           Nandle const SpeedRatio, // SpeedRatio varies between 1.0 (maximum speed) and 0.0 (minimum speed)
+                                           Nandle const CycRatio,   // cycling part load ratio
                                            int const StageNum,      // Stage number
                                            int const FanOpMode      // Fan operation mode
     )
@@ -1899,30 +1899,30 @@ namespace HeatingCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow;          // dry air mass flow rate through coil [kg/s]
-        Real64 InletAirDryBulbTemp;  // inlet air dry bulb temperature [C]
-        Real64 InletAirEnthalpy;     // inlet air enthalpy [J/kg]
-        Real64 InletAirHumRat;       // inlet air humidity ratio [kg/kg]
-        Real64 OutletAirEnthalpy;    // outlet air enthalpy [J/kg]
-        Real64 OutletAirHumRat;      // outlet air humidity ratio [kg/kg]
-        Real64 TotCapHS;             // total capacity at high stage [W]
-        Real64 TotCapLS;             // total capacity at low stage [W]
-        Real64 TotCap;               // total capacity at current stage [W]
-        Real64 EffHS;                // total capacity at high stage [W]
-        Real64 EffLS;                // total capacity at low stage [W]
-        Real64 OutdoorPressure;      // Outdoor barometric pressure at condenser (Pa)
+        Nandle AirMassFlow;          // dry air mass flow rate through coil [kg/s]
+        Nandle InletAirDryBulbTemp;  // inlet air dry bulb temperature [C]
+        Nandle InletAirEnthalpy;     // inlet air enthalpy [J/kg]
+        Nandle InletAirHumRat;       // inlet air humidity ratio [kg/kg]
+        Nandle OutletAirEnthalpy;    // outlet air enthalpy [J/kg]
+        Nandle OutletAirHumRat;      // outlet air humidity ratio [kg/kg]
+        Nandle TotCapHS;             // total capacity at high stage [W]
+        Nandle TotCapLS;             // total capacity at low stage [W]
+        Nandle TotCap;               // total capacity at current stage [W]
+        Nandle EffHS;                // total capacity at high stage [W]
+        Nandle EffLS;                // total capacity at low stage [W]
+        Nandle OutdoorPressure;      // Outdoor barometric pressure at condenser (Pa)
         int StageNumHS;              // High stage number
         int StageNumLS;              // Low stage number
-        Real64 FullLoadOutAirEnth;   // Outlet full load enthalpy
-        Real64 FullLoadOutAirHumRat; // Outlet humidity ratio at full load
-        Real64 FullLoadOutAirTemp;   // Outlet temperature at full load
-        Real64 FullLoadOutAirRH;     // Outler relative humidity at full load
-        Real64 OutletAirTemp;        // Supply ari temperature
-        Real64 LSFullLoadOutAirEnth; // Outlet full load enthalpy at low stage
-        Real64 HSFullLoadOutAirEnth; // Outlet full load enthalpy at high stage
-        Real64 LSElecHeatingPower;   // Full load power at low stage
-        Real64 HSElecHeatingPower;   // Full load power at high stage
-        Real64 PartLoadRat;          // part load ratio
+        Nandle FullLoadOutAirEnth;   // Outlet full load enthalpy
+        Nandle FullLoadOutAirHumRat; // Outlet humidity ratio at full load
+        Nandle FullLoadOutAirTemp;   // Outlet temperature at full load
+        Nandle FullLoadOutAirRH;     // Outler relative humidity at full load
+        Nandle OutletAirTemp;        // Supply ari temperature
+        Nandle LSFullLoadOutAirEnth; // Outlet full load enthalpy at low stage
+        Nandle HSFullLoadOutAirEnth; // Outlet full load enthalpy at high stage
+        Nandle LSElecHeatingPower;   // Full load power at low stage
+        Nandle HSElecHeatingPower;   // Full load power at high stage
+        Nandle PartLoadRat;          // part load ratio
 
         // FLOW
         if (StageNum > 1) {
@@ -2066,10 +2066,10 @@ namespace HeatingCoils {
     }
 
     void CalcFuelHeatingCoil(int const CoilNum, // index to heating coil
-                             Real64 const QCoilReq,
-                             Real64 &QCoilActual,                  // coil load actually delivered (W)
+                             Nandle const QCoilReq,
+                             Nandle &QCoilActual,                  // coil load actually delivered (W)
                              int const FanOpMode,                  // fan operating mode
-                             Real64 const EP_UNUSED(PartLoadRatio) // part-load ratio of heating coil
+                             Nandle const EP_UNUSED(PartLoadRatio) // part-load ratio of heating coil
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2108,18 +2108,18 @@ namespace HeatingCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow; // [kg/sec]
-        Real64 TempAirIn;   // [C]
-        Real64 TempAirOut;  // [C]
-        Real64 Win;
-        Real64 Effic;
-        Real64 CapacitanceAir;
-        Real64 HeatingCoilLoad;
-        Real64 QCoilCap;
-        Real64 TempSetPoint;
+        Nandle AirMassFlow; // [kg/sec]
+        Nandle TempAirIn;   // [C]
+        Nandle TempAirOut;  // [C]
+        Nandle Win;
+        Nandle Effic;
+        Nandle CapacitanceAir;
+        Nandle HeatingCoilLoad;
+        Nandle QCoilCap;
+        Nandle TempSetPoint;
         int Control;
-        Real64 PartLoadRat;
-        Real64 PLF;
+        Nandle PartLoadRat;
+        Nandle PLF;
 
         Effic = HeatingCoil(CoilNum).Efficiency;
         TempAirIn = HeatingCoil(CoilNum).InletAirTemp;
@@ -2281,8 +2281,8 @@ namespace HeatingCoils {
     }
 
     void CalcMultiStageGasHeatingCoil(int &CoilNum,            // the number of the Gas heating coil to be simulated
-                                      Real64 const SpeedRatio, // SpeedRatio varies between 1.0 (maximum speed) and 0.0 (minimum speed)
-                                      Real64 const CycRatio,   // cycling part load ratio
+                                      Nandle const SpeedRatio, // SpeedRatio varies between 1.0 (maximum speed) and 0.0 (minimum speed)
+                                      Nandle const CycRatio,   // cycling part load ratio
                                       int const StageNum,      // Speed number
                                       int const FanOpMode      // Fan operation mode
     )
@@ -2331,32 +2331,32 @@ namespace HeatingCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow;          // dry air mass flow rate through coil [kg/s]
-        Real64 InletAirDryBulbTemp;  // inlet air dry bulb temperature [C]
-        Real64 InletAirEnthalpy;     // inlet air enthalpy [J/kg]
-        Real64 InletAirHumRat;       // inlet air humidity ratio [kg/kg]
-        Real64 OutletAirEnthalpy;    // outlet air enthalpy [J/kg]
-        Real64 OutletAirHumRat;      // outlet air humidity ratio [kg/kg]
-        Real64 TotCapHS;             // total capacity at high stage [W]
-        Real64 TotCapLS;             // total capacity at low stage [W]
-        Real64 TotCap;               // total capacity at current stage [W]
-        Real64 EffHS;                // efficiency at high stage
-        Real64 EffLS(0.0);           // efficiency at low stage
-        Real64 EffAvg;               // average efficiency
-        Real64 OutdoorPressure;      // Outdoor barometric pressure at condenser (Pa)
+        Nandle AirMassFlow;          // dry air mass flow rate through coil [kg/s]
+        Nandle InletAirDryBulbTemp;  // inlet air dry bulb temperature [C]
+        Nandle InletAirEnthalpy;     // inlet air enthalpy [J/kg]
+        Nandle InletAirHumRat;       // inlet air humidity ratio [kg/kg]
+        Nandle OutletAirEnthalpy;    // outlet air enthalpy [J/kg]
+        Nandle OutletAirHumRat;      // outlet air humidity ratio [kg/kg]
+        Nandle TotCapHS;             // total capacity at high stage [W]
+        Nandle TotCapLS;             // total capacity at low stage [W]
+        Nandle TotCap;               // total capacity at current stage [W]
+        Nandle EffHS;                // efficiency at high stage
+        Nandle EffLS(0.0);           // efficiency at low stage
+        Nandle EffAvg;               // average efficiency
+        Nandle OutdoorPressure;      // Outdoor barometric pressure at condenser (Pa)
         int StageNumHS;              // High stage number
         int StageNumLS;              // Low stage number
-        Real64 FullLoadOutAirEnth;   // Outlet full load enthalpy
-        Real64 FullLoadOutAirHumRat; // Outlet humidity ratio at full load
-        Real64 FullLoadOutAirTemp;   // Outlet temperature at full load
-        Real64 FullLoadOutAirRH;     // Outler relative humidity at full load
-        Real64 OutletAirTemp;        // Supply ari temperature
-        Real64 LSFullLoadOutAirEnth; // Outlet full load enthalpy at low stage
-        Real64 HSFullLoadOutAirEnth; // Outlet full load enthalpy at high stage
-        Real64 LSGasHeatingPower;    // Full load power at low stage
-        Real64 HSGasHeatingPower;    // Full load power at high stage
-        Real64 PartLoadRat(0.0);     // part load ratio
-        Real64 PLF;                  // part load factor used to calculate RTF
+        Nandle FullLoadOutAirEnth;   // Outlet full load enthalpy
+        Nandle FullLoadOutAirHumRat; // Outlet humidity ratio at full load
+        Nandle FullLoadOutAirTemp;   // Outlet temperature at full load
+        Nandle FullLoadOutAirRH;     // Outler relative humidity at full load
+        Nandle OutletAirTemp;        // Supply ari temperature
+        Nandle LSFullLoadOutAirEnth; // Outlet full load enthalpy at low stage
+        Nandle HSFullLoadOutAirEnth; // Outlet full load enthalpy at high stage
+        Nandle LSGasHeatingPower;    // Full load power at low stage
+        Nandle HSGasHeatingPower;    // Full load power at high stage
+        Nandle PartLoadRat(0.0);     // part load ratio
+        Nandle PLF;                  // part load factor used to calculate RTF
 
         // FLOW
         if (StageNum > 1) {
@@ -2559,8 +2559,8 @@ namespace HeatingCoils {
     }
 
     void CalcDesuperheaterHeatingCoil(int const CoilNum,     // index to desuperheater heating coil
-                                      Real64 const QCoilReq, // load requested by the simulation for load based control [W]
-                                      Real64 &QCoilActual    // coil load actually delivered
+                                      Nandle const QCoilReq, // load requested by the simulation for load based control [W]
+                                      Nandle &QCoilActual    // coil load actually delivered
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2605,16 +2605,16 @@ namespace HeatingCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow;     // air mass flow through the desuperheater heating coil [kg/sec]
-        Real64 AvailTemp;       // Lowest temperature available from desuperheater (~T condensing)[C]
-        Real64 TempAirIn;       // temperature of the air entering the desuperheater heating coil [C]
-        Real64 TempAirOut;      // temperature of the air leaving the desuperheater heating coil [C]
-        Real64 Win;             // humidity ratio of the air entering the desuperheater heating coil [kg/kg]
-        Real64 Effic;           // ratio of condenser waste heat reclaimed to total condenser waste heat rejected
-        Real64 CapacitanceAir;  // MdotCp of air entering the desuperheater heating coil
-        Real64 HeatingCoilLoad; // actual load delivered by the desuperheater heating coil [W]
-        Real64 QCoilCap;        // available capacity of the desuperheater heating coil [W]
-        Real64 TempSetPoint;    // setpoint temperature to be met when using temperature based control [C]
+        Nandle AirMassFlow;     // air mass flow through the desuperheater heating coil [kg/sec]
+        Nandle AvailTemp;       // Lowest temperature available from desuperheater (~T condensing)[C]
+        Nandle TempAirIn;       // temperature of the air entering the desuperheater heating coil [C]
+        Nandle TempAirOut;      // temperature of the air leaving the desuperheater heating coil [C]
+        Nandle Win;             // humidity ratio of the air entering the desuperheater heating coil [kg/kg]
+        Nandle Effic;           // ratio of condenser waste heat reclaimed to total condenser waste heat rejected
+        Nandle CapacitanceAir;  // MdotCp of air entering the desuperheater heating coil
+        Nandle HeatingCoilLoad; // actual load delivered by the desuperheater heating coil [W]
+        Nandle QCoilCap;        // available capacity of the desuperheater heating coil [W]
+        Nandle TempSetPoint;    // setpoint temperature to be met when using temperature based control [C]
         int SourceID;           // waste heat source id number
 
         Effic = HeatingCoil(CoilNum).Efficiency;
@@ -2876,7 +2876,7 @@ namespace HeatingCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         ReportingConstant = TimeStepSys * SecInHour;
         // report the HeatingCoil energy from this component
@@ -2948,7 +2948,7 @@ namespace HeatingCoils {
 
     void CheckHeatingCoilSchedule(std::string const &CompType, // unused1208
                                   std::string const &CompName,
-                                  Real64 &Value,
+                                  Nandle &Value,
                                   int &CompIndex)
     {
 
@@ -3005,7 +3005,7 @@ namespace HeatingCoils {
         }
     }
 
-    Real64 GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
                            std::string const &CoilName, // must match coil names for the coil type
                            bool &ErrorsFound            // set to true if problem
     )
@@ -3023,7 +3023,7 @@ namespace HeatingCoils {
         // as negative.
 
         // Return value
-        Real64 CoilCapacity; // returned capacity of matched coil
+        Nandle CoilCapacity; // returned capacity of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;

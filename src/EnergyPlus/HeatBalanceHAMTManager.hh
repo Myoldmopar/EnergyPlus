@@ -64,12 +64,12 @@ namespace HeatBalanceHAMTManager {
     extern int const ittermax; // Maximum Number of itterations
     extern int const adjmax;   // Maximum Number of Adjacent Cells
 
-    extern Real64 const wdensity; // Density of water kg.m-3
-    extern Real64 const wspech;   // Specific Heat Capacity of Water J.kg-1.K-1 (at 20C)
-    extern Real64 const whv;      // Evaporation enthalpy of water J.kg-1
-    extern Real64 const convt;    // Temperature convergence limit
-    extern Real64 const qvplim;   // Maximum latent heat W
-    extern Real64 const rhmax;    // Maximum RH value
+    extern Nandle const wdensity; // Density of water kg.m-3
+    extern Nandle const wspech;   // Specific Heat Capacity of Water J.kg-1.K-1 (at 20C)
+    extern Nandle const whv;      // Evaporation enthalpy of water J.kg-1
+    extern Nandle const convt;    // Temperature convergence limit
+    extern Nandle const qvplim;   // Maximum latent heat W
+    extern Nandle const rhmax;    // Maximum RH value
 
     // DERIVED TYPE DEFINITIONS:
 
@@ -84,20 +84,20 @@ namespace HeatBalanceHAMTManager {
     extern Array1D_int Intcell;
     extern Array1D_int IntConcell;
 
-    extern Array1D<Real64> watertot;
-    extern Array1D<Real64> surfrh;
-    extern Array1D<Real64> surfextrh;
-    extern Array1D<Real64> surftemp;
-    extern Array1D<Real64> surfexttemp;
-    extern Array1D<Real64> surfvp;
+    extern Array1D<Nandle> watertot;
+    extern Array1D<Nandle> surfrh;
+    extern Array1D<Nandle> surfextrh;
+    extern Array1D<Nandle> surftemp;
+    extern Array1D<Nandle> surfexttemp;
+    extern Array1D<Nandle> surfvp;
 
-    extern Array1D<Real64> extvtc;   // External Surface vapor transfer coefficient
-    extern Array1D<Real64> intvtc;   // Internal Surface Vapor Transfer Coefficient
+    extern Array1D<Nandle> extvtc;   // External Surface vapor transfer coefficient
+    extern Array1D<Nandle> intvtc;   // Internal Surface Vapor Transfer Coefficient
     extern Array1D_bool extvtcflag;  // External Surface vapor transfer coefficient flag
     extern Array1D_bool intvtcflag;  // Internal Surface Vapor Transfer Coefficient flag
     extern Array1D_bool MyEnvrnFlag; // Flag to reset surface properties.
 
-    extern Real64 deltat; // time step in seconds
+    extern Nandle deltat; // time step in seconds
 
     extern int TotCellsMax; // Maximum number of cells per material
 
@@ -113,32 +113,32 @@ namespace HeatBalanceHAMTManager {
         // Members
         int matid;        // Material Id Number
         int sid;          // Surface Id Number
-        Real64 Qadds;     // Additional sources of heat
-        Real64 density;   // Density
-        Real64 wthermalc; // Moisture Dependant Thermal Conductivity
-        Real64 spech;     // Specific Heat capacity
-        Real64 htc;       // Heat Transfer Coefficient
-        Real64 vtc;       // Vapor Transfer Coefficient
-        Real64 mu;        // Vapor Diffusion resistance Factor
-        Real64 volume;    // Cell Volume
-        Real64 temp;
-        Real64 tempp1;
-        Real64 tempp2;
-        Real64 wreport; // Water content for reporting
-        Real64 water;   // Water Content of cells
-        Real64 vp;      // Vapor Pressure
-        Real64 vpp1;    // Vapor Pressure
-        Real64 vpsat;   // Saturation Vapor Pressure
-        Real64 rh;
-        Real64 rhp1;
-        Real64 rhp2;             // Relative Humidity
-        Real64 rhp;              // cell relative humidity (percent - reporting)
-        Real64 dwdphi;           // Moisture storage capacity
-        Real64 dw;               // Liquid transport Coefficient
-        Array1D<Real64> origin;  // Cell origin. The geometric centre of the cell.
-        Array1D<Real64> length;  // Cell lengths
-        Array1D<Real64> overlap; // Area of overlap
-        Array1D<Real64> dist;    // distance between cell origins
+        Nandle Qadds;     // Additional sources of heat
+        Nandle density;   // Density
+        Nandle wthermalc; // Moisture Dependant Thermal Conductivity
+        Nandle spech;     // Specific Heat capacity
+        Nandle htc;       // Heat Transfer Coefficient
+        Nandle vtc;       // Vapor Transfer Coefficient
+        Nandle mu;        // Vapor Diffusion resistance Factor
+        Nandle volume;    // Cell Volume
+        Nandle temp;
+        Nandle tempp1;
+        Nandle tempp2;
+        Nandle wreport; // Water content for reporting
+        Nandle water;   // Water Content of cells
+        Nandle vp;      // Vapor Pressure
+        Nandle vpp1;    // Vapor Pressure
+        Nandle vpsat;   // Saturation Vapor Pressure
+        Nandle rh;
+        Nandle rhp1;
+        Nandle rhp2;             // Relative Humidity
+        Nandle rhp;              // cell relative humidity (percent - reporting)
+        Nandle dwdphi;           // Moisture storage capacity
+        Nandle dw;               // Liquid transport Coefficient
+        Array1D<Nandle> origin;  // Cell origin. The geometric centre of the cell.
+        Array1D<Nandle> length;  // Cell lengths
+        Array1D<Nandle> overlap; // Area of overlap
+        Array1D<Nandle> dist;    // distance between cell origins
         Array1D_int adjs;
         Array1D_int adjsl;
 
@@ -156,22 +156,22 @@ namespace HeatBalanceHAMTManager {
 
     // Functions
 
-    void ManageHeatBalHAMT(int const SurfNum, Real64 &TempSurfInTmp, Real64 &TempSurfOutTmp);
+    void ManageHeatBalHAMT(int const SurfNum, Nandle &TempSurfInTmp, Nandle &TempSurfOutTmp);
 
     void GetHeatBalHAMTInput();
 
     void InitHeatBalHAMT(EnergyPlus::OutputFiles &outputFiles);
 
-    void CalcHeatBalHAMT(int const sid, Real64 &TempSurfInTmp, Real64 &TempSurfOutTmp);
+    void CalcHeatBalHAMT(int const sid, Nandle &TempSurfInTmp, Nandle &TempSurfOutTmp);
 
     void UpdateHeatBalHAMT(int const sid);
 
     void
-    interp(int const ndata, const Array1D<Real64> &xx, const Array1D<Real64> &yy, Real64 const invalue, Real64 &outvalue, Optional<Real64> outgrad = _);
+    interp(int const ndata, const Array1D<Nandle> &xx, const Array1D<Nandle> &yy, Nandle const invalue, Nandle &outvalue, Optional<Nandle> outgrad = _);
 
-    Real64 RHtoVP(Real64 const RH, Real64 const Temperature);
+    Nandle RHtoVP(Nandle const RH, Nandle const Temperature);
 
-    Real64 WVDC(Real64 const Temperature, Real64 const ambp);
+    Nandle WVDC(Nandle const Temperature, Nandle const ambp);
 
     //                                 COPYRIGHT NOTICE
 

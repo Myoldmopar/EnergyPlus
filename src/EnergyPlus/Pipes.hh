@@ -110,7 +110,7 @@ namespace Pipes {
         static PlantComponent *factory(int objectType, std::string objectName);
 
     public:
-        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad, bool const RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad, bool const RunFlag) override;
     };
 
     // Object Data

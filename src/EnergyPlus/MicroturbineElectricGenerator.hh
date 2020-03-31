@@ -70,75 +70,75 @@ namespace MicroturbineElectricGenerator {
     {
         // Members
         std::string Name;                  // User identifier (name)
-        Real64 RefElecPowerOutput;         // Reference Electrical Power Output from generator (W)
-        Real64 MinElecPowerOutput;         // Minimum Electrical Power Output (W)
-        Real64 MaxElecPowerOutput;         // Maximum Electrical Power Output (W)
-        Real64 RefThermalPowerOutput;      // Reference Electrical Power Output from generator (W)
-        Real64 MinThermalPowerOutput;      // Minimum Electrical Power Output (W)
-        Real64 MaxThermalPowerOutput;      // Maximum Electrical Power Output (W)
-        Real64 RefElecEfficiencyLHV;       // Reference Electrical Efficiency based on fuel LHV
-        Real64 RefCombustAirInletTemp;     // Reference Combustion Air Inlet Temperature (C)
-        Real64 RefCombustAirInletHumRat;   // Reference Combustion Air Inlet Humidity Ratio (kg/kg)
-        Real64 RefElevation;               // Reference Elevation (m)
+        Nandle RefElecPowerOutput;         // Reference Electrical Power Output from generator (W)
+        Nandle MinElecPowerOutput;         // Minimum Electrical Power Output (W)
+        Nandle MaxElecPowerOutput;         // Maximum Electrical Power Output (W)
+        Nandle RefThermalPowerOutput;      // Reference Electrical Power Output from generator (W)
+        Nandle MinThermalPowerOutput;      // Minimum Electrical Power Output (W)
+        Nandle MaxThermalPowerOutput;      // Maximum Electrical Power Output (W)
+        Nandle RefElecEfficiencyLHV;       // Reference Electrical Efficiency based on fuel LHV
+        Nandle RefCombustAirInletTemp;     // Reference Combustion Air Inlet Temperature (C)
+        Nandle RefCombustAirInletHumRat;   // Reference Combustion Air Inlet Humidity Ratio (kg/kg)
+        Nandle RefElevation;               // Reference Elevation (m)
         int ElecPowFTempElevCurveNum;      // Curve index for Electrical Power as a function of temp and elev.
         int ElecEffFTempCurveNum;          // Curve index for Electrical Efficiency function of temp
         int ElecEffFPLRCurveNum;           // Curve index for Electrical Efficiency as a function of PLR
-        Real64 FuelHigherHeatingValue;     // Higher Heating Value for Fuel (kJ/kg)
-        Real64 FuelLowerHeatingValue;      // Lower Heating Value for Fuel (kJ/kg)
-        Real64 StandbyPower;               // Standby Power entered by user (W)
-        Real64 AncillaryPower;             // Ancillary Power entered by user (W)
+        Nandle FuelHigherHeatingValue;     // Higher Heating Value for Fuel (kJ/kg)
+        Nandle FuelLowerHeatingValue;      // Lower Heating Value for Fuel (kJ/kg)
+        Nandle StandbyPower;               // Standby Power entered by user (W)
+        Nandle AncillaryPower;             // Ancillary Power entered by user (W)
         int AncillaryPowerFuelCurveNum;    // Index to ancillary power modifer curve (function of fuel input)
         int HeatRecInletNodeNum;           // Heat Recovery Water Inlet Node number
         int HeatRecOutletNodeNum;          // Heat Recovery Water Outlet Node number
-        Real64 RefThermalEffLHV;           // Reference Thermal Efficiency (LHV Basis)
-        Real64 RefInletWaterTemp;          // Reference Inlet Water Temperature for heat recovery (C)
+        Nandle RefThermalEffLHV;           // Reference Thermal Efficiency (LHV Basis)
+        Nandle RefInletWaterTemp;          // Reference Inlet Water Temperature for heat recovery (C)
         bool InternalFlowControl;          // A9, \field Heat Recovery Water Flow Operating Mode
         bool PlantFlowControl;             // Default = Plant Control
-        Real64 RefHeatRecVolFlowRate;      // Reference Heat Recovery Water Flow Rate (m3/s)
+        Nandle RefHeatRecVolFlowRate;      // Reference Heat Recovery Water Flow Rate (m3/s)
         int HeatRecFlowFTempPowCurveNum;   // Curve index for Heat Recovery Water Flow Rate function of temp & power
         int ThermEffFTempElevCurveNum;     // Curve index for Thermal Efficiency function of temp & elevation
         int HeatRecRateFPLRCurveNum;       // Curve index for Heat Recovery Rate function of part-load ratio
         int HeatRecRateFTempCurveNum;      // Curve index for Heat Recovery Rate function of inlet water temp
         int HeatRecRateFWaterFlowCurveNum; // Curve index for Heat Recovery Rate function of water flow rate
-        Real64 HeatRecMinVolFlowRate;      // Minimum Heat Recovery Water volume Flow Rate (m3/s)
-        Real64 HeatRecMaxVolFlowRate;      // Maximum Heat Recovery Water volume Flow Rate (m3/s)
-        Real64 HeatRecMaxWaterTemp;        // Maximum Heat Recovery Water Temperature (C)
+        Nandle HeatRecMinVolFlowRate;      // Minimum Heat Recovery Water volume Flow Rate (m3/s)
+        Nandle HeatRecMaxVolFlowRate;      // Maximum Heat Recovery Water volume Flow Rate (m3/s)
+        Nandle HeatRecMaxWaterTemp;        // Maximum Heat Recovery Water Temperature (C)
         int CombustionAirInletNodeNum;     // Combustion Air Inlet Node number
         int CombustionAirOutletNodeNum;    // Combustion Air Outlet (Exhaust) Node number
         bool ExhAirCalcsActive;            // Flag to enable exhaust air calculations
-        Real64 RefExhaustAirMassFlowRate;  // Reference Exhaust Air Mass Flow Rate (kg/s)
-        Real64 ExhaustAirMassFlowRate;     // Actual Exhaust Air Mass Flow Rate (kg/s)
+        Nandle RefExhaustAirMassFlowRate;  // Reference Exhaust Air Mass Flow Rate (kg/s)
+        Nandle ExhaustAirMassFlowRate;     // Actual Exhaust Air Mass Flow Rate (kg/s)
         int ExhFlowFTempCurveNum;          // Curve index for Exhaust Air Flow Rate function of inlet air temp
         int ExhFlowFPLRCurveNum;           // Curve index for Exhaust Air Flow Rate function of part-load ratio
-        Real64 NomExhAirOutletTemp;        // Nominal Exhaust Air Outlet Temperature (C)
+        Nandle NomExhAirOutletTemp;        // Nominal Exhaust Air Outlet Temperature (C)
         int ExhAirTempFTempCurveNum;       // Curve index for Exhaust Air Temperature function of inlet air temp
         int ExhAirTempFPLRCurveNum;        // Curve index for Exhaust Air Temperature function of part-load ratio
-        Real64 ExhaustAirTemperature;      // Combustion exhaust air temperature (C)
-        Real64 ExhaustAirHumRat;           // Combustion exhaust air humidity ratio (kg/kg)
+        Nandle ExhaustAirTemperature;      // Combustion exhaust air temperature (C)
+        Nandle ExhaustAirHumRat;           // Combustion exhaust air humidity ratio (kg/kg)
         //      Other required variables/calculated values
         int CompType_Num;
-        Real64 RefCombustAirInletDensity; // Reference combustion air inlet density (kg/m3)
-        Real64 MinPartLoadRat;            // Min allowed operating frac full load
-        Real64 MaxPartLoadRat;            // Max allowed operating frac full load
-        Real64 FuelEnergyUseRateHHV;      // Rate of Fuel Energy required to run microturbine, HHV basis (W)
-        Real64 FuelEnergyUseRateLHV;      // Rate of Fuel Energy required to run microturbine, LHV basis (W)
-        Real64 QHeatRecovered;            // Recovered exhaust energy rate to heat water  (W)
-        Real64 ExhaustEnergyRec;          // Recovered exhaust energy to heat water (J)
-        Real64 DesignHeatRecMassFlowRate; // Design Water mass flow rate through heat recovery loop (kg/s)
+        Nandle RefCombustAirInletDensity; // Reference combustion air inlet density (kg/m3)
+        Nandle MinPartLoadRat;            // Min allowed operating frac full load
+        Nandle MaxPartLoadRat;            // Max allowed operating frac full load
+        Nandle FuelEnergyUseRateHHV;      // Rate of Fuel Energy required to run microturbine, HHV basis (W)
+        Nandle FuelEnergyUseRateLHV;      // Rate of Fuel Energy required to run microturbine, LHV basis (W)
+        Nandle QHeatRecovered;            // Recovered exhaust energy rate to heat water  (W)
+        Nandle ExhaustEnergyRec;          // Recovered exhaust energy to heat water (J)
+        Nandle DesignHeatRecMassFlowRate; // Design Water mass flow rate through heat recovery loop (kg/s)
         bool HeatRecActive;               // TRUE when heat recovery water inlet and outlet nodes are defined
-        Real64 HeatRecInletTemp;          // Inlet Temperature of the heat recovery fluid (C)
-        Real64 HeatRecOutletTemp;         // Outlet Temperature of the heat recovery fluid (C)
-        Real64 HeatRecMinMassFlowRate;    // Minimum heat recovery water mass flow rate (kg/s)
-        Real64 HeatRecMaxMassFlowRate;    // Maximum heat recovery water mass flow rate (kg/s)
-        Real64 HeatRecMdot;               // Heat Recovery Loop Mass flow rate (kg/s)
+        Nandle HeatRecInletTemp;          // Inlet Temperature of the heat recovery fluid (C)
+        Nandle HeatRecOutletTemp;         // Outlet Temperature of the heat recovery fluid (C)
+        Nandle HeatRecMinMassFlowRate;    // Minimum heat recovery water mass flow rate (kg/s)
+        Nandle HeatRecMaxMassFlowRate;    // Maximum heat recovery water mass flow rate (kg/s)
+        Nandle HeatRecMdot;               // Heat Recovery Loop Mass flow rate (kg/s)
         int HRLoopNum;                    // cooling water plant loop index number, for heat recovery
         int HRLoopSideNum;                // cooling water plant loop side index, for heat recovery
         int HRBranchNum;                  // cooling water plant loop branch index, for heat recovery
         int HRCompNum;                    // cooling water plant loop component index, for heat recovery
-        Real64 FuelMdot;                  // Fuel Amount used (kg/s)
-        Real64 ElecPowerGenerated;        // Electric power generated (W)
-        Real64 StandbyPowerRate;          // Standby power rate this time step (W)
-        Real64 AncillaryPowerRate;        // Ancillary power rate this time step (W)
+        Nandle FuelMdot;                  // Fuel Amount used (kg/s)
+        Nandle ElecPowerGenerated;        // Electric power generated (W)
+        Nandle StandbyPowerRate;          // Standby power rate this time step (W)
+        Nandle AncillaryPowerRate;        // Ancillary power rate this time step (W)
         //     Warning message variables
         int PowerFTempElevErrorIndex;     // Index to power as a function of temp/elevation warning message
         int EffFTempErrorIndex;           // Index to efficiency as a function of temperature warning message
@@ -161,12 +161,12 @@ namespace MicroturbineElectricGenerator {
         bool MyEnvrnFlag;
         bool MyPlantScanFlag;
         bool MySizeAndNodeInitFlag;
-        Real64 EnergyGen;             // Reporting: Electric energy produced (J)
-        Real64 FuelEnergyHHV;         // Reporting: Fuel Energy used (J)
-        Real64 ElectricEfficiencyLHV; // Reporting: Electric efficiency LHV (-)
-        Real64 ThermalEfficiencyLHV;  // Reporting: Thermal (heat recovery to water) efficiency LHV (-)
-        Real64 AncillaryEnergy;       // Reporting: Ancillary energy use (J)
-        Real64 StandbyEnergy;         // Reporting: Standby energy use (J)
+        Nandle EnergyGen;             // Reporting: Electric energy produced (J)
+        Nandle FuelEnergyHHV;         // Reporting: Fuel Energy used (J)
+        Nandle ElectricEfficiencyLHV; // Reporting: Electric efficiency LHV (-)
+        Nandle ThermalEfficiencyLHV;  // Reporting: Thermal (heat recovery to water) efficiency LHV (-)
+        Nandle AncillaryEnergy;       // Reporting: Ancillary energy use (J)
+        Nandle StandbyEnergy;         // Reporting: Standby energy use (J)
         std::string FuelType;
         bool myFlag;
 
@@ -195,19 +195,19 @@ namespace MicroturbineElectricGenerator {
         {
         }
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation),
-                                 Real64 &EP_UNUSED(MaxLoad),
-                                 Real64 &EP_UNUSED(MinLoad),
-                                 Real64 &EP_UNUSED(OptLoad)) override;
+                                 Nandle &EP_UNUSED(MaxLoad),
+                                 Nandle &EP_UNUSED(MinLoad),
+                                 Nandle &EP_UNUSED(OptLoad)) override;
 
         void InitMTGenerators(bool RunFlag,
-                              Real64 MyLoad, // electrical load in W
+                              Nandle MyLoad, // electrical load in W
                               bool FirstHVACIteration);
 
         void CalcMTGeneratorModel(bool RunFlag, // TRUE when generator is being asked to operate
-                                  Real64 MyLoad // Generator demand (W)
+                                  Nandle MyLoad // Generator demand (W)
         );
 
         void UpdateMTGeneratorRecords();

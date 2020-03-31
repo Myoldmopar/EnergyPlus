@@ -165,8 +165,8 @@ namespace UnitVentilator {
     // MODULE VARIABLE DECLARATIONS:
     bool HCoilOn(false);        // TRUE if the heating coil (gas or electric especially) should be running
     int NumOfUnitVents(0);      // Number of unit ventilators in the input file
-    Real64 OAMassFlowRate(0.0); // Outside air mass flow rate for the unit ventilator
-    Real64 QZnReq(0.0);         // heating or cooling needed by zone [watts]
+    Nandle OAMassFlowRate(0.0); // Outside air mass flow rate for the unit ventilator
+    Nandle QZnReq(0.0);         // heating or cooling needed by zone [watts]
     Array1D_bool MySizeFlag;
     bool GetUnitVentilatorInputFlag(true); // First time, input is "gotten"
     Array1D_bool CheckEquipName;
@@ -196,8 +196,8 @@ namespace UnitVentilator {
     void SimUnitVentilator(std::string const &CompName,   // name of the fan coil unit
                            int const ZoneNum,             // number of zone being served
                            bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                           Real64 &PowerMet,              // Sensible power supplied (W)
-                           Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                           Nandle &PowerMet,              // Sensible power supplied (W)
+                           Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                            int &CompIndex)
     {
 
@@ -331,10 +331,10 @@ namespace UnitVentilator {
         std::string cCoolingCoilType;   // Cooling coil object type
         std::string cHeatingCoilType;   // Heating coil object type
         int FanIndex;                   // index to fan used for flow checks
-        Real64 FanVolFlow;              // volumetric flow rate of fan
+        Nandle FanVolFlow;              // volumetric flow rate of fan
         std::string CurrentModuleObject;
         Array1D_string Alphas;         // Alpha items for object
-        Array1D<Real64> Numbers;       // Numeric items for object
+        Array1D<Nandle> Numbers;       // Numeric items for object
         Array1D_string cAlphaFields;   // Alpha field names
         Array1D_string cNumericFields; // Numeric field names
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.
@@ -1300,10 +1300,10 @@ namespace UnitVentilator {
         int InNode;                       // inlet node number in unit ventilator loop
         int OutNode;                      // outlet node number in unit ventilator loop
         int OutsideAirNode;               // outside air node number in unit ventilator loop
-        Real64 RhoAir;                    // air density at InNode
-        Real64 TempSteamIn;
-        Real64 SteamDensity;
-        Real64 rho; // local fluid density
+        Nandle RhoAir;                    // air density at InNode
+        Nandle TempSteamIn;
+        Nandle SteamDensity;
+        Nandle rho; // local fluid density
         bool errFlag;
         bool SetMassFlowRateToZero; // TRUE when mass flow rates need to be set to zero
 
@@ -1636,13 +1636,13 @@ namespace UnitVentilator {
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
         int PltSizCoolNum; // index of plant sizing object for 1st cooling loop
         bool ErrorsFound;
-        Real64 DesCoolingLoad;
-        Real64 DesHeatingLoad;
-        Real64 TempSteamIn;
-        Real64 EnthSteamInDry;
-        Real64 EnthSteamOutWet;
-        Real64 LatentHeatSteam;
-        Real64 SteamDensity;
+        Nandle DesCoolingLoad;
+        Nandle DesHeatingLoad;
+        Nandle TempSteamIn;
+        Nandle EnthSteamInDry;
+        Nandle EnthSteamOutWet;
+        Nandle LatentHeatSteam;
+        Nandle SteamDensity;
         static int RefrigIndex(0);
         static int CoilWaterInletNode(0);
         static int CoilWaterOutletNode(0);
@@ -1650,27 +1650,27 @@ namespace UnitVentilator {
         static int CoilSteamOutletNode(0);
         std::string CoolingCoilName;
         std::string CoolingCoilType;
-        Real64 rho;
-        Real64 Cp;
+        Nandle rho;
+        Nandle Cp;
         static int DummyWaterIndex(1);
         bool IsAutoSize;                // Index to autosize
-        Real64 MaxAirVolFlowDes;        // Autosized maximum air flow for reporting
-        Real64 MaxAirVolFlowUser;       // Hardsized maximum air flow for reporting
-        Real64 OutAirVolFlowDes;        // Autosized outdoor air flow for reporting
-        Real64 OutAirVolFlowUser;       // Hardsized outdoor air flow for reporting
-        Real64 MinOutAirVolFlowDes;     // Autosized minimum outdoor air flow for reporting
-        Real64 MinOutAirVolFlowUser;    // Hardsized minimum outdoor air flow for reporting
-        Real64 MaxVolHotWaterFlowDes;   // Autosized maximum water flow for reporting
-        Real64 MaxVolHotWaterFlowUser;  // Hardsized maximum water flow for reporting
-        Real64 MaxVolHotSteamFlowDes;   // Autosized maximum steam flow for reporting
-        Real64 MaxVolHotSteamFlowUser;  // Hardsized maximum steam flow for reporting
-        Real64 MaxVolColdWaterFlowDes;  // Autosized maximum chilled water flow for reporting
-        Real64 MaxVolColdWaterFlowUser; // Hardsized maximum chilled water flow for reporting
+        Nandle MaxAirVolFlowDes;        // Autosized maximum air flow for reporting
+        Nandle MaxAirVolFlowUser;       // Hardsized maximum air flow for reporting
+        Nandle OutAirVolFlowDes;        // Autosized outdoor air flow for reporting
+        Nandle OutAirVolFlowUser;       // Hardsized outdoor air flow for reporting
+        Nandle MinOutAirVolFlowDes;     // Autosized minimum outdoor air flow for reporting
+        Nandle MinOutAirVolFlowUser;    // Hardsized minimum outdoor air flow for reporting
+        Nandle MaxVolHotWaterFlowDes;   // Autosized maximum water flow for reporting
+        Nandle MaxVolHotWaterFlowUser;  // Hardsized maximum water flow for reporting
+        Nandle MaxVolHotSteamFlowDes;   // Autosized maximum steam flow for reporting
+        Nandle MaxVolHotSteamFlowUser;  // Hardsized maximum steam flow for reporting
+        Nandle MaxVolColdWaterFlowDes;  // Autosized maximum chilled water flow for reporting
+        Nandle MaxVolColdWaterFlowUser; // Hardsized maximum chilled water flow for reporting
 
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         int FieldNum = 2;         // IDD numeric field number where input field description is found
         int SizingMethod;  // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                            // HeatingCapacitySizing, etc.)
@@ -1680,10 +1680,10 @@ namespace UnitVentilator {
                            // FractionOfAutosizedHeatingAirflow ...)
         int CapSizingMethod(0); // capacity sizing methods (HeatingDesignCapacity, CapacityPerFloorArea, FractionOfAutosizedCoolingCapacity, and
                                 // FractionOfAutosizedHeatingCapacity )
-        Real64 CoolingAirVolFlowScalable; // cooling airvolume for rate determined using scalable sizing method
-        Real64 HeatingAirVolFlowScalable; // heating airvolume for rate determined using scalable sizing method
+        Nandle CoolingAirVolFlowScalable; // cooling airvolume for rate determined using scalable sizing method
+        Nandle HeatingAirVolFlowScalable; // heating airvolume for rate determined using scalable sizing method
         bool DoWaterCoilSizing = false;   // if TRUE do water coil sizing calculation
-        Real64 WaterCoilSizDeltaT;        // water coil deltaT for design water flow rate autosizing
+        Nandle WaterCoilSizDeltaT;        // water coil deltaT for design water flow rate autosizing
         int CoilNum;                      // index of water coil object
 
         PltSizHeatNum = 0;
@@ -2482,8 +2482,8 @@ namespace UnitVentilator {
     void CalcUnitVentilator(int &UnitVentNum,              // number of the current fan coil unit being simulated
                             int const ZoneNum,             // number of zone being served
                             bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                            Real64 &PowerMet,              // Sensible power supplied (W)
-                            Real64 &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
+                            Nandle &PowerMet,              // Sensible power supplied (W)
+                            Nandle &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
     )
     {
 
@@ -2549,9 +2549,9 @@ namespace UnitVentilator {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const LowTempDiff(0.1); // Smallest allowed temperature difference for comparisons
+        Nandle const LowTempDiff(0.1); // Smallest allowed temperature difference for comparisons
         // (below this value the temperatures are assumed equal)
-        Real64 const LowOAFracDiff(0.01); // Smallest allowed outside air fraction difference for comparison
+        Nandle const LowOAFracDiff(0.01); // Smallest allowed outside air fraction difference for comparison
         // (below this value the fractions are assumed equal)
         int const MaxIter(50); // maximum number of iterations
 
@@ -2561,33 +2561,33 @@ namespace UnitVentilator {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow;   // air mass flow rate [kg/sec]
+        Nandle AirMassFlow;   // air mass flow rate [kg/sec]
         int AirRelNode;       // outside air relief node
         int ControlNode;      // the hot water or cold water inlet node
-        Real64 ControlOffset; // tolerance for output control
+        Nandle ControlOffset; // tolerance for output control
         int InletNode;        // unit air inlet node
-        Real64 MaxOAFrac;     // maximum possible outside air fraction
-        Real64 MaxWaterFlow;  // maximum water flow for heating or cooling [kg/sec]
-        Real64 MinOAFrac;     // minimum possible outside air fraction
-        Real64 MinWaterFlow;  // minimum water flow for heating or cooling [kg/sec]
+        Nandle MaxOAFrac;     // maximum possible outside air fraction
+        Nandle MaxWaterFlow;  // maximum water flow for heating or cooling [kg/sec]
+        Nandle MinOAFrac;     // minimum possible outside air fraction
+        Nandle MinWaterFlow;  // minimum water flow for heating or cooling [kg/sec]
         int OutletNode;       // unit air outlet node
         int OutsideAirNode;   // outside air node
-        Real64 QTotUnitOut;   // total unit output [watts]
-        Real64 QUnitOut;      // heating or sens. cooling provided by fan coil unit [watts]
-        Real64 Tdesired;      // desired temperature after mixing inlet and outdoor air [degrees C]
-        Real64 Tinlet;        // temperature of air coming into the unit ventilator [degrees C]
-        Real64 Toutdoor;      // temperature of outdoor air being introduced into the unit ventilator [degrees C]
-        Real64 MaxSteamFlow;
-        Real64 MinSteamFlow;
-        Real64 LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
-        Real64 SpecHumOut;   // Specific humidity ratio of outlet air (kg moisture / kg moist air)
-        Real64 SpecHumIn;    // Specific humidity ratio of inlet air (kg moisture / kg moist air)
-        Real64 mdot;
-        Array1D<Real64> Par(3); // parameters passed to RegulaFalsi function
+        Nandle QTotUnitOut;   // total unit output [watts]
+        Nandle QUnitOut;      // heating or sens. cooling provided by fan coil unit [watts]
+        Nandle Tdesired;      // desired temperature after mixing inlet and outdoor air [degrees C]
+        Nandle Tinlet;        // temperature of air coming into the unit ventilator [degrees C]
+        Nandle Toutdoor;      // temperature of outdoor air being introduced into the unit ventilator [degrees C]
+        Nandle MaxSteamFlow;
+        Nandle MinSteamFlow;
+        Nandle LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
+        Nandle SpecHumOut;   // Specific humidity ratio of outlet air (kg moisture / kg moist air)
+        Nandle SpecHumIn;    // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle mdot;
+        Array1D<Nandle> Par(3); // parameters passed to RegulaFalsi function
         int OpMode;             // operatin gmode of the fan
-        Real64 PartLoadFrac;    // part load ratio of the unit ventilator
-        Real64 NoOutput;        // no load output of the unit ventilator
-        Real64 FullOutput;      // full load output of the unit ventilator
+        Nandle PartLoadFrac;    // part load ratio of the unit ventilator
+        Nandle NoOutput;        // no load output of the unit ventilator
+        Nandle FullOutput;      // full load output of the unit ventilator
         int SolFlag;            // return flag from RegulaFalsi for sensible load
 
         {
@@ -3250,9 +3250,9 @@ namespace UnitVentilator {
 
     void CalcUnitVentilatorComponents(int const UnitVentNum,              // Unit index in unit ventilator array
                                       bool const FirstHVACIteration,      // flag for 1st HVAV iteration in the time step
-                                      Real64 &LoadMet,                    // load met by unit (watts)
+                                      Nandle &LoadMet,                    // load met by unit (watts)
                                       Optional_int_const OpMode,          // Fan Type
-                                      Optional<Real64 const> PartLoadFrac // Part Load Ratio of coil and fan
+                                      Optional<Nandle const> PartLoadFrac // Part Load Ratio of coil and fan
     )
     {
 
@@ -3303,19 +3303,19 @@ namespace UnitVentilator {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AirMassFlow;           // total mass flow through the unit
-        Real64 CpAirZn;               // specific heat of dry air at zone conditions (zone conditions same as unit inlet)
+        Nandle AirMassFlow;           // total mass flow through the unit
+        Nandle CpAirZn;               // specific heat of dry air at zone conditions (zone conditions same as unit inlet)
         int HCoilInAirNode;           // inlet node number for fan exit/coil inlet
         int InletNode;                // unit air inlet node
         int OutletNode;               // unit air outlet node
-        Real64 QCoilReq;              // Heat addition required from an electric/gas heating coil
-        Real64 mdot;                  // hot water or steam mass flow rate for current time step
-        Real64 PartLoadRatio;         // unit ventilator part load ratio
+        Nandle QCoilReq;              // Heat addition required from an electric/gas heating coil
+        Nandle mdot;                  // hot water or steam mass flow rate for current time step
+        Nandle PartLoadRatio;         // unit ventilator part load ratio
         int FanOpMode;                // fan operating mode or fan type
         static int ATMixOutNode(0);   // outlet node of ATM Mixer
         static int ATMixerPriNode(0); // primary air node of ATM Mixer
         static int ZoneNode(0);       // zone node
-        Real64 SpecHumMin(0);         // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle SpecHumMin(0);         // Specific humidity ratio of inlet air (kg moisture / kg moist air)
 
         // FLOW:
         InletNode = UnitVent(UnitVentNum).AirInNode;
@@ -3612,10 +3612,10 @@ namespace UnitVentilator {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int AirRelNode;            // relief air node number in unit ventilator loop
         int InletNode;             // inlet node number for unit ventilator loop
-        Real64 OAFraction;         // Outside air fraction of inlet air
+        Nandle OAFraction;         // Outside air fraction of inlet air
         int OAMixOutNode;          // outside air mixer outlet node for unit ventilator loop
         int OutsideAirNode;        // outside air node number in unit ventilator loop
-        Real64 OutAirMassFlowRate; // Outside air mass flow rate capped for cycling fan
+        Nandle OutAirMassFlowRate; // Outside air mass flow rate capped for cycling fan
 
         // FLOW:
         AirRelNode = UnitVent(UnitVentNum).AirReliefNode;
@@ -3934,8 +3934,8 @@ namespace UnitVentilator {
         return GetUnitVentilatorReturnAirNode;
     }
 
-    Real64 CalcUnitVentilatorResidual(Real64 const PartLoadRatio, // Coil Part Load Ratio
-                                      Array1D<Real64> const &Par  // Function parameters
+    Nandle CalcUnitVentilatorResidual(Nandle const PartLoadRatio, // Coil Part Load Ratio
+                                      Array1D<Nandle> const &Par  // Function parameters
     )
     {
         // FUNCTION INFORMATION:
@@ -3953,7 +3953,7 @@ namespace UnitVentilator {
         // na
 
         // Return value
-        Real64 Residuum(0.0); // Result (force to 0)
+        Nandle Residuum(0.0); // Result (force to 0)
 
         // Argument array dimensioning
 
@@ -3975,7 +3975,7 @@ namespace UnitVentilator {
         int UnitVentNum;         // Index to this UnitHeater
         bool FirstHVACIteration; // FirstHVACIteration flag
         int OpMode;              // Cycling fan or constant fan
-        Real64 QUnitOut;         // heating/Cooling provided by unit ventilator [watts]
+        Nandle QUnitOut;         // heating/Cooling provided by unit ventilator [watts]
 
         // Convert parameters to usable variables
         UnitVentNum = int(Par(1));
@@ -3989,16 +3989,16 @@ namespace UnitVentilator {
         return Residuum;
     }
 
-    Real64 SetOAMassFlowRateForCoolingVariablePercent(int const UnitVentNum,     // Unit Ventilator index
-                                                      Real64 const MinOAFrac,    // Minimum Outside Air Fraction
-                                                      Real64 const MassFlowRate, // Design Outside Air Mass Flow Rate
-                                                      Real64 const MaxOAFrac,    // Maximum Outside Air Fraction
-                                                      Real64 const Tinlet,       // Inlet Temperature to Unit or Zone Temperature
-                                                      Real64 const Toutdoor      // Outdoor Air Temperature
+    Nandle SetOAMassFlowRateForCoolingVariablePercent(int const UnitVentNum,     // Unit Ventilator index
+                                                      Nandle const MinOAFrac,    // Minimum Outside Air Fraction
+                                                      Nandle const MassFlowRate, // Design Outside Air Mass Flow Rate
+                                                      Nandle const MaxOAFrac,    // Maximum Outside Air Fraction
+                                                      Nandle const Tinlet,       // Inlet Temperature to Unit or Zone Temperature
+                                                      Nandle const Toutdoor      // Outdoor Air Temperature
     )
     {
 
-        Real64 ActualOAMassFlowRate(0.0); // Result or return value
+        Nandle ActualOAMassFlowRate(0.0); // Result or return value
 
         if (Tinlet <= Toutdoor) {
 
@@ -4011,7 +4011,7 @@ namespace UnitVentilator {
             // small load on the cooling coil (if it exists) or will leave a small load that is not met when it could be.
             // Then, limit the OA Mass Flow Rate between the MinOA flow and the MaxOA flow.
 
-            Real64 EnthDiffAcrossFan(0.0); // Temperature difference across the fan
+            Nandle EnthDiffAcrossFan(0.0); // Temperature difference across the fan
             if (!UnitVent(UnitVentNum).ATMixerExists) {
                 EnthDiffAcrossFan = Node(UnitVent(UnitVentNum).FanOutletNode).Enthalpy - Node(UnitVent(UnitVentNum).OAMixerOutNode).Enthalpy;
             } else {
@@ -4033,11 +4033,11 @@ namespace UnitVentilator {
         return ActualOAMassFlowRate;
     }
 
-    void CalcMdotCCoilCycFan(Real64 &mdot,              // mass flow rate
-                             Real64 &QCoilReq,          // Remaining load to cooling coil
-                             Real64 const QZnReq,       // Zone load to setpoint
+    void CalcMdotCCoilCycFan(Nandle &mdot,              // mass flow rate
+                             Nandle &QCoilReq,          // Remaining load to cooling coil
+                             Nandle const QZnReq,       // Zone load to setpoint
                              int const UnitVentNum,     // Unit Ventilator index
-                             Real64 const PartLoadRatio // Part load ratio for unit ventilator
+                             Nandle const PartLoadRatio // Part load ratio for unit ventilator
     )
     {
 
@@ -4050,8 +4050,8 @@ namespace UnitVentilator {
         // Check to see what outside air will do, "turn off" cooling coil if OA can handle the load
         int CCoilInAirNode = UnitVent(UnitVentNum).FanOutletNode;
         int AirInNode = UnitVent(UnitVentNum).AirInNode;
-        Real64 const SmallLoad = -1.0; // Watts
-        Real64 CpAirZn = PsyCpAirFnW(Node(AirInNode).HumRat);
+        Nandle const SmallLoad = -1.0; // Watts
+        Nandle CpAirZn = PsyCpAirFnW(Node(AirInNode).HumRat);
         QCoilReq = QZnReq - Node(CCoilInAirNode).MassFlowRate * CpAirZn * (Node(CCoilInAirNode).Temp - Node(AirInNode).Temp);
         if (QCoilReq > SmallLoad) {
             QCoilReq = 0.0;

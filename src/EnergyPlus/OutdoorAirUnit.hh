@@ -103,7 +103,7 @@ namespace OutdoorAirUnit {
 
     // MODULE VARIABLE DECLARATIONS:
     extern int NumOfOAUnits;      // Number of outdoor air unit in the input file
-    extern Real64 OAMassFlowRate; // Outside air mass flow rate for the zone outdoor air unit
+    extern Nandle OAMassFlowRate; // Outside air mass flow rate for the zone outdoor air unit
     extern Array1D_bool MyOneTimeErrorFlag;
     extern bool GetOutdoorAirUnitInputFlag; // Flag set to make sure you get input once
 
@@ -130,10 +130,10 @@ namespace OutdoorAirUnit {
         int BranchNum;
         int CompNum;
         int FluidIndex; // used in Steam...
-        Real64 MaxVolWaterFlow;
-        Real64 MaxWaterMassFlow;
-        Real64 MinVolWaterFlow;
-        Real64 MinWaterMassFlow;
+        Nandle MaxVolWaterFlow;
+        Nandle MaxWaterMassFlow;
+        Nandle MinVolWaterFlow;
+        Nandle MinWaterMassFlow;
         bool FirstPass;
         // End Of Equipment list data
 
@@ -166,7 +166,7 @@ namespace OutdoorAirUnit {
         int SFanType;                // type of fan in cFanTypes
         int SFanAvailSchedPtr;       // supply fan availability sched from fan object
         int FanPlace;                // fan placement; blow through and draw through
-        Real64 FanCorTemp;           // correction temperature
+        Nandle FanCorTemp;           // correction temperature
         bool FanEffect;              // .TRUE. if unit has a fan type of draw through
         int SFanOutletNode;          // supply fan outlet node number
         std::string ExtFanName;      // name of exhaust fan
@@ -177,16 +177,16 @@ namespace OutdoorAirUnit {
         std::string OutAirSchedName; // schedule of fraction for outside air (all controls)
         int OutAirSchedPtr;          // index to schedule
         int OutsideAirNode;          // outside air node number
-        Real64 OutAirVolFlow;        // m3/s
-        Real64 OutAirMassFlow;       // kg/s
-        Real64 ExtAirVolFlow;        // m3/s
-        Real64 ExtAirMassFlow;       // kg/s
+        Nandle OutAirVolFlow;        // m3/s
+        Nandle OutAirMassFlow;       // kg/s
+        Nandle ExtAirVolFlow;        // m3/s
+        Nandle ExtAirMassFlow;       // kg/s
         std::string ExtAirSchedName; // schedule of fraction for exhaust air
         int ExtOutAirSchedPtr;       // index to schedule
-        Real64 SMaxAirMassFlow;      // kg/s
-        Real64 EMaxAirMassFlow;      // kg/s
-        Real64 SFanMaxAirVolFlow;    // m3/s
-        Real64 EFanMaxAirVolFlow;    // m3/s
+        Nandle SMaxAirMassFlow;      // kg/s
+        Nandle EMaxAirMassFlow;      // kg/s
+        Nandle SFanMaxAirVolFlow;    // m3/s
+        Nandle EFanMaxAirVolFlow;    // m3/s
         std::string HiCtrlTempSched; // Schedule name for the High Control Air temperature
         int HiCtrlTempSchedPtr;      // Schedule index for the High Control Air temperature
         std::string LoCtrlTempSched; // Schedule name for the Low Control Air temperature
@@ -194,29 +194,29 @@ namespace OutdoorAirUnit {
         int OperatingMode;           // operating condition( NeutralMode, HeatingMode, CoolingMode)
         int ControlCompTypeNum;
         int CompErrIndex;
-        Real64 AirMassFlow; // kg/s
+        Nandle AirMassFlow; // kg/s
         bool FlowError;     // flow error flag
         int NumComponents;
         std::string ComponentListName;
-        Real64 CompOutSetTemp; // component outlet setpoint temperature
+        Nandle CompOutSetTemp; // component outlet setpoint temperature
         int AvailStatus;
         std::string AvailManagerListName; // Name of an availability manager list object
         Array1D<OAEquipList> OAEquip;
         // Report data
-        Real64 TotCoolingRate;    // Rate of total cooling delivered to the zone [W]
-        Real64 TotCoolingEnergy;  // Total cooling energy delivered by the OAU supply air to the zone [J]
-        Real64 SensCoolingRate;   // Rate of sensible cooling delivered to the zone [W]
-        Real64 SensCoolingEnergy; // Sensible cooling energy delivered by the OAU supply air to the zone [J]
-        Real64 LatCoolingRate;    // Rate of latent cooling delivered to the zone [W]
-        Real64 LatCoolingEnergy;  // Latent cooling energy delivered by the OAU supply air to the zone [J]
-        Real64 ElecFanRate;       // Total electric use rate (power) for supply/exhaust fans [W]
-        Real64 ElecFanEnergy;     // Electric energy use for supply fan and exhaust fan [J]
-        Real64 SensHeatingEnergy; // sensible heating energy delivered by the ERV supply air to the zone [J]
-        Real64 SensHeatingRate;   // rate of sensible heating delivered to the zone [W]
-        Real64 LatHeatingEnergy;  // latent heating energy delivered by the ERV supply air to the zone [J]
-        Real64 LatHeatingRate;    // rate of latent heating delivered to the zone [W]
-        Real64 TotHeatingEnergy;  // total heating energy delivered by the ERV supply air to the zone [J]
-        Real64 TotHeatingRate;    // rate of total heating delivered to the zone [W]
+        Nandle TotCoolingRate;    // Rate of total cooling delivered to the zone [W]
+        Nandle TotCoolingEnergy;  // Total cooling energy delivered by the OAU supply air to the zone [J]
+        Nandle SensCoolingRate;   // Rate of sensible cooling delivered to the zone [W]
+        Nandle SensCoolingEnergy; // Sensible cooling energy delivered by the OAU supply air to the zone [J]
+        Nandle LatCoolingRate;    // Rate of latent cooling delivered to the zone [W]
+        Nandle LatCoolingEnergy;  // Latent cooling energy delivered by the OAU supply air to the zone [J]
+        Nandle ElecFanRate;       // Total electric use rate (power) for supply/exhaust fans [W]
+        Nandle ElecFanEnergy;     // Electric energy use for supply fan and exhaust fan [J]
+        Nandle SensHeatingEnergy; // sensible heating energy delivered by the ERV supply air to the zone [J]
+        Nandle SensHeatingRate;   // rate of sensible heating delivered to the zone [W]
+        Nandle LatHeatingEnergy;  // latent heating energy delivered by the ERV supply air to the zone [J]
+        Nandle LatHeatingRate;    // rate of latent heating delivered to the zone [W]
+        Nandle TotHeatingEnergy;  // total heating energy delivered by the ERV supply air to the zone [J]
+        Nandle TotHeatingRate;    // rate of total heating delivered to the zone [W]
         bool FirstPass;           // detects first time through for resetting sizing data
 
         // Default Constructor
@@ -244,8 +244,8 @@ namespace OutdoorAirUnit {
     void SimOutdoorAirUnit(std::string const &CompName,   // name of the outdoor air unit
                            int const ZoneNum,             // number of zone being served
                            bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                           Real64 &PowerMet,              // Sensible power supplied (W)
-                           Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                           Nandle &PowerMet,              // Sensible power supplied (W)
+                           Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                            int &CompIndex);
 
     void GetOutdoorAirUnitInputs();
@@ -260,8 +260,8 @@ namespace OutdoorAirUnit {
     void CalcOutdoorAirUnit(int &OAUnitNum,                // number of the current unit being simulated
                             int const ZoneNum,             // number of zone being served
                             bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                            Real64 &PowerMet,              // power supplied
-                            Real64 &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
+                            Nandle &PowerMet,              // power supplied
+                            Nandle &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
     );
 
     void SimZoneOutAirUnitComps(int const OAUnitNum, bool const FirstHVACIteration);
@@ -279,7 +279,7 @@ namespace OutdoorAirUnit {
     void CalcOAUnitCoilComps(int const CompNum, // actual outdoor air unit num
                              bool const FirstHVACIteration,
                              int const EquipIndex, // Component Type -- Integerized for this module
-                             Real64 &LoadMet);
+                             Nandle &LoadMet);
 
     // SUBROUTINE UpdateOutdoorAirUnit
 

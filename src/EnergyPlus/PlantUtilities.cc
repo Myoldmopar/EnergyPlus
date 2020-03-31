@@ -104,7 +104,7 @@ namespace PlantUtilities {
             int CallingCompLoopSideNum;    // for debug error handling
             int CallingCompBranchNum;      // for debug error handling
             int CallingCompCompNum;        // for debug error handling
-            Real64 ThisCriteriaCheckValue; // the previous value, to check the current against
+            Nandle ThisCriteriaCheckValue; // the previous value, to check the current against
 
             // Default Constructor
             CriteriaData()
@@ -127,8 +127,8 @@ namespace PlantUtilities {
         CriteriaChecks.deallocate();
     }
 
-    void InitComponentNodes(Real64 const MinCompMdot,
-                            Real64 const MaxCompMdot,
+    void InitComponentNodes(Nandle const MinCompMdot,
+                            Nandle const MaxCompMdot,
                             int const InletNode,              // component's inlet node index in node structure
                             int const OutletNode,             // component's outlet node index in node structure
                             int const EP_UNUSED(LoopNum),     // plant loop index for PlantLoop structure
@@ -172,8 +172,8 @@ namespace PlantUtilities {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 tmpMinCompMdot; // local value
-        Real64 tmpMaxCompMdot; // local value
+        Nandle tmpMinCompMdot; // local value
+        Nandle tmpMaxCompMdot; // local value
 
         tmpMinCompMdot = MinCompMdot;
         tmpMaxCompMdot = MaxCompMdot;
@@ -217,7 +217,7 @@ namespace PlantUtilities {
         //  ENDIF
     }
 
-    void SetComponentFlowRate(Real64 &CompFlow,      // [kg/s]
+    void SetComponentFlowRate(Nandle &CompFlow,      // [kg/s]
                               int const InletNode,   // component's inlet node index in node structure
                               int const OutletNode,  // component's outlet node index in node structure
                               int const LoopNum,     // plant loop index for PlantLoop structure
@@ -247,7 +247,7 @@ namespace PlantUtilities {
             // ShowFatalError("Preceding loop index error causes program termination");
         }
 
-        Real64 const MdotOldRequest = DataLoopNode::Node(InletNode).MassFlowRateRequest;
+        Nandle const MdotOldRequest = DataLoopNode::Node(InletNode).MassFlowRateRequest;
         auto &loop_side(DataPlant::PlantLoop(LoopNum).LoopSide(LoopSideNum));
         auto &comp(loop_side.Branch(BranchIndex).Comp(CompIndex));
 
@@ -289,11 +289,11 @@ namespace PlantUtilities {
             } else { // bound the flow by Min/Max available and hardware limits
                 if (comp.FlowCtrl == DataBranchAirLoopPlant::ControlType_SeriesActive) {
                     // determine highest flow request for all the components on the branch
-                    Real64 SeriesBranchHighFlowRequest = 0.0;
-                    Real64 SeriesBranchHardwareMaxLim = DataLoopNode::Node(InletNode).MassFlowRateMax;
-                    Real64 SeriesBranchHardwareMinLim = 0.0;
-                    Real64 SeriesBranchMaxAvail = DataLoopNode::Node(InletNode).MassFlowRateMaxAvail;
-                    Real64 SeriesBranchMinAvail = 0.0;
+                    Nandle SeriesBranchHighFlowRequest = 0.0;
+                    Nandle SeriesBranchHardwareMaxLim = DataLoopNode::Node(InletNode).MassFlowRateMax;
+                    Nandle SeriesBranchHardwareMinLim = 0.0;
+                    Nandle SeriesBranchMaxAvail = DataLoopNode::Node(InletNode).MassFlowRateMaxAvail;
+                    Nandle SeriesBranchMinAvail = 0.0;
 
                     // inserting EMS On/Off Supervisory control here to series branch constraint and assuming EMS should shut off flow completely
                     // action here means EMS will not impact the FlowLock == FlowLocked condition (which should still show EMS intent)
@@ -377,7 +377,7 @@ namespace PlantUtilities {
         }
     }
 
-    void SetActuatedBranchFlowRate(Real64 &CompFlow,
+    void SetActuatedBranchFlowRate(Nandle &CompFlow,
                                    int const ActuatedNode,
                                    int const LoopNum,
                                    int const LoopSideNum,
@@ -411,7 +411,7 @@ namespace PlantUtilities {
         auto &loop_side(DataPlant::PlantLoop(LoopNum).LoopSide(LoopSideNum));
 
         // store original flow
-        Real64 const MdotOldRequest = a_node.MassFlowRateRequest;
+        Nandle const MdotOldRequest = a_node.MassFlowRateRequest;
         a_node.MassFlowRateRequest = CompFlow;
         if (LoopNum > 0 && LoopSideNum > 0 && (!ResetMode)) {
             if ((MdotOldRequest > 0.0) && (CompFlow > 0.0)) { // sure that not coming back from a no flow reset
@@ -490,8 +490,8 @@ namespace PlantUtilities {
                                        General::RoundSigDigits(loop_side.FlowLock)); // DEBUG error...should never get here LCOV_EXCL_LINE
             }
 
-            Real64 const a_node_MasFlowRate(a_node.MassFlowRate);
-            Real64 const a_node_MasFlowRateRequest(a_node.MassFlowRateRequest);
+            Nandle const a_node_MasFlowRate(a_node.MassFlowRate);
+            Nandle const a_node_MasFlowRateRequest(a_node.MassFlowRateRequest);
             for (int CompNum = 1, CompNum_end = branch.TotalComponents; CompNum <= CompNum_end; ++CompNum) {
                 auto const &comp(branch.Comp(CompNum));
                 int NodeNum = comp.NodeNumIn;
@@ -504,8 +504,8 @@ namespace PlantUtilities {
         }
     }
 
-    Real64 RegulateCondenserCompFlowReqOp(
-        int const LoopNum, int const LoopSideNum, int const BranchNum, int const CompNum, Real64 const TentativeFlowRequest)
+    Nandle RegulateCondenserCompFlowReqOp(
+        int const LoopNum, int const LoopSideNum, int const BranchNum, int const CompNum, Nandle const TentativeFlowRequest)
     {
 
         // FUNCTION INFORMATION:
@@ -537,13 +537,13 @@ namespace PlantUtilities {
         using DataPlant::PlantLoop;
 
         // Return value
-        Real64 FlowVal;
+        Nandle FlowVal;
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const ZeroLoad(0.0001);
+        Nandle const ZeroLoad(0.0001);
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 CompCurLoad;
+        Nandle CompCurLoad;
         bool CompRunFlag;
         int CompOpScheme;
 
@@ -594,13 +594,13 @@ namespace PlantUtilities {
                     int const SplitterInletNode = DataPlant::PlantLoop(LoopNum).LoopSide(LoopSide).Splitter.NodeNumIn;
                     // loop across branch outlet nodes and check mass continuity
                     int const NumSplitterOutlets = DataPlant::PlantLoop(LoopNum).LoopSide(LoopSide).Splitter.TotalOutletNodes;
-                    Real64 SumOutletFlow = 0.0;
+                    Nandle SumOutletFlow = 0.0;
                     for (int OutletNum = 1; OutletNum <= NumSplitterOutlets; ++OutletNum) {
                         int const BranchNum = DataPlant::PlantLoop(LoopNum).LoopSide(LoopSide).Splitter.BranchNumOut(OutletNum);
                         int const LastNodeOnBranch = DataPlant::PlantLoop(LoopNum).LoopSide(LoopSide).Branch(BranchNum).NodeNumOut;
                         SumOutletFlow += DataLoopNode::Node(LastNodeOnBranch).MassFlowRate;
                     }
-                    Real64 const AbsDifference = std::abs(DataLoopNode::Node(SplitterInletNode).MassFlowRate - SumOutletFlow);
+                    Nandle const AbsDifference = std::abs(DataLoopNode::Node(SplitterInletNode).MassFlowRate - SumOutletFlow);
                     if (AbsDifference > DataPlant::CriteriaDelta_MassFlowRate) {
                         return true;
                     }
@@ -640,9 +640,9 @@ namespace PlantUtilities {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int MixerOutletNode;
         int SplitterInletNode;
-        Real64 AbsDifference;
+        Nandle AbsDifference;
         int NumSplitterOutlets;
-        Real64 SumOutletFlow;
+        Nandle SumOutletFlow;
         int OutletNum;
         int BranchNum;
         int LastNodeOnBranch;
@@ -760,10 +760,10 @@ namespace PlantUtilities {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const OverShootOffset(5.0);
-        Real64 const UnderShootOffset(5.0);
-        Real64 const FatalOverShootOffset(200.0);
-        Real64 const FatalUnderShootOffset(100.0);
+        Nandle const OverShootOffset(5.0);
+        Nandle const UnderShootOffset(5.0);
+        Nandle const FatalOverShootOffset(200.0);
+        Nandle const FatalUnderShootOffset(100.0);
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
 
@@ -777,12 +777,12 @@ namespace PlantUtilities {
         int LSN;
         int BrN;
         int CpN;
-        Real64 LoopCapacity;
-        Real64 LoopDemandSideCapacity;
-        Real64 LoopSupplySideCapacity;
-        Real64 DispatchedCapacity;
-        Real64 LoopDemandSideDispatchedCapacity;
-        Real64 LoopSupplySideDispatchedCapacity;
+        Nandle LoopCapacity;
+        Nandle LoopDemandSideCapacity;
+        Nandle LoopSupplySideCapacity;
+        Nandle DispatchedCapacity;
+        Nandle LoopDemandSideDispatchedCapacity;
+        Nandle LoopSupplySideDispatchedCapacity;
 
         makefatalerror = false;
         if (Node(PlantLoop(LoopNum).LoopSide(LoopSideNum).NodeNumOut).Temp > (PlantLoop(LoopNum).MaxTemp + OverShootOffset)) {
@@ -953,7 +953,7 @@ namespace PlantUtilities {
                                      int const ConnectedLoopNum,    // Component's interconnected loop number
                                      int const ConnectedLoopSide,   // Component's interconnected loop side number
                                      int const CriteriaType,        // The criteria check to use, see DataPlant: SimFlagCriteriaTypes
-                                     Real64 const CriteriaValue     // The value of the criteria check to evaluate
+                                     Nandle const CriteriaValue     // The value of the criteria check to evaluate
     )
     {
 
@@ -1059,10 +1059,10 @@ namespace PlantUtilities {
                                              int const EP_UNUSED(TypeOfNum),      // Component's type index
                                              int const InletNodeNum,              // Component's inlet node pointer
                                              int const OutletNodeNum,             // Component's outlet node pointer
-                                             Real64 const ModelCondenserHeatRate, // model's heat rejection rate at condenser (W)
-                                             Real64 const ModelInletTemp,         // model's inlet temperature (C)
-                                             Real64 const ModelOutletTemp,        // model's outlet temperature (C)
-                                             Real64 const ModelMassFlowRate,      // model's condenser water mass flow rate (kg/s)
+                                             Nandle const ModelCondenserHeatRate, // model's heat rejection rate at condenser (W)
+                                             Nandle const ModelInletTemp,         // model's inlet temperature (C)
+                                             Nandle const ModelOutletTemp,        // model's outlet temperature (C)
+                                             Nandle const ModelMassFlowRate,      // model's condenser water mass flow rate (kg/s)
                                              bool const FirstHVACIteration)
     {
 
@@ -1094,7 +1094,7 @@ namespace PlantUtilities {
         int OtherLoopNum;                     // local loop pointer for remote connected loop
         int OtherLoopSide;                    // local loop side pointer for remote connected loop
         int ConnectLoopNum;                   // local do loop counter
-        Real64 Cp;
+        Nandle Cp;
 
         DidAnythingChange = false;
 
@@ -1148,10 +1148,10 @@ namespace PlantUtilities {
                                          int const EP_UNUSED(TypeOfNum),     // Component's type index
                                          int const InletNodeNum,             // Component's inlet node pointer
                                          int const OutletNodeNum,            // Component's outlet node pointer
-                                         Real64 const ModelRecoveryHeatRate, // model's heat rejection rate at recovery (W)
-                                         Real64 const ModelInletTemp,        // model's inlet temperature (C)
-                                         Real64 const ModelOutletTemp,       // model's outlet temperature (C)
-                                         Real64 const ModelMassFlowRate,     // model's condenser water mass flow rate (kg/s)
+                                         Nandle const ModelRecoveryHeatRate, // model's heat rejection rate at recovery (W)
+                                         Nandle const ModelInletTemp,        // model's inlet temperature (C)
+                                         Nandle const ModelOutletTemp,       // model's outlet temperature (C)
+                                         Nandle const ModelMassFlowRate,     // model's condenser water mass flow rate (kg/s)
                                          bool const FirstHVACIteration)
     {
 
@@ -1183,7 +1183,7 @@ namespace PlantUtilities {
         int OtherLoopNum;                     // local loop pointer for remote connected loop
         int OtherLoopSide;                    // local loop side pointer for remote connected loop
         int ConnectLoopNum;                   // local do loop counter
-        Real64 Cp;                            // local fluid specific heat
+        Nandle Cp;                            // local fluid specific heat
 
         DidAnythingChange = false;
 
@@ -1237,8 +1237,8 @@ namespace PlantUtilities {
                                                      int const InletNodeNum,              // Component's inlet node pointer
                                                      int const EP_UNUSED(OutletNodeNum),  // Component's outlet node pointer
                                                      int const EP_UNUSED(HeatSourceType),            // Type of fluid in Generator loop
-                                                     Real64 const ModelGeneratorHeatRate, // model's generator heat rate (W)
-                                                     Real64 const ModelMassFlowRate,      // model's generator mass flow rate (kg/s)
+                                                     Nandle const ModelGeneratorHeatRate, // model's generator heat rate (W)
+                                                     Nandle const ModelMassFlowRate,      // model's generator mass flow rate (kg/s)
                                                      bool const FirstHVACIteration)
     {
 
@@ -1452,7 +1452,7 @@ namespace PlantUtilities {
     }
 
     void RegisterPlantCompDesignFlow(int const ComponentInletNodeNum, // the component's water inlet node number
-                                     Real64 const DesPlantFlow        // the component's design fluid volume flow rate [m3/s]
+                                     Nandle const DesPlantFlow        // the component's design fluid volume flow rate [m3/s]
     )
     {
 
@@ -1517,7 +1517,7 @@ namespace PlantUtilities {
     void SafeCopyPlantNode(int const InletNodeNum,
                            int const OutletNodeNum,
                            Optional_int_const LoopNum,
-                           Optional<Real64 const> EP_UNUSED(OutletTemp) // set on outlet node if present and water.
+                           Optional<Nandle const> EP_UNUSED(OutletTemp) // set on outlet node if present and water.
     )
     {
 
@@ -1568,7 +1568,7 @@ namespace PlantUtilities {
         }
     }
 
-    Real64 BoundValueToNodeMinMaxAvail(Real64 const ValueToBound, int const NodeNumToBoundWith)
+    Nandle BoundValueToNodeMinMaxAvail(Nandle const ValueToBound, int const NodeNumToBoundWith)
     {
 
         // FUNCTION INFORMATION:
@@ -1587,7 +1587,7 @@ namespace PlantUtilities {
         using DataLoopNode::Node;
 
         // Return value
-        Real64 BoundedValue;
+        Nandle BoundedValue;
 
         BoundedValue = ValueToBound;
         BoundedValue = max(BoundedValue, Node(NodeNumToBoundWith).MassFlowRateMinAvail);
@@ -1596,7 +1596,7 @@ namespace PlantUtilities {
         return BoundedValue;
     }
 
-    void TightenNodeMinMaxAvails(int const NodeNum, Real64 const NewMinAvail, Real64 const NewMaxAvail)
+    void TightenNodeMinMaxAvails(int const NodeNum, Nandle const NewMinAvail, Nandle const NewMaxAvail)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1617,8 +1617,8 @@ namespace PlantUtilities {
         using DataLoopNode::Node;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OldMinAvail;
-        Real64 OldMaxAvail;
+        Nandle OldMinAvail;
+        Nandle OldMaxAvail;
 
         OldMinAvail = Node(NodeNum).MassFlowRateMinAvail;
         OldMaxAvail = Node(NodeNum).MassFlowRateMaxAvail;
@@ -1630,7 +1630,7 @@ namespace PlantUtilities {
         if ((NewMaxAvail < OldMaxAvail) && (NewMaxAvail >= OldMinAvail)) Node(NodeNum).MassFlowRateMaxAvail = NewMaxAvail;
     }
 
-    Real64 BoundValueToWithinTwoValues(Real64 const ValueToBound, Real64 const LowerBound, Real64 const UpperBound)
+    Nandle BoundValueToWithinTwoValues(Nandle const ValueToBound, Nandle const LowerBound, Nandle const UpperBound)
     {
 
         // FUNCTION INFORMATION:
@@ -1649,7 +1649,7 @@ namespace PlantUtilities {
         using DataLoopNode::Node;
 
         // Return value
-        Real64 BoundedValue;
+        Nandle BoundedValue;
 
         BoundedValue = ValueToBound;
         BoundedValue = max(BoundedValue, LowerBound);
@@ -1679,7 +1679,7 @@ namespace PlantUtilities {
     }
 
     // In-Place Right Shift by 1 of Array Elements
-    void rshift1(Array1D<Real64> &a, Real64 const a_l)
+    void rshift1(Array1D<Nandle> &a, Nandle const a_l)
     {
         assert(a.size_bounded());
         for (int i = a.u(), e = a.l(); i > e; --i) {
@@ -1719,12 +1719,12 @@ namespace PlantUtilities {
                 }
 
                 int InletNodeNum = loop_side.NodeNumIn;
-                Real64 InletNodeTemp = DataLoopNode::Node(InletNodeNum).Temp;
-                Real64 InletNodeMdot = DataLoopNode::Node(InletNodeNum).MassFlowRate;
+                Nandle InletNodeTemp = DataLoopNode::Node(InletNodeNum).Temp;
+                Nandle InletNodeMdot = DataLoopNode::Node(InletNodeNum).MassFlowRate;
 
                 int OutletNodeNum = loop_side.NodeNumOut;
-                Real64 OutletNodeTemp = DataLoopNode::Node(OutletNodeNum).Temp;
-                Real64 OutletNodeMdot = DataLoopNode::Node(OutletNodeNum).MassFlowRate;
+                Nandle OutletNodeTemp = DataLoopNode::Node(OutletNodeNum).Temp;
+                Nandle OutletNodeMdot = DataLoopNode::Node(OutletNodeNum).MassFlowRate;
 
                 rshift1(loop_side.InletNode.TemperatureHistory, InletNodeTemp);
                 rshift1(loop_side.InletNode.MassFlowRateHistory, InletNodeMdot);
@@ -1741,8 +1741,8 @@ namespace PlantUtilities {
                                  int &BranchNum,
                                  int &CompNum,
                                  bool &errFlag,
-                                 Optional<Real64 const> LowLimitTemp,
-                                 Optional<Real64 const> HighLimitTemp,
+                                 Optional<Nandle const> LowLimitTemp,
+                                 Optional<Nandle const> HighLimitTemp,
                                  Optional_int CountMatchPlantLoops,
                                  Optional_int_const InletNodeNumber,
                                  Optional_int_const SingleLoopSearch

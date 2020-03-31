@@ -84,13 +84,13 @@ using namespace ObjexxFCL;
 TEST_F(EnergyPlusFixture, DOASEffectOnZoneSizing_CalcDOASSupCondsForSizing)
 {
     // locals
-    Real64 OutDB;        // outside air temperature [C]
-    Real64 OutHR;        // outside humidity ratio [kg Water / kg Dry Air]
+    Nandle OutDB;        // outside air temperature [C]
+    Nandle OutHR;        // outside humidity ratio [kg Water / kg Dry Air]
     int DOASControl;     // dedicated outside air control strategy
-    Real64 DOASLowTemp;  // DOAS low setpoint [C]
-    Real64 DOASHighTemp; // DOAS high setpoint [C]
-    Real64 DOASSupTemp;  // DOAS supply temperature [C]
-    Real64 DOASSupHR;    // DOAS supply humidity ratio [kg H2O / kg dry air]
+    Nandle DOASLowTemp;  // DOAS low setpoint [C]
+    Nandle DOASHighTemp; // DOAS high setpoint [C]
+    Nandle DOASSupTemp;  // DOAS supply temperature [C]
+    Nandle DOASSupHR;    // DOAS supply humidity ratio [kg H2O / kg dry air]
     // neutral supply air
     DOASControl = 1;
     DOASLowTemp = 21.1;

@@ -892,8 +892,8 @@ TEST_F(EnergyPlusFixture, DaylightingManager_ProfileAngle_Test)
     Surface(1).Azimuth = 180.0;
     int horiz = 1;
     int vert = 2;
-    Real64 ProfAng;
-    Vector3<Real64> CosDirSun; // Solar direction cosines
+    Nandle ProfAng;
+    Vector3<Nandle> CosDirSun; // Solar direction cosines
 
     CosDirSun(1) = 0.882397;
     CosDirSun(2) = 0.470492;

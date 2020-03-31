@@ -298,8 +298,8 @@ namespace DemandManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int MgrNum;
         int MgrPtr;
-        Real64 AverageDemand;
-        Real64 OverLimit;
+        Nandle AverageDemand;
+        Nandle OverLimit;
         bool OnPeak;
 
         // FLOW:
@@ -417,7 +417,7 @@ namespace DemandManager {
         int NumNums;              // Number of elements in the numeric array
         int IOStat;               // IO Status when calling get input subroutine
         Array1D_string AlphArray; // Character string data
-        Array1D<Real64> NumArray; // Numeric data
+        Array1D<Nandle> NumArray; // Numeric data
         std::string Units;        // String for meter units
         static bool ErrorsFound(false);
         std::string CurrentModuleObject; // for ease in renaming.
@@ -689,7 +689,7 @@ namespace DemandManager {
         int NumParams;            // Number of arguments total in an ObjectDef
         int IOStat;               // IO Status when calling get input subroutine
         Array1D_string AlphArray; // Character string data
-        Array1D<Real64> NumArray; // Numeric data
+        Array1D<Nandle> NumArray; // Numeric data
         static bool ErrorsFound(false);
         std::string CurrentModuleObject; // for ease in renaming.
         int Item;
@@ -1704,11 +1704,11 @@ namespace DemandManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 BillingPeriod;
+        Nandle BillingPeriod;
         int Item;
         int AveragingWindow;
         bool OnPeak;
-        Real64 OverLimit;
+        Nandle OverLimit;
 
         // FLOW:
         if (DemandManagerList(ListNum).BillingSchedule == 0) {
@@ -1799,7 +1799,7 @@ namespace DemandManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 LowestPower;
+        Nandle LowestPower;
 
         // FLOW:
         CanReduceDemand = false;
@@ -1869,7 +1869,7 @@ namespace DemandManager {
                 }
 
             } else if (SELECT_CASE_var == ManagerTypeVentilation) {
-                Real64 FlowRate(0);
+                Nandle FlowRate(0);
                 FlowRate = OAGetFlowRate(LoadPtr);
                 if (Action == CheckCanReduce) {
                     CanReduceDemand = true;
@@ -1878,7 +1878,7 @@ namespace DemandManager {
                     if (DemandMgr(MgrNum).LimitControl == ManagerLimitFixed) {
                         OASetDemandManagerVentilationFlow(LoadPtr, DemandMgr(MgrNum).FixedRate);
                     } else if (DemandMgr(MgrNum).LimitControl == ManagerLimitReductionRatio) {
-                        Real64 DemandRate(0);
+                        Nandle DemandRate(0);
                         DemandRate = FlowRate * DemandMgr(MgrNum).ReductionRatio;
                         OASetDemandManagerVentilationFlow(LoadPtr, DemandRate);
                     }

@@ -455,8 +455,8 @@ TEST_F(EnergyPlusFixture, WindowAC_VStest1)
     SimulationManager::SetupSimulation(OutputFiles::getSingleton(), errorsFound);
     //
 
-    Real64 qDotMet(0.0);    // Watts total cap
-    Real64 lDotProvid(0.0); // latent removal kg/s
+    Nandle qDotMet(0.0);    // Watts total cap
+    Nandle lDotProvid(0.0); // latent removal kg/s
     int compIndex(0);
     WindowAC::SimWindowAC("ZONE1WINDAC", 1, true, qDotMet, lDotProvid, compIndex);
     // check input processing

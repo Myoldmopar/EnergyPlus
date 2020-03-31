@@ -106,9 +106,9 @@ TEST_F(EnergyPlusFixture, EMSManager_TestForUniqueEMSActuators)
 
     // repeat with reals
     std::string controlTypeName3("ValueOfResults");
-    Real64 testReal1(0.123);
-    Real64 testReal2(0.456);
-    Real64 testReal3(0.789);
+    Nandle testReal1(0.123);
+    Nandle testReal2(0.456);
+    Nandle testReal3(0.789);
     SetupEMSActuator(componentTypeName1, uniqueIDName1, controlTypeName3, units1, EMSActuated1, testReal1);
     SetupEMSActuator(componentTypeName1, uniqueIDName1, controlTypeName3, units1, EMSActuated1, testReal2);
     SetupEMSActuator(componentTypeName2, uniqueIDName1, controlTypeName3, units1, EMSActuated1, testReal3);
@@ -259,7 +259,7 @@ TEST_F(EnergyPlusFixture, SupervisoryControl_PlantComponent_SetActuatedBranchFlo
 
     // set flow, max and maxavail on the nodes
     Node.allocate(3);
-    Real64 NodeMdot(1.5);
+    Nandle NodeMdot(1.5);
     Node(1).MassFlowRate = NodeMdot;
     Node(1).MassFlowRateMax = NodeMdot;
     Node(1).MassFlowRateMaxAvail = NodeMdot;
@@ -423,7 +423,7 @@ TEST_F(EnergyPlusFixture, SupervisoryControl_PlantComponent_SetComponentFlowRate
 
     // set flow, max and maxavail on the nodes
     Node.allocate(3);
-    Real64 NodeMdot(1.5);
+    Nandle NodeMdot(1.5);
     Node(1).MassFlowRate = NodeMdot;
     Node(1).MassFlowRateMax = NodeMdot;
     Node(1).MassFlowRateMaxAvail = NodeMdot;
@@ -505,7 +505,7 @@ TEST_F(EnergyPlusFixture, SupervisoryControl_PlantComponent_SetComponentFlowRate
 
     EXPECT_TRUE(PlantLoop(1).LoopSide(1).Branch(1).Comp(1).EMSLoadOverrideOn);
     EXPECT_NEAR(PlantLoop(1).LoopSide(1).Branch(1).Comp(1).EMSLoadOverrideValue, 0.0, 0.000001);
-    Real64 tempNodeMdot(NodeMdot);
+    Nandle tempNodeMdot(NodeMdot);
 
     // expect node data to represent no flow. Max, MaxAvail, and Request are not changed
     SetComponentFlowRate(tempNodeMdot, 1, 2, 1, 1, 1, 1);

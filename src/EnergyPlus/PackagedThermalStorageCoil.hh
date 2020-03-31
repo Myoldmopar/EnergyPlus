@@ -112,18 +112,18 @@ namespace PackagedThermalStorageCoil {
         int ModeControlType;        // how are operation modes controlled
         int ControlModeSchedNum;    // pointer to control schedule if used
         bool EMSControlModeOn;      // if true, then EMS actuator has been used
-        Real64 EMSControlModeValue; // value to use from EMS actuator for control mode
+        Nandle EMSControlModeValue; // value to use from EMS actuator for control mode
         int CurControlMode;
         int ControlModeErrorIndex;
-        Real64 RatedEvapAirVolFlowRate;  // [m3/s]
-        Real64 RatedEvapAirMassFlowRate; // [kg/s]
+        Nandle RatedEvapAirVolFlowRate;  // [m3/s]
+        Nandle RatedEvapAirMassFlowRate; // [kg/s]
         int EvapAirInletNodeNum;         // evaporator inlet node pointer
         int EvapAirOutletNodeNum;        // evaporator outlet node pointer
         // Cooling Only Mode
         bool CoolingOnlyModeIsAvailable;
-        Real64 CoolingOnlyRatedTotCap; // gross total cooling capacity at rating conditions [W]
-        Real64 CoolingOnlyRatedSHR;    // Sensible heat ratio (sens cap/total cap) at rating conditions [W/W]
-        Real64 CoolingOnlyRatedCOP;    // Coefficient of performance at rating conditions [W/W]
+        Nandle CoolingOnlyRatedTotCap; // gross total cooling capacity at rating conditions [W]
+        Nandle CoolingOnlyRatedSHR;    // Sensible heat ratio (sens cap/total cap) at rating conditions [W/W]
+        Nandle CoolingOnlyRatedCOP;    // Coefficient of performance at rating conditions [W/W]
         int CoolingOnlyCapFTempCurve;  // curve index for total cooling capacity modifier curve
         // (function of entering wetbulb, outside drybulb)
         int CoolingOnlyCapFTempObjectNum; // type of object used for curve input
@@ -146,13 +146,13 @@ namespace PackagedThermalStorageCoil {
         int CoolingOnlySHRFFlowObjectNum;
         // cooling and charge mode
         bool CoolingAndChargeModeAvailable;
-        Real64 CoolingAndChargeRatedTotCap;                // gross total evaporator cooling capacity at rating conditions [W]
-        Real64 CoolingAndChargeRatedTotCapSizingFactor;    // sizing factor for gross total evaporator [ ]
-        Real64 CoolingAndChargeRatedChargeCap;             // net storage charging capacity at rating conditions [W]
-        Real64 CoolingAndChargeRatedChargeCapSizingFactor; // sizing factor for charging capacity [ ]
-        Real64 CoolingAndChargeRatedSHR;                   // Sensible heat ratio (sens cap/total cap) at rating conditions [W/W]
-        Real64 CoolingAndChargeCoolingRatedCOP;            // Coefficient of performance at rating conditions, for cooling [W/W]
-        Real64 CoolingAndChargeChargingRatedCOP;           // Coefficient of performance at rating conditions, for charging [W/W]
+        Nandle CoolingAndChargeRatedTotCap;                // gross total evaporator cooling capacity at rating conditions [W]
+        Nandle CoolingAndChargeRatedTotCapSizingFactor;    // sizing factor for gross total evaporator [ ]
+        Nandle CoolingAndChargeRatedChargeCap;             // net storage charging capacity at rating conditions [W]
+        Nandle CoolingAndChargeRatedChargeCapSizingFactor; // sizing factor for charging capacity [ ]
+        Nandle CoolingAndChargeRatedSHR;                   // Sensible heat ratio (sens cap/total cap) at rating conditions [W/W]
+        Nandle CoolingAndChargeCoolingRatedCOP;            // Coefficient of performance at rating conditions, for cooling [W/W]
+        Nandle CoolingAndChargeChargingRatedCOP;           // Coefficient of performance at rating conditions, for charging [W/W]
         int CoolingAndChargeCoolingCapFTempCurve;          // curve index for total cooling capacity modifier curve
         // (function of entering wetbulb, outside drybulb, state of TES)
         int CoolingAndChargeCoolingCapFTempObjectNum;
@@ -190,13 +190,13 @@ namespace PackagedThermalStorageCoil {
         int CoolingAndChargeSHRFFlowObjectNum;
         // cooling and discharge mode
         bool CoolingAndDischargeModeAvailable;
-        Real64 CoolingAndDischargeRatedTotCap;                   // gross total evaporator cooling capacity at rating conditions [W]
-        Real64 CoolingAndDischargeRatedTotCapSizingFactor;       // sizing factor gross total cooling capacity []
-        Real64 CoolingAndDischargeRatedDischargeCap;             // net storage discharging capacity at rating conditions [W]
-        Real64 CoolingAndDischargeRatedDischargeCapSizingFactor; // sizing factor discharging capacity []
-        Real64 CoolingAndDischargeRatedSHR;                      // Sensible heat ratio (sens cap/total cap) at rating conditions [W/W]
-        Real64 CoolingAndDischargeCoolingRatedCOP;               // Coefficient of performance at rating conditions, for cooling [W/W]
-        Real64 CoolingAndDischargeDischargingRatedCOP;           // Coefficient of performance at rating conditions, for charging [W/W]
+        Nandle CoolingAndDischargeRatedTotCap;                   // gross total evaporator cooling capacity at rating conditions [W]
+        Nandle CoolingAndDischargeRatedTotCapSizingFactor;       // sizing factor gross total cooling capacity []
+        Nandle CoolingAndDischargeRatedDischargeCap;             // net storage discharging capacity at rating conditions [W]
+        Nandle CoolingAndDischargeRatedDischargeCapSizingFactor; // sizing factor discharging capacity []
+        Nandle CoolingAndDischargeRatedSHR;                      // Sensible heat ratio (sens cap/total cap) at rating conditions [W/W]
+        Nandle CoolingAndDischargeCoolingRatedCOP;               // Coefficient of performance at rating conditions, for cooling [W/W]
+        Nandle CoolingAndDischargeDischargingRatedCOP;           // Coefficient of performance at rating conditions, for charging [W/W]
         int CoolingAndDischargeCoolingCapFTempCurve;             // curve index for total cooling capacity modifier curve
         // (function of entering wetbulb, outside drybulb, state of TES)
         int CoolingAndDischargeCoolingCapFTempObjectNum;
@@ -238,9 +238,9 @@ namespace PackagedThermalStorageCoil {
         int CoolingAndDischargeSHRFFlowObjectNum;
         // Charge Only Mode
         bool ChargeOnlyModeAvailable;
-        Real64 ChargeOnlyRatedCapacity;             // net storage charging capacity at rating conditions [W]
-        Real64 ChargeOnlyRatedCapacitySizingFactor; // sizing factor for charging capacity []
-        Real64 ChargeOnlyRatedCOP;                  // coefficient of performance at rating conditions [W/W]
+        Nandle ChargeOnlyRatedCapacity;             // net storage charging capacity at rating conditions [W]
+        Nandle ChargeOnlyRatedCapacitySizingFactor; // sizing factor for charging capacity []
+        Nandle ChargeOnlyRatedCOP;                  // coefficient of performance at rating conditions [W/W]
         int ChargeOnlyChargingCapFTempCurve;        // curve index for charging capacity modifier curve
         // function of outside drybulb and state of TES
         int ChargeOnlyChargingCapFTempObjectNum;
@@ -249,10 +249,10 @@ namespace PackagedThermalStorageCoil {
         int ChargeOnlyChargingEIRFTempObjectNum;
         // Discharge Only mode
         bool DischargeOnlyModeAvailable;
-        Real64 DischargeOnlyRatedDischargeCap;             // gross total evaporator cooling capacity at rating conditions [W]
-        Real64 DischargeOnlyRatedDischargeCapSizingFactor; // sizing factor for cooling capacity []
-        Real64 DischargeOnlyRatedSHR;                      // sensible heat ratio (sens cap/total cap) at rating conditions
-        Real64 DischargeOnlyRatedCOP;                      // coefficient of performance at rating conditions for discharging [W/W]
+        Nandle DischargeOnlyRatedDischargeCap;             // gross total evaporator cooling capacity at rating conditions [W]
+        Nandle DischargeOnlyRatedDischargeCapSizingFactor; // sizing factor for cooling capacity []
+        Nandle DischargeOnlyRatedSHR;                      // sensible heat ratio (sens cap/total cap) at rating conditions
+        Nandle DischargeOnlyRatedCOP;                      // coefficient of performance at rating conditions for discharging [W/W]
         int DischargeOnlyCapFTempCurve;                    // curve index for total cooling capacity modifier curve
         // function of entering wetbulb and state of TES
         int DischargeOnlyCapFTempObjectNum;
@@ -273,22 +273,22 @@ namespace PackagedThermalStorageCoil {
         int DischargeOnlySHRFFLowCurve; // curve index for
         int DischargeOnlySHRFFLowObjectNum;
         // other inputs
-        Real64 AncillaryControlsPower;       // standby and controls electric power, draws when available [W]
-        Real64 ColdWeatherMinimumTempLimit;  // temperature limit for cold weather operation mode [C]
-        Real64 ColdWeatherAncillaryPower;    // electrical power draw during cold weather [W]
+        Nandle AncillaryControlsPower;       // standby and controls electric power, draws when available [W]
+        Nandle ColdWeatherMinimumTempLimit;  // temperature limit for cold weather operation mode [C]
+        Nandle ColdWeatherAncillaryPower;    // electrical power draw during cold weather [W]
         int CondAirInletNodeNum;             // Condenser air inlet node num pointer
         int CondAirOutletNodeNum;            // condenser air outlet node num pointer
         int CondenserType;                   // Type of condenser for DX cooling coil: AIR COOLED or EVAP COOLED
-        Real64 CondenserAirVolumeFlow;       // design air flow rate thru condenser [m3/s]
-        Real64 CondenserAirFlowSizingFactor; // scale condenser air flow relative to evap air flow when autosizing
-        Real64 CondenserAirMassFlow;         // design air flow rate thru condenser [kg/s]
-        Real64 EvapCondEffect;               // effectiveness of the evaporatively cooled condenser
-        Real64 CondInletTemp;                // air temperature drybulb entering condenser section after evap cooling [C]
-        Real64 EvapCondPumpElecNomPower;     // Nominal power input to the evap condenser water circulation pump [W]
-        Real64 EvapCondPumpElecEnergy;       // Electric energy used by condenser water circulation pump [J]
-        Real64 BasinHeaterPowerFTempDiff;    // Basin heater power for evaporatively cooled condensers [W/K]
+        Nandle CondenserAirVolumeFlow;       // design air flow rate thru condenser [m3/s]
+        Nandle CondenserAirFlowSizingFactor; // scale condenser air flow relative to evap air flow when autosizing
+        Nandle CondenserAirMassFlow;         // design air flow rate thru condenser [kg/s]
+        Nandle EvapCondEffect;               // effectiveness of the evaporatively cooled condenser
+        Nandle CondInletTemp;                // air temperature drybulb entering condenser section after evap cooling [C]
+        Nandle EvapCondPumpElecNomPower;     // Nominal power input to the evap condenser water circulation pump [W]
+        Nandle EvapCondPumpElecEnergy;       // Electric energy used by condenser water circulation pump [J]
+        Nandle BasinHeaterPowerFTempDiff;    // Basin heater power for evaporatively cooled condensers [W/K]
         int BasinHeaterAvailSchedNum;        // basin heater availability schedule pointer num
-        Real64 BasinHeaterSetpointTemp;      // evap water basin temperature setpoint [C]
+        Nandle BasinHeaterSetpointTemp;      // evap water basin temperature setpoint [C]
         int EvapWaterSupplyMode;             // where does evap water come from
         std::string EvapWaterSupplyName;     // name of water source e.g. water storage tank
         int EvapWaterSupTankID;              // supply tank index, if any
@@ -301,14 +301,14 @@ namespace PackagedThermalStorageCoil {
         int StorageMedia;                   // water/fluid or ice based TES
         std::string StorageFluidName;       // if user defined, name of fluid type
         int StorageFluidIndex;              // if user defined, index of fluid type
-        Real64 FluidStorageVolume;          // volume of water in storage tank for water systems [m3/s]
-        Real64 IceStorageCapacity;          // capacity of storage in J
-        Real64 StorageCapacitySizingFactor; // storage time used to autocalculate capacity [hr]
-        Real64 MinimumFluidTankTempLimit;   // optional inputs [C]
-        Real64 MaximumFluidTankTempLimit;   // optional inputs [C]
-        Real64 RatedFluidTankTemp;          // rating point condition for fluid storage tanks [C]
+        Nandle FluidStorageVolume;          // volume of water in storage tank for water systems [m3/s]
+        Nandle IceStorageCapacity;          // capacity of storage in J
+        Nandle StorageCapacitySizingFactor; // storage time used to autocalculate capacity [hr]
+        Nandle MinimumFluidTankTempLimit;   // optional inputs [C]
+        Nandle MaximumFluidTankTempLimit;   // optional inputs [C]
+        Nandle RatedFluidTankTemp;          // rating point condition for fluid storage tanks [C]
         int StorageAmbientNodeNum;          // node "pointer" for ambient conditions exposed to TES
-        Real64 StorageUA;                   // overall heat transfer coefficient for TES to ambient [W/k]
+        Nandle StorageUA;                   // overall heat transfer coefficient for TES to ambient [W/k]
         bool TESPlantConnectionAvailable;
         int TESPlantInletNodeNum;            // plant loop inlet node index
         int TESPlantOutletNodeNum;           // plant loop outlet node index
@@ -316,41 +316,41 @@ namespace PackagedThermalStorageCoil {
         int TESPlantLoopSideNum;             // plant loop side connection index
         int TESPlantBranchNum;               // plant loop branch connection index
         int TESPlantCompNum;                 // plant loop component connection index
-        Real64 TESPlantDesignVolumeFlowRate; // plant connection design mass flow rate [m3/s]
-        Real64 TESPlantDesignMassFlowRate;   // [kg/s]
-        Real64 TESPlantEffectiveness;
-        Real64 TimeElapsed;
-        Real64 IceFracRemain;             // state of storage for current time step [0..1.0]
-        Real64 IceFracRemainLastTimestep; // state of storage for previous time step [0..1.0]
-        Real64 FluidTankTempFinal;
-        Real64 FluidTankTempFinalLastTimestep;
+        Nandle TESPlantDesignVolumeFlowRate; // plant connection design mass flow rate [m3/s]
+        Nandle TESPlantDesignMassFlowRate;   // [kg/s]
+        Nandle TESPlantEffectiveness;
+        Nandle TimeElapsed;
+        Nandle IceFracRemain;             // state of storage for current time step [0..1.0]
+        Nandle IceFracRemainLastTimestep; // state of storage for previous time step [0..1.0]
+        Nandle FluidTankTempFinal;
+        Nandle FluidTankTempFinalLastTimestep;
         // dynamic calculated data
-        Real64 QdotPlant;            // heat exchange rate for plant connection to TES tank [W]
-        Real64 Q_Plant;              // heat exchange energy for plant connection to TES tank [J]
-        Real64 QdotAmbient;          // heat exchange rate for skin losses/gains for TES tank to surroundings [W]
-        Real64 Q_Ambient;            // heat exchange enegy for skin losses/gains for TES tank to surroundings [J]
-        Real64 QdotTES;              // heat exchange rate by mechanical systems to charge or discharge TES [W]
-        Real64 Q_TES;                // heat exchange energy by mechanical systems to charge or discharge TES [J]
-        Real64 ElecCoolingPower;     // electric power for cooling [W]
-        Real64 ElecCoolingEnergy;    // electric energy for cooling [J], metered
-        Real64 EvapTotCoolingRate;   // evaporator coil total cooling rate [W]
-        Real64 EvapTotCoolingEnergy; // evaporatory coil total cooling energy [J], metered
-        Real64 EvapSensCoolingRate;
-        Real64 EvapSensCoolingEnergy;
-        Real64 EvapLatCoolingRate;
-        Real64 EvapLatCoolingEnergy;
-        Real64 RuntimeFraction;
-        Real64 CondenserRuntimeFraction;
-        Real64 ElectColdWeatherPower;  // electric power for cold weather protection [W]
-        Real64 ElectColdWeatherEnergy; // electric energy for cold weather protection [J], metered
-        Real64 ElectEvapCondBasinHeaterPower;
-        Real64 ElectEvapCondBasinHeaterEnergy;
-        Real64 EvapWaterConsumpRate;    // Evap Water Consumption rate in m3/sec
-        Real64 EvapWaterConsump;        // Evap Water Consumption in m3
-        Real64 EvapWaterStarvMakupRate; // Evap water consumed but not really available from tank m3/s
-        Real64 EvapWaterStarvMakup;     // Evap water consumed but not really available from tank m3
-        Real64 EvapCondPumpElecPower;
-        Real64 EvapCondPumpElecConsumption;
+        Nandle QdotPlant;            // heat exchange rate for plant connection to TES tank [W]
+        Nandle Q_Plant;              // heat exchange energy for plant connection to TES tank [J]
+        Nandle QdotAmbient;          // heat exchange rate for skin losses/gains for TES tank to surroundings [W]
+        Nandle Q_Ambient;            // heat exchange enegy for skin losses/gains for TES tank to surroundings [J]
+        Nandle QdotTES;              // heat exchange rate by mechanical systems to charge or discharge TES [W]
+        Nandle Q_TES;                // heat exchange energy by mechanical systems to charge or discharge TES [J]
+        Nandle ElecCoolingPower;     // electric power for cooling [W]
+        Nandle ElecCoolingEnergy;    // electric energy for cooling [J], metered
+        Nandle EvapTotCoolingRate;   // evaporator coil total cooling rate [W]
+        Nandle EvapTotCoolingEnergy; // evaporatory coil total cooling energy [J], metered
+        Nandle EvapSensCoolingRate;
+        Nandle EvapSensCoolingEnergy;
+        Nandle EvapLatCoolingRate;
+        Nandle EvapLatCoolingEnergy;
+        Nandle RuntimeFraction;
+        Nandle CondenserRuntimeFraction;
+        Nandle ElectColdWeatherPower;  // electric power for cold weather protection [W]
+        Nandle ElectColdWeatherEnergy; // electric energy for cold weather protection [J], metered
+        Nandle ElectEvapCondBasinHeaterPower;
+        Nandle ElectEvapCondBasinHeaterEnergy;
+        Nandle EvapWaterConsumpRate;    // Evap Water Consumption rate in m3/sec
+        Nandle EvapWaterConsump;        // Evap Water Consumption in m3
+        Nandle EvapWaterStarvMakupRate; // Evap water consumed but not really available from tank m3/s
+        Nandle EvapWaterStarvMakup;     // Evap water consumed but not really available from tank m3
+        Nandle EvapCondPumpElecPower;
+        Nandle EvapCondPumpElecConsumption;
 
         // Default Constructor
         PackagedTESCoolingCoilStruct()
@@ -422,7 +422,7 @@ namespace PackagedThermalStorageCoil {
                     int &CompIndex,
                     int const FanOpMode, // allows parent object to control fan mode
                     int &TESOpMode,
-                    Optional<Real64 const> PartLoadRatio = _ // part load ratio (for single speed cycling unit)
+                    Optional<Nandle const> PartLoadRatio = _ // part load ratio (for single speed cycling unit)
     );
 
     void GetTESCoilInput();
@@ -433,15 +433,15 @@ namespace PackagedThermalStorageCoil {
 
     void CalcTESCoilOffMode(int const TESCoilNum);
 
-    void CalcTESCoilCoolingOnlyMode(int const TESCoilNum, int const FanOpMode, Real64 const PartLoadRatio);
+    void CalcTESCoilCoolingOnlyMode(int const TESCoilNum, int const FanOpMode, Nandle const PartLoadRatio);
 
-    void CalcTESCoilCoolingAndChargeMode(int const TESCoilNum, int const FanOpMode, Real64 const PartLoadRatio);
+    void CalcTESCoilCoolingAndChargeMode(int const TESCoilNum, int const FanOpMode, Nandle const PartLoadRatio);
 
-    void CalcTESCoilCoolingAndDischargeMode(int const TESCoilNum, int const FanOpMode, Real64 const PartLoadRatio);
+    void CalcTESCoilCoolingAndDischargeMode(int const TESCoilNum, int const FanOpMode, Nandle const PartLoadRatio);
 
     void CalcTESCoilChargeOnlyMode(int const TESCoilNum);
 
-    void CalcTESCoilDischargeOnlyMode(int const TESCoilNum, Real64 const PartLoadRatio);
+    void CalcTESCoilDischargeOnlyMode(int const TESCoilNum, Nandle const PartLoadRatio);
 
     void UpdateTEStorage(int const TESCoilNum);
 
@@ -453,9 +453,9 @@ namespace PackagedThermalStorageCoil {
                                       int CoilIndex,
                                       std::string SystemType,
                                       int const FanOpMode,
-                                      Real64 const DesiredOutletTemp,
-                                      Real64 const DesiredOutletHumRat,
-                                      Real64 &PartLoadFrac,
+                                      Nandle const DesiredOutletTemp,
+                                      Nandle const DesiredOutletHumRat,
+                                      Nandle &PartLoadFrac,
                                       int &TESOpMode,
                                       int &ControlType,
                                       int &SensPLRIter,
@@ -467,19 +467,19 @@ namespace PackagedThermalStorageCoil {
                                       int &LatPLRFail,
                                       int &LatPLRFailIndex);
 
-    Real64 TESCoilResidualFunction(Real64 const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                   Array1D<Real64> const &Par  // par(1) = DX coil number
+    Nandle TESCoilResidualFunction(Nandle const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                   Array1D<Nandle> const &Par  // par(1) = DX coil number
     );
 
-    Real64 TESCoilHumRatResidualFunction(Real64 const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                         Array1D<Real64> const &Par  // par(1) = DX coil number
+    Nandle TESCoilHumRatResidualFunction(Nandle const PartLoadRatio, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                         Array1D<Nandle> const &Par  // par(1) = DX coil number
     );
 
     void UpdateColdWeatherProtection(int const TESCoilNum);
 
     void UpdateEvaporativeCondenserBasinHeater(int const TESCoilNum);
 
-    void UpdateEvaporativeCondenserWaterUse(int const TESCoilNum, Real64 const HumRatAfterEvap, int const InletNodeNum);
+    void UpdateEvaporativeCondenserWaterUse(int const TESCoilNum, Nandle const HumRatAfterEvap, int const InletNodeNum);
 
     void GetTESCoilIndex(std::string const &CoilName, int &CoilIndex, bool &ErrorsFound, Optional_string_const CurrentModuleObject = _);
 
@@ -487,10 +487,10 @@ namespace PackagedThermalStorageCoil {
 
     void GetTESCoilAirOutletNode(std::string const &CoilName, int &CoilAirOutletNode, bool &ErrorsFound, std::string const &CurrentModuleObject);
 
-    void GetTESCoilCoolingCapacity(std::string const &CoilName, Real64 &CoilCoolCapacity, bool &ErrorsFound, std::string const &CurrentModuleObject);
+    void GetTESCoilCoolingCapacity(std::string const &CoilName, Nandle &CoilCoolCapacity, bool &ErrorsFound, std::string const &CurrentModuleObject);
 
     void
-    GetTESCoilCoolingAirFlowRate(std::string const &CoilName, Real64 &CoilCoolAirFlow, bool &ErrorsFound, std::string const &CurrentModuleObject);
+    GetTESCoilCoolingAirFlowRate(std::string const &CoilName, Nandle &CoilCoolAirFlow, bool &ErrorsFound, std::string const &CurrentModuleObject);
 
 } // namespace PackagedThermalStorageCoil
 

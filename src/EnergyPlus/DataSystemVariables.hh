@@ -141,9 +141,9 @@ namespace DataSystemVariables {
     extern bool ReportDetailedWarmupConvergence;         // True when the detailed warmup convergence is requested
     extern bool UpdateDataDuringWarmupExternalInterface; // variable sets in the external interface.
     // This update the value during the warmup added for FMI
-    extern Real64 Elapsed_Time;            // For showing elapsed time at end of run
-    extern Real64 Time_Start;              // Call to CPU_Time for start time of simulation
-    extern Real64 Time_Finish;             // Call to CPU_Time for end time of simulation
+    extern Nandle Elapsed_Time;            // For showing elapsed time at end of run
+    extern Nandle Time_Start;              // Call to CPU_Time for start time of simulation
+    extern Nandle Time_Finish;             // Call to CPU_Time for end time of simulation
     extern std::string MinReportFrequency; // String for minimum reporting frequency
     extern bool SortedIDD;                 // after processing, use sorted IDD to obtain Defs, etc.
     extern bool lMinimalShadowing;         // TRUE if MinimalShadowing is to override Solar Distribution flag

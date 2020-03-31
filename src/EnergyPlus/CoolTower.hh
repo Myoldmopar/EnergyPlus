@@ -95,37 +95,37 @@ namespace CoolTower {
         std::string CoolTWaterSupplyName; // Name of water source
         int CoolTWaterSupTankID;          // Index to water storage tank
         int CoolTWaterTankDemandARRID;    // Index to water storage demand
-        Real64 TowerHeight;               // Effective cooltower height in m
-        Real64 OutletArea;                // Outlet area where conditioned air comes in m2
-        Real64 OutletVelocity;            // Outlet velocity of the cooltower in m/s
-        Real64 MaxAirVolFlowRate;         // Maximum allowable airflow in m3/s
-        Real64 AirMassFlowRate;           // Air mass flow rate in kg/s
-        Real64 CoolTAirMass;              // Air mass in kg
-        Real64 MinZoneTemp;               // Lower temperature limit to prevent over cooling in C
-        Real64 FracWaterLoss;             // Fraction of estimated blowdown and drift water
-        Real64 FracFlowSched;             // Fraction of airflow loss
-        Real64 MaxWaterFlowRate;          // Maximum limit of water flow rate in m3/s
-        Real64 ActualWaterFlowRate;       // Actual water mass flow rate in m3/s
-        Real64 RatedPumpPower;            // Rated power consumption for water pump serving the cooltower in watts
-        Real64 SenHeatLoss;               // Sensible heat loss in Joules
-        Real64 SenHeatPower;              // Sensible heat loss rate in watts
-        Real64 LatHeatLoss;               // Latent heat loss in Joules
-        Real64 LatHeatPower;              // Latent heat loss rate in watts
-        Real64 AirVolFlowRate;            // Air flow rate in m3/s
-        Real64 AirVolFlowRateStd;         // Air flow rate in m3/s at standard conditions
-        Real64 CoolTAirVol;               // Air volume in m3
-        Real64 ActualAirVolFlowRate;      // Actual air flow rate in m3/s
-        Real64 InletDBTemp;               // Outdoor dry bulb temperature in C
-        Real64 InletWBTemp;               // Outdoor wet bulb temperature in C
-        Real64 InletHumRat;               // Outdoor humidity ratio
-        Real64 OutletTemp;                // Dry bulb temperature at cooltower exit in C
-        Real64 OutletHumRat;              // Humidity ratio at cooltower exit
-        Real64 CoolTWaterConsumpRate;     // Total water consumption during the processes in m3/s
-        Real64 CoolTWaterStarvMakeupRate; // Water provided from the mains (m3/s)
-        Real64 CoolTWaterStarvMakeup;     // Water provided from the mains
-        Real64 CoolTWaterConsump;         // Total water consumption in m3
-        Real64 PumpElecPower;             // Pump power in watts
-        Real64 PumpElecConsump;           // Pump energy consumption in Joules
+        Nandle TowerHeight;               // Effective cooltower height in m
+        Nandle OutletArea;                // Outlet area where conditioned air comes in m2
+        Nandle OutletVelocity;            // Outlet velocity of the cooltower in m/s
+        Nandle MaxAirVolFlowRate;         // Maximum allowable airflow in m3/s
+        Nandle AirMassFlowRate;           // Air mass flow rate in kg/s
+        Nandle CoolTAirMass;              // Air mass in kg
+        Nandle MinZoneTemp;               // Lower temperature limit to prevent over cooling in C
+        Nandle FracWaterLoss;             // Fraction of estimated blowdown and drift water
+        Nandle FracFlowSched;             // Fraction of airflow loss
+        Nandle MaxWaterFlowRate;          // Maximum limit of water flow rate in m3/s
+        Nandle ActualWaterFlowRate;       // Actual water mass flow rate in m3/s
+        Nandle RatedPumpPower;            // Rated power consumption for water pump serving the cooltower in watts
+        Nandle SenHeatLoss;               // Sensible heat loss in Joules
+        Nandle SenHeatPower;              // Sensible heat loss rate in watts
+        Nandle LatHeatLoss;               // Latent heat loss in Joules
+        Nandle LatHeatPower;              // Latent heat loss rate in watts
+        Nandle AirVolFlowRate;            // Air flow rate in m3/s
+        Nandle AirVolFlowRateStd;         // Air flow rate in m3/s at standard conditions
+        Nandle CoolTAirVol;               // Air volume in m3
+        Nandle ActualAirVolFlowRate;      // Actual air flow rate in m3/s
+        Nandle InletDBTemp;               // Outdoor dry bulb temperature in C
+        Nandle InletWBTemp;               // Outdoor wet bulb temperature in C
+        Nandle InletHumRat;               // Outdoor humidity ratio
+        Nandle OutletTemp;                // Dry bulb temperature at cooltower exit in C
+        Nandle OutletHumRat;              // Humidity ratio at cooltower exit
+        Nandle CoolTWaterConsumpRate;     // Total water consumption during the processes in m3/s
+        Nandle CoolTWaterStarvMakeupRate; // Water provided from the mains (m3/s)
+        Nandle CoolTWaterStarvMakeup;     // Water provided from the mains
+        Nandle CoolTWaterConsump;         // Total water consumption in m3
+        Nandle PumpElecPower;             // Pump power in watts
+        Nandle PumpElecConsump;           // Pump energy consumption in Joules
 
         // Default Constructor
         CoolTowerParams()

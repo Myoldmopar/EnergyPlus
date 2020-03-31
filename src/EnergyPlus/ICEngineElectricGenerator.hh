@@ -63,7 +63,7 @@ namespace ICEngineElectricGenerator {
 
     using DataGlobalConstants::iGeneratorICEngine;
 
-    extern Real64 const ReferenceTemp; // Reference temperature by which lower heating
+    extern Nandle const ReferenceTemp; // Reference temperature by which lower heating
     // value is reported.  This should be subtracted
     // off of when calculated exhaust energies.
 
@@ -77,54 +77,54 @@ namespace ICEngineElectricGenerator {
         std::string TypeOf; // Type of Generator
         int CompType_Num;
         std::string FuelType;       // Type of Fuel - DIESEL, GASOLINE, GAS
-        Real64 RatedPowerOutput;    // W - design nominal capacity of Generator
+        Nandle RatedPowerOutput;    // W - design nominal capacity of Generator
         int ElectricCircuitNode;    // Electric Circuit Node
-        Real64 MinPartLoadRat;      // (IC ENGINE MIN) min allowed operating frac full load
-        Real64 MaxPartLoadRat;      // (IC ENGINE MAX) max allowed operating frac full load
-        Real64 OptPartLoadRat;      // (IC ENGINE BEST) optimal operating frac full load
-        Real64 ElecOutputFuelRat;   // (RELDC) Ratio of Generator output to Fuel Energy Input
+        Nandle MinPartLoadRat;      // (IC ENGINE MIN) min allowed operating frac full load
+        Nandle MaxPartLoadRat;      // (IC ENGINE MAX) max allowed operating frac full load
+        Nandle OptPartLoadRat;      // (IC ENGINE BEST) optimal operating frac full load
+        Nandle ElecOutputFuelRat;   // (RELDC) Ratio of Generator output to Fuel Energy Input
         int ElecOutputFuelCurve;    // Curve Index for generator output to Fuel Energy Input Coeff Poly Fit
-        Real64 RecJacHeattoFuelRat; // (RJACDC) Ratio of Recoverable Jacket Heat to Fuel Energy Input
+        Nandle RecJacHeattoFuelRat; // (RJACDC) Ratio of Recoverable Jacket Heat to Fuel Energy Input
         int RecJacHeattoFuelCurve;  // Curve Index for Ratio of Recoverable Jacket Heat to
         // Fuel Energy Input Coeff Poly Fit
-        Real64 RecLubeHeattoFuelRat; // (RLUBDC) Ratio of Recoverable Lube Oil Heat to Fuel Energy Input
+        Nandle RecLubeHeattoFuelRat; // (RLUBDC) Ratio of Recoverable Lube Oil Heat to Fuel Energy Input
         int RecLubeHeattoFuelCurve;  // Curve Index for Ratio of Recoverable Lube Oil Heat to
         // Fuel Energy Input Coef Poly Fit
-        Real64 TotExhausttoFuelRat; // (REXDC) Total Exhaust heat Input to Fuel Energy Input
+        Nandle TotExhausttoFuelRat; // (REXDC) Total Exhaust heat Input to Fuel Energy Input
         int TotExhausttoFuelCurve;  // Curve Index for Total Exhaust heat Input to Fuel Energy Input
         // Coeffs Poly Fit
-        Real64 ExhaustTemp;               // (TEXDC) Exhaust Gas Temp to Fuel Energy Input
+        Nandle ExhaustTemp;               // (TEXDC) Exhaust Gas Temp to Fuel Energy Input
         int ExhaustTempCurve;             // Curve Index for Exhaust Gas Temp to Fuel Energy Input Coeffs Poly Fit
         int ErrExhaustTempIndex;          // error index for temp curve
-        Real64 UA;                        // (UACDC) exhaust gas Heat Exchanger UA to Capacity
-        Array1D<Real64> UACoef;           // Heat Exchanger UA Coeffs Poly Fit
-        Real64 MaxExhaustperPowerOutput;  // MAX EXHAUST FLOW PER W DSL POWER OUTPUT COEFF
-        Real64 DesignMinExitGasTemp;      // Steam Saturation Temperature
-        Real64 FuelHeatingValue;          // Heating Value of Fuel in kJ/kg
-        Real64 DesignHeatRecVolFlowRate;  // m3/s, Design Water mass flow rate through heat recovery loop
-        Real64 DesignHeatRecMassFlowRate; // kg/s, Design Water mass flow rate through heat recovery loop
+        Nandle UA;                        // (UACDC) exhaust gas Heat Exchanger UA to Capacity
+        Array1D<Nandle> UACoef;           // Heat Exchanger UA Coeffs Poly Fit
+        Nandle MaxExhaustperPowerOutput;  // MAX EXHAUST FLOW PER W DSL POWER OUTPUT COEFF
+        Nandle DesignMinExitGasTemp;      // Steam Saturation Temperature
+        Nandle FuelHeatingValue;          // Heating Value of Fuel in kJ/kg
+        Nandle DesignHeatRecVolFlowRate;  // m3/s, Design Water mass flow rate through heat recovery loop
+        Nandle DesignHeatRecMassFlowRate; // kg/s, Design Water mass flow rate through heat recovery loop
         bool HeatRecActive;               // True if Heat Rec Design Vol Flow Rate > 0
         int HeatRecInletNodeNum;          // Node number on the heat recovery inlet side of the condenser
         int HeatRecOutletNodeNum;         // Node number on the heat recovery outlet side of the condenser
-        Real64 HeatRecInletTemp;          // Inlet Temperature of the heat recovery fluid
-        Real64 HeatRecOutletTemp;         // Outlet Temperature of the heat recovery fluid
-        Real64 HeatRecMdotDesign;         // reporting: Heat Recovery Loop Mass flow rate
-        Real64 HeatRecMdotActual;
-        Real64 QTotalHeatRecovered; // total heat recovered (W)
-        Real64 QJacketRecovered;    // heat recovered from jacket (W)
-        Real64 QLubeOilRecovered;   // heat recovered from lube (W)
-        Real64 QExhaustRecovered;   // exhaust gas heat recovered (W)
-        Real64 FuelEnergyUseRate;   // Fuel Energy used (W)
-        Real64 TotalHeatEnergyRec;  // total heat recovered (J)
-        Real64 JacketEnergyRec;     // heat recovered from jacket (J)
-        Real64 LubeOilEnergyRec;    // heat recovered from lube (J)
-        Real64 ExhaustEnergyRec;    // exhaust gas heat recovered (J)
-        Real64 FuelEnergy;          // Fuel Energy used (J)
-        Real64 FuelMdot;            // Fuel Amount used (Kg/s)
-        Real64 ExhaustStackTemp;    // Exhaust Stack Temperature (C)
-        Real64 ElecPowerGenerated;  // Electric Power Generated (W)
-        Real64 ElecEnergyGenerated; // Amount of Electric Energy Generated (J)
-        Real64 HeatRecMaxTemp;      // Max Temp that can be produced in heat recovery
+        Nandle HeatRecInletTemp;          // Inlet Temperature of the heat recovery fluid
+        Nandle HeatRecOutletTemp;         // Outlet Temperature of the heat recovery fluid
+        Nandle HeatRecMdotDesign;         // reporting: Heat Recovery Loop Mass flow rate
+        Nandle HeatRecMdotActual;
+        Nandle QTotalHeatRecovered; // total heat recovered (W)
+        Nandle QJacketRecovered;    // heat recovered from jacket (W)
+        Nandle QLubeOilRecovered;   // heat recovered from lube (W)
+        Nandle QExhaustRecovered;   // exhaust gas heat recovered (W)
+        Nandle FuelEnergyUseRate;   // Fuel Energy used (W)
+        Nandle TotalHeatEnergyRec;  // total heat recovered (J)
+        Nandle JacketEnergyRec;     // heat recovered from jacket (J)
+        Nandle LubeOilEnergyRec;    // heat recovered from lube (J)
+        Nandle ExhaustEnergyRec;    // exhaust gas heat recovered (J)
+        Nandle FuelEnergy;          // Fuel Energy used (J)
+        Nandle FuelMdot;            // Fuel Amount used (Kg/s)
+        Nandle ExhaustStackTemp;    // Exhaust Stack Temperature (C)
+        Nandle ElecPowerGenerated;  // Electric Power Generated (W)
+        Nandle ElecEnergyGenerated; // Amount of Electric Energy Generated (J)
+        Nandle HeatRecMaxTemp;      // Max Temp that can be produced in heat recovery
         int HRLoopNum;              // cooling water plant loop index number, for heat recovery
         int HRLoopSideNum;          // cooling water plant loop side index, for heat recovery
         int HRBranchNum;            // cooling water plant loop branch index, for heat recovery
@@ -151,19 +151,19 @@ namespace ICEngineElectricGenerator {
         {
         }
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void InitICEngineGenerators(bool RunFlag, bool FirstHVACIteration);
 
-        void CalcICEngineGeneratorModel(bool RunFlag, Real64 MyLoad);
+        void CalcICEngineGeneratorModel(bool RunFlag, Nandle MyLoad);
 
-        void CalcICEngineGenHeatRecovery(Real64 EnergyRecovered, Real64 HeatRecMdot, Real64 &HRecRatio);
+        void CalcICEngineGenHeatRecovery(Nandle EnergyRecovered, Nandle HeatRecMdot, Nandle &HRecRatio);
 
         void update();
 
         void setupOutputVars();
 
-        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
         static PlantComponent *factory(std::string const &objectName);
     };

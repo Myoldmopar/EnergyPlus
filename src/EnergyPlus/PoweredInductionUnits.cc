@@ -776,14 +776,14 @@ namespace PoweredInductionUnits {
         int SecNode;    // secondary air inlet node number
         int HotConNode; // hot water control node number in PIU
         int OutletNode; // unit air outlet node number
-        Real64 RhoAir;  // air density at outside pressure and standard temperature and humidity
+        Nandle RhoAir;  // air density at outside pressure and standard temperature and humidity
         static bool MyOneTimeFlag(true);
         static Array1D_bool MyEnvrnFlag;
         static Array1D_bool MySizeFlag;
         static Array1D_bool MyPlantScanFlag;
         static bool ZoneEquipmentListChecked(false); // True after the Zone Equipment List has been checked for items
         int Loop;                                    // Loop checking control variable
-        Real64 rho;                                  // local plant fluid density
+        Nandle rho;                                  // local plant fluid density
         bool errFlag;
 
         // FLOW:
@@ -1000,40 +1000,40 @@ namespace PoweredInductionUnits {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
-        Real64 CoilInTemp;
-        Real64 CoilOutTemp;
-        Real64 CoilOutHumRat;
-        Real64 DesCoilLoad;
-        Real64 DesMassFlow;
+        Nandle CoilInTemp;
+        Nandle CoilOutTemp;
+        Nandle CoilOutHumRat;
+        Nandle DesCoilLoad;
+        Nandle DesMassFlow;
 
-        Real64 TempSteamIn;
-        Real64 EnthSteamInDry;
-        Real64 EnthSteamOutWet;
-        Real64 LatentHeatSteam;
-        Real64 SteamDensity;
+        Nandle TempSteamIn;
+        Nandle EnthSteamInDry;
+        Nandle EnthSteamOutWet;
+        Nandle LatentHeatSteam;
+        Nandle SteamDensity;
         static int CoilWaterInletNode(0);
         static int CoilWaterOutletNode(0);
         static int CoilSteamInletNode(0);
         static int CoilSteamOutletNode(0);
         bool ErrorsFound;
-        Real64 rho;
-        Real64 Cp;
+        Nandle rho;
+        Nandle Cp;
         static int DummyWaterIndex(1);
         bool IsAutoSize;               // Indicator to autosize
-        Real64 MaxPriAirVolFlowDes;    // Autosized maximum primary air flow for reporting
-        Real64 MaxPriAirVolFlowUser;   // Hardsized maximum primary air flow for reporting
-        Real64 MaxTotAirVolFlowDes;    // Autosized maximum air flow for reporting
-        Real64 MaxTotAirVolFlowUser;   // Hardsized maximum air flow for reporting
-        Real64 MaxSecAirVolFlowDes;    // Autosized maximum secondary air flow for reporting
-        Real64 MaxSecAirVolFlowUser;   // Hardsized maximum secondary air flow for reporting
-        Real64 MinPriAirFlowFracDes;   // Autosized minimum primary air flow fraction for reporting
-        Real64 MinPriAirFlowFracUser;  // Hardsized minimum primary air flow fraction for reporting
-        Real64 FanOnFlowFracDes;       // Autosized fan on flow fraction for reporting
-        Real64 FanOnFlowFracUser;      // Hardsized fan on flow fraction for reporting
-        Real64 MaxVolHotWaterFlowDes;  // Autosized maximum hot water flow for reporting
-        Real64 MaxVolHotWaterFlowUser; // Hardsized maximum hot water flow for reporting
-        Real64 MaxVolHotSteamFlowDes;  // Autosized maximum hot steam flow for reporting
-        Real64 MaxVolHotSteamFlowUser; // Hardsized maximum hot steam flow for reporting
+        Nandle MaxPriAirVolFlowDes;    // Autosized maximum primary air flow for reporting
+        Nandle MaxPriAirVolFlowUser;   // Hardsized maximum primary air flow for reporting
+        Nandle MaxTotAirVolFlowDes;    // Autosized maximum air flow for reporting
+        Nandle MaxTotAirVolFlowUser;   // Hardsized maximum air flow for reporting
+        Nandle MaxSecAirVolFlowDes;    // Autosized maximum secondary air flow for reporting
+        Nandle MaxSecAirVolFlowUser;   // Hardsized maximum secondary air flow for reporting
+        Nandle MinPriAirFlowFracDes;   // Autosized minimum primary air flow fraction for reporting
+        Nandle MinPriAirFlowFracUser;  // Hardsized minimum primary air flow fraction for reporting
+        Nandle FanOnFlowFracDes;       // Autosized fan on flow fraction for reporting
+        Nandle FanOnFlowFracUser;      // Hardsized fan on flow fraction for reporting
+        Nandle MaxVolHotWaterFlowDes;  // Autosized maximum hot water flow for reporting
+        Nandle MaxVolHotWaterFlowUser; // Hardsized maximum hot water flow for reporting
+        Nandle MaxVolHotSteamFlowDes;  // Autosized maximum hot steam flow for reporting
+        Nandle MaxVolHotSteamFlowUser; // Hardsized maximum hot steam flow for reporting
 
         PltSizHeatNum = 0;
         DesMassFlow = 0.0;
@@ -1527,33 +1527,33 @@ namespace PoweredInductionUnits {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 QZnReq;                // heating or cooling needed by zone [Watts]
-        Real64 QToHeatSetPt;          // [W]  remaining load to heating setpoint
-        Real64 QActualHeating;        // the heating load seen by the reheat coil [W]
-        Real64 PowerMet;              // power supplied
+        Nandle QZnReq;                // heating or cooling needed by zone [Watts]
+        Nandle QToHeatSetPt;          // [W]  remaining load to heating setpoint
+        Nandle QActualHeating;        // the heating load seen by the reheat coil [W]
+        Nandle PowerMet;              // power supplied
         bool UnitOn(true);            // TRUE if unit is on
         bool PriOn(true);             // TRUE if primary air available
         bool HCoilOn(true);           // TRUE if heating coil is on
         int ControlNode(0);           // the hot water or cold water inlet node
-        Real64 ControlOffset;         // tolerance for output control
-        Real64 MaxWaterFlow;          // maximum water flow for heating or cooling [kg/s]
-        Real64 MinWaterFlow;          // minimum water flow for heating or cooling [kg/s]
+        Nandle ControlOffset;         // tolerance for output control
+        Nandle MaxWaterFlow;          // maximum water flow for heating or cooling [kg/s]
+        Nandle MinWaterFlow;          // minimum water flow for heating or cooling [kg/s]
         int OutletNode;               // unit air outlet node
         int PriNode;                  // unit primary air inlet node
         int SecNode;                  // unit secondary air inlet node
         int HCoilInAirNode;           // air inlet node of reheat coil
-        Real64 QCoilReq;              // required heating coil outlet to meet zone load
-        Real64 PriAirMassFlow;        // primary air mass flow rate [kg/s]
-        Real64 PriAirMassFlowMax;     // max primary air mass flow rate [kg/s]
-        Real64 PriAirMassFlowMin;     // min primary air mass flow rate [kg/s]
-        Real64 SecAirMassFlow;        // secondary air mass flow rate [kg/s]
-        Real64 CpAirZn;               // zone air specific heat [J/kg-C]
-        Real64 FanDeltaTemp(0.0);     // fan temperature rise [C]
-        Real64 OutletTempNeeded(0.0); // unit outlet temperature needed to meet cooling load
-        Real64 MixTempNeeded(0.0);    // mixer outlet temperature needed to meet cooling load
-        Real64 MinSteamFlow;
-        Real64 MaxSteamFlow;
-        Real64 mdot; // local plant fluid flow rate kg/s
+        Nandle QCoilReq;              // required heating coil outlet to meet zone load
+        Nandle PriAirMassFlow;        // primary air mass flow rate [kg/s]
+        Nandle PriAirMassFlowMax;     // max primary air mass flow rate [kg/s]
+        Nandle PriAirMassFlowMin;     // min primary air mass flow rate [kg/s]
+        Nandle SecAirMassFlow;        // secondary air mass flow rate [kg/s]
+        Nandle CpAirZn;               // zone air specific heat [J/kg-C]
+        Nandle FanDeltaTemp(0.0);     // fan temperature rise [C]
+        Nandle OutletTempNeeded(0.0); // unit outlet temperature needed to meet cooling load
+        Nandle MixTempNeeded(0.0);    // mixer outlet temperature needed to meet cooling load
+        Nandle MinSteamFlow;
+        Nandle MaxSteamFlow;
+        Nandle mdot; // local plant fluid flow rate kg/s
         // Initialize local fan flags to global system flags
         bool PIUTurnFansOn =
             (DataHVACGlobals::TurnFansOn || DataHVACGlobals::TurnZoneFansOnlyOn); // If True, overrides fan schedule and cycles PIU fan on
@@ -1803,29 +1803,29 @@ namespace PoweredInductionUnits {
         using SteamCoils::SimulateSteamCoilComponents;
         using WaterCoils::SimulateWaterCoilComponents;
 
-        Real64 QZnReq;            // heating or cooling needed by zone [Watts]
-        Real64 QToHeatSetPt;      // [W]  remaining load to heating setpoint
-        Real64 QActualHeating;    // the heating load seen by the reheat coil [W]
-        Real64 PowerMet;          // power supplied
+        Nandle QZnReq;            // heating or cooling needed by zone [Watts]
+        Nandle QToHeatSetPt;      // [W]  remaining load to heating setpoint
+        Nandle QActualHeating;    // the heating load seen by the reheat coil [W]
+        Nandle PowerMet;          // power supplied
         bool UnitOn(true);        // TRUE if unit is on
         bool PriOn(true);         // TRUE if primary air available
         bool HCoilOn(true);       // TRUE if heating coil is on
         int ControlNode(0);       // the hot water or cold water inlet node
-        Real64 ControlOffset;     // tolerance for output control
-        Real64 MaxWaterFlow;      // maximum water flow for heating or cooling [kg/s]
-        Real64 MinWaterFlow;      // minimum water flow for heating or cooling [kg/s]
+        Nandle ControlOffset;     // tolerance for output control
+        Nandle MaxWaterFlow;      // maximum water flow for heating or cooling [kg/s]
+        Nandle MinWaterFlow;      // minimum water flow for heating or cooling [kg/s]
         int OutletNode;           // unit air outlet node
         int PriNode;              // unit primary air inlet node
         int SecNode;              // unit secondary air inlet node
         int HCoilInAirNode;       // air inlet node of reheat coil
-        Real64 QCoilReq;          // required heating coil outlet to meet zone load
-        Real64 PriAirMassFlow;    // primary air mass flow rate [kg/s]
-        Real64 PriAirMassFlowMax; // max primary air mass flow rate [kg/s]
-        Real64 PriAirMassFlowMin; // min primary air mass flow rate [kg/s]
-        Real64 SecAirMassFlow;    // secondary air mass flow rate [kg/s]
-        Real64 CpAirZn;           // zone air specific heat [J/kg-C]
-        Real64 FanDeltaTemp(0.0); // fan temperature rise [C]
-        Real64 mdot;              // local fluid flow rate kg/s
+        Nandle QCoilReq;          // required heating coil outlet to meet zone load
+        Nandle PriAirMassFlow;    // primary air mass flow rate [kg/s]
+        Nandle PriAirMassFlowMax; // max primary air mass flow rate [kg/s]
+        Nandle PriAirMassFlowMin; // min primary air mass flow rate [kg/s]
+        Nandle SecAirMassFlow;    // secondary air mass flow rate [kg/s]
+        Nandle CpAirZn;           // zone air specific heat [J/kg-C]
+        Nandle FanDeltaTemp(0.0); // fan temperature rise [C]
+        Nandle mdot;              // local fluid flow rate kg/s
 
         // FLOW
 
@@ -1866,7 +1866,7 @@ namespace PoweredInductionUnits {
             // unit is on
             // Calculate if reheat is needed
             bool ReheatRequired = false;
-            Real64 qMinPrimary = PriAirMassFlowMin * (CpAirZn * min(-SmallTempDiff, (Node(PriNode).Temp - Node(ZoneNode).Temp)));
+            Nandle qMinPrimary = PriAirMassFlowMin * (CpAirZn * min(-SmallTempDiff, (Node(PriNode).Temp - Node(ZoneNode).Temp)));
             if (qMinPrimary < QToHeatSetPt) ReheatRequired = true;
 
             if (!PriOn) {

@@ -61,12 +61,12 @@ class OutputFiles;
 struct CoilCoolingDXCurveFitPerformanceInputSpecification
 {
     std::string name;
-    Real64 crankcase_heater_capacity;
-    Real64 minimum_outdoor_dry_bulb_temperature_for_compressor_operation;
-    Real64 maximum_outdoor_dry_bulb_temperature_for_crankcase_heater_operation;
-    Real64 unit_internal_static_air_pressure;
-    Real64 basin_heater_capacity;
-    Real64 basin_heater_setpoint_temperature;
+    Nandle crankcase_heater_capacity;
+    Nandle minimum_outdoor_dry_bulb_temperature_for_compressor_operation;
+    Nandle maximum_outdoor_dry_bulb_temperature_for_crankcase_heater_operation;
+    Nandle unit_internal_static_air_pressure;
+    Nandle basin_heater_capacity;
+    Nandle basin_heater_setpoint_temperature;
     std::string basin_heater_operating_shedule_name;
     int compressor_fuel_type;
     std::string base_operating_mode_name;
@@ -82,26 +82,26 @@ struct CoilCoolingDXCurveFitPerformance
     void simulate(const DataLoopNode::NodeData &inletNode,
                   DataLoopNode::NodeData &outletNode,
                   int useAlternateMode,
-                  Real64 &PLR,
+                  Nandle &PLR,
                   int &speedNum,
-                  Real64 &speedRatio,
+                  Nandle &speedRatio,
                   int &fanOpMode,
                   DataLoopNode::NodeData &condInletNode,
                   DataLoopNode::NodeData &condOutletNode,
-                  Real64 LoadSHR = 0.0);
+                  Nandle LoadSHR = 0.0);
 
     void calculate(CoilCoolingDXCurveFitOperatingMode &currentMode,
                    const DataLoopNode::NodeData &inletNode,
                    DataLoopNode::NodeData &outletNode,
-                   Real64 &PLR,
+                   Nandle &PLR,
                    int &speedNum,
-                   Real64 &speedRatio,
+                   Nandle &speedRatio,
                    int &fanOpMode,
                    DataLoopNode::NodeData &condInletNode,
                    DataLoopNode::NodeData &condOutletNode);
     void calcStandardRatings(
         int supplyFanIndex, int supplyFanType, std::string const &supplyFanName, int condInletNodeIndex, EnergyPlus::OutputFiles &outputFiles);
-    Real64 calcIEERResidual(Real64 const SupplyAirMassFlowRate, std::vector<Real64> const &Par);
+    Nandle calcIEERResidual(Nandle const SupplyAirMassFlowRate, std::vector<Nandle> const &Par);
     CoilCoolingDXCurveFitPerformanceInputSpecification original_input_specs;
     CoilCoolingDXCurveFitPerformance() = default;
     explicit CoilCoolingDXCurveFitPerformance(const std::string &name);
@@ -109,12 +109,12 @@ struct CoilCoolingDXCurveFitPerformance
     void setOperMode(CoilCoolingDXCurveFitOperatingMode &currentMode, int const mode);
 
     std::string name;
-    Real64 crankcaseHeaterCap = 0.0;
-    Real64 crankcaseHeaterPower = 0.0;
-    Real64 crankcaseHeaterElectricityConsumption = 0.0;
-    Real64 minOutdoorDrybulb = 0.0;
-    Real64 maxOutdoorDrybulbForBasin = 0.0;
-    Real64 unitStatic = 0.0;
+    Nandle crankcaseHeaterCap = 0.0;
+    Nandle crankcaseHeaterPower = 0.0;
+    Nandle crankcaseHeaterElectricityConsumption = 0.0;
+    Nandle minOutdoorDrybulb = 0.0;
+    Nandle maxOutdoorDrybulbForBasin = 0.0;
+    Nandle unitStatic = 0.0;
     bool mySizeFlag = true;
 
     enum CapControlMethod
@@ -124,20 +124,20 @@ struct CoilCoolingDXCurveFitPerformance
     };
     CapControlMethod capControlMethod = CapControlMethod::DISCRETE;
 
-    Real64 evapCondBasinHeatCap = 0.0;
-    Real64 evapCondBasinHeatSetpoint = 0.0;
+    Nandle evapCondBasinHeatCap = 0.0;
+    Nandle evapCondBasinHeatSetpoint = 0.0;
     int evapCondBasinHeatSchedulIndex = 0;
-    Real64 basinHeaterElectricityConsumption = 0.0;
-    Real64 basinHeaterPower = 0.0;
-    Real64 powerUse = 0.0;
-    Real64 electricityConsumption = 0.0;
-    Real64 RTF = 0.0;
+    Nandle basinHeaterElectricityConsumption = 0.0;
+    Nandle basinHeaterPower = 0.0;
+    Nandle powerUse = 0.0;
+    Nandle electricityConsumption = 0.0;
+    Nandle RTF = 0.0;
     bool oneTimeEIOHeaderWrite = true;
-    Real64 wasteHeatRate = 0.0;
+    Nandle wasteHeatRate = 0.0;
     int OperatingMode = 0;
-    Real64 ModeRatio = 0.0;
-    Real64 recoveredEnergyRate = 0.0;
-    Real64 NormalSHR = 0.0;
+    Nandle ModeRatio = 0.0;
+    Nandle recoveredEnergyRate = 0.0;
+    Nandle NormalSHR = 0.0;
 
     CoilCoolingDXCurveFitOperatingMode normalMode;
     int hasAlternateMode = 0; // 0 Normal, 1 Enhanced, 2 SubcoolReheat

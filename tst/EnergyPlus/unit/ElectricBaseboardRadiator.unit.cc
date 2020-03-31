@@ -664,13 +664,13 @@ TEST_F(EnergyPlusFixture, RadConvElecBaseboard_UpdateElectricBaseboardOff)
 {
     // this unit test is related to issue #6276, unit was producing negative heating, new routines turning things off or calculating things when on
     // were added
-    Real64 LoadMet;
-    Real64 QBBCap;
-    Real64 RadHeat;
-    Real64 QBBElecRadSrc;
-    Real64 ElecUseRate;
-    Real64 AirOutletTemp;
-    Real64 AirInletTemp;
+    Nandle LoadMet;
+    Nandle QBBCap;
+    Nandle RadHeat;
+    Nandle QBBElecRadSrc;
+    Nandle ElecUseRate;
+    Nandle AirOutletTemp;
+    Nandle AirInletTemp;
 
     // Set conditions
     LoadMet = -1000.0;
@@ -697,12 +697,12 @@ TEST_F(EnergyPlusFixture, RadConvElecBaseboard_UpdateElectricBaseboardOn)
 {
     // this unit test is related to issue #6276, unit was producing negative heating, new routines turning things off or calculating things when on
     // were added
-    Real64 AirOutletTemp;
-    Real64 ElecUseRate;
-    Real64 AirInletTemp;
-    Real64 QBBCap;
-    Real64 CapacitanceAir;
-    Real64 Effic;
+    Nandle AirOutletTemp;
+    Nandle ElecUseRate;
+    Nandle AirInletTemp;
+    Nandle QBBCap;
+    Nandle CapacitanceAir;
+    Nandle Effic;
 
     // Set conditions
     AirOutletTemp = 0.0;

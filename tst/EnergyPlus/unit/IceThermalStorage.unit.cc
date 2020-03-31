@@ -75,9 +75,9 @@ TEST_F(EnergyPlusFixture, IceThermalStorage_CalcQstarTest)
     int TotCurves = 4;
     enum CurveVars IceStorageCurveType;
     int TestNum;
-    Real64 CurveAnswer = 0.0;
-    Real64 ExpectedValue = 0.0;
-    Real64 Tolerance = 0.001;
+    Nandle CurveAnswer = 0.0;
+    Nandle ExpectedValue = 0.0;
+    Nandle Tolerance = 0.001;
 
     IceThermalStorage::DetailedIceStorage.allocate(TotDetailedIce);
     CurveManager::PerfCurve.allocate(TotCurves);

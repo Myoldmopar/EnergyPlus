@@ -63,9 +63,9 @@ namespace ZoneAirLoopEquipmentManager {
 
     void ManageZoneAirLoopEquipment(std::string const &ZoneAirLoopEquipName,
                                     bool const FirstHVACIteration,
-                                    Real64 &SysOutputProvided,
-                                    Real64 &NonAirSysOutput,
-                                    Real64 &LatOutputProvided, // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                                    Nandle &SysOutputProvided,
+                                    Nandle &NonAirSysOutput,
+                                    Nandle &LatOutputProvided, // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                                     int const ActualZoneNum,
                                     int &ControlledZoneNum,
                                     int &CompIndex);
@@ -77,9 +77,9 @@ namespace ZoneAirLoopEquipmentManager {
     void InitZoneAirLoopEquipmentTimeStep(int const AirDistUnitNum);
 
     void SimZoneAirLoopEquipment(int const AirDistUnitNum,
-                                 Real64 &SysOutputProvided,
-                                 Real64 &NonAirSysOutput,
-                                 Real64 &LatOutputProvided, // Latent add/removal provided by this unit (kg/s), dehumidify = negative
+                                 Nandle &SysOutputProvided,
+                                 Nandle &NonAirSysOutput,
+                                 Nandle &LatOutputProvided, // Latent add/removal provided by this unit (kg/s), dehumidify = negative
                                  bool const FirstHVACIteration,
                                  int const ControlledZoneNum,
                                  int const ActualZoneNum);

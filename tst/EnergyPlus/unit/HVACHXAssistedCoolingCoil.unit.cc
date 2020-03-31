@@ -78,10 +78,10 @@ TEST_F(EnergyPlusFixture, HXAssistCCUnitarySystem_VStest1)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 CpAir(0.0);       // specific heat of air
-    Real64 Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
-    Real64 MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
-    Real64 ZoneTemp(0.0);    // control zone temperature
+    Nandle CpAir(0.0);       // specific heat of air
+    Nandle Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
+    Nandle MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
+    Nandle ZoneTemp(0.0);    // control zone temperature
     int InletNode(0);        // UnitarySystem inlet node number
     int OutletNode(0);       // UnitarySystem outlet node number
     int ControlZoneNum(0);   // index to control zone
@@ -400,11 +400,11 @@ TEST_F(EnergyPlusFixture, HXAssistCCUnitarySystem_VStest1)
     bool HeatingActive = false;
     bool CoolingActive = false;
     int OAUnitNum = 0;
-    Real64 OAUCoilOutTemp = 0.0;
+    Nandle OAUCoilOutTemp = 0.0;
     std::string compName = "GASHEAT DXAC FURNACE 1";
     bool zoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
     UnitarySystems::UnitarySys::factory(DataHVACGlobals::UnitarySys_AnyCoilType, compName, zoneEquipment, 0);
     UnitarySystems::UnitarySys *thisSys = &UnitarySystems::unitarySys[0];
     DataZoneEquipment::ZoneEquipInputsFilled = true;                           // indicate zone data is available

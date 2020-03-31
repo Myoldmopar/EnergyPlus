@@ -141,7 +141,7 @@ namespace RuntimeLanguageProcessor {
         // Members
         // structure for token information for parsing Erl code
         int Type;           // token type, eg. TokenNumber
-        Real64 Number;      // May want to store all literals as a variable?
+        Nandle Number;      // May want to store all literals as a variable?
         std::string String; // Serves double duty, also saves string version of token for easy debugging
         int Operator;       // indentifies operator or function 1..64
         int Variable;       // points to a variable in ErlVariable structure
@@ -160,7 +160,7 @@ namespace RuntimeLanguageProcessor {
         // Members
         std::string Name; // name of custom Erl report variable
         int VariableNum;  // pointer to Erl variable associated with custom report variable
-        Real64 Value;     // Value registered with output processor for report variable
+        Nandle Value;     // Value registered with output processor for report variable
 
         // Default Constructor
         RuntimeReportVarType() : VariableNum(0), Value(0.0)
@@ -223,7 +223,7 @@ namespace RuntimeLanguageProcessor {
 
     std::string IntegerToString(int const Number);
 
-    ErlValueType SetErlValueNumber(Real64 const Number, Optional<ErlValueType const> OrigValue = _);
+    ErlValueType SetErlValueNumber(Nandle const Number, Optional<ErlValueType const> OrigValue = _);
 
     ErlValueType StringValue(std::string const &String);
 
@@ -237,7 +237,7 @@ namespace RuntimeLanguageProcessor {
     void SetupPossibleOperators();
 
     void ExternalInterfaceSetErlVariable(int const varNum,  // The variable index to be written during run time
-                                         Real64 const value // The real time value of the vairable to be set
+                                         Nandle const value // The real time value of the vairable to be set
     );
 
     void ExternalInterfaceInitializeErlVariable(int const varNum,                 // The variable index to be written during run time

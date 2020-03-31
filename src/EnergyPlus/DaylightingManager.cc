@@ -191,46 +191,46 @@ namespace DaylightingManager {
     // MODULE VARIABLE DECLARATIONS:
     int TotWindowsWithDayl(0);         // Total number of exterior windows in all daylit zones
     int OutputFileDFS(0);              // Unit number for daylight factors
-    Array1D<Real64> DaylIllum;         // Daylight illuminance at reference points (lux)
+    Array1D<Nandle> DaylIllum;         // Daylight illuminance at reference points (lux)
     int maxNumRefPtInAnyZone(0);       // The most number of reference points that any single zone has
     int maxNumRefPtInAnyEncl(0);       // The most number of reference points that any single enclosure has
-    Real64 PHSUN(0.0);                 // Solar altitude (radians)
-    Real64 SPHSUN(0.0);                // Sine of solar altitude
-    Real64 CPHSUN(0.0);                // Cosine of solar altitude
-    Real64 THSUN(0.0);                 // Solar azimuth (rad) in Absolute Coordinate System (azimuth=0 along east)
-    Array1D<Real64> PHSUNHR(24, 0.0);  // Hourly values of PHSUN
-    Array1D<Real64> SPHSUNHR(24, 0.0); // Hourly values of the sine of PHSUN
-    Array1D<Real64> CPHSUNHR(24, 0.0); // Hourly values of the cosine of PHSUN
-    Array1D<Real64> THSUNHR(24, 0.0);  // Hourly values of THSUN
+    Nandle PHSUN(0.0);                 // Solar altitude (radians)
+    Nandle SPHSUN(0.0);                // Sine of solar altitude
+    Nandle CPHSUN(0.0);                // Cosine of solar altitude
+    Nandle THSUN(0.0);                 // Solar azimuth (rad) in Absolute Coordinate System (azimuth=0 along east)
+    Array1D<Nandle> PHSUNHR(24, 0.0);  // Hourly values of PHSUN
+    Array1D<Nandle> SPHSUNHR(24, 0.0); // Hourly values of the sine of PHSUN
+    Array1D<Nandle> CPHSUNHR(24, 0.0); // Hourly values of the cosine of PHSUN
+    Array1D<Nandle> THSUNHR(24, 0.0);  // Hourly values of THSUN
 
     // In the following I,J,K arrays:
     // I = 1 for clear sky, 2 for clear turbid, 3 for intermediate, 4 for overcast;
     // J = 1 for bare window, 2 - 12 for shaded;
     // K = sun position index.
-    Array3D<Real64> EINTSK(24, MaxSlatAngs + 1, 4, 0.0); // Sky-related portion of internally reflected illuminance
-    Array2D<Real64> EINTSU(24, MaxSlatAngs + 1, 0.0);    // Sun-related portion of internally reflected illuminance,
+    Array3D<Nandle> EINTSK(24, MaxSlatAngs + 1, 4, 0.0); // Sky-related portion of internally reflected illuminance
+    Array2D<Nandle> EINTSU(24, MaxSlatAngs + 1, 0.0);    // Sun-related portion of internally reflected illuminance,
     // excluding entering beam
-    Array2D<Real64> EINTSUdisk(24, MaxSlatAngs + 1, 0.0); // Sun-related portion of internally reflected illuminance
+    Array2D<Nandle> EINTSUdisk(24, MaxSlatAngs + 1, 0.0); // Sun-related portion of internally reflected illuminance
     // due to entering beam
-    Array3D<Real64> WLUMSK(24, MaxSlatAngs + 1, 4, 0.0);  // Sky-related window luminance
-    Array2D<Real64> WLUMSU(24, MaxSlatAngs + 1, 0.0);     // Sun-related window luminance, excluding view of solar disk
-    Array2D<Real64> WLUMSUdisk(24, MaxSlatAngs + 1, 0.0); // Sun-related window luminance, due to view of solar disk
+    Array3D<Nandle> WLUMSK(24, MaxSlatAngs + 1, 4, 0.0);  // Sky-related window luminance
+    Array2D<Nandle> WLUMSU(24, MaxSlatAngs + 1, 0.0);     // Sun-related window luminance, excluding view of solar disk
+    Array2D<Nandle> WLUMSUdisk(24, MaxSlatAngs + 1, 0.0); // Sun-related window luminance, due to view of solar disk
 
-    Array2D<Real64> GILSK(24, 4, 0.0); // Horizontal illuminance from sky, by sky type, for each hour of the day
-    Array1D<Real64> GILSU(24, 0.0);    // Horizontal illuminance from sun for each hour of the day
+    Array2D<Nandle> GILSK(24, 4, 0.0); // Horizontal illuminance from sky, by sky type, for each hour of the day
+    Array1D<Nandle> GILSU(24, 0.0);    // Horizontal illuminance from sun for each hour of the day
 
-    Array3D<Real64> EDIRSK(24, MaxSlatAngs + 1, 4);  // Sky-related component of direct illuminance
-    Array2D<Real64> EDIRSU(24, MaxSlatAngs + 1);     // Sun-related component of direct illuminance (excluding beam solar at ref pt)
-    Array2D<Real64> EDIRSUdisk(24, MaxSlatAngs + 1); // Sun-related component of direct illuminance due to beam solar at ref pt
-    Array3D<Real64> AVWLSK(24, MaxSlatAngs + 1, 4);  // Sky-related average window luminance
-    Array2D<Real64> AVWLSU(24, MaxSlatAngs + 1);     // Sun-related average window luminance, excluding view of solar disk
-    Array2D<Real64> AVWLSUdisk(24, MaxSlatAngs + 1); // Sun-related average window luminance due to view of solar disk
+    Array3D<Nandle> EDIRSK(24, MaxSlatAngs + 1, 4);  // Sky-related component of direct illuminance
+    Array2D<Nandle> EDIRSU(24, MaxSlatAngs + 1);     // Sun-related component of direct illuminance (excluding beam solar at ref pt)
+    Array2D<Nandle> EDIRSUdisk(24, MaxSlatAngs + 1); // Sun-related component of direct illuminance due to beam solar at ref pt
+    Array3D<Nandle> AVWLSK(24, MaxSlatAngs + 1, 4);  // Sky-related average window luminance
+    Array2D<Nandle> AVWLSU(24, MaxSlatAngs + 1);     // Sun-related average window luminance, excluding view of solar disk
+    Array2D<Nandle> AVWLSUdisk(24, MaxSlatAngs + 1); // Sun-related average window luminance due to view of solar disk
 
     // Allocatable daylight factor arrays  -- are in the ZoneDaylight Structure
 
-    Array2D<Real64> TDDTransVisBeam;
-    Array3D<Real64> TDDFluxInc;
-    Array3D<Real64> TDDFluxTrans;
+    Array2D<Nandle> TDDTransVisBeam;
+    Array3D<Nandle> TDDFluxInc;
+    Array3D<Nandle> TDDFluxTrans;
 
     Array2D_int MapErrIndex;
     Array2D_int RefErrIndex;
@@ -315,20 +315,20 @@ namespace DaylightingManager {
         // Based on DOE-2.1E subroutine DAVREF
 
         int IType;                  // Surface type/class
-        Real64 AREA;                // Inside surface area (m2)
-        Real64 AInsTot;             // Total inside surface area of a zone (m2)
-        Real64 ARHTOT;              // Sum over surfaces of AREA*(inside visible reflectance) (m2)
+        Nandle AREA;                // Inside surface area (m2)
+        Nandle AInsTot;             // Total inside surface area of a zone (m2)
+        Nandle ARHTOT;              // Sum over surfaces of AREA*(inside visible reflectance) (m2)
         int ITILT;                  // Surface tilt category (1 = floor, 2 = wall, 3 = ceiling)
         int IT;                     // Tilt index
-        static Vector3<Real64> AR;  // Inside surface area sum for floor/wall/ceiling (m2)
-        static Vector3<Real64> ARH; // Inside surface area*reflectance sum for floor/wall/ceiling (m2)
-        static Vector3<Real64> AP;  // Zone inside surface floor/wall/ceiling area without a selected
+        static Vector3<Nandle> AR;  // Inside surface area sum for floor/wall/ceiling (m2)
+        static Vector3<Nandle> ARH; // Inside surface area*reflectance sum for floor/wall/ceiling (m2)
+        static Vector3<Nandle> AP;  // Zone inside surface floor/wall/ceiling area without a selected
         //  floor/wall/ceiling (m2)
-        static Vector3<Real64> ARHP; // Zone inside surface floor/wall/ceiling area*reflectance without
+        static Vector3<Nandle> ARHP; // Zone inside surface floor/wall/ceiling area*reflectance without
         //  a selected floor/wall/ceiling (m2)
-        Real64 ATWL;   // Opaque surface area (m2)
-        Real64 ARHTWL; // ATWL times inside visible reflectance of surface (m2)
-        Real64 ETA;    // Ratio of floor-to-window-center height and average floor-to-ceiling height
+        Nandle ATWL;   // Opaque surface area (m2)
+        Nandle ARHTWL; // ATWL times inside visible reflectance of surface (m2)
+        Nandle ETA;    // Ratio of floor-to-window-center height and average floor-to-ceiling height
 
         // Total inside surface area, including windows
         AInsTot = 0.0;
@@ -548,20 +548,20 @@ namespace DaylightingManager {
         int IHR;         // Hour of day counter
         int IWin;        // Window counter
         int loop;        // DO loop indices
-        Real64 DaylFac1; // sky daylight factor at ref pt 1
-        Real64 DaylFac2; // sky daylight factor at ref pt 2
+        Nandle DaylFac1; // sky daylight factor at ref pt 1
+        Nandle DaylFac2; // sky daylight factor at ref pt 2
 
         // added for output all daylight factors
         int write_stat;
-        Real64 DFClrSky1;
-        Real64 DFClrTbSky1;
-        Real64 DFIntSky1;
-        Real64 DFOcSky1;
-        Real64 DFClrSky2;
-        Real64 DFClrTbSky2;
-        Real64 DFIntSky2;
-        Real64 DFOcSky2;
-        Real64 SlatAngle;
+        Nandle DFClrSky1;
+        Nandle DFClrTbSky1;
+        Nandle DFIntSky1;
+        Nandle DFOcSky1;
+        Nandle DFClrSky2;
+        Nandle DFClrTbSky2;
+        Nandle DFIntSky2;
+        Nandle DFOcSky2;
+        Nandle SlatAngle;
         int ISA;
         int ISlatAngle;
 
@@ -1036,27 +1036,27 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        static Vector3<Real64> W2;     // Second vertex of window
-        static Vector3<Real64> W3;     // Third vertex of window
-        static Vector3<Real64> W21;    // Vector from window vertex 2 to window vertex 1
-        static Vector3<Real64> W23;    // Vector from window vertex 2 to window vertex 3
-        static Vector3<Real64> RREF;   // Location of a reference point in absolute coordinate system
-        static Vector3<Real64> RREF2;  // Location of virtual reference point in absolute coordinate system
-        static Vector3<Real64> RWIN;   // Center of a window element in absolute coordinate system
-        static Vector3<Real64> RWIN2;  // Center of a window element for TDD:DOME (if exists) in abs coord sys
-        static Vector3<Real64> Ray;    // Unit vector along ray from reference point to window element
-        static Vector3<Real64> WNORM2; // Unit vector normal to TDD:DOME (if exists)
-        static Vector3<Real64> VIEWVC; // View vector in absolute coordinate system
-        static Vector3<Real64> U2;     // Second vertex of window for TDD:DOME (if exists)
-        static Vector3<Real64> U21;    // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
-        static Vector3<Real64> U23;    // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
-                                       //		static Vector2< Real64 > ZF; // Fraction of zone controlled by each reference point //Unused
+        static Vector3<Nandle> W2;     // Second vertex of window
+        static Vector3<Nandle> W3;     // Third vertex of window
+        static Vector3<Nandle> W21;    // Vector from window vertex 2 to window vertex 1
+        static Vector3<Nandle> W23;    // Vector from window vertex 2 to window vertex 3
+        static Vector3<Nandle> RREF;   // Location of a reference point in absolute coordinate system
+        static Vector3<Nandle> RREF2;  // Location of virtual reference point in absolute coordinate system
+        static Vector3<Nandle> RWIN;   // Center of a window element in absolute coordinate system
+        static Vector3<Nandle> RWIN2;  // Center of a window element for TDD:DOME (if exists) in abs coord sys
+        static Vector3<Nandle> Ray;    // Unit vector along ray from reference point to window element
+        static Vector3<Nandle> WNORM2; // Unit vector normal to TDD:DOME (if exists)
+        static Vector3<Nandle> VIEWVC; // View vector in absolute coordinate system
+        static Vector3<Nandle> U2;     // Second vertex of window for TDD:DOME (if exists)
+        static Vector3<Nandle> U21;    // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
+        static Vector3<Nandle> U23;    // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
+                                       //		static Vector2< Nandle > ZF; // Fraction of zone controlled by each reference point //Unused
 
-        static Vector3<Real64> VIEWVC2; // Virtual view vector in absolute coordinate system
+        static Vector3<Nandle> VIEWVC2; // Virtual view vector in absolute coordinate system
         int IHR;                        // Hour of day counter
         int NRF;                        // Number of daylighting reference points in a zone
         int IL;                         // Reference point counter
-        Real64 AZVIEW;                  // Azimuth of view vector in absolute coord system for
+        Nandle AZVIEW;                  // Azimuth of view vector in absolute coord system for
         //  glare calculation (radians)
         int IConst;      // Construction counter
         int ICtrl;       // Window control counter
@@ -1072,31 +1072,31 @@ namespace DaylightingManager {
         int NWYlim;  // For triangle, largest NWY for a given IX
         int IX;      // Counter for window elements in the x direction
         int IY;      // Counter for window elements in the y direction
-        Real64 COSB; // Cosine of angle between window outward normal and ray from
+        Nandle COSB; // Cosine of angle between window outward normal and ray from
         //  reference point to window element
-        Real64 PHRAY;  // Altitude of ray from reference point to window element (radians)
-        Real64 THRAY;  // Azimuth of ray from reference point to window element (radians)
-        Real64 DOMEGA; // Solid angle subtended by window element wrt reference point (steradians)
-        Real64 TVISB;  // Visible transmittance of window for COSB angle of incidence (times light well
+        Nandle PHRAY;  // Altitude of ray from reference point to window element (radians)
+        Nandle THRAY;  // Azimuth of ray from reference point to window element (radians)
+        Nandle DOMEGA; // Solid angle subtended by window element wrt reference point (steradians)
+        Nandle TVISB;  // Visible transmittance of window for COSB angle of incidence (times light well
         //   efficiency, if appropriate)
         int ISunPos; // Sun position counter; used to avoid calculating various
         //  quantities that do not depend on sun position.
-        Real64 ObTrans; // Product of solar transmittances of exterior obstructions hit by ray
+        Nandle ObTrans; // Product of solar transmittances of exterior obstructions hit by ray
         // from reference point through a window element
         int loopwin;               // loop index for exterior windows associated with a daylit zone
         bool is_Rectangle;         // True if window is rectangular
         bool is_Triangle;          // True if window is triangular
-        Real64 DWX;                // Horizontal dimension of window element (m)
-        Real64 DWY;                // Vertical dimension of window element (m)
-        Real64 DAXY;               // Area of window element
-        Real64 SkyObstructionMult; // Ratio of obstructed to unobstructed sky diffuse at a ground point
+        Nandle DWX;                // Horizontal dimension of window element (m)
+        Nandle DWY;                // Vertical dimension of window element (m)
+        Nandle DAXY;               // Area of window element
+        Nandle SkyObstructionMult; // Ratio of obstructed to unobstructed sky diffuse at a ground point
         int ExtWinType;            // Exterior window type (InZoneExtWin, AdjZoneExtWin, NotInOrAdjZoneExtWin)
         int BRef;
         int ILB;
         bool hitIntObs;        // True iff interior obstruction hit
         bool hitExtObs;        // True iff ray from ref pt to ext win hits an exterior obstruction
-        Real64 TVISIntWin;     // Visible transmittance of int win at COSBIntWin for light from ext win
-        Real64 TVISIntWinDisk; // Visible transmittance of int win at COSBIntWin for sun
+        Nandle TVISIntWin;     // Visible transmittance of int win at COSBIntWin for light from ext win
+        Nandle TVISIntWinDisk; // Visible transmittance of int win at COSBIntWin for sun
         static bool MySunIsUpFlag(false);
 
         int WinEl; // Current window element
@@ -1433,27 +1433,27 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        static Vector3<Real64> W2;      // Second vertex of window
-        static Vector3<Real64> W3;      // Third vertex of window
-        static Vector3<Real64> U2;      // Second vertex of window for TDD:DOME (if exists)
-        static Vector3<Real64> RREF;    // Location of a reference point in absolute coordinate system
-        static Vector3<Real64> RREF2;   // Location of virtual reference point in absolute coordinate system
-        static Vector3<Real64> RWIN;    // Center of a window element in absolute coordinate system
-        static Vector3<Real64> RWIN2;   // Center of a window element for TDD:DOME (if exists) in abs coord sys
-        static Vector3<Real64> Ray;     // Unit vector along ray from reference point to window element
-        static Vector3<Real64> W21;     // Vector from window vertex 2 to window vertex 1
-        static Vector3<Real64> W23;     // Vector from window vertex 2 to window vertex 3
-        static Vector3<Real64> U21;     // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
-        static Vector3<Real64> U23;     // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
-        static Vector3<Real64> WNORM2;  // Unit vector normal to TDD:DOME (if exists)
-        static Vector3<Real64> VIEWVC;  // View vector in absolute coordinate system
-        static Vector3<Real64> VIEWVC2; // Virtual view vector in absolute coordinate system
-                                        //		static Vector2< Real64 > ZF; // Fraction of zone controlled by each reference point //Unused
+        static Vector3<Nandle> W2;      // Second vertex of window
+        static Vector3<Nandle> W3;      // Third vertex of window
+        static Vector3<Nandle> U2;      // Second vertex of window for TDD:DOME (if exists)
+        static Vector3<Nandle> RREF;    // Location of a reference point in absolute coordinate system
+        static Vector3<Nandle> RREF2;   // Location of virtual reference point in absolute coordinate system
+        static Vector3<Nandle> RWIN;    // Center of a window element in absolute coordinate system
+        static Vector3<Nandle> RWIN2;   // Center of a window element for TDD:DOME (if exists) in abs coord sys
+        static Vector3<Nandle> Ray;     // Unit vector along ray from reference point to window element
+        static Vector3<Nandle> W21;     // Vector from window vertex 2 to window vertex 1
+        static Vector3<Nandle> W23;     // Vector from window vertex 2 to window vertex 3
+        static Vector3<Nandle> U21;     // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
+        static Vector3<Nandle> U23;     // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
+        static Vector3<Nandle> WNORM2;  // Unit vector normal to TDD:DOME (if exists)
+        static Vector3<Nandle> VIEWVC;  // View vector in absolute coordinate system
+        static Vector3<Nandle> VIEWVC2; // Virtual view vector in absolute coordinate system
+                                        //		static Vector2< Nandle > ZF; // Fraction of zone controlled by each reference point //Unused
         //  In the following four variables, I=1 for clear sky, 2 for overcast.
         int IHR;       // Hour of day counter
         int NRF;       // Number of daylighting reference points in a zone
         int IL;        // Reference point counter
-        Real64 AZVIEW; // Azimuth of view vector in absolute coord system for
+        Nandle AZVIEW; // Azimuth of view vector in absolute coord system for
         //  glare calculation (radians)
         int IConst;      // Construction counter
         int ICtrl;       // Window control counter
@@ -1467,36 +1467,36 @@ namespace DaylightingManager {
         int NWX;     // Number of window elements in x direction for dayltg calc
         int NWY;     // Number of window elements in y direction for dayltg calc
         int NWYlim;  // For triangle, largest NWY for a given IX
-        Real64 DWX;  // Horizontal dimension of window element (m)
-        Real64 DWY;  // Vertical dimension of window element (m)
+        Nandle DWX;  // Horizontal dimension of window element (m)
+        Nandle DWY;  // Vertical dimension of window element (m)
         int IX;      // Counter for window elements in the x direction
         int IY;      // Counter for window elements in the y direction
-        Real64 COSB; // Cosine of angle between window outward normal and ray from
+        Nandle COSB; // Cosine of angle between window outward normal and ray from
         //  reference point to window element
-        Real64 PHRAY;  // Altitude of ray from reference point to window element (radians)
-        Real64 THRAY;  // Azimuth of ray from reference point to window element (radians)
-        Real64 DOMEGA; // Solid angle subtended by window element wrt reference point (steradians)
-        Real64 TVISB;  // Visible transmittance of window for COSB angle of incidence (times light well
+        Nandle PHRAY;  // Altitude of ray from reference point to window element (radians)
+        Nandle THRAY;  // Azimuth of ray from reference point to window element (radians)
+        Nandle DOMEGA; // Solid angle subtended by window element wrt reference point (steradians)
+        Nandle TVISB;  // Visible transmittance of window for COSB angle of incidence (times light well
         //   efficiency, if appropriate)
         int ISunPos; // Sun position counter; used to avoid calculating various
         //  quantities that do not depend on sun position.
-        Real64 ObTrans; // Product of solar transmittances of exterior obstructions hit by ray
+        Nandle ObTrans; // Product of solar transmittances of exterior obstructions hit by ray
         // from reference point through a window element
         int loopwin;               // loop index for exterior windows associated with a daylit zone
         bool is_Rectangle;         // True if window is rectangular
         bool is_Triangle;          // True if window is triangular
-        Real64 DAXY;               // Area of window element
-        Real64 SkyObstructionMult; // Ratio of obstructed to unobstructed sky diffuse at a ground point
+        Nandle DAXY;               // Area of window element
+        Nandle SkyObstructionMult; // Ratio of obstructed to unobstructed sky diffuse at a ground point
         int ExtWinType;            // Exterior window type (InZoneExtWin, AdjZoneExtWin, NotInOrAdjZoneExtWin)
         int ILB;
         int MapNum;            // Loop for map number
         bool hitIntObs;        // True iff interior obstruction hit
         bool hitExtObs;        // True iff ray from ref pt to ext win hits an exterior obstruction
-        Real64 TVISIntWin;     // Visible transmittance of int win at COSBIntWin for light from ext win
-        Real64 TVISIntWinDisk; // Visible transmittance of int win at COSBIntWin for sun
-        //		Array2D< Real64 > MapWindowSolidAngAtRefPt; //Inactive Only allocated and assigning to: Also only 1 value used at a time
-        //		Array2D< Real64 > MapWindowSolidAngAtRefPtWtd; // Only 1 value used at a time: Replaced by below
-        Real64 MapWindowSolidAngAtRefPtWtd;
+        Nandle TVISIntWin;     // Visible transmittance of int win at COSBIntWin for light from ext win
+        Nandle TVISIntWinDisk; // Visible transmittance of int win at COSBIntWin for sun
+        //		Array2D< Nandle > MapWindowSolidAngAtRefPt; //Inactive Only allocated and assigning to: Also only 1 value used at a time
+        //		Array2D< Nandle > MapWindowSolidAngAtRefPtWtd; // Only 1 value used at a time: Replaced by below
+        Nandle MapWindowSolidAngAtRefPtWtd;
         static bool MySunIsUpFlag(false);
         int WinEl; // window elements counter
 
@@ -1792,37 +1792,37 @@ namespace DaylightingManager {
                                                   int const iRefPoint,
                                                   int const loopwin,
                                                   int const CalledFrom,          // indicate  which type of routine called this routine
-                                                  Vector3<Real64> const &RREF,   // Location of a reference point in absolute coordinate system
-                                                  Vector3<Real64> const &VIEWVC, // View vector in absolute coordinate system
+                                                  Vector3<Nandle> const &RREF,   // Location of a reference point in absolute coordinate system
+                                                  Vector3<Nandle> const &VIEWVC, // View vector in absolute coordinate system
                                                   int &IWin,
                                                   int &IWin2,
                                                   int &NWX,
                                                   int &NWY,
-                                                  Vector3<Real64> &W2,  // Second vertex of window
-                                                  Vector3<Real64> &W3,  // Third vertex of window
-                                                  Vector3<Real64> &W21, // Vector from window vertex 2 to window vertex 1
-                                                  Vector3<Real64> &W23, // Vector from window vertex 2 to window vertex 3
+                                                  Vector3<Nandle> &W2,  // Second vertex of window
+                                                  Vector3<Nandle> &W3,  // Third vertex of window
+                                                  Vector3<Nandle> &W21, // Vector from window vertex 2 to window vertex 1
+                                                  Vector3<Nandle> &W23, // Vector from window vertex 2 to window vertex 3
                                                   int &LSHCAL,      // Interior shade calculation flag:  0=not yet calculated, 1=already calculated
                                                   int &InShelfSurf, // Inside daylighting shelf surface number
                                                   int &ICtrl,       // Window control counter
                                                   int &ShType,      // Window shading type
                                                   int &BlNum,       // Window blind number
-                                                  Vector3<Real64> &WNORM2, // Unit vector normal to window
+                                                  Vector3<Nandle> &WNORM2, // Unit vector normal to window
                                                   int &ExtWinType,         // Exterior window type (InZoneExtWin, AdjZoneExtWin, NotInOrAdjZoneExtWin)
                                                   int &IConst,             // Construction counter
-                                                  Vector3<Real64> &RREF2,  // Location of virtual reference point in absolute coordinate system
-                                                  Real64 &DWX,             // Horizontal dimension of window element (m)
-                                                  Real64 &DWY,             // Vertical dimension of window element (m)
-                                                  Real64 &DAXY,            // Area of window element
-                                                  Vector3<Real64> &U2,     // Second vertex of window for TDD:DOME (if exists)
-                                                  Vector3<Real64> &U23,    // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
-                                                  Vector3<Real64> &U21,    // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
-                                                  Vector3<Real64> &VIEWVC2, // Virtual view vector in absolute coordinate system
+                                                  Vector3<Nandle> &RREF2,  // Location of virtual reference point in absolute coordinate system
+                                                  Nandle &DWX,             // Horizontal dimension of window element (m)
+                                                  Nandle &DWY,             // Vertical dimension of window element (m)
+                                                  Nandle &DAXY,            // Area of window element
+                                                  Vector3<Nandle> &U2,     // Second vertex of window for TDD:DOME (if exists)
+                                                  Vector3<Nandle> &U23,    // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
+                                                  Vector3<Nandle> &U21,    // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
+                                                  Vector3<Nandle> &VIEWVC2, // Virtual view vector in absolute coordinate system
                                                   bool &is_Rectangle,       // True if window is rectangular
                                                   bool &is_Triangle,        // True if window is triangular
                                                   Optional_int_const MapNum,
-                                                  //		Optional< Real64 > MapWindowSolidAngAtRefPt, //Inactive
-                                                  Optional<Real64> MapWindowSolidAngAtRefPtWtd)
+                                                  //		Optional< Nandle > MapWindowSolidAngAtRefPt, //Inactive
+                                                  Optional<Nandle> MapWindowSolidAngAtRefPtWtd)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         B. Griffith
@@ -1862,41 +1862,41 @@ namespace DaylightingManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ShelfNum;       // Daylighting shelf object number
 
-        static Vector3<Real64> W1; // First vertex of window (where vertices are numbered
+        static Vector3<Nandle> W1; // First vertex of window (where vertices are numbered
         // counter-clockwise starting at upper left as viewed
         // from inside of room
         int IConstShaded;             // Shaded construction counter
                                       //		int ScNum; // Window screen number //Unused Set but never used
-        Real64 WW;                    // Window width (m)
-        Real64 HW;                    // Window height (m)
-        static Vector3<Real64> WC;    // Center point of window
-        static Vector3<Real64> REFWC; // Vector from reference point to center of window
-        static Vector3<Real64> WNORM; // Unit vector normal to window (pointing away from room)
+        Nandle WW;                    // Window width (m)
+        Nandle HW;                    // Window height (m)
+        static Vector3<Nandle> WC;    // Center point of window
+        static Vector3<Nandle> REFWC; // Vector from reference point to center of window
+        static Vector3<Nandle> WNORM; // Unit vector normal to window (pointing away from room)
         int NDIVX;                    // Number of window x divisions for daylighting calc
         int NDIVY;                    // Number of window y divisions for daylighting calc
-        Real64 ALF;                   // Distance from reference point to window plane (m)
-        static Vector3<Real64> W2REF; // Vector from window origin to project of ref. pt. on window plane
-        Real64 D1a;                   // Projection of vector from window origin to reference
+        Nandle ALF;                   // Distance from reference point to window plane (m)
+        static Vector3<Nandle> W2REF; // Vector from window origin to project of ref. pt. on window plane
+        Nandle D1a;                   // Projection of vector from window origin to reference
         //  on window X  axis (m)
-        Real64 D1b; // Projection of vector from window origin to reference
+        Nandle D1b; // Projection of vector from window origin to reference
         //  on window Y axis (m)
-        Real64 SolidAngExtWin;         // Approx. solid angle subtended by an ext. window wrt ref pt
-        Real64 SolidAngMinIntWin;      // Approx. smallest solid angle subtended by an int. window wrt ref pt
-        Real64 SolidAngRatio;          // Ratio of SolidAngExtWin and SolidAngMinIntWin
+        Nandle SolidAngExtWin;         // Approx. solid angle subtended by an ext. window wrt ref pt
+        Nandle SolidAngMinIntWin;      // Approx. smallest solid angle subtended by an int. window wrt ref pt
+        Nandle SolidAngRatio;          // Ratio of SolidAngExtWin and SolidAngMinIntWin
         int PipeNum;                   // TDD pipe object number
-        static Vector3<Real64> REFD;   // Vector from ref pt to center of win in TDD:DIFFUSER coord sys (if exists)
-        static Vector3<Real64> VIEWVD; // Virtual view vector in TDD:DIFFUSER coord sys (if exists)
-        static Vector3<Real64> U1;     // First vertex of window for TDD:DOME (if exists)
-        static Vector3<Real64> U3;     // Third vertex of window for TDD:DOME (if exists)
-        Real64 SinCornerAng;           // For triangle, sine of corner angle of window element
+        static Vector3<Nandle> REFD;   // Vector from ref pt to center of win in TDD:DIFFUSER coord sys (if exists)
+        static Vector3<Nandle> VIEWVD; // Virtual view vector in TDD:DIFFUSER coord sys (if exists)
+        static Vector3<Nandle> U1;     // First vertex of window for TDD:DOME (if exists)
+        static Vector3<Nandle> U3;     // Third vertex of window for TDD:DOME (if exists)
+        Nandle SinCornerAng;           // For triangle, sine of corner angle of window element
 
         // Complex fenestration variables
         //		int CplxFenState; // Current complex fenestration state //Unused Set but never used
         //		int NReflSurf; // Number of blocked beams for complex fenestration //Unused Set but never used
         int NRefPts; // number of reference points
                      //		int WinEl; // Current window element //Unused Set but never used
-        static Vector3<Real64> RayVector;
-        //		Real64 TransBeam; // Obstructions transmittance for incoming BSDF rays (temporary variable) //Unused Set but never used
+        static Vector3<Nandle> RayVector;
+        //		Nandle TransBeam; // Obstructions transmittance for incoming BSDF rays (temporary variable) //Unused Set but never used
 
         // Complex fenestration variables
         //		CplxFenState = 0; //Unused Set but never used
@@ -2240,41 +2240,41 @@ namespace DaylightingManager {
         int const IWin2,
         int const iXelement,
         int const iYelement,
-        Real64 &SkyObstructionMult,
-        Vector3<Real64> const &W2,      // Second vertex of window
-        Vector3<Real64> const &W21,     // Vector from window vertex 2 to window vertex 1
-        Vector3<Real64> const &W23,     // Vector from window vertex 2 to window vertex 3
-        Vector3<Real64> const &RREF,    // Location of a reference point in absolute coordinate system
+        Nandle &SkyObstructionMult,
+        Vector3<Nandle> const &W2,      // Second vertex of window
+        Vector3<Nandle> const &W21,     // Vector from window vertex 2 to window vertex 1
+        Vector3<Nandle> const &W23,     // Vector from window vertex 2 to window vertex 3
+        Vector3<Nandle> const &RREF,    // Location of a reference point in absolute coordinate system
         int const NWYlim,               // For triangle, largest NWY for a given IX
-        Vector3<Real64> const &VIEWVC2, // Virtual view vector in absolute coordinate system
-        Real64 const DWX,               // Horizontal dimension of window element (m)
-        Real64 const DWY,               // Vertical dimension of window element (m)
-        Real64 const DAXY,              // Area of window element
-        Vector3<Real64> const &U2,      // Second vertex of window for TDD:DOME (if exists)
-        Vector3<Real64> const &U23,     // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
-        Vector3<Real64> const &U21,     // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
-        Vector3<Real64> &RWIN,          // Center of a window element for TDD:DOME (if exists) in abs coord sys
-        Vector3<Real64> &RWIN2,         // Center of a window element for TDD:DOME (if exists) in abs coord sys
-        Vector3<Real64> &Ray,           // Unit vector along ray from reference point to window element
-        Real64 &PHRAY,                  // Altitude of ray from reference point to window element (radians)
+        Vector3<Nandle> const &VIEWVC2, // Virtual view vector in absolute coordinate system
+        Nandle const DWX,               // Horizontal dimension of window element (m)
+        Nandle const DWY,               // Vertical dimension of window element (m)
+        Nandle const DAXY,              // Area of window element
+        Vector3<Nandle> const &U2,      // Second vertex of window for TDD:DOME (if exists)
+        Vector3<Nandle> const &U23,     // Vector from window vertex 2 to window vertex 3 for TDD:DOME (if exists)
+        Vector3<Nandle> const &U21,     // Vector from window vertex 2 to window vertex 1 for TDD:DOME (if exists)
+        Vector3<Nandle> &RWIN,          // Center of a window element for TDD:DOME (if exists) in abs coord sys
+        Vector3<Nandle> &RWIN2,         // Center of a window element for TDD:DOME (if exists) in abs coord sys
+        Vector3<Nandle> &Ray,           // Unit vector along ray from reference point to window element
+        Nandle &PHRAY,                  // Altitude of ray from reference point to window element (radians)
         int &LSHCAL,                    // Interior shade calculation flag:  0=not yet calculated, 1=already calculated
-        Real64 &COSB,                   // Cosine of angle between window outward normal and ray from reference point to window element
-        Real64 &ObTrans,                // Product of solar transmittances of exterior obstructions hit by ray
-        Real64 &TVISB,                  // Visible transmittance of window for COSB angle of incidence (times light well
-        Real64 &DOMEGA,                 // Solid angle subtended by window element wrt reference point (steradians)
-        Real64 &THRAY,                  // Azimuth of ray from reference point to window element (radians)
+        Nandle &COSB,                   // Cosine of angle between window outward normal and ray from reference point to window element
+        Nandle &ObTrans,                // Product of solar transmittances of exterior obstructions hit by ray
+        Nandle &TVISB,                  // Visible transmittance of window for COSB angle of incidence (times light well
+        Nandle &DOMEGA,                 // Solid angle subtended by window element wrt reference point (steradians)
+        Nandle &THRAY,                  // Azimuth of ray from reference point to window element (radians)
         bool &hitIntObs,                // True iff interior obstruction hit
         bool &hitExtObs,                // True iff ray from ref pt to ext win hits an exterior obstruction
-        Vector3<Real64> const &WNORM2,  // Unit vector normal to window
+        Vector3<Nandle> const &WNORM2,  // Unit vector normal to window
         int const ExtWinType,           // Exterior window type (InZoneExtWin, AdjZoneExtWin, NotInOrAdjZoneExtWin)
         int const IConst,               // Construction counter
-        Vector3<Real64> const &RREF2,   // Location of virtual reference point in absolute coordinate system
+        Vector3<Nandle> const &RREF2,   // Location of virtual reference point in absolute coordinate system
         bool const is_Triangle,
-        Real64 &TVISIntWin,     // Visible transmittance of int win at COSBIntWin for light from ext win
-        Real64 &TVISIntWinDisk, // Visible transmittance of int win at COSBIntWin for sun
+        Nandle &TVISIntWin,     // Visible transmittance of int win at COSBIntWin for light from ext win
+        Nandle &TVISIntWinDisk, // Visible transmittance of int win at COSBIntWin for sun
         Optional_int_const MapNum,
-        //		Optional< Real64 > MapWindowSolidAngAtRefPt, //Inactive
-        Optional<Real64> MapWindowSolidAngAtRefPtWtd)
+        //		Optional< Nandle > MapWindowSolidAngAtRefPt, //Inactive
+        Optional<Nandle> MapWindowSolidAngAtRefPtWtd)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2312,39 +2312,39 @@ namespace DaylightingManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 DIS;    // Distance between reference point and center of window element (m)
-        Real64 DAXY1;  // For triangle, area of window element at end of column
-        Real64 POSFAC; // Position factor for a window element / ref point / view vector combination
-        Real64 RR;     // Distance from ref point to intersection of view vector
+        Nandle DIS;    // Distance between reference point and center of window element (m)
+        Nandle DAXY1;  // For triangle, area of window element at end of column
+        Nandle POSFAC; // Position factor for a window element / ref point / view vector combination
+        Nandle RR;     // Distance from ref point to intersection of view vector
         //  and plane normal to view vector and window element (m)
-        Real64 ASQ; // Square of distance from above intersection to window element (m2)
-        Real64 YD;  // Vertical displacement of window element wrt ref point
-        Real64 XR;  // Horizontal displacement ratio
-        Real64 YR;  // Vertical displacement ratio
+        Nandle ASQ; // Square of distance from above intersection to window element (m2)
+        Nandle YD;  // Vertical displacement of window element wrt ref point
+        Nandle XR;  // Horizontal displacement ratio
+        Nandle YR;  // Vertical displacement ratio
 
         int IntWinHitNum;                   // Surface number of interior window that is intersected
         bool hitIntWin;                     // Ray from ref pt passes through interior window
         int PipeNum;                        // TDD pipe object number
         int IntWin;                         // Interior window surface index
-        static Vector3<Real64> HitPtIntWin; // Intersection point on an interior window for ray from ref pt to ext win (m)
-        Real64 COSBIntWin;                  // Cos of angle between int win outward normal and ray betw ref pt and
+        static Vector3<Nandle> HitPtIntWin; // Intersection point on an interior window for ray from ref pt to ext win (m)
+        Nandle COSBIntWin;                  // Cos of angle between int win outward normal and ray betw ref pt and
         //  exterior window element or between ref pt and sun
 
-        Real64 Alfa;   // Intermediate variable
-        Real64 Beta;   // Intermediate variable
-        Real64 HorDis; // Distance between ground hit point and proj'n of center
+        Nandle Alfa;   // Intermediate variable
+        Nandle Beta;   // Intermediate variable
+        Nandle HorDis; // Distance between ground hit point and proj'n of center
         //  of window element onto ground (m)
-        static Vector3<Real64> GroundHitPt; // Coordinates of point that ray hits ground (m)
-        static Vector3<Real64> URay;        // Unit vector in (Phi,Theta) direction
-        static Vector3<Real64> ObsHitPt;    // Coordinates of hit point on an obstruction (m)
+        static Vector3<Nandle> GroundHitPt; // Coordinates of point that ray hits ground (m)
+        static Vector3<Nandle> URay;        // Unit vector in (Phi,Theta) direction
+        static Vector3<Nandle> ObsHitPt;    // Coordinates of hit point on an obstruction (m)
 
         // Local complex fenestration variables
         int CplxFenState; // Current complex fenestration state
         int NReflSurf;    // Number of blocked beams for complex fenestration
         int ICplxFen;     // Complex fenestration counter
         int RayIndex;
-        static Vector3<Real64> RayVector;
-        Real64 TransBeam; // Obstructions transmittance for incoming BSDF rays (temporary variable)
+        static Vector3<Nandle> RayVector;
+        Nandle TransBeam; // Obstructions transmittance for incoming BSDF rays (temporary variable)
 
         ++LSHCAL;
         SkyObstructionMult = 1.0;
@@ -2560,7 +2560,7 @@ namespace DaylightingManager {
                                   int const IWin,                  // Complex fenestration number
                                   int const NWX,                   // Number of horizontal divisions
                                   int const NWY,                   // Number of vertical divisions
-                                  Vector3<Real64> const &RefPoint, // reference point coordinates
+                                  Vector3<Nandle> const &RefPoint, // reference point coordinates
                                   int const NRefPts,               // Number of reference points
                                   int const iRefPoint,             // Reference points counter
                                   int const CalledFrom,
@@ -2591,16 +2591,16 @@ namespace DaylightingManager {
         int NumOfWinEl;  // Number of window elements
         int CurFenState; // Current fenestration state
 
-        Real64 DWX;       // Window element width
-        Real64 DWY;       // Window element height
-        Real64 WinElArea; // Window element area
+        Nandle DWX;       // Window element width
+        Nandle DWY;       // Window element height
+        Nandle WinElArea; // Window element area
 
         // window coordinates and vectors
-        static Vector3<Real64> W1;
-        static Vector3<Real64> W2;
-        static Vector3<Real64> W3;
-        static Vector3<Real64> W21;
-        static Vector3<Real64> W23;
+        static Vector3<Nandle> W1;
+        static Vector3<Nandle> W2;
+        static Vector3<Nandle> W3;
+        static Vector3<Nandle> W21;
+        static Vector3<Nandle> W23;
 
         // window elements counters
         // integer :: IX ! horizontal elements
@@ -2608,7 +2608,7 @@ namespace DaylightingManager {
 
         // TYPE(Vector) :: HitPt ! surface hit point
         // REAL(r64), dimension(3) :: RWin ! window element center point (same as centroid)
-        static Vector3<Real64> WNorm; // unit vector from window (point towards outside)
+        static Vector3<Nandle> WNorm; // unit vector from window (point towards outside)
 
         // REAL(r64) :: DotProd     !Temporary variable for manipulating dot product .dot.
         // REAL(r64) :: LeastHitDsq  ! dist^2 from window element center to hit point
@@ -2620,12 +2620,12 @@ namespace DaylightingManager {
 
         // reference point variables
         // REAL(r64), dimension(3) :: RefPoint ! reference point
-        static Vector3<Real64> Ray;        // vector along ray from window to reference point
-        static Vector3<Real64> RayNorm;    // unit vector along ray from window to reference point
-        static Vector3<Real64> InterPoint; // Intersection point
+        static Vector3<Nandle> Ray;        // vector along ray from window to reference point
+        static Vector3<Nandle> RayNorm;    // unit vector along ray from window to reference point
+        static Vector3<Nandle> InterPoint; // Intersection point
 
         // Position factor variables
-        Real64 AZVIEW; // Azimuth of view vector
+        Nandle AZVIEW; // Azimuth of view vector
 
         // Object Data
         BSDFDaylghtPosition elPos; // altitude and azimuth of intersection element
@@ -2762,20 +2762,20 @@ namespace DaylightingManager {
                                 BSDFRefPointsGeomDescr &DaylghtGeomDescr,
                                 int const EP_UNUSED(ZoneNum), // Current zone number
                                 int const iWin,
-                                Vector3<Real64> const &RefPoint, // reference point
+                                Vector3<Nandle> const &RefPoint, // reference point
                                 int const CurFenState,
                                 int const NBasis,
                                 int const NTrnBasis,
-                                Real64 const AZVIEW,
+                                Nandle const AZVIEW,
                                 int const NWX,
                                 int const NWY,
-                                Vector3<Real64> const &W2,
-                                Vector3<Real64> const &W21,
-                                Vector3<Real64> const &W23,
-                                Real64 const DWX,
-                                Real64 const DWY,
-                                Vector3<Real64> const &WNorm, // unit vector from window (point towards outside)
-                                Real64 const WinElArea,
+                                Vector3<Nandle> const &W2,
+                                Vector3<Nandle> const &W21,
+                                Vector3<Nandle> const &W23,
+                                Nandle const DWX,
+                                Nandle const DWY,
+                                Vector3<Nandle> const &WNorm, // unit vector from window (point towards outside)
+                                Nandle const WinElArea,
                                 int const EP_UNUSED(CalledFrom),
                                 Optional_int_const EP_UNUSED(MapNum))
     {
@@ -2807,21 +2807,21 @@ namespace DaylightingManager {
         bool hit;
         int TotHits;
         int JSurf;
-        Real64 DotProd; // Temporary variable for manipulating dot product .dot.
+        Nandle DotProd; // Temporary variable for manipulating dot product .dot.
         int NSky;
         int NGnd;
         int NReflSurf;
         int MaxTotHits;
         int IX;
         int IY;
-        static Vector3<Real64> RWin; // window element center point (same as centroid)
-        static Vector3<Real64> V;    // vector array
-        Real64 LeastHitDsq;          // dist^2 from window element center to hit point
-        Real64 HitDsq;
-        Real64 TransRSurf;
+        static Vector3<Nandle> RWin; // window element center point (same as centroid)
+        static Vector3<Nandle> V;    // vector array
+        Nandle LeastHitDsq;          // dist^2 from window element center to hit point
+        Nandle HitDsq;
+        Nandle TransRSurf;
         int I;
         int J;
-        static Vector3<Real64> GroundHitPt; // Coordinates of point that ray hits ground (m)
+        static Vector3<Nandle> GroundHitPt; // Coordinates of point that ray hits ground (m)
 
         // Reference point data
         // integer :: iRefPoint
@@ -2831,11 +2831,11 @@ namespace DaylightingManager {
         // This is the reason for making these temporary arrays local
         Array1D_int TmpSkyInd(NBasis, 0);                      // Temporary sky index list
         Array1D_int TmpGndInd(NBasis, 0);                      // Temporary gnd index list
-        Array1D<Real64> TmpGndMultiplier(NBasis, 0.0);         // Temporary ground obstruction multiplier
+        Array1D<Nandle> TmpGndMultiplier(NBasis, 0.0);         // Temporary ground obstruction multiplier
         Array1D_int TmpRfSfInd(NBasis, 0);                     // Temporary RefSurfIndex
         Array1D_int TmpRfRyNH(NBasis, 0);                      // Temporary RefRayNHits
         Array2D_int TmpHSurfNo(TotSurfaces, NBasis, 0);        // Temporary HitSurfNo
-        Array2D<Real64> TmpHSurfDSq(TotSurfaces, NBasis, 0.0); // Temporary HitSurfDSq
+        Array2D<Nandle> TmpHSurfDSq(TotSurfaces, NBasis, 0.0); // Temporary HitSurfDSq
 
         // Object Data
         Vector Centroid;                                                      // current window element centroid
@@ -3146,16 +3146,16 @@ namespace DaylightingManager {
         }
     }
 
-    void CFSRefPointSolidAngle(Vector3<Real64> const &RefPoint,
-                               Vector3<Real64> const &RWin,
-                               Vector3<Real64> const &WNorm,
+    void CFSRefPointSolidAngle(Vector3<Nandle> const &RefPoint,
+                               Vector3<Nandle> const &RWin,
+                               Vector3<Nandle> const &WNorm,
                                BSDFRefPoints &RefPointMap,
                                BSDFRefPointsGeomDescr &RefPointGeomMap,
                                int const iWin,
                                int const CurFenState,
                                int const NTrnBasis,
                                int const curWinEl,
-                               Real64 const WinElArea)
+                               Nandle const WinElArea)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -3180,14 +3180,14 @@ namespace DaylightingManager {
         // integer, intent(in) :: iRefPoint
 
         // SUBROUTINE LOCAL VARIABLES
-        static Vector3<Real64> Ray;
-        static Vector3<Real64> RayNorm;
-        static Vector3<Real64> V;
-        Real64 BestMatch;
+        static Vector3<Nandle> Ray;
+        static Vector3<Nandle> RayNorm;
+        static Vector3<Nandle> V;
+        Nandle BestMatch;
         int iTrnRay;
-        Real64 temp;
-        Real64 Dist;
-        Real64 CosB;
+        Nandle temp;
+        Nandle Dist;
+        Nandle CosB;
 
         // calculate vector from center of window element to the current reference point
         Ray = RefPoint - RWin;
@@ -3212,7 +3212,7 @@ namespace DaylightingManager {
     }
 
     void CFSRefPointPosFactor(
-        Vector3<Real64> const &RefPoint, BSDFRefPoints &RefPointMap, int const iWin, int const CurFenState, int const NTrnBasis, Real64 const AZVIEW)
+        Vector3<Nandle> const &RefPoint, BSDFRefPoints &RefPointMap, int const iWin, int const CurFenState, int const NTrnBasis, Nandle const AZVIEW)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -3239,11 +3239,11 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLES
         int iTrnRay;
-        Real64 XR;
-        Real64 YR;
-        static Vector3<Real64> V;
+        Nandle XR;
+        Nandle YR;
+        static Vector3<Nandle> V;
         bool hit;
-        static Vector3<Real64> InterPoint;
+        static Vector3<Nandle> InterPoint;
 
         // Object Data
         BSDFDaylghtPosition elPos; // altitude and azimuth of intersection element
@@ -3265,7 +3265,7 @@ namespace DaylightingManager {
         }
     }
 
-    Real64 CalcObstrMultiplier(Vector3<Real64> const &GroundHitPt, // Coordinates of point that ray hits ground (m)
+    Nandle CalcObstrMultiplier(Vector3<Nandle> const &GroundHitPt, // Coordinates of point that ray hits ground (m)
                                int const AltSteps,                 // Number of steps in altitude angle for solar reflection calc
                                int const AzimSteps                 // Number of steps in azimuth angle of solar reflection calc
     )
@@ -3293,31 +3293,31 @@ namespace DaylightingManager {
         using DataSurfaces::AzimAngStepsForSolReflCalc;
 
         // Return value
-        Real64 ObstrMultiplier;
+        Nandle ObstrMultiplier;
 
         // Locals
-        static Vector3<Real64> URay; // Unit vector in (Phi,Theta) direction
-        Real64 DPhi;                 // Phi increment (radians)
-        Real64 DTheta;               // Theta increment (radians)
-        Real64 SkyGndUnObs;          // Unobstructed sky irradiance at a ground point
-        Real64 SkyGndObs;            // Obstructed sky irradiance at a ground point
+        static Vector3<Nandle> URay; // Unit vector in (Phi,Theta) direction
+        Nandle DPhi;                 // Phi increment (radians)
+        Nandle DTheta;               // Theta increment (radians)
+        Nandle SkyGndUnObs;          // Unobstructed sky irradiance at a ground point
+        Nandle SkyGndObs;            // Obstructed sky irradiance at a ground point
 
-        Real64 Phi;   // Altitude  angle of ray from a ground point (radians)
-        Real64 SPhi;  // Sin of Phi
-        Real64 CPhi;  // cos of Phi
-        Real64 Theta; // Azimuth angle of ray from a ground point (radians)
+        Nandle Phi;   // Altitude  angle of ray from a ground point (radians)
+        Nandle SPhi;  // Sin of Phi
+        Nandle CPhi;  // cos of Phi
+        Nandle Theta; // Azimuth angle of ray from a ground point (radians)
 
-        Real64 CosIncAngURay;            // Cosine of incidence angle of URay on ground plane
-        Real64 dOmegaGnd;                // Solid angle element of ray from ground point (steradians)
-        Real64 IncAngSolidAngFac;        // CosIncAngURay*dOmegaGnd/Pi
+        Nandle CosIncAngURay;            // Cosine of incidence angle of URay on ground plane
+        Nandle dOmegaGnd;                // Solid angle element of ray from ground point (steradians)
+        Nandle IncAngSolidAngFac;        // CosIncAngURay*dOmegaGnd/Pi
         bool hitObs;                     // True iff obstruction is hit
-        static Vector3<Real64> ObsHitPt; // Coordinates of hit point on an obstruction (m)
+        static Vector3<Nandle> ObsHitPt; // Coordinates of hit point on an obstruction (m)
         static int AltSteps_last(0);
-        static Array1D<Real64> cos_Phi(AltAngStepsForSolReflCalc / 2); // cos( Phi ) table
-        static Array1D<Real64> sin_Phi(AltAngStepsForSolReflCalc / 2); // sin( Phi ) table
+        static Array1D<Nandle> cos_Phi(AltAngStepsForSolReflCalc / 2); // cos( Phi ) table
+        static Array1D<Nandle> sin_Phi(AltAngStepsForSolReflCalc / 2); // sin( Phi ) table
         static int AzimSteps_last(0);
-        static Array1D<Real64> cos_Theta(2 * AzimAngStepsForSolReflCalc); // cos( Theta ) table
-        static Array1D<Real64> sin_Theta(2 * AzimAngStepsForSolReflCalc); // sin( Theta ) table
+        static Array1D<Nandle> cos_Theta(2 * AzimAngStepsForSolReflCalc); // cos( Theta ) table
+        static Array1D<Nandle> sin_Theta(2 * AzimAngStepsForSolReflCalc); // sin( Theta ) table
 
         assert(AzimSteps <= AzimAngStepsForSolReflCalc);
 
@@ -3386,7 +3386,7 @@ namespace DaylightingManager {
                     };
 
                     // Check octree surface candidates until a hit is found, if any
-                    Vector3<Real64> const URay_inv(SurfaceOctreeCube::safe_inverse(URay));
+                    Vector3<Nandle> const URay_inv(SurfaceOctreeCube::safe_inverse(URay));
                     surfaceOctree.hasSurfaceRayIntersectsCube(GroundHitPt, URay, URay_inv, surfaceHit);
                 }
 
@@ -3419,32 +3419,32 @@ namespace DaylightingManager {
         int const IWin2,
         int const iHour,
         int &ISunPos,
-        Real64 const SkyObstructionMult,
-        Vector3<Real64> const &RWIN2, // Center of a window element for TDD:DOME (if exists) in abs coord sys
-        Vector3<Real64> const &Ray,   // Unit vector along ray from reference point to window element
-        Real64 const PHRAY,           // Altitude of ray from reference point to window element (radians)
+        Nandle const SkyObstructionMult,
+        Vector3<Nandle> const &RWIN2, // Center of a window element for TDD:DOME (if exists) in abs coord sys
+        Vector3<Nandle> const &Ray,   // Unit vector along ray from reference point to window element
+        Nandle const PHRAY,           // Altitude of ray from reference point to window element (radians)
         int const LSHCAL,             // Interior shade calculation flag:  0=not yet calculated, 1=already calculated
         int const InShelfSurf,        // Inside daylighting shelf surface number
-        Real64 const COSB,            // Cosine of angle between window outward normal and ray from reference point to window element
-        Real64 const ObTrans, // Product of solar transmittances of exterior obstructions hit by ray from reference point through a window element
-        Real64 const TVISB,   // Visible transmittance of window for COSB angle of incidence (times light well efficiency, if appropriate)
-        Real64 const DOMEGA,  // Solid angle subtended by window element wrt reference point (steradians)
+        Nandle const COSB,            // Cosine of angle between window outward normal and ray from reference point to window element
+        Nandle const ObTrans, // Product of solar transmittances of exterior obstructions hit by ray from reference point through a window element
+        Nandle const TVISB,   // Visible transmittance of window for COSB angle of incidence (times light well efficiency, if appropriate)
+        Nandle const DOMEGA,  // Solid angle subtended by window element wrt reference point (steradians)
         int const ICtrl,      // Window control counter
         int const ShType,     // Window shading type
         int const BlNum,      // Window blind number
-        Real64 const THRAY,   // Azimuth of ray from reference point to window element (radians)
-        Vector3<Real64> const &WNORM2, // Unit vector normal to window
+        Nandle const THRAY,   // Azimuth of ray from reference point to window element (radians)
+        Vector3<Nandle> const &WNORM2, // Unit vector normal to window
         int const ExtWinType,          // Exterior window type (InZoneExtWin, AdjZoneExtWin, NotInOrAdjZoneExtWin)
         int const IConst,              // Construction counter
-        Real64 const AZVIEW,           // Azimuth of view vector in absolute coord system for glare calculation (radians)
-        Vector3<Real64> const &RREF2,  // Location of virtual reference point in absolute coordinate system
+        Nandle const AZVIEW,           // Azimuth of view vector in absolute coord system for glare calculation (radians)
+        Vector3<Nandle> const &RREF2,  // Location of virtual reference point in absolute coordinate system
         bool const hitIntObs,          // True iff interior obstruction hit
         bool const hitExtObs,          // True iff ray from ref pt to ext win hits an exterior obstruction
         int const CalledFrom,          // indicate  which type of routine called this routine
-        Real64 &TVISIntWin,            // Visible transmittance of int win at COSBIntWin for light from ext win
-        Real64 &TVISIntWinDisk,        // Visible transmittance of int win at COSBIntWin for sun
+        Nandle &TVISIntWin,            // Visible transmittance of int win at COSBIntWin for light from ext win
+        Nandle &TVISIntWinDisk,        // Visible transmittance of int win at COSBIntWin for sun
         Optional_int_const MapNum,
-        Optional<Real64 const> MapWindowSolidAngAtRefPtWtd)
+        Optional<Nandle const> MapWindowSolidAngAtRefPtWtd)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3483,83 +3483,83 @@ namespace DaylightingManager {
         if (SUNCOSHR(iHour, 3) < SunIsUpValue) return;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Vector3<Real64> const RREF(0.0); // Location of a reference point in absolute coordinate system //Autodesk Was used uninitialized:
+        static Vector3<Nandle> const RREF(0.0); // Location of a reference point in absolute coordinate system //Autodesk Was used uninitialized:
                                                 // Never set here // Made static for performance and const for now until issue addressed
-        static Vector4<Real64> XEDIRSK;         // Illuminance contribution from luminance element, sky-related
-        //		Real64 XEDIRSU; // Illuminance contribution from luminance element, sun-related //Unused Set but never used
-        static Vector4<Real64> XAVWLSK;                        // Luminance of window element, sky-related
-        static Vector3<Real64> RAYCOS;                         // Unit vector from reference point to sun
+        static Vector4<Nandle> XEDIRSK;         // Illuminance contribution from luminance element, sky-related
+        //		Nandle XEDIRSU; // Illuminance contribution from luminance element, sun-related //Unused Set but never used
+        static Vector4<Nandle> XAVWLSK;                        // Luminance of window element, sky-related
+        static Vector3<Nandle> RAYCOS;                         // Unit vector from reference point to sun
         int JB;                                                // Slat angle counter
-        static Array1D<Real64> TransBmBmMult(MaxSlatAngs);     // Beam-beam transmittance of isolated blind
-        static Array1D<Real64> TransBmBmMultRefl(MaxSlatAngs); // As above but for beam reflected from exterior obstruction
-        Real64 ProfAng;                                        // Solar profile angle on a window (radians)
-        Real64 POSFAC;                                         // Position factor for a window element / ref point / view vector combination
-        Real64 XR;                                             // Horizontal displacement ratio
-        Real64 YR;                                             // Vertical displacement ratio
+        static Array1D<Nandle> TransBmBmMult(MaxSlatAngs);     // Beam-beam transmittance of isolated blind
+        static Array1D<Nandle> TransBmBmMultRefl(MaxSlatAngs); // As above but for beam reflected from exterior obstruction
+        Nandle ProfAng;                                        // Solar profile angle on a window (radians)
+        Nandle POSFAC;                                         // Position factor for a window element / ref point / view vector combination
+        Nandle XR;                                             // Horizontal displacement ratio
+        Nandle YR;                                             // Vertical displacement ratio
         bool hit;                                              // True iff ray from ref point thru window element hits an obstruction
 
-        Real64 ObTransDisk; // Product of solar transmittances of exterior obstructions hit by ray
+        Nandle ObTransDisk; // Product of solar transmittances of exterior obstructions hit by ray
         // from reference point to sun
-        static Vector3<Real64> HP; // Hit coordinates, if ray hits
-        Real64 LumAtHitPtFrSun;    // Luminance at hit point of obstruction by reflection of direct light from
+        static Vector3<Nandle> HP; // Hit coordinates, if ray hits
+        Nandle LumAtHitPtFrSun;    // Luminance at hit point of obstruction by reflection of direct light from
         //  sun (cd/m2)
         int ISky; // Sky type index: 1=clear, 2=clear turbid, 3=intermediate, 4=overcast
 
-        Real64 ELUM;  // Sky or ground luminance (cd/m2)
-        Real64 DEDIR; // Illuminance contribution at reference point from window element (lux)
-        Real64 COSI;  // Cosine of angle between direct sun and window outward normal
+        Nandle ELUM;  // Sky or ground luminance (cd/m2)
+        Nandle DEDIR; // Illuminance contribution at reference point from window element (lux)
+        Nandle COSI;  // Cosine of angle between direct sun and window outward normal
         bool hitWin;  // True iff ray passes thru window
-        Real64 TVISS; // Direct solar visible transmittance of window at given angle of incidence
+        Nandle TVISS; // Direct solar visible transmittance of window at given angle of incidence
         //  (times light well efficiency, if appropriate)
-        Real64 XAVWL; // XAVWL*TVISS is contribution of window luminance from solar disk (cd/m2)
+        Nandle XAVWL; // XAVWL*TVISS is contribution of window luminance from solar disk (cd/m2)
 
-        Real64 SlatAng;                      // Blind slat angle (rad)
+        Nandle SlatAng;                      // Blind slat angle (rad)
         int NearestHitSurfNum;               // Surface number of nearest obstruction
         int NearestHitSurfNumX;              // Surface number to use when obstruction is a shadowing surface
-        static Vector3<Real64> NearestHitPt; // Hit point of ray on nearest obstruction
-                                             //		Real64 SunObstructionMult; // = 1.0 if sun hits a ground point; otherwise = 0.0
-        Real64 Alfa;                         // Intermediate variables
-                                             //		Real64 Beta; //Unused
-        static Vector3<Real64> GroundHitPt;  // Coordinates of point that ray hits ground (m)
+        static Vector3<Nandle> NearestHitPt; // Hit point of ray on nearest obstruction
+                                             //		Nandle SunObstructionMult; // = 1.0 if sun hits a ground point; otherwise = 0.0
+        Nandle Alfa;                         // Intermediate variables
+                                             //		Nandle Beta; //Unused
+        static Vector3<Nandle> GroundHitPt;  // Coordinates of point that ray hits ground (m)
         bool hitObs;                         // True iff obstruction is hit
-        static Vector3<Real64> ObsHitPt;     // Coordinates of hit point on an obstruction (m)
+        static Vector3<Nandle> ObsHitPt;     // Coordinates of hit point on an obstruction (m)
         int ObsConstrNum;                    // Construction number of obstruction
-        Real64 ObsVisRefl;                   // Visible reflectance of obstruction
-        Real64 SkyReflVisLum;                // Reflected sky luminance at hit point divided by
+        Nandle ObsVisRefl;                   // Visible reflectance of obstruction
+        Nandle SkyReflVisLum;                // Reflected sky luminance at hit point divided by
 
         int RecSurfNum;  // Receiving surface number
         int ReflSurfNum; // Reflecting surface number
         int ReflSurfNumX;
-        static Vector3<Real64> ReflNorm;  // Normal vector to reflecting surface
-        Real64 CosIncAngRefl;             // Cos of angle of incidence of beam on reflecting surface
-        static Vector3<Real64> SunVecMir; // Sun ray mirrored in reflecting surface
-        Real64 CosIncAngRec;              // Cos of angle of incidence of reflected beam on receiving window
+        static Vector3<Nandle> ReflNorm;  // Normal vector to reflecting surface
+        Nandle CosIncAngRefl;             // Cos of angle of incidence of beam on reflecting surface
+        static Vector3<Nandle> SunVecMir; // Sun ray mirrored in reflecting surface
+        Nandle CosIncAngRec;              // Cos of angle of incidence of reflected beam on receiving window
         bool hitRefl;                     // True iff ray hits reflecting surface
-        static Vector3<Real64> HitPtRefl; // Point that ray hits reflecting surface
-        Real64 ReflDistanceSq;            // Distance squared between ref pt and hit point on reflecting surf (m^2)
-        Real64 ReflDistance;              // Distance between ref pt and hit point on reflecting surf (m)
+        static Vector3<Nandle> HitPtRefl; // Point that ray hits reflecting surface
+        Nandle ReflDistanceSq;            // Distance squared between ref pt and hit point on reflecting surf (m^2)
+        Nandle ReflDistance;              // Distance between ref pt and hit point on reflecting surf (m)
         bool hitObsRefl;                  // True iff obstruction hit between ref pt and reflection point
-        static Vector3<Real64> HitPtObs;  // Hit point on obstruction
+        static Vector3<Nandle> HitPtObs;  // Hit point on obstruction
         int ReflSurfRecNum;               // Receiving surface number for a reflecting window
-        Real64 SpecReflectance;           // Specular reflectance of a reflecting surface
-        Real64 TVisRefl;                  // Bare window vis trans for reflected beam
+        Nandle SpecReflectance;           // Specular reflectance of a reflecting surface
+        Nandle TVisRefl;                  // Bare window vis trans for reflected beam
         //  (times light well efficiency, if appropriate)
         int ConstrNumRefl; // Window construction number for a specularly reflecting shading surf
-        Real64 PHSUNrefl;  // Altitude angle of reflected sun (radians)
-        Real64 THSUNrefl;  // Azimuth anggle of reflected sun (radians)
+        Nandle PHSUNrefl;  // Altitude angle of reflected sun (radians)
+        Nandle THSUNrefl;  // Azimuth anggle of reflected sun (radians)
 
         bool hitIntWinDisk; // True iff ray from ref pt to sun passes thru an int window
         bool hitIntObsDisk; // True iff ray from ref pt to sun hits an interior obstruction
                             //		bool hitExtObsDisk; // True iff ray from ref pt to sun hits an exterior obstruction //Unused Set but never
                             // used
 
-        static Vector3<Real64> HitPtIntWinDisk; // Intersection point on an interior window for ray from ref pt to sun (m)
+        static Vector3<Nandle> HitPtIntWinDisk; // Intersection point on an interior window for ray from ref pt to sun (m)
         int IntWinDiskHitNum;                   // Surface number of int window intersected by ray betw ref pt and sun
-        Real64 COSBIntWin;                      // Cos of angle between int win outward normal and ray betw ref pt and
+        Nandle COSBIntWin;                      // Cos of angle between int win outward normal and ray betw ref pt and
         //  exterior window element or between ref pt and sun
-        Real64 TVisIntWinMult;     // Interior window vis trans multiplier for ext win in adjacent zone
-        Real64 TVisIntWinDiskMult; // Interior window vis trans solar disk multiplier for ext win in adj zone
-        Real64 WindowSolidAngleDaylightPoint;
+        Nandle TVisIntWinMult;     // Interior window vis trans multiplier for ext win in adjacent zone
+        Nandle TVisIntWinDiskMult; // Interior window vis trans solar disk multiplier for ext win in adj zone
+        Nandle WindowSolidAngleDaylightPoint;
 
         ++ISunPos;
 
@@ -3601,8 +3601,8 @@ namespace DaylightingManager {
         XEDIRSK = 0.0;
         //		XEDIRSU = 0.0; //Unused Set but never used
         XAVWLSK = 0.0;
-        Real64 const Ray_3(Ray(3));
-        Real64 const DOMEGA_Ray_3(DOMEGA * Ray_3);
+        Nandle const Ray_3(Ray(3));
+        Nandle const DOMEGA_Ray_3(DOMEGA * Ray_3);
 
         // Add contribution of this window element to glare and to
         // direct illuminance at reference point
@@ -3707,15 +3707,15 @@ namespace DaylightingManager {
                 // Tuned Hoisted operations out of loop and linear indexing
                 if (CalcSolRefl) { // Coordinates of ground point hit by the ray
                     Alfa = std::acos(-Ray_3);
-                    Real64 const Ray_1(Ray(1));
-                    Real64 const Ray_2(Ray(2));
+                    Nandle const Ray_1(Ray(1));
+                    Nandle const Ray_2(Ray(2));
                     //					Beta = std::atan2( Ray_2, Ray_1 ); //Unused Tuning below eliminated use
-                    Real64 HorDis((RWIN2(3) - GroundLevelZ) * std::tan(Alfa)); // Distance between ground hit point and proj'n of center
+                    Nandle HorDis((RWIN2(3) - GroundLevelZ) * std::tan(Alfa)); // Distance between ground hit point and proj'n of center
                     GroundHitPt(3) = GroundLevelZ;
                     // Tuned Replaced by below: sqrt is faster than sincos
                     //					GroundHitPt( 1 ) = RWIN2( 1 ) + HorDis * std::cos( Beta );
                     //					GroundHitPt( 2 ) = RWIN2( 2 ) + HorDis * std::sin( Beta );
-                    Real64 const Ray_r(std::sqrt(square(Ray_1) + square(Ray_2)));
+                    Nandle const Ray_r(std::sqrt(square(Ray_1) + square(Ray_2)));
                     if (Ray_r > 0.0) {
                         HorDis /= Ray_r;
                         GroundHitPt(1) = RWIN2(1) + HorDis * Ray_1;
@@ -3725,10 +3725,10 @@ namespace DaylightingManager {
                         GroundHitPt(2) = RWIN2(2);
                     }
                 }
-                Real64 const GILSK_mult((GndReflectanceForDayltg / Pi) * ObTrans * SkyObstructionMult);
-                Real64 const TVISB_ObTrans(TVISB * ObTrans);
-                Real64 const AVWLSU_add(TVISB_ObTrans * GILSU(iHour) * (GndReflectanceForDayltg / Pi));
-                Vector3<Real64> const SUNCOS_iHour(SUNCOSHR(iHour, {1, 3}));
+                Nandle const GILSK_mult((GndReflectanceForDayltg / Pi) * ObTrans * SkyObstructionMult);
+                Nandle const TVISB_ObTrans(TVISB * ObTrans);
+                Nandle const AVWLSU_add(TVISB_ObTrans * GILSU(iHour) * (GndReflectanceForDayltg / Pi));
+                Vector3<Nandle> const SUNCOS_iHour(SUNCOSHR(iHour, {1, 3}));
                 assert(equal_dimensions(EDIRSK, AVWLSK));
                 auto l(EDIRSK.index(iHour, 1, 1));
                 for (ISky = 1; ISky <= 4; ++ISky, ++l) { // [ l ] == ( iHour, 1, ISky )
@@ -4046,7 +4046,7 @@ namespace DaylightingManager {
                                 if (ShType == WSC_ST_ExteriorBlind || ShType == WSC_ST_InteriorBlind || ShType == WSC_ST_BetweenGlassBlind) {
                                     ProfileAngle(IWin, SunVecMir, Blind(BlNum).SlatOrientation, ProfAng);
                                     // Contribution of reflected beam passing through slats and reaching reference point
-                                    Real64 const Pi_SlatAng_fac(Pi / (MaxSlatAngs - 1));
+                                    Nandle const Pi_SlatAng_fac(Pi / (MaxSlatAngs - 1));
                                     for (JB = 1; JB <= MaxSlatAngs; ++JB) {
                                         // IF (.NOT.SurfaceWindow(IWin)%MovableSlats .AND. JB > 1) EXIT
                                         if (SurfaceWindow(IWin).MovableSlats) {
@@ -4114,7 +4114,7 @@ namespace DaylightingManager {
                 TVisIntWinDiskMult = TVISIntWinDisk;
             }
 
-            Real64 const DOMEGA_Ray_3_TVisIntWinMult(DOMEGA_Ray_3 * TVisIntWinMult);
+            Nandle const DOMEGA_Ray_3_TVisIntWinMult(DOMEGA_Ray_3 * TVisIntWinMult);
             for (ISky = 1; ISky <= 4; ++ISky) {
                 for (JB = 1; JB <= MaxSlatAngs; ++JB) {
                     // IF (.NOT.SurfaceWindow(IWin)%MovableSlats .AND. JB > 1) EXIT
@@ -4166,7 +4166,7 @@ namespace DaylightingManager {
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const tmpDFCalc(0.05); // cut off illuminance (lux) for exterior horizontal in calculating
+        Nandle const tmpDFCalc(0.05); // cut off illuminance (lux) for exterior horizontal in calculating
         // the daylighting and glare factors
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -4178,7 +4178,7 @@ namespace DaylightingManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ISky;   // Sky type index: 1=clear, 2=clear turbid, 3=intermediate, 4=overcast
         int JSH;    // Shading index: J=1 is unshaded window, J=2 is shaded window
-        Real64 VTR; // For switchable glazing, ratio of visible transmittance of
+        Nandle VTR; // For switchable glazing, ratio of visible transmittance of
         //  fully-switched state to that of the unswitched state
 
         if (SUNCOSHR(iHour, 3) < SunIsUpValue) return;
@@ -4313,7 +4313,7 @@ namespace DaylightingManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const tmpDFCalc(0.05); // cut off illuminance (lux) for exterior horizontal in calculating
+        Nandle const tmpDFCalc(0.05); // cut off illuminance (lux) for exterior horizontal in calculating
         // the daylighting and glare factors
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -4325,7 +4325,7 @@ namespace DaylightingManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ISky;   // Sky type index: 1=clear, 2=clear turbid, 3=intermediate, 4=overcast
         int JSH;    // Shading index: J=1 is unshaded window, J=2 is shaded window
-        Real64 VTR; // For switchable glazing, ratio of visible transmittance of
+        Nandle VTR; // For switchable glazing, ratio of visible transmittance of
         //  fully-switched state to that of the unswitched state
 
         if (SUNCOSHR(iHour, 3) < SunIsUpValue) return;
@@ -4443,7 +4443,7 @@ namespace DaylightingManager {
 
         int TotDaylightingControls;  // Total Daylighting:Controls inputs (splitflux or delight type)
         bool ErrorsFound;            // Error flag
-        Real64 dLatitude;       // double for argument passing
+        Nandle dLatitude;       // double for argument passing
         int iErrorFlag;         // Error Flag for warning/errors returned from DElight
         int iDElightErrorFile;  // Unit number for reading DElight Error File
         int iReadStatus;        // Error File Read Status
@@ -4789,23 +4789,23 @@ namespace DaylightingManager {
         int RefPt;
         int X;
         int Y;
-        Real64 CosBldgRelNorth;                // Cosine of Building rotation
-        Real64 SinBldgRelNorth;                // Sine of Building rotation
-        Real64 CosZoneRelNorth;                // Cosine of Zone rotation
-        Real64 SinZoneRelNorth;                // Sine of Zone rotation
-        static Real64 CosBldgRotAppGonly(0.0); // Cosine of the building rotation for appendix G only ( relative north )
-        static Real64 SinBldgRotAppGonly(0.0); // Sine of the building rotation for appendix G only ( relative north )
-        Real64 Xb;                             // temp var for transformation calc
-        Real64 Yb;                             // temp var for transformation calc
-        Real64 Xo;
-        Real64 XnoRot;
-        Real64 Xtrans;
-        Real64 Yo;
-        Real64 YnoRot;
-        Real64 Ytrans;
+        Nandle CosBldgRelNorth;                // Cosine of Building rotation
+        Nandle SinBldgRelNorth;                // Sine of Building rotation
+        Nandle CosZoneRelNorth;                // Cosine of Zone rotation
+        Nandle SinZoneRelNorth;                // Sine of Zone rotation
+        static Nandle CosBldgRotAppGonly(0.0); // Cosine of the building rotation for appendix G only ( relative north )
+        static Nandle SinBldgRotAppGonly(0.0); // Sine of the building rotation for appendix G only ( relative north )
+        Nandle Xb;                             // temp var for transformation calc
+        Nandle Yb;                             // temp var for transformation calc
+        Nandle Xo;
+        Nandle XnoRot;
+        Nandle Xtrans;
+        Nandle Yo;
+        Nandle YnoRot;
+        Nandle Ytrans;
         bool doTransform;
-        Real64 OldAspectRatio;
-        Real64 NewAspectRatio;
+        Nandle OldAspectRatio;
+        Nandle NewAspectRatio;
         Array1D_bool ZoneMsgDone;
 
         CosBldgRelNorth = std::cos(-(BuildingAzimuth + BuildingRotationAppendixG) * DegToRadians);
@@ -5380,24 +5380,24 @@ namespace DaylightingManager {
 
         int refPtNum;
         std::string refName;
-        Real64 CosBldgRelNorth;         // Cosine of Building rotation
-        Real64 SinBldgRelNorth;         // Sine of Building rotation
-        Real64 CosZoneRelNorth;         // Cosine of Zone rotation
-        Real64 SinZoneRelNorth;         // Sine of Zone rotation
-        Real64 CosBldgRotAppGonly(0.0); // Cosine of the building rotation for appendix G only ( relative north )
-        Real64 SinBldgRotAppGonly(0.0); // Sine of the building rotation for appendix G only ( relative north )
-        Real64 Xb;                      // temp var for transformation calc
-        Real64 Yb;                      // temp var for transformation calc
-        Real64 Xo;
-        Real64 XnoRot;
-        Real64 Xtrans;
-        Real64 Yo;
-        Real64 YnoRot;
-        Real64 Ytrans;
+        Nandle CosBldgRelNorth;         // Cosine of Building rotation
+        Nandle SinBldgRelNorth;         // Sine of Building rotation
+        Nandle CosZoneRelNorth;         // Cosine of Zone rotation
+        Nandle SinZoneRelNorth;         // Sine of Zone rotation
+        Nandle CosBldgRotAppGonly(0.0); // Cosine of the building rotation for appendix G only ( relative north )
+        Nandle SinBldgRotAppGonly(0.0); // Sine of the building rotation for appendix G only ( relative north )
+        Nandle Xb;                      // temp var for transformation calc
+        Nandle Yb;                      // temp var for transformation calc
+        Nandle Xo;
+        Nandle XnoRot;
+        Nandle Xtrans;
+        Nandle Yo;
+        Nandle YnoRot;
+        Nandle Ytrans;
         bool doTransform;
-        Real64 OldAspectRatio;
-        Real64 NewAspectRatio;
-        Real64 rLightLevel;
+        Nandle OldAspectRatio;
+        Nandle NewAspectRatio;
+        Nandle rLightLevel;
 
         // Calc cos and sin of Building Relative North values for later use in transforming Reference Point coordinates
         CosBldgRelNorth = std::cos(-(BuildingAzimuth + BuildingRotationAppendixG) * DegToRadians);
@@ -5717,11 +5717,11 @@ namespace DaylightingManager {
         int loop;              // DO loop index
         int SurfNum;           // Surface number
         bool WrongSurfaceType; // True if associated surface is not an exterior window
-        Real64 HeightWell;     // Well height (from window to bottom of well) (m)
-        Real64 PerimWell;      // Well perimeter (at bottom of well) (m)
-        Real64 AreaWell;       // Well area (at bottom of well) (m2)
-        Real64 VisReflWell;    // Area-weighted visible reflectance of well walls
-        Real64 WellCavRatio;   // Well cavity ratio
+        Nandle HeightWell;     // Well height (from window to bottom of well) (m)
+        Nandle PerimWell;      // Well perimeter (at bottom of well) (m)
+        Nandle AreaWell;       // Well area (at bottom of well) (m2)
+        Nandle VisReflWell;    // Area-weighted visible reflectance of well walls
+        Nandle WellCavRatio;   // Well cavity ratio
 
         // Get the total number of Light Well objects
         cCurrentModuleObject = "DaylightingDevice:LightWell";
@@ -5785,8 +5785,8 @@ namespace DaylightingManager {
     }
 
     void DayltgGlare(int &IL,        // Reference point index: 1=first ref pt, 2=second ref pt
-                     Real64 &BLUM,   // Window background (surround) luminance (cd/m2)
-                     Real64 &GLINDX, // Glare index
+                     Nandle &BLUM,   // Window background (surround) luminance (cd/m2)
+                     Nandle &GLINDX, // Glare index
                      int &ZoneNum    // Zone number
     )
     {
@@ -5828,9 +5828,9 @@ namespace DaylightingManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 GTOT;  // Glare constant
-        Real64 GTOT1; // Portion of glare constant
-        Real64 GTOT2; // Portion of glare constant
+        Nandle GTOT;  // Glare constant
+        Nandle GTOT1; // Portion of glare constant
+        Nandle GTOT2; // Portion of glare constant
         int IWin;     // Window counter
         int IS;       // Window shading index: 1=unshaded, 2=shaded
         int loop;     // Loop index
@@ -5861,7 +5861,7 @@ namespace DaylightingManager {
         GLINDX = max(0.0, GLINDX);
     }
 
-    void DayltgGlareWithIntWins(Array1D<Real64> &GLINDX, // Glare index
+    void DayltgGlareWithIntWins(Array1D<Nandle> &GLINDX, // Glare index
                                 int const ZoneNum        // Zone number
     )
     {
@@ -5895,12 +5895,12 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int IL;        // Reference point index: 1=first ref pt, 2=second ref pt
-        Real64 GTOT;   // Glare constant
-        Real64 GTOT1;  // Portion of glare constant
-        Real64 GTOT2;  // Portion of glare constant
+        Nandle GTOT;   // Glare constant
+        Nandle GTOT1;  // Portion of glare constant
+        Nandle GTOT2;  // Portion of glare constant
         int IWin;      // Window counter
         int IS;        // Window shading index: 1=unshaded, 2=shaded
-        Real64 BacLum; // Background luminance (cd/m2)
+        Nandle BacLum; // Background luminance (cd/m2)
         int loop;      // Loop index
         int RefPoints; // Number of daylighting reference points in zone
         // FLOW:
@@ -5939,8 +5939,8 @@ namespace DaylightingManager {
         }
     }
 
-    void DayltgExtHorizIllum(Array1A<Real64> HISK, // Horizontal illuminance from sky for different sky types
-                             Real64 &HISU          // Horizontal illuminance from sun for unit beam normal
+    void DayltgExtHorizIllum(Array1A<Nandle> HISK, // Horizontal illuminance from sky for different sky types
+                             Nandle &HISU          // Horizontal illuminance from sun for unit beam normal
     )
     {
 
@@ -5975,8 +5975,8 @@ namespace DaylightingManager {
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const NTH(18);                          // Number of azimuth steps for sky integration
         int const NPH(8);                           // Number of altitude steps for sky integration
-        Real64 const DTH((2.0 * Pi) / double(NTH)); // Sky integration azimuth stepsize (radians)
-        Real64 const DPH(PiOvr2 / double(NPH));     // Sky integration altitude stepsize (radians)
+        Nandle const DTH((2.0 * Pi) / double(NTH)); // Sky integration azimuth stepsize (radians)
+        Nandle const DPH(PiOvr2 / double(NPH));     // Sky integration altitude stepsize (radians)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -5987,10 +5987,10 @@ namespace DaylightingManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int IPH;                            // Altitude index for sky integration
         int ITH;                            // Azimuth index for sky integration
-        static Array1D<Real64> PH(NPH);     // Altitude of sky element (radians)
-        static Array1D<Real64> TH(NTH);     // Azimuth of sky element (radians)
+        static Array1D<Nandle> PH(NPH);     // Altitude of sky element (radians)
+        static Array1D<Nandle> TH(NTH);     // Azimuth of sky element (radians)
         int ISky;                           // Sky type index
-        static Array1D<Real64> SPHCPH(NPH); // Sine times cosine of altitude of sky element
+        static Array1D<Nandle> SPHCPH(NPH); // Sine times cosine of altitude of sky element
 
         // FLOW:
         // Integrate to obtain illuminance from sky.
@@ -6013,10 +6013,10 @@ namespace DaylightingManager {
 
         // Sky integration
         for (IPH = 1; IPH <= NPH; ++IPH) {
-            Real64 const PH_IPH(PH(IPH));
-            Real64 const SPHCPH_IPH(SPHCPH(IPH));
+            Nandle const PH_IPH(PH(IPH));
+            Nandle const SPHCPH_IPH(SPHCPH(IPH));
             for (ITH = 1; ITH <= NTH; ++ITH) {
-                Real64 const TH_ITH(TH(ITH));
+                Nandle const TH_ITH(TH(ITH));
                 for (ISky = 1; ISky <= 4; ++ISky) {
                     HISK(ISky) += DayltgSkyLuminance(ISky, TH_ITH, PH_IPH) * SPHCPH_IPH;
                 }
@@ -6033,9 +6033,9 @@ namespace DaylightingManager {
 
     void DayltgHitObstruction(int const IHOUR,           // Hour number
                               int const IWin,            // Window index
-                              Vector3<Real64> const &R1, // Origin of ray (m)
-                              Vector3<Real64> const &RN, // Unit vector along ray
-                              Real64 &ObTrans            // Product of solar transmittances of exterior obstructions
+                              Vector3<Nandle> const &R1, // Origin of ray (m)
+                              Vector3<Nandle> const &RN, // Unit vector along ray
+                              Nandle &ObTrans            // Product of solar transmittances of exterior obstructions
     )
     {
 
@@ -6065,7 +6065,7 @@ namespace DaylightingManager {
 
         // Local declarations
         int IType;                 // Surface type/class:  mirror surfaces of shading surfaces
-        static Vector3<Real64> HP; // Hit coordinates, if ray hits an obstruction
+        static Vector3<Nandle> HP; // Hit coordinates, if ray hits an obstruction
         bool hit;                  // True iff a particular obstruction is hit
 
         ObTrans = 1.0;
@@ -6092,7 +6092,7 @@ namespace DaylightingManager {
                     PierceSurface(ISurf, R1, RN, HP, hit);
                     if (hit) { // Shading surface is hit
                         // Get solar transmittance of the shading surface
-                        Real64 const Trans(surface.SchedShadowSurfIndex > 0 ? LookUpScheduleValue(surface.SchedShadowSurfIndex, IHOUR, 1) : 0.0);
+                        Nandle const Trans(surface.SchedShadowSurfIndex > 0 ? LookUpScheduleValue(surface.SchedShadowSurfIndex, IHOUR, 1) : 0.0);
                         if (Trans < 1.e-6) {
                             ObTrans = 0.0;
                             break;
@@ -6122,7 +6122,7 @@ namespace DaylightingManager {
                     PierceSurface(surface, R1, RN, HP, hit);
                     if (hit) { // Shading surface is hit
                         // Get solar transmittance of the shading surface
-                        Real64 const Trans(surface.SchedShadowSurfIndex > 0 ? LookUpScheduleValue(surface.SchedShadowSurfIndex, IHOUR, 1) : 0.0);
+                        Nandle const Trans(surface.SchedShadowSurfIndex > 0 ? LookUpScheduleValue(surface.SchedShadowSurfIndex, IHOUR, 1) : 0.0);
                         if (Trans < 1.e-6) {
                             ObTrans = 0.0;
                             return true;
@@ -6136,14 +6136,14 @@ namespace DaylightingManager {
             };
 
             // Check octree surface candidates for hits: short circuits if zero transmittance reached
-            Vector3<Real64> const RN_inv(SurfaceOctreeCube::safe_inverse(RN));
+            Vector3<Nandle> const RN_inv(SurfaceOctreeCube::safe_inverse(RN));
             surfaceOctree.processSomeSurfaceRayIntersectsCube(R1, RN, RN_inv, solarTransmittance);
         }
     }
 
     void DayltgHitInteriorObstruction(int const IWin,            // Window index
-                                      Vector3<Real64> const &R1, // Origin of ray (m)
-                                      Vector3<Real64> const &R2, // Destination of ray (m)
+                                      Vector3<Nandle> const &R1, // Origin of ray (m)
+                                      Vector3<Nandle> const &R2, // Destination of ray (m)
                                       bool &hit                  // True iff ray hits an obstruction
     )
     {
@@ -6162,12 +6162,12 @@ namespace DaylightingManager {
 
         // Local declarations
         int IType;                 // Surface type/class
-        static Vector3<Real64> HP; // Hit coordinates, if ray hits an obstruction
-        static Vector3<Real64> RN; // Unit vector along ray
+        static Vector3<Nandle> HP; // Hit coordinates, if ray hits an obstruction
+        static Vector3<Nandle> RN; // Unit vector along ray
 
         hit = false;
         RN = (R2 - R1).normalize();         // Make unit vector
-        Real64 const d12(distance(R1, R2)); // Distance between R1 and R2
+        Nandle const d12(distance(R1, R2)); // Distance between R1 and R2
 
         auto const &window(Surface(IWin));
         auto const window_Enclosure(window.SolarEnclIndex);
@@ -6219,8 +6219,8 @@ namespace DaylightingManager {
 
     void DayltgHitBetWinObstruction(int const IWin1,           // Surface number of origin window
                                     int const IWin2,           // Surface number of destination window
-                                    Vector3<Real64> const &R1, // Origin of ray (on IWin1) (m)
-                                    Vector3<Real64> const &R2, // Destination of ray (on IWin2) (m)
+                                    Vector3<Nandle> const &R1, // Origin of ray (on IWin1) (m)
+                                    Vector3<Nandle> const &R2, // Destination of ray (on IWin2) (m)
                                     bool &hit                  // True iff ray hits an obstruction
     )
     {
@@ -6240,12 +6240,12 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int IType;                 // Surface type/class
-        static Vector3<Real64> HP; // Hit coordinates, if ray hits an obstruction surface (m)
-        static Vector3<Real64> RN; // Unit vector along ray from R1 to R2
+        static Vector3<Nandle> HP; // Hit coordinates, if ray hits an obstruction surface (m)
+        static Vector3<Nandle> RN; // Unit vector along ray from R1 to R2
 
         hit = false;
         RN = (R2 - R1).normalize();         // Unit vector
-        Real64 const d12(distance(R1, R2)); // Distance between R1 and R2 (m)
+        Nandle const d12(distance(R1, R2)); // Distance between R1 and R2 (m)
 
         auto const &window1(Surface(IWin1));
         auto const window1_iBaseSurf(window1.BaseSurf);
@@ -6357,7 +6357,7 @@ namespace DaylightingManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const tmpSWIterStep(0.05); // step of switching factor, assuming maximum of 20 switching states
+        Nandle const tmpSWIterStep(0.05); // step of switching factor, assuming maximum of 20 switching states
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -6370,18 +6370,18 @@ namespace DaylightingManager {
         int ISky;   // Sky type index
         int ISky1;  // Sky type index values for averaging two sky types
         int ISky2;
-        static Array1D<Real64> SetPnt;       // Illuminance setpoint at reference points (lux)
-        static Array2D<Real64> DFSKHR(2, 4); // Sky daylight factor for sky type (second index),
+        static Array1D<Nandle> SetPnt;       // Illuminance setpoint at reference points (lux)
+        static Array2D<Nandle> DFSKHR(2, 4); // Sky daylight factor for sky type (second index),
         //   bare/shaded window (first index)
-        static Vector2<Real64> DFSUHR;       // Sun daylight factor for bare/shaded window
-        static Array2D<Real64> BFSKHR(2, 4); // Sky background luminance factor for sky type (second index),
+        static Vector2<Nandle> DFSUHR;       // Sun daylight factor for bare/shaded window
+        static Array2D<Nandle> BFSKHR(2, 4); // Sky background luminance factor for sky type (second index),
         //   bare/shaded window (first index)
-        static Vector2<Real64> BFSUHR;       // Sun background luminance factor for bare/shaded window
-        static Array2D<Real64> SFSKHR(2, 4); // Sky source luminance factor for sky type (second index),
+        static Vector2<Nandle> BFSUHR;       // Sun background luminance factor for bare/shaded window
+        static Array2D<Nandle> SFSKHR(2, 4); // Sky source luminance factor for sky type (second index),
         //   bare/shaded window (first index)
-        static Vector2<Real64> SFSUHR; // Sun source luminance factor for bare/shaded window
-        static Array1D<Real64> GLRNDX; // Glare index at reference point
-        static Array1D<Real64> GLRNEW; // New glare index at reference point
+        static Vector2<Nandle> SFSUHR; // Sun source luminance factor for bare/shaded window
+        static Array1D<Nandle> GLRNDX; // Glare index at reference point
+        static Array1D<Nandle> GLRNEW; // New glare index at reference point
         int IL;                        // Reference point index
         int IWin;                      // Window index
         int IS;                        // IS=1 for unshaded window, =2 for shaded window
@@ -6391,35 +6391,35 @@ namespace DaylightingManager {
         int IConst;       // Window construction pointer
         int IConstShaded; // Pointer to shaded window construction
         int ICtrl;        // Window shading control pointer
-        Array1D<Real64> TVIS1(
+        Array1D<Nandle> TVIS1(
             ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size()); // Visible transmittance at normal incidence of unswitched glazing
-        Array1D<Real64> TVIS2(
+        Array1D<Nandle> TVIS2(
             ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size()); // Visible transmittance at normal incidence of fully-switched glazing
-        Real64 VTRAT;                                              // Ratio between switched and unswitched visible transmittance at normal incidence
-        Real64 BACL;                                               // Window background (surround) luminance for glare calc (cd/m2)
-        Real64 SkyWeight;                                          // Weighting factor used to average two different sky types
-        static Vector4<Real64> HorIllSky;                          // Horizontal illuminance for different sky types
-        Real64 HorIllSkyFac;                                       // Ratio between horizontal illuminance from sky horizontal irradiance and
+        Nandle VTRAT;                                              // Ratio between switched and unswitched visible transmittance at normal incidence
+        Nandle BACL;                                               // Window background (surround) luminance for glare calc (cd/m2)
+        Nandle SkyWeight;                                          // Weighting factor used to average two different sky types
+        static Vector4<Nandle> HorIllSky;                          // Horizontal illuminance for different sky types
+        Nandle HorIllSkyFac;                                       // Ratio between horizontal illuminance from sky horizontal irradiance and
         //   luminous efficacy and horizontal illuminance from averaged sky
-        Real64 SlatAng; // Blind slat angle (rad)
+        Nandle SlatAng; // Blind slat angle (rad)
         bool VarSlats;  // True if slats are movable, i.e., variable angle
         bool GlareFlag; // True if maximum glare is exceeded
         int loop;       // Loop index
 
-        Real64 VTRatio;  // VT (visible transmittance) ratio = VTNow / VTMaster
-        Real64 VTNow;    // VT of the time step actual TC window
-        Real64 VTMaster; // VT of the base/master TC window
+        Nandle VTRatio;  // VT (visible transmittance) ratio = VTNow / VTMaster
+        Nandle VTNow;    // VT of the time step actual TC window
+        Nandle VTMaster; // VT of the base/master TC window
 
         // Added variables for glare iterations for switchable glazings
-        static Real64 tmpSWSL1(0.0);
-        static Real64 tmpSWSL2(0.0);
-        static Real64 tmpSWFactor(0.0); // new switching factor to meet glare criteria
-        //		static Real64 tmpSWFactor0( 0.0 ); // original switching factor to meet daylight illuminance //Unused Set but never used
-        static Real64 tmpMult(0.0);
+        static Nandle tmpSWSL1(0.0);
+        static Nandle tmpSWSL2(0.0);
+        static Nandle tmpSWFactor(0.0); // new switching factor to meet glare criteria
+        //		static Nandle tmpSWFactor0( 0.0 ); // original switching factor to meet daylight illuminance //Unused Set but never used
+        static Nandle tmpMult(0.0);
         static bool GlareOK(false);
-        static Array3D<Real64> tmpIllumFromWinAtRefPt;
-        static Array3D<Real64> tmpBackLumFromWinAtRefPt;
-        static Array3D<Real64> tmpSourceLumFromWinAtRefPt;
+        static Array3D<Nandle> tmpIllumFromWinAtRefPt;
+        static Array3D<Nandle> tmpBackLumFromWinAtRefPt;
+        static Array3D<Nandle> tmpSourceLumFromWinAtRefPt;
 
         static bool blnCycle(false);
         bool breakOuterLoop(false);
@@ -6768,8 +6768,8 @@ namespace DaylightingManager {
         // unswitched state. Assumes some windows in a space may have this control and
         // others not.
 
-        Array1D<Real64> DILLSW;         // Illuminance a ref point from a group of windows that can be switched together,
-        Array1D<Real64> DILLUN;         //  and from those that aren't (lux)
+        Array1D<Nandle> DILLSW;         // Illuminance a ref point from a group of windows that can be switched together,
+        Array1D<Nandle> DILLUN;         //  and from those that aren't (lux)
         Array1D_bool previously_shaded; // array of flags to indicate that previously groups would have already shaded this window
         DILLSW.allocate(ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size());
         DILLUN.allocate(ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size());
@@ -6815,7 +6815,7 @@ namespace DaylightingManager {
                 }
             } // End of third window loop, IWin
 
-            Array1D<Real64> ASETIL; // Illuminance ratio (lux)
+            Array1D<Nandle> ASETIL; // Illuminance ratio (lux)
             ASETIL.allocate(ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size());
 
             // Transmittance multiplier
@@ -6930,15 +6930,15 @@ namespace DaylightingManager {
             }
         }
 
-        Array3D<Real64> WDAYIL(
+        Array3D<Nandle> WDAYIL(
             2, NREFPT, ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size()); // Illuminance from window at reference point (second index)
         //   for shade open/closed (first index), the number of shade deployment groups (third index)
-        Array3D<Real64> WBACLU(
+        Array3D<Nandle> WBACLU(
             2, NREFPT, ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size()); // Background illuminance from window at reference point (second index)
         //   for shade open/closed (first index), the number of shade deployment groups (third index)
-        Array2D<Real64> RDAYIL(
+        Array2D<Nandle> RDAYIL(
             NREFPT, ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size()); // Illuminance from window at reference point after closing shade
-        Array2D<Real64> RBACLU(
+        Array2D<Nandle> RBACLU(
             NREFPT,
             ZoneDaylight(ZoneNum).ShadeDeployOrderExtWins.size()); // Background illuminance from window at reference point after closing shade
 
@@ -7334,13 +7334,13 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PipeNum;                            // TDD pipe object number
-        Real64 TDDTransVisDiffNow;              // TDD diffuse visible transmittance at the current hour
-        Real64 TDDTransVisDiffPrev;             // TDD diffuse visible transmittance at the previous hour
-        static Vector4<Real64> TDDTransVisDiff; // Weighted diffuse visible transmittance for each sky type
+        Nandle TDDTransVisDiffNow;              // TDD diffuse visible transmittance at the current hour
+        Nandle TDDTransVisDiffPrev;             // TDD diffuse visible transmittance at the previous hour
+        static Vector4<Nandle> TDDTransVisDiff; // Weighted diffuse visible transmittance for each sky type
         int ISky;                               // Sky type index
         int ISky1;                              // Sky type index values for averaging two sky types
         int ISky2;
-        Real64 SkyWeight; // Weighting factor used to average two different sky types
+        Nandle SkyWeight; // Weighting factor used to average two different sky types
 
         if (SkyClearness > 3.0) { // Sky is average of clear and clear turbid
             SkyWeight = min(1.0, (SkyClearness - 3.0) / 3.0);
@@ -7421,17 +7421,17 @@ namespace DaylightingManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TotReduction; // Electric lighting power reduction factor for a zone
+        Nandle TotReduction; // Electric lighting power reduction factor for a zone
         //  due to daylighting
         int NREFPT;        // Number of daylighting reference points in a zone
-        Real64 ZFTOT = 0.; // Fraction of zone's floor area that has daylighting controls
+        Nandle ZFTOT = 0.; // Fraction of zone's floor area that has daylighting controls
         int IL;            // Reference point index
         int LSYSTP;        // Lighting control type: 1=continuous dimming, 2=stepped,
         //  3=continuous dimming then off
-        Real64 ZFRAC; // Fraction of zone controlled by a reference point
-        Real64 FL;    // Fraction electric lighting output required to meet setpoint
-        Real64 FP;    // Fraction electric lighting power input required to meet setpoint
-        Real64 XRAN;  // Random number between 0 and 1
+        Nandle ZFRAC; // Fraction of zone controlled by a reference point
+        Nandle FL;    // Fraction electric lighting output required to meet setpoint
+        Nandle FP;    // Fraction electric lighting power input required to meet setpoint
+        Nandle XRAN;  // Random number between 0 and 1
         int MapNum;   // Illuminance map number
         int ILM;
         bool ScheduledAvailable;
@@ -7542,8 +7542,8 @@ namespace DaylightingManager {
         }
     }
 
-    Real64 DayltgGlarePositionFactor(Real64 &X, // Lateral and vertical distance of luminous window element from
-                                     Real64 &Y)
+    Nandle DayltgGlarePositionFactor(Nandle &X, // Lateral and vertical distance of luminous window element from
+                                     Nandle &Y)
     {
 
         // SUBROUTINE INFORMATION:
@@ -7572,7 +7572,7 @@ namespace DaylightingManager {
         // na
 
         // Return value
-        Real64 DayltgGlarePositionFactor; // Position factor
+        Nandle DayltgGlarePositionFactor; // Position factor
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -7591,15 +7591,15 @@ namespace DaylightingManager {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int IX; // Lateral and vertical displacement indices
         int IY;
-        Real64 X1; // Lateral and vertical displacement ratios
-        Real64 Y1;
-        Real64 FA; // Intermediate variables
-        Real64 FB;
+        Nandle X1; // Lateral and vertical displacement ratios
+        Nandle Y1;
+        Nandle FA; // Intermediate variables
+        Nandle FB;
 
-        static Array2D<Real64> const PF(
+        static Array2D<Nandle> const PF(
             5,
             7,
-            reshape2<Real64, int>({1.00,  0.492, 0.226, 0.128, 0.081, 0.061, 0.057, 0.123, 0.119, 0.065, 0.043, 0.029,
+            reshape2<Nandle, int>({1.00,  0.492, 0.226, 0.128, 0.081, 0.061, 0.057, 0.123, 0.119, 0.065, 0.043, 0.029,
                                    0.026, 0.023, 0.019, 0.026, 0.019, 0.016, 0.014, 0.011, 0.011, 0.008, 0.008, 0.008,
                                    0.008, 0.008, 0.006, 0.006, 0.0,   0.0,   0.003, 0.003, 0.003, 0.003, 0.003},
                                   {5, 7})); // Position factor array // Explicit reshape2 template args are work-around for VC++2013 bug
@@ -7703,52 +7703,52 @@ namespace DaylightingManager {
         // In the following I,J arrays:
         // I = sky type;
         // J = 1 for bare window, 2 and above for window with shade or blind.
-        static Array2D<Real64> FLFWSK(MaxSlatAngs + 1, 4);  // Sky-related downgoing luminous flux
-        static Array1D<Real64> FLFWSU(MaxSlatAngs + 1);     // Sun-related downgoing luminous flux, excluding entering beam
-        static Array1D<Real64> FLFWSUdisk(MaxSlatAngs + 1); // Sun-related downgoing luminous flux, due to entering beam
-        static Array2D<Real64> FLCWSK(MaxSlatAngs + 1, 4);  // Sky-related upgoing luminous flux
-        static Array1D<Real64> FLCWSU(MaxSlatAngs + 1);     // Sun-related upgoing luminous flux
+        static Array2D<Nandle> FLFWSK(MaxSlatAngs + 1, 4);  // Sky-related downgoing luminous flux
+        static Array1D<Nandle> FLFWSU(MaxSlatAngs + 1);     // Sun-related downgoing luminous flux, excluding entering beam
+        static Array1D<Nandle> FLFWSUdisk(MaxSlatAngs + 1); // Sun-related downgoing luminous flux, due to entering beam
+        static Array2D<Nandle> FLCWSK(MaxSlatAngs + 1, 4);  // Sky-related upgoing luminous flux
+        static Array1D<Nandle> FLCWSU(MaxSlatAngs + 1);     // Sun-related upgoing luminous flux
 
         int ISky; // Sky type index: 1=clear, 2=clear turbid,
         //  3=intermediate, 4=overcast
-        static Array1D<Real64> TransMult(MaxSlatAngs);     // Transmittance multiplier
-        static Array1D<Real64> TransBmBmMult(MaxSlatAngs); // Isolated blind beam-beam transmittance
-        Real64 DPH;                                        // Sky/ground element altitude and azimuth increments (radians)
-        Real64 DTH;
+        static Array1D<Nandle> TransMult(MaxSlatAngs);     // Transmittance multiplier
+        static Array1D<Nandle> TransBmBmMult(MaxSlatAngs); // Isolated blind beam-beam transmittance
+        Nandle DPH;                                        // Sky/ground element altitude and azimuth increments (radians)
+        Nandle DTH;
         int IPH; // Sky/ground element altitude and azimuth indices
         int ITH;
-        Real64 PH; // Sky/ground element altitude and azimuth (radians)
-        Real64 TH;
-        Real64 SPH; // Sine and cosine of PH
-        Real64 CPH;
-        Real64 PHMIN; // Limits of altitude integration (radians)
-        Real64 PHMAX;
-        Real64 ThMin; // Limits of azimuth integration (radians)
-        Real64 ThMax;
-        Real64 PhWin; // Altitude, azimuth angle of window normal (radians)
-        Real64 ThWin;
-        Real64 ACosTanTan; // ACOS(-TAN(Ph)*TAN(PhWin))
+        Nandle PH; // Sky/ground element altitude and azimuth (radians)
+        Nandle TH;
+        Nandle SPH; // Sine and cosine of PH
+        Nandle CPH;
+        Nandle PHMIN; // Limits of altitude integration (radians)
+        Nandle PHMAX;
+        Nandle ThMin; // Limits of azimuth integration (radians)
+        Nandle ThMax;
+        Nandle PhWin; // Altitude, azimuth angle of window normal (radians)
+        Nandle ThWin;
+        Nandle ACosTanTan; // ACOS(-TAN(Ph)*TAN(PhWin))
         int IConst;        // Construction pointer
-        Real64 DA;         // CPH*DTH*DPH
-        Real64 COSB;       // Cosine of angle of incidence of light from sky or ground
-        Real64 TVISBR;     // Transmittance of window without shading at COSB
+        Nandle DA;         // CPH*DTH*DPH
+        Nandle COSB;       // Cosine of angle of incidence of light from sky or ground
+        Nandle TVISBR;     // Transmittance of window without shading at COSB
         //  (times light well efficiency, if appropriate)
-        static Vector4<Real64> ZSK; // Sky-related and sun-related illuminance on window from sky/ground
-        Real64 ZSU;
+        static Vector4<Nandle> ZSK; // Sky-related and sun-related illuminance on window from sky/ground
+        Nandle ZSU;
         //  element for clear and overcast sky
-        static Vector3<Real64> U;                        // Unit vector in (PH,TH) direction
-        Real64 ObTrans;                                  // Product of solar transmittances of obstructions seen by a light ray
-        static Array2D<Real64> ObTransM(NPHMAX, NTHMAX); // ObTrans value for each (TH,PH) direction
+        static Vector3<Nandle> U;                        // Unit vector in (PH,TH) direction
+        Nandle ObTrans;                                  // Product of solar transmittances of obstructions seen by a light ray
+        static Array2D<Nandle> ObTransM(NPHMAX, NTHMAX); // ObTrans value for each (TH,PH) direction
         // unused  REAL(r64)         :: HitPointLumFrClearSky     ! Luminance of obstruction from clear sky (cd/m2)
         // unused  REAL(r64)         :: HitPointLumFrOvercSky     ! Luminance of obstruction from overcast sky (cd/m2)
         // unused  REAL(r64)         :: HitPointLumFrSun          ! Luminance of obstruction from sun (cd/m2)
         int ICtrl;        // Window control pointer
         int IConstShaded; // Pointer to shaded construction for a window
         int JSH;          // Shading index: JSH=1 is bare window, JSH=2 is shaded window
-        Real64 COSBSun;   // Cosine of angle of incidence of direct sun on window
-        Real64 TVISBSun;  // Window's visible transmittance at COSBSun
+        Nandle COSBSun;   // Cosine of angle of incidence of direct sun on window
+        Nandle TVISBSun;  // Window's visible transmittance at COSBSun
         //  (times light well efficiency, if appropriate)
-        Real64 ZSU1; // Transmitted direct normal illuminance (lux)
+        Nandle ZSU1; // Transmitted direct normal illuminance (lux)
         //  CHARACTER(len=32) :: ShType                    ! Window shading device type
         int ShType;                  // Window shading device type
         bool ShadeOn;                // True if exterior or interior window shade present
@@ -7760,69 +7760,69 @@ namespace DaylightingManager {
         int ShelfNum;                // Daylighting shelf object number
         int InShelfSurf;             // Inside daylighting shelf surface number
         int OutShelfSurf;            // Outside daylighting shelf surface number
-        Real64 TransBlBmDiffFront;   // Isolated blind vis beam-diffuse front transmittance
-        Real64 TransScBmDiffFront;   // Isolated screen vis beam-diffuse front transmittance
-        Real64 TransScDiffDiffFront; // Isolated screen vis diffuse-diffuse front transmittance
-        Real64 ReflGlDiffDiffBack;   // Bare glazing system vis diffuse back reflectance
-        Real64 ReflGlDiffDiffFront;  // Bare glazing system vis diffuse front reflectance
-        Real64 ReflBlBmDiffFront;    // Isolated blind vis beam-diffuse front reflectance
-        Real64 TransBlDiffDiffFront; // Isolated blind vis diffuse-diffuse front transmittance
-        Real64 ReflBlDiffDiffFront;  // Isolated blind vis diffuse-diffuse front reflectance
-        Real64 ReflBlDiffDiffBack;   // Isolated blind vis diffuse-diffuse back reflectance
-        Real64 ReflScDiffDiffBack;   // Isolated screen vis diffuse-diffuse back reflectance
-        Real64 ProfAng;              // Solar profile angle (radians)
-        Real64 SlatAng;              // Blind slat angle
+        Nandle TransBlBmDiffFront;   // Isolated blind vis beam-diffuse front transmittance
+        Nandle TransScBmDiffFront;   // Isolated screen vis beam-diffuse front transmittance
+        Nandle TransScDiffDiffFront; // Isolated screen vis diffuse-diffuse front transmittance
+        Nandle ReflGlDiffDiffBack;   // Bare glazing system vis diffuse back reflectance
+        Nandle ReflGlDiffDiffFront;  // Bare glazing system vis diffuse front reflectance
+        Nandle ReflBlBmDiffFront;    // Isolated blind vis beam-diffuse front reflectance
+        Nandle TransBlDiffDiffFront; // Isolated blind vis diffuse-diffuse front transmittance
+        Nandle ReflBlDiffDiffFront;  // Isolated blind vis diffuse-diffuse front reflectance
+        Nandle ReflBlDiffDiffBack;   // Isolated blind vis diffuse-diffuse back reflectance
+        Nandle ReflScDiffDiffBack;   // Isolated screen vis diffuse-diffuse back reflectance
+        Nandle ProfAng;              // Solar profile angle (radians)
+        Nandle SlatAng;              // Blind slat angle
         int JB;                      // Blind slat angle index
-        Real64 t1;                   // Beam-beam vis trans of bare glass layers 1 and 2
-        Real64 t2;
-        Real64 td2; // Diffuse-diffuse vis trans of bare glass layers 2 and 3
-        Real64 td3;
-        Real64 rbd1; // Beam-diffuse back vis reflectance of bare glass layers 1 and 2
-        Real64 rbd2;
-        Real64 rfd2; // Beam-diffuse front vis reflectance of bare glass layers 2 and 3
-        Real64 rfd3;
-        Real64 tfshBd; // Beam-diffuse front vis trans of bare blind
-        Real64 rfshB;  // Beam-diffuse front vis reflectance of bare blind
-        Real64 tfshd;  // Diffuse-diffuse front vis trans of bare blind
-        Real64 rbshd;  // Diffuse-diffuse back vis reflectance of bare blind
+        Nandle t1;                   // Beam-beam vis trans of bare glass layers 1 and 2
+        Nandle t2;
+        Nandle td2; // Diffuse-diffuse vis trans of bare glass layers 2 and 3
+        Nandle td3;
+        Nandle rbd1; // Beam-diffuse back vis reflectance of bare glass layers 1 and 2
+        Nandle rbd2;
+        Nandle rfd2; // Beam-diffuse front vis reflectance of bare glass layers 2 and 3
+        Nandle rfd3;
+        Nandle tfshBd; // Beam-diffuse front vis trans of bare blind
+        Nandle rfshB;  // Beam-diffuse front vis reflectance of bare blind
+        Nandle tfshd;  // Diffuse-diffuse front vis trans of bare blind
+        Nandle rbshd;  // Diffuse-diffuse back vis reflectance of bare blind
         // unused  REAL(r64)         :: A                         ! Intermediate value for azimuth limits calculation
-        Real64 ZSUObsRefl; // Illuminance on window from beam solar reflected by an
+        Nandle ZSUObsRefl; // Illuminance on window from beam solar reflected by an
         //  obstruction (for unit beam normal illuminance)
         int NearestHitSurfNum;               // Surface number of nearest obstruction
         int NearestHitSurfNumX;              // Surface number to use when obstruction is a shadowing surface
-        static Vector3<Real64> NearestHitPt; // Hit point of ray on nearest obstruction (m)
-        Real64 LumAtHitPtFrSun;              // Luminance at hit point on obstruction from solar reflection
+        static Vector3<Nandle> NearestHitPt; // Hit point of ray on nearest obstruction (m)
+        Nandle LumAtHitPtFrSun;              // Luminance at hit point on obstruction from solar reflection
         //  for unit beam normal illuminance (cd/m2)
-        Real64 SunObstructionMult;                                 // = 1 if sun hits a ground point; otherwise = 0
-        static Array2D<Real64> SkyObstructionMult(NPHMAX, NTHMAX); // Ratio of obstructed to unobstructed sky diffuse at
+        Nandle SunObstructionMult;                                 // = 1 if sun hits a ground point; otherwise = 0
+        static Array2D<Nandle> SkyObstructionMult(NPHMAX, NTHMAX); // Ratio of obstructed to unobstructed sky diffuse at
         // a ground point for each (TH,PH) direction
-        Real64 Alfa; // Direction angles for ray heading towards the ground (radians)
-        Real64 Beta;
-        Real64 HorDis;                      // Distance between ground hit point and proj'n of window center onto ground (m)
-        static Vector3<Real64> GroundHitPt; // Coordinates of point that ray from window center hits the ground (m)
+        Nandle Alfa; // Direction angles for ray heading towards the ground (radians)
+        Nandle Beta;
+        Nandle HorDis;                      // Distance between ground hit point and proj'n of window center onto ground (m)
+        static Vector3<Nandle> GroundHitPt; // Coordinates of point that ray from window center hits the ground (m)
         int ObsSurfNum;                     // Obstruction surface number
         bool hitObs;                        // True iff obstruction is hit
-        static Vector3<Real64> ObsHitPt;    // Coordinates of hit point on an obstruction (m)
+        static Vector3<Nandle> ObsHitPt;    // Coordinates of hit point on an obstruction (m)
         int ObsConstrNum;                   // Construction number of obstruction
-        Real64 ObsVisRefl;                  // Visible reflectance of obstruction
-        Real64 SkyReflVisLum;               // Reflected sky luminance at hit point divided by unobstructed sky
+        Nandle ObsVisRefl;                  // Visible reflectance of obstruction
+        Nandle SkyReflVisLum;               // Reflected sky luminance at hit point divided by unobstructed sky
         //  diffuse horizontal illuminance [(cd/m2)/lux]
-        Real64 dReflObsSky; // Contribution to sky-related illuminance on window due to sky diffuse
+        Nandle dReflObsSky; // Contribution to sky-related illuminance on window due to sky diffuse
         //  reflection from an obstruction
-        static Vector3<Real64> URay; // Unit vector in (Phi,Theta) direction
-        Real64 TVisSunRefl;          // Diffuse vis trans of bare window for beam reflection calc
+        static Vector3<Nandle> URay; // Unit vector in (Phi,Theta) direction
+        Nandle TVisSunRefl;          // Diffuse vis trans of bare window for beam reflection calc
         //  (times light well efficiency, if appropriate)
-        Real64 ZSU1refl; // Beam normal illuminance times ZSU1refl = illuminance on window
+        Nandle ZSU1refl; // Beam normal illuminance times ZSU1refl = illuminance on window
         //  due to specular reflection from exterior surfaces
 
         int ZoneNumThisWin;         // temporary to check if this window is actually in adjacent zone
         int ExtWinType;             // Exterior window type (InZoneExtWin, AdjZoneExtWin, NotInOrAdjZoneExtWin)
-        Real64 ZoneInsideSurfArea;  // temporary for calculations, total surface area of zone surfaces m2
+        Nandle ZoneInsideSurfArea;  // temporary for calculations, total surface area of zone surfaces m2
         int IntWinAdjZoneExtWinNum; // the index of the exterior window in IntWinAdjZoneExtWin nested struct
         int AdjExtWinLoop;          // loop index for searching IntWinAdjZoneExtWin
         int IntWinLoop;             // loop index for searching interior windows
         int IntWinNum;              // window index for interior windows associated with exterior windows
-        Real64 COSBintWin;
+        Nandle COSBintWin;
 
         ZoneNumThisWin = Surface(Surface(IWin).BaseSurf).Zone;
         // The inside surface area, ZoneDaylight(ZoneNum)%TotInsSurfArea was calculated in subr DayltgAveInteriorReflectance
@@ -7885,7 +7885,7 @@ namespace DaylightingManager {
         DPH = (PHMAX - PHMIN) / double(NPHMAX);
 
         // Sky/ground element altitude integration
-        Vector3<Real64> const SUNCOS_IHR(SUNCOSHR(IHR, {1, 3}));
+        Vector3<Nandle> const SUNCOS_IHR(SUNCOSHR(IHR, {1, 3}));
         for (IPH = 1; IPH <= NPHMAX; ++IPH) {
             PH = PHMIN + (double(IPH) - 0.5) * DPH;
 
@@ -7922,8 +7922,8 @@ namespace DaylightingManager {
             DA = CPH * DTH * DPH;
 
             // Sky/ground element azimuth integration
-            Real64 const sin_window_phi(std::sin(SurfaceWindow(IWin).Phi));
-            Real64 const cos_window_phi(std::cos(SurfaceWindow(IWin).Phi));
+            Nandle const sin_window_phi(std::sin(SurfaceWindow(IWin).Phi));
+            Nandle const cos_window_phi(std::cos(SurfaceWindow(IWin).Phi));
             for (ITH = 1; ITH <= NTHMAX; ++ITH) {
                 TH = ThMin + (double(ITH) - 0.5) * DTH;
                 U(1) = CPH * std::cos(TH);
@@ -8576,9 +8576,9 @@ namespace DaylightingManager {
                                        int const NBasis,
                                        int const IHR,
                                        int const iRefPoint,
-                                       Array2<Real64> &ElementLuminanceSky,      // sky related luminance at window element (exterior side)
-                                       Array1D<Real64> &ElementLuminanceSun,     // sun related luminance at window element (exterior side),
-                                       Array1D<Real64> &ElementLuminanceSunDisk, // sun related luminance at window element (exterior side),
+                                       Array2<Nandle> &ElementLuminanceSky,      // sky related luminance at window element (exterior side)
+                                       Array1D<Nandle> &ElementLuminanceSun,     // sun related luminance at window element (exterior side),
+                                       Array1D<Nandle> &ElementLuminanceSunDisk, // sun related luminance at window element (exterior side),
                                        int const CalledFrom,
                                        Optional_int_const MapNum)
     {
@@ -8605,19 +8605,19 @@ namespace DaylightingManager {
         int iIncElem;
         int iSky;
         int SolBmIndex;
-        Real64 LambdaInc;
-        Real64 Altitude;
-        Real64 Azimuth;
+        Nandle LambdaInc;
+        Nandle Altitude;
+        Nandle Azimuth;
         //  REAL(r64) :: CurCplxFenState
         int CurCplxFenState;
-        Real64 SunObstrMultiplier; // sun obstruction multiplier used to determine if sun hit the ground point
-        Real64 ObstrTrans;         // product of all surface transmittances intersecting incoming beam
+        Nandle SunObstrMultiplier; // sun obstruction multiplier used to determine if sun hit the ground point
+        Nandle ObstrTrans;         // product of all surface transmittances intersecting incoming beam
 
-        Real64 BeamObstrMultiplier;         // beam obstruction multiplier in case incoming beam is from the ground
+        Nandle BeamObstrMultiplier;         // beam obstruction multiplier in case incoming beam is from the ground
         int ObsSurfNum;                     // Obstruction surface number
         bool hitObs;                        // True iff obstruction is hit
-        static Vector3<Real64> ObsHitPt;    // Coordinates of hit point on an obstruction (m)
-        static Vector3<Real64> GroundHitPt; // Coordinates of point that ray from window center hits the ground (m)
+        static Vector3<Nandle> ObsHitPt;    // Coordinates of hit point on an obstruction (m)
+        static Vector3<Nandle> GroundHitPt; // Coordinates of point that ray from window center hits the ground (m)
 
         int NRefl;          // number of exterior obstructions
         int iReflElem;      // incoming direction blocking surfaces element counter
@@ -8693,7 +8693,7 @@ namespace DaylightingManager {
         } else {
             NGnd = ComplexWind(IWin).DaylghtGeom(CurCplxFenState).IlluminanceMap(iRefPoint, MapNum).NGnd(WinEl);
         }
-        Vector3<Real64> const SUNCOS_IHR(SUNCOSHR(IHR, {1, 3}));
+        Vector3<Nandle> const SUNCOS_IHR(SUNCOSHR(IHR, {1, 3}));
         for (iGndElem = 1; iGndElem <= NGnd; ++iGndElem) {
             // case for sky elements. Integration is done over upper ground hemisphere to determine how many obstructions
             // were hit in the process
@@ -8767,28 +8767,28 @@ namespace DaylightingManager {
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
-        Array2D<Real64> FLSK;     // Sky related luminous flux
-        Array1D<Real64> FLSU;     // Sun related luminous flux, excluding entering beam
-        Array1D<Real64> FLSUdisk; // Sun related luminous flux, due to entering beam
+        Array2D<Nandle> FLSK;     // Sky related luminous flux
+        Array1D<Nandle> FLSU;     // Sun related luminous flux, excluding entering beam
+        Array1D<Nandle> FLSUdisk; // Sun related luminous flux, due to entering beam
 
-        Array2D<Real64> FirstFluxSK;     // Sky related first reflected flux
-        Array1D<Real64> FirstFluxSU;     // Sun related first reflected flux, excluding entering beam
-        Array1D<Real64> FirstFluxSUdisk; // Sun related first reflected flux, due to entering beam
+        Array2D<Nandle> FirstFluxSK;     // Sky related first reflected flux
+        Array1D<Nandle> FirstFluxSU;     // Sun related first reflected flux, excluding entering beam
+        Array1D<Nandle> FirstFluxSUdisk; // Sun related first reflected flux, due to entering beam
 
-        Array2D<Real64> ElementLuminanceSky;     // sky related luminance at window element (exterior side)
-        Array1D<Real64> ElementLuminanceSun;     // sun related luminance at window element (exterior side), exluding beam
-        Array1D<Real64> ElementLuminanceSunDisk; // sun related luminance at window element (exterior side), due to sun beam
+        Array2D<Nandle> ElementLuminanceSky;     // sky related luminance at window element (exterior side)
+        Array1D<Nandle> ElementLuminanceSun;     // sun related luminance at window element (exterior side), exluding beam
+        Array1D<Nandle> ElementLuminanceSunDisk; // sun related luminance at window element (exterior side), due to sun beam
         // Total transmitted flux
-        //		static Vector4< Real64 > FLSKTot; //Unused
-        Real64 FLSUTot;
-        Real64 FLSUdiskTot;
+        //		static Vector4< Nandle > FLSKTot; //Unused
+        Nandle FLSUTot;
+        Nandle FLSUdiskTot;
 
         // Total for first relflected fluxes
-        static Vector4<Real64> FFSKTot;
-        Real64 FFSUTot;
-        Real64 FFSUdiskTot;
+        static Vector4<Nandle> FFSKTot;
+        Nandle FFSUTot;
+        Nandle FFSUdiskTot;
 
-        Real64 COSIncSun; // cosine of sun incidence angle (from basis elements)
+        Nandle COSIncSun; // cosine of sun incidence angle (from basis elements)
 
         int iSky;   // Sky type index: 1=clear, 2=clear turbid, 3=intermediate, 4=overcast
         int iConst; // Construction number
@@ -8801,10 +8801,10 @@ namespace DaylightingManager {
         int iIncElem;  // incoming direction counter
         int iBackElem; // outgoing direction counter
 
-        Real64 LambdaInc; // current lambda value for incoming direction
+        Nandle LambdaInc; // current lambda value for incoming direction
         // REAL(r64) :: LambdaTrn  ! current lambda value for incoming direction
-        Real64 dirTrans; // directional bsdf transmittance
-        Real64 ZoneInsideSurfArea;
+        Nandle dirTrans; // directional bsdf transmittance
+        Nandle ZoneInsideSurfArea;
 
         CurCplxFenState = SurfaceWindow(IWin).ComplexFen.CurrentState;
         iConst = SurfaceWindow(IWin).ComplexFen.State(CurCplxFenState).Konst;
@@ -8928,19 +8928,19 @@ namespace DaylightingManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         // Luminances from different sources to the window
-        Array2D<Real64> ElementLuminanceSky; // sky related luminance at window element (exterior side)
-        Array1D<Real64> ElementLuminanceSun; // sun related luminance at window element (exterior side),
+        Array2D<Nandle> ElementLuminanceSky; // sky related luminance at window element (exterior side)
+        Array1D<Nandle> ElementLuminanceSun; // sun related luminance at window element (exterior side),
         // exluding beam
-        Array1D<Real64> ElementLuminanceSunDisk; // sun related luminance at window element (exterior side),
+        Array1D<Nandle> ElementLuminanceSunDisk; // sun related luminance at window element (exterior side),
         // due to sun beam
 
-        static Vector4<Real64> WinLumSK; // Sky related window luminance
-        Real64 WinLumSU;                 // Sun related window luminance, excluding entering beam
+        static Vector4<Nandle> WinLumSK; // Sky related window luminance
+        Nandle WinLumSU;                 // Sun related window luminance, excluding entering beam
         // REAL(r64) :: WinLumSUdisk  ! Sun related window luminance, due to entering beam
 
-        static Vector4<Real64> EDirSky; // Sky related direct illuminance
-        Real64 EDirSun;                 // Sun related direct illuminance, excluding entering beam
-                                        //		Real64 EDirSunDisk; // Sun related direct illuminance, due to entering beam //Unused Set but never used
+        static Vector4<Nandle> EDirSky; // Sky related direct illuminance
+        Nandle EDirSun;                 // Sun related direct illuminance, excluding entering beam
+                                        //		Nandle EDirSunDisk; // Sun related direct illuminance, due to entering beam //Unused Set but never used
 
         int CurCplxFenState;
         int NIncBasis;
@@ -8950,10 +8950,10 @@ namespace DaylightingManager {
         int iSky;
 
         // REAL(r64) :: LambdaInc ! lambda for incident direation
-        Real64 dirTrans; // directional BSDF transmittance
+        Nandle dirTrans; // directional BSDF transmittance
 
-        Real64 dOmega;      // solid view angle of current element
-        Real64 zProjection; // z-axe projection of solid view angle (used to calculate amount of light at horizontal surface
+        Nandle dOmega;      // solid view angle of current element
+        Nandle zProjection; // z-axe projection of solid view angle (used to calculate amount of light at horizontal surface
         // laying at reference point)
 
         CurCplxFenState = SurfaceWindow(IWin).ComplexFen.CurrentState;
@@ -9022,10 +9022,10 @@ namespace DaylightingManager {
                                                 int const iHour,              // Hour of day
                                                 int const iRefPoint,
                                                 int const NumEl,      // Total number of window elements
-                                                Real64 const AZVIEW,  // Azimuth of view vector in absolute coord system for
+                                                Nandle const AZVIEW,  // Azimuth of view vector in absolute coord system for
                                                 int const CalledFrom, // indicate  which type of routine called this routine
                                                 Optional_int_const MapNum,
-                                                Optional<Real64 const> MapWindowSolidAngAtRefPtWtd)
+                                                Optional<Nandle const> MapWindowSolidAngAtRefPtWtd)
     {
 
         // SUBROUTINE INFORMATION:
@@ -9055,18 +9055,18 @@ namespace DaylightingManager {
         int SolBmIndex;
         int NTrnBasis;
         int iTrnElem;
-        Real64 WindowSolidAngleDaylightPoint(0.0);
-        Real64 XR;
-        Real64 YR;
-        Real64 PosFac;
-        Real64 dirTrans;
-        Real64 LambdaTrn;
-        Real64 WinLumSunDisk;        // window luminance from sun disk
-        Real64 ELumSunDisk;          // window illuminance from sun disk
-        Real64 TransBeam;            // transmittance of the beam for given direction
-        static Vector3<Real64> V;    // temporary vector
-        static Vector3<Real64> RWin; // Window center
-        Real64 RayZ;                 // z component of unit vector for outgoing direction
+        Nandle WindowSolidAngleDaylightPoint(0.0);
+        Nandle XR;
+        Nandle YR;
+        Nandle PosFac;
+        Nandle dirTrans;
+        Nandle LambdaTrn;
+        Nandle WinLumSunDisk;        // window luminance from sun disk
+        Nandle ELumSunDisk;          // window illuminance from sun disk
+        Nandle TransBeam;            // transmittance of the beam for given direction
+        static Vector3<Nandle> V;    // temporary vector
+        static Vector3<Nandle> RWin; // Window center
+        Nandle RayZ;                 // z component of unit vector for outgoing direction
         bool refPointIntersect;
 
         CurCplxFenState = SurfaceWindow(iWin).ComplexFen.CurrentState;
@@ -9144,9 +9144,9 @@ namespace DaylightingManager {
         EDIRSUdisk(iHour, 1) = ELumSunDisk;
     }
 
-    Real64 DayltgSkyLuminance(int const ISky,     // Sky type: 1=clear, 2=clear turbid, 3=intermediate, 4=overcast
-                              Real64 const THSKY, // Azimuth and altitude of sky element (radians)
-                              Real64 const PHSKY)
+    Nandle DayltgSkyLuminance(int const ISky,     // Sky type: 1=clear, 2=clear turbid, 3=intermediate, 4=overcast
+                              Nandle const THSKY, // Azimuth and altitude of sky element (radians)
+                              Nandle const PHSKY)
     {
 
         // SUBROUTINE INFORMATION:
@@ -9181,7 +9181,7 @@ namespace DaylightingManager {
         // USE STATEMENTS: na
 
         // Return value
-        Real64 DayltgSkyLuminance(0.0); // Luminance of sky element divided by zenith luminance
+        Nandle DayltgSkyLuminance(0.0); // Luminance of sky element divided by zenith luminance
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -9196,14 +9196,14 @@ namespace DaylightingManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 SPHSKY;    // Sine of PHSKY
-        Real64 G(0.0);    // Angle between sun and element of sky (radians)
-        Real64 COSG(0.0); // Cosine of G
-        Real64 Z;         // Solar zenith angle (radians)
-        Real64 Z1;        // Luminance factors (intermediate variables)
-        Real64 Z2;
-        Real64 Z3;
-        Real64 Z4;
+        Nandle SPHSKY;    // Sine of PHSKY
+        Nandle G(0.0);    // Angle between sun and element of sky (radians)
+        Nandle COSG(0.0); // Cosine of G
+        Nandle Z;         // Solar zenith angle (radians)
+        Nandle Z1;        // Luminance factors (intermediate variables)
+        Nandle Z2;
+        Nandle Z3;
+        Nandle Z4;
 
         // Autodesk:Return ISky in {1,2,3,4} should be checked or asserted or a default case should be added to SELECT block to set return value
 
@@ -9243,9 +9243,9 @@ namespace DaylightingManager {
     }
 
     void ProfileAngle(int const SurfNum,                // Surface number
-                      Vector3<Real64> const &CosDirSun, // Solar direction cosines
+                      Vector3<Nandle> const &CosDirSun, // Solar direction cosines
                       int const HorOrVert,              // If HORIZONTAL, calculates ProfileAngHor
-                      Real64 &ProfileAng                // Solar profile angle (radians).
+                      Nandle &ProfileAng                // Solar profile angle (radians).
     )
     {
 
@@ -9282,16 +9282,16 @@ namespace DaylightingManager {
         // DERIVED TYPE DEFINITIONS: na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ElevSun;                  // Sun elevation; angle between sun and horizontal (radians)
-        Real64 ElevWin;                  // Window elevation: angle between window outward normal and horizontal (radians)
-        Real64 AzimWin;                  // Window azimuth (radians)
-        Real64 AzimSun;                  // Sun azimuth (radians)
-        static Vector3<Real64> WinNorm;  // Window outward normal unit vector
-        Real64 ThWin;                    // Azimuth angle of WinNorm
-        static Vector3<Real64> SunPrime; // Projection of sun vector onto plane (perpendicular to
+        Nandle ElevSun;                  // Sun elevation; angle between sun and horizontal (radians)
+        Nandle ElevWin;                  // Window elevation: angle between window outward normal and horizontal (radians)
+        Nandle AzimWin;                  // Window azimuth (radians)
+        Nandle AzimSun;                  // Sun azimuth (radians)
+        static Vector3<Nandle> WinNorm;  // Window outward normal unit vector
+        Nandle ThWin;                    // Azimuth angle of WinNorm
+        static Vector3<Nandle> SunPrime; // Projection of sun vector onto plane (perpendicular to
         //  window plane) determined by WinNorm and vector along
         //  baseline of window
-        static Vector3<Real64> WinNormCrossBase; // Cross product of WinNorm and vector along window baseline
+        static Vector3<Nandle> WinNormCrossBase; // Cross product of WinNorm and vector along window baseline
         //  INTEGER            :: IComp             ! Vector component index
 
         // FLOW:
@@ -9310,7 +9310,7 @@ namespace DaylightingManager {
             } else {
                 WinNorm = Surface(SurfNum).OutNormVec;
                 ThWin = AzimWin - PiOvr2;
-                Real64 const sin_ElevWin(std::sin(ElevWin));
+                Nandle const sin_ElevWin(std::sin(ElevWin));
                 WinNormCrossBase(1) = -sin_ElevWin * std::cos(ThWin);
                 WinNormCrossBase(2) = sin_ElevWin * std::sin(ThWin);
                 WinNormCrossBase(3) = std::cos(ElevWin);
@@ -9324,10 +9324,10 @@ namespace DaylightingManager {
         }
     }
 
-    void DayltgClosestObstruction(Vector3<Real64> const &RecPt,  // Point on window from which ray emanates (m)
-                                  Vector3<Real64> const &RayVec, // Unit vector along ray pointing away from window (m)
+    void DayltgClosestObstruction(Vector3<Nandle> const &RecPt,  // Point on window from which ray emanates (m)
+                                  Vector3<Nandle> const &RayVec, // Unit vector along ray pointing away from window (m)
                                   int &NearestHitSurfNum,        // Surface number of nearest obstruction that is hit by ray;
-                                  Vector3<Real64> &NearestHitPt  // Ray's hit point on nearest obstruction (m)
+                                  Vector3<Nandle> &NearestHitPt  // Ray's hit point on nearest obstruction (m)
     )
     {
 
@@ -9362,14 +9362,14 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // na
-        static Vector3<Real64> HitPt; // Hit point on an obstruction (m)
+        static Vector3<Nandle> HitPt; // Hit point on an obstruction (m)
         bool hit;                     // True iff obstruction is hit
 
         // FLOW:
 
         NearestHitSurfNum = 0;
-        Real64 NearestHitDistance_sq(
-            std::numeric_limits<Real64>::max()); // Distance squared from receiving point to nearest hit point for a ray (m^2)
+        Nandle NearestHitDistance_sq(
+            std::numeric_limits<Nandle>::max()); // Distance squared from receiving point to nearest hit point for a ray (m^2)
         NearestHitPt = 0.0;
         if (TotSurfaces < octreeCrossover) { // Linear search through surfaces
 
@@ -9384,7 +9384,7 @@ namespace DaylightingManager {
                             NearestHitSurfNum = ObsSurfNum;
                         } else {
                             // Distance squared from receiving point to hit point
-                            Real64 const HitDistance_sq(distance_squared(HitPt, RecPt));
+                            Nandle const HitDistance_sq(distance_squared(HitPt, RecPt));
                             // Reset NearestHitSurfNum and NearestHitDistance_sq if this hit point is closer than previous closest
                             if (HitDistance_sq < NearestHitDistance_sq) {
                                 NearestHitDistance_sq = HitDistance_sq;
@@ -9412,7 +9412,7 @@ namespace DaylightingManager {
                             nearestHitSurface = &surface;
                         } else {
                             // Distance squared from receiving point to hit point
-                            Real64 const HitDistance_sq(distance_squared(HitPt, RecPt));
+                            Nandle const HitDistance_sq(distance_squared(HitPt, RecPt));
                             // Reset nearestHitSurface and NearestHitDistance_sq if this hit point is closer than previous closest
                             if (HitDistance_sq < NearestHitDistance_sq) {
                                 NearestHitDistance_sq = HitDistance_sq;
@@ -9425,7 +9425,7 @@ namespace DaylightingManager {
             };
 
             // Process octree surface candidates
-            Vector3<Real64> const RayVec_inv(SurfaceOctreeCube::safe_inverse(RayVec));
+            Vector3<Nandle> const RayVec_inv(SurfaceOctreeCube::safe_inverse(RayVec));
             surfaceOctree.processSurfaceRayIntersectsCube(RecPt, RayVec, RayVec_inv, surfaceHit);
             if (nearestHitSurface != nullptr) { // Find surface number: This is inefficient: Improve when surfaces know their own number
                 for (int i = 1; i <= TotSurfaces; ++i) {
@@ -9440,10 +9440,10 @@ namespace DaylightingManager {
     }
 
     void DayltgSurfaceLumFromSun(int const IHR,                    // Hour number
-                                 Vector3<Real64> const &Ray,       // Ray from window to reflecting surface (m)
+                                 Vector3<Nandle> const &Ray,       // Ray from window to reflecting surface (m)
                                  int const ReflSurfNum,            // Number of surface for which luminance is being calculated
-                                 Vector3<Real64> const &ReflHitPt, // Point on ReflSurfNum for luminance calculation (m)
-                                 Real64 &LumAtReflHitPtFrSun       // Luminance at ReflHitPt from beam solar reflection for unit
+                                 Vector3<Nandle> const &ReflHitPt, // Point on ReflSurfNum for luminance calculation (m)
+                                 Nandle &LumAtReflHitPtFrSun       // Luminance at ReflHitPt from beam solar reflection for unit
     )
     {
 
@@ -9476,12 +9476,12 @@ namespace DaylightingManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Vector3<Real64> ReflNorm; // Unit normal to reflecting surface (m)
+        static Vector3<Nandle> ReflNorm; // Unit normal to reflecting surface (m)
         int ObsSurfNum;                  // Obstruction surface number
         bool hitObs;                     // True iff obstruction is hit
-        static Vector3<Real64> ObsHitPt; // Hit point on obstruction (m)
-        Real64 CosIncAngAtHitPt;         // Cosine of angle of incidence of sun at HitPt
-        Real64 DiffVisRefl;              // Diffuse visible reflectance of ReflSurfNum
+        static Vector3<Nandle> ObsHitPt; // Hit point on obstruction (m)
+        Nandle CosIncAngAtHitPt;         // Cosine of angle of incidence of sun at HitPt
+        Nandle DiffVisRefl;              // Diffuse visible reflectance of ReflSurfNum
 
         // FLOW:
 
@@ -9496,7 +9496,7 @@ namespace DaylightingManager {
             }
         }
         // Cosine of angle of incidence of sun at HitPt if sun were to reach HitPt
-        Vector3<Real64> const SUNCOS_IHR(SUNCOSHR(IHR, {1, 3}));
+        Vector3<Nandle> const SUNCOS_IHR(SUNCOSHR(IHR, {1, 3}));
         CosIncAngAtHitPt = dot(ReflNorm, SUNCOS_IHR);
         // Require that the sun be in front of this surface relative to window element
         if (CosIncAngAtHitPt <= 0.0) return; // Sun is in back of reflecting surface
@@ -9566,7 +9566,7 @@ namespace DaylightingManager {
         using General::POLYF;
 
         // Locals
-        static Array1D<Real64> daylight_illum;
+        static Array1D<Nandle> daylight_illum;
 
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
@@ -9585,15 +9585,15 @@ namespace DaylightingManager {
         int ISky;  // Sky type index
         int ISky1; // Sky type index values for averaging two sky types
         int ISky2;
-        static Array2D<Real64> DFSKHR(2, 4); // Sky daylight factor for sky type (first index),
+        static Array2D<Nandle> DFSKHR(2, 4); // Sky daylight factor for sky type (first index),
         //   bare/shaded window (second index)
-        static Vector2<Real64> DFSUHR;       // Sun daylight factor for bare/shaded window
-        static Array2D<Real64> BFSKHR(2, 4); // Sky background luminance factor for sky type (first index),
+        static Vector2<Nandle> DFSUHR;       // Sun daylight factor for bare/shaded window
+        static Array2D<Nandle> BFSKHR(2, 4); // Sky background luminance factor for sky type (first index),
         //   bare/shaded window (second index)
-        static Vector2<Real64> BFSUHR;       // Sun background luminance factor for bare/shaded window
-        static Array2D<Real64> SFSKHR(2, 4); // Sky source luminance factor for sky type (first index),
+        static Vector2<Nandle> BFSUHR;       // Sun background luminance factor for bare/shaded window
+        static Array2D<Nandle> SFSKHR(2, 4); // Sky source luminance factor for sky type (first index),
         //   bare/shaded window (second index)
-        static Vector2<Real64> SFSUHR; // Sun source luminance factor for bare/shaded window
+        static Vector2<Nandle> SFSUHR; // Sun source luminance factor for bare/shaded window
         int IL;                        // Reference point index
         int IWin;                      // Window index
         int IS;                        // IS=1 for unshaded window, =2 for shaded window
@@ -9601,27 +9601,27 @@ namespace DaylightingManager {
         //                                   !  has switchable glazing that adjusts visible transmittance to just meet
         //                                   !  daylighting setpoint; =0 otherwise.
         int ICtrl;                        // Window shading control pointer
-        Real64 SkyWeight;                 // Weighting factor used to average two different sky types
-        static Vector4<Real64> HorIllSky; // Horizontal illuminance for different sky types
-        Real64 HorIllSkyFac;              // Ratio between horizontal illuminance from sky horizontal irradiance and
+        Nandle SkyWeight;                 // Weighting factor used to average two different sky types
+        static Vector4<Nandle> HorIllSky; // Horizontal illuminance for different sky types
+        Nandle HorIllSkyFac;              // Ratio between horizontal illuminance from sky horizontal irradiance and
         //   luminous efficacy and horizontal illuminance from averaged sky
-        Real64 SlatAng; // Blind slat angle (rad)
+        Nandle SlatAng; // Blind slat angle (rad)
         bool VarSlats;  // True if slats are movable, i.e., variable angle
         int loop;       // Window loop index
-        Real64 GTOT;
-        Real64 GTOT1;
-        Real64 GTOT2;
-        static Array1D<Real64> BACLUM;
-        static Array1D<Real64> GLRNDX;
+        Nandle GTOT;
+        Nandle GTOT1;
+        Nandle GTOT2;
+        static Array1D<Nandle> BACLUM;
+        static Array1D<Nandle> GLRNDX;
         int ILB;
 
         int IConst;
-        Real64 VTRatio;
-        Real64 VTNow;
-        Real64 VTMaster;
+        Nandle VTRatio;
+        Nandle VTNow;
+        Nandle VTMaster;
 
-        static Real64 VTDark(0.0);  // Visible transmittance (VT) of electrochromic (EC) windows in fully dark state
-        static Real64 VTMULT(1.0);  // VT multiplier for EC windows
+        static Nandle VTDark(0.0);  // Visible transmittance (VT) of electrochromic (EC) windows in fully dark state
+        static Nandle VTMULT(1.0);  // VT multiplier for EC windows
         static int IConstShaded(0); // The shaded window construction for switchable windows
         int MapNum;
         int ILM;
@@ -10065,9 +10065,9 @@ namespace DaylightingManager {
         int linelen;
         std::string AddXorYString;
         // BSLLC Start
-        static Array1D<Real64> XValue;
-        static Array1D<Real64> YValue;
-        static Array2D<Real64> IllumValue;
+        static Array1D<Nandle> XValue;
+        static Array1D<Nandle> YValue;
+        static Array2D<Nandle> IllumValue;
         int SQYear;
         int SQMonth;
         int SQDayOfMonth;
@@ -10842,11 +10842,11 @@ namespace DaylightingManager {
         // is determined by the split-flux method and is assumed to be uniform, i.e., the same
         // at all reference points.
 
-        Real64 QDifTrans;              // Luminous flux transmitted through an int win from adjacent zone's enclosure (lumens)
-        Real64 QDifTransUp;            // Upgoing part of QDifTrans (lumens)
-        Real64 QDifTransDn;            // Downgoing part of QDifTrans (lumens)
-        Real64 DifInterReflIllThisWin; // Inter-reflected illuminance due to QDifTrans (lux)
-        Real64 BmInterReflIll;         // Inter-reflected illuminance due to beam solar entering ZoneNum's enclosure
+        Nandle QDifTrans;              // Luminous flux transmitted through an int win from adjacent zone's enclosure (lumens)
+        Nandle QDifTransUp;            // Upgoing part of QDifTrans (lumens)
+        Nandle QDifTransDn;            // Downgoing part of QDifTrans (lumens)
+        Nandle DifInterReflIllThisWin; // Inter-reflected illuminance due to QDifTrans (lux)
+        Nandle BmInterReflIll;         // Inter-reflected illuminance due to beam solar entering ZoneNum's enclosure
         //  through its interior windows (lux)
 
         ZoneDaylight(ZoneNum).InterReflIllFrIntWins = 0.0;
@@ -10917,22 +10917,22 @@ namespace DaylightingManager {
         bool is_Rectangle;              // True if window is a rectangle
         bool IntWinNextToIntWinAdjZone; // True if an interior window is next to a zone with
         // one or more exterior windows
-        Real64 IntWinSolidAng; // Approximation to solid angle subtended by an interior window
+        Nandle IntWinSolidAng; // Approximation to solid angle subtended by an interior window
         // from a point a distance SQRT(zone floor area) away.
-        static Vector3<Real64> W1; // Window vertices
-        static Vector3<Real64> W2;
-        static Vector3<Real64> W3;
-        static Vector3<Real64> WC;  // Center point of window
-        static Vector3<Real64> W21; // Unit vectors from window vertex 2 to 1 and 2 to 3
-        static Vector3<Real64> W23;
-        Real64 HW; // Window height and width (m)
-        Real64 WW;
-        static Vector3<Real64> RREF;  // Location of a reference point in absolute coordinate system
-        static Vector3<Real64> Ray;   // Unit vector along ray from reference point to window center
-        static Vector3<Real64> REFWC; // Vector from reference point to center of window
-        static Vector3<Real64> WNORM; // Unit vector normal to window (pointing away from room)
-        Real64 DIS;                   // Distance from ref point to window center (m)
-        Real64 COSB;                  // Cosine of angle between ray from ref pt to center of window
+        static Vector3<Nandle> W1; // Window vertices
+        static Vector3<Nandle> W2;
+        static Vector3<Nandle> W3;
+        static Vector3<Nandle> WC;  // Center point of window
+        static Vector3<Nandle> W21; // Unit vectors from window vertex 2 to 1 and 2 to 3
+        static Vector3<Nandle> W23;
+        Nandle HW; // Window height and width (m)
+        Nandle WW;
+        static Vector3<Nandle> RREF;  // Location of a reference point in absolute coordinate system
+        static Vector3<Nandle> Ray;   // Unit vector along ray from reference point to window center
+        static Vector3<Nandle> REFWC; // Vector from reference point to center of window
+        static Vector3<Nandle> WNORM; // Unit vector normal to window (pointing away from room)
+        Nandle DIS;                   // Distance from ref point to window center (m)
+        Nandle COSB;                  // Cosine of angle between ray from ref pt to center of window
         //  and window outward normal
 
         // FLOW:
@@ -11005,7 +11005,7 @@ namespace DaylightingManager {
         }     // End of loop over zones
     }
 
-    void CheckForGeometricTransform(bool &doTransform, Real64 &OldAspectRatio, Real64 &NewAspectRatio)
+    void CheckForGeometricTransform(bool &doTransform, Nandle &OldAspectRatio, Nandle &NewAspectRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -11043,7 +11043,7 @@ namespace DaylightingManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static Array1D_string cAlphas(1);
-        static Array1D<Real64> rNumerics;
+        static Array1D<Nandle> rNumerics;
         int NAlphas;
         int NNum;
         int IOStat;
@@ -11089,7 +11089,7 @@ namespace DaylightingManager {
                                int const ZoneNum,
                                std::string const &refPt1,
                                std::string const &refPt2,
-                               Real64 const zcoord)
+                               Nandle const zcoord)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Greg Stark

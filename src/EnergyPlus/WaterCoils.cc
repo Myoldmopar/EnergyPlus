@@ -149,9 +149,9 @@ namespace WaterCoils {
     int const MaxPolynomOrder(4);
     int const MaxOrderedPairs(60);
 
-    Real64 const PolyConvgTol(1.E-05);
-    Real64 const MinWaterMassFlowFrac(0.000001);
-    Real64 const MinAirMassFlow(0.001);
+    Nandle const PolyConvgTol(1.E-05);
+    Nandle const MinWaterMassFlowFrac(0.000001);
+    Nandle const MinAirMassFlow(0.001);
 
     // coil types in this module
     int const WaterCoil_SimpleHeating(TypeOf_CoilWaterSimpleHeating);
@@ -247,9 +247,9 @@ namespace WaterCoils {
     void SimulateWaterCoilComponents(std::string const &CompName,
                                      bool const FirstHVACIteration,
                                      int &CompIndex,
-                                     Optional<Real64> QActual,
+                                     Optional<Nandle> QActual,
                                      Optional_int_const FanOpMode,
-                                     Optional<Real64 const> PartLoadRatio)
+                                     Optional<Nandle const> PartLoadRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -267,7 +267,7 @@ namespace WaterCoils {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CoilNum;         // The WaterCoil that you are currently loading input into
         int OpMode;          // fan operating mode
-        Real64 PartLoadFrac; // part-load fraction of heating coil
+        Nandle PartLoadFrac; // part-load fraction of heating coil
 
         // FLOW:
 
@@ -381,7 +381,7 @@ namespace WaterCoils {
         Array1D_string AlphArray;        // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> NumArray;        // Numeric input items for object
+        Array1D<Nandle> NumArray;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int MaxNums(0);           // Maximum number of numeric input fields
@@ -995,41 +995,41 @@ namespace WaterCoils {
         using SimAirServingZones::CheckWaterCoilIsOnAirLoop;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallNo(1.e-9); // SmallNo number in place of zero
+        Nandle const SmallNo(1.e-9); // SmallNo number in place of zero
         int const itmax(10);
         int const MaxIte(500); // Maximum number of iterations
         static std::string const RoutineName("InitWaterCoil");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int tempCoilNum;                   // loop variable
-        Real64 DesInletAirEnth;            // Entering air enthalpy at rating (J/kg)
-        Real64 DesOutletAirEnth;           // Leaving air enthalpy at rating(J/kg)
-        Real64 DesAirApparatusDewPtEnth;   // Air enthalpy at apparatus dew point at rating(J/kg)
-        Real64 DesSatEnthAtWaterInTemp;    // Saturated enthalpy at entering liquid temp(J/kg)
-        Real64 DesHumRatAtWaterInTemp;     // Enthalpy at water inlet temp and entering air HumRat (J/kg)
-        Real64 CapacitanceAir;             // Air-side capacity rate(W/C)
-        Real64 DesAirTempApparatusDewPt;   // Temperature apparatus dew point at design capacity
-        Real64 DesAirHumRatApparatusDewPt; // Humdity Ratio at apparatus dew point at design capacity
-        Real64 DesBypassFactor;            // ByPass Factor at design condition
-        Real64 SlopeTempVsHumRatio;        // Ratio temperature difference to humidity difference
+        Nandle DesInletAirEnth;            // Entering air enthalpy at rating (J/kg)
+        Nandle DesOutletAirEnth;           // Leaving air enthalpy at rating(J/kg)
+        Nandle DesAirApparatusDewPtEnth;   // Air enthalpy at apparatus dew point at rating(J/kg)
+        Nandle DesSatEnthAtWaterInTemp;    // Saturated enthalpy at entering liquid temp(J/kg)
+        Nandle DesHumRatAtWaterInTemp;     // Enthalpy at water inlet temp and entering air HumRat (J/kg)
+        Nandle CapacitanceAir;             // Air-side capacity rate(W/C)
+        Nandle DesAirTempApparatusDewPt;   // Temperature apparatus dew point at design capacity
+        Nandle DesAirHumRatApparatusDewPt; // Humdity Ratio at apparatus dew point at design capacity
+        Nandle DesBypassFactor;            // ByPass Factor at design condition
+        Nandle SlopeTempVsHumRatio;        // Ratio temperature difference to humidity difference
         // between entering and leaving air states
-        Real64 TempApparatusDewPtEstimate; // Estimate of TAdp from SlopeTempVsHumRatio
-        Real64 Y1;                         // Previous values of dependent variable in ITERATE
-        Real64 X1;                         // Previous values of independent variable in ITERATE
-        Real64 error;                      // Deviation of dependent variable in iteration
+        Nandle TempApparatusDewPtEstimate; // Estimate of TAdp from SlopeTempVsHumRatio
+        Nandle Y1;                         // Previous values of dependent variable in ITERATE
+        Nandle X1;                         // Previous values of independent variable in ITERATE
+        Nandle error;                      // Deviation of dependent variable in iteration
         int iter;                          // Iteration counter
         int icvg;                          // Iteration convergence flag
-        Real64 ResultX;                    // Output variable from ITERATE function.
+        Nandle ResultX;                    // Output variable from ITERATE function.
         int Ipass;                         // loop index for App_Dewpoint_Loop
-        static Real64 TOutNew(0.0);        // reset outlet air temperature for Coil:Cooling:Water
-        static Real64 WOutNew(0.0);        // reset outlet air humidity ratio for Coil:Cooling:Water
+        static Nandle TOutNew(0.0);        // reset outlet air temperature for Coil:Cooling:Water
+        static Nandle WOutNew(0.0);        // reset outlet air humidity ratio for Coil:Cooling:Water
 
         int AirInletNode;
         int WaterInletNode;
         int WaterOutletNode;
 
-        static Array1D<Real64> DesCpAir;        // CpAir at Design Inlet Air Temp
-        static Array1D<Real64> DesUARangeCheck; // Value for range check based on Design Inlet Air Humidity Ratio
+        static Array1D<Nandle> DesCpAir;        // CpAir at Design Inlet Air Temp
+        static Array1D<Nandle> DesUARangeCheck; // Value for range check based on Design Inlet Air Humidity Ratio
         /////////// hoisted into namespace InitWaterCoilOneTimeFlag
         // static bool MyOneTimeFlag( true );
         /////////////////////////
@@ -1037,44 +1037,44 @@ namespace WaterCoils {
         static Array1D_bool MyCoilReportFlag;
         static Array1D_bool PlantLoopScanFlag;
 
-        static Array1D<Real64> CoefSeries(5); // Tuned Changed to static: High call count: Set before use
-        Real64 FinDiamVar;
-        Real64 TubeToFinDiamRatio;
+        static Array1D<Nandle> CoefSeries(5); // Tuned Changed to static: High call count: Set before use
+        Nandle FinDiamVar;
+        Nandle TubeToFinDiamRatio;
 
-        Real64 CpAirStd; // specific heat of air at std conditions
+        Nandle CpAirStd; // specific heat of air at std conditions
         int SolFla;      // Flag of solver
-        Real64 UA0;      // lower bound for UA
-        Real64 UA1;      // upper bound for UA
-        Real64 UA;
-        static Array1D<Real64> Par(4); // Tuned Changed to static: High call count: Set before use
+        Nandle UA0;      // lower bound for UA
+        Nandle UA1;      // upper bound for UA
+        Nandle UA;
+        static Array1D<Nandle> Par(4); // Tuned Changed to static: High call count: Set before use
 
         static bool NoSatCurveIntersect(false); // TRUE if failed to find appatatus dew-point
         static bool BelowInletWaterTemp(false); // TRUE if apparatus dew-point below design inlet water temperature
         static bool CBFTooLarge(false);         // TRUE if the coil bypass factor is unrealistically large
         static bool NoExitCondReset(false);     // TRUE if exit condition reset is not to be done
 
-        static Real64 RatedLatentCapacity(0.0); // latent cooling capacity at the rating point [W]
-        static Real64 RatedSHR(0.0);            // sensible heat ratio at the rating point
-        static Real64 CapacitanceWater(0.0);    // capacitance of the water stream [W/K]
-        static Real64 CMin(0.0);                // minimum capacitance of 2 streams [W/K]
-        static Real64 CoilEffectiveness(0.0);   // effectiveness of the coil (rated)
-        static Real64 SurfaceArea(0.0);         // heat exchanger surface area, [m2]
-        static Real64 UATotal(0.0);             // heat exchanger UA total, [W/C]
+        static Nandle RatedLatentCapacity(0.0); // latent cooling capacity at the rating point [W]
+        static Nandle RatedSHR(0.0);            // sensible heat ratio at the rating point
+        static Nandle CapacitanceWater(0.0);    // capacitance of the water stream [W/K]
+        static Nandle CMin(0.0);                // minimum capacitance of 2 streams [W/K]
+        static Nandle CoilEffectiveness(0.0);   // effectiveness of the coil (rated)
+        static Nandle SurfaceArea(0.0);         // heat exchanger surface area, [m2]
+        static Nandle UATotal(0.0);             // heat exchanger UA total, [W/C]
         static Array1D_bool RptCoilHeaderFlag(2, true);
 
-        Real64 DesUACoilExternalEnth; // enthalpy based UAExternal for wet coil surface {kg/s}
-        Real64 LogMeanEnthDiff;       // long mean enthalpy difference {J/kg}
-        Real64 LogMeanTempDiff;       // long mean temperature difference {C}
+        Nandle DesUACoilExternalEnth; // enthalpy based UAExternal for wet coil surface {kg/s}
+        Nandle LogMeanEnthDiff;       // long mean enthalpy difference {J/kg}
+        Nandle LogMeanTempDiff;       // long mean temperature difference {C}
 
-        Real64 DesOutletWaterTemp;
-        Real64 DesSatEnthAtWaterOutTemp;
-        Real64 DesEnthAtWaterOutTempAirInHumRat;
-        Real64 DesEnthWaterOut;
-        Real64 Cp;  // local fluid specific heat
-        Real64 rho; // local fluid density
+        Nandle DesOutletWaterTemp;
+        Nandle DesSatEnthAtWaterOutTemp;
+        Nandle DesEnthAtWaterOutTempAirInHumRat;
+        Nandle DesEnthWaterOut;
+        Nandle Cp;  // local fluid specific heat
+        Nandle rho; // local fluid density
         bool errFlag;
-        static Real64 EnthCorrFrac(0.0); // enthalpy correction factor
-        static Real64 TempCorrFrac(0.0); // temperature correction factor
+        static Nandle EnthCorrFrac(0.0); // enthalpy correction factor
+        static Nandle TempCorrFrac(0.0); // temperature correction factor
 
         // FLOW:
 
@@ -1812,11 +1812,11 @@ namespace WaterCoils {
                 WaterCoil(CoilNum).InletAirHumRat = WaterCoil(CoilNum).DesInletAirHumRat; // fixed in sizing routine
                 WaterCoil(CoilNum).InletAirEnthalpy =
                     Psychrometrics::PsyHFnTdbW(WaterCoil(CoilNum).DesInletAirTemp, WaterCoil(CoilNum).DesInletAirHumRat);
-                Real64 DesInletWetBulb = Psychrometrics::PsyTwbFnTdbWPb(
+                Nandle DesInletWetBulb = Psychrometrics::PsyTwbFnTdbWPb(
                     WaterCoil(CoilNum).DesInletAirTemp, WaterCoil(CoilNum).DesInletAirHumRat, DataEnvironment::StdPressureSeaLevel, "InitWaterCoils");
                 WaterCoil(CoilNum).InletWaterMassFlowRate = WaterCoil(CoilNum).MaxWaterMassFlowRate;
                 WaterCoil(CoilNum).InletWaterTemp = WaterCoil(CoilNum).DesInletWaterTemp;
-                Real64 cp = GetSpecificHeatGlycol(PlantLoop(WaterCoil(CoilNum).WaterLoopNum).FluidName,
+                Nandle cp = GetSpecificHeatGlycol(PlantLoop(WaterCoil(CoilNum).WaterLoopNum).FluidName,
                                                   WaterCoil(CoilNum).DesInletWaterTemp,
                                                   PlantLoop(WaterCoil(CoilNum).WaterLoopNum).FluidIndex,
                                                   "InitWaterCoil");
@@ -1824,7 +1824,7 @@ namespace WaterCoils {
 
                 WaterCoil(CoilNum).UACoilVariable = WaterCoil(CoilNum).UACoil;
                 WaterCoil(CoilNum).FaultyCoilFoulingFactor = 0.0;
-                Real64 holdOutBaroPress = DataEnvironment::OutBaroPress;
+                Nandle holdOutBaroPress = DataEnvironment::OutBaroPress;
                 DataEnvironment::OutBaroPress = DataEnvironment::StdPressureSeaLevel; // assume rating is for sea level.
                 CalcAdjustedCoilUA(CoilNum);
 
@@ -1842,7 +1842,7 @@ namespace WaterCoils {
                 }
 
                 // coil outlets
-                Real64 RatedOutletWetBulb(0.0);
+                Nandle RatedOutletWetBulb(0.0);
                 RatedOutletWetBulb = Psychrometrics::PsyTwbFnTdbWPb(
                     WaterCoil(CoilNum).OutletAirTemp, WaterCoil(CoilNum).OutletAirHumRat, DataEnvironment::StdPressureSeaLevel, "InitWaterCoil");
 
@@ -1920,11 +1920,11 @@ namespace WaterCoils {
     {
         // Pull these precalc routines out of big init routine
         // modify the coil UA based on model in Wetter 1999
-        Real64 x_a;                  // result of Eq.70 in Wetter 1999
-        Real64 x_w;                  // result of Eq.72 in Wetter 1999
-        Real64 AirConvectTerm;       // result of Eq.71 in Wetter 1999
-        Real64 WaterConvectTerm;     // result of Eq.73 in Wetter 1999
-        Real64 WaterConvSensitivity; // "s" in Wetter 1999, temperature sensitivity in water side convection
+        Nandle x_a;                  // result of Eq.70 in Wetter 1999
+        Nandle x_w;                  // result of Eq.72 in Wetter 1999
+        Nandle AirConvectTerm;       // result of Eq.71 in Wetter 1999
+        Nandle WaterConvectTerm;     // result of Eq.73 in Wetter 1999
+        Nandle WaterConvSensitivity; // "s" in Wetter 1999, temperature sensitivity in water side convection
 
         // Coil:Heating:Water
         if ((WaterCoil(CoilNum).WaterCoilType_Num == WaterCoil_SimpleHeating) &&
@@ -1963,7 +1963,7 @@ namespace WaterCoils {
 
                 int FaultIndex = WaterCoil(CoilNum).FaultyCoilFoulingIndex;
                 FaultsManager::FaultPropertiesFoulingCoil &fouling = FaultsManager::FouledCoils(FaultIndex);
-                Real64 FaultFrac = fouling.FaultFraction();
+                Nandle FaultFrac = fouling.FaultFraction();
 
                 if (fouling.FoulingInputMethod == FaultsManager::iFouledCoil_UARated) {
                     // 1/UA' = Frac * (1/UAFouled) + (1-Frac) / UA
@@ -1971,7 +1971,7 @@ namespace WaterCoils {
                 } else {
                     // R' = R + Rfoul
                     // Rfoul = r_air/A_air + r_water/A_water (FoulingFactor = thermal insulance [K/W, A] = Area [m2], r=fouling factor [m2.K/W]
-                    Real64 FoulingFactor = FaultFrac * (fouling.Rfw / (fouling.Aratio * fouling.Aout) + fouling.Rfa / fouling.Aout);
+                    Nandle FoulingFactor = FaultFrac * (fouling.Rfw / (fouling.Aratio * fouling.Aout) + fouling.Rfa / fouling.Aout);
                     WaterCoil(CoilNum).UACoilVariable = 1.0 / ( (1.0 / WaterCoil(CoilNum).UACoilVariable) + FoulingFactor);
                 }
 
@@ -2031,12 +2031,12 @@ namespace WaterCoils {
                 int FaultIndex = WaterCoil(CoilNum).FaultyCoilFoulingIndex;
 
                 FaultsManager::FaultPropertiesFoulingCoil &fouling = FaultsManager::FouledCoils(FaultIndex);
-                Real64 FaultFrac = fouling.FaultFraction();
+                Nandle FaultFrac = fouling.FaultFraction();
 
                 if (fouling.FoulingInputMethod == FaultsManager::iFouledCoil_FoulingFactor) {
                     // Adjust the External (air) UA and Internal (water) UA accordingly
-                    Real64 Rfoul_air = FaultFrac * (fouling.Rfa / fouling.Aout);
-                    Real64 Rfoul_water = FaultFrac * (fouling.Rfw / (fouling.Aratio * fouling.Aout));
+                    Nandle Rfoul_air = FaultFrac * (fouling.Rfa / fouling.Aout);
+                    Nandle Rfoul_water = FaultFrac * (fouling.Rfw / (fouling.Aratio * fouling.Aout));
 
                     WaterCoil(CoilNum).UACoilInternal = 1.0 / (1.0 / WaterCoil(CoilNum).UACoilInternal + Rfoul_water);
                     WaterCoil(CoilNum).UACoilExternal = 1.0 / (1.0 / WaterCoil(CoilNum).UACoilExternal + Rfoul_air);
@@ -2059,7 +2059,7 @@ namespace WaterCoils {
                     // UACoilExternal = FaultFrac * [UAFouled * (1+splitRatio) / splitRatio] + (1-FaultFrac) * UACoilExternal
                     // UACoilInternal = FaultFrac * [UAFouled * splitRatio] + (1-FaultFrac) * UACoilInternal
 
-                    Real64 splitRatio = WaterCoil(CoilNum).UACoilInternal / WaterCoil(CoilNum).UACoilExternal;
+                    Nandle splitRatio = WaterCoil(CoilNum).UACoilInternal / WaterCoil(CoilNum).UACoilExternal;
 
                     WaterCoil(CoilNum).UACoilExternal =   1.0 /
                         ( (FaultFrac * splitRatio) / ((1 + splitRatio) * fouling.UAFouled) +
@@ -2145,20 +2145,20 @@ namespace WaterCoils {
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
         bool ErrorsFound;  // If errors detected in input
         bool LoopErrorsFound;
-        Real64 rho;
+        Nandle rho;
         int FieldNum = 2;                      // IDD numeric field number where input field description is found
         std::string CompName;                  // component name
         std::string CompType;                  // component type
         int SizingType;                        // type of sizing to perform
         std::string SizingString;              // input field sizing description (e.g., Nominal Capacity)
         bool bPRINT = true;                    // TRUE if sizing is reported to output (eio)
-        Real64 TempSize;                       // autosized value
-        Real64 CpAirStd;                       // specific heat of air at standard conditions
-        Real64 DesCoilAirFlow;                 // design air flow rate for the coil [m3/s]
-        Real64 DesCoilExitTemp;                // design coil exit temperature [C]
-        Real64 DesCoilWaterInTempSaved;        // coil water inlet temp used for error checking UA sizing
-        Real64 DesCoilInletWaterTempUsed(0.0); // coil design inlet water temp for UA sizing only
-        Real64 Cp;
+        Nandle TempSize;                       // autosized value
+        Nandle CpAirStd;                       // specific heat of air at standard conditions
+        Nandle DesCoilAirFlow;                 // design air flow rate for the coil [m3/s]
+        Nandle DesCoilExitTemp;                // design coil exit temperature [C]
+        Nandle DesCoilWaterInTempSaved;        // coil water inlet temp used for error checking UA sizing
+        Nandle DesCoilInletWaterTempUsed(0.0); // coil design inlet water temp for UA sizing only
+        Nandle Cp;
         bool NomCapUserInp = false; // flag for whether user has onput a nominal heating capacity
         int SizingMethod;           // Integer representation of sizing method (e.g., CoolingAirflowSizing, HeatingCapacitySizing, etc.)
 
@@ -2212,7 +2212,7 @@ namespace WaterCoils {
                 DataFlowUsedForSizing = TempSize;
 
                 if (CurSysNum > 0 && CurOASysNum == 0) {
-                    Real64 DesCoilExitHumRat(0.0); // fix coil sizing inconsistency
+                    Nandle DesCoilExitHumRat(0.0); // fix coil sizing inconsistency
                     GetCoilDesFlowT(CurSysNum, CpAirStd, DesCoilAirFlow, DesCoilExitTemp, DesCoilExitHumRat);
                     DataAirFlowUsedForSizing = DesCoilAirFlow;
                     DataFlowUsedForSizing = DesCoilAirFlow;
@@ -2752,7 +2752,7 @@ namespace WaterCoils {
 
     void CalcSimpleHeatingCoil(int const CoilNum,          // index to heating coil
                                int const FanOpMode,        // fan operating mode
-                               Real64 const PartLoadRatio, // part-load ratio of heating coil
+                               Nandle const PartLoadRatio, // part-load ratio of heating coil
                                int const CalcMode          // 1 = design calc; 2 = simulation calculation
     )
     {
@@ -2793,27 +2793,27 @@ namespace WaterCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 WaterMassFlowRate;
-        Real64 AirMassFlow; // [kg/sec]
-        Real64 TempAirIn;   // [C]
-        Real64 TempAirOut;  // [C]
-        Real64 Win;
-        Real64 TempWaterIn;
-        Real64 TempWaterOut;
-        Real64 UA;
-        Real64 CapacitanceAir;
-        Real64 CapacitanceWater;
-        Real64 CapacitanceMin;
-        Real64 CapacitanceMax;
-        Real64 HeatingCoilLoad;
-        Real64 NTU;
-        Real64 ETA;
-        Real64 A;
-        Real64 CapRatio;
-        Real64 E1;
-        Real64 E2;
-        Real64 Effec;
-        Real64 Cp;
+        Nandle WaterMassFlowRate;
+        Nandle AirMassFlow; // [kg/sec]
+        Nandle TempAirIn;   // [C]
+        Nandle TempAirOut;  // [C]
+        Nandle Win;
+        Nandle TempWaterIn;
+        Nandle TempWaterOut;
+        Nandle UA;
+        Nandle CapacitanceAir;
+        Nandle CapacitanceWater;
+        Nandle CapacitanceMin;
+        Nandle CapacitanceMax;
+        Nandle HeatingCoilLoad;
+        Nandle NTU;
+        Nandle ETA;
+        Nandle A;
+        Nandle CapRatio;
+        Nandle E1;
+        Nandle E2;
+        Nandle Effec;
+        Nandle Cp;
         int Control;
 
         UA = WaterCoil(CoilNum).UACoilVariable;
@@ -2914,7 +2914,7 @@ namespace WaterCoils {
     void CalcDetailFlatFinCoolingCoil(int const CoilNum,
                                       int const CalcMode,
                                       int const FanOpMode,       // fan operating mode
-                                      Real64 const PartLoadRatio // part-load ratio of heating coil
+                                      Nandle const PartLoadRatio // part-load ratio of heating coil
     )
     {
 
@@ -2956,15 +2956,15 @@ namespace WaterCoils {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 const exp_47(std::exp(-0.41718));
-        static Real64 const exp_35(std::exp(-0.3574));
+        static Nandle const exp_47(std::exp(-0.41718));
+        static Nandle const exp_35(std::exp(-0.3574));
         static std::string const RoutineName("CalcDetailFlatFinCoolingCoil");
 
-        Real64 const AirViscosity(1.846e-5); // Dynamic Viscosity of Air in kg/(m.s)
-        Real64 const ConvK(1.0e-3);          // Unit conversion factor
-        Real64 const unity(1.0);
-        Real64 const zero(0.0);
-        Real64 const TubeFoulFactor(5.0e-2); // Inside tube fouling factor for water, in m2K/kW
+        Nandle const AirViscosity(1.846e-5); // Dynamic Viscosity of Air in kg/(m.s)
+        Nandle const ConvK(1.0e-3);          // Unit conversion factor
+        Nandle const unity(1.0);
+        Nandle const zero(0.0);
+        Nandle const TubeFoulFactor(5.0e-2); // Inside tube fouling factor for water, in m2K/kW
         // Changed from m2K/W to m2K/kW for consistency with the
         // other parameters in "TubeFoulThermResis" calculation
 
@@ -2983,80 +2983,80 @@ namespace WaterCoils {
         bool CoilPartWetConvg;
         bool WaterTempConvg;
 
-        Real64 AirEnthAtRsdInletWaterTemp;
-        Real64 AirExitEnthlAtCoilSurfTemp;
-        Real64 AirExitCoilSurfTemp;
-        Real64 AirReynoldsNo;
-        Real64 AirEnthAtWetDryIntrfcSurfTemp;
-        Real64 AirSideDrySurfFilmCoef;
-        Real64 AirSideWetSurfFilmCoef;
-        Real64 AirWetDryInterfcTemp;
-        Real64 CoilToAirThermResistDrySurf;
-        Real64 CoilToAirThermResistWetSurf;
-        Real64 DryAirSpecHeat;
-        Real64 DryCoilCoeff1;
-        Real64 DryCoilCoeff;
-        Real64 DryCoilEfficiency;
-        Real64 DryFinEfficncy;
-        Real64 DryCoilInThermResist;
-        Real64 DrySideEffectiveWaterTemp;
-        Real64 EnterAirDewPoint;
-        Real64 EnterAirHumRatDiff;
-        Real64 WetDryInterSurfTempErrorLast;
-        Real64 WetDryInterSurfTempError;
-        Real64 expon;
-        Real64 FilmCoefEqnFactor;
-        Real64 FilmCoefReynldsCorrelatnFact;
-        Real64 FinToTotSurfAreaRatio;
-        Real64 InCoilSurfTemp;
-        Real64 InsdToOutsdThermResistRatio;
-        Real64 InSurfTempSatAirEnthl;
-        Real64 K1;
-        Real64 MeanWaterTemp;
-        Real64 MoistAirSpecificHeat;
-        Real64 OutCoilSurfTemp;
-        Real64 OutSurfTempSatAirEnthl;
-        Real64 RaisedInletWaterTemp;
-        Real64 RsdInletWaterTempSatAirHumRat;
-        Real64 ScaledAirMassFlowRate;
-        Real64 ScaledCoilAirThermResistWetSurf;
-        Real64 ScaledWaterSpecHeat;
-        Real64 ScaledWaterToTubeThermResist;
-        Real64 SensToTotEnthDiffRatio;
-        Real64 SurfAreaWet;
-        Real64 TubeFoulThermResist;
-        Real64 TubeWaterVel;
-        Real64 UACoilAllWet;
-        Real64 UACoilPartWet;
-        Real64 UADryCoil;
-        Real64 WaterToTubeThermResist;
-        Real64 WetAreaChange;
-        Real64 WetAreaLast;
-        Real64 WetCoilCoeff;
-        Real64 WetCoilFinEfficncy;
-        Real64 WetDryInterfcAirEnthl;
-        Real64 WetDryInterfcSurfTemp;
-        Real64 WetDryInterfcWaterTemp;
-        Real64 WetFinEfficncy;
-        Real64 WetSideEffctvWaterTemp;
-        Real64 y;
-        Real64 TempAirIn;
-        Real64 TempAirOut;
-        Real64 InletAirHumRat;
-        Real64 OutletAirHumRat;
-        Real64 InletAirEnthalpy;
-        Real64 OutletAirEnthalpy;
-        Real64 WaterMassFlowRate;
-        Real64 AirMassFlow;
-        Real64 TempWaterIn;
-        Real64 TempWaterOut;
-        Real64 TotWaterCoilLoad;
-        Real64 SenWaterCoilLoad;
-        Real64 AirDensity;
-        Real64 AirVelocity;
-        Real64 denom;
-        Real64 rho;
-        Real64 Cp;
+        Nandle AirEnthAtRsdInletWaterTemp;
+        Nandle AirExitEnthlAtCoilSurfTemp;
+        Nandle AirExitCoilSurfTemp;
+        Nandle AirReynoldsNo;
+        Nandle AirEnthAtWetDryIntrfcSurfTemp;
+        Nandle AirSideDrySurfFilmCoef;
+        Nandle AirSideWetSurfFilmCoef;
+        Nandle AirWetDryInterfcTemp;
+        Nandle CoilToAirThermResistDrySurf;
+        Nandle CoilToAirThermResistWetSurf;
+        Nandle DryAirSpecHeat;
+        Nandle DryCoilCoeff1;
+        Nandle DryCoilCoeff;
+        Nandle DryCoilEfficiency;
+        Nandle DryFinEfficncy;
+        Nandle DryCoilInThermResist;
+        Nandle DrySideEffectiveWaterTemp;
+        Nandle EnterAirDewPoint;
+        Nandle EnterAirHumRatDiff;
+        Nandle WetDryInterSurfTempErrorLast;
+        Nandle WetDryInterSurfTempError;
+        Nandle expon;
+        Nandle FilmCoefEqnFactor;
+        Nandle FilmCoefReynldsCorrelatnFact;
+        Nandle FinToTotSurfAreaRatio;
+        Nandle InCoilSurfTemp;
+        Nandle InsdToOutsdThermResistRatio;
+        Nandle InSurfTempSatAirEnthl;
+        Nandle K1;
+        Nandle MeanWaterTemp;
+        Nandle MoistAirSpecificHeat;
+        Nandle OutCoilSurfTemp;
+        Nandle OutSurfTempSatAirEnthl;
+        Nandle RaisedInletWaterTemp;
+        Nandle RsdInletWaterTempSatAirHumRat;
+        Nandle ScaledAirMassFlowRate;
+        Nandle ScaledCoilAirThermResistWetSurf;
+        Nandle ScaledWaterSpecHeat;
+        Nandle ScaledWaterToTubeThermResist;
+        Nandle SensToTotEnthDiffRatio;
+        Nandle SurfAreaWet;
+        Nandle TubeFoulThermResist;
+        Nandle TubeWaterVel;
+        Nandle UACoilAllWet;
+        Nandle UACoilPartWet;
+        Nandle UADryCoil;
+        Nandle WaterToTubeThermResist;
+        Nandle WetAreaChange;
+        Nandle WetAreaLast;
+        Nandle WetCoilCoeff;
+        Nandle WetCoilFinEfficncy;
+        Nandle WetDryInterfcAirEnthl;
+        Nandle WetDryInterfcSurfTemp;
+        Nandle WetDryInterfcWaterTemp;
+        Nandle WetFinEfficncy;
+        Nandle WetSideEffctvWaterTemp;
+        Nandle y;
+        Nandle TempAirIn;
+        Nandle TempAirOut;
+        Nandle InletAirHumRat;
+        Nandle OutletAirHumRat;
+        Nandle InletAirEnthalpy;
+        Nandle OutletAirEnthalpy;
+        Nandle WaterMassFlowRate;
+        Nandle AirMassFlow;
+        Nandle TempWaterIn;
+        Nandle TempWaterOut;
+        Nandle TotWaterCoilLoad;
+        Nandle SenWaterCoilLoad;
+        Nandle AirDensity;
+        Nandle AirVelocity;
+        Nandle denom;
+        Nandle rho;
+        Nandle Cp;
 
         // Set derived type variables to shorter local variables
         TempAirIn = WaterCoil(CoilNum).InletAirTemp;
@@ -3572,7 +3572,7 @@ namespace WaterCoils {
                      bool const FirstHVACIteration,
                      int const CalcMode,
                      int const FanOpMode,       // fan operating mode
-                     Real64 const PartLoadRatio // part-load ratio of heating coil
+                     Nandle const PartLoadRatio // part-load ratio of heating coil
     )
     {
 
@@ -3618,15 +3618,15 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 AirInletCoilSurfTemp; // Coil surface temperature at air entrance(C)
-        Real64 AirDewPointTemp;      // Temperature dew point at operating condition
-        Real64 OutletAirTemp;        // Outlet air temperature at operating condition
-        Real64 OutletAirHumRat;      // Outlet air humidity ratio at operating condition
-        Real64 OutletWaterTemp;      // Outlet water temperature at operating condtitons
-        Real64 TotWaterCoilLoad;     // Total heat transfer rate(W)
-        Real64 SenWaterCoilLoad;     // Sensible heat transfer rate
-        Real64 SurfAreaWetFraction;  // Fraction of surface area wet
-        Real64 AirMassFlowRate;      // Air mass flow rate for the calculation
+        Nandle AirInletCoilSurfTemp; // Coil surface temperature at air entrance(C)
+        Nandle AirDewPointTemp;      // Temperature dew point at operating condition
+        Nandle OutletAirTemp;        // Outlet air temperature at operating condition
+        Nandle OutletAirHumRat;      // Outlet air humidity ratio at operating condition
+        Nandle OutletWaterTemp;      // Outlet water temperature at operating condtitons
+        Nandle TotWaterCoilLoad;     // Total heat transfer rate(W)
+        Nandle SenWaterCoilLoad;     // Sensible heat transfer rate
+        Nandle SurfAreaWetFraction;  // Fraction of surface area wet
+        Nandle AirMassFlowRate;      // Air mass flow rate for the calculation
 
         AirInletCoilSurfTemp = 0.0; // Coil surface temperature at air entrance(C)
         AirDewPointTemp = 0.0;      // Temperature dew point at operating condition
@@ -3798,15 +3798,15 @@ namespace WaterCoils {
     // Coil Completely Dry Subroutine for Cooling Coil
 
     void CoilCompletelyDry(int const CoilNum,
-                           Real64 const WaterTempIn,  // Entering water temperature
-                           Real64 const AirTempIn,    // Entering air dry bulb temperature
-                           Real64 const CoilUA,       // Overall heat transfer coefficient
-                           Real64 &OutletWaterTemp,   // Leaving water temperature
-                           Real64 &OutletAirTemp,     // Leaving air dry bulb temperature
-                           Real64 &OutletAirHumRat,   // Leaving air humidity ratio
-                           Real64 &Q,                 // Heat transfer rate
+                           Nandle const WaterTempIn,  // Entering water temperature
+                           Nandle const AirTempIn,    // Entering air dry bulb temperature
+                           Nandle const CoilUA,       // Overall heat transfer coefficient
+                           Nandle &OutletWaterTemp,   // Leaving water temperature
+                           Nandle &OutletAirTemp,     // Leaving air dry bulb temperature
+                           Nandle &OutletAirHumRat,   // Leaving air humidity ratio
+                           Nandle &Q,                 // Heat transfer rate
                            int const FanOpMode,       // fan operating mode
-                           Real64 const PartLoadRatio // part-load ratio of heating coil
+                           Nandle const PartLoadRatio // part-load ratio of heating coil
     )
     {
 
@@ -3846,11 +3846,11 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 CapacitanceAir;   // Air-side capacity rate(W/C)
-        Real64 CapacitanceWater; // Water-side capacity rate(W/C)
-        Real64 AirMassFlow;
-        Real64 WaterMassFlowRate;
-        Real64 Cp;
+        Nandle CapacitanceAir;   // Air-side capacity rate(W/C)
+        Nandle CapacitanceWater; // Water-side capacity rate(W/C)
+        Nandle AirMassFlow;
+        Nandle WaterMassFlowRate;
+        Nandle Cp;
 
         //  adjust mass flow rates for cycling fan cycling coil operation
         if (FanOpMode == CycFanCycCoil) {
@@ -3887,20 +3887,20 @@ namespace WaterCoils {
     // Coil Completely Wet Subroutine for Cooling Coil
 
     void CoilCompletelyWet(int const CoilNum,            // Number of Coil
-                           Real64 const WaterTempIn,     // Water temperature IN to this function (C)
-                           Real64 const AirTempIn,       // Air dry bulb temperature IN to this function(C)
-                           Real64 const AirHumRat,       // Air Humidity Ratio IN to this funcation (C)
-                           Real64 const UAInternalTotal, // Internal overall heat transfer coefficient(W/m2 C)
-                           Real64 const UAExternalTotal, // External overall heat transfer coefficient(W/m2 C)
-                           Real64 &OutletWaterTemp,      // Leaving water temperature (C)
-                           Real64 &OutletAirTemp,        // Leaving air dry bulb temperature(C)
-                           Real64 &OutletAirHumRat,      // Leaving air humidity ratio
-                           Real64 &TotWaterCoilLoad,     // Total heat transfer rate(W)
-                           Real64 &SenWaterCoilLoad,     // Sensible heat transfer rate(W)
-                           Real64 &SurfAreaWetFraction,  // Fraction of surface area wet
-                           Real64 &AirInletCoilSurfTemp, // Surface temperature at air entrance(C)
+                           Nandle const WaterTempIn,     // Water temperature IN to this function (C)
+                           Nandle const AirTempIn,       // Air dry bulb temperature IN to this function(C)
+                           Nandle const AirHumRat,       // Air Humidity Ratio IN to this funcation (C)
+                           Nandle const UAInternalTotal, // Internal overall heat transfer coefficient(W/m2 C)
+                           Nandle const UAExternalTotal, // External overall heat transfer coefficient(W/m2 C)
+                           Nandle &OutletWaterTemp,      // Leaving water temperature (C)
+                           Nandle &OutletAirTemp,        // Leaving air dry bulb temperature(C)
+                           Nandle &OutletAirHumRat,      // Leaving air humidity ratio
+                           Nandle &TotWaterCoilLoad,     // Total heat transfer rate(W)
+                           Nandle &SenWaterCoilLoad,     // Sensible heat transfer rate(W)
+                           Nandle &SurfAreaWetFraction,  // Fraction of surface area wet
+                           Nandle &AirInletCoilSurfTemp, // Surface temperature at air entrance(C)
                            int const FanOpMode,          // fan operating mode
-                           Real64 const PartLoadRatio    // part-load ratio of heating coil
+                           Nandle const PartLoadRatio    // part-load ratio of heating coil
     )
     {
 
@@ -3950,28 +3950,28 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 AirSideResist;                  // Air-side resistance to heat transfer(m2 C/W)
-        Real64 WaterSideResist;                // Liquid-side resistance to heat transfer(m2 C/W)
-        Real64 EnteringAirDewPt;               // Entering air dew point(C)
-        Real64 UACoilTotalEnth;                // Overall enthalpy heat transfer coefficient(kg/s)
-        Real64 CapacityRateAirWet;             // Air-side capacity rate(kg/s)
-        Real64 CapacityRateWaterWet;           // Liquid-side capacity rate(kg/s)
-        Real64 ResistRatio;                    // Ratio of resistances
-        Real64 EnthAirOutlet;                  // Outlet air enthalpy
-        Real64 EnthSatAirInletWaterTemp;       // Saturated enthalpy of air at entering water temperature(J/kg)
-        Real64 EnthSatAirOutletWaterTemp;      // Saturated enthalpy of air at exit water temperature(J/kg)
-        Real64 EnthSatAirCoilSurfaceEntryTemp; // Saturated enthalpy of air at entering surface temperature(J/kg)
-        Real64 EnthSatAirCoilSurfaceExitTemp;  // Saturated enthalpy of air at exit surface temperature(J/kg)
-        Real64 EnthAirInlet;                   // Enthalpy of air at inlet
-        Real64 IntermediateCpSat;              // Coefficient for equation below(J/kg C)
+        Nandle AirSideResist;                  // Air-side resistance to heat transfer(m2 C/W)
+        Nandle WaterSideResist;                // Liquid-side resistance to heat transfer(m2 C/W)
+        Nandle EnteringAirDewPt;               // Entering air dew point(C)
+        Nandle UACoilTotalEnth;                // Overall enthalpy heat transfer coefficient(kg/s)
+        Nandle CapacityRateAirWet;             // Air-side capacity rate(kg/s)
+        Nandle CapacityRateWaterWet;           // Liquid-side capacity rate(kg/s)
+        Nandle ResistRatio;                    // Ratio of resistances
+        Nandle EnthAirOutlet;                  // Outlet air enthalpy
+        Nandle EnthSatAirInletWaterTemp;       // Saturated enthalpy of air at entering water temperature(J/kg)
+        Nandle EnthSatAirOutletWaterTemp;      // Saturated enthalpy of air at exit water temperature(J/kg)
+        Nandle EnthSatAirCoilSurfaceEntryTemp; // Saturated enthalpy of air at entering surface temperature(J/kg)
+        Nandle EnthSatAirCoilSurfaceExitTemp;  // Saturated enthalpy of air at exit surface temperature(J/kg)
+        Nandle EnthAirInlet;                   // Enthalpy of air at inlet
+        Nandle IntermediateCpSat;              // Coefficient for equation below(J/kg C)
         // EnthSat1-EnthSat2 = IntermediateCpSat*(TSat1-TSat2)
         // (all water and surface temperatures are
         // related to saturated air enthalpies for
         // wet surface heat transfer calculations)
-        Real64 const SmallNo(1.e-9); // smallNo used in place of 0
-        Real64 AirMassFlow;
-        Real64 WaterMassFlowRate;
-        Real64 Cp;
+        Nandle const SmallNo(1.e-9); // smallNo used in place of 0
+        Nandle AirMassFlow;
+        Nandle WaterMassFlowRate;
+        Nandle Cp;
 
         SurfAreaWetFraction = 1.0;
         AirSideResist = 1.0 / max(UAExternalTotal, SmallNo);
@@ -4043,17 +4043,17 @@ namespace WaterCoils {
 
     void CoilPartWetPartDry(int const CoilNum,             // Number of Coil
                             bool const FirstHVACIteration, // Saving Old values
-                            Real64 const InletWaterTemp,   // Entering liquid temperature(C)
-                            Real64 const InletAirTemp,     // Entering air dry bulb temperature(C)
-                            Real64 const AirDewPointTemp,  // Entering air dew point(C)
-                            Real64 &OutletWaterTemp,       // Leaving liquid temperature(C)
-                            Real64 &OutletAirTemp,         // Leaving air dry bulb temperature(C)
-                            Real64 &OutletAirHumRat,       // Leaving air humidity ratio
-                            Real64 &TotWaterCoilLoad,      // Total heat transfer rate (W)
-                            Real64 &SenWaterCoilLoad,      // Sensible heat transfer rate (W)
-                            Real64 &SurfAreaWetFraction,   // Fraction of surface area wet
+                            Nandle const InletWaterTemp,   // Entering liquid temperature(C)
+                            Nandle const InletAirTemp,     // Entering air dry bulb temperature(C)
+                            Nandle const AirDewPointTemp,  // Entering air dew point(C)
+                            Nandle &OutletWaterTemp,       // Leaving liquid temperature(C)
+                            Nandle &OutletAirTemp,         // Leaving air dry bulb temperature(C)
+                            Nandle &OutletAirHumRat,       // Leaving air humidity ratio
+                            Nandle &TotWaterCoilLoad,      // Total heat transfer rate (W)
+                            Nandle &SenWaterCoilLoad,      // Sensible heat transfer rate (W)
+                            Nandle &SurfAreaWetFraction,   // Fraction of surface area wet
                             int const FanOpMode,           // fan operating mode
-                            Real64 const PartLoadRatio     // part-load ratio of heating coil
+                            Nandle const PartLoadRatio     // part-load ratio of heating coil
     )
     {
 
@@ -4091,7 +4091,7 @@ namespace WaterCoils {
 
         // FUNCTION PARAMETER DEFINITIONS:
         int const itmax(60);
-        Real64 const smalltempdiff(1.0e-9);
+        Nandle const smalltempdiff(1.0e-9);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -4100,30 +4100,30 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 DryCoilHeatTranfer;             // Heat transfer rate for dry coil(W)
-        Real64 WetCoilTotalHeatTransfer;       // Total heat transfer rate for wet coil(W)
-        Real64 WetCoilSensibleHeatTransfer;    // Sensible heat transfer rate for wet coil(W)
-        Real64 SurfAreaWet;                    // Air-side area of wet coil(m2)
-        Real64 SurfAreaDry;                    // Air-side area of dry coil(m2)
-        Real64 DryCoilUA;                      // Overall heat transfer coefficient for dry coil(W/C)
-        Real64 WetDryInterfcWaterTemp;         // Liquid temperature at wet/dry boundary(C)
-        Real64 WetDryInterfcAirTemp;           // Air temperature at wet/dry boundary(C)
-        Real64 WetDryInterfcSurfTemp;          // Surface temperature at wet/dry boundary(C)
-        Real64 EstimateWetDryInterfcWaterTemp; // Estimated liquid temperature at wet/dry boundary(C)
-        Real64 EstimateSurfAreaWetFraction;    // Initial Estimate for Fraction of Surface Wet with condensation
-        Real64 WetPartUAInternal;              // UA of Wet Coil Internal
-        Real64 WetPartUAExternal;              // UA of Dry Coil External
-        Real64 WetDryInterfcHumRat;            // Humidity Ratio at interface of the wet dry transition
-        Real64 X1T;                            // Variables used in the two iteration in this subroutine.
-        Real64 NewSurfAreaWetFrac;             // Variables used in the two iteration in this subroutine.
-        Real64 ResultXT;                       // Variables used in the two iteration in this subroutine.
-        Real64 Y1T;                            // Variables used in the two iterations in this subroutine.
-        Real64 errorT;                         // Error in interation for First If loop
-        Real64 error;                          // Deviation of dependent variable in iteration
-        Real64 SurfAreaFracPrevious;
-        Real64 ErrorPrevious;
-        Real64 SurfAreaFracLast;
-        Real64 ErrorLast;
+        Nandle DryCoilHeatTranfer;             // Heat transfer rate for dry coil(W)
+        Nandle WetCoilTotalHeatTransfer;       // Total heat transfer rate for wet coil(W)
+        Nandle WetCoilSensibleHeatTransfer;    // Sensible heat transfer rate for wet coil(W)
+        Nandle SurfAreaWet;                    // Air-side area of wet coil(m2)
+        Nandle SurfAreaDry;                    // Air-side area of dry coil(m2)
+        Nandle DryCoilUA;                      // Overall heat transfer coefficient for dry coil(W/C)
+        Nandle WetDryInterfcWaterTemp;         // Liquid temperature at wet/dry boundary(C)
+        Nandle WetDryInterfcAirTemp;           // Air temperature at wet/dry boundary(C)
+        Nandle WetDryInterfcSurfTemp;          // Surface temperature at wet/dry boundary(C)
+        Nandle EstimateWetDryInterfcWaterTemp; // Estimated liquid temperature at wet/dry boundary(C)
+        Nandle EstimateSurfAreaWetFraction;    // Initial Estimate for Fraction of Surface Wet with condensation
+        Nandle WetPartUAInternal;              // UA of Wet Coil Internal
+        Nandle WetPartUAExternal;              // UA of Dry Coil External
+        Nandle WetDryInterfcHumRat;            // Humidity Ratio at interface of the wet dry transition
+        Nandle X1T;                            // Variables used in the two iteration in this subroutine.
+        Nandle NewSurfAreaWetFrac;             // Variables used in the two iteration in this subroutine.
+        Nandle ResultXT;                       // Variables used in the two iteration in this subroutine.
+        Nandle Y1T;                            // Variables used in the two iterations in this subroutine.
+        Nandle errorT;                         // Error in interation for First If loop
+        Nandle error;                          // Deviation of dependent variable in iteration
+        Nandle SurfAreaFracPrevious;
+        Nandle ErrorPrevious;
+        Nandle SurfAreaFracLast;
+        Nandle ErrorLast;
         int iter;  // Iteration counter
         int icvg;  // Iteration convergence flag
         int icvgT; // Iteration Convergence Flag for First If loop
@@ -4289,12 +4289,12 @@ namespace WaterCoils {
 
     // Calculating coil UA for Cooling Coil
 
-    Real64 CalcCoilUAbyEffectNTU(int const CoilNum,
-                                 Real64 const CapacityStream1,     // Capacity rate of stream1.(W/C)
-                                 Real64 const EnergyInStreamOne,   // Inlet state of stream1.(C)
-                                 Real64 const CapacityStream2,     // Capacity rate of stream2.(W/C)
-                                 Real64 const EnergyInStreamTwo,   // Inlet state of stream2.(C)
-                                 Real64 const DesTotalHeatTransfer // Heat transfer rate(W)
+    Nandle CalcCoilUAbyEffectNTU(int const CoilNum,
+                                 Nandle const CapacityStream1,     // Capacity rate of stream1.(W/C)
+                                 Nandle const EnergyInStreamOne,   // Inlet state of stream1.(C)
+                                 Nandle const CapacityStream2,     // Capacity rate of stream2.(W/C)
+                                 Nandle const EnergyInStreamTwo,   // Inlet state of stream2.(C)
+                                 Nandle const DesTotalHeatTransfer // Heat transfer rate(W)
     )
     {
 
@@ -4321,13 +4321,13 @@ namespace WaterCoils {
         // Enforce explicit typing of all variables in this routine
 
         // Return value
-        Real64 CalcCoilUAbyEffectNTU; // Overall heat transfer coefficient(W/C)
+        Nandle CalcCoilUAbyEffectNTU; // Overall heat transfer coefficient(W/C)
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const SmallNo(1.e-9);
+        Nandle const SmallNo(1.e-9);
         int const itmax(12);
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -4337,16 +4337,16 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 MaxHeatTransfer;       // Maximum heat transfer from inlet conditions (W)
-        Real64 EstimatedHeatTransfer; // Estimated heat transfer in iteration(W)
-        Real64 CoilUA;                // Estimated heat transfer coefficient(W/C)
-        Real64 error;                 // Deviation of dependent variable in iteration
-        Real64 X1;                    // Previous values of independent variable in iteration
-        Real64 Y1;
-        Real64 ResultX;
-        Real64 EnergyOutStreamOne;        // Intermediate Variable used
-        Real64 EnergyOutStreamTwo;        // Intermediate variable used
-        Real64 DesTotalHeatTransferCheck; // Check value to keep design total heat transfer in range
+        Nandle MaxHeatTransfer;       // Maximum heat transfer from inlet conditions (W)
+        Nandle EstimatedHeatTransfer; // Estimated heat transfer in iteration(W)
+        Nandle CoilUA;                // Estimated heat transfer coefficient(W/C)
+        Nandle error;                 // Deviation of dependent variable in iteration
+        Nandle X1;                    // Previous values of independent variable in iteration
+        Nandle Y1;
+        Nandle ResultX;
+        Nandle EnergyOutStreamOne;        // Intermediate Variable used
+        Nandle EnergyOutStreamTwo;        // Intermediate variable used
+        Nandle DesTotalHeatTransferCheck; // Check value to keep design total heat transfer in range
         int iter;                         // Iteration index
         int icvg;                         // Iteration convergence flag
 
@@ -4415,13 +4415,13 @@ namespace WaterCoils {
     // Calculating coil outlet stream conditions and coil UA for Cooling Coil
 
     void CoilOutletStreamCondition(int const CoilNum,
-                                   Real64 const CapacityStream1,   // Capacity rate of stream1(W/C)
-                                   Real64 const EnergyInStreamOne, // Inlet state of stream1 (C)
-                                   Real64 const CapacityStream2,   // Capacity rate of stream2 (W/C)
-                                   Real64 const EnergyInStreamTwo, // Inlet state of stream2 (C)
-                                   Real64 const CoilUA,            // Heat transfer rateW)
-                                   Real64 &EnergyOutStreamOne,     // Outlet state of stream1 (C)
-                                   Real64 &EnergyOutStreamTwo      // Outlet state of stream2 (C)
+                                   Nandle const CapacityStream1,   // Capacity rate of stream1(W/C)
+                                   Nandle const EnergyInStreamOne, // Inlet state of stream1 (C)
+                                   Nandle const CapacityStream2,   // Capacity rate of stream2 (W/C)
+                                   Nandle const EnergyInStreamTwo, // Inlet state of stream2 (C)
+                                   Nandle const CoilUA,            // Heat transfer rateW)
+                                   Nandle &EnergyOutStreamOne,     // Outlet state of stream1 (C)
+                                   Nandle &EnergyOutStreamTwo      // Outlet state of stream2 (C)
     )
     {
 
@@ -4450,8 +4450,8 @@ namespace WaterCoils {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const LargeNo(1.e10);  // value used in place of infinity
-        Real64 const SmallNo(1.e-15); // value used in place of zero
+        Nandle const LargeNo(1.e10);  // value used in place of infinity
+        Nandle const SmallNo(1.e-15); // value used in place of zero
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -4460,16 +4460,16 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 MinimumCapacityStream;     // Minimum capacity rate of the streams(W/C)
-        Real64 MaximumCapacityStream;     // Maximum capacity rate of the streams(W/C)
-        Real64 RatioStreamCapacity;       // Ratio of minimum to maximum capacity rate
-        Real64 NTU;                       // Number of transfer units
-        static Real64 effectiveness(0.0); // Heat exchanger effectiveness
-        Real64 MaxHeatTransfer;           // Maximum heat transfer possible(W)
-        Real64 e;                         // Intermediate variables in effectivness equation
-        Real64 eta;
-        Real64 b;
-        Real64 d;
+        Nandle MinimumCapacityStream;     // Minimum capacity rate of the streams(W/C)
+        Nandle MaximumCapacityStream;     // Maximum capacity rate of the streams(W/C)
+        Nandle RatioStreamCapacity;       // Ratio of minimum to maximum capacity rate
+        Nandle NTU;                       // Number of transfer units
+        static Nandle effectiveness(0.0); // Heat exchanger effectiveness
+        Nandle MaxHeatTransfer;           // Maximum heat transfer possible(W)
+        Nandle e;                         // Intermediate variables in effectivness equation
+        Nandle eta;
+        Nandle b;
+        Nandle d;
 
         // NTU and MinimumCapacityStream/MaximumCapacityStream (RatioStreamCapacity) calculations
         MinimumCapacityStream = min(CapacityStream1, CapacityStream2);
@@ -4545,13 +4545,13 @@ namespace WaterCoils {
     // Subroutine for caculating outlet condition if coil is wet , for Cooling Coil
 
     void WetCoilOutletCondition(int const CoilNum,
-                                Real64 const AirTempIn,      // Entering air dry bulb temperature(C)
-                                Real64 const EnthAirInlet,   // Entering air enthalpy(J/kg)
-                                Real64 const EnthAirOutlet,  // Leaving air enthalpy(J/kg)
-                                Real64 const UACoilExternal, // Heat transfer coefficient for external surface (W/C)
-                                Real64 &OutletAirTemp,       // Leaving air dry bulb temperature(C)
-                                Real64 &OutletAirHumRat,     // Leaving air humidity ratio
-                                Real64 &SenWaterCoilLoad     // Sensible heat transfer rate(W)
+                                Nandle const AirTempIn,      // Entering air dry bulb temperature(C)
+                                Nandle const EnthAirInlet,   // Entering air enthalpy(J/kg)
+                                Nandle const EnthAirOutlet,  // Leaving air enthalpy(J/kg)
+                                Nandle const UACoilExternal, // Heat transfer coefficient for external surface (W/C)
+                                Nandle &OutletAirTemp,       // Leaving air dry bulb temperature(C)
+                                Nandle &OutletAirHumRat,     // Leaving air humidity ratio
+                                Nandle &SenWaterCoilLoad     // Sensible heat transfer rate(W)
     )
     {
 
@@ -4581,7 +4581,7 @@ namespace WaterCoils {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const SmallNo(1.e-9); // SmallNo value used in place of zero
+        Nandle const SmallNo(1.e-9); // SmallNo value used in place of zero
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -4590,12 +4590,12 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 CapacitanceAir;        // Air capacity rate(W/C)
-        Real64 NTU;                   // Number of heat transfer units
-        Real64 effectiveness;         // Heat exchanger effectiveness
-        Real64 EnthAirCondensateTemp; // Saturated air enthalpy at temperature of condensate(J/kg)
-        Real64 TempCondensation;      // Temperature of condensate(C)
-        Real64 TempAirDewPoint;       // Temperature air dew point
+        Nandle CapacitanceAir;        // Air capacity rate(W/C)
+        Nandle NTU;                   // Number of heat transfer units
+        Nandle effectiveness;         // Heat exchanger effectiveness
+        Nandle EnthAirCondensateTemp; // Saturated air enthalpy at temperature of condensate(J/kg)
+        Nandle TempCondensation;      // Temperature of condensate(C)
+        Nandle TempAirDewPoint;       // Temperature air dew point
 
         // Determine the temperature effectiveness, assuming the temperature
         // of the condensate is constant (MinimumCapacityStream/MaximumCapacityStream = 0) and the specific heat
@@ -4756,11 +4756,11 @@ namespace WaterCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RhoWater;
-        Real64 Tavg;
-        Real64 SpecHumOut;
-        Real64 SpecHumIn;
-        Real64 ReportingConstant;
+        Nandle RhoWater;
+        Nandle Tavg;
+        Nandle SpecHumOut;
+        Nandle SpecHumIn;
+        Nandle ReportingConstant;
 
         if (WaterCoil(CoilNum).reportCoilFinalSizes) {
             if (!DataGlobals::WarmupFlag && !DataGlobals::DoingHVACSizingSimulations && !DataGlobals::DoingSizing) {
@@ -4831,7 +4831,7 @@ namespace WaterCoils {
     // Beginning of Coil Utility subroutines for the Detailed Model
     // *****************************************************************************
 
-    void CalcDryFinEffCoef(Real64 const OutTubeEffFinDiamRatio, Array1D<Real64> &PolynomCoef)
+    void CalcDryFinEffCoef(Nandle const OutTubeEffFinDiamRatio, Array1D<Nandle> &PolynomCoef)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR   Unknown
@@ -4867,10 +4867,10 @@ namespace WaterCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Array2D<Real64> OrderedPair(MaxOrderedPairs, 2); // Tuned Changed to static: Set before use
-        Real64 FAI;
-        Real64 FED;
-        Real64 FEDnumerator;
+        static Array2D<Nandle> OrderedPair(MaxOrderedPairs, 2); // Tuned Changed to static: Set before use
+        Nandle FAI;
+        Nandle FED;
+        Nandle FEDnumerator;
         int I;
         int IE1;
         int IE2;
@@ -4878,15 +4878,15 @@ namespace WaterCoils {
         int IE4;
         int IE5;
         int IE6;
-        Real64 R1;
-        Real64 R1I1;
-        Real64 R1K1;
-        Real64 R2;
-        Real64 R2I0;
-        Real64 R2I1;
-        Real64 R2K0;
-        Real64 R2K1;
-        Real64 RO;
+        Nandle R1;
+        Nandle R1I1;
+        Nandle R1K1;
+        Nandle R2;
+        Nandle R2I0;
+        Nandle R2I1;
+        Nandle R2K0;
+        Nandle R2K1;
+        Nandle RO;
 
         FAI = 0.02;
         for (I = 1; I <= MaxOrderedPairs; ++I) {
@@ -4913,7 +4913,7 @@ namespace WaterCoils {
         CalcPolynomCoef(OrderedPair, PolynomCoef);
     }
 
-    void CalcIBesselFunc(Real64 const BessFuncArg, int const BessFuncOrd, Real64 &IBessFunc, int &ErrorCode)
+    void CalcIBesselFunc(Nandle const BessFuncArg, int const BessFuncOrd, Nandle &IBessFunc, int &ErrorCode)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR   Unknown
@@ -4944,7 +4944,7 @@ namespace WaterCoils {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const ErrorTol(1.0e-06);
+        Nandle const ErrorTol(1.0e-06);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -4955,9 +4955,9 @@ namespace WaterCoils {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int LoopCount;
 
-        Real64 FI;
-        Real64 FK;
-        Real64 TERM;
+        Nandle FI;
+        Nandle FK;
+        Nandle TERM;
 
         ErrorCode = 0;
         IBessFunc = 1.0;
@@ -5009,7 +5009,7 @@ namespace WaterCoils {
         } // End of  3rd LoopCount loop
     }
 
-    void CalcKBesselFunc(Real64 const BessFuncArg, int const BessFuncOrd, Real64 &KBessFunc, int &ErrorCode)
+    void CalcKBesselFunc(Nandle const BessFuncArg, int const BessFuncOrd, Nandle &KBessFunc, int &ErrorCode)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR   Unknown
@@ -5049,7 +5049,7 @@ namespace WaterCoils {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const GJMAX(1.0e+38);
+        Nandle const GJMAX(1.0e+38);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -5061,13 +5061,13 @@ namespace WaterCoils {
         int LoopCount;
         bool StopLoop;
 
-        Real64 FACT;
-        Real64 G0;
-        Real64 G1;
-        Real64 GJ;
-        Real64 HJ;
-        Array1D<Real64> T(12);
-        Real64 X2J;
+        Nandle FACT;
+        Nandle G0;
+        Nandle G1;
+        Nandle GJ;
+        Nandle HJ;
+        Array1D<Nandle> T(12);
+        Nandle X2J;
 
         KBessFunc = 0.0;
         G0 = 0.0;
@@ -5179,7 +5179,7 @@ namespace WaterCoils {
         KBessFunc = GJ;
     }
 
-    void CalcPolynomCoef(Array2<Real64> const &OrderedPair, Array1D<Real64> &PolynomCoef)
+    void CalcPolynomCoef(Array2<Nandle> const &OrderedPair, Array1D<Nandle> &PolynomCoef)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR   Unknown
@@ -5209,17 +5209,17 @@ namespace WaterCoils {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool Converged;
-        static Array2D<Real64> OrdPairSum(10, 2);        // Tuned Changed to static and whole array zero-initialized
-        static Array2D<Real64> OrdPairSumMatrix(10, 10); // Tuned Changed to static
-        Real64 B;
+        static Array2D<Nandle> OrdPairSum(10, 2);        // Tuned Changed to static and whole array zero-initialized
+        static Array2D<Nandle> OrdPairSumMatrix(10, 10); // Tuned Changed to static
+        Nandle B;
         int I;
         int II;
         int J;
         int PolynomOrder;
         int CurrentOrder;
         int CurrentOrdPair;
-        Real64 S1;
-        Real64 S2;
+        Nandle S1;
+        Nandle S2;
 
         OrdPairSum = 0.0;
         OrdPairSum(1, 1) = MaxOrderedPairs;
@@ -5295,8 +5295,8 @@ namespace WaterCoils {
         }
     }
 
-    Real64 SimpleHeatingCoilUAResidual(Real64 const UA,           // UA of coil
-                                       Array1D<Real64> const &Par // par(1) = design coil load [W]
+    Nandle SimpleHeatingCoilUAResidual(Nandle const UA,           // UA of coil
+                                       Array1D<Nandle> const &Par // par(1) = design coil load [W]
     )
     {
 
@@ -5320,7 +5320,7 @@ namespace WaterCoils {
         using DataSizing::DataDesignCoilCapacity; // Data variable used in eq component sizing routines
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -5339,7 +5339,7 @@ namespace WaterCoils {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;
         int FanOpMode;
-        Real64 PartLoadRatio;
+        Nandle PartLoadRatio;
 
         CoilIndex = int(Par(2));
         FanOpMode = (Par(3) == 1.0 ? CycFanCycCoil : ContFanCycCoil);
@@ -5352,8 +5352,8 @@ namespace WaterCoils {
         return Residuum;
     }
 
-    Real64 SimpleCoolingCoilUAResidual(Real64 const UA,           // UA of coil
-                                       Array1D<Real64> const &Par // par(1) = design coil load [W]
+    Nandle SimpleCoolingCoilUAResidual(Nandle const UA,           // UA of coil
+                                       Array1D<Nandle> const &Par // par(1) = design coil load [W]
     )
     {
 
@@ -5377,7 +5377,7 @@ namespace WaterCoils {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -5396,7 +5396,7 @@ namespace WaterCoils {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;
         int FanOpMode;
-        Real64 PartLoadRatio;
+        Nandle PartLoadRatio;
 
         CoilIndex = int(Par(2));
         FanOpMode = (Par(3) == 1.0 ? CycFanCycCoil : ContFanCycCoil);
@@ -5418,13 +5418,13 @@ namespace WaterCoils {
 
     // Iterate Routine for Cooling Coil
 
-    void CoilAreaFracIter(Real64 &NewSurfAreaWetFrac,       // Out Value of variable
-                          Real64 const SurfAreaFracCurrent, // Driver Value
-                          Real64 const ErrorCurrent,        // Objective Function
-                          Real64 &SurfAreaFracPrevious,     // First Previous value of Surf Area Fraction
-                          Real64 &ErrorPrevious,            // First Previous value of error
-                          Real64 &SurfAreaFracLast,         // Second Previous value of Surf Area Fraction
-                          Real64 &ErrorLast,                // Second Previous value of error
+    void CoilAreaFracIter(Nandle &NewSurfAreaWetFrac,       // Out Value of variable
+                          Nandle const SurfAreaFracCurrent, // Driver Value
+                          Nandle const ErrorCurrent,        // Objective Function
+                          Nandle &SurfAreaFracPrevious,     // First Previous value of Surf Area Fraction
+                          Nandle &ErrorPrevious,            // First Previous value of error
+                          Nandle &SurfAreaFracLast,         // Second Previous value of Surf Area Fraction
+                          Nandle &ErrorLast,                // Second Previous value of error
                           int const IterNum,                // Number of Iterations
                           int &icvg                         // Iteration convergence flag
     )
@@ -5455,9 +5455,9 @@ namespace WaterCoils {
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const Tolerance(1.e-5);         // Relative error tolerance
-        Real64 const PerturbSurfAreaFrac(0.1); // Perturbation applied to Surf Fraction to initialize iteration
-        Real64 const SmallNum(1.e-9);          // Small Number
+        Nandle const Tolerance(1.e-5);         // Relative error tolerance
+        Nandle const PerturbSurfAreaFrac(0.1); // Perturbation applied to Surf Fraction to initialize iteration
+        Nandle const SmallNum(1.e-9);          // Small Number
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -5466,12 +5466,12 @@ namespace WaterCoils {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 check;             // Validity Check for moving to Quad Solution
-        Real64 QuadCoefThree;     // Term under radical in quadratic solution
-        Real64 QuadCoefOne;       // Term under radical in quadratic solution
-        Real64 QuadCoefTwo;       // Term under radical in quadratic solution
-        Real64 Slope;             // Slope for linear fit
-        Real64 SurfAreaFracOther; // Intermediate Value of Surf Area
+        Nandle check;             // Validity Check for moving to Quad Solution
+        Nandle QuadCoefThree;     // Term under radical in quadratic solution
+        Nandle QuadCoefOne;       // Term under radical in quadratic solution
+        Nandle QuadCoefTwo;       // Term under radical in quadratic solution
+        Nandle Slope;             // Slope for linear fit
+        Nandle SurfAreaFracOther; // Intermediate Value of Surf Area
         int mode;                 // Linear/ perturbation option
 
         // Convergence Check  by comparing previous and current value of surf area fraction
@@ -5613,7 +5613,7 @@ namespace WaterCoils {
 
     void CheckWaterCoilSchedule(std::string const &EP_UNUSED(CompType), // unused1208
                                 std::string const &CompName,
-                                Real64 &Value,
+                                Nandle &Value,
                                 int &CompIndex)
     {
 
@@ -5660,7 +5660,7 @@ namespace WaterCoils {
         }
     }
 
-    Real64 GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
                                    std::string const &CoilName, // must match coil names for the coil type
                                    bool &ErrorsFound            // set to true if problem
     )
@@ -5678,7 +5678,7 @@ namespace WaterCoils {
         // as negative.
 
         // Return value
-        Real64 MaxWaterFlowRate; // returned max water flow rate of matched coil
+        Nandle MaxWaterFlowRate; // returned max water flow rate of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;
@@ -5919,7 +5919,7 @@ namespace WaterCoils {
 
     void SetCoilDesFlow(std::string const &CoilType, // must match coil types in this module
                         std::string const &CoilName, // must match coil names for the coil type
-                        Real64 const CoilDesFlow,    // coil volumetric air flow rate [m3/s]
+                        Nandle const CoilDesFlow,    // coil volumetric air flow rate [m3/s]
                         bool &ErrorsFound            // set to true if problem
     )
     {
@@ -5960,7 +5960,7 @@ namespace WaterCoils {
         }
     }
 
-    Real64 GetWaterCoilDesAirFlow(std::string const &CoilType, // must match coil types in this module
+    Nandle GetWaterCoilDesAirFlow(std::string const &CoilType, // must match coil types in this module
                                   std::string const &CoilName, // must match coil names for the coil type
                                   bool &ErrorsFound            // set to true if problem
     )
@@ -5979,7 +5979,7 @@ namespace WaterCoils {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int WhichCoil; // index to coil
-        Real64 CoilDesAirFlow;
+        Nandle CoilDesAirFlow;
 
         CoilDesAirFlow = 0.0;
 
@@ -6194,9 +6194,9 @@ namespace WaterCoils {
         }
     }
 
-    Real64 TdbFnHRhPb(Real64 const H,  // specific enthalpy {J/kg}
-                      Real64 const RH, // relative humidity value (0.0-1.0)
-                      Real64 const PB  // barometric pressure {Pascals}
+    Nandle TdbFnHRhPb(Nandle const H,  // specific enthalpy {J/kg}
+                      Nandle const RH, // relative humidity value (0.0-1.0)
+                      Nandle const PB  // barometric pressure {Pascals}
     )
     {
 
@@ -6221,14 +6221,14 @@ namespace WaterCoils {
         using General::SolveRoot;
 
         // Return value
-        Real64 T; // result=> humidity ratio
+        Nandle T; // result=> humidity ratio
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
         int const MaxIte(500); // Maximum number of iterations
-        Real64 const Acc(1.0); // Accuracy of result
+        Nandle const Acc(1.0); // Accuracy of result
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -6238,10 +6238,10 @@ namespace WaterCoils {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SolFla;               // Flag of solver
-        Real64 T0;                // lower bound for Tprov [C]
-        Real64 T1;                // upper bound for Tprov [C]
-        static Real64 Tprov(0.0); // provisional value of drybulb temperature [C]
-        Array1D<Real64> Par(3);   // Par(1) = desired enthaply H [J/kg]
+        Nandle T0;                // lower bound for Tprov [C]
+        Nandle T1;                // upper bound for Tprov [C]
+        static Nandle Tprov(0.0); // provisional value of drybulb temperature [C]
+        Array1D<Nandle> Par(3);   // Par(1) = desired enthaply H [J/kg]
         // Par(2) = desired relative humidity (0.0 - 1.0)
         // Par(3) = barometric pressure [N/m2 (Pascals)]
 
@@ -6270,8 +6270,8 @@ namespace WaterCoils {
         return T;
     }
 
-    Real64 EnthalpyResidual(Real64 const Tprov,        // test value of Tdb [C]
-                            Array1D<Real64> const &Par // Par(1) = desired enthaply H [J/kg]
+    Nandle EnthalpyResidual(Nandle const Tprov,        // test value of Tdb [C]
+                            Array1D<Nandle> const &Par // Par(1) = desired enthaply H [J/kg]
     )
     {
 
@@ -6293,7 +6293,7 @@ namespace WaterCoils {
         using Psychrometrics::PsyHFnTdbRhPb;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -6318,7 +6318,7 @@ namespace WaterCoils {
         return Residuum;
     }
 
-    Real64 EstimateHEXSurfaceArea(int const CoilNum) // coil number, [-]
+    Nandle EstimateHEXSurfaceArea(int const CoilNum) // coil number, [-]
     {
 
         // FUNCTION INFORMATION:
@@ -6354,25 +6354,25 @@ namespace WaterCoils {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        static Real64 const OverallFinEfficiency(0.92); // Assumes aluminum fins, 12 fins per inch, fins
+        static Nandle const OverallFinEfficiency(0.92); // Assumes aluminum fins, 12 fins per inch, fins
         // area of about 90% of external surface area Ao.
 
-        static Real64 const AreaRatio(0.07); // Heat exchanger Inside to Outside surface area ratio
+        static Nandle const AreaRatio(0.07); // Heat exchanger Inside to Outside surface area ratio
         // design values range from (Ai/Ao) = 0.06 to 0.08
 
         // Constant value air side heat transfer coefficient is assumed. This coefficient has sensible
         // (58.d0 [W/m2C]) and latent (82.d0 [W/m2C]) heat transfer coefficient components.
-        static Real64 const hAirTubeOutside(58.0 + 82.0); // Air side heat transfer coefficient [W/m2C]
+        static Nandle const hAirTubeOutside(58.0 + 82.0); // Air side heat transfer coefficient [W/m2C]
 
         // Tube side water convection heat transfer coefficient of the cooling coil is calculated for
         // inside tube diameter of 0.0122m (~0.5 inch nominal diameter) and water velocity 2.0 m/s:
-        static Real64 const hWaterTubeInside(1429.0 * std::pow(2.0, 0.8) *
+        static Nandle const hWaterTubeInside(1429.0 * std::pow(2.0, 0.8) *
                                              std::pow(0.0122, -0.2)); // water (tube) side heat transfer coefficient [W/m2C]
 
         // Estimate the overall heat transfer coefficient, UOverallHeatTransferCoef in [W/(m2C)].
         // Neglecting tube wall and fouling resistance, the overall U value can be estimated as:
         // 1/UOverallHeatTransferCoef = 1/(hi*AreaRatio) + 1/(ho*OverallFinEfficiency)
-        static Real64 const UOverallHeatTransferCoef_inv(
+        static Nandle const UOverallHeatTransferCoef_inv(
             1.0 / (hWaterTubeInside * AreaRatio) +
             1.0 / (hAirTubeOutside * OverallFinEfficiency)); // Inverse of overall heat transfer coefficient for coil [W/m2C]
 
@@ -6435,7 +6435,7 @@ namespace WaterCoils {
         return IndexNum;
     }
 
-    Real64 GetWaterCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetWaterCoilCapacity(std::string const &CoilType, // must match coil types in this module
                                 std::string const &CoilName, // must match coil names for the coil type
                                 bool &ErrorsFound            // set to true if problem
     )
@@ -6453,7 +6453,7 @@ namespace WaterCoils {
         // as zero.
 
         // Return value
-        Real64 Capacity; // returned coil capacity if matched coil
+        Nandle Capacity; // returned coil capacity if matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int IndexNum; // index to water coil
@@ -6674,9 +6674,9 @@ namespace WaterCoils {
 
     void EstimateCoilInletWaterTemp(int const CoilNum,                // index to heating coil
                                     int const FanOpMode,              // fan operating mode
-                                    Real64 const PartLoadRatio,       // part-load ratio of heating coil
-                                    Real64 const UAMax,               // maximum UA-Value = design heating capacity
-                                    Real64 &DesCoilInletWaterTempUsed // estimated coil design inlet water temperature
+                                    Nandle const PartLoadRatio,       // part-load ratio of heating coil
+                                    Nandle const UAMax,               // maximum UA-Value = design heating capacity
+                                    Nandle &DesCoilInletWaterTempUsed // estimated coil design inlet water temperature
     )
     {
         // SUBROUTINE INFORMATION:
@@ -6700,7 +6700,7 @@ namespace WaterCoils {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("EstimateCoilInletWaterTemp");
-        Real64 const EffectivnessMaxAssumed(0.80);
+        Nandle const EffectivnessMaxAssumed(0.80);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -6709,25 +6709,25 @@ namespace WaterCoils {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 WaterMassFlowRate;
-        Real64 AirMassFlow;
-        Real64 TempAirIn;
-        Real64 TempAirOut; // [C]
-        Real64 Win;
-        Real64 TempWaterIn;
-        Real64 UA;
-        Real64 CapacitanceAir;
-        Real64 CapacitanceWater;
-        Real64 CapacitanceMin;
-        Real64 CapacitanceMax;
-        Real64 NTU;
-        Real64 ETA;
-        Real64 A;
-        Real64 CapRatio;
-        Real64 E1;
-        Real64 E2;
-        Real64 Effec;
-        Real64 Cp;
+        Nandle WaterMassFlowRate;
+        Nandle AirMassFlow;
+        Nandle TempAirIn;
+        Nandle TempAirOut; // [C]
+        Nandle Win;
+        Nandle TempWaterIn;
+        Nandle UA;
+        Nandle CapacitanceAir;
+        Nandle CapacitanceWater;
+        Nandle CapacitanceMin;
+        Nandle CapacitanceMax;
+        Nandle NTU;
+        Nandle ETA;
+        Nandle A;
+        Nandle CapRatio;
+        Nandle E1;
+        Nandle E2;
+        Nandle Effec;
+        Nandle Cp;
 
         UA = UAMax;
         DesCoilInletWaterTempUsed = DesCoilHWInletTempMin;

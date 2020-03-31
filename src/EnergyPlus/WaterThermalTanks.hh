@@ -155,40 +155,40 @@ namespace WaterThermalTanks {
     extern int numWaterHeaterDesuperheater; // number of desuperheater heating coils
     extern int numHeatPumpWaterHeater;      // number of heat pump water heaters
 
-    extern Real64 hpPartLoadRatio;            // part load ratio of HPWH
+    extern Nandle hpPartLoadRatio;            // part load ratio of HPWH
     extern bool getWaterThermalTankInputFlag; // Calls to Water Heater from multiple places in code
-    extern Real64 mixerInletAirSchedule;      // output of inlet air mixer node schedule
-    extern Real64 mdotAir;                    // mass flow rate of evaporator air, kg/s
+    extern Nandle mixerInletAirSchedule;      // output of inlet air mixer node schedule
+    extern Nandle mdotAir;                    // mass flow rate of evaporator air, kg/s
     extern int numWaterHeaterSizing;          // Number of sizing/design objects for water heaters.
 
     struct StratifiedNodeData
     {
         // Members
-        Real64 Mass; // All nodes have the same mass (kg)
-        Real64 OnCycLossCoeff;
-        Real64 OffCycLossCoeff;
-        Real64 Temp;
-        Real64 SavedTemp;
-        Real64 NewTemp;
-        Real64 TempSum;
-        Real64 TempAvg; // Average node temperature over the time step (C)
-        Real64 CondCoeffUp;
-        Real64 CondCoeffDn;
-        Real64 OffCycParaLoad; // Heat delivered to the tank from off-cycle parasitic sources
-        Real64 OnCycParaLoad;
-        Real64 UseMassFlowRate;
-        Real64 SourceMassFlowRate;
-        Real64 MassFlowFromUpper; // Mass flow rate into this node from node above
-        Real64 MassFlowFromLower; // Mass flow rate into this node from node below
-        Real64 MassFlowToUpper;   // Mass flow rate from this node to node above
-        Real64 MassFlowToLower;   // Mass flow rate from this node to node below
+        Nandle Mass; // All nodes have the same mass (kg)
+        Nandle OnCycLossCoeff;
+        Nandle OffCycLossCoeff;
+        Nandle Temp;
+        Nandle SavedTemp;
+        Nandle NewTemp;
+        Nandle TempSum;
+        Nandle TempAvg; // Average node temperature over the time step (C)
+        Nandle CondCoeffUp;
+        Nandle CondCoeffDn;
+        Nandle OffCycParaLoad; // Heat delivered to the tank from off-cycle parasitic sources
+        Nandle OnCycParaLoad;
+        Nandle UseMassFlowRate;
+        Nandle SourceMassFlowRate;
+        Nandle MassFlowFromUpper; // Mass flow rate into this node from node above
+        Nandle MassFlowFromLower; // Mass flow rate into this node from node below
+        Nandle MassFlowToUpper;   // Mass flow rate from this node to node above
+        Nandle MassFlowToLower;   // Mass flow rate from this node to node below
         // Report Variables
-        Real64 Volume;
-        Real64 Height;      // Node height from top to bottom (like a thickness)
-        Real64 MaxCapacity; // For reporting
+        Nandle Volume;
+        Nandle Height;      // Node height from top to bottom (like a thickness)
+        Nandle MaxCapacity; // For reporting
         int Inlets;
         int Outlets;
-        Real64 HPWHWrappedCondenserHeatingFrac; // fraction of the heat from a wrapped condenser that enters into this node, should add up to 1.
+        Nandle HPWHWrappedCondenserHeatingFrac; // fraction of the heat from a wrapped condenser that enters into this node, should add up to 1.
 
         // Default Constructor
         StratifiedNodeData()
@@ -205,25 +205,25 @@ namespace WaterThermalTanks {
         // Members
         // input data
         SizeEnum DesignMode;                      // what sizing method to use
-        Real64 TankDrawTime;                      // in hours, time storage can meet peak demand
-        Real64 RecoveryTime;                      // time for tank to recover
-        Real64 NominalVolForSizingDemandSideFlow; // nominal tank size to use in sizing demand side connections
+        Nandle TankDrawTime;                      // in hours, time storage can meet peak demand
+        Nandle RecoveryTime;                      // time for tank to recover
+        Nandle NominalVolForSizingDemandSideFlow; // nominal tank size to use in sizing demand side connections
         int NumberOfBedrooms;
-        Real64 NumberOfBathrooms;
-        Real64 TankCapacityPerPerson;
-        Real64 RecoveryCapacityPerPerson;
-        Real64 TankCapacityPerArea;
-        Real64 RecoveryCapacityPerArea;
-        Real64 NumberOfUnits;
-        Real64 TankCapacityPerUnit;
-        Real64 RecoveryCapacityPerUnit;
-        Real64 TankCapacityPerCollectorArea;
-        Real64 HeightAspectRatio;
+        Nandle NumberOfBathrooms;
+        Nandle TankCapacityPerPerson;
+        Nandle RecoveryCapacityPerPerson;
+        Nandle TankCapacityPerArea;
+        Nandle RecoveryCapacityPerArea;
+        Nandle NumberOfUnits;
+        Nandle TankCapacityPerUnit;
+        Nandle RecoveryCapacityPerUnit;
+        Nandle TankCapacityPerCollectorArea;
+        Nandle HeightAspectRatio;
         // data from elsewhere in E+
-        Real64 PeakDemand;
-        Real64 PeakNumberOfPeople;
-        Real64 TotalFloorArea;
-        Real64 TotalSolarCollectorArea;
+        Nandle PeakDemand;
+        Nandle PeakNumberOfPeople;
+        Nandle TotalFloorArea;
+        Nandle TotalSolarCollectorArea;
 
         // Default Constructor
         WaterHeaterSizingData()
@@ -248,23 +248,23 @@ namespace WaterThermalTanks {
         bool StandAlone;                                    // Flag for operation with no plant connections (no use nodes)
         int AvailSchedPtr;                                  // Index to Availability Schedule curve index
         int SetPointTempSchedule;                           // Index to Setpoint Temperature Schedule curve
-        Real64 DeadBandTempDiff;                            // Dead band temperature difference (cut-in temperature)
-        Real64 Capacity;                                    // Heat Pump rated capacity (W)
-        Real64 BackupElementCapacity;                       // Tank backup element capacity (W)
-        Real64 BackupElementEfficiency;                     // Tank backup element efficiency
-        Real64 WHOnCycParaLoad;                             // tank's on-cycle parasitic load (W), disable for rating
-        Real64 WHOffCycParaLoad;                            // tank's off-cycle parasitic load (W), disable for rating
-        Real64 WHOnCycParaFracToTank;                       // tank's on-cycle parasitic frac to tank, disable for rating
-        Real64 WHOffCycParaFracToTank;                      // tank's off-cycle parasitic frac to tank, disable for rating
+        Nandle DeadBandTempDiff;                            // Dead band temperature difference (cut-in temperature)
+        Nandle Capacity;                                    // Heat Pump rated capacity (W)
+        Nandle BackupElementCapacity;                       // Tank backup element capacity (W)
+        Nandle BackupElementEfficiency;                     // Tank backup element efficiency
+        Nandle WHOnCycParaLoad;                             // tank's on-cycle parasitic load (W), disable for rating
+        Nandle WHOffCycParaLoad;                            // tank's off-cycle parasitic load (W), disable for rating
+        Nandle WHOnCycParaFracToTank;                       // tank's on-cycle parasitic frac to tank, disable for rating
+        Nandle WHOffCycParaFracToTank;                      // tank's off-cycle parasitic frac to tank, disable for rating
         int WHPLFCurve;                                     // tank part-load fraction curve index, used for rating procedure
-        Real64 OperatingAirFlowRate;                        // Operating volumetric air flow rate (m3/s)
-        Real64 OperatingAirMassFlowRate;                    // Operating air mass flow rate (kg/s)
-        Real64 OperatingWaterFlowRate;                      // Operating volumetric water flow rate (m3/s)
-        Real64 COP;                                         // Heat Pump coefficient of performance (W/W)
-        Real64 SHR;                                         // Heat Pump air-side coil sensible heat ratio
-        Real64 RatedInletDBTemp;                            // Rated evaporator inlet air dry-bulb temperature (C)
-        Real64 RatedInletWBTemp;                            // Rated evaporator inlet air wet-bulb temperature (C)
-        Real64 RatedInletWaterTemp;                         // Rated condenser inlet water temperature (C)
+        Nandle OperatingAirFlowRate;                        // Operating volumetric air flow rate (m3/s)
+        Nandle OperatingAirMassFlowRate;                    // Operating air mass flow rate (kg/s)
+        Nandle OperatingWaterFlowRate;                      // Operating volumetric water flow rate (m3/s)
+        Nandle COP;                                         // Heat Pump coefficient of performance (W/W)
+        Nandle SHR;                                         // Heat Pump air-side coil sensible heat ratio
+        Nandle RatedInletDBTemp;                            // Rated evaporator inlet air dry-bulb temperature (C)
+        Nandle RatedInletWBTemp;                            // Rated evaporator inlet air wet-bulb temperature (C)
+        Nandle RatedInletWaterTemp;                         // Rated condenser inlet water temperature (C)
         bool FoundTank;                                     // Found storage tank flag associated with HP water heater
         int HeatPumpAirInletNode;                           // HP air inlet node (for zone, zone/outdoor or scheduled)
         int HeatPumpAirOutletNode;                          // HP air outlet node (for zone, zone/outdoor or scheduled)
@@ -295,15 +295,15 @@ namespace WaterThermalTanks {
         int Mode;                                           // HP mode (0 = float, 1 = heating [-1 = venting na for HP])
         int SaveMode;                                       // HP mode on first iteration
         int SaveWHMode;                                     // mode of water heater tank element (backup element)
-        Real64 Power;                                       // HP power used for reporting
-        Real64 Energy;                                      // HP energy used for reporting
-        Real64 HeatingPLR;                                  // HP PLR used for reporting
-        Real64 SetPointTemp;                                // set point or cut-out temperature [C]
-        Real64 MinAirTempForHPOperation;                    // HP does not operate below this ambient temperature
-        Real64 MaxAirTempForHPOperation;                    // HP does not operate above this ambient temperature
+        Nandle Power;                                       // HP power used for reporting
+        Nandle Energy;                                      // HP energy used for reporting
+        Nandle HeatingPLR;                                  // HP PLR used for reporting
+        Nandle SetPointTemp;                                // set point or cut-out temperature [C]
+        Nandle MinAirTempForHPOperation;                    // HP does not operate below this ambient temperature
+        Nandle MaxAirTempForHPOperation;                    // HP does not operate above this ambient temperature
         int InletAirMixerNode;                              // Inlet air mixer node number of HP water heater
         int OutletAirSplitterNode;                          // Outlet air splitter node number of HP water heater
-        Real64 SourceMassFlowRate;                          // Maximum mass flow rate on the source side (kg/s)
+        Nandle SourceMassFlowRate;                          // Maximum mass flow rate on the source side (kg/s)
         AmbientTempEnum InletAirConfiguration;              // Identifies source of HPWH inlet air
         int AmbientTempSchedule;                            // Schedule index pointer for ambient air temp at HPWH inlet
         int AmbientRHSchedule;                              // Schedule index pointer for ambient air RH at HPWH inlet
@@ -311,13 +311,13 @@ namespace WaterThermalTanks {
         CrankTempEnum CrankcaseTempIndicator;               // Indicator for HPWH compressor/crankcase heater location
         int CrankcaseTempSchedule;                          // Schedule index pointer where crankcase heater is located
         int CrankcaseTempZone;                              // Index of zone where compressor/crankcase heater is located
-        Real64 OffCycParaLoad;                              // Rate for off-cycle parasitic load (W)
-        Real64 OnCycParaLoad;                               // Rate for on-cycle parasitic load (W)
+        Nandle OffCycParaLoad;                              // Rate for off-cycle parasitic load (W)
+        Nandle OnCycParaLoad;                               // Rate for on-cycle parasitic load (W)
         AmbientTempEnum ParasiticTempIndicator;             // Indicator for HPWH parasitic heat rejection location
-        Real64 OffCycParaFuelRate;                          // Electric consumption rate for off-cycle parasitic load (W)
-        Real64 OnCycParaFuelRate;                           // Electric consumption rate for on-cycle parasitic load (W)
-        Real64 OffCycParaFuelEnergy;                        // Electric energy consumption for off-cycle parasitic load (J)
-        Real64 OnCycParaFuelEnergy;                         // Electric energy consumption for on-cycle parasitic load (J)
+        Nandle OffCycParaFuelRate;                          // Electric consumption rate for off-cycle parasitic load (W)
+        Nandle OnCycParaFuelRate;                           // Electric consumption rate for on-cycle parasitic load (W)
+        Nandle OffCycParaFuelEnergy;                        // Electric energy consumption for off-cycle parasitic load (J)
+        Nandle OnCycParaFuelEnergy;                         // Electric energy consumption for on-cycle parasitic load (J)
         bool AirFlowRateAutoSized;                          // Used to report air flow autosize info in Init
         bool WaterFlowRateAutoSized;                        // Used to report water flow autosize info in Init
         int HPSetPointError;                                // Used when temperature SP's in tank and HP are reversed
@@ -332,28 +332,28 @@ namespace WaterThermalTanks {
         int RegulaFalsiFailedNum2;                          // Counter for recurring RegulaFalsi failed warning messages
         bool FirstTimeThroughFlag;                          // Flag for saving water heater status
         bool ShowSetPointWarning;                           // Warn when set point is greater than max tank temp limit
-        Real64 HPWaterHeaterSensibleCapacity;               // sensible capacity delivered when HPWH is attached to a zone (W)
-        Real64 HPWaterHeaterLatentCapacity;                 // latent capacity delivered when HPWH is attached to a zone (kg/s)
-        Real64 WrappedCondenserBottomLocation;              // Location of the bottom of the wrapped condenser.
-        Real64 WrappedCondenserTopLocation;                 // Location of the top of the wrapped condenser.
-        Real64 ControlSensor1Height;                        // location from bottom of tank of control sensor 1
+        Nandle HPWaterHeaterSensibleCapacity;               // sensible capacity delivered when HPWH is attached to a zone (W)
+        Nandle HPWaterHeaterLatentCapacity;                 // latent capacity delivered when HPWH is attached to a zone (kg/s)
+        Nandle WrappedCondenserBottomLocation;              // Location of the bottom of the wrapped condenser.
+        Nandle WrappedCondenserTopLocation;                 // Location of the top of the wrapped condenser.
+        Nandle ControlSensor1Height;                        // location from bottom of tank of control sensor 1
         int ControlSensor1Node;                             // Node number of control sensor 1
-        Real64 ControlSensor1Weight;                        // weight of control sensor 1
-        Real64 ControlSensor2Height;                        // location from bottom of tank of control sensor 2
+        Nandle ControlSensor1Weight;                        // weight of control sensor 1
+        Nandle ControlSensor2Height;                        // location from bottom of tank of control sensor 2
         int ControlSensor2Node;                             // Node number of control sensor 2
-        Real64 ControlSensor2Weight;                        // weight of control sensor 2
-        Real64 ControlTempAvg;                              // Measured control temperature for the heat pump, average over timestep, for reporting
-        Real64 ControlTempFinal;                            // Measured control temperature at the end of the timestep, for reporting
+        Nandle ControlSensor2Weight;                        // weight of control sensor 2
+        Nandle ControlTempAvg;                              // Measured control temperature for the heat pump, average over timestep, for reporting
+        Nandle ControlTempFinal;                            // Measured control temperature at the end of the timestep, for reporting
         bool AllowHeatingElementAndHeatPumpToRunAtSameTime; // if false, if the heating element kicks on, it will recover with that before turning the
         // heat pump back on.
         // variables for variable-speed HPWH
         int NumofSpeed;                        // number of speeds for VS HPWH
-        Array1D<Real64> HPWHAirVolFlowRate;    // air volume flow rate during heating operation
-        Array1D<Real64> HPWHAirMassFlowRate;   // air mass flow rate during heating operation
-        Array1D<Real64> HPWHWaterVolFlowRate;  // water volume flow rate during heating operation
-        Array1D<Real64> HPWHWaterMassFlowRate; // water mass flow rate during heating operation
-        Array1D<Real64> MSAirSpeedRatio;       // air speed ratio in heating mode
-        Array1D<Real64> MSWaterSpeedRatio;     // water speed ratio in heating mode
+        Array1D<Nandle> HPWHAirVolFlowRate;    // air volume flow rate during heating operation
+        Array1D<Nandle> HPWHAirMassFlowRate;   // air mass flow rate during heating operation
+        Array1D<Nandle> HPWHWaterVolFlowRate;  // water volume flow rate during heating operation
+        Array1D<Nandle> HPWHWaterMassFlowRate; // water mass flow rate during heating operation
+        Array1D<Nandle> MSAirSpeedRatio;       // air speed ratio in heating mode
+        Array1D<Nandle> MSWaterSpeedRatio;     // water speed ratio in heating mode
         bool bIsIHP;                           // whether the HP is a part of Integrated Heat Pump
         bool MyOneTimeFlagHP;                  // first pass log
         bool MyTwoTimeFlagHP;                  // second pass do input check
@@ -400,11 +400,11 @@ namespace WaterThermalTanks {
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 
-        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
     };
 
     struct WaterThermalTankData : PlantComponent
@@ -417,68 +417,68 @@ namespace WaterThermalTanks {
         std::string EndUseSubcategoryName; // User-defined end-use subcategory name
         bool Init;                         // Flag for initialization:  TRUE means do the init
         bool StandAlone;                   // Flag for operation with no plant connections (no source or use)
-        Real64 Volume;                     // Tank volume (m3)
+        Nandle Volume;                     // Tank volume (m3)
         bool VolumeWasAutoSized;           // true if tank volume was autosize on input
-        Real64 Mass;                       // Total mass of fluid in the tank (kg)
-        Real64 TimeElapsed;                // Fraction of the current hour that has elapsed (h)
+        Nandle Mass;                       // Total mass of fluid in the tank (kg)
+        Nandle TimeElapsed;                // Fraction of the current hour that has elapsed (h)
         // Saved in order to identify the beginning of a new system time
         AmbientTempEnum AmbientTempIndicator;  // Indicator for ambient tank losses (SCHEDULE, ZONE, EXTERIOR)
         int AmbientTempSchedule;               // Schedule index pointer
         int AmbientTempZone;                   // Number of ambient zone around tank
         int AmbientTempOutsideAirNode;         // Number of outside air node
-        Real64 AmbientTemp;                    // Ambient temperature around tank (C)
-        Real64 AmbientZoneGain;                // Internal gain to zone from tank losses (W)
-        Real64 LossCoeff;                      // Overall tank heat loss coefficient, UA (W/K)
-        Real64 OffCycLossCoeff;                // Off-cycle overall tank heat loss coefficient, UA (W/K)
-        Real64 OffCycLossFracToZone;           // Fraction of off-cycle losses added to zone
-        Real64 OnCycLossCoeff;                 // On-cycle overall tank heat loss coefficient, UA (W/K)
-        Real64 OnCycLossFracToZone;            // Fraction of on-cycle losses added to zone
+        Nandle AmbientTemp;                    // Ambient temperature around tank (C)
+        Nandle AmbientZoneGain;                // Internal gain to zone from tank losses (W)
+        Nandle LossCoeff;                      // Overall tank heat loss coefficient, UA (W/K)
+        Nandle OffCycLossCoeff;                // Off-cycle overall tank heat loss coefficient, UA (W/K)
+        Nandle OffCycLossFracToZone;           // Fraction of off-cycle losses added to zone
+        Nandle OnCycLossCoeff;                 // On-cycle overall tank heat loss coefficient, UA (W/K)
+        Nandle OnCycLossFracToZone;            // Fraction of on-cycle losses added to zone
         int Mode;                              // Indicator for current operating mode
         int SavedMode;                         // Mode indicator saved from previous time step
         int ControlType;                       // Indicator for control type
         std::string FuelType;                  // Fuel type
-        Real64 MaxCapacity;                    // Maximum capacity of auxiliary heater 1 (W)
+        Nandle MaxCapacity;                    // Maximum capacity of auxiliary heater 1 (W)
         bool MaxCapacityWasAutoSized;          // true if heater 1 capacity was autosized on input
-        Real64 MinCapacity;                    // Minimum capacity of auxiliary heater 1 (W)
-        Real64 Efficiency;                     // Thermal efficiency of auxiliary heater 1 ()
+        Nandle MinCapacity;                    // Minimum capacity of auxiliary heater 1 (W)
+        Nandle Efficiency;                     // Thermal efficiency of auxiliary heater 1 ()
         int PLFCurve;                          // Part load factor curve as a function of part load ratio
         int SetPointTempSchedule;              // Schedule index pointer
-        Real64 SetPointTemp;                   // Setpoint temperature of auxiliary heater 1 (C)
-        Real64 DeadBandDeltaTemp;              // Deadband temperature difference of auxiliary heater 1 (deltaC)
-        Real64 TankTempLimit;                  // Maximum tank temperature limit before venting (C)
-        Real64 IgnitionDelay;                  // Time delay before heater is allowed to turn on (s)
-        Real64 OffCycParaLoad;                 // Rate for off-cycle parasitic load (W)
+        Nandle SetPointTemp;                   // Setpoint temperature of auxiliary heater 1 (C)
+        Nandle DeadBandDeltaTemp;              // Deadband temperature difference of auxiliary heater 1 (deltaC)
+        Nandle TankTempLimit;                  // Maximum tank temperature limit before venting (C)
+        Nandle IgnitionDelay;                  // Time delay before heater is allowed to turn on (s)
+        Nandle OffCycParaLoad;                 // Rate for off-cycle parasitic load (W)
         std::string OffCycParaFuelType;        // Fuel type for off-cycle parasitic load
-        Real64 OffCycParaFracToTank;           // Fraction of off-cycle parasitic energy ending up in tank (W)
-        Real64 OnCycParaLoad;                  // Rate for on-cycle parasitic load (W)
+        Nandle OffCycParaFracToTank;           // Fraction of off-cycle parasitic energy ending up in tank (W)
+        Nandle OnCycParaLoad;                  // Rate for on-cycle parasitic load (W)
         std::string OnCycParaFuelType;         // Fuel type for on-cycle parasitic load
-        Real64 OnCycParaFracToTank;            // Fraction of on-cycle parasitic energy ending up in tank (W)
+        Nandle OnCycParaFracToTank;            // Fraction of on-cycle parasitic energy ending up in tank (W)
         int UseCurrentFlowLock;                // current flow lock setting on use side
         int UseInletNode;                      // Inlet node on the use side; colder water returning to a hottank
-        Real64 UseInletTemp;                   // Use side inlet temperature (C)
+        Nandle UseInletTemp;                   // Use side inlet temperature (C)
         int UseOutletNode;                     // Outlet node on the use side; hot tank water
-        Real64 UseOutletTemp;                  // Use side outlet temperature (C)
-        Real64 UseMassFlowRate;                // Mass flow rate on the use side (kg/s)
-        Real64 UseEffectiveness;               // Heat transfer effectiveness on use side ()
-        Real64 PlantUseMassFlowRateMax;        // Plant demand-side max flow request on use side (kg/s)
-        Real64 SavedUseOutletTemp;             // Use side outlet temp saved for demand-side flow control (C)
-        Real64 UseDesignVolFlowRate;           // Use side plant volume flow rate (input data, autosizable) m3/s
+        Nandle UseOutletTemp;                  // Use side outlet temperature (C)
+        Nandle UseMassFlowRate;                // Mass flow rate on the use side (kg/s)
+        Nandle UseEffectiveness;               // Heat transfer effectiveness on use side ()
+        Nandle PlantUseMassFlowRateMax;        // Plant demand-side max flow request on use side (kg/s)
+        Nandle SavedUseOutletTemp;             // Use side outlet temp saved for demand-side flow control (C)
+        Nandle UseDesignVolFlowRate;           // Use side plant volume flow rate (input data, autosizable) m3/s
         bool UseDesignVolFlowRateWasAutoSized; // true if use flow rate was autosize on input
         int UseBranchControlType;              // Use side plant branch control type e.g active, passive, bypass
         int UseSidePlantSizNum;                // index in plant sizing that the use side is on
         bool UseSideSeries;
         int UseSideAvailSchedNum;    // use side availability schedule
-        Real64 UseSideLoadRequested; // hold MyLoad request from plant management.
+        Nandle UseSideLoadRequested; // hold MyLoad request from plant management.
         PlantLocation UseSide;
         int SourceInletNode;                      // Inlet node for the source side; hot water from supply
-        Real64 SourceInletTemp;                   // Source side inlet temperature (C)
+        Nandle SourceInletTemp;                   // Source side inlet temperature (C)
         int SourceOutletNode;                     // Outlet node for the source side; colder tank water
-        Real64 SourceOutletTemp;                  // Source side outlet temperature (C)
-        Real64 SourceMassFlowRate;                // Mass flow rate on the source side (kg/s)
-        Real64 SourceEffectiveness;               // Heat transfer effectiveness on source side ()
-        Real64 PlantSourceMassFlowRateMax;        // Plant demand-side max flow request on source side (kg/s)
-        Real64 SavedSourceOutletTemp;             // Source side outlet temp saved for demand-side flow control (C)
-        Real64 SourceDesignVolFlowRate;           // Source side plant volume flow rate (input, autosizable) m3/s
+        Nandle SourceOutletTemp;                  // Source side outlet temperature (C)
+        Nandle SourceMassFlowRate;                // Mass flow rate on the source side (kg/s)
+        Nandle SourceEffectiveness;               // Heat transfer effectiveness on source side ()
+        Nandle PlantSourceMassFlowRateMax;        // Plant demand-side max flow request on source side (kg/s)
+        Nandle SavedSourceOutletTemp;             // Source side outlet temp saved for demand-side flow control (C)
+        Nandle SourceDesignVolFlowRate;           // Source side plant volume flow rate (input, autosizable) m3/s
         bool SourceDesignVolFlowRateWasAutoSized; // true if source flow rate was autosize on input
         int SourceBranchControlType;              // source side plant branch control type e.g active, passive, bypass
         int SourceSidePlantSizNum;                // index in plant sizing that the source side is on
@@ -487,102 +487,102 @@ namespace WaterThermalTanks {
         PlantLocation SrcSide;
         SourceSideEnum SourceSideControlMode; // flag for how source side flow is controlled
         int SourceSideAltSetpointSchedNum;    // schedule of alternate temperature setpoint values
-        Real64 SizingRecoveryTime;            // sizing parameter for autosizing indirect water heaters (hr)
-        Real64 MassFlowRateMax;               // Maximum flow rate for scheduled DHW (kg/s)
-        Real64 VolFlowRateMin;                // Minimum flow rate for heater ignition (kg/s)
-        Real64 MassFlowRateMin;               // Minimum mass flow rate for heater ignition (kg/s)
+        Nandle SizingRecoveryTime;            // sizing parameter for autosizing indirect water heaters (hr)
+        Nandle MassFlowRateMax;               // Maximum flow rate for scheduled DHW (kg/s)
+        Nandle VolFlowRateMin;                // Minimum flow rate for heater ignition (kg/s)
+        Nandle MassFlowRateMin;               // Minimum mass flow rate for heater ignition (kg/s)
         int FlowRateSchedule;                 // Schedule index pointer
         int UseInletTempSchedule;             // Cold water supply temperature schedule index pointer
-        Real64 TankTemp;                      // Temperature of tank fluid (average, if stratified) (C)
-        Real64 SavedTankTemp;                 // Tank temp that is carried from time step to time step (C)
-        Real64 TankTempAvg;                   // Average tank temperature over the time step (C)
+        Nandle TankTemp;                      // Temperature of tank fluid (average, if stratified) (C)
+        Nandle SavedTankTemp;                 // Tank temp that is carried from time step to time step (C)
+        Nandle TankTempAvg;                   // Average tank temperature over the time step (C)
         // Stratified variables (in addition to the above)
-        Real64 Height;           // Height of tank (m)
+        Nandle Height;           // Height of tank (m)
         bool HeightWasAutoSized; // true if the height of tank was autosize on input
-        Real64 Perimeter;        // Perimeter of tank (m), only used for OTHER shape
+        Nandle Perimeter;        // Perimeter of tank (m), only used for OTHER shape
         TankShapeEnum Shape;     // Tank shape:  VERTICAL CYLINDER, HORIZONTAL CYLINDER, or OTHER
-        Real64 HeaterHeight1;
+        Nandle HeaterHeight1;
         int HeaterNode1;
         bool HeaterOn1;
         bool SavedHeaterOn1;
-        Real64 HeaterHeight2;
+        Nandle HeaterHeight2;
         int HeaterNode2;
         bool HeaterOn2;
         bool SavedHeaterOn2;
-        Real64 AdditionalCond; // Additional destratification conductivity (W/m K)
-        Real64 SetPointTemp2;  // Setpoint temperature of auxiliary heater 2 (C)
+        Nandle AdditionalCond; // Additional destratification conductivity (W/m K)
+        Nandle SetPointTemp2;  // Setpoint temperature of auxiliary heater 2 (C)
         int SetPointTempSchedule2;
-        Real64 DeadBandDeltaTemp2;
-        Real64 MaxCapacity2;
-        Real64 OffCycParaHeight;
-        Real64 OnCycParaHeight;
-        Real64 SkinLossCoeff;
-        Real64 SkinLossFracToZone;
-        Real64 OffCycFlueLossCoeff;
-        Real64 OffCycFlueLossFracToZone;
-        Real64 UseInletHeight;              // Height of use side inlet (m)
-        Real64 UseOutletHeight;             // Height of use side outlet (m)
+        Nandle DeadBandDeltaTemp2;
+        Nandle MaxCapacity2;
+        Nandle OffCycParaHeight;
+        Nandle OnCycParaHeight;
+        Nandle SkinLossCoeff;
+        Nandle SkinLossFracToZone;
+        Nandle OffCycFlueLossCoeff;
+        Nandle OffCycFlueLossFracToZone;
+        Nandle UseInletHeight;              // Height of use side inlet (m)
+        Nandle UseOutletHeight;             // Height of use side outlet (m)
         bool UseOutletHeightWasAutoSized;   // true if use outlet height was autosize on input
-        Real64 SourceInletHeight;           // Height of source side inlet (m)
+        Nandle SourceInletHeight;           // Height of source side inlet (m)
         bool SourceInletHeightWasAutoSized; // true if source inlet height was autosize on input
-        Real64 SourceOutletHeight;          // Height of source side outlet (m)
+        Nandle SourceOutletHeight;          // Height of source side outlet (m)
         int UseInletStratNode;              // Use-side inlet node number
         int UseOutletStratNode;             // Use-side outlet node number
         int SourceInletStratNode;           // Source-side inlet node number
         int SourceOutletStratNode;          // Source-side outlet node number
         InletModeEnum InletMode;            // Inlet position mode:  1 = FIXED; 2 = SEEKING
-        Real64 InversionMixingRate;
-        Array1D<Real64> AdditionalLossCoeff; // Loss coefficient added to the skin loss coefficient (W/m2-K)
+        Nandle InversionMixingRate;
+        Array1D<Nandle> AdditionalLossCoeff; // Loss coefficient added to the skin loss coefficient (W/m2-K)
         int Nodes;                           // Number of nodes
         Array1D<StratifiedNodeData> Node;    // Array of node data
         // Report variables
-        Real64 VolFlowRate;            // Scheduled DHW demand (m3/s)
-        Real64 VolumeConsumed;         // Volume of DHW consumed (m3)
-        Real64 UnmetRate;              // Energy demand to heat tank water to setpoint (W)
-        Real64 LossRate;               // Energy demand to support heat losses due to ambient temp (W)
-        Real64 FlueLossRate;           // Heat loss rate to flue (W)
-        Real64 UseRate;                // Energy demand to heat the Use Side water to tank temp (W)
-        Real64 TotalDemandRate;        // Total demand rate (sum of all above rates) (W)
-        Real64 SourceRate;             // Energy supplied by the source side to help heat the tank (W)
-        Real64 HeaterRate;             // The energy the water heater burner puts into the water (W)
-        Real64 HeaterRate1;            // The energy heater 1 puts into the water (W)
-        Real64 HeaterRate2;            // The energy heater 2 puts into the water (W)
-        Real64 FuelRate;               // The fuel consumption rate for the water heater burner (W)
-        Real64 FuelRate1;              // The fuel consumption rate for heater 1 (W)
-        Real64 FuelRate2;              // The fuel consumption rate for heater 2 (W)
-        Real64 VentRate;               // Heat recovery energy lost due to setpoint temp (W)
-        Real64 OffCycParaFuelRate;     // Fuel consumption rate for off-cycle parasitic load (W)
-        Real64 OffCycParaRateToTank;   // Heat rate to tank for off-cycle parasitic load (W)
-        Real64 OnCycParaFuelRate;      // Fuel consumption rate for on-cycle parasitic load (W)
-        Real64 OnCycParaRateToTank;    // Heat rate to tank for on-cycle parasitic load (W)
-        Real64 NetHeatTransferRate;    // Net heat transfer rate to/from tank (W)
+        Nandle VolFlowRate;            // Scheduled DHW demand (m3/s)
+        Nandle VolumeConsumed;         // Volume of DHW consumed (m3)
+        Nandle UnmetRate;              // Energy demand to heat tank water to setpoint (W)
+        Nandle LossRate;               // Energy demand to support heat losses due to ambient temp (W)
+        Nandle FlueLossRate;           // Heat loss rate to flue (W)
+        Nandle UseRate;                // Energy demand to heat the Use Side water to tank temp (W)
+        Nandle TotalDemandRate;        // Total demand rate (sum of all above rates) (W)
+        Nandle SourceRate;             // Energy supplied by the source side to help heat the tank (W)
+        Nandle HeaterRate;             // The energy the water heater burner puts into the water (W)
+        Nandle HeaterRate1;            // The energy heater 1 puts into the water (W)
+        Nandle HeaterRate2;            // The energy heater 2 puts into the water (W)
+        Nandle FuelRate;               // The fuel consumption rate for the water heater burner (W)
+        Nandle FuelRate1;              // The fuel consumption rate for heater 1 (W)
+        Nandle FuelRate2;              // The fuel consumption rate for heater 2 (W)
+        Nandle VentRate;               // Heat recovery energy lost due to setpoint temp (W)
+        Nandle OffCycParaFuelRate;     // Fuel consumption rate for off-cycle parasitic load (W)
+        Nandle OffCycParaRateToTank;   // Heat rate to tank for off-cycle parasitic load (W)
+        Nandle OnCycParaFuelRate;      // Fuel consumption rate for on-cycle parasitic load (W)
+        Nandle OnCycParaRateToTank;    // Heat rate to tank for on-cycle parasitic load (W)
+        Nandle NetHeatTransferRate;    // Net heat transfer rate to/from tank (W)
         int CycleOnCount;              // Number of times heater cycles on in the current time step
         int CycleOnCount1;             // Number of times heater 1 cycles on in the current time step
         int CycleOnCount2;             // Number of times heater 2 cycles on in the current time step
-        Real64 RuntimeFraction;        // Runtime fraction, fraction of timestep that any  heater is running
-        Real64 RuntimeFraction1;       // Runtime fraction, fraction of timestep that heater 1 is running
-        Real64 RuntimeFraction2;       // Runtime fraction, fraction of timestep that heater 2 is running
-        Real64 PartLoadRatio;          // Part load ratio, fraction of maximum heater capacity
-        Real64 UnmetEnergy;            // Energy to heat tank water to setpoint (J)
-        Real64 LossEnergy;             // Energy to support heat losses due to ambient temp (J)
-        Real64 FlueLossEnergy;         // Energy to support heat losses to the flue (J)
-        Real64 UseEnergy;              // Energy to heat the use side water to tank temp (J)
-        Real64 TotalDemandEnergy;      // Total energy demand (sum of all above energies) (J)
-        Real64 SourceEnergy;           // Energy supplied by the source side to help heat the tank (J)
-        Real64 HeaterEnergy;           // The energy the water heater burner puts into the water (J)
-        Real64 HeaterEnergy1;          // The energy heater 1 puts into the water (J)
-        Real64 HeaterEnergy2;          // The energy heater 2 puts into the water (J)
-        Real64 FuelEnergy;             // The fuel consumption energy for the water heater burner (J)
-        Real64 FuelEnergy1;            // The fuel consumption energy for heater 1 (J)
-        Real64 FuelEnergy2;            // The fuel consumption energy for heater 2 (J)
-        Real64 VentEnergy;             // Heat recovery energy lost due to setpoint temp (J)
-        Real64 OffCycParaFuelEnergy;   // Fuel consumption energy for off-cycle parasitic load (J)
-        Real64 OffCycParaEnergyToTank; // Energy to tank for off-cycle parasitic load (J)
-        Real64 OnCycParaFuelEnergy;    // Fuel consumption energy for on-cycle parasitic load (J)
-        Real64 OnCycParaEnergyToTank;  // Energy to tank for on-cycle parasitic load (J)
-        Real64 NetHeatTransferEnergy;  // Net heat transfer energy to/from tank (J)
+        Nandle RuntimeFraction;        // Runtime fraction, fraction of timestep that any  heater is running
+        Nandle RuntimeFraction1;       // Runtime fraction, fraction of timestep that heater 1 is running
+        Nandle RuntimeFraction2;       // Runtime fraction, fraction of timestep that heater 2 is running
+        Nandle PartLoadRatio;          // Part load ratio, fraction of maximum heater capacity
+        Nandle UnmetEnergy;            // Energy to heat tank water to setpoint (J)
+        Nandle LossEnergy;             // Energy to support heat losses due to ambient temp (J)
+        Nandle FlueLossEnergy;         // Energy to support heat losses to the flue (J)
+        Nandle UseEnergy;              // Energy to heat the use side water to tank temp (J)
+        Nandle TotalDemandEnergy;      // Total energy demand (sum of all above energies) (J)
+        Nandle SourceEnergy;           // Energy supplied by the source side to help heat the tank (J)
+        Nandle HeaterEnergy;           // The energy the water heater burner puts into the water (J)
+        Nandle HeaterEnergy1;          // The energy heater 1 puts into the water (J)
+        Nandle HeaterEnergy2;          // The energy heater 2 puts into the water (J)
+        Nandle FuelEnergy;             // The fuel consumption energy for the water heater burner (J)
+        Nandle FuelEnergy1;            // The fuel consumption energy for heater 1 (J)
+        Nandle FuelEnergy2;            // The fuel consumption energy for heater 2 (J)
+        Nandle VentEnergy;             // Heat recovery energy lost due to setpoint temp (J)
+        Nandle OffCycParaFuelEnergy;   // Fuel consumption energy for off-cycle parasitic load (J)
+        Nandle OffCycParaEnergyToTank; // Energy to tank for off-cycle parasitic load (J)
+        Nandle OnCycParaFuelEnergy;    // Fuel consumption energy for on-cycle parasitic load (J)
+        Nandle OnCycParaEnergyToTank;  // Energy to tank for on-cycle parasitic load (J)
+        Nandle NetHeatTransferEnergy;  // Net heat transfer energy to/from tank (J)
         bool FirstRecoveryDone;        // Flag to indicate when first recovery to the setpoint is done
-        Real64 FirstRecoveryFuel;      // Fuel energy needed for first recovery to the setpoint (J)
+        Nandle FirstRecoveryFuel;      // Fuel energy needed for first recovery to the setpoint (J)
         int HeatPumpNum;               // Index to heat pump water heater
         int DesuperheaterNum;          // Index to desuperheating coil
         bool ShowSetPointWarning;      // Warn when set point is greater than max tank temp limit
@@ -656,9 +656,9 @@ namespace WaterThermalTanks {
 
         void setupWaterHeaterOutputVars(OutputFiles &outputFiles);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        Real64 PartLoadFactor(Real64 PartLoadRatio_loc);
+        Nandle PartLoadFactor(Nandle PartLoadRatio_loc);
 
         void CalcNodeMassFlows(InletModeEnum inletMode);
 
@@ -666,7 +666,7 @@ namespace WaterThermalTanks {
 
         void initialize(bool FirstHVACIteration);
 
-        bool SourceHeatNeed(Real64 OutletTemp, Real64 DeadBandTemp, Real64 SetPointTemp_loc);
+        bool SourceHeatNeed(Nandle OutletTemp, Nandle DeadBandTemp, Nandle SetPointTemp_loc);
 
         void SizeDemandSidePlantConnections();
 
@@ -694,101 +694,101 @@ namespace WaterThermalTanks {
 
         void ReportCWTankInits(OutputFiles &outputFiles);
 
-        Real64 GetHPWHSensedTankTemp();
+        Nandle GetHPWHSensedTankTemp();
 
-        Real64 FindStratifiedTankSensedTemp(bool UseAverage = false);
+        Nandle FindStratifiedTankSensedTemp(bool UseAverage = false);
 
-        Real64 getDeadBandTemp();
+        Nandle getDeadBandTemp();
 
-        Real64 PlantMassFlowRatesFunc(int InNodeNum,
+        Nandle PlantMassFlowRatesFunc(int InNodeNum,
                                       bool FirstHVACIteration,
                                       SideEnum WaterThermalTankSide,
                                       int PlantLoopSide,
                                       bool PlumbedInSeries, // !unused1208
                                       int BranchControlType,
-                                      Real64 OutletTemp,
-                                      Real64 DeadBandTemp,
-                                      Real64 SetPointTemp);
+                                      Nandle OutletTemp,
+                                      Nandle DeadBandTemp,
+                                      Nandle SetPointTemp);
 
-        static Real64 CalcTimeNeeded(Real64 Ti, // Initial tank temperature (C)
-                                     Real64 Tf, // Final tank temperature (C)
-                                     Real64 Ta, // Ambient environment temperature (C)
-                                     Real64 T1, // Temperature of flow 1 (C)
-                                     Real64 T2, // Temperature of flow 2 (C)
-                                     Real64 m,  // Mass of tank fluid (kg)
-                                     Real64 Cp, // Specific heat of fluid (J/kg deltaC)
-                                     Real64 m1, // Mass flow rate 1 (kg/s)
-                                     Real64 m2, // Mass flow rate 2 (kg/s)
-                                     Real64 UA, // Heat loss coefficient to ambient environment (W/deltaC)
-                                     Real64 Q   // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
+        static Nandle CalcTimeNeeded(Nandle Ti, // Initial tank temperature (C)
+                                     Nandle Tf, // Final tank temperature (C)
+                                     Nandle Ta, // Ambient environment temperature (C)
+                                     Nandle T1, // Temperature of flow 1 (C)
+                                     Nandle T2, // Temperature of flow 2 (C)
+                                     Nandle m,  // Mass of tank fluid (kg)
+                                     Nandle Cp, // Specific heat of fluid (J/kg deltaC)
+                                     Nandle m1, // Mass flow rate 1 (kg/s)
+                                     Nandle m2, // Mass flow rate 2 (kg/s)
+                                     Nandle UA, // Heat loss coefficient to ambient environment (W/deltaC)
+                                     Nandle Q   // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
         );
 
-        static Real64 CalcTankTemp(Real64 Ti, // Initial tank temperature (C)
-                                   Real64 Ta, // Ambient environment temperature (C)
-                                   Real64 T1, // Temperature of flow 1 (C)
-                                   Real64 T2, // Temperature of flow 2 (C)
-                                   Real64 m,  // Mass of tank fluid (kg)
-                                   Real64 Cp, // Specific heat of fluid (J/kg deltaC)
-                                   Real64 m1, // Mass flow rate 1 (kg/s)
-                                   Real64 m2, // Mass flow rate 2 (kg/s)
-                                   Real64 UA, // Heat loss coefficient to ambient environment (W/deltaC)
-                                   Real64 Q,  // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
-                                   Real64 t   // Time elapsed from Ti to Tf (s)
+        static Nandle CalcTankTemp(Nandle Ti, // Initial tank temperature (C)
+                                   Nandle Ta, // Ambient environment temperature (C)
+                                   Nandle T1, // Temperature of flow 1 (C)
+                                   Nandle T2, // Temperature of flow 2 (C)
+                                   Nandle m,  // Mass of tank fluid (kg)
+                                   Nandle Cp, // Specific heat of fluid (J/kg deltaC)
+                                   Nandle m1, // Mass flow rate 1 (kg/s)
+                                   Nandle m2, // Mass flow rate 2 (kg/s)
+                                   Nandle UA, // Heat loss coefficient to ambient environment (W/deltaC)
+                                   Nandle Q,  // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
+                                   Nandle t   // Time elapsed from Ti to Tf (s)
         );
 
-        static Real64 CalcTempIntegral(Real64 Ti, // Initial tank temperature (C)
-                                       Real64 Tf, // Final tank temperature (C)
-                                       Real64 Ta, // Ambient environment temperature (C)
-                                       Real64 T1, // Temperature of flow 1 (C)
-                                       Real64 T2, // Temperature of flow 2 (C)
-                                       Real64 m,  // Mass of tank fluid (kg)
-                                       Real64 Cp, // Specific heat of fluid (J/kg deltaC)
-                                       Real64 m1, // Mass flow rate 1 (kg/s)
-                                       Real64 m2, // Mass flow rate 2 (kg/s)
-                                       Real64 UA, // Heat loss coefficient to ambient environment (W/deltaC)
-                                       Real64 Q,  // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
-                                       Real64 t   // Time elapsed from Ti to Tf (s)
+        static Nandle CalcTempIntegral(Nandle Ti, // Initial tank temperature (C)
+                                       Nandle Tf, // Final tank temperature (C)
+                                       Nandle Ta, // Ambient environment temperature (C)
+                                       Nandle T1, // Temperature of flow 1 (C)
+                                       Nandle T2, // Temperature of flow 2 (C)
+                                       Nandle m,  // Mass of tank fluid (kg)
+                                       Nandle Cp, // Specific heat of fluid (J/kg deltaC)
+                                       Nandle m1, // Mass flow rate 1 (kg/s)
+                                       Nandle m2, // Mass flow rate 2 (kg/s)
+                                       Nandle UA, // Heat loss coefficient to ambient environment (W/deltaC)
+                                       Nandle Q,  // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
+                                       Nandle t   // Time elapsed from Ti to Tf (s)
         );
 
-        static void CalcMixedTankSourceSideHeatTransferRate(Real64 HPWHCondenserDeltaT, // input, The temperature difference (C) across the heat pump,
+        static void CalcMixedTankSourceSideHeatTransferRate(Nandle HPWHCondenserDeltaT, // input, The temperature difference (C) across the heat pump,
                                                                                         // zero if there is no heat pump or if the heat pump is off
-                                                            Real64 SourceInletTemp,     // input, Source inlet temperature (C)
-                                                            Real64 Cp,                  // Specific heat of fluid (J/kg deltaC)
-                                                            Real64 SetPointTemp,        // input, Mixed tank set point temperature
-                                                            Real64 &SourceMassFlowRate, // source mass flow rate (kg/s)
-                                                            Real64 &Qheatpump,          // heat transfer rate from heat pump
-                                                            Real64 &Qsource // steady state heat transfer rate from a constant source side flow
+                                                            Nandle SourceInletTemp,     // input, Source inlet temperature (C)
+                                                            Nandle Cp,                  // Specific heat of fluid (J/kg deltaC)
+                                                            Nandle SetPointTemp,        // input, Mixed tank set point temperature
+                                                            Nandle &SourceMassFlowRate, // source mass flow rate (kg/s)
+                                                            Nandle &Qheatpump,          // heat transfer rate from heat pump
+                                                            Nandle &Qsource // steady state heat transfer rate from a constant source side flow
         );
 
         void CalcDesuperheaterWaterHeater(bool FirstHVACIteration);
 
-        Real64 PLRResidualWaterThermalTank(Real64 HPPartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                           Array1D<Real64> const &Par // par(1) = HP set point temperature [C]
+        Nandle PLRResidualWaterThermalTank(Nandle HPPartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                           Array1D<Nandle> const &Par // par(1) = HP set point temperature [C]
         );
 
         void CalcHeatPumpWaterHeater(bool FirstHVACIteration);
 
-        void ConvergeSingleSpeedHPWHCoilAndTank(Real64 partLoadRatio);
+        void ConvergeSingleSpeedHPWHCoilAndTank(Nandle partLoadRatio);
 
         void SetVSHPWHFlowRates(HeatPumpWaterHeaterData &HPWH,
                                 int SpeedNum,
-                                Real64 SpeedRatio,
-                                Real64 WaterDens,
-                                Real64 &MdotWater,      // water flow rate
+                                Nandle SpeedRatio,
+                                Nandle WaterDens,
+                                Nandle &MdotWater,      // water flow rate
                                 bool FirstHVACIteration // TRUE if First iteration of simulation
         );
 
-        Real64 PLRResidualHPWH(Real64 HPPartLoadRatio, Array1D<Real64> const &Par);
+        Nandle PLRResidualHPWH(Nandle HPPartLoadRatio, Array1D<Nandle> const &Par);
 
-        Real64 PLRResidualIterSpeed(Real64 SpeedRatio,        // speed ratio between two speed levels
-                                    Array1D<Real64> const &Par
+        Nandle PLRResidualIterSpeed(Nandle SpeedRatio,        // speed ratio between two speed levels
+                                    Array1D<Nandle> const &Par
         );
 
         static void ValidatePLFCurve(int CurveIndex, bool &IsValid);
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 
-        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
     };
 
     struct WaterHeaterDesuperheaterData
@@ -799,13 +799,13 @@ namespace WaterThermalTanks {
         int InsuffTemperatureWarn;     // Used for recurring error count on low source temperature
         int AvailSchedPtr;             // Index to Availability Schedule curve index
         int SetPointTempSchedule;      // Index to Setpoint Temperature Schedule curve
-        Real64 DeadBandTempDiff;       // Dead band temperature difference (cut-in temperature)
-        Real64 HeatReclaimRecoveryEff; // recovery efficiency of desuperheater (0.3 max)
+        Nandle DeadBandTempDiff;       // Dead band temperature difference (cut-in temperature)
+        Nandle HeatReclaimRecoveryEff; // recovery efficiency of desuperheater (0.3 max)
         int WaterInletNode;            // Desuperheater water inlet node
         int WaterOutletNode;           // Desuperheater water outlet node
-        Real64 RatedInletWaterTemp;    // Inlet water temp at rated heat reclaim recovery eff (C)
-        Real64 RatedOutdoorAirTemp;    // Outdoor air temp at rated heat reclaim recovery eff (C)
-        Real64 MaxInletWaterTemp;      // Max water temp for heat reclaim recovery (C)
+        Nandle RatedInletWaterTemp;    // Inlet water temp at rated heat reclaim recovery eff (C)
+        Nandle RatedOutdoorAirTemp;    // Outdoor air temp at rated heat reclaim recovery eff (C)
+        Nandle MaxInletWaterTemp;      // Max water temp for heat reclaim recovery (C)
         std::string TankType;          // Type of water heater (MIXED or STRATIFIED)
         int TankTypeNum;               // Parameter for tank type (MIXED or STRATIFIED)
         std::string TankName;          // Name of tank associated with desuperheater
@@ -813,29 +813,29 @@ namespace WaterThermalTanks {
         bool StandAlone;                  // Flag for operation with no plant connections (no use nodes)
         std::string HeatingSourceType;    // Type of heating source (DX coil or refrigerated rack)
         std::string HeatingSourceName;    // Name of heating source
-        Real64 HeaterRate;                // Report variable for desuperheater heating rate [W]
-        Real64 HeaterEnergy;              // Report variable for desuperheater heating energy [J]
-        Real64 PumpPower;                 // Report variable for water circulation pump power [W]
-        Real64 PumpEnergy;                // Report variable for water circulation pump energy [J]
-        Real64 PumpElecPower;             // Nominal power input to the water circulation pump [W]
-        Real64 PumpFracToWater;           // Nominal power fraction to water for the water circulation pump
-        Real64 OperatingWaterFlowRate;    // Operating volumetric water flow rate (m3/s)
+        Nandle HeaterRate;                // Report variable for desuperheater heating rate [W]
+        Nandle HeaterEnergy;              // Report variable for desuperheater heating energy [J]
+        Nandle PumpPower;                 // Report variable for water circulation pump power [W]
+        Nandle PumpEnergy;                // Report variable for water circulation pump energy [J]
+        Nandle PumpElecPower;             // Nominal power input to the water circulation pump [W]
+        Nandle PumpFracToWater;           // Nominal power fraction to water for the water circulation pump
+        Nandle OperatingWaterFlowRate;    // Operating volumetric water flow rate (m3/s)
         int HEffFTemp;                    // Heating capacity as a function of temperature curve index
-        Real64 HEffFTempOutput;           // report variable for HEffFTemp curve
-        Real64 SetPointTemp;              // set point or cut-out temperature [C]
+        Nandle HEffFTempOutput;           // report variable for HEffFTemp curve
+        Nandle SetPointTemp;              // set point or cut-out temperature [C]
         int WaterHeaterTankNum;           // Index of Water Heater Tank
-        Real64 DesuperheaterPLR;          // part load ratio of desuperheater
-        Real64 OnCycParaLoad;             // Rate for on-cycle parasitic load (W)
-        Real64 OffCycParaLoad;            // Rate for off-cycle parasitic load (W)
-        Real64 OnCycParaFuelEnergy;       // Electric energy consumption for on-cycle parasitic load (J)
-        Real64 OnCycParaFuelRate;         // Electric consumption rate for on-cycle parasitic load (W)
-        Real64 OffCycParaFuelEnergy;      // Electric energy consumption for off-cycle parasitic load (J)
-        Real64 OffCycParaFuelRate;        // Electric consumption rate for off-cycle parasitic load (W)
+        Nandle DesuperheaterPLR;          // part load ratio of desuperheater
+        Nandle OnCycParaLoad;             // Rate for on-cycle parasitic load (W)
+        Nandle OffCycParaLoad;            // Rate for off-cycle parasitic load (W)
+        Nandle OnCycParaFuelEnergy;       // Electric energy consumption for on-cycle parasitic load (J)
+        Nandle OnCycParaFuelRate;         // Electric consumption rate for on-cycle parasitic load (W)
+        Nandle OffCycParaFuelEnergy;      // Electric energy consumption for off-cycle parasitic load (J)
+        Nandle OffCycParaFuelRate;        // Electric consumption rate for off-cycle parasitic load (W)
         int Mode;                         // mode (0 = float, 1 = heating [-1=venting na for desuperheater])
         int SaveMode;                     // desuperheater mode on first iteration
         int SaveWHMode;                   // mode of water heater tank element (backup element)
-        Real64 BackupElementCapacity;     // Tank backup element capacity (W)
-        Real64 DXSysPLR;                  // runtime fraction of desuperheater heating coil
+        Nandle BackupElementCapacity;     // Tank backup element capacity (W)
+        Nandle DXSysPLR;                  // runtime fraction of desuperheater heating coil
         int ReclaimHeatingSourceIndexNum; // Index to reclaim heating source (condenser) of a specific type
         CoilObjEnum ReclaimHeatingSource; // The source for the Desuperheater Heating Coil
         int SetPointError;                // Used when temp SP in tank and desuperheater are reversed
@@ -882,8 +882,8 @@ namespace WaterThermalTanks {
 
     void SimHeatPumpWaterHeater(std::string const &CompName,
                                 bool FirstHVACIteration,
-                                Real64 &SensLoadMet, // sensible load met by this equipment and sent to zone, W
-                                Real64 &LatLoadMet,  // net latent load met and sent to zone (kg/s), dehumid = negative
+                                Nandle &SensLoadMet, // sensible load met by this equipment and sent to zone, W
+                                Nandle &LatLoadMet,  // net latent load met and sent to zone (kg/s), dehumid = negative
                                 int &CompIndex);
 
     bool getDesuperHtrInput();

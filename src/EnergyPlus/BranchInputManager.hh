@@ -316,21 +316,21 @@ namespace BranchInputManager {
                                        std::string &FoundPlantLoopName,
                                        int &FoundPlantLoopNum,
                                        std::string &FoundSupplyDemand,
-                                       Real64 &FoundVolFlowRate,
+                                       Nandle &FoundVolFlowRate,
                                        bool &MatchedPlantLoop);
 
     void FindCondenserLoopBranchConnection(std::string const &BranchListName,
                                            std::string &FoundCondLoopName,
                                            int &FoundCondLoopNum,
                                            std::string &FoundSupplyDemand,
-                                           Real64 &FoundVolFlowRate,
+                                           Nandle &FoundVolFlowRate,
                                            bool &MatchedCondLoop);
 
     void FindAirLoopBranchConnection(std::string const &BranchListName,
                                      std::string &FoundAirLoopName,
                                      int &FoundAirLoopNum,
                                      std::string &FoundAir,
-                                     Real64 &FoundVolFlowRate,
+                                     Nandle &FoundVolFlowRate,
                                      bool &MatchedAirLoop);
 
     void FindAirPlantCondenserLoopFromBranchList(std::string const &BranchListName, // Branch List Name

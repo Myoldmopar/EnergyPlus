@@ -96,13 +96,13 @@ namespace RoomAirModelUserTempPattern {
 
     void FigureTwoGradInterpPattern(int const PattrnID, int const ZoneNum);
 
-    Real64 OutdoorDryBulbGrad(Real64 DryBulbTemp, Real64 UpperBound, Real64 HiGradient, Real64 LowerBound, Real64 LowGradient);
+    Nandle OutdoorDryBulbGrad(Nandle DryBulbTemp, Nandle UpperBound, Nandle HiGradient, Nandle LowerBound, Nandle LowGradient);
 
     void FigureConstGradPattern(int const PattrnID, int const ZoneNum);
 
     //*****************************************************************************************
 
-    Real64 FigureNDheightInZone(int const thisHBsurf); // index in main Surface array
+    Nandle FigureNDheightInZone(int const thisHBsurf); // index in main Surface array
 
     //***************************************************
 

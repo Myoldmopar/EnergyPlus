@@ -101,23 +101,23 @@ namespace PollutionModule {
     {
         // Members
         int FuelFactorType;
-        Real64 Source;
-        Real64 CO2Pollution;
-        Real64 COPollution;
-        Real64 CH4Pollution;
-        Real64 NOxPollution;
-        Real64 N2OPollution;
-        Real64 SO2Pollution;
-        Real64 PMPollution;
-        Real64 PM10Pollution;
-        Real64 PM25Pollution;
-        Real64 NH3Pollution;
-        Real64 NMVOCPollution;
-        Real64 HgPollution;
-        Real64 PbPollution;
-        Real64 WaterPollution;
-        Real64 NucHiPollution;
-        Real64 NucLoPollution;
+        Nandle Source;
+        Nandle CO2Pollution;
+        Nandle COPollution;
+        Nandle CH4Pollution;
+        Nandle NOxPollution;
+        Nandle N2OPollution;
+        Nandle SO2Pollution;
+        Nandle PMPollution;
+        Nandle PM10Pollution;
+        Nandle PM25Pollution;
+        Nandle NH3Pollution;
+        Nandle NMVOCPollution;
+        Nandle HgPollution;
+        Nandle PbPollution;
+        Nandle WaterPollution;
+        Nandle NucHiPollution;
+        Nandle NucLoPollution;
 
         // Default Constructor
         ComponentProps()
@@ -129,23 +129,23 @@ namespace PollutionModule {
 
         // Member Constructor
         ComponentProps(int const FuelFactorType,
-                       Real64 const Source,
-                       Real64 const CO2Pollution,
-                       Real64 const COPollution,
-                       Real64 const CH4Pollution,
-                       Real64 const NOxPollution,
-                       Real64 const N2OPollution,
-                       Real64 const SO2Pollution,
-                       Real64 const PMPollution,
-                       Real64 const PM10Pollution,
-                       Real64 const PM25Pollution,
-                       Real64 const NH3Pollution,
-                       Real64 const NMVOCPollution,
-                       Real64 const HgPollution,
-                       Real64 const PbPollution,
-                       Real64 const WaterPollution,
-                       Real64 const NucHiPollution,
-                       Real64 const NucLoPollution)
+                       Nandle const Source,
+                       Nandle const CO2Pollution,
+                       Nandle const COPollution,
+                       Nandle const CH4Pollution,
+                       Nandle const NOxPollution,
+                       Nandle const N2OPollution,
+                       Nandle const SO2Pollution,
+                       Nandle const PMPollution,
+                       Nandle const PM10Pollution,
+                       Nandle const PM25Pollution,
+                       Nandle const NH3Pollution,
+                       Nandle const NMVOCPollution,
+                       Nandle const HgPollution,
+                       Nandle const PbPollution,
+                       Nandle const WaterPollution,
+                       Nandle const NucHiPollution,
+                       Nandle const NucLoPollution)
             : FuelFactorType(FuelFactorType), Source(Source), CO2Pollution(CO2Pollution), COPollution(COPollution), CH4Pollution(CH4Pollution),
               NOxPollution(NOxPollution), N2OPollution(N2OPollution), SO2Pollution(SO2Pollution), PMPollution(PMPollution),
               PM10Pollution(PM10Pollution), PM25Pollution(PM25Pollution), NH3Pollution(NH3Pollution), NMVOCPollution(NMVOCPollution),
@@ -160,23 +160,23 @@ namespace PollutionModule {
         // Members
         int FuelFactorType;
         bool FuelFactorUsed;
-        Real64 Source;
-        Real64 CO2;
-        Real64 CO;
-        Real64 CH4;
-        Real64 NOx;
-        Real64 N2O;
-        Real64 SO2;
-        Real64 PM;
-        Real64 PM10;
-        Real64 PM25;
-        Real64 NH3;
-        Real64 NMVOC;
-        Real64 Hg;
-        Real64 Pb;
-        Real64 Water;
-        Real64 NucHi;
-        Real64 NucLo;
+        Nandle Source;
+        Nandle CO2;
+        Nandle CO;
+        Nandle CH4;
+        Nandle NOx;
+        Nandle N2O;
+        Nandle SO2;
+        Nandle PM;
+        Nandle PM10;
+        Nandle PM25;
+        Nandle NH3;
+        Nandle NMVOC;
+        Nandle Hg;
+        Nandle Pb;
+        Nandle Water;
+        Nandle NucHi;
+        Nandle NucLo;
         int SourceSched;
         int CO2Sched;
         int COSched;
@@ -207,23 +207,23 @@ namespace PollutionModule {
         // Member Constructor
         CoefficientProps(int const FuelFactorType,
                          bool const FuelFactorUsed,
-                         Real64 const Source,
-                         Real64 const CO2,
-                         Real64 const CO,
-                         Real64 const CH4,
-                         Real64 const NOx,
-                         Real64 const N2O,
-                         Real64 const SO2,
-                         Real64 const PM,
-                         Real64 const PM10,
-                         Real64 const PM25,
-                         Real64 const NH3,
-                         Real64 const NMVOC,
-                         Real64 const Hg,
-                         Real64 const Pb,
-                         Real64 const Water,
-                         Real64 const NucHi,
-                         Real64 const NucLo,
+                         Nandle const Source,
+                         Nandle const CO2,
+                         Nandle const CO,
+                         Nandle const CH4,
+                         Nandle const NOx,
+                         Nandle const N2O,
+                         Nandle const SO2,
+                         Nandle const PM,
+                         Nandle const PM10,
+                         Nandle const PM25,
+                         Nandle const NH3,
+                         Nandle const NMVOC,
+                         Nandle const Hg,
+                         Nandle const Pb,
+                         Nandle const Water,
+                         Nandle const NucHi,
+                         Nandle const NucLo,
                          int const SourceSched,
                          int const CO2Sched,
                          int const COSched,
@@ -267,13 +267,13 @@ namespace PollutionModule {
         ComponentProps OtherFuel1Comp;
         ComponentProps OtherFuel2Comp;
         // Total for all of the Pollutants
-        Real64 N2OPollutTotal;
-        Real64 CH4PollutTotal;
-        Real64 CO2PollutTotal;
+        Nandle N2OPollutTotal;
+        Nandle CH4PollutTotal;
+        Nandle CO2PollutTotal;
         // Total Carbon Equivalent Components
-        Real64 TotCarbonEquivFromN2O;
-        Real64 TotCarbonEquivFromCH4;
-        Real64 TotCarbonEquivFromCO2;
+        Nandle TotCarbonEquivFromN2O;
+        Nandle TotCarbonEquivFromCH4;
+        Nandle TotCarbonEquivFromCO2;
         // Fuel Type Coefficients
         CoefficientProps ElecCoef;
         CoefficientProps NatGasCoef;
@@ -286,12 +286,12 @@ namespace PollutionModule {
         CoefficientProps OtherFuel1Coef;
         CoefficientProps OtherFuel2Coef;
         // Total Carbon Equivalent Coeffs
-        Real64 CarbonEquivN2O;
-        Real64 CarbonEquivCH4;
-        Real64 CarbonEquivCO2;
-        Real64 PurchHeatEffic;
-        Real64 PurchCoolCOP;
-        Real64 SteamConvEffic;
+        Nandle CarbonEquivN2O;
+        Nandle CarbonEquivCH4;
+        Nandle CarbonEquivCO2;
+        Nandle PurchHeatEffic;
+        Nandle PurchCoolCOP;
+        Nandle SteamConvEffic;
 
         // Default Constructor
         PollutionProps()
@@ -314,12 +314,12 @@ namespace PollutionModule {
                        ComponentProps const &DieselComp,
                        ComponentProps const &OtherFuel1Comp,
                        ComponentProps const &OtherFuel2Comp,
-                       Real64 const N2OPollutTotal,
-                       Real64 const CH4PollutTotal,
-                       Real64 const CO2PollutTotal,
-                       Real64 const TotCarbonEquivFromN2O,
-                       Real64 const TotCarbonEquivFromCH4,
-                       Real64 const TotCarbonEquivFromCO2,
+                       Nandle const N2OPollutTotal,
+                       Nandle const CH4PollutTotal,
+                       Nandle const CO2PollutTotal,
+                       Nandle const TotCarbonEquivFromN2O,
+                       Nandle const TotCarbonEquivFromCH4,
+                       Nandle const TotCarbonEquivFromCO2,
                        CoefficientProps const &ElecCoef,
                        CoefficientProps const &NatGasCoef,
                        CoefficientProps const &FuelOil1Coef,
@@ -330,12 +330,12 @@ namespace PollutionModule {
                        CoefficientProps const &DieselCoef,
                        CoefficientProps const &OtherFuel1Coef,
                        CoefficientProps const &OtherFuel2Coef,
-                       Real64 const CarbonEquivN2O,
-                       Real64 const CarbonEquivCH4,
-                       Real64 const CarbonEquivCO2,
-                       Real64 const PurchHeatEffic,
-                       Real64 const PurchCoolCOP,
-                       Real64 const SteamConvEffic)
+                       Nandle const CarbonEquivN2O,
+                       Nandle const CarbonEquivCH4,
+                       Nandle const CarbonEquivCO2,
+                       Nandle const PurchHeatEffic,
+                       Nandle const PurchCoolCOP,
+                       Nandle const SteamConvEffic)
             : ElecComp(ElecComp), ElecPurchComp(ElecPurchComp), ElecSurplusSoldComp(ElecSurplusSoldComp), NatGasComp(NatGasComp),
               FuelOil1Comp(FuelOil1Comp), FuelOil2Comp(FuelOil2Comp), CoalComp(CoalComp), GasolineComp(GasolineComp), PropaneComp(PropaneComp),
               DieselComp(DieselComp), OtherFuel1Comp(OtherFuel1Comp), OtherFuel2Comp(OtherFuel2Comp), N2OPollutTotal(N2OPollutTotal),
@@ -355,18 +355,18 @@ namespace PollutionModule {
         // FuelType Names
         Array1D_string FuelTypeNames;
         // Fuel Types used with the Pollution Factors
-        Real64 Elec;
-        Real64 NatGas;
-        Real64 FuelOil1;
-        Real64 FuelOil2;
-        Real64 Coal;
-        Real64 Gasoline;
-        Real64 Propane;
-        Real64 Diesel;
-        Real64 OtherFuel1;
-        Real64 OtherFuel2;
-        Real64 ElecPurch;
-        Real64 ElecSold;
+        Nandle Elec;
+        Nandle NatGas;
+        Nandle FuelOil1;
+        Nandle FuelOil2;
+        Nandle Coal;
+        Nandle Gasoline;
+        Nandle Propane;
+        Nandle Diesel;
+        Nandle OtherFuel1;
+        Nandle OtherFuel2;
+        Nandle ElecPurch;
+        Nandle ElecSold;
         // Facility Meter Indexes
         int ElecFacilityIndex;
         int DieselFacilityIndex;
@@ -385,22 +385,22 @@ namespace PollutionModule {
         int ElecPurchasedFacilityIndex;
         int ElecSurplusSoldFacilityIndex;
         // Facility Meter Values used in Pollution Calcs
-        Real64 ElecFacility;
-        Real64 DieselFacility;
-        Real64 PurchCoolFacility;
-        Real64 PurchHeatFacility;
-        Real64 NatGasFacility;
-        Real64 GasolineFacility;
-        Real64 CoalFacility;
-        Real64 FuelOil1Facility;
-        Real64 FuelOil2Facility;
-        Real64 PropaneFacility;
-        Real64 OtherFuel1Facility;
-        Real64 OtherFuel2Facility;
-        Real64 ElecProducedFacility;
-        Real64 SteamFacility;
-        Real64 ElecPurchasedFacility;
-        Real64 ElecSurplusSoldFacility;
+        Nandle ElecFacility;
+        Nandle DieselFacility;
+        Nandle PurchCoolFacility;
+        Nandle PurchHeatFacility;
+        Nandle NatGasFacility;
+        Nandle GasolineFacility;
+        Nandle CoalFacility;
+        Nandle FuelOil1Facility;
+        Nandle FuelOil2Facility;
+        Nandle PropaneFacility;
+        Nandle OtherFuel1Facility;
+        Nandle OtherFuel2Facility;
+        Nandle ElecProducedFacility;
+        Nandle SteamFacility;
+        Nandle ElecPurchasedFacility;
+        Nandle ElecSurplusSoldFacility;
 
         // Default Constructor
         FuelTypeProps()
@@ -462,14 +462,14 @@ namespace PollutionModule {
 
     void GetFuelFactorInfo(std::string const &fuelName,  // input fuel name  (standard from Tabular reports)
                            bool &fuelFactorUsed,         // return value true if user has entered this fuel
-                           Real64 &fuelSourceFactor,     // if used, the source factor
+                           Nandle &fuelSourceFactor,     // if used, the source factor
                            bool &fuelFactorScheduleUsed, // if true, schedules for this fuel are used
                            int &ffScheduleIndex          // if schedules for this fuel are used, return schedule index
     );
 
-    void GetEnvironmentalImpactFactorInfo(Real64 &efficiencyDistrictHeating, // if entered, the efficiency of District Heating
-                                          Real64 &efficiencyDistrictCooling, // if entered, the efficiency of District Cooling
-                                          Real64 &sourceFactorSteam          // if entered, the source factor for Steam
+    void GetEnvironmentalImpactFactorInfo(Nandle &efficiencyDistrictHeating, // if entered, the efficiency of District Heating
+                                          Nandle &efficiencyDistrictCooling, // if entered, the efficiency of District Cooling
+                                          Nandle &sourceFactorSteam          // if entered, the source factor for Steam
     );
 
 } // namespace PollutionModule

@@ -71,30 +71,30 @@ namespace DataPlant {
         std::string NodeNameOut; // Component outlet node name
         int NodeNumIn;           // Component inlet node number
         int NodeNumOut;          // Component outlet node number
-        Real64 MyLoad;           // Distributed Load
-        Real64 MaxLoad;          // Maximum load
-        Real64 MinLoad;          // Minimum Load
-        Real64 OptLoad;          // Optimal Load
-        Real64 SizFac;           // Sizing Fraction
+        Nandle MyLoad;           // Distributed Load
+        Nandle MaxLoad;          // Maximum load
+        Nandle MinLoad;          // Minimum Load
+        Nandle OptLoad;          // Optimal Load
+        Nandle SizFac;           // Sizing Fraction
         int CurOpSchemeType;     // updated pointer to
         // Plant()%OpScheme(CurOpSchemeType)...
         int NumOpSchemes;      // number of schemes held in the pointer array
         int CurCompLevelOpNum; // pointer to the OpScheme array defined next
         // PlantLoop()%LoopSide()%Branch()%Comp()%OpScheme(curOpSchemePtr)
         Array1D<OpSchemePtrData> OpScheme; // Pointers to component on lists
-        Real64 EquipDemand;                // Component load request based on inlet temp and outlet SP
+        Nandle EquipDemand;                // Component load request based on inlet temp and outlet SP
         bool EMSLoadOverrideOn;            // EMS is calling to override load dispatched to component
-        Real64 EMSLoadOverrideValue;       // EMS value to use for load when overridden [W] always positive.
+        Nandle EMSLoadOverrideValue;       // EMS value to use for load when overridden [W] always positive.
         int HowLoadServed;                 // nature of component in terms of how it can meet load
-        Real64 MinOutletTemp;              // Component exit lower limit temperature
-        Real64 MaxOutletTemp;              // Component exit upper limit temperature
+        Nandle MinOutletTemp;              // Component exit lower limit temperature
+        Nandle MaxOutletTemp;              // Component exit upper limit temperature
         bool FreeCoolCntrlShutDown;        // true if component was shut down because of free cooling
-        Real64 FreeCoolCntrlMinCntrlTemp;  // current control temp value for free cooling controls
+        Nandle FreeCoolCntrlMinCntrlTemp;  // current control temp value for free cooling controls
         int FreeCoolCntrlMode;             // type of sensor used for free cooling controls
         int FreeCoolCntrlNodeNum;          // chiller condenser inlet node number for free cooling controls
         int IndexInLoopSidePumps;          // If I'm a pump, this tells my index in PL(:)%LS(:)%Pumps
-        Real64 TempDesCondIn;
-        Real64 TempDesEvapOut;
+        Nandle TempDesCondIn;
+        Nandle TempDesEvapOut;
         PlantComponent *compPtr;
         EnergyPlus::PlantLocation location;
 

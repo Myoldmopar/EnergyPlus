@@ -75,17 +75,17 @@ namespace DataHVACGlobals {
 
     // MODULE PARAMETER DEFINITIONS:
 
-    Real64 const SmallTempDiff(1.0E-5);
-    Real64 const SmallMassFlow(0.001);
-    Real64 const VerySmallMassFlow(1.0E-30);
-    Real64 const SmallLoad(1.0);
-    Real64 const TempControlTol(0.1); // temperature control tolerance for packaged equip. [deg C]
-    Real64 const SmallAirVolFlow(0.001);
-    Real64 const SmallWaterVolFlow(1.0E-9);
-    Real64 const BlankNumeric(-99999.0);      // indicates numeric input field was blank
-    Real64 const RetTempMax(60.0);            // maximum return air temperature [deg C]
-    Real64 const RetTempMin(-30.0);           // minimum return air temperature [deg C]
-    Real64 const DesCoilHWInletTempMin(46.0); // minimum heating water coil water inlet temp for UA sizing only. [deg C]
+    Nandle const SmallTempDiff(1.0E-5);
+    Nandle const SmallMassFlow(0.001);
+    Nandle const VerySmallMassFlow(1.0E-30);
+    Nandle const SmallLoad(1.0);
+    Nandle const TempControlTol(0.1); // temperature control tolerance for packaged equip. [deg C]
+    Nandle const SmallAirVolFlow(0.001);
+    Nandle const SmallWaterVolFlow(1.0E-9);
+    Nandle const BlankNumeric(-99999.0);      // indicates numeric input field was blank
+    Nandle const RetTempMax(60.0);            // maximum return air temperature [deg C]
+    Nandle const RetTempMin(-30.0);           // minimum return air temperature [deg C]
+    Nandle const DesCoilHWInletTempMin(46.0); // minimum heating water coil water inlet temp for UA sizing only. [deg C]
 
     // Number of Sizing types from list below
     int const NumOfSizingTypes(33); // number of sizing types
@@ -370,24 +370,24 @@ namespace DataHVACGlobals {
     int const CoilPerfDX_CoolBypassEmpirical(100);
 
     // Airflow per total capacity range (Regular DX coils)
-    Real64 const MaxRatedVolFlowPerRatedTotCap1(0.00006041); // m3/s per watt = 450 cfm/ton
-    Real64 const MinRatedVolFlowPerRatedTotCap1(0.00004027); // m3/s per watt = 300 cfm/ton
-    Real64 const MaxHeatVolFlowPerRatedTotCap1(0.00008056);  // m3/s per watt = 600 cfm/ton
-    Real64 const MaxCoolVolFlowPerRatedTotCap1(0.00006713);  // m3/s per watt = 500 cfm/ton
-    Real64 const MinOperVolFlowPerRatedTotCap1(0.00002684);  // m3/s per watt = 200 cfm/ton
+    Nandle const MaxRatedVolFlowPerRatedTotCap1(0.00006041); // m3/s per watt = 450 cfm/ton
+    Nandle const MinRatedVolFlowPerRatedTotCap1(0.00004027); // m3/s per watt = 300 cfm/ton
+    Nandle const MaxHeatVolFlowPerRatedTotCap1(0.00008056);  // m3/s per watt = 600 cfm/ton
+    Nandle const MaxCoolVolFlowPerRatedTotCap1(0.00006713);  // m3/s per watt = 500 cfm/ton
+    Nandle const MinOperVolFlowPerRatedTotCap1(0.00002684);  // m3/s per watt = 200 cfm/ton
 
     // 100% DOAS DX coils Airflow per total capacity ratio
-    Real64 const MaxRatedVolFlowPerRatedTotCap2(0.00003355); // m3/s per watt = 250 cfm/ton
-    Real64 const MinRatedVolFlowPerRatedTotCap2(0.00001677); // m3/s per watt = 125 cfm/ton
-    Real64 const MaxHeatVolFlowPerRatedTotCap2(0.00004026);  // m3/s per watt = 300 cfm/ton
-    Real64 const MaxCoolVolFlowPerRatedTotCap2(0.00004026);  // m3/s per watt = 300 cfm/ton
-    Real64 const MinOperVolFlowPerRatedTotCap2(0.00001342);  // m3/s per watt = 100 cfm/ton
+    Nandle const MaxRatedVolFlowPerRatedTotCap2(0.00003355); // m3/s per watt = 250 cfm/ton
+    Nandle const MinRatedVolFlowPerRatedTotCap2(0.00001677); // m3/s per watt = 125 cfm/ton
+    Nandle const MaxHeatVolFlowPerRatedTotCap2(0.00004026);  // m3/s per watt = 300 cfm/ton
+    Nandle const MaxCoolVolFlowPerRatedTotCap2(0.00004026);  // m3/s per watt = 300 cfm/ton
+    Nandle const MinOperVolFlowPerRatedTotCap2(0.00001342);  // m3/s per watt = 100 cfm/ton
 
-    Array1D<Real64> MaxRatedVolFlowPerRatedTotCap(2, {MaxRatedVolFlowPerRatedTotCap1, MaxRatedVolFlowPerRatedTotCap2});
-    Array1D<Real64> MinRatedVolFlowPerRatedTotCap(2, {MinRatedVolFlowPerRatedTotCap1, MinRatedVolFlowPerRatedTotCap2});
-    Array1D<Real64> MaxHeatVolFlowPerRatedTotCap(2, {MaxHeatVolFlowPerRatedTotCap1, MaxHeatVolFlowPerRatedTotCap2});
-    Array1D<Real64> MaxCoolVolFlowPerRatedTotCap(2, {MaxCoolVolFlowPerRatedTotCap1, MaxCoolVolFlowPerRatedTotCap2});
-    Array1D<Real64> MinOperVolFlowPerRatedTotCap(2, {MinOperVolFlowPerRatedTotCap1, MinOperVolFlowPerRatedTotCap2});
+    Array1D<Nandle> MaxRatedVolFlowPerRatedTotCap(2, {MaxRatedVolFlowPerRatedTotCap1, MaxRatedVolFlowPerRatedTotCap2});
+    Array1D<Nandle> MinRatedVolFlowPerRatedTotCap(2, {MinRatedVolFlowPerRatedTotCap1, MinRatedVolFlowPerRatedTotCap2});
+    Array1D<Nandle> MaxHeatVolFlowPerRatedTotCap(2, {MaxHeatVolFlowPerRatedTotCap1, MaxHeatVolFlowPerRatedTotCap2});
+    Array1D<Nandle> MaxCoolVolFlowPerRatedTotCap(2, {MaxCoolVolFlowPerRatedTotCap1, MaxCoolVolFlowPerRatedTotCap2});
+    Array1D<Nandle> MinOperVolFlowPerRatedTotCap(2, {MinOperVolFlowPerRatedTotCap1, MinOperVolFlowPerRatedTotCap2});
 
     // dx coil type (DXCT)
     int const RegularDXCoil(1); // Regular DX coils or mixed air dx coils
@@ -431,7 +431,7 @@ namespace DataHVACGlobals {
 
     // parameter concerning the amount of change in zone temperature is needed
     // for oscillation of zone temperature to be detected.
-    Real64 const OscillateMagnitude(0.15);
+    Nandle const OscillateMagnitude(0.15);
 
     // Parameters for HVACSystemRootFindingAlgorithm
     int const Bisection(2);
@@ -444,9 +444,9 @@ namespace DataHVACGlobals {
 
     bool FirstTimeStepSysFlag(false); // Set to true at the start of each sub-time step
 
-    Real64 TimeStepSys(0.0);                  // System Time Increment - the adaptive time step used by the HVAC simulation (hours)
-    Real64 SysTimeElapsed(0.0);               // elapsed system time in zone timestep (hours)
-    Real64 FracTimeStepZone(0.0);             // System time step divided by the zone time step
+    Nandle TimeStepSys(0.0);                  // System Time Increment - the adaptive time step used by the HVAC simulation (hours)
+    Nandle SysTimeElapsed(0.0);               // elapsed system time in zone timestep (hours)
+    Nandle FracTimeStepZone(0.0);             // System time step divided by the zone time step
     bool ShortenTimeStepSys(false);           // Logical flag that triggers shortening of system time step
     int NumOfSysTimeSteps(1);                 // for current zone time step, number of system timesteps inside  it
     int NumOfSysTimeStepsLastZoneTimeStep(1); // previous zone time step, num of system timesteps inside
@@ -458,16 +458,16 @@ namespace DataHVACGlobals {
     int NumElecCircuits(0);               // Number of electric circuits specified in simulation
     int NumGasMeters(0);                  // Number of gas meters specified in simulation
     int NumPrimaryAirSys(0);              // Number of primary HVAC air systems
-    Real64 OnOffFanPartLoadFraction(1.0); // fan part-load fraction (Fan:OnOff)
-    Real64 DXCoilTotalCapacity(0.0);      // DX coil total cooling capacity (eio report var for HPWHs)
-    Real64 DXElecCoolingPower(0.0);       // Electric power consumed by DX cooling coil last DX simulation
-    Real64 DXElecHeatingPower(0.0);       // Electric power consumed by DX heating coil last DX simulation
-    Real64 ElecHeatingCoilPower(0.0);     // Electric power consumed by electric heating coil
-    Real64 AirToAirHXElecPower(0.0);      // Electric power consumed by Heat Exchanger:Air To Air (Generic or Flat Plate)
+    Nandle OnOffFanPartLoadFraction(1.0); // fan part-load fraction (Fan:OnOff)
+    Nandle DXCoilTotalCapacity(0.0);      // DX coil total cooling capacity (eio report var for HPWHs)
+    Nandle DXElecCoolingPower(0.0);       // Electric power consumed by DX cooling coil last DX simulation
+    Nandle DXElecHeatingPower(0.0);       // Electric power consumed by DX heating coil last DX simulation
+    Nandle ElecHeatingCoilPower(0.0);     // Electric power consumed by electric heating coil
+    Nandle AirToAirHXElecPower(0.0);      // Electric power consumed by Heat Exchanger:Air To Air (Generic or Flat Plate)
     // from last simulation in HeatRecovery.cc
-    Real64 UnbalExhMassFlow(0.0);      // unbalanced zone exhaust from a zone equip component [kg/s]
-    Real64 BalancedExhMassFlow(0.0);   // balanced zone exhaust (declared as so by user)  [kg/s]
-    Real64 PlenumInducedMassFlow(0.0); // secondary air mass flow rate induced from a return plenum [kg/s]
+    Nandle UnbalExhMassFlow(0.0);      // unbalanced zone exhaust from a zone equip component [kg/s]
+    Nandle BalancedExhMassFlow(0.0);   // balanced zone exhaust (declared as so by user)  [kg/s]
+    Nandle PlenumInducedMassFlow(0.0); // secondary air mass flow rate induced from a return plenum [kg/s]
     bool TurnFansOn(false);            // If true overrides fan schedule and cycles fans on
     bool TurnZoneFansOnlyOn(false); // If true overrides zone fan schedule and cycles fans on (currently used only by parallel powered induction unit)
     bool TurnFansOff(false);        // If True overides fan schedule and TurnFansOn and forces fans off
@@ -478,9 +478,9 @@ namespace DataHVACGlobals {
     bool NightVentOn(false);         // set TRUE in SimAirServingZone if night ventilation is happening
 
     int NumTempContComps(0);
-    Real64 HPWHInletDBTemp(0.0);     // Used by curve objects when calculating DX coil performance for HEAT PUMP:WATER HEATER
-    Real64 HPWHInletWBTemp(0.0);     // Used by curve objects when calculating DX coil performance for HEAT PUMP:WATER HEATER
-    Real64 HPWHCrankcaseDBTemp(0.0); // Used for HEAT PUMP:WATER HEATER crankcase heater ambient temperature calculations
+    Nandle HPWHInletDBTemp(0.0);     // Used by curve objects when calculating DX coil performance for HEAT PUMP:WATER HEATER
+    Nandle HPWHInletWBTemp(0.0);     // Used by curve objects when calculating DX coil performance for HEAT PUMP:WATER HEATER
+    Nandle HPWHCrankcaseDBTemp(0.0); // Used for HEAT PUMP:WATER HEATER crankcase heater ambient temperature calculations
     bool AirLoopInit(false);         // flag for whether InitAirLoops has been called
     bool AirLoopsSimOnce(false);     // True means that the air loops have been simulated once in this environment
     bool GetAirPathDataDone(false);  // True means that air loops inputs have been processed
@@ -492,16 +492,16 @@ namespace DataHVACGlobals {
     Array1D_int HybridVentSysAvailActualZoneNum;    // Actual zone num in hybrid vent availability manager
     Array1D_int HybridVentSysAvailANCtrlStatus;     // AN control status in hybrid vent availability manager
     Array1D_int HybridVentSysAvailMaster;           // Master object name: Ventilation for simple; Zone name for AN
-    Array1D<Real64> HybridVentSysAvailWindModifier; // Wind modifier for AirflowNetwork
+    Array1D<Nandle> HybridVentSysAvailWindModifier; // Wind modifier for AirflowNetwork
     // For multispeed heat pump only
-    Real64 MSHPMassFlowRateLow(0.0);       // Mass flow rate at low speed
-    Real64 MSHPMassFlowRateHigh(0.0);      // Mass flow rate at high speed
-    Real64 MSHPWasteHeat(0.0);             // Waste heat
-    Real64 PreviousTimeStep(0.0);          // The time step length at the previous time step
+    Nandle MSHPMassFlowRateLow(0.0);       // Mass flow rate at low speed
+    Nandle MSHPMassFlowRateHigh(0.0);      // Mass flow rate at high speed
+    Nandle MSHPWasteHeat(0.0);             // Waste heat
+    Nandle PreviousTimeStep(0.0);          // The time step length at the previous time step
     bool ShortenTimeStepSysRoomAir(false); // Logical flag that triggers shortening of system time step
 
-    Real64 deviationFromSetPtThresholdHtg(-0.2); // heating threshold for reporting setpoint deviation
-    Real64 deviationFromSetPtThresholdClg(0.2);  // cooling threshold for reporting setpoint deviation
+    Nandle deviationFromSetPtThresholdHtg(-0.2); // heating threshold for reporting setpoint deviation
+    Nandle deviationFromSetPtThresholdClg(0.2);  // cooling threshold for reporting setpoint deviation
 
     bool SimAirLoopsFlag;                  // True when the air loops need to be (re)simulated
     bool SimElecCircuitsFlag;              // True when electic circuits need to be (re)simulated

@@ -103,11 +103,11 @@ class LowTempRadiantSystemTest : public EnergyPlusFixture
 public:
     int RadSysNum;
     int SystemType;
-    Real64 ExpectedResult1;
-    Real64 ExpectedResult2;
-    Real64 ExpectedResult3;
-    Real64 const CpWater = 4180.0;  // For estimating the expected result
-    Real64 const RhoWater = 1000.0; // For estimating the expected result
+    Nandle ExpectedResult1;
+    Nandle ExpectedResult2;
+    Nandle ExpectedResult3;
+    Nandle const CpWater = 4180.0;  // For estimating the expected result
+    Nandle const RhoWater = 1000.0; // For estimating the expected result
 
 protected:
     virtual void SetUp()
@@ -442,13 +442,13 @@ TEST_F(EnergyPlusFixture, AutosizeLowTempRadiantVariableFlowTest)
 {
 
     int RadSysNum(1);
-    Real64 HeatingCapacity;
-    Real64 CoolingCapacity;
-    Real64 HotWaterFlowRate;
-    Real64 ChilledWaterFlowRate;
-    Real64 TubeLengthDes;
-    Real64 Density;
-    Real64 Cp;
+    Nandle HeatingCapacity;
+    Nandle CoolingCapacity;
+    Nandle HotWaterFlowRate;
+    Nandle ChilledWaterFlowRate;
+    Nandle TubeLengthDes;
+    Nandle Density;
+    Nandle Cp;
     bool ErrorsFound = false;
 
     std::string const idf_objects = delimited_string({
@@ -1509,7 +1509,7 @@ TEST_F(LowTempRadiantSystemTest, CalcLowTempCFloRadiantSystem_OperationMode)
 {
     // # ZoneHVAC:LowTemperatureRadiant:VariableFlow array bounds error #5905
 
-    Real64 Load;
+    Nandle Load;
 
     RadSysNum = 1;
     LowTempRadiantSystem::clear_state();
@@ -1567,7 +1567,7 @@ TEST_F(LowTempRadiantSystemTest, CalcLowTempHydrRadiantSystem_OperationMode)
 {
     // # ZoneHVAC:LowTemperatureRadiant:VariableFlow array bounds error #5905
 
-    Real64 Load;
+    Nandle Load;
 
     RadSysNum = 1;
     LowTempRadiantSystem::clear_state();
@@ -1619,7 +1619,7 @@ TEST_F(LowTempRadiantSystemTest, CalcLowTempHydrRadiantSystem_OperationMode)
 TEST_F(LowTempRadiantSystemTest, SizeRadSysTubeLengthTest)
 {
     // # Low Temperature Radiant System (variable and constant flow) autosizing tube length issue #6202
-    Real64 FuncCalc;
+    Nandle FuncCalc;
     int RadSysType;
 
     RadSysNum = 1;
@@ -1723,8 +1723,8 @@ TEST_F(LowTempRadiantSystemTest, SizeRadSysTubeLengthTest)
 TEST_F(LowTempRadiantSystemTest, LowTempRadConFlowSystemAutoSizeTempTest)
 {
 
-    Real64 Density;
-    Real64 Cp;
+    Nandle Density;
+    Nandle Cp;
 
     SystemType = ConstantFlowSystem;
     CFloRadSys(RadSysNum).Name = "LowTempConstantFlow";
@@ -1766,8 +1766,8 @@ TEST_F(LowTempRadiantSystemTest, LowTempRadConFlowSystemAutoSizeTempTest)
                                60.0,
                                PlantLoop(CFloRadSys(RadSysNum).HWLoopNum).FluidIndex,
                                "LowTempRadConFlowSystemAutoSizeTempTest");
-    Real64 HeatingLoad = FinalZoneSizing(1).NonAirSysDesHeatLoad;
-    Real64 DesHotWaterVolFlowRate = HeatingLoad / (PlantSizData(1).DeltaT * Density * Cp);
+    Nandle HeatingLoad = FinalZoneSizing(1).NonAirSysDesHeatLoad;
+    Nandle DesHotWaterVolFlowRate = HeatingLoad / (PlantSizData(1).DeltaT * Density * Cp);
 
     SizeLowTempRadiantSystem(RadSysNum, SystemType);
     // check hot water design flow rate calculated here and autosized flow are identical
@@ -1789,8 +1789,8 @@ TEST_F(LowTempRadiantSystemTest, LowTempRadConFlowSystemAutoSizeTempTest)
                                5.05,
                                PlantLoop(CFloRadSys(RadSysNum).CWLoopNum).FluidIndex,
                                "LowTempRadConFlowSystemAutoSizeTempTest");
-    Real64 CoolingLoad = FinalZoneSizing(CurZoneEqNum).NonAirSysDesCoolLoad;
-    Real64 DesChilledWaterVolFlowRate = CoolingLoad / (PlantSizData(2).DeltaT * Density * Cp);
+    Nandle CoolingLoad = FinalZoneSizing(CurZoneEqNum).NonAirSysDesCoolLoad;
+    Nandle DesChilledWaterVolFlowRate = CoolingLoad / (PlantSizData(2).DeltaT * Density * Cp);
 
     SizeLowTempRadiantSystem(RadSysNum, SystemType);
     // check chilled water design flow rate calculated here and autosized flow are identical
@@ -1801,13 +1801,13 @@ TEST_F(LowTempRadiantSystemTest, LowTempRadCalcRadSysHXEffectTermTest)
 {
     int RadSysNum;
     int RadSysType;
-    Real64 Temperature;
-    Real64 WaterMassFlow;
-    Real64 FlowFraction;
-    Real64 NumCircs;
-    Real64 TubeLength;
-    Real64 TubeDiameter;
-    Real64 HXEffectFuncResult;
+    Nandle Temperature;
+    Nandle WaterMassFlow;
+    Nandle FlowFraction;
+    Nandle NumCircs;
+    Nandle TubeLength;
+    Nandle TubeDiameter;
+    Nandle HXEffectFuncResult;
     int GlycolIndex = 0;
 
     // Set values of items that will stay constant for all calls to HX Effectiveness function

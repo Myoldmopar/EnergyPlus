@@ -119,11 +119,11 @@ TEST_F(EnergyPlusFixture, UnitHeater_HWHeatingCoilUAAutoSizingTest)
     int ZoneNum(1);                   // zone index
     int CoilNum(1);                   // heating coil index
     int PltSizHeatNum(0);             // hot water plant loop index
-    Real64 HWMaxVolFlowRate(0.0);     // hot water coil water volume flow rate, m3/s
-    Real64 CpHW(0.0);                 // hot water specific heat, J/kg K
-    Real64 HWPlantDeltaTDesign(0.0);  // hot water plant loop design temp difference, deltaC
-    Real64 HWCoilDesignCapacity(0.0); // hot water heating coil design capacity (W)
-    Real64 HWDensity(0.0);            // hot water density, kg/m3
+    Nandle HWMaxVolFlowRate(0.0);     // hot water coil water volume flow rate, m3/s
+    Nandle CpHW(0.0);                 // hot water specific heat, J/kg K
+    Nandle HWPlantDeltaTDesign(0.0);  // hot water plant loop design temp difference, deltaC
+    Nandle HWCoilDesignCapacity(0.0); // hot water heating coil design capacity (W)
+    Nandle HWDensity(0.0);            // hot water density, kg/m3
 
     std::string const idf_objects = delimited_string({
         "  Timestep,4;",
@@ -1174,16 +1174,16 @@ TEST_F(EnergyPlusFixture, UnitHeater_SimUnitHeaterTest)
     int UHAirInletNode(0);    // unit heater air inlet node
     int UHAirOutletNode(0);   // unit heater air outlet node
 
-    Real64 CpHW(0.0);                  // hot water specific heat, J/kg K
-    Real64 SysOutputProvided(0.0);     // heating rate delivered
-    Real64 LatOutputProvided(0.0);     // latent heating rate delivered
-    Real64 ConvTol(1.0);               // convergence tolerance
-    Real64 HWMassFlowRate(0.0);        // hot water coil water mass flow rate, m3/s
-    Real64 UHAirMassFlowRate(0.0);     // unit heate air mass flow rate
-    Real64 UHHeatingRate(0.0);         // unit heate heating rate
-    Real64 UHEnteringAirEnthalpy(0.0); // unit heater entering air enthalpy
-    Real64 UHLeavingAirEnthalpy(0.0);  // unit heater leaving air enthalpy
-    Real64 HWCoilHeatingRate(0.0);     // hot water heating coil heating rate
+    Nandle CpHW(0.0);                  // hot water specific heat, J/kg K
+    Nandle SysOutputProvided(0.0);     // heating rate delivered
+    Nandle LatOutputProvided(0.0);     // latent heating rate delivered
+    Nandle ConvTol(1.0);               // convergence tolerance
+    Nandle HWMassFlowRate(0.0);        // hot water coil water mass flow rate, m3/s
+    Nandle UHAirMassFlowRate(0.0);     // unit heate air mass flow rate
+    Nandle UHHeatingRate(0.0);         // unit heate heating rate
+    Nandle UHEnteringAirEnthalpy(0.0); // unit heater entering air enthalpy
+    Nandle UHLeavingAirEnthalpy(0.0);  // unit heater leaving air enthalpy
+    Nandle HWCoilHeatingRate(0.0);     // hot water heating coil heating rate
 
     std::string const idf_objects = delimited_string({
         "  ScheduleTypeLimits,",

@@ -79,10 +79,10 @@ namespace AirflowNetworkBalanceManager {
 
     // MODULE VARIABLE DECLARATIONS:
     // Report variables
-    extern Array1D<Real64> PZ;
+    extern Array1D<Nandle> PZ;
     // Inverse matrix
-    extern Array1D<Real64> MA;
-    extern Array1D<Real64> MV;
+    extern Array1D<Nandle> MA;
+    extern Array1D<Nandle> MV;
     extern Array1D_int IVEC;
     extern Array1D_int SplitterNodeNumbers;
 
@@ -113,14 +113,14 @@ namespace AirflowNetworkBalanceManager {
     extern int DisSysNumOfLinks;
     extern int NumOfExtNodes;
     extern int AirflowNetworkNumOfExtSurfaces;
-    extern Real64 IncAng;                  // Wind incidence angle relative to facade normal (deg)
-    extern Array1D<Real64> FacadeAng;      // Facade azimuth angle (for walls, angle of outward normal to facade measured clockwise from North) (deg)
+    extern Nandle IncAng;                  // Wind incidence angle relative to facade normal (deg)
+    extern Array1D<Nandle> FacadeAng;      // Facade azimuth angle (for walls, angle of outward normal to facade measured clockwise from North) (deg)
     extern int WindDirNum;                 // Wind direction number
-    extern Real64 WindAng;                 // Wind direction angle (degrees clockwise from North)
+    extern Nandle WindAng;                 // Wind direction angle (degrees clockwise from North)
     extern int SupplyFanInletNode;         // Supply air fan inlet node number
     extern int SupplyFanOutletNode;        // Supply air fan outlet node number
     extern int SupplyFanType;              // Supply air fan type
-    extern Real64 OnOffFanRunTimeFraction; // Run time fraction for an On/Off fan flow rate
+    extern Nandle OnOffFanRunTimeFraction; // Run time fraction for an On/Off fan flow rate
     extern int AirflowNetworkNumOfOccuVentCtrls;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE AirflowNetworkBalanceManager:
@@ -131,23 +131,23 @@ namespace AirflowNetworkBalanceManager {
     struct AirflowNetworkReportVars
     {
         // Members
-        Real64 InfilVolume;        // Volume of Air {m3} due to infiltration
-        Real64 InfilMass;          // Mass of Air {kg} due to infiltration
-        Real64 InfilAirChangeRate; // Infiltration air change rate {ach}
-        Real64 VentilHeatLoss;     // Heat Gain {W} due to ventilation
-        Real64 VentilHeatGain;     // Heat Loss {W} due to ventilation
-        Real64 VentilVolume;       // Volume of Air {m3} due to ventilation
-        Real64 VentilMass;         // Mass of Air {kg} due to ventilation
-        Real64 VentilFanElec;      // Fan Electricity {W} due to ventilation
-        Real64 VentilAirTemp;      // Air Temp {C} of ventilation
-        Real64 MixVolume;          // Mixing volume of Air {m3}
-        Real64 MixMass;            // Mixing mass of air {kg}
-        Real64 ExfilSensiLoss;     // Sensible heat Loss rate {W} due to exfiltration
-        Real64 ExfilLatentLoss;    // Latent heat Loss rate {W} due to exfiltration
-        Real64 ExfilTotalLoss;     // Total heat Loss rate {W} due to exfiltration
-        Real64 ExfilMass;          // Mass of Air {kg} due to exfiltration
-        Real64 InletMass;          // Total zone inlet mass of air {kg}
-        Real64 OutletMass;         // Total zone outlet mass of air {kg}
+        Nandle InfilVolume;        // Volume of Air {m3} due to infiltration
+        Nandle InfilMass;          // Mass of Air {kg} due to infiltration
+        Nandle InfilAirChangeRate; // Infiltration air change rate {ach}
+        Nandle VentilHeatLoss;     // Heat Gain {W} due to ventilation
+        Nandle VentilHeatGain;     // Heat Loss {W} due to ventilation
+        Nandle VentilVolume;       // Volume of Air {m3} due to ventilation
+        Nandle VentilMass;         // Mass of Air {kg} due to ventilation
+        Nandle VentilFanElec;      // Fan Electricity {W} due to ventilation
+        Nandle VentilAirTemp;      // Air Temp {C} of ventilation
+        Nandle MixVolume;          // Mixing volume of Air {m3}
+        Nandle MixMass;            // Mixing mass of air {kg}
+        Nandle ExfilSensiLoss;     // Sensible heat Loss rate {W} due to exfiltration
+        Nandle ExfilLatentLoss;    // Latent heat Loss rate {W} due to exfiltration
+        Nandle ExfilTotalLoss;     // Total heat Loss rate {W} due to exfiltration
+        Nandle ExfilMass;          // Mass of Air {kg} due to exfiltration
+        Nandle InletMass;          // Total zone inlet mass of air {kg}
+        Nandle OutletMass;         // Total zone outlet mass of air {kg}
 
         // Default Constructor
         AirflowNetworkReportVars()
@@ -180,29 +180,29 @@ namespace AirflowNetworkBalanceManager {
 
     void CalcWindPressureCoeffs();
 
-    Real64 CalcDuctInsideConvResist(Real64 const Tair, // Average air temperature
-                                    Real64 const mdot, // Mass flow rate
-                                    Real64 const Dh,   // Hydraulic diameter
-                                    Real64 const hIn   // User defined convection coefficient
+    Nandle CalcDuctInsideConvResist(Nandle const Tair, // Average air temperature
+                                    Nandle const mdot, // Mass flow rate
+                                    Nandle const Dh,   // Hydraulic diameter
+                                    Nandle const hIn   // User defined convection coefficient
     );
 
-    Real64 CalcDuctOutsideConvResist(Real64 const Ts,      // Surface temperature
-                                     Real64 const Tamb,    // Free air temperature
-                                     Real64 const Wamb,    // Free air humidity ratio
-                                     Real64 const Pamb,    // Free air barometric pressure
-                                     Real64 const Dh,      // Hydraulic diameter
-                                     Real64 const ZoneNum, // Zone number
-                                     Real64 const hOut     // User defined convection coefficient
+    Nandle CalcDuctOutsideConvResist(Nandle const Ts,      // Surface temperature
+                                     Nandle const Tamb,    // Free air temperature
+                                     Nandle const Wamb,    // Free air humidity ratio
+                                     Nandle const Pamb,    // Free air barometric pressure
+                                     Nandle const Dh,      // Hydraulic diameter
+                                     Nandle const ZoneNum, // Zone number
+                                     Nandle const hOut     // User defined convection coefficient
     );
 
-    Real64 CalcWindPressure(int const curve,           // Curve index, change this to pointer after curve refactor
+    Nandle CalcWindPressure(int const curve,           // Curve index, change this to pointer after curve refactor
                             bool const symmetricCurve, // True if the curve is symmetric (0 to 180)
                             bool const relativeAngle,  // True if the Cp curve angle is measured relative to the surface
-                            Real64 const azimuth,      // Azimuthal angle of surface
-                            Real64 const windSpeed,    // Wind velocity
-                            Real64 const windDir,      // Wind direction
-                            Real64 const dryBulbTemp,  // Air node dry bulb temperature
-                            Real64 const humRat        // Air node humidity ratio
+                            Nandle const azimuth,      // Azimuthal angle of surface
+                            Nandle const windSpeed,    // Wind velocity
+                            Nandle const windDir,      // Wind direction
+                            Nandle const dryBulbTemp,  // Air node dry bulb temperature
+                            Nandle const humRat        // Air node humidity ratio
     );
 
     void CalcAirflowNetworkHeatBalance();
@@ -220,7 +220,7 @@ namespace AirflowNetworkBalanceManager {
     void UpdateAirflowNetwork(Optional_bool_const FirstHVACIteration = _); // True when solution technique on first iteration
 
     void AirflowNetworkVentingControl(int const i,       // AirflowNetwork surface number
-                                      Real64 &OpenFactor // Window or door opening factor (used to calculate airflow)
+                                      Nandle &OpenFactor // Window or door opening factor (used to calculate airflow)
     );
 
     void ValidateDistributionSystem();
@@ -231,33 +231,33 @@ namespace AirflowNetworkBalanceManager {
 
     void HybridVentilationControl();
 
-    void CalcSingleSidedCps(std::vector<std::vector<Real64>> &valsByFacade, int numWindDirs = 36);
+    void CalcSingleSidedCps(std::vector<std::vector<Nandle>> &valsByFacade, int numWindDirs = 36);
 
-    Real64 GetZoneInfilAirChangeRate(int const ZoneNum); // hybrid ventilation system controlled zone number
+    Nandle GetZoneInfilAirChangeRate(int const ZoneNum); // hybrid ventilation system controlled zone number
 
     int GetAirLoopNumber(int const NodeNumber); // Get air loop number for each distribution node and linkage
 
-    Real64 AFNPressureResidual(Real64 const ExFanMassFlowRate,
-                               Array1D<Real64> const &Par); // Residual function using Regula Falsi
+    Nandle AFNPressureResidual(Nandle const ExFanMassFlowRate,
+                               Array1D<Nandle> const &Par); // Residual function using Regula Falsi
 
     // derived class or struct
     struct OccupantVentilationControlProp
     {
 
         std::string Name;                     // Provide a unique object name
-        Real64 MinOpeningTime;                // Minimum Opening Time
-        Real64 MinClosingTime;                // Minimum Closing Time
+        Nandle MinOpeningTime;                // Minimum Opening Time
+        Nandle MinClosingTime;                // Minimum Closing Time
         std::string ComfortLowTempCurveName;  // Thermal Comfort Low Temperature Curve Name
         std::string ComfortHighTempCurveName; // Thermal Comfort High Temperature Curve Name
         int ComfortLowTempCurveNum;           // Thermal Comfort Low Temperature Curve number
         int ComfortHighTempCurveNum;          // Thermal Comfort high Temperature Curve number
         int OpeningProbSchNum;                // Opening probability schedule pointer
         int ClosingProbSchNum;                // Closing probability schedule pointer
-        Real64 ComfortBouPoint;               // Thermal Comfort Temperature Boundary Point
+        Nandle ComfortBouPoint;               // Thermal Comfort Temperature Boundary Point
         bool OccupancyCheck;                  // Occupancy check
         std::string OpeningProbSchName;       // Opening probability schedule name
         std::string ClosingProbSchName;       // Closing probability schedule name
-        Real64 MaxPPD;                        // Maximum PPD used to calculate comfort band (%)
+        Nandle MaxPPD;                        // Maximum PPD used to calculate comfort band (%)
         bool MinTimeControlOnly;              // Chach minimum opening and closing time only
 
         // Default Constructor
@@ -270,16 +270,16 @@ namespace AirflowNetworkBalanceManager {
         void calc(int const ZoneNum,
                   int const SurfNum,
                   int const PrevOpeningstatus,
-                  Real64 const TimeOpenDuration,
-                  Real64 const TimeCloseDuration,
+                  Nandle const TimeOpenDuration,
+                  Nandle const TimeCloseDuration,
                   int &OpeningStatus,
                   int &OpeningProbStatus,
                   int &ClosingProbStatus); // function to perform calculations
 
         bool openingProbability(int const ZoneNum,
-                                Real64 const TimeCloseDuration); // function to perform calculations of opening probability
+                                Nandle const TimeCloseDuration); // function to perform calculations of opening probability
 
-        bool closingProbability(Real64 const TimeCloseDuration); // function to perform calculations of closing probability
+        bool closingProbability(Nandle const TimeCloseDuration); // function to perform calculations of closing probability
     };
 
     extern Array1D<OccupantVentilationControlProp> OccupantVentilationControl;

@@ -127,14 +127,14 @@ namespace IntegratedHeatPump {
         int MinSpedSCDWH; //- minimum speed level for SCDWH mode
         int MinSpedSHDWH;
         //- minimum speed level for SHDWH mode
-        Real64 TindoorOverCoolAllow;   //- [C], indoor temperature above which indoor overcooling is allowed
-        Real64 TambientOverCoolAllow;  //- [C], ambient temperature above which indoor overcooling is allowed
-        Real64 TindoorWHHighPriority;  //- [C], indoor temperature above which water heating has the higher priority
-        Real64 TambientWHHighPriority; // ambient temperature above which water heating has the higher priority
+        Nandle TindoorOverCoolAllow;   //- [C], indoor temperature above which indoor overcooling is allowed
+        Nandle TambientOverCoolAllow;  //- [C], ambient temperature above which indoor overcooling is allowed
+        Nandle TindoorWHHighPriority;  //- [C], indoor temperature above which water heating has the higher priority
+        Nandle TambientWHHighPriority; // ambient temperature above which water heating has the higher priority
 
-        Real64 WaterVolSCDWH;
+        Nandle WaterVolSCDWH;
         // limit of water volume before switching from SCDWH to SCWH
-        Real64 TimeLimitSHDWH; // time limit before turning from SHDWH to electric heating
+        Nandle TimeLimitSHDWH; // time limit before turning from SHDWH to electric heating
 
         int WHtankType;
         std::string WHtankName;
@@ -145,21 +145,21 @@ namespace IntegratedHeatPump {
         // whether water heating call available
         bool CheckWHCall;
         IHPOperationMode CurMode; // current working mode
-        Real64 ControlledZoneTemp;
-        Real64 WaterFlowAccumVol;
+        Nandle ControlledZoneTemp;
+        Nandle WaterFlowAccumVol;
         // water flow accumulated volume
-        Real64 SHDWHRunTime;
-        Real64 CoolVolFlowScale;
+        Nandle SHDWHRunTime;
+        Nandle CoolVolFlowScale;
         // max fan cooling volumetric flow rate
-        Real64 HeatVolFlowScale;
+        Nandle HeatVolFlowScale;
         // max fan heating volumetric flow rate
-        Real64 MaxHeatAirMassFlow;
+        Nandle MaxHeatAirMassFlow;
         // maximum air mass flow rate for heating mode
-        Real64 MaxHeatAirVolFlow;
+        Nandle MaxHeatAirVolFlow;
         // maximum air volume flow rate for heating mode
-        Real64 MaxCoolAirMassFlow;
+        Nandle MaxCoolAirMassFlow;
         // maximum air mass flow rate for heating mode
-        Real64 MaxCoolAirVolFlow;
+        Nandle MaxCoolAirVolFlow;
         // maximum air volume flow rate for heating mode
         bool IHPCoilsSized; // whether IHP coils have been sized
 
@@ -171,38 +171,38 @@ namespace IntegratedHeatPump {
 
         int ODAirInletNodeNum;  // oudoor coil inlet Nod
         int ODAirOutletNodeNum; // oudoor coil outlet Nod
-        Real64 TankSourceWaterMassFlowRate;
+        Nandle TankSourceWaterMassFlowRate;
         // tank source water flow rate
-        Real64 AirFlowSavInWaterLoop; // air flow saving for SCWH mode
-        Real64 AirFlowSavInAirLoop;   // air flow saving for SCWH mode
+        Nandle AirFlowSavInWaterLoop; // air flow saving for SCWH mode
+        Nandle AirFlowSavInAirLoop;   // air flow saving for SCWH mode
 
         // new output variables
-        Real64 AirLoopFlowRate;
+        Nandle AirLoopFlowRate;
         // air loop mass flow rate [kg/s]
-        Real64 TotalCoolingRate;
+        Nandle TotalCoolingRate;
         // total cooling rate [w]
-        Real64 TotalWaterHeatingRate;
+        Nandle TotalWaterHeatingRate;
         // total water heating rate [w]
-        Real64 TotalSpaceHeatingRate;
+        Nandle TotalSpaceHeatingRate;
         // total space heating rate [w]
-        Real64 TotalPower;
+        Nandle TotalPower;
         // total power consumption  [w]
-        Real64 TotalLatentLoad;
+        Nandle TotalLatentLoad;
         // total latent cooling rate [w]
-        Real64 Qsource;
+        Nandle Qsource;
         // source energy rate, [w]
-        Real64 Energy;
+        Nandle Energy;
         // total electric energy consumption [J]
-        Real64 EnergyLoadTotalCooling;
+        Nandle EnergyLoadTotalCooling;
         // total cooling energy [J]
-        Real64 EnergyLoadTotalHeating;
+        Nandle EnergyLoadTotalHeating;
         // total heating energy [J]
-        Real64 EnergyLoadTotalWaterHeating;
+        Nandle EnergyLoadTotalWaterHeating;
         // total heating energy [J]
-        Real64 EnergyLatent; // total latent energy [J]
-        Real64 EnergySource;
+        Nandle EnergyLatent; // total latent energy [J]
+        Nandle EnergySource;
         // total source energy
-        Real64 TotalCOP; // total COP
+        Nandle TotalCOP; // total COP
 
         // Default Constructor
         IntegratedHeatPumpData()
@@ -242,18 +242,18 @@ namespace IntegratedHeatPump {
     void SimIHP(std::string const &CompName,   // Coil Name
                 int &CompIndex,                // Index for Component name
                 int const CyclingScheme,       // Continuous fan OR cycling compressor
-                Real64 &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
-                Real64 &HPTimeConstant,        // Heat pump time constant [s]
-                Real64 &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
+                Nandle &MaxONOFFCyclesperHour, // Maximum cycling rate of heat pump [cycles/hr]
+                Nandle &HPTimeConstant,        // Heat pump time constant [s]
+                Nandle &FanDelayTime,          // Fan delay time, time delay for the HP's fan to
                 int const CompOp,              // compressor on/off. 0 = off; 1= on
-                Real64 const PartLoadFrac,
+                Nandle const PartLoadFrac,
                 int const SpeedNum,                        // compressor speed number
-                Real64 const SpeedRatio,                   // compressor speed ratio
-                Real64 const SensLoad,                     // Sensible demand load [W]
-                Real64 const LatentLoad,                   // Latent demand load [W]
+                Nandle const SpeedRatio,                   // compressor speed ratio
+                Nandle const SensLoad,                     // Sensible demand load [W]
+                Nandle const LatentLoad,                   // Latent demand load [W]
                 bool const IsCallbyWH,                     // whether the call from the water heating loop or air loop, true = from water heating loop
                 bool const FirstHVACIteration,             // TRUE if First iteration of simulation
-                Optional<Real64 const> OnOffAirFlowRat = _ // ratio of comp on to comp off air flow rate
+                Optional<Nandle const> OnOffAirFlowRat = _ // ratio of comp on to comp off air flow rate
     );
 
     void GetIHPInput();
@@ -265,8 +265,8 @@ namespace IntegratedHeatPump {
     void UpdateIHP(int const DXCoilNum);
 
     void DecideWorkMode(int const DXCoilNum,
-                        Real64 const SensLoad,  // Sensible demand load [W]
-                        Real64 const LatentLoad // Latent demand load [W]
+                        Nandle const SensLoad,  // Sensible demand load [W]
+                        Nandle const LatentLoad // Latent demand load [W]
     );
 
     IHPOperationMode GetCurWorkMode(int const DXCoilNum);
@@ -275,21 +275,21 @@ namespace IntegratedHeatPump {
 
     int GetMaxSpeedNumIHP(int const DXCoilNum);
 
-    Real64 GetAirVolFlowRateIHP(int const DXCoilNum,
+    Nandle GetAirVolFlowRateIHP(int const DXCoilNum,
                                 int const SpeedNum,
-                                Real64 const SpeedRatio,
+                                Nandle const SpeedRatio,
                                 bool const IsCallbyWH // whether the call from the water heating loop or air loop, true = from water heating loop
     );
 
-    Real64 GetWaterVolFlowRateIHP(int const DXCoilNum,
+    Nandle GetWaterVolFlowRateIHP(int const DXCoilNum,
                                   int const SpeedNum,
-                                  Real64 const SpeedRatio,
+                                  Nandle const SpeedRatio,
                                   bool const IsCallbyWH // whether the call from the water heating loop or air loop, true = from water heating loop
     );
 
-    Real64 GetAirMassFlowRateIHP(int const DXCoilNum,
+    Nandle GetAirMassFlowRateIHP(int const DXCoilNum,
                                  int const SpeedNum,
-                                 Real64 const SpeedRatio,
+                                 Nandle const SpeedRatio,
                                  bool const IsCallbyWH // whether the call from the water heating loop or air loop, true = from water heating loop
     );
 
@@ -315,7 +315,7 @@ namespace IntegratedHeatPump {
                                 bool &ErrorsFound            // set to true if problem
     );
 
-    Real64 GetDWHCoilCapacityIHP(std::string const &CoilType, // must match coil types in this module
+    Nandle GetDWHCoilCapacityIHP(std::string const &CoilType, // must match coil types in this module
                                  std::string const &CoilName, // must match coil names for the coil type
                                  IHPOperationMode const Mode, // mode coil type
                                  bool &ErrorsFound            // set to true if problem

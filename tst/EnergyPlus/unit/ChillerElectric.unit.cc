@@ -155,7 +155,7 @@ TEST_F(EnergyPlusFixture, ChillerElectric_WaterCooled_Autosize)
     DataPlant::PlantFinalSizesOkayToReport = true;
 
     bool RunFlag(true);
-    Real64 MyLoad(-20000.0);
+    Nandle MyLoad(-20000.0);
 
     Psychrometrics::InitializePsychRoutines();
     auto &thisChiller = ElectricChiller(1);

@@ -67,10 +67,10 @@ namespace EnergyPlus {
 
 TEST_F(EnergyPlusFixture, HeatBalanceIntRadExchange_CarrollMRT) {
     int N;                     // NUMBER OF SURFACES
-    Array1D<Real64> A;         // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-    Array1D<Real64> FMRT;      // MRT "VIEW FACTORS"
-    Array1D<Real64> EMISS;     // Gray body emissivities
-    Array1D<Real64> Fp;        // Gray body radiative resistance
+    Array1D<Nandle> A;         // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+    Array1D<Nandle> FMRT;      // MRT "VIEW FACTORS"
+    Array1D<Nandle> EMISS;     // Gray body emissivities
+    Array1D<Nandle> Fp;        // Gray body radiative resistance
 
     // Three surfaces of equal size
     N = 3;
@@ -133,14 +133,14 @@ TEST_F(EnergyPlusFixture, HeatBalanceIntRadExchange_FixViewFactorsTest)
 {
 
     int N;                     // NUMBER OF SURFACES
-    Array1D<Real64> A;         // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-    Array2D<Real64> F;         // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
+    Array1D<Nandle> A;         // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+    Array2D<Nandle> F;         // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
     int ZoneNum;               // Zone number being fixed
-    Real64 OriginalCheckValue; // check of SUM(F) - N
-    Real64 FixedCheckValue;    // check after fixed of SUM(F) - N
-    Real64 FinalCheckValue;    // the one to go with
+    Nandle OriginalCheckValue; // check of SUM(F) - N
+    Nandle FixedCheckValue;    // check after fixed of SUM(F) - N
+    Nandle FinalCheckValue;    // the one to go with
     int NumIterations;         // number of iterations to fixed
-    Real64 RowSum;             // RowSum of Fixed
+    Nandle RowSum;             // RowSum of Fixed
 
     N = 3;
 

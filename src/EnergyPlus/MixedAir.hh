@@ -205,13 +205,13 @@ namespace MixedAir {
         int Lockout; // 0=NoLockoutPossible; 1=LockoutWithHeatingPossible;
         // 2=LockoutWithCompressorPossible;
         bool FixedMin;        // Fixed Minimum or Proportional Minimum
-        Real64 TempLim;       // Temperature Limit
-        Real64 TempLowLim;    // Temperature Lower Limit
-        Real64 EnthLim;       // Enthalpy Limit
-        Real64 DPTempLim;     // Dew Point Temperature Limit
+        Nandle TempLim;       // Temperature Limit
+        Nandle TempLowLim;    // Temperature Lower Limit
+        Nandle EnthLim;       // Enthalpy Limit
+        Nandle DPTempLim;     // Dew Point Temperature Limit
         int EnthalpyCurvePtr; // Electronic Enthalpy Curve Index (max HumRat = f[OAT])
-        Real64 MinOA;         // Minimum outside air flow (m3/sec)
-        Real64 MaxOA;         // Maximum outside air flow (m3/sec)
+        Nandle MinOA;         // Minimum outside air flow (m3/sec)
+        Nandle MaxOA;         // Maximum outside air flow (m3/sec)
         int Econo;            // 0 = NoEconomizer, 1 = FixedDryBulb, 2 = FixedEnthalpy, 3=DifferentialDryBulb,
         // 4=DifferentialEnthalpy, 5=FixedDewPointAndDryBulb, 6 = ElectronicEnthalpy,
         // 7 =DifferentialDryBulbAndEnthalpy
@@ -223,35 +223,35 @@ namespace MixedAir {
         int RetNode;          // Return Air Node Number
         std::string MinOASch; // Name of the minimum outside air schedule
         int MinOASchPtr;      // Index to the minimum outside air schedule
-        Real64 RelMassFlow;
-        Real64 OAMassFlow;
-        Real64 ExhMassFlow;
-        Real64 MixMassFlow;
-        Real64 InletTemp;
-        Real64 InletEnth;
-        Real64 InletPress;
-        Real64 InletHumRat;
-        Real64 OATemp;
-        Real64 OAEnth;
-        Real64 OAPress;
-        Real64 OAHumRat;
-        Real64 RetTemp;
-        Real64 RetEnth;
-        Real64 MixSetTemp;
-        Real64 MinOAMassFlowRate; // Minimum outside air flow (kg/s)
-        Real64 MaxOAMassFlowRate; // Maximum outside air flow (kg/s)
-        Real64 RelTemp;
-        Real64 RelEnth;
-        Real64 RelSensiLossRate; // Heat lost to ambient from relief air (W)
-        Real64 RelLatentLossRate;
-        Real64 RelTotalLossRate;
+        Nandle RelMassFlow;
+        Nandle OAMassFlow;
+        Nandle ExhMassFlow;
+        Nandle MixMassFlow;
+        Nandle InletTemp;
+        Nandle InletEnth;
+        Nandle InletPress;
+        Nandle InletHumRat;
+        Nandle OATemp;
+        Nandle OAEnth;
+        Nandle OAPress;
+        Nandle OAHumRat;
+        Nandle RetTemp;
+        Nandle RetEnth;
+        Nandle MixSetTemp;
+        Nandle MinOAMassFlowRate; // Minimum outside air flow (kg/s)
+        Nandle MaxOAMassFlowRate; // Maximum outside air flow (kg/s)
+        Nandle RelTemp;
+        Nandle RelEnth;
+        Nandle RelSensiLossRate; // Heat lost to ambient from relief air (W)
+        Nandle RelLatentLossRate;
+        Nandle RelTotalLossRate;
 
         int ZoneEquipZoneNum;
         std::string VentilationMechanicalName; // Name of ventilation:mechanical object used for DCV
         int VentMechObjectNum;                 // Index to VENTILATION:MECHANICAL object for this controller
         int HumidistatZoneNum;                 // zone number where humidistat is located
         int NodeNumofHumidistatZone;           // node number of zone where humidistat is located
-        Real64 HighRHOAFlowRatio;              // Modify ratio with respect to maximum outdoor air flow rate (high RH)
+        Nandle HighRHOAFlowRatio;              // Modify ratio with respect to maximum outdoor air flow rate (high RH)
         bool ModifyDuringHighOAMoisture; // flag to Modify outdoor air flow, TRUE when modify any time, FALSE when modify only when indoor air humrat
                                          // is less than outdoor HR
         int EconomizerOASchedPtr;        // schedule to modify outdoor air flow
@@ -267,18 +267,18 @@ namespace MixedAir {
         int EconomizerStatus;           // Air Economizer status (1 = on, 0 = off or economizer not exists)
         int HeatRecoveryBypassStatus;   // OA Sys Heat Recovery Bypass status (1 = on, 0 = off or economizer not exists)
         int HRHeatingCoilActive;        // OA Sys Heat Recovery Heating Coil Was Active status (1 = on, 0 = off)
-        Real64 MixedAirTempAtMinOAFlow; // calculated mixed air temp when using special HX bypass control
+        Nandle MixedAirTempAtMinOAFlow; // calculated mixed air temp when using special HX bypass control
         int HighHumCtrlStatus;          // High Humidity Control status (1 = on, 0 = off or high hum ctrl not used)
-        Real64 OAFractionRpt;           // Actual outdoor air fraction for reporting (based on mixed air flow rate),
+        Nandle OAFractionRpt;           // Actual outdoor air fraction for reporting (based on mixed air flow rate),
         // 0 to 1 (normally)
-        Real64 MinOAFracLimit;             // Minimum OA fraction limit
-        Real64 MechVentOAMassFlowRequest;  // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
+        Nandle MinOAFracLimit;             // Minimum OA fraction limit
+        Nandle MechVentOAMassFlowRequest;  // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
         bool EMSOverrideOARate;            // if true, EMS is calling to override OA rate
-        Real64 EMSOARateValue;             // Value EMS is directing to use. [kg/s]
+        Nandle EMSOARateValue;             // Value EMS is directing to use. [kg/s]
         int HeatRecoveryBypassControlType; // User input selects type of heat recovery optimization
         bool ManageDemand;                 // Used by demand manager to manage ventilation
-        Real64 DemandLimitFlowRate;        // Current demand limit if demand manager is ON
-        Real64 MaxOAFracBySetPoint;        // The maximum OA fraction due to freezing cooling coil check
+        Nandle DemandLimitFlowRate;        // Current demand limit if demand manager is ON
+        Nandle MaxOAFracBySetPoint;        // The maximum OA fraction due to freezing cooling coil check
         int MixedAirSPMNum;                // index of mixed air setpoint manager
         bool CoolCoilFreezeCheck;          // if true, cooling coil freezing is prevented by recalculating the amount of OA
         bool EconoActive;                  // if true economizer is active
@@ -306,14 +306,14 @@ namespace MixedAir {
         void CalcOAController(int const AirLoopNum, bool const FirstHVACIteration);
 
         void CalcOAEconomizer(
-            int const AirLoopNum, Real64 const OutAirMinFrac, Real64 &OASignal, bool &HighHumidityOperationFlag, bool const FirstHVACIteration);
+            int const AirLoopNum, Nandle const OutAirMinFrac, Nandle &OASignal, bool &HighHumidityOperationFlag, bool const FirstHVACIteration);
 
         void SizeOAController();
 
         void UpdateOAController();
 
-        void Checksetpoints(Real64 const OutAirMinFrac,   // Local variable used to calculate min OA fraction
-                            Real64 &OutAirSignal,         // Used to set OA mass flow rate
+        void Checksetpoints(Nandle const OutAirMinFrac,   // Local variable used to calculate min OA fraction
+                            Nandle &OutAirSignal,         // Used to set OA mass flow rate
                             bool &EconomizerOperationFlag // logical used to show economizer status
         );
     };
@@ -326,16 +326,16 @@ namespace MixedAir {
         int SchPtr;                             // Index to the mechanical ventilation schedule
         bool DCVFlag;                           // if true, implement OA based on demand controlled ventilation
         int NumofVentMechZones;                 // Number of zones with mechanical ventilation
-        Real64 TotAreaOAFlow;                   // Total outdoor air flow rate for all zones per area (m3/s/m2)
-        Real64 TotPeopleOAFlow;                 // Total outdoor air flow rate for all PEOPLE objects in zones (m3/s)
-        Real64 TotZoneOAFlow;                   // Total outdoor air flow rate for all zones (m3/s)
-        Real64 TotZoneOAACH;                    // Total outdoor air flow rate for all zones Air Changes per hour (m3/s/m3)
+        Nandle TotAreaOAFlow;                   // Total outdoor air flow rate for all zones per area (m3/s/m2)
+        Nandle TotPeopleOAFlow;                 // Total outdoor air flow rate for all PEOPLE objects in zones (m3/s)
+        Nandle TotZoneOAFlow;                   // Total outdoor air flow rate for all zones (m3/s)
+        Nandle TotZoneOAACH;                    // Total outdoor air flow rate for all zones Air Changes per hour (m3/s/m3)
         int SystemOAMethod;                     // System Outdoor Air Method - SOAM_ZoneSum, SOAM_VRP
-        Real64 ZoneMaxOAFraction;               // Zone maximum outdoor air fraction
-        Array1D<Real64> ZoneOAAreaRate;         // Mechanical ventilation rate (m3/s/m2) for each zone
-        Array1D<Real64> ZoneOAPeopleRate;       // Mechanical ventilation rate (m3/s/person) for each zone
-        Array1D<Real64> ZoneOAFlowRate;         // OA Flow Rate (m3/s/zone) for each zone
-        Array1D<Real64> ZoneOAACHRate;          // OA ACH (m3/s/volume) for each zone
+        Nandle ZoneMaxOAFraction;               // Zone maximum outdoor air fraction
+        Array1D<Nandle> ZoneOAAreaRate;         // Mechanical ventilation rate (m3/s/m2) for each zone
+        Array1D<Nandle> ZoneOAPeopleRate;       // Mechanical ventilation rate (m3/s/person) for each zone
+        Array1D<Nandle> ZoneOAFlowRate;         // OA Flow Rate (m3/s/zone) for each zone
+        Array1D<Nandle> ZoneOAACHRate;          // OA ACH (m3/s/volume) for each zone
         Array1D_int VentMechZone;               // Zones requiring mechanical ventilation
         Array1D_string VentMechZoneName;        // name of mech vent zone
         Array1D_int ZoneDesignSpecOAObjIndex;   // index of the design specification outdoor air object for each zone
@@ -347,15 +347,15 @@ namespace MixedAir {
         int CO2GainErrorIndex;       // Index for recurring error message when CO2 generation from people is zero for SOAM_ProportionalControlSchOcc
         int OAMaxMinLimitErrorCount; // Counter when max OA < min OA for SOAM_ProportionalControlDesOARate
         int OAMaxMinLimitErrorIndex; // Index for max OA < min OA recurring error message for SOAM_ProportionalControlDesOARate
-        Array1D<Real64> ZoneADEffCooling;           // Zone air distribution effectiveness in cooling mode for each zone
-        Array1D<Real64> ZoneADEffHeating;           // Zone air distribution effectiveness in heating mode for each zone
+        Array1D<Nandle> ZoneADEffCooling;           // Zone air distribution effectiveness in cooling mode for each zone
+        Array1D<Nandle> ZoneADEffHeating;           // Zone air distribution effectiveness in heating mode for each zone
         Array1D_int ZoneADEffSchPtr;                // Pointer to the zone air distribution effectiveness schedule for each zone
         Array1D_int ZoneDesignSpecADObjIndex;       // index of the design specification zone air distribution object for each zone
         Array1D_string ZoneDesignSpecADObjName;     // name of the design specification zone air distribution object for each zone
-        Array1D<Real64> ZoneSecondaryRecirculation; // zone air secondary recirculation ratio for each zone
+        Array1D<Nandle> ZoneSecondaryRecirculation; // zone air secondary recirculation ratio for each zone
         Array1D_int ZoneOAFlowMethod;               // OA flow method for each zone
         Array1D_int ZoneOASchPtr;               // Index to the outdoor air schedule for each zone (from DesignSpecification:OutdoorAir or default)
-        Array1D<Real64> OAPropCtlMinRateSchPtr; // Outdoor design OA flow rate schedule from DesignSpecification:OutdoorAir
+        Array1D<Nandle> OAPropCtlMinRateSchPtr; // Outdoor design OA flow rate schedule from DesignSpecification:OutdoorAir
 
         // Default Constructor
         VentilationMechanicalProps()
@@ -365,8 +365,8 @@ namespace MixedAir {
         {
         }
 
-        void CalcMechVentController(Real64 &SysSA,             // System supply air mass flow rate [kg/s]
-                                    Real64 &MechVentOAMassFlow // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
+        void CalcMechVentController(Nandle &SysSA,             // System supply air mass flow rate [kg/s]
+                                    Nandle &MechVentOAMassFlow // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
         );
     };
 
@@ -379,26 +379,26 @@ namespace MixedAir {
         int InletNode;  // Inlet node for outside air stream (Nov. 2004 BTG was OANode )
         int RelNode;    // Outlet node - relief air
         int RetNode;    // Inlet node - return air
-        Real64 MixTemp;
-        Real64 MixHumRat;
-        Real64 MixEnthalpy;
-        Real64 MixPressure;
-        Real64 MixMassFlowRate;
-        Real64 OATemp;
-        Real64 OAHumRat;
-        Real64 OAEnthalpy;
-        Real64 OAPressure;
-        Real64 OAMassFlowRate;
-        Real64 RelTemp;
-        Real64 RelHumRat;
-        Real64 RelEnthalpy;
-        Real64 RelPressure;
-        Real64 RelMassFlowRate;
-        Real64 RetTemp;
-        Real64 RetHumRat;
-        Real64 RetEnthalpy;
-        Real64 RetPressure;
-        Real64 RetMassFlowRate;
+        Nandle MixTemp;
+        Nandle MixHumRat;
+        Nandle MixEnthalpy;
+        Nandle MixPressure;
+        Nandle MixMassFlowRate;
+        Nandle OATemp;
+        Nandle OAHumRat;
+        Nandle OAEnthalpy;
+        Nandle OAPressure;
+        Nandle OAMassFlowRate;
+        Nandle RelTemp;
+        Nandle RelHumRat;
+        Nandle RelEnthalpy;
+        Nandle RelPressure;
+        Nandle RelMassFlowRate;
+        Nandle RetTemp;
+        Nandle RetHumRat;
+        Nandle RetEnthalpy;
+        Nandle RetPressure;
+        Nandle RetMassFlowRate;
 
         // Default Constructor
         OAMixerProps()
@@ -418,13 +418,13 @@ namespace MixedAir {
 
     // Functions
 
-    Real64 OAGetFlowRate(int OAPtr);
+    Nandle OAGetFlowRate(int OAPtr);
 
-    Real64 OAGetMinFlowRate(int OAPtr);
+    Nandle OAGetMinFlowRate(int OAPtr);
 
     void OASetDemandManagerVentilationState(int OAPtr, bool aState);
 
-    void OASetDemandManagerVentilationFlow(int OAPtr, Real64 aFlow);
+    void OASetDemandManagerVentilationFlow(int OAPtr, Nandle aFlow);
 
     int GetOAController(std::string const &OAName);
 
@@ -470,7 +470,7 @@ namespace MixedAir {
                                    int const OutAirNum,
                                    Array1D_string const &AlphArray,
                                    int &NumAlphas,
-                                   Array1D<Real64> const &NumArray,
+                                   Array1D<Nandle> const &NumArray,
                                    int &NumNums,
                                    Array1D_bool const &lNumericBlanks, // Unused
                                    Array1D_bool const &lAlphaBlanks,
@@ -521,12 +521,12 @@ namespace MixedAir {
     // Beginning Utility Section of the Module
     //******************************************************************************
 
-    Real64 MixedAirControlTempResidual(Real64 const OASignal,     // Relative outside air flow rate (0 to 1)
-                                       Array1D<Real64> const &Par // par(1) = mixed node number
+    Nandle MixedAirControlTempResidual(Nandle const OASignal,     // Relative outside air flow rate (0 to 1)
+                                       Array1D<Nandle> const &Par // par(1) = mixed node number
     );
 
-    Real64 MultiCompControlTempResidual(Real64 const OASignal,     // Relative outside air flow rate (0 to 1)
-                                        Array1D<Real64> const &Par // par(1) = mixed node number
+    Nandle MultiCompControlTempResidual(Nandle const OASignal,     // Relative outside air flow rate (0 to 1)
+                                        Array1D<Nandle> const &Par // par(1) = mixed node number
     );
 
     Array1D_int GetOAMixerNodeNumbers(std::string const &OAMixerName, // must match OA mixer names for the OA mixer type

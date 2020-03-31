@@ -61,8 +61,8 @@ namespace EnergyPlus {
 
 namespace PondGroundHeatExchanger {
 
-    extern Real64 const SmallNum;      // Very small number to avoid div0 errors
-    extern Real64 const StefBoltzmann; // Stefan-Boltzmann constant
+    extern Nandle const SmallNum;      // Very small number to avoid div0 errors
+    extern Nandle const StefBoltzmann; // Stefan-Boltzmann constant
 
     extern int NumOfPondGHEs; // Number of pond ground heat exchangers
 
@@ -72,17 +72,17 @@ namespace PondGroundHeatExchanger {
         std::string Name;           // name of pond GHE
         std::string InletNode;      // pond inlet fluid node
         std::string OutletNode;     // pond outlet fluid node
-        Real64 DesignMassFlowRate;  // design flow rate of circulating fluid
-        Real64 DesignCapacity;      // design cooling capacity of pond at
-        Real64 Depth;               // depth of pond
-        Real64 Area;                // area of pond
-        Real64 TubeInDiameter;      // hydronic tube inside diameter
-        Real64 TubeOutDiameter;     // hydronic tube outside diameter
-        Real64 TubeConductivity;    // hydronic tube thermal conductivity
-        Real64 GrndConductivity;    // ground thermal conductivity
-        Real64 CircuitLength;       // length of each circuit
-        Real64 BulkTemperature;     // current pond bulk temperature
-        Real64 PastBulkTemperature; // past pond bulk temperature
+        Nandle DesignMassFlowRate;  // design flow rate of circulating fluid
+        Nandle DesignCapacity;      // design cooling capacity of pond at
+        Nandle Depth;               // depth of pond
+        Nandle Area;                // area of pond
+        Nandle TubeInDiameter;      // hydronic tube inside diameter
+        Nandle TubeOutDiameter;     // hydronic tube outside diameter
+        Nandle TubeConductivity;    // hydronic tube thermal conductivity
+        Nandle GrndConductivity;    // ground thermal conductivity
+        Nandle CircuitLength;       // length of each circuit
+        Nandle BulkTemperature;     // current pond bulk temperature
+        Nandle PastBulkTemperature; // past pond bulk temperature
         int NumCircuits;            // number of circuits in total
         int InletNodeNum;           // inlet node number
         int OutletNodeNum;          // oulet node number
@@ -95,12 +95,12 @@ namespace PondGroundHeatExchanger {
         int CompNum;
 
         // Report data
-        Real64 InletTemp;        // fluid inlet temperature
-        Real64 OutletTemp;       // fluid outlet temperature
-        Real64 MassFlowRate;     // fluid mass flow rate
-        Real64 PondTemp;         // pond bulk temperature
-        Real64 HeatTransferRate; // total fluid heat transfer rate, Watts
-        Real64 Energy;           // cumulative energy, Joules
+        Nandle InletTemp;        // fluid inlet temperature
+        Nandle OutletTemp;       // fluid outlet temperature
+        Nandle MassFlowRate;     // fluid mass flow rate
+        Nandle PondTemp;         // pond bulk temperature
+        Nandle HeatTransferRate; // total fluid heat transfer rate, Watts
+        Nandle Energy;           // cumulative energy, Joules
 
         bool OneTimeFlag;
         bool MyFlag;
@@ -118,11 +118,11 @@ namespace PondGroundHeatExchanger {
         {
         }
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
         void InitPondGroundHeatExchanger(bool FirstHVACIteration);
 
@@ -130,15 +130,15 @@ namespace PondGroundHeatExchanger {
 
         void CalcPondGroundHeatExchanger();
 
-        Real64 CalcTotalFLux(Real64 PondBulkTemp // pond temp for this flux calculation
+        Nandle CalcTotalFLux(Nandle PondBulkTemp // pond temp for this flux calculation
         );
 
-        Real64 CalcEffectiveness(Real64 InsideTemperature, // Temperature of fluid in pipe circuit, in C
-                                 Real64 PondTemperature,   // Temperature of pond water (i.e. outside the pipe), in C
-                                 Real64 massFlowRate       // Mass flow rate, in kg/s
+        Nandle CalcEffectiveness(Nandle InsideTemperature, // Temperature of fluid in pipe circuit, in C
+                                 Nandle PondTemperature,   // Temperature of pond water (i.e. outside the pipe), in C
+                                 Nandle massFlowRate       // Mass flow rate, in kg/s
         );
 
-        Real64 CalcSolarFlux();
+        Nandle CalcSolarFlux();
 
         void UpdatePondGroundHeatExchanger();
 

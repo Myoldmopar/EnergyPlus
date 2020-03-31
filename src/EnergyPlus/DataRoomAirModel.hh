@@ -154,100 +154,100 @@ namespace DataRoomAirModel {
     extern int TotNumOfAirNodes;
     extern int TotNumOfRoomAFNNodes;
     extern Array1D_int TotNumOfZoneAirNodes;
-    extern Array1D<Real64> ConvectiveFloorSplit;
-    extern Array1D<Real64> InfiltratFloorSplit;
+    extern Array1D<Nandle> ConvectiveFloorSplit;
+    extern Array1D<Nandle> InfiltratFloorSplit;
     // UCSD
-    extern Array1D<Real64> DVHcIn;
+    extern Array1D<Nandle> DVHcIn;
     extern int TotUCSDDV;                // Total number of UCSDDV zones
     extern Array1D_bool IsZoneDV;        // Is the air model for the zone UCSDDV?
-    extern Array1D<Real64> ZTOC;         // Temperature of occupied (lower) zone
-    extern Array1D<Real64> AvgTempGrad;  // vertical Average Temperature Gradient in the room
-    extern Array1D<Real64> ZTMX;         // Temperature of the mixing(upper) layer
-    extern Array1D<Real64> MaxTempGrad;  // maximum Average Temperature Gradient in the room
-    extern Array1D<Real64> HVACAirTemp;  // HVAC system temperature (DEG C)
-    extern Array1D<Real64> HVACMassFlow; // HVAC system mass flow rate (KG/S)
-    extern Array1D<Real64> ZTFloor;
-    extern Array1D<Real64> HeightTransition;
-    extern Array1D<Real64> FracMinFlow;
+    extern Array1D<Nandle> ZTOC;         // Temperature of occupied (lower) zone
+    extern Array1D<Nandle> AvgTempGrad;  // vertical Average Temperature Gradient in the room
+    extern Array1D<Nandle> ZTMX;         // Temperature of the mixing(upper) layer
+    extern Array1D<Nandle> MaxTempGrad;  // maximum Average Temperature Gradient in the room
+    extern Array1D<Nandle> HVACAirTemp;  // HVAC system temperature (DEG C)
+    extern Array1D<Nandle> HVACMassFlow; // HVAC system mass flow rate (KG/S)
+    extern Array1D<Nandle> ZTFloor;
+    extern Array1D<Nandle> HeightTransition;
+    extern Array1D<Nandle> FracMinFlow;
     extern Array1D_int ZoneDVMixedFlag;
-    extern Array1D<Real64> ZoneDVMixedFlagRep;
+    extern Array1D<Nandle> ZoneDVMixedFlagRep;
     extern Array1D_bool ZoneAirSystemON;
-    extern Array1D<Real64> TCMF; // comfort temperature
-    extern Array1D<Real64> ZoneCeilingHeight;
-    extern Array1D<Real64> MATFloor;    // [C] floor level mean air temp
-    extern Array1D<Real64> XMATFloor;   // [C] floor level mean air temp at t minus 1 zone time step
-    extern Array1D<Real64> XM2TFloor;   // [C] floor level mean air temp at t minus 2 zone time step
-    extern Array1D<Real64> XM3TFloor;   // [C] floor level mean air temp at t minus 3 zone time step
-    extern Array1D<Real64> XM4TFloor;   // [C] floor level mean air temp at t minus 4 zone time step
-    extern Array1D<Real64> DSXMATFloor; // [C] floor level mean air temp at t minus 1 system time step
-    extern Array1D<Real64> DSXM2TFloor; // [C] floor level mean air temp at t minus 2 system time step
-    extern Array1D<Real64> DSXM3TFloor; // [C] floor level mean air temp at t minus 3 system time step
-    extern Array1D<Real64> DSXM4TFloor; // [C] floor level mean air temp at t minus 4 system time step
-    extern Array1D<Real64> MATOC;       // [C] occupied mean air temp
-    extern Array1D<Real64> XMATOC;      // [C] occupied mean air temp at t minus 1 zone time step
-    extern Array1D<Real64> XM2TOC;      // [C] occupied mean air temp at t minus 2 zone time step
-    extern Array1D<Real64> XM3TOC;      // [C] occupied mean air temp at t minus 3 zone time step
-    extern Array1D<Real64> XM4TOC;      // [C] occupied mean air temp at t minus 4 zone time step
-    extern Array1D<Real64> DSXMATOC;    // [C] occupied mean air temp at t minus 1 system time step
-    extern Array1D<Real64> DSXM2TOC;    // [C] occupied mean air temp at t minus 2 system time step
-    extern Array1D<Real64> DSXM3TOC;    // [C] occupied mean air temp at t minus 3 system time step
-    extern Array1D<Real64> DSXM4TOC;    // [C] occupied mean air temp at t minus 4 system time step
-    extern Array1D<Real64> MATMX;       // [C] mixed (upper) mean air temp
-    extern Array1D<Real64> XMATMX;      // [C] mixed (upper) mean air temp at t minus 1 zone time step
-    extern Array1D<Real64> XM2TMX;      // [C] mixed (upper) mean air temp at t minus 2 zone time step
-    extern Array1D<Real64> XM3TMX;      // [C] mixed (upper) mean air temp at t minus 3 zone time step
-    extern Array1D<Real64> XM4TMX;      // [C] mixed (upper) mean air temp at t minus 4 zone time step
-    extern Array1D<Real64> DSXMATMX;    // [C] mixed  mean air temp at t minus 1 system time step
-    extern Array1D<Real64> DSXM2TMX;    // [C] mixed  mean air temp at t minus 2 system time step
-    extern Array1D<Real64> DSXM3TMX;    // [C] mixed  mean air temp at t minus 3 system time step
-    extern Array1D<Real64> DSXM4TMX;    // [C] mixed  mean air temp at t minus 4 system time step
-    extern Array1D<Real64> ZTM1Floor;   // [C] difference equation's Floor air temp at t minus 1
-    extern Array1D<Real64> ZTM2Floor;   // [C] difference equation's Floor air temp at t minus 2
-    extern Array1D<Real64> ZTM3Floor;   // [C] difference equation's Floor air temp at t minus 3
-    extern Array1D<Real64> ZTM1OC;      // [C] difference equation's Occupied air temp at t minus 1
-    extern Array1D<Real64> ZTM2OC;      // [C] difference equation's Occupied air temp at t minus 2
-    extern Array1D<Real64> ZTM3OC;      // [C] difference equation's Occupied air temp at t minus 3
-    extern Array1D<Real64> ZTM1MX;      // [C] difference equation's Mixed  air temp at t minus 1
-    extern Array1D<Real64> ZTM2MX;      // [C] difference equation's Mixed  air temp at t minus 1
-    extern Array1D<Real64> ZTM3MX;      // [C] difference equation's Mixed  air temp at t minus 1
-    extern Array1D<Real64> AIRRATFloor;
-    extern Array1D<Real64> AIRRATOC;
-    extern Array1D<Real64> AIRRATMX;
+    extern Array1D<Nandle> TCMF; // comfort temperature
+    extern Array1D<Nandle> ZoneCeilingHeight;
+    extern Array1D<Nandle> MATFloor;    // [C] floor level mean air temp
+    extern Array1D<Nandle> XMATFloor;   // [C] floor level mean air temp at t minus 1 zone time step
+    extern Array1D<Nandle> XM2TFloor;   // [C] floor level mean air temp at t minus 2 zone time step
+    extern Array1D<Nandle> XM3TFloor;   // [C] floor level mean air temp at t minus 3 zone time step
+    extern Array1D<Nandle> XM4TFloor;   // [C] floor level mean air temp at t minus 4 zone time step
+    extern Array1D<Nandle> DSXMATFloor; // [C] floor level mean air temp at t minus 1 system time step
+    extern Array1D<Nandle> DSXM2TFloor; // [C] floor level mean air temp at t minus 2 system time step
+    extern Array1D<Nandle> DSXM3TFloor; // [C] floor level mean air temp at t minus 3 system time step
+    extern Array1D<Nandle> DSXM4TFloor; // [C] floor level mean air temp at t minus 4 system time step
+    extern Array1D<Nandle> MATOC;       // [C] occupied mean air temp
+    extern Array1D<Nandle> XMATOC;      // [C] occupied mean air temp at t minus 1 zone time step
+    extern Array1D<Nandle> XM2TOC;      // [C] occupied mean air temp at t minus 2 zone time step
+    extern Array1D<Nandle> XM3TOC;      // [C] occupied mean air temp at t minus 3 zone time step
+    extern Array1D<Nandle> XM4TOC;      // [C] occupied mean air temp at t minus 4 zone time step
+    extern Array1D<Nandle> DSXMATOC;    // [C] occupied mean air temp at t minus 1 system time step
+    extern Array1D<Nandle> DSXM2TOC;    // [C] occupied mean air temp at t minus 2 system time step
+    extern Array1D<Nandle> DSXM3TOC;    // [C] occupied mean air temp at t minus 3 system time step
+    extern Array1D<Nandle> DSXM4TOC;    // [C] occupied mean air temp at t minus 4 system time step
+    extern Array1D<Nandle> MATMX;       // [C] mixed (upper) mean air temp
+    extern Array1D<Nandle> XMATMX;      // [C] mixed (upper) mean air temp at t minus 1 zone time step
+    extern Array1D<Nandle> XM2TMX;      // [C] mixed (upper) mean air temp at t minus 2 zone time step
+    extern Array1D<Nandle> XM3TMX;      // [C] mixed (upper) mean air temp at t minus 3 zone time step
+    extern Array1D<Nandle> XM4TMX;      // [C] mixed (upper) mean air temp at t minus 4 zone time step
+    extern Array1D<Nandle> DSXMATMX;    // [C] mixed  mean air temp at t minus 1 system time step
+    extern Array1D<Nandle> DSXM2TMX;    // [C] mixed  mean air temp at t minus 2 system time step
+    extern Array1D<Nandle> DSXM3TMX;    // [C] mixed  mean air temp at t minus 3 system time step
+    extern Array1D<Nandle> DSXM4TMX;    // [C] mixed  mean air temp at t minus 4 system time step
+    extern Array1D<Nandle> ZTM1Floor;   // [C] difference equation's Floor air temp at t minus 1
+    extern Array1D<Nandle> ZTM2Floor;   // [C] difference equation's Floor air temp at t minus 2
+    extern Array1D<Nandle> ZTM3Floor;   // [C] difference equation's Floor air temp at t minus 3
+    extern Array1D<Nandle> ZTM1OC;      // [C] difference equation's Occupied air temp at t minus 1
+    extern Array1D<Nandle> ZTM2OC;      // [C] difference equation's Occupied air temp at t minus 2
+    extern Array1D<Nandle> ZTM3OC;      // [C] difference equation's Occupied air temp at t minus 3
+    extern Array1D<Nandle> ZTM1MX;      // [C] difference equation's Mixed  air temp at t minus 1
+    extern Array1D<Nandle> ZTM2MX;      // [C] difference equation's Mixed  air temp at t minus 1
+    extern Array1D<Nandle> ZTM3MX;      // [C] difference equation's Mixed  air temp at t minus 1
+    extern Array1D<Nandle> AIRRATFloor;
+    extern Array1D<Nandle> AIRRATOC;
+    extern Array1D<Nandle> AIRRATMX;
     // Euler and Exact solution algorithms
-    extern Array1D<Real64> Zone1Floor;  // [C] difference equation's Floor air temp at previous dt
-    extern Array1D<Real64> ZoneMXFloor; // [C] difference equation's Floor air temp at t minus 1
-    extern Array1D<Real64> ZoneM2Floor; // [C] difference equation's Floor air temp at t minus 2
-    extern Array1D<Real64> Zone1OC;     // [C] difference equation's Occupied air temp at previous dt
-    extern Array1D<Real64> ZoneMXOC;    // [C] difference equation's Occupied air temp at t minus 1
-    extern Array1D<Real64> ZoneM2OC;    // [C] difference equation's Occupied air temp at t minus 2
-    extern Array1D<Real64> Zone1MX;     // [C] difference equation's Mixed  air temp at previous dt
-    extern Array1D<Real64> ZoneMXMX;    // [C] difference equation's Mixed  air temp at t minus 1
-    extern Array1D<Real64> ZoneM2MX;    // [C] difference equation's Mixed  air temp at t minus 2
+    extern Array1D<Nandle> Zone1Floor;  // [C] difference equation's Floor air temp at previous dt
+    extern Array1D<Nandle> ZoneMXFloor; // [C] difference equation's Floor air temp at t minus 1
+    extern Array1D<Nandle> ZoneM2Floor; // [C] difference equation's Floor air temp at t minus 2
+    extern Array1D<Nandle> Zone1OC;     // [C] difference equation's Occupied air temp at previous dt
+    extern Array1D<Nandle> ZoneMXOC;    // [C] difference equation's Occupied air temp at t minus 1
+    extern Array1D<Nandle> ZoneM2OC;    // [C] difference equation's Occupied air temp at t minus 2
+    extern Array1D<Nandle> Zone1MX;     // [C] difference equation's Mixed  air temp at previous dt
+    extern Array1D<Nandle> ZoneMXMX;    // [C] difference equation's Mixed  air temp at t minus 1
+    extern Array1D<Nandle> ZoneM2MX;    // [C] difference equation's Mixed  air temp at t minus 2
     // UCSD-CV
-    extern Array1D<Real64> CVHcIn;
+    extern Array1D<Nandle> CVHcIn;
     extern int TotUCSDCV;                   // Total number of UCSDDV zones
     extern Array1D_bool IsZoneCV;           // Is the air model for the zone UCSDDV?
-    extern Array1D<Real64> ZoneCVisMixing;  // Zone set to CV is actually using a mixing model
-    extern Array1D<Real64> ZTJET;           // Jet Temperatures
-    extern Array1D<Real64> ZTREC;           // Recirculation Temperatures
-    extern Array1D<Real64> RoomOutflowTemp; // Temperature of air flowing out of the room
-    extern Array1D<Real64> JetRecAreaRatio;
-    extern Array1D<Real64> Urec;           // Recirculation region average velocity
-    extern Array1D<Real64> Ujet;           // Jet region average velocity
-    extern Array1D<Real64> Qrec;           // Recirculation zone total flow rate
-    extern Array1D<Real64> Qtot;           // Total volumetric inflow rate through all active aperatures [m3/s]
-    extern Array1D<Real64> RecInflowRatio; // Ratio of the recirculation volumetric flow rate to the total inflow flow rate []
-    extern Array1D<Real64> Uhc;
-    extern Array1D<Real64> Ain;                     // Inflow aperture area
-    extern Array1D<Real64> Droom;                   // CV Zone average length
-    extern Array1D<Real64> Dstar;                   // CV Zone average length, wind direction corrected
-    extern Array1D<Real64> Tin;                     // Inflow air temperature
-    extern Array1D<Real64> TotArea;                 // Sum of the areas of all apertures in the zone
+    extern Array1D<Nandle> ZoneCVisMixing;  // Zone set to CV is actually using a mixing model
+    extern Array1D<Nandle> ZTJET;           // Jet Temperatures
+    extern Array1D<Nandle> ZTREC;           // Recirculation Temperatures
+    extern Array1D<Nandle> RoomOutflowTemp; // Temperature of air flowing out of the room
+    extern Array1D<Nandle> JetRecAreaRatio;
+    extern Array1D<Nandle> Urec;           // Recirculation region average velocity
+    extern Array1D<Nandle> Ujet;           // Jet region average velocity
+    extern Array1D<Nandle> Qrec;           // Recirculation zone total flow rate
+    extern Array1D<Nandle> Qtot;           // Total volumetric inflow rate through all active aperatures [m3/s]
+    extern Array1D<Nandle> RecInflowRatio; // Ratio of the recirculation volumetric flow rate to the total inflow flow rate []
+    extern Array1D<Nandle> Uhc;
+    extern Array1D<Nandle> Ain;                     // Inflow aperture area
+    extern Array1D<Nandle> Droom;                   // CV Zone average length
+    extern Array1D<Nandle> Dstar;                   // CV Zone average length, wind direction corrected
+    extern Array1D<Nandle> Tin;                     // Inflow air temperature
+    extern Array1D<Nandle> TotArea;                 // Sum of the areas of all apertures in the zone
     extern Array2D_int AirflowNetworkSurfaceUCSDCV; // table for AirflowNetwork surfaces organization
     extern int CVNumAirflowNetworkSurfaces;         // total number of AirFlowNetwork surfaces.
     // Interzone surfaces counts twice.
-    extern Array1D<Real64> Rfr;          // Ration between inflow and recirculation air flows
-    extern Array1D<Real64> ZoneCVhasREC; // Airflow pattern is C(0), CR(1)
+    extern Array1D<Nandle> Rfr;          // Ration between inflow and recirculation air flows
+    extern Array1D<Nandle> ZoneCVhasREC; // Airflow pattern is C(0), CR(1)
     extern bool UCSDModelUsed;
     extern bool MundtModelUsed;
     // UCSD-UF
@@ -255,13 +255,13 @@ namespace DataRoomAirModel {
     extern int TotUCSDUE;         // total number of UCSDUE zones
     extern Array1D_bool IsZoneUI; // controls program flow, for interior or exterior UFAD model
     extern Array1D_int ZoneUFPtr;
-    extern Array1D<Real64> UFHcIn;
+    extern Array1D<Nandle> UFHcIn;
     extern Array1D_int ZoneUFMixedFlag;
-    extern Array1D<Real64> ZoneUFMixedFlagRep;
-    extern Array1D<Real64> ZoneUFGamma;
-    extern Array1D<Real64> ZoneUFPowInPlumes;            // [W]
-    extern Array1D<Real64> ZoneUFPowInPlumesfromWindows; // [W]
-    extern Array1D<Real64> Phi;                          // dimensionless measure of occupied subzone temperature
+    extern Array1D<Nandle> ZoneUFMixedFlagRep;
+    extern Array1D<Nandle> ZoneUFGamma;
+    extern Array1D<Nandle> ZoneUFPowInPlumes;            // [W]
+    extern Array1D<Nandle> ZoneUFPowInPlumesfromWindows; // [W]
+    extern Array1D<Nandle> Phi;                          // dimensionless measure of occupied subzone temperature
 
     // END UCSD
 
@@ -310,8 +310,8 @@ namespace DataRoomAirModel {
         std::string ZoneName;
         int ZonePtr;               // Pointer to the zone number for this statement
         int ClassType;             // depending on type of model
-        Real64 Height;             // height
-        Real64 ZoneVolumeFraction; // portion of zone air volume associated with this node
+        Nandle Height;             // height
+        Nandle ZoneVolumeFraction; // portion of zone air volume associated with this node
         Array1D_bool SurfMask;     // limit of 60 surfaces at current sizing
         bool IsZone;               // TRUE if this node is zone node
 
@@ -328,10 +328,10 @@ namespace DataRoomAirModel {
         int ZonePtr;                // Pointer to the zone number for this statement
         int SchedGainsPtr;          // Schedule for internal gain fraction to occupied zone
         std::string SchedGainsName; // Gains Schedule name
-        Real64 NumPlumesPerOcc;     // Effective number of plumes per occupant
-        Real64 ThermostatHeight;    // Height of thermostat/ temperature control sensor
-        Real64 ComfortHeight;       // Height at which air temperature is measured for comfort purposes
-        Real64 TempTrigger;         // Minimum temperature difference between TOC TMX for stratification
+        Nandle NumPlumesPerOcc;     // Effective number of plumes per occupant
+        Nandle ThermostatHeight;    // Height of thermostat/ temperature control sensor
+        Nandle ComfortHeight;       // Height at which air temperature is measured for comfort purposes
+        Nandle TempTrigger;         // Minimum temperature difference between TOC TMX for stratification
 
         // Default Constructor
         DVData() : ZonePtr(0), SchedGainsPtr(-1), NumPlumesPerOcc(1.0), ThermostatHeight(0.0), ComfortHeight(0.0), TempTrigger(0.0)
@@ -359,17 +359,17 @@ namespace DataRoomAirModel {
     {
         // Members
         int FlowFlag; // Equal to 1 if the opening has inflow, else equal to 0.
-        Real64 Width; // Width of the opening [m]
-        Real64 Area;  // Area of the opening [m2]
-        Real64 Fin;   // Inflow volume flux through the opening [m3/s]
-        Real64 Uin;   // Inflow air velocity through the opening [m/s]
-        Real64 Vjet;  // Average maximum jet velocity for the opening [m/s]
-        Real64 Yjet;  // Y in "Y = aX + b" formula
-        Real64 Ujet;  // Volume average jet region velocity [m/s]
-        Real64 Yrec;  // Y in "Y = aX + b" formula
-        Real64 Urec;  // Area-averaged velocity in the y-z plane with maximum flow [m/s]
-        Real64 YQrec; // Y in "Y = aX + b" formula
-        Real64 Qrec;  // Total flow rate for the recirculation regions in the plane of maximum flow [m3/s]
+        Nandle Width; // Width of the opening [m]
+        Nandle Area;  // Area of the opening [m2]
+        Nandle Fin;   // Inflow volume flux through the opening [m3/s]
+        Nandle Uin;   // Inflow air velocity through the opening [m/s]
+        Nandle Vjet;  // Average maximum jet velocity for the opening [m/s]
+        Nandle Yjet;  // Y in "Y = aX + b" formula
+        Nandle Ujet;  // Volume average jet region velocity [m/s]
+        Nandle Yrec;  // Y in "Y = aX + b" formula
+        Nandle Urec;  // Area-averaged velocity in the y-z plane with maximum flow [m/s]
+        Nandle YQrec; // Y in "Y = aX + b" formula
+        Nandle Qrec;  // Total flow rate for the recirculation regions in the plane of maximum flow [m3/s]
 
         // Default Constructor
         CVFlow()
@@ -381,11 +381,11 @@ namespace DataRoomAirModel {
     struct CVDVParameters
     {
         // Members
-        Real64 Width;
-        Real64 Height;
+        Nandle Width;
+        Nandle Height;
         int Shadow;
-        Real64 Zmin;
-        Real64 Zmax;
+        Nandle Zmin;
+        Nandle Zmax;
 
         // Default Constructor
         CVDVParameters() : Width(0.0), Height(0.0), Shadow(0), Zmin(0.0), Zmax(0.0)
@@ -399,24 +399,24 @@ namespace DataRoomAirModel {
         std::string ZoneName;    // Name of zone
         int ZonePtr;             // Pointer to the zone number for this statement
         int ZoneEquipPtr;        // Pointer to zone equip for this UFAD zone
-        Real64 DiffusersPerZone; // Number of diffusers in this zone
-        Real64 PowerPerPlume;    // Power in each plume [W]
-        Real64 DiffArea;         // Effective area of a diffuser [m2]
-        Real64 DiffAngle;        // angle between diffuser slots and vertical (degrees)
-        Real64 HeatSrcHeight;    // height of heat source above floor [m]
-        Real64 ThermostatHeight; // Height of thermostat/ temperature control sensor [m]
-        Real64 ComfortHeight;    // Height at which air temperature is measured for
+        Nandle DiffusersPerZone; // Number of diffusers in this zone
+        Nandle PowerPerPlume;    // Power in each plume [W]
+        Nandle DiffArea;         // Effective area of a diffuser [m2]
+        Nandle DiffAngle;        // angle between diffuser slots and vertical (degrees)
+        Nandle HeatSrcHeight;    // height of heat source above floor [m]
+        Nandle ThermostatHeight; // Height of thermostat/ temperature control sensor [m]
+        Nandle ComfortHeight;    // Height at which air temperature is measured for
         // comfort purposes [m]
-        Real64 TempTrigger; // Minimum temperature difference between TOC TMX
+        Nandle TempTrigger; // Minimum temperature difference between TOC TMX
         // for stratification [deltaC]
         int DiffuserType;     // 1=Swirl, 2=variable area, 3=displacement, 4=linear bar grille, 5=custom
-        Real64 TransHeight;   // user specified transition height [m]
+        Nandle TransHeight;   // user specified transition height [m]
         bool CalcTransHeight; // flag to calc trans height or use user specified input
-        Real64 A_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 B_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 C_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 D_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 E_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle A_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle B_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle C_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle D_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle E_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
 
         // Default Constructor
         UFIData()
@@ -433,26 +433,26 @@ namespace DataRoomAirModel {
         std::string ZoneName;    // Name of zone
         int ZonePtr;             // Pointer to the zone number for this statement
         int ZoneEquipPtr;        // Pointer to zone equip for this UFAD zone
-        Real64 DiffusersPerZone; // Number of diffusers in this zone
-        Real64 PowerPerPlume;    // Power in each plume [W]
-        Real64 DiffArea;         // Effective area of a diffuser [m2]
-        Real64 DiffAngle;        // angle between diffuser slots and vertical (degrees)
-        Real64 HeatSrcHeight;    // height of heat source above floor [m]
-        Real64 ThermostatHeight; // Height of thermostat/ temperature control sensor [m]
-        Real64 ComfortHeight;    // Height at which air temperature is measured for
+        Nandle DiffusersPerZone; // Number of diffusers in this zone
+        Nandle PowerPerPlume;    // Power in each plume [W]
+        Nandle DiffArea;         // Effective area of a diffuser [m2]
+        Nandle DiffAngle;        // angle between diffuser slots and vertical (degrees)
+        Nandle HeatSrcHeight;    // height of heat source above floor [m]
+        Nandle ThermostatHeight; // Height of thermostat/ temperature control sensor [m]
+        Nandle ComfortHeight;    // Height at which air temperature is measured for
         // comfort purposes [m]
-        Real64 TempTrigger; // Minimum temperature difference between TOC TMX
+        Nandle TempTrigger; // Minimum temperature difference between TOC TMX
         // for stratification [deltaC]
         int DiffuserType;     // 1=Swirl, 2=variable area, 3=displacement, 4=linear bar grille, 5=custom
-        Real64 TransHeight;   // user specified transition height [m]
+        Nandle TransHeight;   // user specified transition height [m]
         bool CalcTransHeight; // flag to calc trans height or use user specified input
-        Real64 A_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 B_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 C_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 D_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 E_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
-        Real64 WinWidth;      // sum of widths of exterior windows in zone
-        Real64 NumExtWin;     // number of exterior windows in the zone
+        Nandle A_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle B_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle C_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle D_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle E_Kc;          // Coefficient A in Formula Kc = A*Gamma**B + C + D*Gamma + E*Gamma**2
+        Nandle WinWidth;      // sum of widths of exterior windows in zone
+        Nandle NumExtWin;     // number of exterior windows in the zone
         bool ShadeDown;       // signals shade up or down
 
         // Default Constructor
@@ -469,7 +469,7 @@ namespace DataRoomAirModel {
         // Members
         // user variables
         Array1D_string SurfName;  // user defined name
-        Array1D<Real64> DeltaTai; // (Tai - MAT ) offset from mean air temp
+        Array1D<Nandle> DeltaTai; // (Tai - MAT ) offset from mean air temp
         int NumSurfs;             // number of surfaces in this pattern
         // calculated and from elsewhere
         Array1D_int SurfID; // index in HB surface structure array
@@ -485,7 +485,7 @@ namespace DataRoomAirModel {
         // Members
         // user variables
         std::string Name; // name
-        Real64 Gradient;  // value of vertical gradient [C/m]
+        Nandle Gradient;  // value of vertical gradient [C/m]
 
         // Default Constructor
         ConstGradPattern() : Gradient(0.0)
@@ -498,16 +498,16 @@ namespace DataRoomAirModel {
         // Members
         // user variables
         std::string Name;               // name
-        Real64 TstatHeight;             // Height of thermostat/ temperature control sensor
-        Real64 TleavingHeight;          // height of return air node where leaving zone
-        Real64 TexhaustHeight;          // height of exhaust air node where leaving zone
-        Real64 LowGradient;             // lower value of vertical gradient [C/m]
-        Real64 HiGradient;              // upper value of vertical gradient [C/m]
+        Nandle TstatHeight;             // Height of thermostat/ temperature control sensor
+        Nandle TleavingHeight;          // height of return air node where leaving zone
+        Nandle TexhaustHeight;          // height of exhaust air node where leaving zone
+        Nandle LowGradient;             // lower value of vertical gradient [C/m]
+        Nandle HiGradient;              // upper value of vertical gradient [C/m]
         int InterpolationMode;          // control for interpolation mode
-        Real64 UpperBoundTempScale;     // temperature value for HiGradient
-        Real64 LowerBoundTempScale;     // temperature value for LowGradient
-        Real64 UpperBoundHeatRateScale; // load value for HiGradient
-        Real64 LowerBoundHeatRateScale; // load value for lowGradient
+        Nandle UpperBoundTempScale;     // temperature value for HiGradient
+        Nandle LowerBoundTempScale;     // temperature value for LowGradient
+        Nandle UpperBoundHeatRateScale; // load value for HiGradient
+        Nandle LowerBoundHeatRateScale; // load value for lowGradient
 
         // Default Constructor
         TwoVertGradInterpolPattern()
@@ -520,8 +520,8 @@ namespace DataRoomAirModel {
     struct TempVsHeightPattern // to be used as nested structure in RoomAirPattern
     {
         // Members
-        Array1D<Real64> ZetaPatrn;     // non dimensional height from floor,
-        Array1D<Real64> DeltaTaiPatrn; // Tai- MAT (TODO, check sign)
+        Array1D<Nandle> ZetaPatrn;     // non dimensional height from floor,
+        Array1D<Nandle> DeltaTaiPatrn; // Tai- MAT (TODO, check sign)
 
         // Default Constructor
         TempVsHeightPattern()
@@ -539,9 +539,9 @@ namespace DataRoomAirModel {
         TwoVertGradInterpolPattern TwoGradPatrn; // Two gradient interpolation pattern
         TempVsHeightPattern VertPatrn;           // Vertical gradient profile pattern
         SurfMapPattern MapPatrn;                 // Generic Surface map pattern
-        Real64 DeltaTstat;                       // (Tstat - MAT) offset   deg C
-        Real64 DeltaTleaving;                    // (Tleaving - MAT) deg C
-        Real64 DeltaTexhaust;                    // (Texhaust - MAT) deg C
+        Nandle DeltaTstat;                       // (Tstat - MAT) offset   deg C
+        Nandle DeltaTleaving;                    // (Tleaving - MAT) deg C
+        Nandle DeltaTexhaust;                    // (Texhaust - MAT) deg C
 
         // Default Constructor
         TemperaturePatternStruct() : PatrnID(0), PatternMode(0), DeltaTstat(0.0), DeltaTleaving(0.0), DeltaTexhaust(0.0)
@@ -554,8 +554,8 @@ namespace DataRoomAirModel {
         // Members
         std::string Name;    // unique identifier
         int SurfID;          // id in HB surface structs
-        Real64 TadjacentAir; // place to put resulting temperature value
-        Real64 Zeta;         // non-dimensional height in zone ot
+        Nandle TadjacentAir; // place to put resulting temperature value
+        Nandle Zeta;         // non-dimensional height in zone ot
 
         // Default Constructor
         SurfaceAssocNestedStruct() : SurfID(0), TadjacentAir(23.0), Zeta(0.0)
@@ -576,18 +576,18 @@ namespace DataRoomAirModel {
         std::string PatternCntrlSched; // name of schedule that selects pattern
         int PatternSchedID;            // index of pattern selecting schedule
         // calculated and from elsewhere
-        Real64 ZoneHeight;                      // in meters, from Zone%CeilingHeight
+        Nandle ZoneHeight;                      // in meters, from Zone%CeilingHeight
         int ZoneNodeID;                         // index in Node array for this zone
         Array1D_int ExhaustAirNodeID;           // indexes in Node array
-        Real64 TairMean;                        // comes from MAT
-        Real64 Tstat;                           // temperature for thermostat
-        Real64 Tleaving;                        // temperature for return air node
-        Real64 Texhaust;                        // temperature for exhaust air node
+        Nandle TairMean;                        // comes from MAT
+        Nandle Tstat;                           // temperature for thermostat
+        Nandle Tleaving;                        // temperature for return air node
+        Nandle Texhaust;                        // temperature for exhaust air node
         Array1D<SurfaceAssocNestedStruct> Surf; // nested struct w/ surface info
         int totNumSurfs;                        // total surfs for this zone
         int firstSurfID;                        // Index of first surface
         // report
-        Real64 Gradient; // result for modeled gradient if using two-gradient interpolation
+        Nandle Gradient; // result for modeled gradient if using two-gradient interpolation
 
         // Default Constructor
         AirPatternInfobyZoneStruct()
@@ -604,9 +604,9 @@ namespace DataRoomAirModel {
         int AirflowNetworkLinkSimuID;    // point to this linkage in AirflowNetworkLinkSimu structure
         int AirflowNetworkLinkageDataID; // point to this linkage in AirflowNetworkLinkageData structure
         int AirflowNetworkLinkReportID;  // point to this linkage in AirflowNetworkLinkReport structure
-        Real64 MdotIn;                   // mass flow rate of air into control volume(neg means leaving control volume) (kg / s)
-        Real64 TempIn;                   // drybulb temperature of air into control volume
-        Real64 HumRatIn;                 // humidity ratio of air into control volume
+        Nandle MdotIn;                   // mass flow rate of air into control volume(neg means leaving control volume) (kg / s)
+        Nandle TempIn;                   // drybulb temperature of air into control volume
+        Nandle HumRatIn;                 // humidity ratio of air into control volume
 
         // Default Constructor
         AirflowLinkagesInfoNestedStruct()
@@ -639,8 +639,8 @@ namespace DataRoomAirModel {
         std::string SupplyNodeName; // HVAC system supply node name
         std::string ReturnNodeName; // HVAC system return node name
         int TypeOfNum;              // HVAC type num
-        Real64 SupplyFraction;      // Supply flow fraction
-        Real64 ReturnFraction;      // Return flow fraction
+        Nandle SupplyFraction;      // Supply flow fraction
+        Nandle ReturnFraction;      // Return flow fraction
         int EquipConfigIndex;       // HVAC equipment configuration index
         int SupNodeNum;             // HVAC supply node number
         int RetNodeNum;             // HVAC return node number
@@ -664,7 +664,7 @@ namespace DataRoomAirModel {
         // Members
         // user variables
         std::string Name;                                           // name of the node itself
-        Real64 ZoneVolumeFraction;                                  // Zone volume fraction applied to this specific node
+        Nandle ZoneVolumeFraction;                                  // Zone volume fraction applied to this specific node
         std::string NodeSurfListName;                               // name of nodes' adjacent surface list
         bool HasSurfacesAssigned;                                   // True if this node has surfaces assigned
         Array1D<bool> SurfMask;                                     // Sized to num of surfs in Zone, true if surface is associated with this node
@@ -672,7 +672,7 @@ namespace DataRoomAirModel {
         bool HasIntGainsAssigned;                                   // True if this node has internal gain assigned
         int NumIntGains;                                            // Number of internal gain objects
         Array1D<int> IntGainsDeviceIndices;                         // sized to NumIntGains, index pointers to internal gains struct
-        Array1D<Real64> IntGainsFractions;                          // sized to NumIntGains, gain fractions to this node
+        Array1D<Nandle> IntGainsFractions;                          // sized to NumIntGains, gain fractions to this node
         Array1D<RoomAirflowNetworkNodeInternalGainsStruct> IntGain; // Internal gain struct
         std::string NodeHVACListName;                               // name of node's HVAC list
         bool HasHVACAssigned;                                       // True if HVAC systems are assigned to this node
@@ -681,61 +681,61 @@ namespace DataRoomAirModel {
         int AirflowNetworkNodeID;                                   // pointer to AirflowNetworkNodeData structure
         int NumOfAirflowLinks;                                      // Number of intra zone links
         Array1D<AirflowLinkagesInfoNestedStruct> Link;              // Linkage struct
-        Real64 AirVolume;                                           // air volume in control volume associated with this node(m3 / s)
-        Real64 RhoAir;                                              // current density of air for nodal control volume
-        Real64 CpAir;                                               // current heat capacity of air for nodal control volume
+        Nandle AirVolume;                                           // air volume in control volume associated with this node(m3 / s)
+        Nandle RhoAir;                                              // current density of air for nodal control volume
+        Nandle CpAir;                                               // current heat capacity of air for nodal control volume
 
-        Real64 AirTemp;     // node air temperature
-        Real64 AirTempX1;   // node air temperature at t minus 1 zone timestep
-        Real64 AirTempX2;   // node air temperature at t minus 2 zone timestep
-        Real64 AirTempX3;   // node air temperature at t minus 3 zone timestep
-        Real64 AirTempX4;   // node air temperature at t minus 4 zone timestep
-        Real64 AirTempDSX1; // node air temperature at t minus 1 system timestep
-        Real64 AirTempDSX2; // node air temperature at t minus 2 system timestep
-        Real64 AirTempDSX3; // node air temperature at t minus 3 system timestep
-        Real64 AirTempDSX4; // node air temperature at t minus 4 system timestep
-        Real64 AirTempT1;   // node air temperature at the previous time step used in Exact and Euler method
-        Real64 AirTempTMX;  // temporary node air temperature to test convergence used in Exact and Euler method
-        Real64 AirTempTM2;  // node air temperature at time step t-2 used in Exact and Euler method
+        Nandle AirTemp;     // node air temperature
+        Nandle AirTempX1;   // node air temperature at t minus 1 zone timestep
+        Nandle AirTempX2;   // node air temperature at t minus 2 zone timestep
+        Nandle AirTempX3;   // node air temperature at t minus 3 zone timestep
+        Nandle AirTempX4;   // node air temperature at t minus 4 zone timestep
+        Nandle AirTempDSX1; // node air temperature at t minus 1 system timestep
+        Nandle AirTempDSX2; // node air temperature at t minus 2 system timestep
+        Nandle AirTempDSX3; // node air temperature at t minus 3 system timestep
+        Nandle AirTempDSX4; // node air temperature at t minus 4 system timestep
+        Nandle AirTempT1;   // node air temperature at the previous time step used in Exact and Euler method
+        Nandle AirTempTMX;  // temporary node air temperature to test convergence used in Exact and Euler method
+        Nandle AirTempTM2;  // node air temperature at time step t-2 used in Exact and Euler method
 
-        Real64 HumRat;     // node air humidity ratio
-        Real64 HumRatX1;   // node air humidity ratio at t minus 1 zone timestep
-        Real64 HumRatX2;   // node air humidity ratio at t minus 2 zone timestep
-        Real64 HumRatX3;   // node air humidity ratio at t minus 3 zone timestep
-        Real64 HumRatX4;   // node air humidity ratio at t minus 4 zone timestep
-        Real64 HumRatDSX1; // node air humidity ratio at t minus 1 system timestep
-        Real64 HumRatDSX2; // node air humidity ratio at t minus 2 system timestep
-        Real64 HumRatDSX3; // node air humidity ratio at t minus 3 system timestep
-        Real64 HumRatDSX4; // node air humidity ratio at t minus 4 system timestep
-        Real64 HumRatW1;   // node air humidity ratio at the previous time step used in Exact and Euler method
-        Real64 HumRatWMX;  // temporary node air humidity ratio to test convergence used in Exact and Euler method
-        Real64 HumRatWM2;  // node air humidity ratio at time step t-2 used in Exact and Euler method
+        Nandle HumRat;     // node air humidity ratio
+        Nandle HumRatX1;   // node air humidity ratio at t minus 1 zone timestep
+        Nandle HumRatX2;   // node air humidity ratio at t minus 2 zone timestep
+        Nandle HumRatX3;   // node air humidity ratio at t minus 3 zone timestep
+        Nandle HumRatX4;   // node air humidity ratio at t minus 4 zone timestep
+        Nandle HumRatDSX1; // node air humidity ratio at t minus 1 system timestep
+        Nandle HumRatDSX2; // node air humidity ratio at t minus 2 system timestep
+        Nandle HumRatDSX3; // node air humidity ratio at t minus 3 system timestep
+        Nandle HumRatDSX4; // node air humidity ratio at t minus 4 system timestep
+        Nandle HumRatW1;   // node air humidity ratio at the previous time step used in Exact and Euler method
+        Nandle HumRatWMX;  // temporary node air humidity ratio to test convergence used in Exact and Euler method
+        Nandle HumRatWM2;  // node air humidity ratio at time step t-2 used in Exact and Euler method
 
-        Real64 RelHumidity; // node air relative humidity
+        Nandle RelHumidity; // node air relative humidity
 
         // sensible heat balance terms for node
-        Real64 SumIntSensibleGain; // rate of heat gain from internal sensible gains(after fraction)
-        Real64 SumHA;              // sum of Hc * Area for surfaces associated with this node(surface convection sensible gain term)
-        Real64 SumHATsurf;         // sum of Hc * Area * Temp for surfaces associated with this node for convective heat transfer
-        Real64 SumHATref;          // sum of Hc * Area * Temp for surfaces associated with this node for radiation exchange
-        Real64 SumLinkMCp;         // sum of mdor*Cp for incoming airflows for this node derived from the AirflowNetwork model
-        Real64 SumLinkMCpT; // sum of mdor*Cp*T for incoming airflows and source temperature for this node derived from the AirflowNetwork model
-        Real64 SumSysMCp;   // sum of mdor*Cp for incoming supply airflows for this node
-        Real64 SumSysMCpT;  // sum of mdor*Cp*T for incoming supply airflows and temperature for this node
-        Real64 SumSysM;     // sum of mdot for incoming supply airflows for this node
-        Real64 SumSysMW;    // sum of mdot*W for incoming supply airflows and temperature for this node
-        Real64 NonAirSystemResponse;     // sum of convective system load
-        Real64 SysDepZoneLoadsLagged;    // sum of system lagged load
-        Real64 SysDepZoneLoadsLaggedOld; // sum of system lagged load
-        Real64 AirCap;                   // Air storage term for energy balalce at each node
-        Real64 AirHumRat;                // Air storage term for moisture balalce at each node
+        Nandle SumIntSensibleGain; // rate of heat gain from internal sensible gains(after fraction)
+        Nandle SumHA;              // sum of Hc * Area for surfaces associated with this node(surface convection sensible gain term)
+        Nandle SumHATsurf;         // sum of Hc * Area * Temp for surfaces associated with this node for convective heat transfer
+        Nandle SumHATref;          // sum of Hc * Area * Temp for surfaces associated with this node for radiation exchange
+        Nandle SumLinkMCp;         // sum of mdor*Cp for incoming airflows for this node derived from the AirflowNetwork model
+        Nandle SumLinkMCpT; // sum of mdor*Cp*T for incoming airflows and source temperature for this node derived from the AirflowNetwork model
+        Nandle SumSysMCp;   // sum of mdor*Cp for incoming supply airflows for this node
+        Nandle SumSysMCpT;  // sum of mdor*Cp*T for incoming supply airflows and temperature for this node
+        Nandle SumSysM;     // sum of mdot for incoming supply airflows for this node
+        Nandle SumSysMW;    // sum of mdot*W for incoming supply airflows and temperature for this node
+        Nandle NonAirSystemResponse;     // sum of convective system load
+        Nandle SysDepZoneLoadsLagged;    // sum of system lagged load
+        Nandle SysDepZoneLoadsLaggedOld; // sum of system lagged load
+        Nandle AirCap;                   // Air storage term for energy balalce at each node
+        Nandle AirHumRat;                // Air storage term for moisture balalce at each node
         // latent moisture balance terms for node
-        Real64 SumIntLatentGain; // rate of heat gain form internal latent gains(after fraction)
-        Real64 SumHmAW;          // sum of AREA*Moist CONVECTION COEFF*INSIDE Humidity Ratio
-        Real64 SumHmARa;         // SUM OF ZONE AREA*Moist CONVECTION COEFF*Rho Air
-        Real64 SumHmARaW;        // SUM OF ZONE AREA*Moist CONVECTION COEFF*Rho Air* Inside Humidity Ratio
-        Real64 SumLinkM;         // sum of mdor for incoming airflows for this node derived from the AirflowNetwork model
-        Real64 SumLinkMW; // sum of mdor*Cp*T for incoming airflows and source humidity ratio for this node derived from the AirflowNetwork model
+        Nandle SumIntLatentGain; // rate of heat gain form internal latent gains(after fraction)
+        Nandle SumHmAW;          // sum of AREA*Moist CONVECTION COEFF*INSIDE Humidity Ratio
+        Nandle SumHmARa;         // SUM OF ZONE AREA*Moist CONVECTION COEFF*Rho Air
+        Nandle SumHmARaW;        // SUM OF ZONE AREA*Moist CONVECTION COEFF*Rho Air* Inside Humidity Ratio
+        Nandle SumLinkM;         // sum of mdor for incoming airflows for this node derived from the AirflowNetwork model
+        Nandle SumLinkMW; // sum of mdor*Cp*T for incoming airflows and source humidity ratio for this node derived from the AirflowNetwork model
 
         // Default Constructor
         RoomAirflowNetworkAirNodeNestedStruct()
@@ -800,10 +800,10 @@ namespace DataRoomAirModel {
         int NumOfAirNodes;                                   // Number of air nodes
         Array1D<RoomAirflowNetworkAirNodeNestedStruct> Node; // Node struct
         int ZoneNodeID;                                      // index in system Node array for this zone
-        Real64 TairMean;                                     // comes from MAT
-        Real64 Tstat;                                        // temperature for thermostat
-        Real64 Tleaving;                                     // temperature for return air node
-        Real64 Texhaust;                                     // temperature for exhaust air node
+        Nandle TairMean;                                     // comes from MAT
+        Nandle Tstat;                                        // temperature for thermostat
+        Nandle Tleaving;                                     // temperature for return air node
+        Nandle Texhaust;                                     // temperature for exhaust air node
         int totNumSurfs;                                     // total surfs for this zone
         int firstSurfID;                                     // Index of first surface
         int RAFNNum;                                         // RAFN number

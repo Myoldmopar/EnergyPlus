@@ -117,17 +117,17 @@ namespace EcoRoofManager {
 
     // MODULE VARIABLE DECLARATIONS:
 
-    Real64 CumRunoff(0.0); // Cumulative runoff, updated each time step (m) mult by roof area to get volume
-    Real64 CumET(0.0);     // Cumulative evapotranspiration from soil and plants (m)
-    Real64 CumPrecip(0.0);
-    Real64 CumIrrigation(0.0); // Cumulative irrigation, updated each time step (m) mult by roof area to get volume
-    Real64 CurrentRunoff;
-    Real64 CurrentET;
-    Real64 CurrentPrecipitation; // units of (m) per timestep
-    Real64 CurrentIrrigation;    // units of (m) per timestep
+    Nandle CumRunoff(0.0); // Cumulative runoff, updated each time step (m) mult by roof area to get volume
+    Nandle CumET(0.0);     // Cumulative evapotranspiration from soil and plants (m)
+    Nandle CumPrecip(0.0);
+    Nandle CumIrrigation(0.0); // Cumulative irrigation, updated each time step (m) mult by roof area to get volume
+    Nandle CurrentRunoff;
+    Nandle CurrentET;
+    Nandle CurrentPrecipitation; // units of (m) per timestep
+    Nandle CurrentIrrigation;    // units of (m) per timestep
 
-    Real64 Tfold; // leaf temperature from the previous time step
-    Real64 Tgold; // ground temperature from the previous time step
+    Nandle Tfold; // leaf temperature from the previous time step
+    Nandle Tgold; // ground temperature from the previous time step
     bool EcoRoofbeginFlag(true);
 
     // MODULE SUBROUTINES:
@@ -139,7 +139,7 @@ namespace EcoRoofManager {
     void CalcEcoRoof(int const SurfNum, // Indicator of Surface Number for the current surface
                      int const ZoneNum, // Indicator for zone number where the current surface
                      int &ConstrNum,    // Indicator for contruction index for the current surface
-                     Real64 &TempExt    // Exterior temperature boundary condidtion
+                     Nandle &TempExt    // Exterior temperature boundary condidtion
     )
     {
         // SUBROUTINE INFORMATION
@@ -178,132 +178,132 @@ namespace EcoRoofManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const Kv(0.4);           // Von Karmen's constant (source FASST)
-        Real64 const rch(0.63);         // Turbulent Schimdt Number
-        Real64 const rche(0.71);        // Turbulent Prandtl Number
-        Real64 const Rair(0.286e3);     // Gas Constant of air J/Kg K
-        Real64 const g1(9.81);          // Gravity. In m/sec^2.
-        Real64 const Sigma(5.6697e-08); // Stefan-Boltzmann constant W/m^2K^4
-        Real64 const Cpa(1005.6);       // Specific heat of Water Vapor. (J/Kg.K)
+        Nandle const Kv(0.4);           // Von Karmen's constant (source FASST)
+        Nandle const rch(0.63);         // Turbulent Schimdt Number
+        Nandle const rche(0.71);        // Turbulent Prandtl Number
+        Nandle const Rair(0.286e3);     // Gas Constant of air J/Kg K
+        Nandle const g1(9.81);          // Gravity. In m/sec^2.
+        Nandle const Sigma(5.6697e-08); // Stefan-Boltzmann constant W/m^2K^4
+        Nandle const Cpa(1005.6);       // Specific heat of Water Vapor. (J/Kg.K)
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static int FirstEcoSurf(0); // Indicates lowest numbered surface that is an ecoroof
         // used to determine WHEN to updatesoilProps...
         int EcoLoop; // an integer loop variable for the simultaneous solution iteration
 
-        Real64 AbsThermSurf; // Thermal absoptance of the exterior surface
+        Nandle AbsThermSurf; // Thermal absoptance of the exterior surface
         int RoughSurf;       // Roughness index of the exterior (ecoroof) surface.
-        Real64 HMovInsul;    // "Convection" coefficient of movable insulation
+        Nandle HMovInsul;    // "Convection" coefficient of movable insulation
         //  REAL(r64)    :: HSky                ! "Convection" coefficient from sky to surface
         //  REAL(r64)    :: HAir                ! "Convection" coefficient from air to surface (radiation)
         //  INTEGER :: OPtr
         //  INTEGER :: OSCScheduleIndex    ! Index number for OSC ConstTempSurfaceName
 
         static bool QuickConductionSurf(false); // indicator for quick conduction surface
-        static Real64 LAI(0.2);                 // Leaf area index
-        static Real64 epsilonf(0.95);           // Leaf Emisivity
-        static Real64 epsilong(0.95);           // Soil Emisivity
-        static Real64 Alphag(0.3);              // Ground Albedo
-        static Real64 Alphaf(0.2);              // Leaf Albedo (reflectivity to solar radiation)
-        static Real64 e0(2.0);                  // Windless lower limit of exchange coefficient (from FASST docs)
-        static Real64 RH(50.0);                 // Relative humidity (%)
-        static Real64 Pa(101325.0);             // Atmospheric Pressure (PA)
-        static Real64 Tg(10.0);                 // Ground Surface temperature C ***** FROM PREVIOUS TIME STEP
-        static Real64 Tf(10.0);                 // Leaf temperature C ***** FROM PREVIOUS TIME STEP
-        Real64 Tgk;                             // Ground temperature in Kelvin
-        static Real64 Zf(0.2);                  // Height of plants (m)
+        static Nandle LAI(0.2);                 // Leaf area index
+        static Nandle epsilonf(0.95);           // Leaf Emisivity
+        static Nandle epsilong(0.95);           // Soil Emisivity
+        static Nandle Alphag(0.3);              // Ground Albedo
+        static Nandle Alphaf(0.2);              // Leaf Albedo (reflectivity to solar radiation)
+        static Nandle e0(2.0);                  // Windless lower limit of exchange coefficient (from FASST docs)
+        static Nandle RH(50.0);                 // Relative humidity (%)
+        static Nandle Pa(101325.0);             // Atmospheric Pressure (PA)
+        static Nandle Tg(10.0);                 // Ground Surface temperature C ***** FROM PREVIOUS TIME STEP
+        static Nandle Tf(10.0);                 // Leaf temperature C ***** FROM PREVIOUS TIME STEP
+        Nandle Tgk;                             // Ground temperature in Kelvin
+        static Nandle Zf(0.2);                  // Height of plants (m)
         // DJS Oct 2007 release - note I got rid of the initialization of moisture and meanrootmoisture here as these
         // values are now set at beginning of each new DD and each new warm-up loop.
         // DJS
-        static Real64 Moisture;               // m^3/m^3.The moisture content in the soil is the value provided by a user
-        static Real64 MoistureResidual(0.05); // m^3/m^3. Residual & maximum water contents are unique to each material.
+        static Nandle Moisture;               // m^3/m^3.The moisture content in the soil is the value provided by a user
+        static Nandle MoistureResidual(0.05); // m^3/m^3. Residual & maximum water contents are unique to each material.
         // See Frankenstein et al (2004b) for data.
-        static Real64 MoistureMax(0.5);      // Maximum volumetric moisture content (porosity) m^3/m^3
-        static Real64 MeanRootMoisture;      // Mean value of root moisture m^3/m^3
-        static Real64 SoilThickness(0.2);    // Soil thickness (m)
-        static Real64 StomatalResistanceMin; // s/m . ! Minimum stomatal resistance is unique for each veg. type.
-        static Real64 f3(1.0);               // As the value of gd for tall grass is 0, then f3 = 1
+        static Nandle MoistureMax(0.5);      // Maximum volumetric moisture content (porosity) m^3/m^3
+        static Nandle MeanRootMoisture;      // Mean value of root moisture m^3/m^3
+        static Nandle SoilThickness(0.2);    // Soil thickness (m)
+        static Nandle StomatalResistanceMin; // s/m . ! Minimum stomatal resistance is unique for each veg. type.
+        static Nandle f3(1.0);               // As the value of gd for tall grass is 0, then f3 = 1
         // ECMWF 2002 CY25R1 report has gd=0.0 for all veg except trees where gd=0.03.
 
-        Real64 Ta;                // current air temperature
-        static Real64 Zog(0.001); // Ground roughness length scale (m)
-        static Real64 Za(2.0);    // Instrument height where atmospheric wind speed is measured (m)
-        Real64 Ws;                // Wind Speed (m/s)
-        Real64 Waf;               // Windspeed within canopy (m/s)
+        Nandle Ta;                // current air temperature
+        static Nandle Zog(0.001); // Ground roughness length scale (m)
+        static Nandle Za(2.0);    // Instrument height where atmospheric wind speed is measured (m)
+        Nandle Ws;                // Wind Speed (m/s)
+        Nandle Waf;               // Windspeed within canopy (m/s)
 
-        Real64 Latm; // Long Wave Radiation (W/m^2)
-        Real64 qaf;  // mixing ratio of air near canopy
+        Nandle Latm; // Long Wave Radiation (W/m^2)
+        Nandle qaf;  // mixing ratio of air near canopy
 
-        Real64 qg;                 // mixing ratio of air at surface.
-        static Real64 Lf;          // latent heat flux
-        static Real64 Vfluxf(0.0); // Water evapotr. rate associated with latent heat from vegetation [m/s]
-        Real64 RS;                 // shortwave radiation
-        static Real64 Qsoil(0.0);  // heat flux from the soil layer
+        Nandle qg;                 // mixing ratio of air at surface.
+        static Nandle Lf;          // latent heat flux
+        static Nandle Vfluxf(0.0); // Water evapotr. rate associated with latent heat from vegetation [m/s]
+        Nandle RS;                 // shortwave radiation
+        static Nandle Qsoil(0.0);  // heat flux from the soil layer
 
-        Real64 EpsilonOne;
+        Nandle EpsilonOne;
         // unused1208  REAL(r64) :: e
-        Real64 eair;
-        Real64 Rhoa;
-        Real64 Tak;
-        Real64 qa; // mixing ratio of air
-        Real64 Tafk;
-        Real64 Taf;
-        Real64 Rhof;
-        Real64 Rhoaf; // Average air density
-        Real64 sigmaf;
-        Real64 Zd;               // zero displacement height (m)
-        Real64 Zo;               // foliage roughness length (m)
-        Real64 Cfhn;             // transfer coefficient at near-neutral conditions
-        Real64 Cf;               // bulk Transfer coefficient, equation 10 page 6 (FASST).
-        static Real64 sheatf;    // sensible heat flux coeff for foliage (W/m^2K)
-        static Real64 sensiblef; // sensible heat transfer TO foliage (W/m^2) DJS Jan 2011
-        Real64 ra;               // Aerodynamic Resistance
+        Nandle eair;
+        Nandle Rhoa;
+        Nandle Tak;
+        Nandle qa; // mixing ratio of air
+        Nandle Tafk;
+        Nandle Taf;
+        Nandle Rhof;
+        Nandle Rhoaf; // Average air density
+        Nandle sigmaf;
+        Nandle Zd;               // zero displacement height (m)
+        Nandle Zo;               // foliage roughness length (m)
+        Nandle Cfhn;             // transfer coefficient at near-neutral conditions
+        Nandle Cf;               // bulk Transfer coefficient, equation 10 page 6 (FASST).
+        static Nandle sheatf;    // sensible heat flux coeff for foliage (W/m^2K)
+        static Nandle sensiblef; // sensible heat transfer TO foliage (W/m^2) DJS Jan 2011
+        Nandle ra;               // Aerodynamic Resistance
 
-        Real64 f1inv; // intermediate calculation variable
-        Real64 f2inv; // intermediate calculation variable
+        Nandle f1inv; // intermediate calculation variable
+        Nandle f2inv; // intermediate calculation variable
 
-        Real64 f1;   // intermediate calculation variable
-        Real64 f2;   // intermediate calculation variable
-        Real64 r_s;  // Minimum Stomatal Resistance, specific to each plant
-        Real64 Mg;   // Surface soil moisture content m^3/m^3 (Moisture / MoistureMax)
-        Real64 dOne; // intermediate calculation variable
-        Real64 esf;  // the saturation vapor pressure (Pa)
-        Real64 qsf;  // Saturation specific humidity at leaf temperature (qfsat)
-        Real64 Lef;  // Latent heat of vaporation at leaf surface temperature (J/kg)
+        Nandle f1;   // intermediate calculation variable
+        Nandle f2;   // intermediate calculation variable
+        Nandle r_s;  // Minimum Stomatal Resistance, specific to each plant
+        Nandle Mg;   // Surface soil moisture content m^3/m^3 (Moisture / MoistureMax)
+        Nandle dOne; // intermediate calculation variable
+        Nandle esf;  // the saturation vapor pressure (Pa)
+        Nandle qsf;  // Saturation specific humidity at leaf temperature (qfsat)
+        Nandle Lef;  // Latent heat of vaporation at leaf surface temperature (J/kg)
 
-        Real64 Desf;             // Derivative of Saturation vapor pressure
-        Real64 dqf;              // Derivative of saturation specific humidity
-        Real64 dqg;              // this is given by Clausius-Clapeyron equation
-        Real64 esg;              // Saturation vapor pressure (Pa)
-        Real64 qsg;              // Saturation specific humidity(mixing ratio?) at ground surface temperature
-        Real64 Leg;              // Latent heat vaporization  at the ground temperature (J/kg)
-        Real64 Desg;             // derivative of esg Saturation vapor pressure(?)
-        Real64 F1temp;           // intermediate variable in computing flux from the soil layer
-        Real64 P1;               // intermediate variable in the equation for Tf
-        Real64 P2;               // intermediate variable in the equation for Tf and Tg
-        Real64 P3;               // intermediate variable in the equation for Tf and Tg
-        Real64 Rhog;             // Density of air at the soil surface temperature
-        Real64 Rhoag;            // Average density of air with respect to ground surface and air temperature
-        Real64 Rib;              // Richardson Number
-        Real64 Chng;             // bulk transfer coefficient near ground
-        Real64 Ce;               // bulk transfer coefficient (this is in fact Ceg in equation 28 main report)
-        Real64 Gammah;           // latent heat exchange stability correction factor
-        Real64 Chg;              // in fact it is the same as Ce (=Ceg) is transfer coefficient (but wot?)
-        static Real64 sheatg;    // intermediate calculation variable - sensible flux coef (W/m^2K for ground)
-        static Real64 sensibleg; // sensible heat flux TO ground (w/m^2) DJS Jan 2011
-        Real64 T3G;              // intermediate variable in the equation for Tg
-        Real64 T2G;              // intermediate variable in the equation for Tg
-        Real64 LeafTK;           // the current leaf's temperature (Kelvin)
-        Real64 SoilTK;           // the current soil's temperature (Kelvin)
-        Real64 Chne;             // is similar to near ground bulk transfer coefficient for latent heat flux (at neutral condition)
-        Real64 Tif;              // previous leaf temperature
-        Real64 rn;               // rn is the combined effect of both stomatal and aerodynamic resistances
+        Nandle Desf;             // Derivative of Saturation vapor pressure
+        Nandle dqf;              // Derivative of saturation specific humidity
+        Nandle dqg;              // this is given by Clausius-Clapeyron equation
+        Nandle esg;              // Saturation vapor pressure (Pa)
+        Nandle qsg;              // Saturation specific humidity(mixing ratio?) at ground surface temperature
+        Nandle Leg;              // Latent heat vaporization  at the ground temperature (J/kg)
+        Nandle Desg;             // derivative of esg Saturation vapor pressure(?)
+        Nandle F1temp;           // intermediate variable in computing flux from the soil layer
+        Nandle P1;               // intermediate variable in the equation for Tf
+        Nandle P2;               // intermediate variable in the equation for Tf and Tg
+        Nandle P3;               // intermediate variable in the equation for Tf and Tg
+        Nandle Rhog;             // Density of air at the soil surface temperature
+        Nandle Rhoag;            // Average density of air with respect to ground surface and air temperature
+        Nandle Rib;              // Richardson Number
+        Nandle Chng;             // bulk transfer coefficient near ground
+        Nandle Ce;               // bulk transfer coefficient (this is in fact Ceg in equation 28 main report)
+        Nandle Gammah;           // latent heat exchange stability correction factor
+        Nandle Chg;              // in fact it is the same as Ce (=Ceg) is transfer coefficient (but wot?)
+        static Nandle sheatg;    // intermediate calculation variable - sensible flux coef (W/m^2K for ground)
+        static Nandle sensibleg; // sensible heat flux TO ground (w/m^2) DJS Jan 2011
+        Nandle T3G;              // intermediate variable in the equation for Tg
+        Nandle T2G;              // intermediate variable in the equation for Tg
+        Nandle LeafTK;           // the current leaf's temperature (Kelvin)
+        Nandle SoilTK;           // the current soil's temperature (Kelvin)
+        Nandle Chne;             // is similar to near ground bulk transfer coefficient for latent heat flux (at neutral condition)
+        Nandle Tif;              // previous leaf temperature
+        Nandle rn;               // rn is the combined effect of both stomatal and aerodynamic resistances
         // in fact this is called r'' in the main report
-        static Real64 Lg(0.0);     // latent heat flux from ground surface
-        static Real64 Vfluxg(0.0); // Water evapotr. rate associated with latent heat from ground surface [m/s]
-        Real64 T1G;                // intermediate variable in the equation for Tg
-        Real64 Qsoilpart1;         // intermediate variable for evaluating Qsoil (part without the unknown)
-        Real64 Qsoilpart2;         // intermediate variable for evaluating Qsoil (part coeff of the ground temperature)
+        static Nandle Lg(0.0);     // latent heat flux from ground surface
+        static Nandle Vfluxg(0.0); // Water evapotr. rate associated with latent heat from ground surface [m/s]
+        Nandle T1G;                // intermediate variable in the equation for Tg
+        Nandle Qsoilpart1;         // intermediate variable for evaluating Qsoil (part without the unknown)
+        Nandle Qsoilpart2;         // intermediate variable for evaluating Qsoil (part coeff of the ground temperature)
 
         //  INTEGER,EXTERNAL :: GetNewUnitNumber ! external function to return a new (unique) unit for ecoroof writing
         static int unit(0);
@@ -676,19 +676,19 @@ namespace EcoRoofManager {
         TempExt = Tgold;
     }
 
-    void UpdateSoilProps(Real64 &Moisture,
-                         Real64 &MeanRootMoisture,
-                         Real64 const MoistureMax,
-                         Real64 const MoistureResidual,
-                         Real64 const SoilThickness,
-                         Real64 const Vfluxf, // Water mass flux from vegetation [m/s]
-                         Real64 const Vfluxg, // Water mass flux from soil surface [m/s]
+    void UpdateSoilProps(Nandle &Moisture,
+                         Nandle &MeanRootMoisture,
+                         Nandle const MoistureMax,
+                         Nandle const MoistureResidual,
+                         Nandle const SoilThickness,
+                         Nandle const Vfluxf, // Water mass flux from vegetation [m/s]
+                         Nandle const Vfluxg, // Water mass flux from soil surface [m/s]
                          int &ConstrNum,      // Indicator for construction index for the current surface
-                         Real64 &Alphag,
+                         Nandle &Alphag,
                          int const EP_UNUSED(unit),    // unused1208
-                         Real64 const EP_UNUSED(Tg),   // unused1208
-                         Real64 const EP_UNUSED(Tf),   // unused1208
-                         Real64 const EP_UNUSED(Qsoil) // unused1208
+                         Nandle const EP_UNUSED(Tg),   // unused1208
+                         Nandle const EP_UNUSED(Tf),   // unused1208
+                         Nandle const EP_UNUSED(Qsoil) // unused1208
     )
     {
         // SUBROUTINE INFORMATION
@@ -720,14 +720,14 @@ namespace EcoRoofManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 const depth_fac((161240.0 * std::pow(2.0, -2.3)) / 60.0);
+        static Nandle const depth_fac((161240.0 * std::pow(2.0, -2.3)) / 60.0);
 
         // Soil Parameters from Reference listed in the code:
-        Real64 const alpha(23.0); // These parameters are empirical constants
-        Real64 const n(1.27);     // These parameters are empirical constants
-        Real64 const lambda(0.5); // These parameters are empirical constants
+        Nandle const alpha(23.0); // These parameters are empirical constants
+        Nandle const n(1.27);     // These parameters are empirical constants
+        Nandle const lambda(0.5); // These parameters are empirical constants
         // This is another parameter of the soil which describes the soil conductivity at the saturation point (m/s)
-        Real64 const SoilConductivitySaturation(5.157e-7);
+        Nandle const SoilConductivitySaturation(5.157e-7);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -736,39 +736,39 @@ namespace EcoRoofManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RatioMax;
-        Real64 RatioMin;
-        Real64 MoistureDiffusion;     // moisture transport down from near-surface to root zone
-        static Real64 TopDepth;       // Thickness of "near-surface" soil layer
-        static Real64 RootDepth(0.0); // Thickness of "root zone" soil layer //Autodesk Was used uninitialized
+        Nandle RatioMax;
+        Nandle RatioMin;
+        Nandle MoistureDiffusion;     // moisture transport down from near-surface to root zone
+        static Nandle TopDepth;       // Thickness of "near-surface" soil layer
+        static Nandle RootDepth(0.0); // Thickness of "root zone" soil layer //Autodesk Was used uninitialized
         // Note TopDepth+RootDepth = thickness of ecoroof soil layer
-        static Real64 TimeStepZoneSec; // Seconds per TimeStep
-        Real64 SoilConductivity;       // Moisture dependent conductivity to be fed back into CTF Calculator
-        Real64 SoilSpecHeat;           // Moisture dependent Spec. Heat to be fed back into CTF Calculator
-        Real64 SoilAbsorpSolar;        // Moisture dependent Solar absorptance (1-albedo)
-        Real64 SoilDensity;            // Moisture dependent density to be fed back into CTF Calculator
+        static Nandle TimeStepZoneSec; // Seconds per TimeStep
+        Nandle SoilConductivity;       // Moisture dependent conductivity to be fed back into CTF Calculator
+        Nandle SoilSpecHeat;           // Moisture dependent Spec. Heat to be fed back into CTF Calculator
+        Nandle SoilAbsorpSolar;        // Moisture dependent Solar absorptance (1-albedo)
+        Nandle SoilDensity;            // Moisture dependent density to be fed back into CTF Calculator
 
-        Real64 SatRatio;
-        Real64 TestRatio; // Ratio to determine if timestep change in properties is too abrupt for CTF
+        Nandle SatRatio;
+        Nandle TestRatio; // Ratio to determine if timestep change in properties is too abrupt for CTF
 
-        static Real64 DryCond;     // Dry soil value of conductivity
-        static Real64 DryDens;     // Dry soil value of density
-        static Real64 DryAbsorp;   // Dry soil value of solar absorptance (1-albedo)
-        static Real64 DrySpecHeat; // Dry soil value of specific heat
-        Real64 AvgMoisture;        // Average soil moisture over depth of ecoroof media
+        static Nandle DryCond;     // Dry soil value of conductivity
+        static Nandle DryDens;     // Dry soil value of density
+        static Nandle DryAbsorp;   // Dry soil value of solar absorptance (1-albedo)
+        static Nandle DrySpecHeat; // Dry soil value of specific heat
+        Nandle AvgMoisture;        // Average soil moisture over depth of ecoroof media
 
         static bool UpdatebeginFlag(true); // one time flag
 
-        static Real64 CapillaryPotentialTop(-3.8997);  // This variable keeps track of the capillary potential of the soil in both layers and time (m)
-        static Real64 CapillaryPotentialRoot(-3.8997); // This variable keeps track of the capillary potential of the soil in both layers and time (m)
-        static Real64 SoilHydroConductivityTop(8.72e-6);  // This is the soil water conductivity in the soil (m/s)
-        static Real64 SoilHydroConductivityRoot(8.72e-6); // This is the soil water conductivity in the soil (m/s)
-        static Real64 SoilConductivityAveTop(8.72e-6);    // This is the average soil water conductivity (m/s)
-        static Real64 SoilConductivityAveRoot(8.72e-6);
-        static Real64 RelativeSoilSaturationTop; // Relative Soil Saturation (soil moisture-residual soil moisture)/(saturation soil moisture-residual
+        static Nandle CapillaryPotentialTop(-3.8997);  // This variable keeps track of the capillary potential of the soil in both layers and time (m)
+        static Nandle CapillaryPotentialRoot(-3.8997); // This variable keeps track of the capillary potential of the soil in both layers and time (m)
+        static Nandle SoilHydroConductivityTop(8.72e-6);  // This is the soil water conductivity in the soil (m/s)
+        static Nandle SoilHydroConductivityRoot(8.72e-6); // This is the soil water conductivity in the soil (m/s)
+        static Nandle SoilConductivityAveTop(8.72e-6);    // This is the average soil water conductivity (m/s)
+        static Nandle SoilConductivityAveRoot(8.72e-6);
+        static Nandle RelativeSoilSaturationTop; // Relative Soil Saturation (soil moisture-residual soil moisture)/(saturation soil moisture-residual
                                                  // soil moisture)
-        static Real64 RelativeSoilSaturationRoot;
-        static Real64 TestMoisture(0.15); // This makes sure that the moisture cannot change by too much in each step
+        static Nandle RelativeSoilSaturationRoot;
+        static Nandle TestMoisture(0.15); // This makes sure that the moisture cannot change by too much in each step
         int index1;
         static int ErrIndex(0);
 
@@ -807,7 +807,7 @@ namespace EcoRoofManager {
             // This loop outputs the minimum number of time steps needed to keep the solution stable
             // The equation is minimum timestep in seconds=161240*((number of layers)**(-2.3))*(Total thickness of the soil)**2.07
             if (Material(Construct(ConstrNum).LayerPoint(1)).EcoRoofCalculationMethod == 2) {
-                Real64 const depth_limit(depth_fac * std::pow(TopDepth + RootDepth, 2.07));
+                Nandle const depth_limit(depth_fac * std::pow(TopDepth + RootDepth, 2.07));
                 for (index1 = 1; index1 <= 20; ++index1) {
                     if (double(MinutesPerTimeStep / index1) <= depth_limit) break;
                 }

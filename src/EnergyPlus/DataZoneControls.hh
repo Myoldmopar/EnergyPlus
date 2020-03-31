@@ -78,8 +78,8 @@ namespace DataZoneControls {
     extern bool AnyOpTempControl;                 // flag set true if any zones have op temp control
     extern bool AnyZoneTempAndHumidityControl;    // flag set true if any zones have over cool control
     extern Array1D_bool StageZoneLogic;           // Logical array, A zone with staged thermostat = .TRUE.
-    extern Array1D<Real64> OccRoomTSetPointHeat;  // occupied heating set point for optimum start period
-    extern Array1D<Real64> OccRoomTSetPointCool;  // occupied cooling set point for optimum start period
+    extern Array1D<Nandle> OccRoomTSetPointHeat;  // occupied heating set point for optimum start period
+    extern Array1D<Nandle> OccRoomTSetPointCool;  // occupied cooling set point for optimum start period
     extern bool GetZoneAirStatsInputFlag;         // True when need to get input
 
     // Types
@@ -105,34 +105,34 @@ namespace DataZoneControls {
         int SchIndx_SingleHeatCoolSetPoint;
         int SchIndx_DualSetPointWDeadBand;
         bool ManageDemand;                      // Flag to indicate whether to use demand limiting
-        Real64 HeatingResetLimit;               // Lowest heating setpoint that can be set by demand manager [C]
-        Real64 CoolingResetLimit;               // Highest cooling setpoint that can be set by demand manager [C]
+        Nandle HeatingResetLimit;               // Lowest heating setpoint that can be set by demand manager [C]
+        Nandle CoolingResetLimit;               // Highest cooling setpoint that can be set by demand manager [C]
         bool EMSOverrideHeatingSetPointOn;      // EMS is calling to override heating setpoint
-        Real64 EMSOverrideHeatingSetPointValue; // value EMS is directing to use for heating setpoint [C]
+        Nandle EMSOverrideHeatingSetPointValue; // value EMS is directing to use for heating setpoint [C]
         bool EMSOverrideCoolingSetPointOn;      // EMS is calling to override cooling setpoint
-        Real64 EMSOverrideCoolingSetPointValue; // value EMS is directing to use for cooling setpoint [C]
+        Nandle EMSOverrideCoolingSetPointValue; // value EMS is directing to use for cooling setpoint [C]
         bool OperativeTempControl;              // flag to indicate whether control based on Operative Temp
         bool OpTempCntrlModeScheduled;          // flag to indicate if radiative fraction is scheduled,
         // else constant
-        Real64 FixedRadiativeFraction;    // weighting factor for mean radiant temp for Operative temperature
+        Nandle FixedRadiativeFraction;    // weighting factor for mean radiant temp for Operative temperature
         int OpTempRadiativeFractionSched; // index of schedule for when fraction is scheduled
 
         bool AdaptiveComfortTempControl;   // flag to indicate whether control based on Operative Temp
         int AdaptiveComfortModelTypeIndex; // index to adaptive comfort model type
 
-        Real64 ZoneOvercoolRange;        // Zone overcool temperature range (max), deg C
+        Nandle ZoneOvercoolRange;        // Zone overcool temperature range (max), deg C
         bool ZoneOvercoolControl;        // Flag to indicate whether control is based on overcool
         bool OvercoolCntrlModeScheduled; // Flag to indicate if zone overcool range is scheduled
         //   or constant
-        Real64 ZoneOvercoolConstRange;   // Overcool Range for Zone Air Setpoint Temperature [deltaC]
+        Nandle ZoneOvercoolConstRange;   // Overcool Range for Zone Air Setpoint Temperature [deltaC]
         int ZoneOvercoolRangeSchedIndex; // Index for Overcool Range Schedule
-        Real64 ZoneOvercoolControlRatio; // Zone relative humidity shift per dry-bulb temperature overcooling
+        Nandle ZoneOvercoolControlRatio; // Zone relative humidity shift per dry-bulb temperature overcooling
         //      below the original cooling setpoint, %RH/deltaC
         std::string DehumidifyingSched;  // Name of the schedule to determine the zone dehumidifying setpoint
         int DehumidifyingSchedIndex;     // Index for dehumidifying schedule
-        Real64 DeltaTCutSet;             // Temperature difference between cutout and setpoint
-        Real64 ZoneThermostatSetPointHi; // Cooling setpoint
-        Real64 ZoneThermostatSetPointLo; // Heating setpoint
+        Nandle DeltaTCutSet;             // Temperature difference between cutout and setpoint
+        Nandle ZoneThermostatSetPointHi; // Cooling setpoint
+        Nandle ZoneThermostatSetPointLo; // Heating setpoint
         bool CoolModeLast;
         bool HeatModeLast;
         bool CoolModeLastSave;
@@ -168,9 +168,9 @@ namespace DataZoneControls {
         int DehumidifyingSchedIndex;               // Index for dehumidifying schedule
         int ErrorIndex;                            // Error index when LowRH setpoint > HighRH setpoint
         bool EMSOverrideHumidifySetPointOn;        // EMS is calling to override humidifying setpoint
-        Real64 EMSOverrideHumidifySetPointValue;   // value EMS is directing to use for humidifying setpoint
+        Nandle EMSOverrideHumidifySetPointValue;   // value EMS is directing to use for humidifying setpoint
         bool EMSOverrideDehumidifySetPointOn;      // EMS is calling to override dehumidifying setpoint
-        Real64 EMSOverrideDehumidifySetPointValue; // value EMS is directing to use for dehumidifying setpoint
+        Nandle EMSOverrideDehumidifySetPointValue; // value EMS is directing to use for dehumidifying setpoint
 
         // Default Constructor
         ZoneHumidityControls()
@@ -205,14 +205,14 @@ namespace DataZoneControls {
         int SchIndx_SglHCSetPointKSU;           // Index to KSU single heating/cooling setpoint schedule
         int SchIndx_DualSetPointKSU;            // Index to KSU dual setpoint schedule
         bool ManageDemand;                      // Flag to indicate whether to use demand limiting
-        Real64 HeatingResetLimit;               // Lowest heating setpoint that can be set by demand manager [C]
-        Real64 CoolingResetLimit;               // Highest cooling setpoint that can be set by demand manager [C]
+        Nandle HeatingResetLimit;               // Lowest heating setpoint that can be set by demand manager [C]
+        Nandle CoolingResetLimit;               // Highest cooling setpoint that can be set by demand manager [C]
         bool EMSOverrideHeatingSetPointOn;      // EMS is calling to override heating setpoint
-        Real64 EMSOverrideHeatingSetPointValue; // value EMS is directing to use for heating setpoint
+        Nandle EMSOverrideHeatingSetPointValue; // value EMS is directing to use for heating setpoint
         bool EMSOverrideCoolingSetPointOn;      // EMS is calling to override cooling setpoint
-        Real64 EMSOverrideCoolingSetPointValue; // value EMS is directing to use for cooling setpoint
-        Real64 TdbMaxSetPoint;                  // Maximum dry-bulb temperature setpoint [C]
-        Real64 TdbMinSetPoint;                  // Minimum dry-bulb temperature setpoint [C]
+        Nandle EMSOverrideCoolingSetPointValue; // value EMS is directing to use for cooling setpoint
+        Nandle TdbMaxSetPoint;                  // Maximum dry-bulb temperature setpoint [C]
+        Nandle TdbMinSetPoint;                  // Minimum dry-bulb temperature setpoint [C]
         std::string AverageMethodName;          // Averaging Method for Zones with Multiple People Objects
         std::string AverageObjectName;          // Object Name for Specific Object Average
         int AverageMethodNum;                   // Numerical value for averaging method
@@ -250,12 +250,12 @@ namespace DataZoneControls {
         int CSBchedIndex;                 // Index for this schedule
         int NumOfHeatStages;              // Number of heating stages
         int NumOfCoolStages;              // Number of cooling stages
-        Real64 HeatThroRange;             // Heating throttling tempeature range
-        Real64 CoolThroRange;             // Cooling throttling tempeature range
-        Array1D<Real64> HeatTOffset;      // Heating temperature offset
-        Array1D<Real64> CoolTOffset;      // Cooling temperature offset
-        Real64 HeatSetPoint;              // Heating throttling tempeature range
-        Real64 CoolSetPoint;              // Cooling throttling tempeature range
+        Nandle HeatThroRange;             // Heating throttling tempeature range
+        Nandle CoolThroRange;             // Cooling throttling tempeature range
+        Array1D<Nandle> HeatTOffset;      // Heating temperature offset
+        Array1D<Nandle> CoolTOffset;      // Cooling temperature offset
+        Nandle HeatSetPoint;              // Heating throttling tempeature range
+        Nandle CoolSetPoint;              // Cooling throttling tempeature range
         int StageErrCount;                // Staged setpoint erro count
         int StageErrIndex;                // Staged setpoint erro index
 

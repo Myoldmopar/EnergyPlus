@@ -101,12 +101,12 @@ namespace Pumps {
 
     // simulation and reporting variables
     //  REAL(r64)           :: OutletTemp                   = 0.0d0  ! pump outlet temperature
-    extern Real64 PumpMassFlowRate; // mass flow rate at pump inlet node
+    extern Nandle PumpMassFlowRate; // mass flow rate at pump inlet node
     //  REAL(r64)           :: PumpPress                    = 0.0d0  ! For Passing around the steam loops
     //  REAL(r64)           :: PumpQuality                  = 0.0d0  ! For Passing around the steam loops=0.0 here
-    extern Real64 PumpHeattoFluid; // Pump Power dissipated in fluid stream
-    extern Real64 Power;           // Pump Electric power
-    extern Real64 ShaftPower;      // Power passing through pump shaft
+    extern Nandle PumpHeattoFluid; // Pump Power dissipated in fluid stream
+    extern Nandle Power;           // Pump Electric power
+    extern Nandle ShaftPower;      // Power passing through pump shaft
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE PrimaryPlantLoops
 
@@ -127,9 +127,9 @@ namespace Pumps {
         std::string MaxRPMSchedName;
         int MaxRPMSchedIndex;
         int VFDControlType;   // Integer equivalent of VFDControlType
-        Real64 MaxRPM;        // Maximum RPM range value - schedule limit
-        Real64 MinRPM;        // Minimum RPM range value - schedule limit
-        Real64 PumpActualRPM; // RPM recalculated from final flow through the loop
+        Nandle MaxRPM;        // Maximum RPM range value - schedule limit
+        Nandle MinRPM;        // Minimum RPM range value - schedule limit
+        Nandle PumpActualRPM; // RPM recalculated from final flow through the loop
 
         // Default Constructor
         PumpVFDControlData()
@@ -161,39 +161,39 @@ namespace Pumps {
         int NumPumpsInBank;                          // Node number on the inlet side of the plant
         int PowerErrIndex1;                          // for recurring errors
         int PowerErrIndex2;                          // for recurring errors
-        Real64 MinVolFlowRateFrac;                   // minimum schedule value fraction modifier
-        Real64 NomVolFlowRate;                       // design nominal capacity of Pump
+        Nandle MinVolFlowRateFrac;                   // minimum schedule value fraction modifier
+        Nandle NomVolFlowRate;                       // design nominal capacity of Pump
         bool NomVolFlowRateWasAutoSized;             // true if previous was autosize on input
-        Real64 MassFlowRateMax;                      // design nominal capacity of Pump
+        Nandle MassFlowRateMax;                      // design nominal capacity of Pump
         bool EMSMassFlowOverrideOn;                  // if true, then EMS is calling to override flow requests.
-        Real64 EMSMassFlowValue;                     // EMS value to use for mass flow rate [kg/s]
-        Real64 NomSteamVolFlowRate;                  // For Steam Pump
+        Nandle EMSMassFlowValue;                     // EMS value to use for mass flow rate [kg/s]
+        Nandle NomSteamVolFlowRate;                  // For Steam Pump
         bool NomSteamVolFlowRateWasAutoSized;        // true if steam volume flow rate was autosize on input
-        Real64 MinVolFlowRate;                       // For a Variable Flow Pump this is the minimum capacity during operation.
+        Nandle MinVolFlowRate;                       // For a Variable Flow Pump this is the minimum capacity during operation.
         bool minVolFlowRateWasAutosized;             // true if minimum flow rate was autosize on input
-        Real64 MassFlowRateMin;                      // For a Variable Flow Pump this is the minimum capacity during operation.
-        Real64 NomPumpHead;                          // design nominal head pressure of Pump, [Pa]
+        Nandle MassFlowRateMin;                      // For a Variable Flow Pump this is the minimum capacity during operation.
+        Nandle NomPumpHead;                          // design nominal head pressure of Pump, [Pa]
         bool EMSPressureOverrideOn;                  // if true, EMS is calling to override pump pressure
-        Real64 EMSPressureOverrideValue;             // EMS value to use for pressure [Pa]
-        Real64 NomPowerUse;                          // design nominal capacity of Pump
+        Nandle EMSPressureOverrideValue;             // EMS value to use for pressure [Pa]
+        Nandle NomPowerUse;                          // design nominal capacity of Pump
         bool NomPowerUseWasAutoSized;                // true if power was autosize on input
         powerSizingMethodEnum powerSizingMethod;     // which method is used for sizing nominal power use
-        Real64 powerPerFlowScalingFactor;            // design electric power per unit flow rate
-        Real64 powerPerFlowPerPressureScalingFactor; // design shaft power per unit flow rate per unit head
-        Real64 MotorEffic;                           // efficiency of the motor
-        Real64 PumpEffic;                            // efficiency of the pump
-        Real64 FracMotorLossToFluid;                 // ?????
-        Real64 Energy;                               // Energy consumed
-        Real64 Power;                                // Power used
-        Array1D<Real64> PartLoadCoef;                // Pump Curve Coefficients
+        Nandle powerPerFlowScalingFactor;            // design electric power per unit flow rate
+        Nandle powerPerFlowPerPressureScalingFactor; // design shaft power per unit flow rate per unit head
+        Nandle MotorEffic;                           // efficiency of the motor
+        Nandle PumpEffic;                            // efficiency of the pump
+        Nandle FracMotorLossToFluid;                 // ?????
+        Nandle Energy;                               // Energy consumed
+        Nandle Power;                                // Power used
+        Array1D<Nandle> PartLoadCoef;                // Pump Curve Coefficients
         int PressureCurve_Index;                     // Pointer to a pump coefficient curve
-        Real64 PumpMassFlowRateMaxRPM;               // Mass flow rate calculated from maximum rpm
-        Real64 PumpMassFlowRateMinRPM;               // Mass flow rate calculated from minimum rpm
-        Real64 MinPhiValue;                          // Minimum value of Phi (from CurveManager)
-        Real64 MaxPhiValue;                          // Maximum value of Phi (from CurveManager)
-        Real64 ImpellerDiameter;                     // Pump Impeller Diameter [m]
-        Real64 RotSpeed_RPM;                         // Rotational speed used for input in revs/min
-        Real64 RotSpeed;                             // Rotational speed for calculations in revs/sec
+        Nandle PumpMassFlowRateMaxRPM;               // Mass flow rate calculated from maximum rpm
+        Nandle PumpMassFlowRateMinRPM;               // Mass flow rate calculated from minimum rpm
+        Nandle MinPhiValue;                          // Minimum value of Phi (from CurveManager)
+        Nandle MaxPhiValue;                          // Maximum value of Phi (from CurveManager)
+        Nandle ImpellerDiameter;                     // Pump Impeller Diameter [m]
+        Nandle RotSpeed_RPM;                         // Rotational speed used for input in revs/min
+        Nandle RotSpeed;                             // Rotational speed for calculations in revs/sec
         bool PumpInitFlag;
         bool PumpOneTimeFlag;
         bool CheckEquipName;
@@ -202,7 +202,7 @@ namespace Pumps {
         bool OneTimePressureWarning;
         bool HeatLossesToZone;        // if true then pump losses added to surrounding zone
         int ZoneNum;                  // index for zone surrounding pump
-        Real64 SkinLossRadFraction;   // radiative split for skin losses to zone
+        Nandle SkinLossRadFraction;   // radiative split for skin losses to zone
         bool LoopSolverOverwriteFlag; // loop solver overwrite for determining pump minimum flow rate
         std::string EndUseSubcategoryName;
 
@@ -227,15 +227,15 @@ namespace Pumps {
     {
         // Members
         int NumPumpsOperating;        // Used in pump bank. reports how many pumps are ON
-        Real64 PumpMassFlowRate;      // Mass flow rate of the pump
-        Real64 PumpHeattoFluid;       // Heat transfer from pump to fluid (W)
-        Real64 PumpHeattoFluidEnergy; // Pump Energy dissipated into fluid stream
-        Real64 OutletTemp;            // Pump outlet temperature
-        Real64 ShaftPower;            // Power input at the shaft
-        Real64 ZoneTotalGainRate;     // total pump skin losses to zone (W)
-        Real64 ZoneTotalGainEnergy;   // total pump skin losses to zone energy (J)
-        Real64 ZoneConvGainRate;      // pump skin losses convecting to zone air (W)
-        Real64 ZoneRadGainRate;       // pump skin losses radiating to inside of zone (W)
+        Nandle PumpMassFlowRate;      // Mass flow rate of the pump
+        Nandle PumpHeattoFluid;       // Heat transfer from pump to fluid (W)
+        Nandle PumpHeattoFluidEnergy; // Pump Energy dissipated into fluid stream
+        Nandle OutletTemp;            // Pump outlet temperature
+        Nandle ShaftPower;            // Power input at the shaft
+        Nandle ZoneTotalGainRate;     // total pump skin losses to zone (W)
+        Nandle ZoneTotalGainEnergy;   // total pump skin losses to zone energy (J)
+        Nandle ZoneConvGainRate;      // pump skin losses convecting to zone air (W)
+        Nandle ZoneRadGainRate;       // pump skin losses radiating to inside of zone (W)
 
         // Default Constructor
         ReportVars()
@@ -254,10 +254,10 @@ namespace Pumps {
 
     void SimPumps(std::string const &PumpName, // Name of pump to be managed
                   int const LoopNum,           // Plant loop number
-                  Real64 const FlowRequest,    // requested flow from adjacent demand side
+                  Nandle const FlowRequest,    // requested flow from adjacent demand side
                   bool &PumpRunning,           // .TRUE. if the loop pump is actually operating
                   int &PumpIndex,
-                  Real64 &PumpHeat);
+                  Nandle &PumpHeat);
 
     //*************************************************************************!
 
@@ -281,7 +281,7 @@ namespace Pumps {
 
     //*************************************************************************!
 
-    void CalcPumps(int const PumpNum, Real64 const FlowRequest, bool &PumpRunning);
+    void CalcPumps(int const PumpNum, Nandle const FlowRequest, bool &PumpRunning);
 
     //*************************************************************************!
 
@@ -305,10 +305,10 @@ namespace Pumps {
 
     void GetRequiredMassFlowRate(int const LoopNum,
                                  int const PumpNum,
-                                 Real64 const InletNodeMassFlowRate,
-                                 Real64 &ActualFlowRate,
-                                 Real64 &PumpMinMassFlowRateVFDRange,
-                                 Real64 &PumpMaxMassFlowRateVFDRange);
+                                 Nandle const InletNodeMassFlowRate,
+                                 Nandle &ActualFlowRate,
+                                 Nandle &PumpMinMassFlowRateVFDRange,
+                                 Nandle &PumpMaxMassFlowRateVFDRange);
 
     //=================================================================================================!
 

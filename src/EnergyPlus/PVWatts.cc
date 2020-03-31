@@ -72,15 +72,15 @@ namespace PVWatts {
     std::map<int, PVWattsGenerator> PVWattsGenerators;
 
     PVWattsGenerator::PVWattsGenerator(const std::string &name,
-                                       const Real64 dcSystemCapacity,
+                                       const Nandle dcSystemCapacity,
                                        ModuleType moduleType,
                                        ArrayType arrayType,
-                                       Real64 systemLosses,
+                                       Nandle systemLosses,
                                        GeometryType geometryType,
-                                       Real64 tilt,
-                                       Real64 azimuth,
+                                       Nandle tilt,
+                                       Nandle azimuth,
                                        size_t surfaceNum,
-                                       Real64 groundCoverageRatio)
+                                       Nandle groundCoverageRatio)
         : m_lastCellTemperature(20.0), m_lastPlaneOfArrayIrradiance(0.0), m_cellTemperature(20.0), m_planeOfArrayIrradiance(0.0),
           m_outputDCPower(1000.0)
     {
@@ -187,7 +187,7 @@ namespace PVWatts {
         }
 
         // Set up the pvwatts cell temperature member
-        const Real64 pvwatts_height = 5.0;
+        const Nandle pvwatts_height = 5.0;
         m_tccalc = std::unique_ptr<pvwatts_celltemp>(new pvwatts_celltemp(m_inoct + 273.15, pvwatts_height, DataGlobals::TimeStepZone));
     }
 
@@ -217,7 +217,7 @@ namespace PVWatts {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         const int maxAlphas = 6;  // from idd
         const int maxNumeric = 5; // from idd
         cAlphaFieldNames.allocate(maxAlphas);
@@ -244,7 +244,7 @@ namespace PVWatts {
                                       cNumericFieldNames);
 
         const std::string name(cAlphaArgs(AlphaFields::NAME));
-        const Real64 dcSystemCapacity(rNumericArgs(NumFields::DC_SYSTEM_CAPACITY));
+        const Nandle dcSystemCapacity(rNumericArgs(NumFields::DC_SYSTEM_CAPACITY));
         const std::map<std::string, ModuleType> moduleTypeMap = {
             {"STANDARD", ModuleType::STANDARD}, {"PREMIUM", ModuleType::PREMIUM}, {"THINFILM", ModuleType::THIN_FILM}};
         ModuleType moduleType;
@@ -270,7 +270,7 @@ namespace PVWatts {
             arrayType = arrayTypeIt->second;
         }
 
-        const Real64 systemLosses(rNumericArgs(NumFields::SYSTEM_LOSSES));
+        const Nandle systemLosses(rNumericArgs(NumFields::SYSTEM_LOSSES));
         const std::map<std::string, GeometryType> geometryTypeMap{{"TILTAZIMUTH", GeometryType::TILT_AZIMUTH}, {"SURFACE", GeometryType::SURFACE}};
         GeometryType geometryType;
         auto geometryTypeIt = geometryTypeMap.find(cAlphaArgs(AlphaFields::GEOMETRY_TYPE));
@@ -281,8 +281,8 @@ namespace PVWatts {
             geometryType = geometryTypeIt->second;
         }
 
-        const Real64 tilt(rNumericArgs(NumFields::TILT_ANGLE));
-        const Real64 azimuth(rNumericArgs(NumFields::AZIMUTH_ANGLE));
+        const Nandle tilt(rNumericArgs(NumFields::TILT_ANGLE));
+        const Nandle azimuth(rNumericArgs(NumFields::AZIMUTH_ANGLE));
         int surfaceNum;
         if (lAlphaFieldBlanks(AlphaFields::SURFACE_NAME)) {
             surfaceNum = 0;
@@ -297,14 +297,14 @@ namespace PVWatts {
         if (NumNums < NumFields::GROUND_COVERAGE_RATIO) {
             return PVWattsGenerator(name, dcSystemCapacity, moduleType, arrayType, systemLosses, geometryType, tilt, azimuth, surfaceNum, 0.4);
         }
-        const Real64 groundCoverageRatio(rNumericArgs(NumFields::GROUND_COVERAGE_RATIO));
+        const Nandle groundCoverageRatio(rNumericArgs(NumFields::GROUND_COVERAGE_RATIO));
 
         PVWattsGenerator pvwattsGenerator(
             name, dcSystemCapacity, moduleType, arrayType, systemLosses, geometryType, tilt, azimuth, surfaceNum, groundCoverageRatio);
         return pvwattsGenerator;
     }
 
-    Real64 PVWattsGenerator::getDCSystemCapacity()
+    Nandle PVWattsGenerator::getDCSystemCapacity()
     {
         return m_dcSystemCapacity;
     }
@@ -319,7 +319,7 @@ namespace PVWatts {
         return m_arrayType;
     }
 
-    Real64 PVWattsGenerator::getSystemLosses()
+    Nandle PVWattsGenerator::getSystemLosses()
     {
         return m_systemLosses;
     }
@@ -329,12 +329,12 @@ namespace PVWatts {
         return m_geometryType;
     }
 
-    Real64 PVWattsGenerator::getTilt()
+    Nandle PVWattsGenerator::getTilt()
     {
         return m_tilt;
     }
 
-    Real64 PVWattsGenerator::getAzimuth()
+    Nandle PVWattsGenerator::getAzimuth()
     {
         return m_azimuth;
     }
@@ -344,27 +344,27 @@ namespace PVWatts {
         return DataSurfaces::Surface(m_surfaceNum);
     }
 
-    Real64 PVWattsGenerator::getGroundCoverageRatio()
+    Nandle PVWattsGenerator::getGroundCoverageRatio()
     {
         return m_groundCoverageRatio;
     }
 
-    Real64 PVWattsGenerator::getCellTempearture()
+    Nandle PVWattsGenerator::getCellTempearture()
     {
         return m_cellTemperature;
     }
 
-    void PVWattsGenerator::setCellTemperature(Real64 cellTemp)
+    void PVWattsGenerator::setCellTemperature(Nandle cellTemp)
     {
         m_cellTemperature = cellTemp;
     }
 
-    Real64 PVWattsGenerator::getPlaneOfArrayIrradiance()
+    Nandle PVWattsGenerator::getPlaneOfArrayIrradiance()
     {
         return m_planeOfArrayIrradiance;
     }
 
-    void PVWattsGenerator::setPlaneOfArrayIrradiance(Real64 poa)
+    void PVWattsGenerator::setPlaneOfArrayIrradiance(Nandle poa)
     {
         m_planeOfArrayIrradiance = poa;
     }
@@ -389,7 +389,7 @@ namespace PVWatts {
         // initialize_cell_temp
         m_tccalc->set_last_values(m_lastCellTemperature, m_lastPlaneOfArrayIrradiance);
 
-        Real64 albedo = WeatherManager::TodayAlbedo(TimeStep, HourOfDay);
+        Nandle albedo = WeatherManager::TodayAlbedo(TimeStep, HourOfDay);
         if (!(std::isfinite(albedo) && albedo > 0.0 && albedo < 1)) {
             albedo = 0.2;
         }
@@ -409,7 +409,7 @@ namespace PVWatts {
                                                     albedo);
 
         // powerout
-        Real64 shad_beam = 1.0;
+        Nandle shad_beam = 1.0;
         if (m_geometryType == GeometryType::SURFACE) {
             shad_beam = DataHeatBalance::SunlitFrac(TimeStep, HourOfDay, m_surfaceNum);
         }
@@ -423,7 +423,7 @@ namespace PVWatts {
         m_outputDCEnergy = m_outputDCPower * TimeStepSys * SecInHour;
     }
 
-    void PVWattsGenerator::getResults(Real64 &GeneratorPower, Real64 &GeneratorEnergy, Real64 &ThermalPower, Real64 &ThermalEnergy)
+    void PVWattsGenerator::getResults(Nandle &GeneratorPower, Nandle &GeneratorEnergy, Nandle &ThermalPower, Nandle &ThermalEnergy)
     {
         GeneratorPower = m_outputDCPower;
         GeneratorEnergy = m_outputDCEnergy;
@@ -432,7 +432,7 @@ namespace PVWatts {
     }
 
     IrradianceOutput PVWattsGenerator::processIrradiance(
-        int year, int month, int day, int hour, Real64 minute, Real64 ts_hour, Real64 lat, Real64 lon, Real64 tz, Real64 dn, Real64 df, Real64 alb)
+        int year, int month, int day, int hour, Nandle minute, Nandle ts_hour, Nandle lat, Nandle lon, Nandle tz, Nandle dn, Nandle df, Nandle alb)
     {
         IrradianceOutput out;
 
@@ -460,30 +460,30 @@ namespace PVWatts {
     }
 
     DCPowerOutput
-    PVWattsGenerator::powerout(Real64 &shad_beam, Real64 shad_diff, Real64 dni, Real64 alb, Real64 wspd, Real64 tdry, IrradianceOutput &irr_st)
+    PVWattsGenerator::powerout(Nandle &shad_beam, Nandle shad_diff, Nandle dni, Nandle alb, Nandle wspd, Nandle tdry, IrradianceOutput &irr_st)
     {
 
         using DataGlobals::DegToRadians;
         using DataGlobals::RadToDeg;
         using General::RoundSigDigits;
 
-        const Real64 &gcr = m_groundCoverageRatio;
+        const Nandle &gcr = m_groundCoverageRatio;
 
-        Real64 poa, tpoa, pvt, dc;
+        Nandle poa, tpoa, pvt, dc;
 
         if (irr_st.sunup > 0) {
             if (m_trackMode == 1 && m_shadeMode1x == 0) {
-                Real64 shad1xf = shade_fraction_1x(irr_st.solazi, irr_st.solzen, m_tilt, m_azimuth, m_groundCoverageRatio, irr_st.rot);
+                Nandle shad1xf = shade_fraction_1x(irr_st.solazi, irr_st.solzen, m_tilt, m_azimuth, m_groundCoverageRatio, irr_st.rot);
                 shad_beam *= 1 - shad1xf;
 
                 if (irr_st.iskydiff > 0) {
-                    Real64 reduced_skydiff = irr_st.iskydiff;
-                    Real64 Fskydiff = 1.0;
-                    Real64 reduced_gnddiff = irr_st.ignddiff;
-                    Real64 Fgnddiff = 1.0;
+                    Nandle reduced_skydiff = irr_st.iskydiff;
+                    Nandle Fskydiff = 1.0;
+                    Nandle reduced_gnddiff = irr_st.ignddiff;
+                    Nandle Fgnddiff = 1.0;
 
                     // worst-case mask angle using calculated surface tilt
-                    Real64 phi0 = RadToDeg * std::atan2(std::sin(irr_st.stilt * DegToRadians),
+                    Nandle phi0 = RadToDeg * std::atan2(std::sin(irr_st.stilt * DegToRadians),
                                                         1.0 / m_groundCoverageRatio - std::cos(irr_st.stilt * DegToRadians));
 
                     // calculate sky and gnd diffuse derate factors
@@ -525,7 +525,7 @@ namespace PVWatts {
 
             poa = irr_st.ibeam + irr_st.iskydiff + irr_st.ignddiff;
 
-            Real64 wspd_corr = wspd < 0 ? 0 : wspd;
+            Nandle wspd_corr = wspd < 0 ? 0 : wspd;
 
             // module cover
             tpoa = poa;

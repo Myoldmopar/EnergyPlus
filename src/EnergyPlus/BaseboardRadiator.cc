@@ -123,7 +123,7 @@ namespace BaseboardRadiator {
 
     // Data
     // MODULE PARAMETER DEFINITIONS
-    Real64 const SimpConvAirFlowSpeed(0.5); // m/s
+    Nandle const SimpConvAirFlowSpeed(0.5); // m/s
     static std::string const cCMO_BBRadiator_Water("ZoneHVAC:Baseboard:Convective:Water");
 
     // DERIVED TYPE DEFINITIONS
@@ -156,7 +156,7 @@ namespace BaseboardRadiator {
                       int const ActualZoneNum,
                       int const ControlledZoneNum,
                       bool const FirstHVACIteration,
-                      Real64 &PowerMet,
+                      Nandle &PowerMet,
                       int &CompIndex)
     {
 
@@ -185,10 +185,10 @@ namespace BaseboardRadiator {
 
         int BaseboardNum;               // index of unit in baseboard array
         static bool GetInputFlag(true); // one time get input flag
-        Real64 QZnReq;                  // zone load not yet satisfied
-        Real64 MaxWaterFlow;
-        Real64 MinWaterFlow;
-        Real64 DummyMdot;
+        Nandle QZnReq;                  // zone load not yet satisfied
+        Nandle MaxWaterFlow;
+        Nandle MinWaterFlow;
+        Nandle DummyMdot;
 
         if (GetInputFlag) {
             GetBaseboardInput();
@@ -601,9 +601,9 @@ namespace BaseboardRadiator {
         static bool ZoneEquipmentListChecked(false); // True after the Zone Equipment List has been checked for items
         int Loop;
         static Array1D_bool MyEnvrnFlag;
-        Real64 RhoAirStdInit;
-        Real64 rho; // local fluid density
-        Real64 Cp;  // local fluid specific heat
+        Nandle RhoAirStdInit;
+        Nandle rho; // local fluid density
+        Nandle Cp;  // local fluid specific heat
         bool errFlag;
 
         if (Baseboard(BaseboardNum).ZonePtr <= 0) Baseboard(BaseboardNum).ZonePtr = ZoneEquipConfig(ControlledZoneNumSub).ActualZoneNum;
@@ -738,7 +738,7 @@ namespace BaseboardRadiator {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const Acc(0.0001); // Accuracy of result
+        Nandle const Acc(0.0001); // Accuracy of result
         int const MaxIte(500);    // Maximum number of iterations
         static std::string const RoutineName(cCMO_BBRadiator_Water + ":SizeBaseboard");
 
@@ -751,25 +751,25 @@ namespace BaseboardRadiator {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int WaterInletNode;
         int PltSizHeatNum(0); // index of plant sizing object for 1st heating loop
-        Real64 DesCoilLoad(0.0);
+        Nandle DesCoilLoad(0.0);
         int SolFla; // Flag of solver
-        Real64 UA0; // lower bound for UA
-        Real64 UA1; // upper bound for UA
-        Real64 UA;
-        Array1D<Real64> Par(2);
+        Nandle UA0; // lower bound for UA
+        Nandle UA1; // upper bound for UA
+        Nandle UA;
+        Array1D<Nandle> Par(2);
         bool ErrorsFound(false);             // If errors detected in input
-        Real64 rho;                          // local fluid density
-        Real64 Cp;                           // local fluid specific heat
+        Nandle rho;                          // local fluid density
+        Nandle Cp;                           // local fluid specific heat
         bool FlowAutoSize(false);            // Indicator to autosizing water volume flow
         bool UAAutoSize(false);              // Indicator to autosizing UA
-        Real64 WaterVolFlowRateMaxDes(0.0);  // Design water volume flow for reproting
-        Real64 WaterVolFlowRateMaxUser(0.0); // User hard-sized volume flow for reporting
-        Real64 UADes(0.0);                   // Design UA value for reproting
-        Real64 UAUser(0.0);                  // User hard-sized value for reporting
+        Nandle WaterVolFlowRateMaxDes(0.0);  // Design water volume flow for reproting
+        Nandle WaterVolFlowRateMaxUser(0.0); // User hard-sized volume flow for reporting
+        Nandle UADes(0.0);                   // Design UA value for reproting
+        Nandle UAUser(0.0);                  // User hard-sized value for reporting
         std::string CompName;                // component name
         std::string CompType;                // component type
         std::string SizingString;            // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;                     // autosized value of coil input field
+        Nandle TempSize;                     // autosized value of coil input field
         int FieldNum = 1;                    // IDD numeric field number where input field description is found
         int SizingMethod;                    // Integer representation of sizing method name (HeatingCapacitySizing)
         bool PrintFlag;                      // TRUE when sizing information is reported in the eio file
@@ -970,7 +970,7 @@ namespace BaseboardRadiator {
 
                         // before iterating on a design UA check output at lower UA bound
                         Baseboard(BaseboardNum).UA = UA0;
-                        Real64 LoadMet = 0.0;
+                        Nandle LoadMet = 0.0;
                         int BBIndex = BaseboardNum;
                         SimHWConvective(BBIndex, LoadMet);
                         if (LoadMet < DesCoilLoad) { // baseboard output should be below design load
@@ -1081,7 +1081,7 @@ namespace BaseboardRadiator {
         }
     }
 
-    void SimHWConvective(int &BaseboardNum, Real64 &LoadMet)
+    void SimHWConvective(int &BaseboardNum, Nandle &LoadMet)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Russ Taylor
@@ -1125,25 +1125,25 @@ namespace BaseboardRadiator {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneNum;
-        Real64 WaterInletTemp;
-        Real64 AirInletTemp;
-        Real64 CpAir;
-        Real64 CpWater;
-        Real64 AirMassFlowRate;
-        Real64 WaterMassFlowRate;
-        Real64 CapacitanceAir;
-        Real64 CapacitanceWater;
-        Real64 CapacitanceMax;
-        Real64 CapacitanceMin;
-        Real64 CapacityRatio;
-        Real64 NTU;
-        Real64 Effectiveness;
-        Real64 WaterOutletTemp;
-        Real64 AirOutletTemp;
-        Real64 AA;
-        Real64 BB;
-        Real64 CC;
-        Real64 QZnReq;
+        Nandle WaterInletTemp;
+        Nandle AirInletTemp;
+        Nandle CpAir;
+        Nandle CpWater;
+        Nandle AirMassFlowRate;
+        Nandle WaterMassFlowRate;
+        Nandle CapacitanceAir;
+        Nandle CapacitanceWater;
+        Nandle CapacitanceMax;
+        Nandle CapacitanceMin;
+        Nandle CapacityRatio;
+        Nandle NTU;
+        Nandle Effectiveness;
+        Nandle WaterOutletTemp;
+        Nandle AirOutletTemp;
+        Nandle AA;
+        Nandle BB;
+        Nandle CC;
+        Nandle QZnReq;
 
         ZoneNum = Baseboard(BaseboardNum).ZonePtr;
         QZnReq = ZoneSysEnergyDemand(ZoneNum).RemainingOutputReqToHeatSP;
@@ -1321,8 +1321,8 @@ namespace BaseboardRadiator {
         Baseboard(BaseboardNum).Energy = Baseboard(BaseboardNum).Power * TimeStepSys * SecInHour;
     }
 
-    Real64 HWBaseboardUAResidual(Real64 const UA,           // UA of coil
-                                 Array1D<Real64> const &Par // par(1) = design coil load [W]
+    Nandle HWBaseboardUAResidual(Nandle const UA,           // UA of coil
+                                 Array1D<Nandle> const &Par // par(1) = design coil load [W]
     )
     {
 
@@ -1346,7 +1346,7 @@ namespace BaseboardRadiator {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -1364,7 +1364,7 @@ namespace BaseboardRadiator {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int BaseboardIndex;
-        Real64 LoadMet;
+        Nandle LoadMet;
 
         BaseboardIndex = int(Par(2));
         Baseboard(BaseboardIndex).UA = UA;

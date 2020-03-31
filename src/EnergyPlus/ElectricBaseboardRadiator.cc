@@ -111,13 +111,13 @@ namespace ElectricBaseboardRadiator {
 
     // VARIABLE DECLARATIONS:
     int NumElecBaseboards(0);
-    Array1D<Real64> QBBElecRadSource;     // Need to keep the last value in case we are still iterating
-    Array1D<Real64> QBBElecRadSrcAvg;     // Need to keep the last value in case we are still iterating
-    Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
+    Array1D<Nandle> QBBElecRadSource;     // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> QBBElecRadSrcAvg;     // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
     // Record keeping variables used to calculate QBBRadSrcAvg locally
-    Array1D<Real64> LastQBBElecRadSrc;  // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastQBBElecRadSrc;  // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     Array1D_bool MySizeFlag;
     Array1D_bool CheckEquipName;
 
@@ -131,7 +131,7 @@ namespace ElectricBaseboardRadiator {
                           int const EP_UNUSED(ActualZoneNum),
                           int const ControlledZoneNum,
                           bool const FirstHVACIteration,
-                          Real64 &PowerMet,
+                          Nandle &PowerMet,
                           int &CompIndex)
     {
 
@@ -227,8 +227,8 @@ namespace ElectricBaseboardRadiator {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("GetBaseboardInput: "); // include trailing blank space
-        Real64 const MaxFraction(1.0);                               // Maximum limit of fractional values
-        Real64 const MinFraction(0.0);                               // Minimum limit of fractional values
+        Nandle const MaxFraction(1.0);                               // Maximum limit of fractional values
+        Nandle const MinFraction(0.0);                               // Minimum limit of fractional values
         //    INTEGER,PARAMETER :: MaxDistribSurfaces   = 20      ! Maximum number of surfaces that a baseboard heater can radiate to
         int const MinDistribSurfaces(1);                  // Minimum number of surfaces that a baseboard heater can radiate to
         int const iHeatCAPMAlphaNum(3);                   // get input index to HW baseboard heating capacity sizing method
@@ -238,7 +238,7 @@ namespace ElectricBaseboardRadiator {
             3); // get input index to HW baseboard heating capacity sizing as fraction of autozized heating capacity
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AllFracsSummed; // Sum of the fractions radiant
+        Nandle AllFracsSummed; // Sum of the fractions radiant
         int BaseboardNum;
         int NumAlphas;
         int NumNumbers;
@@ -687,8 +687,8 @@ namespace ElectricBaseboardRadiator {
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
-        Real64 FracOfAutoSzCap;   // fraction of autosized capacity
+        Nandle TempSize;          // autosized value of coil input field
+        Nandle FracOfAutoSzCap;   // fraction of autosized capacity
         int FieldNum = 1;         // IDD numeric field number where input field description is found
         int SizingMethod; // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                           // HeatingCapacitySizing, etc.)
@@ -775,20 +775,20 @@ namespace ElectricBaseboardRadiator {
         using ScheduleManager::GetScheduleIndex;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SimpConvAirFlowSpeed(0.5); // m/s
+        Nandle const SimpConvAirFlowSpeed(0.5); // m/s
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneNum;
-        Real64 AirInletTemp;
-        Real64 CpAir;
-        Real64 AirMassFlowRate;
-        Real64 CapacitanceAir;
-        Real64 Effic;
-        Real64 AirOutletTemp;
-        Real64 QBBCap;
-        Real64 RadHeat;
-        Real64 QZnReq;
-        Real64 LoadMet;
+        Nandle AirInletTemp;
+        Nandle CpAir;
+        Nandle AirMassFlowRate;
+        Nandle CapacitanceAir;
+        Nandle Effic;
+        Nandle AirOutletTemp;
+        Nandle QBBCap;
+        Nandle RadHeat;
+        Nandle QZnReq;
+        Nandle LoadMet;
 
         ZoneNum = ElecBaseboard(BaseboardNum).ZonePtr;
         QZnReq = ZoneSysEnergyDemand(ZoneNum).RemainingOutputReqToHeatSP;
@@ -839,7 +839,7 @@ namespace ElectricBaseboardRadiator {
                     // what is happening in the zone.  If it is still predicting a negative heating
                     // load, then zero everything out.
                     // First, turn off the baseboard:
-                    Real64 TempZeroSourceSumHATsurf;
+                    Nandle TempZeroSourceSumHATsurf;
                     QBBElecRadSource(BaseboardNum) = 0.0;
                     DistributeBBElecRadGains();
                     HeatBalanceSurfaceManager::CalcHeatBalanceOutsideSurf(ZoneNum);
@@ -892,13 +892,13 @@ namespace ElectricBaseboardRadiator {
         ElecBaseboard(BaseboardNum).ConvPower = QBBCap - RadHeat;
     }
 
-    void UpdateElectricBaseboardOff(Real64 &LoadMet,
-                                    Real64 &QBBCap,
-                                    Real64 &RadHeat,
-                                    Real64 &QBBElecRadSrc,
-                                    Real64 &ElecUseRate,
-                                    Real64 &AirOutletTemp,
-                                    Real64 const AirInletTemp)
+    void UpdateElectricBaseboardOff(Nandle &LoadMet,
+                                    Nandle &QBBCap,
+                                    Nandle &RadHeat,
+                                    Nandle &QBBElecRadSrc,
+                                    Nandle &ElecUseRate,
+                                    Nandle &AirOutletTemp,
+                                    Nandle const AirInletTemp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -916,7 +916,7 @@ namespace ElectricBaseboardRadiator {
     }
 
     void UpdateElectricBaseboardOn(
-        Real64 &AirOutletTemp, Real64 &ElecUseRate, Real64 const AirInletTemp, Real64 const QBBCap, Real64 const CapacitanceAir, Real64 const Effic)
+        Nandle &AirOutletTemp, Nandle &ElecUseRate, Nandle const AirInletTemp, Nandle const QBBCap, Nandle const CapacitanceAir, Nandle const Effic)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1044,14 +1044,14 @@ namespace ElectricBaseboardRadiator {
         using General::RoundSigDigits;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
+        Nandle const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int RadSurfNum;           // Counter for surfaces receiving radiation from radiant heater
         int BaseboardNum;         // Counter for the baseboard
         int SurfNum;              // Pointer to the Surface derived type
         int ZoneNum;              // Pointer to the Zone derived type
-        Real64 ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
+        Nandle ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
 
         // Initialize arrays
         QElecBaseboardSurf = 0.0;
@@ -1109,7 +1109,7 @@ namespace ElectricBaseboardRadiator {
         ElecBaseboard(BaseboardNum).RadEnergy = ElecBaseboard(BaseboardNum).RadPower * TimeStepSys * SecInHour;
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
 
         // FUNCTION INFORMATION:
@@ -1127,11 +1127,11 @@ namespace ElectricBaseboardRadiator {
         using namespace DataHeatBalSurface;
 
         // Return value
-        Real64 SumHATsurf;
+        Nandle SumHATsurf;
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // Surface number
-        Real64 Area; // Effective surface area
+        Nandle Area; // Effective surface area
 
         SumHATsurf = 0.0;
 

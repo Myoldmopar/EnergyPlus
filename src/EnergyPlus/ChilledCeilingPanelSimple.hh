@@ -82,14 +82,14 @@ namespace CoolingPanelSimple {
 
     // MODULE VARIABLE DECLARATIONS:
     extern int NumCoolingPanels;
-    extern Array1D<Real64> CoolingPanelSource;   // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> CoolingPanelSrcAvg;   // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
+    extern Array1D<Nandle> CoolingPanelSource;   // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> CoolingPanelSrcAvg;   // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
 
     // Record keeping variables used to calculate CoolingPanelSrcAvg locally
-    extern Array1D<Real64> LastCoolingPanelSrc; // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastSysTimeElapsed;  // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastTimeStepSys;     // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastCoolingPanelSrc; // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastSysTimeElapsed;  // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastTimeStepSys;     // Need to keep the last value in case we are still iterating
     extern Array1D_bool CheckEquipName;
     extern Array1D_bool SetLoopIndexFlag; // get loop number flag
 
@@ -119,37 +119,37 @@ namespace CoolingPanelSimple {
         std::string ColdSetptSched;
         int ColdSetptSchedPtr;
         int CondCtrlType;
-        Real64 CondDewPtDeltaT;
+        Nandle CondDewPtDeltaT;
         int CondErrIndex;
-        Real64 ColdThrottlRange;
-        Real64 RatedWaterTemp;
+        Nandle ColdThrottlRange;
+        Nandle RatedWaterTemp;
         int CoolingCapMethod;
-        Real64 ScaledCoolingCapacity;
-        Real64 UA;
-        Real64 Offset;
-        Real64 WaterMassFlowRate;
-        Real64 WaterMassFlowRateMax;
-        Real64 RatedWaterFlowRate;
-        Real64 WaterVolFlowRateMax;
-        Real64 WaterInletTempStd;
-        Real64 WaterInletTemp;
-        Real64 WaterInletEnthalpy;
-        Real64 WaterOutletTempStd;
-        Real64 WaterOutletTemp;
-        Real64 WaterOutletEnthalpy;
-        Real64 RatedZoneAirTemp;
-        Real64 FracRadiant;
-        Real64 FracConvect;
-        Real64 FracDistribPerson;
-        Array1D<Real64> FracDistribToSurf;
-        Real64 TotPower;
-        Real64 Power;
-        Real64 ConvPower;
-        Real64 RadPower;
-        Real64 TotEnergy;
-        Real64 Energy;
-        Real64 ConvEnergy;
-        Real64 RadEnergy;
+        Nandle ScaledCoolingCapacity;
+        Nandle UA;
+        Nandle Offset;
+        Nandle WaterMassFlowRate;
+        Nandle WaterMassFlowRateMax;
+        Nandle RatedWaterFlowRate;
+        Nandle WaterVolFlowRateMax;
+        Nandle WaterInletTempStd;
+        Nandle WaterInletTemp;
+        Nandle WaterInletEnthalpy;
+        Nandle WaterOutletTempStd;
+        Nandle WaterOutletTemp;
+        Nandle WaterOutletEnthalpy;
+        Nandle RatedZoneAirTemp;
+        Nandle FracRadiant;
+        Nandle FracConvect;
+        Nandle FracDistribPerson;
+        Array1D<Nandle> FracDistribToSurf;
+        Nandle TotPower;
+        Nandle Power;
+        Nandle ConvPower;
+        Nandle RadPower;
+        Nandle TotEnergy;
+        Nandle Energy;
+        Nandle ConvEnergy;
+        Nandle RadEnergy;
         int LoopNum;     // plant loop index
         int LoopSideNum; // plant loop side index
         int BranchNum;   // plant loop branch index
@@ -173,7 +173,7 @@ namespace CoolingPanelSimple {
 
         void CalcCoolingPanel(int const CoolingPanelNum);
 
-        void SetCoolingPanelControlTemp(Real64 &ControlTemp, int const ZoneNum);
+        void SetCoolingPanelControlTemp(Nandle &ControlTemp, int const ZoneNum);
 
         bool SizeCoolingPanelUA();
 
@@ -203,7 +203,7 @@ namespace CoolingPanelSimple {
                          int const ActualZoneNum,
                          int const ControlledZoneNum,
                          bool const FirstHVACIteration,
-                         Real64 &PowerMet,
+                         Nandle &PowerMet,
                          int &CompIndex);
 
     void GetCoolingPanelInput();
@@ -218,7 +218,7 @@ namespace CoolingPanelSimple {
 
     void DistributeCoolingPanelRadGains();
 
-    Real64 SumHATsurf(int const ZoneNum); // Zone number
+    Nandle SumHATsurf(int const ZoneNum); // Zone number
 
 } // namespace CoolingPanelSimple
 

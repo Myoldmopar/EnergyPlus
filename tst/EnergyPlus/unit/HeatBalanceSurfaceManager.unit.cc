@@ -85,8 +85,8 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_CalcOutsideSurfTemp)
     int SurfNum;      // Surface number DO loop counter
     int ZoneNum;      // Zone number the current surface is attached to
     int ConstrNum;    // Construction index for the current surface
-    Real64 HMovInsul; // "Convection" coefficient of movable insulation
-    Real64 TempExt;   // Exterior temperature boundary condition
+    Nandle HMovInsul; // "Convection" coefficient of movable insulation
+    Nandle TempExt;   // Exterior temperature boundary condition
     bool ErrorFlag;   // Movable insulation error flag
 
     SurfNum = 1;
@@ -160,7 +160,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_CalcOutsideSurfTemp)
 TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_TestSurfTempCalcHeatBalanceInsideSurf)
 {
 
-    Real64 surfTemp;
+    Nandle surfTemp;
     DataSurfaces::SurfaceData testSurface;
     DataHeatBalance::ZoneData testZone;
     int cntWarmupSurfTemp = 0;
@@ -1346,8 +1346,8 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_TestSurfPropertyLocalEnv)
         DataSurfaces::Surface(SurfNum).ExtConvCoeff = -1;
     }
     CalcHeatBalanceOutsideSurf();
-    Real64 HExt_Expect_Surf1 = ConvectionCoefficients::CalcASHRAESimpExtConvectCoeff(5, 1.5);
-    Real64 HExt_Expect_Surf2 = ConvectionCoefficients::CalcASHRAESimpExtConvectCoeff(5, 0.0);
+    Nandle HExt_Expect_Surf1 = ConvectionCoefficients::CalcASHRAESimpExtConvectCoeff(5, 1.5);
+    Nandle HExt_Expect_Surf2 = ConvectionCoefficients::CalcASHRAESimpExtConvectCoeff(5, 0.0);
     EXPECT_EQ(HExt_Expect_Surf1, DataHeatBalSurface::HcExtSurf(1));
     EXPECT_EQ(HExt_Expect_Surf2, DataHeatBalSurface::HcExtSurf(2));
 }
@@ -1898,8 +1898,8 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_TestSurfPropertySrdSurfLWR)
     ScheduleManager::Schedule(3).CurrentValue = 22.0; // Grd temp
 
     int SurfNum;
-    Real64 const StefanBoltzmann(5.6697E-8);
-    Real64 const KelvinConv(273.15);
+    Nandle const StefanBoltzmann(5.6697E-8);
+    Nandle const KelvinConv(273.15);
     for (SurfNum = 1; SurfNum <= 6; SurfNum++) {
         DataHeatBalSurface::TH(1, 1, SurfNum) = 20;         // Surf temp
         DataSurfaces::Surface(SurfNum).OutDryBulbTemp = 22; // Air temp
@@ -2496,9 +2496,9 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_TestSurfTempCalcHeatBalanceA
 TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_TestReportIntMovInsInsideSurfTemp)
 {
 
-    Real64 ExpectedResult1;
-    Real64 ExpectedResult2;
-    Real64 ExpectedResult3;
+    Nandle ExpectedResult1;
+    Nandle ExpectedResult2;
+    Nandle ExpectedResult3;
 
     DataSurfaces::clear_state();
     DataHeatBalSurface::clear_state();
@@ -2554,14 +2554,14 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_OutsideSurfHeatBalanceWhenRa
    
     // If Rain Flag = on, GetQdotConvOutRep uses Outdoor Air Wet Bulb Temp.
     DataEnvironment::IsRain = true;
-    Real64 ExpectedQconvPerArea1 = -1000 * (6.71793958923051 - 6.66143784594778);
+    Nandle ExpectedQconvPerArea1 = -1000 * (6.71793958923051 - 6.66143784594778);
 
     EXPECT_NEAR(ExpectedQconvPerArea1, GetQdotConvOutRepPerArea(1), 0.01);
 
     // Otherwise, GetQdotConvOutRep uses Outdoor Air Dry Bulb Temp.
     DataEnvironment::IsRain = false;
     DataHeatBalSurface::HcExtSurf(1) = 5.65361106051348;
-    Real64 ExpectedQconvPerArea2 = -5.65361106051348 * (6.71793958923051 - 7.2);
+    Nandle ExpectedQconvPerArea2 = -5.65361106051348 * (6.71793958923051 - 7.2);
 
     EXPECT_NEAR(ExpectedQconvPerArea2, GetQdotConvOutRepPerArea(1), 0.01);
 }

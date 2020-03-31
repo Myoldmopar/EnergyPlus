@@ -80,9 +80,9 @@ namespace HeatBalanceIntRadExchange {
     // Functions
     void clear_state();
 
-    void CalcInteriorRadExchange(Array1S<Real64> const SurfaceTemp,       // Current surface temperatures
+    void CalcInteriorRadExchange(Array1S<Nandle> const SurfaceTemp,       // Current surface temperatures
                                  int const SurfIterations,                // Number of iterations in calling subroutine
-                                 Array1D<Real64> &NetLWRadToSurf,          // Net long wavelength radiant exchange from other surfaces
+                                 Array1D<Nandle> &NetLWRadToSurf,          // Net long wavelength radiant exchange from other surfaces
                                  Optional_int_const ZoneToResimulate = _, // if passed in, then only calculate for this zone
                                  std::string const &CalledFrom = "");
 
@@ -100,7 +100,7 @@ namespace HeatBalanceIntRadExchange {
 
     void GetInputViewFactors(std::string const &EnclosureName, // Needed to check for user input view factors.
                              int const N,                      // NUMBER OF SURFACES
-                             Array2A<Real64> F,                // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
+                             Array2A<Nandle> F,                // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
                              const Array1D_int &SPtr,          // pointer to actual surface number
                              bool &NoUserInputF,               // Flag signifying no input F's for this
                              bool &ErrorsFound                 // True when errors are found in number of fields vs max args
@@ -108,52 +108,52 @@ namespace HeatBalanceIntRadExchange {
 
     void GetInputViewFactorsbyName(std::string const &ZoneName, // Needed to check for user input view factors.
                                    int const N,                 // NUMBER OF SURFACES
-                                   Array2A<Real64> F,           // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
+                                   Array2A<Nandle> F,           // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
                                    const Array1D_int &SPtr,     // pointer to actual surface number
                                    bool &NoUserInputF,          // Flag signifying no input F's for this
                                    bool &ErrorsFound            // True when errors are found in number of fields vs max args
     );
 
     void CalcApproximateViewFactors(int const N,                    // NUMBER OF SURFACES
-                                    const Array1D<Real64> &A,       // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                                    const Array1D<Real64> &Azimuth, // Facing angle of the surface (in degrees)
-                                    const Array1D<Real64> &Tilt,    // Tilt angle of the surface (in degrees)
-                                    Array2A<Real64> F,              // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
+                                    const Array1D<Nandle> &A,       // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                                    const Array1D<Nandle> &Azimuth, // Facing angle of the surface (in degrees)
+                                    const Array1D<Nandle> &Tilt,    // Tilt angle of the surface (in degrees)
+                                    Array2A<Nandle> F,              // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
                                     const Array1D_int &SPtr         // pointer to REAL(r64) surface number (for error message)
     );
 
     void FixViewFactors(int const N,                     // NUMBER OF SURFACES
-                        const Array1D<Real64> &A,        // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                        Array2A<Real64> F,               // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
+                        const Array1D<Nandle> &A,        // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                        Array2A<Nandle> F,               // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
                         std::string &enclName,           // Name of Enclosure being fixed
                         std::vector<int> const zoneNums, // Zones which are part of this enclosure
-                        Real64 &OriginalCheckValue,      // check of SUM(F) - N
-                        Real64 &FixedCheckValue,         // check after fixed of SUM(F) - N
-                        Real64 &FinalCheckValue,         // the one to go with
+                        Nandle &OriginalCheckValue,      // check of SUM(F) - N
+                        Nandle &FixedCheckValue,         // check after fixed of SUM(F) - N
+                        Nandle &FinalCheckValue,         // the one to go with
                         int &NumIterations,              // number of iterations to fixed
-                        Real64 &RowSum                   // RowSum of Fixed
+                        Nandle &RowSum                   // RowSum of Fixed
     );
 
     void CalcScriptF(int const N,             // Number of surfaces
-                     Array1D<Real64> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                     Array2<Real64> const &F, // DIRECT VIEW FACTOR MATRIX (N X N)
-                     Array1D<Real64> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
-                     Array2<Real64> &ScriptF  // MATRIX OF SCRIPT F FACTORS (N X N) //Tuned Transposed
+                     Array1D<Nandle> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                     Array2<Nandle> const &F, // DIRECT VIEW FACTOR MATRIX (N X N)
+                     Array1D<Nandle> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
+                     Array2<Nandle> &ScriptF  // MATRIX OF SCRIPT F FACTORS (N X N) //Tuned Transposed
     );
 
     void CalcFMRT(int const N,             // Number of surfaces
-                  Array1D<Real64> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                  Array1D<Real64> &FMRT     // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
+                  Array1D<Nandle> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                  Array1D<Nandle> &FMRT     // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
     );
 
     void CalcFp(int const N,             // Number of surfaces
-                Array1D<Real64> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
-                Array1D<Real64> &FMRT,    // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
-                Array1D<Real64> &Fp       // VECTOR OF OPPENHEIM RESISTNACE VALUES
+                Array1D<Nandle> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
+                Array1D<Nandle> &FMRT,    // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
+                Array1D<Nandle> &Fp       // VECTOR OF OPPENHEIM RESISTNACE VALUES
     );
 
-    void CalcMatrixInverse(Array2<Real64> &A, // Matrix: Gets reduced to L\U form
-                           Array2<Real64> &I  // Returned as inverse matrix
+    void CalcMatrixInverse(Array2<Nandle> &A, // Matrix: Gets reduced to L\U form
+                           Array2<Nandle> &I  // Returned as inverse matrix
     );
 
     int GetRadiantSystemSurface(std::string const &cCurrentModuleObject, // Calling Object type

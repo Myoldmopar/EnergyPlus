@@ -179,7 +179,7 @@ namespace OutdoorAirUnit {
 
     // MODULE VARIABLE DECLARATIONS:
     int NumOfOAUnits(0);                   // Number of outdoor air unit in the input file
-    Real64 OAMassFlowRate(0.0);            // Outside air mass flow rate for the zone outdoor air unit
+    Nandle OAMassFlowRate(0.0);            // Outside air mass flow rate for the zone outdoor air unit
     bool GetOutdoorAirUnitInputFlag(true); // Flag set to make sure you get input once
 
     // Autosizing variables
@@ -223,8 +223,8 @@ namespace OutdoorAirUnit {
     void SimOutdoorAirUnit(std::string const &CompName,   // name of the outdoor air unit
                            int const ZoneNum,             // number of zone being served
                            bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                           Real64 &PowerMet,              // Sensible power supplied (W)
-                           Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                           Nandle &PowerMet,              // Sensible power supplied (W)
+                           Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                            int &CompIndex)
     {
 
@@ -381,7 +381,7 @@ namespace OutdoorAirUnit {
         Array1D_string cNumericFields;   // Numeric field names
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
         Array1D_string AlphArray;
         static bool errFlag(false);
 
@@ -1144,11 +1144,11 @@ namespace OutdoorAirUnit {
         int InNode;                       // inlet node number in outdoor air unit
         int OutNode;                      // outlet node number in outdoor air unit
         int OutsideAirNode;               // outside air node number outdoor air unit
-        Real64 OAFrac;                    // possible outside air fraction
-        Real64 EAFrac;                    // possible exhaust air fraction
-        Real64 RhoAir;                    // air density at InNode
+        Nandle OAFrac;                    // possible outside air fraction
+        Nandle EAFrac;                    // possible exhaust air fraction
+        Nandle RhoAir;                    // air density at InNode
         int compLoop;                     // local do loop index
-        Real64 rho;
+        Nandle rho;
         bool errFlag;
 
         // FLOW:
@@ -1298,7 +1298,7 @@ namespace OutdoorAirUnit {
                     if (OutAirUnit(OAUnitNum).OAEquip(compLoop).CoilPlantTypeOfNum == TypeOf_CoilSteamAirHeating) {
                         OutAirUnit(OAUnitNum).OAEquip(compLoop).MaxVolWaterFlow =
                             GetCoilMaxSteamFlowRate(OutAirUnit(OAUnitNum).OAEquip(compLoop).ComponentIndex, errFlag);
-                        Real64 rho = GetSatDensityRefrig(PlantLoop(OutAirUnit(OAUnitNum).OAEquip(compLoop).LoopNum).FluidName,
+                        Nandle rho = GetSatDensityRefrig(PlantLoop(OutAirUnit(OAUnitNum).OAEquip(compLoop).LoopNum).FluidName,
                                                          DataGlobals::SteamInitConvTemp,
                                                          1.0,
                                                          PlantLoop(OutAirUnit(OAUnitNum).OAEquip(compLoop).LoopNum).FluidIndex,
@@ -1453,15 +1453,15 @@ namespace OutdoorAirUnit {
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
         int PltSizCoolNum; // index of plant sizing object for 1st cooling loop
         bool ErrorsFound;
-        Real64 RhoAir;
+        Nandle RhoAir;
         int CompNum;
         bool IsAutoSize;            // Indicator to autosize
-        Real64 OutAirVolFlowDes;    // Autosized outdoor air flow for reporting
-        Real64 OutAirVolFlowUser;   // Hardsized outdoor air flow for reporting
-        Real64 ExtAirVolFlowDes;    // Autosized exhaust air flow for reporting
-        Real64 ExtAirVolFlowUser;   // Hardsized exhaust air flow for reporting
-        Real64 MaxVolWaterFlowDes;  // Autosized maximum water flow for reporting
-        Real64 MaxVolWaterFlowUser; // Hardsized maximum water flow for reporting
+        Nandle OutAirVolFlowDes;    // Autosized outdoor air flow for reporting
+        Nandle OutAirVolFlowUser;   // Hardsized outdoor air flow for reporting
+        Nandle ExtAirVolFlowDes;    // Autosized exhaust air flow for reporting
+        Nandle ExtAirVolFlowUser;   // Hardsized exhaust air flow for reporting
+        Nandle MaxVolWaterFlowDes;  // Autosized maximum water flow for reporting
+        Nandle MaxVolWaterFlowUser; // Hardsized maximum water flow for reporting
 
         PltSizCoolNum = 0;
         PltSizHeatNum = 0;
@@ -1648,8 +1648,8 @@ namespace OutdoorAirUnit {
     void CalcOutdoorAirUnit(int &OAUnitNum,                // number of the current unit being simulated
                             int const ZoneNum,             // number of zone being served
                             bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                            Real64 &PowerMet,              // power supplied
-                            Real64 &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
+                            Nandle &PowerMet,              // power supplied
+                            Nandle &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
     )
     {
 
@@ -1705,30 +1705,30 @@ namespace OutdoorAirUnit {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static std::string const CurrentModuleObject("ZoneHVAC:OutdoorAirUnit");
-        Real64 DesOATemp;    // Design OA Temp degree C
-        Real64 AirMassFlow;  // air mass flow rate [kg/s]
+        Nandle DesOATemp;    // Design OA Temp degree C
+        Nandle AirMassFlow;  // air mass flow rate [kg/s]
         int ControlNode;     // the hot water or cold water inlet node
         int InletNode;       // Unit air inlet node
         int SFanOutletNode;  // Unit supply fan outlet node
         int OutletNode;      // air outlet node
         int OutsideAirNode;  // outside air node
-        Real64 QTotUnitOut;  // total unit output [watts]
-        Real64 QUnitOut;     // heating or sens. cooling provided by fan coil unit [watts]
-        Real64 LatLoadMet;   // heating or sens. cooling provided by fan coil unit [watts]
-        Real64 MinHumRat;    // desired temperature after mixing inlet and outdoor air [degrees C]
-        Real64 SetPointTemp; // temperature that will be used to control the radiant system [Celsius]
-        Real64 HiCtrlTemp;   // Current high point in setpoint temperature range
-        Real64 LoCtrlTemp;   // Current low point in setpoint temperature range
-        Real64 AirInEnt;     // RE-calcualte the Enthalpy of supply air
-        Real64 AirOutletTemp;
+        Nandle QTotUnitOut;  // total unit output [watts]
+        Nandle QUnitOut;     // heating or sens. cooling provided by fan coil unit [watts]
+        Nandle LatLoadMet;   // heating or sens. cooling provided by fan coil unit [watts]
+        Nandle MinHumRat;    // desired temperature after mixing inlet and outdoor air [degrees C]
+        Nandle SetPointTemp; // temperature that will be used to control the radiant system [Celsius]
+        Nandle HiCtrlTemp;   // Current high point in setpoint temperature range
+        Nandle LoCtrlTemp;   // Current low point in setpoint temperature range
+        Nandle AirInEnt;     // RE-calcualte the Enthalpy of supply air
+        Nandle AirOutletTemp;
         static int OperatingMode(0);
         static int UnitControlType(0);
-        Real64 ZoneSupAirEnt; // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle ZoneSupAirEnt; // Specific humidity ratio of inlet air (kg moisture / kg moist air)
         // Latent output
-        Real64 LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
-        Real64 SpecHumOut;   // Specific humidity ratio of outlet air (kg moisture / kg moist air)
-        Real64 SpecHumIn;    // Specific humidity ratio of inlet air (kg moisture / kg moist air)
-        Real64 ZoneAirEnt;   // zone air enthalphy J/kg
+        Nandle LatentOutput; // Latent (moisture) add/removal rate, negative is dehumidification [kg/s]
+        Nandle SpecHumOut;   // Specific humidity ratio of outlet air (kg moisture / kg moist air)
+        Nandle SpecHumIn;    // Specific humidity ratio of inlet air (kg moisture / kg moist air)
+        Nandle ZoneAirEnt;   // zone air enthalphy J/kg
 
         // FLOW:
 
@@ -2124,13 +2124,13 @@ namespace OutdoorAirUnit {
         // DERIVED TYPE DEFINITIONS: None
 
         // SUBROUTINE LOCAL VARIABLE DEFINITIONS
-        Real64 OAMassFlow;
-        Real64 QCompReq;
+        Nandle OAMassFlow;
+        Nandle QCompReq;
         int UnitNum;
-        Real64 MaxWaterFlow;
-        Real64 MinWaterFlow;
+        Nandle MaxWaterFlow;
+        Nandle MinWaterFlow;
         int ControlNode;
-        Real64 CpAirZn;
+        Nandle CpAirZn;
         int SimCompNum;
         int OpMode;
         int EquipTypeNum;
@@ -2138,12 +2138,12 @@ namespace OutdoorAirUnit {
         int WCCoilOutletNode;
         int WHCoilInletNode;
         int WHCoilOutletNode;
-        Real64 QUnitOut;
+        Nandle QUnitOut;
         static int DXSystemIndex(0);
-        Real64 CompAirOutTemp;
-        Real64 FanEffect;
+        Nandle CompAirOutTemp;
+        Nandle FanEffect;
         bool DrawFan; // fan position If .True., the temperature increasing by fan operating is considered
-        Real64 Dxsystemouttemp;
+        Nandle Dxsystemouttemp;
         static bool HeatActive(false);
         static bool CoolActive(false);
 
@@ -2417,8 +2417,8 @@ namespace OutdoorAirUnit {
                     } else {
                         Dxsystemouttemp = CompAirOutTemp - FanEffect;
                     }
-                    Real64 sensOut = 0.0;
-                    Real64 latOut = 0.0;
+                    Nandle sensOut = 0.0;
+                    Nandle latOut = 0.0;
                     OutAirUnit(OAUnitNum)
                         .OAEquip(SimCompNum)
                         .compPointer->simulate(EquipName,
@@ -2443,7 +2443,7 @@ namespace OutdoorAirUnit {
     void CalcOAUnitCoilComps(int const CompNum, // actual outdoor air unit num
                              bool const FirstHVACIteration,
                              int const EquipIndex, // Component Type -- Integerized for this module
-                             Real64 &LoadMet)
+                             Nandle &LoadMet)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2473,17 +2473,17 @@ namespace OutdoorAirUnit {
         // Locals
         // SUBROUTINE LOCAL VARIABLE DEFINITIONS
         int OAUnitNum;
-        Real64 CpAirZn;
+        Nandle CpAirZn;
         int CoilIndex;
         int OpMode;
-        Real64 AirMassFlow;
-        Real64 FanEffect;
+        Nandle AirMassFlow;
+        Nandle FanEffect;
         bool DrawFan; // Fan Flag
         int InletNode;
         int OutletNode;
-        Real64 QCompReq; // Actual equipment load
+        Nandle QCompReq; // Actual equipment load
         int CoilTypeNum;
-        Real64 CoilAirOutTemp;
+        Nandle CoilAirOutTemp;
         int CompoNum;
 
         // Flow

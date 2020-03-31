@@ -95,16 +95,16 @@ namespace PoweredInductionUnits {
         int UnitType_Num;         // index for type of unit
         std::string Sched;        // availability schedule
         int SchedPtr;             // index to schedule
-        Real64 MaxTotAirVolFlow;  // m3/s  (series)
-        Real64 MaxTotAirMassFlow; // kg/s  (series)
-        Real64 MaxPriAirVolFlow;  // m3/s
-        Real64 MaxPriAirMassFlow; // kg/s
-        Real64 MinPriAirFlowFrac; // minimum primary air flow fraction
-        Real64 MinPriAirMassFlow; // kg/s
-        Real64 MaxSecAirVolFlow;  // m3/s (parallel)
-        Real64 MaxSecAirMassFlow; // kg/s (parallel)
-        Real64 FanOnFlowFrac;     // frac of primary air flow at which fan turns on (parallel)
-        Real64 FanOnAirMassFlow;  // primary air mass flow rate at which fan turns on (parallel)
+        Nandle MaxTotAirVolFlow;  // m3/s  (series)
+        Nandle MaxTotAirMassFlow; // kg/s  (series)
+        Nandle MaxPriAirVolFlow;  // m3/s
+        Nandle MaxPriAirMassFlow; // kg/s
+        Nandle MinPriAirFlowFrac; // minimum primary air flow fraction
+        Nandle MinPriAirMassFlow; // kg/s
+        Nandle MaxSecAirVolFlow;  // m3/s (parallel)
+        Nandle MaxSecAirMassFlow; // kg/s (parallel)
+        Nandle FanOnFlowFrac;     // frac of primary air flow at which fan turns on (parallel)
+        Nandle FanOnAirMassFlow;  // primary air mass flow rate at which fan turns on (parallel)
         int PriAirInNode;         // unit primary air inlet node number
         int SecAirInNode;         // unit secondary air inlet node number
         int OutAirNode;           // unit air outlet node number
@@ -123,17 +123,17 @@ namespace PoweredInductionUnits {
         std::string HCoil; // name of heating coil component
         int HCoil_Index;   // index to this heating coil
         int HCoil_FluidIndex;
-        Real64 MaxVolHotWaterFlow; // m3/s
-        Real64 MaxVolHotSteamFlow; // m3/s
-        Real64 MaxHotWaterFlow;    // kg/s
-        Real64 MaxHotSteamFlow;    // kg/s
-        Real64 MinVolHotWaterFlow; // m3/s
-        Real64 MinHotSteamFlow;    // kg/s
-        Real64 MinVolHotSteamFlow; // m3/s
-        Real64 MinHotWaterFlow;    // kg/s
+        Nandle MaxVolHotWaterFlow; // m3/s
+        Nandle MaxVolHotSteamFlow; // m3/s
+        Nandle MaxHotWaterFlow;    // kg/s
+        Nandle MaxHotSteamFlow;    // kg/s
+        Nandle MinVolHotWaterFlow; // m3/s
+        Nandle MinHotSteamFlow;    // kg/s
+        Nandle MinVolHotSteamFlow; // m3/s
+        Nandle MinHotWaterFlow;    // kg/s
         int HotControlNode;        // hot water control node
         int HotCoilOutNodeNum;     // outlet of coil
-        Real64 HotControlOffset;   // control tolerance
+        Nandle HotControlOffset;   // control tolerance
         int HWLoopNum;             // index for plant loop with hot plant coil
         int HWLoopSide;            // index for plant loop side for hot plant coil
         int HWBranchNum;           // index for plant branch for hot plant coil
@@ -141,10 +141,10 @@ namespace PoweredInductionUnits {
         int ADUNum;                // index of corresponding air distribution unit
         bool InducesPlenumAir;     // True if secondary air comes from the plenum
         // Report data
-        Real64 HeatingRate;      // unit heat addition rate to zone [W]
-        Real64 HeatingEnergy;    // unit heat addition to zone [J]
-        Real64 SensCoolRate;     // unit sensible heat removal rate from zone [W]
-        Real64 SensCoolEnergy;   // unit sensible heat removal from zone [J]
+        Nandle HeatingRate;      // unit heat addition rate to zone [W]
+        Nandle HeatingEnergy;    // unit heat addition to zone [J]
+        Nandle SensCoolRate;     // unit sensible heat removal rate from zone [W]
+        Nandle SensCoolEnergy;   // unit sensible heat removal from zone [J]
         int CtrlZoneNum;         // index to control zone
         int ctrlZoneInNodeIndex; // index to the control zone inlet node
         int AirLoopNum;          // index for the air loop that this terminal is connected to.

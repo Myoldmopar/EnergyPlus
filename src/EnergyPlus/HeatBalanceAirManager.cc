@@ -369,18 +369,18 @@ namespace HeatBalanceAirManager {
         using SystemAvailabilityManager::GetHybridVentilationControlStatus;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const VentilTempLimit(100.0);                               // degrees Celsius
-        Real64 const MixingTempLimit(100.0);                               // degrees Celsius
-        Real64 const VentilWSLimit(40.0);                                  // m/s
+        Nandle const VentilTempLimit(100.0);                               // degrees Celsius
+        Nandle const MixingTempLimit(100.0);                               // degrees Celsius
+        Nandle const VentilWSLimit(40.0);                                  // m/s
         static std::string const RoutineName("GetSimpleAirModelInputs: "); // include trailing blank space
         // Refrigeration Door Mixing Protection types, factors used to moderate mixing flow.
-        Real64 const RefDoorNone(0.0);
-        Real64 const RefDoorAirCurtain(0.5);
-        Real64 const RefDoorStripCurtain(0.9);
+        Nandle const RefDoorNone(0.0);
+        Nandle const RefDoorAirCurtain(0.5);
+        Nandle const RefDoorStripCurtain(0.9);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Array2D<Real64> SVals1;
-        Array2D<Real64> SVals2;
+        Array2D<Nandle> SVals1;
+        Array2D<Nandle> SVals2;
         int NumAlpha;  // Number of Alphas for each GetobjectItem call
         int NumNumber; // Number of Numbers for each GetobjectItem call
         int maxAlpha;  // max of Alphas for allocation
@@ -392,7 +392,7 @@ namespace HeatBalanceAirManager {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
 
         int i;
@@ -411,9 +411,9 @@ namespace HeatBalanceAirManager {
         int Item1;
         bool errFlag;
         int ZLItem;
-        Array1D<Real64> TotInfilVentFlow;
-        Array1D<Real64> TotMixingFlow;
-        Array1D<Real64> ZoneMixingNum;
+        Array1D<Nandle> TotInfilVentFlow;
+        Array1D<Nandle> TotMixingFlow;
+        Array1D<Nandle> ZoneMixingNum;
         int ConnectTest;
         int ConnectionNumber;
         int NumbNum;
@@ -3523,7 +3523,7 @@ namespace HeatBalanceAirManager {
         TotInfilVentFlow.dimension(NumOfZones, 0.0);
 
 
-        auto divide_and_print_if_greater_than_zero = [&](const Real64 denominator, const Real64 numerator){
+        auto divide_and_print_if_greater_than_zero = [&](const Nandle denominator, const Nandle numerator){
             if (denominator > 0.0) {
                 print(outputFiles.eio, "{:.3R},", numerator / denominator);
             } else {
@@ -3619,7 +3619,7 @@ namespace HeatBalanceAirManager {
                 print(outputFiles.eio, "{:.2R},", Ventilation(Loop).MinIndoorTemperature);
             }
 
-            const auto print_temperature = [&](const int ptr, const Real64 value) {
+            const auto print_temperature = [&](const int ptr, const Nandle value) {
                 if (ptr > 0) {
                     print(outputFiles.eio, "Schedule: {},", GetScheduleName(ptr));
                 } else {
@@ -4109,7 +4109,7 @@ namespace HeatBalanceAirManager {
         int J;    // local index for second zone in refrig door pair
 
         int ZoneNum;              // zone counter
-        Real64 ZoneMixingFlowSum; // sum of zone mixing flows for a zone
+        Nandle ZoneMixingFlowSum; // sum of zone mixing flows for a zone
         int NumOfMixingObjects;   // number of mixing objects for a receiving zone
 
         // Select type of airflow calculation
@@ -4269,7 +4269,7 @@ namespace HeatBalanceAirManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneLoop;             // Counter for the # of zones (nz)
         int TempControlledZoneID; // index for zone in TempConrolled Zone structure
-        Real64 thisMRTFraction;   // temp working value for radiative fraction/weight
+        Nandle thisMRTFraction;   // temp working value for radiative fraction/weight
 
         for (ZoneLoop = 1; ZoneLoop <= NumOfZones; ++ZoneLoop) {
             // The mean air temperature is actually ZTAV which is the average

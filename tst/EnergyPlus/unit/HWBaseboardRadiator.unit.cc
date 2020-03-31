@@ -75,7 +75,7 @@ using namespace ObjexxFCL;
 
 TEST_F(EnergyPlusFixture, HWBaseboardRadiator_CalcHWBaseboard)
 {
-    Real64 LoadMet;
+    Nandle LoadMet;
     int BBNum;
 
     Node.allocate(1);
@@ -121,7 +121,7 @@ TEST_F(EnergyPlusFixture, HWBaseboardRadiator_CalcHWBaseboard)
 
 TEST_F(EnergyPlusFixture, HWBaseboardRadiator_HWBaseboardWaterFlowResetTest)
 {
-    Real64 LoadMet;
+    Nandle LoadMet;
     int BBNum;
 
     BBNum = 1;

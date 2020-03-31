@@ -94,7 +94,7 @@ namespace PurchasedAirManager {
     extern int const DeadBand;
     // Delta humidity ratio limit, 0.00025 equals delta between 45F dewpoint and 46F dewpoint
     // used to prevent dividing by near zero
-    extern Real64 const SmallDeltaHumRat;
+    extern Nandle const SmallDeltaHumRat;
 
     // DERIVED TYPE DEFINITIONS:
 
@@ -124,25 +124,25 @@ namespace PurchasedAirManager {
         std::string ReturnPlenumName;
         int ZoneRecircAirNodeNum; // Node number of recirculation air node for purchased air
         //   same as exhaust node if specified, otherwise zone return node
-        Real64 MaxHeatSuppAirTemp;   // Maximum supply air temperature for heating [C]
-        Real64 MinCoolSuppAirTemp;   // Minimum supply air temperature for cooling [C]
-        Real64 MaxHeatSuppAirHumRat; // Maximum supply heating air humidity ratio [kg water/kg dry air]
-        Real64 MinCoolSuppAirHumRat; // Minimum supply cooling air humidity ratio [kg water/kg dry air]
+        Nandle MaxHeatSuppAirTemp;   // Maximum supply air temperature for heating [C]
+        Nandle MinCoolSuppAirTemp;   // Minimum supply air temperature for cooling [C]
+        Nandle MaxHeatSuppAirHumRat; // Maximum supply heating air humidity ratio [kg water/kg dry air]
+        Nandle MinCoolSuppAirHumRat; // Minimum supply cooling air humidity ratio [kg water/kg dry air]
         int HeatingLimit;            // Heating capacity limit type - NoLimit, LimitFlowRate, LimitCapacity,
         //       or LimitFlowRateAndCapacity
-        Real64 MaxHeatVolFlowRate; // Maximum heating supply air flow[m3/s]
-        Real64 MaxHeatSensCap;     // Maximum heating sensible capacity [W]
+        Nandle MaxHeatVolFlowRate; // Maximum heating supply air flow[m3/s]
+        Nandle MaxHeatSensCap;     // Maximum heating sensible capacity [W]
         int CoolingLimit;          // Cooling capacity limit type - NoLimit, LimitFlowRate, LimitCapacity,
         //       or LimitFlowRateAndCapacity
-        Real64 MaxCoolVolFlowRate; // Maximum cooling supply air flow [m3/s]
-        Real64 MaxCoolTotCap;      // Maximum cooling total capacity [W]
+        Nandle MaxCoolVolFlowRate; // Maximum cooling supply air flow [m3/s]
+        Nandle MaxCoolTotCap;      // Maximum cooling total capacity [W]
         std::string HeatSched;     // Heating availablity schedule
         int HeatSchedPtr;          // Index to heating availability schedule
         std::string CoolSched;     // Cooling availability schedule
         int CoolSchedPtr;          // Index to the cooling availability schedule
         int DehumidCtrlType;       // Dehumidification control type - ConstantSensibleHeatRatio,
         //      Humidistat, or ConstantSupplyHumidityRatio
-        Real64 CoolSHR;    // Cooling sensible heat ratio
+        Nandle CoolSHR;    // Cooling sensible heat ratio
         int HumidCtrlType; // Humidification control type - None,
         //      Humidistat, or ConstantSupplyHumidityRatio
         int OARequirementsPtr; // Index to DesignSpecification:OutdoorAir object
@@ -153,35 +153,35 @@ namespace PurchasedAirManager {
         bool OutdoorAir;                    // Is there outdoor air?
         int OutdoorAirNodeNum;              // Node number of the outdoor air inlet node
         int HtRecType;                      // Outdoor air heat recovery type - None, Sensible, Enthalpy
-        Real64 HtRecSenEff;                 // Sensible heat recovery effectiveness
-        Real64 HtRecLatEff;                 // Latent heat recovery effectiveness
+        Nandle HtRecSenEff;                 // Sensible heat recovery effectiveness
+        Nandle HtRecLatEff;                 // Latent heat recovery effectiveness
         int OAFlowFracSchPtr;               // Fraction schedule applied to total OA requirement
-        Real64 MaxHeatMassFlowRate;         // The maximum heating air mass flow rate [kg/s]
-        Real64 MaxCoolMassFlowRate;         // The maximum cooling air mass flow rate [kg/s]
+        Nandle MaxHeatMassFlowRate;         // The maximum heating air mass flow rate [kg/s]
+        Nandle MaxCoolMassFlowRate;         // The maximum cooling air mass flow rate [kg/s]
         bool EMSOverrideMdotOn;             // if true, then EMS is calling to override supply mass flow rate
-        Real64 EMSValueMassFlowRate;        // Value EMS is directing to use for supply mass flow rate [kg/s]
+        Nandle EMSValueMassFlowRate;        // Value EMS is directing to use for supply mass flow rate [kg/s]
         bool EMSOverrideOAMdotOn;           // if true, then EMS is calling to override OA mass flow rate
-        Real64 EMSValueOAMassFlowRate;      // Value EMS is directing to use for OA mass flow rate [kg/s]
+        Nandle EMSValueOAMassFlowRate;      // Value EMS is directing to use for OA mass flow rate [kg/s]
         bool EMSOverrideSupplyTempOn;       // if true, then EMS is calling to override supply temperature
-        Real64 EMSValueSupplyTemp;          // Value EMS is directing to use for supply temperature [C]
+        Nandle EMSValueSupplyTemp;          // Value EMS is directing to use for supply temperature [C]
         bool EMSOverrideSupplyHumRatOn;     // if true, then EMS is calling to override supply humidity ratio
-        Real64 EMSValueSupplyHumRat;        // Value EMS is directing to use for supply humidity ratio [kgWater/kgDryAir]
-        Real64 MinOAMassFlowRate;           // The minimum required outdoor air mass flow rate [kg/s]
-        Real64 OutdoorAirMassFlowRate;      // The outdoor air mass flow rate [kg/s]
-        Real64 OutdoorAirVolFlowRateStdRho; //  The outdoor air volume flow rate using standard density  [m3/s]
-        Real64 SupplyAirMassFlowRate;       // Supply air mass flow rate [kg/s]
-        Real64 SupplyAirVolFlowRateStdRho;  // supply air volume flow using standard density [m3/s]
+        Nandle EMSValueSupplyHumRat;        // Value EMS is directing to use for supply humidity ratio [kgWater/kgDryAir]
+        Nandle MinOAMassFlowRate;           // The minimum required outdoor air mass flow rate [kg/s]
+        Nandle OutdoorAirMassFlowRate;      // The outdoor air mass flow rate [kg/s]
+        Nandle OutdoorAirVolFlowRateStdRho; //  The outdoor air volume flow rate using standard density  [m3/s]
+        Nandle SupplyAirMassFlowRate;       // Supply air mass flow rate [kg/s]
+        Nandle SupplyAirVolFlowRateStdRho;  // supply air volume flow using standard density [m3/s]
         // Intermediate results
-        Real64 FinalMixedAirTemp;     // Dry-bulb temperature of the mixed air, saved for system ventilation load reporting [C]
-        Real64 FinalMixedAirHumRat;   // Humidity ratio of the mixed air, saved for system ventilation load reporting [kgWater/kgDryAir]
-        Real64 HtRecSenOutput;        // Sensible heating/cooling rate from heat recovery (<0 means cooling) [W]
-        Real64 HtRecLatOutput;        // Latent heating/cooling rate from heat recovery (<0 means cooling or dehumidfying) [W]
-        Real64 OASenOutput;           // Outdoor air sensible output relative to zone conditions [W], <0 means OA is cooler than zone air
-        Real64 OALatOutput;           // Outdoor air latent output relative to zone conditions [W], <0 means OA is drier than zone air
-        Real64 SenOutputToZone;       // Ideal Loads System sensible output to zone [W], <0 means supply is cooler than zone air
-        Real64 LatOutputToZone;       // Ideal Loads System latent heat output to zone [W], <0 means supply is drier than zone air
-        Real64 SenCoilLoad;           // Ideal Loads System sensible load on "coils" (<0 means cooling) [W]
-        Real64 LatCoilLoad;           // Ideal Loads System latent load on "coils" (<0 means cooling or dehumidfying) [W]
+        Nandle FinalMixedAirTemp;     // Dry-bulb temperature of the mixed air, saved for system ventilation load reporting [C]
+        Nandle FinalMixedAirHumRat;   // Humidity ratio of the mixed air, saved for system ventilation load reporting [kgWater/kgDryAir]
+        Nandle HtRecSenOutput;        // Sensible heating/cooling rate from heat recovery (<0 means cooling) [W]
+        Nandle HtRecLatOutput;        // Latent heating/cooling rate from heat recovery (<0 means cooling or dehumidfying) [W]
+        Nandle OASenOutput;           // Outdoor air sensible output relative to zone conditions [W], <0 means OA is cooler than zone air
+        Nandle OALatOutput;           // Outdoor air latent output relative to zone conditions [W], <0 means OA is drier than zone air
+        Nandle SenOutputToZone;       // Ideal Loads System sensible output to zone [W], <0 means supply is cooler than zone air
+        Nandle LatOutputToZone;       // Ideal Loads System latent heat output to zone [W], <0 means supply is drier than zone air
+        Nandle SenCoilLoad;           // Ideal Loads System sensible load on "coils" (<0 means cooling) [W]
+        Nandle LatCoilLoad;           // Ideal Loads System latent load on "coils" (<0 means cooling or dehumidfying) [W]
         int OAFlowMaxCoolOutputError; // Counter for OAFlow > Max Cooling Flow error
         int OAFlowMaxHeatOutputError; // Counter for OAFlow > Max Heating Flow error
         int SaturationOutputError;    // Counter for OAFlow > Max Heating Flow error
@@ -192,56 +192,56 @@ namespace PurchasedAirManager {
         int CoolErrIndex; // Cooling setpoint error index (recurring errors)
         int HeatErrIndex; // Heating setpoint error index (recurring errors)
         // Output variables
-        Real64 SenHeatEnergy;      // Sensible heating energy consumed [J]
-        Real64 LatHeatEnergy;      // Latent   heating energy consumed [J]
-        Real64 TotHeatEnergy;      // Total    heating energy consumed [J]
-        Real64 SenCoolEnergy;      // Sensible cooling energy consumed [J]
-        Real64 LatCoolEnergy;      // Latent   cooling energy consumed [J]
-        Real64 TotCoolEnergy;      // Total    cooling energy consumed [J]
-        Real64 ZoneSenHeatEnergy;  // Sensible heating energy supplied to the zone [J]
-        Real64 ZoneLatHeatEnergy;  // Latent   heating energy supplied to the zone [J]
-        Real64 ZoneTotHeatEnergy;  // Total    heating energy supplied to the zone [J]
-        Real64 ZoneSenCoolEnergy;  // Sensible cooling energy supplied to the zone [J]
-        Real64 ZoneLatCoolEnergy;  // Latent   cooling energy supplied to the zone [J]
-        Real64 ZoneTotCoolEnergy;  // Total    cooling energy supplied to the zone [J]
-        Real64 OASenHeatEnergy;    // Sensible heating energy required for OA to equal zone air [J]
-        Real64 OALatHeatEnergy;    // Latent   heating energy required for OA to equal zone air [J]
-        Real64 OATotHeatEnergy;    // Total    heating energy required for OA to equal zone air [J]
-        Real64 OASenCoolEnergy;    // Sensible cooling energy required for OA to equal zone air [J]
-        Real64 OALatCoolEnergy;    // Latent   cooling energy required for OA to equal zone air [J]
-        Real64 OATotCoolEnergy;    // Total    cooling energy required for OA to equal zone air [J]
-        Real64 HtRecSenHeatEnergy; // Sensible heating energy from heat reocovery [J]
-        Real64 HtRecLatHeatEnergy; // Latent   heating energy from heat reocovery [J]
-        Real64 HtRecTotHeatEnergy; // Total    heating energy from heat reocovery [J]
-        Real64 HtRecSenCoolEnergy; // Sensible cooling energy from heat reocovery [J]
-        Real64 HtRecLatCoolEnergy; // Latent   cooling energy from heat reocovery [J]
-        Real64 HtRecTotCoolEnergy; // Total    cooling energy from heat reocovery [J]
-        Real64 SenHeatRate;        // Sensible heating rate consumed [W]
-        Real64 LatHeatRate;        // Latent   heating rate consumed [W]
-        Real64 TotHeatRate;        // Total    heating rate consumed [W]
-        Real64 SenCoolRate;        // Sensible cooling rate consumed [W]
-        Real64 LatCoolRate;        // Latent   cooling rate consumed [W]
-        Real64 TotCoolRate;        // Total    cooling rate consumed [W]
-        Real64 ZoneSenHeatRate;    // Sensible heating rate supplied to the zone [W]
-        Real64 ZoneLatHeatRate;    // Latent   heating rate supplied to the zone [W]
-        Real64 ZoneTotHeatRate;    // Total    heating rate supplied to the zone [W]
-        Real64 ZoneSenCoolRate;    // Sensible cooling rate supplied to the zone [W]
-        Real64 ZoneLatCoolRate;    // Latent   cooling rate supplied to the zone [W]
-        Real64 ZoneTotCoolRate;    // Total    cooling rate supplied to the zone [W]
-        Real64 OASenHeatRate;      // Sensible heating rate required for OA to equal zone air [W]
-        Real64 OALatHeatRate;      // Latent   heating rate required for OA to equal zone air [W]
-        Real64 OATotHeatRate;      // Total    heating rate required for OA to equal zone air [W]
-        Real64 OASenCoolRate;      // Sensible cooling rate required for OA to equal zone air [W]
-        Real64 OALatCoolRate;      // Latent   cooling rate required for OA to equal zone air [W]
-        Real64 OATotCoolRate;      // Total    cooling rate required for OA to equal zone air [W]
-        Real64 HtRecSenHeatRate;   // Sensible heating rate from heat reocovery [W]
-        Real64 HtRecLatHeatRate;   // Latent   heating rate from heat reocovery [W]
-        Real64 HtRecTotHeatRate;   // Total    heating rate from heat reocovery [W]
-        Real64 HtRecSenCoolRate;   // Sensible cooling rate from heat reocovery [W]
-        Real64 HtRecLatCoolRate;   // Latent   cooling rate from heat reocovery [W]
-        Real64 HtRecTotCoolRate;   // Total    cooling rate from heat reocovery [W]
-        Real64 TimeEconoActive;    // Time economizer is active [hrs]
-        Real64 TimeHtRecActive;    // Time heat reocovery is active [hrs]
+        Nandle SenHeatEnergy;      // Sensible heating energy consumed [J]
+        Nandle LatHeatEnergy;      // Latent   heating energy consumed [J]
+        Nandle TotHeatEnergy;      // Total    heating energy consumed [J]
+        Nandle SenCoolEnergy;      // Sensible cooling energy consumed [J]
+        Nandle LatCoolEnergy;      // Latent   cooling energy consumed [J]
+        Nandle TotCoolEnergy;      // Total    cooling energy consumed [J]
+        Nandle ZoneSenHeatEnergy;  // Sensible heating energy supplied to the zone [J]
+        Nandle ZoneLatHeatEnergy;  // Latent   heating energy supplied to the zone [J]
+        Nandle ZoneTotHeatEnergy;  // Total    heating energy supplied to the zone [J]
+        Nandle ZoneSenCoolEnergy;  // Sensible cooling energy supplied to the zone [J]
+        Nandle ZoneLatCoolEnergy;  // Latent   cooling energy supplied to the zone [J]
+        Nandle ZoneTotCoolEnergy;  // Total    cooling energy supplied to the zone [J]
+        Nandle OASenHeatEnergy;    // Sensible heating energy required for OA to equal zone air [J]
+        Nandle OALatHeatEnergy;    // Latent   heating energy required for OA to equal zone air [J]
+        Nandle OATotHeatEnergy;    // Total    heating energy required for OA to equal zone air [J]
+        Nandle OASenCoolEnergy;    // Sensible cooling energy required for OA to equal zone air [J]
+        Nandle OALatCoolEnergy;    // Latent   cooling energy required for OA to equal zone air [J]
+        Nandle OATotCoolEnergy;    // Total    cooling energy required for OA to equal zone air [J]
+        Nandle HtRecSenHeatEnergy; // Sensible heating energy from heat reocovery [J]
+        Nandle HtRecLatHeatEnergy; // Latent   heating energy from heat reocovery [J]
+        Nandle HtRecTotHeatEnergy; // Total    heating energy from heat reocovery [J]
+        Nandle HtRecSenCoolEnergy; // Sensible cooling energy from heat reocovery [J]
+        Nandle HtRecLatCoolEnergy; // Latent   cooling energy from heat reocovery [J]
+        Nandle HtRecTotCoolEnergy; // Total    cooling energy from heat reocovery [J]
+        Nandle SenHeatRate;        // Sensible heating rate consumed [W]
+        Nandle LatHeatRate;        // Latent   heating rate consumed [W]
+        Nandle TotHeatRate;        // Total    heating rate consumed [W]
+        Nandle SenCoolRate;        // Sensible cooling rate consumed [W]
+        Nandle LatCoolRate;        // Latent   cooling rate consumed [W]
+        Nandle TotCoolRate;        // Total    cooling rate consumed [W]
+        Nandle ZoneSenHeatRate;    // Sensible heating rate supplied to the zone [W]
+        Nandle ZoneLatHeatRate;    // Latent   heating rate supplied to the zone [W]
+        Nandle ZoneTotHeatRate;    // Total    heating rate supplied to the zone [W]
+        Nandle ZoneSenCoolRate;    // Sensible cooling rate supplied to the zone [W]
+        Nandle ZoneLatCoolRate;    // Latent   cooling rate supplied to the zone [W]
+        Nandle ZoneTotCoolRate;    // Total    cooling rate supplied to the zone [W]
+        Nandle OASenHeatRate;      // Sensible heating rate required for OA to equal zone air [W]
+        Nandle OALatHeatRate;      // Latent   heating rate required for OA to equal zone air [W]
+        Nandle OATotHeatRate;      // Total    heating rate required for OA to equal zone air [W]
+        Nandle OASenCoolRate;      // Sensible cooling rate required for OA to equal zone air [W]
+        Nandle OALatCoolRate;      // Latent   cooling rate required for OA to equal zone air [W]
+        Nandle OATotCoolRate;      // Total    cooling rate required for OA to equal zone air [W]
+        Nandle HtRecSenHeatRate;   // Sensible heating rate from heat reocovery [W]
+        Nandle HtRecLatHeatRate;   // Latent   heating rate from heat reocovery [W]
+        Nandle HtRecTotHeatRate;   // Total    heating rate from heat reocovery [W]
+        Nandle HtRecSenCoolRate;   // Sensible cooling rate from heat reocovery [W]
+        Nandle HtRecLatCoolRate;   // Latent   cooling rate from heat reocovery [W]
+        Nandle HtRecTotCoolRate;   // Total    cooling rate from heat reocovery [W]
+        Nandle TimeEconoActive;    // Time economizer is active [hrs]
+        Nandle TimeHtRecActive;    // Time heat reocovery is active [hrs]
         int ZonePtr;               // pointer to a zone served by an Ideal load air system
         int HVACSizingIndex;       // index of a HVAC Sizing object for an Ideal load air system
 
@@ -306,8 +306,8 @@ namespace PurchasedAirManager {
     // Functions
 
     void SimPurchasedAir(std::string const &PurchAirName,
-                         Real64 &SysOutputProvided,
-                         Real64 &MoistOutputProvided, // Moisture output provided (kg/s), dehumidification = negative
+                         Nandle &SysOutputProvided,
+                         Nandle &MoistOutputProvided, // Moisture output provided (kg/s), dehumidification = negative
                          bool const FirstHVACIteration,
                          int const ControlledZoneNum,
                          int const ActualZoneNum,
@@ -323,22 +323,22 @@ namespace PurchasedAirManager {
     void SizePurchasedAir(int const PurchAirNum);
 
     void CalcPurchAirLoads(int const PurchAirNum,
-                           Real64 &SysOutputProvided,   // Sensible output provided [W] cooling = negative
-                           Real64 &MoistOutputProvided, // Moisture output provided [kg/s] dehumidification = negative
+                           Nandle &SysOutputProvided,   // Sensible output provided [W] cooling = negative
+                           Nandle &MoistOutputProvided, // Moisture output provided [kg/s] dehumidification = negative
                            int const ControlledZoneNum,
                            int const ActualZoneNum);
 
     void CalcPurchAirMinOAMassFlow(int const PurchAirNum,   // index to ideal loads unit
                                    int const ActualZoneNum, // index to actual zone number
-                                   Real64 &OAMassFlowRate   // outside air mass flow rate [kg/s] from volume flow using std density
+                                   Nandle &OAMassFlowRate   // outside air mass flow rate [kg/s] from volume flow using std density
     );
 
     void CalcPurchAirMixedAir(int const PurchAirNum,           // index to ideal loads unit
-                              Real64 const OAMassFlowRate,     // outside air mass flow rate [kg/s]
-                              Real64 const SupplyMassFlowRate, // supply air mass flow rate [kg/s]
-                              Real64 &MixedAirTemp,            // Mixed air dry bulb temperature [C]
-                              Real64 &MixedAirHumRat,          // Mixed air humidity ratio [kgWater/kgDryAir]
-                              Real64 &MixedAirEnthalpy,        // Mixed air enthalpy [J/kg]
+                              Nandle const OAMassFlowRate,     // outside air mass flow rate [kg/s]
+                              Nandle const SupplyMassFlowRate, // supply air mass flow rate [kg/s]
+                              Nandle &MixedAirTemp,            // Mixed air dry bulb temperature [C]
+                              Nandle &MixedAirHumRat,          // Mixed air humidity ratio [kgWater/kgDryAir]
+                              Nandle &MixedAirEnthalpy,        // Mixed air enthalpy [J/kg]
                               int const OperatingMode          // current operating mode, Off, Heating, Cooling, or DeadBand
     );
 
@@ -346,15 +346,15 @@ namespace PurchasedAirManager {
 
     void ReportPurchasedAir(int const PurchAirNum);
 
-    Real64 GetPurchasedAirOutAirMassFlow(int const PurchAirNum);
+    Nandle GetPurchasedAirOutAirMassFlow(int const PurchAirNum);
 
     int GetPurchasedAirZoneInletAirNode(int const PurchAirNum);
 
     int GetPurchasedAirReturnAirNode(int const PurchAirNum);
 
-    Real64 GetPurchasedAirMixedAirTemp(int const PurchAirNum);
+    Nandle GetPurchasedAirMixedAirTemp(int const PurchAirNum);
 
-    Real64 GetPurchasedAirMixedAirHumRat(int const PurchAirNum);
+    Nandle GetPurchasedAirMixedAirHumRat(int const PurchAirNum);
 
     bool CheckPurchasedAirForReturnPlenum(int const &ReturnPlenumIndex);
 

@@ -223,7 +223,7 @@ namespace DataSurfaceColors {
         Array1D_string cNumericFields;
         Array1D_bool lAlphaBlanks;
         Array1D_bool lNumericBlanks;
-        Array1D<Real64> rNumerics;
+        Array1D<Nandle> rNumerics;
 
         DXFcolorno = defaultcolorno;
         // first see if there is a scheme name

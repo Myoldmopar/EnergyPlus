@@ -89,9 +89,9 @@ TEST_F(EnergyPlusFixture, SolarShadingTest_CalcPerSolarBeamTest)
     //	static int ZoneNum( 0 ); // Zone number
     //	int NumAlphas( 2 );
     //	int NumNumbers( 9 );
-    Real64 AvgEqOfTime(0.0);       // Average value of Equation of Time for period
-    Real64 AvgSinSolarDeclin(1.0); // Average value of Sine of Solar Declination for period
-    Real64 AvgCosSolarDeclin(0.0); // Average value of Cosine of Solar Declination for period
+    Nandle AvgEqOfTime(0.0);       // Average value of Equation of Time for period
+    Nandle AvgSinSolarDeclin(1.0); // Average value of Sine of Solar Declination for period
+    Nandle AvgCosSolarDeclin(0.0); // Average value of Cosine of Solar Declination for period
     int NumTimeSteps(6);
 
     TimeStep = 1;

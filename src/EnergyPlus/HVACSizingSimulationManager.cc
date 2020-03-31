@@ -105,8 +105,8 @@ void HVACSizingSimulationManager::CreateNewCoincidentPlantAnalysisObject(std::st
     using namespace FluidProperties;
     using DataSizing::PlantSizData;
 
-    Real64 density;
-    Real64 cp;
+    Nandle density;
+    Nandle cp;
 
     // find plant loop number
     for (int i = 1; i <= TotNumLoops; ++i) {

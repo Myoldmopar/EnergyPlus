@@ -60,13 +60,13 @@ void SetupZoneInternalGain(int const ZoneNum,
                            std::string const &cComponentObject, // object class name for device contributing internal gain
                            std::string const &cComponentName,   // user unique name for device
                            int const IntGainComp_TypeOfNum,
-                           Real64 *ConvectionGainRate, // pointer target for remote convection gain value to be accessed
-                           Real64 *ReturnAirConvectionGainRate,
-                           Real64 *ThermalRadiationGainRate, // pointer target for remote IR radiation gain value to be accessed
-                           Real64 *LatentGainRate,
-                           Real64 *ReturnAirLatentGainRate,
-                           Real64 *CarbonDioxideGainRate,
-                           Real64 *GenericContamGainRate,
+                           Nandle *ConvectionGainRate, // pointer target for remote convection gain value to be accessed
+                           Nandle *ReturnAirConvectionGainRate,
+                           Nandle *ThermalRadiationGainRate, // pointer target for remote IR radiation gain value to be accessed
+                           Nandle *LatentGainRate,
+                           Nandle *ReturnAirLatentGainRate,
+                           Nandle *CarbonDioxideGainRate,
+                           Nandle *GenericContamGainRate,
                            int RetNodeNum // for return air heat gains
 )
 {

@@ -95,7 +95,7 @@ TEST_F( CoilCoolingDXTest, CoilCoolingDXCurveFitSpeedTest )
     thisSpeed.RatedEIR = 0.30;
     thisSpeed.AirMassFlow = 1.0;
     int fanOpMode = 0;
-    Real64 condInletTemp = 24;
+    Nandle condInletTemp = 24;
     thisSpeed.CalcSpeedOutput(inletNode, outletNode, thisSpeed.PLR, fanOpMode, condInletTemp);
 
     EXPECT_NEAR( outletNode.Temp, 17.791, 0.001 );

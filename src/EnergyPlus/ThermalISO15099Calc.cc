@@ -116,7 +116,7 @@ namespace ThermalISO15099Calc {
 
     // Functions
 
-    void film(Real64 const tex, Real64 const tw, Real64 const ws, int const iwd, Real64 &hcout, int const ibc)
+    void film(Nandle const tex, Nandle const tw, Nandle const ws, int const iwd, Nandle &hcout, int const ibc)
     {
         //***********************************************************************
         // purpose - to find outdoor film coeff
@@ -130,11 +130,11 @@ namespace ThermalISO15099Calc {
         //   hcout - convective film coeff [w m-2 k-1]
 
         // Locals
-        Real64 const conv(5.6783);
+        Nandle const conv(5.6783);
 
-        Real64 vc;
-        Real64 acoef;
-        Real64 bexp;
+        Nandle vc;
+        Nandle acoef;
+        Nandle bexp;
 
         // calculation of convection component of exterior film coefficient using the :
         {
@@ -179,97 +179,97 @@ namespace ThermalISO15099Calc {
 
     void Calc_ISO15099(int const nlayer,
                        int const iwd,
-                       Real64 &tout,
-                       Real64 &tind,
-                       Real64 &trmin,
-                       Real64 const wso,
-                       Real64 const wsi,
-                       Real64 const dir,
-                       Real64 const outir,
+                       Nandle &tout,
+                       Nandle &tind,
+                       Nandle &trmin,
+                       Nandle const wso,
+                       Nandle const wsi,
+                       Nandle const dir,
+                       Nandle const outir,
                        int const isky,
-                       Real64 const tsky,
-                       Real64 &esky,
-                       Real64 const fclr,
-                       Real64 const VacuumPressure,
-                       Real64 const VacuumMaxGapThickness,
-                       Array1D<Real64> &gap,
-                       Array1D<Real64> &thick,
-                       Array1D<Real64> &scon,
-                       const Array1D<Real64> &tir,
-                       const Array1D<Real64> &emis,
-                       Real64 const totsol,
-                       Real64 const tilt,
-                       const Array1D<Real64> &asol,
-                       Real64 const height,
-                       Real64 const heightt,
-                       Real64 const width,
-                       const Array1D<Real64> &presure,
+                       Nandle const tsky,
+                       Nandle &esky,
+                       Nandle const fclr,
+                       Nandle const VacuumPressure,
+                       Nandle const VacuumMaxGapThickness,
+                       Array1D<Nandle> &gap,
+                       Array1D<Nandle> &thick,
+                       Array1D<Nandle> &scon,
+                       const Array1D<Nandle> &tir,
+                       const Array1D<Nandle> &emis,
+                       Nandle const totsol,
+                       Nandle const tilt,
+                       const Array1D<Nandle> &asol,
+                       Nandle const height,
+                       Nandle const heightt,
+                       Nandle const width,
+                       const Array1D<Nandle> &presure,
                        Array2A_int const iprop,
-                       Array2A<Real64> const frct,
-                       Array2A<Real64> const xgcon,
-                       Array2A<Real64> const xgvis,
-                       Array2A<Real64> const xgcp,
-                       const Array1D<Real64> &xwght,
-                       const Array1D<Real64> &gama,
+                       Array2A<Nandle> const frct,
+                       Array2A<Nandle> const xgcon,
+                       Array2A<Nandle> const xgvis,
+                       Array2A<Nandle> const xgcp,
+                       const Array1D<Nandle> &xwght,
+                       const Array1D<Nandle> &gama,
                        const Array1D_int &nmix,
                        const Array1D_int &SupportPillar,     // Shows whether or not gap have support pillar
-                       const Array1D<Real64> &PillarSpacing, // Pillar spacing for each gap (used in case there is support pillar)
-                       const Array1D<Real64> &PillarRadius,  // Pillar radius for each gap (used in case there is support pillar)
-                       Array1D<Real64> &theta,
-                       Array1D<Real64> &q,
-                       Array1D<Real64> &qv,
-                       Real64 &ufactor,
-                       Real64 &sc,
-                       Real64 &hflux,
-                       Real64 &hcin,
-                       Real64 &hcout,
-                       Real64 &hrin,
-                       Real64 &hrout,
-                       Real64 &hin,
-                       Real64 &hout,
-                       Array1D<Real64> &hcgas,
-                       Array1D<Real64> &hrgas,
-                       Real64 &shgc,
+                       const Array1D<Nandle> &PillarSpacing, // Pillar spacing for each gap (used in case there is support pillar)
+                       const Array1D<Nandle> &PillarRadius,  // Pillar radius for each gap (used in case there is support pillar)
+                       Array1D<Nandle> &theta,
+                       Array1D<Nandle> &q,
+                       Array1D<Nandle> &qv,
+                       Nandle &ufactor,
+                       Nandle &sc,
+                       Nandle &hflux,
+                       Nandle &hcin,
+                       Nandle &hcout,
+                       Nandle &hrin,
+                       Nandle &hrout,
+                       Nandle &hin,
+                       Nandle &hout,
+                       Array1D<Nandle> &hcgas,
+                       Array1D<Nandle> &hrgas,
+                       Nandle &shgc,
                        int &nperr,
                        std::string &ErrorMessage,
-                       Real64 &shgct,
-                       Real64 &tamb,
-                       Real64 &troom,
+                       Nandle &shgct,
+                       Nandle &tamb,
+                       Nandle &troom,
                        const Array1D_int &ibc,
-                       const Array1D<Real64> &Atop,
-                       const Array1D<Real64> &Abot,
-                       const Array1D<Real64> &Al,
-                       const Array1D<Real64> &Ar,
-                       const Array1D<Real64> &Ah,
-                       const Array1D<Real64> &SlatThick,
-                       const Array1D<Real64> &SlatWidth,
-                       const Array1D<Real64> &SlatAngle,
-                       const Array1D<Real64> &SlatCond,
-                       const Array1D<Real64> &SlatSpacing,
-                       const Array1D<Real64> &SlatCurve,
-                       const Array1D<Real64> &vvent,
-                       const Array1D<Real64> &tvent,
+                       const Array1D<Nandle> &Atop,
+                       const Array1D<Nandle> &Abot,
+                       const Array1D<Nandle> &Al,
+                       const Array1D<Nandle> &Ar,
+                       const Array1D<Nandle> &Ah,
+                       const Array1D<Nandle> &SlatThick,
+                       const Array1D<Nandle> &SlatWidth,
+                       const Array1D<Nandle> &SlatAngle,
+                       const Array1D<Nandle> &SlatCond,
+                       const Array1D<Nandle> &SlatSpacing,
+                       const Array1D<Nandle> &SlatCurve,
+                       const Array1D<Nandle> &vvent,
+                       const Array1D<Nandle> &tvent,
                        const Array1D_int &LayerType,
                        const Array1D_int &nslice,
-                       const Array1D<Real64> &LaminateA,
-                       const Array1D<Real64> &LaminateB,
-                       const Array1D<Real64> &sumsol,
-                       Array1D<Real64> &Ra,
-                       Array1D<Real64> &Nu,
+                       const Array1D<Nandle> &LaminateA,
+                       const Array1D<Nandle> &LaminateB,
+                       const Array1D<Nandle> &sumsol,
+                       Array1D<Nandle> &Ra,
+                       Array1D<Nandle> &Nu,
                        int const ThermalMod,
                        int const Debug_mode, // Switch for debug output files:
-                       Real64 &ShadeEmisRatioOut,
-                       Real64 &ShadeEmisRatioIn,
-                       Real64 &ShadeHcRatioOut,
-                       Real64 &ShadeHcRatioIn,
-                       Real64 &HcUnshadedOut,
-                       Real64 &HcUnshadedIn,
-                       Array1D<Real64> &Keff,
-                       Array1D<Real64> &ShadeGapKeffConv,
-                       Real64 const SDScalar,
+                       Nandle &ShadeEmisRatioOut,
+                       Nandle &ShadeEmisRatioIn,
+                       Nandle &ShadeHcRatioOut,
+                       Nandle &ShadeHcRatioIn,
+                       Nandle &HcUnshadedOut,
+                       Nandle &HcUnshadedIn,
+                       Array1D<Nandle> &Keff,
+                       Array1D<Nandle> &ShadeGapKeffConv,
+                       Nandle const SDScalar,
                        int const SHGCCalc, // SHGC calculation switch:
                        int &NumOfIterations,
-                       Real64 const edgeGlCorrFac // Edge of glass correction factor
+                       Nandle const edgeGlCorrFac // Edge of glass correction factor
     )
     {
 
@@ -361,39 +361,39 @@ namespace ThermalISO15099Calc {
 
         // Variables
 
-        static Array1D<Real64> thetas(maxlay2);
-        static Array1D<Real64> rir(maxlay2);
-        static Array1D<Real64> hcgass(maxlay1);
-        static Array1D<Real64> hrgass(maxlay1);
-        static Array1D<Real64> rs(maxlay3, 0.0);
+        static Array1D<Nandle> thetas(maxlay2);
+        static Array1D<Nandle> rir(maxlay2);
+        static Array1D<Nandle> hcgass(maxlay1);
+        static Array1D<Nandle> hrgass(maxlay1);
+        static Array1D<Nandle> rs(maxlay3, 0.0);
 
         //  REAL(r64) :: grho(maxgas,3)
-        static Array1D<Real64> qs(maxlay3);
-        static Array1D<Real64> qvs(maxlay1);
-        static Array1D<Real64> LaminateAU(maxlay);
-        static Array1D<Real64> sumsolU(maxlay);
-        static Array1D<Real64> sol0(maxlay);
-        Real64 shgct_NOSD;
-        Real64 trmout;
+        static Array1D<Nandle> qs(maxlay3);
+        static Array1D<Nandle> qvs(maxlay1);
+        static Array1D<Nandle> LaminateAU(maxlay);
+        static Array1D<Nandle> sumsolU(maxlay);
+        static Array1D<Nandle> sol0(maxlay);
+        Nandle shgct_NOSD;
+        Nandle trmout;
 
-        Real64 Gout;
-        Real64 Gin;
-        Real64 AchievedErrorTolerance;
-        Real64 AchievedErrorToleranceSolar;
+        Nandle Gout;
+        Nandle Gin;
+        Nandle AchievedErrorTolerance;
+        Nandle AchievedErrorToleranceSolar;
         int NumOfIter;
         int NumOfIterSolar;
 
-        Real64 tgg;
-        Real64 qc1;
-        Real64 qc2;
-        Real64 qcgg;
-        static Array1D<Real64> qcgas(maxlay1);
-        static Array1D<Real64> qcgaps(maxlay1);
-        static Array1D<Real64> qrgas(maxlay1);
-        static Array1D<Real64> qrgaps(maxlay1);
+        Nandle tgg;
+        Nandle qc1;
+        Nandle qc2;
+        Nandle qcgg;
+        static Array1D<Nandle> qcgas(maxlay1);
+        static Array1D<Nandle> qcgaps(maxlay1);
+        static Array1D<Nandle> qrgas(maxlay1);
+        static Array1D<Nandle> qrgaps(maxlay1);
 
-        Real64 ShadeHcModifiedOut;
-        Real64 ShadeHcModifiedIn;
+        Nandle ShadeHcModifiedOut;
+        Nandle ShadeHcModifiedIn;
 
         // REAL(r64) :: xgrho(maxgas, 3)   !!!!!!!!!!!!!!!!!1
 
@@ -401,118 +401,118 @@ namespace ThermalISO15099Calc {
 
         bool NeedUnshadedRun;
         int nlayer_NOSD;
-        Real64 AchievedErrorTolerance_NOSD;
+        Nandle AchievedErrorTolerance_NOSD;
         int NumOfIter_NOSD;
-        static Array1D<Real64> Atop_NOSD(maxlay);
-        static Array1D<Real64> Abot_NOSD(maxlay);
-        static Array1D<Real64> Al_NOSD(maxlay);
-        static Array1D<Real64> Ar_NOSD(maxlay);
-        static Array1D<Real64> Ah_NOSD(maxlay);
-        static Array1D<Real64> EffectiveOpenness_NOSD(maxlay);
-        static Array1D<Real64> SlatThick_NOSD(maxlay);
-        static Array1D<Real64> SlatWidth_NOSD(maxlay);
-        static Array1D<Real64> SlatAngle_NOSD(maxlay);
-        static Array1D<Real64> SlatCond_NOSD(maxlay);
-        static Array1D<Real64> SlatSpacing_NOSD(maxlay);
-        static Array1D<Real64> SlatCurve_NOSD(maxlay);
-        static Array1D<Real64> vvent_NOSD(maxlay1);
-        static Array1D<Real64> tvent_NOSD(maxlay1);
-        static Array1D<Real64> qv_NOSD(maxlay1);
-        static Array1D<Real64> q_NOSD(maxlay3);
-        Real64 hin_NOSD;
-        Real64 flux_NOSD;
-        Real64 hcin_NOSD;
-        Real64 hrin_NOSD;
-        Real64 hcout_NOSD;
-        Real64 hrout_NOSD;
-        Real64 tamb_NOSD;
-        Real64 troom_NOSD;
+        static Array1D<Nandle> Atop_NOSD(maxlay);
+        static Array1D<Nandle> Abot_NOSD(maxlay);
+        static Array1D<Nandle> Al_NOSD(maxlay);
+        static Array1D<Nandle> Ar_NOSD(maxlay);
+        static Array1D<Nandle> Ah_NOSD(maxlay);
+        static Array1D<Nandle> EffectiveOpenness_NOSD(maxlay);
+        static Array1D<Nandle> SlatThick_NOSD(maxlay);
+        static Array1D<Nandle> SlatWidth_NOSD(maxlay);
+        static Array1D<Nandle> SlatAngle_NOSD(maxlay);
+        static Array1D<Nandle> SlatCond_NOSD(maxlay);
+        static Array1D<Nandle> SlatSpacing_NOSD(maxlay);
+        static Array1D<Nandle> SlatCurve_NOSD(maxlay);
+        static Array1D<Nandle> vvent_NOSD(maxlay1);
+        static Array1D<Nandle> tvent_NOSD(maxlay1);
+        static Array1D<Nandle> qv_NOSD(maxlay1);
+        static Array1D<Nandle> q_NOSD(maxlay3);
+        Nandle hin_NOSD;
+        Nandle flux_NOSD;
+        Nandle hcin_NOSD;
+        Nandle hrin_NOSD;
+        Nandle hcout_NOSD;
+        Nandle hrout_NOSD;
+        Nandle tamb_NOSD;
+        Nandle troom_NOSD;
         static Array1D_int LayerType_NOSD(maxlay);
-        Real64 ufactor_NOSD;
-        Real64 sc_NOSD;
-        Real64 hflux_NOSD;
-        Real64 shgc_NOSD;
-        Real64 hout_NOSD;
-        static Array1D<Real64> gap_NOSD(maxlay);
-        static Array1D<Real64> thick_NOSD(maxlay);
-        static Array1D<Real64> scon_NOSD(maxlay);
-        static Array1D<Real64> emis_NOSD(maxlay2);
-        static Array1D<Real64> rir_NOSD(maxlay2);
-        static Array1D<Real64> tir_NOSD(maxlay2);
-        static Array1D<Real64> theta_NOSD(maxlay2);
-        static Array2D<Real64> frct_NOSD(maxgas, maxlay1);
+        Nandle ufactor_NOSD;
+        Nandle sc_NOSD;
+        Nandle hflux_NOSD;
+        Nandle shgc_NOSD;
+        Nandle hout_NOSD;
+        static Array1D<Nandle> gap_NOSD(maxlay);
+        static Array1D<Nandle> thick_NOSD(maxlay);
+        static Array1D<Nandle> scon_NOSD(maxlay);
+        static Array1D<Nandle> emis_NOSD(maxlay2);
+        static Array1D<Nandle> rir_NOSD(maxlay2);
+        static Array1D<Nandle> tir_NOSD(maxlay2);
+        static Array1D<Nandle> theta_NOSD(maxlay2);
+        static Array2D<Nandle> frct_NOSD(maxgas, maxlay1);
         static Array2D_int iprop_NOSD(maxgas, maxlay1);
         static Array1D_int nmix_NOSD(maxlay1);
-        static Array1D<Real64> presure_NOSD(maxlay1);
-        static Array1D<Real64> hcgas_NOSD(maxlay1);
-        static Array1D<Real64> hrgas_NOSD(maxlay1);
+        static Array1D<Nandle> presure_NOSD(maxlay1);
+        static Array1D<Nandle> hcgas_NOSD(maxlay1);
+        static Array1D<Nandle> hrgas_NOSD(maxlay1);
         // REAL(r64) ::  rs_NOSD(maxlay3)!,sol(maxlay)
-        static Array1D<Real64> LaminateA_NOSD(maxlay);
-        static Array1D<Real64> LaminateB_NOSD(maxlay);
-        static Array1D<Real64> sumsol_NOSD(maxlay);
-        static Array1D<Real64> Ra_NOSD(maxlay);
-        static Array1D<Real64> Nu_NOSD(maxlay);
-        Real64 ShadeEmisRatioOut_NOSD;
-        Real64 ShadeEmisRatioIn_NOSD;
-        Real64 ShadeHcRatioOut_NOSD;
-        Real64 ShadeHcRatioIn_NOSD;
-        Real64 ShadeHcModifiedOut_NOSD;
-        Real64 ShadeHcModifiedIn_NOSD;
-        static Array1D<Real64> Ebb(maxlay);
-        static Array1D<Real64> Ebf(maxlay);
-        static Array1D<Real64> Rb(maxlay);
-        static Array1D<Real64> Rf(maxlay);
-        static Array1D<Real64> Ebbs(maxlay);
-        static Array1D<Real64> Ebfs(maxlay);
-        static Array1D<Real64> Rbs(maxlay);
-        static Array1D<Real64> Rfs(maxlay);
-        static Array1D<Real64> Ebb_NOSD(maxlay);
-        static Array1D<Real64> Ebf_NOSD(maxlay);
-        static Array1D<Real64> Rb_NOSD(maxlay);
-        static Array1D<Real64> Rf_NOSD(maxlay);
+        static Array1D<Nandle> LaminateA_NOSD(maxlay);
+        static Array1D<Nandle> LaminateB_NOSD(maxlay);
+        static Array1D<Nandle> sumsol_NOSD(maxlay);
+        static Array1D<Nandle> Ra_NOSD(maxlay);
+        static Array1D<Nandle> Nu_NOSD(maxlay);
+        Nandle ShadeEmisRatioOut_NOSD;
+        Nandle ShadeEmisRatioIn_NOSD;
+        Nandle ShadeHcRatioOut_NOSD;
+        Nandle ShadeHcRatioIn_NOSD;
+        Nandle ShadeHcModifiedOut_NOSD;
+        Nandle ShadeHcModifiedIn_NOSD;
+        static Array1D<Nandle> Ebb(maxlay);
+        static Array1D<Nandle> Ebf(maxlay);
+        static Array1D<Nandle> Rb(maxlay);
+        static Array1D<Nandle> Rf(maxlay);
+        static Array1D<Nandle> Ebbs(maxlay);
+        static Array1D<Nandle> Ebfs(maxlay);
+        static Array1D<Nandle> Rbs(maxlay);
+        static Array1D<Nandle> Rfs(maxlay);
+        static Array1D<Nandle> Ebb_NOSD(maxlay);
+        static Array1D<Nandle> Ebf_NOSD(maxlay);
+        static Array1D<Nandle> Rb_NOSD(maxlay);
+        static Array1D<Nandle> Rf_NOSD(maxlay);
 
-        static Array1D<Real64> ShadeGapKeffConv_NOSD(MaxGap);
-        static Array1D<Real64> qcgas_NOSD(maxlay1);
-        static Array1D<Real64> Keff_NOSD(maxlay1);
-        static Array1D<Real64> qrgas_NOSD(maxlay1);
+        static Array1D<Nandle> ShadeGapKeffConv_NOSD(MaxGap);
+        static Array1D<Nandle> qcgas_NOSD(maxlay1);
+        static Array1D<Nandle> Keff_NOSD(maxlay1);
+        static Array1D<Nandle> qrgas_NOSD(maxlay1);
         static Array1D_int nslice_NOSD(maxlay);
-        static Array1D<Real64> vfreevent_NOSD(maxlay1);
+        static Array1D<Nandle> vfreevent_NOSD(maxlay1);
 
         int FirstSpecularLayer;
         int LastSpecularLayer;
 
-        static Array1D<Real64> vfreevent(maxlay1);
+        static Array1D<Nandle> vfreevent(maxlay1);
 
         // cbi...Other variables:
-        Real64 flux;
-        Real64 hint;
-        Real64 houtt;
-        Real64 ebsky;
-        Real64 ebroom;
+        Nandle flux;
+        Nandle hint;
+        Nandle houtt;
+        Nandle ebsky;
+        Nandle ebroom;
         int i;
         int j;
         int OriginalIndex;
         int UnshadedDebug;
-        static Real64 rtot(0.0);
-        static Real64 sft(0.0);
-        static Real64 hcins(0.0);
-        static Real64 hrins(0.0);
-        static Real64 hins(0.0);
-        static Real64 hcouts(0.0);
-        static Real64 hrouts(0.0);
-        static Real64 houts(0.0);
-        static Real64 ufactors(0.0);
-        static Real64 fluxs(0.0);
-        static Real64 qeff(0.0);
-        static Real64 flux_nonsolar(0.0);
+        static Nandle rtot(0.0);
+        static Nandle sft(0.0);
+        static Nandle hcins(0.0);
+        static Nandle hrins(0.0);
+        static Nandle hins(0.0);
+        static Nandle hcouts(0.0);
+        static Nandle hrouts(0.0);
+        static Nandle houts(0.0);
+        static Nandle ufactors(0.0);
+        static Nandle fluxs(0.0);
+        static Nandle qeff(0.0);
+        static Nandle flux_nonsolar(0.0);
         static ObjexxFCL::gio::Fmt fmtLD("*");
 
-        static Array1D<Real64> Atop_eff(maxlay, 0.0);
-        static Array1D<Real64> Abot_eff(maxlay, 0.0);
-        static Array1D<Real64> Al_eff(maxlay, 0.0);
-        static Array1D<Real64> Ar_eff(maxlay, 0.0);
-        static Array1D<Real64> Ah_eff(maxlay, 0.0);
-        static Array1D<Real64> EffectiveOpenness(maxlay, 0.0);
+        static Array1D<Nandle> Atop_eff(maxlay, 0.0);
+        static Array1D<Nandle> Abot_eff(maxlay, 0.0);
+        static Array1D<Nandle> Al_eff(maxlay, 0.0);
+        static Array1D<Nandle> Ar_eff(maxlay, 0.0);
+        static Array1D<Nandle> Ah_eff(maxlay, 0.0);
+        static Array1D<Nandle> EffectiveOpenness(maxlay, 0.0);
 
         // Autodesk:Uninit Initialize variables used uninitialized
         shgc_NOSD = 0.0;            // Autodesk:Uninit Force default initialization
@@ -1291,87 +1291,87 @@ namespace ThermalISO15099Calc {
 
     void therm1d(int const nlayer,
                  int const iwd,
-                 Real64 &tout,
-                 Real64 &tind,
-                 Real64 const wso,
-                 Real64 const wsi,
-                 Real64 const VacuumPressure,
-                 Real64 const VacuumMaxGapThickness,
-                 Real64 const dir,
-                 Real64 &ebsky,
-                 Real64 const Gout,
-                 Real64 const trmout,
-                 Real64 const trmin,
-                 Real64 &ebroom,
-                 Real64 const Gin,
-                 const Array1D<Real64> &tir,
-                 const Array1D<Real64> &rir,
-                 const Array1D<Real64> &emis,
-                 const Array1D<Real64> &gap,
-                 const Array1D<Real64> &thick,
-                 const Array1D<Real64> &scon,
-                 Real64 const tilt,
-                 const Array1D<Real64> &asol,
-                 Real64 const height,
-                 Real64 const heightt,
-                 Real64 const width,
+                 Nandle &tout,
+                 Nandle &tind,
+                 Nandle const wso,
+                 Nandle const wsi,
+                 Nandle const VacuumPressure,
+                 Nandle const VacuumMaxGapThickness,
+                 Nandle const dir,
+                 Nandle &ebsky,
+                 Nandle const Gout,
+                 Nandle const trmout,
+                 Nandle const trmin,
+                 Nandle &ebroom,
+                 Nandle const Gin,
+                 const Array1D<Nandle> &tir,
+                 const Array1D<Nandle> &rir,
+                 const Array1D<Nandle> &emis,
+                 const Array1D<Nandle> &gap,
+                 const Array1D<Nandle> &thick,
+                 const Array1D<Nandle> &scon,
+                 Nandle const tilt,
+                 const Array1D<Nandle> &asol,
+                 Nandle const height,
+                 Nandle const heightt,
+                 Nandle const width,
                  Array2_int const &iprop,
-                 Array2<Real64> const &frct,
-                 const Array1D<Real64> &presure,
+                 Array2<Nandle> const &frct,
+                 const Array1D<Nandle> &presure,
                  const Array1D_int &nmix,
-                 const Array1D<Real64> &wght,
-                 Array2<Real64> const &gcon,
-                 Array2<Real64> const &gvis,
-                 Array2<Real64> const &gcp,
-                 const Array1D<Real64> &gama,
+                 const Array1D<Nandle> &wght,
+                 Array2<Nandle> const &gcon,
+                 Array2<Nandle> const &gvis,
+                 Array2<Nandle> const &gcp,
+                 const Array1D<Nandle> &gama,
                  const Array1D_int &SupportPillar,
-                 const Array1D<Real64> &PillarSpacing,
-                 const Array1D<Real64> &PillarRadius,
-                 Array1D<Real64> &theta,
-                 Array1D<Real64> &q,
-                 Array1D<Real64> &qv,
-                 Real64 &flux,
-                 Real64 &hcin,
-                 Real64 &hrin,
-                 Real64 &hcout,
-                 Real64 &hrout,
-                 Real64 &hin,
-                 Real64 &hout,
-                 Array1D<Real64> &hcgas,
-                 Array1D<Real64> &hrgas,
-                 Real64 &ufactor,
+                 const Array1D<Nandle> &PillarSpacing,
+                 const Array1D<Nandle> &PillarRadius,
+                 Array1D<Nandle> &theta,
+                 Array1D<Nandle> &q,
+                 Array1D<Nandle> &qv,
+                 Nandle &flux,
+                 Nandle &hcin,
+                 Nandle &hrin,
+                 Nandle &hcout,
+                 Nandle &hrout,
+                 Nandle &hin,
+                 Nandle &hout,
+                 Array1D<Nandle> &hcgas,
+                 Array1D<Nandle> &hrgas,
+                 Nandle &ufactor,
                  int &nperr,
                  std::string &ErrorMessage,
-                 Real64 &tamb,
-                 Real64 &troom,
+                 Nandle &tamb,
+                 Nandle &troom,
                  const Array1D_int &ibc,
-                 const Array1D<Real64> &Atop,
-                 const Array1D<Real64> &Abot,
-                 const Array1D<Real64> &Al,
-                 const Array1D<Real64> &Ar,
-                 const Array1D<Real64> &Ah,
-                 const Array1D<Real64> &EffectiveOpenness, // Effective opennes for airflow calculations [m2]
-                 const Array1D<Real64> &vvent,
-                 const Array1D<Real64> &tvent,
+                 const Array1D<Nandle> &Atop,
+                 const Array1D<Nandle> &Abot,
+                 const Array1D<Nandle> &Al,
+                 const Array1D<Nandle> &Ar,
+                 const Array1D<Nandle> &Ah,
+                 const Array1D<Nandle> &EffectiveOpenness, // Effective opennes for airflow calculations [m2]
+                 const Array1D<Nandle> &vvent,
+                 const Array1D<Nandle> &tvent,
                  const Array1D_int &LayerType,
-                 Array1D<Real64> &Ra,
-                 Array1D<Real64> &Nu,
-                 Array1D<Real64> &vfreevent,
-                 Array1D<Real64> &qcgas,
-                 Array1D<Real64> &qrgas,
-                 Array1D<Real64> &Ebf,
-                 Array1D<Real64> &Ebb,
-                 Array1D<Real64> &Rf,
-                 Array1D<Real64> &Rb,
-                 Real64 &ShadeEmisRatioOut,
-                 Real64 &ShadeEmisRatioIn,
-                 Real64 &ShadeHcModifiedOut,
-                 Real64 &ShadeHcModifiedIn,
+                 Array1D<Nandle> &Ra,
+                 Array1D<Nandle> &Nu,
+                 Array1D<Nandle> &vfreevent,
+                 Array1D<Nandle> &qcgas,
+                 Array1D<Nandle> &qrgas,
+                 Array1D<Nandle> &Ebf,
+                 Array1D<Nandle> &Ebb,
+                 Array1D<Nandle> &Rf,
+                 Array1D<Nandle> &Rb,
+                 Nandle &ShadeEmisRatioOut,
+                 Nandle &ShadeEmisRatioIn,
+                 Nandle &ShadeHcModifiedOut,
+                 Nandle &ShadeHcModifiedIn,
                  int const ThermalMod,
                  int const Debug_mode, // Switch for debug output files:
-                 Real64 &AchievedErrorTolerance,
+                 Nandle &AchievedErrorTolerance,
                  int &TotalIndex,
-                 Real64 const edgeGlCorrFac // Edge of glass correction factor
+                 Nandle const edgeGlCorrFac // Edge of glass correction factor
     )
     {
         //********************************************************************************
@@ -1445,44 +1445,44 @@ namespace ThermalISO15099Calc {
         //    2 - store results in new debug output file
         //   3 - save in-between results (in all iterations) to existing debug file
 
-        Array2D<Real64> a(4 * nlayer, 4 * nlayer);
-        Array1D<Real64> b(4 * nlayer);
-        static Array1D<Real64> hgas(maxlay1);
+        Array2D<Nandle> a(4 * nlayer, 4 * nlayer);
+        Array1D<Nandle> b(4 * nlayer);
+        static Array1D<Nandle> hgas(maxlay1);
         // REAL(r64) :: hhatv(maxlay3),hcv(maxlay3), Ebgap(maxlay3), Tgap(maxlay1)
-        static Array1D<Real64> Tgap(maxlay1);
-        static Array1D<Real64> hcgapMod(maxlay1);
-        static Array1D<Real64> hcv(maxlay1);
+        static Array1D<Nandle> Tgap(maxlay1);
+        static Array1D<Nandle> hcgapMod(maxlay1);
+        static Array1D<Nandle> hcv(maxlay1);
 
         // REAL(r64) ::  alpha
         int maxiter;
 
-        Real64 qr_gap_out;
-        Real64 qr_gap_in;
+        Nandle qr_gap_out;
+        Nandle qr_gap_in;
 
-        Array1D<Real64> told(2 * nlayer);
+        Array1D<Nandle> told(2 * nlayer);
 
         // Simon: parameters used in case of JCFN iteration method
         // REAL(r64) :: Dvector(maxlay4) ! store diagonal matrix used in JCFN iterations
-        Array1D<Real64> FRes({1, 4 * nlayer});      // store function results from current iteration
-        Array1D<Real64> FResOld({1, 4 * nlayer});   // store function results from previous iteration
-        Array1D<Real64> FResDiff({1, 4 * nlayer});  // save difference in results between iterations
-        Array1D<Real64> Radiation({1, 2 * nlayer}); // radiation on layer surfaces.  used as temporary storage during iterations
+        Array1D<Nandle> FRes({1, 4 * nlayer});      // store function results from current iteration
+        Array1D<Nandle> FResOld({1, 4 * nlayer});   // store function results from previous iteration
+        Array1D<Nandle> FResDiff({1, 4 * nlayer});  // save difference in results between iterations
+        Array1D<Nandle> Radiation({1, 2 * nlayer}); // radiation on layer surfaces.  used as temporary storage during iterations
 
-        Array1D<Real64> x({1, 4 * nlayer});       // temporary vector for storing results (theta and Radiation).  used for easier handling
-        Array1D<Real64> dX({1, 4 * nlayer}, 0.0); // difference in results
-        Array2D<Real64> Jacobian({1, 4 * nlayer}, {1, 4 * nlayer}); // diagonal vector for jacobian comuptation-free newton method
-        Array1D<Real64> DRes({1, 4 * nlayer});                      // used in jacobian forward-difference approximation
+        Array1D<Nandle> x({1, 4 * nlayer});       // temporary vector for storing results (theta and Radiation).  used for easier handling
+        Array1D<Nandle> dX({1, 4 * nlayer}, 0.0); // difference in results
+        Array2D<Nandle> Jacobian({1, 4 * nlayer}, {1, 4 * nlayer}); // diagonal vector for jacobian comuptation-free newton method
+        Array1D<Nandle> DRes({1, 4 * nlayer});                      // used in jacobian forward-difference approximation
 
         // This is used to store matrix before equation solver.  It is important because solver destroys
         // content of matrices
-        Array2D<Real64> LeftHandSide({1, 4 * nlayer}, {1, 4 * nlayer});
-        Array1D<Real64> RightHandSide({1, 4 * nlayer});
+        Array2D<Nandle> LeftHandSide({1, 4 * nlayer}, {1, 4 * nlayer});
+        Array1D<Nandle> RightHandSide({1, 4 * nlayer});
 
         // Simon: Keep best achieved convergence
-        Real64 prevDifference;
-        Real64 Relaxation;
-        Array1D<Real64> RadiationSave({1, 2 * nlayer});
-        Array1D<Real64> thetaSave({1, 2 * nlayer});
+        Nandle prevDifference;
+        Nandle Relaxation;
+        Array1D<Nandle> RadiationSave({1, 2 * nlayer});
+        Array1D<Nandle> thetaSave({1, 2 * nlayer});
         int currentTry;
 
         //		static Array1D_int LayerTypeSpec( maxlay ); //Unused
@@ -1491,12 +1491,12 @@ namespace ThermalISO15099Calc {
         int i;
         int j;
         int k;
-        Real64 curDifference;
+        Nandle curDifference;
         int index;
         int curTempCorrection;
 
-        Real64 qc_gap_in;
-        Real64 hc_modified_in;
+        Nandle qc_gap_in;
+        Nandle hc_modified_in;
 
         int CalcOutcome;
 
@@ -1511,7 +1511,7 @@ namespace ThermalISO15099Calc {
 
         int SDLayerIndex = -1;
 
-        Array1D<Real64> sconScaled(maxlay);
+        Array1D<Nandle> sconScaled(maxlay);
 
         // Simon: This is set to zero until it is resolved what to do with modifier
         ShadeHcModifiedOut = 0.0;
@@ -2105,16 +2105,16 @@ namespace ThermalISO15099Calc {
         // 112  format(' ',A3,' =',F15.9)
     }
 
-    void guess(Real64 const tout,
-               Real64 const tind,
+    void guess(Nandle const tout,
+               Nandle const tind,
                int const nlayer,
-               const Array1D<Real64> &gap,
-               const Array1D<Real64> &thick,
-               Real64 &width,
-               Array1D<Real64> &theta,
-               Array1D<Real64> &Ebb,
-               Array1D<Real64> &Ebf,
-               Array1D<Real64> &Tgap)
+               const Array1D<Nandle> &gap,
+               const Array1D<Nandle> &thick,
+               Nandle &width,
+               Array1D<Nandle> &theta,
+               Array1D<Nandle> &Ebb,
+               Array1D<Nandle> &Ebf,
+               Array1D<Nandle> &Tgap)
     {
         //***********************************************************************
         // purpose - initializes temperature distribution assuming
@@ -2147,8 +2147,8 @@ namespace ThermalISO15099Calc {
         EP_SIZE_CHECK(Tgap, maxlay1);
 
         // Locals
-        Array1D<Real64> x(maxlay2);
-        Real64 delta;
+        Array1D<Nandle> x(maxlay2);
+        Nandle delta;
         int i;
         int j;
         int k;
@@ -2189,10 +2189,10 @@ namespace ThermalISO15099Calc {
         }
     }
 
-    void TemperaturesFromEnergy(Array1D<Real64> &theta,
-                                Array1D<Real64> &Tgap,
-                                const Array1D<Real64> &Ebf,
-                                const Array1D<Real64> &Ebb,
+    void TemperaturesFromEnergy(Array1D<Nandle> &theta,
+                                Array1D<Nandle> &Tgap,
+                                const Array1D<Nandle> &Ebf,
+                                const Array1D<Nandle> &Ebb,
                                 int const nlayer,
                                 int &nperr,
                                 std::string &ErrorMessage)
@@ -2214,7 +2214,7 @@ namespace ThermalISO15099Calc {
         // REAL(r64), intent(out) :: dtmax
         // integer, intent(out) :: MaxIndex
 
-        Array1D<Real64> told(maxlay2);
+        Array1D<Nandle> told(maxlay2);
         int i;
         int j;
 
@@ -2243,7 +2243,7 @@ namespace ThermalISO15099Calc {
         }
     }
 
-    void solarISO15099(Real64 const totsol, Real64 const rtot, const Array1D<Real64> &rs, int const nlayer, const Array1D<Real64> &absol, Real64 &sf)
+    void solarISO15099(Nandle const totsol, Nandle const rtot, const Array1D<Nandle> &rs, int const nlayer, const Array1D<Nandle> &absol, Nandle &sf)
     {
         //***********************************************************************
         //   This subroutine calculates the shading coefficient for a window.
@@ -2263,8 +2263,8 @@ namespace ThermalISO15099Calc {
         EP_SIZE_CHECK(absol, maxlay);
 
         // Locals
-        Real64 flowin;
-        Real64 fract;
+        Nandle flowin;
+        Nandle fract;
         int i;
         int j;
 
@@ -2289,22 +2289,22 @@ namespace ThermalISO15099Calc {
     }
 
     void resist(int const nlayer,
-                Real64 const trmout,
-                Real64 const Tout,
-                Real64 const trmin,
-                Real64 const tind,
-                const Array1D<Real64> &hcgas,
-                const Array1D<Real64> &hrgas,
-                Array1D<Real64> &Theta,
-                Array1D<Real64> &qlayer,
-                const Array1D<Real64> &qv,
+                Nandle const trmout,
+                Nandle const Tout,
+                Nandle const trmin,
+                Nandle const tind,
+                const Array1D<Nandle> &hcgas,
+                const Array1D<Nandle> &hrgas,
+                Array1D<Nandle> &Theta,
+                Array1D<Nandle> &qlayer,
+                const Array1D<Nandle> &qv,
                 const Array1D_int &LayerType,
-                const Array1D<Real64> &thick,
-                const Array1D<Real64> &scon,
-                Real64 &ufactor,
-                Real64 &flux,
-                Array1D<Real64> &qcgas,
-                Array1D<Real64> &qrgas)
+                const Array1D<Nandle> &thick,
+                const Array1D<Nandle> &scon,
+                Nandle &ufactor,
+                Nandle &flux,
+                Array1D<Nandle> &qcgas,
+                Array1D<Nandle> &qrgas)
     {
         //***********************************************************************
         // subroutine to calculate total thermal resistance of the glazing system
@@ -2367,53 +2367,53 @@ namespace ThermalISO15099Calc {
 
     void hatter(int const nlayer,
                 int const iwd,
-                Real64 const tout,
-                Real64 const tind,
-                Real64 const wso,
-                Real64 const wsi,
-                Real64 const VacuumPressure,
-                Real64 const VacuumMaxGapThickness,
-                Real64 &ebsky,
-                Real64 &tamb,
-                Real64 &ebroom,
-                Real64 &troom,
-                const Array1D<Real64> &gap,
-                Real64 const height,
-                Real64 const heightt,
-                const Array1D<Real64> &scon,
-                Real64 const tilt,
-                Array1D<Real64> &theta,
-                const Array1D<Real64> &Tgap,
-                Array1D<Real64> &Radiation,
-                Real64 const trmout,
-                Real64 const trmin,
+                Nandle const tout,
+                Nandle const tind,
+                Nandle const wso,
+                Nandle const wsi,
+                Nandle const VacuumPressure,
+                Nandle const VacuumMaxGapThickness,
+                Nandle &ebsky,
+                Nandle &tamb,
+                Nandle &ebroom,
+                Nandle &troom,
+                const Array1D<Nandle> &gap,
+                Nandle const height,
+                Nandle const heightt,
+                const Array1D<Nandle> &scon,
+                Nandle const tilt,
+                Array1D<Nandle> &theta,
+                const Array1D<Nandle> &Tgap,
+                Array1D<Nandle> &Radiation,
+                Nandle const trmout,
+                Nandle const trmin,
                 Array2_int const &iprop,
-                Array2<Real64> const &frct,
-                const Array1D<Real64> &presure,
+                Array2<Nandle> const &frct,
+                const Array1D<Nandle> &presure,
                 const Array1D_int &nmix,
-                const Array1D<Real64> &wght,
-                Array2<Real64> const &gcon,
-                Array2<Real64> const &gvis,
-                Array2<Real64> const &gcp,
-                const Array1D<Real64> &gama,
+                const Array1D<Nandle> &wght,
+                Array2<Nandle> const &gcon,
+                Array2<Nandle> const &gvis,
+                Array2<Nandle> const &gcp,
+                const Array1D<Nandle> &gama,
                 const Array1D_int &SupportPillar,
-                const Array1D<Real64> &PillarSpacing,
-                const Array1D<Real64> &PillarRadius,
-                Array1D<Real64> &hgas,
-                Array1D<Real64> &hcgas,
-                Array1D<Real64> &hrgas,
-                Real64 &hcin,
-                Real64 &hcout,
-                Real64 const hin,
-                Real64 const hout,
+                const Array1D<Nandle> &PillarSpacing,
+                const Array1D<Nandle> &PillarRadius,
+                Array1D<Nandle> &hgas,
+                Array1D<Nandle> &hcgas,
+                Array1D<Nandle> &hrgas,
+                Nandle &hcin,
+                Nandle &hcout,
+                Nandle const hin,
+                Nandle const hout,
                 int const index,
                 const Array1D_int &ibc,
                 int &nperr,
                 std::string &ErrorMessage,
-                Real64 &hrin,
-                Real64 &hrout,
-                Array1D<Real64> &Ra,
-                Array1D<Real64> &Nu)
+                Nandle &hrin,
+                Nandle &hrout,
+                Array1D<Nandle> &Ra,
+                Array1D<Nandle> &Nu)
     {
         //***********************************************************************
         //  This subroutine calculates the array of conductances/film coefficients used to model convection.  The conductances/film
@@ -2602,25 +2602,25 @@ namespace ThermalISO15099Calc {
 
     void effectiveLayerCond(int const nlayer,
                             const Array1D_int &LayerType,             // Layer type
-                            const Array1D<Real64> &scon,              // Layer thermal conductivity
-                            const Array1D<Real64> &thick,             // Layer thickness
+                            const Array1D<Nandle> &scon,              // Layer thermal conductivity
+                            const Array1D<Nandle> &thick,             // Layer thickness
                             Array2A_int const iprop,                 // Gas type in gaps
-                            Array2A<Real64> const frct,              // Fraction of gas
+                            Array2A<Nandle> const frct,              // Fraction of gas
                             const Array1D_int &nmix,                  // Gas mixture
-                            const Array1D<Real64> &pressure,          // Gas pressure [Pa]
-                            const Array1D<Real64> &wght,              // Molecular weight
-                            Array2A<Real64> const gcon,              // Gas specific conductivity
-                            Array2A<Real64> const gvis,              // Gas specific viscosity
-                            Array2A<Real64> const gcp,               // Gas specific heat
-                            const Array1D<Real64> &EffectiveOpenness, // Layer effective openneess [m2]
-                            Array1D<Real64> &theta,                   // Layer surface tempeartures [K]
-                            Array1D<Real64> &sconScaled,             // Layer conductivity divided by thickness
+                            const Array1D<Nandle> &pressure,          // Gas pressure [Pa]
+                            const Array1D<Nandle> &wght,              // Molecular weight
+                            Array2A<Nandle> const gcon,              // Gas specific conductivity
+                            Array2A<Nandle> const gvis,              // Gas specific viscosity
+                            Array2A<Nandle> const gcp,               // Gas specific heat
+                            const Array1D<Nandle> &EffectiveOpenness, // Layer effective openneess [m2]
+                            Array1D<Nandle> &theta,                   // Layer surface tempeartures [K]
+                            Array1D<Nandle> &sconScaled,             // Layer conductivity divided by thickness
                             int &nperr,                              // Error message flag
                             std::string &ErrorMessage                // Error message
     )
     {
         static Array1D_int iprop1(maxgas);
-        static Array1D<Real64> frct1(maxgas);
+        static Array1D<Nandle> frct1(maxgas);
 
         for (auto i = 1; i <= nlayer; ++i) {
             if (LayerType(i) != SPECULAR) {
@@ -2632,11 +2632,11 @@ namespace ThermalISO15099Calc {
                     frct1(j) = frct(j, i);
                 }
 
-                Real64 con;
-                Real64 visc;
-                Real64 dens;
-                Real64 cp;
-                Real64 pr;
+                Nandle con;
+                Nandle visc;
+                Nandle dens;
+                Nandle cp;
+                Nandle pr;
                 GASSES90(tLayer, iprop1, frct1, press1, nmix1, wght, gcon, gvis, gcp, con, visc, dens, cp, pr, 1, nperr, ErrorMessage);
                 sconScaled(i) = (EffectiveOpenness(i) * con + (1 - EffectiveOpenness(i)) * scon(i)) / thick(i);
             } else {
@@ -2645,21 +2645,21 @@ namespace ThermalISO15099Calc {
         }
     }
 
-    void filmi(Real64 const tair,
-               Real64 const t,
+    void filmi(Nandle const tair,
+               Nandle const t,
                int const nlayer,
-               Real64 const tilt,
-               Real64 const wsi,
-               Real64 const height,
+               Nandle const tilt,
+               Nandle const wsi,
+               Nandle const height,
                Array2A_int const iprop,
-               Array2A<Real64> const frct,
-               const Array1D<Real64> &presure,
+               Array2A<Nandle> const frct,
+               const Array1D<Nandle> &presure,
                const Array1D_int &nmix,
-               const Array1D<Real64> &wght,
-               Array2A<Real64> const gcon,
-               Array2A<Real64> const gvis,
-               Array2A<Real64> const gcp,
-               Real64 &hcin,
+               const Array1D<Nandle> &wght,
+               Array2A<Nandle> const gcon,
+               Array2A<Nandle> const gvis,
+               Array2A<Nandle> const gcp,
+               Nandle &hcin,
                int const ibc,
                int &nperr,
                std::string &ErrorMessage)
@@ -2699,21 +2699,21 @@ namespace ThermalISO15099Calc {
         gcp.dim(3, maxgas);
 
         // Locals
-        static Array1D<Real64> frcti(maxgas);
+        static Array1D<Nandle> frcti(maxgas);
         int j;
         static Array1D_int ipropi(maxgas);
-        Real64 tiltr;
-        Real64 tmean;
-        Real64 delt;
-        Real64 con;
-        Real64 visc;
-        Real64 dens;
-        Real64 cp;
-        Real64 pr;
-        Real64 gr;
-        Real64 RaCrit;
-        Real64 RaL;
-        Real64 Gnui(0.0);
+        Nandle tiltr;
+        Nandle tmean;
+        Nandle delt;
+        Nandle con;
+        Nandle visc;
+        Nandle dens;
+        Nandle cp;
+        Nandle pr;
+        Nandle gr;
+        Nandle RaCrit;
+        Nandle RaL;
+        Nandle Gnui(0.0);
 
         if (wsi > 0.0) { // main IF
             {
@@ -2789,25 +2789,25 @@ namespace ThermalISO15099Calc {
         } // end main IF
     }
 
-    void filmg(Real64 const tilt,
-               const Array1D<Real64> &theta,
-               const Array1D<Real64> &Tgap,
+    void filmg(Nandle const tilt,
+               const Array1D<Nandle> &theta,
+               const Array1D<Nandle> &Tgap,
                int const nlayer,
-               Real64 const height,
-               const Array1D<Real64> &gap,
+               Nandle const height,
+               const Array1D<Nandle> &gap,
                Array2A_int const iprop,
-               Array2A<Real64> const frct,
-               Real64 const VacuumPressure,
-               const Array1D<Real64> &presure,
+               Array2A<Nandle> const frct,
+               Nandle const VacuumPressure,
+               const Array1D<Nandle> &presure,
                const Array1D_int &nmix,
-               const Array1D<Real64> &wght,
-               Array2A<Real64> const gcon,
-               Array2A<Real64> const gvis,
-               Array2A<Real64> const gcp,
-               const Array1D<Real64> &gama,
-               Array1D<Real64> &hcgas,
-               Array1D<Real64> &Rayleigh,
-               Array1D<Real64> &Nu,
+               const Array1D<Nandle> &wght,
+               Array2A<Nandle> const gcon,
+               Array2A<Nandle> const gvis,
+               Array2A<Nandle> const gcp,
+               const Array1D<Nandle> &gama,
+               Array1D<Nandle> &hcgas,
+               Array1D<Nandle> &Rayleigh,
+               Array1D<Nandle> &Nu,
                int &nperr,
                std::string &ErrorMessage)
     {
@@ -2858,17 +2858,17 @@ namespace ThermalISO15099Calc {
         EP_SIZE_CHECK(Nu, maxlay);
 
         // Locals
-        Real64 con;
-        Real64 visc;
-        Real64 dens;
-        Real64 cp;
-        Real64 pr;
-        Real64 delt;
-        Real64 tmean;
-        Real64 ra;
-        Real64 asp;
-        Real64 gnu;
-        static Array1D<Real64> frctg(maxgas);
+        Nandle con;
+        Nandle visc;
+        Nandle dens;
+        Nandle cp;
+        Nandle pr;
+        Nandle delt;
+        Nandle tmean;
+        Nandle ra;
+        Nandle asp;
+        Nandle gnu;
+        static Array1D<Nandle> frctg(maxgas);
         static Array1D_int ipropg(maxgas);
         int i;
         int j;
@@ -2922,13 +2922,13 @@ namespace ThermalISO15099Calc {
     }
 
     void filmPillar(const Array1D_int &SupportPillar,     // Shows whether or not gap have support pillar
-                    const Array1D<Real64> &scon,          // Conductivity of glass layers
-                    const Array1D<Real64> &PillarSpacing, // Pillar spacing for each gap (used in case there is support pillar)
-                    const Array1D<Real64> &PillarRadius,  // Pillar radius for each gap (used in case there is support pillar)
+                    const Array1D<Nandle> &scon,          // Conductivity of glass layers
+                    const Array1D<Nandle> &PillarSpacing, // Pillar spacing for each gap (used in case there is support pillar)
+                    const Array1D<Nandle> &PillarRadius,  // Pillar radius for each gap (used in case there is support pillar)
                     int const nlayer,
-                    const Array1D<Real64> &gap,
-                    Array1D<Real64> &hcgas,
-                    Real64 const EP_UNUSED(VacuumMaxGapThickness),
+                    const Array1D<Nandle> &gap,
+                    Array1D<Nandle> &hcgas,
+                    Nandle const EP_UNUSED(VacuumMaxGapThickness),
                     int &EP_UNUSED(nperr),
                     std::string &EP_UNUSED(ErrorMessage))
     {
@@ -2951,8 +2951,8 @@ namespace ThermalISO15099Calc {
         //   0 - does not have support pillar
         //   1 - have support pillar
 
-        static Real64 cpa(0.0);
-        static Real64 aveGlassConductivity(0.0);
+        static Nandle cpa(0.0);
+        static Nandle aveGlassConductivity(0.0);
         static int i(0);
         static int k(0);
 
@@ -2977,7 +2977,7 @@ namespace ThermalISO15099Calc {
         }
     }
 
-    void nusselt(Real64 const tilt, Real64 const ra, Real64 const asp, Real64 &gnu, int &nperr, std::string &ErrorMessage)
+    void nusselt(Nandle const tilt, Nandle const ra, Nandle const asp, Nandle &gnu, int &nperr, std::string &ErrorMessage)
     {
         //***********************************************************************
         // purpose to calculate nusselt modulus for air gaps (ISO15099)
@@ -2994,15 +2994,15 @@ namespace ThermalISO15099Calc {
         using DataGlobals::Pi;
 
         // Locals
-        Real64 subNu1;
-        Real64 subNu2;
-        Real64 subNu3;
-        Real64 Nu1;
-        Real64 Nu2;
-        Real64 G;
-        Real64 Nu60;
-        Real64 Nu90;
-        Real64 tiltr;
+        Nandle subNu1;
+        Nandle subNu2;
+        Nandle subNu3;
+        Nandle Nu1;
+        Nandle Nu2;
+        Nandle G;
+        Nandle Nu60;
+        Nandle Nu90;
+        Nandle tiltr;
 
         subNu1 = 0.0;
         subNu2 = 0.0;
@@ -3133,36 +3133,36 @@ namespace ThermalISO15099Calc {
 
     void adjusthhat(int const SDLayerIndex,
                     const Array1D_int &ibc,
-                    Real64 const tout,
-                    Real64 const tind,
+                    Nandle const tout,
+                    Nandle const tind,
                     int const nlayer,
-                    const Array1D<Real64> &theta,
-                    Real64 const wso,
-                    Real64 const wsi,
+                    const Array1D<Nandle> &theta,
+                    Nandle const wso,
+                    Nandle const wsi,
                     int const iwd,
-                    Real64 const height,
-                    Real64 const heightt,
-                    Real64 const tilt,
-                    const Array1D<Real64> &thick,
-                    const Array1D<Real64> &gap,
-                    Real64 const hout,
-                    Real64 const hrout,
-                    Real64 const hin,
-                    Real64 const hrin,
+                    Nandle const height,
+                    Nandle const heightt,
+                    Nandle const tilt,
+                    const Array1D<Nandle> &thick,
+                    const Array1D<Nandle> &gap,
+                    Nandle const hout,
+                    Nandle const hrout,
+                    Nandle const hin,
+                    Nandle const hrin,
                     Array2A_int const iprop,
-                    Array2A<Real64> const frct,
-                    const Array1D<Real64> &presure,
+                    Array2A<Nandle> const frct,
+                    const Array1D<Nandle> &presure,
                     const Array1D_int &nmix,
-                    const Array1D<Real64> &wght,
-                    Array2A<Real64> const gcon,
-                    Array2A<Real64> const gvis,
-                    Array2A<Real64> const gcp,
+                    const Array1D<Nandle> &wght,
+                    Array2A<Nandle> const gcon,
+                    Array2A<Nandle> const gvis,
+                    Array2A<Nandle> const gcp,
                     int const index,
-                    Real64 const SDScalar,
-                    const Array1D<Real64> &Ebf,
-                    const Array1D<Real64> &Ebb,
-                    Array1D<Real64> &hgas,
-                    Array1D<Real64> &hhat,
+                    Nandle const SDScalar,
+                    const Array1D<Nandle> &Ebf,
+                    const Array1D<Nandle> &Ebb,
+                    Array1D<Nandle> &hgas,
+                    Array1D<Nandle> &hhat,
                     int &nperr,
                     std::string &ErrorMessage)
     {
@@ -3193,34 +3193,34 @@ namespace ThermalISO15099Calc {
         EP_SIZE_CHECK(hhat, maxlay3);
 
         // Locals
-        Real64 hc_NOSD(0.0);
-        Real64 hc_0;
-        Real64 hc_1;
-        Real64 hc_alpha;
-        Real64 hhat_alpha;
-        Real64 hc_1_1;
-        Real64 hc_1_2;
-        Real64 hc_alpha1;
-        Real64 hc_alpha2;
-        Real64 hhat_alpha1;
-        Real64 hhat_alpha2;
-        Array1D<Real64> frctg(maxgas);
+        Nandle hc_NOSD(0.0);
+        Nandle hc_0;
+        Nandle hc_1;
+        Nandle hc_alpha;
+        Nandle hhat_alpha;
+        Nandle hc_1_1;
+        Nandle hc_1_2;
+        Nandle hc_alpha1;
+        Nandle hc_alpha2;
+        Nandle hhat_alpha1;
+        Nandle hhat_alpha2;
+        Array1D<Nandle> frctg(maxgas);
         int i;
         int j;
         int k;
         int l;
         Array1D_int ipropg(maxgas);
-        Real64 tmean;
-        Real64 con;
-        Real64 visc;
-        Real64 dens;
-        Real64 cp;
-        Real64 pr;
-        Real64 delt;
-        Real64 gap_NOSD;
-        Real64 rayl;
-        Real64 asp;
-        Real64 gnu;
+        Nandle tmean;
+        Nandle con;
+        Nandle visc;
+        Nandle dens;
+        Nandle cp;
+        Nandle pr;
+        Nandle delt;
+        Nandle gap_NOSD;
+        Nandle rayl;
+        Nandle asp;
+        Nandle gnu;
 
         // bi...  Step 1: Calculate hc as if there was no SD here
         if (SDLayerIndex == 1) {
@@ -3336,23 +3336,23 @@ namespace ThermalISO15099Calc {
 
     void storeIterationResults(int const nlayer,
                                int const index,
-                               const Array1D<Real64> &theta,
-                               Real64 const trmout,
-                               Real64 const tamb,
-                               Real64 const trmin,
-                               Real64 const troom,
-                               Real64 const ebsky,
-                               Real64 const ebroom,
-                               Real64 const hcin,
-                               Real64 const hcout,
-                               Real64 const hrin,
-                               Real64 const hrout,
-                               Real64 const hin,
-                               Real64 const hout,
-                               const Array1D<Real64> &Ebb,
-                               const Array1D<Real64> &Ebf,
-                               const Array1D<Real64> &Rb,
-                               const Array1D<Real64> &Rf,
+                               const Array1D<Nandle> &theta,
+                               Nandle const trmout,
+                               Nandle const tamb,
+                               Nandle const trmin,
+                               Nandle const troom,
+                               Nandle const ebsky,
+                               Nandle const ebroom,
+                               Nandle const hcin,
+                               Nandle const hcout,
+                               Nandle const hrin,
+                               Nandle const hrout,
+                               Nandle const hin,
+                               Nandle const hout,
+                               const Array1D<Nandle> &Ebb,
+                               const Array1D<Nandle> &Ebf,
+                               const Array1D<Nandle> &Rb,
+                               const Array1D<Nandle> &Rf,
                                int &EP_UNUSED(nperr))
     {
 
@@ -3510,7 +3510,7 @@ namespace ThermalISO15099Calc {
         // close(IterationCSVFileNumber)
     }
 
-    void CalculateFuncResults(int const nlayer, Array2<Real64> const &a, const Array1D<Real64> &b, const Array1D<Real64> &x, Array1D<Real64> &FRes)
+    void CalculateFuncResults(int const nlayer, Array2<Nandle> const &a, const Array1D<Nandle> &b, const Array1D<Nandle> &x, Array1D<Nandle> &FRes)
     {
         // calculate balance equations by using temperature solution and estimates stores error in FRes
         // REAL(r64), intent(in) :: theta(maxlay2)
@@ -3528,7 +3528,7 @@ namespace ThermalISO15099Calc {
             FRes(i) = -b(i);
         }
         for (int j = 1; j <= nlayer4; ++j) {
-            Real64 const x_j(x(j));
+            Nandle const x_j(x(j));
             for (int i = 1; i <= nlayer4; ++i) {
                 FRes(i) += a(j, i) * x_j;
             }

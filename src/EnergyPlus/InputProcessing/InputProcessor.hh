@@ -120,9 +120,9 @@ public:
 
     bool findDefault(std::string &default_value, json const &schema_field_obj);
 
-    bool findDefault(Real64 &default_value, json const &schema_field_obj);
+    bool findDefault(Nandle &default_value, json const &schema_field_obj);
 
-    bool getDefaultValue(std::string const &objectWord, std::string const &fieldName, Real64 &value);
+    bool getDefaultValue(std::string const &objectWord, std::string const &fieldName, Nandle &value);
 
     bool getDefaultValue(std::string const &objectWord, std::string const &fieldName, std::string &value);
 
@@ -132,7 +132,7 @@ public:
                        int const Number,
                        Array1S_string Alphas,
                        int &NumAlphas,
-                       Array1D<Real64> &Numbers,
+                       Array1D<Nandle> &Numbers,
                        int &NumNumbers,
                        int &Status,
                        Optional<Array1D_bool> NumBlank = _,
@@ -245,7 +245,7 @@ private:
                             bool within_max_fields,
                             Array1S_string Alphas,
                             int &NumAlphas,
-                            Array1D<Real64> &Numbers,
+                            Array1D<Nandle> &Numbers,
                             int &NumNumbers,
                             Optional<Array1D_bool> NumBlank = _,
                             Optional<Array1D_bool> AlphaBlank = _,

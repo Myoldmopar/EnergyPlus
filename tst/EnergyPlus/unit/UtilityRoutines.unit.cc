@@ -70,9 +70,9 @@ TEST_F(EnergyPlusFixture, RecurringWarningTest)
 
     // void ShowRecurringSevereErrorAtEnd(std::string const &Message,         // Message automatically written to "error file" at end of simulation
     //    int &MsgIndex,                      // Recurring message index, if zero, next available index is assigned
-    //    Optional<Real64 const> ReportMaxOf, // Track and report the max of the values passed to this argument
-    //    Optional<Real64 const> ReportMinOf, // Track and report the min of the values passed to this argument
-    //    Optional<Real64 const> ReportSumOf, // Track and report the sum of the values passed to this argument
+    //    Optional<Nandle const> ReportMaxOf, // Track and report the max of the values passed to this argument
+    //    Optional<Nandle const> ReportMinOf, // Track and report the min of the values passed to this argument
+    //    Optional<Nandle const> ReportSumOf, // Track and report the sum of the values passed to this argument
     //    std::string const &ReportMaxUnits,  // optional char string (<=15 length) of units for max value
     //    std::string const &ReportMinUnits,  // optional char string (<=15 length) of units for min value
     //    std::string const &ReportSumUnits   // optional char string (<=15 length) of units for sum value

@@ -168,10 +168,10 @@ namespace AirflowNetwork {
     int AirflowNetworkNumOfZones(0);    // The number of zones for multizone calculation
 
     bool RollBackFlag(false);                  // Roll back flag when system time step down shifting
-    Array1D<Real64> ANZT;                      // Local zone air temperature for roll back use
-    Array1D<Real64> ANZW;                      // Local zone air humidity ratio for roll back use
-    Array1D<Real64> ANCO;                      // Local zone air CO2 for roll back use
-    Array1D<Real64> ANGC;                      // Local zone air generic contaminant for roll back use
+    Array1D<Nandle> ANZT;                      // Local zone air temperature for roll back use
+    Array1D<Nandle> ANZW;                      // Local zone air humidity ratio for roll back use
+    Array1D<Nandle> ANCO;                      // Local zone air CO2 for roll back use
+    Array1D<Nandle> ANGC;                      // Local zone air generic contaminant for roll back use
     int AirflowNetworkNumOfExhFan(0);          // Number of zone exhaust fans
     Array1D_bool AirflowNetworkZoneExhaustFan; // Logical to use zone exhaust fans
     bool AirflowNetworkFanActivated(false);    // Supply fan activation flag
@@ -179,11 +179,11 @@ namespace AirflowNetwork {
     // Multispeed HP only
     int MultiSpeedHPIndicator(0); // Indicator for multispeed heat pump use
     // Additional airflow needed for an VAV fan to compensate the leakage losses and supply pathway pressure losses [kg/s]
-    Real64 VAVTerminalRatio(0.0);       // The terminal flow ratio when a supply VAV fan reach its max flow rate
+    Nandle VAVTerminalRatio(0.0);       // The terminal flow ratio when a supply VAV fan reach its max flow rate
     bool VAVSystem(false);              // This flag is used to represent a VAV system
-    Real64 ExhaustFanMassFlowRate(0.0); // Exhaust fan flow rate used in PressureStat
+    Nandle ExhaustFanMassFlowRate(0.0); // Exhaust fan flow rate used in PressureStat
     int PressureSetFlag(0);             // PressureSet flag
-    Real64 ReliefMassFlowRate(0.0);     // OA Mixer relief node flow rate used in PressureStat
+    Nandle ReliefMassFlowRate(0.0);     // OA Mixer relief node flow rate used in PressureStat
 
     // Object Data
     Array1D<AirflowNetworkNodeSimuData> AirflowNetworkNodeSimu;
@@ -228,18 +228,18 @@ namespace AirflowNetwork {
     Array1D<ReliefFlow> DisSysCompReliefAirData;
     Array1D<AirflowNetworkLinkageViewFactorProp> AirflowNetworkLinkageViewFactorData;
 
-    static Real64 square(Real64 x)
+    static Nandle square(Nandle x)
     {
         return x * x;
     }
 
     int Duct::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                        Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                        Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                         int const EP_UNUSED(i),     // Linkage number
                         const AirProperties &propN, // Node 1 properties
                         const AirProperties &propM, // Node 2 properties
-                        std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                        std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                        std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                        std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -262,25 +262,25 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const C(0.868589);
-        Real64 const EPS(0.001);
+        Nandle const C(0.868589);
+        Nandle const EPS(0.001);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 A0;
-        Real64 A1;
-        Real64 A2;
-        Real64 B;
-        Real64 D;
-        Real64 S2;
-        Real64 CDM;
-        Real64 FL; // friction factor for laminar flow.
-        Real64 FT; // friction factor for turbulent flow.
-        Real64 FTT;
-        Real64 RE; // Reynolds number.
-        Real64 ed;
-        Real64 ld;
-        Real64 g;
-        Real64 AA1;
+        Nandle A0;
+        Nandle A1;
+        Nandle A2;
+        Nandle B;
+        Nandle D;
+        Nandle S2;
+        Nandle CDM;
+        Nandle FL; // friction factor for laminar flow.
+        Nandle FT; // friction factor for turbulent flow.
+        Nandle FTT;
+        Nandle RE; // Reynolds number.
+        Nandle ed;
+        Nandle ld;
+        Nandle g;
+        Nandle AA1;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
@@ -385,12 +385,12 @@ namespace AirflowNetwork {
     }
 
     int SurfaceCrack::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                 int const i,                // Linkage number
                                 const AirProperties &propN, // Node 1 properties
                                 const AirProperties &propM, // Node 2 properties
-                                std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
         // SUBROUTINE INFORMATION:
@@ -411,18 +411,18 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 RhozNorm;
-        Real64 VisczNorm;
-        Real64 expn;
-        Real64 Ctl;
-        Real64 coef;
-        Real64 Corr;
-        Real64 VisAve;
-        Real64 Tave;
-        Real64 RhoCor;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle RhozNorm;
+        Nandle VisczNorm;
+        Nandle expn;
+        Nandle Ctl;
+        Nandle coef;
+        Nandle Corr;
+        Nandle VisAve;
+        Nandle Tave;
+        Nandle RhoCor;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
@@ -502,12 +502,12 @@ namespace AirflowNetwork {
     }
 
     int DuctLeak::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                            Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                            Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                             int const EP_UNUSED(i),     // Linkage number
                             const AirProperties &propN, // Node 1 properties
                             const AirProperties &propM, // Node 2 properties
-                            std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                            std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                            std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                            std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
         // SUBROUTINE INFORMATION:
@@ -528,19 +528,19 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 Ctl;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle Ctl;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
 
         // FLOW:
         // Crack standard condition: T=20C, p=101325 Pa and 0 g/kg
-        Real64 RhozNorm = AIRDENSITY(101325.0, 20.0, 0.0);
-        Real64 VisczNorm = 1.71432e-5 + 4.828e-8 * 20.0;
-        Real64 coef = FlowCoef;
+        Nandle RhozNorm = AIRDENSITY(101325.0, 20.0, 0.0);
+        Nandle VisczNorm = 1.71432e-5 + 4.828e-8 * 20.0;
+        Nandle coef = FlowCoef;
 
         if (PDROP >= 0.0) {
             coef /= propN.sqrtDensity;
@@ -596,12 +596,12 @@ namespace AirflowNetwork {
     }
 
     int ConstantVolumeFan::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                     Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                     Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                      int const i,                // Linkage number
                                      const AirProperties &propN, // Node 1 properties
                                      const AirProperties &propM, // Node 2 properties
-                                     std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                     std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                     std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                     std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -639,8 +639,8 @@ namespace AirflowNetwork {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int k;
         int k1;
-        Real64 SumTermFlow;     // Sum of all Terminal flows [kg/s]
-        Real64 SumFracSuppLeak; // Sum of all supply leaks as a fraction of supply fan flow rate
+        Nandle SumTermFlow;     // Sum of all Terminal flows [kg/s]
+        Nandle SumFracSuppLeak; // Sum of all supply leaks as a fraction of supply fan flow rate
         int Node1;
         int Node2;
 
@@ -705,12 +705,12 @@ namespace AirflowNetwork {
     }
 
     int DetailedFan::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                               Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                               Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                int const i,                // Linkage number
                                const AirProperties &propN, // Node 1 properties
                                const AirProperties &propM, // Node 2 properties
-                               std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                               std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                               std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                               std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -732,21 +732,21 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const TOL(0.00001);
+        Nandle const TOL(0.00001);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int j;
         int k;
         int L;
-        Real64 DPDF;
-        Real64 PRISE; // pressure rise (negative of pressure drop) (Pa).
-        Real64 BX;
-        Real64 BY;
-        Real64 CX;
-        Real64 CY;
-        Real64 CCY;
-        Real64 DX;
-        Real64 DY;
+        Nandle DPDF;
+        Nandle PRISE; // pressure rise (negative of pressure drop) (Pa).
+        Nandle BX;
+        Nandle BY;
+        Nandle CX;
+        Nandle CY;
+        Nandle CCY;
+        Nandle DX;
+        Nandle DY;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,5E14.6)");
@@ -833,12 +833,12 @@ namespace AirflowNetwork {
     }
 
     int Damper::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                          Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                          Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                           int const i,                // Linkage number
                           const AirProperties &propN, // Node 1 properties
                           const AirProperties &propM, // Node 2 properties
-                          std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                          std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                          std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                          std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -860,7 +860,7 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 C;
+        Nandle C;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
@@ -895,12 +895,12 @@ namespace AirflowNetwork {
     }
 
     int EffectiveLeakageRatio::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                         Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                         Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                          int const EP_UNUSED(i),     // Linkage number
                                          const AirProperties &propN, // Node 1 properties
                                          const AirProperties &propM, // Node 2 properties
-                                         std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                         std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                         std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                         std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -922,10 +922,10 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 FlowCoef;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle FlowCoef;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
@@ -981,12 +981,12 @@ namespace AirflowNetwork {
     }
 
     int DetailedOpening::calculate(bool const EP_UNUSED(LFLAG),           // Initialization flag.If = 1, use laminar relationship
-                                   Real64 const PDROP,                    // Total pressure drop across a component (P1 - P2) [Pa]
+                                   Nandle const PDROP,                    // Total pressure drop across a component (P1 - P2) [Pa]
                                    int const IL,                          // Linkage number
                                    const AirProperties &EP_UNUSED(propN), // Node 1 properties
                                    const AirProperties &EP_UNUSED(propM), // Node 2 properties
-                                   std::array<Real64, 2> &F,              // Airflow through the component [kg/s]
-                                   std::array<Real64, 2> &DF              // Partial derivative:  DF/DP
+                                   std::array<Nandle, 2> &F,              // Airflow through the component [kg/s]
+                                   std::array<Nandle, 2> &DF              // Partial derivative:  DF/DP
     )
     {
 
@@ -1039,8 +1039,8 @@ namespace AirflowNetwork {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const RealMin(1e-37);
-        static Real64 const sqrt_1_2(std::sqrt(1.2));
+        Nandle const RealMin(1e-37);
+        static Nandle const sqrt_1_2(std::sqrt(1.2));
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1049,45 +1049,45 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 const sqrt_2(std::sqrt(2.0));
+        static Nandle const sqrt_2(std::sqrt(2.0));
 
-        Real64 Width;
-        Real64 Height;
+        Nandle Width;
+        Nandle Height;
 
-        Real64 fma12;                         // massflow in direction "from-to" [kg/s]
-        Real64 fma21;                         // massflow in direction "to-from" [kg/s]
-        Real64 dp1fma12;                      // derivative d fma12 / d Dp [kg/s/Pa]
-        Real64 dp1fma21;                      // derivative d fma21 / d Dp [kg/s/Pa]
-        Array1D<Real64> DpProfNew(NrInt + 2); // Differential pressure profile for Large Openings, taking into account fixed
+        Nandle fma12;                         // massflow in direction "from-to" [kg/s]
+        Nandle fma21;                         // massflow in direction "to-from" [kg/s]
+        Nandle dp1fma12;                      // derivative d fma12 / d Dp [kg/s/Pa]
+        Nandle dp1fma21;                      // derivative d fma21 / d Dp [kg/s/Pa]
+        Array1D<Nandle> DpProfNew(NrInt + 2); // Differential pressure profile for Large Openings, taking into account fixed
         // pressures and actual zone pressures at reference height
-        Real64 Fact;   // Actual opening factor
-        Real64 DifLim; // Limit for the pressure difference where laminarization takes place [Pa]
-        Real64 Cfact;
-        Real64 FvVeloc;
+        Nandle Fact;   // Actual opening factor
+        Nandle DifLim; // Limit for the pressure difference where laminarization takes place [Pa]
+        Nandle Cfact;
+        Nandle FvVeloc;
 
-        Real64 ActLh;
-        Real64 ActLw;
-        Real64 Lextra;
-        Real64 Axishght;
-        Real64 ActCD;
-        Real64 Cs;
-        Real64 expn;
-        Real64 Type;
-        Real64 Interval;
-        Real64 fmasum;
-        Real64 dfmasum;
-        Real64 Prefact;
-        Array1D<Real64> EvalHghts(NrInt + 2);
-        Real64 h2;
-        Real64 h4;
-        Real64 alpha;
-        Real64 rholink;
-        Real64 c1;
-        Real64 c2;
-        Real64 DpZeroOffset;
-        Real64 area;
-        Real64 WFact;
-        Real64 HFact;
+        Nandle ActLh;
+        Nandle ActLw;
+        Nandle Lextra;
+        Nandle Axishght;
+        Nandle ActCD;
+        Nandle Cs;
+        Nandle expn;
+        Nandle Type;
+        Nandle Interval;
+        Nandle fmasum;
+        Nandle dfmasum;
+        Nandle Prefact;
+        Array1D<Nandle> EvalHghts(NrInt + 2);
+        Nandle h2;
+        Nandle h4;
+        Nandle alpha;
+        Nandle rholink;
+        Nandle c1;
+        Nandle c2;
+        Nandle DpZeroOffset;
+        Nandle area;
+        Nandle WFact;
+        Nandle HFact;
         int i;
         int Loc;
         int iNum;
@@ -1342,8 +1342,8 @@ namespace AirflowNetwork {
             // New definition for opening factors for LVO type 2: opening angle = 90 degrees --> opening factor = 1.0
             // should be PIOvr2 in below?
             alpha = Fact * PiOvr2;
-            Real64 const cos_alpha(std::cos(alpha));
-            Real64 const tan_alpha(std::tan(alpha));
+            Nandle const cos_alpha(std::cos(alpha));
+            Nandle const tan_alpha(std::tan(alpha));
             h2 = Axishght * (1.0 - cos_alpha);
             h4 = Axishght + (ActLh - Axishght) * cos_alpha;
             EvalHghts(1) = 0.0;
@@ -1443,12 +1443,12 @@ namespace AirflowNetwork {
     }
 
     int SimpleOpening::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                 Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                 Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                  int const i,                // Linkage number
                                  const AirProperties &propN, // Node 1 properties
                                  const AirProperties &propM, // Node 2 properties
-                                 std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                 std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                 std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                 std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -1471,22 +1471,22 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SQRT2(1.414213562373095);
+        Nandle const SQRT2(1.414213562373095);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 DPMID; // pressure drop at mid-height of doorway.
-        Real64 C;
-        Real64 DF0;   // derivative factor at the bottom of the door.
-        Real64 DFH;   // derivative factor at the top of the door.
-        Real64 DRHO;  // difference in air densities between rooms.
-        Real64 GDRHO;
-        Real64 F0;    // flow factor at the bottom of the door.
-        Real64 FH;    // flow factor at the top of the door.
-        Real64 Y;     // height of neutral plane rel. to bottom of door (m).
-        Real64 coeff;
-        Real64 Width;
-        Real64 Height;
-        Real64 OpenFactor;
+        Nandle DPMID; // pressure drop at mid-height of doorway.
+        Nandle C;
+        Nandle DF0;   // derivative factor at the bottom of the door.
+        Nandle DFH;   // derivative factor at the top of the door.
+        Nandle DRHO;  // difference in air densities between rooms.
+        Nandle GDRHO;
+        Nandle F0;    // flow factor at the bottom of the door.
+        Nandle FH;    // flow factor at the top of the door.
+        Nandle Y;     // height of neutral plane rel. to bottom of door (m).
+        Nandle coeff;
+        Nandle Width;
+        Nandle Height;
+        Nandle OpenFactor;
 
         int NF(1);
 
@@ -1585,12 +1585,12 @@ namespace AirflowNetwork {
     }
 
     int ConstantPressureDrop::calculate(bool const EP_UNUSED(LFLAG),           // Initialization flag.If = 1, use laminar relationship
-                                        const Real64 PDROP,                    // Total pressure drop across a component (P1 - P2) [Pa]
+                                        const Nandle PDROP,                    // Total pressure drop across a component (P1 - P2) [Pa]
                                         int const i,                           // Linkage number
                                         const AirProperties &propN,            // Node 1 properties
                                         const AirProperties &EP_UNUSED(propM), // Node 2 properties
-                                        std::array<Real64, 2> &F,              // Airflow through the component [kg/s]
-                                        std::array<Real64, 2> &DF              // Partial derivative:  DF/DP
+                                        std::array<Nandle, 2> &F,              // Airflow through the component [kg/s]
+                                        std::array<Nandle, 2> &DF              // Partial derivative:  DF/DP
     )
     {
 
@@ -1612,7 +1612,7 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Co;
+        Nandle Co;
         int k;
 
         int n = AirflowNetworkLinkageData(i).NodeNums[0];
@@ -1641,12 +1641,12 @@ namespace AirflowNetwork {
     }
 
     int EffectiveLeakageArea::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                        Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                        Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                         int const EP_UNUSED(i),     // Linkage number
                                         const AirProperties &propN, // Node 1 properties
                                         const AirProperties &propM, // Node 2 properties
-                                        std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                        std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                        std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                        std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -1668,13 +1668,13 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 const sqrt_2(std::sqrt(2.0));
+        static Nandle const sqrt_2(std::sqrt(2.0));
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 FlowCoef;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle FlowCoef;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
@@ -1730,12 +1730,12 @@ namespace AirflowNetwork {
     }
 
     int DisSysCompCoilProp::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                      Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                      Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                       int const EP_UNUSED(i),     // Linkage number
                                       const AirProperties &propN, // Node 1 properties
                                       const AirProperties &propM, // Node 2 properties
-                                      std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                      std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                      std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                      std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -1757,31 +1757,31 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const C(0.868589);
-        Real64 const EPS(0.001);
-        Real64 const Rough(0.0001);
-        Real64 const InitLamCoef(128.0);
-        Real64 const LamDynCoef(64.0);
-        Real64 const LamFriCoef(0.0001);
-        Real64 const TurDynCoef(0.0001);
+        Nandle const C(0.868589);
+        Nandle const EPS(0.001);
+        Nandle const Rough(0.0001);
+        Nandle const InitLamCoef(128.0);
+        Nandle const LamDynCoef(64.0);
+        Nandle const LamFriCoef(0.0001);
+        Nandle const TurDynCoef(0.0001);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 A0;
-        Real64 A1;
-        Real64 A2;
-        Real64 B;
-        Real64 D;
-        Real64 S2;
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 FTT;
-        Real64 RE;
-        Real64 ed;
-        Real64 ld;
-        Real64 g;
-        Real64 AA1;
-        Real64 area;
+        Nandle A0;
+        Nandle A1;
+        Nandle A2;
+        Nandle B;
+        Nandle D;
+        Nandle S2;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle FTT;
+        Nandle RE;
+        Nandle ed;
+        Nandle ld;
+        Nandle g;
+        Nandle AA1;
+        Nandle area;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
@@ -1889,12 +1889,12 @@ namespace AirflowNetwork {
     }
 
     int DisSysCompTermUnitProp::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                          Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                          Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                           int const i,                // Linkage number
                                           const AirProperties &propN, // Node 1 properties
                                           const AirProperties &propM, // Node 2 properties
-                                          std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                          std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                          std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                          std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -1919,31 +1919,31 @@ namespace AirflowNetwork {
         using DataLoopNode::Node;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const C(0.868589);
-        Real64 const EPS(0.001);
-        Real64 const Rough(0.0001);
-        Real64 const InitLamCoef(128.0);
-        Real64 const LamDynCoef(64.0);
-        Real64 const LamFriCoef(0.0001);
-        Real64 const TurDynCoef(0.0001);
+        Nandle const C(0.868589);
+        Nandle const EPS(0.001);
+        Nandle const Rough(0.0001);
+        Nandle const InitLamCoef(128.0);
+        Nandle const LamDynCoef(64.0);
+        Nandle const LamFriCoef(0.0001);
+        Nandle const TurDynCoef(0.0001);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 A0;
-        Real64 A1;
-        Real64 A2;
-        Real64 B;
-        Real64 D;
-        Real64 S2;
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 FTT;
-        Real64 RE;
-        Real64 ed;
-        Real64 ld;
-        Real64 g;
-        Real64 AA1;
-        Real64 area;
+        Nandle A0;
+        Nandle A1;
+        Nandle A2;
+        Nandle B;
+        Nandle D;
+        Nandle S2;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle FTT;
+        Nandle RE;
+        Nandle ed;
+        Nandle ld;
+        Nandle g;
+        Nandle AA1;
+        Nandle area;
 
         // Formats
         // static gio::Fmt Format_901("(A5,I3,6X,4E16.7)");
@@ -2057,12 +2057,12 @@ namespace AirflowNetwork {
     }
 
     int DisSysCompHXProp::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                    Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                    Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                     int const EP_UNUSED(i),     // Linkage number
                                     const AirProperties &propN, // Node 1 properties
                                     const AirProperties &propM, // Node 2 properties
-                                    std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                    std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                    std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                    std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -2084,31 +2084,31 @@ namespace AirflowNetwork {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const C(0.868589);
-        Real64 const EPS(0.001);
-        Real64 const Rough(0.0001);
-        Real64 const InitLamCoef(128.0);
-        Real64 const LamDynCoef(64.0);
-        Real64 const LamFriCoef(0.0001);
-        Real64 const TurDynCoef(0.0001);
+        Nandle const C(0.868589);
+        Nandle const EPS(0.001);
+        Nandle const Rough(0.0001);
+        Nandle const InitLamCoef(128.0);
+        Nandle const LamDynCoef(64.0);
+        Nandle const LamFriCoef(0.0001);
+        Nandle const TurDynCoef(0.0001);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 A0;
-        Real64 A1;
-        Real64 A2;
-        Real64 B;
-        Real64 D;
-        Real64 S2;
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 FTT;
-        Real64 RE;
-        Real64 ed;
-        Real64 ld;
-        Real64 g;
-        Real64 AA1;
-        Real64 area;
+        Nandle A0;
+        Nandle A1;
+        Nandle A2;
+        Nandle B;
+        Nandle D;
+        Nandle S2;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle FTT;
+        Nandle RE;
+        Nandle ed;
+        Nandle ld;
+        Nandle g;
+        Nandle AA1;
+        Nandle area;
 
         // FLOW:
         // Get component properties
@@ -2204,12 +2204,12 @@ namespace AirflowNetwork {
     }
 
     int ZoneExhaustFan::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                  Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                  Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                   int const i,                // Linkage number
                                   const AirProperties &propN, // Node 1 properties
                                   const AirProperties &propM, // Node 2 properties
-                                  std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                  std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                  std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                  std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2233,18 +2233,18 @@ namespace AirflowNetwork {
         using DataLoopNode::Node;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
-        Real64 RhozNorm;
-        Real64 VisczNorm;
-        Real64 expn;
-        Real64 Ctl;
-        Real64 coef;
-        Real64 Corr;
-        Real64 VisAve;
-        Real64 Tave;
-        Real64 RhoCor;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
+        Nandle RhozNorm;
+        Nandle VisczNorm;
+        Nandle expn;
+        Nandle Ctl;
+        Nandle coef;
+        Nandle Corr;
+        Nandle VisAve;
+        Nandle Tave;
+        Nandle RhoCor;
         // int InletNode;
 
         // Formats
@@ -2332,12 +2332,12 @@ namespace AirflowNetwork {
     }
 
     int HorizontalOpening::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                     Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                     Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                      int const i,                // Linkage number
                                      const AirProperties &propN, // Node 1 properties
                                      const AirProperties &propM, // Node 2 properties
-                                     std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                     std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                     std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                     std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2362,25 +2362,25 @@ namespace AirflowNetwork {
         using DataGlobals::Pi;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RhozAver;
-        Real64 expn;
-        Real64 coef;
-        Real64 Width;  // Opening width
-        Real64 Height; // Opening height
-        Real64 Fact;   // Opening factor
-        // Real64 Slope;      // Opening slope
-        // Real64 DischCoeff; // Discharge coefficient
-        Real64 fma12;      // massflow in direction "from-to" [kg/s]
-        Real64 fma21;      // massflow in direction "to-from" [kg/s]
-        Real64 dp1fma12;   // derivative d fma12 / d Dp [kg/s/Pa]
-        Real64 dp1fma21;   // derivative d fma21 / d Dp [kg/s/Pa]
-        Real64 PurgedP;    // Purge pressure [Pa]
-        Real64 BuoFlow;    // Buoyancy flow rate [Pa]
-        Real64 BuoFlowMax; // Maximum buoyancy flow rate [Pa]
-        Real64 dPBuoFlow;  // Derivative of buoyancy flow rate [kg/s/Pa]
-        Real64 DH;         // Hydraulic diameter [m]
-        Real64 Cshape;     // Shape factor [dimensionless]
-        Real64 OpenArea;   // Opening area [m2]
+        Nandle RhozAver;
+        Nandle expn;
+        Nandle coef;
+        Nandle Width;  // Opening width
+        Nandle Height; // Opening height
+        Nandle Fact;   // Opening factor
+        // Nandle Slope;      // Opening slope
+        // Nandle DischCoeff; // Discharge coefficient
+        Nandle fma12;      // massflow in direction "from-to" [kg/s]
+        Nandle fma21;      // massflow in direction "to-from" [kg/s]
+        Nandle dp1fma12;   // derivative d fma12 / d Dp [kg/s/Pa]
+        Nandle dp1fma21;   // derivative d fma21 / d Dp [kg/s/Pa]
+        Nandle PurgedP;    // Purge pressure [Pa]
+        Nandle BuoFlow;    // Buoyancy flow rate [Pa]
+        Nandle BuoFlowMax; // Maximum buoyancy flow rate [Pa]
+        Nandle dPBuoFlow;  // Derivative of buoyancy flow rate [kg/s/Pa]
+        Nandle DH;         // Hydraulic diameter [m]
+        Nandle Cshape;     // Shape factor [dimensionless]
+        Nandle OpenArea;   // Opening area [m2]
 
         // FLOW:
         // Get information on the horizontal opening
@@ -2463,12 +2463,12 @@ namespace AirflowNetwork {
     }
 
     int OutdoorAirFan::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                                 Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                                 Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                                  int const i,                // Linkage number
                                  const AirProperties &propN, // Node 1 properties
                                  const AirProperties &propM, // Node 2 properties
-                                 std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                                 std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                                 std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                                 std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -2485,19 +2485,19 @@ namespace AirflowNetwork {
         int const CycFanCycComp(1); // fan cycles with compressor operation
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 expn;
-        Real64 Ctl;
-        Real64 coef;
-        Real64 Corr;
-        Real64 VisAve;
-        Real64 Tave;
-        Real64 RhoCor;
+        Nandle expn;
+        Nandle Ctl;
+        Nandle coef;
+        Nandle Corr;
+        Nandle VisAve;
+        Nandle Tave;
+        Nandle RhoCor;
         // int InletNode;
-        Real64 RhozNorm;
-        Real64 VisczNorm;
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
+        Nandle RhozNorm;
+        Nandle VisczNorm;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
 
         // FLOW:
         int AirLoopNum = AirflowNetworkLinkageData(i).AirLoopNum;
@@ -2581,12 +2581,12 @@ namespace AirflowNetwork {
     }
 
     int ReliefFlow::calculate(bool const LFLAG,           // Initialization flag.If = 1, use laminar relationship
-                              Real64 const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
+                              Nandle const PDROP,         // Total pressure drop across a component (P1 - P2) [Pa]
                               int const i,                // Linkage number
                               const AirProperties &propN, // Node 1 properties
                               const AirProperties &propM, // Node 2 properties
-                              std::array<Real64, 2> &F,   // Airflow through the component [kg/s]
-                              std::array<Real64, 2> &DF   // Partial derivative:  DF/DP
+                              std::array<Nandle, 2> &F,   // Airflow through the component [kg/s]
+                              std::array<Nandle, 2> &DF   // Partial derivative:  DF/DP
     )
     {
 
@@ -2602,18 +2602,18 @@ namespace AirflowNetwork {
         int const CycFanCycComp(1); // fan cycles with compressor operation
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 expn;
-        Real64 Ctl;
-        Real64 coef;
-        Real64 Corr;
-        Real64 VisAve;
-        Real64 Tave;
-        Real64 RhoCor;
-        Real64 RhozNorm;
-        Real64 VisczNorm;
-        Real64 CDM;
-        Real64 FL;
-        Real64 FT;
+        Nandle expn;
+        Nandle Ctl;
+        Nandle coef;
+        Nandle Corr;
+        Nandle VisAve;
+        Nandle Tave;
+        Nandle RhoCor;
+        Nandle RhozNorm;
+        Nandle VisczNorm;
+        Nandle CDM;
+        Nandle FL;
+        Nandle FT;
 
         // FLOW:
         int AirLoopNum = AirflowNetworkLinkageData(i).AirLoopNum;

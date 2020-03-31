@@ -318,7 +318,7 @@ namespace CostEstimateManager {
         bool WildcardObjNames;
         int thisChil;
         int thisPV;
-        Real64 Multipliers;
+        Nandle Multipliers;
 
         // Setup working data structure for line items
         for (Item = 1; Item <= NumLineItems; ++Item) { // Loop thru cost line items
@@ -597,13 +597,13 @@ namespace CostEstimateManager {
         std::string ThisConstructStr;
 
         Array1D_bool uniqueSurfMask;
-        Array1D<Real64> SurfMultipleARR;
+        Array1D<Nandle> SurfMultipleARR;
         int surf;     // do-loop counter for checking for surfaces for uniqueness
         int thisCoil; // index of named coil in its derived type
         bool WildcardObjNames;
         int thisChil;
         int thisPV;
-        Real64 Multipliers;
+        Nandle Multipliers;
 
         // Setup working data structure for line items
         for (Item = 1; Item <= NumLineItems; ++Item) { // Loop thru cost line items
@@ -640,7 +640,7 @@ namespace CostEstimateManager {
                         }
                     }
                     // determine which surfaces have the construction type  and if any are duplicates..
-                    Real64 Qty(0.0);
+                    Nandle Qty(0.0);
                     for (int i = 1; i <= TotSurfaces; ++i) {
                         auto const &s(Surface(i));
                         if (uniqueSurfMask(i) && (s.Construction == ThisConstructID)) Qty += s.Area * SurfMultipleARR(i);
@@ -665,7 +665,7 @@ namespace CostEstimateManager {
 
                     if (CostLineItem(Item).PerKiloWattCap > 0.0) {
                         if (WildcardObjNames) {
-                            Real64 Qty(0.0);
+                            Nandle Qty(0.0);
                             for (auto const &e : DXCoil)
                                 Qty += e.RatedTotCap(1);
                             CostLineItem(Item).Qty = Qty / 1000.0;
@@ -691,7 +691,7 @@ namespace CostEstimateManager {
 
                     if (CostLineItem(Item).PerKWCapPerCOP > 0.0) {
                         if (WildcardObjNames) {
-                            Real64 Qty(0.0);
+                            Nandle Qty(0.0);
                             for (auto const &e : DXCoil)
                                 Qty += e.RatedCOP(1) * e.RatedTotCap(1);
                             CostLineItem(Item).Qty = Qty / 1000.0;
@@ -719,7 +719,7 @@ namespace CostEstimateManager {
 
                     if (CostLineItem(Item).PerKiloWattCap > 0.0) {
                         if (WildcardObjNames) {
-                            Real64 Qty(0.0);
+                            Nandle Qty(0.0);
                             for (auto const &e : HeatingCoil)
                                 if (e.HCoilType_Num == 1) Qty += e.NominalCapacity;
                             CostLineItem(Item).Qty = Qty / 1000.0;
@@ -745,7 +745,7 @@ namespace CostEstimateManager {
 
                     if (CostLineItem(Item).PerKWCapPerCOP > 0.0) {
                         if (WildcardObjNames) {
-                            Real64 Qty(0.0);
+                            Nandle Qty(0.0);
                             for (auto const &e : HeatingCoil)
                                 if (e.HCoilType_Num == 1) Qty += e.Efficiency * e.NominalCapacity;
                             CostLineItem(Item).Qty = Qty / 1000.0;
@@ -833,7 +833,7 @@ namespace CostEstimateManager {
                         if (CostLineItem(Item).ParentObjName != "") {
                             ThisZoneID = UtilityRoutines::FindItem(CostLineItem(Item).ParentObjName, Zone);
                             if (ThisZoneID > 0) {
-                                Real64 Qty(0.0);
+                                Nandle Qty(0.0);
                                 for (auto const &e : Lights)
                                     if (e.ZonePtr == ThisZoneID) Qty += e.DesignLevel;
                                 CostLineItem(Item).Qty = (Zone(ThisZoneID).Multiplier * Zone(ThisZoneID).ListMultiplier / 1000.0) *

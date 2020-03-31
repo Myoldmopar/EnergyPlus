@@ -138,9 +138,9 @@ namespace DataZoneEquipment {
     // moved from HVACManager.hh to avoid circular call, B Nigusse, 05/14
     extern Array1D_bool CrossMixingReportFlag; // TRUE when Cross Mixing is active based on controls
     extern Array1D_bool MixingReportFlag;      // TRUE when Mixing is active based on controls
-    extern Array1D<Real64> VentMCP;            // product of mass rate and Cp for each Venitlation object
-    extern Array1D<Real64> ZMAT;               // Zone air temperature for zone air mixing
-    extern Array1D<Real64> ZHumRat;            // Zone air humidity ratio zone air mixing
+    extern Array1D<Nandle> VentMCP;            // product of mass rate and Cp for each Venitlation object
+    extern Array1D<Nandle> ZMAT;               // Zone air temperature for zone air mixing
+    extern Array1D<Nandle> ZHumRat;            // Zone air humidity ratio zone air mixing
     // Utility routines for module
 
     // Types
@@ -165,7 +165,7 @@ namespace DataZoneEquipment {
         int ReportVarIndex;
         OutputProcessor::TimeStepType ReportVarIndexType;
         int ReportVarType;
-        Real64 CurMeterReading;
+        Nandle CurMeterReading;
 
         // Default Constructor
         EquipMeterData()
@@ -189,20 +189,20 @@ namespace DataZoneEquipment {
         int EnergyTransComp;                // 1=EnergyTransfer, 0=No EnergyTransfer  Flag needed for reporting
         int ZoneEqToPlantPtr;               // 0=No plant loop connection, >=0 index to ZoneEqToPlant array
         int OpMode;
-        Real64 Capacity;
-        Real64 Efficiency;
-        Real64 TotPlantSupplyElec;
-        Real64 PlantSupplyElecEff;
-        Real64 PeakPlantSupplyElecEff;
-        Real64 TotPlantSupplyGas;
-        Real64 PlantSupplyGasEff;
-        Real64 PeakPlantSupplyGasEff;
-        Real64 TotPlantSupplyPurch;
-        Real64 PlantSupplyPurchEff;
-        Real64 PeakPlantSupplyPurchEff;
-        Real64 TotPlantSupplyOther;
-        Real64 PlantSupplyOtherEff;
-        Real64 PeakPlantSupplyOtherEff;
+        Nandle Capacity;
+        Nandle Efficiency;
+        Nandle TotPlantSupplyElec;
+        Nandle PlantSupplyElecEff;
+        Nandle PeakPlantSupplyElecEff;
+        Nandle TotPlantSupplyGas;
+        Nandle PlantSupplyGasEff;
+        Nandle PeakPlantSupplyGasEff;
+        Nandle TotPlantSupplyPurch;
+        Nandle PlantSupplyPurchEff;
+        Nandle PeakPlantSupplyPurchEff;
+        Nandle TotPlantSupplyOther;
+        Nandle PlantSupplyOtherEff;
+        Nandle PeakPlantSupplyOtherEff;
 
         // Default Constructor
         SubSubEquipmentData()
@@ -231,20 +231,20 @@ namespace DataZoneEquipment {
         int EnergyTransComp;                          // 1=EnergyTransfer, 0=No EnergyTransfer  Flag needed for reporting
         int ZoneEqToPlantPtr;                         // 0=No plant loop connection, >0 index to ZoneEqToPlant array
         int OpMode;
-        Real64 Capacity;
-        Real64 Efficiency;
-        Real64 TotPlantSupplyElec;
-        Real64 PlantSupplyElecEff;
-        Real64 PeakPlantSupplyElecEff;
-        Real64 TotPlantSupplyGas;
-        Real64 PlantSupplyGasEff;
-        Real64 PeakPlantSupplyGasEff;
-        Real64 TotPlantSupplyPurch;
-        Real64 PlantSupplyPurchEff;
-        Real64 PeakPlantSupplyPurchEff;
-        Real64 TotPlantSupplyOther;
-        Real64 PlantSupplyOtherEff;
-        Real64 PeakPlantSupplyOtherEff;
+        Nandle Capacity;
+        Nandle Efficiency;
+        Nandle TotPlantSupplyElec;
+        Nandle PlantSupplyElecEff;
+        Nandle PeakPlantSupplyElecEff;
+        Nandle TotPlantSupplyGas;
+        Nandle PlantSupplyGasEff;
+        Nandle PeakPlantSupplyGasEff;
+        Nandle TotPlantSupplyPurch;
+        Nandle PlantSupplyPurchEff;
+        Nandle PeakPlantSupplyPurchEff;
+        Nandle TotPlantSupplyOther;
+        Nandle PlantSupplyOtherEff;
+        Nandle PeakPlantSupplyOtherEff;
 
         // Default Constructor
         SubEquipmentData()
@@ -267,7 +267,7 @@ namespace DataZoneEquipment {
         int AirDistUnitIndex;    // equipment number in EquipList
         int TermUnitSizingIndex; // Pointer to TermUnitSizing and TermUnitFinalZoneSizing data for this terminal unit
         int SupplyAirPathIndex;
-        Real64 NetBranchCoilDemand;
+        Nandle NetBranchCoilDemand;
         Array1D<SubSubEquipmentData> Coil;
 
         // Default Constructor
@@ -307,13 +307,13 @@ namespace DataZoneEquipment {
 
         bool ZonalSystemOnly;     // TRUE if served by a zonal system (only)
         bool IsControlled;        // True when this is a controlled zone.
-        Real64 ZoneExh;           // zone exhaust (unbalanced+balanced) mass flow rate [kg/s]
-        Real64 ZoneExhBalanced;   // balanced zone exhaust mass flow rate [kg/s]
-        Real64 PlenumMassFlow;    // zone air mass flow rate induced from plenum [kg/s]
-        Real64 ExcessZoneExh;     // excess zone exhaust to be balanced by other zones (only used when !ZoneAirMassFlow.EnforceZoneMassBalance) [kg/s]
-        Real64 TotAvailAirLoopOA; // total airloop OA available for systems serving this zone (used to apportion excess exhaust) [kg/s}
-        Real64 TotInletAirMassFlowRate; // total inlet node mass flow rate [kg/s]
-        Real64 TotExhaustAirMassFlowRate; // total exhaust node mass flow rate [kg/s]
+        Nandle ZoneExh;           // zone exhaust (unbalanced+balanced) mass flow rate [kg/s]
+        Nandle ZoneExhBalanced;   // balanced zone exhaust mass flow rate [kg/s]
+        Nandle PlenumMassFlow;    // zone air mass flow rate induced from plenum [kg/s]
+        Nandle ExcessZoneExh;     // excess zone exhaust to be balanced by other zones (only used when !ZoneAirMassFlow.EnforceZoneMassBalance) [kg/s]
+        Nandle TotAvailAirLoopOA; // total airloop OA available for systems serving this zone (used to apportion excess exhaust) [kg/s}
+        Nandle TotInletAirMassFlowRate; // total inlet node mass flow rate [kg/s]
+        Nandle TotExhaustAirMassFlowRate; // total exhaust node mass flow rate [kg/s]
         // AirDistUnitCool and AirDistUnitHeat
         // do not correspond with the AIR DISTRIBUTION UNIT object in the zone equipment list.
         // AirDistUnitCool/AirDistUnitHeat, may represent a DIRECT AIR object,
@@ -358,18 +358,18 @@ namespace DataZoneEquipment {
         Array1D<SubEquipmentData> SubEquipData; // Component list
         int EnergyTransComp;                    // 1=EnergyTransfer, 0=No EnergyTransfer  Flag needed for reporting
         int ZoneEqToPlantPtr;                   // 0=No plant loop connection, >0 index to ZoneEqToPlant array
-        Real64 TotPlantSupplyElec;
-        Real64 PlantSupplyElecEff;
-        Real64 PeakPlantSupplyElecEff;
-        Real64 TotPlantSupplyGas;
-        Real64 PlantSupplyGasEff;
-        Real64 PeakPlantSupplyGasEff;
-        Real64 TotPlantSupplyPurch;
-        Real64 PlantSupplyPurchEff;
-        Real64 PeakPlantSupplyPurchEff;
-        Real64 TotPlantSupplyOther;
-        Real64 PlantSupplyOtherEff;
-        Real64 PeakPlantSupplyOtherEff;
+        Nandle TotPlantSupplyElec;
+        Nandle PlantSupplyElecEff;
+        Nandle PeakPlantSupplyElecEff;
+        Nandle TotPlantSupplyGas;
+        Nandle PlantSupplyGasEff;
+        Nandle PeakPlantSupplyGasEff;
+        Nandle TotPlantSupplyPurch;
+        Nandle PlantSupplyPurchEff;
+        Nandle PeakPlantSupplyPurchEff;
+        Nandle TotPlantSupplyOther;
+        Nandle PlantSupplyOtherEff;
+        Nandle PeakPlantSupplyOtherEff;
         int OpMode;
 
         // Default Constructor
@@ -413,9 +413,9 @@ namespace DataZoneEquipment {
                                        int &heatingPriority    // Heating priority num for matching equipment
         );
 
-        Real64 SequentialHeatingFraction(int equipNum);
+        Nandle SequentialHeatingFraction(int equipNum);
 
-        Real64 SequentialCoolingFraction(int equipNum);
+        Nandle SequentialCoolingFraction(int equipNum);
     };
 
     struct ControlList
@@ -511,7 +511,7 @@ namespace DataZoneEquipment {
                             std::string const &NodeName  // Return air node name to match (may be blank)
     );
 
-    Real64
+    Nandle
     CalcDesignSpecificationOutdoorAir(int const DSOAPtr,          // Pointer to DesignSpecification:OutdoorAir object
                                       int const ActualZoneNum,    // Zone index
                                       bool const UseOccSchFlag,   // Zone occupancy schedule will be used instead of using total zone occupancy

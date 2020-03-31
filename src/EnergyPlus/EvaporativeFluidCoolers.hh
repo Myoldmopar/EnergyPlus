@@ -86,11 +86,11 @@ namespace EvaporativeFluidCoolers {
 
     struct EvapFluidCoolerInletConds
     {
-        Real64 WaterTemp;  // Evaporative fluid cooler water inlet temperature (C)
-        Real64 AirTemp;    // Evaporative fluid cooler air inlet dry-bulb temperature (C)
-        Real64 AirWetBulb; // Evaporative fluid cooler air inlet wet-bulb temperature (C)
-        Real64 AirPress;   // Evaporative fluid cooler air barometric pressure
-        Real64 AirHumRat;  // Evaporative fluid cooler air inlet humidity ratio (kg/kg)
+        Nandle WaterTemp;  // Evaporative fluid cooler water inlet temperature (C)
+        Nandle AirTemp;    // Evaporative fluid cooler air inlet dry-bulb temperature (C)
+        Nandle AirWetBulb; // Evaporative fluid cooler air inlet wet-bulb temperature (C)
+        Nandle AirPress;   // Evaporative fluid cooler air barometric pressure
+        Nandle AirHumRat;  // Evaporative fluid cooler air inlet humidity ratio (kg/kg)
 
         EvapFluidCoolerInletConds() : WaterTemp(0.0), AirTemp(0.0), AirWetBulb(0.0), AirPress(0.0), AirHumRat(0.0)
         {
@@ -107,49 +107,49 @@ namespace EvaporativeFluidCoolers {
         PIM PerformanceInputMethod_Num;
         bool Available;                               // need an array of logicals--load identifiers of available equipment
         bool ON;                                      // Simulate the machine at it's operating part load ratio
-        Real64 DesignWaterFlowRate;                   // Design water flow rate through the evaporative fluid cooler [m3/s]
+        Nandle DesignWaterFlowRate;                   // Design water flow rate through the evaporative fluid cooler [m3/s]
         bool DesignWaterFlowRateWasAutoSized;         // true if design water rate was autosize on input
-        Real64 DesignSprayWaterFlowRate;              // Design spray water flow rate through the evaporative fluid cooler [m3/s]
-        Real64 DesWaterMassFlowRate;                  // Design water flow rate through the evaporative fluid cooler [kg/s]
-        Real64 HighSpeedAirFlowRate;                  // Air flow rate through evaporative fluid cooler at high speed [m3/s]
+        Nandle DesignSprayWaterFlowRate;              // Design spray water flow rate through the evaporative fluid cooler [m3/s]
+        Nandle DesWaterMassFlowRate;                  // Design water flow rate through the evaporative fluid cooler [kg/s]
+        Nandle HighSpeedAirFlowRate;                  // Air flow rate through evaporative fluid cooler at high speed [m3/s]
         bool HighSpeedAirFlowRateWasAutoSized;        // true if high speed air rate was autosized
-        Real64 HighSpeedFanPower;                     // Fan power at high fan speed [W]
+        Nandle HighSpeedFanPower;                     // Fan power at high fan speed [W]
         bool HighSpeedFanPowerWasAutoSized;           // true if high fan power was autosize on input
-        Real64 HighSpeedEvapFluidCoolerUA;            // UA of evaporative fluid cooler at high fan speed [W/C]
+        Nandle HighSpeedEvapFluidCoolerUA;            // UA of evaporative fluid cooler at high fan speed [W/C]
         bool HighSpeedEvapFluidCoolerUAWasAutoSized;  // true if high speed UA was autosized on input
-        Real64 LowSpeedAirFlowRate;                   // Air flow rate through evaporative fluid cooler at low speed [m3/s]
+        Nandle LowSpeedAirFlowRate;                   // Air flow rate through evaporative fluid cooler at low speed [m3/s]
         bool LowSpeedAirFlowRateWasAutoSized;         // true if low speed air rate was autosize on input
-        Real64 LowSpeedAirFlowRateSizingFactor;       // sizing factor for low speed air flow rate []
-        Real64 LowSpeedFanPower;                      // Fan power at low fan speed [W]
+        Nandle LowSpeedAirFlowRateSizingFactor;       // sizing factor for low speed air flow rate []
+        Nandle LowSpeedFanPower;                      // Fan power at low fan speed [W]
         bool LowSpeedFanPowerWasAutoSized;            // true if low speed fan power set to autosize on input
-        Real64 LowSpeedFanPowerSizingFactor;          // Sizing factor for low speed fan power []
-        Real64 LowSpeedEvapFluidCoolerUA;             // UA of evaporative fluid cooler at low fan speed [W/C]
+        Nandle LowSpeedFanPowerSizingFactor;          // Sizing factor for low speed fan power []
+        Nandle LowSpeedEvapFluidCoolerUA;             // UA of evaporative fluid cooler at low fan speed [W/C]
         bool LowSpeedEvapFluidCoolerUAWasAutoSized;   // true if low speed UA set to autosize on input
-        Real64 LowSpeedEvapFluidCoolerUASizingFactor; // sizing factor for low speed UA []
-        Real64 DesignEnteringWaterTemp;               // Entering water temperature at design conditions
-        Real64 DesignEnteringAirTemp;                 // Design inlet air dry-bulb temperature (C)
-        Real64 DesignEnteringAirWetBulbTemp;          // Design inlet air wet-bulb temperature (C)
-        Real64 EvapFluidCoolerMassFlowRateMultiplier; // Maximum evaporative fluid cooler flow rate is
+        Nandle LowSpeedEvapFluidCoolerUASizingFactor; // sizing factor for low speed UA []
+        Nandle DesignEnteringWaterTemp;               // Entering water temperature at design conditions
+        Nandle DesignEnteringAirTemp;                 // Design inlet air dry-bulb temperature (C)
+        Nandle DesignEnteringAirWetBulbTemp;          // Design inlet air wet-bulb temperature (C)
+        Nandle EvapFluidCoolerMassFlowRateMultiplier; // Maximum evaporative fluid cooler flow rate is
         // this multiplier times design flow rate
-        Real64 HeatRejectCapNomCapSizingRatio;  // ratio of actual cap to nominal capacity []
-        Real64 HighSpeedStandardDesignCapacity; // Standard Design Capacity of the evaporative fluid cooler [W]
+        Nandle HeatRejectCapNomCapSizingRatio;  // ratio of actual cap to nominal capacity []
+        Nandle HighSpeedStandardDesignCapacity; // Standard Design Capacity of the evaporative fluid cooler [W]
         // with entering water at 35C (95F),
         //  leaving water at 29.44C (85F), entering air at 25.56C (78F) wet-bulb
         //  temp and 35C (95F) dry-bulb temp, and water flow
         //  rate of 5.382E-8 m3/s per watt (3 gpm/ton)
-        Real64 LowSpeedStandardDesignCapacity; // Standard Design Capacity of the evaporative fluid cooler [W]
+        Nandle LowSpeedStandardDesignCapacity; // Standard Design Capacity of the evaporative fluid cooler [W]
         // with entering water at 35C (95F),
         //  leaving water at 29.44C (85F), entering air at 25.56C (78F) wet-bulb
         //  temp and 35C (95F) dry-bulb temp, and water flow
         //  rate of 5.382E-8 m3/s per watt (3 gpm/ton)
-        Real64 LowSpeedStandardDesignCapacitySizingFactor; // sizing factor for low speed capacity []
-        Real64 HighSpeedUserSpecifiedDesignCapacity;       // User specified design capacity [W]
-        Real64 LowSpeedUserSpecifiedDesignCapacity;        // User specified design capacity for at low speed for
+        Nandle LowSpeedStandardDesignCapacitySizingFactor; // sizing factor for low speed capacity []
+        Nandle HighSpeedUserSpecifiedDesignCapacity;       // User specified design capacity [W]
+        Nandle LowSpeedUserSpecifiedDesignCapacity;        // User specified design capacity for at low speed for
         // two speed fluid cooler[W]
-        Real64 LowSpeedUserSpecifiedDesignCapacitySizingFactor; // sizing factor for low speed user capacity []
-        Real64 Concentration;                                   // fluid/glycol concentration - percent
+        Nandle LowSpeedUserSpecifiedDesignCapacitySizingFactor; // sizing factor for low speed user capacity []
+        Nandle Concentration;                                   // fluid/glycol concentration - percent
         int FluidIndex;                                         // Index to Property arrays
-        Real64 SizFac;                                          // sizing factor
+        Nandle SizFac;                                          // sizing factor
         int WaterInletNodeNum;                                  // Node number on the water inlet side of the evaporative fluid cooler
         int WaterOutletNodeNum;                                 // Node number on the water outlet side of the evaporative fluid cooler
         int OutdoorAirInletNodeNum;                             // Node number of outdoor air inlet for the evaporative fluid cooler
@@ -170,7 +170,7 @@ namespace EvaporativeFluidCoolers {
         // fluid bypass
         int CapacityControl; // Type of capacity control for single speed cooling tower:
         //  0 - FanCycling, 1 - FluidBypass
-        Real64 BypassFraction; // Fraction of fluid bypass as a ratio of total fluid flow
+        Nandle BypassFraction; // Fraction of fluid bypass as a ratio of total fluid flow
         //  through the tower sump
         // begin water system interactions
         EvapLoss EvapLossMode;     // sets how evaporative fluid cooler water evaporation is modeled
@@ -178,9 +178,9 @@ namespace EvaporativeFluidCoolers {
         int SchedIDBlowdown;       // index "pointer" to schedule of blowdown in [m3/s]
         int WaterTankID;           // index "pointer" to WaterStorage structure
         int WaterTankDemandARRID;  // index "pointer" to demand array inside WaterStorage structure
-        Real64 UserEvapLossFactor; // simple model [%/Delt C]
-        Real64 DriftLossFraction;
-        Real64 ConcentrationRatio; // ratio of solids in blowdown vs make up water
+        Nandle UserEvapLossFactor; // simple model [%/Delt C]
+        Nandle DriftLossFraction;
+        Nandle ConcentrationRatio; // ratio of solids in blowdown vs make up water
         bool SuppliedByWaterSystem;
         // end water system variables
         // loop topology variables
@@ -188,35 +188,35 @@ namespace EvaporativeFluidCoolers {
         int LoopSideNum;
         int BranchNum;
         int CompNum;
-        Real64 InletWaterTemp;    // CW temperature at evaporative fluid cooler inlet
-        Real64 OutletWaterTemp;   // CW temperature at evaporative fluid cooler outlet
+        Nandle InletWaterTemp;    // CW temperature at evaporative fluid cooler inlet
+        Nandle OutletWaterTemp;   // CW temperature at evaporative fluid cooler outlet
         int WaterInletNode;       // Node number at evaporative fluid cooler inlet
         int WaterOutletNode;      // Node number at evaporative fluid cooler outlet
-        Real64 WaterMassFlowRate; // WaterMassFlowRate through evaporative fluid cooler
-        Real64 Qactual;           // Evaporative fluid cooler heat transfer
-        Real64 FanPower;          // Evaporative fluid cooler fan power used
-        Real64 AirFlowRateRatio;  // Ratio of air flow rate through VS evaporative fluid cooler
-        Real64 WaterUsage;        // Evaporative fluid cooler water usage (m3/s)
+        Nandle WaterMassFlowRate; // WaterMassFlowRate through evaporative fluid cooler
+        Nandle Qactual;           // Evaporative fluid cooler heat transfer
+        Nandle FanPower;          // Evaporative fluid cooler fan power used
+        Nandle AirFlowRateRatio;  // Ratio of air flow rate through VS evaporative fluid cooler
+        Nandle WaterUsage;        // Evaporative fluid cooler water usage (m3/s)
         bool MyOneTimeFlag;
         bool MyEnvrnFlag;
         bool OneTimeFlagForEachEvapFluidCooler;
         bool CheckEquipName;
-        Real64 fluidCoolerInletWaterTemp;  // Evaporative fluid cooler inlet water temperature (C)
-        Real64 fluidCoolerOutletWaterTemp; // Evaporative fluid cooler outlet water temperature (C)
-        Real64 FanEnergy;                  // Evaporative fluid cooler fan energy consumption (J)
-        Real64 WaterAmountUsed;            // Evaporative fluid cooler make up water usage (m3)
-        Real64 EvaporationVdot;
-        Real64 EvaporationVol;
-        Real64 DriftVdot;
-        Real64 DriftVol;
-        Real64 BlowdownVdot;
-        Real64 BlowdownVol;
-        Real64 MakeUpVdot;
-        Real64 MakeUpVol;
-        Real64 TankSupplyVdot;
-        Real64 TankSupplyVol;
-        Real64 StarvedMakeUpVdot;
-        Real64 StarvedMakeUpVol;
+        Nandle fluidCoolerInletWaterTemp;  // Evaporative fluid cooler inlet water temperature (C)
+        Nandle fluidCoolerOutletWaterTemp; // Evaporative fluid cooler outlet water temperature (C)
+        Nandle FanEnergy;                  // Evaporative fluid cooler fan energy consumption (J)
+        Nandle WaterAmountUsed;            // Evaporative fluid cooler make up water usage (m3)
+        Nandle EvaporationVdot;
+        Nandle EvaporationVol;
+        Nandle DriftVdot;
+        Nandle DriftVol;
+        Nandle BlowdownVdot;
+        Nandle BlowdownVol;
+        Nandle MakeUpVdot;
+        Nandle MakeUpVol;
+        Nandle TankSupplyVdot;
+        Nandle TankSupplyVol;
+        Nandle StarvedMakeUpVdot;
+        Nandle StarvedMakeUpVol;
         EvapFluidCoolerInletConds inletConds;
 
         // Default Constructor
@@ -250,11 +250,11 @@ namespace EvaporativeFluidCoolers {
 
         void setupOutputVars();
 
-        void getSizingFactor(Real64 &_SizFac) override;
+        void getSizingFactor(Nandle &_SizFac) override;
 
-        void getDesignCapacities(const PlantLocation &, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void InitEvapFluidCooler();
 
@@ -270,9 +270,9 @@ namespace EvaporativeFluidCoolers {
 
         void CalcTwoSpeedEvapFluidCooler();
 
-        Real64 SimpleEvapFluidCoolerUAResidual(Real64 UA, Array1D<Real64> const &Par);
+        Nandle SimpleEvapFluidCoolerUAResidual(Nandle UA, Array1D<Nandle> const &Par);
 
-        void SimSimpleEvapFluidCooler(Real64 waterMassFlowRate, Real64 AirFlowRate, Real64 UAdesign, Real64 &outletWaterTemp);
+        void SimSimpleEvapFluidCooler(Nandle waterMassFlowRate, Nandle AirFlowRate, Nandle UAdesign, Nandle &outletWaterTemp);
     };
 
     // Object Data

@@ -94,23 +94,23 @@ namespace SplitterComponent {
     {
         // Members
         std::string SplitterName; // Name of the Splitter
-        Real64 InletTemp;
-        Real64 InletHumRat;
-        Real64 InletEnthalpy;
-        Real64 InletPressure;
+        Nandle InletTemp;
+        Nandle InletHumRat;
+        Nandle InletEnthalpy;
+        Nandle InletPressure;
         int InletNode;
-        Real64 InletMassFlowRate;         // MassFlow through the Splitter being Simulated [kg/Sec]
-        Real64 InletMassFlowRateMaxAvail; // Max Avail MassFlow through the Splitter being Simulated [kg/Sec]
-        Real64 InletMassFlowRateMinAvail; // Min Avail MassFlow through the Splitter being Simulated [kg/Sec]
+        Nandle InletMassFlowRate;         // MassFlow through the Splitter being Simulated [kg/Sec]
+        Nandle InletMassFlowRateMaxAvail; // Max Avail MassFlow through the Splitter being Simulated [kg/Sec]
+        Nandle InletMassFlowRateMinAvail; // Min Avail MassFlow through the Splitter being Simulated [kg/Sec]
         int NumOutletNodes;
         Array1D_int OutletNode;
-        Array1D<Real64> OutletMassFlowRate;
-        Array1D<Real64> OutletMassFlowRateMaxAvail;
-        Array1D<Real64> OutletMassFlowRateMinAvail;
-        Array1D<Real64> OutletTemp;
-        Array1D<Real64> OutletHumRat;
-        Array1D<Real64> OutletEnthalpy;
-        Array1D<Real64> OutletPressure;
+        Array1D<Nandle> OutletMassFlowRate;
+        Array1D<Nandle> OutletMassFlowRateMaxAvail;
+        Array1D<Nandle> OutletMassFlowRateMinAvail;
+        Array1D<Nandle> OutletTemp;
+        Array1D<Nandle> OutletHumRat;
+        Array1D<Nandle> OutletEnthalpy;
+        Array1D<Nandle> OutletPressure;
 
         // Default Constructor
         SplitterConditions()

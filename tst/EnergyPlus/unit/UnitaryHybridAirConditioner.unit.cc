@@ -191,11 +191,11 @@ TEST_F(EnergyPlusFixture, Test_UnitaryHybridAirConditioner_Unittest)
     InitZoneHybridUnitaryAirConditioners(1, 1);
     Model *pZoneHybridUnitaryAirConditioner = &HybridUnitaryAirConditioners::ZoneHybridUnitaryAirConditioner(1);
     // setup local variables for model inputs
-    Real64 Tosa, Tra, Wra, Wosa, RHosa, RHra, DesignMinVR, Requestedheating, RequestedCooling, Requested_Humidification, Requested_Dehumidification;
+    Nandle Tosa, Tra, Wra, Wosa, RHosa, RHra, DesignMinVR, Requestedheating, RequestedCooling, Requested_Humidification, Requested_Dehumidification;
     RHosa = 0;
     std::string TimeDate;
     int modenumber = 0;
-    Real64 MsaRatio, OSAF;
+    Nandle MsaRatio, OSAF;
     MsaRatio = OSAF = 1;
 
     Requestedheating = RequestedCooling = Requested_Humidification = Requested_Dehumidification = 0;
@@ -227,16 +227,16 @@ TEST_F(EnergyPlusFixture, Test_UnitaryHybridAirConditioner_Unittest)
     pZoneHybridUnitaryAirConditioner->doStep(RequestedCooling, Requestedheating, Requested_Humidification, Requested_Dehumidification, DesignMinVR);
 
     // output results
-    Real64 NormalizationDivisor = 3.0176;
-    Real64 ScaledMaxMsa = pZoneHybridUnitaryAirConditioner->ScaledSystemMaximumSupplyAirMassFlowRate;
-    Real64 MinFlowFraction = DesignMinVR / ScaledMaxMsa;
+    Nandle NormalizationDivisor = 3.0176;
+    Nandle ScaledMaxMsa = pZoneHybridUnitaryAirConditioner->ScaledSystemMaximumSupplyAirMassFlowRate;
+    Nandle MinFlowFraction = DesignMinVR / ScaledMaxMsa;
     modenumber = pZoneHybridUnitaryAirConditioner->PrimaryMode;
-    Real64 Tsa = pZoneHybridUnitaryAirConditioner->OutletTemp;
-    Real64 Msa = pZoneHybridUnitaryAirConditioner->OutletMassFlowRate;
-    Real64 deliveredSC = pZoneHybridUnitaryAirConditioner->UnitSensibleCoolingRate;
-    Real64 deliveredSH = pZoneHybridUnitaryAirConditioner->UnitSensibleHeatingRate;
-    Real64 averageOSAF = pZoneHybridUnitaryAirConditioner->averageOSAF;
-    Real64 Electricpower = pZoneHybridUnitaryAirConditioner->FinalElectricalPower;
+    Nandle Tsa = pZoneHybridUnitaryAirConditioner->OutletTemp;
+    Nandle Msa = pZoneHybridUnitaryAirConditioner->OutletMassFlowRate;
+    Nandle deliveredSC = pZoneHybridUnitaryAirConditioner->UnitSensibleCoolingRate;
+    Nandle deliveredSH = pZoneHybridUnitaryAirConditioner->UnitSensibleHeatingRate;
+    Nandle averageOSAF = pZoneHybridUnitaryAirConditioner->averageOSAF;
+    Nandle Electricpower = pZoneHybridUnitaryAirConditioner->FinalElectricalPower;
 
     // checks
     EXPECT_EQ(modenumber, 3); // IEC and DX2 Mode
@@ -415,7 +415,7 @@ TEST_F(EnergyPlusFixture, Test_UnitaryHybridAirConditioner_Unittest)
 
     SystemReports::ReportMaxVentilationLoads();
     // output results
-    Real64 zone_oa_mass_flow = ZoneOAMassFlow(1); // OA flow reported to the zone from the unitary hybrid system
+    Nandle zone_oa_mass_flow = ZoneOAMassFlow(1); // OA flow reported to the zone from the unitary hybrid system
 
     // checks
     EXPECT_EQ(zone_oa_mass_flow, DesignMinVR); // reported zone OA flow matches unitary hybrid OA flow
@@ -440,7 +440,7 @@ TEST_F(EnergyPlusFixture, Test_UnitaryHybridAirConditioner_Unittest)
                         EndUses, Groups, Names, NumFound);
 
     // output results
-    Real64 MaxFlow = pZoneHybridUnitaryAirConditioner->ScaledSystemMaximumSupplyAirVolumeFlowRate;
+    Nandle MaxFlow = pZoneHybridUnitaryAirConditioner->ScaledSystemMaximumSupplyAirVolumeFlowRate;
 
     // Check the meters associated with the ZoneHVAC:HybridUnitaryHVAC outputs
     EXPECT_EQ(21, NumFound);
@@ -794,18 +794,18 @@ TEST_F(EnergyPlusFixture, Test_UnitaryHybridAirConditioner_CalculateCurveVal)
     pZoneHybridUnitaryAirConditioner->Initialize(1);
     pZoneHybridUnitaryAirConditioner->InitializeModelParams();
 
-    Real64 Toa = 10.0;
-    Real64 Woa = 0.005;
-    Real64 Tra = 20.0;
-    Real64 Wra = 0.01;
-    Real64 Ma = 0.5;
-    Real64 OAF = 1.0;
-    Real64 ExpectedTsa = 5.0;
-    Real64 ExpectedWsa = 0.005/3.0;
-    Real64 ExpectedPowerOutput = 1000.0*2.0/3.0176;
-    Real64 ExpectedFanPowerOutput = 3.25*2.0/3.0176;
+    Nandle Toa = 10.0;
+    Nandle Woa = 0.005;
+    Nandle Tra = 20.0;
+    Nandle Wra = 0.01;
+    Nandle Ma = 0.5;
+    Nandle OAF = 1.0;
+    Nandle ExpectedTsa = 5.0;
+    Nandle ExpectedWsa = 0.005/3.0;
+    Nandle ExpectedPowerOutput = 1000.0*2.0/3.0176;
+    Nandle ExpectedFanPowerOutput = 3.25*2.0/3.0176;
 
-    std::vector<Real64> ExpectedResults{ExpectedTsa,ExpectedWsa,ExpectedPowerOutput,ExpectedFanPowerOutput };
+    std::vector<Nandle> ExpectedResults{ExpectedTsa,ExpectedWsa,ExpectedPowerOutput,ExpectedFanPowerOutput };
     CMode mode0 = pZoneHybridUnitaryAirConditioner->OperatingModes[0];
 
     // The following loop is intended to loop through the valid curves in each operating mode, where i corresponds to the correct curve index in this operating mode, as well as the correct expected
@@ -817,7 +817,7 @@ TEST_F(EnergyPlusFixture, Test_UnitaryHybridAirConditioner_CalculateCurveVal)
     // SUPPLY_FAN_POWER = 3;
 
     for (std::size_t i=0; i<ExpectedResults.size(); i++){
-        Real64 testCurveVal = mode0.CalculateCurveVal(Toa, Woa, Tra, Wra, Ma, OAF, i);
+        Nandle testCurveVal = mode0.CalculateCurveVal(Toa, Woa, Tra, Wra, Ma, OAF, i);
         EXPECT_EQ(testCurveVal, ExpectedResults[i]);
     }
 }

@@ -506,8 +506,8 @@ TEST_F(EnergyPlusFixture, PackagedTerminalHP_VSCoils_Sizing)
     EXPECT_EQ(VariableSpeedCoils::VarSpeedCoil(1).MSRatedAirVolFlowRate(9), PTUnit(1).MaxCoolAirVolFlow);
 
     // expect the ratio of air flow to capacity to be equal to the reference air flow and capacity ratio specified in coil input
-    Real64 refAirflowCapacityRatio = 0.891980668 / 16092.825525; // speed 9 reference cooling data
-    Real64 sizingAirflowCapacityRatio =
+    Nandle refAirflowCapacityRatio = 0.891980668 / 16092.825525; // speed 9 reference cooling data
+    Nandle sizingAirflowCapacityRatio =
         VariableSpeedCoils::VarSpeedCoil(1).MSRatedAirVolFlowRate(9) / VariableSpeedCoils::VarSpeedCoil(1).MSRatedTotCap(9);
     EXPECT_EQ(refAirflowCapacityRatio, sizingAirflowCapacityRatio);
 
@@ -531,21 +531,21 @@ TEST_F(EnergyPlusFixture, PackagedTerminalHP_VSCoils_Sizing)
 
     SizeFan(1);
     // the fan vol flow rate should equal the max of cooling and heating coil flow rates
-    Real64 maxCoilAirFlow = max(VariableSpeedCoils::VarSpeedCoil( 1 ).RatedAirVolFlowRate, VariableSpeedCoils::VarSpeedCoil( 2 ).RatedAirVolFlowRate);
+    Nandle maxCoilAirFlow = max(VariableSpeedCoils::VarSpeedCoil( 1 ).RatedAirVolFlowRate, VariableSpeedCoils::VarSpeedCoil( 2 ).RatedAirVolFlowRate);
     EXPECT_EQ(Fan(1).MaxAirFlowRate, maxCoilAirFlow);
     EXPECT_EQ(Fan(1).MaxAirFlowRate, max(PTUnit(1).MaxCoolAirVolFlow, PTUnit(1).MaxHeatAirVolFlow));
 
     // Initialize the packaged terminal heat pump
-    Real64 OnOffAirFlowRatio(1.0); // ratio of compressor ON airflow to average airflow over timestep
-    Real64 ZoneLoad(0.0);          // cooling or heating needed by zone [watts]
+    Nandle OnOffAirFlowRatio(1.0); // ratio of compressor ON airflow to average airflow over timestep
+    Nandle ZoneLoad(0.0);          // cooling or heating needed by zone [watts]
 
     // Also set BeginEnvrnFlag so code is tested for coil initialization and does not crash
     DataGlobals::BeginEnvrnFlag = true;
     InitPTUnit(1, DataSizing::CurZoneEqNum, true, OnOffAirFlowRatio, ZoneLoad);
 
     // check that an intermediate speed has the correct flow ratio
-    Real64 refAirflowRatio = 0.530468926 / 0.891980668; // speed 4 reference cooling data and full flow rate at speed 9
-    Real64 expectedAirFlowRate = refAirflowRatio * PTUnit(1).MaxCoolAirVolFlow;
+    Nandle refAirflowRatio = 0.530468926 / 0.891980668; // speed 4 reference cooling data and full flow rate at speed 9
+    Nandle expectedAirFlowRate = refAirflowRatio * PTUnit(1).MaxCoolAirVolFlow;
     EXPECT_NEAR(expectedAirFlowRate, PTUnit(1).CoolVolumeFlowRate(4), 0.00000001);
     EXPECT_NEAR(expectedAirFlowRate, 3.939704195, 0.00000001);
 
@@ -572,12 +572,12 @@ TEST_F(EnergyPlusFixture, AirTerminalSingleDuctMixer_SimPTAC_HeatingCoilTest)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 PrimaryAirMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle PrimaryAirMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int PTUnitNum(1);
 
@@ -922,11 +922,11 @@ TEST_F(EnergyPlusFixture, SimPTAC_SZVAVTest)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 HVACInletMassFlowRate(0.0);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 LatOutputProvided(0.0);
-    Real64 QUnitOut(0.0);
-    Real64 QZnReq(0.0);
+    Nandle HVACInletMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle LatOutputProvided(0.0);
+    Nandle QUnitOut(0.0);
+    Nandle QZnReq(0.0);
     int ZoneNum(1);
     int PTUnitNum(1);
 

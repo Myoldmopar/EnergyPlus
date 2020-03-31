@@ -79,8 +79,8 @@ namespace OutputProcessor {
     extern int const ReportVDD_Yes; // Report the variable dictionaries in "report format"
     extern int const ReportVDD_IDF; // Report the variable dictionaries in "IDF format"
 
-    extern Real64 const MinSetValue;
-    extern Real64 const MaxSetValue;
+    extern Nandle const MinSetValue;
+    extern Nandle const MaxSetValue;
     extern int const IMinSetValue;
     extern int const IMaxSetValue;
 
@@ -154,7 +154,7 @@ namespace OutputProcessor {
     extern int NumVarMeterArrays; // Current number of Arrays pointing to meters
 
     extern int NumEnergyMeters;        // Current number of Energy Meters
-    extern Array1D<Real64> MeterValue; // This holds the current timestep value for each meter.
+    extern Array1D<Nandle> MeterValue; // This holds the current timestep value for each meter.
 
     extern int TimeStepStampReportNbr;          // TimeStep and Hourly Report number
     extern std::string TimeStepStampReportChr;  // TimeStep and Hourly Report number (character -- for printing)
@@ -171,7 +171,7 @@ namespace OutputProcessor {
     extern int RunPeriodStampReportNbr;         // RunPeriod Report number
     extern std::string RunPeriodStampReportChr; // RunPeriod Report number (character -- for printing)
     extern bool TrackingRunPeriodVariables;     // Requested RunPeriod Report Variables
-    extern Real64 TimeStepZoneSec;              // Seconds from NumTimeStepInHour
+    extern Nandle TimeStepZoneSec;              // Seconds from NumTimeStepInHour
     extern bool ErrorsLogged;
     extern bool ProduceVariableDictionary;
 
@@ -267,8 +267,8 @@ namespace OutputProcessor {
     struct TimeSteps
     {
         // Members
-        Real64 * TimeStep; // fortran POINTER Pointer to the Actual Time Step Variable (Zone or HVAC)
-        Real64 CurMinute;           // Current minute (decoded from real Time Step Value)
+        Nandle * TimeStep; // fortran POINTER Pointer to the Actual Time Step Variable (Zone or HVAC)
+        Nandle CurMinute;           // Current minute (decoded from real Time Step Value)
 
         // Default Constructor
         TimeSteps()
@@ -280,12 +280,12 @@ namespace OutputProcessor {
     struct RealVariables
     {
         // Members
-        Real64 * Which; // The POINTER to the actual variable holding the value
-        Real64 Value;            // Current Value of the variable (to resolution of Zone Time Step)
-        Real64 TSValue;          // Value of this variable at the Zone Time Step
-        Real64 EITSValue;        // Value of this variable at the Zone Time Step for external interface
-        Real64 StoreValue;       // At end of Zone Time Step, value is placed here for later reporting
-        Real64 NumStored;        // Number of hours stored
+        Nandle * Which; // The POINTER to the actual variable holding the value
+        Nandle Value;            // Current Value of the variable (to resolution of Zone Time Step)
+        Nandle TSValue;          // Value of this variable at the Zone Time Step
+        Nandle EITSValue;        // Value of this variable at the Zone Time Step for external interface
+        Nandle StoreValue;       // At end of Zone Time Step, value is placed here for later reporting
+        Nandle NumStored;        // Number of hours stored
         StoreType storeType;     // Variable Type (Summed/Non-Static or Average/Static)
         bool Stored;             // True when value is stored
         bool Report;             // User has requested reporting of this variable in the IDF
@@ -293,9 +293,9 @@ namespace OutputProcessor {
         bool thisTSStored;       // if stored for this zone timestep
         int thisTSCount;
         ReportingFrequency frequency; // How often to report this variable
-        Real64 MaxValue;              // Maximum reporting (only for Averaged variables, and those greater than Time Step)
+        Nandle MaxValue;              // Maximum reporting (only for Averaged variables, and those greater than Time Step)
         int maxValueDate;             // Date stamp of maximum
-        Real64 MinValue;              // Minimum reporting (only for Averaged variables, and those greater than Time Step)
+        Nandle MinValue;              // Minimum reporting (only for Averaged variables, and those greater than Time Step)
         int minValueDate;             // Date stamp of minimum
         int ReportID;                 // Report variable ID number
         std::string ReportIDChr;      // Report variable ID number (character -- for printing)
@@ -317,11 +317,11 @@ namespace OutputProcessor {
     {
         // Members
         int * Which; // The POINTER to the actual variable holding the value
-        Real64 Value;        // Current Value of the variable (to resolution of Zone Time Step)
-        Real64 TSValue;      // Value of this variable at the Zone Time Step
-        Real64 EITSValue;    // Value of this variable at the Zone Time Step for external interface
-        Real64 StoreValue;   // At end of Zone Time Step, value is placed here for later reporting
-        Real64 NumStored;    // Number of hours stored
+        Nandle Value;        // Current Value of the variable (to resolution of Zone Time Step)
+        Nandle TSValue;      // Value of this variable at the Zone Time Step
+        Nandle EITSValue;    // Value of this variable at the Zone Time Step for external interface
+        Nandle StoreValue;   // At end of Zone Time Step, value is placed here for later reporting
+        Nandle NumStored;    // Number of hours stored
         StoreType storeType; // Variable Type (Summed/Non-Static or Average/Static)
         bool Stored;         // True when value is stored
         bool Report;         // User has requested reporting of this variable in the IDF
@@ -451,72 +451,72 @@ namespace OutputProcessor {
         int TypeOfMeter;             // type of meter
         int SourceMeter;             // for custom decrement meters, this is the meter number for the subtraction
 
-        Real64 TSValue;          // TimeStep Value
-        Real64 CurTSValue;       // Current TimeStep Value (internal access)
+        Nandle TSValue;          // TimeStep Value
+        Nandle CurTSValue;       // Current TimeStep Value (internal access)
         bool RptTS;              // Report at End of TimeStep (Zone)
         bool RptTSFO;            // Report at End of TimeStep (Zone) -- meter file only
         int TSRptNum;            // Report Number for TS Values
         std::string TSRptNumChr; // Report Number for TS Values (character -- for printing)
 
-        Real64 HRValue;          // Hourly Value
+        Nandle HRValue;          // Hourly Value
         bool RptHR;              // Report at End of Hour
         bool RptHRFO;            // Report at End of Hour -- meter file only
-        Real64 HRMaxVal;         // Maximum Value (Hour)
+        Nandle HRMaxVal;         // Maximum Value (Hour)
         int HRMaxValDate;        // Date stamp of maximum
-        Real64 HRMinVal;         // Minimum Value (Hour)
+        Nandle HRMinVal;         // Minimum Value (Hour)
         int HRMinValDate;        // Date stamp of minimum
         int HRRptNum;            // Report Number for HR Values
         std::string HRRptNumChr; // Report Number for HR Values (character -- for printing)
 
-        Real64 DYValue;          // Daily Value
+        Nandle DYValue;          // Daily Value
         bool RptDY;              // Report at End of Day
         bool RptDYFO;            // Report at End of Day -- meter file only
-        Real64 DYMaxVal;         // Maximum Value (Day)
+        Nandle DYMaxVal;         // Maximum Value (Day)
         int DYMaxValDate;        // Date stamp of maximum
-        Real64 DYMinVal;         // Minimum Value (Day)
+        Nandle DYMinVal;         // Minimum Value (Day)
         int DYMinValDate;        // Date stamp of minimum
         int DYRptNum;            // Report Number for DY Values
         std::string DYRptNumChr; // Report Number for DY Values (character -- for printing)
 
-        Real64 MNValue;          // Monthly Value
+        Nandle MNValue;          // Monthly Value
         bool RptMN;              // Report at End of Month
         bool RptMNFO;            // Report at End of Month -- meter file only
-        Real64 MNMaxVal;         // Maximum Value (Month)
+        Nandle MNMaxVal;         // Maximum Value (Month)
         int MNMaxValDate;        // Date stamp of maximum
-        Real64 MNMinVal;         // Minimum Value (Month)
+        Nandle MNMinVal;         // Minimum Value (Month)
         int MNMinValDate;        // Date stamp of minimum
         int MNRptNum;            // Report Number for MN Values
         std::string MNRptNumChr; // Report Number for MN Values (character -- for printing)
 
-        Real64 YRValue;          // Yearly Value
+        Nandle YRValue;          // Yearly Value
         bool RptYR;              // Report at End of Year
         bool RptYRFO;            // Report at End of Year
-        Real64 YRMaxVal;         // Maximum Value (Yearly)
+        Nandle YRMaxVal;         // Maximum Value (Yearly)
         int YRMaxValDate;        // Date stamp of maximum
-        Real64 YRMinVal;         // Minimum Value (Yearly)
+        Nandle YRMinVal;         // Minimum Value (Yearly)
         int YRMinValDate;        // Date stamp of minimum
         int YRRptNum;            // Report Number for YR Values
         std::string YRRptNumChr; // Report Number for YR Values (character -- for printing)
 
-        Real64 SMValue;          // Simulation Value
+        Nandle SMValue;          // Simulation Value
         bool RptSM;              // Report at End of Environment/Simulation
         bool RptSMFO;            // Report at End of Environment/Simulation -- meter file only
-        Real64 SMMaxVal;         // Maximum Value (Sim)
+        Nandle SMMaxVal;         // Maximum Value (Sim)
         int SMMaxValDate;        // Date stamp of maximum
-        Real64 SMMinVal;         // Minimum Value (Sim)
+        Nandle SMMinVal;         // Minimum Value (Sim)
         int SMMinValDate;        // Date stamp of minimum
         int SMRptNum;            // Report Number for SM Values
         std::string SMRptNumChr; // Report Number for SM Values (character -- for printing)
 
-        Real64 LastSMValue;      // Simulation Value
-        Real64 LastSMMaxVal;     // Maximum Value (Sim)
+        Nandle LastSMValue;      // Simulation Value
+        Nandle LastSMMaxVal;     // Maximum Value (Sim)
         int LastSMMaxValDate;    // Date stamp of maximum
-        Real64 LastSMMinVal;     // Minimum Value (Sim)
+        Nandle LastSMMinVal;     // Minimum Value (Sim)
         int LastSMMinValDate;    // Date stamp of minimum
-        Real64 FinYrSMValue;     // Final Year Simulation Value
-        Real64 FinYrSMMaxVal;    // Maximum Value (Sim)
+        Nandle FinYrSMValue;     // Final Year Simulation Value
+        Nandle FinYrSMMaxVal;    // Maximum Value (Sim)
         int FinYrSMMaxValDate;   // Date stamp of maximum
-        Real64 FinYrSMMinVal;    // Minimum Value (Sim)
+        Nandle FinYrSMMinVal;    // Minimum Value (Sim)
         int FinYrSMMinValDate;   // Date stamp of minimum
         bool RptAccTS;           // Report Cumulative Meter at Time Step
         bool RptAccTSFO;         // Report Cumulative Meter at Time Step -- meter file only
@@ -589,7 +589,7 @@ namespace OutputProcessor {
     void InitializeOutput();
 
     void SetupTimePointers(std::string const &IndexKey, // Which timestep is being set up, 'Zone'=1, 'HVAC'=2
-                           Real64 &TimeStep             // The timestep variable.  Used to get the address
+                           Nandle &TimeStep             // The timestep variable.  Used to get the address
     );
 
     void CheckReportVariable(std::string const &KeyedValue, // Associated Key for this variable
@@ -699,12 +699,12 @@ namespace OutputProcessor {
                                bool &ErrorsFound                      // true if errors found during subroutine
     );
 
-    void UpdateMeterValues(Real64 const TimeStepValue,                    // Value of this variable at the current time step.
+    void UpdateMeterValues(Nandle const TimeStepValue,                    // Value of this variable at the current time step.
                            int const NumOnMeters,                         // Number of meters this variable is "on".
                            const Array1D_int &OnMeters                     // Which meters this variable is on (index values)
     );
 
-    void UpdateMeterValues(Real64 const TimeStepValue,                    // Value of this variable at the current time step.
+    void UpdateMeterValues(Nandle const TimeStepValue,                    // Value of this variable at the current time step.
                            int const NumOnMeters,                         // Number of meters this variable is "on".
                            const Array1D_int &OnMeters,                    // Which meters this variable is on (index values)
                            int const NumOnCustomMeters,                   // Number of custom meters this variable is "on".
@@ -715,16 +715,16 @@ namespace OutputProcessor {
 
     void ResetAccumulationWhenWarmupComplete();
 
-    void SetMinMax(Real64 const TestValue, // Candidate new value
+    void SetMinMax(Nandle const TestValue, // Candidate new value
                    int const TimeStamp,    // TimeStamp to be stored if applicable
-                   Real64 &CurMaxValue,    // Current Maximum Value
+                   Nandle &CurMaxValue,    // Current Maximum Value
                    int &CurMaxValDate,     // Current Maximum Value Date Stamp
-                   Real64 &CurMinValue,    // Current Minimum Value
+                   Nandle &CurMinValue,    // Current Minimum Value
                    int &CurMinValDate      // Current Minimum Value Date Stamp
     );
 
-    void ReportTSMeters(Real64 const StartMinute, // Start Minute for TimeStep
-                        Real64 const EndMinute,   // End Minute for TimeStep
+    void ReportTSMeters(Nandle const StartMinute, // Start Minute for TimeStep
+                        Nandle const EndMinute,   // End Minute for TimeStep
                         bool &PrintESOTimeStamp,  // True if the ESO Time Stamp also needs to be printed
                         bool PrintTimeStampToSQL  // Print Time Stamp to SQL file
     );
@@ -766,8 +766,8 @@ namespace OutputProcessor {
                                   Optional_int_const Month = _,               // the month of the reporting interval
                                   Optional_int_const DayOfMonth = _,          // The day of the reporting interval
                                   Optional_int_const Hour = _,                // The hour of the reporting interval
-                                  Optional<Real64 const> EndMinute = _,       // The last minute in the reporting interval
-                                  Optional<Real64 const> StartMinute = _,     // The starting minute of the reporting interval
+                                  Optional<Nandle const> EndMinute = _,       // The last minute in the reporting interval
+                                  Optional<Nandle const> StartMinute = _,     // The starting minute of the reporting interval
                                   Optional_int_const DST = _,                 // A flag indicating whether daylight savings time is observed
                                   Optional_string_const DayType = _           // The day tied for the data (e.g., Monday)
     );
@@ -782,8 +782,8 @@ namespace OutputProcessor {
                                   Optional_int_const Month = _,               // the month of the reporting interval
                                   Optional_int_const DayOfMonth = _,          // The day of the reporting interval
                                   Optional_int_const Hour = _,                // The hour of the reporting interval
-                                  Optional<Real64 const> EndMinute = _,       // The last minute in the reporting interval
-                                  Optional<Real64 const> StartMinute = _,     // The starting minute of the reporting interval
+                                  Optional<Nandle const> EndMinute = _,       // The last minute in the reporting interval
+                                  Optional<Nandle const> StartMinute = _,     // The starting minute of the reporting interval
                                   Optional_int_const DST = _,                 // A flag indicating whether daylight savings time is observed
                                   Optional_string_const DayType = _           // The day tied for the data (e.g., Monday)
     );
@@ -830,37 +830,37 @@ namespace OutputProcessor {
 
     void WriteReportRealData(int const reportID,                         // The variable's report ID
                              std::string const &creportID,               // variable ID in characters
-                             Real64 const repValue,                      // The variable's value
+                             Nandle const repValue,                      // The variable's value
                              StoreType const storeType,                  // Averaged or Sum
-                             Real64 const numOfItemsStored,              // The number of items (hours or timesteps) of data stored
+                             Nandle const numOfItemsStored,              // The number of items (hours or timesteps) of data stored
                              ReportingFrequency const reportingInterval, // The variable's reporting interval (e.g., daily)
-                             Real64 const minValue,                      // The variable's minimum value during the reporting interval
+                             Nandle const minValue,                      // The variable's minimum value during the reporting interval
                              int const minValueDate,                     // The date the minimum value occurred
-                             Real64 const MaxValue,                      // The variable's maximum value during the reporting interval
+                             Nandle const MaxValue,                      // The variable's maximum value during the reporting interval
                              int const maxValueDate                      // The date the maximum value occurred
     );
 
     void WriteCumulativeReportMeterData(int const reportID,           // The variable's report ID
                                         std::string const &creportID, // variable ID in characters
-                                        Real64 const repValue,        // The variable's value
+                                        Nandle const repValue,        // The variable's value
                                         bool const meterOnlyFlag      // A flag that indicates if the data should be written to standard output
     );
 
     void WriteReportMeterData(OutputFiles &outputFiles,
                               int const reportID,                         // The variable's report ID
                               std::string const &creportID,               // variable ID in characters
-                              Real64 const repValue,                      // The variable's value
+                              Nandle const repValue,                      // The variable's value
                               ReportingFrequency const reportingInterval, // The variable's reporting interval (e.g., hourly)
-                              Real64 const minValue,                      // The variable's minimum value during the reporting interval
+                              Nandle const minValue,                      // The variable's minimum value during the reporting interval
                               int const minValueDate,                     // The date the minimum value occurred
-                              Real64 const MaxValue,                      // The variable's maximum value during the reporting interval
+                              Nandle const MaxValue,                      // The variable's maximum value during the reporting interval
                               int const maxValueDate,                     // The date of the maximum value
                               bool const meterOnlyFlag                    // Indicates whether the data is for the meter file only
     );
 
     void WriteNumericData(int const reportID,           // The variable's reporting ID
                           std::string const &creportID, // variable ID in characters
-                          Real64 const repValue         // The variable's value
+                          Nandle const repValue         // The variable's value
     );
 
     void WriteNumericData(int const reportID,           // The variable's reporting ID
@@ -879,9 +879,9 @@ namespace OutputProcessor {
 
     void WriteReportIntegerData(int const reportID,                         // The variable's reporting ID
                                 std::string const &reportIDString,          // The variable's reporting ID (character)
-                                Real64 const repValue,                      // The variable's value
+                                Nandle const repValue,                      // The variable's value
                                 StoreType const storeType,                  // Type of item (averaged or summed)
-                                Real64 const numOfItemsStored,              // The number of items (hours or timesteps) of data stored
+                                Nandle const numOfItemsStored,              // The number of items (hours or timesteps) of data stored
                                 ReportingFrequency const reportingInterval, // The reporting interval (e.g., monthly)
                                 int const minValue,                         // The variable's minimum value during the reporting interval
                                 int const minValueDate,                     // The date the minimum value occurred
@@ -895,7 +895,7 @@ namespace OutputProcessor {
 
     void SetInternalVariableValue(int const varType,       // 1=integer, 2=real, 3=meter
                                   int const keyVarIndex,   // Array index
-                                  Real64 const SetRealVal, // real value to set, if type is real or meter
+                                  Nandle const SetRealVal, // real value to set, if type is real or meter
                                   int const SetIntVal      // integer value to set if type is integer
     );
 
@@ -928,7 +928,7 @@ namespace OutputProcessor {
 
 void SetupOutputVariable(std::string const &VariableName,           // String Name of variable (with units)
                          OutputProcessor::Unit const &VariableUnit, // Actual units corresponding to the actual variable
-                         Real64 &ActualVariable,                    // Actual Variable, used to set up pointer
+                         Nandle &ActualVariable,                    // Actual Variable, used to set up pointer
                          std::string const &TimeStepTypeKey,           // Zone, HeatBalance=1, HVAC, System, Plant=2
                          std::string const &VariableTypeKey,        // State, Average=1, NonState, Sum=2
                          std::string const &KeyedValue,             // Associated Key for this variable
@@ -956,7 +956,7 @@ void SetupOutputVariable(std::string const &VariableName,           // String Na
 
 void SetupOutputVariable(std::string const &VariableName,           // String Name of variable
                          OutputProcessor::Unit const &VariableUnit, // Actual units corresponding to the actual variable
-                         Real64 &ActualVariable,                    // Actual Variable, used to set up pointer
+                         Nandle &ActualVariable,                    // Actual Variable, used to set up pointer
                          std::string const &TimeStepTypeKey,           // Zone, HeatBalance=1, HVAC, System, Plant=2
                          std::string const &VariableTypeKey,        // State, Average=1, NonState, Sum=2
                          int const KeyedValue,                      // Associated Key for this variable
@@ -990,19 +990,19 @@ int GetMeterIndex(std::string const &MeterName);
 
 std::string GetMeterResourceType(int const MeterNumber); // Which Meter Number (from GetMeterIndex)
 
-Real64 GetCurrentMeterValue(int const MeterNumber); // Which Meter Number (from GetMeterIndex)
+Nandle GetCurrentMeterValue(int const MeterNumber); // Which Meter Number (from GetMeterIndex)
 
-Real64 GetInstantMeterValue(int const MeterNumber, // Which Meter Number (from GetMeterIndex)
+Nandle GetInstantMeterValue(int const MeterNumber, // Which Meter Number (from GetMeterIndex)
                             OutputProcessor::TimeStepType const TimeStepType    // Whether this is zone of HVAC
 );
 
 void IncrementInstMeterCache();
 
-Real64 GetInternalVariableValue(int const varType,    // 1=integer, 2=real, 3=meter
+Nandle GetInternalVariableValue(int const varType,    // 1=integer, 2=real, 3=meter
                                 int const keyVarIndex // Array index
 );
 
-Real64 GetInternalVariableValueExternalInterface(int const varType,    // 1=integer, 2=REAL(r64), 3=meter
+Nandle GetInternalVariableValueExternalInterface(int const varType,    // 1=integer, 2=REAL(r64), 3=meter
                                                  int const keyVarIndex // Array index
 );
 

@@ -145,7 +145,7 @@ TEST_F(EnergyPlusFixture, MixedAir_ProcessOAControllerTest)
 
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObjects(CMO_OAController), NumArg, NumAlphas, NumNums);
 
-    Array1D<Real64> NumArray(NumNums, 0.0);
+    Array1D<Nandle> NumArray(NumNums, 0.0);
     Array1D_string AlphArray(NumAlphas);
     Array1D_string cAlphaFields(NumAlphas);
     Array1D_string cNumericFields(NumNums);
@@ -560,8 +560,8 @@ TEST_F(EnergyPlusFixture, MixedAir_HXBypassOptionTest)
         ; // OA inlet (actuated) air nodes, dry air
     }
 
-    Real64 expectedOAflow(0.0);
-    Real64 expectedMinOAflow(0.0);
+    Nandle expectedOAflow(0.0);
+    Nandle expectedMinOAflow(0.0);
 
     // Case 1 - economizer active, NoLockout, BypassWhenWithinEconomizerLimits
     // economizer should open to meet the mixed air setpoint assuming dry air to make it simple, HXbypass true
@@ -1221,8 +1221,8 @@ TEST_F(EnergyPlusFixture, MixedAir_HumidifierOnOASystemTest)
     int HumNum(1);
     int AirInNode(0);
     int AirOutNode(0);
-    Real64 WaterConsumptionRate(0.0); // water use rate of the humidifier
-    Real64 ElecPowerInput(0.0);       // electric use rate of the humidifier
+    Nandle WaterConsumptionRate(0.0); // water use rate of the humidifier
+    Nandle ElecPowerInput(0.0);       // electric use rate of the humidifier
 
     PrimaryAirSystem.allocate(AirloopNum);
     PrimaryAirSystem(AirloopNum).Name = "Airloop 1";
@@ -1448,7 +1448,7 @@ TEST_F(EnergyPlusFixture, MixedAir_MissingHIghRHControlInputTest)
 
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObjects(CMO_OAController), NumArg, NumAlphas, NumNums);
 
-    Array1D<Real64> NumArray(NumNums, 0.0);
+    Array1D<Nandle> NumArray(NumNums, 0.0);
     Array1D_string AlphArray(NumAlphas);
     Array1D_string cAlphaFields(NumAlphas);
     Array1D_string cNumericFields(NumNums);
@@ -1579,7 +1579,7 @@ TEST_F(EnergyPlusFixture, MixedAir_HIghRHControlTest)
 
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObjects(CMO_OAController), NumArg, NumAlphas, NumNums);
 
-    Array1D<Real64> NumArray(NumNums, 0.0);
+    Array1D<Nandle> NumArray(NumNums, 0.0);
     Array1D_string AlphArray(NumAlphas);
     Array1D_string cAlphaFields(NumAlphas);
     Array1D_string cNumericFields(NumNums);
@@ -1656,7 +1656,7 @@ TEST_F(EnergyPlusFixture, MixedAir_HIghRHControlTest)
     EXPECT_EQ(OAController(ControllerNum).NodeNumofHumidistatZone, ZoneEquipConfig(1).ZoneNode);
     int airLoopNum = 1;
     int outAirMinFrac = 0.0;
-    Real64 OASignal = 0.0;
+    Nandle OASignal = 0.0;
     bool HighHumidityOperationFlag = false;
     bool firstHVACIteration = false;
     OAController(ControllerNum).MixSetTemp = 15.0;
@@ -5250,8 +5250,8 @@ TEST_F(EnergyPlusFixture, MechVentController_IAQPTests)
     EXPECT_FALSE(ErrorsFound);
 
     int NumZones(2);
-    Real64 SysMassFlow(0.0); // System supply mass flow rate [kg/s]
-    Real64 OAMassFlow(0.0);  // OA mass flow rate [kg/s]
+    Nandle SysMassFlow(0.0); // System supply mass flow rate [kg/s]
+    Nandle OAMassFlow(0.0);  // OA mass flow rate [kg/s]
     DataContaminantBalance::ZoneSysContDemand.allocate(NumZones);
     DataContaminantBalance::ZoneSysContDemand(1).OutputRequiredToCO2SP = 0.2;
     DataContaminantBalance::ZoneSysContDemand(2).OutputRequiredToCO2SP = 0.3;
@@ -5453,8 +5453,8 @@ TEST_F(EnergyPlusFixture, MechVentController_ZoneSumTests)
         DataHeatBalance::Zone(index).FloorArea = DataHeatBalance::Zone(index).UserEnteredFloorArea;
     }
 
-    Real64 SysMassFlow(0.0);          // System supply mass flow rate [kg/s]
-    Real64 OAMassFlow(0.0);           // OA mass flow rate [kg/s]
+    Nandle SysMassFlow(0.0);          // System supply mass flow rate [kg/s]
+    Nandle OAMassFlow(0.0);           // OA mass flow rate [kg/s]
     DataEnvironment::StdRhoAir = 1.0; // For convenience so mass flow returned will equal volume flows input
 
     DataHeatBalance::ZoneIntGain.allocate(NumZones);
@@ -6015,8 +6015,8 @@ TEST_F(EnergyPlusFixture, OAController_ProportionalMinimum_HXBypassTest)
     PrimaryAirSys.Branch(1).Comp(1).Name = "OA Sys";
     PrimaryAirSys.Branch(1).Comp(1).TypeOf = "AirLoopHVAC:OutdoorAirSystem";
 
-    Real64 DesignSupplyAirMassFlow = 1.0 * StdRhoAir;
-    Real64 MixedAirMassFlow = 0.50 * DesignSupplyAirMassFlow;
+    Nandle DesignSupplyAirMassFlow = 1.0 * StdRhoAir;
+    Nandle MixedAirMassFlow = 0.50 * DesignSupplyAirMassFlow;
 
     curAirLoopFlow.DesSupply = DesignSupplyAirMassFlow;
 
@@ -6053,10 +6053,10 @@ TEST_F(EnergyPlusFixture, OAController_ProportionalMinimum_HXBypassTest)
     Node(curOACntrl.OANode).Temp = curOACntrl.OATemp;
     Node(curOACntrl.OANode).Enthalpy = Psychrometrics::PsyHFnTdbW(curOACntrl.InletTemp, 0.0);
 
-    Real64 OAMassFlowActual(0.0);
-    Real64 OAMassFlowAMin(0.0);
-    Real64 OutAirMassFlowFracMin(0.0);
-    Real64 OutAirMassFlowFracActual(0.0);
+    Nandle OAMassFlowActual(0.0);
+    Nandle OAMassFlowAMin(0.0);
+    Nandle OutAirMassFlowFracMin(0.0);
+    Nandle OutAirMassFlowFracActual(0.0);
 
     // check OA controller inputs
     EXPECT_EQ(curOACntrl.Lockout, NoLockoutPossible); // NoLockout (ecoomizer always active)
@@ -6209,8 +6209,8 @@ TEST_F(EnergyPlusFixture, OAController_FixedMinimum_MinimumLimitTypeTest)
     PrimaryAirSys.Branch(1).Comp(1).Name = "OA Sys";
     PrimaryAirSys.Branch(1).Comp(1).TypeOf = "AirLoopHVAC:OutdoorAirSystem";
 
-    Real64 DesignSupplyAirMassFlow = 1.0 * StdRhoAir;
-    Real64 MixedAirMassFlow = 0.50 * DesignSupplyAirMassFlow;
+    Nandle DesignSupplyAirMassFlow = 1.0 * StdRhoAir;
+    Nandle MixedAirMassFlow = 0.50 * DesignSupplyAirMassFlow;
 
     curAirLoopFlow.DesSupply = DesignSupplyAirMassFlow;
 
@@ -6247,10 +6247,10 @@ TEST_F(EnergyPlusFixture, OAController_FixedMinimum_MinimumLimitTypeTest)
     Node(curOACntrl.OANode).Temp = curOACntrl.OATemp;
     Node(curOACntrl.OANode).Enthalpy = Psychrometrics::PsyHFnTdbW(curOACntrl.InletTemp, 0.0);
 
-    Real64 OAMassFlowActual(0.0);
-    Real64 OAMassFlowAMin(0.0);
-    Real64 OutAirMassFlowFracMin(0.0);
-    Real64 OutAirMassFlowFracActual(0.0);
+    Nandle OAMassFlowActual(0.0);
+    Nandle OAMassFlowAMin(0.0);
+    Nandle OutAirMassFlowFracMin(0.0);
+    Nandle OutAirMassFlowFracActual(0.0);
 
     // check OA controller inputs
     EXPECT_EQ(curOACntrl.MinOA, 0.2);                 // user specified minimum OA vol flow rate
@@ -6417,8 +6417,8 @@ TEST_F(EnergyPlusFixture, OAController_HighExhaustMassFlowTest)
     PrimaryAirSys.Branch(1).Comp(1).Name = "OA Sys";
     PrimaryAirSys.Branch(1).Comp(1).TypeOf = "AirLoopHVAC:OutdoorAirSystem";
 
-    Real64 DesignSupplyAirMassFlow = 1.0 * DataEnvironment::StdRhoAir;
-    Real64 MixedAirMassFlow = DesignSupplyAirMassFlow;
+    Nandle DesignSupplyAirMassFlow = 1.0 * DataEnvironment::StdRhoAir;
+    Nandle MixedAirMassFlow = DesignSupplyAirMassFlow;
 
     curAirLoopFlow.DesSupply = DesignSupplyAirMassFlow;
 
@@ -6456,10 +6456,10 @@ TEST_F(EnergyPlusFixture, OAController_HighExhaustMassFlowTest)
     Node(curOACntrl.OANode).Temp = curOACntrl.OATemp;
     Node(curOACntrl.OANode).Enthalpy = Psychrometrics::PsyHFnTdbW(curOACntrl.InletTemp, 0.0);
 
-    Real64 OAMassFlowActual(0.0);
-    Real64 OAMassFlowAMin(0.0);
-    Real64 OutAirMassFlowFracMin(0.0);
-    Real64 OutAirMassFlowFracActual(0.0);
+    Nandle OAMassFlowActual(0.0);
+    Nandle OAMassFlowAMin(0.0);
+    Nandle OutAirMassFlowFracMin(0.0);
+    Nandle OutAirMassFlowFracActual(0.0);
 
     // check OA controller inputs
     EXPECT_EQ(curOACntrl.MinOA, 0.2);                 // user specified minimum OA vol flow rate
@@ -6668,8 +6668,8 @@ TEST_F(EnergyPlusFixture, OAController_LowExhaustMassFlowTest)
     PrimaryAirSys.Branch(1).Comp(1).Name = "OA Sys";
     PrimaryAirSys.Branch(1).Comp(1).TypeOf = "AirLoopHVAC:OutdoorAirSystem";
 
-    Real64 DesignSupplyAirMassFlow = 1.0 * DataEnvironment::StdRhoAir;
-    Real64 MixedAirMassFlow = DesignSupplyAirMassFlow;
+    Nandle DesignSupplyAirMassFlow = 1.0 * DataEnvironment::StdRhoAir;
+    Nandle MixedAirMassFlow = DesignSupplyAirMassFlow;
 
     curAirLoopFlow.DesSupply = DesignSupplyAirMassFlow;
 
@@ -6707,10 +6707,10 @@ TEST_F(EnergyPlusFixture, OAController_LowExhaustMassFlowTest)
     Node(curOACntrl.OANode).Temp = curOACntrl.OATemp;
     Node(curOACntrl.OANode).Enthalpy = Psychrometrics::PsyHFnTdbW(curOACntrl.InletTemp, 0.0);
 
-    Real64 OAMassFlowActual(0.0);
-    Real64 OAMassFlowAMin(0.0);
-    Real64 OutAirMassFlowFracMin(0.0);
-    Real64 OutAirMassFlowFracActual(0.0);
+    Nandle OAMassFlowActual(0.0);
+    Nandle OAMassFlowAMin(0.0);
+    Nandle OutAirMassFlowFracMin(0.0);
+    Nandle OutAirMassFlowFracActual(0.0);
 
     // check OA controller inputs
     EXPECT_EQ(curOACntrl.MinOA, 0.5);                 // user specified minimum OA vol flow rate

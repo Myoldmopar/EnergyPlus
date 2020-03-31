@@ -140,7 +140,7 @@ namespace DualDuct {
     int NumDualDuctConstVolDampers;
     int NumDualDuctVarVolDampers;
     int NumDualDuctVarVolOA;
-    Real64 MassFlowSetToler;
+    Nandle MassFlowSetToler;
     bool GetDualDuctInputFlag(true); // Flag set to make sure you get input once
 
     // Object Data
@@ -271,7 +271,7 @@ namespace DualDuct {
         int NumAlphas;
         int NumNums;
         int IOStat;
-        static Array1D<Real64> NumArray(2, 0.0);
+        static Array1D<Nandle> NumArray(2, 0.0);
         static Array1D_string AlphArray(7);
         static Array1D_string cAlphaFields(7);       // Alpha field names
         static Array1D_string cNumericFields(2);     // Numeric field names
@@ -282,7 +282,7 @@ namespace DualDuct {
         int CtrlZone;                                // controlled zone do loop index
         int SupAirIn;                                // controlled zone supply air inlet index
         int ADUNum;                                  // loop control to search Air Distribution Units
-        static Real64 DummyOAFlow(0.0);
+        static Nandle DummyOAFlow(0.0);
 
         // Flow
         NumDualDuctConstVolDampers = inputProcessor->getNumObjectsFound(cCMO_DDConstantVolume);
@@ -855,7 +855,7 @@ namespace DualDuct {
         //static Array1D_bool MyAirLoopFlag;
         static bool ZoneEquipmentListChecked(false); // True after the Zone Equipment List has been checked for items
         int Loop;                                    // Loop checking control variable
-        Real64 PeopleFlow;                           // local sum variable, m3/s
+        Nandle PeopleFlow;                           // local sum variable, m3/s
         // FLOW:
 
         // Do the Begin Simulation initializations
@@ -1226,15 +1226,15 @@ namespace DualDuct {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MassFlow;    // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
-        Real64 HumRat;      // [Kg Moisture / Kg dry air]
-        Real64 Enthalpy;    // [Watts]
-        Real64 Temperature; // [C]
-        Real64 QTotLoad;    // [W]
-        Real64 QZnReq;      // [W]
-        Real64 CpAirZn;
-        Real64 CpAirSysHot;
-        Real64 CpAirSysCold;
+        Nandle MassFlow;    // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
+        Nandle HumRat;      // [Kg Moisture / Kg dry air]
+        Nandle Enthalpy;    // [Watts]
+        Nandle Temperature; // [C]
+        Nandle QTotLoad;    // [W]
+        Nandle QZnReq;      // [W]
+        Nandle CpAirZn;
+        Nandle CpAirSysHot;
+        Nandle CpAirSysCold;
 
         // Get the calculated load from the Heat Balance from ZoneSysEnergyDemand
         QTotLoad = ZoneSysEnergyDemand(ZoneNum).RemainingOutputRequired;
@@ -1362,17 +1362,17 @@ namespace DualDuct {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MassFlow;    // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
-        Real64 HumRat;      // [Kg Moisture / Kg dry air]
-        Real64 Enthalpy;    // [Watts]
-        Real64 Temperature; // [C]
-        Real64 QTotLoad;    // [W]
-        Real64 QZnReq;      // [W]
-        Real64 CpAirZn;     // specific heat of zone air
-        Real64 CpAirSysHot;
-        Real64 CpAirSysCold;
-        Real64 MassFlowBasedOnOA; // Supply air flow rate based on minimum OA requirement
-        Real64 AirLoopOAFrac;     // fraction of outdoor air entering air loop outside air system
+        Nandle MassFlow;    // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
+        Nandle HumRat;      // [Kg Moisture / Kg dry air]
+        Nandle Enthalpy;    // [Watts]
+        Nandle Temperature; // [C]
+        Nandle QTotLoad;    // [W]
+        Nandle QZnReq;      // [W]
+        Nandle CpAirZn;     // specific heat of zone air
+        Nandle CpAirSysHot;
+        Nandle CpAirSysCold;
+        Nandle MassFlowBasedOnOA; // Supply air flow rate based on minimum OA requirement
+        Nandle AirLoopOAFrac;     // fraction of outdoor air entering air loop outside air system
 
         // The calculated load from the Heat Balance
         QTotLoad = ZoneSysEnergyDemand(ZoneNum).RemainingOutputRequired;
@@ -1589,25 +1589,25 @@ namespace DualDuct {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MassFlowMax;     // [kg/sec]   Maximum Mass Flow Rate from OA and Recirc Inlets
-        Real64 HumRat;          // [Kg Moisture / Kg dry air]
-        Real64 Enthalpy;        // [Watts]
-        Real64 Temperature;     // [C]
-        Real64 QTotLoadRemain;  // [W]
-        Real64 QtoHeatSPRemain; // [W]
-        Real64 QtoCoolSPRemain; // [W]
+        Nandle MassFlowMax;     // [kg/sec]   Maximum Mass Flow Rate from OA and Recirc Inlets
+        Nandle HumRat;          // [Kg Moisture / Kg dry air]
+        Nandle Enthalpy;        // [Watts]
+        Nandle Temperature;     // [C]
+        Nandle QTotLoadRemain;  // [W]
+        Nandle QtoHeatSPRemain; // [W]
+        Nandle QtoCoolSPRemain; // [W]
         //  REAL(r64) :: QTotRemainAdjust  ! [W]
-        Real64 QtoHeatSPRemainAdjust; // [W]
-        Real64 QtoCoolSPRemainAdjust; // [W]
-        Real64 QOALoadToHeatSP;       // [W]
-        Real64 QOALoadToCoolSP;       // [W]
-        Real64 QOALoad;               // Amount of cooling load accounted for by OA Stream [W]
-        Real64 QRALoad;               // Amount of cooling load accounted for by Recirc Stream [W]
-        Real64 CpAirZn;               // specific heat of zone air
-        Real64 CpAirSysOA;            // specific heat of outdoor air
-        Real64 CpAirSysRA;            // specific heat of recirculated air
-        Real64 OAMassFlow;            // Supply air flow rate based on minimum OA requirement - for printing
-        Real64 TotMassFlow;           // [kg/sec]   Total Mass Flow Rate from OA and Recirc Inlets
+        Nandle QtoHeatSPRemainAdjust; // [W]
+        Nandle QtoCoolSPRemainAdjust; // [W]
+        Nandle QOALoadToHeatSP;       // [W]
+        Nandle QOALoadToCoolSP;       // [W]
+        Nandle QOALoad;               // Amount of cooling load accounted for by OA Stream [W]
+        Nandle QRALoad;               // Amount of cooling load accounted for by Recirc Stream [W]
+        Nandle CpAirZn;               // specific heat of zone air
+        Nandle CpAirSysOA;            // specific heat of outdoor air
+        Nandle CpAirSysRA;            // specific heat of recirculated air
+        Nandle OAMassFlow;            // Supply air flow rate based on minimum OA requirement - for printing
+        Nandle TotMassFlow;           // [kg/sec]   Total Mass Flow Rate from OA and Recirc Inlets
         int OAInletNodeNum;
         int RecircInletNodeNum;
 
@@ -1811,8 +1811,8 @@ namespace DualDuct {
         this->dd_airterminalRecircAirInlet.AirMassFlowRateHist1 = this->dd_airterminalRecircAirInlet.AirMassFlowRate;
     }
 
-    void DualDuctAirTerminal::CalcOAMassFlow(Real64 &SAMassFlow,   // outside air based on optional user input
-                        Real64 &AirLoopOAFrac // outside air based on optional user input
+    void DualDuctAirTerminal::CalcOAMassFlow(Nandle &SAMassFlow,   // outside air based on optional user input
+                        Nandle &AirLoopOAFrac // outside air based on optional user input
     )
     {
 
@@ -1837,8 +1837,8 @@ namespace DualDuct {
 
         bool const UseMinOASchFlag(true); // Always use min OA schedule in calculations.
 
-        Real64 OAVolumeFlowRate; // outside air volume flow rate (m3/s)
-        Real64 OAMassFlow;       // outside air mass flow rate (kg/s)
+        Nandle OAVolumeFlowRate; // outside air volume flow rate (m3/s)
+        Nandle OAMassFlow;       // outside air mass flow rate (kg/s)
 
         // initialize OA flow rate and OA report variable
         SAMassFlow = 0.0;
@@ -1864,8 +1864,8 @@ namespace DualDuct {
         }
     }
 
-    void DualDuctAirTerminal::CalcOAOnlyMassFlow(Real64 &OAMassFlow,           // outside air flow from user input kg/s
-                            Optional<Real64> MaxOAVolFlow // design level for outside air m3/s
+    void DualDuctAirTerminal::CalcOAOnlyMassFlow(Nandle &OAMassFlow,           // outside air flow from user input kg/s
+                            Optional<Nandle> MaxOAVolFlow // design level for outside air m3/s
     )
     {
 
@@ -1904,7 +1904,7 @@ namespace DualDuct {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        Real64 OAVolumeFlowRate; // outside air volume flow rate (m3/s)
+        Nandle OAVolumeFlowRate; // outside air volume flow rate (m3/s)
         bool UseOccSchFlag;      // TRUE = use actual occupancy, FALSE = use total zone people
         bool PerPersonNotSet;
 
@@ -2277,7 +2277,7 @@ namespace DualDuct {
         static Array1D_string DamperNamesARR;
         int DamperIndex;                 // Loop index to Damper that you are currently loading input into
         std::string CurrentModuleObject; // for ease in getting objects
-        static Array1D<Real64> NumArray(2, 0.0);
+        static Array1D<Nandle> NumArray(2, 0.0);
         static Array1D_string AlphArray(7);
         static Array1D_string cAlphaFields(7);       // Alpha field names
         static Array1D_string cNumericFields(2);     // Numeric field names

@@ -116,7 +116,7 @@ namespace WaterUse {
         // water use and connections that are not connected to a full plant loop
 
         int const MaxIterations(100);
-        Real64 const Tolerance(0.1); // Make input?
+        Nandle const Tolerance(0.1); // Make input?
 
         int WaterEquipNum;
         int WaterConnNum;
@@ -223,7 +223,7 @@ namespace WaterUse {
 
     void WaterConnectionsType::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                         bool FirstHVACIteration,
-                                        Real64 &EP_UNUSED(CurLoad),
+                                        Nandle &EP_UNUSED(CurLoad),
                                         bool EP_UNUSED(RunFlag))
     {
 
@@ -237,7 +237,7 @@ namespace WaterUse {
         // Plant sim call for plant loop connected water use and connections
 
         int const MaxIterations(100);
-        Real64 const Tolerance(0.1); // Make input?
+        Nandle const Tolerance(0.1); // Make input?
 
         if (DataGlobals::BeginEnvrnFlag && this->MyEnvrnFlag) {
             if (numWaterEquipment > 0) {
@@ -949,14 +949,14 @@ namespace WaterUse {
                 this->LatentRate = 0.0;
                 this->LatentEnergy = 0.0;
             } else {
-                Real64 ZoneHumRat = DataHeatBalFanSys::ZoneAirHumRat(this->Zone);
-                Real64 ZoneHumRatSat = Psychrometrics::PsyWFnTdbRhPb(
+                Nandle ZoneHumRat = DataHeatBalFanSys::ZoneAirHumRat(this->Zone);
+                Nandle ZoneHumRatSat = Psychrometrics::PsyWFnTdbRhPb(
                     DataHeatBalFanSys::MAT(this->Zone), 1.0, DataEnvironment::OutBaroPress, RoutineName); // Humidratio at 100% relative humidity
-                Real64 RhoAirDry = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataHeatBalFanSys::MAT(this->Zone), 0.0);
-                Real64 ZoneMassMax =
+                Nandle RhoAirDry = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataHeatBalFanSys::MAT(this->Zone), 0.0);
+                Nandle ZoneMassMax =
                     (ZoneHumRatSat - ZoneHumRat) * RhoAirDry * DataHeatBalance::Zone(this->Zone).Volume; // Max water that can be evaporated to zone
-                Real64 FlowMassMax = this->TotalMassFlowRate * DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour; // Max water in flow
-                Real64 MoistureMassMax = min(ZoneMassMax, FlowMassMax);
+                Nandle FlowMassMax = this->TotalMassFlowRate * DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour; // Max water in flow
+                Nandle MoistureMassMax = min(ZoneMassMax, FlowMassMax);
 
                 this->MoistureMass = ScheduleManager::GetCurrentScheduleValue(this->LatentFracSchedule) * MoistureMassMax;
                 this->MoistureRate = this->MoistureMass / (DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour);
@@ -1106,7 +1106,7 @@ namespace WaterUse {
                                                          this->PlantLoopCompNum);
 
                 } else {
-                    Real64 DesiredHotWaterMassFlow = this->HotMassFlowRate;
+                    Nandle DesiredHotWaterMassFlow = this->HotMassFlowRate;
                     PlantUtilities::SetComponentFlowRate(DesiredHotWaterMassFlow,
                                                          this->InletNode,
                                                          this->OutletNode,
@@ -1117,7 +1117,7 @@ namespace WaterUse {
                     // readjust if more than actual available mass flow rate determined by the demand side manager
                     if ((this->HotMassFlowRate != DesiredHotWaterMassFlow) && (this->HotMassFlowRate > 0.0)) { // plant didn't give what was asked for
 
-                        Real64 AvailableFraction = DesiredHotWaterMassFlow / this->HotMassFlowRate;
+                        Nandle AvailableFraction = DesiredHotWaterMassFlow / this->HotMassFlowRate;
 
                         this->ColdMassFlowRate = this->TotalMassFlowRate - this->HotMassFlowRate; // Preserve the total mass flow rate
 
@@ -1167,7 +1167,7 @@ namespace WaterUse {
         //       MODIFIED       na
         //       RE-ENGINEERED  na
 
-        Real64 MassFlowTempSum = 0.0;
+        Nandle MassFlowTempSum = 0.0;
         this->DrainMassFlowRate = 0.0;
 
         for (int Loop = 1; Loop <= this->NumWaterEquipment; ++Loop) {
@@ -1225,9 +1225,9 @@ namespace WaterUse {
                 }
             }
 
-            Real64 HXCapacityRate = Psychrometrics::CPHW(DataGlobals::InitConvTemp) * this->RecoveryMassFlowRate;
-            Real64 DrainCapacityRate = Psychrometrics::CPHW(DataGlobals::InitConvTemp) * this->DrainMassFlowRate;
-            Real64 MinCapacityRate = min(DrainCapacityRate, HXCapacityRate);
+            Nandle HXCapacityRate = Psychrometrics::CPHW(DataGlobals::InitConvTemp) * this->RecoveryMassFlowRate;
+            Nandle DrainCapacityRate = Psychrometrics::CPHW(DataGlobals::InitConvTemp) * this->DrainMassFlowRate;
+            Nandle MinCapacityRate = min(DrainCapacityRate, HXCapacityRate);
 
             {
                 auto const SELECT_CASE_var(this->HeatRecoveryHX);
@@ -1235,18 +1235,18 @@ namespace WaterUse {
                     this->Effectiveness = 1.0;
 
                 } else if (SELECT_CASE_var == HeatRecoveryHXEnum::CounterFlow) { // Unmixed
-                    Real64 CapacityRatio = MinCapacityRate / max(DrainCapacityRate, HXCapacityRate);
-                    Real64 NTU = this->HXUA / MinCapacityRate;
+                    Nandle CapacityRatio = MinCapacityRate / max(DrainCapacityRate, HXCapacityRate);
+                    Nandle NTU = this->HXUA / MinCapacityRate;
                     if (CapacityRatio == 1.0) {
                         this->Effectiveness = NTU / (1.0 + NTU);
                     } else {
-                        Real64 ExpVal = std::exp(-NTU * (1.0 - CapacityRatio));
+                        Nandle ExpVal = std::exp(-NTU * (1.0 - CapacityRatio));
                         this->Effectiveness = (1.0 - ExpVal) / (1.0 - CapacityRatio * ExpVal);
                     }
 
                 } else if (SELECT_CASE_var == HeatRecoveryHXEnum::CrossFlow) { // Unmixed
-                    Real64 CapacityRatio = MinCapacityRate / max(DrainCapacityRate, HXCapacityRate);
-                    Real64 NTU = this->HXUA / MinCapacityRate;
+                    Nandle CapacityRatio = MinCapacityRate / max(DrainCapacityRate, HXCapacityRate);
+                    Nandle NTU = this->HXUA / MinCapacityRate;
                     this->Effectiveness =
                         1.0 - std::exp((std::pow(NTU, 0.22) / CapacityRatio) * (std::exp(-CapacityRatio * std::pow(NTU, 0.78)) - 1.0));
                 }

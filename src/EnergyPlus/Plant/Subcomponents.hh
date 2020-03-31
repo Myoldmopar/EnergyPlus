@@ -67,20 +67,20 @@ namespace DataPlant {
         bool MeteredVarsFound;
         int NumMeteredVars;
         int EnergyTransComp; // 1=EnergyTransfer, 0=No EnergyTransfer - Reporting flag
-        Real64 TotPlantSupplyElec;
-        Real64 PlantSupplyElecEff;
-        Real64 PeakPlantSupplyElecEff;
-        Real64 TotPlantSupplyGas;
-        Real64 PlantSupplyGasEff;
-        Real64 PeakPlantSupplyGasEff;
-        Real64 TotPlantSupplyPurch;
-        Real64 PlantSupplyPurchEff;
-        Real64 PeakPlantSupplyPurchEff;
-        Real64 TotPlantSupplyOther;
-        Real64 PlantSupplyOtherEff;
-        Real64 PeakPlantSupplyOtherEff;
-        Real64 Capacity;
-        Real64 Efficiency;
+        Nandle TotPlantSupplyElec;
+        Nandle PlantSupplyElecEff;
+        Nandle PeakPlantSupplyElecEff;
+        Nandle TotPlantSupplyGas;
+        Nandle PlantSupplyGasEff;
+        Nandle PeakPlantSupplyGasEff;
+        Nandle TotPlantSupplyPurch;
+        Nandle PlantSupplyPurchEff;
+        Nandle PeakPlantSupplyPurchEff;
+        Nandle TotPlantSupplyOther;
+        Nandle PlantSupplyOtherEff;
+        Nandle PeakPlantSupplyOtherEff;
+        Nandle Capacity;
+        Nandle Efficiency;
         int OpMode;
         Array1D<MeterData> MeteredVar; // Index of energy output report data
         int AirSysToPlantPtr;          // 0=No plant connection, >0 = index to AirSysToPlant array
@@ -111,23 +111,23 @@ namespace DataPlant {
         bool ON; // TRUE = designated component or operation scheme available
         int NumMeteredVars;
         int EnergyTransComp; // 1=EnergyTransfer, 0=No EnergyTransfer - Reporting flag
-        Real64 Capacity;
-        Real64 Efficiency;
+        Nandle Capacity;
+        Nandle Efficiency;
         int OpMode;
-        Real64 TotPlantSupplyElec;
-        Real64 PlantSupplyElecEff;
-        Real64 PeakPlantSupplyElecEff;
-        Real64 TotPlantSupplyGas;
-        Real64 PlantSupplyGasEff;
-        Real64 PeakPlantSupplyGasEff;
-        Real64 TotPlantSupplyPurch;
-        Real64 PlantSupplyPurchEff;
-        Real64 PeakPlantSupplyPurchEff;
-        Real64 TotPlantSupplyOther;
-        Real64 PlantSupplyOtherEff;
-        Real64 PeakPlantSupplyOtherEff;
+        Nandle TotPlantSupplyElec;
+        Nandle PlantSupplyElecEff;
+        Nandle PeakPlantSupplyElecEff;
+        Nandle TotPlantSupplyGas;
+        Nandle PlantSupplyGasEff;
+        Nandle PeakPlantSupplyGasEff;
+        Nandle TotPlantSupplyPurch;
+        Nandle PlantSupplyPurchEff;
+        Nandle PeakPlantSupplyPurchEff;
+        Nandle TotPlantSupplyOther;
+        Nandle PlantSupplyOtherEff;
+        Nandle PeakPlantSupplyOtherEff;
         int AirSysToPlantPtr; // 0=No plant connection, >0 = index to AirSysToPlant array
-        Real64 LoopLoadFrac;
+        Nandle LoopLoadFrac;
         Array1D<MeterData> MeteredVar;           // Index of energy output report data
         Array1D<SubSubcomponentData> SubSubComp; // Component list
 

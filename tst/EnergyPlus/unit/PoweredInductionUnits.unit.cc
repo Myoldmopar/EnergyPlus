@@ -207,7 +207,7 @@ TEST_F(EnergyPlusFixture, ParallelPIUTest1)
     int SecNodeNum = PoweredInductionUnits::PIU(SysNum).SecAirInNode;
     int PriNodeNum = PoweredInductionUnits::PIU(SysNum).PriAirInNode;
     bool FirstHVACIteration = true;
-    Real64 SecMaxMassFlow = 0.05 * DataEnvironment::StdRhoAir; // From inputs
+    Nandle SecMaxMassFlow = 0.05 * DataEnvironment::StdRhoAir; // From inputs
 
     DataGlobals::BeginEnvrnFlag = true; // Must be true for initial pass thru InitPIU for this terminal unit
     FirstHVACIteration = true;
@@ -434,11 +434,11 @@ TEST_F(EnergyPlusFixture, SeriesPIUTest1)
     FirstHVACIteration = false;
 
     // From inputs
-    Real64 SecMaxMassFlow = PoweredInductionUnits::PIU(SysNum).MaxTotAirMassFlow;
-    Real64 PriMaxMassFlow = PoweredInductionUnits::PIU(SysNum).MaxPriAirMassFlow;
-    Real64 PriMinMassFlow = PoweredInductionUnits::PIU(SysNum).MaxPriAirMassFlow * PoweredInductionUnits::PIU(SysNum).MinPriAirFlowFrac;
-    Real64 SecMassFlowAtPrimMin = PoweredInductionUnits::PIU(SysNum).MaxTotAirMassFlow - PriMinMassFlow;
-    Real64 SecMassFlowAtPrimMax = PoweredInductionUnits::PIU(SysNum).MaxTotAirMassFlow - PriMaxMassFlow;
+    Nandle SecMaxMassFlow = PoweredInductionUnits::PIU(SysNum).MaxTotAirMassFlow;
+    Nandle PriMaxMassFlow = PoweredInductionUnits::PIU(SysNum).MaxPriAirMassFlow;
+    Nandle PriMinMassFlow = PoweredInductionUnits::PIU(SysNum).MaxPriAirMassFlow * PoweredInductionUnits::PIU(SysNum).MinPriAirFlowFrac;
+    Nandle SecMassFlowAtPrimMin = PoweredInductionUnits::PIU(SysNum).MaxTotAirMassFlow - PriMinMassFlow;
+    Nandle SecMassFlowAtPrimMax = PoweredInductionUnits::PIU(SysNum).MaxTotAirMassFlow - PriMaxMassFlow;
 
     // Note that the fan schedule is always off, so the PIU fan should only run if the night cycle turn on flag is true
 

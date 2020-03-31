@@ -89,10 +89,10 @@ namespace DataEnvironment {
     // Thus, all variables in this module must be PUBLIC.
 
     // MODULE PARAMETER DEFINITIONS:
-    Real64 const EarthRadius(6356000.0);          // Radius of the Earth (m)
-    Real64 const AtmosphericTempGradient(0.0065); // Standard atmospheric air temperature gradient (K/m)
-    Real64 const SunIsUpValue(0.00001);           // if Cos Zenith Angle of the sun is >= this value, the sun is "up"
-    Real64 const StdPressureSeaLevel(101325.0);   // Standard barometric pressure at sea level (Pa)
+    Nandle const EarthRadius(6356000.0);          // Radius of the Earth (m)
+    Nandle const AtmosphericTempGradient(0.0065); // Standard atmospheric air temperature gradient (K/m)
+    Nandle const SunIsUpValue(0.00001);           // if Cos Zenith Angle of the sun is >= this value, the sun is "up"
+    Nandle const StdPressureSeaLevel(101325.0);   // Standard barometric pressure at sea level (Pa)
 
     // DERIVED TYPE DEFINITIONS:
     // na
@@ -101,81 +101,81 @@ namespace DataEnvironment {
     // na
 
     // MODULE VARIABLE DECLARATIONS:
-    Real64 BeamSolarRad;                   // Current beam normal solar irradiance
+    Nandle BeamSolarRad;                   // Current beam normal solar irradiance
     bool EMSBeamSolarRadOverrideOn(false); // EMS flag for beam normal solar irradiance
-    Real64 EMSBeamSolarRadOverrideValue;   // EMS override value for beam normal solar irradiance
+    Nandle EMSBeamSolarRadOverrideValue;   // EMS override value for beam normal solar irradiance
     int DayOfMonth;                        // Current day of the month
     int DayOfMonthTomorrow;                // Tomorrow's day of the month
     int DayOfWeek;                         // Current day of the week (Sunday=1, Monday=2, ...)
     int DayOfWeekTomorrow;                 // Tomorrow's day of the week (Sunday=1, Monday=2, ...)
     int DayOfYear;                         // Current day of the year (01JAN=1, 02JAN=2, ...)
     int DayOfYear_Schedule;                // Schedule manager always assumes leap years...
-    Real64 DifSolarRad;                    // Current sky diffuse solar horizontal irradiance
+    Nandle DifSolarRad;                    // Current sky diffuse solar horizontal irradiance
     bool EMSDifSolarRadOverrideOn(false);  // EMS flag for sky diffuse solar horizontal irradiance
-    Real64 EMSDifSolarRadOverrideValue;    // EMS override value for sky diffuse solar horizontal irradiance
+    Nandle EMSDifSolarRadOverrideValue;    // EMS override value for sky diffuse solar horizontal irradiance
     int DSTIndicator;                      // Daylight Saving Time Indicator (1=yes, 0=no) for Today
-    Real64 Elevation;                      // Elevation of this building site
+    Nandle Elevation;                      // Elevation of this building site
     bool EndMonthFlag;                     // Set to true on last day of month
     bool EndYearFlag;                      // Set to true on the last day of year
-    Real64 GndReflectanceForDayltg;        // Ground visible reflectance for use in daylighting calc
-    Real64 GndReflectance;                 // Ground visible reflectance from input
-    Real64 GndSolarRad;                    // Current ground reflected radiation
-    Real64 GroundTemp;                     // Current ground temperature {C}
-    Real64 GroundTempKelvin;               // Current ground temperature {K}
-    Real64 GroundTempFC;                   // Current ground temperature defined for F or C factor method {C}
-    Real64 GroundTemp_Surface;             // Current surface ground temperature {C}
-    Real64 GroundTemp_Deep;                // Current deep ground temperature
+    Nandle GndReflectanceForDayltg;        // Ground visible reflectance for use in daylighting calc
+    Nandle GndReflectance;                 // Ground visible reflectance from input
+    Nandle GndSolarRad;                    // Current ground reflected radiation
+    Nandle GroundTemp;                     // Current ground temperature {C}
+    Nandle GroundTempKelvin;               // Current ground temperature {K}
+    Nandle GroundTempFC;                   // Current ground temperature defined for F or C factor method {C}
+    Nandle GroundTemp_Surface;             // Current surface ground temperature {C}
+    Nandle GroundTemp_Deep;                // Current deep ground temperature
     int HolidayIndex;                      // Indicates whether current day is a holiday and if so what type
     // HolidayIndex=(0-no holiday, 1-holiday type 1, ...)
     int HolidayIndexTomorrow;                 // Tomorrow's Holiday Index
     bool IsRain;                              // Surfaces are wet for this time interval
     bool IsSnow;                              // Snow on the ground for this time interval
-    Real64 Latitude;                          // Latitude of building location
-    Real64 Longitude;                         // Longitude of building location
+    Nandle Latitude;                          // Latitude of building location
+    Nandle Longitude;                         // Longitude of building location
     int Month;                                // Current calendar month
     int MonthTomorrow;                        // Tomorrow's calendar month
-    Real64 OutBaroPress;                      // Current outdoor air barometric pressure
-    Real64 OutDryBulbTemp;                    // Current outdoor air dry bulb temperature
+    Nandle OutBaroPress;                      // Current outdoor air barometric pressure
+    Nandle OutDryBulbTemp;                    // Current outdoor air dry bulb temperature
     bool EMSOutDryBulbOverrideOn(false);      // EMS flag for outdoor air dry bulb temperature
-    Real64 EMSOutDryBulbOverrideValue;        // EMS override value for outdoor air dry bulb temperature
-    Real64 OutHumRat;                         // Current outdoor air humidity ratio
-    Real64 OutRelHum;                         // Current outdoor relative humidity [%]
-    Real64 OutRelHumValue;                    // Current outdoor relative humidity value [0.0-1.0]
+    Nandle EMSOutDryBulbOverrideValue;        // EMS override value for outdoor air dry bulb temperature
+    Nandle OutHumRat;                         // Current outdoor air humidity ratio
+    Nandle OutRelHum;                         // Current outdoor relative humidity [%]
+    Nandle OutRelHumValue;                    // Current outdoor relative humidity value [0.0-1.0]
     bool EMSOutRelHumOverrideOn(false);       // EMS flag for outdoor relative humidity value
-    Real64 EMSOutRelHumOverrideValue;         // EMS override value for outdoor relative humidity value
-    Real64 OutEnthalpy;                       // Current outdoor enthalpy
-    Real64 OutAirDensity;                     // Current outdoor air density
-    Real64 OutWetBulbTemp;                    // Current outdoor air wet bulb temperature
-    Real64 OutDewPointTemp;                   // Current outdoor dewpoint temperature
+    Nandle EMSOutRelHumOverrideValue;         // EMS override value for outdoor relative humidity value
+    Nandle OutEnthalpy;                       // Current outdoor enthalpy
+    Nandle OutAirDensity;                     // Current outdoor air density
+    Nandle OutWetBulbTemp;                    // Current outdoor air wet bulb temperature
+    Nandle OutDewPointTemp;                   // Current outdoor dewpoint temperature
     bool EMSOutDewPointTempOverrideOn(false); // EMS flag for outdoor dewpoint temperature
-    Real64 EMSOutDewPointTempOverrideValue;   // EMS override value for outdoor dewpoint temperature
-    Real64 SkyTemp;                           // Current sky temperature {C}
-    Real64 SkyTempKelvin;                     // Current sky temperature {K}
-    Real64 LiquidPrecipitation;               // Current liquid precipitation amount (rain) {m}
+    Nandle EMSOutDewPointTempOverrideValue;   // EMS override value for outdoor dewpoint temperature
+    Nandle SkyTemp;                           // Current sky temperature {C}
+    Nandle SkyTempKelvin;                     // Current sky temperature {K}
+    Nandle LiquidPrecipitation;               // Current liquid precipitation amount (rain) {m}
     bool SunIsUp;                             // True when Sun is over horizon, False when not
-    Real64 WindDir;                           // Current outdoor air wind direction
+    Nandle WindDir;                           // Current outdoor air wind direction
     bool EMSWindDirOverrideOn(false);         // EMS flag for outdoor air wind direction
-    Real64 EMSWindDirOverrideValue;           // EMS override value for outdoor air wind direction
-    Real64 WindSpeed;                         // Current outdoor air wind speed
+    Nandle EMSWindDirOverrideValue;           // EMS override value for outdoor air wind direction
+    Nandle WindSpeed;                         // Current outdoor air wind speed
     bool EMSWindSpeedOverrideOn(false);       // EMS flag for outdoor air wind speed
-    Real64 EMSWindSpeedOverrideValue;         // EMS override value for outdoor air wind speed
-    Real64 WaterMainsTemp;                    // Current water mains temperature
+    Nandle EMSWindSpeedOverrideValue;         // EMS override value for outdoor air wind speed
+    Nandle WaterMainsTemp;                    // Current water mains temperature
     int Year;                                 // Current calendar year of the simulation from the weather file
     int YearTomorrow;                         // Tomorrow's calendar year of the simulation
-    Array1D<Real64> SOLCOS(3);                // Solar direction cosines at current time step
-    Real64 CloudFraction;                     // Fraction of sky covered by clouds
-    Real64 HISKF;                             // Exterior horizontal illuminance from sky (lux).
-    Real64 HISUNF;                            // Exterior horizontal beam illuminance (lux)
-    Real64 HISUNFnorm;                        // Exterior beam normal illuminance (lux)
-    Real64 PDIRLW;                            // Luminous efficacy (lum/W) of beam solar radiation
-    Real64 PDIFLW;                            // Luminous efficacy (lum/W) of sky diffuse solar radiation
-    Real64 SkyClearness;                      // Sky clearness (see subr. DayltgLuminousEfficacy)
-    Real64 SkyBrightness;                     // Sky brightness (see subr. DayltgLuminousEfficacy)
-    Real64 StdBaroPress(StdPressureSeaLevel); // Standard "atmospheric pressure" based on elevation (ASHRAE HOF p6.1)
-    Real64 StdRhoAir;                         // Standard "rho air" set in WeatherManager - based on StdBaroPress
-    Real64 rhoAirSTP;                         // Standard density of dry air at 101325 Pa, 20.0C temperaure
-    Real64 TimeZoneNumber;                    // Time Zone Number of building location
-    Real64 TimeZoneMeridian;                  // Standard Meridian of TimeZone
+    Array1D<Nandle> SOLCOS(3);                // Solar direction cosines at current time step
+    Nandle CloudFraction;                     // Fraction of sky covered by clouds
+    Nandle HISKF;                             // Exterior horizontal illuminance from sky (lux).
+    Nandle HISUNF;                            // Exterior horizontal beam illuminance (lux)
+    Nandle HISUNFnorm;                        // Exterior beam normal illuminance (lux)
+    Nandle PDIRLW;                            // Luminous efficacy (lum/W) of beam solar radiation
+    Nandle PDIFLW;                            // Luminous efficacy (lum/W) of sky diffuse solar radiation
+    Nandle SkyClearness;                      // Sky clearness (see subr. DayltgLuminousEfficacy)
+    Nandle SkyBrightness;                     // Sky brightness (see subr. DayltgLuminousEfficacy)
+    Nandle StdBaroPress(StdPressureSeaLevel); // Standard "atmospheric pressure" based on elevation (ASHRAE HOF p6.1)
+    Nandle StdRhoAir;                         // Standard "rho air" set in WeatherManager - based on StdBaroPress
+    Nandle rhoAirSTP;                         // Standard density of dry air at 101325 Pa, 20.0C temperaure
+    Nandle TimeZoneNumber;                    // Time Zone Number of building location
+    Nandle TimeZoneMeridian;                  // Standard Meridian of TimeZone
     std::string EnvironmentName;              // Current environment name (longer for weather file names)
     std::string WeatherFileLocationTitle;     // Location Title from Weather File
     std::string CurMnDyHr;                    // Current Month/Day/Hour timestamp info
@@ -189,19 +189,19 @@ namespace DataEnvironment {
     int MaxNumberSimYears;                    // Maximum number of simulation years requested in all RunPeriod statements
     int RunPeriodStartDayOfWeek;              // Day of week of the first day of the run period. (or design day - day of week)
 
-    Real64 CosSolarDeclinAngle; // Cosine of the solar declination angle
-    Real64 EquationOfTime;      // Value of the equation of time formula
-    Real64 SinLatitude;         // Sine of Latitude
-    Real64 CosLatitude;         // Cosine of Latitude
-    Real64 SinSolarDeclinAngle; // Sine of the solar declination angle
-    Real64 TS1TimeOffset(-0.5); // offset when TS=1 for solar calculations
+    Nandle CosSolarDeclinAngle; // Cosine of the solar declination angle
+    Nandle EquationOfTime;      // Value of the equation of time formula
+    Nandle SinLatitude;         // Sine of Latitude
+    Nandle CosLatitude;         // Cosine of Latitude
+    Nandle SinSolarDeclinAngle; // Sine of the solar declination angle
+    Nandle TS1TimeOffset(-0.5); // offset when TS=1 for solar calculations
 
-    Real64 WeatherFileWindModCoeff(1.5863); // =(WindBLHeight/WindSensorHeight)**WindExp for conditions at the weather station
-    Real64 WeatherFileTempModCoeff(0.0);    // =AtmosphericTempGradient*EarthRadius*SensorHeight/(EarthRadius+SensorHeight)
+    Nandle WeatherFileWindModCoeff(1.5863); // =(WindBLHeight/WindSensorHeight)**WindExp for conditions at the weather station
+    Nandle WeatherFileTempModCoeff(0.0);    // =AtmosphericTempGradient*EarthRadius*SensorHeight/(EarthRadius+SensorHeight)
 
-    Real64 SiteWindExp(0.22);        // Exponent for the wind velocity profile at the site
-    Real64 SiteWindBLHeight(370.0);  // Boundary layer height for the wind velocity profile at the site (m)
-    Real64 SiteTempGradient(0.0065); // Air temperature gradient coefficient (K/m)
+    Nandle SiteWindExp(0.22);        // Exponent for the wind velocity profile at the site
+    Nandle SiteWindBLHeight(370.0);  // Boundary layer height for the wind velocity profile at the site (m)
+    Nandle SiteTempGradient(0.0065); // Air temperature gradient coefficient (K/m)
 
     bool GroundTempObjInput(false);         // Ground temperature object input
     bool GroundTemp_SurfaceObjInput(false); // Surface ground temperature object input
@@ -237,78 +237,78 @@ namespace DataEnvironment {
     // Needed for unit tests, should not be normally called.
     void clear_state()
     {
-        BeamSolarRad = Real64();
+        BeamSolarRad = Nandle();
         EMSBeamSolarRadOverrideOn = false;
-        EMSBeamSolarRadOverrideValue = Real64();
+        EMSBeamSolarRadOverrideValue = Nandle();
         DayOfMonth = int();
         DayOfMonthTomorrow = int();
         DayOfWeek = int();
         DayOfWeekTomorrow = int();
         DayOfYear = int();
         DayOfYear_Schedule = int();
-        DifSolarRad = Real64();
+        DifSolarRad = Nandle();
         EMSDifSolarRadOverrideOn = false;
-        EMSDifSolarRadOverrideValue = Real64();
+        EMSDifSolarRadOverrideValue = Nandle();
         DSTIndicator = int();
-        Elevation = Real64();
+        Elevation = Nandle();
         EndMonthFlag = bool();
-        GndReflectanceForDayltg = Real64();
-        GndReflectance = Real64();
-        GndSolarRad = Real64();
-        GroundTemp = Real64();
-        GroundTempKelvin = Real64();
-        GroundTempFC = Real64();
-        GroundTemp_Surface = Real64();
-        GroundTemp_Deep = Real64();
+        GndReflectanceForDayltg = Nandle();
+        GndReflectance = Nandle();
+        GndSolarRad = Nandle();
+        GroundTemp = Nandle();
+        GroundTempKelvin = Nandle();
+        GroundTempFC = Nandle();
+        GroundTemp_Surface = Nandle();
+        GroundTemp_Deep = Nandle();
         HolidayIndex = int();
         HolidayIndexTomorrow = int();
         IsRain = bool();
         IsSnow = bool();
-        Latitude = Real64();
-        Longitude = Real64();
+        Latitude = Nandle();
+        Longitude = Nandle();
         Month = int();
         MonthTomorrow = int();
-        OutBaroPress = Real64();
-        OutDryBulbTemp = Real64();
+        OutBaroPress = Nandle();
+        OutDryBulbTemp = Nandle();
         EMSOutDryBulbOverrideOn = false;
-        EMSOutDryBulbOverrideValue = Real64();
-        OutHumRat = Real64();
-        OutRelHum = Real64();
-        OutRelHumValue = Real64();
+        EMSOutDryBulbOverrideValue = Nandle();
+        OutHumRat = Nandle();
+        OutRelHum = Nandle();
+        OutRelHumValue = Nandle();
         EMSOutRelHumOverrideOn = false;
-        EMSOutRelHumOverrideValue = Real64();
-        OutEnthalpy = Real64();
-        OutAirDensity = Real64();
-        OutWetBulbTemp = Real64();
-        OutDewPointTemp = Real64();
+        EMSOutRelHumOverrideValue = Nandle();
+        OutEnthalpy = Nandle();
+        OutAirDensity = Nandle();
+        OutWetBulbTemp = Nandle();
+        OutDewPointTemp = Nandle();
         EMSOutDewPointTempOverrideOn = false;
-        EMSOutDewPointTempOverrideValue = Real64();
-        SkyTemp = Real64();
-        SkyTempKelvin = Real64();
-        LiquidPrecipitation = Real64();
+        EMSOutDewPointTempOverrideValue = Nandle();
+        SkyTemp = Nandle();
+        SkyTempKelvin = Nandle();
+        LiquidPrecipitation = Nandle();
         SunIsUp = bool();
-        WindDir = Real64();
+        WindDir = Nandle();
         EMSWindDirOverrideOn = false;
-        EMSWindDirOverrideValue = Real64();
-        WindSpeed = Real64();
+        EMSWindDirOverrideValue = Nandle();
+        WindSpeed = Nandle();
         EMSWindSpeedOverrideOn = false;
-        EMSWindSpeedOverrideValue = Real64();
-        WaterMainsTemp = Real64();
+        EMSWindSpeedOverrideValue = Nandle();
+        WaterMainsTemp = Nandle();
         Year = int();
         YearTomorrow = int();
         SOLCOS.dimension(3);
-        CloudFraction = Real64();
-        HISKF = Real64();
-        HISUNF = Real64();
-        HISUNFnorm = Real64();
-        PDIRLW = Real64();
-        PDIFLW = Real64();
-        SkyClearness = Real64();
-        SkyBrightness = Real64();
+        CloudFraction = Nandle();
+        HISKF = Nandle();
+        HISUNF = Nandle();
+        HISUNFnorm = Nandle();
+        PDIRLW = Nandle();
+        PDIFLW = Nandle();
+        SkyClearness = Nandle();
+        SkyBrightness = Nandle();
         StdBaroPress = 101325.0;
-        StdRhoAir = Real64();
-        TimeZoneNumber = Real64();
-        TimeZoneMeridian = Real64();
+        StdRhoAir = Nandle();
+        TimeZoneNumber = Nandle();
+        TimeZoneMeridian = Nandle();
         EnvironmentName = std::string();
         WeatherFileLocationTitle = std::string();
         CurMnDyHr = std::string();
@@ -321,11 +321,11 @@ namespace DataEnvironment {
         TotalOverallSimDays = int();
         MaxNumberSimYears = int();
         RunPeriodStartDayOfWeek = int();
-        CosSolarDeclinAngle = Real64();
-        EquationOfTime = Real64();
-        SinLatitude = Real64();
-        CosLatitude = Real64();
-        SinSolarDeclinAngle = Real64();
+        CosSolarDeclinAngle = Nandle();
+        EquationOfTime = Nandle();
+        SinLatitude = Nandle();
+        CosLatitude = Nandle();
+        SinSolarDeclinAngle = Nandle();
         TS1TimeOffset = -0.5;
         WeatherFileWindModCoeff = 1.5863;
         WeatherFileTempModCoeff = 0.0;
@@ -350,7 +350,7 @@ namespace DataEnvironment {
         varyingOrientationSchedIndex = 0;
     }
 
-    Real64 OutDryBulbTempAt(Real64 const Z) // Height above ground (m)
+    Nandle OutDryBulbTempAt(Nandle const Z) // Height above ground (m)
     {
 
         // FUNCTION INFORMATION:
@@ -372,13 +372,13 @@ namespace DataEnvironment {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 LocalOutDryBulbTemp; // Return result for function (C)
+        Nandle LocalOutDryBulbTemp; // Return result for function (C)
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 BaseTemp; // Base temperature at Z = 0 (C)
+        Nandle BaseTemp; // Base temperature at Z = 0 (C)
 
         BaseTemp = OutDryBulbTemp + WeatherFileTempModCoeff;
 
@@ -399,7 +399,7 @@ namespace DataEnvironment {
         return LocalOutDryBulbTemp;
     }
 
-    Real64 OutWetBulbTempAt(Real64 const Z) // Height above ground (m)
+    Nandle OutWetBulbTempAt(Nandle const Z) // Height above ground (m)
     {
 
         // FUNCTION INFORMATION:
@@ -421,13 +421,13 @@ namespace DataEnvironment {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 LocalOutWetBulbTemp; // Return result for function (C)
+        Nandle LocalOutWetBulbTemp; // Return result for function (C)
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 BaseTemp; // Base temperature at Z = 0 (C)
+        Nandle BaseTemp; // Base temperature at Z = 0 (C)
 
         BaseTemp = OutWetBulbTemp + WeatherFileTempModCoeff;
 
@@ -448,7 +448,7 @@ namespace DataEnvironment {
         return LocalOutWetBulbTemp;
     }
 
-    Real64 OutDewPointTempAt(Real64 const Z) // Height above ground (m)
+    Nandle OutDewPointTempAt(Nandle const Z) // Height above ground (m)
     {
 
         // FUNCTION INFORMATION:
@@ -471,13 +471,13 @@ namespace DataEnvironment {
         using General::RoundSigDigits;
 
         // Return value
-        Real64 LocalOutDewPointTemp; // Return result for function (C)
+        Nandle LocalOutDewPointTemp; // Return result for function (C)
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 BaseTemp; // Base temperature at Z = 0 (C)
+        Nandle BaseTemp; // Base temperature at Z = 0 (C)
 
         BaseTemp = OutDewPointTemp + WeatherFileTempModCoeff;
 
@@ -498,7 +498,7 @@ namespace DataEnvironment {
         return LocalOutDewPointTemp;
     }
 
-    Real64 WindSpeedAt(Real64 const Z) // Height above ground (m)
+    Nandle WindSpeedAt(Nandle const Z) // Height above ground (m)
     {
 
         // FUNCTION INFORMATION:
@@ -518,7 +518,7 @@ namespace DataEnvironment {
         // Terrain variables are set in HeatBalanceManager or entered by the user.
 
         // Return value
-        Real64 LocalWindSpeed; // Return result for function (m/s)
+        Nandle LocalWindSpeed; // Return result for function (m/s)
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -537,7 +537,7 @@ namespace DataEnvironment {
         return LocalWindSpeed;
     }
 
-    Real64 OutBaroPressAt(Real64 const Z) // Height above ground (m)
+    Nandle OutBaroPressAt(Nandle const Z) // Height above ground (m)
     {
 
         // FUNCTION INFORMATION:
@@ -556,20 +556,20 @@ namespace DataEnvironment {
         // U.S. Standard Atmosphere1976, Part 1, Chapter 1.3, Equation 33b.
 
         // Return value
-        Real64 LocalAirPressure; // Return result for function (Pa)
+        Nandle LocalAirPressure; // Return result for function (Pa)
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FNCTION PARAMETER DEFINITIONS:
-        Real64 const StdGravity(9.80665);    // The acceleration of gravity at the sea level (m/s2)
-        Real64 const AirMolarMass(0.028964); // Molar mass of Earth's air (kg/mol)
-        Real64 const GasConstant(8.31432);   // Molar gas constant (J/Mol-K)
-        Real64 const TempGradient(-0.0065);  // Molecular-scale temperature gradient (K/m)
-        Real64 const GeopotentialH(0.0);     // Geopotential height (zero within 11km from the sea level) (m)
+        Nandle const StdGravity(9.80665);    // The acceleration of gravity at the sea level (m/s2)
+        Nandle const AirMolarMass(0.028964); // Molar mass of Earth's air (kg/mol)
+        Nandle const GasConstant(8.31432);   // Molar gas constant (J/Mol-K)
+        Nandle const TempGradient(-0.0065);  // Molecular-scale temperature gradient (K/m)
+        Nandle const GeopotentialH(0.0);     // Geopotential height (zero within 11km from the sea level) (m)
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 BaseTemp; // Base temperature at Z
+        Nandle BaseTemp; // Base temperature at Z
 
         BaseTemp = OutDryBulbTempAt(Z) + KelvinConv;
 
@@ -585,7 +585,7 @@ namespace DataEnvironment {
         return LocalAirPressure;
     }
 
-    void SetOutBulbTempAt_error(std::string const &Settings, Real64 const max_height, std::string const &SettingsName)
+    void SetOutBulbTempAt_error(std::string const &Settings, Nandle const max_height, std::string const &SettingsName)
     {
         // Using/Aliasing
         using General::RoundSigDigits;
@@ -599,7 +599,7 @@ namespace DataEnvironment {
         ShowFatalError("Program terminates due to preceding condition(s).");
     }
 
-    void SetWindSpeedAt(int const NumItems, const Array1D<Real64> &Heights, Array1D<Real64> &LocalWindSpeed, std::string const &EP_UNUSED(Settings))
+    void SetWindSpeedAt(int const NumItems, const Array1D<Nandle> &Heights, Array1D<Nandle> &LocalWindSpeed, std::string const &EP_UNUSED(Settings))
     {
 
         // SUBROUTINE INFORMATION:
@@ -638,8 +638,8 @@ namespace DataEnvironment {
         if (SiteWindExp == 0.0) {
             LocalWindSpeed = WindSpeed;
         } else {
-            Real64 const fac(WindSpeed * WeatherFileWindModCoeff * std::pow(SiteWindBLHeight, -SiteWindExp));
-            Real64 Z; // Centroid value
+            Nandle const fac(WindSpeed * WeatherFileWindModCoeff * std::pow(SiteWindBLHeight, -SiteWindExp));
+            Nandle Z; // Centroid value
             for (int i = 1; i <= NumItems; ++i) {
                 Z = Heights(i);
                 if (Z <= 0.0) {

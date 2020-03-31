@@ -71,30 +71,30 @@ namespace HeatBalanceManager {
 
     // Real Variables for the Heat Balance Simulation
     // Variables used to determine warmup convergence
-    extern Array1D<Real64> MaxCoolLoadPrevDay; // Max cooling load from the previous day
-    extern Array1D<Real64> MaxCoolLoadZone;    // Maximum zone cooling load from the current day
-    extern Array1D<Real64> MaxHeatLoadPrevDay; // Max heating load from the previous day
-    extern Array1D<Real64> MaxHeatLoadZone;    // Maximum zone heating load from the current day
-    extern Array1D<Real64> MaxTempPrevDay;     // Max temperature from the previous day
-    extern Array1D<Real64> MaxTempZone;        // Maximum zone temperature from the current day
-    extern Array1D<Real64> MinTempPrevDay;     // Min temperature from the previous day
-    extern Array1D<Real64> MinTempZone;        // Minimum zone temperature from the current day
+    extern Array1D<Nandle> MaxCoolLoadPrevDay; // Max cooling load from the previous day
+    extern Array1D<Nandle> MaxCoolLoadZone;    // Maximum zone cooling load from the current day
+    extern Array1D<Nandle> MaxHeatLoadPrevDay; // Max heating load from the previous day
+    extern Array1D<Nandle> MaxHeatLoadZone;    // Maximum zone heating load from the current day
+    extern Array1D<Nandle> MaxTempPrevDay;     // Max temperature from the previous day
+    extern Array1D<Nandle> MaxTempZone;        // Maximum zone temperature from the current day
+    extern Array1D<Nandle> MinTempPrevDay;     // Min temperature from the previous day
+    extern Array1D<Nandle> MinTempZone;        // Minimum zone temperature from the current day
 
     // Variables used to report difference in temperature and load from the last two warmup days
-    extern Array1D<Real64> WarmupTempDiff;     // Temperature difference between the last two warmup days
-    extern Array1D<Real64> WarmupLoadDiff;     // Zone load differences between the last two warmup days
-    extern Array1D<Real64> TempZoneSecPrevDay; // Zone air temperature from the second last warmup day
-    extern Array1D<Real64> LoadZoneSecPrevDay; // Zone load from the second last warmup day
-    extern Array1D<Real64> TempZonePrevDay;    // Zone air temperature from the previous day
-    extern Array1D<Real64> LoadZonePrevDay;    // Zone load from the previuos day
-    extern Array1D<Real64> TempZone;           // Zone air temperature from the current warmup day
-    extern Array1D<Real64> LoadZone;           // Zone load from the current warmup day
+    extern Array1D<Nandle> WarmupTempDiff;     // Temperature difference between the last two warmup days
+    extern Array1D<Nandle> WarmupLoadDiff;     // Zone load differences between the last two warmup days
+    extern Array1D<Nandle> TempZoneSecPrevDay; // Zone air temperature from the second last warmup day
+    extern Array1D<Nandle> LoadZoneSecPrevDay; // Zone load from the second last warmup day
+    extern Array1D<Nandle> TempZonePrevDay;    // Zone air temperature from the previous day
+    extern Array1D<Nandle> LoadZonePrevDay;    // Zone load from the previuos day
+    extern Array1D<Nandle> TempZone;           // Zone air temperature from the current warmup day
+    extern Array1D<Nandle> LoadZone;           // Zone load from the current warmup day
 
-    extern Array2D<Real64> TempZoneRpt;       // Zone air temperature to report (average over all warmup days)
-    extern Array1D<Real64> TempZoneRptStdDev; // Zone air temperature to report (std dev over all warmup days)
-    extern Array2D<Real64> LoadZoneRpt;       // Zone load to report (average over all warmup days)
-    extern Array1D<Real64> LoadZoneRptStdDev; // Zone load to report (std dev over all warmup days)
-    extern Array2D<Real64> MaxLoadZoneRpt;    // Maximum zone load for reporting calcs
+    extern Array2D<Nandle> TempZoneRpt;       // Zone air temperature to report (average over all warmup days)
+    extern Array1D<Nandle> TempZoneRptStdDev; // Zone air temperature to report (std dev over all warmup days)
+    extern Array2D<Nandle> LoadZoneRpt;       // Zone load to report (average over all warmup days)
+    extern Array1D<Nandle> LoadZoneRptStdDev; // Zone load to report (std dev over all warmup days)
+    extern Array2D<Nandle> MaxLoadZoneRpt;    // Maximum zone load for reporting calcs
     extern int CountWarmupDayPoints;          // Count of warmup timesteps (to achieve warmup)
 
     extern std::string CurrentModuleObject; // to assist in getting input
@@ -119,11 +119,11 @@ namespace HeatBalanceManager {
         // warmup (PassFlag(1)=Max Temp, PassFlag(2)=Min Temp, PassFlag(3)=Max Heat Load
         // PassFlag(4)=Max Cool Load)
         // Following are stored test values for temperature and loads convergence
-        Real64 TestMaxTempValue;     // Max Temperature convergence value=ABS(MaxTempPrevDay(ZoneNum)-MaxTempZone(ZoneNum))
-        Real64 TestMinTempValue;     // Min Temperature convergence value=ABS(MinTempPrevDay(ZoneNum)-MinTempZone(ZoneNum))
-        Real64 TestMaxHeatLoadValue; // Max Heat Load convergence value=
+        Nandle TestMaxTempValue;     // Max Temperature convergence value=ABS(MaxTempPrevDay(ZoneNum)-MaxTempZone(ZoneNum))
+        Nandle TestMinTempValue;     // Min Temperature convergence value=ABS(MinTempPrevDay(ZoneNum)-MinTempZone(ZoneNum))
+        Nandle TestMaxHeatLoadValue; // Max Heat Load convergence value=
         //  ABS((MaxHeatLoadZone(ZoneNum)-MaxHeatLoadPrevDay(ZoneNum))/MaxHeatLoadZone(ZoneNum))
-        Real64 TestMaxCoolLoadValue; // Max Cool Load convergence value=
+        Nandle TestMaxCoolLoadValue; // Max Cool Load convergence value=
         //  ABS((MaxCoolLoadZone(ZoneNum)-MaxCoolLoadPrevDay(ZoneNum))/MaxCoolLoadZone(ZoneNum))
 
         // Default Constructor
@@ -179,7 +179,7 @@ namespace HeatBalanceManager {
                          int const ZoneLoop,
                          Array1D_string const &cAlphaArgs,
                          int &NumAlphas,
-                         Array1D<Real64> const &rNumericArgs,
+                         Array1D<Nandle> const &rNumericArgs,
                          int &NumNumbers,
                          Array1D_bool const &lNumericFieldBlanks, // Unused
                          Array1D_bool const &lAlphaFieldBlanks,

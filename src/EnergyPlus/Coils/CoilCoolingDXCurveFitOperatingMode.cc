@@ -158,11 +158,11 @@ void CoilCoolingDXCurveFitOperatingMode::size()
 
     int SizingMethod = DataHVACGlobals::CoolingAirflowSizing;
     std::string SizingString = "Rated Evaporator Air Flow Rate";
-    Real64 TempSize = this->original_input_specs.rated_evaporator_air_flow_rate;
+    Nandle TempSize = this->original_input_specs.rated_evaporator_air_flow_rate;
     ReportSizingManager::RequestSizing(CompType, CompName, SizingMethod, SizingString, TempSize, PrintFlag, RoutineName);
     this->ratedEvapAirFlowRate = TempSize;
-    Real64 const ratedInletAirTemp(26.6667);        // 26.6667C or 80F
-    Real64 const ratedInletAirHumRat(0.01125);      // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
+    Nandle const ratedInletAirTemp(26.6667);        // 26.6667C or 80F
+    Nandle const ratedInletAirHumRat(0.01125);      // Humidity ratio corresponding to 80F dry bulb/67F wet bulb
     this->ratedEvapAirMassFlowRate = this->ratedEvapAirFlowRate * Psychrometrics::PsyRhoAirFnPbTdbW(
             DataEnvironment::StdBaroPress, ratedInletAirTemp, ratedInletAirHumRat, RoutineName);
 
@@ -192,9 +192,9 @@ void CoilCoolingDXCurveFitOperatingMode::size()
 
 void CoilCoolingDXCurveFitOperatingMode::CalcOperatingMode(const DataLoopNode::NodeData &inletNode,
                                                            DataLoopNode::NodeData &outletNode,
-                                                           Real64 &PLR,
+                                                           Nandle &PLR,
                                                            int &speedNum,
-                                                           Real64 &speedRatio,
+                                                           Nandle &speedRatio,
                                                            int &fanOpMode,
                                                            DataLoopNode::NodeData &condInletNode,
                                                            DataLoopNode::NodeData &EP_UNUSED(condOutletNode))
@@ -229,15 +229,15 @@ void CoilCoolingDXCurveFitOperatingMode::CalcOperatingMode(const DataLoopNode::N
     }
 
     // If multispeed, evaluate high speed first using speedRatio as PLR
-    Real64 plr1 = PLR;
+    Nandle plr1 = PLR;
     if (speedNum > 1) {
         plr1 = speedRatio;
     }
 
     thisspeed.CalcSpeedOutput(inletNode, outletNode, plr1, fanOpMode, this->condInletTemp);
 
-    Real64 outSpeed1HumRat = outletNode.HumRat;
-    Real64 outSpeed1Enthalpy = outletNode.Enthalpy;
+    Nandle outSpeed1HumRat = outletNode.HumRat;
+    Nandle outSpeed1Enthalpy = outletNode.Enthalpy;
 
     if (fanOpMode == DataHVACGlobals::ContFanCycCoil) {
         outletNode.HumRat = outletNode.HumRat * plr1 + (1.0 - plr1) * inletNode.HumRat;
@@ -265,7 +265,7 @@ void CoilCoolingDXCurveFitOperatingMode::CalcOperatingMode(const DataLoopNode::N
     }
 }
 
-Real64 CoilCoolingDXCurveFitOperatingMode::getCurrentEvapCondPumpPower(int speedNum) {
+Nandle CoilCoolingDXCurveFitOperatingMode::getCurrentEvapCondPumpPower(int speedNum) {
     // Currently speedNum is 1-based, while this->speeds are zero-based
     auto const &thisspeed(this->speeds[max(speedNum - 1, 0)]);
     auto const &powerFraction(thisspeed.evap_condenser_pump_power_fraction);

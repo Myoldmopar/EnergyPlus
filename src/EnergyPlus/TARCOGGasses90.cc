@@ -98,20 +98,20 @@ namespace TARCOGGasses90 {
 
     // Functions
 
-    void GASSES90(Real64 const tmean,
+    void GASSES90(Nandle const tmean,
                   const Array1D_int &iprop,
-                  const Array1D<Real64> &frct,
-                  Real64 const pres,
+                  const Array1D<Nandle> &frct,
+                  Nandle const pres,
                   int const nmix,
-                  const Array1D<Real64> &xwght,
-                  Array2<Real64> const &xgcon,
-                  Array2<Real64> const &xgvis,
-                  Array2<Real64> const &xgcp,
-                  Real64 &con,
-                  Real64 &visc,
-                  Real64 &dens,
-                  Real64 &cp,
-                  Real64 &pr,
+                  const Array1D<Nandle> &xwght,
+                  Array2<Nandle> const &xgcon,
+                  Array2<Nandle> const &xgvis,
+                  Array2<Nandle> const &xgcp,
+                  Nandle &con,
+                  Nandle &visc,
+                  Nandle &dens,
+                  Nandle &cp,
+                  Nandle &pr,
                   int const standard,
                   int &nperr,
                   std::string &ErrorMessage)
@@ -121,37 +121,37 @@ namespace TARCOGGasses90 {
 
         // Locals
 
-        static Real64 const two_sqrt_2(2.0 * std::sqrt(2.0));
-        static Array1D<Real64> fvis(maxgas);
-        static Array1D<Real64> fcon(maxgas);
-        static Array1D<Real64> fdens(maxgas);
-        static Array1D<Real64> fcp(maxgas);
-        static Array1D<Real64> kprime(maxgas);
-        static Array1D<Real64> kdblprm(maxgas);
-        static Array1D<Real64> mukpdwn(maxgas);
-        static Array1D<Real64> kpdown(maxgas);
-        static Array1D<Real64> kdpdown(maxgas);
-        Real64 molmix;
-        Real64 cpmixm;
-        Real64 phimup;
-        Real64 downer;
-        Real64 psiup;
-        Real64 psiterm;
-        Real64 phikup;
+        static Nandle const two_sqrt_2(2.0 * std::sqrt(2.0));
+        static Array1D<Nandle> fvis(maxgas);
+        static Array1D<Nandle> fcon(maxgas);
+        static Array1D<Nandle> fdens(maxgas);
+        static Array1D<Nandle> fcp(maxgas);
+        static Array1D<Nandle> kprime(maxgas);
+        static Array1D<Nandle> kdblprm(maxgas);
+        static Array1D<Nandle> mukpdwn(maxgas);
+        static Array1D<Nandle> kpdown(maxgas);
+        static Array1D<Nandle> kdpdown(maxgas);
+        Nandle molmix;
+        Nandle cpmixm;
+        Nandle phimup;
+        Nandle downer;
+        Nandle psiup;
+        Nandle psiterm;
+        Nandle phikup;
 
         // REAL(r64) gaslaw
         // DATA gaslaw /8314.51d0/   ! Molar gas constant in Joules/(kmol*K)
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const ENpressure(1.0e5); // Gap gas pressure (Pa)
-        Real64 const gaslaw(8314.51);   // Molar gas constant (J/kMol-K)
+        Nandle const ENpressure(1.0e5); // Gap gas pressure (Pa)
+        Nandle const gaslaw(8314.51);   // Molar gas constant (J/kMol-K)
 
         //!! Body of GASSES90
 
         // Autodesk:Uninit Initialize variables used uninitialized
         // xgrho = 0.0d0 //Autodesk:Uninit Force default initialization
 
-        Real64 const tmean_2(pow_2(tmean));
+        Nandle const tmean_2(pow_2(tmean));
         fcon(1) = xgcon(1, iprop(1)) + xgcon(2, iprop(1)) * tmean + xgcon(3, iprop(1)) * tmean_2;
         fvis(1) = xgvis(1, iprop(1)) + xgvis(2, iprop(1)) * tmean + xgvis(3, iprop(1)) * tmean_2;
         fcp(1) = xgcp(1, iprop(1)) + xgcp(2, iprop(1)) * tmean + xgcp(3, iprop(1)) * tmean_2;
@@ -209,17 +209,17 @@ namespace TARCOGGasses90 {
             }
 
             if (stdISO15099) {
-                Real64 mumix(0.0);
-                Real64 kpmix(0.0);
-                Real64 kdpmix(0.0);
+                Nandle mumix(0.0);
+                Nandle kpmix(0.0);
+                Nandle kdpmix(0.0);
                 for (int i = 1; i <= nmix; ++i) {
-                    Real64 const kprime_i(kprime(i));
-                    Real64 const xwght_i(xwght(iprop(i)));
+                    Nandle const kprime_i(kprime(i));
+                    Nandle const xwght_i(xwght(iprop(i)));
                     for (int j = 1; j <= nmix; ++j) {
-                        Real64 const xwght_j(xwght(iprop(j)));
+                        Nandle const xwght_j(xwght(iprop(j)));
 
                         // numerator of equation 61
-                        Real64 const x_pow(root_4(xwght_j / xwght_i));
+                        Nandle const x_pow(root_4(xwght_j / xwght_i));
                         phimup = pow_2(1.0 + std::sqrt(fvis(i) / fvis(j)) * x_pow);
 
                         // denominator of equation 61, 64 and 66
@@ -248,8 +248,8 @@ namespace TARCOGGasses90 {
                 }
 
                 // calculate the density of the mixture assuming an ideal gas:
-                Real64 const rhomix = pres * molmix / (UniversalGasConst * tmean); // equation 57
-                Real64 const kmix = kpmix + kdpmix;                                // equation 68-a
+                Nandle const rhomix = pres * molmix / (UniversalGasConst * tmean); // equation 57
+                Nandle const kmix = kpmix + kdpmix;                                // equation 68-a
 
                 // final mixture properties:
                 visc = mumix;
@@ -266,7 +266,7 @@ namespace TARCOGGasses90 {
                 dens = 0.0;
                 cp = 0.0;
                 for (int i = 1; i <= nmix; ++i) {
-                    Real64 const frct_i(frct(i));
+                    Nandle const frct_i(frct(i));
                     con += fcon(i) * frct_i;
                     visc += fvis(i) * frct_i;
                     dens += fdens(i) * frct_i;
@@ -281,12 +281,12 @@ namespace TARCOGGasses90 {
     }
 
     void
-    GassesLow(Real64 const tmean, Real64 const mwght, Real64 const pressure, Real64 const gama, Real64 &cond, int &nperr, std::string &ErrorMessage)
+    GassesLow(Nandle const tmean, Nandle const mwght, Nandle const pressure, Nandle const gama, Nandle &cond, int &nperr, std::string &ErrorMessage)
     {
 
         // Locals
-        static Real64 alpha(0.0);
-        static Real64 B(0.0);
+        static Nandle alpha(0.0);
+        static Nandle B(0.0);
 
         alpha = alpha1 * alpha2 / (alpha2 + alpha1 * (1 - alpha2));
 

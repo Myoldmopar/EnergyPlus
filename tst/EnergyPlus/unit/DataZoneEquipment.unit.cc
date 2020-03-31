@@ -124,7 +124,7 @@ TEST_F(EnergyPlusFixture, DataZoneEquipment_TestCalcDesignSpecificationOutdoorAi
     ScheduleManager::Schedule(1).CurrentValue = 1.0;
     ScheduleManager::Schedule(2).CurrentValue = 131.881995;
 
-    Real64 OAVolumeFlowRate;
+    Nandle OAVolumeFlowRate;
     // Test ZOAM_ProportionalControlSchOcc
     DataContaminantBalance::ZoneAirCO2(1) = 500.0;
     OAVolumeFlowRate = CalcDesignSpecificationOutdoorAir(1, 1, false, false);

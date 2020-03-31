@@ -97,17 +97,17 @@ namespace HVACMultiSpeedHeatPump {
     // MODULE VARIABLE DECLARATIONS:
     extern int NumMSHeatPumps; // Number of multi speed heat pumps
     extern int AirLoopPass;    // Number of air loop pass
-    extern Real64 TempSteamIn; // steam coil steam inlet temperature
+    extern Nandle TempSteamIn; // steam coil steam inlet temperature
 
     extern std::string CurrentModuleObject; // Object type for getting and error messages
-    extern Real64 CompOnMassFlow;           // System air mass flow rate w/ compressor ON
-    extern Real64 CompOffMassFlow;          // System air mass flow rate w/ compressor OFF
-    extern Real64 CompOnFlowRatio;          // fan flow ratio when coil on
-    extern Real64 CompOffFlowRatio;         // fan flow ratio when coil off
-    extern Real64 FanSpeedRatio;            // fan speed ratio passed to on/off fan object
-    extern Real64 SupHeaterLoad;            // load to be met by supplemental heater [W]
-    extern Real64 SaveLoadResidual;         // Saved load residual used to check convergence
-    extern Real64 SaveCompressorPLR;        // holds compressor PLR from active DX coil
+    extern Nandle CompOnMassFlow;           // System air mass flow rate w/ compressor ON
+    extern Nandle CompOffMassFlow;          // System air mass flow rate w/ compressor OFF
+    extern Nandle CompOnFlowRatio;          // fan flow ratio when coil on
+    extern Nandle CompOffFlowRatio;         // fan flow ratio when coil off
+    extern Nandle FanSpeedRatio;            // fan speed ratio passed to on/off fan object
+    extern Nandle SupHeaterLoad;            // load to be met by supplemental heater [W]
+    extern Nandle SaveLoadResidual;         // Saved load residual used to check convergence
+    extern Nandle SaveCompressorPLR;        // holds compressor PLR from active DX coil
     extern Array1D_bool CheckEquipName;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE
@@ -130,14 +130,14 @@ namespace HVACMultiSpeedHeatPump {
         int ZoneSequenceHeatingNum;         // Index to heating sequence/priority for this zone
         std::string ControlZoneName;        // Controlled zone name
         int NodeNumOfControlledZone;        // Controlled zone node number
-        Real64 FlowFraction;                // Fraction of the total volume flow that goes through the controlling zone
+        Nandle FlowFraction;                // Fraction of the total volume flow that goes through the controlling zone
         std::string FanName;                // Name of supply air fan
         int FanType;                        // Supply fan type
         int FanNum;                         // Supply fan number
         int FanPlaceType;                   // Supply air fan placement: 1 Blow through; 2 Draw through
         int FanInletNode;                   // Fan Inlet node
         int FanOutletNode;                  // Fan Outlet node
-        Real64 FanVolFlow;                  // Supply fan volumetric flow rate
+        Nandle FanVolFlow;                  // Supply fan volumetric flow rate
         std::string FanSchedule;            // Supply air fan operating mode schedule name
         int FanSchedPtr;                    // Pointer to the Supply air fan operating mode schedule
         int OpMode;                         // mode of operation; 1=cycling fan, cycling compressor; 2=continuous fan, cycling compresor
@@ -153,68 +153,68 @@ namespace HVACMultiSpeedHeatPump {
         std::string SuppHeatCoilName;       // Supplymental heating coil name
         int SuppHeatCoilType;               // Supplymental heating coil type: 1 Gas; 2 Electric; 3 Recovery
         int SuppHeatCoilNum;                // Supplymental heating coil number
-        Real64 DesignSuppHeatingCapacity;   // Supplemental heating coil design capacity
-        Real64 SuppMaxAirTemp;              // Maximum supply air temperature from supplemental heater
-        Real64 SuppMaxOATemp;               // Maximum outdoor dry-bulb temperature for supplemental heater operation
-        Real64 AuxOnCyclePower;             // Auxiliary On-Cycle Electric Power
-        Real64 AuxOffCyclePower;            // Auxiliary Off-Cycle Electric Power
-        Real64 DesignHeatRecFlowRate;       // Design water volume flow rate through heat recovery loop [m3/s]
+        Nandle DesignSuppHeatingCapacity;   // Supplemental heating coil design capacity
+        Nandle SuppMaxAirTemp;              // Maximum supply air temperature from supplemental heater
+        Nandle SuppMaxOATemp;               // Maximum outdoor dry-bulb temperature for supplemental heater operation
+        Nandle AuxOnCyclePower;             // Auxiliary On-Cycle Electric Power
+        Nandle AuxOffCyclePower;            // Auxiliary Off-Cycle Electric Power
+        Nandle DesignHeatRecFlowRate;       // Design water volume flow rate through heat recovery loop [m3/s]
         bool HeatRecActive;                 // True when entered Heat Rec Vol Flow Rate > 0
         std::string HeatRecName;            // heat recovery water inlet name
         int HeatRecInletNodeNum;            // Node number on heat recovery water inlet
         int HeatRecOutletNodeNum;           // Node number on heat recovery water outlet
-        Real64 MaxHeatRecOutletTemp;        // Maximum outlet water temperature for heat recovery
-        Real64 DesignHeatRecMassFlowRate;   // Design water mass flow rate through heat recovery loop [kg/s]
+        Nandle MaxHeatRecOutletTemp;        // Maximum outlet water temperature for heat recovery
+        Nandle DesignHeatRecMassFlowRate;   // Design water mass flow rate through heat recovery loop [kg/s]
         int HRLoopNum;                      // plant loop number for heat recovery
         int HRLoopSideNum;                  // Plant loop side for heat recovery
         int HRBranchNum;                    // plant loop branch for heat recovery
         int HRCompNum;                      // plant loop component for heat recovery
-        Real64 AuxElecPower;                // Auxiliary Electric Power
-        Real64 IdleVolumeAirRate;           // Supply air volumetric flow rate when no cooling or heating is needed
-        Real64 IdleMassFlowRate;            // Supply air mass flow rate when no cooling or heating is needed
-        Real64 IdleSpeedRatio;              // Fan speed ratio in idle mode
+        Nandle AuxElecPower;                // Auxiliary Electric Power
+        Nandle IdleVolumeAirRate;           // Supply air volumetric flow rate when no cooling or heating is needed
+        Nandle IdleMassFlowRate;            // Supply air mass flow rate when no cooling or heating is needed
+        Nandle IdleSpeedRatio;              // Fan speed ratio in idle mode
         int NumOfSpeedCooling;              // The number of speeds for cooling
         int NumOfSpeedHeating;              // The number of speeds for heating
-        Array1D<Real64> HeatVolumeFlowRate; // Supply air volume flow rate during heating operation
-        Array1D<Real64> HeatMassFlowRate;   // Supply air mass flow rate during heating operation
-        Array1D<Real64> CoolVolumeFlowRate; // Supply air volume flow rate during cooling operation
-        Array1D<Real64> CoolMassFlowRate;   // Supply air mass flow rate during cooling operation
-        Array1D<Real64> HeatingSpeedRatio;  // Fan speed ratio in heating mode
-        Array1D<Real64> CoolingSpeedRatio;  // Fan speed ratio in cooling mode
+        Array1D<Nandle> HeatVolumeFlowRate; // Supply air volume flow rate during heating operation
+        Array1D<Nandle> HeatMassFlowRate;   // Supply air mass flow rate during heating operation
+        Array1D<Nandle> CoolVolumeFlowRate; // Supply air volume flow rate during cooling operation
+        Array1D<Nandle> CoolMassFlowRate;   // Supply air mass flow rate during cooling operation
+        Array1D<Nandle> HeatingSpeedRatio;  // Fan speed ratio in heating mode
+        Array1D<Nandle> CoolingSpeedRatio;  // Fan speed ratio in cooling mode
         bool CheckFanFlow;                  // Supply airflow check
         int LastMode;                       // MSHP operation mode
         int HeatCoolMode;                   // System operating mode (0 = floating, 1 = cooling, 2 = heating)
         int AirLoopNumber;                  // Air loop served by the engine driven heat pump system
         int NumControlledZones;             // Number of controlled zones for this system
         int ZoneInletNode;                  // Zone inlet node number in the controlled zone
-        Real64 CompPartLoadRatio;           // Compressor part load ratio
-        Real64 FanPartLoadRatio;            // Fan part load ratio
-        Real64 TotCoolEnergyRate;           // Total cooling enertgy rate
-        Real64 TotHeatEnergyRate;           // Total heating enertgy rate
-        Real64 SensCoolEnergyRate;          // Sensible cooling enertgy rate
-        Real64 SensHeatEnergyRate;          // Sensible heating enertgy rate
-        Real64 LatCoolEnergyRate;           // Latent cooling enertgy rate
-        Real64 LatHeatEnergyRate;           // Latent heating enertgy rate
-        Real64 ElecPower;                   // Electric power (fan + supplemental electric coil)
-        Real64 LoadMet;                     // met system load
-        Real64 HeatRecoveryRate;            // Heat recovery rate [W]
-        Real64 HeatRecoveryInletTemp;       // Inlet temperature for heat recovery rate [C]
-        Real64 HeatRecoveryOutletTemp;      // Outlet temperature for heat recovery rate [C]
-        Real64 HeatRecoveryMassFlowRate;    // Mass flow rate for heat recovery rate [kg/s]
+        Nandle CompPartLoadRatio;           // Compressor part load ratio
+        Nandle FanPartLoadRatio;            // Fan part load ratio
+        Nandle TotCoolEnergyRate;           // Total cooling enertgy rate
+        Nandle TotHeatEnergyRate;           // Total heating enertgy rate
+        Nandle SensCoolEnergyRate;          // Sensible cooling enertgy rate
+        Nandle SensHeatEnergyRate;          // Sensible heating enertgy rate
+        Nandle LatCoolEnergyRate;           // Latent cooling enertgy rate
+        Nandle LatHeatEnergyRate;           // Latent heating enertgy rate
+        Nandle ElecPower;                   // Electric power (fan + supplemental electric coil)
+        Nandle LoadMet;                     // met system load
+        Nandle HeatRecoveryRate;            // Heat recovery rate [W]
+        Nandle HeatRecoveryInletTemp;       // Inlet temperature for heat recovery rate [C]
+        Nandle HeatRecoveryOutletTemp;      // Outlet temperature for heat recovery rate [C]
+        Nandle HeatRecoveryMassFlowRate;    // Mass flow rate for heat recovery rate [kg/s]
         int AirFlowControl;                 // fan control mode, UseCompressorOnFlow or UseCompressorOffFlow
         int ErrIndexCyc;                    // Error index at low speed
         int ErrIndexVar;                    // Error index at high speed
-        Real64 LoadLoss;                    // Air distribution system loss
+        Nandle LoadLoss;                    // Air distribution system loss
         int SuppCoilAirInletNode;           // air inlet node number of supplemental heating coil
         int SuppCoilAirOutletNode;          // air outlet node number of supplemental heating coil
         int SuppHeatCoilType_Num;           // Numeric Equivalent for Supplemental Heat Coil Type
         int SuppHeatCoilIndex;              // Index to supplemental heater
         int SuppCoilControlNode;            // control node for simple water and steam heating coil
-        Real64 MaxSuppCoilFluidFlow;        // water or steam mass flow rate for supplemental heating coil [kg/s]
+        Nandle MaxSuppCoilFluidFlow;        // water or steam mass flow rate for supplemental heating coil [kg/s]
         int SuppCoilOutletNode;             // outlet node for hot water and steam supplemental heating coil
         int CoilAirInletNode;               // air inlet node number of supplemental heating coil
         int CoilControlNode;                // control node for simple water and steam heating coil
-        Real64 MaxCoilFluidFlow;            // water or steam mass flow rate for supplemental heating coil [kg/s]
+        Nandle MaxCoilFluidFlow;            // water or steam mass flow rate for supplemental heating coil [kg/s]
         int CoilOutletNode;                 // outlet node for hot water and steam supplemental heating coil
         int HotWaterCoilControlNode;
         int HotWaterCoilOutletNode;
@@ -241,9 +241,9 @@ namespace HVACMultiSpeedHeatPump {
         int HeatCountAvail;            // Counter used to minimize the occurrence of output warnings
         int HeatIndexAvail;            // Index used to minimize the occurrence of output warnings
         bool FirstPass;                // used to determine when first call is made
-        Array1D<Real64> FullOutput;    // Full output for different speed
-        Real64 MinOATCompressorCooling; // min OAT from multispeed cooling coil object
-        Real64 MinOATCompressorHeating; // min OAT from multispeed heating coil object
+        Array1D<Nandle> FullOutput;    // Full output for different speed
+        Nandle MinOATCompressorCooling; // min OAT from multispeed cooling coil object
+        Nandle MinOATCompressorHeating; // min OAT from multispeed heating coil object
 
         // Default Constructor
         MSHeatPumpData()
@@ -272,13 +272,13 @@ namespace HVACMultiSpeedHeatPump {
     struct MSHeatPumpReportData
     {
         // Members
-        Real64 ElecPowerConsumption;   // Electricity power comsumption: CondenserFan+CrankcaseHeater+Defroster+aux
-        Real64 HeatRecoveryEnergy;     // Heat recovery rate [J]
-        Real64 CycRatio;               // Cycle ratio
-        Real64 SpeedRatio;             // Speed ratio between two stages
+        Nandle ElecPowerConsumption;   // Electricity power comsumption: CondenserFan+CrankcaseHeater+Defroster+aux
+        Nandle HeatRecoveryEnergy;     // Heat recovery rate [J]
+        Nandle CycRatio;               // Cycle ratio
+        Nandle SpeedRatio;             // Speed ratio between two stages
         int SpeedNum;                  // Speed number
-        Real64 AuxElecCoolConsumption; // Auxiliary electricity power consumption during cooling
-        Real64 AuxElecHeatConsumption; // Auxiliary electricity power consumption during heating
+        Nandle AuxElecCoolConsumption; // Auxiliary electricity power consumption during cooling
+        Nandle AuxElecHeatConsumption; // Auxiliary electricity power consumption during heating
 
         // Default Constructor
         MSHeatPumpReportData()
@@ -305,9 +305,9 @@ namespace HVACMultiSpeedHeatPump {
     void SimMSHP(int const MSHeatPumpNum,       // number of the current engine driven Heat Pump being simulated
                  bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
                  int const AirLoopNum,          // air loop index
-                 Real64 &QSensUnitOut,          // cooling/heating deliveded to zones [W]
-                 Real64 const QZnReq,           // required zone load
-                 Real64 &OnOffAirFlowRatio      // ratio of compressor ON airflow to AVERAGE airflow over timestep
+                 Nandle &QSensUnitOut,          // cooling/heating deliveded to zones [W]
+                 Nandle const QZnReq,           // required zone load
+                 Nandle &OnOffAirFlowRatio      // ratio of compressor ON airflow to AVERAGE airflow over timestep
     );
 
     //******************************************************************************
@@ -319,8 +319,8 @@ namespace HVACMultiSpeedHeatPump {
     void InitMSHeatPump(int const MSHeatPumpNum,       // Engine driven heat pump number
                         bool const FirstHVACIteration, // TRUE if first HVAC iteration
                         int const AirLoopNum,          // air loop index
-                        Real64 &QZnReq,                // Heating/Cooling load for all served zones
-                        Real64 &OnOffAirFlowRatio      // Ratio of compressor ON airflow to average airflow over timestep
+                        Nandle &QZnReq,                // Heating/Cooling load for all served zones
+                        Nandle &OnOffAirFlowRatio      // Ratio of compressor ON airflow to average airflow over timestep
     );
 
     //******************************************************************************
@@ -333,13 +333,13 @@ namespace HVACMultiSpeedHeatPump {
                            bool const FirstHVACIteration, // flag for 1st HVAC iteration in the time step
                            int const CompOp,              // compressor operation; 1=on, 0=off
                            int const OpMode,              // operating mode: CycFanCycCoil | ContFanCycCoil
-                           Real64 const QZnReq,           // cooling or heating output needed by zone [W]
+                           Nandle const QZnReq,           // cooling or heating output needed by zone [W]
                            int const ZoneNum,             // Index to zone number
                            int &SpeedNum,                 // Speed number
-                           Real64 &SpeedRatio,            // unit speed ratio for DX coils
-                           Real64 &PartLoadFrac,          // unit part load fraction
-                           Real64 &OnOffAirFlowRatio,     // ratio of compressor ON airflow to AVERAGE airflow over timestep
-                           Real64 &SupHeaterLoad          // Supplemental heater load [W]
+                           Nandle &SpeedRatio,            // unit speed ratio for DX coils
+                           Nandle &PartLoadFrac,          // unit part load fraction
+                           Nandle &OnOffAirFlowRatio,     // ratio of compressor ON airflow to AVERAGE airflow over timestep
+                           Nandle &SupHeaterLoad          // Supplemental heater load [W]
     );
 
     //******************************************************************************
@@ -348,24 +348,24 @@ namespace HVACMultiSpeedHeatPump {
                         bool const FirstHVACIteration, // Flag for 1st HVAC iteration
                         int const CompOp,              // Compressor on/off; 1=on, 0=off
                         int const SpeedNum,            // Speed number
-                        Real64 const SpeedRatio,       // Compressor speed ratio
-                        Real64 const PartLoadFrac,     // Compressor part load fraction
-                        Real64 &LoadMet,               // Load met by unit (W)
-                        Real64 const QZnReq,           // Zone load (W)
-                        Real64 &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
-                        Real64 &SupHeaterLoad          // supplemental heater load (W)
+                        Nandle const SpeedRatio,       // Compressor speed ratio
+                        Nandle const PartLoadFrac,     // Compressor part load fraction
+                        Nandle &LoadMet,               // Load met by unit (W)
+                        Nandle const QZnReq,           // Zone load (W)
+                        Nandle &OnOffAirFlowRatio,     // Ratio of compressor ON airflow to AVERAGE airflow over timestep
+                        Nandle &SupHeaterLoad          // supplemental heater load (W)
     );
 
     //******************************************************************************
 
-    Real64 MSHPCyclingResidual(Real64 const PartLoadFrac, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                               Array1D<Real64> const &Par // par(1) = MSHPNum
+    Nandle MSHPCyclingResidual(Nandle const PartLoadFrac, // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                               Array1D<Nandle> const &Par // par(1) = MSHPNum
     );
 
     //******************************************************************************
 
-    Real64 MSHPVarSpeedResidual(Real64 const SpeedRatio,   // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                Array1D<Real64> const &Par // par(1) = MSHPNum
+    Nandle MSHPVarSpeedResidual(Nandle const SpeedRatio,   // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                Array1D<Nandle> const &Par // par(1) = MSHPNum
     );
 
     //******************************************************************************
@@ -379,21 +379,21 @@ namespace HVACMultiSpeedHeatPump {
     void MSHPHeatRecovery(int const MSHeatPumpNum); // Number of the current electric MSHP being simulated
 
     void SetAverageAirFlow(int const MSHeatPumpNum,              // Unit index
-                           Real64 const PartLoadRatio,           // unit part load ratio
-                           Real64 &OnOffAirFlowRatio,            // ratio of compressor ON airflow to average airflow over timestep
+                           Nandle const PartLoadRatio,           // unit part load ratio
+                           Nandle &OnOffAirFlowRatio,            // ratio of compressor ON airflow to average airflow over timestep
                            Optional_int_const SpeedNum = _,      // Speed number
-                           Optional<Real64 const> SpeedRatio = _ // Speed ratio
+                           Optional<Nandle const> SpeedRatio = _ // Speed ratio
     );
 
     void CalcNonDXHeatingCoils(int const MSHeatPumpNum,       // multispeed heatpump index
                                bool const FirstHVACIteration, // flag for first HVAC iteration in the time step
-                               Real64 const HeatingLoad,      // supplemental coil load to be met by unit (watts)
+                               Nandle const HeatingLoad,      // supplemental coil load to be met by unit (watts)
                                int const FanMode,             // fan operation mode
-                               Real64 &HeatCoilLoadmet,       // Heating Load Met
-                               Optional<Real64 const> PartLoadFrac = _);
+                               Nandle &HeatCoilLoadmet,       // Heating Load Met
+                               Optional<Nandle const> PartLoadFrac = _);
 
-    Real64 HotWaterCoilResidual(Real64 const HWFlow,       // hot water flow rate in kg/s
-                                Array1D<Real64> const &Par // Par(5) is the requested coil load
+    Nandle HotWaterCoilResidual(Nandle const HWFlow,       // hot water flow rate in kg/s
+                                Array1D<Nandle> const &Par // Par(5) is the requested coil load
     );
 
 } // namespace HVACMultiSpeedHeatPump

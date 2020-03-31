@@ -76,9 +76,9 @@ namespace WindowManager {
 
     /////////////////////////////////////////////////////////////////////////////////////////
     void CalcWindowHeatBalanceExternalRoutines(int const SurfNum,          // Surface number
-                                               Real64 const HextConvCoeff, // Outside air film conductance coefficient
-                                               Real64 &SurfInsideTemp,     // Inside window surface temperature
-                                               Real64 &SurfOutsideTemp     // Outside surface temperature (C)
+                                               Nandle const HextConvCoeff, // Outside air film conductance coefficient
+                                               Nandle &SurfInsideTemp,     // Inside window surface temperature
+                                               Nandle &SurfOutsideTemp     // Outside surface temperature (C)
     )
     {
         // SUBROUTINE INFORMATION:
@@ -104,7 +104,7 @@ namespace WindowManager {
         aSystem->setTolerance(solutionTolerance);
 
         // get previous timestep temperatures solution for faster iterations
-        std::vector<Real64> Guess;
+        std::vector<Nandle> Guess;
         auto totSolidLayers = construction.TotSolidLayers;
 
         // Interior and exterior shading layers have gas between them and IGU but that gas
@@ -130,7 +130,7 @@ namespace WindowManager {
         auto aLayers = aSystem->getSolidLayers();
         auto i = 1;
         for (const auto & aLayer : aLayers) {
-            Real64 aTemp = 0;
+            Nandle aTemp = 0;
             for (auto aSide : EnumSide()) {
                 aTemp = aLayer->getTemperature(aSide);
                 thetas(i) = aTemp;
@@ -269,7 +269,7 @@ namespace WindowManager {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    std::shared_ptr<CSingleSystem> CWCEHeatTransferFactory::getTarcogSystem(Real64 const t_HextConvCoeff)
+    std::shared_ptr<CSingleSystem> CWCEHeatTransferFactory::getTarcogSystem(Nandle const t_HextConvCoeff)
     {
         auto Indoor = getIndoor();
         auto Outdoor = getOutdoor(t_HextConvCoeff);
@@ -603,7 +603,7 @@ namespace WindowManager {
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    std::shared_ptr<CEnvironment> CWCEHeatTransferFactory::getOutdoor(const Real64 t_Hext) const
+    std::shared_ptr<CEnvironment> CWCEHeatTransferFactory::getOutdoor(const Nandle t_Hext) const
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic

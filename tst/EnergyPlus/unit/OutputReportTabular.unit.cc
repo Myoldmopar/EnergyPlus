@@ -212,8 +212,8 @@ TEST(OutputReportTabularTest, unitsFromHeading)
     std::string unitString;
     int indexUnitConv;
     std::string curUnits;
-    Real64 curConversionFactor;
-    Real64 curConversionOffset;
+    Nandle curConversionFactor;
+    Nandle curConversionOffset;
 
     SetupUnitConversions();
     unitsStyle = unitsStyleInchPound;
@@ -290,8 +290,8 @@ TEST_F(EnergyPlusFixture, OutputReportTabularTest_GetUnitConversion)
 
     int indexUnitConv;
     std::string curUnits;
-    Real64 curConversionFactor;
-    Real64 curConversionOffset;
+    Nandle curConversionFactor;
+    Nandle curConversionOffset;
     std::string varNameWithUnits;
 
     SetupUnitConversions();
@@ -3497,7 +3497,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabularMonthly_ResetMonthlyGathering)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    Real64 extLitUse;
+    Nandle extLitUse;
 
     SetupOutputVariable("Exterior Lights Electric Energy",
                         OutputProcessor::Unit::J,
@@ -3561,7 +3561,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabularMonthly_ResetMonthlyGathering)
 TEST_F(EnergyPlusFixture, OutputReportTabular_ConfirmResetBEPSGathering)
 {
 
-    Real64 extLitUse;
+    Nandle extLitUse;
 
     SetupOutputVariable("Exterior Lights Electric Energy",
                         OutputProcessor::Unit::J,
@@ -3760,9 +3760,9 @@ TEST_F(EnergyPlusFixture, OutputReportTabular_GatherHeatEmissionReport)
     CondenserLoopTowers::towers(1).Qactual = 1.0;
     CondenserLoopTowers::towers(1).FanEnergy = 50.0;
 
-    Real64 TimeStepSysSec = DataHVACGlobals::TimeStepSys * SecInHour;
-    Real64 reliefEnergy = 2.0 * TimeStepSysSec;
-    Real64 condenserReject = 1.0 * TimeStepSysSec + 50.0;
+    Nandle TimeStepSysSec = DataHVACGlobals::TimeStepSys * SecInHour;
+    Nandle reliefEnergy = 2.0 * TimeStepSysSec;
+    Nandle condenserReject = 1.0 * TimeStepSysSec + 50.0;
 
     GatherHeatEmissionReport(OutputProcessor::TimeStepType::TimeStepSystem);
 
@@ -3788,7 +3788,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabular_GatherHeatEmissionReport)
     DXCoils::DXCoil(2).FuelConsumed = 0.0;
     DXCoils::DXCoil(2).CrankcaseHeaterConsumption = 0.0;
 
-    Real64 coilReject = 1.0 * TimeStepSysSec + 200.0 + 10.0;
+    Nandle coilReject = 1.0 * TimeStepSysSec + 200.0 + 10.0;
 
     GatherHeatEmissionReport(OutputProcessor::TimeStepType::TimeStepSystem);
     EXPECT_EQ(reliefEnergy, DataHeatBalance::SysTotalHVACReliefHeatLoss);
@@ -6357,7 +6357,7 @@ TEST_F(SQLiteFixture, WriteVeriSumTable_TestNotPartOfTotal)
      ***********************************************************************************************************************************************/
 
     // RowName, ColumnName, value
-    std::vector<std::tuple<std::string, std::string, Real64>> results({
+    std::vector<std::tuple<std::string, std::string, Nandle>> results({
         {Zone(1).Name, "Area", Zone(1).FloorArea},
         {Zone(2).Name, "Area", Zone(2).FloorArea},
         {Zone(3).Name, "Area", Zone(3).FloorArea},
@@ -6412,7 +6412,7 @@ TEST_F(SQLiteFixture, WriteVeriSumTable_TestNotPartOfTotal)
                           "  AND RowName = '" +
                           rowName + "'" + "  AND ColumnName = '" + columnName + "'");
 
-        Real64 return_val = execAndReturnFirstDouble(query);
+        Nandle return_val = execAndReturnFirstDouble(query);
         // EnergyPlus::sqlite->sqliteCommit();
 
         // Add informative message if failed
@@ -6437,7 +6437,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabularMonthly_invalidAggregationOrder)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    Real64 extLitUse;
+    Nandle extLitUse;
 
     SetupOutputVariable("Exterior Lights Electric Energy",
                         OutputProcessor::Unit::J,
@@ -6682,7 +6682,7 @@ TEST(OutputReportTabularTest, CombineLoadCompResults_test)
     compLoadPartial.cellUsed.allocate(10, 30);
     compLoadPartial.cellUsed = false;
 
-    Real64 multiplier = 3.;
+    Nandle multiplier = 3.;
 
     compLoadPartial.cells(1, 1) = 1.1;
     compLoadPartial.cells(4, 25) = 1.2;
@@ -6754,10 +6754,10 @@ TEST(OutputReportTabularTest, LoadSummaryUnitConversion_test)
     compLoad.totCapPerArea = 0.15;
 
     unitsStyle = unitsStyleInchPound;
-    Real64 powerConversion = getSpecificUnitMultiplier("W", "Btu/h");
-    Real64 areaConversion = getSpecificUnitMultiplier("m2", "ft2");
-    Real64 airFlowConversion = getSpecificUnitMultiplier("m3/s", "ft3/min");
-    Real64 airFlowPerAreaConversion = getSpecificUnitMultiplier("m3/s-m2", "ft3/min-ft2");
+    Nandle powerConversion = getSpecificUnitMultiplier("W", "Btu/h");
+    Nandle areaConversion = getSpecificUnitMultiplier("m2", "ft2");
+    Nandle airFlowConversion = getSpecificUnitMultiplier("m3/s", "ft3/min");
+    Nandle airFlowPerAreaConversion = getSpecificUnitMultiplier("m3/s-m2", "ft3/min-ft2");
     int tempConvIndx = getSpecificUnitIndex("C", "F");
 
     LoadSummaryUnitConversion(compLoad);
@@ -6849,39 +6849,39 @@ TEST(OutputReportTabularTest, GetDelaySequencesTwice_test)
     Surface(1).HeatTransSurf = true;
     Surface(1).Class = SurfaceClass_Window;
 
-    Array1D<Real64> peopleDelaySeq;
+    Array1D<Nandle> peopleDelaySeq;
     peopleDelaySeq.allocate(NumOfTimeStepInHour * 24);
     peopleDelaySeq = 0.;
 
-    Array1D<Real64> peopleDelaySeqCool;
+    Array1D<Nandle> peopleDelaySeqCool;
     peopleDelaySeqCool.allocate(NumOfTimeStepInHour * 24);
     peopleDelaySeqCool = 0.;
 
-    Array1D<Real64> equipDelaySeqCool;
+    Array1D<Nandle> equipDelaySeqCool;
     equipDelaySeqCool.allocate(NumOfTimeStepInHour * 24);
     equipDelaySeqCool = 0.;
 
-    Array1D<Real64> hvacLossDelaySeqCool;
+    Array1D<Nandle> hvacLossDelaySeqCool;
     hvacLossDelaySeqCool.allocate(NumOfTimeStepInHour * 24);
     hvacLossDelaySeqCool = 0.;
 
-    Array1D<Real64> powerGenDelaySeqCool;
+    Array1D<Nandle> powerGenDelaySeqCool;
     powerGenDelaySeqCool.allocate(NumOfTimeStepInHour * 24);
     powerGenDelaySeqCool = 0.;
 
-    Array1D<Real64> lightDelaySeqCool;
+    Array1D<Nandle> lightDelaySeqCool;
     lightDelaySeqCool.allocate(NumOfTimeStepInHour * 24);
     lightDelaySeqCool = 0.;
 
-    Array1D<Real64> feneSolarDelaySeqCool;
+    Array1D<Nandle> feneSolarDelaySeqCool;
     feneSolarDelaySeqCool.allocate(NumOfTimeStepInHour * 24);
     feneSolarDelaySeqCool = 0.;
 
-    Array3D<Real64> feneCondInstantSeq;
+    Array3D<Nandle> feneCondInstantSeq;
     feneCondInstantSeq.allocate(TotDesDays + TotRunDesPersDays, NumOfTimeStepInHour * 24, NumOfZones);
     feneCondInstantSeq = 0.0;
 
-    Array2D<Real64> surfDelaySeqCool;
+    Array2D<Nandle> surfDelaySeqCool;
     surfDelaySeqCool.allocate(NumOfTimeStepInHour * 24, TotSurfaces);
     surfDelaySeqCool = 0.0;
 
@@ -7241,8 +7241,8 @@ TEST_F(EnergyPlusFixture, OutputReportTabularMonthlyPredefined_FindNeededOutputV
     // Except Zone Mean Air Temperature, which is in HeatBalanceAirManager::GetSimpleAirModelInputs()
     // Instead of calling these
     // Fake the setup of the OutputVariables needed for two different zones
-    Real64 zoneTemp;
-    Real64 timeNotMet;
+    Nandle zoneTemp;
+    Nandle timeNotMet;
     std::vector<std::string> ZoneNames({"Zone1", "Zone2"});
 
     for (int i = 0; i < 2; ++i) {
@@ -7657,16 +7657,16 @@ TEST_F(SQLiteFixture, WriteSourceEnergyEndUseSummary_TestPerArea) {
     Zone(3).ExtWindowArea = 0.0;
 
     // Gross takes all that are PartOfTot
-    Real64 expectedBuildingGrossFloorArea = Zone(1).FloorArea + Zone(2).FloorArea;
+    Nandle expectedBuildingGrossFloorArea = Zone(1).FloorArea + Zone(2).FloorArea;
     // Conditionned takes only PartOfTot AND COnditioned
-    Real64 expectedBuildingConditionedFloorArea = Zone(1).FloorArea;
+    Nandle expectedBuildingConditionedFloorArea = Zone(1).FloorArea;
 
 
     // Assume that we only have electricity with a value of 3.6e6 * 1e4 J =10.000 kWh.
     // And that this only comes for a single end use endUseHeating=1
     OutputReportTabular::gatherEndUseBySourceBEPS(1, DataGlobalConstants::endUseHeating) = 3.6e10;
     OutputReportTabular::gatherTotalsBySourceBEPS(1) = 3.6e10;
-    Real64 eleckWh = 1e4;
+    Nandle eleckWh = 1e4;
 
     OutputReportTabular::unitsStyle = OutputReportTabular::unitsStyleJtoKWH;
 
@@ -7688,7 +7688,7 @@ TEST_F(SQLiteFixture, WriteSourceEnergyEndUseSummary_TestPerArea) {
     std::vector<std::string> testRowNames = {"Heating", "Total Source Energy End Use Components"};
 
     // TableName, value
-    std::vector<std::tuple<std::string, Real64>> results({
+    std::vector<std::tuple<std::string, Nandle>> results({
         {"Source Energy End Use Components Summary", eleckWh},
         {"Source Energy End Use Component Per Conditioned Floor Area", 10000.0 / expectedBuildingConditionedFloorArea},
         {"Source Energy End Use Components Per Total Floor Area", 10000.0 / expectedBuildingGrossFloorArea},
@@ -7697,7 +7697,7 @@ TEST_F(SQLiteFixture, WriteSourceEnergyEndUseSummary_TestPerArea) {
     for (auto& v: results) {
 
         std::string tableName = std::get<0>(v);
-        Real64 expectedValue = std::get<1>(v);
+        Nandle expectedValue = std::get<1>(v);
 
         for (auto& rowName : testRowNames) {
             std::string query("SELECT Value From TabularDataWithStrings"
@@ -7706,7 +7706,7 @@ TEST_F(SQLiteFixture, WriteSourceEnergyEndUseSummary_TestPerArea) {
                               "  AND RowName = '" + rowName + "'" +
                               "  AND ColumnName = '" + columnName + "'");
 
-            Real64 return_val = execAndReturnFirstDouble(query);
+            Nandle return_val = execAndReturnFirstDouble(query);
 
             // Add informative message if failed
             EXPECT_NEAR(expectedValue, return_val, 0.01) << "Failed for TableName=" << tableName << "; RowName=" << rowName;
@@ -7735,7 +7735,7 @@ TEST_F(SQLiteFixture, OutputReportTabular_EndUseBySubcategorySQL)
 
     SetPredefinedTables();
 
-    Real64 extLitUse = 1e8;
+    Nandle extLitUse = 1e8;
 
     SetupOutputVariable("Exterior Lights Electric Energy",
                         OutputProcessor::Unit::J,
@@ -7852,7 +7852,7 @@ TEST_F(SQLiteFixture, OutputReportTabular_EndUseBySubcategorySQL)
                   "  AND ReportName = 'AnnualBuildingUtilityPerformanceSummary'"
                   "  AND ColumnName = 'Electricity'"
                   "  AND RowName = 'Exterior Lighting:AnotherEndUseSubCat'");
-    Real64 return_val = execAndReturnFirstDouble(query);
+    Nandle return_val = execAndReturnFirstDouble(query);
 
     EXPECT_NEAR(extLitUse * 3 / 3.6e6, return_val, 0.01) << "Failed for query: " << query;
 

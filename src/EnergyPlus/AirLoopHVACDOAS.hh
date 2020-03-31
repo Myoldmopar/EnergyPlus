@@ -81,7 +81,7 @@ namespace AirLoopHVACDOAS {
         std::string OutletNodeName;
         std::vector<std::string> InletNodeName;
         std::vector<int> InletNodeNum;
-        Real64 OutletTemp;
+        Nandle OutletTemp;
 
         static void getAirLoopMixer();
         void CalcAirLoopMixer();
@@ -105,10 +105,10 @@ namespace AirLoopHVACDOAS {
         std::string InletNodeName;
         std::vector<std::string> OutletNodeName;
         std::vector<int> OutletNodeNum;
-        Real64 InletTemp;
+        Nandle InletTemp;
 
         static void getAirLoopSplitter();
-        void CalcAirLoopSplitter(Real64 Temp, Real64 Humrat);
+        void CalcAirLoopSplitter(Nandle Temp, Nandle Humrat);
     };
 
     struct AirLoopDOAS
@@ -116,16 +116,16 @@ namespace AirLoopHVACDOAS {
 
         // friend class AirLoopMixer and AirLoopSplitter;
         // members
-        Real64 SumMassFlowRate;
-        Real64 PreheatTemp;
-        Real64 PrecoolTemp;
-        Real64 PreheatHumRat;
-        Real64 PrecoolHumRat;
-        Real64 SizingMassFlow;
-        Real64 SizingCoolOATemp;
-        Real64 SizingCoolOAHumRat;
-        Real64 HeatOutTemp;   // outdoor air temperature for heating sizing calculation
-        Real64 HeatOutHumRat; // outdoor air humidity ratio for heating sizing calculation
+        Nandle SumMassFlowRate;
+        Nandle PreheatTemp;
+        Nandle PrecoolTemp;
+        Nandle PreheatHumRat;
+        Nandle PrecoolHumRat;
+        Nandle SizingMassFlow;
+        Nandle SizingCoolOATemp;
+        Nandle SizingCoolOAHumRat;
+        Nandle HeatOutTemp;   // outdoor air temperature for heating sizing calculation
+        Nandle HeatOutHumRat; // outdoor air humidity ratio for heating sizing calculation
 
         int m_AirLoopDOASNum;
         int m_OASystemNum;

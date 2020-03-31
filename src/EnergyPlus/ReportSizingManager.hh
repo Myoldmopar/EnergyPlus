@@ -64,39 +64,39 @@ namespace ReportSizingManager {
     void ReportSizingOutput(std::string const &CompType,        // the type of the component
                             std::string const &CompName,        // the name of the component
                             std::string const &VarDesc,         // the description of the input variable
-                            Real64 const VarValue,              // the value from the sizing calculation
+                            Nandle const VarValue,              // the value from the sizing calculation
                             Optional_string_const UsrDesc = _,  // the description of a user-specified variable
-                            Optional<Real64 const> UsrValue = _ // the value from the user for the desc item
+                            Optional<Nandle const> UsrValue = _ // the value from the user for the desc item
     );
 
     void RequestSizing(std::string const &CompType,      // type of component
                        std::string const &CompName,      // name of component
                        int const SizingType,             // integerized type of sizing requested (see DataHVACGlobals, e.g. CoolingCapacitySizing)
                        std::string const &SizingString,  // string containing info for eio report
-                       Real64 &SizingResult,             // result of the sizing procedure
+                       Nandle &SizingResult,             // result of the sizing procedure
                        bool const PrintWarningFlag,      // TRUE when requesting output (eio) reporting
                        std::string const &CallingRoutine, // name of calling rotuine for warning messages
-                       Real64 const fraction = 1.0
+                       Nandle const fraction = 1.0
     );
 
     void GetCoilDesFlowT(int SysNum,           // central air system index
-                         Real64 CpAir,         // specific heat to be used in calculations [J/kgC]
-                         Real64 &DesFlow,      // returned design mass flow [kg/s]
-                         Real64 &DesExitTemp,  // returned design coil exit temperature [kg/s]
-                         Real64 &DesExitHumRat // returned design coil exit humidity ratio [kg/kg]
+                         Nandle CpAir,         // specific heat to be used in calculations [J/kgC]
+                         Nandle &DesFlow,      // returned design mass flow [kg/s]
+                         Nandle &DesExitTemp,  // returned design coil exit temperature [kg/s]
+                         Nandle &DesExitHumRat // returned design coil exit humidity ratio [kg/kg]
     );
 
-    Real64 setOAFracForZoneEqSizing(Real64 const &desMassFlow, DataSizing::ZoneEqSizingData const &zoneEqSizing);
-    Real64 setHeatCoilInletTempForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setOAFracForZoneEqSizing(Nandle const &desMassFlow, DataSizing::ZoneEqSizingData const &zoneEqSizing);
+    Nandle setHeatCoilInletTempForZoneEqSizing(Nandle const &outAirFrac,
                                                DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                DataSizing::ZoneSizingData const &finalZoneSizing);
-    Real64 setHeatCoilInletHumRatForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setHeatCoilInletHumRatForZoneEqSizing(Nandle const &outAirFrac,
                                                  DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                  DataSizing::ZoneSizingData const &finalZoneSizing);
-    Real64 setCoolCoilInletTempForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setCoolCoilInletTempForZoneEqSizing(Nandle const &outAirFrac,
                                                DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                DataSizing::ZoneSizingData const &finalZoneSizing);
-    Real64 setCoolCoilInletHumRatForZoneEqSizing(Real64 const &outAirFrac,
+    Nandle setCoolCoilInletHumRatForZoneEqSizing(Nandle const &outAirFrac,
                                                  DataSizing::ZoneEqSizingData const &zoneEqSizing,
                                                  DataSizing::ZoneSizingData const &finalZoneSizing);
 

@@ -64,7 +64,7 @@ namespace DataBranchAirLoopPlant {
     // Data
     // MODULE PARAMETER DEFINITIONS:
     // Parameters for tolerance
-    extern Real64 const MassFlowTolerance; // minimum significant mass flow rate (kg/s)
+    extern Nandle const MassFlowTolerance; // minimum significant mass flow rate (kg/s)
 
     // Pressure Curve Type: None, pressure, or generic curve (if generic it will be a postive value which is the curve manager index)
     extern int const PressureCurve_Error;
@@ -91,19 +91,19 @@ namespace DataBranchAirLoopPlant {
     {
         // Members
         std::string Name;
-        Real64 EquivDiameter;         // - An effective diameter for calculation of Re & e/D [m]
-        Real64 MinorLossCoeff;        // - K factor                                          [-]
-        Real64 EquivLength;           // - An effective length to apply friction calculation [m]
-        Real64 EquivRoughness;        // - An effective roughness (e) to calculate e/D       [m]
+        Nandle EquivDiameter;         // - An effective diameter for calculation of Re & e/D [m]
+        Nandle MinorLossCoeff;        // - K factor                                          [-]
+        Nandle EquivLength;           // - An effective length to apply friction calculation [m]
+        Nandle EquivRoughness;        // - An effective roughness (e) to calculate e/D       [m]
         bool ConstantFPresent;        // - Signal for if a constant value of f was entered
-        Real64 ConstantF;             // - Constant value of f (if applicable)               [-]
+        Nandle ConstantF;             // - Constant value of f (if applicable)               [-]
         bool EMSOverrideOn;           // if TRUE, then EMS is calling to override curve value
-        Real64 EMSOverrideCurveValue; // Value of curve result EMS is directing to use
+        Nandle EMSOverrideCurveValue; // Value of curve result EMS is directing to use
         //  report variables.
-        Real64 CurveOutput;
-        Real64 CurveInput1; // - MassFlow                                         [kg/s]
-        Real64 CurveInput2; // - Density                                          [kg/m3]
-        Real64 CurveInput3; // - Velocity                                         [m/s]
+        Nandle CurveOutput;
+        Nandle CurveInput1; // - MassFlow                                         [kg/s]
+        Nandle CurveInput2; // - Density                                          [kg/m3]
+        Nandle CurveInput3; // - Velocity                                         [m/s]
 
         // Default Constructor
         PlantPressureCurveData()

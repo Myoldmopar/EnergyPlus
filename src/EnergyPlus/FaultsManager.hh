@@ -161,7 +161,7 @@ namespace FaultsManager {
         int FaultTypeEnum;
         int AvaiSchedPtr;
         int SeveritySchedPtr;
-        Real64 Offset; // offset, + means sensor reading is higher than actual value
+        Nandle Offset; // offset, + means sensor reading is higher than actual value
         bool Status;   // for future use
 
         // Default Constructor
@@ -175,7 +175,7 @@ namespace FaultsManager {
         virtual ~FaultProperties() = default;
 
     public:
-        Real64 CalFaultOffsetAct();
+        Nandle CalFaultOffsetAct();
     };
 
     struct FaultPropertiesEconomizer : public FaultProperties // Class for fault models related with economizer
@@ -232,11 +232,11 @@ namespace FaultsManager {
         int FouledCoiledType;       // Type of coil that's fouled
         int FouledCoilNum;          // The "FouledUARated" implies having to use the Coil's UA, which could be autosized, so have to use this index
         int FoulingInputMethod;     // Coil fouling input method
-        Real64 UAFouled;            // Fouling coil UA under rating conditions
-        Real64 Rfw;                 // Water side fouling factor
-        Real64 Rfa;                 // Air side fouling factor
-        Real64 Aout;                // Coil outside surface area
-        Real64 Aratio;              // Inside to outside surface area ratio
+        Nandle UAFouled;            // Fouling coil UA under rating conditions
+        Nandle Rfw;                 // Water side fouling factor
+        Nandle Rfa;                 // Air side fouling factor
+        Nandle Aout;                // Coil outside surface area
+        Nandle Aratio;              // Inside to outside surface area ratio
 
         // Default Constructor
         FaultPropertiesFoulingCoil()
@@ -249,10 +249,10 @@ namespace FaultsManager {
         virtual ~FaultPropertiesFoulingCoil() = default;
       public:
         // Calculate the fouling thermal insulance factor (the reciprocal of a heat transfert coefficient) due to fouling in a coil
-        // Real64 CalFaultyCoilFoulingFactor();
+        // Nandle CalFaultyCoilFoulingFactor();
 
         // Calculate the Fault Fraction based on Availability and Severity Schedules
-        Real64 FaultFraction();
+        Nandle FaultFraction();
     };
 
     struct FaultPropertiesAirFilter : public FaultProperties // Class for FaultModel:Fouling:AirFilter, derived from FaultProperties
@@ -264,8 +264,8 @@ namespace FaultsManager {
         std::string FaultyAirFilterPressFracSche; // Schedule describing variations of the fan pressure rise
         int FaultyAirFilterFanCurvePtr;           // The index to the curve
         int FaultyAirFilterPressFracSchePtr;      // The pointer to the schedule
-        Real64 FaultyAirFilterFanPressInc;        // The increase of the fan pressure due to fouled air filter
-        Real64 FaultyAirFilterFanFlowDec;         // The decrease of the fan airflow rate due to fouled air filter
+        Nandle FaultyAirFilterFanPressInc;        // The increase of the fan pressure due to fouled air filter
+        Nandle FaultyAirFilterFanFlowDec;         // The decrease of the fan airflow rate due to fouled air filter
 
         // Default Constructor
         FaultPropertiesAirFilter()
@@ -310,12 +310,12 @@ namespace FaultsManager {
 
     public:
         void CalFaultChillerSWT(bool FlagConstantFlowChiller,  // True if chiller is constant flow and false if it is variable flow
-                                Real64 FaultyChillerSWTOffset, // Faulty chiller SWT sensor offset
-                                Real64 Cp,                     // Local fluid specific heat
-                                Real64 EvapInletTemp,          // Chiller evaporator inlet water temperature
-                                Real64 &EvapOutletTemp,        // Chiller evaporator outlet water temperature
-                                Real64 &EvapMassFlowRate,      // Chiller mass flow rate
-                                Real64 &QEvaporator            // Chiller evaporator heat transfer rate
+                                Nandle FaultyChillerSWTOffset, // Faulty chiller SWT sensor offset
+                                Nandle Cp,                     // Local fluid specific heat
+                                Nandle EvapInletTemp,          // Chiller evaporator inlet water temperature
+                                Nandle &EvapOutletTemp,        // Chiller evaporator outlet water temperature
+                                Nandle &EvapMassFlowRate,      // Chiller mass flow rate
+                                Nandle &QEvaporator            // Chiller evaporator heat transfer rate
         );
     };
 
@@ -336,7 +336,7 @@ namespace FaultsManager {
         // Members
         std::string TowerType;    // Tower type
         std::string TowerName;    // Tower name
-        Real64 UAReductionFactor; // UA Reduction Factor
+        Nandle UAReductionFactor; // UA Reduction Factor
 
         // Default Constructor
         FaultPropertiesTowerFouling() : TowerType(""), TowerName(""), UAReductionFactor(1.0)
@@ -344,13 +344,13 @@ namespace FaultsManager {
         }
 
     public:
-        Real64 CalFaultyTowerFoulingFactor();
+        Nandle CalFaultyTowerFoulingFactor();
     };
 
     struct FaultPropertiesFouling : public FaultProperties // Class for FaultModel:Fouling
     {
         // Members
-        Real64 FoulingFactor; // Fouling Factor
+        Nandle FoulingFactor; // Fouling Factor
 
         // Default Constructor
         FaultPropertiesFouling() : FoulingFactor(1.0)
@@ -358,7 +358,7 @@ namespace FaultsManager {
         }
 
     public:
-        Real64 CalFoulingFactor(); // To calculate the dynamic fouling factor
+        Nandle CalFoulingFactor(); // To calculate the dynamic fouling factor
     };
 
     struct FaultPropertiesBoilerFouling : public FaultPropertiesFouling // Class for FaultModel:Fouling:Boiler

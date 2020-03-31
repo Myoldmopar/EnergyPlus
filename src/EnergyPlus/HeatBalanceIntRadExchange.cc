@@ -142,9 +142,9 @@ namespace HeatBalanceIntRadExchange {
         CalcInteriorRadExchangefirstTime = true;
     }
 
-    void CalcInteriorRadExchange(Array1S<Real64> const SurfaceTemp,   // Current surface temperatures
+    void CalcInteriorRadExchange(Array1S<Nandle> const SurfaceTemp,   // Current surface temperatures
                                  int const SurfIterations,            // Number of iterations in calling subroutine
-                                 Array1D<Real64> &NetLWRadToSurf,      // Net long wavelength radiant exchange from other surfaces
+                                 Array1D<Nandle> &NetLWRadToSurf,      // Net long wavelength radiant exchange from other surfaces
                                  Optional_int_const ZoneToResimulate, // if passed in, then only calculate for this zone
 #ifdef EP_Count_Calls
                                  std::string const &CalledFrom)
@@ -169,7 +169,7 @@ namespace HeatBalanceIntRadExchange {
         // Hottel, H. C. and A. F. Sarofim, Radiative Transfer, Ch 3, McGraw Hill, 1967.
 
         // Types
-        typedef Array1D<Real64>::size_type size_type;
+        typedef Array1D<Nandle>::size_type size_type;
 
         // Using/Aliasing
         using General::InterpSlatAng; // Function for slat angle interpolation
@@ -177,7 +177,7 @@ namespace HeatBalanceIntRadExchange {
         using HeatBalanceMovableInsulation::EvalInsideMovableInsulation;
         using WindowEquivalentLayer::EQLWindowInsideEffectiveEmiss;
 
-        Real64 const StefanBoltzmannConst(5.6697e-8); // Stefan-Boltzmann constant in W/(m2*K4)
+        Nandle const StefanBoltzmannConst(5.6697e-8); // Stefan-Boltzmann constant in W/(m2*K4)
         static ObjexxFCL::gio::Fmt fmtLD("*");
 
         bool IntShadeOrBlindStatusChanged; // True if status of interior shade or blind on at least
@@ -186,9 +186,9 @@ namespace HeatBalanceIntRadExchange {
         int ShadeFlagPrev; // Window shading status previous time step
 
         // variables added as part of strategy to reduce calculation time - Glazer 2011-04-22
-        static Array1D<Real64> SurfaceTempRad;
-        static Array1D<Real64> SurfaceTempInKto4th;
-        static Array1D<Real64> SurfaceEmiss;
+        static Array1D<Nandle> SurfaceTempRad;
+        static Array1D<Nandle> SurfaceTempInKto4th;
+        static Array1D<Nandle> SurfaceEmiss;
 
 
         // FLOW:
@@ -269,8 +269,8 @@ namespace HeatBalanceIntRadExchange {
 
             if (SurfIterations == 0) {
 
-                Real64 HMovInsul; // "Resistance" value of movable insulation (if present)
-                Real64 AbsInt; // Absorptivity of movable insulation material (supercedes that of the construction if interior movable insulation is
+                Nandle HMovInsul; // "Resistance" value of movable insulation (if present)
+                Nandle AbsInt; // Absorptivity of movable insulation material (supercedes that of the construction if interior movable insulation is
                                // present)
                 bool IntMovInsulChanged; // True if the status of interior movable insulation has changed
 
@@ -333,9 +333,9 @@ namespace HeatBalanceIntRadExchange {
 
             // Set surface emissivities and temperatures
             // Also, for Carroll method, calculate numerators and denominators of radiant temperature
-            Real64 CarrollMRTNumerator(0.0);
-            Real64 CarrollMRTDenominator(0.0);
-            Real64 CarrollMRTInKTo4th;  // Carroll MRT
+            Nandle CarrollMRTNumerator(0.0);
+            Nandle CarrollMRTDenominator(0.0);
+            Nandle CarrollMRTInKTo4th;  // Carroll MRT
             for (size_type ZoneSurfNum = 0; ZoneSurfNum < s_zone_Surfaces; ++ZoneSurfNum) {
                 int const SurfNum = zone_SurfacePtr[ZoneSurfNum];
                 auto const &surface_window(SurfaceWindow(SurfNum));
@@ -397,9 +397,9 @@ namespace HeatBalanceIntRadExchange {
                     auto& netLWRadToRecSurf(NetLWRadToSurf(RecSurfNum));
                     if (rec_construct.TypeIsWindow) {
                         auto& rec_surface_window(SurfaceWindow(RecSurfNum));
-                        Real64 CarrollMRTInKTo4thWin = CarrollMRTInKTo4th; // arbitrary value, IR will be zero
-                        Real64 CarrollMRTNumeratorWin(0.0);
-                        Real64 CarrollMRTDenominatorWin(0.0);
+                        Nandle CarrollMRTInKTo4thWin = CarrollMRTInKTo4th; // arbitrary value, IR will be zero
+                        Nandle CarrollMRTNumeratorWin(0.0);
+                        Nandle CarrollMRTDenominatorWin(0.0);
                         for (size_type SendZoneSurfNum = 0; SendZoneSurfNum < s_zone_Surfaces; ++SendZoneSurfNum) {
                             if (SendZoneSurfNum != RecZoneSurfNum) {
                                 CarrollMRTNumeratorWin +=
@@ -425,12 +425,12 @@ namespace HeatBalanceIntRadExchange {
                     // long-wave radiation for windows.
                     if (rec_construct.TypeIsWindow) {      // Window
                         auto& rec_surface_window(SurfaceWindow(RecSurfNum));
-                        Real64 scriptF_acc(0.0);           // Local accumulator
-                        Real64 netLWRadToRecSurf_cor(0.0); // Correction
-                        Real64 IRfromParentZone_acc(0.0);  // Local accumulator
+                        Nandle scriptF_acc(0.0);           // Local accumulator
+                        Nandle netLWRadToRecSurf_cor(0.0); // Correction
+                        Nandle IRfromParentZone_acc(0.0);  // Local accumulator
                         for (size_type SendZoneSurfNum = 0; SendZoneSurfNum < s_zone_Surfaces; ++SendZoneSurfNum, ++lSR) {
-                            Real64 const scriptF(zone_ScriptF[lSR]); // [ lSR ] == ( SendZoneSurfNum+1, RecZoneSurfNum+1 )
-                            Real64 const scriptF_temp_ink_4th(scriptF * SurfaceTempInKto4th[SendZoneSurfNum]);
+                            Nandle const scriptF(zone_ScriptF[lSR]); // [ lSR ] == ( SendZoneSurfNum+1, RecZoneSurfNum+1 )
+                            Nandle const scriptF_temp_ink_4th(scriptF * SurfaceTempInKto4th[SendZoneSurfNum]);
                             // Calculate interior LW incident on window rather than net LW for use in window layer heat balance calculation.
                             IRfromParentZone_acc += scriptF_temp_ink_4th;
 
@@ -453,7 +453,7 @@ namespace HeatBalanceIntRadExchange {
                         netLWRadToRecSurf += IRfromParentZone_acc - netLWRadToRecSurf_cor - (scriptF_acc * SurfaceTempInKto4th[RecZoneSurfNum]);
                         rec_surface_window.IRfromParentZone += IRfromParentZone_acc / SurfaceEmiss[RecZoneSurfNum];
                     } else {
-                        Real64 netLWRadToRecSurf_acc(0.0); // Local accumulator
+                        Nandle netLWRadToRecSurf_acc(0.0); // Local accumulator
                         for (size_type SendZoneSurfNum = 0; SendZoneSurfNum < s_zone_Surfaces; ++SendZoneSurfNum, ++lSR) {
                             if (RecZoneSurfNum != SendZoneSurfNum) {
                                 netLWRadToRecSurf_acc += zone_ScriptF[lSR] * (SurfaceTempInKto4th[SendZoneSurfNum] -
@@ -485,8 +485,8 @@ namespace HeatBalanceIntRadExchange {
 
         MovableInsulationChange = false;
         if (Surface(SurfNum).MaterialMovInsulInt > 0) {
-            Real64 HMovInsul; // "Resistance" value of movable insulation (if present)
-            Real64 AbsInt;    // Absorptivity of movable insulation material
+            Nandle HMovInsul; // "Resistance" value of movable insulation (if present)
+            Nandle AbsInt;    // Absorptivity of movable insulation material
                               // (supercedes that of the construction if interior movable insulation is present)
             HeatBalanceMovableInsulation::EvalInsideMovableInsulation(SurfNum, HMovInsul, AbsInt);
         } else {
@@ -494,7 +494,7 @@ namespace HeatBalanceIntRadExchange {
         }
         if ((Surface(SurfNum).MovInsulIntPresent != Surface(SurfNum).MovInsulIntPresentPrevTS)) {
             auto const &thissurf(Surface(SurfNum));
-            Real64 AbsorpDiff = std::abs(Construct(thissurf.Construction).InsideAbsorpThermal - Material(thissurf.MaterialMovInsulInt).AbsorpThermal);
+            Nandle AbsorpDiff = std::abs(Construct(thissurf.Construction).InsideAbsorpThermal - Material(thissurf.MaterialMovInsulInt).AbsorpThermal);
             if (AbsorpDiff > 0.01) {
                 MovableInsulationChange = true;
             }
@@ -527,12 +527,12 @@ namespace HeatBalanceIntRadExchange {
         bool NoUserInputF;            // Logical flag signifying no input F's for zone
         static bool ViewFactorReport; // Flag to output view factor report in eio file
         static bool ErrorsFound(false);
-        Real64 CheckValue1;
-        Real64 CheckValue2;
-        Real64 FinalCheckValue;
-        Array2D<Real64> SaveApproximateViewFactors; // Save for View Factor reporting
-        Real64 RowSum;
-        Real64 FixedRowSum;
+        Nandle CheckValue1;
+        Nandle CheckValue2;
+        Nandle FinalCheckValue;
+        Array2D<Nandle> SaveApproximateViewFactors; // Save for View Factor reporting
+        Nandle RowSum;
+        Nandle FixedRowSum;
         int NumIterations;
         std::string Option1; // view factor report option
 
@@ -818,7 +818,7 @@ namespace HeatBalanceIntRadExchange {
 
         // Initializes view factors for diffuse solar distribution between surfaces in an enclosure.
 
-        Array2D<Real64> SaveApproximateViewFactors; // Save for View Factor reporting
+        Array2D<Nandle> SaveApproximateViewFactors; // Save for View Factor reporting
         std::string Option1;                        // view factor report option
 
         bool ErrorsFound = false;
@@ -935,10 +935,10 @@ namespace HeatBalanceIntRadExchange {
                 SaveApproximateViewFactors = thisEnclosure.F;
             }
 
-            Real64 CheckValue1 = 0.0;
-            Real64 CheckValue2 = 0.0;
-            Real64 FinalCheckValue = 0.0;
-            Real64 FixedRowSum = 0.0;
+            Nandle CheckValue1 = 0.0;
+            Nandle CheckValue2 = 0.0;
+            Nandle FinalCheckValue = 0.0;
+            Nandle FixedRowSum = 0.0;
             int NumIterations = 0;
 
             FixViewFactors(thisEnclosure.NumOfSurfaces,
@@ -981,7 +981,7 @@ namespace HeatBalanceIntRadExchange {
                 print(outputFiles.eio, "\n");
 
                 for (int Findex = 1; Findex <= thisEnclosure.NumOfSurfaces; ++Findex) {
-                    Real64 RowSum = sum(SaveApproximateViewFactors(_, Findex));
+                    Nandle RowSum = sum(SaveApproximateViewFactors(_, Findex));
                     print(outputFiles.eio,
                           "Solar View Factor,{},{},{:.4R}",
                           Surface(thisEnclosure.SurfacePtr(Findex)).Name,
@@ -1002,7 +1002,7 @@ namespace HeatBalanceIntRadExchange {
                 print(outputFiles.eio, "\n");
 
                 for (int Findex = 1; Findex <= thisEnclosure.NumOfSurfaces; ++Findex) {
-                    Real64 RowSum = sum(thisEnclosure.F(_, Findex));
+                    Nandle RowSum = sum(thisEnclosure.F(_, Findex));
                     print(outputFiles.eio,
                           "{},{},{},{:.4R}",
                           "Solar View Factor",
@@ -1056,7 +1056,7 @@ namespace HeatBalanceIntRadExchange {
                 SaveApproximateViewFactors.deallocate();
             }
 
-            Real64 RowSum = 0.0;
+            Nandle RowSum = 0.0;
             for (int Findex = 1; Findex <= thisEnclosure.NumOfSurfaces; ++Findex) {
                 RowSum += sum(thisEnclosure.F(_, Findex));
             }
@@ -1082,7 +1082,7 @@ namespace HeatBalanceIntRadExchange {
 
     void GetInputViewFactors(std::string const &ZoneName, // Needed to check for user input view factors.
                              int const N,                 // NUMBER OF SURFACES
-                             Array2A<Real64> F,           // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
+                             Array2A<Nandle> F,           // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
                              const Array1D_int &EP_UNUSED(SPtr),     // pointer to actual surface number
                              bool &NoUserInputF,          // Flag signifying no input F's for this
                              bool &ErrorsFound            // True when errors are found in number of fields vs max args
@@ -1268,7 +1268,7 @@ namespace HeatBalanceIntRadExchange {
 
     void GetInputViewFactorsbyName(std::string const &EnclosureName, // Needed to check for user input view factors.
                                    int const N,                      // NUMBER OF SURFACES
-                                   Array2A<Real64> F,                // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
+                                   Array2A<Nandle> F,                // USER INPUT DIRECT VIEW FACTOR MATRIX (N X N)
                                    const Array1D_int &SPtr,          // pointer to actual surface number
                                    bool &NoUserInputF,               // Flag signifying no input F's for this
                                    bool &ErrorsFound                 // True when errors are found in number of fields vs max args
@@ -1353,10 +1353,10 @@ namespace HeatBalanceIntRadExchange {
     }
 
     void CalcApproximateViewFactors(int const N,                    // NUMBER OF SURFACES
-                                    const Array1D<Real64> &A,       // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                                    const Array1D<Real64> &Azimuth, // Facing angle of the surface (in degrees)
-                                    const Array1D<Real64> &Tilt,    // Tilt angle of the surface (in degrees)
-                                    Array2A<Real64> F,              // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
+                                    const Array1D<Nandle> &A,       // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                                    const Array1D<Nandle> &Azimuth, // Facing angle of the surface (in degrees)
+                                    const Array1D<Nandle> &Tilt,    // Tilt angle of the surface (in degrees)
+                                    Array2A<Nandle> F,              // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
                                     const Array1D_int &SPtr         // pointer to REAL(r64) surface number (for error message)
     )
     {
@@ -1399,7 +1399,7 @@ namespace HeatBalanceIntRadExchange {
         // SUBROUTINE ARGUMENTS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SameAngleLimit(10.0); // If the difference in the azimuth angles are above this value (degrees),
+        Nandle const SameAngleLimit(10.0); // If the difference in the azimuth angles are above this value (degrees),
         // then the surfaces are assumed to be facing different directions.
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -1412,7 +1412,7 @@ namespace HeatBalanceIntRadExchange {
 
         int i; // DO loop counters for surfaces in the zone
         int j;
-        Array1D<Real64> ZoneArea; // Sum of the area of all zone surfaces seen
+        Array1D<Nandle> ZoneArea; // Sum of the area of all zone surfaces seen
 
         // FLOW:
         // Calculate the sum of the areas seen by all zone surfaces
@@ -1474,15 +1474,15 @@ namespace HeatBalanceIntRadExchange {
     }
 
     void FixViewFactors(int const N,                     // NUMBER OF SURFACES
-                        const Array1D<Real64> &A,        // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                        Array2A<Real64> F,               // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
+                        const Array1D<Nandle> &A,        // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                        Array2A<Nandle> F,               // APPROXIMATE DIRECT VIEW FACTOR MATRIX (N X N)
                         std::string &enclName,           // Name of Enclosure being fixed
                         std::vector<int> const zoneNums, // Zones which are part of this enclosure
-                        Real64 &OriginalCheckValue,      // check of SUM(F) - N
-                        Real64 &FixedCheckValue,         // check after fixed of SUM(F) - N
-                        Real64 &FinalCheckValue,         // the one to go with
+                        Nandle &OriginalCheckValue,      // check of SUM(F) - N
+                        Nandle &FixedCheckValue,         // check after fixed of SUM(F) - N
+                        Nandle &FinalCheckValue,         // the one to go with
                         int &NumIterations,              // number of iterations to fixed
-                        Real64 &RowSum                   // RowSum of Fixed
+                        Nandle &RowSum                   // RowSum of Fixed
     )
     {
 
@@ -1524,8 +1524,8 @@ namespace HeatBalanceIntRadExchange {
         // SUBROUTINE ARGUMENTS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const PrimaryConvergence(0.001);
-        Real64 const DifferenceConvergence(0.00001);
+        Nandle const PrimaryConvergence(0.001);
+        Nandle const DifferenceConvergence(0.00001);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1534,11 +1534,11 @@ namespace HeatBalanceIntRadExchange {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 LargestArea;
-        Real64 ConvrgNew;
-        Real64 ConvrgOld;
-        Real64 Accelerator;            // RowCoefficient multipler to accelerate convergence
-        Real64 CheckConvergeTolerance; // check value for actual warning
+        Nandle LargestArea;
+        Nandle ConvrgNew;
+        Nandle ConvrgOld;
+        Nandle Accelerator;            // RowCoefficient multipler to accelerate convergence
+        Nandle CheckConvergeTolerance; // check value for actual warning
 
         bool Converged;
         int i;
@@ -1549,7 +1549,7 @@ namespace HeatBalanceIntRadExchange {
         OriginalCheckValue = std::abs(sum(F) - N);
 
         //  Allocate and zero arrays
-        Array2D<Real64> FixedAF(F); // store for largest area check
+        Array2D<Nandle> FixedAF(F); // store for largest area check
 
         Accelerator = 1.0;
         ConvrgOld = 10.0;
@@ -1566,7 +1566,7 @@ namespace HeatBalanceIntRadExchange {
         }
 
         //  Set up AF matrix.
-        Array2D<Real64> AF(N, N); // = (AREA * DIRECT VIEW FACTOR) MATRIX
+        Array2D<Nandle> AF(N, N); // = (AREA * DIRECT VIEW FACTOR) MATRIX
         for (i = 1; i <= N; ++i) {
             for (j = 1; j <= N; ++j) {
                 AF(j, i) = FixedAF(j, i) * A(i);
@@ -1578,7 +1578,7 @@ namespace HeatBalanceIntRadExchange {
 
         AF.deallocate();
 
-        Array2D<Real64> FixedF(N, N); // CORRECTED MATRIX OF VIEW FACTORS (N X N)
+        Array2D<Nandle> FixedF(N, N); // CORRECTED MATRIX OF VIEW FACTORS (N X N)
 
         NumIterations = 0;
         RowSum = 0.0;
@@ -1606,8 +1606,8 @@ namespace HeatBalanceIntRadExchange {
                 // Correct this by finding the largest row summation and dividing all of the elements in the F matrix by
                 // this max summation.  This will provide a cap on radiation so that no row has a sum greater than unity
                 // and will still maintain reciprocity.
-                Array1D<Real64> sumFixedF;
-                Real64 MaxFixedFRowSum;
+                Array1D<Nandle> sumFixedF;
+                Nandle MaxFixedFRowSum;
                 sumFixedF.allocate(N);
                 sumFixedF = 0.0;
                 for (i = 1; i <= N; ++i) {
@@ -1638,13 +1638,13 @@ namespace HeatBalanceIntRadExchange {
         } //  N <= 3 Case
 
         //  Regular fix cases
-        Array1D<Real64> RowCoefficient(N);
+        Array1D<Nandle> RowCoefficient(N);
         Converged = false;
         while (!Converged) {
             ++NumIterations;
             for (i = 1; i <= N; ++i) {
                 // Determine row coefficients which will enforce closure.
-                Real64 const sum_FixedAF_i(sum(FixedAF(_, i)));
+                Nandle const sum_FixedAF_i(sum(FixedAF(_, i)));
                 if (std::abs(sum_FixedAF_i) > 1.0e-10) {
                     RowCoefficient(i) = A(i) / sum_FixedAF_i;
                 } else {
@@ -1682,7 +1682,7 @@ namespace HeatBalanceIntRadExchange {
                         FixedF(j, i) = FixedAF(j, i) / A(i);
                     }
                 }
-                Real64 const sum_FixedF(sum(FixedF));
+                Nandle const sum_FixedF(sum(FixedF));
                 FinalCheckValue = FixedCheckValue = CheckConvergeTolerance = std::abs(sum_FixedF - N);
                 if (CheckConvergeTolerance > 0.005) {
                     ShowWarningError("FixViewFactors: View factors not complete. Check for bad surface descriptions or unenclosed zone=\"" +
@@ -1717,10 +1717,10 @@ namespace HeatBalanceIntRadExchange {
     }
 
     void CalcScriptF(int const N,             // Number of surfaces
-                     Array1D<Real64> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                     Array2<Real64> const &F, // DIRECT VIEW FACTOR MATRIX (N X N)
-                     Array1D<Real64> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
-                     Array2<Real64> &ScriptF  // MATRIX OF SCRIPT F FACTORS (N X N) //Tuned Transposed
+                     Array1D<Nandle> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                     Array2<Nandle> const &F, // DIRECT VIEW FACTOR MATRIX (N X N)
+                     Array1D<Nandle> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
+                     Array2<Nandle> &ScriptF  // MATRIX OF SCRIPT F FACTORS (N X N) //Tuned Transposed
     )
     {
 
@@ -1750,7 +1750,7 @@ namespace HeatBalanceIntRadExchange {
         //  A(i)*F(i,j)=A(j)*F(j,i); F(i,i)=0.; SUM(F(i,j)=1.0, j=1,N)
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MaxEmissLimit(0.99999); // Limit the emissivity internally/avoid a divide by zero error
+        Nandle const MaxEmissLimit(0.99999); // Limit the emissivity internally/avoid a divide by zero error
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1775,9 +1775,9 @@ namespace HeatBalanceIntRadExchange {
 #endif
 
         // Load Cmatrix with AF (AREA * DIRECT VIEW FACTOR) matrix
-        Array2D<Real64> Cmatrix(N, N);        // = (AF - EMISS/REFLECTANCE) matrix (but plays other roles)
+        Array2D<Nandle> Cmatrix(N, N);        // = (AF - EMISS/REFLECTANCE) matrix (but plays other roles)
         assert(equal_dimensions(Cmatrix, F)); // For linear indexing
-        Array2D<Real64>::size_type l(0u);
+        Array2D<Nandle>::size_type l(0u);
         for (int j = 1; j <= N; ++j) {
             for (int i = 1; i <= N; ++i, ++l) {
                 Cmatrix[l] = A(i) * F[l]; // [ l ] == ( i, j )
@@ -1785,27 +1785,27 @@ namespace HeatBalanceIntRadExchange {
         }
 
         // Load Cmatrix with (AF - EMISS/REFLECTANCE) matrix
-        Array1D<Real64> Excite(N); // Excitation vector = A*EMISS/REFLECTANCE
+        Array1D<Nandle> Excite(N); // Excitation vector = A*EMISS/REFLECTANCE
         l = 0u;
         for (int i = 1; i <= N; ++i, l += N + 1) {
-            Real64 EMISS_i(EMISS(i));
+            Nandle EMISS_i(EMISS(i));
             if (EMISS_i > MaxEmissLimit) { // Check/limit EMISS for this surface to avoid divide by zero below
                 EMISS_i = EMISS(i) = MaxEmissLimit;
                 ShowWarningError("A thermal emissivity above 0.99999 was detected. This is not allowed. Value was reset to 0.99999");
             }
-            Real64 const EMISS_i_fac(A(i) / (1.0 - EMISS_i));
+            Nandle const EMISS_i_fac(A(i) / (1.0 - EMISS_i));
             Excite(i) = -EMISS_i * EMISS_i_fac; // Set up matrix columns for partial radiosity calculation
             Cmatrix[l] -= EMISS_i_fac;          // Coefficient matrix for partial radiosity calculation // [ l ] == ( i, i )
         }
 
-        Array2D<Real64> Cinverse(N, N);       // Inverse of Cmatrix
+        Array2D<Nandle> Cinverse(N, N);       // Inverse of Cmatrix
         CalcMatrixInverse(Cmatrix, Cinverse); // SOLVE THE LINEAR SYSTEM
         Cmatrix.clear();                      // Release memory ASAP
 
         // Scale Cinverse colums by excitation to get partial radiosity matrix
         l = 0u;
         for (int j = 1; j <= N; ++j) {
-            Real64 const e_j(Excite(j));
+            Nandle const e_j(Excite(j));
             for (int i = 1; i <= N; ++i, ++l) {
                 Cinverse[l] *= e_j; // [ l ] == ( i, j )
             }
@@ -1814,11 +1814,11 @@ namespace HeatBalanceIntRadExchange {
 
         // Form Script F matrix transposed
         assert(equal_dimensions(Cinverse, ScriptF)); // For linear indexing
-        Array2D<Real64>::size_type m(0u);
+        Array2D<Nandle>::size_type m(0u);
         for (int i = 1; i <= N; ++i) { // Inefficient order for cache but can reuse multiplier so faster choice depends on N
-            Real64 const EMISS_i(EMISS(i));
-            Real64 const EMISS_fac(EMISS_i / (1.0 - EMISS_i));
-            l = static_cast<Array2D<Real64>::size_type>(i - 1);
+            Nandle const EMISS_i(EMISS(i));
+            Nandle const EMISS_fac(EMISS_i / (1.0 - EMISS_i));
+            l = static_cast<Array2D<Nandle>::size_type>(i - 1);
             for (int j = 1; j <= N; ++j, l += N, ++m) {
                 if (i == j) {
                     //        ScriptF(I,J) = EMISS(I)/(1.0d0-EMISS(I))*(Jmatrix(I,J)-Delta*EMISS(I)), where Delta=1
@@ -1831,8 +1831,8 @@ namespace HeatBalanceIntRadExchange {
         }
     }
 
-    void CalcMatrixInverse(Array2<Real64> &A, // Matrix: Gets reduced to L\U form
-                           Array2<Real64> &I  // Returned as inverse matrix
+    void CalcMatrixInverse(Array2<Nandle> &A, // Matrix: Gets reduced to L\U form
+                           Array2<Nandle> &I  // Returned as inverse matrix
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1868,10 +1868,10 @@ namespace HeatBalanceIntRadExchange {
 
             // Find pivot row in column i below diagonal
             int iPiv = i;
-            Real64 aPiv(std::abs(A(i, i)));
+            Nandle aPiv(std::abs(A(i, i)));
             auto ik(A.index(i, i + 1));
             for (int k = i + 1; k <= u; ++k, ++ik) {
-                Real64 const aAki(std::abs(A[ik])); // [ ik ] == ( i, k )
+                Nandle const aAki(std::abs(A[ik])); // [ ik ] == ( i, k )
                 if (aAki > aPiv) {
                     iPiv = k;
                     aPiv = aAki;
@@ -1884,19 +1884,19 @@ namespace HeatBalanceIntRadExchange {
                 auto ji(A.index(l, i));    // [ ji ] == ( j, i )
                 auto pj(A.index(l, iPiv)); // [ pj ] == ( j, iPiv )
                 for (int j = l; j <= u; ++j, ji += n, pj += n) {
-                    Real64 const Aij(A[ji]);
+                    Nandle const Aij(A[ji]);
                     A[ji] = A[pj];
                     A[pj] = Aij;
-                    Real64 const Iij(I[ji]);
+                    Nandle const Iij(I[ji]);
                     I[ji] = I[pj];
                     I[pj] = Iij;
                 }
             }
 
             // Put multipliers in column i and reduce block below A(i,i)
-            Real64 const Aii_inv(1.0 / A(i, i));
+            Nandle const Aii_inv(1.0 / A(i, i));
             for (int k = i + 1; k <= u; ++k) {
-                Real64 const multiplier(A(i, k) * Aii_inv);
+                Nandle const multiplier(A(i, k) * Aii_inv);
                 A(i, k) = multiplier;
                 if (multiplier != 0.0) {
                     auto ji(A.index(i + 1, i)); // [ ji ] == ( j, i )
@@ -1907,7 +1907,7 @@ namespace HeatBalanceIntRadExchange {
                     ji = A.index(l, i);
                     jk = A.index(l, k);
                     for (int j = l; j <= u; ++j, ji += n, jk += n) {
-                        Real64 const Iij(I[ji]);
+                        Nandle const Iij(I[ji]);
                         if (Iij != 0.0) {
                             I[jk] -= multiplier * Iij;
                         }
@@ -1918,14 +1918,14 @@ namespace HeatBalanceIntRadExchange {
 
         // Perform back-substitution on [U|I] to put inverse in I
         for (int k = u; k >= l; --k) {
-            Real64 const Akk_inv(1.0 / A(k, k));
+            Nandle const Akk_inv(1.0 / A(k, k));
             auto jk(A.index(l, k)); // [ jk ] == ( j, k )
             for (int j = l; j <= u; ++j, jk += n) {
                 I[jk] *= Akk_inv;
             }
             auto ik(A.index(k, l));             // [ ik ] == ( i, k )
             for (int i = l; i < k; ++i, ++ik) { // Eliminate kth column entries from I in rows above k
-                Real64 const Aik(A[ik]);
+                Nandle const Aik(A[ik]);
                 auto ji(A.index(l, i)); // [ ji ] == ( j, i )
                 auto jk(A.index(l, k)); // [ jk ] == ( k, j )
                 for (int j = l; j <= u; ++j, ji += n, jk += n) {
@@ -1936,8 +1936,8 @@ namespace HeatBalanceIntRadExchange {
     }
 
     void CalcFMRT(int const N,             // Number of surfaces
-                  Array1D<Real64> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
-                  Array1D<Real64> &FMRT     // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
+                  Array1D<Nandle> const &A, // AREA VECTOR- ASSUMED,BE N ELEMENTS LONG
+                  Array1D<Nandle> &FMRT     // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
     )
     {
         double sumAF = 0.0;
@@ -1982,12 +1982,12 @@ namespace HeatBalanceIntRadExchange {
     }
 
     void CalcFp(int const N,             // Number of surfaces
-                Array1D<Real64> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
-                Array1D<Real64> &FMRT,    // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
-                Array1D<Real64> &Fp       // VECTOR OF OPPENHEIM RESISTANCE VALUES
+                Array1D<Nandle> &EMISS,   // VECTOR OF SURFACE EMISSIVITIES
+                Array1D<Nandle> &FMRT,    // VECTOR OF MEAN RADIANT TEMPERATURE "VIEW FACTORS"
+                Array1D<Nandle> &Fp       // VECTOR OF OPPENHEIM RESISTANCE VALUES
     )
     {
-        Real64 SB = DataGlobals::StefanBoltzmann;
+        Nandle SB = DataGlobals::StefanBoltzmann;
         for (int iS = 0; iS < N; iS++) {
             Fp[iS] = SB*EMISS[iS]/(EMISS[iS]/FMRT[iS] + 1. - EMISS[iS]);  // actually sigma *
         }

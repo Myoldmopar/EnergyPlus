@@ -73,8 +73,8 @@ using WeatherManager::NumDaysInYear;
 int simDay = 0;
 int numIterYears = 0;
 int const maxYearsToIterate = 10;
-Real64 finalTempConvergenceCriteria = 0.05;
-Real64 iterationTempConvergenceCriteria = 0.00001;
+Nandle finalTempConvergenceCriteria = 0.05;
+Nandle iterationTempConvergenceCriteria = 0.00001;
 
 //******************************************************************************
 
@@ -192,12 +192,12 @@ void FiniteDiffGroundTempsModel::getWeatherData()
     // SUBROUTINE ARGUMENT DEFINITIONS:
     bool Available; // an environment is available to process
     bool ErrorsFound;
-    Real64 outDryBulbTemp_num;
-    Real64 relHum_num;
-    Real64 windSpeed_num;
-    Real64 horizSolarRad_num;
-    Real64 airDensity_num;
-    Real64 annualAveAirTemp_num;
+    Nandle outDryBulbTemp_num;
+    Nandle relHum_num;
+    Nandle windSpeed_num;
+    Nandle horizSolarRad_num;
+    Nandle airDensity_num;
+    Nandle annualAveAirTemp_num;
     int denominator;
 
     // Save current environment so we can revert back when done
@@ -390,21 +390,21 @@ void FiniteDiffGroundTempsModel::developMesh()
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
     // Surface layer parameters
-    Real64 surfaceLayerThickness = 2.0;
-    Real64 surfaceLayerCellThickness = 0.015;
+    Nandle surfaceLayerThickness = 2.0;
+    Nandle surfaceLayerCellThickness = 0.015;
     int surfaceLayerNumCells = surfaceLayerThickness / surfaceLayerCellThickness;
 
     // Center layer parameters
-    Real64 centerLayerExpansionCoeff = 1.10879;
+    Nandle centerLayerExpansionCoeff = 1.10879;
     int centerLayerNumCells = 80;
 
     // Deep layer parameters
-    Real64 deepLayerThickness = 0.2;
-    Real64 deepLayerCellThickness = surfaceLayerCellThickness;
+    Nandle deepLayerThickness = 0.2;
+    Nandle deepLayerCellThickness = surfaceLayerCellThickness;
     int deepLayerNumCells = deepLayerThickness / deepLayerCellThickness;
 
     // Other
-    Real64 currentCellDepth = 0.0;
+    Nandle currentCellDepth = 0.0;
 
     totalNumCells = surfaceLayerNumCells + centerLayerNumCells + deepLayerNumCells;
 
@@ -539,36 +539,36 @@ void FiniteDiffGroundTempsModel::updateSurfaceCellTemperature()
     // Determines heat transfer to surface. Updates surface cell temperature.
 
     // FUNCTION LOCAL VARIABLE DECLARATIONS:
-    Real64 numerator(0.0);
-    Real64 denominator(0.0);
-    Real64 resistance(0.0);
-    Real64 incidentHeatGain;
-    Real64 incidentSolar_MJhrmin;
-    Real64 evapotransHeatLoss_Wm2;
-    Real64 absorbedIncidentSolar_MJhrmin;
-    Real64 vaporPressureSaturated_kPa;
-    Real64 vaporPressureActual_kPa;
-    Real64 currAirTempK;
-    Real64 QRAD_NL;
-    Real64 netIncidentRadiation_MJhr;
-    Real64 netIncidentRadiation_Wm2;
-    Real64 slope_S;
-    Real64 CN;
-    Real64 G_hr;
-    Real64 Cd;
-    Real64 pressure;
-    Real64 psychrometricConstant;
-    Real64 evapotransFluidLoss_mmhr;
-    Real64 evapotransFluidLoss_mhr;
-    Real64 latentHeatVaporization;
-    Real64 evapotransHeatLoss_MJhrmin;
+    Nandle numerator(0.0);
+    Nandle denominator(0.0);
+    Nandle resistance(0.0);
+    Nandle incidentHeatGain;
+    Nandle incidentSolar_MJhrmin;
+    Nandle evapotransHeatLoss_Wm2;
+    Nandle absorbedIncidentSolar_MJhrmin;
+    Nandle vaporPressureSaturated_kPa;
+    Nandle vaporPressureActual_kPa;
+    Nandle currAirTempK;
+    Nandle QRAD_NL;
+    Nandle netIncidentRadiation_MJhr;
+    Nandle netIncidentRadiation_Wm2;
+    Nandle slope_S;
+    Nandle CN;
+    Nandle G_hr;
+    Nandle Cd;
+    Nandle pressure;
+    Nandle psychrometricConstant;
+    Nandle evapotransFluidLoss_mmhr;
+    Nandle evapotransFluidLoss_mhr;
+    Nandle latentHeatVaporization;
+    Nandle evapotransHeatLoss_MJhrmin;
 
-    Real64 const rho_water(998.0);      // [kg/m3]
-    Real64 const airSpecificHeat(1003); // '[J/kg-K]
+    Nandle const rho_water(998.0);      // [kg/m3]
+    Nandle const airSpecificHeat(1003); // '[J/kg-K]
     // evapotranspiration parameters
-    Real64 const absor_Corrected(0.77);
-    Real64 const convert_Wm2_To_MJhrmin(3600.0 / 1000000.0);
-    Real64 const convert_MJhrmin_To_Wm2(1.0 / convert_Wm2_To_MJhrmin);
+    Nandle const absor_Corrected(0.77);
+    Nandle const convert_Wm2_To_MJhrmin(3600.0 / 1000000.0);
+    Nandle const convert_MJhrmin_To_Wm2(1.0 / convert_Wm2_To_MJhrmin);
 
     auto &thisCell = cellArray(1);
     auto &cellBelow_thisCell = cellArray(2);
@@ -683,9 +683,9 @@ void FiniteDiffGroundTempsModel::updateGeneralDomainCellTemperature(int const ce
     // Update cell temperature based on HT from cells above and below
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 numerator(0.0);
-    Real64 denominator(0.0);
-    Real64 resistance(0.0);
+    Nandle numerator(0.0);
+    Nandle denominator(0.0);
+    Nandle resistance(0.0);
 
     auto &thisCell = cellArray(cell);
     auto &cellAbove_thisCell = cellArray(cell - 1);
@@ -732,11 +732,11 @@ void FiniteDiffGroundTempsModel::updateBottomCellTemperature()
     //	IPCC scoping meeting on renewable energy sources: 59-80.
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 numerator(0.0);
-    Real64 denominator(0.0);
-    Real64 resistance(0.0);
-    Real64 HTBottom;
-    Real64 geothermalGradient(0.025); // C/m
+    Nandle numerator(0.0);
+    Nandle denominator(0.0);
+    Nandle resistance(0.0);
+    Nandle HTBottom;
+    Nandle geothermalGradient(0.025); // C/m
 
     auto &thisCell = cellArray(totalNumCells);
     auto &cellAbove_thisCell = cellArray(totalNumCells - 1);
@@ -856,7 +856,7 @@ void FiniteDiffGroundTempsModel::initDomain()
     for (int cell = 1; cell <= totalNumCells; ++cell) {
         auto &thisCell = cellArray(cell);
 
-        Real64 depth = (thisCell.maxZValue + thisCell.minZValue) / 2.0;
+        Nandle depth = (thisCell.maxZValue + thisCell.minZValue) / 2.0;
 
         // Initialize temperatures
         if (tempModel) {
@@ -946,14 +946,14 @@ void FiniteDiffGroundTempsModel::doStartOfTimeStepInits()
 
 //******************************************************************************
 
-Real64 FiniteDiffGroundTempsModel::interpolate(Real64 const x, Real64 const x_hi, Real64 const x_low, Real64 const y_hi, Real64 const y_low)
+Nandle FiniteDiffGroundTempsModel::interpolate(Nandle const x, Nandle const x_hi, Nandle const x_low, Nandle const y_hi, Nandle const y_low)
 {
     return (x - x_low) / (x_hi - x_low) * (y_hi - y_low) + y_low;
 }
 
 //******************************************************************************
 
-Real64 FiniteDiffGroundTempsModel::getGroundTemp()
+Nandle FiniteDiffGroundTempsModel::getGroundTemp()
 {
 
     // SUBROUTINE INFORMATION:
@@ -971,14 +971,14 @@ Real64 FiniteDiffGroundTempsModel::getGroundTemp()
     int i1;         // Next day
     int j0;         // Cell index with depth less than y-depth
     int j1;         // Next cell index (with depth greater than y-depth
-    Real64 T_i0_j0; // Temp at int( x-day ); cell lower_bound( y-depth )
-    Real64 T_i1_j0; // Temp at int( x-day ) + 1; cell lower_bound( y-depth )
-    Real64 T_i0_j1; // Temp at int( x-day ); cell lower_bound( y-depth ) + 1
-    Real64 T_i1_j1; // Temp at int( x-day ) + 1; cell lower_bound( y-depth ) + 1
-    Real64 T_ix_j0; // Temp at x-day; cell lower_bound( y-depth )
-    Real64 T_ix_j1; // Temp at x-day; cell lower_bound( y-depth ) + 1
-    Real64 T_ix_jy; // Final Temperature--Temp at x-day; y-depth
-    Real64 dayFrac; // Fraction of day
+    Nandle T_i0_j0; // Temp at int( x-day ); cell lower_bound( y-depth )
+    Nandle T_i1_j0; // Temp at int( x-day ) + 1; cell lower_bound( y-depth )
+    Nandle T_i0_j1; // Temp at int( x-day ); cell lower_bound( y-depth ) + 1
+    Nandle T_i1_j1; // Temp at int( x-day ) + 1; cell lower_bound( y-depth ) + 1
+    Nandle T_ix_j0; // Temp at x-day; cell lower_bound( y-depth )
+    Nandle T_ix_j1; // Temp at x-day; cell lower_bound( y-depth ) + 1
+    Nandle T_ix_jy; // Final Temperature--Temp at x-day; y-depth
+    Nandle dayFrac; // Fraction of day
 
     if (depth < 0.0) {
         depth = 0.0;
@@ -1073,7 +1073,7 @@ Real64 FiniteDiffGroundTempsModel::getGroundTemp()
 
 //******************************************************************************
 
-Real64 FiniteDiffGroundTempsModel::getGroundTempAtTimeInSeconds(Real64 const _depth, Real64 const seconds)
+Nandle FiniteDiffGroundTempsModel::getGroundTempAtTimeInSeconds(Nandle const _depth, Nandle const seconds)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -1102,7 +1102,7 @@ Real64 FiniteDiffGroundTempsModel::getGroundTempAtTimeInSeconds(Real64 const _de
 
 //******************************************************************************
 
-Real64 FiniteDiffGroundTempsModel::getGroundTempAtTimeInMonths(Real64 const _depth, int const month)
+Nandle FiniteDiffGroundTempsModel::getGroundTempAtTimeInMonths(Nandle const _depth, int const month)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -1114,7 +1114,7 @@ Real64 FiniteDiffGroundTempsModel::getGroundTempAtTimeInMonths(Real64 const _dep
     // Returns ground temperature when input time is in months
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 const aveDaysInMonth = NumDaysInYear / 12;
+    Nandle const aveDaysInMonth = NumDaysInYear / 12;
 
     depth = _depth;
 
@@ -1143,25 +1143,25 @@ void FiniteDiffGroundTempsModel::evaluateSoilRhoCp(Optional<int const> cell, Opt
     // Evaluates the soil properties
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    static Real64 Theta_ice;
-    static Real64 Theta_liq;
-    static Real64 Theta_sat;
-    static Real64 rho_ice;
-    static Real64 rho_liq;
-    static Real64 rhoCp_soil_liq_1;
-    static Real64 CP_liq;
-    static Real64 CP_ice;
-    static Real64 Lat_fus;
-    static Real64 Cp_transient;
-    static Real64 rhoCP_soil_liq;
-    static Real64 rhoCP_soil_transient;
-    static Real64 rhoCP_soil_ice;
+    static Nandle Theta_ice;
+    static Nandle Theta_liq;
+    static Nandle Theta_sat;
+    static Nandle rho_ice;
+    static Nandle rho_liq;
+    static Nandle rhoCp_soil_liq_1;
+    static Nandle CP_liq;
+    static Nandle CP_ice;
+    static Nandle Lat_fus;
+    static Nandle Cp_transient;
+    static Nandle rhoCP_soil_liq;
+    static Nandle rhoCP_soil_transient;
+    static Nandle rhoCP_soil_ice;
     // other variables
-    Real64 frzAllIce;
-    Real64 frzIceTrans;
-    Real64 frzLiqTrans;
-    Real64 frzAllLiq;
-    Real64 rhoCP_soil;
+    Nandle frzAllIce;
+    Nandle frzIceTrans;
+    Nandle frzLiqTrans;
+    Nandle frzAllLiq;
+    Nandle rhoCP_soil;
 
     // These vary by domain now, so we must be careful to retrieve them every time
     Theta_liq = waterContent;

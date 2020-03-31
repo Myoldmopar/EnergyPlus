@@ -78,50 +78,50 @@ namespace ChillerElectricEIR {
         std::string Name;                 // User identifier
         int TypeNum;                      // plant loop type identifier
         int CondenserType;                // Type of Condenser - Air Cooled, Water Cooled or Evap Cooled
-        Real64 RefCap;                    // Reference capacity of chiller [W]
+        Nandle RefCap;                    // Reference capacity of chiller [W]
         bool RefCapWasAutoSized;          // reference capacity was autosized on input
-        Real64 RefCOP;                    // Reference coefficient of performance [W/W]
+        Nandle RefCOP;                    // Reference coefficient of performance [W/W]
         int FlowMode;                     // one of 3 modes for component flow during operation
         bool ModulatedFlowSetToLoop;      // True if the setpoint is missing at the outlet node
         bool ModulatedFlowErrDone;        // true if setpoint warning issued
         bool HRSPErrDone;                 // TRUE if set point warning issued for heat recovery loop
-        Real64 EvapVolFlowRate;           // Reference water volumetric flow rate through the evaporator [m3/s]
+        Nandle EvapVolFlowRate;           // Reference water volumetric flow rate through the evaporator [m3/s]
         bool EvapVolFlowRateWasAutoSized; // true if previous was autosize input
-        Real64 EvapMassFlowRate;
-        Real64 EvapMassFlowRateMax;       // Reference water mass flow rate through evaporator [kg/s]
-        Real64 CondVolFlowRate;           // Reference water volumetric flow rate through the condenser [m3/s]
+        Nandle EvapMassFlowRate;
+        Nandle EvapMassFlowRateMax;       // Reference water mass flow rate through evaporator [kg/s]
+        Nandle CondVolFlowRate;           // Reference water volumetric flow rate through the condenser [m3/s]
         bool CondVolFlowRateWasAutoSized; // true if previous was set to autosize on input
-        Real64 CondMassFlowRate;          // Condenser mass flow rate [kg/s]
-        Real64 CondMassFlowRateMax;       // Reference water mass flow rate through condenser [kg/s]
-        Real64 CondenserFanPowerRatio;    // Reference power of condenser fan to capacity ratio, W/W
-        Real64 CompPowerToCondenserFrac;  // Fraction of compressor electric power rejected by condenser [0 to 1]
+        Nandle CondMassFlowRate;          // Condenser mass flow rate [kg/s]
+        Nandle CondMassFlowRateMax;       // Reference water mass flow rate through condenser [kg/s]
+        Nandle CondenserFanPowerRatio;    // Reference power of condenser fan to capacity ratio, W/W
+        Nandle CompPowerToCondenserFrac;  // Fraction of compressor electric power rejected by condenser [0 to 1]
         int EvapInletNodeNum;             // Node number on the inlet side of the plant (evaporator side)
         int EvapOutletNodeNum;            // Node number on the outlet side of the plant (evaporator side)
-        Real64 EvapOutletTemp;            // Evaporator outlet temperature [C]
+        Nandle EvapOutletTemp;            // Evaporator outlet temperature [C]
         int CondInletNodeNum;             // Node number on the inlet side of the condenser
         int CondOutletNodeNum;            // Node number on the outlet side of the condenser
-        Real64 CondOutletTemp;            // Condenser outlet temperature [C]
-        Real64 CondOutletHumRat;          // Condenser outlet humidity ratio [kg/kg]
-        Real64 MinPartLoadRat;            // Minimum allowed operating fraction of full load
-        Real64 MaxPartLoadRat;            // Maximum allowed operating fraction of full load
-        Real64 OptPartLoadRat;            // Optimal operating fraction of full load
-        Real64 MinUnloadRat;              // Minimum unloading ratio
-        Real64 TempRefCondIn;             // The reference secondary loop fluid temperature
+        Nandle CondOutletTemp;            // Condenser outlet temperature [C]
+        Nandle CondOutletHumRat;          // Condenser outlet humidity ratio [kg/kg]
+        Nandle MinPartLoadRat;            // Minimum allowed operating fraction of full load
+        Nandle MaxPartLoadRat;            // Maximum allowed operating fraction of full load
+        Nandle OptPartLoadRat;            // Optimal operating fraction of full load
+        Nandle MinUnloadRat;              // Minimum unloading ratio
+        Nandle TempRefCondIn;             // The reference secondary loop fluid temperature
         // at the chiller condenser side inlet [C]
-        Real64 TempRefEvapOut; // The reference primary loop fluid temperature
+        Nandle TempRefEvapOut; // The reference primary loop fluid temperature
         // at the chiller evaporator side outlet [C]
-        Real64 TempLowLimitEvapOut;                // Low temperature shut off [C]
-        Real64 DesignHeatRecVolFlowRate;           // Design water volumetric flow rate through heat recovery loop [m3/s]
+        Nandle TempLowLimitEvapOut;                // Low temperature shut off [C]
+        Nandle DesignHeatRecVolFlowRate;           // Design water volumetric flow rate through heat recovery loop [m3/s]
         bool DesignHeatRecVolFlowRateWasAutoSized; // true if previous input was autosize
-        Real64 DesignHeatRecMassFlowRate;          // Design water mass flow rate through heat recovery loop [kg/s]
-        Real64 SizFac;                             // sizing factor
-        Real64 BasinHeaterPowerFTempDiff;          // Basin heater capacity per degree C below setpoint (W/C)
-        Real64 BasinHeaterSetPointTemp;            // setpoint temperature for basin heater operation (C)
+        Nandle DesignHeatRecMassFlowRate;          // Design water mass flow rate through heat recovery loop [kg/s]
+        Nandle SizFac;                             // sizing factor
+        Nandle BasinHeaterPowerFTempDiff;          // Basin heater capacity per degree C below setpoint (W/C)
+        Nandle BasinHeaterSetPointTemp;            // setpoint temperature for basin heater operation (C)
         bool HeatRecActive;                        // True when entered Heat Rec Vol Flow Rate > 0
         int HeatRecInletNodeNum;                   // Node number for the heat recovery inlet side of the condenser
         int HeatRecOutletNodeNum;                  // Node number for the heat recovery outlet side of the condenser
-        Real64 HeatRecCapacityFraction;            // user input for heat recovery capacity fraction []
-        Real64 HeatRecMaxCapacityLimit;            // Capacity limit for Heat recovery, one time calc [W]
+        Nandle HeatRecCapacityFraction;            // user input for heat recovery capacity fraction []
+        Nandle HeatRecMaxCapacityLimit;            // Capacity limit for Heat recovery, one time calc [W]
         int HeatRecSetPointNodeNum;                // index for system node with the heat recover leaving setpoint
         int HeatRecInletLimitSchedNum;             // index for schedule for the inlet high limit for heat recovery operation
         int ChillerCapFTIndex;                     // Index for the total cooling capacity modifier curve
@@ -137,8 +137,8 @@ namespace ChillerElectricEIR {
         int ChillerEIRFTErrorIndex;   // Used for negative EIR as a function of temp warnings
         int ChillerEIRFPLRError;      // Used for negative EIR as a function of PLR warnings
         int ChillerEIRFPLRErrorIndex; // Used for negative EIR as a function of PLR warnings
-        Real64 ChillerEIRFPLRMin;     // Minimum value of PLR from EIRFPLR curve
-        Real64 ChillerEIRFPLRMax;     // Maximum value of PLR from EIRFPLR curve
+        Nandle ChillerEIRFPLRMin;     // Minimum value of PLR from EIRFPLR curve
+        Nandle ChillerEIRFPLRMax;     // Maximum value of PLR from EIRFPLR curve
         int DeltaTErrCount;           // Evaporator delta T equals 0 for variable flow chiller warning messages
         int DeltaTErrCountIndex;      // Index to evaporator delta T = 0 for variable flow chiller warning messages
         int CWLoopNum;                // chilled water plant loop index number
@@ -157,7 +157,7 @@ namespace ChillerElectricEIR {
         int CondMassFlowIndex;
         std::string MsgBuffer1;  // - buffer to print warning messages on following time step
         std::string MsgBuffer2;  // - buffer to print warning messages on following time step
-        Real64 MsgDataLast;      // value of data when warning occurred (passed to Recurring Warn)
+        Nandle MsgDataLast;      // value of data when warning occurred (passed to Recurring Warn)
         bool PrintMessage;       // logical to determine if message is valid
         int MsgErrorCount;       // number of occurrences of warning
         int ErrCount1;           // for recurring error messages
@@ -165,43 +165,43 @@ namespace ChillerElectricEIR {
         // Operational fault parameters
         bool FaultyChillerSWTFlag;         // True if the chiller has SWT sensor fault
         int FaultyChillerSWTIndex;         // Index of the fault object corresponding to the chiller
-        Real64 FaultyChillerSWTOffset;     // Chiller SWT sensor offset
+        Nandle FaultyChillerSWTOffset;     // Chiller SWT sensor offset
         bool FaultyChillerFoulingFlag;     // True if the chiller has fouling fault
         int FaultyChillerFoulingIndex;     // Index of the fault object corresponding to the chiller
-        Real64 FaultyChillerFoulingFactor; // Chiller fouling factor
+        Nandle FaultyChillerFoulingFactor; // Chiller fouling factor
         std::string EndUseSubcategory;     // identifier use for the end use subcategory
-        Real64 TimeStepSysLast;
-        Real64 CurrentEndTimeLast;
+        Nandle TimeStepSysLast;
+        Nandle CurrentEndTimeLast;
         bool oneTimeFlag;
         bool MyEnvrnFlag;
-        Real64 EvapWaterConsump;              // Evap cooler water consumption (m3)
-        Real64 EvapWaterConsumpRate;          // Evap condenser water consumption rate [m3/s]
-        Real64 Power;                         // Rate of chiller electric energy use [W]
-        Real64 QEvaporator;                   // Rate of heat transfer to the evaporator coil [W]
-        Real64 QCondenser;                    // Rate of heat transfer to the condenser coil [W]
-        Real64 QHeatRecovered;                // Rate of heat transfer to the heat recovery coil [W]
-        Real64 HeatRecOutletTemp;             // Heat recovery outlet temperature [C]
-        Real64 CondenserFanPower;             // Condenser Fan Power (fan cycles with compressor) [W]
-        Real64 ChillerCapFT;                  // Chiller capacity fraction (evaluated as a function of temperature)
-        Real64 ChillerEIRFT;                  // Chiller electric input ratio (EIR = 1 / COP) as a function of temperature
-        Real64 ChillerEIRFPLR;                // Chiller EIR as a function of part-load ratio (PLR)
-        Real64 ChillerPartLoadRatio;          // Chiller part-load ratio (PLR)
-        Real64 ChillerCyclingRatio;           // Chiller cycling ratio
-        Real64 BasinHeaterPower;              // Basin heater power (W)
-        Real64 ChillerFalseLoadRate;          // Chiller false load over and above the water-side load [W]
-        Real64 ChillerFalseLoad;              // reporting: Chiller false load over and above water side load [W]
-        Real64 Energy;                        // reporting: Chiller electric consumption [J]
-        Real64 EvapEnergy;                    // reporting: Evaporator heat transfer energy [J]
-        Real64 CondEnergy;                    // reporting: Condenser heat transfer energy [J]
-        Real64 CondInletTemp;                 // reporting: Condenser inlet temperature [C]
-        Real64 EvapInletTemp;                 // reporting: Evaporator inlet temperature [C]
-        Real64 ActualCOP;                     // reporting: Coefficient of performance
-        Real64 EnergyHeatRecovery;            // reporting: Energy recovered from water-cooled condenser [J]
-        Real64 HeatRecInletTemp;              // reporting: Heat reclaim inlet temperature [C]
-        Real64 HeatRecMassFlow;               // reporting: Heat reclaim mass flow rate [kg/s]
-        Real64 ChillerCondAvgTemp;            // reporting: average condenser temp for curves with Heat recovery [C]
-        Real64 CondenserFanEnergyConsumption; // reporting: Air-cooled condenser fan energy [J]
-        Real64 BasinHeaterConsumption;        // Basin heater energy consumption (J)
+        Nandle EvapWaterConsump;              // Evap cooler water consumption (m3)
+        Nandle EvapWaterConsumpRate;          // Evap condenser water consumption rate [m3/s]
+        Nandle Power;                         // Rate of chiller electric energy use [W]
+        Nandle QEvaporator;                   // Rate of heat transfer to the evaporator coil [W]
+        Nandle QCondenser;                    // Rate of heat transfer to the condenser coil [W]
+        Nandle QHeatRecovered;                // Rate of heat transfer to the heat recovery coil [W]
+        Nandle HeatRecOutletTemp;             // Heat recovery outlet temperature [C]
+        Nandle CondenserFanPower;             // Condenser Fan Power (fan cycles with compressor) [W]
+        Nandle ChillerCapFT;                  // Chiller capacity fraction (evaluated as a function of temperature)
+        Nandle ChillerEIRFT;                  // Chiller electric input ratio (EIR = 1 / COP) as a function of temperature
+        Nandle ChillerEIRFPLR;                // Chiller EIR as a function of part-load ratio (PLR)
+        Nandle ChillerPartLoadRatio;          // Chiller part-load ratio (PLR)
+        Nandle ChillerCyclingRatio;           // Chiller cycling ratio
+        Nandle BasinHeaterPower;              // Basin heater power (W)
+        Nandle ChillerFalseLoadRate;          // Chiller false load over and above the water-side load [W]
+        Nandle ChillerFalseLoad;              // reporting: Chiller false load over and above water side load [W]
+        Nandle Energy;                        // reporting: Chiller electric consumption [J]
+        Nandle EvapEnergy;                    // reporting: Evaporator heat transfer energy [J]
+        Nandle CondEnergy;                    // reporting: Condenser heat transfer energy [J]
+        Nandle CondInletTemp;                 // reporting: Condenser inlet temperature [C]
+        Nandle EvapInletTemp;                 // reporting: Evaporator inlet temperature [C]
+        Nandle ActualCOP;                     // reporting: Coefficient of performance
+        Nandle EnergyHeatRecovery;            // reporting: Energy recovered from water-cooled condenser [J]
+        Nandle HeatRecInletTemp;              // reporting: Heat reclaim inlet temperature [C]
+        Nandle HeatRecMassFlow;               // reporting: Heat reclaim mass flow rate [kg/s]
+        Nandle ChillerCondAvgTemp;            // reporting: average condenser temp for curves with Heat recovery [C]
+        Nandle CondenserFanEnergyConsumption; // reporting: Air-cooled condenser fan energy [J]
+        Nandle BasinHeaterConsumption;        // Basin heater energy consumption (J)
         bool IPLVFlag;
         int EquipFlowCtrl;
 
@@ -236,29 +236,29 @@ namespace ChillerElectricEIR {
 
         void setupOutputVars();
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void getDesignTemperatures(Real64 &TempDesCondIn, Real64 &TempDesEvapOut) override;
+        void getDesignTemperatures(Nandle &TempDesCondIn, Nandle &TempDesEvapOut) override;
 
-        void getSizingFactor(Real64 &sizFac) override;
+        void getSizingFactor(Nandle &sizFac) override;
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void initialize(bool RunFlag, Real64 MyLoad);
+        void initialize(bool RunFlag, Nandle MyLoad);
 
         void size();
 
-        void calculate(Real64 &MyLoad, bool RunFlag);
+        void calculate(Nandle &MyLoad, bool RunFlag);
 
-        void calcHeatRecovery(Real64 &QCond,        // Current condenser load [W]
-                              Real64 CondMassFlow,  // Current condenser mass flow [kg/s]
-                              Real64 condInletTemp, // Current condenser inlet temp [C]
-                              Real64 &QHeatRec      // Amount of heat recovered [W]
+        void calcHeatRecovery(Nandle &QCond,        // Current condenser load [W]
+                              Nandle CondMassFlow,  // Current condenser mass flow [kg/s]
+                              Nandle condInletTemp, // Current condenser inlet temp [C]
+                              Nandle &QHeatRec      // Amount of heat recovered [W]
         );
 
-        void update(Real64 MyLoad, bool RunFlag);
+        void update(Nandle MyLoad, bool RunFlag);
     };
 
     // Object Data

@@ -83,7 +83,7 @@ namespace ZoneContaminantPredictorCorrector {
     void ManageZoneContaminanUpdates(int const UpdateType, // Can be iGetZoneSetPoints, iPredictStep, iCorrectStep
                                      bool const ShortenTimeStepSys,
                                      bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                                     Real64 const PriorTimeStep // the old value for timestep length is passed for possible use in interpolating
+                                     Nandle const PriorTimeStep // the old value for timestep length is passed for possible use in interpolating
     );
 
     void GetZoneContaminanInputs();
@@ -94,7 +94,7 @@ namespace ZoneContaminantPredictorCorrector {
 
     void PredictZoneContaminants(bool const ShortenTimeStepSys,
                                  bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step
-                                 Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                                 Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     );
 
     void PushZoneTimestepHistories();
@@ -104,16 +104,16 @@ namespace ZoneContaminantPredictorCorrector {
     void RevertZoneTimestepHistories();
 
     void InverseModelCO2(int const ZoneNum,           // Zone number
-                         Real64 &CO2Gain,             // Zone total CO2 gain
-                         Real64 &CO2GainExceptPeople, // ZOne total CO2 gain from sources except for people
-                         Real64 &ZoneMassFlowRate,    // Zone air mass flow rate
-                         Real64 &CO2MassFlowRate,     // Zone air CO2 mass flow rate
-                         Real64 &RhoAir               // Air density
+                         Nandle &CO2Gain,             // Zone total CO2 gain
+                         Nandle &CO2GainExceptPeople, // ZOne total CO2 gain from sources except for people
+                         Nandle &ZoneMassFlowRate,    // Zone air mass flow rate
+                         Nandle &CO2MassFlowRate,     // Zone air CO2 mass flow rate
+                         Nandle &RhoAir               // Air density
     );
 
     void CorrectZoneContaminants(bool const ShortenTimeStepSys,
                                  bool const UseZoneTimeStepHistory, // if true then use zone timestep history, if false use system time step history
-                                 Real64 const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
+                                 Nandle const PriorTimeStep         // the old value for timestep length is passed for possible use in interpolating
     );
 
 } // namespace ZoneContaminantPredictorCorrector

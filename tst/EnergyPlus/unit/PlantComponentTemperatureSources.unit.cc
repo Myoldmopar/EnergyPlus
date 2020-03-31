@@ -88,7 +88,7 @@ TEST_F(EnergyPlusFixture, TestPlantComponentTemperatureSource)
     DataPlant::PlantLoop(1).LoopSide(2).Branch(1).Comp(1).NodeNumIn = 1;
 
     // define the INOUT variables that are passed back
-    Real64 myLoad = 0.0;
+    Nandle myLoad = 0.0;
 
     // First call is for initialization only
     bool firstHVACIteration;

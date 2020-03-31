@@ -163,18 +163,18 @@ namespace PluginManagement {
         int maxGlobalVariableIndex = -1;
         void addGlobalVariable(const std::string& name);
         static int getGlobalVariableHandle(const std::string& name, bool suppress_warning = false);
-        static Real64 getGlobalVariableValue(int handle);
-        static void setGlobalVariableValue(int handle, Real64 value);
+        static Nandle getGlobalVariableValue(int handle);
+        static void setGlobalVariableValue(int handle, Nandle value);
 
         int maxTrendVariableIndex = -1;
         int getTrendVariableHandle(const std::string& name);
-        Real64 getTrendVariableValue(int handle, int timeIndex);
+        Nandle getTrendVariableValue(int handle, int timeIndex);
         static size_t getTrendVariableHistorySize(int handle);
-        Real64 getTrendVariableAverage(int handle, int count);
-        Real64 getTrendVariableMin(int handle, int count);
-        Real64 getTrendVariableMax(int handle, int count);
-        Real64 getTrendVariableSum(int handle, int count);
-        Real64 getTrendVariableDirection(int handle, int count);
+        Nandle getTrendVariableAverage(int handle, int count);
+        Nandle getTrendVariableMin(int handle, int count);
+        Nandle getTrendVariableMax(int handle, int count);
+        Nandle getTrendVariableSum(int handle, int count);
+        Nandle getTrendVariableDirection(int handle, int count);
 
         void updatePluginValues();
 
@@ -186,8 +186,8 @@ namespace PluginManagement {
     struct PluginTrendVariable {
         std::string name;
         int numValues;
-        std::deque<Real64> values;
-        std::deque<Real64> times;
+        std::deque<Nandle> values;
+        std::deque<Nandle> times;
         int indexOfPluginVariable;
         PluginTrendVariable(std::string _name, int _numValues, int _indexOfPluginVariable) :
             name(std::move(_name)), numValues(_numValues), indexOfPluginVariable(_indexOfPluginVariable)
@@ -205,7 +205,7 @@ namespace PluginManagement {
     extern std::unique_ptr<PluginManager> pluginManager;
     extern std::vector<PluginTrendVariable> trends;
     extern std::vector<std::string> globalVariableNames;
-    extern std::vector<Real64> globalVariableValues;
+    extern std::vector<Nandle> globalVariableValues;
 
     // some flags
     extern bool fullyReady;

@@ -88,29 +88,29 @@ namespace SolarCollectors {
     {
         // Members
         std::string Name;                      // Name of solar collector parameters
-        Real64 Area;                           // Gross area of collector (m2)
+        Nandle Area;                           // Gross area of collector (m2)
         FluidEnum TestFluid;                   // Test fluid (only WATER for now)
-        Real64 TestMassFlowRate;               // Test volumetric flow rate (m3/s)
+        Nandle TestMassFlowRate;               // Test volumetric flow rate (m3/s)
         TestTypeEnum TestType;                 // Test correlation type (INLET | AVERAGE | OUTLET)
-        Real64 eff0;                           // Coefficient 1 of efficiency equation (Y-intercept)
-        Real64 eff1;                           // Coefficient 2 of efficiency equation (1st order)
-        Real64 eff2;                           // Coefficient 3 of efficiency equation (2nd order)
-        Real64 iam1;                           // Coefficient 2 of incident angle modifier (1st order)
-        Real64 iam2;                           // Coefficient 3 of incident angle modifier (2nd order)
+        Nandle eff0;                           // Coefficient 1 of efficiency equation (Y-intercept)
+        Nandle eff1;                           // Coefficient 2 of efficiency equation (1st order)
+        Nandle eff2;                           // Coefficient 3 of efficiency equation (2nd order)
+        Nandle iam1;                           // Coefficient 2 of incident angle modifier (1st order)
+        Nandle iam2;                           // Coefficient 3 of incident angle modifier (2nd order)
         TankTypeEnum ICSType_Num;              // ICS collector type
-        Real64 Volume;                         // collector water net volume (m3)
-        Real64 SideHeight;                     // collector side height (m)
-        Real64 ThermalMass;                    // thermal mass of the absorber plate (J/m2C)
-        Real64 ULossSide;                      // heat loss conductance for collector side (W/m2C)
-        Real64 ULossBottom;                    // heat loss conductance for collector bottom (W/m2C)
-        Real64 AspectRatio;                    // collector aspect ratio (dimensionless)
+        Nandle Volume;                         // collector water net volume (m3)
+        Nandle SideHeight;                     // collector side height (m)
+        Nandle ThermalMass;                    // thermal mass of the absorber plate (J/m2C)
+        Nandle ULossSide;                      // heat loss conductance for collector side (W/m2C)
+        Nandle ULossBottom;                    // heat loss conductance for collector bottom (W/m2C)
+        Nandle AspectRatio;                    // collector aspect ratio (dimensionless)
         int NumOfCovers;                       // number of transparent collector covers
-        Real64 CoverSpacing;                   // collector cover spacings (m)
-        Array1D<Real64> RefractiveIndex;       // refractive idex of inner and outer covers (dimensionless)
-        Array1D<Real64> ExtCoefTimesThickness; // extinction coefficient times thickness of covers (dimensionless)
-        Array1D<Real64> EmissOfCover;          // emissivity of inner and outer covers (dimensionless)
-        Real64 EmissOfAbsPlate;                // emissivity Of absorber plate (dimensionless)
-        Real64 AbsorOfAbsPlate;                // absorptance of the absorber plate (dimensionless)
+        Nandle CoverSpacing;                   // collector cover spacings (m)
+        Array1D<Nandle> RefractiveIndex;       // refractive idex of inner and outer covers (dimensionless)
+        Array1D<Nandle> ExtCoefTimesThickness; // extinction coefficient times thickness of covers (dimensionless)
+        Array1D<Nandle> EmissOfCover;          // emissivity of inner and outer covers (dimensionless)
+        Nandle EmissOfAbsPlate;                // emissivity Of absorber plate (dimensionless)
+        Nandle AbsorOfAbsPlate;                // absorptance of the absorber plate (dimensionless)
 
         // Default Constructor
         ParametersData()
@@ -121,7 +121,7 @@ namespace SolarCollectors {
         {
         }
 
-        Real64 IAM(Real64 IncidentAngle // Angle of incidence (radians)
+        Nandle IAM(Nandle IncidentAngle // Angle of incidence (radians)
         );
     };
 
@@ -143,67 +143,67 @@ namespace SolarCollectors {
         int Parameters;           // Parameters object number
         int Surface;              // Surface object number
         int InletNode;            // Inlet node
-        Real64 InletTemp;         // Inlet temperature from plant (C)
+        Nandle InletTemp;         // Inlet temperature from plant (C)
         int OutletNode;           // Outlet node
-        Real64 OutletTemp;        // Outlet temperature or stagnation temperature in the collector (C)
-        Real64 MassFlowRate;      // Mass flow rate through the collector (kg/s)
-        Real64 MassFlowRateMax;   // Maximum mass flow rate through the collector (kg/s)
-        Real64 VolFlowRateMax;    // Maximum volumetric flow rate through the collector (m3/s)
+        Nandle OutletTemp;        // Outlet temperature or stagnation temperature in the collector (C)
+        Nandle MassFlowRate;      // Mass flow rate through the collector (kg/s)
+        Nandle MassFlowRateMax;   // Maximum mass flow rate through the collector (kg/s)
+        Nandle VolFlowRateMax;    // Maximum volumetric flow rate through the collector (m3/s)
         int ErrIndex;             // Error index for recurring error
         int IterErrIndex;         // Error index for recurring error (iteration - did not converge)
         // Report variables
-        Real64 IncidentAngleModifier; // Net incident angle modifier
-        Real64 Efficiency;            // Thermal efficiency of solar energy conversion
-        Real64 Power;                 // Heat gain or loss to collector fluid (W)
-        Real64 HeatGain;              // Heat gain to collector fluid (W)
-        Real64 HeatLoss;              // Heat loss from collector fluid (W)
-        Real64 Energy;                // Energy gained (or lost) to collector fluid (J)
+        Nandle IncidentAngleModifier; // Net incident angle modifier
+        Nandle Efficiency;            // Thermal efficiency of solar energy conversion
+        Nandle Power;                 // Heat gain or loss to collector fluid (W)
+        Nandle HeatGain;              // Heat gain to collector fluid (W)
+        Nandle HeatLoss;              // Heat loss from collector fluid (W)
+        Nandle Energy;                // Energy gained (or lost) to collector fluid (J)
         // Report variables
-        Real64 HeatRate;           // Collector useful Heat gain rate [W]
-        Real64 HeatEnergy;         // Collector useful Heat gain energy [J]
-        Real64 StoredHeatRate;     // net heat gain or loss rate of the collector fluid [W]
-        Real64 StoredHeatEnergy;   // net heat gain or loss energy of the collector fluid [J]
-        Real64 HeatGainRate;       // Collector useful Heat gain rate [W]
-        Real64 HeatGainEnergy;     // Collector useful Heat gain energy (J)
-        Real64 HeatLossRate;       // collector useful heat loss rate [W]
-        Real64 HeatLossEnergy;     // Collector useful Heat loss energy [J]
-        Real64 SkinHeatLossRate;   // collector skin heat loss rate [W]
-        Real64 CollHeatLossEnergy; // collector skin heat loss energy[J]
-        Real64 TauAlpha;           // Transmittance-absorptance product total radiation
-        Real64 UTopLoss;           // Over all top loss coefficient [W/m2.C]
-        Real64 TempOfWater;        // average temperature of the collector water [C]
-        Real64 TempOfAbsPlate;     // average temperature of the abs plate [C]
-        Real64 TempOfInnerCover;   // temperature of the collector inner cover [C]
-        Real64 TempOfOuterCover;   // temperature of the collector inner cover [C]
+        Nandle HeatRate;           // Collector useful Heat gain rate [W]
+        Nandle HeatEnergy;         // Collector useful Heat gain energy [J]
+        Nandle StoredHeatRate;     // net heat gain or loss rate of the collector fluid [W]
+        Nandle StoredHeatEnergy;   // net heat gain or loss energy of the collector fluid [J]
+        Nandle HeatGainRate;       // Collector useful Heat gain rate [W]
+        Nandle HeatGainEnergy;     // Collector useful Heat gain energy (J)
+        Nandle HeatLossRate;       // collector useful heat loss rate [W]
+        Nandle HeatLossEnergy;     // Collector useful Heat loss energy [J]
+        Nandle SkinHeatLossRate;   // collector skin heat loss rate [W]
+        Nandle CollHeatLossEnergy; // collector skin heat loss energy[J]
+        Nandle TauAlpha;           // Transmittance-absorptance product total radiation
+        Nandle UTopLoss;           // Over all top loss coefficient [W/m2.C]
+        Nandle TempOfWater;        // average temperature of the collector water [C]
+        Nandle TempOfAbsPlate;     // average temperature of the abs plate [C]
+        Nandle TempOfInnerCover;   // temperature of the collector inner cover [C]
+        Nandle TempOfOuterCover;   // temperature of the collector inner cover [C]
         // Data from elsewhere and calculated
-        Real64 TauAlphaNormal;               // Transmittance-absorptance product normal radiation
-        Real64 TauAlphaSkyDiffuse;           // Transmittance-absorptance product sky diffuse radiation
-        Real64 TauAlphaGndDiffuse;           // Transmittance-absorptance product grn diffuse radiation
-        Real64 TauAlphaBeam;                 // Transmittance-absorptance product beam radiation
-        Array1D<Real64> CoversAbsSkyDiffuse; // sky diffuse solar absorptance of cover
-        Array1D<Real64> CoversAbsGndDiffuse; // ground diffuse solar absorptance of cover
-        Array1D<Real64> CoverAbs;            // solar rad weighted covers absorptance
-        Real64 TimeElapsed;                  // Fraction of the current hour that has elapsed (h)
+        Nandle TauAlphaNormal;               // Transmittance-absorptance product normal radiation
+        Nandle TauAlphaSkyDiffuse;           // Transmittance-absorptance product sky diffuse radiation
+        Nandle TauAlphaGndDiffuse;           // Transmittance-absorptance product grn diffuse radiation
+        Nandle TauAlphaBeam;                 // Transmittance-absorptance product beam radiation
+        Array1D<Nandle> CoversAbsSkyDiffuse; // sky diffuse solar absorptance of cover
+        Array1D<Nandle> CoversAbsGndDiffuse; // ground diffuse solar absorptance of cover
+        Array1D<Nandle> CoverAbs;            // solar rad weighted covers absorptance
+        Nandle TimeElapsed;                  // Fraction of the current hour that has elapsed (h)
         // Saved in order to identify the beginning of a new system time
-        Real64 UbLoss;                 // Over all bottom loss coefficient [W/m2C]
-        Real64 UsLoss;                 // Over all side loss coefficient [W/m2C]
-        Real64 AreaRatio;              // Side area to collector area ratio [-]
-        Real64 RefSkyDiffInnerCover;   // Sky diffuse refl of inner cover (cover 1)
-        Real64 RefGrnDiffInnerCover;   // ground diffuse refl of inner cover (cover 1)
-        Real64 RefDiffInnerCover;      // diffuse reflectance of the inner cover (cover 1) from bottom
-        Real64 SavedTempOfWater;       // water temp carried from time step to time step [C]
-        Real64 SavedTempOfAbsPlate;    // abs plate temp carried from time step to time step [C]
-        Real64 SavedTempOfInnerCover;  // inner cover temp carried from time step to time step [C]
-        Real64 SavedTempOfOuterCover;  // outer cover temp carried from time step to time step [C]
-        Real64 SavedTempCollectorOSCM; // Temperature of collector back from OSCM at previous time step [C]
-        Real64 Length;                 // characteristic length of the abs plate
-        Real64 TiltR2V;                // collector tilt angle from the vertical [degree]
-        Real64 Tilt;                   // collector tilt angle from the horizontal [degree]
-        Real64 CosTilt;                // cosine of colector tilt angle [-]
-        Real64 SinTilt;                // sine of 1.8 times colector tilt angle [-]
-        Real64 SideArea;               // weighted collector side area (m2)
-        Real64 Area;                   // collector area (m2)
-        Real64 Volume;                 // collector net volume (m3)
+        Nandle UbLoss;                 // Over all bottom loss coefficient [W/m2C]
+        Nandle UsLoss;                 // Over all side loss coefficient [W/m2C]
+        Nandle AreaRatio;              // Side area to collector area ratio [-]
+        Nandle RefSkyDiffInnerCover;   // Sky diffuse refl of inner cover (cover 1)
+        Nandle RefGrnDiffInnerCover;   // ground diffuse refl of inner cover (cover 1)
+        Nandle RefDiffInnerCover;      // diffuse reflectance of the inner cover (cover 1) from bottom
+        Nandle SavedTempOfWater;       // water temp carried from time step to time step [C]
+        Nandle SavedTempOfAbsPlate;    // abs plate temp carried from time step to time step [C]
+        Nandle SavedTempOfInnerCover;  // inner cover temp carried from time step to time step [C]
+        Nandle SavedTempOfOuterCover;  // outer cover temp carried from time step to time step [C]
+        Nandle SavedTempCollectorOSCM; // Temperature of collector back from OSCM at previous time step [C]
+        Nandle Length;                 // characteristic length of the abs plate
+        Nandle TiltR2V;                // collector tilt angle from the vertical [degree]
+        Nandle Tilt;                   // collector tilt angle from the horizontal [degree]
+        Nandle CosTilt;                // cosine of colector tilt angle [-]
+        Nandle SinTilt;                // sine of 1.8 times colector tilt angle [-]
+        Nandle SideArea;               // weighted collector side area (m2)
+        Nandle Area;                   // collector area (m2)
+        Nandle Volume;                 // collector net volume (m3)
         bool OSCM_ON;                  // Boundary condition is OSCM
         bool InitICS;                  // used to initialize ICS variables only
         bool SetLoopIndexFlag;
@@ -232,50 +232,50 @@ namespace SolarCollectors {
 
         void initialize();
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void CalcTransRefAbsOfCover(Real64 IncidentAngle,              // Angle of incidence (radians)
-                                    Real64 &TransSys,                  // cover system solar transmittance
-                                    Real64 &ReflSys,                   // cover system solar reflectance
-                                    Real64 &AbsCover1,                 // Inner cover solar absorbtance
-                                    Real64 &AbsCover2,                 // Outer cover solar absorbtance
+        void CalcTransRefAbsOfCover(Nandle IncidentAngle,              // Angle of incidence (radians)
+                                    Nandle &TransSys,                  // cover system solar transmittance
+                                    Nandle &ReflSys,                   // cover system solar reflectance
+                                    Nandle &AbsCover1,                 // Inner cover solar absorbtance
+                                    Nandle &AbsCover2,                 // Outer cover solar absorbtance
                                     Optional_bool_const InOUTFlag = _, // flag for calc. diffuse solar refl of cover from inside out
-                                    Optional<Real64> RefSysDiffuse = _ // cover system solar reflectance from inner to outer cover
+                                    Optional<Nandle> RefSysDiffuse = _ // cover system solar reflectance from inner to outer cover
         );
 
         void CalcSolarCollector();
 
         void CalcICSSolarCollector();
 
-        void CalcTransAbsorProduct(Real64 IncidAngle);
+        void CalcTransAbsorProduct(Nandle IncidAngle);
 
         void CalcHeatTransCoeffAndCoverTemp();
 
-        static void ICSCollectorAnalyticalSolution(Real64 SecInTimeStep,     // seconds in a time step
-                                                   Real64 a1,                // coefficient of ODE for Tp
-                                                   Real64 a2,                // coefficient of ODE for Tp
-                                                   Real64 a3,                // coefficient of ODE for Tp
-                                                   Real64 b1,                // coefficient of ODE for TW
-                                                   Real64 b2,                // coefficient of ODE for TW
-                                                   Real64 b3,                // coefficient of ODE for TW
-                                                   Real64 TempAbsPlateOld,   // absorber plate temperature at previous time step [C]
-                                                   Real64 TempWaterOld,      // collector water temperature at previous time step [C]
-                                                   Real64 &TempAbsPlate,     // absorber plate temperature at current time step [C]
-                                                   Real64 &TempWater,        // collector water temperature at current time step [C]
+        static void ICSCollectorAnalyticalSolution(Nandle SecInTimeStep,     // seconds in a time step
+                                                   Nandle a1,                // coefficient of ODE for Tp
+                                                   Nandle a2,                // coefficient of ODE for Tp
+                                                   Nandle a3,                // coefficient of ODE for Tp
+                                                   Nandle b1,                // coefficient of ODE for TW
+                                                   Nandle b2,                // coefficient of ODE for TW
+                                                   Nandle b3,                // coefficient of ODE for TW
+                                                   Nandle TempAbsPlateOld,   // absorber plate temperature at previous time step [C]
+                                                   Nandle TempWaterOld,      // collector water temperature at previous time step [C]
+                                                   Nandle &TempAbsPlate,     // absorber plate temperature at current time step [C]
+                                                   Nandle &TempWater,        // collector water temperature at current time step [C]
                                                    bool AbsorberPlateHasMass // flag for absorber thermal mass
         );
 
-        static Real64 CalcConvCoeffBetweenPlates(Real64 TempSurf1, // temperature of surface 1
-                                                 Real64 TempSurf2, // temperature of surface 1
-                                                 Real64 AirGap,    // characteristic length [m]
-                                                 Real64 CosTilt,   // cosine of surface tilt angle relative to the horizontal
-                                                 Real64 SinTilt    // sine of surface tilt angle relative to the horizontal
+        static Nandle CalcConvCoeffBetweenPlates(Nandle TempSurf1, // temperature of surface 1
+                                                 Nandle TempSurf2, // temperature of surface 1
+                                                 Nandle AirGap,    // characteristic length [m]
+                                                 Nandle CosTilt,   // cosine of surface tilt angle relative to the horizontal
+                                                 Nandle SinTilt    // sine of surface tilt angle relative to the horizontal
         );
 
-        static Real64 CalcConvCoeffAbsPlateAndWater(Real64 TAbsorber, // temperature of absorber plate [C]
-                                                    Real64 TWater,    // temperature of water [C]
-                                                    Real64 Lc,        // characteristic length [m]
-                                                    Real64 TiltR2V    // collector tilt angle relative to the vertical [degree]
+        static Nandle CalcConvCoeffAbsPlateAndWater(Nandle TAbsorber, // temperature of absorber plate [C]
+                                                    Nandle TWater,    // temperature of water [C]
+                                                    Nandle Lc,        // characteristic length [m]
+                                                    Nandle TiltR2V    // collector tilt angle relative to the vertical [degree]
         );
 
         static void GetExtVentedCavityIndex(int SurfacePtr, int &VentCavIndex);

@@ -96,28 +96,28 @@ namespace Boilers {
         int CompNum;                  // plant loop component connection
         bool Available;               // TRUE if machine available in current time step
         bool ON;                      // TRUE: simulate the machine at it's operating part load ratio
-        Real64 NomCap;                // W - design nominal capacity of Boiler
+        Nandle NomCap;                // W - design nominal capacity of Boiler
         bool NomCapWasAutoSized;      // true if previous was set to autosize input
-        Real64 Effic;                 // boiler efficiency at design conditions
-        Real64 TempDesBoilerOut;      // C - Boiler design outlet temperature
+        Nandle Effic;                 // boiler efficiency at design conditions
+        Nandle TempDesBoilerOut;      // C - Boiler design outlet temperature
         int FlowMode;                 // one of 3 modes for componet flow during operation
         bool ModulatedFlowSetToLoop;  // True if the setpoint is missing at the outlet node
         bool ModulatedFlowErrDone;    // true if setpoint warning issued
-        Real64 VolFlowRate;           // m3/s - Boiler water design volumetric flow rate
+        Nandle VolFlowRate;           // m3/s - Boiler water design volumetric flow rate
         bool VolFlowRateWasAutoSized; // true if previous was set to autosize input
-        Real64 DesMassFlowRate;       // kg/s - Boiler water design mass flow rate
-        Real64 MassFlowRate;          // kg/s - Boiler water mass flow rate
-        Real64 SizFac;                // sizing factor
+        Nandle DesMassFlowRate;       // kg/s - Boiler water design mass flow rate
+        Nandle MassFlowRate;          // kg/s - Boiler water mass flow rate
+        Nandle SizFac;                // sizing factor
         int BoilerInletNodeNum;       // Node number at the boiler inlet
         int BoilerOutletNodeNum;      // Node number at the boiler outlet
-        Real64 MinPartLoadRat;        // Minimum allowed operating part load ratio
-        Real64 MaxPartLoadRat;        // Maximum allowed operating part load ratio
-        Real64 OptPartLoadRat;        // Optimal operating part load ratio
-        Real64 OperPartLoadRat;       // Actual operating part load ratio
+        Nandle MinPartLoadRat;        // Minimum allowed operating part load ratio
+        Nandle MaxPartLoadRat;        // Maximum allowed operating part load ratio
+        Nandle OptPartLoadRat;        // Optimal operating part load ratio
+        Nandle OperPartLoadRat;       // Actual operating part load ratio
         int CurveTempMode;            // water temp to use in curve, switch between entering and leaving
         int EfficiencyCurvePtr;       // Index to efficiency curve
-        Real64 TempUpLimitBoilerOut;  // C - Boiler outlet maximum temperature limit
-        Real64 ParasiticElecLoad;     // W - Parasitic electric power (e.g. forced draft fan)
+        Nandle TempUpLimitBoilerOut;  // C - Boiler outlet maximum temperature limit
+        Nandle ParasiticElecLoad;     // W - Parasitic electric power (e.g. forced draft fan)
         int EffCurveOutputError;      // efficiency curve output <=0 recurring warning error counter
         int EffCurveOutputIndex;      // efficiency curve output <=0 recurring warning error message index
         int CalculatedEffError;       // calculated efficiency >1.1 recurring warning error counter
@@ -126,22 +126,22 @@ namespace Boilers {
         // Operational fault parameters
         bool FaultyBoilerFoulingFlag;     // True if the boiler has fouling fault
         int FaultyBoilerFoulingIndex;     // Index of the fault object corresponding to the boiler
-        Real64 FaultyBoilerFoulingFactor; // Boiler fouling factor
+        Nandle FaultyBoilerFoulingFactor; // Boiler fouling factor
         std::string EndUseSubcategory;    // identifier use for the end use subcategory
         bool MyEnvrnFlag;
         bool MyFlag;
 
-        Real64 FuelUsed;           // W - Boiler fuel used
-        Real64 ParasiticElecPower; // W - Parasitic electrical power (e.g. forced draft fan)
-        Real64 BoilerLoad;         // W - Boiler Load
-        Real64 BoilerMassFlowRate; // kg/s - Boiler mass flow rate
-        Real64 BoilerOutletTemp;   // W - Boiler outlet temperature
-        Real64 BoilerPLR;          // Boiler operating part-load ratio
+        Nandle FuelUsed;           // W - Boiler fuel used
+        Nandle ParasiticElecPower; // W - Parasitic electrical power (e.g. forced draft fan)
+        Nandle BoilerLoad;         // W - Boiler Load
+        Nandle BoilerMassFlowRate; // kg/s - Boiler mass flow rate
+        Nandle BoilerOutletTemp;   // W - Boiler outlet temperature
+        Nandle BoilerPLR;          // Boiler operating part-load ratio
 
-        Real64 BoilerEnergy;             // J - Boiler energy integrated over time
-        Real64 FuelConsumed;             // J - Boiler Fuel consumed integrated over time
-        Real64 BoilerInletTemp;          // C - Boiler inlet temperature
-        Real64 ParasiticElecConsumption; // J - Parasitic Electrical Consumption (e.g. forced draft fan)
+        Nandle BoilerEnergy;             // J - Boiler energy integrated over time
+        Nandle FuelConsumed;             // J - Boiler Fuel consumed integrated over time
+        Nandle BoilerInletTemp;          // C - Boiler inlet temperature
+        Nandle ParasiticElecConsumption; // J - Parasitic Electrical Consumption (e.g. forced draft fan)
 
         std::string BoilerFuelTypeForOutputVariable;
 
@@ -159,11 +159,11 @@ namespace Boilers {
         {
         }
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void getSizingFactor(Real64 &SizFac) override;
+        void getSizingFactor(Nandle &SizFac) override;
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 
@@ -173,12 +173,12 @@ namespace Boilers {
 
         void SizeBoiler();
 
-        void CalcBoilerModel(Real64 MyLoad,    // W - hot water demand to be met by boiler
+        void CalcBoilerModel(Nandle MyLoad,    // W - hot water demand to be met by boiler
                              bool RunFlag,     // TRUE if boiler operating
                              int EquipFlowCtrl // Flow control mode for the equipment
         );
 
-        void UpdateBoilerRecords(Real64 MyLoad, // boiler operating load
+        void UpdateBoilerRecords(Nandle MyLoad, // boiler operating load
                                  bool RunFlag   // boiler on when TRUE
         );
 

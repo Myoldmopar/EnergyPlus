@@ -70,14 +70,14 @@ namespace HWBaseboardRadiator {
 
     // MODULE VARIABLE DECLARATIONS:
     extern int NumHWBaseboards;
-    extern Array1D<Real64> QBBRadSource;         // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> QBBRadSrcAvg;         // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
+    extern Array1D<Nandle> QBBRadSource;         // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> QBBRadSrcAvg;         // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
 
     // Record keeping variables used to calculate QBBRadSrcAvg locally
-    extern Array1D<Real64> LastQBBRadSrc;      // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastQBBRadSrc;      // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     extern Array1D_bool MySizeFlag;
     extern Array1D_bool CheckEquipName;
     extern Array1D_bool SetLoopIndexFlag; // get loop number flag
@@ -101,39 +101,39 @@ namespace HWBaseboardRadiator {
         int TotSurfToDistrib;
         int ControlCompTypeNum;
         int CompErrIndex;
-        Real64 AirMassFlowRate;
-        Real64 AirMassFlowRateStd;
-        Real64 WaterTempAvg;
-        Real64 RatedCapacity;
-        Real64 UA;
-        Real64 Offset;
-        Real64 WaterMassFlowRate;
-        Real64 WaterMassFlowRateMax;
-        Real64 WaterMassFlowRateStd;
-        Real64 WaterVolFlowRateMax;
-        Real64 WaterInletTempStd;
-        Real64 WaterInletTemp;
-        Real64 WaterInletEnthalpy;
-        Real64 WaterOutletTempStd;
-        Real64 WaterOutletTemp;
-        Real64 WaterOutletEnthalpy;
-        Real64 AirInletTempStd;
-        Real64 AirInletTemp;
-        Real64 AirOutletTemp;
-        Real64 AirInletHumRat;
-        Real64 AirOutletTempStd;
-        Real64 FracRadiant;
-        Real64 FracConvect;
-        Real64 FracDistribPerson;
-        Array1D<Real64> FracDistribToSurf;
-        Real64 TotPower;
-        Real64 Power;
-        Real64 ConvPower;
-        Real64 RadPower;
-        Real64 TotEnergy;
-        Real64 Energy;
-        Real64 ConvEnergy;
-        Real64 RadEnergy;
+        Nandle AirMassFlowRate;
+        Nandle AirMassFlowRateStd;
+        Nandle WaterTempAvg;
+        Nandle RatedCapacity;
+        Nandle UA;
+        Nandle Offset;
+        Nandle WaterMassFlowRate;
+        Nandle WaterMassFlowRateMax;
+        Nandle WaterMassFlowRateStd;
+        Nandle WaterVolFlowRateMax;
+        Nandle WaterInletTempStd;
+        Nandle WaterInletTemp;
+        Nandle WaterInletEnthalpy;
+        Nandle WaterOutletTempStd;
+        Nandle WaterOutletTemp;
+        Nandle WaterOutletEnthalpy;
+        Nandle AirInletTempStd;
+        Nandle AirInletTemp;
+        Nandle AirOutletTemp;
+        Nandle AirInletHumRat;
+        Nandle AirOutletTempStd;
+        Nandle FracRadiant;
+        Nandle FracConvect;
+        Nandle FracDistribPerson;
+        Array1D<Nandle> FracDistribToSurf;
+        Nandle TotPower;
+        Nandle Power;
+        Nandle ConvPower;
+        Nandle RadPower;
+        Nandle TotEnergy;
+        Nandle Energy;
+        Nandle ConvEnergy;
+        Nandle RadEnergy;
         int LoopNum;     // plant loop index
         int LoopSideNum; // plant loop side index
         int BranchNum;   // plant loop branch index
@@ -143,7 +143,7 @@ namespace HWBaseboardRadiator {
         int BBInletTempFlowReSimIndex;
         int HeatingCapMethod;         // - Method for heating capacity scaledsizing calculation (HeatingDesignCapacity, CapacityPerFloorArea,
                                       // FracOfAutosizedHeatingCapacity)
-        Real64 ScaledHeatingCapacity; // - scaled maximum heating capacity {W} or scalable variable of zone HVAC equipment, {-}, or {W/m2}
+        Nandle ScaledHeatingCapacity; // - scaled maximum heating capacity {W} or scalable variable of zone HVAC equipment, {-}, or {W/m2}
 
         // Default Constructor
         HWBaseboardParams()
@@ -180,7 +180,7 @@ namespace HWBaseboardRadiator {
                         int const ActualZoneNum,
                         int const ControlledZoneNum,
                         bool const FirstHVACIteration,
-                        Real64 &PowerMet,
+                        Nandle &PowerMet,
                         int &CompIndex);
 
     void GetHWBaseboardInput();
@@ -189,7 +189,7 @@ namespace HWBaseboardRadiator {
 
     void SizeHWBaseboard(int const BaseboardNum);
 
-    void CalcHWBaseboard(int &BaseboardNum, Real64 &LoadMet);
+    void CalcHWBaseboard(int &BaseboardNum, Nandle &LoadMet);
 
     void UpdateHWBaseboard(int const BaseboardNum);
 
@@ -199,7 +199,7 @@ namespace HWBaseboardRadiator {
 
     void ReportHWBaseboard(int const BaseboardNum);
 
-    Real64 SumHATsurf(int const ZoneNum); // Zone number
+    Nandle SumHATsurf(int const ZoneNum); // Zone number
 
     void UpdateHWBaseboardPlantConnection(int const BaseboardTypeNum,       // type index
                                           std::string const &BaseboardName, // component name

@@ -94,7 +94,7 @@ namespace MatrixDataManager {
         std::string Name; // Matrix Name
         int MatrixType;
         // REAL(r64), DIMENSION(:), ALLOCATABLE     :: Mat1D ! hold data if one dimensional
-        Array2D<Real64> Mat2D; // hold data if two dimensional
+        Array2D<Nandle> Mat2D; // hold data if two dimensional
         // REAL(r64), DIMENSION(:,:,:), Allocatable :: Mat3D ! hold data if three dimensional
 
         // Default Constructor
@@ -113,7 +113,7 @@ namespace MatrixDataManager {
     int MatrixIndex(std::string const &MatrixName);
 
     void Get2DMatrix(int const Idx, // pointer index to location in MatData
-                     Array2S<Real64> Mat2D);
+                     Array2S<Nandle> Mat2D);
 
     void Get2DMatrixDimensions(int const Idx, // pointer index to location in MatData
                                int &NumRows,

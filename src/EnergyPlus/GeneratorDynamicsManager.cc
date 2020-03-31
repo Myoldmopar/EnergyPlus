@@ -156,12 +156,12 @@ namespace GeneratorDynamicsManager {
                                      int const GeneratorNum,                      // Generator number
                                      bool const RunFlagElectCenter,               // TRUE when Generator operating per electric load center request
                                      bool const RunFlagPlant,                     // TRUE when generator operating per Plant request (always false)
-                                     Real64 const ElecLoadRequest,                // Generator Electrical power demand
-                                     Real64 const ThermalLoadRequest,             // cogenerator Thermal power demand
-                                     Real64 &ElecLoadProvided,                    // power allowed
+                                     Nandle const ElecLoadRequest,                // Generator Electrical power demand
+                                     Nandle const ThermalLoadRequest,             // cogenerator Thermal power demand
+                                     Nandle &ElecLoadProvided,                    // power allowed
                                      int &OperatingMode,                          // operating mode
-                                     Real64 &PLRforSubtimestepStartUp,            // part load ratio for switch to normal from start up
-                                     Real64 &PLRforSubtimestepShutDown,           // part load ratio for switch from cool down to other
+                                     Nandle &PLRforSubtimestepStartUp,            // part load ratio for switch to normal from start up
+                                     Nandle &PLRforSubtimestepShutDown,           // part load ratio for switch from cool down to other
                                      bool const EP_UNUSED(FirstHVACIteration)     // True is this is first HVAC iteration
     )
     {
@@ -241,17 +241,17 @@ namespace GeneratorDynamicsManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool RunFlag;                           // true if generator supposed to run
         int DynaCntrlNum(0);                    // index in GeneratorDynamics structure for this generator          ! na
-        Real64 CurrentFractionalDay;            // working var, time in decimal days
-        Real64 EndingFractionalDay;             // working var, time is decimal days
-        Real64 LastSystemTimeStepFractionalDay; // working var, time is decimal days
-        Real64 MaxPel;                          // working variable for max allowed by transient constraint
-        Real64 MinPel;                          // working variabel for min allowed by transient constraint
-        Real64 PelInput;                        // holds initial value of IN var
-        Real64 Pel;
+        Nandle CurrentFractionalDay;            // working var, time in decimal days
+        Nandle EndingFractionalDay;             // working var, time is decimal days
+        Nandle LastSystemTimeStepFractionalDay; // working var, time is decimal days
+        Nandle MaxPel;                          // working variable for max allowed by transient constraint
+        Nandle MinPel;                          // working variabel for min allowed by transient constraint
+        Nandle PelInput;                        // holds initial value of IN var
+        Nandle Pel;
         int newOpMode(0);
-        Real64 SchedVal;
+        Nandle SchedVal;
         //  REAL(r64)    :: PelDiff
-        Real64 ElectLoadForThermalRequest;
+        Nandle ElectLoadForThermalRequest;
         bool ConstrainedMaxP;           // true if request was altered because of max power limit
         bool ConstrainedMinP;           // true if request was altered because of min power limit
         bool ConstrainedIncreasingPdot; // true if request was altered because of power rate of change up
@@ -262,9 +262,9 @@ namespace GeneratorDynamicsManager {
         //  INTEGER :: OutletCWnode        = 0 ! cooling water outlet node ID
         static int InletCWnode(0); // cooling water inlet node ID
         static bool InternalFlowControl(false);
-        static Real64 TcwIn(0.0);          // inlet cooling water temperature (C)
-        static Real64 TrialMdotcw(0.0);    // test or estimate of what the plant flows are going to be (kg/s)
-        static Real64 LimitMinMdotcw(0.0); // lower limit for cooling water flow for generatior operation (kg/s)
+        static Nandle TcwIn(0.0);          // inlet cooling water temperature (C)
+        static Nandle TrialMdotcw(0.0);    // test or estimate of what the plant flows are going to be (kg/s)
+        static Nandle LimitMinMdotcw(0.0); // lower limit for cooling water flow for generatior operation (kg/s)
 
         // inits
         PLRforSubtimestepStartUp = 1.0;
@@ -750,8 +750,8 @@ namespace GeneratorDynamicsManager {
                                  std::string const &EP_UNUSED(GeneratorName), // user specified name of Generator
                                  int const GeneratorNum,                      // Generator number
                                  bool const EP_UNUSED(RunFlag),               // TRUE when Generator operating
-                                 Real64 const FuelFlowRequest,                // Generator demand mdot kg/ s
-                                 Real64 &FuelFlowProvided,                    // allowed after constraints kg/s
+                                 Nandle const FuelFlowRequest,                // Generator demand mdot kg/ s
+                                 Nandle &FuelFlowProvided,                    // allowed after constraints kg/s
                                  bool &ConstrainedIncreasingMdot,             // true if request was altered because of fuel rate of change up
                                  bool &ConstrainedDecreasingMdot              // true if request was altered because of fuel rate of change down
     )
@@ -791,9 +791,9 @@ namespace GeneratorDynamicsManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MdotFuel;
-        Real64 MaxMdot;
-        Real64 MinMdot;
+        Nandle MdotFuel;
+        Nandle MaxMdot;
+        Nandle MinMdot;
         int DynaCntrlNum(0);
 
         ConstrainedIncreasingMdot = false;
@@ -830,9 +830,9 @@ namespace GeneratorDynamicsManager {
         FuelFlowProvided = MdotFuel;
     }
 
-    Real64 FuncDetermineCWMdotForInternalFlowControl(int const GeneratorNum, // ID of generator
-                                                     Real64 const Pnetss,    // power net steady state
-                                                     Real64 const TcwIn      // temperature of cooling water at inlet
+    Nandle FuncDetermineCWMdotForInternalFlowControl(int const GeneratorNum, // ID of generator
+                                                     Nandle const Pnetss,    // power net steady state
+                                                     Nandle const TcwIn      // temperature of cooling water at inlet
     )
     {
 
@@ -857,7 +857,7 @@ namespace GeneratorDynamicsManager {
         using PlantUtilities::SetComponentFlowRate;
 
         // Return value
-        Real64 FuncDetermineCWMdotForInternalFlowControl;
+        Nandle FuncDetermineCWMdotForInternalFlowControl;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -872,7 +872,7 @@ namespace GeneratorDynamicsManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 MdotCW;
+        Nandle MdotCW;
         int InletNode;
         int OutletNode;
 

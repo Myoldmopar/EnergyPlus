@@ -298,21 +298,21 @@ namespace SetPointManager {
     namespace {
         bool InitSetPointManagersOneTimeFlag(true);
         bool InitSetPointManagersOneTimeFlag2(true);
-        Real64 DCESPMDsn_EntCondTemp(0.0);
-        Real64 DCESPMDsn_MinCondSetpt(0.0);
-        Real64 DCESPMCur_MinLiftTD(0.0);
-        Real64 DCESPMDesign_Load_Sum(0.0);
-        Real64 DCESPMActual_Load_Sum(0.0);
-        Real64 DCESPMWeighted_Actual_Load_Sum(0.0);
-        Real64 DCESPMWeighted_Design_Load_Sum(0.0);
-        Real64 DCESPMWeighted_Ratio(0.0);
-        Real64 DCESPMMin_DesignWB(0.0);
-        Real64 DCESPMMin_ActualWb(0.0);
-        Real64 DCESPMOpt_CondEntTemp(0.0);
-        Real64 DCESPMDesignClgCapacity_Watts(0.0);
-        Real64 DCESPMCurrentLoad_Watts(0.0);
-        Real64 DCESPMCondInletTemp(0.0);
-        Real64 DCESPMEvapOutletTemp(0.0);
+        Nandle DCESPMDsn_EntCondTemp(0.0);
+        Nandle DCESPMDsn_MinCondSetpt(0.0);
+        Nandle DCESPMCur_MinLiftTD(0.0);
+        Nandle DCESPMDesign_Load_Sum(0.0);
+        Nandle DCESPMActual_Load_Sum(0.0);
+        Nandle DCESPMWeighted_Actual_Load_Sum(0.0);
+        Nandle DCESPMWeighted_Design_Load_Sum(0.0);
+        Nandle DCESPMWeighted_Ratio(0.0);
+        Nandle DCESPMMin_DesignWB(0.0);
+        Nandle DCESPMMin_ActualWb(0.0);
+        Nandle DCESPMOpt_CondEntTemp(0.0);
+        Nandle DCESPMDesignClgCapacity_Watts(0.0);
+        Nandle DCESPMCurrentLoad_Watts(0.0);
+        Nandle DCESPMCondInletTemp(0.0);
+        Nandle DCESPMEvapOutletTemp(0.0);
     } // namespace
     // temperature-based flow control manager
     // Average Cooling Set Pt Mgr
@@ -585,7 +585,7 @@ namespace SetPointManager {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         static int MaxNumAlphas(0);  // argument for call to GetObjectDefMaxArgs
         static int MaxNumNumbers(0); // argument for call to GetObjectDefMaxArgs
@@ -5307,9 +5307,9 @@ namespace SetPointManager {
         // Modified schedule setpoint manager logic
 
         // Locals
-        Real64 CurSchValOnPeak;
-        Real64 CurSchValCharge;
-        Real64 const OnVal(0.5);
+        Nandle CurSchValOnPeak;
+        Nandle CurSchValCharge;
+        Nandle const OnVal(0.5);
         int const CoolOpComp(1); // a component that cools only (chillers)
         int const DualOpComp(2); // a component that heats or cools (ice storage tank)
 
@@ -5371,11 +5371,11 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SchedVal;
-        Real64 OutLowTemp;
-        Real64 OutHighTemp;
-        Real64 SetTempAtOutLow;
-        Real64 SetTempAtOutHigh;
+        Nandle SchedVal;
+        Nandle OutLowTemp;
+        Nandle OutHighTemp;
+        Nandle SetTempAtOutLow;
+        Nandle SetTempAtOutHigh;
 
         if (this->SchedPtr > 0) {
             SchedVal = GetCurrentScheduleValue(this->SchedPtr);
@@ -5398,10 +5398,10 @@ namespace SetPointManager {
         this->SetPt = CalcSetPoint(OutLowTemp, OutHighTemp, OutDryBulbTemp, SetTempAtOutLow, SetTempAtOutHigh);
     }
 
-    Real64 DefineOutsideAirSetPointManager::CalcSetPoint(
-        Real64 OutLowTemp, Real64 OutHighTemp, Real64 OutDryBulbTemp, Real64 SetTempAtOutLow, Real64 SetTempAtOutHigh)
+    Nandle DefineOutsideAirSetPointManager::CalcSetPoint(
+        Nandle OutLowTemp, Nandle OutHighTemp, Nandle OutDryBulbTemp, Nandle SetTempAtOutLow, Nandle SetTempAtOutHigh)
     {
-        Real64 SetPt;
+        Nandle SetPt;
         if (OutLowTemp < OutHighTemp) { // && SetTempAtOutLow > SetTempAtOutHigh
             if (OutDryBulbTemp <= OutLowTemp) {
                 SetPt = SetTempAtOutLow;
@@ -5453,32 +5453,32 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneLoad;     // required zone load [W]
-        Real64 ZoneMassFlow; // zone inlet mass flow rate [kg/s]
-        Real64 CpAir;        // inlet air specific heat [J/kg-C]
+        Nandle ZoneLoad;     // required zone load [W]
+        Nandle ZoneMassFlow; // zone inlet mass flow rate [kg/s]
+        Nandle CpAir;        // inlet air specific heat [J/kg-C]
         int ZoneInletNode;
         int ZoneNode;
         int ZoneNum;
-        Real64 ZoneTemp;
-        Real64 ZoneLoadToCoolSetPt;
-        Real64 ZoneLoadToHeatSetPt;
-        Real64 TSetPt;
-        Real64 TSetPt1;
-        Real64 TSetPt2;
+        Nandle ZoneTemp;
+        Nandle ZoneLoadToCoolSetPt;
+        Nandle ZoneLoadToHeatSetPt;
+        Nandle TSetPt;
+        Nandle TSetPt1;
+        Nandle TSetPt2;
         bool DeadBand;
         int FanNodeIn;
         int FanNodeOut;
         int RetNode;
         int OAMixOAInNode;
-        Real64 FanDeltaT;
-        static Real64 TSupNoHC(0.0); // supply temperature with no heating or cooling
-        Real64 TMixAtMinOA;
-        Real64 EnthMixAtMinOA;
-        Real64 HumRatMixAtMinOA;
+        Nandle FanDeltaT;
+        static Nandle TSupNoHC(0.0); // supply temperature with no heating or cooling
+        Nandle TMixAtMinOA;
+        Nandle EnthMixAtMinOA;
+        Nandle HumRatMixAtMinOA;
         int AirLoopNum;
-        Real64 OAFrac;
+        Nandle OAFrac;
         int LoopInNode;
-        static Real64 ExtrRateNoHC(0.0); // the heating (>0) or cooling (<0) that can be done by supply air at TSupNoHC [W]
+        static Nandle ExtrRateNoHC(0.0); // the heating (>0) or cooling (<0) that can be done by supply air at TSupNoHC [W]
 
         ZoneInletNode = this->ZoneInletNodeNum;
         ZoneNum = this->ControlZoneNum;
@@ -5585,13 +5585,13 @@ namespace SetPointManager {
         using DataHVACGlobals::SmallMassFlow;
         using DataZoneEnergyDemands::ZoneSysEnergyDemand;
 
-        Real64 ZoneLoadtoHeatSP; // required zone load to zone heating setpoint [W]
-        Real64 ZoneMassFlow;     // zone inlet mass flow rate [kg/s]
-        Real64 CpAir;            // inlet air specific heat [J/kg-C]
+        Nandle ZoneLoadtoHeatSP; // required zone load to zone heating setpoint [W]
+        Nandle ZoneMassFlow;     // zone inlet mass flow rate [kg/s]
+        Nandle CpAir;            // inlet air specific heat [J/kg-C]
         int ZoneInletNode;
         int ZoneNode;
         int ZoneNum;
-        Real64 ZoneTemp;
+        Nandle ZoneTemp;
 
         ZoneInletNode = this->ZoneInletNodeNum;
         ZoneNum = this->ControlZoneNum;
@@ -5627,13 +5627,13 @@ namespace SetPointManager {
         using DataHVACGlobals::SmallMassFlow;
         using DataZoneEnergyDemands::ZoneSysEnergyDemand;
 
-        Real64 ZoneLoadtoCoolSP; // required zone load to zone Cooling setpoint [W]
-        Real64 ZoneMassFlow;     // zone inlet mass flow rate [kg/s]
-        Real64 CpAir;            // inlet air specific Cool [J/kg-C]
+        Nandle ZoneLoadtoCoolSP; // required zone load to zone Cooling setpoint [W]
+        Nandle ZoneMassFlow;     // zone inlet mass flow rate [kg/s]
+        Nandle CpAir;            // inlet air specific Cool [J/kg-C]
         int ZoneInletNode;
         int ZoneNode;
         int ZoneNum;
-        Real64 ZoneTemp;
+        Nandle ZoneTemp;
 
         ZoneInletNode = this->ZoneInletNodeNum;
         ZoneNum = this->ControlZoneNum;
@@ -5776,11 +5776,11 @@ namespace SetPointManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         int ZoneNode;
-        Real64 ZoneMassFlow;
+        Nandle ZoneMassFlow;
         int ZoneNum;
-        Real64 MoistureLoad; // Zone moisture load (kg moisture/second) required to meet the relative humidity setpoint
+        Nandle MoistureLoad; // Zone moisture load (kg moisture/second) required to meet the relative humidity setpoint
         // Value obtained from ZoneTempPredictorCorrector (via ZoneSysMoistureDemand in DataZoneEnergyDemands)
-        Real64 SupplyAirHumRat; // Desired air humidity ratio
+        Nandle SupplyAirHumRat; // Desired air humidity ratio
 
         this->SetPt = 0.0;
         // Only use one zone for now
@@ -5839,11 +5839,11 @@ namespace SetPointManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         int ZoneNode;        // Control zone air node number
-        Real64 ZoneMassFlow; // Zone air mass flow rate (kg/s)
-        Real64 MoistureLoad; // Zone moisture load (kg moisture/sec) required to meet the relative humidity setpoint
+        Nandle ZoneMassFlow; // Zone air mass flow rate (kg/s)
+        Nandle MoistureLoad; // Zone moisture load (kg moisture/sec) required to meet the relative humidity setpoint
         // Value obtained from ZoneTempPredictorCorrector (via ZoneSysMoistureDemand in DataZoneEnergyDemands)
-        Real64 SupplyAirHumRat; // Desired air humidity ratio
-        Real64 SystemMassFlow;
+        Nandle SupplyAirHumRat; // Desired air humidity ratio
+        Nandle SystemMassFlow;
 
         this->SetPt = 0.0;
         // Only use one zone for now
@@ -5907,9 +5907,9 @@ namespace SetPointManager {
         int RefNode;         // setpoint reference node number
         int CoolCoilInNode;  // Cooling coil inlet node number
         int CoolCoilOutNode; // Cooling coil outlet node number
-        Real64 MinTemp;      // Minimum temperature at cooling coil outlet node
-        Real64 dtFan;        // Temperature difference across a fan
-        Real64 dtCoolCoil;   // Temperature difference across a coolig coil
+        Nandle MinTemp;      // Minimum temperature at cooling coil outlet node
+        Nandle dtFan;        // Temperature difference across a fan
+        Nandle dtCoolCoil;   // Temperature difference across a coolig coil
 
         FanInNode = this->FanInNode;
         FanOutNode = this->FanOutNode;
@@ -6011,11 +6011,11 @@ namespace SetPointManager {
         int MixedOutNode;       // mixed air outlet node number
         int OAInNode;           // outside air inlet node number
         int ReturnInNode;       // return air inlet node number
-        Real64 OAFraction;      // outside air fraction of mixed flow rate
-        Real64 ReturnInValue;   // return air inlet node mass flow rate
-        Real64 RefNodeSetPoint; // setpoint at reference node
-        Real64 MinSetPoint;     // minimum allowed setpoint
-        Real64 MaxSetPoint;     // maximum allowed setpoint
+        Nandle OAFraction;      // outside air fraction of mixed flow rate
+        Nandle ReturnInValue;   // return air inlet node mass flow rate
+        Nandle RefNodeSetPoint; // setpoint at reference node
+        Nandle MinSetPoint;     // minimum allowed setpoint
+        Nandle MaxSetPoint;     // maximum allowed setpoint
         bool HumiditySetPoint;  // logical to indicate if this is a humidity setpoint
         static bool LocalSetPointCheckFailed(false);
 
@@ -6136,17 +6136,17 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneLoad;         // required zone load [W]
-        Real64 ZoneMassFlowMax;  // zone inlet maximum mass flow rate [kg/s]
-        Real64 CpAir;            // inlet air specific heat [J/kg-C]
+        Nandle ZoneLoad;         // required zone load [W]
+        Nandle ZoneMassFlowMax;  // zone inlet maximum mass flow rate [kg/s]
+        Nandle CpAir;            // inlet air specific heat [J/kg-C]
         int AirLoopNum;          // the index of the air loop served by this setpoint manager
-        Real64 TotCoolLoad;      // sum of the zone cooling loads for this air loop [W]
+        Nandle TotCoolLoad;      // sum of the zone cooling loads for this air loop [W]
         int ZonesCooledIndex;    // DO loop index for zones cooled by the air loop
         int CtrlZoneNum;         // the controlled zone index
         int ZoneInletNode;       // the zone inlet node number
-        Real64 ZoneTemp;         // zone temperature [C]
-        Real64 ZoneSetPointTemp; // zone supply air temperature [C]
-        Real64 SetPointTemp;     // the system setpoint temperature [C]
+        Nandle ZoneTemp;         // zone temperature [C]
+        Nandle ZoneSetPointTemp; // zone supply air temperature [C]
+        Nandle SetPointTemp;     // the system setpoint temperature [C]
         int ZoneNode;            // the zone node number of the current zone
         int ZoneNum;             // the actual zone number
 
@@ -6217,17 +6217,17 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneLoad;         // required zone load [W]
-        Real64 ZoneMassFlowMax;  // zone inlet maximum mass flow rate [kg/s]
-        Real64 CpAir;            // inlet air specific heat [J/kg-C]
+        Nandle ZoneLoad;         // required zone load [W]
+        Nandle ZoneMassFlowMax;  // zone inlet maximum mass flow rate [kg/s]
+        Nandle CpAir;            // inlet air specific heat [J/kg-C]
         int AirLoopNum;          // the index of the air loop served by this setpoint manager
-        Real64 TotHeatLoad;      // sum of the zone heating loads for this air loop [W]
+        Nandle TotHeatLoad;      // sum of the zone heating loads for this air loop [W]
         int ZonesHeatedIndex;    // DO loop index for zones heated by the air loop
         int CtrlZoneNum;         // the controlled zone index
         int ZoneInletNode;       // the zone inlet node number
-        Real64 ZoneTemp;         // zone temperature [C]
-        Real64 ZoneSetPointTemp; // zone supply air temperature [C]
-        Real64 SetPointTemp;     // the system setpoint temperature [C]
+        Nandle ZoneTemp;         // zone temperature [C]
+        Nandle ZoneSetPointTemp; // zone supply air temperature [C]
+        Nandle SetPointTemp;     // the system setpoint temperature [C]
         int ZoneNode;            // the zone node number of the current zone
         int ZoneNum;             // the actual zone number
 
@@ -6323,24 +6323,24 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneLoad;         // required zone load [W]
-        Real64 ZoneMassFlowMax;  // zone inlet maximum mass flow rate [kg/s]
-        Real64 CpAir;            // inlet air specific heat [J/kg-C]
+        Nandle ZoneLoad;         // required zone load [W]
+        Nandle ZoneMassFlowMax;  // zone inlet maximum mass flow rate [kg/s]
+        Nandle CpAir;            // inlet air specific heat [J/kg-C]
         int AirLoopNum;          // the index of the air loop served by this setpoint manager
-        Real64 TotCoolLoad;      // sum of the zone cooling loads for this air loop [W]
+        Nandle TotCoolLoad;      // sum of the zone cooling loads for this air loop [W]
         int ZonesCooledIndex;    // DO loop index for zones cooled by the air loop
         int CtrlZoneNum;         // the controlled zone index
         int ZoneInletNode;       // the zone inlet node number
-        Real64 ZoneTemp;         // zone temperature [C]
-        Real64 ZoneSetPointTemp; // zone supply air temperature [C]
-        Real64 SetPointTemp;     // the system setpoint temperature [C]
+        Nandle ZoneTemp;         // zone temperature [C]
+        Nandle ZoneSetPointTemp; // zone supply air temperature [C]
+        Nandle SetPointTemp;     // the system setpoint temperature [C]
         int ZoneNode;            // the zone node number of the current zone
         int ZoneNum;             // the actual zone number
-        Real64 MinFracFlow;
-        Real64 ZoneFracFlow;
-        Real64 FracFlow;
-        Real64 MaxSetPointTemp;
-        Real64 MinSetPointTemp;
+        Nandle MinFracFlow;
+        Nandle ZoneFracFlow;
+        Nandle FracFlow;
+        Nandle MaxSetPointTemp;
+        Nandle MinSetPointTemp;
         int CritZoneNumTemp;
         int CritZoneNumFlow;
         int ControlStrategy;
@@ -6465,13 +6465,13 @@ namespace SetPointManager {
         int MixerSupInNode;  // Mixer supply inlet node number
         int MixerOutNode;    // Mixer outlet node number
         int LoopOutNode;     // loop outlet node number
-        Real64 TempSetPt;    // the setpoint temperature (from schedule) [C]
-        Real64 TempSetPtMod; // the setpoint temperature modified for fan heat gain [C]
-        Real64 SupFlow;      // supply flow rate before mixing [kg/s]
-        Real64 RABFlow;      // Return Air Bypass flow rate [kg/s]
-        Real64 TotSupFlow;   // supply air flow after mixing [kg/s]
-        Real64 TempSup;      // temperature of supply air before mixing [kg/s]
-        Real64 TempRAB;      // temperature of return bypass air
+        Nandle TempSetPt;    // the setpoint temperature (from schedule) [C]
+        Nandle TempSetPtMod; // the setpoint temperature modified for fan heat gain [C]
+        Nandle SupFlow;      // supply flow rate before mixing [kg/s]
+        Nandle RABFlow;      // Return Air Bypass flow rate [kg/s]
+        Nandle TotSupFlow;   // supply air flow after mixing [kg/s]
+        Nandle TempSup;      // temperature of supply air before mixing [kg/s]
+        Nandle TempRAB;      // temperature of return bypass air
 
         MixerRABInNode = this->RABMixInNode;
         MixerSupInNode = this->SupMixInNode;
@@ -6525,24 +6525,24 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneLoad;                 // zone load predicted to the setpoint [W]
-        Real64 ZoneMassFlowRate;         // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
-        Real64 CpAir;                    // inlet air specific heat [J/kg-C]
+        Nandle ZoneLoad;                 // zone load predicted to the setpoint [W]
+        Nandle ZoneMassFlowRate;         // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
+        Nandle CpAir;                    // inlet air specific heat [J/kg-C]
         int AirLoopNum;                  // the index of the air loop served by this setpoint manager
-        Real64 SumHeatLoad;              // sum of the zone's predicted heating loads for this air loop [W]
-        Real64 SumProductMdotCpTZoneTot; // sum of the product of zone inlet node actual mass flow rate,
+        Nandle SumHeatLoad;              // sum of the zone's predicted heating loads for this air loop [W]
+        Nandle SumProductMdotCpTZoneTot; // sum of the product of zone inlet node actual mass flow rate,
         // Cp of air at zone air node and zone air node temperature for
         // all zones in the air loop [W]
-        Real64 SumProductMdotCp; // sum of the product of zone inlet node actual mass flow rate, and
+        Nandle SumProductMdotCp; // sum of the product of zone inlet node actual mass flow rate, and
         // Cp of air at zone inlet node for all heated zones in the airloop [W/C]
-        Real64 SumProductMdotCpTot; // sum of the product of zone inlet node actual mass flow rate, and
+        Nandle SumProductMdotCpTot; // sum of the product of zone inlet node actual mass flow rate, and
         // Cp of air at zone air node for all zones in the airloop [W/C]
-        Real64 ZoneAverageTemp; // multizone average zone air node temperature [C]
+        Nandle ZoneAverageTemp; // multizone average zone air node temperature [C]
         int ZonesHeatedIndex;   // DO loop index for zones cooled by the air loop
         int CtrlZoneNum;        // the controlled zone index
         int ZoneInletNode;      // the zone inlet node number
-        Real64 ZoneTemp;        // zone air node temperature [C]
-        Real64 SetPointTemp;    // the system setpoint temperature [C]
+        Nandle ZoneTemp;        // zone air node temperature [C]
+        Nandle SetPointTemp;    // the system setpoint temperature [C]
         int ZoneNode;           // the zone node number of the current zone
 
         SumHeatLoad = 0.0;
@@ -6624,24 +6624,24 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ZoneLoad;                 // zone load predicted to the setpoint [W]
-        Real64 ZoneMassFlowRate;         // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
-        Real64 CpAir;                    // inlet air specific heat [J/kg-C]
+        Nandle ZoneLoad;                 // zone load predicted to the setpoint [W]
+        Nandle ZoneMassFlowRate;         // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
+        Nandle CpAir;                    // inlet air specific heat [J/kg-C]
         int AirLoopNum;                  // the index of the air loop served by this setpoint manager
-        Real64 SumCoolLoad;              // sum of the zone cooling loads for this air loop [W]
-        Real64 SumProductMdotCpTZoneTot; // sum of the product of zone inlet node actual mass flow rate,
+        Nandle SumCoolLoad;              // sum of the zone cooling loads for this air loop [W]
+        Nandle SumProductMdotCpTZoneTot; // sum of the product of zone inlet node actual mass flow rate,
         // Cp of air at zone air node and zone air node temperature for
         // all zones in the air loop [W]
-        Real64 SumProductMdotCp; // sum of the product of zone inlet node actual mass flow rate, and
+        Nandle SumProductMdotCp; // sum of the product of zone inlet node actual mass flow rate, and
         // Cp of air at zone inlet node for cooled zones in the airloop [W/C]
-        Real64 SumProductMdotCpTot; // sum of the product of zone inlet node actual mass flow rate, and
+        Nandle SumProductMdotCpTot; // sum of the product of zone inlet node actual mass flow rate, and
         // Cp of air at zone air node for all zones in the airloop [W/C]
-        Real64 ZoneAverageTemp; // multizone average zone Air node temperature [C]
+        Nandle ZoneAverageTemp; // multizone average zone Air node temperature [C]
         int ZonesCooledIndex;   // DO loop index for zones cooled by the air loop
         int CtrlZoneNum;        // the controlled zone index
         int ZoneInletNode;      // the zone inlet node number
-        Real64 ZoneTemp;        // zone air node temperature [C]
-        Real64 SetPointTemp;    // the system setpoint temperature [C]
+        Nandle ZoneTemp;        // zone air node temperature [C]
+        Nandle SetPointTemp;    // the system setpoint temperature [C]
         int ZoneNode;           // the zone node number of the current zone
 
         SumCoolLoad = 0.0;
@@ -6716,20 +6716,20 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
-        Real64 ZoneMassFlowRate;     // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
+        Nandle MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
+        Nandle ZoneMassFlowRate;     // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
         int AirLoopNum;              // the index of the air loop served by this setpoint manager
-        Real64 SumMoistureLoad;      // sum of the zone moisture loads for this air loop [W]
-        Real64 SumMdot;              // sum of the actual mass flow rate for controlled zones in the air loop [kg/s]
-        Real64 SumMdotTot;           // sum of the actual mass flow rate for this air loop [kg/s]
-        Real64 SumProductMdotHumTot; // sum of product of actual mass flow rate at the zone inlet node,
+        Nandle SumMoistureLoad;      // sum of the zone moisture loads for this air loop [W]
+        Nandle SumMdot;              // sum of the actual mass flow rate for controlled zones in the air loop [kg/s]
+        Nandle SumMdotTot;           // sum of the actual mass flow rate for this air loop [kg/s]
+        Nandle SumProductMdotHumTot; // sum of product of actual mass flow rate at the zone inlet node,
         // and humidity ratio at zones air node for all zones in the airloop [kgWater/s]
-        Real64 AverageZoneHum; // multizone average zone air node humidity ratio of all zones in the air loop [kg/kg]
+        Nandle AverageZoneHum; // multizone average zone air node humidity ratio of all zones in the air loop [kg/kg]
         int ZonesCooledIndex;  // DO loop index for zones cooled by the air loop
         int CtrlZoneNum;       // the controlled zone index
         int ZoneInletNode;     // the zone inlet node number
-        Real64 ZoneHum;        // zone air node humidity ratio [kg/kg]
-        Real64 SetPointHum;    // system setpoint humidity ratio [kg/kg]
+        Nandle ZoneHum;        // zone air node humidity ratio [kg/kg]
+        Nandle SetPointHum;    // system setpoint humidity ratio [kg/kg]
         int ZoneNode;          // the zone node number of the current zone
 
         SumMdot = 0.0;
@@ -6799,21 +6799,21 @@ namespace SetPointManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
-        Real64 ZoneMassFlowRate;     // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
+        Nandle MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
+        Nandle ZoneMassFlowRate;     // zone inlet node actual mass flow rate lagged by system one time step[kg/s]
         int AirLoopNum;              // the index of the air loop served by this setpoint manager
-        Real64 SumMoistureLoad;      // sum of the zone moisture loads for this air loop [W]
-        Real64 SumMdot;              // sum of the actual mass flow rate for controlled zones in the air loop [kg/s]
-        Real64 SumMdotTot;           // sum of the actual mass flow rate for this air loop [kg/s]
-        Real64 SumProductMdotHumTot; // sum of product of actual mass flow rate at the zone inlet node,
+        Nandle SumMoistureLoad;      // sum of the zone moisture loads for this air loop [W]
+        Nandle SumMdot;              // sum of the actual mass flow rate for controlled zones in the air loop [kg/s]
+        Nandle SumMdotTot;           // sum of the actual mass flow rate for this air loop [kg/s]
+        Nandle SumProductMdotHumTot; // sum of product of actual mass flow rate at the zone inlet node,
         // and humidity ratio at zones air node for all zones in the airloop [kgWater/s]
-        Real64 AverageZoneHum; // multizone average zone air node humidity ratio of all zones in the air loop [kg/kg]
+        Nandle AverageZoneHum; // multizone average zone air node humidity ratio of all zones in the air loop [kg/kg]
         int ZonesCooledIndex;  // DO loop index for zones cooled by the air loop
         int CtrlZoneNum;       // the controlled zone index
         int ZoneInletNode;     // the zone inlet node number
-        Real64 ZoneHum;        // zone air node humidity ratio [kg/kg]
+        Nandle ZoneHum;        // zone air node humidity ratio [kg/kg]
         //  REAL(r64)      :: AverageSetPointHum   ! Supply air humidity ratio [kg/kg]
-        Real64 SetPointHum; // system setpoint humidity ratio [kg/kg]
+        Nandle SetPointHum; // system setpoint humidity ratio [kg/kg]
         int ZoneNode;       // the zone node number of the current zone
 
         SumMdot = 0.0;
@@ -6877,7 +6877,7 @@ namespace SetPointManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallMoistureLoad(0.00001); // small moisture load [kgWater/s]
+        Nandle const SmallMoistureLoad(0.00001); // small moisture load [kgWater/s]
 
         // INTERFACE BLOCK SPECIFICATIONS
 
@@ -6890,12 +6890,12 @@ namespace SetPointManager {
         int CtrlZoneNum;             // the controlled zone index
         int ZoneInletNode;           // the zone inlet node number
         int ZoneNode;                // the zone node number of the current zone
-        Real64 ZoneHum;              // zone air node humidity ratio [kg/kg]
-        Real64 SetPointHum;          // system setpoint humidity ratio [kg/kg]
-        Real64 ZoneSetPointHum;      // Zone setpoint humidity ratio [kg/kg]
-        Real64 MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
-        Real64 ZoneMassFlowRate;     // zone inlet node actual supply air mass flow rate [kg/s]
-        Real64 SumMoistureLoad(0.0); // sum of the zone moisture loads for this air loop [W]
+        Nandle ZoneHum;              // zone air node humidity ratio [kg/kg]
+        Nandle SetPointHum;          // system setpoint humidity ratio [kg/kg]
+        Nandle ZoneSetPointHum;      // Zone setpoint humidity ratio [kg/kg]
+        Nandle MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
+        Nandle ZoneMassFlowRate;     // zone inlet node actual supply air mass flow rate [kg/s]
+        Nandle SumMoistureLoad(0.0); // sum of the zone moisture loads for this air loop [W]
 
         AirLoopNum = this->AirLoopNum;
         SetPointHum = this->MinSetHum;
@@ -6956,7 +6956,7 @@ namespace SetPointManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallMoistureLoad(0.00001); // small moisture load [kgWater/s]
+        Nandle const SmallMoistureLoad(0.00001); // small moisture load [kgWater/s]
 
         // INTERFACE BLOCK SPECIFICATIONS
 
@@ -6969,12 +6969,12 @@ namespace SetPointManager {
         int CtrlZoneNum;             // the controlled zone index
         int ZoneInletNode;           // the zone inlet node number
         int ZoneNode;                // the zone node number of the current zone
-        Real64 ZoneHum;              // zone air node humidity ratio [kg/kg]
-        Real64 SetPointHum;          // system setpoint humidity ratio [kg/kg]
-        Real64 ZoneSetPointHum;      // Zone setpoint humidity ratio [kg/kg]
-        Real64 MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
-        Real64 ZoneMassFlowRate;     // zone inlet node actual supply air mass flow rate [kg/s]
-        Real64 SumMoistureLoad(0.0); // sum of the zone moisture loads for this air loop [W]
+        Nandle ZoneHum;              // zone air node humidity ratio [kg/kg]
+        Nandle SetPointHum;          // system setpoint humidity ratio [kg/kg]
+        Nandle ZoneSetPointHum;      // Zone setpoint humidity ratio [kg/kg]
+        Nandle MoistureLoad;         // zone's moisture load predicted to the setpoint [kgWater/s]
+        Nandle ZoneMassFlowRate;     // zone inlet node actual supply air mass flow rate [kg/s]
+        Nandle SumMoistureLoad(0.0); // sum of the zone moisture loads for this air loop [W]
 
         AirLoopNum = this->AirLoopNum;
         SetPointHum = this->MaxSetHum;
@@ -7041,8 +7041,8 @@ namespace SetPointManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         //  INTEGER      :: CtrldNodeNum    ! index of the items in the controlled node list
-        Real64 MinSetPoint; // minimum allowed setpoint
-        Real64 MaxSetPoint; // maximum allowed setpoint
+        Nandle MinSetPoint; // minimum allowed setpoint
+        Nandle MaxSetPoint; // maximum allowed setpoint
 
         MaxSetPoint = this->MaxSetTemp;
         MinSetPoint = this->MinSetTemp;
@@ -7103,9 +7103,9 @@ namespace SetPointManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int RefNode;        // setpoint reference node number
-        Real64 RefNodeTemp; // setpoint at reference node
-        Real64 MinSetPoint; // minimum allowed setpoint
-        Real64 MaxSetPoint; // maximum allowed setpoint
+        Nandle RefNodeTemp; // setpoint at reference node
+        Nandle MinSetPoint; // minimum allowed setpoint
+        Nandle MaxSetPoint; // maximum allowed setpoint
 
         RefNodeTemp = 0.0;
 
@@ -7171,8 +7171,8 @@ namespace SetPointManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         //  INTEGER      :: CtrldNodeNum    ! index of the items in the controlled node list
-        Real64 MinSetPoint; // minimum allowed setpoint
-        Real64 MaxSetPoint; // maximum allowed setpoint
+        Nandle MinSetPoint; // minimum allowed setpoint
+        Nandle MaxSetPoint; // maximum allowed setpoint
 
         MaxSetPoint = this->MaxSetTemp;
         MinSetPoint = this->MinSetTemp;
@@ -7235,35 +7235,35 @@ namespace SetPointManager {
         // na
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         //////////// hoisted into namespace ////////////////////////////////////////////////
-        // static Real64 Dsn_EntCondTemp( 0.0 ); // The chiller design entering condenser temp, C; e.g. 29.44C {85F} // DCESPMDsn_EntCondTemp
-        // static Real64 Dsn_MinCondSetpt( 0.0 ); // The design minimum condenser water temp, C; e.g. 18.33C {65 F} // DCESPMDsn_MinCondSetpt
-        // static Real64 Cur_MinLiftTD( 0.0 ); // Minimum lift (TCond entering - Tevap leaving) TD this timestep // DCESPMCur_MinLiftTD
-        // static Real64 Design_Load_Sum( 0.0 ); // the design load of the chillers, W // DCESPMDesign_Load_Sum
-        // static Real64 Actual_Load_Sum( 0.0 ); // the actual load of the chillers, W // DCESPMActual_Load_Sum
-        // static Real64 Weighted_Actual_Load_Sum( 0.0 ); // Intermediate weighted value of actual load on plant, W // DCESPMWeighted_Actual_Load_Sum
-        // static Real64 Weighted_Design_Load_Sum( 0.0 ); // Intermediate weighted value of design load on plant, W // DCESPMWeighted_Design_Load_Sum
-        // static Real64 Weighted_Ratio( 0.0 ); // Weighted part load ratio of chillers // DCESPMWeighted_Ratio
-        // static Real64 Min_DesignWB( 0.0 ); // Minimum design twr wet bulb allowed, C // DCESPMMin_DesignWB
-        // static Real64 Min_ActualWb( 0.0 ); // Minimum actual oa wet bulb allowed, C // DCESPMMin_ActualWb
-        // static Real64 Opt_CondEntTemp( 0.0 ); // Optimized Condenser entering water temperature setpoint this timestep, C // DCESPMOpt_CondEntTemp
-        // static Real64 DesignClgCapacity_Watts( 0.0 ); // DCESPMDesignClgCapacity_Watts
-        // static Real64 CurrentLoad_Watts( 0.0 ); // DCESPMCurrentLoad_Watts
-        // static Real64 CondInletTemp( 0.0 ); // Condenser water inlet temperature (C) // DCESPMCondInletTemp
-        // static Real64 EvapOutletTemp( 0.0 ); // Evaporator water outlet temperature (C) // DCESPMEvapOutletTemp
+        // static Nandle Dsn_EntCondTemp( 0.0 ); // The chiller design entering condenser temp, C; e.g. 29.44C {85F} // DCESPMDsn_EntCondTemp
+        // static Nandle Dsn_MinCondSetpt( 0.0 ); // The design minimum condenser water temp, C; e.g. 18.33C {65 F} // DCESPMDsn_MinCondSetpt
+        // static Nandle Cur_MinLiftTD( 0.0 ); // Minimum lift (TCond entering - Tevap leaving) TD this timestep // DCESPMCur_MinLiftTD
+        // static Nandle Design_Load_Sum( 0.0 ); // the design load of the chillers, W // DCESPMDesign_Load_Sum
+        // static Nandle Actual_Load_Sum( 0.0 ); // the actual load of the chillers, W // DCESPMActual_Load_Sum
+        // static Nandle Weighted_Actual_Load_Sum( 0.0 ); // Intermediate weighted value of actual load on plant, W // DCESPMWeighted_Actual_Load_Sum
+        // static Nandle Weighted_Design_Load_Sum( 0.0 ); // Intermediate weighted value of design load on plant, W // DCESPMWeighted_Design_Load_Sum
+        // static Nandle Weighted_Ratio( 0.0 ); // Weighted part load ratio of chillers // DCESPMWeighted_Ratio
+        // static Nandle Min_DesignWB( 0.0 ); // Minimum design twr wet bulb allowed, C // DCESPMMin_DesignWB
+        // static Nandle Min_ActualWb( 0.0 ); // Minimum actual oa wet bulb allowed, C // DCESPMMin_ActualWb
+        // static Nandle Opt_CondEntTemp( 0.0 ); // Optimized Condenser entering water temperature setpoint this timestep, C // DCESPMOpt_CondEntTemp
+        // static Nandle DesignClgCapacity_Watts( 0.0 ); // DCESPMDesignClgCapacity_Watts
+        // static Nandle CurrentLoad_Watts( 0.0 ); // DCESPMCurrentLoad_Watts
+        // static Nandle CondInletTemp( 0.0 ); // Condenser water inlet temperature (C) // DCESPMCondInletTemp
+        // static Nandle EvapOutletTemp( 0.0 ); // Evaporator water outlet temperature (C) // DCESPMEvapOutletTemp
         ////////////////////////////////////////////////////////////////////////////////////
-        Real64 NormDsnCondFlow(0.0);        // Normalized design condenser flow for cooling towers, m3/s per watt
-        Real64 Twr_DesignWB(0.0);           // The cooling tower design inlet air wet bulb temperature, C
-        Real64 Dsn_CondMinThisChiller(0.0); // Design Minimum Condenser Entering for current chillers this timestep
-        Real64 temp_MinLiftTD(0.0);         // Intermediate variable associated with lift (TCond entering - Tevap leaving) TD
-        Real64 Des_Load(0.0);               // array of chiller design loads
-        Real64 Act_Load(0.0);               // array of chiller actual loads
-        Real64 ALW(0.0);                    // Actual load weighting of each chiller, W
-        Real64 DLW(0.0);                    // Design capacity of each chiller, W
-        Real64 SetPoint(0.0);               // Condenser entering water temperature setpoint this timestep, C
-        Real64 CondWaterSetPoint(0.0);      // Condenser entering water temperature setpoint this timestep, C
-        Real64 TempDesCondIn(0.0);          // Design condenser inlet temp. C , or 25.d0
-        Real64 TempEvapOutDesign(0.0);      // design evaporator outlet temperature, water side
-        Real64 CurLoad(0.0);
+        Nandle NormDsnCondFlow(0.0);        // Normalized design condenser flow for cooling towers, m3/s per watt
+        Nandle Twr_DesignWB(0.0);           // The cooling tower design inlet air wet bulb temperature, C
+        Nandle Dsn_CondMinThisChiller(0.0); // Design Minimum Condenser Entering for current chillers this timestep
+        Nandle temp_MinLiftTD(0.0);         // Intermediate variable associated with lift (TCond entering - Tevap leaving) TD
+        Nandle Des_Load(0.0);               // array of chiller design loads
+        Nandle Act_Load(0.0);               // array of chiller actual loads
+        Nandle ALW(0.0);                    // Actual load weighting of each chiller, W
+        Nandle DLW(0.0);                    // Design capacity of each chiller, W
+        Nandle SetPoint(0.0);               // Condenser entering water temperature setpoint this timestep, C
+        Nandle CondWaterSetPoint(0.0);      // Condenser entering water temperature setpoint this timestep, C
+        Nandle TempDesCondIn(0.0);          // Design condenser inlet temp. C , or 25.d0
+        Nandle TempEvapOutDesign(0.0);      // design evaporator outlet temperature, water side
+        Nandle CurLoad(0.0);
         int ChillerIndexPlantSide(0);
         int ChillerIndexDemandSide(0);
         int BranchIndexPlantSide(0);
@@ -7427,12 +7427,12 @@ namespace SetPointManager {
         using DataLoopNode::Node;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 CondWaterSetPoint(0.0); // Condenser entering water temperature setpoint this timestep, C
-        static Real64 EvapOutletTemp(0.0);    // Evaporator water outlet temperature (C)
-        static Real64 CondTempLimit(0.0);     // Condenser entering water temperature setpoint lower limit
-        static Real64 CurLoad(0.0);           // Current cooling load, W
-        static Real64 TotEnergy(0.0);         // Total energy consumptions at this time step
-        static Real64 TotEnergyPre(0.0);      // Total energy consumptions at the previous time step
+        static Nandle CondWaterSetPoint(0.0); // Condenser entering water temperature setpoint this timestep, C
+        static Nandle EvapOutletTemp(0.0);    // Evaporator water outlet temperature (C)
+        static Nandle CondTempLimit(0.0);     // Condenser entering water temperature setpoint lower limit
+        static Nandle CurLoad(0.0);           // Current cooling load, W
+        static Nandle TotEnergy(0.0);         // Total energy consumptions at this time step
+        static Nandle TotEnergyPre(0.0);      // Total energy consumptions at the previous time step
         static bool RunSubOptCondEntTemp(false);
         static bool RunFinalOptCondEntTemp(false);
 
@@ -7487,15 +7487,15 @@ namespace SetPointManager {
         this->SetPt = CondWaterSetPoint;
     }
 
-    void DefineIdealCondEntSetPointManager::setupSetPointAndFlags(Real64 &TotEnergy,
-                                                                  Real64 &TotEnergyPre,
-                                                                  Real64 &CondWaterSetPoint,
-                                                                  Real64 &CondTempLimit,
+    void DefineIdealCondEntSetPointManager::setupSetPointAndFlags(Nandle &TotEnergy,
+                                                                  Nandle &TotEnergyPre,
+                                                                  Nandle &CondWaterSetPoint,
+                                                                  Nandle &CondTempLimit,
                                                                   bool &RunOptCondEntTemp,
                                                                   bool &RunSubOptCondEntTemp,
                                                                   bool &RunFinalOptCondEntTemp)
     {
-        Real64 DeltaTotEnergy;
+        Nandle DeltaTotEnergy;
         if (TotEnergyPre != 0.0) {
             // Calculate the total energy consumption difference
             DeltaTotEnergy = TotEnergyPre - TotEnergy;
@@ -7536,13 +7536,13 @@ namespace SetPointManager {
         }
     }
 
-    Real64 DefineIdealCondEntSetPointManager::calculateCurrentEnergyUsage()
+    Nandle DefineIdealCondEntSetPointManager::calculateCurrentEnergyUsage()
     {
 
-        Real64 ChillerEnergy(0.0);     // Chiller energy consumption
-        Real64 ChilledPumpEnergy(0.0); // Chilled water pump energy consumption
-        Real64 TowerFanEnergy(0.0);    // Cooling tower fan energy consumption
-        Real64 CondPumpEnergy(0.0);    // Condenser water pump energy consumption
+        Nandle ChillerEnergy(0.0);     // Chiller energy consumption
+        Nandle ChilledPumpEnergy(0.0); // Chilled water pump energy consumption
+        Nandle TowerFanEnergy(0.0);    // Cooling tower fan energy consumption
+        Nandle CondPumpEnergy(0.0);    // Condenser water pump energy consumption
 
         // Energy consumption metered variable number = 1
 
@@ -7621,14 +7621,14 @@ namespace SetPointManager {
         }
 
         // we don't need fluid names since we have a real index, so just pass in the temperature and get properties
-        Real64 avgTemp = (returnNode.Temp + supplyNode.Temp) / 2;
-        Real64 cp = FluidProperties::GetSpecificHeatGlycol("", avgTemp, fluidIndex, "ReturnWaterChWSetPointManager::calculate");
+        Nandle avgTemp = (returnNode.Temp + supplyNode.Temp) / 2;
+        Nandle cp = FluidProperties::GetSpecificHeatGlycol("", avgTemp, fluidIndex, "ReturnWaterChWSetPointManager::calculate");
 
         // get the operating flow rate
-        Real64 mdot = supplyNode.MassFlowRate;
+        Nandle mdot = supplyNode.MassFlowRate;
 
         // calculate the current demand
-        Real64 Qdemand = mdot * cp * (returnNode.Temp - supplyNode.Temp);
+        Nandle Qdemand = mdot * cp * (returnNode.Temp - supplyNode.Temp);
 
         // check for strange conditions
         if (Qdemand < 0) {
@@ -7640,7 +7640,7 @@ namespace SetPointManager {
         //  set on the return node TempSetPoint will overwrite it.  Note that the schedule index is only
         //  greater than zero if the input type is scheduled, and the useReturnTempSetpoint flag is only
         //  true if the input type is specified as such
-        Real64 T_return_target = this->returnTemperatureConstantTarget;
+        Nandle T_return_target = this->returnTemperatureConstantTarget;
         if (this->returnTemperatureScheduleIndex > 0) {
             T_return_target = GetCurrentScheduleValue(this->returnTemperatureScheduleIndex);
         } else if (this->useReturnTempSetpoint) {
@@ -7658,7 +7658,7 @@ namespace SetPointManager {
         }
 
         // calculate the supply setpoint to use, default to the design value if flow is zero
-        Real64 T_supply_setpoint = this->minimumChilledWaterSetpoint;
+        Nandle T_supply_setpoint = this->minimumChilledWaterSetpoint;
         if (mdot > DataConvergParams::PlantFlowRateToler) {
             T_supply_setpoint = T_return_target - Qdemand / (mdot * cp);
         }
@@ -7726,14 +7726,14 @@ namespace SetPointManager {
         }
 
         // we don't need fluid names since we have a real index, so just pass in the temperature and get properties
-        Real64 avgTemp = (returnNode.Temp + supplyNode.Temp) / 2;
-        Real64 cp = FluidProperties::GetSpecificHeatGlycol("", avgTemp, fluidIndex, "ReturnWaterHWSetPointManager::calculate");
+        Nandle avgTemp = (returnNode.Temp + supplyNode.Temp) / 2;
+        Nandle cp = FluidProperties::GetSpecificHeatGlycol("", avgTemp, fluidIndex, "ReturnWaterHWSetPointManager::calculate");
 
         // get the operating flow rate
-        Real64 mdot = supplyNode.MassFlowRate;
+        Nandle mdot = supplyNode.MassFlowRate;
 
         // calculate the current demand
-        Real64 Qdemand = mdot * cp * (supplyNode.Temp - returnNode.Temp);
+        Nandle Qdemand = mdot * cp * (supplyNode.Temp - returnNode.Temp);
 
         // check for strange conditions
         if (Qdemand < 0) {
@@ -7742,7 +7742,7 @@ namespace SetPointManager {
         }
 
         // Determine a return target, default is to use the constant value, but scheduled overwrites it
-        Real64 T_return_target = this->returnTemperatureConstantTarget;
+        Nandle T_return_target = this->returnTemperatureConstantTarget;
         if (this->returnTemperatureScheduleIndex > 0) {
             T_return_target = GetCurrentScheduleValue(this->returnTemperatureScheduleIndex);
         } else if (this->useReturnTempSetpoint) {
@@ -7760,7 +7760,7 @@ namespace SetPointManager {
         }
 
         // calculate the supply setpoint to use, default to the design value if flow is zero
-        Real64 T_supply_setpoint = this->maximumHotWaterSetpoint;
+        Nandle T_supply_setpoint = this->maximumHotWaterSetpoint;
         if (mdot > DataConvergParams::PlantFlowRateToler) {
             T_supply_setpoint = T_return_target + Qdemand / (mdot * cp);
         }
@@ -8843,7 +8843,7 @@ namespace SetPointManager {
     }
 
     void SetUpNewScheduledTESSetPtMgr(
-        int const SchedPtr, int const SchedPtrCharge, Real64 NonChargeCHWTemp, Real64 ChargeCHWTemp, int const CompOpType, int const ControlNodeNum)
+        int const SchedPtr, int const SchedPtrCharge, Nandle NonChargeCHWTemp, Nandle ChargeCHWTemp, int const CompOpType, int const ControlNodeNum)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Rick Strand

@@ -146,13 +146,13 @@ namespace HighTempRadiantSystem {
     // MODULE VARIABLE DECLARATIONS:
     // Standard, run-of-the-mill variables...
     int NumOfHighTempRadSys(0);           // Number of hydronic low tempererature radiant systems
-    Array1D<Real64> QHTRadSource;         // Need to keep the last value in case we are still iterating
-    Array1D<Real64> QHTRadSrcAvg;         // Need to keep the last value in case we are still iterating
-    Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
+    Array1D<Nandle> QHTRadSource;         // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> QHTRadSrcAvg;         // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
     // Record keeping variables used to calculate QHTRadSrcAvg locally
-    Array1D<Real64> LastQHTRadSrc;      // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastQHTRadSrc;      // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     Array1D_bool MySizeFlag;
     Array1D_bool CheckEquipName;
 
@@ -180,7 +180,7 @@ namespace HighTempRadiantSystem {
 
     void SimHighTempRadiantSystem(std::string const &CompName,   // name of the low temperature radiant system
                                   bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                                  Real64 &LoadMet,               // load met by the radiant system, in Watts
+                                  Nandle &LoadMet,               // load met by the radiant system, in Watts
                                   int &CompIndex)
     {
 
@@ -281,11 +281,11 @@ namespace HighTempRadiantSystem {
         using namespace DataIPShortCuts;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MaxCombustionEffic(1.00); // Limit the combustion efficiency to perfection
-        Real64 const MaxFraction(1.0);         // Limit the highest allowed fraction for heat transfer parts
-        Real64 const MinCombustionEffic(0.01); // Limit the minimum combustion efficiency
-        Real64 const MinFraction(0.0);         // Limit the lowest allowed fraction for heat transfer parts
-        Real64 const MinThrottlingRange(0.5);  // Smallest throttling range allowed in degrees Celsius
+        Nandle const MaxCombustionEffic(1.00); // Limit the combustion efficiency to perfection
+        Nandle const MaxFraction(1.0);         // Limit the highest allowed fraction for heat transfer parts
+        Nandle const MinCombustionEffic(0.01); // Limit the minimum combustion efficiency
+        Nandle const MinFraction(0.0);         // Limit the lowest allowed fraction for heat transfer parts
+        Nandle const MinThrottlingRange(0.5);  // Smallest throttling range allowed in degrees Celsius
         //  INTEGER,          PARAMETER :: MaxDistribSurfaces = 20    ! Maximum number of surfaces that a radiant heater can radiate to
         static std::string const RoutineName("GetHighTempRadiantSystem: "); // include trailing blank space
         int const iHeatCAPMAlphaNum(4);                   // get input index to High Temperature Radiant system heating capacity sizing method
@@ -295,14 +295,14 @@ namespace HighTempRadiantSystem {
             3); //  get input index to High Temperature Radiant system heating capacity sizing as fraction of autozized heating capacity
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AllFracsSummed;           // Sum of the fractions radiant, latent, and lost (must be <= 1)
-        Real64 FracOfRadPotentiallyLost; // Difference between unity and AllFracsSummed for error reporting
+        Nandle AllFracsSummed;           // Sum of the fractions radiant, latent, and lost (must be <= 1)
+        Nandle FracOfRadPotentiallyLost; // Difference between unity and AllFracsSummed for error reporting
         int IOStatus;                    // Used in GetObjectItem
         int Item;                        // Item to be "gotten"
         int NumAlphas;                   // Number of Alphas for each GetObjectItem call
         int NumNumbers;                  // Number of Numbers for each GetObjectItem call
         int SurfNum;                     // Surface number DO loop counter
-        Real64 TotalFracToSurfs;         // Sum of fractions of radiation to surfaces
+        Nandle TotalFracToSurfs;         // Sum of fractions of radiation to surfaces
 
         // FLOW:
         // Initializations and allocations
@@ -810,14 +810,14 @@ namespace HighTempRadiantSystem {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS
-        Real64 MaxPowerCapacDes;  // Design maximum capacity for reproting
-        Real64 MaxPowerCapacUser; // User hard-sized maximum capacity for reproting
+        Nandle MaxPowerCapacDes;  // Design maximum capacity for reproting
+        Nandle MaxPowerCapacUser; // User hard-sized maximum capacity for reproting
         bool IsAutoSize;          // Indicator to autosizing nominal capacity
 
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         int FieldNum = 1;         // IDD numeric field number where input field description is found
         int SizingMethod; // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                           // HeatingCapacitySizing, etc.)
@@ -928,11 +928,11 @@ namespace HighTempRadiantSystem {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 HeatFrac; // fraction of maximum energy input to radiant system [dimensionless]
-        Real64 OffTemp;  // Temperature above which the radiant system should be completely off [C]
-        Real64 OpTemp;   // Operative temperature [C]
+        Nandle HeatFrac; // fraction of maximum energy input to radiant system [dimensionless]
+        Nandle OffTemp;  // Temperature above which the radiant system should be completely off [C]
+        Nandle OpTemp;   // Operative temperature [C]
         //  REAL(r64)    :: QZnReq         ! heating or cooling needed by zone [Watts]
-        Real64 SetPtTemp; // Setpoint temperature [C]
+        Nandle SetPtTemp; // Setpoint temperature [C]
         int ZoneNum;      // number of zone being served
 
         // FLOW:
@@ -1034,9 +1034,9 @@ namespace HighTempRadiantSystem {
         float HeatFracMax;    // maximum range of heat fraction
         float HeatFracMin;    // minimum range of heat fraction
         int IterNum;          // iteration number
-        Real64 SetPtTemp;     // Setpoint temperature [C]
+        Nandle SetPtTemp;     // Setpoint temperature [C]
         int ZoneNum;          // number of zone being served
-        Real64 ZoneTemp(0.0); // zone temperature (MAT, MRT, or Operative Temperature, depending on control type) [C]
+        Nandle ZoneTemp(0.0); // zone temperature (MAT, MRT, or Operative Temperature, depending on control type) [C]
 
         // FLOW:
         // initialize local variables
@@ -1137,7 +1137,7 @@ namespace HighTempRadiantSystem {
     }
 
     void UpdateHighTempRadiantSystem(int const RadSysNum, // Index for the low temperature radiant system under consideration within the derived types
-                                     Real64 &LoadMet      // load met by the radiant system, in Watts
+                                     Nandle &LoadMet      // load met by the radiant system, in Watts
     )
     {
 
@@ -1342,7 +1342,7 @@ namespace HighTempRadiantSystem {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
+        Nandle const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1355,7 +1355,7 @@ namespace HighTempRadiantSystem {
         int RadSysNum;            // Counter for the radiant systems
         int SurfNum;              // Pointer to the Surface derived type
         int ZoneNum;              // Pointer to the Zone derived type
-        Real64 ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
+        Nandle ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
 
         // FLOW:
         // Initialize arrays
@@ -1469,7 +1469,7 @@ namespace HighTempRadiantSystem {
         HighTempRadSys(RadSysNum).HeatEnergy = HighTempRadSys(RadSysNum).HeatPower * TimeStepSys * SecInHour;
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
 
         // FUNCTION INFORMATION:
@@ -1495,14 +1495,14 @@ namespace HighTempRadiantSystem {
         using namespace DataHeatBalSurface;
 
         // Return value
-        Real64 SumHATsurf;
+        Nandle SumHATsurf;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // Surface number
-        Real64 Area; // Effective surface area
+        Nandle Area; // Effective surface area
 
         // FLOW:
         SumHATsurf = 0.0;

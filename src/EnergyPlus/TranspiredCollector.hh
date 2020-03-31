@@ -95,62 +95,62 @@ namespace TranspiredCollector {
         Array1D_int ZoneNode;         // Air system node "pointer", should have zone node
         int Layout;                   // 'Square' or 'Triangle'
         int Correlation;              // which heat exchanger effectiveness model
-        Real64 HoleDia;               // Diameter of Perforations in Collector [m]
-        Real64 Pitch;                 // Distance between Perforations in Collector [m]
-        Real64 LWEmitt;               // Thermal Emissivity of Collector Surface [dimensionless]
-        Real64 SolAbsorp;             // Solar Absorbtivity of Collector Surface [dimensionless]
+        Nandle HoleDia;               // Diameter of Perforations in Collector [m]
+        Nandle Pitch;                 // Distance between Perforations in Collector [m]
+        Nandle LWEmitt;               // Thermal Emissivity of Collector Surface [dimensionless]
+        Nandle SolAbsorp;             // Solar Absorbtivity of Collector Surface [dimensionless]
         int CollRoughness;            // surface roughness for exterior convection calcs.
-        Real64 PlenGapThick;          // Depth of Plenum Behind Collector [m]
-        Real64 PlenCrossArea;         // cross section area of plenum behind collector [m2]
+        Nandle PlenGapThick;          // Depth of Plenum Behind Collector [m]
+        Nandle PlenCrossArea;         // cross section area of plenum behind collector [m2]
         int NumSurfs;                 // a single collector can have multiple surfaces underneath it
         Array1D_int SurfPtrs;         // = 0  ! array of pointers for participating underlying surfaces
-        Real64 Height;                // Overall Height of Collector  [m]
-        Real64 AreaRatio;             // Ratio of actual surface are to projected surface area [dimensionless]
-        Real64 CollectThick;          // Thickness of collector absorber plate material.  [m]
-        Real64 Cv;                    // volume-based effectiveness of openings for wind-driven vent when Passive
-        Real64 Cd;                    // discharge coefficient of openings for bouyancy-driven vent when Passive
+        Nandle Height;                // Overall Height of Collector  [m]
+        Nandle AreaRatio;             // Ratio of actual surface are to projected surface area [dimensionless]
+        Nandle CollectThick;          // Thickness of collector absorber plate material.  [m]
+        Nandle Cv;                    // volume-based effectiveness of openings for wind-driven vent when Passive
+        Nandle Cd;                    // discharge coefficient of openings for bouyancy-driven vent when Passive
         int NumOASysAttached;         // =1 if no splitter, other wise set by Splitter object
         int FreeHeatSetPointSchedPtr; // used for controlling seperately from usual setpoint managers.
         int VsucErrIndex;
         // data from elswhere and calculated
-        Real64 ActualArea; // Overall Area of Collect with surface corrugations.
-        Real64 ProjArea;   // Overall Area of Collector projected, as if flat [m2]
+        Nandle ActualArea; // Overall Area of Collect with surface corrugations.
+        Nandle ProjArea;   // Overall Area of Collector projected, as if flat [m2]
         Vector Centroid;   // computed centroid
-        Real64 Porosity;   // fraction of absorber plate [--]
+        Nandle Porosity;   // fraction of absorber plate [--]
         bool IsOn;         // .TRUE. means "on" or "ACTIVE" , .false means "off" or "PASSIVE
-        Real64 Tplen;      // modeled drybulb temperature for air between collector and wall [C]
-        Real64 Tcoll;      // modeled surface temperature for collector [C]
-        Real64 TplenLast;  // Old Value for modeled drybulb temp if air between collector and wall [C]
-        Real64 TcollLast;  // Old value for modeled surface temperature for collector [C]
-        Real64 HrPlen;     // Modeled radiation coef for OSCM [W/m2-C]
-        Real64 HcPlen;     // Modeled Convection coef for OSCM [W/m2-C]
-        Real64 MdotVent;   // air mass flow exchanging with ambient when passive.
-        Real64 HdeltaNPL;  // lenth scale for bouyancy-driven vent when Passive [m]
-        Real64 TairHX;     // air drybulb of air leaving collector when Active [C]
-        Real64 InletMDot;  // flow rate from outdoor mixer controller
-        Real64 InletTempDB;
-        Real64 Tilt;       // Tilt from area weighted average of underlying surfaces
-        Real64 Azimuth;    // Azimuth from area weighted average of underlying surfaces
-        Real64 QdotSource; // Source/sink term
+        Nandle Tplen;      // modeled drybulb temperature for air between collector and wall [C]
+        Nandle Tcoll;      // modeled surface temperature for collector [C]
+        Nandle TplenLast;  // Old Value for modeled drybulb temp if air between collector and wall [C]
+        Nandle TcollLast;  // Old value for modeled surface temperature for collector [C]
+        Nandle HrPlen;     // Modeled radiation coef for OSCM [W/m2-C]
+        Nandle HcPlen;     // Modeled Convection coef for OSCM [W/m2-C]
+        Nandle MdotVent;   // air mass flow exchanging with ambient when passive.
+        Nandle HdeltaNPL;  // lenth scale for bouyancy-driven vent when Passive [m]
+        Nandle TairHX;     // air drybulb of air leaving collector when Active [C]
+        Nandle InletMDot;  // flow rate from outdoor mixer controller
+        Nandle InletTempDB;
+        Nandle Tilt;       // Tilt from area weighted average of underlying surfaces
+        Nandle Azimuth;    // Azimuth from area weighted average of underlying surfaces
+        Nandle QdotSource; // Source/sink term
         // reporting data
-        Real64 Isc;               // total incident solar on collector [W]
-        Real64 HXeff;             // heat exchanger effectiveness [--]
-        Real64 Vsuction;          // Average suction face velocity [m/s]
-        Real64 PassiveACH;        // air changes per hour when passive [1/hr]
-        Real64 PassiveMdotVent;   // Total Nat Vent air change rate  [kg/s]
-        Real64 PassiveMdotWind;   // Nat Vent air change rate from Wind-driven [kg/s]
-        Real64 PassiveMdotTherm;  // Nat. Vent air change rate from bouyancy-driven flow [kg/s]
-        Real64 PlenumVelocity;    // effective velocity inside plenum [m/s]
-        Real64 SupOutTemp;        // supply air outlet temperature [C]
-        Real64 SupOutHumRat;      // supply air outlet humidity ratio [kg water/kg dry air]
-        Real64 SupOutEnth;        // supply air outlet enthalpy [J/kg]
-        Real64 SupOutMassFlow;    // supply air outlet mass flow rate [kg/s]
-        Real64 SensHeatingRate;   // rate of sensible heat being added to the supply (primary) air [W]
-        Real64 SensHeatingEnergy; // sensible heat added to the supply (primary) air [J]
-        Real64 SensCoolingRate;   // rate of sensible heat being removed from the supply (primary) air [W]
-        Real64 SensCoolingEnergy; // sensible heat removed from the supply (primary) air [J]
-        Real64 UTSCEfficiency;    // Total Efficiency (with wall) SensHeatingRate/IncidentRadiation[--]
-        Real64 UTSCCollEff;       // Collector-only Efficiency [--]
+        Nandle Isc;               // total incident solar on collector [W]
+        Nandle HXeff;             // heat exchanger effectiveness [--]
+        Nandle Vsuction;          // Average suction face velocity [m/s]
+        Nandle PassiveACH;        // air changes per hour when passive [1/hr]
+        Nandle PassiveMdotVent;   // Total Nat Vent air change rate  [kg/s]
+        Nandle PassiveMdotWind;   // Nat Vent air change rate from Wind-driven [kg/s]
+        Nandle PassiveMdotTherm;  // Nat. Vent air change rate from bouyancy-driven flow [kg/s]
+        Nandle PlenumVelocity;    // effective velocity inside plenum [m/s]
+        Nandle SupOutTemp;        // supply air outlet temperature [C]
+        Nandle SupOutHumRat;      // supply air outlet humidity ratio [kg water/kg dry air]
+        Nandle SupOutEnth;        // supply air outlet enthalpy [J/kg]
+        Nandle SupOutMassFlow;    // supply air outlet mass flow rate [kg/s]
+        Nandle SensHeatingRate;   // rate of sensible heat being added to the supply (primary) air [W]
+        Nandle SensHeatingEnergy; // sensible heat added to the supply (primary) air [J]
+        Nandle SensCoolingRate;   // rate of sensible heat being removed from the supply (primary) air [W]
+        Nandle SensCoolingEnergy; // sensible heat removed from the supply (primary) air [J]
+        Nandle UTSCEfficiency;    // Total Efficiency (with wall) SensHeatingRate/IncidentRadiation[--]
+        Nandle UTSCCollEff;       // Collector-only Efficiency [--]
 
         // Default Constructor
         UTSCDataStruct()
@@ -187,12 +187,12 @@ namespace TranspiredCollector {
     void UpdateTranspiredCollector(int const UTSCNum);
 
     void SetUTSCQdotSource(int const UTSCNum,
-                           Real64 const QSource // source term in Watts
+                           Nandle const QSource // source term in Watts
     );
 
     void GetTranspiredCollectorIndex(int const SurfacePtr, int &UTSCIndex);
 
-    void GetUTSCTsColl(int const UTSCNum, Real64 &TsColl);
+    void GetUTSCTsColl(int const UTSCNum, Nandle &TsColl);
 
     int GetAirInletNodeNum(std::string const &UTSCName,
         bool &ErrorsFound

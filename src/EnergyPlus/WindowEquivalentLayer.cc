@@ -137,12 +137,12 @@ namespace WindowEquivalentLayer {
     using General::TrimSigDigits;
 
     // Data
-    Real64 const RadiansToDeg(180.0 /
+    Nandle const RadiansToDeg(180.0 /
                               3.141592653589793); // Conversion for Radians to Degrees: Not using DataGlobals::Pi to avoid initialization order bug
-    Real64 const PAtmSeaLevel(101325.0);          // Standard atmospheric pressure at sea level (Pa)
+    Nandle const PAtmSeaLevel(101325.0);          // Standard atmospheric pressure at sea level (Pa)
     int const hipRHO(1);                          // return reflectance
     int const hipTAU(2);                          // return transmittance
-    Real64 const SMALL_ERROR(0.000001);           // small number
+    Nandle const SMALL_ERROR(0.000001);           // small number
     // CFSGAP: space between layers (gap types)
     int const gtySEALED(1);  // sealed
     int const gtyOPENin(2);  // open to indoor air  (re Open Channel Flow (OCF))
@@ -157,7 +157,7 @@ namespace WindowEquivalentLayer {
     int const hipTAU_BB0(3);
     int const hipDIM(3); // dimension of parameter array
 
-    Array3D<Real64> CFSDiffAbsTrans;
+    Array3D<Nandle> CFSDiffAbsTrans;
     Array1D_bool EQLDiffPropFlag;
 
     // MODULE SUBROUTINES:
@@ -282,7 +282,7 @@ namespace WindowEquivalentLayer {
         int EQLNum;                               // equivalent layer window construction index
         int NumGLayers;                           // number of gap layers
         int NumSLayers;                           // number of glazing and shade layers (non-gas layers)
-        Array2D<Real64> SysAbs1(2, CFSMAXNL + 1); // layers absorptance and system transmittance
+        Array2D<Nandle> SysAbs1(2, CFSMAXNL + 1); // layers absorptance and system transmittance
         // Flow
 
         if (!allocated(CFSLayers)) CFSLayers.allocate(Construct(ConstrNum).TotLayers);
@@ -450,7 +450,7 @@ namespace WindowEquivalentLayer {
     }
 
     void CalcEQLWindowUvalue(CFSTY const &FS, // CFS to be calculated
-                             Real64 &UNFRC    // NFRC U-factor, W/m2-K
+                             Nandle &UNFRC    // NFRC U-factor, W/m2-K
     )
     {
         // SUBROUTINE INFORMATION:
@@ -482,9 +482,9 @@ namespace WindowEquivalentLayer {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const Height(1.0); // window height, m
-        Real64 const TOUT(-18.0); // outdoor air temperature, C
-        Real64 const TIN(21.0);   // indoor air temperature, C
+        Nandle const Height(1.0); // window height, m
+        Nandle const TOUT(-18.0); // outdoor air temperature, C
+        Nandle const TIN(21.0);   // indoor air temperature, C
         static std::string const RoutineName("CalcEQLWindowUvalue: ");
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -493,21 +493,21 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS
-        Real64 U;    // U-factor, W/m2-K
-        Real64 UOld; // U-factor during pevious iteration step, W/m2-K
-        Real64 HXO;  // outdoor combined conv+rad surf coeff, W/m2-K
-        Real64 HXI;  // indoor combined conf+rad surf coeff, W/m2-K
-        Real64 HRO;  // outdoor side radiation surf coeff, W/m2-K
-        Real64 HCO;  // outdoor side convection surf coeff, W/m2-K
-        Real64 HRI;  // indoor side radiation surf coeff, W/m2-K
-        Real64 HCI;  // indoor side convection surf coeff, W/m2-K
-        Real64 TGO;
-        Real64 TGI;
-        Real64 TGIK;
-        Real64 TIK;
-        Real64 DT;      // temperature difference, K
-        Real64 EO;      // outside face effective emissivity, (-)
-        Real64 EI;      // inside face effective emissivity, (-)
+        Nandle U;    // U-factor, W/m2-K
+        Nandle UOld; // U-factor during pevious iteration step, W/m2-K
+        Nandle HXO;  // outdoor combined conv+rad surf coeff, W/m2-K
+        Nandle HXI;  // indoor combined conf+rad surf coeff, W/m2-K
+        Nandle HRO;  // outdoor side radiation surf coeff, W/m2-K
+        Nandle HCO;  // outdoor side convection surf coeff, W/m2-K
+        Nandle HRI;  // indoor side radiation surf coeff, W/m2-K
+        Nandle HCI;  // indoor side convection surf coeff, W/m2-K
+        Nandle TGO;
+        Nandle TGI;
+        Nandle TGIK;
+        Nandle TIK;
+        Nandle DT;      // temperature difference, K
+        Nandle EO;      // outside face effective emissivity, (-)
+        Nandle EI;      // inside face effective emissivity, (-)
         int I;          // index
         bool CFSURated; // false if U-Value calculation failed
         // Flow
@@ -554,8 +554,8 @@ namespace WindowEquivalentLayer {
     }
 
     void CalcEQLWindowSHGCAndTransNormal(CFSTY const &FS,    // fenestration system
-                                         Real64 &SHGCSummer, // solar heat gain coefficient
-                                         Real64 &TransNormal // transmittance at normal incidence
+                                         Nandle &SHGCSummer, // solar heat gain coefficient
+                                         Nandle &TransNormal // transmittance at normal incidence
     )
     {
 
@@ -585,10 +585,10 @@ namespace WindowEquivalentLayer {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const TOL(0.01);
-        Real64 const TIN(297.15);
-        Real64 const TOUT(305.15);
-        Real64 const BeamSolarInc(783.0);
+        Nandle const TOL(0.01);
+        Nandle const TIN(297.15);
+        Nandle const TOUT(305.15);
+        Nandle const BeamSolarInc(783.0);
         static std::string const RoutineName("CalcEQLWindowSHGCAndTransNormal: ");
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -598,23 +598,23 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 HCOUT;
-        Real64 TRMOUT;
-        Real64 TRMIN;
-        Real64 HCIN;
-        Array1D<Real64> QOCF(CFSMAXNL);
-        Array1D<Real64> JB({0, CFSMAXNL});
-        Array1D<Real64> JF({1, CFSMAXNL + 1});
-        Array1D<Real64> T(CFSMAXNL);
-        Array1D<Real64> Q({0, CFSMAXNL});
-        Array1D<Real64> H({0, CFSMAXNL + 1});
-        Array2D<Real64> Abs1(2, CFSMAXNL + 1);
-        Real64 QOCFRoom;
-        Real64 UCG;
-        Real64 SHGC;
-        Real64 IncA;
-        Real64 VProfA;
-        Real64 HProfA;
+        Nandle HCOUT;
+        Nandle TRMOUT;
+        Nandle TRMIN;
+        Nandle HCIN;
+        Array1D<Nandle> QOCF(CFSMAXNL);
+        Array1D<Nandle> JB({0, CFSMAXNL});
+        Array1D<Nandle> JF({1, CFSMAXNL + 1});
+        Array1D<Nandle> T(CFSMAXNL);
+        Array1D<Nandle> Q({0, CFSMAXNL});
+        Array1D<Nandle> H({0, CFSMAXNL + 1});
+        Array2D<Nandle> Abs1(2, CFSMAXNL + 1);
+        Nandle QOCFRoom;
+        Nandle UCG;
+        Nandle SHGC;
+        Nandle IncA;
+        Nandle VProfA;
+        Nandle HProfA;
         int NL;
         int I;
         bool CFSSHGC;
@@ -683,10 +683,10 @@ namespace WindowEquivalentLayer {
 
     void CalcEQLWindowOpticalProperty(CFSTY &FS,              // fenestration system
                                       int const DiffBeamFlag, // isDIFF: calc diffuse properties
-                                      Array2A<Real64> Abs1,
-                                      Real64 const IncA,   // angle of incidence, radians
-                                      Real64 const VProfA, // inc solar vertical profile angle, radians
-                                      Real64 const HProfA  // inc solar horizontal profile angle, radians
+                                      Array2A<Nandle> Abs1,
+                                      Nandle const IncA,   // angle of incidence, radians
+                                      Nandle const VProfA, // inc solar vertical profile angle, radians
+                                      Nandle const HProfA  // inc solar horizontal profile angle, radians
     )
     {
         // SUBROUTINE INFORMATION:
@@ -770,10 +770,10 @@ namespace WindowEquivalentLayer {
     }
 
     void EQLWindowSurfaceHeatBalance(int const SurfNum,       // Surface number
-                                     Real64 const HcOut,      // outside convection coeficient at this timestep, W/m2K
-                                     Real64 &SurfInsideTemp,  // Inside window surface temperature (innermost face) [C]
-                                     Real64 &SurfOutsideTemp, // Outside surface temperature (C)
-                                     Real64 &SurfOutsideEmiss,
+                                     Nandle const HcOut,      // outside convection coeficient at this timestep, W/m2K
+                                     Nandle &SurfInsideTemp,  // Inside window surface temperature (innermost face) [C]
+                                     Nandle &SurfOutsideTemp, // Outside surface temperature (C)
+                                     Nandle &SurfOutsideEmiss,
                                      int const CalcCondition // Calucation condition (summer, winter or no condition)
     )
     {
@@ -810,7 +810,7 @@ namespace WindowEquivalentLayer {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const TOL(0.0001); // convergence tolerance
+        Nandle const TOL(0.0001); // convergence tolerance
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -820,19 +820,19 @@ namespace WindowEquivalentLayer {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NL; // Number of layers
-        Real64 TIN(0);
-        Real64 TRMIN;
-        Real64 Tout(0);
-        Real64 TRMOUT;
-        Real64 QCONV;
-        Array1D<Real64> QOCF(CFSMAXNL);
-        Real64 QOCFRoom;
-        Array1D<Real64> JB({0, CFSMAXNL});
-        Array1D<Real64> JF({1, CFSMAXNL + 1});
-        Array1D<Real64> T(CFSMAXNL);
-        Array1D<Real64> Q({0, CFSMAXNL});
-        Array1D<Real64> H({0, CFSMAXNL + 1});
-        Array1D<Real64> QAllSWwinAbs({1, CFSMAXNL + 1});
+        Nandle TIN(0);
+        Nandle TRMIN;
+        Nandle Tout(0);
+        Nandle TRMOUT;
+        Nandle QCONV;
+        Array1D<Nandle> QOCF(CFSMAXNL);
+        Nandle QOCFRoom;
+        Array1D<Nandle> JB({0, CFSMAXNL});
+        Array1D<Nandle> JF({1, CFSMAXNL + 1});
+        Array1D<Nandle> T(CFSMAXNL);
+        Array1D<Nandle> Q({0, CFSMAXNL});
+        Array1D<Nandle> H({0, CFSMAXNL + 1});
+        Array1D<Nandle> QAllSWwinAbs({1, CFSMAXNL + 1});
 
         int EQLNum;    // equivalent layer window index
         int ZoneNum;   // Zone number corresponding to SurfNum
@@ -840,33 +840,33 @@ namespace WindowEquivalentLayer {
 
         int ZoneEquipConfigNum;
         int NodeNum;
-        Real64 SumSysMCp;  // Zone sum of air system MassFlowRate*Cp
-        Real64 SumSysMCpT; // Zone sum of air system MassFlowRate*Cp*T
-        Real64 MassFlowRate;
-        Real64 NodeTemp;
-        Real64 CpAir;
-        Real64 RefAirTemp; // reference air temperatures
+        Nandle SumSysMCp;  // Zone sum of air system MassFlowRate*Cp
+        Nandle SumSysMCpT; // Zone sum of air system MassFlowRate*Cp*T
+        Nandle MassFlowRate;
+        Nandle NodeTemp;
+        Nandle CpAir;
+        Nandle RefAirTemp; // reference air temperatures
         int SurfNumAdj;    // An interzone surface's number in the adjacent zone
         int ZoneNumAdj;    // An interzone surface's adjacent zone number
-        Real64 LWAbsIn;    // effective long wave absorptance/emissivity back side
-        Real64 LWAbsOut;   // effective long wave absorptance/emissivity front side
-        Real64 outir(0);
-        Real64 rmir;
-        Real64 Ebout;
-        Real64 QXConv;              // extra convective gain from this surface
-        Real64 TaIn(0);             // zone air temperature
-        Real64 tsky;                // sky temperature
-        Real64 HcIn;                // inside convection coeficient at this timestep, W/m2K
-        Real64 ConvHeatFlowNatural; // Convective heat flow from gap between glass and interior shade or blind (W)
-        Real64 NetIRHeatGainWindow; // net radiation gain from the window surface to the zone (W)
-        Real64 ConvHeatGainWindow;  // net convection heat gain from inside surface of window to zone air (W)
+        Nandle LWAbsIn;    // effective long wave absorptance/emissivity back side
+        Nandle LWAbsOut;   // effective long wave absorptance/emissivity front side
+        Nandle outir(0);
+        Nandle rmir;
+        Nandle Ebout;
+        Nandle QXConv;              // extra convective gain from this surface
+        Nandle TaIn(0);             // zone air temperature
+        Nandle tsky;                // sky temperature
+        Nandle HcIn;                // inside convection coeficient at this timestep, W/m2K
+        Nandle ConvHeatFlowNatural; // Convective heat flow from gap between glass and interior shade or blind (W)
+        Nandle NetIRHeatGainWindow; // net radiation gain from the window surface to the zone (W)
+        Nandle ConvHeatGainWindow;  // net convection heat gain from inside surface of window to zone air (W)
         int InSideLayerType;        // interior shade type
 
         int SrdSurfsNum;       // Surrounding surfaces list number
         int SrdSurfNum;        // Surrounding surface number DO loop counter
-        Real64 SrdSurfTempAbs; // Absolute temperature of a surrounding surface
-        Real64 SrdSurfViewFac; // View factor of a surrounding surface
-        Real64 OutSrdIR;
+        Nandle SrdSurfTempAbs; // Absolute temperature of a surrounding surface
+        Nandle SrdSurfViewFac; // View factor of a surrounding surface
+        Nandle OutSrdIR;
 
         // Flow
 
@@ -1066,11 +1066,11 @@ namespace WindowEquivalentLayer {
         OtherConvGainInsideFaceToZoneRep(SurfNum) = SurfaceWindow(SurfNum).OtherConvHeatGain;
     }
 
-    void OPENNESS_LW(Real64 const OPENNESS, // shade openness (=tausbb at normal incidence)
-                     Real64 const EPSLW0,   // apparent LW emittance of shade at 0 openness
-                     Real64 const TAULW0,   // apparent LW transmittance of shade at 0 openness
-                     Real64 &EPSLW,         // returned: effective LW emittance of shade
-                     Real64 &TAULW          // returned: effective LW transmittance of shade
+    void OPENNESS_LW(Nandle const OPENNESS, // shade openness (=tausbb at normal incidence)
+                     Nandle const EPSLW0,   // apparent LW emittance of shade at 0 openness
+                     Nandle const TAULW0,   // apparent LW transmittance of shade at 0 openness
+                     Nandle &EPSLW,         // returned: effective LW emittance of shade
+                     Nandle &TAULW          // returned: effective LW transmittance of shade
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1118,7 +1118,7 @@ namespace WindowEquivalentLayer {
         TAULW = TAULW0 * (1.0 - OPENNESS) + OPENNESS;
     }
 
-    Real64 P01(Real64 const P,         // property
+    Nandle P01(Nandle const P,         // property
                std::string const &WHAT // identifier for err msg
     )
     {
@@ -1138,7 +1138,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 P01;
+        Nandle P01;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -1170,9 +1170,9 @@ namespace WindowEquivalentLayer {
         return P01;
     }
 
-    Real64 HEMINT(std::function<Real64(Real64 const THETA, int const OPT, const Array1D<Real64> &)> F, // property integrand function
+    Nandle HEMINT(std::function<Nandle(Nandle const THETA, int const OPT, const Array1D<Nandle> &)> F, // property integrand function
                   int const F_Opt,                                                                   // options passed to F() (hipRHO, hipTAU)
-                  const Array1D<Real64> &F_P                                                          // parameters passed to F()
+                  const Array1D<Nandle> &F_P                                                          // parameters passed to F()
     )
     {
         //       AUTHOR         ASHRAE 1311-RP
@@ -1200,7 +1200,7 @@ namespace WindowEquivalentLayer {
         // FUNCTION PARAMETER DEFINITIONS:
         static int const KMAX(8); // max steps
         static int const NPANMAX(std::pow(2, KMAX));
-        Real64 const TOL(0.0005); // convergence tolerance
+        Nandle const TOL(0.0005); // convergence tolerance
         static std::string const RoutineName("HEMINT");
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -1210,14 +1210,14 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Array2D<Real64> T(KMAX, KMAX);
-        Real64 FX;
-        Real64 X1;
-        Real64 X2;
-        Real64 X;
-        Real64 DX;
-        Real64 SUM;
-        Real64 DIFF;
+        Array2D<Nandle> T(KMAX, KMAX);
+        Nandle FX;
+        Nandle X1;
+        Nandle X2;
+        Nandle X;
+        Nandle DX;
+        Nandle SUM;
+        Nandle DIFF;
         int nPan;
         int I;
         int K;
@@ -1248,7 +1248,7 @@ namespace WindowEquivalentLayer {
             // Now complete the row
             if (K > 1) {
                 for (L = 2; L <= K; ++L) {
-                    Real64 const pow_4_L_1(std::pow(4.0, L - 1));
+                    Nandle const pow_4_L_1(std::pow(4.0, L - 1));
                     T(K, L) = (pow_4_L_1 * T(K, L - 1) - T(K - 1, L - 1)) / (pow_4_L_1 - 1.0);
                 }
                 //    check for convergence
@@ -1266,11 +1266,11 @@ namespace WindowEquivalentLayer {
         return P01(T(K, K), RoutineName);
     }
 
-    void RB_DIFF(Real64 const RHO_BT0, // normal incidence beam-total reflectance
-                 Real64 const TAU_BT0, // normal incidence beam-total transmittance
-                 Real64 const TAU_BB0, // normal incidence beam-beam transmittance
-                 Real64 &RHO_DD,       // returned: diffuse-diffuse reflectance
-                 Real64 &TAU_DD        // returned: diffuse-diffuse transmittance
+    void RB_DIFF(Nandle const RHO_BT0, // normal incidence beam-total reflectance
+                 Nandle const TAU_BT0, // normal incidence beam-total transmittance
+                 Nandle const TAU_BB0, // normal incidence beam-beam transmittance
+                 Nandle &RHO_DD,       // returned: diffuse-diffuse reflectance
+                 Nandle &TAU_DD        // returned: diffuse-diffuse transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1304,8 +1304,8 @@ namespace WindowEquivalentLayer {
         // DERIVED TYPE DEFINITIONS
         // na
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Array1D<Real64> P(hipDIM);
-        Real64 SumRefAndTran; // sum of the reflectance and transmittance
+        Array1D<Nandle> P(hipDIM);
+        Nandle SumRefAndTran; // sum of the reflectance and transmittance
         // Flow
 
         RHO_DD = RHO_BT0;
@@ -1326,9 +1326,9 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    Real64 RB_F(Real64 const THETA,       // incidence angle, radians
+    Nandle RB_F(Nandle const THETA,       // incidence angle, radians
                 int const EP_UNUSED(OPT), // options (unused)
-                const Array1D<Real64> &P   // parameters
+                const Array1D<Nandle> &P   // parameters
     )
     {
         //       AUTHOR         ASHRAE 1311-RP
@@ -1362,9 +1362,9 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 RHO_BD;
-        Real64 TAU_BB;
-        Real64 TAU_BD;
+        Nandle RHO_BD;
+        Nandle TAU_BB;
+        Nandle TAU_BD;
         // Flow
 
         RB_BEAM(THETA, P(hipRHO_BT0), P(hipTAU_BT0), P(hipTAU_BB0), RHO_BD, TAU_BB, TAU_BD);
@@ -1372,13 +1372,13 @@ namespace WindowEquivalentLayer {
         return TAU_BB + TAU_BD;
     }
 
-    void RB_BEAM(Real64 const xTHETA,  // angle of incidence, radians (0 - PI/2)
-                 Real64 const RHO_BT0, // normal incidence beam-total front reflectance
-                 Real64 const TAU_BT0, // normal incidence beam-total transmittance
-                 Real64 const TAU_BB0, // normal incidence beam-beam transmittance
-                 Real64 &RHO_BD,       // returned: beam-diffuse front reflectance
-                 Real64 &TAU_BB,       // returned: beam-beam transmittance
-                 Real64 &TAU_BD        // returned: beam-diffuse transmittance
+    void RB_BEAM(Nandle const xTHETA,  // angle of incidence, radians (0 - PI/2)
+                 Nandle const RHO_BT0, // normal incidence beam-total front reflectance
+                 Nandle const TAU_BT0, // normal incidence beam-total transmittance
+                 Nandle const TAU_BB0, // normal incidence beam-beam transmittance
+                 Nandle &RHO_BD,       // returned: beam-diffuse front reflectance
+                 Nandle &TAU_BB,       // returned: beam-beam transmittance
+                 Nandle &TAU_BD        // returned: beam-diffuse transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1412,12 +1412,12 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 THETA;        // working angle of incidence (limited < 90 deg)
-        Real64 TAUM0;        // apparent blind material transmittance at normal incidence
-        Real64 THETA_CUTOFF; // cutoff angle, radians (angle beyond which total transmittance goes to zero)
-        Real64 TAUBT_EXPO;   // exponent in the beam-total transmittance model
-        Real64 TAUBB_EXPO;   // exponent in the beam-beam transmittance model
-        Real64 TAU_BT;       // beam-total transmittance
+        Nandle THETA;        // working angle of incidence (limited < 90 deg)
+        Nandle TAUM0;        // apparent blind material transmittance at normal incidence
+        Nandle THETA_CUTOFF; // cutoff angle, radians (angle beyond which total transmittance goes to zero)
+        Nandle TAUBT_EXPO;   // exponent in the beam-total transmittance model
+        Nandle TAUBB_EXPO;   // exponent in the beam-beam transmittance model
+        Nandle TAU_BT;       // beam-total transmittance
         // Flow
 
         THETA = min(89.99 * DegToRadians, xTHETA);
@@ -1435,7 +1435,7 @@ namespace WindowEquivalentLayer {
             }
             TAU_BT = TAU_BT0 * std::pow(std::cos(THETA), TAUBT_EXPO); // always 0 - 1
 
-            Real64 const cos_TAU_BB0(std::cos(TAU_BB0 * PiOvr2));
+            Nandle const cos_TAU_BB0(std::cos(TAU_BB0 * PiOvr2));
             THETA_CUTOFF = DegToRadians * (90.0 - 25.0 * cos_TAU_BB0);
             if (THETA >= THETA_CUTOFF) {
                 TAU_BB = 0.0;
@@ -1452,11 +1452,11 @@ namespace WindowEquivalentLayer {
         TAU_BD = P01(TAU_BT - TAU_BB, ContextName);
     }
 
-    void IS_DIFF(Real64 const RHO_BT0, // normal incidence beam-total reflectance
-                 Real64 const TAU_BT0, // normal incidence beam-total transmittance
-                 Real64 const TAU_BB0, // normal incidence beam-beam transmittance
-                 Real64 &RHO_DD,       // returned: diffuse-diffuse reflectance
-                 Real64 &TAU_DD        // returned: diffuse-diffuse transmittance
+    void IS_DIFF(Nandle const RHO_BT0, // normal incidence beam-total reflectance
+                 Nandle const TAU_BT0, // normal incidence beam-total transmittance
+                 Nandle const TAU_BB0, // normal incidence beam-beam transmittance
+                 Nandle &RHO_DD,       // returned: diffuse-diffuse reflectance
+                 Nandle &TAU_DD        // returned: diffuse-diffuse transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1480,7 +1480,7 @@ namespace WindowEquivalentLayer {
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
         //   TAU_BT0 = TAU_BB0 + TAU_BD0
-        Array1D<Real64> P(hipDIM);
+        Array1D<Nandle> P(hipDIM);
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("IS_DIFF: ");
 
@@ -1491,7 +1491,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SumRefAndTran;
+        Nandle SumRefAndTran;
         // Flow
 
         P(hipRHO_BT0) = RHO_BT0;
@@ -1512,9 +1512,9 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    Real64 IS_F(Real64 const THETA,     // incidence angle, radians
+    Nandle IS_F(Nandle const THETA,     // incidence angle, radians
                 int const OPT,          // options (1=reflectance, 2=transmittance)
-                const Array1D<Real64> &P // parameters
+                const Array1D<Nandle> &P // parameters
     )
     {
         //       AUTHOR         ASHRAE 1311-RP
@@ -1532,7 +1532,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 IS_F;
+        Nandle IS_F;
 
         // Argument array dimensioning
         EP_SIZE_CHECK(P, hipDIM);
@@ -1549,9 +1549,9 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 RHO_BD;
-        Real64 TAU_BB;
-        Real64 TAU_BD;
+        Nandle RHO_BD;
+        Nandle TAU_BB;
+        Nandle TAU_BD;
         // Flow
 
         IS_BEAM(THETA, P(hipRHO_BT0), P(hipTAU_BT0), P(hipTAU_BB0), RHO_BD, TAU_BB, TAU_BD);
@@ -1566,13 +1566,13 @@ namespace WindowEquivalentLayer {
         return IS_F;
     }
 
-    void IS_BEAM(Real64 const xTHETA,  // incidence angle, radians (0 - PI/2)
-                 Real64 const RHO_BT0, // beam-total reflectance
-                 Real64 const TAU_BT0, // beam-total transmittance at normal incidence
-                 Real64 const TAU_BB0, // beam-beam transmittance at normal incidence
-                 Real64 &RHO_BD,       // returned: beam-diffuse reflectance
-                 Real64 &TAU_BB,       // returned: beam-beam transmittance
-                 Real64 &TAU_BD        // returned: beam-diffuse transmittance
+    void IS_BEAM(Nandle const xTHETA,  // incidence angle, radians (0 - PI/2)
+                 Nandle const RHO_BT0, // beam-total reflectance
+                 Nandle const TAU_BT0, // beam-total transmittance at normal incidence
+                 Nandle const TAU_BB0, // beam-beam transmittance at normal incidence
+                 Nandle &RHO_BD,       // returned: beam-diffuse reflectance
+                 Nandle &TAU_BB,       // returned: beam-beam transmittance
+                 Nandle &TAU_BD        // returned: beam-diffuse transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1609,15 +1609,15 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 THETA_CUTOFF; // cutoff angle, radians (beyond which TAU_BB = 0)
-        Real64 B;            // working temp
-        Real64 RHO_W;        // apparent wire reflectance
-        Real64 RHO_BT90;     // beam-total reflectance at 90 deg incidence
-        Real64 TAU_BT;       // beam-total transmittance
+        Nandle THETA_CUTOFF; // cutoff angle, radians (beyond which TAU_BB = 0)
+        Nandle B;            // working temp
+        Nandle RHO_W;        // apparent wire reflectance
+        Nandle RHO_BT90;     // beam-total reflectance at 90 deg incidence
+        Nandle TAU_BT;       // beam-total transmittance
         // Flow
 
-        Real64 const THETA(min(89.99 * DegToRadians, xTHETA)); // working incident angle, radians
-        Real64 const COSTHETA(std::cos(THETA));
+        Nandle const THETA(min(89.99 * DegToRadians, xTHETA)); // working incident angle, radians
+        Nandle const COSTHETA(std::cos(THETA));
 
         RHO_W = RHO_BT0 / max(0.00001, 1.0 - TAU_BB0);
         B = -0.45 * std::log(max(RHO_W, 0.01));
@@ -1646,8 +1646,8 @@ namespace WindowEquivalentLayer {
         TAU_BD = P01(TAU_BT - TAU_BB, TauBD_Name);
     }
 
-    Real64 IS_OPENNESS(Real64 const D, // wire diameter
-                       Real64 const S  // wire spacing
+    Nandle IS_OPENNESS(Nandle const D, // wire diameter
+                       Nandle const S  // wire spacing
     )
     {
         //       AUTHOR         ASHRAE 1311-RP
@@ -1689,7 +1689,7 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    Real64 IS_DSRATIO(Real64 const OPENNESS) // openness
+    Nandle IS_DSRATIO(Nandle const OPENNESS) // openness
     {
         //       AUTHOR         ASHRAE 1311-RP
         //       DATE WRITTEN   unknown
@@ -1730,11 +1730,11 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    void FM_DIFF(Real64 const RHO_BT0, // fabric beam-total reflectance at normal incidence
-                 Real64 const TAU_BT0, // fabric beam-total transmittance at normal incidence
-                 Real64 const TAU_BB0, // forward facing fabric beam-beam transmittance at normal incidence
-                 Real64 &RHO_DD,       // returned: fabric diffuse-diffuse reflectance
-                 Real64 &TAU_DD        // returned: fabric diffuse-diffuse transmittance
+    void FM_DIFF(Nandle const RHO_BT0, // fabric beam-total reflectance at normal incidence
+                 Nandle const TAU_BT0, // fabric beam-total transmittance at normal incidence
+                 Nandle const TAU_BB0, // forward facing fabric beam-beam transmittance at normal incidence
+                 Nandle &RHO_DD,       // returned: fabric diffuse-diffuse reflectance
+                 Nandle &TAU_DD        // returned: fabric diffuse-diffuse transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -1768,9 +1768,9 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TAU_BD0;
-        Array1D<Real64> P(hipDIM);
-        Real64 SumRefAndTran;
+        Nandle TAU_BD0;
+        Array1D<Nandle> P(hipDIM);
+        Nandle SumRefAndTran;
         // flow
 
         TAU_BD0 = TAU_BT0 - TAU_BB0;
@@ -1793,9 +1793,9 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    Real64 FM_F(Real64 const THETA,     // incidence angle, radians
+    Nandle FM_F(Nandle const THETA,     // incidence angle, radians
                 int const Opt,          // options (hipRHO, hipTAU)
-                const Array1D<Real64> &P // parameters
+                const Array1D<Nandle> &P // parameters
     )
     {
         //       AUTHOR         ASHRAE 1311-RP
@@ -1813,7 +1813,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 FM_F;
+        Nandle FM_F;
 
         // Argument array dimensioning
         EP_SIZE_CHECK(P, hipDIM);
@@ -1830,9 +1830,9 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 RHO_BD;
-        Real64 TAU_BB;
-        Real64 TAU_BD;
+        Nandle RHO_BD;
+        Nandle TAU_BB;
+        Nandle TAU_BD;
         // Flow
 
         FM_BEAM(THETA, P(hipRHO_BT0), P(hipTAU_BT0), P(hipTAU_BB0), RHO_BD, TAU_BB, TAU_BD);
@@ -1847,13 +1847,13 @@ namespace WindowEquivalentLayer {
         return FM_F;
     }
 
-    void FM_BEAM(Real64 const xTHETA,  // incidence angle, radians (0 - PI/2)
-                 Real64 const RHO_BT0, // fabric beam-total reflectance
-                 Real64 const TAU_BT0, // fabric beam-total transmittance at normal incidence
-                 Real64 const TAU_BB0, // fabric beam-beam transmittance at normal incidence
-                 Real64 &RHO_BD,       // returned: fabric beam-diffuse reflectance
-                 Real64 &TAU_BB,       // returned: fabric beam-beam transmittance
-                 Real64 &TAU_BD        // returned: fabric beam-diffuse transmittance
+    void FM_BEAM(Nandle const xTHETA,  // incidence angle, radians (0 - PI/2)
+                 Nandle const RHO_BT0, // fabric beam-total reflectance
+                 Nandle const TAU_BT0, // fabric beam-total transmittance at normal incidence
+                 Nandle const TAU_BB0, // fabric beam-beam transmittance at normal incidence
+                 Nandle &RHO_BD,       // returned: fabric beam-diffuse reflectance
+                 Nandle &TAU_BB,       // returned: fabric beam-beam transmittance
+                 Nandle &TAU_BD        // returned: fabric beam-diffuse transmittance
     )
     {
 
@@ -1890,18 +1890,18 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 THETA; // working incident angle, radians
-        Real64 R;     // working temps
-        Real64 B;
-        Real64 RHO_Y;    // apparent yarn reflectance
-        Real64 RHO_BT90; // beam-total reflectance at 90 deg incidence
-        Real64 TAU_BT;   // beam-total transmittance
+        Nandle THETA; // working incident angle, radians
+        Nandle R;     // working temps
+        Nandle B;
+        Nandle RHO_Y;    // apparent yarn reflectance
+        Nandle RHO_BT90; // beam-total reflectance at 90 deg incidence
+        Nandle TAU_BT;   // beam-total transmittance
         // Flow
 
         THETA = std::abs(max(-89.99 * DegToRadians, min(89.99 * DegToRadians, xTHETA)));
         // limit -89.99 - +89.99
         // by symmetry, optical properties same at +/- theta
-        Real64 const COSTHETA(std::cos(THETA));
+        Nandle const COSTHETA(std::cos(THETA));
 
         RHO_Y = RHO_BT0 / max(0.00001, 1.0 - TAU_BB0);
         R = 0.7 * std::pow(RHO_Y, 0.7);
@@ -1923,14 +1923,14 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    void PD_LW(Real64 const S,               // pleat spacing (> 0)
-               Real64 const W,               // pleat depth (>=0, same units as S)
-               Real64 const OPENNESS_FABRIC, // fabric openness, 0-1 (=tausbb at normal incidence)
-               Real64 const EPSLWF0_FABRIC,  // fabric LW front emittance at 0 openness
-               Real64 const EPSLWB0_FABRIC,  // fabric LW back emittance at 0 openness
-               Real64 const TAULW0_FABRIC,   // fabric LW transmittance at 0 openness
-               Real64 &EPSLWF_PD,            // returned: drape front effective LW emittance
-               Real64 &TAULW_PD              // returned: drape effective LW transmittance
+    void PD_LW(Nandle const S,               // pleat spacing (> 0)
+               Nandle const W,               // pleat depth (>=0, same units as S)
+               Nandle const OPENNESS_FABRIC, // fabric openness, 0-1 (=tausbb at normal incidence)
+               Nandle const EPSLWF0_FABRIC,  // fabric LW front emittance at 0 openness
+               Nandle const EPSLWB0_FABRIC,  // fabric LW back emittance at 0 openness
+               Nandle const TAULW0_FABRIC,   // fabric LW transmittance at 0 openness
+               Nandle &EPSLWF_PD,            // returned: drape front effective LW emittance
+               Nandle &TAULW_PD              // returned: drape effective LW transmittance
     )
     {
 
@@ -1968,13 +1968,13 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RHOLWF_FABRIC;
-        Real64 RHOLWB_FABRIC;
-        Real64 TAULW_FABRIC;
-        Real64 EPSLWF_FABRIC;
-        Real64 EPSLWB_FABRIC;
-        Real64 TAULX;
-        Real64 RHOLWF_PD;
+        Nandle RHOLWF_FABRIC;
+        Nandle RHOLWB_FABRIC;
+        Nandle TAULW_FABRIC;
+        Nandle EPSLWF_FABRIC;
+        Nandle EPSLWB_FABRIC;
+        Nandle TAULX;
+        Nandle RHOLWF_PD;
         // Flow
 
         OPENNESS_LW(OPENNESS_FABRIC, EPSLWF0_FABRIC, TAULW0_FABRIC, EPSLWF_FABRIC, TAULW_FABRIC);
@@ -1988,13 +1988,13 @@ namespace WindowEquivalentLayer {
         EPSLWF_PD = P01(1.0 - TAULW_PD - RHOLWF_PD, EpsLWF_Name);
     }
 
-    void PD_DIFF(Real64 const S,        // pleat spacing (> 0)
-                 Real64 const W,        // pleat depth (>=0, same units as S)
-                 Real64 const RHOFF_DD, // fabric front diffuse-diffuse reflectance
-                 Real64 const RHOBF_DD, // fabric back diffuse-diffuse reflectance
-                 Real64 const TAUF_DD,  // fabric diffuse-diffuse transmittance
-                 Real64 &RHOFDD,        // returned: drape diffuse-diffuse reflectance
-                 Real64 &TAUFDD         // returned: drape diffuse-diffuse transmittance
+    void PD_DIFF(Nandle const S,        // pleat spacing (> 0)
+                 Nandle const W,        // pleat depth (>=0, same units as S)
+                 Nandle const RHOFF_DD, // fabric front diffuse-diffuse reflectance
+                 Nandle const RHOBF_DD, // fabric back diffuse-diffuse reflectance
+                 Nandle const TAUF_DD,  // fabric diffuse-diffuse transmittance
+                 Nandle &RHOFDD,        // returned: drape diffuse-diffuse reflectance
+                 Nandle &TAUFDD         // returned: drape diffuse-diffuse transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2030,41 +2030,41 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AK; // length of diagonal strings of the rectangular enclosure
-        Real64 CG;
-        Real64 F12; // shape factors
-        Real64 F14;
-        Real64 F32;
-        Real64 F21;
-        Real64 F31;
-        Real64 F34;
-        Real64 F24;
-        Real64 F41;
-        Real64 F42;
-        Real64 F57;
-        Real64 F56;
-        Real64 F58;
-        Real64 F67;
-        Real64 F65;
-        Real64 F68;
-        Real64 F75;
-        Real64 F76;
-        Real64 F78;
-        Real64 F85;
-        Real64 F87;
-        Real64 F86;
-        Real64 J1; // radiosity, surface i
-        Real64 J2;
-        Real64 J4;
-        Real64 J7;
-        Real64 J6;
-        Real64 J8;
-        Real64 G1; // irradiance, surface i
-        Real64 G3;
-        Real64 G5;
-        Real64 G7;
-        Array2D<Real64> A(N + 2, N);
-        Array1D<Real64> XSOL(N);
+        Nandle AK; // length of diagonal strings of the rectangular enclosure
+        Nandle CG;
+        Nandle F12; // shape factors
+        Nandle F14;
+        Nandle F32;
+        Nandle F21;
+        Nandle F31;
+        Nandle F34;
+        Nandle F24;
+        Nandle F41;
+        Nandle F42;
+        Nandle F57;
+        Nandle F56;
+        Nandle F58;
+        Nandle F67;
+        Nandle F65;
+        Nandle F68;
+        Nandle F75;
+        Nandle F76;
+        Nandle F78;
+        Nandle F85;
+        Nandle F87;
+        Nandle F86;
+        Nandle J1; // radiosity, surface i
+        Nandle J2;
+        Nandle J4;
+        Nandle J7;
+        Nandle J6;
+        Nandle J8;
+        Nandle G1; // irradiance, surface i
+        Nandle G3;
+        Nandle G5;
+        Nandle G7;
+        Array2D<Nandle> A(N + 2, N);
+        Array1D<Nandle> XSOL(N);
         // Flow
 
         if (W / S < SMALL_ERROR) {
@@ -2166,23 +2166,23 @@ namespace WindowEquivalentLayer {
         RHOFDD = P01((RHOFF_DD + TAUF_DD * G1 + G5) / 2.0, RhoDD_Name);
     }
 
-    void PD_BEAM(Real64 const S,         // pleat spacing (> 0)
-                 Real64 const W,         // pleat depth (>=0, same units as S)
-                 Real64 const OHM_V_RAD, // vertical profile angle, radians +=above horiz
-                 Real64 const OHM_H_RAD, // horizontal profile angle, radians=clockwise when viewed from above
-                 Real64 const RHOFF_BT0, // beam total reflectance front (outside)
-                 Real64 const TAUFF_BB0, // beam beam transmittance front (outside)
-                 Real64 const TAUFF_BD0, // beam diffuse transmittance front (outside)
-                 Real64 const RHOFF_DD,  // diffuse-diffuse reflectance front (outside)
-                 Real64 const TAUFF_DD,  // diffuse-diffuse transmittance front (outside)
-                 Real64 const RHOBF_BT0, // beam total reflectance back (inside)
-                 Real64 const TAUBF_BB0, // beam beam total transmittance back (inside)
-                 Real64 const TAUBF_BD0, // beam diffuse transmittance back (inside)
-                 Real64 const RHOBF_DD,  // diffuse-diffuse reflectance front (outside)
-                 Real64 const TAUBF_DD,  // diffuse-diffuse transmittance front (outside)
-                 Real64 &RHO_BD,         // returned: drape front beam-diffuse reflectance
-                 Real64 &TAU_BB,         // returned: drape beam-beam transmittance
-                 Real64 &TAU_BD          // returned: drape beam-diffuse transmittance
+    void PD_BEAM(Nandle const S,         // pleat spacing (> 0)
+                 Nandle const W,         // pleat depth (>=0, same units as S)
+                 Nandle const OHM_V_RAD, // vertical profile angle, radians +=above horiz
+                 Nandle const OHM_H_RAD, // horizontal profile angle, radians=clockwise when viewed from above
+                 Nandle const RHOFF_BT0, // beam total reflectance front (outside)
+                 Nandle const TAUFF_BB0, // beam beam transmittance front (outside)
+                 Nandle const TAUFF_BD0, // beam diffuse transmittance front (outside)
+                 Nandle const RHOFF_DD,  // diffuse-diffuse reflectance front (outside)
+                 Nandle const TAUFF_DD,  // diffuse-diffuse transmittance front (outside)
+                 Nandle const RHOBF_BT0, // beam total reflectance back (inside)
+                 Nandle const TAUBF_BB0, // beam beam total transmittance back (inside)
+                 Nandle const TAUBF_BD0, // beam diffuse transmittance back (inside)
+                 Nandle const RHOBF_DD,  // diffuse-diffuse reflectance front (outside)
+                 Nandle const TAUBF_DD,  // diffuse-diffuse transmittance front (outside)
+                 Nandle &RHO_BD,         // returned: drape front beam-diffuse reflectance
+                 Nandle &TAU_BB,         // returned: drape beam-beam transmittance
+                 Nandle &TAU_BD          // returned: drape beam-diffuse transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2214,28 +2214,28 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 DE; // length of directly illuminated surface on side of pleat that
+        Nandle DE; // length of directly illuminated surface on side of pleat that
         //   is open on front (same units as S and W)
-        Real64 EF;      // length of pleat side shaded surface (W-DE) (same units as S and W)
-        Real64 OMEGA_V; // profile angles limited to +/- PI/2
-        Real64 OMEGA_H;
-        Real64 TAUFF_BT0;
-        Real64 TAUBF_BT0;
-        Real64 THETA_PARL; // beam incidence angles on pleat surface parallel / perpendicular
-        Real64 THETA_PERP;
+        Nandle EF;      // length of pleat side shaded surface (W-DE) (same units as S and W)
+        Nandle OMEGA_V; // profile angles limited to +/- PI/2
+        Nandle OMEGA_H;
+        Nandle TAUFF_BT0;
+        Nandle TAUBF_BT0;
+        Nandle THETA_PARL; // beam incidence angles on pleat surface parallel / perpendicular
+        Nandle THETA_PERP;
         // to window plane
-        Real64 RHOFF_BT_PARL;
-        Real64 TAUFF_BB_PARL;
-        Real64 TAUFF_BD_PARL;
-        Real64 RHOBF_BT_PARL;
-        Real64 TAUBF_BB_PARL;
-        Real64 TAUBF_BD_PARL;
-        Real64 RHOFF_BT_PERP;
-        Real64 TAUFF_BB_PERP;
-        Real64 TAUFF_BD_PERP;
-        Real64 RHOBF_BT_PERP;
-        Real64 TAUBF_BB_PERP;
-        Real64 TAUBF_BD_PERP;
+        Nandle RHOFF_BT_PARL;
+        Nandle TAUFF_BB_PARL;
+        Nandle TAUFF_BD_PARL;
+        Nandle RHOBF_BT_PARL;
+        Nandle TAUBF_BB_PARL;
+        Nandle TAUBF_BD_PARL;
+        Nandle RHOFF_BT_PERP;
+        Nandle TAUFF_BB_PERP;
+        Nandle TAUFF_BD_PERP;
+        Nandle RHOBF_BT_PERP;
+        Nandle TAUBF_BB_PERP;
+        Nandle TAUBF_BD_PERP;
         // Flow
 
         OMEGA_V = std::abs(max(-89.5 * DegToRadians, min(89.5 * DegToRadians, OHM_V_RAD)));
@@ -2244,9 +2244,9 @@ namespace WindowEquivalentLayer {
         // by symmetry, properties same for +/- profile angle
 
         // incidence angles on pleat front/back (_PARL) and sides (_PERP)
-        Real64 const tan_OMEGA_V(std::tan(OMEGA_V));
-        Real64 const cos_OMEGA_H(std::cos(OMEGA_H));
-        Real64 const sin_OMEGA_H(std::sin(OMEGA_H));
+        Nandle const tan_OMEGA_V(std::tan(OMEGA_V));
+        Nandle const cos_OMEGA_H(std::cos(OMEGA_H));
+        Nandle const sin_OMEGA_H(std::sin(OMEGA_H));
         THETA_PARL = std::acos(std::abs(std::cos(std::atan(tan_OMEGA_V * cos_OMEGA_H)) * cos_OMEGA_H));
         THETA_PERP = std::acos(std::abs(std::cos(std::atan(tan_OMEGA_V * sin_OMEGA_H)) * sin_OMEGA_H));
 
@@ -2428,29 +2428,29 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    void PD_BEAM_CASE_I(Real64 const S,                  // pleat spacing (> 0)
-                        Real64 const W,                  // pleat depth (>=0, same units as S)
-                        Real64 const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
-                        Real64 const DE,                 // width of illumination on pleat bottom (same units as S)
-                        Real64 const RHOFF_BT_PARL,
-                        Real64 const TAUFF_BB_PARL,
-                        Real64 const TAUFF_BD_PARL,
-                        Real64 const EP_UNUSED(RHOBF_BT_PARL),
-                        Real64 const EP_UNUSED(TAUBF_BB_PARL),
-                        Real64 const EP_UNUSED(TAUBF_BD_PARL),
-                        Real64 const RHOFF_BT_PERP,
-                        Real64 const TAUFF_BB_PERP,
-                        Real64 const TAUFF_BD_PERP,
-                        Real64 const RHOBF_BT_PERP,
-                        Real64 const TAUBF_BB_PERP,
-                        Real64 const TAUBF_BD_PERP,
-                        Real64 const RHOBF_DD, // fabric back diffuse-diffuse reflectance
-                        Real64 const RHOFF_DD, // fabric front diffuse-diffuse reflectance
-                        Real64 const TAUFF_DD, // fabric front diffuse-diffuse transmittance
-                        Real64 const TAUBF_DD, // fabric back diffuse-diffuse transmittance
-                        Real64 &RHO_BD,        // returned: drape front beam-diffuse reflectance
-                        Real64 &TAU_BD,        // returned: drape front beam-diffuse transmittance
-                        Real64 &TAU_BB         // returned: drape front beam-beam transmittance
+    void PD_BEAM_CASE_I(Nandle const S,                  // pleat spacing (> 0)
+                        Nandle const W,                  // pleat depth (>=0, same units as S)
+                        Nandle const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
+                        Nandle const DE,                 // width of illumination on pleat bottom (same units as S)
+                        Nandle const RHOFF_BT_PARL,
+                        Nandle const TAUFF_BB_PARL,
+                        Nandle const TAUFF_BD_PARL,
+                        Nandle const EP_UNUSED(RHOBF_BT_PARL),
+                        Nandle const EP_UNUSED(TAUBF_BB_PARL),
+                        Nandle const EP_UNUSED(TAUBF_BD_PARL),
+                        Nandle const RHOFF_BT_PERP,
+                        Nandle const TAUFF_BB_PERP,
+                        Nandle const TAUFF_BD_PERP,
+                        Nandle const RHOBF_BT_PERP,
+                        Nandle const TAUBF_BB_PERP,
+                        Nandle const TAUBF_BD_PERP,
+                        Nandle const RHOBF_DD, // fabric back diffuse-diffuse reflectance
+                        Nandle const RHOFF_DD, // fabric front diffuse-diffuse reflectance
+                        Nandle const TAUFF_DD, // fabric front diffuse-diffuse transmittance
+                        Nandle const TAUBF_DD, // fabric back diffuse-diffuse transmittance
+                        Nandle &RHO_BD,        // returned: drape front beam-diffuse reflectance
+                        Nandle &TAU_BD,        // returned: drape front beam-diffuse transmittance
+                        Nandle &TAU_BB         // returned: drape front beam-beam transmittance
     )
     {
 
@@ -2487,110 +2487,110 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TAUBF_BT_PERP;
-        Real64 AB; // lengths of surfaces and diagonal strings
-        Real64 GN;
-        Real64 NP;
-        Real64 GP;
-        Real64 NK;
-        Real64 PK;
-        Real64 BC;
-        Real64 AN;
-        Real64 AP;
-        Real64 AK;
-        Real64 BG;
-        Real64 BP;
-        Real64 CG;
-        Real64 BK;
-        Real64 CP;
-        Real64 CN;
-        Real64 Z1_BB; // beam source terms
-        Real64 Z7_BB;
-        Real64 Z1_BD; // diffuse source terms due to incident beam radiation
-        Real64 Z2_BD;
-        Real64 Z7_BD;
-        Real64 Z3_BD;
-        Real64 Z9_BD;
-        Real64 Z13_BD;
-        Real64 Z14_BD;
+        Nandle TAUBF_BT_PERP;
+        Nandle AB; // lengths of surfaces and diagonal strings
+        Nandle GN;
+        Nandle NP;
+        Nandle GP;
+        Nandle NK;
+        Nandle PK;
+        Nandle BC;
+        Nandle AN;
+        Nandle AP;
+        Nandle AK;
+        Nandle BG;
+        Nandle BP;
+        Nandle CG;
+        Nandle BK;
+        Nandle CP;
+        Nandle CN;
+        Nandle Z1_BB; // beam source terms
+        Nandle Z7_BB;
+        Nandle Z1_BD; // diffuse source terms due to incident beam radiation
+        Nandle Z2_BD;
+        Nandle Z7_BD;
+        Nandle Z3_BD;
+        Nandle Z9_BD;
+        Nandle Z13_BD;
+        Nandle Z14_BD;
         // shape factors
-        Real64 F12;
-        Real64 F13;
-        Real64 F14;
-        Real64 F16;
-        Real64 F17;
-        Real64 F21;
-        Real64 F25;
-        Real64 F26;
-        Real64 F27;
-        Real64 F31;
-        Real64 F35;
-        Real64 F36;
-        Real64 F37;
-        Real64 F41;
-        Real64 F45;
-        Real64 F46;
-        Real64 F47;
-        Real64 F51;
-        Real64 F52;
-        Real64 F53;
-        Real64 F54;
-        Real64 F56;
-        Real64 F57;
-        Real64 F61;
-        Real64 F62;
-        Real64 F63;
-        Real64 F64;
-        Real64 F71;
-        Real64 F72;
-        Real64 F73;
-        Real64 F74;
-        Real64 F89;
-        Real64 F810;
-        Real64 F811;
-        Real64 F812;
-        Real64 F813;
-        Real64 F814;
-        Real64 F911;
-        Real64 F912;
-        Real64 F913;
-        Real64 F914;
-        Real64 F1011;
-        Real64 F1012;
-        Real64 F1013;
-        Real64 F1014;
-        Real64 F119;
-        Real64 F1110;
-        Real64 F1112;
-        Real64 F1113;
-        Real64 F1114;
-        Real64 F129;
-        Real64 F1210;
-        Real64 F1211;
-        Real64 F139;
-        Real64 F1310;
-        Real64 F1311;
-        Real64 F149;
-        Real64 F1410;
-        Real64 F1411;
-        Real64 J1; // radiosity, surface i
-        Real64 J2;
-        Real64 J3;
-        Real64 J4;
-        Real64 J6;
-        Real64 J7;
-        Real64 J9;
-        Real64 J10;
-        Real64 J11;
-        Real64 J12;
-        Real64 J13;
-        Real64 J14;
-        Real64 G1; // irradiance, surface i
-        Real64 G5;
-        Real64 G8;
-        Real64 G11;
-        Array2D<Real64> A(N + 2, N); // coefficients of the radiosity equations matrix
-        Array1D<Real64> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
+        Nandle F12;
+        Nandle F13;
+        Nandle F14;
+        Nandle F16;
+        Nandle F17;
+        Nandle F21;
+        Nandle F25;
+        Nandle F26;
+        Nandle F27;
+        Nandle F31;
+        Nandle F35;
+        Nandle F36;
+        Nandle F37;
+        Nandle F41;
+        Nandle F45;
+        Nandle F46;
+        Nandle F47;
+        Nandle F51;
+        Nandle F52;
+        Nandle F53;
+        Nandle F54;
+        Nandle F56;
+        Nandle F57;
+        Nandle F61;
+        Nandle F62;
+        Nandle F63;
+        Nandle F64;
+        Nandle F71;
+        Nandle F72;
+        Nandle F73;
+        Nandle F74;
+        Nandle F89;
+        Nandle F810;
+        Nandle F811;
+        Nandle F812;
+        Nandle F813;
+        Nandle F814;
+        Nandle F911;
+        Nandle F912;
+        Nandle F913;
+        Nandle F914;
+        Nandle F1011;
+        Nandle F1012;
+        Nandle F1013;
+        Nandle F1014;
+        Nandle F119;
+        Nandle F1110;
+        Nandle F1112;
+        Nandle F1113;
+        Nandle F1114;
+        Nandle F129;
+        Nandle F1210;
+        Nandle F1211;
+        Nandle F139;
+        Nandle F1310;
+        Nandle F1311;
+        Nandle F149;
+        Nandle F1410;
+        Nandle F1411;
+        Nandle J1; // radiosity, surface i
+        Nandle J2;
+        Nandle J3;
+        Nandle J4;
+        Nandle J6;
+        Nandle J7;
+        Nandle J9;
+        Nandle J10;
+        Nandle J11;
+        Nandle J12;
+        Nandle J13;
+        Nandle J14;
+        Nandle G1; // irradiance, surface i
+        Nandle G5;
+        Nandle G8;
+        Nandle G11;
+        Array2D<Nandle> A(N + 2, N); // coefficients of the radiosity equations matrix
+        Array1D<Nandle> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
         // Flow
 
         TAUBF_BT_PERP = TAUBF_BD_PERP + TAUBF_BB_PERP;
@@ -2869,29 +2869,29 @@ namespace WindowEquivalentLayer {
         RHO_BD = (RHOFF_BT_PARL + TAUBF_DD * G1 + G8) / 2.0;
     }
 
-    void PD_BEAM_CASE_II(Real64 const S,                  // pleat spacing (> 0)
-                         Real64 const W,                  // pleat depth (>=0, same units as S)
-                         Real64 const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
-                         Real64 const DE,                 // width of illumination on pleat bottom (same units as S)
-                         Real64 const RHOFF_BT_PARL,
-                         Real64 const TAUFF_BB_PARL,
-                         Real64 const TAUFF_BD_PARL,
-                         Real64 const EP_UNUSED(RHOBF_BT_PARL),
-                         Real64 const EP_UNUSED(TAUBF_BB_PARL),
-                         Real64 const EP_UNUSED(TAUBF_BD_PARL),
-                         Real64 const RHOFF_BT_PERP,
-                         Real64 const TAUFF_BB_PERP,
-                         Real64 const TAUFF_BD_PERP,
-                         Real64 const RHOBF_BT_PERP,
-                         Real64 const TAUBF_BB_PERP,
-                         Real64 const TAUBF_BD_PERP,
-                         Real64 const RHOBF_DD, // fabric back diffuse-diffuse reflectance
-                         Real64 const RHOFF_DD, // fabric front diffuse-diffuse reflectance
-                         Real64 const TAUFF_DD, // fabric front diffuse-diffuse transmittance
-                         Real64 const TAUBF_DD, // fabric back diffuse-diffuse transmittance
-                         Real64 &RHO_BD,        // returned: drape front beam-diffuse reflectance
-                         Real64 &TAU_BD,        // returned: drape front beam-diffuse transmittance
-                         Real64 &TAU_BB         // returned: drape front beam-beam transmittance
+    void PD_BEAM_CASE_II(Nandle const S,                  // pleat spacing (> 0)
+                         Nandle const W,                  // pleat depth (>=0, same units as S)
+                         Nandle const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
+                         Nandle const DE,                 // width of illumination on pleat bottom (same units as S)
+                         Nandle const RHOFF_BT_PARL,
+                         Nandle const TAUFF_BB_PARL,
+                         Nandle const TAUFF_BD_PARL,
+                         Nandle const EP_UNUSED(RHOBF_BT_PARL),
+                         Nandle const EP_UNUSED(TAUBF_BB_PARL),
+                         Nandle const EP_UNUSED(TAUBF_BD_PARL),
+                         Nandle const RHOFF_BT_PERP,
+                         Nandle const TAUFF_BB_PERP,
+                         Nandle const TAUFF_BD_PERP,
+                         Nandle const RHOBF_BT_PERP,
+                         Nandle const TAUBF_BB_PERP,
+                         Nandle const TAUBF_BD_PERP,
+                         Nandle const RHOBF_DD, // fabric back diffuse-diffuse reflectance
+                         Nandle const RHOFF_DD, // fabric front diffuse-diffuse reflectance
+                         Nandle const TAUFF_DD, // fabric front diffuse-diffuse transmittance
+                         Nandle const TAUBF_DD, // fabric back diffuse-diffuse transmittance
+                         Nandle &RHO_BD,        // returned: drape front beam-diffuse reflectance
+                         Nandle &TAU_BD,        // returned: drape front beam-diffuse transmittance
+                         Nandle &TAU_BB         // returned: drape front beam-beam transmittance
     )
     {
 
@@ -2929,87 +2929,87 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TAUBF_BT_PERP;
-        Real64 AB; // lengths of surfaces and diagonal strings
-        Real64 GN;
-        Real64 NK;
-        Real64 BC;
-        Real64 AN;
-        Real64 AK;
-        Real64 BG;
-        Real64 CG;
-        Real64 BK;
-        Real64 CN;
-        Real64 Z1_BD; // diffuse source terms due to incident beam radiation
-        Real64 Z2_BD;
-        Real64 Z3_BD;
-        Real64 Z6_BD;
-        Real64 Z8_BD;
-        Real64 Z11_BD;
-        Real64 Z12_BD;
-        Real64 Z1_BB; // beam source terms due to incident beam radiation
-        Real64 Z6_BB;
+        Nandle TAUBF_BT_PERP;
+        Nandle AB; // lengths of surfaces and diagonal strings
+        Nandle GN;
+        Nandle NK;
+        Nandle BC;
+        Nandle AN;
+        Nandle AK;
+        Nandle BG;
+        Nandle CG;
+        Nandle BK;
+        Nandle CN;
+        Nandle Z1_BD; // diffuse source terms due to incident beam radiation
+        Nandle Z2_BD;
+        Nandle Z3_BD;
+        Nandle Z6_BD;
+        Nandle Z8_BD;
+        Nandle Z11_BD;
+        Nandle Z12_BD;
+        Nandle Z1_BB; // beam source terms due to incident beam radiation
+        Nandle Z6_BB;
         // shape factors
-        Real64 F12;
-        Real64 F13;
-        Real64 F15;
-        Real64 F16;
-        Real64 F21;
-        Real64 F25;
-        Real64 F26;
-        Real64 F31;
-        Real64 F35;
-        Real64 F36;
-        Real64 F41;
-        Real64 F42;
-        Real64 F43;
-        Real64 F45;
-        Real64 F46;
-        Real64 F51;
-        Real64 F52;
-        Real64 F53;
-        Real64 F54;
-        Real64 F61;
-        Real64 F62;
-        Real64 F63;
-        Real64 F78;
-        Real64 F79;
-        Real64 F710;
-        Real64 F711;
-        Real64 F712;
-        Real64 F810;
-        Real64 F811;
-        Real64 F812;
-        Real64 F910;
-        Real64 F911;
-        Real64 F912;
-        Real64 F108;
-        Real64 F109;
-        Real64 F1011;
-        Real64 F1012;
-        Real64 F118;
-        Real64 F119;
-        Real64 F1110;
-        Real64 F128;
-        Real64 F129;
-        Real64 F1210;
+        Nandle F12;
+        Nandle F13;
+        Nandle F15;
+        Nandle F16;
+        Nandle F21;
+        Nandle F25;
+        Nandle F26;
+        Nandle F31;
+        Nandle F35;
+        Nandle F36;
+        Nandle F41;
+        Nandle F42;
+        Nandle F43;
+        Nandle F45;
+        Nandle F46;
+        Nandle F51;
+        Nandle F52;
+        Nandle F53;
+        Nandle F54;
+        Nandle F61;
+        Nandle F62;
+        Nandle F63;
+        Nandle F78;
+        Nandle F79;
+        Nandle F710;
+        Nandle F711;
+        Nandle F712;
+        Nandle F810;
+        Nandle F811;
+        Nandle F812;
+        Nandle F910;
+        Nandle F911;
+        Nandle F912;
+        Nandle F108;
+        Nandle F109;
+        Nandle F1011;
+        Nandle F1012;
+        Nandle F118;
+        Nandle F119;
+        Nandle F1110;
+        Nandle F128;
+        Nandle F129;
+        Nandle F1210;
 
-        Real64 J1; // radiosity, surface i
-        Real64 J2;
-        Real64 J3;
-        Real64 J5;
-        Real64 J6;
-        Real64 J8;
-        Real64 J9;
-        Real64 J10;
-        Real64 J11;
-        Real64 J12;
-        Real64 G1; // irradiance, surface i
-        Real64 G4;
-        Real64 G7;
-        Real64 G10;
-        Array2D<Real64> A(N + 2, N); // coefficients of the radiosity equations matrix
-        Array1D<Real64> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
+        Nandle J1; // radiosity, surface i
+        Nandle J2;
+        Nandle J3;
+        Nandle J5;
+        Nandle J6;
+        Nandle J8;
+        Nandle J9;
+        Nandle J10;
+        Nandle J11;
+        Nandle J12;
+        Nandle G1; // irradiance, surface i
+        Nandle G4;
+        Nandle G7;
+        Nandle G10;
+        Array2D<Nandle> A(N + 2, N); // coefficients of the radiosity equations matrix
+        Array1D<Nandle> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
         // Flow
 
         TAUBF_BT_PERP = TAUBF_BD_PERP + TAUBF_BB_PERP;
@@ -3218,29 +3218,29 @@ namespace WindowEquivalentLayer {
         RHO_BD = (RHOFF_BT_PARL + TAUBF_DD * G1 + G7) / 2.0;
     }
 
-    void PD_BEAM_CASE_III(Real64 const S,       // pleat spacing (> 0)
-                          Real64 const W,       // pleat depth (>=0, same units as S)
-                          Real64 const OMEGA_H, // horizontal profile angle, radians
-                          Real64 const DE,      // width of illumination on pleat bottom (same units as S)
-                          Real64 const RHOFF_BT_PARL,
-                          Real64 const TAUFF_BB_PARL,
-                          Real64 const TAUFF_BD_PARL,
-                          Real64 const EP_UNUSED(RHOBF_BT_PARL),
-                          Real64 const EP_UNUSED(TAUBF_BB_PARL),
-                          Real64 const EP_UNUSED(TAUBF_BD_PARL),
-                          Real64 const RHOFF_BT_PERP,
-                          Real64 const TAUFF_BB_PERP,
-                          Real64 const TAUFF_BD_PERP,
-                          Real64 const RHOBF_BT_PERP,
-                          Real64 const TAUBF_BB_PERP,
-                          Real64 const TAUBF_BD_PERP,
-                          Real64 const RHOBF_DD, // fabric back diffuse-diffuse reflectance
-                          Real64 const RHOFF_DD, // fabric front diffuse-diffuse reflectance
-                          Real64 const TAUFF_DD, // fabric front diffuse-diffuse transmittance
-                          Real64 const TAUBF_DD, // fabric back diffuse-diffuse transmittance
-                          Real64 &RHO_BD,        // returned: drape front beam-diffuse reflectance
-                          Real64 &TAU_BD,        // returned: drape front beam-diffuse transmittance
-                          Real64 &TAU_BB         // returned: drape front beam-beam transmittance
+    void PD_BEAM_CASE_III(Nandle const S,       // pleat spacing (> 0)
+                          Nandle const W,       // pleat depth (>=0, same units as S)
+                          Nandle const OMEGA_H, // horizontal profile angle, radians
+                          Nandle const DE,      // width of illumination on pleat bottom (same units as S)
+                          Nandle const RHOFF_BT_PARL,
+                          Nandle const TAUFF_BB_PARL,
+                          Nandle const TAUFF_BD_PARL,
+                          Nandle const EP_UNUSED(RHOBF_BT_PARL),
+                          Nandle const EP_UNUSED(TAUBF_BB_PARL),
+                          Nandle const EP_UNUSED(TAUBF_BD_PARL),
+                          Nandle const RHOFF_BT_PERP,
+                          Nandle const TAUFF_BB_PERP,
+                          Nandle const TAUFF_BD_PERP,
+                          Nandle const RHOBF_BT_PERP,
+                          Nandle const TAUBF_BB_PERP,
+                          Nandle const TAUBF_BD_PERP,
+                          Nandle const RHOBF_DD, // fabric back diffuse-diffuse reflectance
+                          Nandle const RHOFF_DD, // fabric front diffuse-diffuse reflectance
+                          Nandle const TAUFF_DD, // fabric front diffuse-diffuse transmittance
+                          Nandle const TAUBF_DD, // fabric back diffuse-diffuse transmittance
+                          Nandle &RHO_BD,        // returned: drape front beam-diffuse reflectance
+                          Nandle &TAU_BD,        // returned: drape front beam-diffuse transmittance
+                          Nandle &TAU_BB         // returned: drape front beam-beam transmittance
     )
     {
 
@@ -3278,87 +3278,87 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TAUBF_BT_PERP;
-        Real64 AB; // lengths for surfaces and diagonal strings
-        Real64 GN;
-        Real64 NK;
-        Real64 BC;
-        Real64 AN;
-        Real64 AK;
-        Real64 BG;
-        Real64 CG;
-        Real64 BK;
-        Real64 CN;
-        Real64 Z1_BB; // beam source terms
-        Real64 Z6_BB;
-        Real64 Z1_BD; // diffuse source terms
-        Real64 Z2_BD;
-        Real64 Z6_BD;
-        Real64 Z3_BD;
-        Real64 Z8_BD;
-        Real64 Z11_BD;
-        Real64 Z12_BD;
+        Nandle TAUBF_BT_PERP;
+        Nandle AB; // lengths for surfaces and diagonal strings
+        Nandle GN;
+        Nandle NK;
+        Nandle BC;
+        Nandle AN;
+        Nandle AK;
+        Nandle BG;
+        Nandle CG;
+        Nandle BK;
+        Nandle CN;
+        Nandle Z1_BB; // beam source terms
+        Nandle Z6_BB;
+        Nandle Z1_BD; // diffuse source terms
+        Nandle Z2_BD;
+        Nandle Z6_BD;
+        Nandle Z3_BD;
+        Nandle Z8_BD;
+        Nandle Z11_BD;
+        Nandle Z12_BD;
         // shape factors
-        Real64 F12;
-        Real64 F13;
-        Real64 F15;
-        Real64 F16;
-        Real64 F21;
-        Real64 F25;
-        Real64 F26;
-        Real64 F31;
-        Real64 F35;
-        Real64 F36;
-        Real64 F41;
-        Real64 F42;
-        Real64 F43;
-        Real64 F45;
-        Real64 F46;
-        Real64 F51;
-        Real64 F52;
-        Real64 F53;
-        Real64 F54;
-        Real64 F61;
-        Real64 F62;
-        Real64 F63;
-        Real64 F78;
-        Real64 F79;
-        Real64 F710;
-        Real64 F711;
-        Real64 F712;
-        Real64 F810;
-        Real64 F811;
-        Real64 F812;
-        Real64 F910;
-        Real64 F911;
-        Real64 F912;
-        Real64 F108;
-        Real64 F109;
-        Real64 F1011;
-        Real64 F1012;
-        Real64 F118;
-        Real64 F119;
-        Real64 F1110;
-        Real64 F128;
-        Real64 F129;
-        Real64 F1210;
-        Real64 J1; // radiosity, surface i
-        Real64 J2;
-        Real64 J3;
-        Real64 J5;
-        Real64 J6;
-        Real64 J8;
-        Real64 J9;
-        Real64 J10;
-        Real64 J11;
-        Real64 J12;
-        Real64 G1; // irradiance, surface i
-        Real64 G4;
-        Real64 G7;
-        Real64 G10;
+        Nandle F12;
+        Nandle F13;
+        Nandle F15;
+        Nandle F16;
+        Nandle F21;
+        Nandle F25;
+        Nandle F26;
+        Nandle F31;
+        Nandle F35;
+        Nandle F36;
+        Nandle F41;
+        Nandle F42;
+        Nandle F43;
+        Nandle F45;
+        Nandle F46;
+        Nandle F51;
+        Nandle F52;
+        Nandle F53;
+        Nandle F54;
+        Nandle F61;
+        Nandle F62;
+        Nandle F63;
+        Nandle F78;
+        Nandle F79;
+        Nandle F710;
+        Nandle F711;
+        Nandle F712;
+        Nandle F810;
+        Nandle F811;
+        Nandle F812;
+        Nandle F910;
+        Nandle F911;
+        Nandle F912;
+        Nandle F108;
+        Nandle F109;
+        Nandle F1011;
+        Nandle F1012;
+        Nandle F118;
+        Nandle F119;
+        Nandle F1110;
+        Nandle F128;
+        Nandle F129;
+        Nandle F1210;
+        Nandle J1; // radiosity, surface i
+        Nandle J2;
+        Nandle J3;
+        Nandle J5;
+        Nandle J6;
+        Nandle J8;
+        Nandle J9;
+        Nandle J10;
+        Nandle J11;
+        Nandle J12;
+        Nandle G1; // irradiance, surface i
+        Nandle G4;
+        Nandle G7;
+        Nandle G10;
 
-        Array2D<Real64> A(N + 2, N); // coefficients of the radiosity equations matrix
-        Array1D<Real64> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
+        Array2D<Nandle> A(N + 2, N); // coefficients of the radiosity equations matrix
+        Array1D<Nandle> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
         // Flow
 
         TAUBF_BT_PERP = TAUBF_BD_PERP + TAUBF_BB_PERP;
@@ -3567,29 +3567,29 @@ namespace WindowEquivalentLayer {
         RHO_BD = (RHOFF_BT_PARL + TAUBF_DD * G1 + G7) / 2.0;
     }
 
-    void PD_BEAM_CASE_IV(Real64 const S,                  // pleat spacing (> 0)
-                         Real64 const W,                  // pleat depth (>=0, same units as S)
-                         Real64 const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
-                         Real64 const EP_UNUSED(DE),      // width of illumination on pleat bottom (same units as S)
-                         Real64 const RHOFF_BT_PARL,
-                         Real64 const TAUFF_BB_PARL,
-                         Real64 const TAUFF_BD_PARL,
-                         Real64 const EP_UNUSED(RHOBF_BT_PARL),
-                         Real64 const EP_UNUSED(TAUBF_BB_PARL),
-                         Real64 const EP_UNUSED(TAUBF_BD_PARL),
-                         Real64 const RHOFF_BT_PERP,
-                         Real64 const TAUFF_BB_PERP,
-                         Real64 const TAUFF_BD_PERP,
-                         Real64 const RHOBF_BT_PERP,
-                         Real64 const TAUBF_BB_PERP,
-                         Real64 const TAUBF_BD_PERP,
-                         Real64 const RHOBF_DD, // fabric back diffuse-diffuse reflectance
-                         Real64 const RHOFF_DD, // fabric front diffuse-diffuse reflectance
-                         Real64 const TAUFF_DD, // fabric front diffuse-diffuse transmittance
-                         Real64 const TAUBF_DD, // fabric back diffuse-diffuse transmittance
-                         Real64 &RHO_BD,        // returned: drape front beam-diffuse reflectance
-                         Real64 &TAU_BD,        // returned: drape front beam-diffuse transmittance
-                         Real64 &TAU_BB         // returned: drape front beam-beam transmittance
+    void PD_BEAM_CASE_IV(Nandle const S,                  // pleat spacing (> 0)
+                         Nandle const W,                  // pleat depth (>=0, same units as S)
+                         Nandle const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
+                         Nandle const EP_UNUSED(DE),      // width of illumination on pleat bottom (same units as S)
+                         Nandle const RHOFF_BT_PARL,
+                         Nandle const TAUFF_BB_PARL,
+                         Nandle const TAUFF_BD_PARL,
+                         Nandle const EP_UNUSED(RHOBF_BT_PARL),
+                         Nandle const EP_UNUSED(TAUBF_BB_PARL),
+                         Nandle const EP_UNUSED(TAUBF_BD_PARL),
+                         Nandle const RHOFF_BT_PERP,
+                         Nandle const TAUFF_BB_PERP,
+                         Nandle const TAUFF_BD_PERP,
+                         Nandle const RHOBF_BT_PERP,
+                         Nandle const TAUBF_BB_PERP,
+                         Nandle const TAUBF_BD_PERP,
+                         Nandle const RHOBF_DD, // fabric back diffuse-diffuse reflectance
+                         Nandle const RHOFF_DD, // fabric front diffuse-diffuse reflectance
+                         Nandle const TAUFF_DD, // fabric front diffuse-diffuse transmittance
+                         Nandle const TAUBF_DD, // fabric back diffuse-diffuse transmittance
+                         Nandle &RHO_BD,        // returned: drape front beam-diffuse reflectance
+                         Nandle &TAU_BD,        // returned: drape front beam-diffuse transmittance
+                         Nandle &TAU_BB         // returned: drape front beam-beam transmittance
     )
     {
         // SUBROUTINE INFORMATION:
@@ -3625,46 +3625,46 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TAUBF_BT_PERP;
-        Real64 AK; // length of diagonal strings
-        Real64 CG;
-        Real64 Z1_BB; // beam source term
-        Real64 Z1_BD; // diffuse source terms
-        Real64 Z2_BD;
-        Real64 Z4_BD;
-        Real64 Z6_BD;
-        Real64 Z8_BD;
+        Nandle TAUBF_BT_PERP;
+        Nandle AK; // length of diagonal strings
+        Nandle CG;
+        Nandle Z1_BB; // beam source term
+        Nandle Z1_BD; // diffuse source terms
+        Nandle Z2_BD;
+        Nandle Z4_BD;
+        Nandle Z6_BD;
+        Nandle Z8_BD;
         // shape factors
-        Real64 F12;
-        Real64 F14;
-        Real64 F21;
-        Real64 F24;
-        Real64 F31;
-        Real64 F32;
-        Real64 F34;
-        Real64 F41;
-        Real64 F42;
-        Real64 F56;
-        Real64 F57;
-        Real64 F58;
-        Real64 F67;
-        Real64 F68;
-        Real64 F76;
-        Real64 F78;
-        Real64 F86;
-        Real64 F87;
-        Real64 J1; // radiosity, surface i
-        Real64 J2;
-        Real64 J4;
-        Real64 J6;
-        Real64 J7;
-        Real64 J8;
-        Real64 G1; // irradiance, surface i
-        Real64 G3;
-        Real64 G5;
-        Real64 G7;
-        Array2D<Real64> A(N + 2, N); // coefficients of the radiosity equations matrix
-        Array1D<Real64> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
+        Nandle F12;
+        Nandle F14;
+        Nandle F21;
+        Nandle F24;
+        Nandle F31;
+        Nandle F32;
+        Nandle F34;
+        Nandle F41;
+        Nandle F42;
+        Nandle F56;
+        Nandle F57;
+        Nandle F58;
+        Nandle F67;
+        Nandle F68;
+        Nandle F76;
+        Nandle F78;
+        Nandle F86;
+        Nandle F87;
+        Nandle J1; // radiosity, surface i
+        Nandle J2;
+        Nandle J4;
+        Nandle J6;
+        Nandle J7;
+        Nandle J8;
+        Nandle G1; // irradiance, surface i
+        Nandle G3;
+        Nandle G5;
+        Nandle G7;
+        Array2D<Nandle> A(N + 2, N); // coefficients of the radiosity equations matrix
+        Array1D<Nandle> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
         // Flow
 
         TAUBF_BT_PERP = TAUBF_BD_PERP + TAUBF_BB_PERP;
@@ -3765,29 +3765,29 @@ namespace WindowEquivalentLayer {
         RHO_BD = (RHOFF_BT_PARL + TAUBF_DD * G1 + G5) / 2.0;
     }
 
-    void PD_BEAM_CASE_V(Real64 const S,       // pleat spacing (> 0)
-                        Real64 const W,       // pleat depth (>=0, same units as S)
-                        Real64 const OMEGA_H, // horizontal profile angle, radians
-                        Real64 const DE,      // width of illumination on pleat bottom (same units as S)
-                        Real64 const RHOFF_BT_PARL,
-                        Real64 const TAUFF_BB_PARL,
-                        Real64 const TAUFF_BD_PARL,
-                        Real64 const EP_UNUSED(RHOBF_BT_PARL),
-                        Real64 const EP_UNUSED(TAUBF_BB_PARL),
-                        Real64 const EP_UNUSED(TAUBF_BD_PARL),
-                        Real64 const RHOFF_BT_PERP,
-                        Real64 const TAUFF_BB_PERP,
-                        Real64 const TAUFF_BD_PERP,
-                        Real64 const RHOBF_BT_PERP,
-                        Real64 const TAUBF_BB_PERP,
-                        Real64 const TAUBF_BD_PERP,
-                        Real64 const RHOBF_DD, // fabric back diffuse-diffuse reflectance
-                        Real64 const RHOFF_DD, // fabric front diffuse-diffuse reflectance
-                        Real64 const TAUFF_DD, // fabric front diffuse-diffuse transmittance
-                        Real64 const TAUBF_DD, // fabric back diffuse-diffuse transmittance
-                        Real64 &RHO_BD,        // returned: drape front beam-diffuse reflectance
-                        Real64 &TAU_BD,        // returned: drape front beam-diffuse transmittance
-                        Real64 &TAU_BB         // returned: drape front beam-beam transmittance
+    void PD_BEAM_CASE_V(Nandle const S,       // pleat spacing (> 0)
+                        Nandle const W,       // pleat depth (>=0, same units as S)
+                        Nandle const OMEGA_H, // horizontal profile angle, radians
+                        Nandle const DE,      // width of illumination on pleat bottom (same units as S)
+                        Nandle const RHOFF_BT_PARL,
+                        Nandle const TAUFF_BB_PARL,
+                        Nandle const TAUFF_BD_PARL,
+                        Nandle const EP_UNUSED(RHOBF_BT_PARL),
+                        Nandle const EP_UNUSED(TAUBF_BB_PARL),
+                        Nandle const EP_UNUSED(TAUBF_BD_PARL),
+                        Nandle const RHOFF_BT_PERP,
+                        Nandle const TAUFF_BB_PERP,
+                        Nandle const TAUFF_BD_PERP,
+                        Nandle const RHOBF_BT_PERP,
+                        Nandle const TAUBF_BB_PERP,
+                        Nandle const TAUBF_BD_PERP,
+                        Nandle const RHOBF_DD, // fabric back diffuse-diffuse reflectance
+                        Nandle const RHOFF_DD, // fabric front diffuse-diffuse reflectance
+                        Nandle const TAUFF_DD, // fabric front diffuse-diffuse transmittance
+                        Nandle const TAUBF_DD, // fabric back diffuse-diffuse transmittance
+                        Nandle &RHO_BD,        // returned: drape front beam-diffuse reflectance
+                        Nandle &TAU_BD,        // returned: drape front beam-diffuse transmittance
+                        Nandle &TAU_BB         // returned: drape front beam-beam transmittance
     )
     {
 
@@ -3824,69 +3824,69 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TAUBF_BT_PERP;
-        Real64 AK; // lengths of surfaces and diagonal strings
-        Real64 CG;
-        Real64 MK;
-        Real64 DK;
-        Real64 MF;
-        Real64 DM;
-        Real64 GM;
-        Real64 GF;
-        Real64 Z1_BB; // beam source term
-        Real64 Z1_BD; // diffuse source terms
-        Real64 Z2_BD;
-        Real64 Z4_BD;
-        Real64 Z6_BD;
-        Real64 Z7_BD;
-        Real64 Z9_BD;
+        Nandle TAUBF_BT_PERP;
+        Nandle AK; // lengths of surfaces and diagonal strings
+        Nandle CG;
+        Nandle MK;
+        Nandle DK;
+        Nandle MF;
+        Nandle DM;
+        Nandle GM;
+        Nandle GF;
+        Nandle Z1_BB; // beam source term
+        Nandle Z1_BD; // diffuse source terms
+        Nandle Z2_BD;
+        Nandle Z4_BD;
+        Nandle Z6_BD;
+        Nandle Z7_BD;
+        Nandle Z9_BD;
         // shape factors
-        Real64 F12;
-        Real64 F14;
-        Real64 F21;
-        Real64 F24;
-        Real64 F31;
-        Real64 F32;
-        Real64 F34;
-        Real64 F41;
-        Real64 F42;
-        Real64 F56;
-        Real64 F57;
-        Real64 F58;
-        Real64 F59;
-        Real64 F67;
-        Real64 F68;
-        Real64 F69;
-        Real64 F76;
-        Real64 F79;
-        Real64 F86;
-        Real64 F89;
-        Real64 F96;
-        Real64 F97;
-        Real64 F98;
-        Real64 J1; // radiosities
-        Real64 J2;
-        Real64 J4;
-        Real64 J6;
-        Real64 J7;
-        Real64 J8;
-        Real64 J9;
-        Real64 G1; // irradiances
-        Real64 G3;
-        Real64 G5;
-        Real64 G7;
-        Real64 G8;
+        Nandle F12;
+        Nandle F14;
+        Nandle F21;
+        Nandle F24;
+        Nandle F31;
+        Nandle F32;
+        Nandle F34;
+        Nandle F41;
+        Nandle F42;
+        Nandle F56;
+        Nandle F57;
+        Nandle F58;
+        Nandle F59;
+        Nandle F67;
+        Nandle F68;
+        Nandle F69;
+        Nandle F76;
+        Nandle F79;
+        Nandle F86;
+        Nandle F89;
+        Nandle F96;
+        Nandle F97;
+        Nandle F98;
+        Nandle J1; // radiosities
+        Nandle J2;
+        Nandle J4;
+        Nandle J6;
+        Nandle J7;
+        Nandle J8;
+        Nandle J9;
+        Nandle G1; // irradiances
+        Nandle G3;
+        Nandle G5;
+        Nandle G7;
+        Nandle G8;
 
-        Array2D<Real64> A(N + 2, N); // coefficients of the radiosity equations matrix
-        Array1D<Real64> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
+        Array2D<Nandle> A(N + 2, N); // coefficients of the radiosity equations matrix
+        Array1D<Nandle> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
         // Flow
 
         TAUBF_BT_PERP = TAUBF_BD_PERP + TAUBF_BB_PERP;
 
         AK = std::sqrt(W * W + S * S);
         CG = AK;
-        Real64 const cos_OMEGA_H(std::abs(std::cos(OMEGA_H)));
-        Real64 const sin_OMEGA_H(std::abs(std::sin(OMEGA_H)));
+        Nandle const cos_OMEGA_H(std::abs(std::cos(OMEGA_H)));
+        Nandle const sin_OMEGA_H(std::abs(std::sin(OMEGA_H)));
         MK = (W * sin_OMEGA_H) / cos_OMEGA_H;
         DK = AK;
         MF = S - MK;
@@ -4010,29 +4010,29 @@ namespace WindowEquivalentLayer {
         RHO_BD = (RHOFF_BT_PARL + TAUBF_DD * G1 + G5) / 2.0;
     }
 
-    void PD_BEAM_CASE_VI(Real64 const S,                  // pleat spacing (> 0)
-                         Real64 const W,                  // pleat depth (>=0, same units as S)
-                         Real64 const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
-                         Real64 const EP_UNUSED(DE),      // width of illumination on pleat bottom (same units as S)
-                         Real64 const RHOFF_BT_PARL,
-                         Real64 const TAUFF_BB_PARL,
-                         Real64 const TAUFF_BD_PARL,
-                         Real64 const EP_UNUSED(RHOBF_BT_PARL),
-                         Real64 const EP_UNUSED(TAUBF_BB_PARL),
-                         Real64 const EP_UNUSED(TAUBF_BD_PARL),
-                         Real64 const EP_UNUSED(RHOFF_BT_PERP),
-                         Real64 const EP_UNUSED(TAUFF_BB_PERP),
-                         Real64 const EP_UNUSED(TAUFF_BD_PERP),
-                         Real64 const EP_UNUSED(RHOBF_BT_PERP),
-                         Real64 const EP_UNUSED(TAUBF_BB_PERP),
-                         Real64 const EP_UNUSED(TAUBF_BD_PERP),
-                         Real64 const RHOBF_DD, // fabric back diffuse-diffuse reflectance
-                         Real64 const RHOFF_DD, // fabric front diffuse-diffuse reflectance
-                         Real64 const TAUFF_DD, // fabric front diffuse-diffuse transmittance
-                         Real64 const TAUBF_DD, // fabric back diffuse-diffuse transmittance
-                         Real64 &RHO_BD,        // returned: drape front beam-diffuse reflectance
-                         Real64 &TAU_BD,        // returned: drape front beam-diffuse transmittance
-                         Real64 &TAU_BB         // returned: drape front beam-beam transmittance
+    void PD_BEAM_CASE_VI(Nandle const S,                  // pleat spacing (> 0)
+                         Nandle const W,                  // pleat depth (>=0, same units as S)
+                         Nandle const EP_UNUSED(OMEGA_H), // horizontal profile angle, radians
+                         Nandle const EP_UNUSED(DE),      // width of illumination on pleat bottom (same units as S)
+                         Nandle const RHOFF_BT_PARL,
+                         Nandle const TAUFF_BB_PARL,
+                         Nandle const TAUFF_BD_PARL,
+                         Nandle const EP_UNUSED(RHOBF_BT_PARL),
+                         Nandle const EP_UNUSED(TAUBF_BB_PARL),
+                         Nandle const EP_UNUSED(TAUBF_BD_PARL),
+                         Nandle const EP_UNUSED(RHOFF_BT_PERP),
+                         Nandle const EP_UNUSED(TAUFF_BB_PERP),
+                         Nandle const EP_UNUSED(TAUFF_BD_PERP),
+                         Nandle const EP_UNUSED(RHOBF_BT_PERP),
+                         Nandle const EP_UNUSED(TAUBF_BB_PERP),
+                         Nandle const EP_UNUSED(TAUBF_BD_PERP),
+                         Nandle const RHOBF_DD, // fabric back diffuse-diffuse reflectance
+                         Nandle const RHOFF_DD, // fabric front diffuse-diffuse reflectance
+                         Nandle const TAUFF_DD, // fabric front diffuse-diffuse transmittance
+                         Nandle const TAUBF_DD, // fabric back diffuse-diffuse transmittance
+                         Nandle &RHO_BD,        // returned: drape front beam-diffuse reflectance
+                         Nandle &TAU_BD,        // returned: drape front beam-diffuse transmittance
+                         Nandle &TAU_BB         // returned: drape front beam-beam transmittance
     )
     {
 
@@ -4068,41 +4068,41 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AK; // length of diagonal strings
-        Real64 CG;
-        Real64 Z1_BD; // diffuse source termps
-        Real64 Z7_BD;
+        Nandle AK; // length of diagonal strings
+        Nandle CG;
+        Nandle Z1_BD; // diffuse source termps
+        Nandle Z7_BD;
         // shape factors
-        Real64 F12;
-        Real64 F14;
-        Real64 F21;
-        Real64 F24;
-        Real64 F31;
-        Real64 F32;
-        Real64 F34;
-        Real64 F41;
-        Real64 F42;
-        Real64 F56;
-        Real64 F57;
-        Real64 F58;
-        Real64 F67;
-        Real64 F68;
-        Real64 F76;
-        Real64 F78;
-        Real64 F86;
-        Real64 F87;
-        Real64 J1; // radiosity, surface i
-        Real64 J2;
-        Real64 J4;
-        Real64 J6;
-        Real64 J7;
-        Real64 J8;
-        Real64 G1; // irradiance, surface i
-        Real64 G3;
-        Real64 G5;
-        Real64 G7;
-        Array2D<Real64> A(N + 2, N); // coefficients of the radiosity equations matrix
-        Array1D<Real64> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
+        Nandle F12;
+        Nandle F14;
+        Nandle F21;
+        Nandle F24;
+        Nandle F31;
+        Nandle F32;
+        Nandle F34;
+        Nandle F41;
+        Nandle F42;
+        Nandle F56;
+        Nandle F57;
+        Nandle F58;
+        Nandle F67;
+        Nandle F68;
+        Nandle F76;
+        Nandle F78;
+        Nandle F86;
+        Nandle F87;
+        Nandle J1; // radiosity, surface i
+        Nandle J2;
+        Nandle J4;
+        Nandle J6;
+        Nandle J7;
+        Nandle J8;
+        Nandle G1; // irradiance, surface i
+        Nandle G3;
+        Nandle G5;
+        Nandle G7;
+        Array2D<Nandle> A(N + 2, N); // coefficients of the radiosity equations matrix
+        Array1D<Nandle> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
         // Flow
 
         AK = std::sqrt(W * W + S * S);
@@ -4197,14 +4197,14 @@ namespace WindowEquivalentLayer {
         RHO_BD = (RHOFF_BT_PARL + TAUBF_DD * G1 + G5) / 2.0;
     }
 
-    void VB_DIFF(Real64 const S,           // slat spacing (any length units; same units as W)
-                 Real64 const W,           // slat tip-to-tip width (any length units; same units as S)
-                 Real64 const PHI,         // slat angle, radians (-PI/2 <= PHI <= PI/2)
-                 Real64 const RHODFS_SLAT, // reflectance of downward-facing slat surfaces (concave?)
-                 Real64 const RHOUFS_SLAT, // reflectance of upward-facing slat surfaces (convex?)
-                 Real64 const TAU_SLAT,    // diffuse transmitance of slats
-                 Real64 &RHOFVB,           // returned: front side effective diffuse reflectance of venetian blind
-                 Real64 &TAUVB             // returned: effective diffuse transmittance of venetian blind
+    void VB_DIFF(Nandle const S,           // slat spacing (any length units; same units as W)
+                 Nandle const W,           // slat tip-to-tip width (any length units; same units as S)
+                 Nandle const PHI,         // slat angle, radians (-PI/2 <= PHI <= PI/2)
+                 Nandle const RHODFS_SLAT, // reflectance of downward-facing slat surfaces (concave?)
+                 Nandle const RHOUFS_SLAT, // reflectance of upward-facing slat surfaces (convex?)
+                 Nandle const TAU_SLAT,    // diffuse transmitance of slats
+                 Nandle &RHOFVB,           // returned: front side effective diffuse reflectance of venetian blind
+                 Nandle &TAUVB             // returned: effective diffuse transmittance of venetian blind
     )
     {
         // SUBROUTINE INFORMATION:
@@ -4242,25 +4242,25 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CD; // lengths of the diagonal strings used in the four-surface model
-        Real64 AF;
-        Real64 F13; // shape factors
-        Real64 F14;
-        Real64 F12;
-        Real64 F31;
-        Real64 F41;
-        Real64 FSS;
-        Real64 C3; // temporaries
-        Real64 B3;
-        Real64 C4;
-        Real64 B4;
-        Real64 K3;
-        Real64 K4;
-        Real64 DEN;
+        Nandle CD; // lengths of the diagonal strings used in the four-surface model
+        Nandle AF;
+        Nandle F13; // shape factors
+        Nandle F14;
+        Nandle F12;
+        Nandle F31;
+        Nandle F41;
+        Nandle FSS;
+        Nandle C3; // temporaries
+        Nandle B3;
+        Nandle C4;
+        Nandle B4;
+        Nandle K3;
+        Nandle K4;
+        Nandle DEN;
         // flow
 
-        Real64 const W_cos_PHI_2(pow_2(W * std::cos(PHI)));
-        Real64 const W_sin_PHI(W * std::sin(PHI));
+        Nandle const W_cos_PHI_2(pow_2(W * std::cos(PHI)));
+        Nandle const W_sin_PHI(W * std::sin(PHI));
         CD = std::sqrt(W_cos_PHI_2 + pow_2(S + W_sin_PHI));
         AF = std::sqrt(W_cos_PHI_2 + pow_2(S - W_sin_PHI));
 
@@ -4284,8 +4284,8 @@ namespace WindowEquivalentLayer {
         RHOFVB = P01((F13 * K3) + (F14 * K4), RhoF_Name);
     }
 
-    Real64 VB_SLAT_RADIUS_RATIO(Real64 const W, // slat tip-to-tip (chord) width (any units; same units as C) must be > 0
-                                Real64 const C  // slat crown height (any units, same units as W) must be >= 0
+    Nandle VB_SLAT_RADIUS_RATIO(Nandle const W, // slat tip-to-tip (chord) width (any units; same units as C) must be > 0
+                                Nandle const C  // slat crown height (any units, same units as W) must be >= 0
     )
     {
         //       AUTHOR         ASHRAE 1311-RP
@@ -4303,7 +4303,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 VB_SLAT_RADIUS_RATIO;
+        Nandle VB_SLAT_RADIUS_RATIO;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -4317,7 +4317,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 CX;
+        Nandle CX;
         // Flow
 
         if (C <= 0.0 || W <= 0.0) {
@@ -4330,17 +4330,17 @@ namespace WindowEquivalentLayer {
         return VB_SLAT_RADIUS_RATIO;
     }
 
-    void VB_SOL46_CURVE(Real64 const S,           // slat spacing (any length units; same units as W)
-                        Real64 const W,           // slat tip-to-tip (chord) width (any length units; same units as S)
-                        Real64 const SL_WR,       // slat curvature radius ratio (= W/R)
-                        Real64 const PHIx,        // slat angle, radians (-PI/2 <= PHI <= PI/2)
-                        Real64 const OMEGAx,      // incident beam profile angle (radians)
-                        Real64 const RHODFS_SLAT, // SW (solar) reflectance downward-facing slat surfaces (concave?)
-                        Real64 const RHOUFS_SLAT, // SW (solar) reflectance upward-facing slat surfaces (convex?)
-                        Real64 const TAU_SLAT,    // SW (solar) transmittance of slats
-                        Real64 &RHO_BD,           // returned: effective SW (solar) beam-to-diffuse reflectance front side
-                        Real64 &TAU_BB,           // returned: effective SW (solar) beam-to-beam transmittance front side
-                        Real64 &TAU_BD            // returned: effective SW (solar) beam-to-diffuse transmittance front side
+    void VB_SOL46_CURVE(Nandle const S,           // slat spacing (any length units; same units as W)
+                        Nandle const W,           // slat tip-to-tip (chord) width (any length units; same units as S)
+                        Nandle const SL_WR,       // slat curvature radius ratio (= W/R)
+                        Nandle const PHIx,        // slat angle, radians (-PI/2 <= PHI <= PI/2)
+                        Nandle const OMEGAx,      // incident beam profile angle (radians)
+                        Nandle const RHODFS_SLAT, // SW (solar) reflectance downward-facing slat surfaces (concave?)
+                        Nandle const RHOUFS_SLAT, // SW (solar) reflectance upward-facing slat surfaces (convex?)
+                        Nandle const TAU_SLAT,    // SW (solar) transmittance of slats
+                        Nandle &RHO_BD,           // returned: effective SW (solar) beam-to-diffuse reflectance front side
+                        Nandle &TAU_BB,           // returned: effective SW (solar) beam-to-beam transmittance front side
+                        Nandle &TAU_BD            // returned: effective SW (solar) beam-to-diffuse transmittance front side
     )
     {
         // SUBROUTINE INFORMATION:
@@ -4384,29 +4384,29 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 DE; // distance from front tip of any slat to shadow (caused by the adjacent slat) on
+        Nandle DE; // distance from front tip of any slat to shadow (caused by the adjacent slat) on
         // the plane of the same slat; DE may be greater than the slat width, W
-        Real64 PHI;
-        Real64 OMEGA;
-        Real64 SL_RAD;
-        Real64 SL_THETA;
-        Real64 Slope;
-        Real64 T_CORR_D;
-        Real64 T_CORR_F;
-        Real64 RHO_TEMP;
-        Real64 TAU_TEMP;
-        Real64 XA;
-        Real64 XB;
-        Real64 XC;
-        Real64 XD;
-        Real64 XE;
-        Real64 XF(0);
-        Real64 YA;
-        Real64 YB;
-        Real64 YC;
-        Real64 YD;
-        Real64 YE;
-        Real64 YF(0);
+        Nandle PHI;
+        Nandle OMEGA;
+        Nandle SL_RAD;
+        Nandle SL_THETA;
+        Nandle Slope;
+        Nandle T_CORR_D;
+        Nandle T_CORR_F;
+        Nandle RHO_TEMP;
+        Nandle TAU_TEMP;
+        Nandle XA;
+        Nandle XB;
+        Nandle XC;
+        Nandle XD;
+        Nandle XE;
+        Nandle XF(0);
+        Nandle YA;
+        Nandle YB;
+        Nandle YC;
+        Nandle YD;
+        Nandle YE;
+        Nandle YF(0);
         int CORR;
         // Flow
 
@@ -4534,13 +4534,13 @@ namespace WindowEquivalentLayer {
                     if ((PHI + OMEGA) >= 0.0) { // Slat is lit from above
                         DE = XC - XA;
                         VB_SOL6(S, W, OMEGA, DE, PHI, RHODFS_SLAT, RHOUFS_SLAT, TAU_SLAT, RHO_BD, TAU_BD);
-                        Real64 const S_cos_OMEGA_inv(1.0 / (S * std::cos(OMEGA)));
+                        Nandle const S_cos_OMEGA_inv(1.0 / (S * std::cos(OMEGA)));
                         RHO_BD *= T_CORR_D * S_cos_OMEGA_inv;
                         TAU_BD *= T_CORR_D * S_cos_OMEGA_inv;
                     } else { // Slat is lit from below
                         DE = XC - XA;
                         VB_SOL6(S, W, OMEGA, DE, PHI, RHODFS_SLAT, RHOUFS_SLAT, TAU_SLAT, RHO_BD, TAU_BD);
-                        Real64 const S_cos_OMEGA_inv(1.0 / (S * std::cos(OMEGA)));
+                        Nandle const S_cos_OMEGA_inv(1.0 / (S * std::cos(OMEGA)));
                         RHO_TEMP = RHO_BD * T_CORR_F * S_cos_OMEGA_inv;
                         TAU_TEMP = TAU_BD * T_CORR_F * S_cos_OMEGA_inv;
                         DE = std::abs(XB - XF);
@@ -4590,16 +4590,16 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    void VB_SOL4(Real64 const S,           // slat spacing (any length units; same units as W)
-                 Real64 const W,           // slat tip-to-tip width (any length units; same units as S)
-                 Real64 const OMEGA,       // incident beam profile angle (radians)
-                 Real64 const DE,          // distance from front tip of any slat to shadow (caused by the adjacent slat) on
-                 Real64 const PHI,         // slat angle, radians (-PI/2 <= PHI <= PI/2)
-                 Real64 const RHODFS_SLAT, // solar reflectance downward-facing slat surfaces (concave?)
-                 Real64 const RHOUFS_SLAT, // solar reflectance upward-facing slat surfaces (convex?)
-                 Real64 const TAU_SLAT,    // solar transmittance of slat
-                 Real64 &RHO_BD,           // returned: solar beam-to-diffuse reflectance the venetian blind (front side)
-                 Real64 &TAU_BD            // returned: solar beam-to-diffuse transmittance of the venetian blind (front side)
+    void VB_SOL4(Nandle const S,           // slat spacing (any length units; same units as W)
+                 Nandle const W,           // slat tip-to-tip width (any length units; same units as S)
+                 Nandle const OMEGA,       // incident beam profile angle (radians)
+                 Nandle const DE,          // distance from front tip of any slat to shadow (caused by the adjacent slat) on
+                 Nandle const PHI,         // slat angle, radians (-PI/2 <= PHI <= PI/2)
+                 Nandle const RHODFS_SLAT, // solar reflectance downward-facing slat surfaces (concave?)
+                 Nandle const RHOUFS_SLAT, // solar reflectance upward-facing slat surfaces (convex?)
+                 Nandle const TAU_SLAT,    // solar transmittance of slat
+                 Nandle &RHO_BD,           // returned: solar beam-to-diffuse reflectance the venetian blind (front side)
+                 Nandle &TAU_BD            // returned: solar beam-to-diffuse transmittance of the venetian blind (front side)
     )
     {
         // SUBROUTINE INFORMATION:
@@ -4640,26 +4640,26 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AF; // lengths of diagonal strings used in the four-surface model
-        Real64 CD;
-        Real64 F13; // Shape factors
-        Real64 F14;
-        Real64 F23;
-        Real64 F24;
-        Real64 F34;
-        Real64 F43;
-        Real64 Z3; // diffuse source terms from surfaces 3 and 4 due to incident beam radiation
-        Real64 Z4;
-        Real64 J3; // radiosity, surface i
-        Real64 J4;
-        Real64 B3; // temporaries
-        Real64 B4;
-        Real64 C3;
-        Real64 C4;
+        Nandle AF; // lengths of diagonal strings used in the four-surface model
+        Nandle CD;
+        Nandle F13; // Shape factors
+        Nandle F14;
+        Nandle F23;
+        Nandle F24;
+        Nandle F34;
+        Nandle F43;
+        Nandle Z3; // diffuse source terms from surfaces 3 and 4 due to incident beam radiation
+        Nandle Z4;
+        Nandle J3; // radiosity, surface i
+        Nandle J4;
+        Nandle B3; // temporaries
+        Nandle B4;
+        Nandle C3;
+        Nandle C4;
         // flow
 
-        Real64 const W_cos_PHI_2(pow_2(W * std::cos(PHI)));
-        Real64 const W_sin_PHI(W * std::sin(PHI));
+        Nandle const W_cos_PHI_2(pow_2(W * std::cos(PHI)));
+        Nandle const W_sin_PHI(W * std::sin(PHI));
         AF = std::sqrt(W_cos_PHI_2 + pow_2(S - W_sin_PHI));
         CD = std::sqrt(W_cos_PHI_2 + pow_2(S + W_sin_PHI));
         //  CHECK TO SEE WHICH SIDE OF SLAT IS SUNLIT
@@ -4708,16 +4708,16 @@ namespace WindowEquivalentLayer {
         } // END OF CHECK FOR CLOSED BLIND
     }
 
-    void VB_SOL6(Real64 const S,           // slat spacing (any length units; same units as W)
-                 Real64 const W,           // slat tip-to-tip width (any length units; same units as S)
-                 Real64 const OMEGA,       // incident beam profile angle (radians)
-                 Real64 const DE,          // distance from front tip of any slat to shadow (caused by the adjacent slat) on
-                 Real64 const PHI,         // slat angle, radians (-PI/2 <= PHI <= PI/2)
-                 Real64 const RHODFS_SLAT, // solar reflectance downward-facing slat surfaces (concave)
-                 Real64 const RHOUFS_SLAT, // solar reflectance upward-facing slat surfaces (convex)
-                 Real64 const TAU_SLAT,    // solar transmittance of slat
-                 Real64 &RHO_BD,           // returned: solar beam-to-diffuse reflectance the venetian blind (front side)
-                 Real64 &TAU_BD            // returned: solar beam-to-diffuse transmittance of the venetian blind (front side)
+    void VB_SOL6(Nandle const S,           // slat spacing (any length units; same units as W)
+                 Nandle const W,           // slat tip-to-tip width (any length units; same units as S)
+                 Nandle const OMEGA,       // incident beam profile angle (radians)
+                 Nandle const DE,          // distance from front tip of any slat to shadow (caused by the adjacent slat) on
+                 Nandle const PHI,         // slat angle, radians (-PI/2 <= PHI <= PI/2)
+                 Nandle const RHODFS_SLAT, // solar reflectance downward-facing slat surfaces (concave)
+                 Nandle const RHOUFS_SLAT, // solar reflectance upward-facing slat surfaces (convex)
+                 Nandle const TAU_SLAT,    // solar transmittance of slat
+                 Nandle &RHO_BD,           // returned: solar beam-to-diffuse reflectance the venetian blind (front side)
+                 Nandle &TAU_BD            // returned: solar beam-to-diffuse transmittance of the venetian blind (front side)
     )
     {
         // SUBROUTINE INFORMATION:
@@ -4760,40 +4760,40 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AB; // lengths of slat segments and diagonal strings
-        Real64 AE;
-        Real64 AF;
-        Real64 BC;
-        Real64 BD;
-        Real64 BF;
-        Real64 CD;
-        Real64 CE;
-        Real64 EF;
+        Nandle AB; // lengths of slat segments and diagonal strings
+        Nandle AE;
+        Nandle AF;
+        Nandle BC;
+        Nandle BD;
+        Nandle BF;
+        Nandle CD;
+        Nandle CE;
+        Nandle EF;
         //  used in the six-surface model
-        Real64 F13; // shape factors
-        Real64 F14;
-        Real64 F23;
-        Real64 F24;
-        Real64 F34;
-        Real64 F36;
-        Real64 F15;
-        Real64 F16;
-        Real64 F43;
-        Real64 F45;
-        Real64 F54;
-        Real64 F56;
-        Real64 F63;
-        Real64 F65;
-        Real64 F25;
-        Real64 F26;
-        Real64 Z3; // diffuse source terms from surfaces 3 and 4 due to incident beam radiation
-        Real64 Z4;
-        Real64 J3; // radiosity, surface i
-        Real64 J4;
-        Real64 J5;
-        Real64 J6;
-        Array2D<Real64> A(N + 2, N); // coefficients of the radiosity equations matrix
-        Array1D<Real64> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
+        Nandle F13; // shape factors
+        Nandle F14;
+        Nandle F23;
+        Nandle F24;
+        Nandle F34;
+        Nandle F36;
+        Nandle F15;
+        Nandle F16;
+        Nandle F43;
+        Nandle F45;
+        Nandle F54;
+        Nandle F56;
+        Nandle F63;
+        Nandle F65;
+        Nandle F25;
+        Nandle F26;
+        Nandle Z3; // diffuse source terms from surfaces 3 and 4 due to incident beam radiation
+        Nandle Z4;
+        Nandle J3; // radiosity, surface i
+        Nandle J4;
+        Nandle J5;
+        Nandle J6;
+        Array2D<Nandle> A(N + 2, N); // coefficients of the radiosity equations matrix
+        Array1D<Nandle> XSOL(N);     // solution vector (obtained after solving the radiosity equations matrix)
         // flow
 
         //  CHECK TO SEE WHICH SIDE OF SLAT IS SUNLIT
@@ -4822,14 +4822,14 @@ namespace WindowEquivalentLayer {
 
         } else { // VENETIAN BLIND IS OPENED
             AB = DE;
-            Real64 const cos_PHI(std::cos(PHI));
-            Real64 const sin_PHI(std::sin(PHI));
-            Real64 const W_cos_PHI_2(pow_2(W * cos_PHI));
+            Nandle const cos_PHI(std::cos(PHI));
+            Nandle const sin_PHI(std::sin(PHI));
+            Nandle const W_cos_PHI_2(pow_2(W * cos_PHI));
             AF = std::sqrt(W_cos_PHI_2 + pow_2(S - W * sin_PHI));
             BC = W - AB;
             EF = BC;
-            Real64 const DE_cos_PHI_2(pow_2(DE * cos_PHI));
-            Real64 const EF_cos_PHI_2(pow_2(EF * cos_PHI));
+            Nandle const DE_cos_PHI_2(pow_2(DE * cos_PHI));
+            Nandle const EF_cos_PHI_2(pow_2(EF * cos_PHI));
             BD = std::sqrt(DE_cos_PHI_2 + pow_2(S + DE * sin_PHI));
             BF = std::sqrt(EF_cos_PHI_2 + pow_2(S - EF * sin_PHI));
             CD = std::sqrt(W_cos_PHI_2 + pow_2(S + W * sin_PHI));
@@ -4889,8 +4889,8 @@ namespace WindowEquivalentLayer {
     }
 
     void SOLMATS(int const N,          // # of active rows in A
-                 Array2S<Real64> A,    // matrix, minimum required dimensions: A( N, N+2)
-                 Array1D<Real64> &XSOL // returned: solution vector, min req dimension: XSOL( N)
+                 Array2S<Nandle> A,    // matrix, minimum required dimensions: A( N, N+2)
+                 Array1D<Nandle> &XSOL // returned: solution vector, min req dimension: XSOL( N)
     )
     {
         // SUBROUTINE INFORMATION:
@@ -4926,11 +4926,11 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CMAX;
-        Real64 TEMP;
-        Real64 C;
-        Real64 Y;
-        Real64 D;
+        Nandle CMAX;
+        Nandle TEMP;
+        Nandle C;
+        Nandle Y;
+        Nandle D;
         int NM1;
         int NP1;
         int NP2;
@@ -5004,21 +5004,21 @@ namespace WindowEquivalentLayer {
     }
 
     void ASHWAT_ThermalCalc(CFSTY &FS,        // fenestration system
-                            Real64 const TIN, // indoor / outdoor air temperature, K
-                            Real64 const TOUT,
-                            Real64 const HCIN, // indoor / outdoor convective heat transfer
-                            Real64 const HCOUT,
-                            Real64 const TRMOUT,
-                            Real64 const TRMIN,           // indoor / outdoor mean radiant temp, K
-                            Array1S<Real64> const SOURCE, // absorbed solar by layer, W/m2
-                            Real64 const TOL,             // convergence tolerance, usually
-                            Array1D<Real64> &QOCF,        // returned: heat flux to layer i from gaps i-1 and i
-                            Real64 &QOCFRoom,             // returned: open channel heat gain to room, W/m2
-                            Array1D<Real64> &T,           // returned: layer temperatures, 1=outside-most layer, K
-                            Array1D<Real64> &Q,           // returned: heat flux at ith gap (betw layers i and i+1), W/m2
-                            Array1D<Real64> &JF,          // returned: front (outside facing) radiosity of surfaces, W/m2
-                            Array1D<Real64> &JB,          // returned: back (inside facing) radiosity, W/m2
-                            Array1D<Real64> &HC           // returned: gap convective heat transfer coefficient, W/m2K
+                            Nandle const TIN, // indoor / outdoor air temperature, K
+                            Nandle const TOUT,
+                            Nandle const HCIN, // indoor / outdoor convective heat transfer
+                            Nandle const HCOUT,
+                            Nandle const TRMOUT,
+                            Nandle const TRMIN,           // indoor / outdoor mean radiant temp, K
+                            Array1S<Nandle> const SOURCE, // absorbed solar by layer, W/m2
+                            Nandle const TOL,             // convergence tolerance, usually
+                            Array1D<Nandle> &QOCF,        // returned: heat flux to layer i from gaps i-1 and i
+                            Nandle &QOCFRoom,             // returned: open channel heat gain to room, W/m2
+                            Array1D<Nandle> &T,           // returned: layer temperatures, 1=outside-most layer, K
+                            Array1D<Nandle> &Q,           // returned: heat flux at ith gap (betw layers i and i+1), W/m2
+                            Array1D<Nandle> &JF,          // returned: front (outside facing) radiosity of surfaces, W/m2
+                            Array1D<Nandle> &JB,          // returned: back (inside facing) radiosity, W/m2
+                            Array1D<Nandle> &HC           // returned: gap convective heat transfer coefficient, W/m2K
     )
     {
         // SUBROUTINE INFORMATION:
@@ -5081,23 +5081,23 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 ALPHA;
-        Real64 HCOCFout;
-        Array2D<Real64> A(3 * FS.NL + 4, 3 * FS.NL + 2);
-        Array1D<Real64> XSOL(3 * FS.NL + 2);
-        Real64 MAXERR;
-        Array1D<Real64> TNEW(FS.NL);        // latest estimate of layer temperatures, K
-        Array1D<Real64> EB({0, FS.NL + 1}); // black emissive power by layer, W/m2
+        Nandle ALPHA;
+        Nandle HCOCFout;
+        Array2D<Nandle> A(3 * FS.NL + 4, 3 * FS.NL + 2);
+        Array1D<Nandle> XSOL(3 * FS.NL + 2);
+        Nandle MAXERR;
+        Array1D<Nandle> TNEW(FS.NL);        // latest estimate of layer temperatures, K
+        Array1D<Nandle> EB({0, FS.NL + 1}); // black emissive power by layer, W/m2
                                             //   EB( 0) = outdoor environment, EB( NL+1) = indoor environment
-        Array1D<Real64> HHAT({0, FS.NL});   // convective heat transfer coefficient (W/m2.K4)
+        Array1D<Nandle> HHAT({0, FS.NL});   // convective heat transfer coefficient (W/m2.K4)
                                             //   based on EB, NOT temperature difference
-        Real64 RHOF_ROOM;                   // effective longwave room-side properties
-        Real64 TAU_ROOM;
-        Real64 EPSF_ROOM;
-        Real64 RHOB_OUT; // effective longwave outdoor environment properties
-        Real64 TAU_OUT;
-        Real64 EPSB_OUT;
-        Array1D<Real64> QNET(FS.NL); // checksum - net heat flux to a layer - should be zero - not needed
+        Nandle RHOF_ROOM;                   // effective longwave room-side properties
+        Nandle TAU_ROOM;
+        Nandle EPSF_ROOM;
+        Nandle RHOB_OUT; // effective longwave outdoor environment properties
+        Nandle TAU_OUT;
+        Nandle EPSB_OUT;
+        Array1D<Nandle> QNET(FS.NL); // checksum - net heat flux to a layer - should be zero - not needed
         int ADIM;                    // dimension of the A matrix
         int CONVRG;
         int NL;
@@ -5107,36 +5107,36 @@ namespace WindowEquivalentLayer {
         int ITRY;
         int hin_scheme;                   // flags different schemes for indoor convection coefficients
         Array1D_int ISDL({0, FS.NL + 1}); // Flag to mark diathermanous layers, 0=opaque
-        Array1D<Real64> QOCF_F(FS.NL);    // heat flux to outdoor-facing surface of layer i, from gap i-1,
+        Array1D<Nandle> QOCF_F(FS.NL);    // heat flux to outdoor-facing surface of layer i, from gap i-1,
                                           //   due to open channel flow, W/m2
-        Array1D<Real64> QOCF_B(FS.NL);    // heat flux to indoor-facing surface of layer i, from gap i,
+        Array1D<Nandle> QOCF_B(FS.NL);    // heat flux to indoor-facing surface of layer i, from gap i,
                                           //   due to open channel flow, W/m2
-        Array1D<Real64> HR({0, FS.NL});   // Radiant heat transfer coefficient [W/m2K]
-        Array1D<Real64> HJR(FS.NL);       // radiative and convective jump heat transfer coefficients
-        Array1D<Real64> HJC(FS.NL);
-        Array1D<Real64> RHOF({0, FS.NL + 1}); // longwave reflectance, front    !  these variables help simplify
-        Array1D<Real64> RHOB({0, FS.NL + 1}); // longwave reflectance, back     !  the code because it is useful to
-        Array1D<Real64> EPSF({0, FS.NL + 1}); // longwave emisivity,   front    !  increase the scope of the arrays
-        Array1D<Real64> EPSB({0, FS.NL + 1}); // longwave emisivity,   back     !  to include indoor and outdoor
-        Array1D<Real64> TAU({0, FS.NL + 1});  // longwave transmittance         !  nodes - more general
-        Array2D<Real64> HC2D(6, 6);           // convective heat transfer coefficients between layers i and j
-        Array2D<Real64> HR2D(6, 6);           // radiant heat transfer coefficients between layers i and j
-        Array1D<Real64> HCIout(6);            // convective and radiant heat transfer coefficients between
-        Array1D<Real64> HRIout(6);
+        Array1D<Nandle> HR({0, FS.NL});   // Radiant heat transfer coefficient [W/m2K]
+        Array1D<Nandle> HJR(FS.NL);       // radiative and convective jump heat transfer coefficients
+        Array1D<Nandle> HJC(FS.NL);
+        Array1D<Nandle> RHOF({0, FS.NL + 1}); // longwave reflectance, front    !  these variables help simplify
+        Array1D<Nandle> RHOB({0, FS.NL + 1}); // longwave reflectance, back     !  the code because it is useful to
+        Array1D<Nandle> EPSF({0, FS.NL + 1}); // longwave emisivity,   front    !  increase the scope of the arrays
+        Array1D<Nandle> EPSB({0, FS.NL + 1}); // longwave emisivity,   back     !  to include indoor and outdoor
+        Array1D<Nandle> TAU({0, FS.NL + 1});  // longwave transmittance         !  nodes - more general
+        Array2D<Nandle> HC2D(6, 6);           // convective heat transfer coefficients between layers i and j
+        Array2D<Nandle> HR2D(6, 6);           // radiant heat transfer coefficients between layers i and j
+        Array1D<Nandle> HCIout(6);            // convective and radiant heat transfer coefficients between
+        Array1D<Nandle> HRIout(6);
         // layer i and outdoor air or mean radiant temperature, resp.
-        Array1D<Real64> HCIin(6); // convective and radiant heat transfer coefficients between
-        Array1D<Real64> HRIin(6);
+        Array1D<Nandle> HCIin(6); // convective and radiant heat transfer coefficients between
+        Array1D<Nandle> HRIin(6);
         // layer i and indoor air or mean radiant temperature, resp.
         //  Indoor side convection coefficients - used for Open Channel Flow on indoor side
-        Real64 HFS;                          // nominal height of fen system (assumed 1 m)
-        Real64 TOC_EFF;                      // effective thickness of open channel, m
-        Real64 ConvF;                        // convection factor: accounts for enhanced convection
+        Nandle HFS;                          // nominal height of fen system (assumed 1 m)
+        Nandle TOC_EFF;                      // effective thickness of open channel, m
+        Nandle ConvF;                        // convection factor: accounts for enhanced convection
                                              //   for e.g. VB adjacent to open channel
-        Real64 HC_GA;                        // convection - glass to air
-        Real64 HC_SA;                        // convection - shade (both sides) to air
-        Real64 HC_GS;                        // convection - glass to shade (one side)
-        Array1D<Real64> SOURCEdv(FS.NL + 1); // indices of merit
-        Real64 QGAIN;                        // total gain to conditioned space [[W/m2]
+        Nandle HC_GA;                        // convection - glass to air
+        Nandle HC_SA;                        // convection - shade (both sides) to air
+        Nandle HC_GS;                        // convection - glass to shade (one side)
+        Array1D<Nandle> SOURCEdv(FS.NL + 1); // indices of merit
+        Nandle QGAIN;                        // total gain to conditioned space [[W/m2]
                                              // Flow
 
         NL = FS.NL; // working copy
@@ -5219,10 +5219,10 @@ namespace WindowEquivalentLayer {
         //  Start the solver
         //  ITERATION RE-ENTRY
 
-        Real64 const TIN_2(pow_2(TIN));
-        Real64 const TOUT_2(pow_2(TOUT));
-        Real64 const TRMOUT_4(pow_4(TRMOUT));
-        Real64 const TRMIN_4(pow_4(TRMIN));
+        Nandle const TIN_2(pow_2(TIN));
+        Nandle const TOUT_2(pow_2(TOUT));
+        Nandle const TRMOUT_4(pow_4(TRMOUT));
+        Nandle const TRMIN_4(pow_4(TRMIN));
 
         for (ITRY = 1; ITRY <= MaxIter; ++ITRY) {
 
@@ -5313,7 +5313,7 @@ namespace WindowEquivalentLayer {
 
             HHAT(0) = HC[0] * (1.0 / StefanBoltzmann) / ((TOUT_2 + pow_2(T(1))) * (TOUT + T(1)));
 
-            Real64 T_I_2(pow_2(T(1))), T_IP_2;
+            Nandle T_I_2(pow_2(T(1))), T_IP_2;
             for (I = 1; I <= NL - 1; ++I) { // Scan the cavities
                 T_IP_2 = pow_2(T(I + 1));
                 HHAT(I) = HC[I] * (1.0 / StefanBoltzmann) / ((T_I_2 + T_IP_2) * (T(I) + T(I + 1)));
@@ -5462,24 +5462,24 @@ namespace WindowEquivalentLayer {
     }
 
     bool ASHWAT_ThermalRatings(CFSTY const &FS,  // fenestration system
-                               Real64 const TIN, // indoor / outdoor air temperature, K
-                               Real64 const TOUT,
-                               Real64 const HCIN, // indoor / outdoor convective heat transfer
-                               Real64 const HCOUT,
-                               Real64 const TRMOUT,
-                               Real64 const TRMIN,           // indoor / outdoor mean radiant temp, K
-                               Real64 const ISOL,            // total incident solar, W/m2 (values used for SOURCE derivation)
-                               Array1S<Real64> const SOURCE, // absorbed solar by layer, W/m2
-                               Real64 const TOL,             // convergence tolerance, usually
-                               Array1D<Real64> &QOCF,        // returned: heat flux to layer i from gaps i-1 and i
-                               Real64 &QOCFRoom,             // returned: open channel heat gain to room, W/m2
-                               Array1D<Real64> &T,           // returned: layer temperatures, 1=outside-most layer, K
-                               Array1D<Real64> &Q,           // returned: heat flux at ith gap (betw layers i and i+1), W/m2
-                               Array1D<Real64> &JF,          // returned: front (outside facing) radiosity of surfaces, W/m2
-                               Array1D<Real64> &JB,          // returned: back (inside facing) radiosity, W/m2
-                               Array1D<Real64> &HC,          // returned: gap convective heat transfer coefficient, W/m2K
-                               Real64 &UCG,                  // returned: center-glass U-factor, W/m2-K
-                               Real64 &SHGC,                 // returned: center-glass SHGC (Solar Heat Gain Coefficient)
+                               Nandle const TIN, // indoor / outdoor air temperature, K
+                               Nandle const TOUT,
+                               Nandle const HCIN, // indoor / outdoor convective heat transfer
+                               Nandle const HCOUT,
+                               Nandle const TRMOUT,
+                               Nandle const TRMIN,           // indoor / outdoor mean radiant temp, K
+                               Nandle const ISOL,            // total incident solar, W/m2 (values used for SOURCE derivation)
+                               Array1S<Nandle> const SOURCE, // absorbed solar by layer, W/m2
+                               Nandle const TOL,             // convergence tolerance, usually
+                               Array1D<Nandle> &QOCF,        // returned: heat flux to layer i from gaps i-1 and i
+                               Nandle &QOCFRoom,             // returned: open channel heat gain to room, W/m2
+                               Array1D<Nandle> &T,           // returned: layer temperatures, 1=outside-most layer, K
+                               Array1D<Nandle> &Q,           // returned: heat flux at ith gap (betw layers i and i+1), W/m2
+                               Array1D<Nandle> &JF,          // returned: front (outside facing) radiosity of surfaces, W/m2
+                               Array1D<Nandle> &JB,          // returned: back (inside facing) radiosity, W/m2
+                               Array1D<Nandle> &HC,          // returned: gap convective heat transfer coefficient, W/m2K
+                               Nandle &UCG,                  // returned: center-glass U-factor, W/m2-K
+                               Nandle &SHGC,                 // returned: center-glass SHGC (Solar Heat Gain Coefficient)
                                bool const HCInFlag           // If true uses ISO Std 150099 routine for HCIn calc
     )
     {
@@ -5537,7 +5537,7 @@ namespace WindowEquivalentLayer {
         //   0=outside, 1=betw layer 1-2, ..., NL=inside
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const Height(1.0); // Window height (m) for standard ratings calculation
+        Nandle const Height(1.0); // Window height (m) for standard ratings calculation
         int const MaxIter(100);   // maximum number of iterations allowed
         static std::string const RoutineName("ASHWAT_ThermalRatings: ");
         // INTERFACE BLOCK SPECIFICATIONS
@@ -5547,23 +5547,23 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 ALPHA;
-        Real64 HCOCFout;
-        Array2D<Real64> A(3 * FS.NL + 4, 3 * FS.NL + 2);
-        Array1D<Real64> XSOL(3 * FS.NL + 2);
-        Real64 MAXERR;
-        Array1D<Real64> TNEW(FS.NL);        // latest estimate of layer temperatures, K
-        Array1D<Real64> EB({0, FS.NL + 1}); // black emissive power by layer, W/m2
+        Nandle ALPHA;
+        Nandle HCOCFout;
+        Array2D<Nandle> A(3 * FS.NL + 4, 3 * FS.NL + 2);
+        Array1D<Nandle> XSOL(3 * FS.NL + 2);
+        Nandle MAXERR;
+        Array1D<Nandle> TNEW(FS.NL);        // latest estimate of layer temperatures, K
+        Array1D<Nandle> EB({0, FS.NL + 1}); // black emissive power by layer, W/m2
                                             //   EB( 0) = outdoor environment, EB( NL+1) = indoor environment
-        Array1D<Real64> HHAT({0, FS.NL});   // convective heat transfer coefficient (W/m2.K4)
+        Array1D<Nandle> HHAT({0, FS.NL});   // convective heat transfer coefficient (W/m2.K4)
                                             //   based on EB, NOT temperature difference
-        Real64 RHOF_ROOM;                   // effective longwave room-side properties
-        Real64 TAU_ROOM;
-        Real64 EPSF_ROOM;
-        Real64 RHOB_OUT; // effective longwave outdoor environment properties
-        Real64 TAU_OUT;
-        Real64 EPSB_OUT;
-        Array1D<Real64> QNET(FS.NL); // checksum - net heat flux to a layer - should be zero - not needed
+        Nandle RHOF_ROOM;                   // effective longwave room-side properties
+        Nandle TAU_ROOM;
+        Nandle EPSF_ROOM;
+        Nandle RHOB_OUT; // effective longwave outdoor environment properties
+        Nandle TAU_OUT;
+        Nandle EPSB_OUT;
+        Array1D<Nandle> QNET(FS.NL); // checksum - net heat flux to a layer - should be zero - not needed
         int ADIM;                    // dimension of the A matrix
         int CONVRG;
         int NL;
@@ -5577,53 +5577,53 @@ namespace WindowEquivalentLayer {
         int IB;                           // Counter begin and end limits
         int IE;
         int IDV;                       // Integer dummy variable, general utility
-        Array1D<Real64> QOCF_F(FS.NL); // heat flux to outdoor-facing surface of layer i, from gap i-1,
+        Array1D<Nandle> QOCF_F(FS.NL); // heat flux to outdoor-facing surface of layer i, from gap i-1,
                                        //   due to open channel flow, W/m2
-        Array1D<Real64> QOCF_B(FS.NL); // heat flux to indoor-facing surface of layer i, from gap i,
+        Array1D<Nandle> QOCF_B(FS.NL); // heat flux to indoor-facing surface of layer i, from gap i,
                                        //   due to open channel flow, W/m2
-        Real64 Rvalue;                 // R-value in IP units [hr.ft2.F/BTU]
-        Real64 TAE_IN;                 // Indoor and outdoor effective ambient temperatures [K]
-        Real64 TAE_OUT;
-        Array1D<Real64> HR({0, FS.NL}); // Radiant heat transfer coefficient [W/m2K]
-        Array1D<Real64> HJR(FS.NL);     // radiative and convective jump heat transfer coefficients
-        Array1D<Real64> HJC(FS.NL);
-        Real64 FHR_OUT; // hre/(hre+hce) fraction radiant h, outdoor or indoor, used for TAE
-        Real64 FHR_IN;
-        Real64 Q_IN;                          // net gain to the room [W/m2], including transmitted solar
-        Array1D<Real64> RHOF({0, FS.NL + 1}); // longwave reflectance, front    !  these variables help simplify
-        Array1D<Real64> RHOB({0, FS.NL + 1}); // longwave reflectance, back     !  the code because it is useful to
-        Array1D<Real64> EPSF({0, FS.NL + 1}); // longwave emisivity,   front    !  increase the scope of the arrays
-        Array1D<Real64> EPSB({0, FS.NL + 1}); // longwave emisivity,   back     !  to include indoor and outdoor
-        Array1D<Real64> TAU({0, FS.NL + 1});  // longwave transmittance         !  nodes - more general
-        Real64 RTOT;                          // total resistance from TAE_OUT to TAE_IN [m2K/W]
-        Array2D<Real64> HC2D(6, 6);           // convective heat transfer coefficients between layers i and j
-        Array2D<Real64> HR2D(6, 6);           // radiant heat transfer coefficients between layers i and j
-        Array1D<Real64> HCIout(6);            // convective and radiant heat transfer coefficients between
-        Array1D<Real64> HRIout(6);
+        Nandle Rvalue;                 // R-value in IP units [hr.ft2.F/BTU]
+        Nandle TAE_IN;                 // Indoor and outdoor effective ambient temperatures [K]
+        Nandle TAE_OUT;
+        Array1D<Nandle> HR({0, FS.NL}); // Radiant heat transfer coefficient [W/m2K]
+        Array1D<Nandle> HJR(FS.NL);     // radiative and convective jump heat transfer coefficients
+        Array1D<Nandle> HJC(FS.NL);
+        Nandle FHR_OUT; // hre/(hre+hce) fraction radiant h, outdoor or indoor, used for TAE
+        Nandle FHR_IN;
+        Nandle Q_IN;                          // net gain to the room [W/m2], including transmitted solar
+        Array1D<Nandle> RHOF({0, FS.NL + 1}); // longwave reflectance, front    !  these variables help simplify
+        Array1D<Nandle> RHOB({0, FS.NL + 1}); // longwave reflectance, back     !  the code because it is useful to
+        Array1D<Nandle> EPSF({0, FS.NL + 1}); // longwave emisivity,   front    !  increase the scope of the arrays
+        Array1D<Nandle> EPSB({0, FS.NL + 1}); // longwave emisivity,   back     !  to include indoor and outdoor
+        Array1D<Nandle> TAU({0, FS.NL + 1});  // longwave transmittance         !  nodes - more general
+        Nandle RTOT;                          // total resistance from TAE_OUT to TAE_IN [m2K/W]
+        Array2D<Nandle> HC2D(6, 6);           // convective heat transfer coefficients between layers i and j
+        Array2D<Nandle> HR2D(6, 6);           // radiant heat transfer coefficients between layers i and j
+        Array1D<Nandle> HCIout(6);            // convective and radiant heat transfer coefficients between
+        Array1D<Nandle> HRIout(6);
         // layer i and outdoor air or mean radiant temperature, resp.
-        Array1D<Real64> HCIin(6); // convective and radiant heat transfer coefficients between
-        Array1D<Real64> HRIin(6);
+        Array1D<Nandle> HCIin(6); // convective and radiant heat transfer coefficients between
+        Array1D<Nandle> HRIin(6);
         // layer i and indoor air or mean radiant temperature, resp.
-        Real64 HCinout; // convective and radiant heat transfer coefficients between
-        Real64 HRinout;
+        Nandle HCinout; // convective and radiant heat transfer coefficients between
+        Nandle HRinout;
         // indoor and outdoor air or mean radiant temperatures
         // (almost always zero)
         //  Indoor side convection coefficients - used for Open Channel Flow on indoor side
-        Real64 HFS;     // nominal height of fen system (assumed 1 m)
-        Real64 TOC_EFF; // effective thickness of open channel, m
-        Real64 ConvF;   // convection factor: accounts for enhanced convection
+        Nandle HFS;     // nominal height of fen system (assumed 1 m)
+        Nandle TOC_EFF; // effective thickness of open channel, m
+        Nandle ConvF;   // convection factor: accounts for enhanced convection
                         //   for e.g. VB adjacent to open channel
-        Real64 HC_GA;   // convection - glass to air
-        Real64 HC_SA;   // convection - shade (both sides) to air
-        Real64 HC_GS;   // convection - glass to shade (one side)
-        Real64 TINdv;   // dummy variables used
-        Real64 TOUTdv;
-        Real64 TRMINdv; // for boundary conditions in calculating
-        Real64 TRMOUTdv;
-        Array1D<Real64> SOURCEdv(FS.NL + 1); // indices of merit
-        Real64 QGAIN;                        // total gain to conditioned space [[W/m2]
-        Real64 SaveHCNLm;                    // place to save HC[NL-1] - two resistance networks differ
-        Real64 SaveHCNL;                     // place to save HC[NL]   - two resistance networks differ
+        Nandle HC_GA;   // convection - glass to air
+        Nandle HC_SA;   // convection - shade (both sides) to air
+        Nandle HC_GS;   // convection - glass to shade (one side)
+        Nandle TINdv;   // dummy variables used
+        Nandle TOUTdv;
+        Nandle TRMINdv; // for boundary conditions in calculating
+        Nandle TRMOUTdv;
+        Array1D<Nandle> SOURCEdv(FS.NL + 1); // indices of merit
+        Nandle QGAIN;                        // total gain to conditioned space [[W/m2]
+        Nandle SaveHCNLm;                    // place to save HC[NL-1] - two resistance networks differ
+        Nandle SaveHCNL;                     // place to save HC[NL]   - two resistance networks differ
                                              // in their definitions of these heat transfer coefficients
                                              // Flow
 
@@ -5708,10 +5708,10 @@ namespace WindowEquivalentLayer {
         //  Start the solver
         //  ITERATION RE-ENTRY
 
-        Real64 const TIN_2(pow_2(TIN));
-        Real64 const TOUT_2(pow_2(TOUT));
-        Real64 const TRMOUT_4(pow_4(TRMOUT));
-        Real64 const TRMIN_4(pow_4(TRMIN));
+        Nandle const TIN_2(pow_2(TIN));
+        Nandle const TOUT_2(pow_2(TOUT));
+        Nandle const TRMOUT_4(pow_4(TRMOUT));
+        Nandle const TRMIN_4(pow_4(TRMIN));
 
         for (ITRY = 1; ITRY <= MaxIter; ++ITRY) {
 
@@ -5800,7 +5800,7 @@ namespace WindowEquivalentLayer {
 
             HHAT(0) = HC[0] * (1.0 / StefanBoltzmann) / ((TOUT_2 + pow_2(T(1))) * (TOUT + T(1)));
 
-            Real64 T_I_2(pow_2(T(1))), T_IP_2;
+            Nandle T_I_2(pow_2(T(1))), T_IP_2;
             for (I = 1; I <= NL - 1; ++I) { // Scan the cavities
                 T_IP_2 = pow_2(T(I + 1));
                 HHAT(I) = HC[I] * (1.0 / StefanBoltzmann) / ((T_I_2 + T_IP_2) * (T(I) + T(I + 1)));
@@ -6407,17 +6407,17 @@ namespace WindowEquivalentLayer {
         return ASHWAT_ThermalRatings;
     }
 
-    void DL_RES_r2(Real64 const Tg,    // mean glass layer temperature, {K}
-                   Real64 const Td,    // mean diathermanous layer temperature, {K}
-                   Real64 const Tm,    // mean radiant room temperature, {K}
-                   Real64 const rhog,  // reflectance of glass layer, {-}
-                   Real64 const rhodf, // front reflectance of diathermanous layer, {-}
-                   Real64 const rhodb, // back reflectance of diathermanous layer, {-}
-                   Real64 const taud,  // transmittance of diathermanous layer, {-}
-                   Real64 const rhom,  // reflectance of the room, {-}
-                   Real64 &hr_gm,      // heat transfer coefficient between left and right surface {W/m2K}
-                   Real64 &hr_gd,      // heat transfer coefficient between left and middle surface {W/m2K}
-                   Real64 &hr_md       // heat transfer coefficient between right and middle surface {W/m2K}
+    void DL_RES_r2(Nandle const Tg,    // mean glass layer temperature, {K}
+                   Nandle const Td,    // mean diathermanous layer temperature, {K}
+                   Nandle const Tm,    // mean radiant room temperature, {K}
+                   Nandle const rhog,  // reflectance of glass layer, {-}
+                   Nandle const rhodf, // front reflectance of diathermanous layer, {-}
+                   Nandle const rhodb, // back reflectance of diathermanous layer, {-}
+                   Nandle const taud,  // transmittance of diathermanous layer, {-}
+                   Nandle const rhom,  // reflectance of the room, {-}
+                   Nandle &hr_gm,      // heat transfer coefficient between left and right surface {W/m2K}
+                   Nandle &hr_gd,      // heat transfer coefficient between left and middle surface {W/m2K}
+                   Nandle &hr_md       // heat transfer coefficient between right and middle surface {W/m2K}
     )
     {
         // SUBROUTINE INFORMATION:
@@ -6459,18 +6459,18 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Epsg;
-        Real64 Epsdf;
-        Real64 Epsdb;
-        Real64 Epsm;
-        Array2D<Real64> A(22, 20);
-        Array1D<Real64> X(20);
+        Nandle Epsg;
+        Nandle Epsdf;
+        Nandle Epsdb;
+        Nandle Epsm;
+        Array2D<Nandle> A(22, 20);
+        Array1D<Nandle> X(20);
         // real FSg_g, FSdf_g, FSdb_g, FSm_g
-        Real64 FSg_df;
-        Real64 FSm_df;
-        Real64 FSg_db;
-        Real64 FSm_db;
-        Real64 FSg_m;
+        Nandle FSg_df;
+        Nandle FSm_df;
+        Nandle FSg_db;
+        Nandle FSm_db;
+        Nandle FSg_m;
 
         //  Calculate 4 emissivities/absorptivities
 
@@ -6531,9 +6531,9 @@ namespace WindowEquivalentLayer {
         //         then q_xy will also be zero
         //  Note:  This code has no problem with temperatures being equal
 
-        Real64 const Td_2(pow_2(Td));
-        Real64 const Tg_2(pow_2(Tg));
-        Real64 const Tm_2(pow_2(Tm));
+        Nandle const Td_2(pow_2(Td));
+        Nandle const Tg_2(pow_2(Tg));
+        Nandle const Tm_2(pow_2(Tm));
         hr_gm = Epsg * Epsm * FSg_m * StefanBoltzmann * (Tg + Tm) * (Tg_2 + Tm_2);
         hr_gd =
             Epsg * Epsdf * FSg_df * StefanBoltzmann * (Td + Tg) * (Td_2 + Tg_2) + Epsg * Epsdb * FSg_db * StefanBoltzmann * (Td + Tg) * (Td_2 + Tg_2);
@@ -6541,7 +6541,7 @@ namespace WindowEquivalentLayer {
             Epsm * Epsdf * FSm_df * StefanBoltzmann * (Td + Tm) * (Td_2 + Tm_2) + Epsm * Epsdb * FSm_db * StefanBoltzmann * (Td + Tm) * (Td_2 + Tm_2);
     }
 
-    void SETUP4x4_A(Real64 const rhog, Real64 const rhodf, Real64 const rhodb, Real64 const taud, Real64 const rhom, Array2A<Real64> A)
+    void SETUP4x4_A(Nandle const rhog, Nandle const rhodf, Nandle const rhodb, Nandle const taud, Nandle const rhom, Array2A<Nandle> A)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         John L. Wright, University of Waterloo,
@@ -6593,19 +6593,19 @@ namespace WindowEquivalentLayer {
         A(4, 4) = 1.0;
     }
 
-    Real64 FRA(Real64 const TM, // mean gas temp, K
-               Real64 const T,  // gas layer thickness, m
-               Real64 const DT, // temp difference across layer, K
-               Real64 const AK, // gas conductance coeffs, K = AK + BK*TM + CK*TM*TM
-               Real64 const BK,
-               Real64 const CK,
-               Real64 const ACP, // gas specific heat coeffs, CP = ACP + BCP*TM + CCP*TM*TM
-               Real64 const BCP,
-               Real64 const EP_UNUSED(CCP),
-               Real64 const AVISC, // gas viscosity coeffs, VISC = AVISC + BVISC*TM + CVISC*TM*TM
-               Real64 const BVISC,
-               Real64 const EP_UNUSED(CVISC),
-               Real64 const RHOGAS // gas density, kg/m3
+    Nandle FRA(Nandle const TM, // mean gas temp, K
+               Nandle const T,  // gas layer thickness, m
+               Nandle const DT, // temp difference across layer, K
+               Nandle const AK, // gas conductance coeffs, K = AK + BK*TM + CK*TM*TM
+               Nandle const BK,
+               Nandle const CK,
+               Nandle const ACP, // gas specific heat coeffs, CP = ACP + BCP*TM + CCP*TM*TM
+               Nandle const BCP,
+               Nandle const EP_UNUSED(CCP),
+               Nandle const AVISC, // gas viscosity coeffs, VISC = AVISC + BVISC*TM + CVISC*TM*TM
+               Nandle const BVISC,
+               Nandle const EP_UNUSED(CVISC),
+               Nandle const RHOGAS // gas density, kg/m3
     )
     {
         //       AUTHOR         (John Wright, University of WaterLoo, ASHRAE 1311-RP)
@@ -6626,7 +6626,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 FRA;
+        Nandle FRA;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -6642,10 +6642,10 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 Z;
-        Real64 K;
-        Real64 CP;
-        Real64 VISC;
+        Nandle Z;
+        Nandle K;
+        Nandle CP;
+        Nandle VISC;
         // flow
 
         Z = 1.0;
@@ -6658,7 +6658,7 @@ namespace WindowEquivalentLayer {
         return FRA;
     }
 
-    Real64 FNU(Real64 const RA) // Rayleigh number
+    Nandle FNU(Nandle const RA) // Rayleigh number
     {
         //       AUTHOR         (John Wright, University of WaterLoo, ASHRAE 1311-RP)
         //       DATE WRITTEN
@@ -6677,7 +6677,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 FNU;
+        Nandle FNU;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -6693,7 +6693,7 @@ namespace WindowEquivalentLayer {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
-        Real64 const ARA(std::abs(RA));
+        Nandle const ARA(std::abs(RA));
         if (ARA <= 10000.0) {
             FNU = 1.0 + 1.75967e-10 * std::pow(ARA, 2.2984755);
         } else if (ARA <= 50000.0) {
@@ -6704,9 +6704,9 @@ namespace WindowEquivalentLayer {
         return FNU;
     }
 
-    Real64 HConvGap(CFSGAP const &G, // gap
-                    Real64 const T1, // bounding surface temps (K)
-                    Real64 const T2)
+    Nandle HConvGap(CFSGAP const &G, // gap
+                    Nandle const T1, // bounding surface temps (K)
+                    Nandle const T2)
     {
         //       AUTHOR         (University of WaterLoo, ASHRAE 1311-RP)
         //       DATE WRITTEN   unknown
@@ -6723,7 +6723,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 HConvGap;
+        Nandle HConvGap;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -6738,12 +6738,12 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 TM;   // Mean temperature, K
-        Real64 DT;   // temperature difference, (K)
-        Real64 RA;   // Rayleigh Number, (-)
-        Real64 NU;   // Nusselt Number, (-)
-        Real64 KGAS; // Gas conductivity at film temp, (W/m.K)
-        Real64 T;    // effective gap spacing, m
+        Nandle TM;   // Mean temperature, K
+        Nandle DT;   // temperature difference, (K)
+        Nandle RA;   // Rayleigh Number, (-)
+        Nandle NU;   // Nusselt Number, (-)
+        Nandle KGAS; // Gas conductivity at film temp, (W/m.K)
+        Nandle T;    // effective gap spacing, m
         // Flow
 
         T = G.TAS_EFF;
@@ -6757,10 +6757,10 @@ namespace WindowEquivalentLayer {
         return HConvGap;
     }
 
-    Real64 HRadPar(Real64 const T1, // bounding surface temps [K]
-                   Real64 const T2,
-                   Real64 const E1, // bounding surface emissivities
-                   Real64 const E2)
+    Nandle HRadPar(Nandle const T1, // bounding surface temps [K]
+                   Nandle const T2,
+                   Nandle const E1, // bounding surface emissivities
+                   Nandle const E2)
     {
         //       AUTHOR         ASHRAE 1311-RP
         //       DATE WRITTEN   unknown
@@ -6780,7 +6780,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 HRadPar;
+        Nandle HRadPar;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -6795,7 +6795,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 DV; // dummy variable
+        Nandle DV; // dummy variable
         // Flow
 
         HRadPar = 0.0;
@@ -6806,9 +6806,9 @@ namespace WindowEquivalentLayer {
         return HRadPar;
     }
 
-    Real64 HIC_ASHRAE(Real64 const L,  // glazing height, m
-                      Real64 const TG, // glazing inside surf temp, C or K
-                      Real64 const TI  // inside air temp, C or K
+    Nandle HIC_ASHRAE(Nandle const L,  // glazing height, m
+                      Nandle const TG, // glazing inside surf temp, C or K
+                      Nandle const TI  // inside air temp, C or K
     )
     {
         //       AUTHOR         ASHRAE 1311-RP
@@ -6825,7 +6825,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 HIC_ASHRAE;
+        Nandle HIC_ASHRAE;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -6847,10 +6847,10 @@ namespace WindowEquivalentLayer {
         return HIC_ASHRAE;
     }
 
-    void SLtoGL(Real64 const breal, // distance from shade to glass (m)
-                Real64 const Ts,    // shade temperature (K)
-                Real64 const Tg,    // glass temperature (K)
-                Real64 &hsg,        // the heat transfer coefficient, shade-to-glass, {W/m2K}
+    void SLtoGL(Nandle const breal, // distance from shade to glass (m)
+                Nandle const Ts,    // shade temperature (K)
+                Nandle const Tg,    // glass temperature (K)
+                Nandle &hsg,        // the heat transfer coefficient, shade-to-glass, {W/m2K}
                 int const scheme)
     {
         // SUBROUTINE INFORMATION:
@@ -6882,15 +6882,15 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 b;
-        Real64 Tavg;
-        Real64 rho;
-        Real64 beta;
-        Real64 dvisc;
-        Real64 Cp;
-        Real64 k;
-        Real64 Rabsg;
-        Real64 Nubsg;
+        Nandle b;
+        Nandle Tavg;
+        Nandle rho;
+        Nandle beta;
+        Nandle dvisc;
+        Nandle Cp;
+        Nandle k;
+        Nandle Rabsg;
+        Nandle Nubsg;
         // Flow
 
         hsg = 0.0; //  default - large spacing, b
@@ -6929,11 +6929,11 @@ namespace WindowEquivalentLayer {
         } //  end of scheme .eq. 2
     }
 
-    Real64 SLtoAMB(Real64 const b,     // distance from shade to glass (m) where air flow takes place
-                   Real64 const L,     // window height, m (usually taken as 1 m)
-                   Real64 const Ts,    // shade temperature, K
-                   Real64 const Tamb,  // room air temperature, K
-                   Real64 const hc_in, // indoor (room) convective transfer coeff, W/m2K)
+    Nandle SLtoAMB(Nandle const b,     // distance from shade to glass (m) where air flow takes place
+                   Nandle const L,     // window height, m (usually taken as 1 m)
+                   Nandle const Ts,    // shade temperature, K
+                   Nandle const Tamb,  // room air temperature, K
+                   Nandle const hc_in, // indoor (room) convective transfer coeff, W/m2K)
                    int const scheme    // flag to select model, scheme=2 has problems
     )
     {
@@ -6956,7 +6956,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 SLtoAMB;
+        Nandle SLtoAMB;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -6972,14 +6972,14 @@ namespace WindowEquivalentLayer {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         // a
-        Real64 Tavg;
-        Real64 rho;
-        Real64 beta;
-        Real64 dvisc;
-        Real64 Cp;
-        Real64 k;
-        Real64 Rabsa;
-        Real64 hfp;
+        Nandle Tavg;
+        Nandle rho;
+        Nandle beta;
+        Nandle dvisc;
+        Nandle Cp;
+        Nandle k;
+        Nandle Rabsa;
+        Nandle hfp;
         // Flow
 
         SLtoAMB = 2.0 * hc_in; //    DEFAULT - convection from both sides
@@ -7056,12 +7056,12 @@ namespace WindowEquivalentLayer {
         return SLtoAMB;
     }
 
-    void GLtoAMB(Real64 const b,     // distance from shade to glass {m}
-                 Real64 const L,     // window height {m}, usually taken as 1 meter
-                 Real64 const Tg,    // glass temperature {K}
-                 Real64 const Tamb,  // room air temperature, {K}
-                 Real64 const hc_in, // inside convection coefficient, {W/m2K}
-                 Real64 &hgamb,      // glass to room air heat transfer coefficient
+    void GLtoAMB(Nandle const b,     // distance from shade to glass {m}
+                 Nandle const L,     // window height {m}, usually taken as 1 meter
+                 Nandle const Tg,    // glass temperature {K}
+                 Nandle const Tamb,  // room air temperature, {K}
+                 Nandle const hc_in, // inside convection coefficient, {W/m2K}
+                 Nandle &hgamb,      // glass to room air heat transfer coefficient
                  int const scheme)
     {
         // SUBROUTINE INFORMATION:
@@ -7095,14 +7095,14 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Tavg;
-        Real64 rho;
-        Real64 beta;
-        Real64 dvisc;
-        Real64 Cp;
-        Real64 k;
-        Real64 Rabga;
-        Real64 hfp;
+        Nandle Tavg;
+        Nandle rho;
+        Nandle beta;
+        Nandle dvisc;
+        Nandle Cp;
+        Nandle k;
+        Nandle Rabga;
+        Nandle hfp;
         // Flow
 
         hgamb = hc_in; // default - good for large glass/shade spacing
@@ -7176,7 +7176,7 @@ namespace WindowEquivalentLayer {
         } //  end of scheme .eq. 3
     }
 
-    Real64 ConvectionFactor(CFSLAYER const &L) // window layer
+    Nandle ConvectionFactor(CFSLAYER const &L) // window layer
     {
         //       AUTHOR         ASHRAE 1311-RP
         //       DATE WRITTEN   unknown
@@ -7192,7 +7192,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 ConvectionFactor;
+        Nandle ConvectionFactor;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -7206,7 +7206,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 SlatADeg;
+        Nandle SlatADeg;
         // Flow
 
         if (L.LTYPE == ltyVBHOR) {
@@ -7220,11 +7220,11 @@ namespace WindowEquivalentLayer {
     }
 
     bool CFSUFactor(CFSTY const &FS,    // fenestration system
-                    Real64 const TOUT,  // outdoor temperature, C (air and MRT)
-                    Real64 const HCOUT, // outdoor convective coefficient, W/m2-K
-                    Real64 const TIN,   // indoor air temperature, C
-                    Real64 const HCIN,  // indoor convective coefficient, W/m2-K
-                    Real64 &U           // returned: U factor, W/m2-K
+                    Nandle const TOUT,  // outdoor temperature, C (air and MRT)
+                    Nandle const HCOUT, // outdoor convective coefficient, W/m2-K
+                    Nandle const TIN,   // indoor air temperature, C
+                    Nandle const HCIN,  // indoor convective coefficient, W/m2-K
+                    Nandle &U           // returned: U factor, W/m2-K
     )
     {
         // FUNCTION INFORMATION:
@@ -7253,7 +7253,7 @@ namespace WindowEquivalentLayer {
         // FUNCTION ARGUMENT DEFINITIONS:
         // for conditions specified (no incident solar)
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const TOL(0.01); // 0.0001d0
+        Nandle const TOL(0.01); // 0.0001d0
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -7263,20 +7263,20 @@ namespace WindowEquivalentLayer {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int NL;
-        Real64 TOABS;
-        Real64 TRMOUT;
-        Real64 TIABS;
-        Real64 TRMIN;
-        Array1D<Real64> QOCF(FS.NL);
-        Real64 QOCFRoom;
-        Array1D<Real64> JB({0, FS.NL});
-        Array1D<Real64> JF({1, FS.NL + 1});
-        Array1D<Real64> T(FS.NL);
-        Array1D<Real64> Q({0, FS.NL});
-        Array1D<Real64> H({0, FS.NL + 1});
-        Array1D<Real64> SOURCE(FS.NL + 1);
-        Real64 ISOL;
-        Real64 SHGC;
+        Nandle TOABS;
+        Nandle TRMOUT;
+        Nandle TIABS;
+        Nandle TRMIN;
+        Array1D<Nandle> QOCF(FS.NL);
+        Nandle QOCFRoom;
+        Array1D<Nandle> JB({0, FS.NL});
+        Array1D<Nandle> JF({1, FS.NL + 1});
+        Array1D<Nandle> T(FS.NL);
+        Array1D<Nandle> Q({0, FS.NL});
+        Array1D<Nandle> H({0, FS.NL + 1});
+        Array1D<Nandle> SOURCE(FS.NL + 1);
+        Nandle ISOL;
+        Nandle SHGC;
         // Flow
 
         CFSUFactor = false;
@@ -7303,11 +7303,11 @@ namespace WindowEquivalentLayer {
     void ASHWAT_Solar(int const NL,                      // # of layers
                       Array1S<CFSSWP> const LSWP_ON,     // layer SW (solar) properties (off-normal adjusted)
                       CFSSWP const &SWP_ROOM,            // effective SW (solar) properties of room
-                      Real64 const IBEAM,                // incident beam insolation (W/m2 aperture)
-                      Real64 const IDIFF,                // incident diffuse insolation (W/m2 aperture)
-                      Real64 const ILIGHTS,              // incident diffuse insolation (W/m2 aperture)
-                      Array1S<Real64> SOURCE,            // returned: layer-by-layer flux of absorbed
-                      Optional<Array1S<Real64>> SourceBD // returned: layer-by-layer flux of absorbed
+                      Nandle const IBEAM,                // incident beam insolation (W/m2 aperture)
+                      Nandle const IDIFF,                // incident diffuse insolation (W/m2 aperture)
+                      Nandle const ILIGHTS,              // incident diffuse insolation (W/m2 aperture)
+                      Array1S<Nandle> SOURCE,            // returned: layer-by-layer flux of absorbed
+                      Optional<Array1S<Nandle>> SourceBD // returned: layer-by-layer flux of absorbed
     )
     {
         // SUBROUTINE INFORMATION:
@@ -7352,23 +7352,23 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS
-        Array1D<Real64> BPLUS({0, NL}); // beam solar fluxes flowing in outward and inward directions
-        Array1D<Real64> BMINUS({0, NL});
+        Array1D<Nandle> BPLUS({0, NL}); // beam solar fluxes flowing in outward and inward directions
+        Array1D<Nandle> BMINUS({0, NL});
         //   correspond to Edwards QPLUS and QMINUS (except note
         //   reverse layer numbering)
-        Array1D<Real64> CPLUS({0, NL}); // diffuse solar fluxes caused by BPLUS and BMINUS;
-        Array1D<Real64> CMINUS({0, NL});
+        Array1D<Nandle> CPLUS({0, NL}); // diffuse solar fluxes caused by BPLUS and BMINUS;
+        Array1D<Nandle> CMINUS({0, NL});
         //   appear as sources in diffuse calculation
-        Array1D<Real64> DPLUS({0, NL}); // diffuse solar fluxes flowing in outward and inward
-        Array1D<Real64> DMINUS({0, NL});
+        Array1D<Nandle> DPLUS({0, NL}); // diffuse solar fluxes flowing in outward and inward
+        Array1D<Nandle> DMINUS({0, NL});
         //   directions (W/m2)
-        Array1D<Real64> AP(2 * NL);
-        Array1D<Real64> AE(2 * NL);
-        Array1D<Real64> AW(2 * NL);
-        Array1D<Real64> BP(2 * NL);
-        Array1D<Real64> X(2 * NL);
-        Real64 CHKSUM;
-        Array1D<Real64> BeamDiffuseAbs(NL + 1); // beam-diffuse absorbed fraction of beam radiation (W/m2)
+        Array1D<Nandle> AP(2 * NL);
+        Array1D<Nandle> AE(2 * NL);
+        Array1D<Nandle> AW(2 * NL);
+        Array1D<Nandle> BP(2 * NL);
+        Array1D<Nandle> X(2 * NL);
+        Nandle CHKSUM;
+        Array1D<Nandle> BeamDiffuseAbs(NL + 1); // beam-diffuse absorbed fraction of beam radiation (W/m2)
         int N_TDMA;
         int I;
         int LINE;
@@ -7470,10 +7470,10 @@ namespace WindowEquivalentLayer {
 
     void NETRAD(int const NL,                  // # of layers, 1=outside .. NL=inside
                 Array1S<CFSSWP> const LSWP_ON, // layer SW (solar) properties (off-normal adjusted)
-                Real64 const RHO_room,         // effective solar reflectance of room (at inside)
-                Real64 const ISOL,             // incident flux (W/m2)
-                Array1D<Real64> &QPLUS,        // returned: see Edwards paper
-                Array1D<Real64> &QMINUS        // returned: see Edwards paper
+                Nandle const RHO_room,         // effective solar reflectance of room (at inside)
+                Nandle const ISOL,             // incident flux (W/m2)
+                Array1D<Nandle> &QPLUS,        // returned: see Edwards paper
+                Array1D<Nandle> &QMINUS        // returned: see Edwards paper
     )
     {
         // SUBROUTINE INFORMATION:
@@ -7511,8 +7511,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Array1D<Real64> TED(NL + 1);
-        Array1D<Real64> RED(NL + 1);
+        Array1D<Nandle> TED(NL + 1);
+        Array1D<Nandle> RED(NL + 1);
 
         //   Reflectance and Transmittance
 
@@ -7534,7 +7534,7 @@ namespace WindowEquivalentLayer {
     }
 
     void
-    TDMA_R(Array1D<Real64> &X, const Array1D<Real64> &AP, const Array1D<Real64> &AE, const Array1D<Real64> &AW, const Array1D<Real64> &BP, int const N)
+    TDMA_R(Array1D<Nandle> &X, const Array1D<Nandle> &AP, const Array1D<Nandle> &AE, const Array1D<Nandle> &AW, const Array1D<Nandle> &BP, int const N)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         JOHN L. WRIGHT
@@ -7566,8 +7566,8 @@ namespace WindowEquivalentLayer {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int J;
-        Array1D<Real64> ALPHA(N);
-        Array1D<Real64> BETA(N);
+        Array1D<Nandle> ALPHA(N);
+        Array1D<Nandle> BETA(N);
         // Flow
 
         ALPHA(N) = AW(N) / AP(N);
@@ -7584,7 +7584,7 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    void TDMA(Array1D<Real64> &X, const Array1D<Real64> &AP, const Array1D<Real64> &AE, const Array1D<Real64> &AW, const Array1D<Real64> &BP, int const N)
+    void TDMA(Array1D<Nandle> &X, const Array1D<Nandle> &AP, const Array1D<Nandle> &AE, const Array1D<Nandle> &AW, const Array1D<Nandle> &BP, int const N)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         JOHN L. WRIGHT
@@ -7616,9 +7616,9 @@ namespace WindowEquivalentLayer {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int J;
-        Array1D<Real64> ALPHA(N);
-        Array1D<Real64> BETA(N);
-        Real64 D;
+        Array1D<Nandle> ALPHA(N);
+        Array1D<Nandle> BETA(N);
+        Nandle D;
         // Flow
 
         ALPHA(1) = AE(1) / AP(1);
@@ -7641,7 +7641,7 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    void AUTOTDMA(Array1D<Real64> &X, Array1D<Real64> &AP, const Array1D<Real64> &AE, const Array1D<Real64> &AW, const Array1D<Real64> &BP, int &N)
+    void AUTOTDMA(Array1D<Nandle> &X, Array1D<Nandle> &AP, const Array1D<Nandle> &AE, const Array1D<Nandle> &AW, const Array1D<Nandle> &BP, int &N)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         JOHN L. WRIGHT
@@ -7695,9 +7695,9 @@ namespace WindowEquivalentLayer {
     }
 
     void ASHWAT_OffNormalProperties(CFSLAYER const &L,    // layer for which to derive off-normal properties
-                                    Real64 const THETA,   // solar beam angle of incidence, from normal, radians
-                                    Real64 const OMEGA_V, // solar beam vertical profile angle, +=above horizontal, radians
-                                    Real64 const OMEGA_H, // solar beam horizontal profile angle, +=clockwise when viewed
+                                    Nandle const THETA,   // solar beam angle of incidence, from normal, radians
+                                    Nandle const OMEGA_V, // solar beam vertical profile angle, +=above horizontal, radians
+                                    Nandle const OMEGA_H, // solar beam horizontal profile angle, +=clockwise when viewed
                                     CFSSWP &LSWP_ON       // returned: off-normal properties
     )
     {
@@ -7765,9 +7765,9 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    bool Specular_OffNormal(Real64 const THETA, // solar beam angle of incidence, from normal radians
-                            Real64 &RAT_1MR,    // returned: ratio of off-normal to normal solar (1-reflectance)
-                            Real64 &RAT_TAU     // returned: ratio of off-normal to normal solar transmittance
+    bool Specular_OffNormal(Nandle const THETA, // solar beam angle of incidence, from normal radians
+                            Nandle &RAT_1MR,    // returned: ratio of off-normal to normal solar (1-reflectance)
+                            Nandle &RAT_TAU     // returned: ratio of off-normal to normal solar transmittance
     )
     {
         // FUNCTION INFORMATION:
@@ -7805,23 +7805,23 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 TAU0;
-        Real64 RHO0;
-        Real64 THETA1;
-        Real64 THETA2;
-        Real64 TAU_ON;
-        Real64 RHO_ON;
-        Real64 TAU_A;
-        Real64 RPERP; // interface reflectance with respect to perpendicular
-        Real64 RPARL;
+        Nandle TAU0;
+        Nandle RHO0;
+        Nandle THETA1;
+        Nandle THETA2;
+        Nandle TAU_ON;
+        Nandle RHO_ON;
+        Nandle TAU_A;
+        Nandle RPERP; // interface reflectance with respect to perpendicular
+        Nandle RPARL;
         // and parallel polarization components of solar radiation
-        Real64 TAUPERP;
-        Real64 TAUPARL;
-        Real64 RHOPERP;
-        Real64 RHOPARL;
-        Real64 N2; // reference refractive index for generating general off-normal
+        Nandle TAUPERP;
+        Nandle TAUPARL;
+        Nandle RHOPERP;
+        Nandle RHOPARL;
+        Nandle N2; // reference refractive index for generating general off-normal
         //  curves for specular glazings
-        Real64 KL; // extinction coefficient - thickness product, also used as a
+        Nandle KL; // extinction coefficient - thickness product, also used as a
         //  reference value to generate off-normal curves for specular layers
         // Flow
 
@@ -7860,7 +7860,7 @@ namespace WindowEquivalentLayer {
     }
 
     void Specular_SWP(CFSSWP &SWP,       // short wave properties (adjusted in place)
-                      Real64 const OMEGA // incident angle, radians
+                      Nandle const OMEGA // incident angle, radians
     )
     {
         // SUBROUTINE INFORMATION:
@@ -7891,8 +7891,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RAT_1MR; // adjustment factors, see Specular_OffNormal()
-        Real64 RAT_TAU; // adjustment factors, see Specular_OffNormal()
+        Nandle RAT_1MR; // adjustment factors, see Specular_OffNormal()
+        Nandle RAT_TAU; // adjustment factors, see Specular_OffNormal()
         static bool Specular_OffNormalReturn(true);
         // Flow
 
@@ -7904,8 +7904,8 @@ namespace WindowEquivalentLayer {
     }
 
     void Specular_Adjust(CFSSWP &SWP,          // short wave properties (adjusted in place)
-                         Real64 const RAT_1MR, // adjustment factors, see Specular_OffNormal()
-                         Real64 const RAT_TAU  // adjustment factors, see Specular_OffNormal()
+                         Nandle const RAT_1MR, // adjustment factors, see Specular_OffNormal()
+                         Nandle const RAT_TAU  // adjustment factors, see Specular_OffNormal()
     )
     {
         // SUBROUTINE INFORMATION:
@@ -7943,7 +7943,7 @@ namespace WindowEquivalentLayer {
         SWP.RHOSBBB = 1.0 - RAT_1MR * (1.0 - SWP.RHOSBBB);
     }
 
-    void Specular_RATDiff(Real64 &RAT_1MRDiff, Real64 &RAT_TAUDiff)
+    void Specular_RATDiff(Nandle &RAT_1MRDiff, Nandle &RAT_TAUDiff)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         JOHN L. WRIGHT, University of Waterloo, Mechanical Engineering
@@ -7973,9 +7973,9 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 X1MRDiff(-1.0);
-        static Real64 XTAUDiff(-1.0);
-        Array1D<Real64> P(hipDIM);
+        static Nandle X1MRDiff(-1.0);
+        static Nandle XTAUDiff(-1.0);
+        Array1D<Nandle> P(hipDIM);
         // Flow
 
         if (XTAUDiff < 0.0) {
@@ -7987,9 +7987,9 @@ namespace WindowEquivalentLayer {
         RAT_1MRDiff = X1MRDiff;
     }
 
-    Real64 Specular_F(Real64 const THETA,     // incidence angle, radians
+    Nandle Specular_F(Nandle const THETA,     // incidence angle, radians
                       int const OPT,          // options (unused)
-                      const Array1D<Real64> &EP_UNUSED(P) // parameters (none defined)
+                      const Array1D<Nandle> &EP_UNUSED(P) // parameters (none defined)
     )
     {
         // FUNCTION INFORMATION:
@@ -8009,7 +8009,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 Specular_F;
+        Nandle Specular_F;
 
         // Argument array dimensioning
         //EP_SIZE_CHECK(P, hipDIM);
@@ -8028,8 +8028,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 RAT_TAU;
-        Real64 RAT_1MR;
+        Nandle RAT_TAU;
+        Nandle RAT_1MR;
         static bool Specular_OffNormalReturn(true);
         // Flow
 
@@ -8076,8 +8076,8 @@ namespace WindowEquivalentLayer {
         // DERIVED TYPE DEFINITIONS
         // na
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RAT_TAU;
-        Real64 RAT_1MR;
+        Nandle RAT_TAU;
+        Nandle RAT_1MR;
         // Flow
 
         //#if 1
@@ -8126,8 +8126,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 TAULX;
-        Real64 OPENNESS;
+        Nandle TAULX;
+        Nandle OPENNESS;
 
         RB_LWP = false;
         if (L.LTYPE != ltyROLLB) return RB_LWP;
@@ -8144,7 +8144,7 @@ namespace WindowEquivalentLayer {
 
     bool RB_SWP(CFSLAYER const &L,           // RB layer
                 CFSSWP &LSWP,                // returned: equivalent layer properties set
-                Optional<Real64 const> THETA // incident angle, 0 <= theta <= PI/2
+                Optional<Nandle const> THETA // incident angle, 0 <= theta <= PI/2
     )
     {
         // FUNCTION INFORMATION:
@@ -8181,11 +8181,11 @@ namespace WindowEquivalentLayer {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         bool DODIFFUSE;
-        Real64 RHOBF_BT0;
-        Real64 RHOFF_BT0;
-        Real64 TAUBF_BT0;
-        Real64 TAUFF_BT0;
-        Real64 TAUX;
+        Nandle RHOBF_BT0;
+        Nandle RHOFF_BT0;
+        Nandle TAUBF_BT0;
+        Nandle TAUFF_BT0;
+        Nandle TAUX;
         // Flow
 
         RB_SWP = false;
@@ -8249,8 +8249,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OPENNESS;
-        Real64 TAULX;
+        Nandle OPENNESS;
+        Nandle TAULX;
         // Flow
 
         IS_LWP = false;
@@ -8267,7 +8267,7 @@ namespace WindowEquivalentLayer {
 
     bool IS_SWP(CFSLAYER const &L,           // PD layer
                 CFSSWP &LSWP,                // returned: equivalent layer properties set
-                Optional<Real64 const> THETA // incident angle, 0 <= theta <= PI/2
+                Optional<Nandle const> THETA // incident angle, 0 <= theta <= PI/2
     )
     {
         // FUNCTION INFORMATION:
@@ -8304,11 +8304,11 @@ namespace WindowEquivalentLayer {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         bool DODIFFUSE;
-        Real64 RHOBF_BT0;
-        Real64 RHOFF_BT0;
-        Real64 TAUBF_BT0;
-        Real64 TAUFF_BT0;
-        Real64 TAUX;
+        Nandle RHOBF_BT0;
+        Nandle RHOFF_BT0;
+        Nandle TAUBF_BT0;
+        Nandle TAUFF_BT0;
+        Nandle TAUX;
         // Flow
 
         IS_SWP = false;
@@ -8370,11 +8370,11 @@ namespace WindowEquivalentLayer {
         // DERIVED TYPE DEFINITIONS
         // na
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RHOBF_BT0; // total back reflectance
-        Real64 RHOFF_BT0; // total front reflectance
-        Real64 TAUBF_BT0; // total back transmittance
-        Real64 TAUFF_BT0; // total front transmittance
-        Real64 TAUX;
+        Nandle RHOBF_BT0; // total back reflectance
+        Nandle RHOFF_BT0; // total front reflectance
+        Nandle TAUBF_BT0; // total back transmittance
+        Nandle TAUFF_BT0; // total front transmittance
+        Nandle TAUX;
         // flow
 
         RHOFF_BT0 = SWP.RHOSFBB + SWP.RHOSFBD; // front rho
@@ -8419,8 +8419,8 @@ namespace WindowEquivalentLayer {
         // DERIVED TYPE DEFINITIONS
         // na
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 TAULX;
-        Real64 OPENNESS_FABRIC;
+        Nandle TAULX;
+        Nandle OPENNESS_FABRIC;
         // Flow
 
         PD_LWP = false;
@@ -8438,8 +8438,8 @@ namespace WindowEquivalentLayer {
 
     bool PD_SWP(CFSLAYER const &L,                // PD layer
                 CFSSWP &LSWP,                     // returned: equivalent layer properties set
-                Optional<Real64 const> OHM_V_RAD, // vertical VB profile angles, radians
-                Optional<Real64 const> OHM_H_RAD  // horizonatl VB profile angles, radians
+                Optional<Nandle const> OHM_V_RAD, // vertical VB profile angles, radians
+                Optional<Nandle const> OHM_H_RAD  // horizonatl VB profile angles, radians
     )
     {
         // FUNCTION INFORMATION:
@@ -8473,9 +8473,9 @@ namespace WindowEquivalentLayer {
         // na
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         bool DODIFFUSE;
-        Real64 RHOBF_BT0;
-        Real64 RHOFF_BT0;
-        Real64 TAUX;
+        Nandle RHOBF_BT0;
+        Nandle RHOFF_BT0;
+        Nandle TAUX;
         // Flow
 
         PD_SWP = false;
@@ -8568,11 +8568,11 @@ namespace WindowEquivalentLayer {
         // DERIVED TYPE DEFINITIONS
         // na
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 RHODFS_SLAT;
-        Real64 RHOUFS_SLAT;
-        Real64 RHOLF;
-        Real64 RHOLB;
-        Real64 TAULX;
+        Nandle RHODFS_SLAT;
+        Nandle RHOUFS_SLAT;
+        Nandle RHOLF;
+        Nandle RHOLB;
+        Nandle TAULX;
         // Flow
 
         VB_LWP = false;
@@ -8595,7 +8595,7 @@ namespace WindowEquivalentLayer {
 
     bool VB_SWP(CFSLAYER const &L,           // VB layer
                 CFSSWP &LSWP,                // returned: equivalent off-normal properties
-                Optional<Real64 const> OMEGA // incident profile angle (radians)
+                Optional<Nandle const> OMEGA // incident profile angle (radians)
     )
     {
         // FUNCTION INFORMATION:
@@ -8629,8 +8629,8 @@ namespace WindowEquivalentLayer {
         // DERIVED TYPE DEFINITIONS
         // na
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 SL_WR;
-        Real64 TAUX;
+        Nandle SL_WR;
+        Nandle TAUX;
         bool DODIFFUSE;
         // Flow
 
@@ -8677,7 +8677,7 @@ namespace WindowEquivalentLayer {
     }
 
     bool VB_ShadeControl(CFSLAYER &L,           // VB layer
-                         Real64 const OMEGA_DEG // incident profile angle (degrees)
+                         Nandle const OMEGA_DEG // incident profile angle (degrees)
     )
     {
         // FUNCTION INFORMATION:
@@ -8712,7 +8712,7 @@ namespace WindowEquivalentLayer {
         // DERIVED TYPE DEFINITIONS
         // na
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 SLATA;
+        Nandle SLATA;
         // Flow
 
         SLATA = L.PHI_DEG;
@@ -8740,7 +8740,7 @@ namespace WindowEquivalentLayer {
         return VB_ShadeControl;
     }
 
-    Real64 VB_CriticalSlatAngle(Real64 const OMEGA_DEG // incident profile angle (degrees)
+    Nandle VB_CriticalSlatAngle(Nandle const OMEGA_DEG // incident profile angle (degrees)
     )
     {
         // FUNCTION INFORMATION:
@@ -8760,7 +8760,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 VB_CriticalSlatAngle;
+        Nandle VB_CriticalSlatAngle;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -8774,7 +8774,7 @@ namespace WindowEquivalentLayer {
         // na
 
         //// FUNCTION LOCAL VARIABLE DECLARATIONS:
-        // Real64 RAT;
+        // Nandle RAT;
         //// Flow
 
         // TODO handle vert blind cases etc
@@ -8785,9 +8785,9 @@ namespace WindowEquivalentLayer {
     }
 
     bool DoShadeControl(CFSLAYER &L,          // layer (returned updated)
-                        Real64 const THETA,   // solar beam angle of incidence, from normal, (radians)
-                        Real64 const OMEGA_V, // solar beam vertical profile angle, +=above horizontal (radians)
-                        Real64 const OMEGA_H  // solar beam horizontal profile angle, +=clockwise when viewed
+                        Nandle const THETA,   // solar beam angle of incidence, from normal, (radians)
+                        Nandle const OMEGA_V, // solar beam vertical profile angle, +=above horizontal (radians)
+                        Nandle const OMEGA_H  // solar beam horizontal profile angle, +=clockwise when viewed
     )
     {
         // FUNCTION INFORMATION:
@@ -8827,7 +8827,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OMEGA_DEG; // controlling profile angel, degrees
+        Nandle OMEGA_DEG; // controlling profile angel, degrees
         // Flow
 
         DoShadeControl = false; // default: no shade controls implemented
@@ -9089,9 +9089,9 @@ namespace WindowEquivalentLayer {
 
     void BuildGap(CFSGAP &G,                    // returned
                   int const GType,              // gap type (gtyOPENin, gtyOPENout or gtySEALED)
-                  Real64 &TAS,                  // gap thickness, m
-                  Optional<Real64 const> xTMan, // re density calc -- temp (C) and pressure (Pa)
-                  Optional<Real64 const> xPMan  // re density calc -- temp (C) and pressure (Pa)
+                  Nandle &TAS,                  // gap thickness, m
+                  Optional<Nandle const> xTMan, // re density calc -- temp (C) and pressure (Pa)
+                  Optional<Nandle const> xPMan  // re density calc -- temp (C) and pressure (Pa)
     )
     {
 
@@ -9120,7 +9120,7 @@ namespace WindowEquivalentLayer {
         // at time of manufacture, default = 21 C / 1 ATM
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 GapThickMin(0.0001); // Minimum gap thickness allowed, m
+        static Nandle GapThickMin(0.0001); // Minimum gap thickness allowed, m
         static std::string const RoutineName("BuildGap: ");
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -9129,8 +9129,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 PMan;
-        Real64 TMan;
+        Nandle PMan;
+        Nandle TMan;
         // Flow
 
         if (TAS < GapThickMin) {
@@ -9187,7 +9187,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 VBTHICK;
+        Nandle VBTHICK;
         // Flow
 
         if (!IsVBLayer(L)) return; // insurance
@@ -9197,8 +9197,8 @@ namespace WindowEquivalentLayer {
     }
 
     float DensityCFSFillGas(CFSFILLGAS const &FG, // gas properties
-                            Real64 const P,       // pressure, Pa
-                            Real64 const T        // temperature, K
+                            Nandle const P,       // pressure, Pa
+                            Nandle const T        // temperature, K
     )
     {
         // FUNCTION INFORMATION:
@@ -9504,7 +9504,7 @@ namespace WindowEquivalentLayer {
         }
     }
 
-    Real64 EffectiveEPSLF(CFSTY const &FS) // Complex Fenestration
+    Nandle EffectiveEPSLF(CFSTY const &FS) // Complex Fenestration
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         <unknown>, ASHRAE 1311-RP
@@ -9523,7 +9523,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 EffectiveEPSLF;
+        Nandle EffectiveEPSLF;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -9536,8 +9536,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 E;  // Effective emissivity
-        Real64 TX; // correction factor
+        Nandle E;  // Effective emissivity
+        Nandle TX; // correction factor
         int iL;    // layers index
         // Flow
 
@@ -9556,7 +9556,7 @@ namespace WindowEquivalentLayer {
         return EffectiveEPSLF;
     }
 
-    Real64 EffectiveEPSLB(CFSTY const &FS) // Complex Fenestration
+    Nandle EffectiveEPSLB(CFSTY const &FS) // Complex Fenestration
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         <unknown>, ASHRAE 1311-RP
@@ -9575,7 +9575,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 EffectiveEPSLB;
+        Nandle EffectiveEPSLB;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -9588,8 +9588,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 E;  // Effective emissivity
-        Real64 TX; // correction factor
+        Nandle E;  // Effective emissivity
+        Nandle TX; // correction factor
         int iL;    // layers index
         // Flow
 
@@ -9608,10 +9608,10 @@ namespace WindowEquivalentLayer {
         return EffectiveEPSLB;
     }
 
-    bool FEQX(Real64 const a, // values to compare, fractional tolerance
-              Real64 const b,
-              Real64 const tolF,
-              Optional<Real64> tolAbs // absolute tolerance
+    bool FEQX(Nandle const a, // values to compare, fractional tolerance
+              Nandle const b,
+              Nandle const tolF,
+              Optional<Nandle> tolAbs // absolute tolerance
     )
     {
         // FUNCTION INFORMATION:
@@ -9644,8 +9644,8 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 d;
-        Real64 tolAbsX;
+        Nandle d;
+        Nandle tolAbsX;
         // Flow
 
         if (present(tolAbs)) {
@@ -9662,8 +9662,8 @@ namespace WindowEquivalentLayer {
         return FEQX;
     }
 
-    Real64 TRadC(Real64 const J,    // radiosity, W/m2
-                 Real64 const Emiss // surface emissivity
+    Nandle TRadC(Nandle const J,    // radiosity, W/m2
+                 Nandle const Emiss // surface emissivity
     )
     {
         // FUNCTION INFORMATION:
@@ -9702,7 +9702,7 @@ namespace WindowEquivalentLayer {
 
     void CalcEQLOpticalProperty(int const SurfNum,
                                 int const BeamDIffFlag, // identifier index of diffuse and beam SW radiation
-                                Array2A<Real64> CFSAbs  // absorbed beam solar radiation by layers fraction
+                                Array2A<Nandle> CFSAbs  // absorbed beam solar radiation by layers fraction
     )
     {
 
@@ -9744,10 +9744,10 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ProfAngVer; // Solar vertical profile angle (radians) for horizontal blind
-        Real64 ProfAngHor; // Solar horizontal profile angle (radians) for vertical blind
-        Real64 IncAng;     // incident angle degree
-        static Array2D<Real64> Abs1(2, CFSMAXNL + 1);
+        Nandle ProfAngVer; // Solar vertical profile angle (radians) for horizontal blind
+        Nandle ProfAngHor; // Solar horizontal profile angle (radians) for vertical blind
+        Nandle IncAng;     // incident angle degree
+        static Array2D<Nandle> Abs1(2, CFSMAXNL + 1);
         int Lay;       // window layer index
         int EQLNum;    // equivalent layer window construction index
         int ConstrNum; // construction index
@@ -9843,10 +9843,10 @@ namespace WindowEquivalentLayer {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 UValue;
+        Nandle UValue;
         int EQLNum;
-        Real64 SHGCSummer;
-        Real64 TransNormal;
+        Nandle SHGCSummer;
+        Nandle TransNormal;
         // flow
 
         UValue = 0.0;
@@ -9865,7 +9865,7 @@ namespace WindowEquivalentLayer {
         Construct(ConstrNum).SolTransNorm = TransNormal;
     }
 
-    Real64 EQLWindowInsideEffectiveEmiss(int const ConstrNum)
+    Nandle EQLWindowInsideEffectiveEmiss(int const ConstrNum)
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Bereket A Nigusse
@@ -9903,7 +9903,7 @@ namespace WindowEquivalentLayer {
         return EffectiveEPSLB(CFS(Construct(ConstrNum).EQLConsPtr));
     }
 
-    Real64 EQLWindowOutsideEffectiveEmiss(int const ConstrNum)
+    Nandle EQLWindowOutsideEffectiveEmiss(int const ConstrNum)
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Bereket A Nigusse
@@ -9923,7 +9923,7 @@ namespace WindowEquivalentLayer {
         // na
 
         // Return value
-        Real64 OutSideLWEmiss; // LW outside emissivity
+        Nandle OutSideLWEmiss; // LW outside emissivity
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -9946,9 +9946,9 @@ namespace WindowEquivalentLayer {
         return OutSideLWEmiss;
     }
 
-    Real64 HCInWindowStandardRatings(Real64 const Height,  // Window height, 1.0 m
-                                     Real64 const TSurfIn, // Inside surface temperature
-                                     Real64 const TAirIn   // Zone Air Temperature
+    Nandle HCInWindowStandardRatings(Nandle const Height,  // Window height, 1.0 m
+                                     Nandle const TSurfIn, // Inside surface temperature
+                                     Nandle const TAirIn   // Zone Air Temperature
     )
     {
         // FUNCTION INFORMATION:
@@ -9970,7 +9970,7 @@ namespace WindowEquivalentLayer {
         using Psychrometrics::PsyRhoAirFnPbTdbW;
 
         // Return value
-        Real64 hcin; // interior surface convection coefficient
+        Nandle hcin; // interior surface convection coefficient
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -9984,16 +9984,16 @@ namespace WindowEquivalentLayer {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 TmeanFilm;       // mean film temperature
-        Real64 TmeanFilmKelvin; // mean film temperature for property evaluation
-        Real64 rho;             // density of (apparently dry) air [kg/m3]
-        Real64 Cp;              // specific heat of air [J/kg-K]
-        Real64 lambda;          // thermal conductivity of air [W/m-K]
-        Real64 mu;              // dynamic viscosity of air [kg/m-s]
-        Real64 RaH;             // Rayleigh number for cavity height [ Non dim]
-        Real64 TiltDeg;         // glazing tilt in degrees
-        Real64 sineTilt;        // sine of glazing tilt
-        Real64 Nuint;           // Nusselt number for interior surface convection
+        Nandle TmeanFilm;       // mean film temperature
+        Nandle TmeanFilmKelvin; // mean film temperature for property evaluation
+        Nandle rho;             // density of (apparently dry) air [kg/m3]
+        Nandle Cp;              // specific heat of air [J/kg-K]
+        Nandle lambda;          // thermal conductivity of air [W/m-K]
+        Nandle mu;              // dynamic viscosity of air [kg/m-s]
+        Nandle RaH;             // Rayleigh number for cavity height [ Non dim]
+        Nandle TiltDeg;         // glazing tilt in degrees
+        Nandle sineTilt;        // sine of glazing tilt
+        Nandle Nuint;           // Nusselt number for interior surface convection
 
         TiltDeg = 90.0;
         sineTilt = std::sin(TiltDeg * DegToRadians); // degrees as arg

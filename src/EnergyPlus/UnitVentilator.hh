@@ -93,8 +93,8 @@ namespace UnitVentilator {
     // MODULE VARIABLE DECLARATIONS:
     extern bool HCoilOn;          // TRUE if the heating coil (gas or electric especially) should be running
     extern int NumOfUnitVents;    // Number of unit ventilators in the input file
-    extern Real64 OAMassFlowRate; // Outside air mass flow rate for the unit ventilator
-    extern Real64 QZnReq;         // heating or cooling needed by zone [watts]
+    extern Nandle OAMassFlowRate; // Outside air mass flow rate for the unit ventilator
+    extern Nandle QZnReq;         // heating or cooling needed by zone [watts]
     extern Array1D_bool MySizeFlag;
     extern bool GetUnitVentilatorInputFlag; // First time, input is "gotten"
     extern Array1D_bool CheckEquipName;
@@ -124,8 +124,8 @@ namespace UnitVentilator {
         int OpMode;           // mode of operation; 1=cycling fan, cycling coil, 2=continuous fan, cycling coil
         int ControlCompTypeNum;
         int CompErrIndex;
-        Real64 MaxAirVolFlow;       // m3/s
-        Real64 MaxAirMassFlow;      // kg/s
+        Nandle MaxAirVolFlow;       // m3/s
+        Nandle MaxAirMassFlow;      // kg/s
         int OAControlType;          // type of control; options are VARIABLE PERCENT and FIXED TEMPERATURE
         std::string MinOASchedName; // schedule of fraction for minimum outside air (all controls)
         int MinOASchedPtr;          // index to schedule
@@ -137,10 +137,10 @@ namespace UnitVentilator {
         int OutsideAirNode;       // outside air node number
         int AirReliefNode;        // relief air node number
         int OAMixerOutNode;       // outlet node after the outside air mixer (inlet to coils if present)
-        Real64 OutAirVolFlow;     // m3/s
-        Real64 OutAirMassFlow;    // kg/s
-        Real64 MinOutAirVolFlow;  // m3/s
-        Real64 MinOutAirMassFlow; // kg/s
+        Nandle OutAirVolFlow;     // m3/s
+        Nandle OutAirMassFlow;    // kg/s
+        Nandle MinOutAirVolFlow;  // m3/s
+        Nandle MinOutAirMassFlow; // kg/s
         int CoilOption;           // type of coil option; options are BOTH, HEATING, COOLING, AND NONE
         bool HCoilPresent;        // .TRUE. if unit ventilator has a heating coil
         int HCoilType;            // type of heating coil (water, gas, electric, etc.)
@@ -151,18 +151,18 @@ namespace UnitVentilator {
         int HCoil_FluidIndex;
         std::string HCoilSchedName; // availability schedule for the heating coil
         int HCoilSchedPtr;          // index to schedule
-        Real64 HCoilSchedValue;
-        Real64 MaxVolHotWaterFlow; // m3/s
-        Real64 MaxVolHotSteamFlow; // m3/s
-        Real64 MaxHotWaterFlow;    // kg/s
-        Real64 MaxHotSteamFlow;
-        Real64 MinHotSteamFlow;
-        Real64 MinVolHotWaterFlow; // m3/s
-        Real64 MinVolHotSteamFlow; // m3/s
-        Real64 MinHotWaterFlow;    // kg/s
+        Nandle HCoilSchedValue;
+        Nandle MaxVolHotWaterFlow; // m3/s
+        Nandle MaxVolHotSteamFlow; // m3/s
+        Nandle MaxHotWaterFlow;    // kg/s
+        Nandle MaxHotSteamFlow;
+        Nandle MinHotSteamFlow;
+        Nandle MinVolHotWaterFlow; // m3/s
+        Nandle MinVolHotSteamFlow; // m3/s
+        Nandle MinHotWaterFlow;    // kg/s
         int HotControlNode;        // hot water control node
         int HotCoilOutNodeNum;     // outlet of coil
-        Real64 HotControlOffset;   // control tolerance
+        Nandle HotControlOffset;   // control tolerance
         int HWLoopNum;             // index for plant loop with hot water coil
         int HWLoopSide;            // index for plant loop side for hot water coil
         int HWBranchNum;           // index for plant branch for hot water coil
@@ -179,31 +179,31 @@ namespace UnitVentilator {
         // 'CoilSystem:Cooling:Water:HeatExchangerAssisted'
         std::string CCoilSchedName; // availability schedule for the cooling coil
         int CCoilSchedPtr;          // index to schedule
-        Real64 CCoilSchedValue;
-        Real64 MaxVolColdWaterFlow; // m3/s
-        Real64 MaxColdWaterFlow;    // kg/s
-        Real64 MinVolColdWaterFlow; // m3/s
-        Real64 MinColdWaterFlow;    // kg/s
+        Nandle CCoilSchedValue;
+        Nandle MaxVolColdWaterFlow; // m3/s
+        Nandle MaxColdWaterFlow;    // kg/s
+        Nandle MinVolColdWaterFlow; // m3/s
+        Nandle MinColdWaterFlow;    // kg/s
         int ColdControlNode;        // chilled water control node
         int ColdCoilOutNodeNum;     // chilled water coil out node
-        Real64 ColdControlOffset;   // control tolerance
+        Nandle ColdControlOffset;   // control tolerance
         int CWLoopNum;              // index for plant loop with chilled water coil
         int CWLoopSide;             // index for plant loop side for chilled water coil
         int CWBranchNum;            // index for plant branch for chilled water coil
         int CWCompNum;              // index for plant component for chilled water coil
         // Report data
-        Real64 HeatPower;  // unit heating output in watts
-        Real64 HeatEnergy; // unit heating output in J
-        Real64 TotCoolPower;
-        Real64 TotCoolEnergy;
-        Real64 SensCoolPower;
-        Real64 SensCoolEnergy;
-        Real64 ElecPower;
-        Real64 ElecEnergy;
+        Nandle HeatPower;  // unit heating output in watts
+        Nandle HeatEnergy; // unit heating output in J
+        Nandle TotCoolPower;
+        Nandle TotCoolEnergy;
+        Nandle SensCoolPower;
+        Nandle SensCoolEnergy;
+        Nandle ElecPower;
+        Nandle ElecEnergy;
         std::string AvailManagerListName; // Name of an availability manager list object
         int AvailStatus;
-        Real64 FanPartLoadRatio; // fan part-load ratio for time step
-        Real64 PartLoadFrac;     // unit ventilator part-load ratio for time step
+        Nandle FanPartLoadRatio; // fan part-load ratio for time step
+        Nandle PartLoadFrac;     // unit ventilator part-load ratio for time step
         int ZonePtr;             // pointer to a zone served by a unit ventilator
         int HVACSizingIndex;     // index of a HVACSizing object for a unit ventilator
         bool ATMixerExists;      // True if there is an ATMixer
@@ -257,8 +257,8 @@ namespace UnitVentilator {
     void SimUnitVentilator(std::string const &CompName,   // name of the fan coil unit
                            int const ZoneNum,             // number of zone being served
                            bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                           Real64 &PowerMet,              // Sensible power supplied (W)
-                           Real64 &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
+                           Nandle &PowerMet,              // Sensible power supplied (W)
+                           Nandle &LatOutputProvided,     // Latent add/removal supplied by window AC (kg/s), dehumid = negative
                            int &CompIndex);
 
     void GetUnitVentilatorInput();
@@ -273,15 +273,15 @@ namespace UnitVentilator {
     void CalcUnitVentilator(int &UnitVentNum,              // number of the current fan coil unit being simulated
                             int const ZoneNum,             // number of zone being served
                             bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                            Real64 &PowerMet,              // Sensible power supplied (W)
-                            Real64 &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
+                            Nandle &PowerMet,              // Sensible power supplied (W)
+                            Nandle &LatOutputProvided      // Latent power supplied (kg/s), negative = dehumidification
     );
 
     void CalcUnitVentilatorComponents(int const UnitVentNum,                  // Unit index in unit ventilator array
                                       bool const FirstHVACIteration,          // flag for 1st HVAV iteration in the time step
-                                      Real64 &LoadMet,                        // load met by unit (watts)
+                                      Nandle &LoadMet,                        // load met by unit (watts)
                                       Optional_int_const OpMode = _,          // Fan Type
-                                      Optional<Real64 const> PartLoadFrac = _ // Part Load Ratio of coil and fan
+                                      Optional<Nandle const> PartLoadFrac = _ // Part Load Ratio of coil and fan
     );
 
     void SimUnitVentOAMixer(int const UnitVentNum, // Unit index in unit ventilator array
@@ -305,23 +305,23 @@ namespace UnitVentilator {
 
     int GetUnitVentilatorReturnAirNode(int const UnitVentNum);
 
-    Real64 CalcUnitVentilatorResidual(Real64 const PartLoadRatio, // Coil Part Load Ratio
-                                      Array1D<Real64> const &Par  // Function parameters
+    Nandle CalcUnitVentilatorResidual(Nandle const PartLoadRatio, // Coil Part Load Ratio
+                                      Array1D<Nandle> const &Par  // Function parameters
     );
     
-    Real64 SetOAMassFlowRateForCoolingVariablePercent(int const UnitVentNum,        // Unit Ventilator index number
-                                                      Real64 const MinOAFrac,       // Minimum Outside Air Fraction
-                                                      Real64 const MassFlowRate,    // Design Outside Air Mass Flow Rate
-                                                      Real64 const MaxOAFrac,       // Maximum Outside Air Fraction
-                                                      Real64 const Tinlet,          // Inlet Temperature to Unit or Zone Temperature
-                                                      Real64 const Toutdoor         // Outdoor Air Temperature
+    Nandle SetOAMassFlowRateForCoolingVariablePercent(int const UnitVentNum,        // Unit Ventilator index number
+                                                      Nandle const MinOAFrac,       // Minimum Outside Air Fraction
+                                                      Nandle const MassFlowRate,    // Design Outside Air Mass Flow Rate
+                                                      Nandle const MaxOAFrac,       // Maximum Outside Air Fraction
+                                                      Nandle const Tinlet,          // Inlet Temperature to Unit or Zone Temperature
+                                                      Nandle const Toutdoor         // Outdoor Air Temperature
     );
     
-    void CalcMdotCCoilCycFan(Real64 &mdot,                  // mass flow rate
-                             Real64 &QCoilReq,              // Remaining cooling coil load
-                             Real64 const QZnReq,           // Zone load to setpoint
+    void CalcMdotCCoilCycFan(Nandle &mdot,                  // mass flow rate
+                             Nandle &QCoilReq,              // Remaining cooling coil load
+                             Nandle const QZnReq,           // Zone load to setpoint
                                int const UnitVentNum,       // Unit Ventilator index
-                               Real64 const PartLoadRatio   // Part load ratio for unit ventilator
+                               Nandle const PartLoadRatio   // Part load ratio for unit ventilator
     );
 
 } // namespace UnitVentilator

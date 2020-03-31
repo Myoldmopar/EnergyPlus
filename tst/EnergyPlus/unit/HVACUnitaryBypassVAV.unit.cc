@@ -84,7 +84,7 @@ public:
     int cbvavNum = 1;
     bool FirstHVACIteration = true;
     int AirLoopNum = 1;
-    Real64 OnOffAirFlowRatio = 1.0;
+    Nandle OnOffAirFlowRatio = 1.0;
     bool HXUnitOn = true;
     int NumNodes = 1; // number of zone inlet and zone exhaust nodes
     bool ErrorsFound = false;
@@ -811,7 +811,7 @@ TEST_F(CBVAVSys, UnitaryBypassVAV_NoOASys)
     EXPECT_LE(cbvav.OutletTempSetPoint, cbvav.MaxLATHeating);
     EXPECT_NEAR(cbvav.OutletTempSetPoint, 9.56, 0.01);
 
-    Real64 PartLoadFrac = 0.0;
+    Nandle PartLoadFrac = 0.0;
     HVACUnitaryBypassVAV::ControlCBVAVOutput(cbvavNum, FirstHVACIteration, PartLoadFrac, OnOffAirFlowRatio, HXUnitOn);
     EXPECT_EQ(PartLoadFrac, 1.0); // load = -9000 W, coil capacity = 10,000 W, SHR = 0.7 so max sensible is around 7,000 W
 
@@ -820,7 +820,7 @@ TEST_F(CBVAVSys, UnitaryBypassVAV_NoOASys)
     DataZoneEnergyDemands::ZoneSysEnergyDemand(1).SequencedOutputRequiredToHeatingSP(1) = -15000.0; // more load to heating set point
     // No need to reset changeOverTimer since load did not change
     HVACUnitaryBypassVAV::InitCBVAV(cbvavNum, FirstHVACIteration, AirLoopNum, OnOffAirFlowRatio, HXUnitOn);
-    Real64 FullOutput = 0.0;
+    Nandle FullOutput = 0.0;
     HVACUnitaryBypassVAV::CalcCBVAV(cbvavNum, FirstHVACIteration, PartLoadFrac, FullOutput, OnOffAirFlowRatio, HXUnitOn);
     EXPECT_NEAR(PartLoadFrac, 0.935, 0.001); // load = -7000 W, coil capacity = 10,000 W, SHR = 0.7 so max sensible is just over 7,000 W
     EXPECT_NEAR(cbvav.OutletTempSetPoint, DataLoopNode::Node(cbvav.AirOutNode).Temp, 0.0001);
@@ -898,7 +898,7 @@ TEST_F(CBVAVSys, UnitaryBypassVAV_InternalOAMixer)
     EXPECT_LE(cbvav.OutletTempSetPoint, cbvav.MaxLATHeating);
     EXPECT_NEAR(cbvav.OutletTempSetPoint, 9.59, 0.01);
 
-    Real64 PartLoadFrac = 0.0;
+    Nandle PartLoadFrac = 0.0;
     HVACUnitaryBypassVAV::ControlCBVAVOutput(cbvavNum, FirstHVACIteration, PartLoadFrac, OnOffAirFlowRatio, HXUnitOn);
     EXPECT_EQ(PartLoadFrac, 1.0); // load = -9000 W, coil capacity = 10,000 W, SHR = 0.7 so max sensible is around 7,000 W
 
@@ -907,7 +907,7 @@ TEST_F(CBVAVSys, UnitaryBypassVAV_InternalOAMixer)
     DataZoneEnergyDemands::ZoneSysEnergyDemand(1).SequencedOutputRequiredToHeatingSP(1) = -15000.0; // more load to heating set point
     cbvav.changeOverTimer = -1.0; // reset timer so GetZoneLoads executes
     HVACUnitaryBypassVAV::InitCBVAV(cbvavNum, FirstHVACIteration, AirLoopNum, OnOffAirFlowRatio, HXUnitOn);
-    Real64 FullOutput = 0.0;
+    Nandle FullOutput = 0.0;
     HVACUnitaryBypassVAV::CalcCBVAV(cbvavNum, FirstHVACIteration, PartLoadFrac, FullOutput, OnOffAirFlowRatio, HXUnitOn);
     EXPECT_LT(PartLoadFrac, 1.0); // load = -6000 W, coil capacity = 10,000 W, SHR = 0.7 so max sensible is around 7,000 W
     EXPECT_NEAR(cbvav.OutletTempSetPoint, DataLoopNode::Node(cbvav.AirOutNode).Temp, 0.0001);
@@ -985,7 +985,7 @@ TEST_F(CBVAVSys, UnitaryBypassVAV_Mixerconnected)
     EXPECT_LE(cbvav.OutletTempSetPoint, cbvav.MaxLATHeating);
     EXPECT_NEAR(cbvav.OutletTempSetPoint, 9.56, 0.01);
 
-    Real64 PartLoadFrac = 0.0;
+    Nandle PartLoadFrac = 0.0;
     HVACUnitaryBypassVAV::ControlCBVAVOutput(cbvavNum, FirstHVACIteration, PartLoadFrac, OnOffAirFlowRatio, HXUnitOn);
     EXPECT_EQ(PartLoadFrac, 1.0); // load = -9000 W, coil capacity = 10,000 W, SHR = 0.7 so max sensible is around 7,000 W
 
@@ -1005,7 +1005,7 @@ TEST_F(CBVAVSys, UnitaryBypassVAV_Mixerconnected)
     DataZoneEnergyDemands::ZoneSysEnergyDemand(1).SequencedOutputRequiredToCoolingSP(1) = -7000.0; // load to cooling set point
     DataZoneEnergyDemands::ZoneSysEnergyDemand(1).SequencedOutputRequiredToHeatingSP(1) = -15000.0; // more load to heating set point
     HVACUnitaryBypassVAV::InitCBVAV(cbvavNum, FirstHVACIteration, AirLoopNum, OnOffAirFlowRatio, HXUnitOn);
-    Real64 FullOutput = 0.0;
+    Nandle FullOutput = 0.0;
     HVACUnitaryBypassVAV::CalcCBVAV(cbvavNum, FirstHVACIteration, PartLoadFrac, FullOutput, OnOffAirFlowRatio, HXUnitOn);
     EXPECT_LT(PartLoadFrac, 1.0); // load = -7000 W, coil capacity = 10,000 W, SHR = 0.7 so max sensible is around 7,000 W
     EXPECT_NEAR(cbvav.OutletTempSetPoint, DataLoopNode::Node(cbvav.AirOutNode).Temp, 0.0001);
@@ -1021,7 +1021,7 @@ TEST_F(CBVAVSys, UnitaryBypassVAV_Mixerconnected)
     EXPECT_NEAR(
         DataAirLoop::AirLoopFlow(cbvav.AirLoopNumber).BypassMassFlow, DataLoopNode::Node(cbvav.PlenumMixerInletAirNode).MassFlowRate, 0.00001);
     EXPECT_NEAR(DataLoopNode::Node(cbvav.PlenumMixerInletAirNode).MassFlowRate, 0.302, 0.001);
-    Real64 systemFlow = DataLoopNode::Node(cbvav.PlenumMixerInletAirNode).MassFlowRate + DataLoopNode::Node(cbvav.AirOutNode).MassFlowRate;
+    Nandle systemFlow = DataLoopNode::Node(cbvav.PlenumMixerInletAirNode).MassFlowRate + DataLoopNode::Node(cbvav.AirOutNode).MassFlowRate;
     EXPECT_NEAR(systemFlow, cbvav.MaxCoolAirMassFlow, 0.0001);
 
     // switch to heating load and check that outlet temp meets set point

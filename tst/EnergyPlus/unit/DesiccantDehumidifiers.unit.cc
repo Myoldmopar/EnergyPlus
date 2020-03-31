@@ -98,10 +98,10 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnOASystemTest)
     int CompIndex(1);
     int CoilIndex(0);
     int loop(0);
-    Real64 RegCoilDesInletTemp(0.0);
-    Real64 RegCoilDesOutletTemp(0.0);
-    Real64 RegCoilInletAirMassFlowRate(0.0);
-    Real64 RegCoilCapacity(0.0);
+    Nandle RegCoilDesInletTemp(0.0);
+    Nandle RegCoilDesOutletTemp(0.0);
+    Nandle RegCoilInletAirMassFlowRate(0.0);
+    Nandle RegCoilCapacity(0.0);
 
     std::string const idf_objects = delimited_string({
 
@@ -2859,10 +2859,10 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_OnPrimaryAirSystemTest)
     int CompIndex(1);
     int CoilIndex(0);
     int loop(0);
-    Real64 RegCoilDesInletTemp(0.0);
-    Real64 RegCoilDesOutletTemp(0.0);
-    Real64 RegCoilInletAirMassFlowRate(0.0);
-    Real64 RegCoilCapacity(0.0);
+    Nandle RegCoilDesInletTemp(0.0);
+    Nandle RegCoilDesOutletTemp(0.0);
+    Nandle RegCoilInletAirMassFlowRate(0.0);
+    Nandle RegCoilCapacity(0.0);
 
     std::string const idf_objects = delimited_string({
 
@@ -4039,10 +4039,10 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_RegenAirHeaterHWCoilSizingTest)
     int CompIndex(1);
     int CoilIndex(0);
     int loop(0);
-    Real64 RegCoilDesInletTemp(0.0);
-    Real64 RegCoilDesOutletTemp(0.0);
-    Real64 RegCoilInletAirMassFlowRate(0.0);
-    Real64 RegCoilCapacity(0.0);
+    Nandle RegCoilDesInletTemp(0.0);
+    Nandle RegCoilDesOutletTemp(0.0);
+    Nandle RegCoilInletAirMassFlowRate(0.0);
+    Nandle RegCoilCapacity(0.0);
 
     std::string const idf_objects = delimited_string({
 
@@ -5465,10 +5465,10 @@ TEST_F(EnergyPlusFixture, DesiccantDehum_VSCoolingCoilOnPrimaryAirSystemTest)
     int CompIndex(1);
     int CoilIndex(0);
     int loop(0);
-    Real64 RegCoilDesInletTemp(0.0);
-    Real64 RegCoilDesOutletTemp(0.0);
-    Real64 RegCoilInletAirMassFlowRate(0.0);
-    Real64 RegCoilCapacity(0.0);
+    Nandle RegCoilDesInletTemp(0.0);
+    Nandle RegCoilDesOutletTemp(0.0);
+    Nandle RegCoilInletAirMassFlowRate(0.0);
+    Nandle RegCoilCapacity(0.0);
 
     std::string const idf_objects = delimited_string({
 

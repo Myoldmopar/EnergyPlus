@@ -1583,9 +1583,9 @@ TEST_F(EnergyPlusFixture, HeatBalanceManager_EMSConstructionTest)
     int winSurfNum = UtilityRoutines::FindItemInList("FENESTRATIONSURFACE", DataSurfaces::Surface);
     int win1ConstNum = UtilityRoutines::FindItemInList("WINDOWCONSTRUCTION1", DataHeatBalance::Construct);
     EXPECT_EQ(DataSurfaces::Surface(winSurfNum).Construction, win1ConstNum);
-    Real64 transSol = DataSurfaces::WinSysSolTransmittance(winSurfNum);
+    Nandle transSol = DataSurfaces::WinSysSolTransmittance(winSurfNum);
     EXPECT_GT(transSol, 0.8);
-    Real64 refPtIllum = DataDaylighting::ZoneDaylight(1).DaylIllumAtRefPt(1);
+    Nandle refPtIllum = DataDaylighting::ZoneDaylight(1).DaylIllumAtRefPt(1);
     EXPECT_GT(refPtIllum, 3000.0);
 
     // Test 2 - Set time of day to afternoon - should use low transmittance window
@@ -1998,7 +1998,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceManager_UpdateWindowFaceTempsNonBSDFWin)
     DataHeatBalSurface::TH(2,1,2) = 35.0;
     DataHeatBalSurface::TH(2,1,3) = 36.0;
     
-    Real64 ZeroResult = 0.0;
+    Nandle ZeroResult = 0.0;
 
     HeatBalanceManager::UpdateWindowFaceTempsNonBSDFWin();
     

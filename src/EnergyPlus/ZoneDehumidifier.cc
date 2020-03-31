@@ -171,8 +171,8 @@ namespace ZoneDehumidifier {
     void SimZoneDehumidifier(std::string const &CompName,              // Name of the zone dehumidifier
                              int const ZoneNum,                        // Number of zone being served
                              bool const EP_UNUSED(FirstHVACIteration), // TRUE if 1st HVAC simulation of system timestep
-                             Real64 &QSensOut,                         // Sensible capacity delivered to zone (W)
-                             Real64 &QLatOut,                          // Latent capacity delivered to zone (kg/s), dehumidify = negative
+                             Nandle &QSensOut,                         // Sensible capacity delivered to zone (W)
+                             Nandle &QLatOut,                          // Latent capacity delivered to zone (kg/s), dehumidify = negative
                              int &CompIndex                            // Index to the zone dehumidifier
     )
     {
@@ -210,7 +210,7 @@ namespace ZoneDehumidifier {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneDehumidNum;   // Index of zone dehumidifier being simulated
-        Real64 QZnDehumidReq; // Zone dehumidification load required (kg moisture/sec)
+        Nandle QZnDehumidReq; // Zone dehumidification load required (kg moisture/sec)
 
         if (GetInputFlag) {
             GetZoneDehumidifierInput();
@@ -281,8 +281,8 @@ namespace ZoneDehumidifier {
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("GetZoneDehumidifierInput");
         static std::string const CurrentModuleObject("ZoneHVAC:Dehumidifier:DX");
-        Real64 const RatedInletAirTemp(26.7);
-        Real64 const RatedInletAirRH(60.0);
+        Nandle const RatedInletAirTemp(26.7);
+        Nandle const RatedInletAirRH(60.0);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -299,11 +299,11 @@ namespace ZoneDehumidifier {
         Array1D_string Alphas;          // Alpha input items for object
         Array1D_string cAlphaFields;    // Alpha field names
         Array1D_string cNumericFields;  // Numeric field names
-        Array1D<Real64> Numbers;        // Numeric input items for object
+        Array1D<Nandle> Numbers;        // Numeric input items for object
         Array1D_bool lAlphaBlanks;      // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;    // Logical array, numeric field input BLANK = .TRUE.
         static int TotalArgs(0);        // Total number of alpha and numeric arguments (max)
-        Real64 CurveVal;                // Output from curve object (water removal or energy factor curves)
+        Nandle CurveVal;                // Output from curve object (water removal or energy factor curves)
 
         NumDehumidifiers = inputProcessor->getNumObjectsFound(CurrentModuleObject);
 
@@ -656,9 +656,9 @@ namespace ZoneDehumidifier {
         static bool ZoneEquipmentListChecked(false); // True after the Zone Equipment List has been checked for items
         int LoopIndex;                               // DO loop index
         int AirInletNode;                            // Inlet air node number
-        Real64 RatedAirHumrat;                       // Humidity ratio (kg/kg) at rated inlet air conditions of 26.6667C, 60% RH
-        Real64 RatedAirDBTemp;                       // Dry-bulb air temperature at rated conditions 26.6667C
-        Real64 RatedAirRH;                           // Relative humidity of air (0.6 --> 60%) at rated conditions
+        Nandle RatedAirHumrat;                       // Humidity ratio (kg/kg) at rated inlet air conditions of 26.6667C, 60% RH
+        Nandle RatedAirDBTemp;                       // Dry-bulb air temperature at rated conditions 26.6667C
+        Nandle RatedAirRH;                           // Relative humidity of air (0.6 --> 60%) at rated conditions
 
         // Do the one time initializations
         if (MyOneTimeFlag) {
@@ -761,9 +761,9 @@ namespace ZoneDehumidifier {
     }
 
     void CalcZoneDehumidifier(int const ZoneDehumNum,     // Index number of the current zone dehumidifier being simulated
-                              Real64 const QZnDehumidReq, // Dehumidification load to be met (kg/s), negative value means dehumidification load
-                              Real64 &SensibleOutput,     // Sensible (heating) output (W), sent to load predictor for next simulation time step
-                              Real64 &LatentOutput        // Latent (dehumidification) output provided (kg/s)
+                              Nandle const QZnDehumidReq, // Dehumidification load to be met (kg/s), negative value means dehumidification load
+                              Nandle &SensibleOutput,     // Sensible (heating) output (W), sent to load predictor for next simulation time step
+                              Nandle &LatentOutput        // Latent (dehumidification) output provided (kg/s)
     )
     {
 
@@ -806,24 +806,24 @@ namespace ZoneDehumidifier {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 WaterRemovalRateFactor;  // Adjustment to  Rate Water Removal as a function of inlet air T and RH
-        Real64 WaterRemovalVolRate;     // Actual water removal rate at current inlet air conditions (L/day)
-        Real64 WaterRemovalMassRate;    // Actual water removal rate at current inlet air conditions (kg/s)
-        Real64 EnergyFactorAdjFactor;   // Adjustment to Rate Energy Factor as a function of inlet air T and RH
-        Real64 EnergyFactor;            // Actual Energy Factor as a function of inlet air T and RH
-        Real64 InletAirTemp;            // Dry-bulb temperature of air entering the dehumidifier (C)
-        Real64 InletAirHumRat;          // Humidity ratio of the air entering the dehumidifier (kg/kg)
-        Real64 InletAirRH;              // Relative humidity of air entering the dehumidifier (%)
-        Real64 OutletAirTemp;           // Dry-bulb temperature of air leaving the dehumidifier (C)
-        Real64 OutletAirHumRat;         // Humidity ratio of air leaving the dehumidifier (kg/kg)
-        Real64 PLR;                     // Part-load ratio = (dehumid load to be met)/(dehumid capacity of the dehumidifier)
-        Real64 PLF;                     // Part-load fraction (-), RuntimeFraction = PLR/PLF
-        Real64 RunTimeFraction;         // Dehumidifier runtime fraction (-)
-        Real64 ElectricPowerOnCycle;    // Electric power when dehumidifier is operating (W)
-        Real64 ElectricPowerAvg;        // Average electric power for this dehumidifier (W)
-        Real64 hfg;                     // Enthalpy of evaporation of inlet air (J/kg)
-        Real64 AirMassFlowRate;         // Air mass flow rate through this dehumidifier (kg/s)
-        Real64 Cp;                      // Heat capacity of inlet air (J/kg-C)
+        Nandle WaterRemovalRateFactor;  // Adjustment to  Rate Water Removal as a function of inlet air T and RH
+        Nandle WaterRemovalVolRate;     // Actual water removal rate at current inlet air conditions (L/day)
+        Nandle WaterRemovalMassRate;    // Actual water removal rate at current inlet air conditions (kg/s)
+        Nandle EnergyFactorAdjFactor;   // Adjustment to Rate Energy Factor as a function of inlet air T and RH
+        Nandle EnergyFactor;            // Actual Energy Factor as a function of inlet air T and RH
+        Nandle InletAirTemp;            // Dry-bulb temperature of air entering the dehumidifier (C)
+        Nandle InletAirHumRat;          // Humidity ratio of the air entering the dehumidifier (kg/kg)
+        Nandle InletAirRH;              // Relative humidity of air entering the dehumidifier (%)
+        Nandle OutletAirTemp;           // Dry-bulb temperature of air leaving the dehumidifier (C)
+        Nandle OutletAirHumRat;         // Humidity ratio of air leaving the dehumidifier (kg/kg)
+        Nandle PLR;                     // Part-load ratio = (dehumid load to be met)/(dehumid capacity of the dehumidifier)
+        Nandle PLF;                     // Part-load fraction (-), RuntimeFraction = PLR/PLF
+        Nandle RunTimeFraction;         // Dehumidifier runtime fraction (-)
+        Nandle ElectricPowerOnCycle;    // Electric power when dehumidifier is operating (W)
+        Nandle ElectricPowerAvg;        // Average electric power for this dehumidifier (W)
+        Nandle hfg;                     // Enthalpy of evaporation of inlet air (J/kg)
+        Nandle AirMassFlowRate;         // Air mass flow rate through this dehumidifier (kg/s)
+        Nandle Cp;                      // Heat capacity of inlet air (J/kg-C)
         static int AirInletNodeNum(0);  // Node number for the inlet air to the dehumidifier
         static int AirOutletNodeNum(0); // Node number for the outlet air from the dehumidifier
 
@@ -1144,10 +1144,10 @@ namespace ZoneDehumidifier {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ReportingConstant; // Number of seconds per HVAC system time step, to convert from W (J/s) to J
-        Real64 RhoWater;          // Density of condensate (water) being removed (kg/m3)
-        Real64 InletAirTemp;      // Dry-bulb temperature of air entering the dehumidifier (C)
-        Real64 OutletAirTemp;     // Dry-bulb temperature of air leaving the dehumidifier (C)
+        Nandle ReportingConstant; // Number of seconds per HVAC system time step, to convert from W (J/s) to J
+        Nandle RhoWater;          // Density of condensate (water) being removed (kg/m3)
+        Nandle InletAirTemp;      // Dry-bulb temperature of air entering the dehumidifier (C)
+        Nandle OutletAirTemp;     // Dry-bulb temperature of air leaving the dehumidifier (C)
         int AirInletNodeNum;      // Node number corresponding to the air entering dehumidifier
 
         ReportingConstant = TimeStepSys * SecInHour;

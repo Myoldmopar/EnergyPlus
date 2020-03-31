@@ -123,20 +123,20 @@ namespace UFADManager {
     // MODULE VARIABLE DECLARATIONS:
     static std::string const BlankString;
 
-    Real64 HAT_MX(0.0);                  // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone
-    Real64 HAT_MXWin(0.0);               // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone (windows only)
-    Real64 HA_MX(0.0);                   // HA_MX Convection Coefficient times Area for the upper subzone
-    Real64 HA_MXWin(0.0);                // HA_MX Convection Coefficient times Area for the upper subzone (windows only)
-    Real64 HAT_OC(0.0);                  // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone
-    Real64 HAT_OCWin(0.0);               // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone (windows only)
-    Real64 HA_OC(0.0);                   // HA_OC Convection Coefficient times Area for the lower subzone
-    Real64 HA_OCWin(0.0);                // HA_OC Convection Coefficient times Area for the lower subzone (windows only)
-    Real64 HAT_FLOOR(0.0);               // HAT_FLOOR Convection Coefficient times Area times Temperature for the floor(?) subzone
-    Real64 HA_FLOOR(0.0);                // HA_FLOOR Convection Coefficient times Area for the floor(?) subzone
-    Real64 HeightFloorSubzoneTop(0.2);   // Assumed thickness of floor subzone
-    Real64 ThickOccupiedSubzoneMin(0.2); // Minimum thickness of occupied subzone
-    Real64 HeightIntMass(0.0);           // Height of internal mass surfaces, assumed vertical, cannot exceed ceiling height
-    Real64 HeightIntMassDefault(2.0);    // Default height of internal mass surfaces
+    Nandle HAT_MX(0.0);                  // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone
+    Nandle HAT_MXWin(0.0);               // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone (windows only)
+    Nandle HA_MX(0.0);                   // HA_MX Convection Coefficient times Area for the upper subzone
+    Nandle HA_MXWin(0.0);                // HA_MX Convection Coefficient times Area for the upper subzone (windows only)
+    Nandle HAT_OC(0.0);                  // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone
+    Nandle HAT_OCWin(0.0);               // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone (windows only)
+    Nandle HA_OC(0.0);                   // HA_OC Convection Coefficient times Area for the lower subzone
+    Nandle HA_OCWin(0.0);                // HA_OC Convection Coefficient times Area for the lower subzone (windows only)
+    Nandle HAT_FLOOR(0.0);               // HAT_FLOOR Convection Coefficient times Area times Temperature for the floor(?) subzone
+    Nandle HA_FLOOR(0.0);                // HA_FLOOR Convection Coefficient times Area for the floor(?) subzone
+    Nandle HeightFloorSubzoneTop(0.2);   // Assumed thickness of floor subzone
+    Nandle ThickOccupiedSubzoneMin(0.2); // Minimum thickness of occupied subzone
+    Nandle HeightIntMass(0.0);           // Height of internal mass surfaces, assumed vertical, cannot exceed ceiling height
+    Nandle HeightIntMassDefault(2.0);    // Default height of internal mass surfaces
 
     // SUBROUTINE SPECIFICATIONS:
 
@@ -247,7 +247,7 @@ namespace UFADManager {
 
         static bool MyOneTimeFlag(true);
         static Array1D_bool MySizeFlag;
-        static Real64 NumShadesDown(0.0);
+        static Nandle NumShadesDown(0.0);
         int UINum;             // index to underfloor interior zone model data
         static int Ctd(0);     // DO loop index
         static int SurfNum(0); // surface data structure index
@@ -336,13 +336,13 @@ namespace UFADManager {
         int UINum;                            // index to underfloor interior zone model data
         static int Ctd(0);                    // DO loop index
         static int SurfNum(0);                // surface data structure index
-        static Real64 NumberOfOccupants(0.0); // design number of occupants in the zone
-        static Real64 NumberOfPlumes(0.0);    // design number of plumes in the zone
-        static Real64 ZoneElecConv(0.0);      // zone elec equip design convective gain [W]
-        static Real64 ZoneGasConv(0.0);       // zone gas equip design convective gain [W]
-        static Real64 ZoneOthEqConv(0.0);     // zone other equip design convective gain [W]
-        static Real64 ZoneHWEqConv(0.0);      // zone hot water equip design convective gain [W]
-        static Real64 ZoneSteamEqConv(0.0);   // zone steam equip design convective gain [W]
+        static Nandle NumberOfOccupants(0.0); // design number of occupants in the zone
+        static Nandle NumberOfPlumes(0.0);    // design number of plumes in the zone
+        static Nandle ZoneElecConv(0.0);      // zone elec equip design convective gain [W]
+        static Nandle ZoneGasConv(0.0);       // zone gas equip design convective gain [W]
+        static Nandle ZoneOthEqConv(0.0);     // zone other equip design convective gain [W]
+        static Nandle ZoneHWEqConv(0.0);      // zone hot water equip design convective gain [W]
+        static Nandle ZoneSteamEqConv(0.0);   // zone steam equip design convective gain [W]
 
         if (ZoneModelType == RoomAirModel_UCSDUFI) {
             UINum = ZoneUFPtr(ZoneNum);
@@ -681,7 +681,7 @@ namespace UFADManager {
         }
     }
 
-    void HcUCSDUF(int const ZoneNum, Real64 const FractionHeight)
+    void HcUCSDUF(int const ZoneNum, Nandle const FractionHeight)
     {
 
         // SUBROUTINE INFORMATION:
@@ -704,15 +704,15 @@ namespace UFADManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Ctd;         // DO loop counter for surfaces
-        Real64 HLD;      // Convection coefficient for the lower area of surface
-        Real64 TmedDV;   // Average temperature for DV
-        Real64 Z1;       // auxiliary var for lowest height
-        Real64 Z2;       // auxiliary var for highest height
-        Real64 ZSupSurf; // highest height for this surface
-        Real64 ZInfSurf; // lowest height for this surface
-        Real64 HLU;      // Convection coefficient for the upper area of surface
-        Real64 LayH;     // Height of the Occupied/Mixed subzone interface
-        Real64 LayFrac;  // Fraction height of the Occupied/Mixed subzone interface
+        Nandle HLD;      // Convection coefficient for the lower area of surface
+        Nandle TmedDV;   // Average temperature for DV
+        Nandle Z1;       // auxiliary var for lowest height
+        Nandle Z2;       // auxiliary var for highest height
+        Nandle ZSupSurf; // highest height for this surface
+        Nandle ZInfSurf; // lowest height for this surface
+        Nandle HLU;      // Convection coefficient for the upper area of surface
+        Nandle LayH;     // Height of the Occupied/Mixed subzone interface
+        Nandle LayFrac;  // Fraction height of the Occupied/Mixed subzone interface
         int SurfNum;     // Surface number
         // Initialize HAT and HA
 
@@ -1015,52 +1015,52 @@ namespace UFADManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static bool MIXFLAG(false); // if true treat as a mixed zone
-        Real64 CeilingHeight;       // zone ceiling height above floor [m]
+        Nandle CeilingHeight;       // zone ceiling height above floor [m]
         int UINum;                  // index to underfloor interior zone model data
-        Real64 GainsFrac;           // fraction of occupied subzone heat gains that remain in the subzone;
+        Nandle GainsFrac;           // fraction of occupied subzone heat gains that remain in the subzone;
         // that is, don't go into the plumes
         // REAL(r64)   :: NumPLPP            ! number of plumes per person
-        Real64 HeightThermostat;    // height of the thermostat above the floor [m]
-        Real64 HeightComfort;       // height at which comfort temperature is calculated
-        Real64 TempDiffCritRep;     // Minimum temperature difference between upper and occupied subzones for reporting
-        Real64 ConvGainsOccSubzone; // convective heat gains into the lower (occupied) subzone [W]
-        Real64 ConvGainsUpSubzone;  // convective heat gains into the upper subzone [W]
-        Real64 ConvGains;           // total zone convective gains (exclusing surfaces) [W]
+        Nandle HeightThermostat;    // height of the thermostat above the floor [m]
+        Nandle HeightComfort;       // height at which comfort temperature is calculated
+        Nandle TempDiffCritRep;     // Minimum temperature difference between upper and occupied subzones for reporting
+        Nandle ConvGainsOccSubzone; // convective heat gains into the lower (occupied) subzone [W]
+        Nandle ConvGainsUpSubzone;  // convective heat gains into the upper subzone [W]
+        Nandle ConvGains;           // total zone convective gains (exclusing surfaces) [W]
         int ZoneEquipConfigNum;     // ZoneEquipConfig index for this UFAD zone
-        Real64 SumSysMCp;           // Sum of system mass flow rate * specific heat for this zone [W/K]
-        Real64 SumSysMCpT;          // Sum of system mass flow rate * specific heat * temperature for this zone [W]
-        Real64 SumSysM;             // Sum of systems mass flow rate [kg/s]
-        Real64 NodeTemp;            // inlet node temperature [K]
-        Real64 MassFlowRate;        // system mass flow rate [kg/s]
-        Real64 CpAir;               // specific heat of air [J/kgK]
+        Nandle SumSysMCp;           // Sum of system mass flow rate * specific heat for this zone [W/K]
+        Nandle SumSysMCpT;          // Sum of system mass flow rate * specific heat * temperature for this zone [W]
+        Nandle SumSysM;             // Sum of systems mass flow rate [kg/s]
+        Nandle NodeTemp;            // inlet node temperature [K]
+        Nandle MassFlowRate;        // system mass flow rate [kg/s]
+        Nandle CpAir;               // specific heat of air [J/kgK]
         int InNodeIndex;            // inlet node index in ZoneEquipConfig
-        Real64 SumMCp;              // mass flow rate * specific heat for this zone for infiltration, ventilation, mixing [W/K]
-        Real64 SumMCpT;             // mass flow rate * specific heat* temp for this zone for infiltration, ventilation, mixing [W]
-        Real64 MCp_Total;           // total mass flow rate * specific heat for this zone [W/K]
-        Real64 MCpT_Total;          // total mass flow rate * specific heat* temp for this zone [W]
-        Real64 NumberOfPlumes;
-        Real64 PowerInPlumes;             // [W]
-        static Real64 PowerPerPlume(0.0); // power generating each plume [W]
-        Real64 HeightFrac;                // Fractional height of transition between occupied and upper subzones
-        Real64 TotSysFlow;                // [m3/s]
-        Real64 NumDiffusersPerPlume;
-        Real64 NumDiffusers;
-        Real64 TSupK; // supply yemperature [K]
-        Real64 Gamma; // dimensionless height parameter; higher gamma means interface height will be
+        Nandle SumMCp;              // mass flow rate * specific heat for this zone for infiltration, ventilation, mixing [W/K]
+        Nandle SumMCpT;             // mass flow rate * specific heat* temp for this zone for infiltration, ventilation, mixing [W]
+        Nandle MCp_Total;           // total mass flow rate * specific heat for this zone [W/K]
+        Nandle MCpT_Total;          // total mass flow rate * specific heat* temp for this zone [W]
+        Nandle NumberOfPlumes;
+        Nandle PowerInPlumes;             // [W]
+        static Nandle PowerPerPlume(0.0); // power generating each plume [W]
+        Nandle HeightFrac;                // Fractional height of transition between occupied and upper subzones
+        Nandle TotSysFlow;                // [m3/s]
+        Nandle NumDiffusersPerPlume;
+        Nandle NumDiffusers;
+        Nandle TSupK; // supply yemperature [K]
+        Nandle Gamma; // dimensionless height parameter; higher gamma means interface height will be
         // higher, smaller gamma means interface height will be lower.
-        Real64 DiffArea;     // diffuser effective area [m2]
-        Real64 ThrowAngle;   // diffuser slot angle relative to vertical [radians]
-        Real64 SourceHeight; // height of plume sources above the floor [m]
+        Nandle DiffArea;     // diffuser effective area [m2]
+        Nandle ThrowAngle;   // diffuser slot angle relative to vertical [radians]
+        Nandle SourceHeight; // height of plume sources above the floor [m]
         int Ctd;
-        Real64 AirCap;
-        Real64 TempHistTerm;
-        Real64 ZTAveraged;
-        Real64 HeightUpSubzoneAve;       // Height of center of upper air subzone
-        Real64 HeightOccupiedSubzoneAve; // Height of center of occupied air subzone
-        Real64 ZoneMult;                 // total zone multiplier
+        Nandle AirCap;
+        Nandle TempHistTerm;
+        Nandle ZTAveraged;
+        Nandle HeightUpSubzoneAve;       // Height of center of upper air subzone
+        Nandle HeightOccupiedSubzoneAve; // Height of center of occupied air subzone
+        Nandle ZoneMult;                 // total zone multiplier
         int ZoneNodeNum;                 // node number of the HVAC zone node
-        static Real64 TempDepCoef(0.0);  // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
-        static Real64 TempIndCoef(0.0);  // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
+        static Nandle TempDepCoef(0.0);  // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
+        static Nandle TempIndCoef(0.0);  // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
         static Array1D_int IntGainTypesOccupied(29,
                                                 {IntGainTypeOf_People,
                                                  IntGainTypeOf_WaterHeaterMixed,
@@ -1093,7 +1093,7 @@ namespace UFADManager {
                                                  IntGainTypeOf_RefrigerationWalkIn});
 
         static Array1D_int IntGainTypesUpSubzone(2, {IntGainTypeOf_DaylightingDeviceTubular, IntGainTypeOf_Lights});
-        Real64 RetAirGains;
+        Nandle RetAirGains;
 
         // Exact solution or Euler method
         if (ZoneAirSolutionAlgo != Use3rdOrder) {
@@ -1488,53 +1488,53 @@ namespace UFADManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static bool MIXFLAG(false); // if true treat as a mixed zone
-        Real64 CeilingHeight;       // zone ceiling height above floor [m]
+        Nandle CeilingHeight;       // zone ceiling height above floor [m]
         int UINum;                  // index to underfloor interior zone model data
-        Real64 GainsFrac;           // fraction of occupied subzone heat gains that remain in the subzone;
+        Nandle GainsFrac;           // fraction of occupied subzone heat gains that remain in the subzone;
         // that is, don't go into the plumes
-        Real64 HeightThermostat;    // height of the thermostat above the floor [m]
-        Real64 HeightComfort;       // height at which comfort temperature is calculated
-        Real64 TempDiffCritRep;     // Minimum temperature difference between upper and occupied subzones for reporting
-        Real64 ConvGainsOccSubzone; // convective heat gains into the lower (occupied) subzone [W]
-        Real64 ConvGainsUpSubzone;  // convective heat gains into the upper subzone [W]
-        Real64 ConvGains;           // total zone convective gains (excluding surfaces) [W]
-        Real64 ConvGainsWindows;    // convective gain from windows [W]
+        Nandle HeightThermostat;    // height of the thermostat above the floor [m]
+        Nandle HeightComfort;       // height at which comfort temperature is calculated
+        Nandle TempDiffCritRep;     // Minimum temperature difference between upper and occupied subzones for reporting
+        Nandle ConvGainsOccSubzone; // convective heat gains into the lower (occupied) subzone [W]
+        Nandle ConvGainsUpSubzone;  // convective heat gains into the upper subzone [W]
+        Nandle ConvGains;           // total zone convective gains (excluding surfaces) [W]
+        Nandle ConvGainsWindows;    // convective gain from windows [W]
         int ZoneEquipConfigNum;     // ZoneEquipConfig index for this UFAD zone
-        Real64 SumSysMCp;           // Sum of system mass flow rate * specific heat for this zone [W/K]
-        Real64 SumSysMCpT;          // Sum of system mass flow rate * specific heat * temperature for this zone [W]
-        Real64 SumSysM;             // Sum of systems mass flow rate [kg/s]
-        Real64 NodeTemp;            // inlet node temperature [K]
-        Real64 MassFlowRate;        // system mass flow rate [kg/s]
-        Real64 CpAir;               // specific heat of air [J/kgK]
+        Nandle SumSysMCp;           // Sum of system mass flow rate * specific heat for this zone [W/K]
+        Nandle SumSysMCpT;          // Sum of system mass flow rate * specific heat * temperature for this zone [W]
+        Nandle SumSysM;             // Sum of systems mass flow rate [kg/s]
+        Nandle NodeTemp;            // inlet node temperature [K]
+        Nandle MassFlowRate;        // system mass flow rate [kg/s]
+        Nandle CpAir;               // specific heat of air [J/kgK]
         int InNodeIndex;            // inlet node index in ZoneEquipConfig
-        Real64 SumMCp;              // mass flow rate * specific heat for this zone for infiltration, ventilation, mixing [W/K]
-        Real64 SumMCpT;             // mass flow rate * specific heat* temp for this zone for infiltration, ventilation, mixing [W]
-        Real64 MCp_Total;           // total mass flow rate * specific heat for this zone [W/K]
-        Real64 MCpT_Total;          // total mass flow rate * specific heat* temp for this zone [W]
-        Real64 NumberOfPlumes;
-        Real64 PowerInPlumes;             // [W]
-        static Real64 PowerPerPlume(0.0); // power carried by each plume [W]
-        Real64 PowerInPlumesPerMeter;     // Power in Plumes per meter of window length [W/m]
-        static Real64 NumDiffusersPerPlume(0.0);
-        Real64 HeightFrac; // Fractional height of transition between occupied and upper subzones
-        Real64 TotSysFlow; // [m3/s]
-        Real64 NumDiffusers;
-        Real64 TSupK; // supply yemperature [K]
-        Real64 Gamma; // dimensionless height parameter; higher gamma means interface height will be
+        Nandle SumMCp;              // mass flow rate * specific heat for this zone for infiltration, ventilation, mixing [W/K]
+        Nandle SumMCpT;             // mass flow rate * specific heat* temp for this zone for infiltration, ventilation, mixing [W]
+        Nandle MCp_Total;           // total mass flow rate * specific heat for this zone [W/K]
+        Nandle MCpT_Total;          // total mass flow rate * specific heat* temp for this zone [W]
+        Nandle NumberOfPlumes;
+        Nandle PowerInPlumes;             // [W]
+        static Nandle PowerPerPlume(0.0); // power carried by each plume [W]
+        Nandle PowerInPlumesPerMeter;     // Power in Plumes per meter of window length [W/m]
+        static Nandle NumDiffusersPerPlume(0.0);
+        Nandle HeightFrac; // Fractional height of transition between occupied and upper subzones
+        Nandle TotSysFlow; // [m3/s]
+        Nandle NumDiffusers;
+        Nandle TSupK; // supply yemperature [K]
+        Nandle Gamma; // dimensionless height parameter; higher gamma means interface height will be
         // higher, smaller gamma means interface height will be lower.
-        Real64 DiffArea;     // diffuser effective area [m2]
-        Real64 ThrowAngle;   // diffuser slot angle relative to vertical [radians]
-        Real64 SourceHeight; // height of plume sources above the floor [m]
+        Nandle DiffArea;     // diffuser effective area [m2]
+        Nandle ThrowAngle;   // diffuser slot angle relative to vertical [radians]
+        Nandle SourceHeight; // height of plume sources above the floor [m]
         int Ctd;
-        Real64 AirCap;
-        Real64 TempHistTerm;
-        Real64 ZTAveraged;
-        Real64 HeightUpSubzoneAve;       // Height of center of upper air subzone
-        Real64 HeightOccupiedSubzoneAve; // Height of center of occupied air subzone
-        Real64 ZoneMult;                 // total zone multiplier
+        Nandle AirCap;
+        Nandle TempHistTerm;
+        Nandle ZTAveraged;
+        Nandle HeightUpSubzoneAve;       // Height of center of upper air subzone
+        Nandle HeightOccupiedSubzoneAve; // Height of center of occupied air subzone
+        Nandle ZoneMult;                 // total zone multiplier
         int ZoneNodeNum;                 // node number of the HVAC zone node
-        static Real64 TempDepCoef(0.0);  // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
-        static Real64 TempIndCoef(0.0);  // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
+        static Nandle TempDepCoef(0.0);  // Formerly CoefSumha, coef in zone temp equation with dimensions of h*A
+        static Nandle TempIndCoef(0.0);  // Formerly CoefSumhat, coef in zone temp equation with dimensions of h*A(T1
         static Array1D_int IntGainTypesOccupied(29,
                                                 {IntGainTypeOf_People,
                                                  IntGainTypeOf_WaterHeaterMixed,
@@ -1567,7 +1567,7 @@ namespace UFADManager {
                                                  IntGainTypeOf_RefrigerationWalkIn});
 
         static Array1D_int IntGainTypesUpSubzone(2, {IntGainTypeOf_DaylightingDeviceTubular, IntGainTypeOf_Lights});
-        Real64 RetAirGains;
+        Nandle RetAirGains;
 
         // Exact solution or Euler method
         if (ZoneAirSolutionAlgo != Use3rdOrder) {

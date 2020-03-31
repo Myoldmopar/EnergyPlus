@@ -1980,7 +1980,7 @@ TEST_F(InputProcessorFixture, getObjectItem_json1)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -1994,7 +1994,7 @@ TEST_F(InputProcessorFixture, getObjectItem_json1)
     EXPECT_TRUE(compare_containers(std::vector<std::string>({}), cNumericFields));
     EXPECT_TRUE(compare_containers(std::vector<bool>({}), lNumericBlanks));
     EXPECT_TRUE(compare_containers(std::vector<bool>({false}), lAlphaBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({}), Numbers));
     EXPECT_EQ(1, NumAlphas);
     EXPECT_EQ(0, NumNumbers);
     EXPECT_EQ(1, IOStatus);
@@ -2030,7 +2030,7 @@ TEST_F(InputProcessorFixture, getObjectItem_json2)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs, NumAlphas, NumNumbers);
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2063,7 +2063,7 @@ TEST_F(InputProcessorFixture, getObjectItem_json2)
         cNumericFields));
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false}), lNumericBlanks));
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, true, false, false, false, true, true}), lAlphaBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({-99999, -99999, 0.80, 0.0, 0.0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({-99999, -99999, 0.80, 0.0, 0.0}), Numbers));
     //        EXPECT_EQ( 6, NumAlphas ); // TODO: Should be 6, why is it 7? Might be due to name field
     EXPECT_EQ(6, NumAlphas);
     EXPECT_EQ(5, NumNumbers);
@@ -2104,7 +2104,7 @@ TEST_F(InputProcessorFixture, getObjectItem_json3)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs, NumAlphas, NumNumbers);
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2126,7 +2126,7 @@ TEST_F(InputProcessorFixture, getObjectItem_json3)
     EXPECT_TRUE(compare_containers(
         std::vector<bool>({false, false, false, false, false, false, false, false, false, false, false, false, false, false}), lNumericBlanks));
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, true, false, false}), lAlphaBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.5, 4, 0, 0, 4.572, 0, 0, 0, 15.24, 0, 0, 15.24, 0, 4.572}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.5, 4, 0, 0, 4.572, 0, 0, 0, 15.24, 0, 0, 15.24, 0, 4.572}), Numbers));
     EXPECT_EQ(8, NumAlphas);
     EXPECT_EQ(14, NumNumbers);
     EXPECT_EQ(1, IOStatus);
@@ -2165,7 +2165,7 @@ TEST_F(InputProcessorFixture, getObjectItem_parsing_numbers_as_alpha_fields)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2188,7 +2188,7 @@ TEST_F(InputProcessorFixture, getObjectItem_parsing_numbers_as_alpha_fields)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, true, true}), lAlphaBlanks));
 
     EXPECT_EQ(15, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.5000000, 1.0, 4, 0.548000, 0, 2.5, 0.548, 0, .5, 5.548, 0, 0.5, 5.548, 0, 2.5}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.5000000, 1.0, 4, 0.548000, 0, 2.5, 0.548, 0, .5, 5.548, 0, 0.5, 5.548, 0, 2.5}), Numbers));
     EXPECT_TRUE(compare_containers(
         std::vector<bool>({false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}),
         lNumericBlanks));
@@ -2229,7 +2229,7 @@ TEST_F(InputProcessorFixture, getObjectItem_parsing_numbers_as_alpha_fields2)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2252,7 +2252,7 @@ TEST_F(InputProcessorFixture, getObjectItem_parsing_numbers_as_alpha_fields2)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, true, true}), lAlphaBlanks));
 
     EXPECT_EQ(15, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.5000000, 1.0, 4, 0.548000, 0, 2.5, 0.548, 0, .5, 5.548, 0, 0.5, 5.548, 0, 2.5}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.5000000, 1.0, 4, 0.548000, 0, 2.5, 0.548, 0, .5, 5.548, 0, 0.5, 5.548, 0, 2.5}), Numbers));
     EXPECT_TRUE(compare_containers(
         std::vector<bool>({false, false, false, false, false, false, false, false, false, false, false, false, false, false, false}),
         lNumericBlanks));
@@ -2301,7 +2301,7 @@ TEST_F(InputProcessorFixture, getObjectItem_empty_fields_with_no_defaults)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2350,7 +2350,7 @@ TEST_F(InputProcessorFixture, getObjectItem_empty_fields_with_no_defaults)
                                                              "Minimum Curve Output",
                                                              "Maximum Curve Output"}),
                                    cNumericFields));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({
                                        0.632475E+00,
                                        -0.121321E-01,
                                        0.507773E-03,
@@ -2407,7 +2407,7 @@ TEST_F(InputProcessorFixture, getObjectItem_truncated_obj_pulled_up_semicolon)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2451,7 +2451,7 @@ TEST_F(InputProcessorFixture, getObjectItem_truncated_obj_pulled_up_semicolon)
                                                              "Maximum Curve Output"}),
                                    cNumericFields));
     EXPECT_TRUE(compare_containers(
-        std::vector<Real64>(
+        std::vector<Nandle>(
             {0.632475E+00, -0.121321E-01, 0.507773E-03, 0.155377E-01, 0.272840E-03, -0.679201E-03, 12.77778, 23.88889, 23.88889, 46.11111, 0, 0}),
         Numbers));
     EXPECT_TRUE(
@@ -2509,7 +2509,7 @@ TEST_F(InputProcessorFixture, getObjectItem_truncated_sizing_system_min_fields)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2547,7 +2547,7 @@ TEST_F(InputProcessorFixture, getObjectItem_truncated_sizing_system_min_fields)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, false, false, true, true, true, true}), lAlphaBlanks));
 
     EXPECT_EQ(26, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({-99999, 0.4, 7, 0.0085, 11.0, 0.0085, 12.8, 16.7,   0.0085, 0.0085, 0,      0, 0,
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({-99999, 0.4, 7, 0.0085, 11.0, 0.0085, 12.8, 16.7,   0.0085, 0.0085, 0,      0, 0,
                                                         0,      0,   0, 0,      0,    0,      1,    -99999, 0,      0,      -99999, 0, 0}),
                                    Numbers));
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, false, false, false, false, false, true, true, true,
@@ -2594,7 +2594,7 @@ TEST_F(InputProcessorFixture, getObjectItem_missing_numerics_with_defaults_and_a
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2636,7 +2636,7 @@ TEST_F(InputProcessorFixture, getObjectItem_missing_numerics_with_defaults_and_a
         std::vector<std::string>({"Rated Capacity", "Rated Gas Use Rate", "Thermal Efficiency", "Rated Fan Power", "Auxiliary Electric Power"}),
         cNumericFields));
     EXPECT_TRUE(compare_containers(std::vector<bool>({true, false, true, false, true}), lNumericBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0, -99999, 0.80, 0.0, 0.0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0, -99999, 0.80, 0.0, 0.0}), Numbers));
 
     EXPECT_EQ(1, IOStatus);
 }
@@ -2668,7 +2668,7 @@ TEST_F(InputProcessorFixture, getObjectItem_truncated_autosize_fields)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2703,7 +2703,7 @@ TEST_F(InputProcessorFixture, getObjectItem_truncated_autosize_fields)
         std::vector<std::string>({"Rated Capacity", "Rated Gas Use Rate", "Thermal Efficiency", "Rated Fan Power", "Auxiliary Electric Power"}),
         cNumericFields));
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, true, true, true, true}), lNumericBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({-99999, 0, 0, 0, 0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({-99999, 0, 0, 0, 0}), Numbers));
     EXPECT_EQ(1, IOStatus);
 }
 
@@ -2767,7 +2767,7 @@ TEST_F(InputProcessorFixture, getObjectItem_unitary_system_input)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2824,7 +2824,7 @@ TEST_F(InputProcessorFixture, getObjectItem_unitary_system_input)
                                                       true, true, true,  false, true, true, true,  true, true, true, true,  true, true}),
                                    lNumericBlanks));
     EXPECT_TRUE(
-        compare_containers(std::vector<Real64>({1, 2, 1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0}), Numbers));
+        compare_containers(std::vector<Nandle>({1, 2, 1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0}), Numbers));
     EXPECT_EQ(1, IOStatus);
 }
 
@@ -2855,7 +2855,7 @@ TEST_F(InputProcessorFixture, getObjectItem_test_numbers_as_strings)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2879,7 +2879,7 @@ TEST_F(InputProcessorFixture, getObjectItem_test_numbers_as_strings)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, true, false, false, true, true}), lAlphaBlanks));
 
     EXPECT_EQ(0, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({}), Numbers));
     EXPECT_TRUE(compare_containers(std::vector<bool>({}), lNumericBlanks));
     EXPECT_EQ(1, IOStatus);
 }
@@ -2914,7 +2914,7 @@ TEST_F(InputProcessorFixture, getObjectItem_test_zone_input)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2929,7 +2929,7 @@ TEST_F(InputProcessorFixture, getObjectItem_test_zone_input)
 
     EXPECT_EQ(8, NumNumbers);
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, false, false, false, true}), lNumericBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0, 0, 0, 0, 1, 1, -99999, -99999, 0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0, 0, 0, 0, 1, 1, -99999, -99999, 0}), Numbers));
     EXPECT_EQ(1, IOStatus);
 }
 
@@ -2971,7 +2971,7 @@ TEST_F(InputProcessorFixture, getObjectItem_zone_HVAC_input)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -2998,7 +2998,7 @@ TEST_F(InputProcessorFixture, getObjectItem_zone_HVAC_input)
 
     EXPECT_EQ(0, NumNumbers);
     EXPECT_TRUE(compare_containers(std::vector<bool>({}), lNumericBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({}), Numbers));
 
     CurrentModuleObject = "ZoneHVAC:EquipmentList";
 
@@ -3012,7 +3012,7 @@ TEST_F(InputProcessorFixture, getObjectItem_zone_HVAC_input)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs2, NumAlphas2, NumNumbers2);
 
     Array1D_string Alphas2(NumAlphas2);
-    Array1D<Real64> Numbers2(NumNumbers2, 0.0);
+    Array1D<Nandle> Numbers2(NumNumbers2, 0.0);
     Array1D_bool lNumericBlanks2(NumNumbers2, true);
     Array1D_bool lAlphaBlanks2(NumAlphas2, true);
     Array1D_string cAlphaFields2(NumAlphas2);
@@ -3037,7 +3037,7 @@ TEST_F(InputProcessorFixture, getObjectItem_zone_HVAC_input)
 
     EXPECT_EQ(2, NumNumbers2);
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false}), lNumericBlanks2));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({1, 1}), Numbers2));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({1, 1}), Numbers2));
     EXPECT_EQ(1, IOStatus);
 }
 
@@ -3086,7 +3086,7 @@ TEST_F(InputProcessorFixture, getObjectItem_coil_heating_fuel)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -3104,7 +3104,7 @@ TEST_F(InputProcessorFixture, getObjectItem_coil_heating_fuel)
 
     EXPECT_EQ(4, NumNumbers);
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false}), lNumericBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.45, 0.1, 0.30, 0.344}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.45, 0.1, 0.30, 0.344}), Numbers));
 
     int TotalArgs2 = 0;
     int NumAlphas2 = 0;
@@ -3113,7 +3113,7 @@ TEST_F(InputProcessorFixture, getObjectItem_coil_heating_fuel)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs2, NumAlphas2, NumNumbers2);
 
     Array1D_string Alphas2(NumAlphas2);
-    Array1D<Real64> Numbers2(NumNumbers2, 0.0);
+    Array1D<Nandle> Numbers2(NumNumbers2, 0.0);
     Array1D_bool lNumericBlanks2(NumNumbers2, true);
     Array1D_bool lAlphaBlanks2(NumAlphas2, true);
     Array1D_string cAlphaFields2(NumAlphas2);
@@ -3131,7 +3131,7 @@ TEST_F(InputProcessorFixture, getObjectItem_coil_heating_fuel)
 
     EXPECT_EQ(4, NumNumbers);
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false}), lNumericBlanks2));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.55, 0.2, 0.40, 0.444}), Numbers2));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.55, 0.2, 0.40, 0.444}), Numbers2));
 
     EXPECT_EQ(1, IOStatus);
 }
@@ -3172,7 +3172,7 @@ TEST_F(InputProcessorFixture, getObjectItem_schedule_objects)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -3195,7 +3195,7 @@ TEST_F(InputProcessorFixture, getObjectItem_schedule_objects)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, true, true}), lAlphaBlanks));
 
     EXPECT_EQ(0, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0, 0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0, 0}), Numbers));
     EXPECT_TRUE(compare_containers(std::vector<bool>({true, true}), lNumericBlanks));
 
     CurrentModuleObject = "Schedule:Compact";
@@ -3210,7 +3210,7 @@ TEST_F(InputProcessorFixture, getObjectItem_schedule_objects)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs, NumAlphas, NumNumbers);
 
     Array1D_string Alphas2(NumAlphas);
-    Array1D<Real64> Numbers2(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers2(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks2(NumNumbers, true);
     Array1D_bool lAlphaBlanks2(NumAlphas, true);
     Array1D_string cAlphaFields2(NumAlphas);
@@ -3226,7 +3226,7 @@ TEST_F(InputProcessorFixture, getObjectItem_schedule_objects)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, false}), lAlphaBlanks2));
 
     EXPECT_EQ(0, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({}), Numbers2));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({}), Numbers2));
     EXPECT_TRUE(compare_containers(std::vector<bool>({}), lNumericBlanks2));
 
     EXPECT_EQ(1, IOStatus);
@@ -3263,7 +3263,7 @@ TEST_F(InputProcessorFixture, getObjectItem_fan_on_off)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -3279,7 +3279,7 @@ TEST_F(InputProcessorFixture, getObjectItem_fan_on_off)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, true, true, true}), lAlphaBlanks));
 
     EXPECT_EQ(5, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.7, 600, 1.6, 0.9, 1.0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.7, 600, 1.6, 0.9, 1.0}), Numbers));
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false}), lNumericBlanks));
     EXPECT_EQ(1, IOStatus);
 }
@@ -3327,7 +3327,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_quadratic)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -3342,7 +3342,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_quadratic)
 
     EXPECT_EQ(5, NumNumbers);
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, true, true}), lNumericBlanks));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.8, 0.2, 0, 0.5, 1.5, 0, 0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.8, 0.2, 0, 0.5, 1.5, 0, 0}), Numbers));
 
     int TotalArgs2 = 0;
     int NumAlphas2 = 0;
@@ -3351,7 +3351,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_quadratic)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs2, NumAlphas2, NumNumbers2);
 
     Array1D_string Alphas2(NumAlphas2);
-    Array1D<Real64> Numbers2(NumNumbers2, 0.0);
+    Array1D<Nandle> Numbers2(NumNumbers2, 0.0);
     Array1D_bool lNumericBlanks2(NumNumbers2, true);
     Array1D_bool lAlphaBlanks2(NumAlphas2, true);
     Array1D_string cAlphaFields2(NumAlphas2);
@@ -3366,7 +3366,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_quadratic)
 
     EXPECT_EQ(5, NumNumbers2);
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, true, true}), lNumericBlanks2));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({1.1552, -0.1808, 0.0256, 0.5, 1.5, 0, 0}), Numbers2));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({1.1552, -0.1808, 0.0256, 0.5, 1.5, 0, 0}), Numbers2));
 
     int TotalArgs3 = 0;
     int NumAlphas3 = 0;
@@ -3375,7 +3375,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_quadratic)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs3, NumAlphas3, NumNumbers3);
 
     Array1D_string Alphas3(NumAlphas3);
-    Array1D<Real64> Numbers3(NumNumbers3, 0.0);
+    Array1D<Nandle> Numbers3(NumNumbers3, 0.0);
     Array1D_bool lNumericBlanks3(NumNumbers3, true);
     Array1D_bool lAlphaBlanks3(NumAlphas3, true);
     Array1D_string cAlphaFields3(NumAlphas3);
@@ -3390,7 +3390,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_quadratic)
 
     EXPECT_EQ(5, NumNumbers3);
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false, false, true, true}), lNumericBlanks3));
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({0.85, 0.15, 0, 0.0, 1, 0, 0}), Numbers3));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({0.85, 0.15, 0, 0.0, 1, 0, 0}), Numbers3));
     EXPECT_EQ(1, IOStatus);
 }
 
@@ -3536,7 +3536,7 @@ TEST_F(InputProcessorFixture, getObjectItem_coil_cooling_dx_variable_speed)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -3604,7 +3604,7 @@ TEST_F(InputProcessorFixture, getObjectItem_coil_cooling_dx_variable_speed)
 
     EXPECT_EQ(72, NumNumbers);
     EXPECT_TRUE(compare_containers(
-        std::vector<Real64>({10.0,      10.0, 32000, 1.6,       0,    0,   0,         200,  10.0, -25.0,    0,    2,   1524.1,     .75,  4,
+        std::vector<Nandle>({10.0,      10.0, 32000, 1.6,       0,    0,   0,         200,  10.0, -25.0,    0,    2,   1524.1,     .75,  4,
                              0.1359072, 0.26, 0,     1877.9,    0.75, 4.0, 0.151008,  0.30, 0,    2226.6,   .75,  4.0, 0.1661088,  0.33, 0,
                              2911.3,    0.75, 4.0,   0.1963104, 0.38, 0,   3581.7,    0.75, 4.0,  0.226512, 0.44, 0,   4239.5,     0.75, 4.0,
                              0.2567136, 0.5,  0,     4885.7,    0.75, 4.0, 0.2869152, 0.57, 0,    5520.7,   0.75, 4.0, 0.31711680, 0.63, 0,
@@ -3702,7 +3702,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_biquadratic)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -3717,7 +3717,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_biquadratic)
 
     EXPECT_EQ(12, NumNumbers);
     EXPECT_TRUE(compare_containers(
-        std::vector<Real64>(
+        std::vector<Nandle>(
             {0.942587793, 0.009543347, 0.000683770, -0.011042676, 0.000005249, -0.000009720, 12.77778, 23.88889, 18.0, 46.11111, 0, 0}),
         Numbers));
     EXPECT_TRUE(
@@ -3730,7 +3730,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_biquadratic)
     inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, TotalArgs2, NumAlphas2, NumNumbers2);
 
     Array1D_string Alphas2(NumAlphas2);
-    Array1D<Real64> Numbers2(NumNumbers2, 0.0);
+    Array1D<Nandle> Numbers2(NumNumbers2, 0.0);
     Array1D_bool lNumericBlanks2(NumNumbers2, true);
     Array1D_bool lAlphaBlanks2(NumAlphas2, true);
     Array1D_string cAlphaFields2(NumAlphas2);
@@ -3745,7 +3745,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_biquadratic)
 
     EXPECT_EQ(12, NumNumbers2);
     EXPECT_TRUE(compare_containers(
-        std::vector<Real64>(
+        std::vector<Nandle>(
             {0.342414409, 0.034885008, -0.000623700, 0.004977216, 0.000437951, -0.000728028, 12.77778, 23.88889, 18.0, 46.11111, 0, 0}),
         Numbers2));
     EXPECT_TRUE(
@@ -3791,7 +3791,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_biquadratic2)
 
     int IOStatus = 0;
     Array1D_string Alphas(NumAlphas);
-    Array1D<Real64> Numbers(NumNumbers, 0.0);
+    Array1D<Nandle> Numbers(NumNumbers, 0.0);
     Array1D_bool lNumericBlanks(NumNumbers, true);
     Array1D_bool lAlphaBlanks(NumAlphas, true);
     Array1D_string cAlphaFields(NumAlphas);
@@ -3814,7 +3814,7 @@ TEST_F(InputProcessorFixture, getObjectItem_curve_biquadratic2)
     EXPECT_TRUE(compare_containers(std::vector<bool>({false, false, false, false}), lAlphaBlanks));
 
     EXPECT_EQ(12, NumNumbers);
-    EXPECT_TRUE(compare_containers(std::vector<Real64>({1, 0, 0, 0, 0, 0, 0, 0, 0, 46.11111, 0, 0}), Numbers));
+    EXPECT_TRUE(compare_containers(std::vector<Nandle>({1, 0, 0, 0, 0, 0, 0, 0, 0, 46.11111, 0, 0}), Numbers));
     EXPECT_TRUE(
         compare_containers(std::vector<bool>({false, false, false, false, false, false, false, false, false, false, true, true}), lNumericBlanks));
     EXPECT_EQ(1, IOStatus);
@@ -3988,7 +3988,7 @@ TEST_F(InputProcessorFixture, clean_epjson)
           EXPECT_EQ(1, )  // EXPECT_EQ( 1, IDFRecords( index ).ObjectDefPtr );
           EXPECT_TRUE( compare_containers( std::vector< std::string >( { "8.5" } ), IDFRecords( index ).Alphas ) );
           EXPECT_TRUE( compare_containers( std::vector< bool >( { false } ), IDFRecords( index ).AlphBlank ) );
-          EXPECT_TRUE( compare_containers( std::vector< Real64 >( {} ), IDFRecords( index ).Numbers ) );
+          EXPECT_TRUE( compare_containers( std::vector< Nandle >( {} ), IDFRecords( index ).Numbers ) );
           EXPECT_TRUE( compare_containers( std::vector< bool >( {} ), IDFRecords( index ).NumBlank ) );
 
           std::string const simulation_control_name( "SIMULATIONCONTROL" );
@@ -4006,7 +4006,7 @@ TEST_F(InputProcessorFixture, clean_epjson)
           EXPECT_EQ( 2, IDFRecords( index ).ObjectDefPtr );
           EXPECT_TRUE( compare_containers( std::vector< std::string >( { "NO", "NO", "NO", "YES", "YES" } ), IDFRecords( index ).Alphas ) );
           EXPECT_TRUE( compare_containers( std::vector< bool >( { false, false, false, false, false } ), IDFRecords( index ).AlphBlank ) );
-          EXPECT_TRUE( compare_containers( std::vector< Real64 >( {} ), IDFRecords( index ).Numbers ) );
+          EXPECT_TRUE( compare_containers( std::vector< Nandle >( {} ), IDFRecords( index ).Numbers ) );
           EXPECT_TRUE( compare_containers( std::vector< bool >( {} ), IDFRecords( index ).NumBlank ) );
 
    }

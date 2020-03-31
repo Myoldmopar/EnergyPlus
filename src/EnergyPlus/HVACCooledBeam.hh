@@ -65,9 +65,9 @@ namespace HVACCooledBeam {
     // MODULE PARAMETER DEFINITIONS:
     extern int const Passive_Cooled_Beam;
     extern int const Active_Cooled_Beam;
-    extern Real64 const NomMassFlowPerBeam; // nominal water mass flow rate per beam [kg/s]
-    extern Real64 const MinWaterVel;        // minimum water velocity [m/s]
-    extern Real64 const Coeff2;
+    extern Nandle const NomMassFlowPerBeam; // nominal water mass flow rate per beam [kg/s]
+    extern Nandle const MinWaterVel;        // minimum water velocity [m/s]
+    extern Nandle const Coeff2;
     // DERIVED TYPE DEFINITIONS:
 
     // MODULE VARIABLE DECLARATIONS:
@@ -92,41 +92,41 @@ namespace HVACCooledBeam {
         int CBType_Num;              // index to type of cooled beam: passive=1; active=2
         std::string Sched;           // availability schedule
         int SchedPtr;                // index to schedule
-        Real64 MaxAirVolFlow;        // m3/s (autosizable)
-        Real64 MaxAirMassFlow;       // kg/s
-        Real64 MaxCoolWaterVolFlow;  // m3/s
-        Real64 MaxCoolWaterMassFlow; // kg/s
+        Nandle MaxAirVolFlow;        // m3/s (autosizable)
+        Nandle MaxAirMassFlow;       // kg/s
+        Nandle MaxCoolWaterVolFlow;  // m3/s
+        Nandle MaxCoolWaterMassFlow; // kg/s
         int AirInNode;               // unit air inlet node number
         int AirOutNode;              // unit air outlet node number
         int CWInNode;                // chilled water inlet node
         int CWOutNode;               // chilled water outlet node
         int ADUNum;                  // index of corresponding air distribution unit
-        Real64 NumBeams;             // number of beams in the zone
-        Real64 BeamLength;           // length of individual beam [m]
-        Real64 DesInletWaterTemp;    // design inlet water temperature [C]
-        Real64 DesOutletWaterTemp;   // design outlet water Temperature [c]
-        Real64 CoilArea;             // coil surface area per coil length [m2/m]
-        Real64 a;                    // model parameter a
-        Real64 n1;                   // model parameter n0
-        Real64 n2;                   // model parameter n1
-        Real64 n3;                   // model parameter n2
-        Real64 a0;                   // model parameter a0
-        Real64 K1;                   // model parameter K1
-        Real64 n;                    // model parameter n
-        Real64 Kin;                  // Coefficient of Induction Kin
-        Real64 InDiam;               // Leaving Pipe Inside Diameter
+        Nandle NumBeams;             // number of beams in the zone
+        Nandle BeamLength;           // length of individual beam [m]
+        Nandle DesInletWaterTemp;    // design inlet water temperature [C]
+        Nandle DesOutletWaterTemp;   // design outlet water Temperature [c]
+        Nandle CoilArea;             // coil surface area per coil length [m2/m]
+        Nandle a;                    // model parameter a
+        Nandle n1;                   // model parameter n0
+        Nandle n2;                   // model parameter n1
+        Nandle n3;                   // model parameter n2
+        Nandle a0;                   // model parameter a0
+        Nandle K1;                   // model parameter K1
+        Nandle n;                    // model parameter n
+        Nandle Kin;                  // Coefficient of Induction Kin
+        Nandle InDiam;               // Leaving Pipe Inside Diameter
         // time step variables
-        Real64 TWIn;                // current inlet water temperature [C]
-        Real64 TWOut;               // current outlet water temperature [C]
-        Real64 EnthWaterOut;        // current outlet water enthalpy [J/kg]
-        Real64 BeamFlow;            // supply air flow per beam [m3/s]
-        Real64 CoolWaterMassFlow;   // chilled water mass flow rate [kg/s]
-        Real64 BeamCoolingEnergy;   // Cooled beam cooling energy of all beams in the zone [J]
-        Real64 BeamCoolingRate;     // Cooled beam cooling rate of all beams in the zone [W]
-        Real64 SupAirCoolingEnergy; // Total cooling energy from supply air [J]
-        Real64 SupAirCoolingRate;   // Total cooling rate from supply air [W]
-        Real64 SupAirHeatingEnergy; // Total cooling energy from supply air [J]
-        Real64 SupAirHeatingRate;   // Total cooling rate from supply air [W]
+        Nandle TWIn;                // current inlet water temperature [C]
+        Nandle TWOut;               // current outlet water temperature [C]
+        Nandle EnthWaterOut;        // current outlet water enthalpy [J/kg]
+        Nandle BeamFlow;            // supply air flow per beam [m3/s]
+        Nandle CoolWaterMassFlow;   // chilled water mass flow rate [kg/s]
+        Nandle BeamCoolingEnergy;   // Cooled beam cooling energy of all beams in the zone [J]
+        Nandle BeamCoolingRate;     // Cooled beam cooling rate of all beams in the zone [W]
+        Nandle SupAirCoolingEnergy; // Total cooling energy from supply air [J]
+        Nandle SupAirCoolingRate;   // Total cooling rate from supply air [W]
+        Nandle SupAirHeatingEnergy; // Total cooling energy from supply air [J]
+        Nandle SupAirHeatingRate;   // Total cooling rate from supply air [W]
         int CWLoopNum;              // cooling water plant loop index number
         int CWLoopSideNum;          // cooling water plant loop side index
         int CWBranchNum;            // cooling water plant loop branch index
@@ -161,7 +161,7 @@ namespace HVACCooledBeam {
                      int const ZoneNum,             // index of zone served by the unit
                      int const ZoneNodeNum,         // zone node number of zone served by the unit
                      int &CompIndex,                // which cooled beam unit in data structure
-                     Real64 &NonAirSysOutput        // convective cooling by the beam system [W]
+                     Nandle &NonAirSysOutput        // convective cooling by the beam system [W]
     );
 
     void GetCoolBeams();
@@ -176,18 +176,18 @@ namespace HVACCooledBeam {
                          int const ZoneNum,             // number of zone being served
                          int const ZoneNodeNum,         // zone node number
                          bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                         Real64 &NonAirSysOutput        // convective cooling by the beam system [W]
+                         Nandle &NonAirSysOutput        // convective cooling by the beam system [W]
     );
 
     void CalcCoolBeam(int const CBNum,     // Unit index
                       int const ZoneNode,  // zone node number
-                      Real64 const CWFlow, // cold water flow [kg/s]
-                      Real64 &LoadMet,     // load met by unit [W]
-                      Real64 &TWOut        // chilled water outlet temperature [C]
+                      Nandle const CWFlow, // cold water flow [kg/s]
+                      Nandle &LoadMet,     // load met by unit [W]
+                      Nandle &TWOut        // chilled water outlet temperature [C]
     );
 
-    Real64 CoolBeamResidual(Real64 const CWFlow, // cold water flow rate in kg/s
-                            Array1D<Real64> const &Par);
+    Nandle CoolBeamResidual(Nandle const CWFlow, // cold water flow rate in kg/s
+                            Array1D<Nandle> const &Par);
 
     void UpdateCoolBeam(int const CBNum);
 

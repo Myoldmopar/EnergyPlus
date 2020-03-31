@@ -79,14 +79,14 @@ using namespace OutputReportPredefined;
 
 TEST_F(EnergyPlusFixture, HeatPumpWaterHeaterTests_TestQsourceCalcs)
 {
-    Real64 DeltaT = 0.0;
-    Real64 const SourceInletTemp = 62.0;
-    Real64 const Cp = 4178.; // water, J/(kg * K)
-    Real64 const SetPointTemp = 60.0;
-    Real64 const SourceMassFlowRateOrig = 0.378529822165; // water, 6 gal/min
-    Real64 SourceMassFlowRate = SourceMassFlowRateOrig;
-    Real64 Qheatpump = 0.0;
-    Real64 Qsource = 0.0;
+    Nandle DeltaT = 0.0;
+    Nandle const SourceInletTemp = 62.0;
+    Nandle const Cp = 4178.; // water, J/(kg * K)
+    Nandle const SetPointTemp = 60.0;
+    Nandle const SourceMassFlowRateOrig = 0.378529822165; // water, 6 gal/min
+    Nandle SourceMassFlowRate = SourceMassFlowRateOrig;
+    Nandle Qheatpump = 0.0;
+    Nandle Qsource = 0.0;
 
     // Mixed Tank
 
@@ -775,12 +775,12 @@ TEST_F(EnergyPlusFixture, HPWHEnergyBalance)
     WaterThermalTanks::mdotAir = 0.0993699992873531;
 
     int GlycolIndex = 0;
-    const Real64 Cp = FluidProperties::GetSpecificHeatGlycol(Water, Tank.TankTemp, GlycolIndex, "HPWHEnergyBalance");
+    const Nandle Cp = FluidProperties::GetSpecificHeatGlycol(Water, Tank.TankTemp, GlycolIndex, "HPWHEnergyBalance");
 
     Tank.CalcHeatPumpWaterHeater(false);
 
-    const Real64 HeatFromCoil = Coil.TotalHeatingEnergyRate * TimeStepSys * 3600; // J
-    Real64 TankEnergySum = 0;
+    const Nandle HeatFromCoil = Coil.TotalHeatingEnergyRate * TimeStepSys * 3600; // J
+    Nandle TankEnergySum = 0;
     for (int i = 1; i <= Tank.Nodes; ++i) {
         const WaterThermalTanks::StratifiedNodeData &Node = Tank.Node(i);
 
@@ -795,7 +795,7 @@ TEST_F(EnergyPlusFixture, HPWHEnergyBalance)
     // Add back in the energy that was lost to ambient
     TankEnergySum -= Tank.LossRate * TimeStepSys * 3600;
 
-    const Real64 ErrorBound = HeatFromCoil * 0.0001; // Within 0.01% of each other
+    const Nandle ErrorBound = HeatFromCoil * 0.0001; // Within 0.01% of each other
     EXPECT_NEAR(HeatFromCoil, TankEnergySum, ErrorBound);
 }
 
@@ -1028,8 +1028,8 @@ TEST_F(EnergyPlusFixture, HPWHSizing)
 
     bool ErrorsFound = false;
     int CompIndex = 1;
-    Real64 SenseLoadMet = 0;
-    Real64 LatLoadMet = 0;
+    Nandle SenseLoadMet = 0;
+    Nandle LatLoadMet = 0;
     HeatBalanceManager::GetZoneData(ErrorsFound);
     ASSERT_FALSE(ErrorsFound);
     DataHVACGlobals::TimeStepSys = 1;
@@ -1044,18 +1044,18 @@ TEST_F(EnergyPlusFixture, HPWHSizing)
 TEST_F(EnergyPlusFixture, WaterThermalTank_CalcTempIntegral)
 {
 
-    Real64 Ti = 57.22;   // Initial tank temperature (C)
-    Real64 Tf = 52.22;   // Final tank temperature (C)
-    Real64 Ta = 19.72;   // Ambient environment temperature (C)
-    Real64 T1 = 14.44;   // Temperature of flow 1 (C)
-    Real64 T2 = 0.00;    // Temperature of flow 2 (C)
-    Real64 m = 148.67;   // Mass of tank fluid (kg)
-    Real64 Cp = 4183.9;  // Specific heat of fluid (J/kg deltaC)
-    Real64 m1 = 0.06761; // Mass flow rate 1 (kg/s)
-    Real64 m2 = 0.00;    // Mass flow rate 2 (kg/s)
-    Real64 UA = 5.0;     // Heat loss coefficient to ambient environment (W/deltaC)
-    Real64 Q = 0.0;      // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
-    Real64 t = 269.2;    // Time elapsed from Ti to Tf (s)
+    Nandle Ti = 57.22;   // Initial tank temperature (C)
+    Nandle Tf = 52.22;   // Final tank temperature (C)
+    Nandle Ta = 19.72;   // Ambient environment temperature (C)
+    Nandle T1 = 14.44;   // Temperature of flow 1 (C)
+    Nandle T2 = 0.00;    // Temperature of flow 2 (C)
+    Nandle m = 148.67;   // Mass of tank fluid (kg)
+    Nandle Cp = 4183.9;  // Specific heat of fluid (J/kg deltaC)
+    Nandle m1 = 0.06761; // Mass flow rate 1 (kg/s)
+    Nandle m2 = 0.00;    // Mass flow rate 2 (kg/s)
+    Nandle UA = 5.0;     // Heat loss coefficient to ambient environment (W/deltaC)
+    Nandle Q = 0.0;      // Net heating rate for non-temp dependent sources, i.e. heater and parasitics (W)
+    Nandle t = 269.2;    // Time elapsed from Ti to Tf (s)
 
     EXPECT_NEAR(14716.6, WaterThermalTanks::WaterThermalTankData::CalcTempIntegral(Ti, Tf, Ta, T1, T2, m, Cp, m1, m2, UA, Q, t), 0.1);
 
@@ -1843,7 +1843,7 @@ TEST_F(EnergyPlusFixture, MixedTankTimeNeededCalc)
     Tank.CalcWaterThermalTankMixed();
 
     // steady state estimated tank skin heat loss rate (1 minute time step)
-    Real64 TankSkinHeatLossRate = -Tank.OffCycLossFracToZone * Tank.OffCycLossCoeff * (Tank.AmbientTempZone - Tank.TankTempAvg);
+    Nandle TankSkinHeatLossRate = -Tank.OffCycLossFracToZone * Tank.OffCycLossCoeff * (Tank.AmbientTempZone - Tank.TankTempAvg);
     // expected tank avg temp less than starting value of 60 C
     EXPECT_LT(Tank.TankTempAvg, 60.0);
     // check tank skin heat loss rate to the zone
@@ -1959,7 +1959,7 @@ TEST_F(EnergyPlusFixture, StratifiedTankCalc)
 
     Tank.CalcWaterThermalTankStratified();
 
-    std::vector<Real64> NodeTemps;
+    std::vector<Nandle> NodeTemps;
     NodeTemps.resize(Tank.Nodes);
     for (int i = 0; i < Tank.Nodes; ++i) {
         NodeTemps[i] = Tank.Node[i].Temp;
@@ -1993,7 +1993,7 @@ TEST_F(EnergyPlusFixture, StratifiedTankCalc)
     }
 
     // Run a test with a use flow rate
-    std::vector<Real64> PrevNodeTemps;
+    std::vector<Nandle> PrevNodeTemps;
     PrevNodeTemps.resize(Tank.Nodes);
     for (int i = 0; i < Tank.Nodes; ++i) {
         auto &node = Tank.Node[i];
@@ -2014,14 +2014,14 @@ TEST_F(EnergyPlusFixture, StratifiedTankCalc)
     for (int i = 0; i < Tank.Nodes - 1; ++i) {
         EXPECT_GE(NodeTemps[i], NodeTemps[i + 1]);
     }
-    const Real64 SecInTimeStep = TimeStepSys * DataGlobals::SecInHour;
+    const Nandle SecInTimeStep = TimeStepSys * DataGlobals::SecInHour;
     int DummyIndex = 1;
-    Real64 TankNodeEnergy = 0;
+    Nandle TankNodeEnergy = 0;
     for (int i = 0; i < Tank.Nodes; ++i) {
         auto &node = Tank.Node[i];
         TankNodeEnergy += node.Mass * (NodeTemps[i] - PrevNodeTemps[i]);
     }
-    Real64 Cp = FluidProperties::GetSpecificHeatGlycol("WATER", 60.0, DummyIndex, "StratifiedTankCalcNoDraw");
+    Nandle Cp = FluidProperties::GetSpecificHeatGlycol("WATER", 60.0, DummyIndex, "StratifiedTankCalcNoDraw");
     TankNodeEnergy *= Cp;
     EXPECT_NEAR(Tank.NetHeatTransferRate * SecInTimeStep, TankNodeEnergy, fabs(TankNodeEnergy * 0.0001));
 
@@ -2047,7 +2047,7 @@ TEST_F(EnergyPlusFixture, StratifiedTankCalc)
         EXPECT_LE(node.Temp, Tank.TankTempLimit);
     }
     EXPECT_LT(Tank.VentRate, 0.0);
-    const Real64 ExpectedVentedEnergy = Tank.Node[0].Mass * Cp * 5.0 / SecInTimeStep;
+    const Nandle ExpectedVentedEnergy = Tank.Node[0].Mass * Cp * 5.0 / SecInTimeStep;
     EXPECT_NEAR(ExpectedVentedEnergy, -Tank.VentRate, fabs(ExpectedVentedEnergy) * 0.05);
 }
 
@@ -2167,16 +2167,16 @@ TEST_F(EnergyPlusFixture, StratifiedTankSourceFlowRateCalc)
     Tank.SourceMassFlowRate = 6.30901964e-5 * 997; // 1 gal/min
 
     int DummyIndex = 1;
-    Real64 Cp = FluidProperties::GetSpecificHeatGlycol("WATER", 60.0, DummyIndex, "StratifiedTankCalcNoDraw");
+    Nandle Cp = FluidProperties::GetSpecificHeatGlycol("WATER", 60.0, DummyIndex, "StratifiedTankCalcNoDraw");
 
     Tank.CalcWaterThermalTankStratified();
 
-    Real64 EnergySum = 0.0;
+    Nandle EnergySum = 0.0;
     for (int i = 0; i < Tank.Nodes; ++i) {
         auto &node = Tank.Node[i];
         EnergySum += node.Mass * Cp * (node.Temp - 60.0);
     }
-    Real64 Esource = Tank.SourceEffectiveness * Tank.SourceMassFlowRate * Cp *
+    Nandle Esource = Tank.SourceEffectiveness * Tank.SourceMassFlowRate * Cp *
                      (Tank.SourceInletTemp - Tank.Node(Tank.SourceOutletStratNode).TempAvg) * TimeStepSys * SecInHour;
     EXPECT_NEAR(Esource, EnergySum, EnergySum * 0.001);
 }
@@ -2642,7 +2642,7 @@ TEST_F(EnergyPlusFixture, StratifiedTank_GSHP_DesuperheaterSourceHeat)
     int SupplySide(2);
     int BranchNum(1);
     int CompNum(1);
-    Real64 PLR(0.5);
+    Nandle PLR(0.5);
 
     EXPECT_FALSE(WaterThermalTanks::GetWaterThermalTankInput(OutputFiles::getSingleton()));
     // Test if the new data Structure for water to air heat pump coils successfully initialized
@@ -3202,7 +3202,7 @@ TEST_F(EnergyPlusFixture, MixedTankAlternateSchedule)
 
     int TankNum(1);
     int DemandSide(1);
-    Real64 rho;
+    Nandle rho;
     int WaterIndex(1);
     bool NeedsHeatOrCool;
     WaterThermalTanks::WaterThermalTankData &Tank = WaterThermalTank(TankNum);

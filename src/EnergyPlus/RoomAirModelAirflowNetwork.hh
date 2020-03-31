@@ -90,7 +90,7 @@ namespace RoomAirModelAirflowNetwork {
 
         //*****************************************************************************************
 
-        void CalcSurfaceMoistureSums(int const RoomAirNode, Real64 &SumHmAW, Real64 &SumHmARa, Real64 &SumHmARaW, Array1D<bool> const &SurfMask);
+        void CalcSurfaceMoistureSums(int const RoomAirNode, Nandle &SumHmAW, Nandle &SumHmARa, Nandle &SumHmARaW, Array1D<bool> const &SurfMask);
     };
 
     // Object data

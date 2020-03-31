@@ -79,71 +79,71 @@ namespace SwimmingPool {
         int HWLoopSide;
         int HWBranchNum;
         int HWCompNum;
-        Real64 WaterVolFlowMax;                 // maximum water flow rate for pool, m3/s
-        Real64 WaterMassFlowRateMax;            // maximum water mass flow rate for pool, kg/s
-        Real64 AvgDepth;                        // average depth of the pool, m
-        Real64 ActivityFactor;                  // Activity factor for the pool
+        Nandle WaterVolFlowMax;                 // maximum water flow rate for pool, m3/s
+        Nandle WaterMassFlowRateMax;            // maximum water mass flow rate for pool, kg/s
+        Nandle AvgDepth;                        // average depth of the pool, m
+        Nandle ActivityFactor;                  // Activity factor for the pool
         std::string ActivityFactorSchedName;    // Activity factor schedule name
         int ActivityFactorSchedPtr;             // Activity factor schedule pointer
-        Real64 CurActivityFactor;               // Current activity factor value
+        Nandle CurActivityFactor;               // Current activity factor value
         std::string MakeupWaterSupplyName;      // Name of make-up water source
         std::string MakeupWaterSupplySchedName; // Name of make-up water supply schedule
         int MakeupWaterSupplySchedPtr;          // Index to schedule for make-up water
-        Real64 CurMakeupWaterTemp;              // Current makeup water temperature
+        Nandle CurMakeupWaterTemp;              // Current makeup water temperature
         std::string CoverSchedName;             // Pool cover schedule name
         int CoverSchedPtr;                      // Index to pool cover schedule
-        Real64 CurCoverSchedVal;                // Current cover schedule value based on schedule
-        Real64 CoverEvapFactor;                 // Pool cover evaporation factor
-        Real64 CoverConvFactor;                 // Pool cover convective factor
-        Real64 CoverSWRadFactor;                // Pool cover short-wavelength radiation factor
-        Real64 CoverLWRadFactor;                // Pool cover long-wavelength radiation factor
-        Real64 CurCoverEvapFac;                 // Current pool cover evaporation factor
-        Real64 CurCoverConvFac;                 // Current pool cover convective factor
-        Real64 CurCoverSWRadFac;                // Current pool cover short-wavelength radiation factor
-        Real64 CurCoverLWRadFac;                // Current pool cover long-wavelength radiation factor
-        Real64 RadConvertToConvect;             // LW and SW radiation converted to convective gain by pool cover in W/m2
-        Real64 MiscPowerFactor;                 // Pool miscellaneous power equipment consumption coefficient in W/(kg/s)
+        Nandle CurCoverSchedVal;                // Current cover schedule value based on schedule
+        Nandle CoverEvapFactor;                 // Pool cover evaporation factor
+        Nandle CoverConvFactor;                 // Pool cover convective factor
+        Nandle CoverSWRadFactor;                // Pool cover short-wavelength radiation factor
+        Nandle CoverLWRadFactor;                // Pool cover long-wavelength radiation factor
+        Nandle CurCoverEvapFac;                 // Current pool cover evaporation factor
+        Nandle CurCoverConvFac;                 // Current pool cover convective factor
+        Nandle CurCoverSWRadFac;                // Current pool cover short-wavelength radiation factor
+        Nandle CurCoverLWRadFac;                // Current pool cover long-wavelength radiation factor
+        Nandle RadConvertToConvect;             // LW and SW radiation converted to convective gain by pool cover in W/m2
+        Nandle MiscPowerFactor;                 // Pool miscellaneous power equipment consumption coefficient in W/(kg/s)
         std::string SetPtTempSchedName;         // Schedule name for water setpoint temperature
         int SetPtTempSchedPtr;                  // Schedule pointer for water setpoint temperature
-        Real64 CurSetPtTemp;                    // Current water setpoint temperature
-        Real64 MaxNumOfPeople;                  // Number of people in the pool as defined by user input
+        Nandle CurSetPtTemp;                    // Current water setpoint temperature
+        Nandle MaxNumOfPeople;                  // Number of people in the pool as defined by user input
         std::string PeopleSchedName;            // Name of people schedule
         int PeopleSchedPtr;                     // People schedule index
         std::string PeopleHeatGainSchedName;    // Name of people heat gain schedule
         int PeopleHeatGainSchedPtr;             // People heat gain schedule index
-        Real64 PeopleHeatGain;                  // Current heat gain from people
+        Nandle PeopleHeatGain;                  // Current heat gain from people
         int GlycolIndex;                        // index in fluid property routines for water
-        Real64 WaterMass;                       // pool water mass
-        Real64 SatPressPoolWaterTemp;           // Saturation pressure at the pool water temperature
-        Real64 PartPressZoneAirTemp;            // Partial pressure of water vapor in the air
+        Nandle WaterMass;                       // pool water mass
+        Nandle SatPressPoolWaterTemp;           // Saturation pressure at the pool water temperature
+        Nandle PartPressZoneAirTemp;            // Partial pressure of water vapor in the air
         // Report data
-        Real64 PoolWaterTemp;           // Average pool water temperature
-        Real64 WaterInletTemp;          // water inlet temperature
-        Real64 WaterOutletTemp;         // water outlet temperature
-        Real64 WaterMassFlowRate;       // water mass flow rate
-        Real64 MakeUpWaterMassFlowRate; // makeup water flow rate (addition to the pool)
-        Real64 MakeUpWaterMass;         // makeup water mass added to pool
-        Real64 MakeUpWaterVolFlowRate;  // makeup water volume flow rate
-        Real64 MakeUpWaterVol;          // makeup water volume added to pool
-        Real64 HeatPower;               // heating sent to pool in Watts
-        Real64 HeatEnergy;              // heating sent to pool in Joules
-        Real64 MiscEquipPower;          // power for miscellaneous pool equipment in Watts
-        Real64 MiscEquipEnergy;         // energy for miscellaneous pool equipment in Joules
-        Real64 RadConvertToConvectRep;  // LW and SW radiation converted to convective gain by pool cover (reporting) in W
-        Real64 EvapHeatLossRate;        // Heat lost due to evaporation of pool water as a rate in Watts
-        Real64 EvapEnergyLoss;          // Energy lost due to evaporation in Joules
+        Nandle PoolWaterTemp;           // Average pool water temperature
+        Nandle WaterInletTemp;          // water inlet temperature
+        Nandle WaterOutletTemp;         // water outlet temperature
+        Nandle WaterMassFlowRate;       // water mass flow rate
+        Nandle MakeUpWaterMassFlowRate; // makeup water flow rate (addition to the pool)
+        Nandle MakeUpWaterMass;         // makeup water mass added to pool
+        Nandle MakeUpWaterVolFlowRate;  // makeup water volume flow rate
+        Nandle MakeUpWaterVol;          // makeup water volume added to pool
+        Nandle HeatPower;               // heating sent to pool in Watts
+        Nandle HeatEnergy;              // heating sent to pool in Joules
+        Nandle MiscEquipPower;          // power for miscellaneous pool equipment in Watts
+        Nandle MiscEquipEnergy;         // energy for miscellaneous pool equipment in Joules
+        Nandle RadConvertToConvectRep;  // LW and SW radiation converted to convective gain by pool cover (reporting) in W
+        Nandle EvapHeatLossRate;        // Heat lost due to evaporation of pool water as a rate in Watts
+        Nandle EvapEnergyLoss;          // Energy lost due to evaporation in Joules
         bool MyOneTimeFlag;
         bool MyEnvrnFlagGeneral;
         bool MyPlantScanFlagPool;
         Array1D_int SurfaceToPoolIndex;
-        Array1D<Real64> QPoolSrcAvg;          // Average source over the time step for a particular radiant surface
-        Array1D<Real64> HeatTransCoefsAvg;    // Average denominator term over the time step for a particular pool
-        Array1D<Real64> ZeroSourceSumHATsurf; // Equal to SumHATsurf for all the walls in a zone with no source
+        Array1D<Nandle> QPoolSrcAvg;          // Average source over the time step for a particular radiant surface
+        Array1D<Nandle> HeatTransCoefsAvg;    // Average denominator term over the time step for a particular pool
+        Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to SumHATsurf for all the walls in a zone with no source
         // Record keeping variables used to calculate QRadSysSrcAvg locally
-        Array1D<Real64> LastQPoolSrc;       // Need to keep the last value in case we are still iterating
-        Array1D<Real64> LastHeatTransCoefs; // Need to keep the last value in case we are still iterating
-        Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-        Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+        Array1D<Nandle> LastQPoolSrc;       // Need to keep the last value in case we are still iterating
+        Array1D<Nandle> LastHeatTransCoefs; // Need to keep the last value in case we are still iterating
+        Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+        Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
 
         // Default Constructor
         SwimmingPoolData()
@@ -160,7 +160,7 @@ namespace SwimmingPool {
         {
         }
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void initialize(bool FirstHVACIteration // true during the first HVAC iteration
         );
@@ -174,10 +174,10 @@ namespace SwimmingPool {
 
         void calculate();
 
-        void calcSwimmingPoolEvap(Real64 &EvapRate, // Evaporation rate
+        void calcSwimmingPoolEvap(Nandle &EvapRate, // Evaporation rate
                                   int SurfNum,      // Surface index
-                                  Real64 MAT,       // mean air temperature
-                                  Real64 HumRat     // zone air humidity ratio
+                                  Nandle MAT,       // mean air temperature
+                                  Nandle HumRat     // zone air humidity ratio
         );
 
         void update();
@@ -194,13 +194,13 @@ namespace SwimmingPool {
 
     void UpdatePoolSourceValAvg(bool &SwimmingPoolOn); // .TRUE. if the swimming pool has "run" this zone time step
 
-    Real64 SumHATsurf(int ZoneNum); // Zone number
+    Nandle SumHATsurf(int ZoneNum); // Zone number
 
     void ReportSwimmingPool();
 
-    Real64 MakeUpWaterVolFlowFunct(Real64 MakeUpWaterMassFlowRate, Real64 Density);
+    Nandle MakeUpWaterVolFlowFunct(Nandle MakeUpWaterMassFlowRate, Nandle Density);
 
-    Real64 MakeUpWaterVolFunct(Real64 MakeUpWaterMass, Real64 Density);
+    Nandle MakeUpWaterVolFunct(Nandle MakeUpWaterMass, Nandle Density);
 
 } // namespace SwimmingPool
 

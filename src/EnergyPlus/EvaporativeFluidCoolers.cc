@@ -149,7 +149,7 @@ namespace EvaporativeFluidCoolers {
         int NumNums;                  // Number of elements in the numeric array
         int IOStat;                   // IO Status when calling get input subroutine
         bool ErrorsFound(false);      // Logical flag set .TRUE. if errors found while getting input data
-        Array1D<Real64> NumArray(25); // Numeric input data array
+        Array1D<Nandle> NumArray(25); // Numeric input data array
         Array1D_string AlphArray(13); // Character string input data array
 
         // Get number of all evaporative fluid coolers specified in the input data file (idf)
@@ -959,12 +959,12 @@ namespace EvaporativeFluidCoolers {
         SetupOutputVariable("Cooling Tower Water Blowdown Volume", OutputProcessor::Unit::m3, this->BlowdownVol, "System", "Sum", this->Name);
     }
 
-    void EvapFluidCoolerSpecs::getSizingFactor(Real64 &_SizFac)
+    void EvapFluidCoolerSpecs::getSizingFactor(Nandle &_SizFac)
     {
         _SizFac = this->SizFac;
     }
 
-    void EvapFluidCoolerSpecs::getDesignCapacities(const PlantLocation &, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void EvapFluidCoolerSpecs::getDesignCapacities(const PlantLocation &, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         if (this->TypeOf_Num == DataPlant::TypeOf_EvapFluidCooler_SingleSpd) {
 
@@ -989,7 +989,7 @@ namespace EvaporativeFluidCoolers {
 
     void EvapFluidCoolerSpecs::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                         bool EP_UNUSED(FirstHVACIteration),
-                                        Real64 &EP_UNUSED(CurLoad),
+                                        Nandle &EP_UNUSED(CurLoad),
                                         bool RunFlag)
     {
 
@@ -1102,7 +1102,7 @@ namespace EvaporativeFluidCoolers {
         // Begin environment initializations
         if (this->MyEnvrnFlag && DataGlobals::BeginEnvrnFlag && (DataPlant::PlantFirstSizesOkayToFinalize)) {
 
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                            DataGlobals::InitConvTemp,
                                                            DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                            RoutineName);
@@ -1176,23 +1176,23 @@ namespace EvaporativeFluidCoolers {
         // Based on SizeTower by Don Shirey, Sept/Oct 2002; Richard Raustad, Feb 2005
 
         int const MaxIte(500);    // Maximum number of iterations
-        Real64 const Acc(0.0001); // Accuracy of result
+        Nandle const Acc(0.0001); // Accuracy of result
         std::string const CalledFrom("SizeEvapFluidCooler");
 
         int SolFla;                      // Flag of solver
-        Real64 UA;                       // Calculated UA value [W/C]
-        Real64 OutWaterTempAtUA0;        // Water outlet temperature at UA0
-        Real64 OutWaterTempAtUA1;        // Water outlet temperature at UA1
-        Real64 DesignEnteringAirWetBulb; // Intermediate variable to check that design exit
+        Nandle UA;                       // Calculated UA value [W/C]
+        Nandle OutWaterTempAtUA0;        // Water outlet temperature at UA0
+        Nandle OutWaterTempAtUA1;        // Water outlet temperature at UA1
+        Nandle DesignEnteringAirWetBulb; // Intermediate variable to check that design exit
         // temperature specified in the plant:sizing object
         // is higher than the design entering air wet-bulb temp
         // when autosize feature is used
-        Array1D<Real64> Par(4); // Parameter array need for RegulaFalsi routine
+        Array1D<Nandle> Par(4); // Parameter array need for RegulaFalsi routine
 
-        Real64 DesEvapFluidCoolerLoad = 0.0; // Design evaporative fluid cooler load [W]
-        Real64 tmpDesignWaterFlowRate = this->DesignWaterFlowRate;
-        Real64 tmpHighSpeedFanPower = this->HighSpeedFanPower;
-        Real64 tmpHighSpeedAirFlowRate = this->HighSpeedAirFlowRate;
+        Nandle DesEvapFluidCoolerLoad = 0.0; // Design evaporative fluid cooler load [W]
+        Nandle tmpDesignWaterFlowRate = this->DesignWaterFlowRate;
+        Nandle tmpHighSpeedFanPower = this->HighSpeedFanPower;
+        Nandle tmpHighSpeedAirFlowRate = this->HighSpeedAirFlowRate;
 
         int PltSizCondNum = DataPlant::PlantLoop(this->LoopNum).PlantSizNum;
 
@@ -1244,11 +1244,11 @@ namespace EvaporativeFluidCoolers {
 
         if (this->PerformanceInputMethod_Num == PIM::UFactor && !this->HighSpeedEvapFluidCoolerUAWasAutoSized) {
             if (PltSizCondNum > 0) {
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                DataGlobals::InitConvTemp,
                                                                DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                CalledFrom);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                    DataSizing::PlantSizData(PltSizCondNum).ExitTemp,
                                                                    DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                    CalledFrom);
@@ -1314,11 +1314,11 @@ namespace EvaporativeFluidCoolers {
                     if (DataPlant::PlantFirstSizesOkayToFinalize) this->HighSpeedFanPower = tmpHighSpeedFanPower;
                 } else if (PltSizCondNum > 0) {
                     if (DataSizing::PlantSizData(PltSizCondNum).DesVolFlowRate >= DataHVACGlobals::SmallWaterVolFlow) {
-                        Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                        Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                        DataGlobals::InitConvTemp,
                                                                        DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                        CalledFrom);
-                        Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                        Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                            DataSizing::PlantSizData(PltSizCondNum).ExitTemp,
                                                                            DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                            CalledFrom);
@@ -1410,11 +1410,11 @@ namespace EvaporativeFluidCoolers {
                                           "must be > 25.6 C if autosizing the Evaporative Fluid Cooler.");
                         ShowFatalError("Review and revise design input values as appropriate.");
                     }
-                    Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                    Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                    DataGlobals::InitConvTemp,
                                                                    DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                    CalledFrom);
-                    Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                    Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                        DataSizing::PlantSizData(PltSizCondNum).ExitTemp,
                                                                        DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                        CalledFrom);
@@ -1425,8 +1425,8 @@ namespace EvaporativeFluidCoolers {
                     Par(4) = Cp;
 
                     // Lower bound for UA [W/C]
-                    Real64 UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
-                    Real64 UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
+                    Nandle UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
+                    Nandle UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
                     this->inletConds.WaterTemp = DataSizing::PlantSizData(PltSizCondNum).ExitTemp + DataSizing::PlantSizData(PltSizCondNum).DeltaT;
                     this->inletConds.AirTemp = 35.0;
                     this->inletConds.AirWetBulb = 25.6;
@@ -1522,19 +1522,19 @@ namespace EvaporativeFluidCoolers {
             if (this->DesignWaterFlowRate >= DataHVACGlobals::SmallWaterVolFlow) {
                 // Standard Design Capacity doesn't include compressor heat;
                 // predefined factor was 1.25 W heat rejection per W of delivered cooling, now a user input with 1.25 default
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                DataGlobals::InitConvTemp,
                                                                DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                CalledFrom);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(
                     DataPlant::PlantLoop(this->LoopNum).FluidName, 35.0, DataPlant::PlantLoop(this->LoopNum).FluidIndex, CalledFrom);
                 DesEvapFluidCoolerLoad = this->HighSpeedStandardDesignCapacity * this->HeatRejectCapNomCapSizingRatio;
                 Par(1) = DesEvapFluidCoolerLoad;
                 Par(2) = rho * this->DesignWaterFlowRate; // Design water mass flow rate
                 Par(3) = this->HighSpeedAirFlowRate;      // Design air volume flow rate
                 Par(4) = Cp;
-                Real64 UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
-                Real64 UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
+                Nandle UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
+                Nandle UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
                 this->inletConds.WaterTemp = 35.0;            // 95F design inlet water temperature
                 this->inletConds.AirTemp = 35.0;              // 95F design inlet air dry-bulb temp
                 this->inletConds.AirWetBulb = 25.6;           // 78F design inlet air wet-bulb temp
@@ -1588,11 +1588,11 @@ namespace EvaporativeFluidCoolers {
 
         if (this->PerformanceInputMethod_Num == PIM::UserSpecifiedDesignCapacity) {
             if (this->DesignWaterFlowRate >= DataHVACGlobals::SmallWaterVolFlow) {
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                DataGlobals::InitConvTemp,
                                                                DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                CalledFrom);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                    this->DesignEnteringWaterTemp,
                                                                    DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                    CalledFrom);
@@ -1601,8 +1601,8 @@ namespace EvaporativeFluidCoolers {
                 Par(2) = rho * tmpDesignWaterFlowRate; // Design water mass flow rate
                 Par(3) = tmpHighSpeedAirFlowRate;      // Design air volume flow rate
                 Par(4) = Cp;
-                Real64 UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
-                Real64 UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
+                Nandle UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
+                Nandle UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
 
                 this->inletConds.WaterTemp = this->DesignEnteringWaterTemp;
                 this->inletConds.AirTemp = this->DesignEnteringAirTemp;
@@ -1730,11 +1730,11 @@ namespace EvaporativeFluidCoolers {
             if (this->DesignWaterFlowRate >= DataHVACGlobals::SmallWaterVolFlow && this->LowSpeedStandardDesignCapacity > 0.0) {
                 // Standard design capacity doesn't include compressor heat;
                 // predefined factor was 1.25 W heat rejection per W of delivered cooling, now user input with default 1.25
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                DataGlobals::InitConvTemp,
                                                                DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                CalledFrom);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                    this->DesignEnteringWaterTemp,
                                                                    DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                    CalledFrom);
@@ -1743,8 +1743,8 @@ namespace EvaporativeFluidCoolers {
                 Par(2) = rho * tmpDesignWaterFlowRate; // Design water mass flow rate
                 Par(3) = this->LowSpeedAirFlowRate;    // Air volume flow rate at low fan speed
                 Par(4) = Cp;
-                Real64 UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
-                Real64 UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
+                Nandle UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
+                Nandle UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
                 this->inletConds.WaterTemp = 35.0;            // 95F design inlet water temperature
                 this->inletConds.AirTemp = 35.0;              // 95F design inlet air dry-bulb temp
                 this->inletConds.AirWetBulb = 25.6;           // 78F design inlet air wet-bulb temp
@@ -1781,11 +1781,11 @@ namespace EvaporativeFluidCoolers {
 
         if (this->PerformanceInputMethod_Num == PIM::UserSpecifiedDesignCapacity && this->TypeOf_Num == DataPlant::TypeOf_EvapFluidCooler_TwoSpd) {
             if (this->DesignWaterFlowRate >= DataHVACGlobals::SmallWaterVolFlow && this->LowSpeedUserSpecifiedDesignCapacity > 0.0) {
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                DataGlobals::InitConvTemp,
                                                                DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                CalledFrom);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                    this->DesignEnteringWaterTemp,
                                                                    DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                    CalledFrom);
@@ -1794,8 +1794,8 @@ namespace EvaporativeFluidCoolers {
                 Par(2) = rho * tmpDesignWaterFlowRate; // Design water mass flow rate
                 Par(3) = this->LowSpeedAirFlowRate;    // Air volume flow rate at low fan speed
                 Par(4) = Cp;
-                Real64 UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
-                Real64 UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
+                Nandle UA0 = 0.0001 * DesEvapFluidCoolerLoad; // Assume deltaT = 10000K (limit)
+                Nandle UA1 = DesEvapFluidCoolerLoad;          // Assume deltaT = 1K
                 this->inletConds.WaterTemp = this->DesignEnteringWaterTemp;
                 this->inletConds.AirTemp = this->DesignEnteringAirTemp;
                 this->inletConds.AirWetBulb = this->DesignEnteringAirWetBulbTemp;
@@ -1909,24 +1909,24 @@ namespace EvaporativeFluidCoolers {
         std::string const RoutineName("CalcSingleSpeedEvapFluidCooler");
         int const MaxIteration(100); // Maximum fluid bypass iteration calculations
         std::string const MaxItChar("100");
-        Real64 const BypassFractionThreshold(0.01); // Threshold to stop bypass iteration
-        Real64 const OWTLowerLimit(0.0);            // The limit of evaporative fluid cooler exit fluid temperature used
+        Nandle const BypassFractionThreshold(0.01); // Threshold to stop bypass iteration
+        Nandle const OWTLowerLimit(0.0);            // The limit of evaporative fluid cooler exit fluid temperature used
         // in the fluid bypass calculation to avoid fluid freezing. For water,
         // it is 0 degreeC and for glycols, it can be much lower. The fluid type
         // is stored at the loop. Current choices are Water and Steam,
         // needs to expand for glycols
 
-        Real64 AirFlowRate;
-        Real64 UAdesign = 0.0; // UA value at design conditions (entered by user or calculated)
-        Real64 CpWater;
-        Real64 TempSetPoint = 0.0;
+        Nandle AirFlowRate;
+        Nandle UAdesign = 0.0; // UA value at design conditions (entered by user or calculated)
+        Nandle CpWater;
+        Nandle TempSetPoint = 0.0;
 
         // set inlet and outlet nodes
         this->WaterInletNode = this->WaterInletNodeNum;
         this->WaterOutletNode = this->WaterOutletNodeNum;
         this->Qactual = 0.0;
         this->FanPower = 0.0;
-        Real64 inletWaterTemp = DataLoopNode::Node(this->WaterInletNode).Temp;
+        Nandle inletWaterTemp = DataLoopNode::Node(this->WaterInletNode).Temp;
         this->OutletWaterTemp = inletWaterTemp;
         AirFlowRate = 0.0;
         {
@@ -1951,14 +1951,14 @@ namespace EvaporativeFluidCoolers {
             //     Turn on evaporative fluid cooler fan
             UAdesign = this->HighSpeedEvapFluidCoolerUA;
             AirFlowRate = this->HighSpeedAirFlowRate;
-            Real64 FanPowerOn = this->HighSpeedFanPower;
+            Nandle FanPowerOn = this->HighSpeedFanPower;
 
             this->SimSimpleEvapFluidCooler(this->WaterMassFlowRate, AirFlowRate, UAdesign, this->OutletWaterTemp);
 
             if (this->OutletWaterTemp <= TempSetPoint) {
                 if (this->CapacityControl == 0 || this->OutletWaterTemp <= OWTLowerLimit) {
                     //         Setpoint was met with pump ON and fan ON, calculate run-time fraction
-                    Real64 FanModeFrac = (TempSetPoint - inletWaterTemp) / (this->OutletWaterTemp - inletWaterTemp);
+                    Nandle FanModeFrac = (TempSetPoint - inletWaterTemp) / (this->OutletWaterTemp - inletWaterTemp);
                     this->FanPower = FanModeFrac * FanPowerOn;
                     this->OutletWaterTemp = TempSetPoint;
                 } else {
@@ -1987,16 +1987,16 @@ namespace EvaporativeFluidCoolers {
         // The iteration ends when the numer of iteration exceeds the limit or the difference
         //  between the new and old bypass fractions is less than the threshold.
         if (BypassFlag == 1) {
-            Real64 bypassFraction = (TempSetPoint - this->OutletWaterTemp) / (inletWaterTemp - this->OutletWaterTemp);
+            Nandle bypassFraction = (TempSetPoint - this->OutletWaterTemp) / (inletWaterTemp - this->OutletWaterTemp);
             if (bypassFraction > 1.0 || bypassFraction < 0.0) {
                 // Bypass cannot meet setpoint, assume no bypass
                 this->BypassFraction = 0.0;
                 AirFlowRate = 0.0;
             } else {
                 int NumIteration = 0;
-                Real64 BypassFraction2 = 0.0; // Fluid bypass fraction
-                Real64 BypassFractionPrev = bypassFraction;
-                Real64 OutletWaterTempPrev = this->OutletWaterTemp;
+                Nandle BypassFraction2 = 0.0; // Fluid bypass fraction
+                Nandle BypassFractionPrev = bypassFraction;
+                Nandle OutletWaterTempPrev = this->OutletWaterTemp;
                 while (NumIteration < MaxIteration) {
                     ++NumIteration;
                     // need to iterate for the new OutletWaterTemp while bypassing evaporative fluid cooler water
@@ -2104,10 +2104,10 @@ namespace EvaporativeFluidCoolers {
         this->InletWaterTemp = DataLoopNode::Node(this->WaterInletNode).Temp;
         this->OutletWaterTemp = this->InletWaterTemp;
 
-        Real64 OutletWaterTemp1stStage = this->OutletWaterTemp;
-        Real64 OutletWaterTemp2ndStage = this->OutletWaterTemp;
-        Real64 AirFlowRate = 0.0;
-        Real64 TempSetPoint = 0.0;
+        Nandle OutletWaterTemp1stStage = this->OutletWaterTemp;
+        Nandle OutletWaterTemp2ndStage = this->OutletWaterTemp;
+        Nandle AirFlowRate = 0.0;
+        Nandle TempSetPoint = 0.0;
         {
             auto const SELECT_CASE_var(DataPlant::PlantLoop(this->LoopNum).LoopDemandCalcScheme);
             if (SELECT_CASE_var == DataPlant::SingleSetPoint) {
@@ -2124,15 +2124,15 @@ namespace EvaporativeFluidCoolers {
 
         if (this->InletWaterTemp > TempSetPoint) {
             //     Setpoint was not met ,turn on evaporative fluid cooler 1st stage fan
-            Real64 UAdesign = this->LowSpeedEvapFluidCoolerUA;
+            Nandle UAdesign = this->LowSpeedEvapFluidCoolerUA;
             AirFlowRate = this->LowSpeedAirFlowRate;
-            Real64 FanPowerLow = this->LowSpeedFanPower;
-            Real64 FanPowerHigh;
+            Nandle FanPowerLow = this->LowSpeedFanPower;
+            Nandle FanPowerHigh;
             this->SimSimpleEvapFluidCooler(this->WaterMassFlowRate, AirFlowRate, UAdesign, OutletWaterTemp1stStage);
 
             if (OutletWaterTemp1stStage <= TempSetPoint) {
                 //         Setpoint was met with pump ON and fan ON 1st stage, calculate fan mode fraction
-                Real64 FanModeFrac = (TempSetPoint - this->InletWaterTemp) / (OutletWaterTemp1stStage - this->InletWaterTemp);
+                Nandle FanModeFrac = (TempSetPoint - this->InletWaterTemp) / (OutletWaterTemp1stStage - this->InletWaterTemp);
                 this->FanPower = FanModeFrac * FanPowerLow;
                 this->OutletWaterTemp = TempSetPoint;
                 this->Qactual *= FanModeFrac;
@@ -2146,7 +2146,7 @@ namespace EvaporativeFluidCoolers {
 
                 if ((OutletWaterTemp2ndStage <= TempSetPoint) && UAdesign > 0.0) {
                     //           Setpoint was met with pump ON and fan ON 2nd stage, calculate fan mode fraction
-                    Real64 FanModeFrac = (TempSetPoint - OutletWaterTemp1stStage) / (OutletWaterTemp2ndStage - OutletWaterTemp1stStage);
+                    Nandle FanModeFrac = (TempSetPoint - OutletWaterTemp1stStage) / (OutletWaterTemp2ndStage - OutletWaterTemp1stStage);
                     this->FanPower = (FanModeFrac * FanPowerHigh) + (1.0 - FanModeFrac) * FanPowerLow;
                     this->OutletWaterTemp = TempSetPoint;
                 } else {
@@ -2158,7 +2158,7 @@ namespace EvaporativeFluidCoolers {
         }
 
         // Should this be water inlet node num??
-        Real64 CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+        Nandle CpWater = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                 DataLoopNode::Node(this->WaterInletNode).Temp,
                                                                 DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                 RoutineName);
@@ -2166,10 +2166,10 @@ namespace EvaporativeFluidCoolers {
         this->AirFlowRateRatio = AirFlowRate / this->HighSpeedAirFlowRate;
     }
 
-    void EvapFluidCoolerSpecs::SimSimpleEvapFluidCooler(Real64 const waterMassFlowRate,
-                                                        Real64 const AirFlowRate,
-                                                        Real64 const UAdesign,
-                                                        Real64 &outletWaterTemp)
+    void EvapFluidCoolerSpecs::SimSimpleEvapFluidCooler(Nandle const waterMassFlowRate,
+                                                        Nandle const AirFlowRate,
+                                                        Nandle const UAdesign,
+                                                        Nandle &outletWaterTemp)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2190,53 +2190,53 @@ namespace EvaporativeFluidCoolers {
         // ASHRAE     1999.  HVAC1KIT: A Toolkit for Primary HVAC System Energy Calculations.
 
         int const IterMax(50);                  // Maximum number of iterations allowed
-        Real64 const WetBulbTolerance(0.00001); // Maximum error for exiting wet-bulb temperature between iterations
-        Real64 const DeltaTwbTolerance(0.001);  // Maximum error (tolerance) in DeltaTwb for iteration convergence [C]
+        Nandle const WetBulbTolerance(0.00001); // Maximum error for exiting wet-bulb temperature between iterations
+        Nandle const DeltaTwbTolerance(0.001);  // Maximum error (tolerance) in DeltaTwb for iteration convergence [C]
         std::string const RoutineName("SimSimpleEvapFluidCooler");
 
         this->WaterInletNode = this->WaterInletNodeNum;
         this->WaterOutletNode = this->WaterOutletNodeNum;
-        Real64 qActual = 0.0;
-        Real64 WetBulbError = 1.0;
-        Real64 DeltaTwb = 1.0;
+        Nandle qActual = 0.0;
+        Nandle WetBulbError = 1.0;
+        Nandle DeltaTwb = 1.0;
 
         // set local evaporative fluid cooler inlet and outlet temperature variables
         this->InletWaterTemp = this->inletConds.WaterTemp;
         outletWaterTemp = this->InletWaterTemp;
-        Real64 InletAirTemp = this->inletConds.AirTemp;
-        Real64 InletAirWetBulb = this->inletConds.AirWetBulb;
+        Nandle InletAirTemp = this->inletConds.AirTemp;
+        Nandle InletAirWetBulb = this->inletConds.AirWetBulb;
 
         if (UAdesign == 0.0) return;
 
         // set water and air properties
-        Real64 AirDensity = Psychrometrics::PsyRhoAirFnPbTdbW(this->inletConds.AirPress, InletAirTemp, this->inletConds.AirHumRat);
-        Real64 AirMassFlowRate = AirFlowRate * AirDensity;
-        Real64 CpAir = Psychrometrics::PsyCpAirFnW(this->inletConds.AirHumRat);
-        Real64 CpWater = FluidProperties::GetSpecificHeatGlycol(
+        Nandle AirDensity = Psychrometrics::PsyRhoAirFnPbTdbW(this->inletConds.AirPress, InletAirTemp, this->inletConds.AirHumRat);
+        Nandle AirMassFlowRate = AirFlowRate * AirDensity;
+        Nandle CpAir = Psychrometrics::PsyCpAirFnW(this->inletConds.AirHumRat);
+        Nandle CpWater = FluidProperties::GetSpecificHeatGlycol(
             DataPlant::PlantLoop(this->LoopNum).FluidName, this->InletWaterTemp, DataPlant::PlantLoop(this->LoopNum).FluidIndex, RoutineName);
-        Real64 InletAirEnthalpy = Psychrometrics::PsyHFnTdbRhPb(InletAirWetBulb, 1.0, this->inletConds.AirPress);
+        Nandle InletAirEnthalpy = Psychrometrics::PsyHFnTdbRhPb(InletAirWetBulb, 1.0, this->inletConds.AirPress);
 
         // initialize exiting wet bulb temperature before iterating on final solution
-        Real64 OutletAirWetBulb = InletAirWetBulb + 6.0;
+        Nandle OutletAirWetBulb = InletAirWetBulb + 6.0;
 
         // Calculate mass flow rates
-        Real64 MdotCpWater = waterMassFlowRate * CpWater;
+        Nandle MdotCpWater = waterMassFlowRate * CpWater;
         int Iter = 0;
         while ((WetBulbError > WetBulbTolerance) && (Iter <= IterMax) && (DeltaTwb > DeltaTwbTolerance)) {
             ++Iter;
-            Real64 OutletAirEnthalpy = Psychrometrics::PsyHFnTdbRhPb(OutletAirWetBulb, 1.0, this->inletConds.AirPress);
+            Nandle OutletAirEnthalpy = Psychrometrics::PsyHFnTdbRhPb(OutletAirWetBulb, 1.0, this->inletConds.AirPress);
             // calculate the airside specific heat and capacity
-            Real64 CpAirside = (OutletAirEnthalpy - InletAirEnthalpy) / (OutletAirWetBulb - InletAirWetBulb);
-            Real64 AirCapacity = AirMassFlowRate * CpAirside;
+            Nandle CpAirside = (OutletAirEnthalpy - InletAirEnthalpy) / (OutletAirWetBulb - InletAirWetBulb);
+            Nandle AirCapacity = AirMassFlowRate * CpAirside;
             // calculate the minimum to maximum capacity ratios of airside and waterside
-            Real64 CapacityRatioMin = min(AirCapacity, MdotCpWater);
-            Real64 CapacityRatioMax = max(AirCapacity, MdotCpWater);
-            Real64 CapacityRatio = CapacityRatioMin / CapacityRatioMax;
+            Nandle CapacityRatioMin = min(AirCapacity, MdotCpWater);
+            Nandle CapacityRatioMax = max(AirCapacity, MdotCpWater);
+            Nandle CapacityRatio = CapacityRatioMin / CapacityRatioMax;
             // Calculate heat transfer coefficient and number of transfer units (NTU)
-            Real64 UAactual = UAdesign * CpAirside / CpAir;
-            Real64 NumTransferUnits = UAactual / CapacityRatioMin;
+            Nandle UAactual = UAdesign * CpAirside / CpAir;
+            Nandle NumTransferUnits = UAactual / CapacityRatioMin;
             // calculate heat exchanger effectiveness
-            Real64 effectiveness;
+            Nandle effectiveness;
             if (CapacityRatio <= 0.995) {
                 effectiveness = (1.0 - std::exp(-1.0 * NumTransferUnits * (1.0 - CapacityRatio))) /
                                 (1.0 - CapacityRatio * std::exp(-1.0 * NumTransferUnits * (1.0 - CapacityRatio)));
@@ -2245,7 +2245,7 @@ namespace EvaporativeFluidCoolers {
             }
             // calculate water to air heat transfer and store last exiting WB temp of air
             qActual = effectiveness * CapacityRatioMin * (this->InletWaterTemp - InletAirWetBulb);
-            Real64 OutletAirWetBulbLast = OutletAirWetBulb;
+            Nandle OutletAirWetBulbLast = OutletAirWetBulb;
             // calculate new exiting wet bulb temperature of airstream
             OutletAirWetBulb = InletAirWetBulb + qActual / AirCapacity;
             // Check error tolerance and exit if satisfied
@@ -2262,7 +2262,7 @@ namespace EvaporativeFluidCoolers {
         }
     }
 
-    Real64 EvapFluidCoolerSpecs::SimpleEvapFluidCoolerUAResidual(Real64 const UA, Array1D<Real64> const &Par)
+    Nandle EvapFluidCoolerSpecs::SimpleEvapFluidCoolerUAResidual(Nandle const UA, Array1D<Nandle> const &Par)
     {
 
         // FUNCTION INFORMATION:
@@ -2283,7 +2283,7 @@ namespace EvaporativeFluidCoolers {
         // REFERENCES:
         // Based on SimpleTowerUAResidual by Fred Buhl, May 2002
 
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -2291,8 +2291,8 @@ namespace EvaporativeFluidCoolers {
         // Par(3) = design air volume flow rate [m3/s]
         // Par(4) = water specific heat [J/(kg*C)]
 
-        Real64 OutWaterTemp;  // outlet water temperature [C]
-        Real64 CoolingOutput; // Evaporative fluid cooler cooling output [W]
+        Nandle OutWaterTemp;  // outlet water temperature [C]
+        Nandle CoolingOutput; // Evaporative fluid cooler cooling output [W]
 
         this->SimSimpleEvapFluidCooler(Par(2), Par(3), UA, OutWaterTemp);
         CoolingOutput = Par(4) * Par(2) * (this->inletConds.WaterTemp - OutWaterTemp);
@@ -2321,31 +2321,31 @@ namespace EvaporativeFluidCoolers {
         this->BlowdownVdot = 0.0;
         this->EvaporationVdot = 0.0;
 
-        Real64 AverageWaterTemp = (this->InletWaterTemp + this->OutletWaterTemp) / 2.0;
+        Nandle AverageWaterTemp = (this->InletWaterTemp + this->OutletWaterTemp) / 2.0;
 
         // Set water and air properties
         if (this->EvapLossMode == EvapLoss::ByMoistTheory) {
 
-            Real64 AirDensity = Psychrometrics::PsyRhoAirFnPbTdbW(this->inletConds.AirPress, this->inletConds.AirTemp, this->inletConds.AirHumRat);
-            Real64 AirMassFlowRate = this->AirFlowRateRatio * this->HighSpeedAirFlowRate * AirDensity;
-            Real64 InletAirEnthalpy = Psychrometrics::PsyHFnTdbRhPb(this->inletConds.AirWetBulb, 1.0, this->inletConds.AirPress);
+            Nandle AirDensity = Psychrometrics::PsyRhoAirFnPbTdbW(this->inletConds.AirPress, this->inletConds.AirTemp, this->inletConds.AirHumRat);
+            Nandle AirMassFlowRate = this->AirFlowRateRatio * this->HighSpeedAirFlowRate * AirDensity;
+            Nandle InletAirEnthalpy = Psychrometrics::PsyHFnTdbRhPb(this->inletConds.AirWetBulb, 1.0, this->inletConds.AirPress);
 
             if (AirMassFlowRate > 0.0) {
                 // Calculate outlet air conditions for determining water usage
 
-                Real64 OutletAirEnthalpy = InletAirEnthalpy + this->Qactual / AirMassFlowRate;
-                Real64 OutletAirTSat = Psychrometrics::PsyTsatFnHPb(OutletAirEnthalpy, this->inletConds.AirPress);
-                Real64 OutletAirHumRatSat = Psychrometrics::PsyWFnTdbH(OutletAirTSat, OutletAirEnthalpy);
+                Nandle OutletAirEnthalpy = InletAirEnthalpy + this->Qactual / AirMassFlowRate;
+                Nandle OutletAirTSat = Psychrometrics::PsyTsatFnHPb(OutletAirEnthalpy, this->inletConds.AirPress);
+                Nandle OutletAirHumRatSat = Psychrometrics::PsyWFnTdbH(OutletAirTSat, OutletAirEnthalpy);
 
                 // calculate specific humidity ratios (HUMRAT to mass of moist air not dry air)
-                Real64 InSpecificHumRat = this->inletConds.AirHumRat / (1 + this->inletConds.AirHumRat);
-                Real64 OutSpecificHumRat = OutletAirHumRatSat / (1 + OutletAirHumRatSat);
+                Nandle InSpecificHumRat = this->inletConds.AirHumRat / (1 + this->inletConds.AirHumRat);
+                Nandle OutSpecificHumRat = OutletAirHumRatSat / (1 + OutletAirHumRatSat);
 
                 // calculate average air temp for density call
-                Real64 TairAvg = (this->inletConds.AirTemp + OutletAirTSat) / 2.0;
+                Nandle TairAvg = (this->inletConds.AirTemp + OutletAirTSat) / 2.0;
 
                 // Amount of water evaporated
-                Real64 rho = FluidProperties::GetDensityGlycol(
+                Nandle rho = FluidProperties::GetDensityGlycol(
                     DataPlant::PlantLoop(this->LoopNum).FluidName, TairAvg, DataPlant::PlantLoop(this->LoopNum).FluidIndex, RoutineName);
                 this->EvaporationVdot = (AirMassFlowRate * (OutSpecificHumRat - InSpecificHumRat)) / rho; // [m3/s]
                 if (this->EvaporationVdot < 0.0) this->EvaporationVdot = 0.0;
@@ -2354,7 +2354,7 @@ namespace EvaporativeFluidCoolers {
             }
 
         } else if (this->EvapLossMode == EvapLoss::ByUserFactor) {
-            Real64 rho = FluidProperties::GetDensityGlycol(
+            Nandle rho = FluidProperties::GetDensityGlycol(
                 DataPlant::PlantLoop(this->LoopNum).FluidName, AverageWaterTemp, DataPlant::PlantLoop(this->LoopNum).FluidIndex, RoutineName);
             this->EvaporationVdot = this->UserEvapLossFactor * (this->InletWaterTemp - this->OutletWaterTemp) * (this->WaterMassFlowRate / rho);
             if (this->EvaporationVdot < 0.0) this->EvaporationVdot = 0.0;
@@ -2400,7 +2400,7 @@ namespace EvaporativeFluidCoolers {
             // set demand request
             DataWater::WaterStorage(this->WaterTankID).VdotRequestDemand(this->WaterTankDemandARRID) = this->MakeUpVdot;
 
-            Real64 AvailTankVdot =
+            Nandle AvailTankVdot =
                 DataWater::WaterStorage(this->WaterTankID).VdotAvailDemand(this->WaterTankDemandARRID); // check what tank can currently provide
 
             this->TankSupplyVdot = this->MakeUpVdot; // init
@@ -2434,7 +2434,7 @@ namespace EvaporativeFluidCoolers {
         // This subroutine is for passing results to the outlet water node.
 
         ObjexxFCL::gio::Fmt LowTempFmt("(' ',F6.2)");
-        Real64 const TempAllowance(0.02); // Minimum difference b/w fluid cooler water outlet temp and
+        Nandle const TempAllowance(0.02); // Minimum difference b/w fluid cooler water outlet temp and
         std::string CharErrOut;
         std::string CharLowOutletTemp;
 
@@ -2464,8 +2464,8 @@ namespace EvaporativeFluidCoolers {
         }
 
         // Check if OutletWaterTemp is below the minimum condenser loop temp and warn user
-        Real64 LoopMinTemp = DataPlant::PlantLoop(this->LoopNum).MinTemp;
-        Real64 TempDifference = DataPlant::PlantLoop(this->LoopNum).MinTemp - this->OutletWaterTemp;
+        Nandle LoopMinTemp = DataPlant::PlantLoop(this->LoopNum).MinTemp;
+        Nandle TempDifference = DataPlant::PlantLoop(this->LoopNum).MinTemp - this->OutletWaterTemp;
         if (TempDifference > TempAllowance && this->WaterMassFlowRate > 0.0) {
             ++this->OutletWaterTempErrorCount;
             ObjexxFCL::gio::write(CharLowOutletTemp, LowTempFmt) << LoopMinTemp;
@@ -2516,7 +2516,7 @@ namespace EvaporativeFluidCoolers {
         // PURPOSE OF THIS SUBROUTINE:
         // This subroutine updates the report variables for the evaporative fluid cooler.
 
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 

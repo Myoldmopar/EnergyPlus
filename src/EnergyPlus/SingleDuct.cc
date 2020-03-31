@@ -382,7 +382,7 @@ namespace SingleDuct {
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
         static int MaxNums(0);           // Maximum number of numeric input fields
@@ -2042,9 +2042,9 @@ namespace SingleDuct {
         //static Array1D_bool MyEnvrnFlag;
         //static Array1D_bool MySizeFlag;
         //static Array1D_bool GetGasElecHeatCoilCap; // Gets autosized value of coil capacity
-        Real64 SteamTemp;
-        Real64 SteamDensity;
-        Real64 rho;
+        Nandle SteamTemp;
+        Nandle SteamDensity;
+        Nandle rho;
         bool errFlag;
 
         //static Array1D_bool PlantLoopScanFlag;
@@ -2179,7 +2179,7 @@ namespace SingleDuct {
             }
 
             // get current environment air terminal box turndown minimum flow fraction
-            Real64 CurrentEnvZoneTurndownMinAirFrac = 1.0;
+            Nandle CurrentEnvZoneTurndownMinAirFrac = 1.0;
             if (this->ZoneTurndownMinAirFracSchExist) {
                 CurrentEnvZoneTurndownMinAirFrac = ScheduleManager::GetScheduleMinValue(this->ZoneTurndownMinAirFracSchPtr);
             } 
@@ -2233,21 +2233,21 @@ namespace SingleDuct {
         InletNode = this->InletNodeNum;
         OutletNode = this->OutletNodeNum;
 
-        Real64 mDotFromOARequirement(0.0);
+        Nandle mDotFromOARequirement(0.0);
 
         if (this->SysType_Num == SingleDuctConstVolNoReheat) {
-            /*Real64 mDotFromOARequirement( 0.0 );*/
+            /*Nandle mDotFromOARequirement( 0.0 );*/
             if (!this->NoOAFlowInputFromUser) {
                 mDotFromOARequirement = this->AirMassFlowRateMax;
                 int airLoopNum(0);
-                Real64 airLoopOAFrac(0.0);
+                Nandle airLoopOAFrac(0.0);
                 airLoopNum = this->AirLoopNum;
                 if (airLoopNum > 0) {
                     airLoopOAFrac = DataAirLoop::AirLoopFlow(airLoopNum).OAFrac;
                     bool UseOccSchFlag = false;
                     if (this->OAPerPersonMode == DataZoneEquipment::PerPersonDCVByCurrentLevel) UseOccSchFlag = true;
                     if (airLoopOAFrac > 0.0) {
-                        Real64 vDotOAReq = DataZoneEquipment::CalcDesignSpecificationOutdoorAir(
+                        Nandle vDotOAReq = DataZoneEquipment::CalcDesignSpecificationOutdoorAir(
                             this->OARequirementsPtr, this->CtrlZoneNum, UseOccSchFlag, true);
                         mDotFromOARequirement = vDotOAReq * DataEnvironment::StdRhoAir / airLoopOAFrac;
                         mDotFromOARequirement = min(mDotFromOARequirement, this->AirMassFlowRateMax);
@@ -2410,17 +2410,17 @@ namespace SingleDuct {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
-        static Real64 CoilInTemp(0.0);
-        static Real64 DesCoilLoad(0.0);
-        static Real64 DesZoneHeatLoad(0.0);
-        static Real64 ZoneDesTemp(0.0);
-        static Real64 ZoneDesHumRat(0.0);
-        Real64 DesMassFlow;
-        Real64 TempSteamIn;
-        Real64 EnthSteamOutWet;
-        Real64 EnthSteamInDry;
-        Real64 LatentHeatSteam;
-        Real64 SteamDensity;
+        static Nandle CoilInTemp(0.0);
+        static Nandle DesCoilLoad(0.0);
+        static Nandle DesZoneHeatLoad(0.0);
+        static Nandle ZoneDesTemp(0.0);
+        static Nandle ZoneDesHumRat(0.0);
+        Nandle DesMassFlow;
+        Nandle TempSteamIn;
+        Nandle EnthSteamOutWet;
+        Nandle EnthSteamInDry;
+        Nandle LatentHeatSteam;
+        Nandle SteamDensity;
         static int CoilWaterInletNode(0);
         static int CoilWaterOutletNode(0);
         static int CoilSteamInletNode(0);
@@ -2428,29 +2428,29 @@ namespace SingleDuct {
 
         bool ErrorsFound;
         bool PlantSizingErrorsFound;
-        Real64 rho; // local fluid density
-        Real64 Cp;  // local fluid specific heat
+        Nandle rho; // local fluid density
+        Nandle Cp;  // local fluid specific heat
         static int DummyWaterIndex(1);
-        static Real64 UserInputMaxHeatAirVolFlowRate(0.0); // user input for MaxHeatAirVolFlowRate
+        static Nandle UserInputMaxHeatAirVolFlowRate(0.0); // user input for MaxHeatAirVolFlowRate
         bool IsAutoSize;
         int ZoneNum(0);
-        Real64 MinMinFlowRatio(0.0);              // the minimum minimum flow ratio
-        Real64 MaxAirVolFlowRateDes;              // Autosized maximum air flow rate for reporting
-        Real64 MaxAirVolFlowRateUser;             // Hardsized maximum air flow rate for reporting
-        Real64 MaxHeatAirVolFlowRateDes;          // Autosized maximum heating air flow rate for reporting
-        Real64 MaxHeatAirVolFlowRateUser;         // Hardsized maximum heating air flow rate for reporting
-        Real64 MinAirFlowFracDes;                 // Autosized minimum cooling air flow fraction for reporting
-        Real64 MinAirFlowFracUser;                // User input minimum cooling air flow fraction for reporting
-        Real64 FixedMinAirDes;                    // Autosized minimum cooling air flow rate for reporting [m3/s]
-        Real64 FixedMinAirUser;                   // User input minimum cooling air flow rate for reporting [m3/s]
-        Real64 MaxAirVolFlowRateDuringReheatDes;  // Autosized maximum air flow durign reheat for reporting
-        Real64 MaxAirVolFlowRateDuringReheatUser; // Hardsized maximum air flow durign reheat for reporting
-        Real64 MaxAirVolFractionDuringReheatDes;  // Autosized maximum air fraction durign reheat for reporting
-        Real64 MaxAirVolFractionDuringReheatUser; // Hardsized maximum air flow durign reheat for reporting
-        Real64 MaxReheatWaterVolFlowDes;          // Autosized reheat water flow or reporting
-        Real64 MaxReheatWaterVolFlowUser;         // Hardsized reheat water flow for reporting
-        Real64 MaxReheatSteamVolFlowDes;          // Autosized reheat steam flow for reporting
-        Real64 MaxReheatSteamVolFlowUser;         // Hardsized reheat steam flow for reporting
+        Nandle MinMinFlowRatio(0.0);              // the minimum minimum flow ratio
+        Nandle MaxAirVolFlowRateDes;              // Autosized maximum air flow rate for reporting
+        Nandle MaxAirVolFlowRateUser;             // Hardsized maximum air flow rate for reporting
+        Nandle MaxHeatAirVolFlowRateDes;          // Autosized maximum heating air flow rate for reporting
+        Nandle MaxHeatAirVolFlowRateUser;         // Hardsized maximum heating air flow rate for reporting
+        Nandle MinAirFlowFracDes;                 // Autosized minimum cooling air flow fraction for reporting
+        Nandle MinAirFlowFracUser;                // User input minimum cooling air flow fraction for reporting
+        Nandle FixedMinAirDes;                    // Autosized minimum cooling air flow rate for reporting [m3/s]
+        Nandle FixedMinAirUser;                   // User input minimum cooling air flow rate for reporting [m3/s]
+        Nandle MaxAirVolFlowRateDuringReheatDes;  // Autosized maximum air flow durign reheat for reporting
+        Nandle MaxAirVolFlowRateDuringReheatUser; // Hardsized maximum air flow durign reheat for reporting
+        Nandle MaxAirVolFractionDuringReheatDes;  // Autosized maximum air fraction durign reheat for reporting
+        Nandle MaxAirVolFractionDuringReheatUser; // Hardsized maximum air flow durign reheat for reporting
+        Nandle MaxReheatWaterVolFlowDes;          // Autosized reheat water flow or reporting
+        Nandle MaxReheatWaterVolFlowUser;         // Hardsized reheat water flow for reporting
+        Nandle MaxReheatSteamVolFlowDes;          // Autosized reheat steam flow for reporting
+        Nandle MaxReheatSteamVolFlowUser;         // Hardsized reheat steam flow for reporting
 
         PltSizHeatNum = 0;
         DesMassFlow = 0.0;
@@ -3244,35 +3244,35 @@ namespace SingleDuct {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MassFlow;     // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
-        Real64 QTotLoad;     // [Watts] Remaining load required for this zone
-        Real64 QZnReq;       // [Watts] Load calculated for heating coil
-        Real64 QToHeatSetPt; // [W]  remaining load to heating setpoint
-        Real64 CpAirAvg;
-        Real64 DeltaTemp;
+        Nandle MassFlow;     // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
+        Nandle QTotLoad;     // [Watts] Remaining load required for this zone
+        Nandle QZnReq;       // [Watts] Load calculated for heating coil
+        Nandle QToHeatSetPt; // [W]  remaining load to heating setpoint
+        Nandle CpAirAvg;
+        Nandle DeltaTemp;
         int SysOutletNode;                       // The node number of the terminal unit outlet node
         int SysInletNode;                        // the node number of the terminal unit inlet node
         int WaterControlNode;                    // This is the Actuated Reheat Control Node
-        Real64 MaxFlowWater;                     // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 MinFlowWater;                     // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 QActualHeating;                   // the heating load seen by the reheat coil
-        Real64 QHeatingDelivered;                // the actual output from heating coil
-        Real64 LeakLoadMult;                     // load multiplier to adjust for downstream leaks
-        Real64 MinFlowFrac;                      // minimum flow fraction (and minimum damper position)
-        static Real64 MinAirMassFlowRevAct(0.0); // minimum air mass flow rate used in "reverse action" air mass flow rate calculation
-        static Real64 MaxAirMassFlowRevAct(0.0); // maximum air mass flow rate used in "reverse action" air mass flow rate calculation
-        Real64 MassFlowBasedOnOA;                // supply air mass flow rate based on zone OA requirements
-        Real64 AirLoopOAFrac;                    // fraction of outside air entering air loop
-        Real64 DummyMdot;                        // temporary mass flow rate argument
+        Nandle MaxFlowWater;                     // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle MinFlowWater;                     // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle QActualHeating;                   // the heating load seen by the reheat coil
+        Nandle QHeatingDelivered;                // the actual output from heating coil
+        Nandle LeakLoadMult;                     // load multiplier to adjust for downstream leaks
+        Nandle MinFlowFrac;                      // minimum flow fraction (and minimum damper position)
+        static Nandle MinAirMassFlowRevAct(0.0); // minimum air mass flow rate used in "reverse action" air mass flow rate calculation
+        static Nandle MaxAirMassFlowRevAct(0.0); // maximum air mass flow rate used in "reverse action" air mass flow rate calculation
+        Nandle MassFlowBasedOnOA;                // supply air mass flow rate based on zone OA requirements
+        Nandle AirLoopOAFrac;                    // fraction of outside air entering air loop
+        Nandle DummyMdot;                        // temporary mass flow rate argument
 
-        static Real64 ZoneTemp(0.0);                      // zone air temperature [C]
-        static Real64 MaxHeatTemp(0.0);                   // maximum supply air temperature [C]
-        static Real64 MaxDeviceAirMassFlowReheat(0.0);    // air mass flow rate required to meet the coil heating load [W]
-        static Real64 MassFlowReqToLimitLeavingTemp(0.0); // air mass flow rate actually used [W]
-        static Real64 QZoneMaxRHTempLimit(0.0);           // maximum zone heat addition rate given constraints of MaxHeatTemp and max
+        static Nandle ZoneTemp(0.0);                      // zone air temperature [C]
+        static Nandle MaxHeatTemp(0.0);                   // maximum supply air temperature [C]
+        static Nandle MaxDeviceAirMassFlowReheat(0.0);    // air mass flow rate required to meet the coil heating load [W]
+        static Nandle MassFlowReqToLimitLeavingTemp(0.0); // air mass flow rate actually used [W]
+        static Nandle QZoneMaxRHTempLimit(0.0);           // maximum zone heat addition rate given constraints of MaxHeatTemp and max
         // available air mass flow rate [W]
-        static Real64 MinMassAirFlow(0.0); // the air flow rate during heating for normal acting damper
-        static Real64 QZoneMax2(0.0);      // temporary variable
+        static Nandle MinMassAirFlow(0.0); // the air flow rate during heating for normal acting damper
+        static Nandle QZoneMax2(0.0);      // temporary variable
 
         // Note to the perplexed
         // The SINGLE DUCT:VAV:REHEAT terminal unit originally contained 2 components: a damper
@@ -3695,8 +3695,8 @@ namespace SingleDuct {
         this->MassFlow1 = MassFlow;
     }
 
-    void SingleDuctAirTerminal::CalcOAMassFlow(Real64 &SAMassFlow,   // outside air based on optional user input
-                        Real64 &AirLoopOAFrac // outside air based on optional user input
+    void SingleDuctAirTerminal::CalcOAMassFlow(Nandle &SAMassFlow,   // outside air based on optional user input
+                        Nandle &AirLoopOAFrac // outside air based on optional user input
     )
     {
 
@@ -3738,8 +3738,8 @@ namespace SingleDuct {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OAVolumeFlowRate; // outside air volume flow rate (m3/s)
-        Real64 OAMassFlow;       // outside air mass flow rate (kg/s)
+        Nandle OAVolumeFlowRate; // outside air volume flow rate (m3/s)
+        Nandle OAMassFlow;       // outside air mass flow rate (kg/s)
 
         // initialize OA flow rate and OA report variable
         SAMassFlow = 0.0;
@@ -3805,32 +3805,32 @@ namespace SingleDuct {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MassFlow;      // Total Mass Flow Rate from Hot & Cold Inlets [kg/sec]
-        Real64 QTotLoad;      // Total load based on thermostat setpoint temperature [Watts]
-        Real64 QZnReq;        // Total load to be met by terminal heater [Watts]
-        Real64 QToHeatSetPt;  // Remaining load to heating setpoint [W]
-        Real64 QSupplyAir;    // Zone load met by VAVHeatandCool system
-        Real64 CpAirZn;       // Specific heat of zone air [J/kg-C]
-        Real64 CpAirSysIn;    // Specific heat of VAVHeatandCool box entering air [J/kg-C]
-        Real64 DeltaTemp;     // Temperature difference multiplied by specific heat [J/kg]
-        Real64 MaxFlowWater;  // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 MinFlowWater;  // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 LeakLoadMult;  // Load multiplier to adjust for downstream leaks
+        Nandle MassFlow;      // Total Mass Flow Rate from Hot & Cold Inlets [kg/sec]
+        Nandle QTotLoad;      // Total load based on thermostat setpoint temperature [Watts]
+        Nandle QZnReq;        // Total load to be met by terminal heater [Watts]
+        Nandle QToHeatSetPt;  // Remaining load to heating setpoint [W]
+        Nandle QSupplyAir;    // Zone load met by VAVHeatandCool system
+        Nandle CpAirZn;       // Specific heat of zone air [J/kg-C]
+        Nandle CpAirSysIn;    // Specific heat of VAVHeatandCool box entering air [J/kg-C]
+        Nandle DeltaTemp;     // Temperature difference multiplied by specific heat [J/kg]
+        Nandle MaxFlowWater;  // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle MinFlowWater;  // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle LeakLoadMult;  // Load multiplier to adjust for downstream leaks
         int SysOutletNode;    // The node number of the terminal unit outlet node
         int SysInletNode;     // The node number of the terminal unit inlet node
         int WaterControlNode; // This is the Actuated Reheat Control Node
-        Real64 DummyMdot;
-        Real64 QActualHeating;
-        Real64 MinFlowFrac;                // minimum flow fraction (and minimum damper position)
-        static Real64 ZoneTemp(0.0);       // zone air temperature [C]
-        static Real64 MaxHeatTemp(0.0);    // maximum supply air temperature [C]
-        static Real64 MassFlowReq(0.0);    // air mass flow rate required to meet the coil heating load [W]
-        static Real64 MassFlowActual(0.0); // air mass flow rate actually used [W]
-        static Real64 QZoneMax(0.0);       // maximum zone heat addition rate given constraints of MaxHeatTemp and max
+        Nandle DummyMdot;
+        Nandle QActualHeating;
+        Nandle MinFlowFrac;                // minimum flow fraction (and minimum damper position)
+        static Nandle ZoneTemp(0.0);       // zone air temperature [C]
+        static Nandle MaxHeatTemp(0.0);    // maximum supply air temperature [C]
+        static Nandle MassFlowReq(0.0);    // air mass flow rate required to meet the coil heating load [W]
+        static Nandle MassFlowActual(0.0); // air mass flow rate actually used [W]
+        static Nandle QZoneMax(0.0);       // maximum zone heat addition rate given constraints of MaxHeatTemp and max
         // available air mass flow rate [W]
-        static Real64 MinMassAirFlow(0.0); // the air flow rate during heating for normal acting damper
-        static Real64 QZoneMax2(0.0);      // temporary variable
-        static Real64 QZoneMax3(0.0);      // temporary variable
+        static Nandle MinMassAirFlow(0.0); // the air flow rate during heating for normal acting damper
+        static Nandle QZoneMax2(0.0);      // temporary variable
+        static Nandle QZoneMax3(0.0);      // temporary variable
 
         // sd_airterminal(SysNum)%InletNodeNum is the inlet node to the terminal unit and the damper
         // sd_airterminal(SysNum)%OutletNodeNum is the outlet node of the damper and the inlet node of the heating coil
@@ -4166,7 +4166,7 @@ namespace SingleDuct {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const BigLoad(1.0e+20);
+        Nandle const BigLoad(1.0e+20);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -4175,41 +4175,41 @@ namespace SingleDuct {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MassFlow = 0; // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
-        Real64 QTotLoad; // [Watts]
+        Nandle MassFlow = 0; // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
+        Nandle QTotLoad; // [Watts]
         // unused  REAL(r64) :: QZnReq      ! [Watts]
-        Real64 CpAirZn;
+        Nandle CpAirZn;
         // unused  REAL(r64) :: CpAirSysIn
         // unused  REAL(r64) :: DeltaTemp
         int SysOutletNode;    // The node number of the terminal unit outlet node
         int SysInletNode;     // the node number of the terminal unit inlet node
         int WaterControlNode; // This is the Actuated Reheat Control Node
         int SteamControlNode;
-        Real64 MaxFlowWater;    // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 MinFlowWater;    // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 MaxFlowSteam;    // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 MinFlowSteam;    // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 HWFlow;          // the hot water flow rate [kg/s]
-        Real64 QCoolFanOnMax;   // max cooling - fan at max flow; note that cooling is always < 0. [W]
-        Real64 QCoolFanOnMin;   // min active cooling with fan on - fan at lowest speed. [W]
-        Real64 QHeatFanOnMax;   // max heating - fan at heat flow max, hot water flow at max [W]
-        Real64 QHeatFanOnMin;   // min heating - fan at min flow, hot water at max flow [W]
-        Real64 QHeatFanOffMax;  // max heating - fan off, hot water flow at max [W]
-        Real64 QNoHeatFanOff;   // min heating - fan off, hot water at min flow [W]
+        Nandle MaxFlowWater;    // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle MinFlowWater;    // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle MaxFlowSteam;    // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle MinFlowSteam;    // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle HWFlow;          // the hot water flow rate [kg/s]
+        Nandle QCoolFanOnMax;   // max cooling - fan at max flow; note that cooling is always < 0. [W]
+        Nandle QCoolFanOnMin;   // min active cooling with fan on - fan at lowest speed. [W]
+        Nandle QHeatFanOnMax;   // max heating - fan at heat flow max, hot water flow at max [W]
+        Nandle QHeatFanOnMin;   // min heating - fan at min flow, hot water at max flow [W]
+        Nandle QHeatFanOffMax;  // max heating - fan off, hot water flow at max [W]
+        Nandle QNoHeatFanOff;   // min heating - fan off, hot water at min flow [W]
         int HCType;             // heating coil type (as a number)
         int FanType;            // fan type (as a number)
-        Real64 HCLoad;          // load passed to a gas or electric heating coil [W]
+        Nandle HCLoad;          // load passed to a gas or electric heating coil [W]
         int FanOp;              // 1 if fan is on; 0 if off.
-        Real64 MaxCoolMassFlow; // air flow at max cooling [kg/s]
-        Real64 MaxHeatMassFlow; // air flow at max heating [kg/s]
-        Real64 MinMassFlow;     // minimum air flow rate [kg/s]
-        Real64 UnitFlowToler;   // flow rate tolerance
-        Real64 QDelivered;
-        Real64 FracDelivered;
-        Array1D<Real64> Par(11);
+        Nandle MaxCoolMassFlow; // air flow at max cooling [kg/s]
+        Nandle MaxHeatMassFlow; // air flow at max heating [kg/s]
+        Nandle MinMassFlow;     // minimum air flow rate [kg/s]
+        Nandle UnitFlowToler;   // flow rate tolerance
+        Nandle QDelivered;
+        Nandle FracDelivered;
+        Array1D<Nandle> Par(11);
         int SolFlag;
-        Real64 ErrTolerance;
-        Real64 MaxSteamCap; // steam coil capacity at full load
+        Nandle ErrTolerance;
+        Nandle MaxSteamCap; // steam coil capacity at full load
         bool ErrorsFound;   // returned from mining function call
 
         // The calculated load from the Heat Balance
@@ -4607,19 +4607,19 @@ namespace SingleDuct {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 MassFlow;     // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
-        Real64 QZnReq;       // [Watts]
-        Real64 QToHeatSetPt; // [W]  remaining load to heating setpoint
-        Real64 CpAir;
+        Nandle MassFlow;     // [kg/sec]   Total Mass Flow Rate from Hot & Cold Inlets
+        Nandle QZnReq;       // [Watts]
+        Nandle QToHeatSetPt; // [W]  remaining load to heating setpoint
+        Nandle CpAir;
         int WaterControlNode;        // This is the Actuated Reheat Control Node
-        Real64 MaxFlowWater;         // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 MinFlowWater;         // This is the value passed to the Controller depending if FirstHVACIteration or not
-        Real64 QActualHeating;       // the heating load seen by the reheat coil
-        static Real64 TAirMax(0.0);  // Maximum zone supply air temperature [C]
-        static Real64 QMax(0.0);     // Maximum heat addition rate imposed by the max zone supply air temperature [W]
-        static Real64 ZoneTemp(0.0); // Zone temperature [C]
-        static Real64 QMax2(0.0);
-        Real64 DummyMdot; // local fluid mass flow rate
+        Nandle MaxFlowWater;         // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle MinFlowWater;         // This is the value passed to the Controller depending if FirstHVACIteration or not
+        Nandle QActualHeating;       // the heating load seen by the reheat coil
+        static Nandle TAirMax(0.0);  // Maximum zone supply air temperature [C]
+        static Nandle QMax(0.0);     // Maximum heat addition rate imposed by the max zone supply air temperature [W]
+        static Nandle ZoneTemp(0.0); // Zone temperature [C]
+        static Nandle QMax2(0.0);
+        Nandle DummyMdot; // local fluid mass flow rate
 
         QToHeatSetPt = ZoneSysEnergyDemand(ZoneNum).RemainingOutputReqToHeatSP; // The calculated load from the Heat Balance
         MassFlow = this->sd_airterminalInlet.AirMassFlowRateMaxAvail;                    // System massflow is set to the Available
@@ -4772,13 +4772,13 @@ namespace SingleDuct {
         using DataHVACGlobals::TimeStepSys;
         using Psychrometrics::PsyHFnTdbW;
 
-        Real64 MassFlow;           // [kg/sec]   mass flow rate at the inlet
-        Real64 SensOutputProvided; // heating and cooling provided to the zone [W]
+        Nandle MassFlow;           // [kg/sec]   mass flow rate at the inlet
+        Nandle SensOutputProvided; // heating and cooling provided to the zone [W]
 
         MassFlow = this->sd_airterminalInlet.AirMassFlowRate; // system air mass flow rate
 
         if (GetCurrentScheduleValue(this->SchedPtr) > 0.0 && MassFlow > SmallMassFlow) {
-            Real64 CpAir = PsyCpAirFnW(0.5 * (Node(this->OutletNodeNum).HumRat + Node(ZoneNodeNum).HumRat));
+            Nandle CpAir = PsyCpAirFnW(0.5 * (Node(this->OutletNodeNum).HumRat + Node(ZoneNodeNum).HumRat));
             SensOutputProvided = MassFlow * CpAir * (Node(this->OutletNodeNum).Temp - Node(ZoneNodeNum).Temp);
         } else {
             SensOutputProvided = 0.0;
@@ -4805,12 +4805,12 @@ namespace SingleDuct {
     void SingleDuctAirTerminal::CalcVAVVS(bool const FirstHVACIteration,  // flag for 1st HVAV iteration in the time step
                    int const ZoneNode,             // zone node number
                    int const EP_UNUSED(HCoilType), // type of hot water coil !unused1208
-                   Real64 const HWFlow,            // hot water flow (kg/s)
-                   Real64 const HCoilReq,          // gas or elec coil demand requested
+                   Nandle const HWFlow,            // hot water flow (kg/s)
+                   Nandle const HCoilReq,          // gas or elec coil demand requested
                    int const FanType,              // type of fan
-                   Real64 const AirFlow,           // air flow rate (kg/s)
+                   Nandle const AirFlow,           // air flow rate (kg/s)
                    int const FanOn,                // 1 means fan is on
-                   Real64 &LoadMet                 // load met by unit (watts)
+                   Nandle &LoadMet                 // load met by unit (watts)
     )
     {
 
@@ -4853,10 +4853,10 @@ namespace SingleDuct {
         int FanOutNode;      // fan outlet node (heating coil inlet node)
         int HCOutNode;       // unit air outlet node (heating coil air outlet node)
         int HotControlNode;  // the hot water inlet node
-        Real64 AirMassFlow;  // total air mass flow rate [kg/s]
-        Real64 CpAirZn;      // zone air specific heat [J/kg-C]
+        Nandle AirMassFlow;  // total air mass flow rate [kg/s]
+        Nandle CpAirZn;      // zone air specific heat [J/kg-C]
         bool TurnFansOffSav; // save the fan off flag
-        Real64 mdot;
+        Nandle mdot;
 
         TurnFansOffSav = TurnFansOff;
         FanInNode = this->InletNodeNum;
@@ -4922,8 +4922,8 @@ namespace SingleDuct {
         LoadMet = AirMassFlow * CpAirZn * (Node(HCOutNode).Temp - Node(ZoneNode).Temp);
     }
 
-    Real64 SingleDuctAirTerminal::VAVVSCoolingResidual(Real64 const SupplyAirMassFlow, // supply air mass flow rate [kg/s]
-                                Array1D<Real64> const &Par       // Par(1) = REAL(SysNum)
+    Nandle SingleDuctAirTerminal::VAVVSCoolingResidual(Nandle const SupplyAirMassFlow, // supply air mass flow rate [kg/s]
+                                Array1D<Nandle> const &Par       // Par(1) = REAL(SysNum)
     )
     {
 
@@ -4947,7 +4947,7 @@ namespace SingleDuct {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -4974,11 +4974,11 @@ namespace SingleDuct {
         int UnitIndex;
         bool FirstHVACSoln;
         int ZoneNodeIndex;
-        Real64 MinHWFlow;  // min hot water flow rate
+        Nandle MinHWFlow;  // min hot water flow rate
         int HCType;        // heating coil type (integer)
         int FanType;       // fan type (as an integer)
         int FanOp;         // fan operation; 0=off, 1=on.
-        Real64 UnitOutput; // cooling output [W] (cooling is negative)
+        Nandle UnitOutput; // cooling output [W] (cooling is negative)
 
         UnitIndex = int(Par(1));
         FirstHVACSoln = (Par(2) > 0.0);
@@ -4994,8 +4994,8 @@ namespace SingleDuct {
         return Residuum;
     }
 
-    Real64 SingleDuctAirTerminal::VAVVSHWNoFanResidual(Real64 const HWMassFlow,  // hot water mass flow rate [kg/s]
-                                Array1D<Real64> const &Par // Par(1) = REAL(SysNum)
+    Nandle SingleDuctAirTerminal::VAVVSHWNoFanResidual(Nandle const HWMassFlow,  // hot water mass flow rate [kg/s]
+                                Array1D<Nandle> const &Par // Par(1) = REAL(SysNum)
     )
     {
 
@@ -5019,7 +5019,7 @@ namespace SingleDuct {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -5048,15 +5048,15 @@ namespace SingleDuct {
         int UnitIndex;
         bool FirstHVACSoln;
         int ZoneNodeIndex;
-        Real64 AirMassFlow; // supply air mass flow rate [kg/s]
+        Nandle AirMassFlow; // supply air mass flow rate [kg/s]
         int HCType;         // heating coil type (integer)
         int FanType;        // fan type (as an integer)
         int FanOp;          // fan operation; 0=off, 1=on.
-        Real64 UnitOutput;  // heating output [W]
-        Real64 QSteamLoad;  // proportional load to calculate steam flow [W]
-        Real64 MinSteamFlow;
-        Real64 MaxSteamFlow;
-        Real64 MaxSteamCoilCapacity;
+        Nandle UnitOutput;  // heating output [W]
+        Nandle QSteamLoad;  // proportional load to calculate steam flow [W]
+        Nandle MinSteamFlow;
+        Nandle MaxSteamFlow;
+        Nandle MaxSteamCoilCapacity;
 
         UnitIndex = int(Par(1));
         FirstHVACSoln = (Par(2) > 0.0);
@@ -5085,8 +5085,8 @@ namespace SingleDuct {
         return Residuum;
     }
 
-    Real64 SingleDuctAirTerminal::VAVVSHWFanOnResidual(Real64 const SupplyAirMassFlow, // supply air mass flow rate [kg/s]
-                                Array1D<Real64> const &Par       // Par(1) = REAL(SysNum)
+    Nandle SingleDuctAirTerminal::VAVVSHWFanOnResidual(Nandle const SupplyAirMassFlow, // supply air mass flow rate [kg/s]
+                                Array1D<Nandle> const &Par       // Par(1) = REAL(SysNum)
     )
     {
 
@@ -5110,7 +5110,7 @@ namespace SingleDuct {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -5137,11 +5137,11 @@ namespace SingleDuct {
         int UnitIndex;
         bool FirstHVACSoln;
         int ZoneNodeIndex;
-        Real64 HWMassFlow; // hot water mass flow rate [kg/s]
+        Nandle HWMassFlow; // hot water mass flow rate [kg/s]
         int HCType;        // heating coil type (integer)
         int FanType;       // fan type (as an integer)
         int FanOp;         // fan operation; 0=off, 1=on.
-        Real64 UnitOutput; // heating output [W]
+        Nandle UnitOutput; // heating output [W]
 
         UnitIndex = int(Par(1));
         FirstHVACSoln = (Par(2) > 0.0);
@@ -5157,8 +5157,8 @@ namespace SingleDuct {
         return Residuum;
     }
 
-    Real64 SingleDuctAirTerminal::VAVVSHCFanOnResidual(Real64 const HeatingFrac, // fraction of maximum heating output
-                                Array1D<Real64> const &Par // Par(1) = REAL(SysNum)
+    Nandle SingleDuctAirTerminal::VAVVSHCFanOnResidual(Nandle const HeatingFrac, // fraction of maximum heating output
+                                Array1D<Nandle> const &Par // Par(1) = REAL(SysNum)
     )
     {
 
@@ -5182,7 +5182,7 @@ namespace SingleDuct {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -5209,13 +5209,13 @@ namespace SingleDuct {
         int UnitIndex;
         bool FirstHVACSoln;
         int ZoneNodeIndex;
-        Real64 MaxHeatOut;      // maximum heating output [W]
+        Nandle MaxHeatOut;      // maximum heating output [W]
         int HCType;             // heating coil type (integer)
         int FanType;            // fan type (as an integer)
         int FanOp;              // fan operation; 0=off, 1=on.
-        Real64 UnitOutput;      // heating output [W]
-        Real64 AirMassFlowRate; // [kg/s]
-        Real64 HeatOut;         // heating coil output [W]
+        Nandle UnitOutput;      // heating output [W]
+        Nandle AirMassFlowRate; // [kg/s]
+        Nandle HeatOut;         // heating coil output [W]
 
         UnitIndex = int(Par(1));
         FirstHVACSoln = (Par(2) > 0.0);
@@ -5767,10 +5767,10 @@ namespace SingleDuct {
         }
 
         // Every iteration
-        Real64 mDotFromOARequirement(0.0);
-        Real64 vDotOAReq(0.0);
+        Nandle mDotFromOARequirement(0.0);
+        Nandle vDotOAReq(0.0);
         if (!this->NoOAFlowInputFromUser) {
-            Real64 airLoopOAFrac(0.0);
+            Nandle airLoopOAFrac(0.0);
             bool UseOccSchFlag = false;
             if (this->OAPerPersonMode == DataZoneEquipment::PerPersonDCVByCurrentLevel) UseOccSchFlag = true;
             if (this->AirLoopNum > 0) {
@@ -5832,20 +5832,20 @@ namespace SingleDuct {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        static Real64 PriMassFlowRate(0.0);
-        static Real64 PriEnthalpy(0.0);
-        static Real64 PriHumRat(0.0);
-        static Real64 PriTemp(0.0);
+        static Nandle PriMassFlowRate(0.0);
+        static Nandle PriEnthalpy(0.0);
+        static Nandle PriHumRat(0.0);
+        static Nandle PriTemp(0.0);
 
-        static Real64 SecAirMassFlowRate(0.0);
-        static Real64 SecAirEnthalpy(0.0);
-        static Real64 SecAirHumRat(0.0);
-        static Real64 SecAirTemp(0.0);
+        static Nandle SecAirMassFlowRate(0.0);
+        static Nandle SecAirEnthalpy(0.0);
+        static Nandle SecAirHumRat(0.0);
+        static Nandle SecAirTemp(0.0);
 
-        static Real64 MixedAirMassFlowRate(0.0);
-        static Real64 MixedAirEnthalpy(0.0);
-        static Real64 MixedAirHumRat(0.0);
-        static Real64 MixedAirTemp(0.0);
+        static Nandle MixedAirMassFlowRate(0.0);
+        static Nandle MixedAirEnthalpy(0.0);
+        static Nandle MixedAirHumRat(0.0);
+        static Nandle MixedAirTemp(0.0);
 
         PriEnthalpy = Node(SysATMixer(SysNum).PriInNode).Enthalpy;
         PriHumRat = Node(SysATMixer(SysNum).PriInNode).HumRat;
@@ -6021,7 +6021,7 @@ namespace SingleDuct {
     }
 
     void SetATMixerPriFlow(int const ATMixerNum,                     // Air terminal mixer index
-                           Optional<Real64 const> PriAirMassFlowRate // Air terminal mixer primary air mass flow rate [kg/s]
+                           Optional<Nandle const> PriAirMassFlowRate // Air terminal mixer primary air mass flow rate [kg/s]
     )
     {
 
@@ -6116,21 +6116,21 @@ namespace SingleDuct {
                 } else {
                     // mix preheat condition with return air condition based on OA frac. OA frac should nearly always be 1.
                     // OA frac is based on air loop fraction, not ATMixer flow fraction since air loop can serve multiple ATMixers
-                    Real64 OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
+                    Nandle OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
                     OutAirFrac = min(1.0, max(0.0, OutAirFrac));
 
                     // calculate humrat based on simple mixing
-                    Real64 CoilInHumRatForSizing =
+                    Nandle CoilInHumRatForSizing =
                         OutAirFrac * FinalSysSizing(airLoopIndex).PreheatHumRat + (1 - OutAirFrac) * FinalSysSizing(airLoopIndex).HeatRetHumRat;
 
                     // calculate enthalpy based on simple mixing
-                    Real64 CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).PreheatTemp,
+                    Nandle CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).PreheatTemp,
                                                                                              FinalSysSizing(airLoopIndex).PreheatHumRat) +
                                                      (1 - OutAirFrac) * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).HeatRetTemp,
                                                                                                    FinalSysSizing(airLoopIndex).HeatRetHumRat);
 
                     // back calculate temperature based on humrat and enthalpy state points
-                    Real64 CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
+                    Nandle CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
 
                     ZoneEqSizing(curZoneEqNum).ATMixerHeatPriDryBulb = CoilInTempForSizing;
                     ZoneEqSizing(curZoneEqNum).ATMixerHeatPriHumRat = CoilInHumRatForSizing;
@@ -6143,21 +6143,21 @@ namespace SingleDuct {
                     ZoneEqSizing(curZoneEqNum).ATMixerHeatPriHumRat = FinalSysSizing(airLoopIndex).HeatOutHumRat;
                 } else {
                     // OA frac is based on air loop fraction, not ATMixer flow fraction since air loop can serve multiple ATMixers
-                    Real64 OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
+                    Nandle OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
                     OutAirFrac = min(1.0, max(0.0, OutAirFrac));
 
                     // calculate humrat based on simple mixing
-                    Real64 CoilInHumRatForSizing =
+                    Nandle CoilInHumRatForSizing =
                         OutAirFrac * FinalSysSizing(airLoopIndex).HeatOutHumRat + (1 - OutAirFrac) * FinalSysSizing(airLoopIndex).HeatRetHumRat;
 
                     // calculate enthalpy based on simple mixing
-                    Real64 CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).HeatOutTemp,
+                    Nandle CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).HeatOutTemp,
                                                                                              FinalSysSizing(airLoopIndex).HeatOutHumRat) +
                                                      (1 - OutAirFrac) * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).HeatRetTemp,
                                                                                                    FinalSysSizing(airLoopIndex).HeatRetHumRat);
 
                     // back calculate temperature based on humrat and enthalpy state points
-                    Real64 CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
+                    Nandle CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
 
                     ZoneEqSizing(curZoneEqNum).ATMixerHeatPriDryBulb = CoilInTempForSizing;
                     ZoneEqSizing(curZoneEqNum).ATMixerHeatPriHumRat = CoilInHumRatForSizing;
@@ -6178,21 +6178,21 @@ namespace SingleDuct {
                 } else {
                     // mix precool condition with return air condition based on OA frac. OA frac should nearly always be 1.
                     // OA frac is based on air loop fraction, not ATMixer flow fraction since air loop can serve multiple ATMixers
-                    Real64 OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
+                    Nandle OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
                     OutAirFrac = min(1.0, max(0.0, OutAirFrac));
 
                     // calculate humrat based on simple mixing
-                    Real64 CoilInHumRatForSizing =
+                    Nandle CoilInHumRatForSizing =
                         OutAirFrac * FinalSysSizing(airLoopIndex).PrecoolHumRat + (1 - OutAirFrac) * FinalSysSizing(airLoopIndex).RetHumRatAtCoolPeak;
 
                     // calculate enthalpy based on simple mixing
-                    Real64 CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).PrecoolTemp,
+                    Nandle CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).PrecoolTemp,
                                                                                              FinalSysSizing(airLoopIndex).PrecoolHumRat) +
                                                      (1 - OutAirFrac) * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).RetTempAtCoolPeak,
                                                                                                    FinalSysSizing(airLoopIndex).RetHumRatAtCoolPeak);
 
                     // back calculate temperature based on humrat and enthalpy state points
-                    Real64 CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
+                    Nandle CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
 
                     ZoneEqSizing(curZoneEqNum).ATMixerCoolPriDryBulb = CoilInTempForSizing;
                     ZoneEqSizing(curZoneEqNum).ATMixerCoolPriHumRat = CoilInHumRatForSizing;
@@ -6205,21 +6205,21 @@ namespace SingleDuct {
                     ZoneEqSizing(curZoneEqNum).ATMixerCoolPriHumRat = FinalSysSizing(airLoopIndex).OutHumRatAtCoolPeak;
                 } else {
                     // OA frac is based on air loop fraction, not ATMixer flow fraction since air loop can serve multiple ATMixers
-                    Real64 OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
+                    Nandle OutAirFrac = FinalSysSizing(airLoopIndex).DesOutAirVolFlow / FinalSysSizing(airLoopIndex).DesMainVolFlow;
                     OutAirFrac = min(1.0, max(0.0, OutAirFrac));
 
                     // calculate humrat based on simple mixing
-                    Real64 CoilInHumRatForSizing = OutAirFrac * FinalSysSizing(airLoopIndex).OutHumRatAtCoolPeak +
+                    Nandle CoilInHumRatForSizing = OutAirFrac * FinalSysSizing(airLoopIndex).OutHumRatAtCoolPeak +
                                                    (1 - OutAirFrac) * FinalSysSizing(airLoopIndex).RetHumRatAtCoolPeak;
 
                     // calculate enthalpy based on simple mixing
-                    Real64 CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).OutTempAtCoolPeak,
+                    Nandle CoilInEnthalpyForSizing = OutAirFrac * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).OutTempAtCoolPeak,
                                                                                              FinalSysSizing(airLoopIndex).OutHumRatAtCoolPeak) +
                                                      (1 - OutAirFrac) * Psychrometrics::PsyHFnTdbW(FinalSysSizing(airLoopIndex).RetTempAtCoolPeak,
                                                                                                    FinalSysSizing(airLoopIndex).RetHumRatAtCoolPeak);
 
                     // back calculate temperature based on humrat and enthalpy state points
-                    Real64 CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
+                    Nandle CoilInTempForSizing = Psychrometrics::PsyTdbFnHW(CoilInEnthalpyForSizing, CoilInHumRatForSizing);
 
                     ZoneEqSizing(curZoneEqNum).ATMixerCoolPriDryBulb = CoilInTempForSizing;
                     ZoneEqSizing(curZoneEqNum).ATMixerCoolPriHumRat = CoilInHumRatForSizing;

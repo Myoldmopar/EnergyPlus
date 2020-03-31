@@ -64,66 +64,66 @@ namespace FuelCellElectricGenerator {
         std::string Name;           // name of this PowerModule data
         int EffMode;                // mode for efficiency curves
         int EffCurveID;             // pointer to curve for efficiency
-        Real64 NomEff;              // nominal efficiency
-        Real64 NomPel;              // nominal power rate at rating point
+        Nandle NomEff;              // nominal efficiency
+        Nandle NomPel;              // nominal power rate at rating point
         int NumCycles;              // number of start stop cycles
-        Real64 CyclingDegradRat;    // rate of degradation from cycles
-        Real64 NumRunHours;         // number of hours of operation
-        Real64 OperateDegradRat;    // rate of degradation from run time (per hour)
-        Real64 ThreshRunHours;      // number of hours before degradation starts
-        Real64 UpTranLimit;         // power up transient limit
-        Real64 DownTranLimit;       // power down tran limit
-        Real64 StartUpTime;         // time for start up [hours]
-        Real64 StartUpFuel;         // fuel use during start up
-        Real64 StartUpElectConsum;  // electricity used during start up
-        Real64 StartUpElectProd;    // electricity produced during start up
-        Real64 ShutDownTime;        // time to shut down [hours]
-        Real64 ShutDownFuel;        // fuel consumed during shut down
-        Real64 ShutDownElectConsum; // Elect consumed during shut down
-        Real64 ANC0;                // Ancilliary Loads constant term
-        Real64 ANC1;                // Ancilliary Loads linear term
+        Nandle CyclingDegradRat;    // rate of degradation from cycles
+        Nandle NumRunHours;         // number of hours of operation
+        Nandle OperateDegradRat;    // rate of degradation from run time (per hour)
+        Nandle ThreshRunHours;      // number of hours before degradation starts
+        Nandle UpTranLimit;         // power up transient limit
+        Nandle DownTranLimit;       // power down tran limit
+        Nandle StartUpTime;         // time for start up [hours]
+        Nandle StartUpFuel;         // fuel use during start up
+        Nandle StartUpElectConsum;  // electricity used during start up
+        Nandle StartUpElectProd;    // electricity produced during start up
+        Nandle ShutDownTime;        // time to shut down [hours]
+        Nandle ShutDownFuel;        // fuel consumed during shut down
+        Nandle ShutDownElectConsum; // Elect consumed during shut down
+        Nandle ANC0;                // Ancilliary Loads constant term
+        Nandle ANC1;                // Ancilliary Loads linear term
         int SkinLossMode;           // how are skin losses determined
         std::string ZoneName;
         int ZoneID; // "pointer" to zone with component in it
-        Real64 RadiativeFract;
-        Real64 QdotSkin;
-        Real64 UAskin;
+        Nandle RadiativeFract;
+        Nandle QdotSkin;
+        Nandle UAskin;
         int SkinLossCurveID;
         int WaterSupplyCurveID;            // pointer to curve for water use in reforming
-        Real64 NdotDilutionAir;            // user defined constant flow of dilution air (kmol/sec)
-        Real64 StackHeatLossToDilution;    // (watts)
+        Nandle NdotDilutionAir;            // user defined constant flow of dilution air (kmol/sec)
+        Nandle StackHeatLossToDilution;    // (watts)
         std::string DilutionInletNodeName; // dilution -> AirHR ?? added air heat recovery path
         int DilutionInletNode;             // pointer to node for inlet
         std::string DilutionExhaustNodeName;
         int DilutionExhaustNode; // pointer to node getting exhaust
-        Real64 PelMin;           // minimum operating point for FCPM electrical power Pel
-        Real64 PelMax;           // maximum operating point for FCPM electrical power Pel
+        Nandle PelMin;           // minimum operating point for FCPM electrical power Pel
+        Nandle PelMax;           // maximum operating point for FCPM electrical power Pel
         // Calculated values and input from elsewhere
-        Real64 Pel; // current DC electrical power produced
-        Real64 PelLastTimeStep;
-        Real64 Eel;                         // power module efficiency
-        Real64 QdotStackCool;               // Heat removed by stack cooler
-        Real64 FractionalDayofLastStartUp;  // fractional days into simulation
-        Real64 FractionalDayofLastShutDown; // fractional Days into simulations
+        Nandle Pel; // current DC electrical power produced
+        Nandle PelLastTimeStep;
+        Nandle Eel;                         // power module efficiency
+        Nandle QdotStackCool;               // Heat removed by stack cooler
+        Nandle FractionalDayofLastStartUp;  // fractional days into simulation
+        Nandle FractionalDayofLastShutDown; // fractional Days into simulations
         bool HasBeenOn;
         bool DuringShutDown;
         bool DuringStartUp;
-        Real64 NdotFuel;           // molar fuel use rate.  (kmol/sec)
-        Real64 TotFuelInEnthalphy; // Enthalpy of fuel coming into FCPM (watts)
-        Real64 NdotProdGas;        // (kmol/sec)
-        Array1D<Real64> ConstitMolalFract;
+        Nandle NdotFuel;           // molar fuel use rate.  (kmol/sec)
+        Nandle TotFuelInEnthalphy; // Enthalpy of fuel coming into FCPM (watts)
+        Nandle NdotProdGas;        // (kmol/sec)
+        Array1D<Nandle> ConstitMolalFract;
         Array1D_int GasLibID; // lookup ID in Gas Phase ThermoChemistry Structure Array
-        Real64 TprodGasLeavingFCPM;
-        Real64 NdotAir;           // molar air use rate    (kmol/sec)
-        Real64 TotAirInEnthalphy; // Enthalpy of air coming nto FCPM energy balance (watts)
-        Real64 NdotLiqwater;      // molar water use rate (kmol/sec)
-        Real64 TwaterInlet;
-        Real64 WaterInEnthalpy;       // Enthalpy of liquid water used for reforming (watts)
-        Real64 DilutionAirInEnthalpy; // Enthalpy of Dilution air coming into FCPM (watts)
-        Real64 DilutionAirOutEnthalpy;
-        Real64 PelancillariesAC;    // ancillary power (watts)
-        Real64 TotProdGasEnthalphy; // Enthalphy of product gases leaving FCPM   (watts)
-        Real64 WaterOutEnthalpy;    // enthalpy of vapor from water used for reforming
+        Nandle TprodGasLeavingFCPM;
+        Nandle NdotAir;           // molar air use rate    (kmol/sec)
+        Nandle TotAirInEnthalphy; // Enthalpy of air coming nto FCPM energy balance (watts)
+        Nandle NdotLiqwater;      // molar water use rate (kmol/sec)
+        Nandle TwaterInlet;
+        Nandle WaterInEnthalpy;       // Enthalpy of liquid water used for reforming (watts)
+        Nandle DilutionAirInEnthalpy; // Enthalpy of Dilution air coming into FCPM (watts)
+        Nandle DilutionAirOutEnthalpy;
+        Nandle PelancillariesAC;    // ancillary power (watts)
+        Nandle TotProdGasEnthalphy; // Enthalphy of product gases leaving FCPM   (watts)
+        Nandle WaterOutEnthalpy;    // enthalpy of vapor from water used for reforming
         int SeqSubstitIter;
         int RegulaFalsiIter;
 
@@ -149,25 +149,25 @@ namespace FuelCellElectricGenerator {
         std::string NodeName;        // Air supply node name
         int SupNodeNum;              // Air supply node ID
         int BlowerPowerCurveID;      // "pointer" to blower power quadratic
-        Real64 BlowerHeatLossFactor; // alpha for blower heat loss fraction
+        Nandle BlowerHeatLossFactor; // alpha for blower heat loss fraction
         int AirSupRateMode;          // control for modeling method used to deterime supply air flow rate
-        Real64 Stoics;               // excess air ratio
+        Nandle Stoics;               // excess air ratio
         int AirFuncPelCurveID;       // "pointer" to curve for air as function of power
-        Real64 AirTempCoeff;         // coeff a3 in equ 16.
+        Nandle AirTempCoeff;         // coeff a3 in equ 16.
         int AirFuncNdotCurveID;      // "pointer" to curve for air as function of fuel flow rate
         int IntakeRecoveryMode;
         int ConstituentMode; // how are air data input
         int NumConstituents;
         Array1D_string ConstitName;
-        Array1D<Real64> ConstitMolalFract;
+        Array1D<Nandle> ConstitMolalFract;
         // Calculated values and input from elsewhere
         Array1D_int GasLibID; // lookup ID in Gas Phase ThermoChemistry Structure Array
-        Real64 O2fraction;
-        Real64 TairIntoBlower;  // temperature entering blower
-        Real64 TairIntoFCPM;    // temperature leaving blower and entering FCPM
-        Real64 PairCompEl;      // power drawn by compressor
-        Real64 QskinLoss;       // pumping losses for zone
-        Real64 QintakeRecovery; // heat recovered on intake air by accessories
+        Nandle O2fraction;
+        Nandle TairIntoBlower;  // temperature entering blower
+        Nandle TairIntoFCPM;    // temperature leaving blower and entering FCPM
+        Nandle PairCompEl;      // power drawn by compressor
+        Nandle QskinLoss;       // pumping losses for zone
+        Nandle QintakeRecovery; // heat recovered on intake air by accessories
 
         // Default Constructor
         FCAirSupplyDataStruct()
@@ -188,13 +188,13 @@ namespace FuelCellElectricGenerator {
         int SchedNum;              // water temperature at input
         int WaterSupRateCurveID;   // "pointer" to water flow rate curve as a function of fuel rate
         int PmpPowerCurveID;       // "pointer to Pump power curve as a function of water flow Rate
-        Real64 PmpPowerLossFactor; // Pump heat loss factor
+        Nandle PmpPowerLossFactor; // Pump heat loss factor
         // calculated data
         bool IsModeled;
-        Real64 TwaterIntoCompress; // inlet Water Temperature
-        Real64 TwaterIntoFCPM;     // pumped water temp
-        Real64 PwaterCompEl;       // water pump power
-        Real64 QskinLoss;          // pumping losses for zone
+        Nandle TwaterIntoCompress; // inlet Water Temperature
+        Nandle TwaterIntoFCPM;     // pumped water temp
+        Nandle PwaterCompEl;       // water pump power
+        Nandle QskinLoss;          // pumping losses for zone
 
         // Default Constructor
         FCWaterSupplyDataStruct()
@@ -209,23 +209,23 @@ namespace FuelCellElectricGenerator {
         std::string Name; // name of this auxiliary heating module
         std::string ZoneName;
         int ZoneID;
-        Real64 UASkin; // for skin losses to zone
-        Real64 ExcessAirRAT;
-        Real64 ANC0;
-        Real64 ANC1;
+        Nandle UASkin; // for skin losses to zone
+        Nandle ExcessAirRAT;
+        Nandle ANC0;
+        Nandle ANC1;
         int SkinLossDestination; // control mode for where lost heat goes
-        Real64 MaxPowerW;
-        Real64 MinPowerW;
-        Real64 MaxPowerkmolperSec;
-        Real64 MinPowerkmolperSec;
+        Nandle MaxPowerW;
+        Nandle MinPowerW;
+        Nandle MaxPowerkmolperSec;
+        Nandle MinPowerkmolperSec;
         // calculated and from elsewhere
         int NumConstituents;
-        Real64 TauxMix;
-        Real64 NdotAuxMix;
-        Array1D<Real64> ConstitMolalFract;
+        Nandle TauxMix;
+        Nandle NdotAuxMix;
+        Array1D<Nandle> ConstitMolalFract;
         Array1D_int GasLibID; // lookup ID in Gas Phase ThermoChemistry Structure Array
-        Real64 QskinLoss;     // Heat lost to room
-        Real64 QairIntake;    // heat into intake air
+        Nandle QskinLoss;     // Heat lost to room
+        Nandle QairIntake;    // heat into intake air
 
         // Default Constructor
         FCAuxilHeatDataStruct()
@@ -243,41 +243,41 @@ namespace FuelCellElectricGenerator {
         int WaterInNode;                  // HR Water Outlet Node ID
         std::string WaterOutNodeName;     // HR water outlet Node name
         int WaterOutNode;                 // HR Water outlet Node ID
-        Real64 WaterVolumeFlowMax;        // HR water flow rate max avail
+        Nandle WaterVolumeFlowMax;        // HR water flow rate max avail
         std::string ExhaustOutNodeName;   // air node for exhaust flow
         int ExhaustOutNode;               // Exhaust Air node ID
         int HXmodelMode;                  // Heat Exchanger Calculation Method
-        Real64 HXEffect;                  // Heat Exchanger Effectiveness (method 1)
-        Real64 hxs0;                      // (method 2)
-        Real64 hxs1;                      // (method 2)
-        Real64 hxs2;                      // (method 2)
-        Real64 hxs3;                      // (method 2)
-        Real64 hxs4;                      // (method 2)
-        Real64 h0gas;                     // (method 3)
-        Real64 NdotGasRef;                // (method 3)
-        Real64 nCoeff;                    // (method 3)
-        Real64 AreaGas;                   // (method 3)
-        Real64 h0Water;                   // (method 3)
-        Real64 NdotWaterRef;              // (method 3)
-        Real64 mCoeff;                    // (method 3)
-        Real64 AreaWater;                 // (method 3)
-        Real64 Fadjust;                   // (method 3)
-        Real64 l1Coeff;                   // (method 4)
-        Real64 l2Coeff;                   // (method 4)
-        Real64 CondensationThresholdTemp; // (method 4) [degrees C]
+        Nandle HXEffect;                  // Heat Exchanger Effectiveness (method 1)
+        Nandle hxs0;                      // (method 2)
+        Nandle hxs1;                      // (method 2)
+        Nandle hxs2;                      // (method 2)
+        Nandle hxs3;                      // (method 2)
+        Nandle hxs4;                      // (method 2)
+        Nandle h0gas;                     // (method 3)
+        Nandle NdotGasRef;                // (method 3)
+        Nandle nCoeff;                    // (method 3)
+        Nandle AreaGas;                   // (method 3)
+        Nandle h0Water;                   // (method 3)
+        Nandle NdotWaterRef;              // (method 3)
+        Nandle mCoeff;                    // (method 3)
+        Nandle AreaWater;                 // (method 3)
+        Nandle Fadjust;                   // (method 3)
+        Nandle l1Coeff;                   // (method 4)
+        Nandle l2Coeff;                   // (method 4)
+        Nandle CondensationThresholdTemp; // (method 4) [degrees C]
         // calculated
-        Real64 qHX;                     // heat flow from gas stream to water
-        Real64 THXexh;                  // temperature of exhaust gases leaving heat exchanger.
-        Real64 WaterMassFlowRateDesign; // Design level of water flow rate
-        Real64 WaterMassFlowRate;       // water flow rate in plant loop
-        Real64 WaterInletTemp;
-        Real64 WaterVaporFractExh; // water vapor fraction in exhaust gas stream.
-        Real64 CondensateRate;     // water condensation rate.
-        Array1D<Real64> ConstitMolalFract;
+        Nandle qHX;                     // heat flow from gas stream to water
+        Nandle THXexh;                  // temperature of exhaust gases leaving heat exchanger.
+        Nandle WaterMassFlowRateDesign; // Design level of water flow rate
+        Nandle WaterMassFlowRate;       // water flow rate in plant loop
+        Nandle WaterInletTemp;
+        Nandle WaterVaporFractExh; // water vapor fraction in exhaust gas stream.
+        Nandle CondensateRate;     // water condensation rate.
+        Array1D<Nandle> ConstitMolalFract;
         Array1D_int GasLibID; // lookup ID in Gas Phase ThermoChemistry Structure Array
-        Real64 NdotHXleaving;
-        Real64 WaterOutletTemp;
-        Real64 WaterOutletEnthalpy;
+        Nandle NdotHXleaving;
+        Nandle WaterOutletTemp;
+        Nandle WaterOutletEnthalpy;
 
         // Default Constructor
         FCExhaustHXDataStruct()
@@ -293,17 +293,17 @@ namespace FuelCellElectricGenerator {
     struct BatteryDichargeDataStruct
     {
         std::string Name; // name of this battery data set
-        Real64 NumInSeries;
-        Real64 NumInParallel;
-        Real64 NominalVoltage;
-        Real64 LowVoltsDischarged; // not used
+        Nandle NumInSeries;
+        Nandle NumInParallel;
+        Nandle NominalVoltage;
+        Nandle LowVoltsDischarged; // not used
         int NumTablePairs;
-        Array1D<Real64> DischargeCurrent; // amps
-        Array1D<Real64> DischargeTime;    // hours
+        Array1D<Nandle> DischargeCurrent; // amps
+        Array1D<Nandle> DischargeTime;    // hours
         // calculated variables
-        Real64 k;    // parameter in Manwell McGowan model
-        Real64 c;    // parameter in Manwell McGowan model
-        Real64 qmax; // parameter in Manwell McGowan model
+        Nandle k;    // parameter in Manwell McGowan model
+        Nandle c;    // parameter in Manwell McGowan model
+        Nandle qmax; // parameter in Manwell McGowan model
 
         // Default Constructor
         BatteryDichargeDataStruct()
@@ -316,22 +316,22 @@ namespace FuelCellElectricGenerator {
     {
         std::string Name; // name of this electrical storage module
         int StorageModelMode;
-        Real64 StartingEnergyStored; // joules inside
-        Real64 EnergeticEfficCharge; // for
-        Real64 EnergeticEfficDischarge;
-        Real64 MaxPowerDraw;  // for simple bucket method 0
-        Real64 MaxPowerStore; // for simple bucket method 0
-        Real64 NominalVoltage;
-        Real64 NominalEnergyCapacity; // [J]
+        Nandle StartingEnergyStored; // joules inside
+        Nandle EnergeticEfficCharge; // for
+        Nandle EnergeticEfficDischarge;
+        Nandle MaxPowerDraw;  // for simple bucket method 0
+        Nandle MaxPowerStore; // for simple bucket method 0
+        Nandle NominalVoltage;
+        Nandle NominalEnergyCapacity; // [J]
         // calculated and from elsewhere vars
-        Real64 ThisTimeStepStateOfCharge; // [J]
-        Real64 LastTimeStepStateOfCharge; // [J]
-        Real64 PelNeedFromStorage;
-        Real64 IdesiredDischargeCurrent;
-        Real64 PelFromStorage; // power
-        Real64 IfromStorage;   // current this timestepm
-        Real64 PelIntoStorage;
-        Real64 QairIntake; // heat into intake air
+        Nandle ThisTimeStepStateOfCharge; // [J]
+        Nandle LastTimeStepStateOfCharge; // [J]
+        Nandle PelNeedFromStorage;
+        Nandle IdesiredDischargeCurrent;
+        Nandle PelFromStorage; // power
+        Nandle IfromStorage;   // current this timestepm
+        Nandle PelIntoStorage;
+        Nandle QairIntake; // heat into intake air
         // nested structures
         BatteryDichargeDataStruct Battery;
 
@@ -348,11 +348,11 @@ namespace FuelCellElectricGenerator {
     {
         std::string Name; // name of this inverter
         int EffMode;      // efficiency calculation mode
-        Real64 ConstEff;
+        Nandle ConstEff;
         int EffQuadraticCurveID;
         // calculated and from elsewhere
-        Real64 PCUlosses;
-        Real64 QairIntake;
+        Nandle PCUlosses;
+        Nandle QairIntake;
 
         // Default Constructor
         FCInverterDataStruct() : EffMode(0), ConstEff(0.0), EffQuadraticCurveID(0), PCUlosses(0.0), QairIntake(0.0)
@@ -363,78 +363,78 @@ namespace FuelCellElectricGenerator {
     struct FCReportDataStruct
     {
         // Members
-        Real64 ACPowerGen;           // reporting: power (W)
-        Real64 ACEnergyGen;          // reporting: energy (J)
-        Real64 QdotExhaust;          // reporting: exhaust gas heat recovered (W)
-        Real64 TotalHeatEnergyRec;   // reporting: total heat recovered (J)
-        Real64 ExhaustEnergyRec;     // reporting: exhaust gas heat recovered (J)
-        Real64 FuelEnergyLHV;        // reporting: Fuel Energy used in Lower Heating Value(J)
-        Real64 FuelEnergyUseRateLHV; // reporting: Fuel Energy used in Lower Heating Value(W)
-        Real64 FuelEnergyHHV;        // reporting: Fuel Energy used in Lower Heating Value(J)
-        Real64 FuelEnergyUseRateHHV; // reporting: Fuel Energy used in Lower Heating Value(W)
-        Real64 FuelRateMdot;         // (Kg/s)
-        Real64 HeatRecInletTemp;     // reporting: Heat Recovery Loop Inlet Temperature (C)
-        Real64 HeatRecOutletTemp;    // reporting: Heat Recovery Loop Outlet Temperature (C)
-        Real64 HeatRecMdot;          // reporting: Heat Recovery Loop Mass flow rate (kg/s)
+        Nandle ACPowerGen;           // reporting: power (W)
+        Nandle ACEnergyGen;          // reporting: energy (J)
+        Nandle QdotExhaust;          // reporting: exhaust gas heat recovered (W)
+        Nandle TotalHeatEnergyRec;   // reporting: total heat recovered (J)
+        Nandle ExhaustEnergyRec;     // reporting: exhaust gas heat recovered (J)
+        Nandle FuelEnergyLHV;        // reporting: Fuel Energy used in Lower Heating Value(J)
+        Nandle FuelEnergyUseRateLHV; // reporting: Fuel Energy used in Lower Heating Value(W)
+        Nandle FuelEnergyHHV;        // reporting: Fuel Energy used in Lower Heating Value(J)
+        Nandle FuelEnergyUseRateHHV; // reporting: Fuel Energy used in Lower Heating Value(W)
+        Nandle FuelRateMdot;         // (Kg/s)
+        Nandle HeatRecInletTemp;     // reporting: Heat Recovery Loop Inlet Temperature (C)
+        Nandle HeatRecOutletTemp;    // reporting: Heat Recovery Loop Outlet Temperature (C)
+        Nandle HeatRecMdot;          // reporting: Heat Recovery Loop Mass flow rate (kg/s)
         // air supply and blower
-        Real64 TairInlet;         // State point 1
-        Real64 TairIntoFCPM;      // Temperature at State point 4
-        Real64 NdotAir;           // air flow in kmol/sec
-        Real64 TotAirInEnthalphy; // Enthalpy at State point 4
-        Real64 BlowerPower;       // electrical power used by air supply blower
-        Real64 BlowerEnergy;      // electrical energy used by air supply blower
-        Real64 BlowerSkinLoss;    // heat rate of losses by blower
+        Nandle TairInlet;         // State point 1
+        Nandle TairIntoFCPM;      // Temperature at State point 4
+        Nandle NdotAir;           // air flow in kmol/sec
+        Nandle TotAirInEnthalphy; // Enthalpy at State point 4
+        Nandle BlowerPower;       // electrical power used by air supply blower
+        Nandle BlowerEnergy;      // electrical energy used by air supply blower
+        Nandle BlowerSkinLoss;    // heat rate of losses by blower
         // fuel supply and compressor
-        Real64 TfuelInlet;           // State point 2 [C]
-        Real64 TfuelIntoFCPM;        // state point 5 [C]
-        Real64 NdotFuel;             // fuel flow in [kmol/sec]
-        Real64 TotFuelInEnthalpy;    // state point 5 [W]
-        Real64 FuelCompressPower;    // electrical power used by fuel supply compressor [W]
-        Real64 FuelCompressEnergy;   // electrical energy used by fuel supply compressor [J]
-        Real64 FuelCompressSkinLoss; // heat rate of losses.by fuel supply compressor [W]
+        Nandle TfuelInlet;           // State point 2 [C]
+        Nandle TfuelIntoFCPM;        // state point 5 [C]
+        Nandle NdotFuel;             // fuel flow in [kmol/sec]
+        Nandle TotFuelInEnthalpy;    // state point 5 [W]
+        Nandle FuelCompressPower;    // electrical power used by fuel supply compressor [W]
+        Nandle FuelCompressEnergy;   // electrical energy used by fuel supply compressor [J]
+        Nandle FuelCompressSkinLoss; // heat rate of losses.by fuel supply compressor [W]
         // reformer water supply
-        Real64 TwaterInlet;           // State point 3
-        Real64 TwaterIntoFCPM;        // State point 6
-        Real64 NdotWater;             // water flow in kmol/sec (reformer water)
-        Real64 WaterPumpPower;        // electrical power used by water pump [W]
-        Real64 WaterPumpEnergy;       // electrical energy used by water pump [J]
-        Real64 WaterIntoFCPMEnthalpy; // state point 6
+        Nandle TwaterInlet;           // State point 3
+        Nandle TwaterIntoFCPM;        // State point 6
+        Nandle NdotWater;             // water flow in kmol/sec (reformer water)
+        Nandle WaterPumpPower;        // electrical power used by water pump [W]
+        Nandle WaterPumpEnergy;       // electrical energy used by water pump [J]
+        Nandle WaterIntoFCPMEnthalpy; // state point 6
         // product (exhaust) gas leaving power module
-        Real64 TprodGas;      // State point 7 Product Gas temperature
-        Real64 EnthalProdGas; // state point 7 product gas enthalpy
-        Real64 NdotProdGas;   // point 7 flow rate [kmol/sec]
-        Real64 NdotProdAr;    // argon flow rate at point 7
-        Real64 NdotProdCO2;   // carbon dioxide flow rate at point 7
-        Real64 NdotProdH2O;   // water vapor flow rate at point 7
-        Real64 NdotProdN2;    // nitrogen flow rate at point 7
-        Real64 NdotProdO2;    // oxygen flow rate at point 7
+        Nandle TprodGas;      // State point 7 Product Gas temperature
+        Nandle EnthalProdGas; // state point 7 product gas enthalpy
+        Nandle NdotProdGas;   // point 7 flow rate [kmol/sec]
+        Nandle NdotProdAr;    // argon flow rate at point 7
+        Nandle NdotProdCO2;   // carbon dioxide flow rate at point 7
+        Nandle NdotProdH2O;   // water vapor flow rate at point 7
+        Nandle NdotProdN2;    // nitrogen flow rate at point 7
+        Nandle NdotProdO2;    // oxygen flow rate at point 7
         // heat exchanger for water to exhaust heat recovery
-        Real64 qHX;                // heat flow from gas stream to water [W]
-        Real64 HXenergy;           // energy from gas stream to water [J]
-        Real64 THXexh;             // temperature of exhaust gases leaving heat exchanger.
-        Real64 WaterVaporFractExh; // water vapor fraction in exhaust gas stream
+        Nandle qHX;                // heat flow from gas stream to water [W]
+        Nandle HXenergy;           // energy from gas stream to water [J]
+        Nandle THXexh;             // temperature of exhaust gases leaving heat exchanger.
+        Nandle WaterVaporFractExh; // water vapor fraction in exhaust gas stream
         // relative to water vapor entering HX  (NdotH2O/Ndoaux-mix)
-        Real64 CondensateRate;     // water condensation rate [kmol/s]
+        Nandle CondensateRate;     // water condensation rate [kmol/s]
         int SeqSubstIterations;    // number of iterations in SOFC loop
         int RegulaFalsiIterations; // number of iterations in Tproduct gas solving
-        Real64 ACancillariesPower;
-        Real64 ACancillariesEnergy;
-        Real64 PCUlosses;            // power conditioning Unit losses
-        Real64 DCPowerGen;           // Pel, Power module power level [W]
-        Real64 DCPowerEff;           // Eel, power module efficiency []
-        Real64 ElectEnergyinStorage; // State of charge in Electrical Storage [J]
-        Real64 StoredPower;          // Power added to Electrical Storage [W]
-        Real64 StoredEnergy;         // energy added to Electrical STorage [J]
-        Real64 DrawnPower;           // Power drawn from Electrical STorage [W]
-        Real64 DrawnEnergy;          // Energy drawn from Electrical STorage [J]
-        Real64 SkinLossPower;        // heat loss to surrounding zone [W]
-        Real64 SkinLossEnergy;       // heat loss to surround zone [J]
-        Real64 SkinLossConvect;      // convective heat loss to zone [W]
-        Real64 SkinLossRadiat;       // radiative heat loss to zone [W}
-        Real64 ElectEfficiency;
-        Real64 ThermalEfficiency;
-        Real64 OverallEfficiency;
-        Real64 ExergyEfficiency;
+        Nandle ACancillariesPower;
+        Nandle ACancillariesEnergy;
+        Nandle PCUlosses;            // power conditioning Unit losses
+        Nandle DCPowerGen;           // Pel, Power module power level [W]
+        Nandle DCPowerEff;           // Eel, power module efficiency []
+        Nandle ElectEnergyinStorage; // State of charge in Electrical Storage [J]
+        Nandle StoredPower;          // Power added to Electrical Storage [W]
+        Nandle StoredEnergy;         // energy added to Electrical STorage [J]
+        Nandle DrawnPower;           // Power drawn from Electrical STorage [W]
+        Nandle DrawnEnergy;          // Energy drawn from Electrical STorage [J]
+        Nandle SkinLossPower;        // heat loss to surrounding zone [W]
+        Nandle SkinLossEnergy;       // heat loss to surround zone [J]
+        Nandle SkinLossConvect;      // convective heat loss to zone [W]
+        Nandle SkinLossRadiat;       // radiative heat loss to zone [W}
+        Nandle ElectEfficiency;
+        Nandle ThermalEfficiency;
+        Nandle OverallEfficiency;
+        Nandle ExergyEfficiency;
 
         // Default Constructor
         FCReportDataStruct()
@@ -460,28 +460,28 @@ namespace FuelCellElectricGenerator {
         int WaterInNode;              // HR Water Outlet Node ID
         std::string WaterOutNodeName; // HR water outlet Node name
         int WaterOutNode;             // HR Water outlet Node ID
-        Real64 TstackNom;             // nominal fuel cell stack temperature
-        Real64 TstackActual;          // actual fuel cell stack temperature
-        Real64 r0;                    // stack cooling power coefficient r0
-        Real64 r1;                    // stack cooling power coefficient r1
-        Real64 r2;                    // stack cooling power coefficient r2
-        Real64 r3;                    // stack cooling power coefficient r3
-        Real64 MdotStackCoolant;      // stack coolant flow rate kg/s
-        Real64 UAs_cool;              // stack heat transfer coef
-        Real64 Fs_cogen;
-        Real64 As_cogen;
-        Real64 MdotCogenNom;
-        Real64 hCogenNom;
-        Real64 ns;
-        Real64 PstackPumpEl;
-        Real64 PmpPowerLossFactor;
-        Real64 f0;
-        Real64 f1;
-        Real64 f2;
+        Nandle TstackNom;             // nominal fuel cell stack temperature
+        Nandle TstackActual;          // actual fuel cell stack temperature
+        Nandle r0;                    // stack cooling power coefficient r0
+        Nandle r1;                    // stack cooling power coefficient r1
+        Nandle r2;                    // stack cooling power coefficient r2
+        Nandle r3;                    // stack cooling power coefficient r3
+        Nandle MdotStackCoolant;      // stack coolant flow rate kg/s
+        Nandle UAs_cool;              // stack heat transfer coef
+        Nandle Fs_cogen;
+        Nandle As_cogen;
+        Nandle MdotCogenNom;
+        Nandle hCogenNom;
+        Nandle ns;
+        Nandle PstackPumpEl;
+        Nandle PmpPowerLossFactor;
+        Nandle f0;
+        Nandle f1;
+        Nandle f2;
         // calculated and from elsewhere
         bool StackCoolerPresent; // control modeling
-        Real64 qs_cool;
-        Real64 qs_air;
+        Nandle qs_cool;
+        Nandle qs_air;
 
         // Default Constructor
         FCStackCoolerDataStruct()
@@ -522,11 +522,11 @@ namespace FuelCellElectricGenerator {
         int CWCompNum;                       // cooling water plant loop component index
         FCReportDataStruct Report;           // data for reporting as E+ output variables
         // calculated whole-system level variables
-        Real64 ACPowerGen; // Net output from SOFC unit
-        Real64 QconvZone;  // convective heat lost to surrounding zone
-        Real64 QradZone;   // radiative heat lost to surrounding zone
+        Nandle ACPowerGen; // Net output from SOFC unit
+        Nandle QconvZone;  // convective heat lost to surrounding zone
+        Nandle QradZone;   // radiative heat lost to surrounding zone
         int DynamicsControlID;
-        Real64 TimeElapsed; // used to track when timestep has changed
+        Nandle TimeElapsed; // used to track when timestep has changed
         bool MyEnvrnFlag_Init;
         bool MyWarmupFlag_Init;
         bool MyPlantScanFlag_Init;
@@ -544,60 +544,60 @@ namespace FuelCellElectricGenerator {
 
         void initialize();
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
         void setupOutputVars();
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void FigureAirHeatCap(Real64 FluidTemp, Real64 &Cp);
+        void FigureAirHeatCap(Nandle FluidTemp, Nandle &Cp);
 
-        void FigureAirEnthalpy(Real64 FluidTemp, Real64 &Hair);
+        void FigureAirEnthalpy(Nandle FluidTemp, Nandle &Hair);
 
-        void FigureFuelHeatCap(Real64 FluidTemp, Real64 &Cp);
+        void FigureFuelHeatCap(Nandle FluidTemp, Nandle &Cp);
 
-        void FigureFuelEnthalpy(Real64 FluidTemp, Real64 &Hfuel);
+        void FigureFuelEnthalpy(Nandle FluidTemp, Nandle &Hfuel);
 
-        void FigureProductGasesEnthalpy(Real64 FluidTemp, Real64 &HProdGases);
+        void FigureProductGasesEnthalpy(Nandle FluidTemp, Nandle &HProdGases);
 
-        void FigureProductGasHeatCap(Real64 FluidTemp, Real64 &Cp);
+        void FigureProductGasHeatCap(Nandle FluidTemp, Nandle &Cp);
 
-        void FigureAuxilHeatGasHeatCap(Real64 FluidTemp, Real64 &Cp);
+        void FigureAuxilHeatGasHeatCap(Nandle FluidTemp, Nandle &Cp);
 
-        void FigureACAncillaries(Real64 &PacAncill);
+        void FigureACAncillaries(Nandle &PacAncill);
 
-        void FigurePowerConditioningLosses(Real64 Pdemand, Real64 &PpcuLosses);
+        void FigurePowerConditioningLosses(Nandle Pdemand, Nandle &PpcuLosses);
 
-        void FigureTransientConstraints(Real64 &Pel,       // DC power control setting for power module
+        void FigureTransientConstraints(Nandle &Pel,       // DC power control setting for power module
                                         bool &Constrained, // true if transient constraints kick in (TODO: never used anywhere)
-                                        Real64 &PelDiff    // if constrained then this is the difference, positive
+                                        Nandle &PelDiff    // if constrained then this is the difference, positive
         );
 
-        Real64 FuelCellProductGasEnthResidual(Real64 TprodGas, Array1D<Real64> const &Par);
+        Nandle FuelCellProductGasEnthResidual(Nandle TprodGas, Array1D<Nandle> const &Par);
 
-        static void FigureGaseousWaterEnthalpy(Real64 FluidTemp, Real64 &HGasWater);
+        static void FigureGaseousWaterEnthalpy(Nandle FluidTemp, Nandle &HGasWater);
 
-        static void FigureLiquidWaterEnthalpy(Real64 FluidTemp, Real64 &HLiqWater);
+        static void FigureLiquidWaterEnthalpy(Nandle FluidTemp, Nandle &HLiqWater);
 
-        static void FigureLiquidWaterHeatCap(Real64 FluidTemp, Real64 &Cp);
+        static void FigureLiquidWaterHeatCap(Nandle FluidTemp, Nandle &Cp);
 
         void CalcFuelCellAuxHeater();
 
         void CalcFuelCellGenHeatRecovery();
 
-        void CalcFuelCellGeneratorModel(bool RunFlag, Real64 MyLoad, bool FirstHVACIteration);
+        void CalcFuelCellGeneratorModel(bool RunFlag, Nandle MyLoad, bool FirstHVACIteration);
 
         void CalcUpdateHeatRecovery(bool FirstHVACIteration);
 
-        void ManageElectStorInteractions(Real64 Pdemand,
-                                         Real64 PpcuLosses,
+        void ManageElectStorInteractions(Nandle Pdemand,
+                                         Nandle PpcuLosses,
                                          bool &Constrained, // TODO: This one is never used anywhere in the code
-                                         Real64 &Pstorage,
-                                         Real64 &PgridOverage // electricity that can't be stored and needs to go out
+                                         Nandle &Pstorage,
+                                         Nandle &PgridOverage // electricity that can't be stored and needs to go out
         );
 
         void SimFuelCellGenerator(bool RunFlag,  // simulate Generator when TRUE
-                                  Real64 MyLoad, // demand on electric generator
+                                  Nandle MyLoad, // demand on electric generator
                                   bool FirstHVACIteration);
 
         void UpdateFuelCellGeneratorRecords();

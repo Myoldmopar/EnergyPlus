@@ -119,8 +119,8 @@ namespace HVACHXAssistedCoolingCoil {
 
     // MODULE VARIABLE DECLARATIONS:
     int TotalNumHXAssistedCoils(0);             // The total number of HXAssistedCoolingCoil compound objects
-    Array1D<Real64> HXAssistedCoilOutletTemp;   // Outlet temperature from this compound object
-    Array1D<Real64> HXAssistedCoilOutletHumRat; // Outlet humidity ratio from this compound object
+    Array1D<Nandle> HXAssistedCoilOutletTemp;   // Outlet temperature from this compound object
+    Array1D<Nandle> HXAssistedCoilOutletHumRat; // Outlet humidity ratio from this compound object
     // PUBLIC so others can access this information
     bool GetCoilsInputFlag(true); // Flag to allow input data to be retrieved from idf on first call to this subroutine
     Array1D_bool CheckEquipName;
@@ -167,13 +167,13 @@ namespace HVACHXAssistedCoolingCoil {
     void SimHXAssistedCoolingCoil(std::string const &HXAssistedCoilName, // Name of HXAssistedCoolingCoil
                                   bool const FirstHVACIteration,         // FirstHVACIteration flag
                                   int const CompOp,                      // compressor operation; 1=on, 0=off
-                                  Real64 const PartLoadRatio,            // Part load ratio of Coil:DX:CoolingBypassFactorEmpirical
+                                  Nandle const PartLoadRatio,            // Part load ratio of Coil:DX:CoolingBypassFactorEmpirical
                                   int &CompIndex,
                                   int const FanOpMode,                // Allows the parent object to control fan operation
                                   Optional_bool_const HXUnitEnable,   // flag to enable heat exchanger heat recovery
-                                  Optional<Real64 const> OnOffAFR,    // Ratio of compressor ON air mass flow rate to AVERAGE over time step
+                                  Optional<Nandle const> OnOffAFR,    // Ratio of compressor ON air mass flow rate to AVERAGE over time step
                                   Optional_bool_const EconomizerFlag, // OA sys or air loop economizer status
-                                  Optional<Real64> QTotOut            // the total cooling output of unit
+                                  Optional<Nandle> QTotOut            // the total cooling output of unit
     )
     {
 
@@ -196,9 +196,9 @@ namespace HVACHXAssistedCoolingCoil {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int HXAssistedCoilNum; // Index for HXAssistedCoolingCoil
-        Real64 AirFlowRatio;   // Ratio of compressor ON air mass flow rate to AVEARAGE over time step
+        Nandle AirFlowRatio;   // Ratio of compressor ON air mass flow rate to AVEARAGE over time step
         bool HXUnitOn;         // flag to enable heat exchanger
-        Real64 AirMassFlow;    // HX System air mass flow rate
+        Nandle AirMassFlow;    // HX System air mass flow rate
         int InletNodeNum;      // HX System inlet node number
         int OutletNodeNum;     // HX System outlet node number
 
@@ -326,7 +326,7 @@ namespace HVACHXAssistedCoolingCoil {
         Array1D_string AlphArray;         // Alpha input items for object
         Array1D_string cAlphaFields;      // Alpha field names
         Array1D_string cNumericFields;    // Numeric field names
-        Array1D<Real64> NumArray;         // Numeric input items for object
+        Array1D<Nandle> NumArray;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;        // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;      // Logical array, numeric field input BLANK = .TRUE.
         static int MaxNums(0);            // Maximum number of numeric input fields
@@ -852,10 +852,10 @@ namespace HVACHXAssistedCoolingCoil {
     void CalcHXAssistedCoolingCoil(int const HXAssistedCoilNum,         // Index number for HXAssistedCoolingCoil
                                    bool const FirstHVACIteration,       // FirstHVACIteration flag
                                    int const CompOp,                    // compressor operation; 1=on, 0=off
-                                   Real64 const PartLoadRatio,          // Cooling coil part load ratio
+                                   Nandle const PartLoadRatio,          // Cooling coil part load ratio
                                    bool const HXUnitOn,                 // Flag to enable heat exchanger
                                    int const FanOpMode,                 // Allows parent object to control fan operation
-                                   Optional<Real64 const> OnOffAirFlow, // Ratio of compressor ON air mass flow to AVERAGE over time step
+                                   Optional<Nandle const> OnOffAirFlow, // Ratio of compressor ON air mass flow to AVERAGE over time step
                                    Optional_bool_const EconomizerFlag   // OA (or airloop) econommizer status
     )
     {
@@ -898,10 +898,10 @@ namespace HVACHXAssistedCoolingCoil {
         //  na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 CoilOutputTempLast; // Exiting cooling coil temperature from last iteration
-        Real64 AirMassFlow;               // Inlet air mass flow rate
-        Real64 Error;                     // Error (exiting coil temp from last iteration minus current coil exiting temp)
-        Real64 ErrorLast;                 // check for oscillations
+        static Nandle CoilOutputTempLast; // Exiting cooling coil temperature from last iteration
+        Nandle AirMassFlow;               // Inlet air mass flow rate
+        Nandle Error;                     // Error (exiting coil temp from last iteration minus current coil exiting temp)
+        Nandle ErrorLast;                 // check for oscillations
         int Iter;                         // Number of iterations
         int CompanionCoilIndexNum;        // Index to DX coil
 
@@ -961,12 +961,12 @@ namespace HVACHXAssistedCoolingCoil {
                           PartLoadRatio,
                           OnOffAirFlow);
             } else if (HXAssistedCoil(HXAssistedCoilNum).CoolingCoilType_Num == DataHVACGlobals::Coil_CoolingAirToAirVariableSpeed) {
-                Real64 QZnReq(-1.0);               // Zone load (W), input to variable-speed DX coil
-                Real64 QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
-                Real64 MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
-                Real64 HPTimeConstant(0.0);        // Heat pump time constant [s]
-                Real64 FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
-                Real64 OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
+                Nandle QZnReq(-1.0);               // Zone load (W), input to variable-speed DX coil
+                Nandle QLatReq(0.0);               // Zone latent load, input to variable-speed DX coil
+                Nandle MaxONOFFCyclesperHour(4.0); // Maximum cycling rate of heat pump [cycles/hr]
+                Nandle HPTimeConstant(0.0);        // Heat pump time constant [s]
+                Nandle FanDelayTime(0.0);          // Fan delay time, time delay for the HP's fan to
+                Nandle OnOffAirFlowRatio(1.0);     // ratio of compressor on flow to average flow over time step
                 VariableSpeedCoils::SimVariableSpeedCoils(HXAssistedCoil(HXAssistedCoilNum).CoolingCoilName,
                                                           HXAssistedCoil(HXAssistedCoilNum).CoolingCoilIndex,
                                                           CompOp,
@@ -1053,7 +1053,7 @@ namespace HVACHXAssistedCoolingCoil {
 
     void CheckHXAssistedCoolingCoilSchedule(std::string const &EP_UNUSED(CompType), // unused1208
                                             std::string const &CompName,
-                                            Real64 &Value,
+                                            Nandle &Value,
                                             int &CompIndex)
     {
 
@@ -1108,7 +1108,7 @@ namespace HVACHXAssistedCoolingCoil {
         }
     }
 
-    Real64 GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
                            std::string const &CoilName, // must match coil names for the coil type
                            bool &ErrorsFound            // set to true if problem
     )
@@ -1130,7 +1130,7 @@ namespace HVACHXAssistedCoolingCoil {
         using WaterCoils::GetWaterCoilCapacity;
 
         // Return value
-        Real64 CoilCapacity; // returned capacity of matched coil
+        Nandle CoilCapacity; // returned capacity of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;
@@ -1693,7 +1693,7 @@ namespace HVACHXAssistedCoolingCoil {
         }
     }
 
-    Real64 GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
                                    std::string const &CoilName, // must match coil names for the coil type
                                    bool &ErrorsFound            // set to true if problem
     )
@@ -1714,7 +1714,7 @@ namespace HVACHXAssistedCoolingCoil {
         auto &GetWaterCoilMaxFlowRate(WaterCoils::GetCoilMaxWaterFlowRate);
 
         // Return value
-        Real64 MaxWaterFlowRate; // returned max water flow rate of matched coil
+        Nandle MaxWaterFlowRate; // returned max water flow rate of matched coil
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;
@@ -1761,7 +1761,7 @@ namespace HVACHXAssistedCoolingCoil {
         return MaxWaterFlowRate;
     }
 
-    Real64 GetHXCoilAirFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetHXCoilAirFlowRate(std::string const &CoilType, // must match coil types in this module
                                 std::string const &CoilName, // must match coil names for the coil type
                                 bool &ErrorsFound            // set to true if problem
     )
@@ -1782,7 +1782,7 @@ namespace HVACHXAssistedCoolingCoil {
         using HeatRecovery::GetSupplyAirFlowRate;
 
         // Return value
-        Real64 MaxAirFlowRate; // returned max air flow rate of matched HX
+        Nandle MaxAirFlowRate; // returned max air flow rate of matched HX
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichCoil;

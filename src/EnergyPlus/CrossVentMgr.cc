@@ -113,18 +113,18 @@ namespace CrossVentMgr {
     // na
 
     // MODULE VARIABLE DECLARATIONS:
-    Real64 HAT_J(0.0);             // HAT_J Convection Coefficient times Area times Temperature for Jet subzone
-    Real64 HA_J(0.0);              // HA_J  Convection Coefficient times Area for Jet subzone
-    Real64 HAT_R(0.0);             // HAT_R Convection Coefficient times Area times Temperature for Recirculation subzone
-    Real64 HA_R(0.0);              // HA_J  Convection Coefficient times Area for Recirculation subzone
-    Real64 const Cjet1(1.873);     // First correlation constant for the jet velocity
-    Real64 const Cjet2(0.243);     // Second correlation constant for the jet velocity
-    Real64 const Crec1(0.591);     // First correlation constant for the recirculation velocity
-    Real64 const Crec2(0.070);     // Second correlation constant for the recirculation velocity
-    Real64 const CjetTemp(0.849);  // Correlation constant for the jet temperature rise
-    Real64 const CrecTemp(1.385);  // Correlation constant for the recirculation temperature rise
-    Real64 const CrecFlow1(0.415); // First correlation constant for the recirculation flow rate
-    Real64 const CrecFlow2(0.466); // Second correlation constant for the recirculation flow rate
+    Nandle HAT_J(0.0);             // HAT_J Convection Coefficient times Area times Temperature for Jet subzone
+    Nandle HA_J(0.0);              // HA_J  Convection Coefficient times Area for Jet subzone
+    Nandle HAT_R(0.0);             // HAT_R Convection Coefficient times Area times Temperature for Recirculation subzone
+    Nandle HA_R(0.0);              // HA_J  Convection Coefficient times Area for Recirculation subzone
+    Nandle const Cjet1(1.873);     // First correlation constant for the jet velocity
+    Nandle const Cjet2(0.243);     // Second correlation constant for the jet velocity
+    Nandle const Crec1(0.591);     // First correlation constant for the recirculation velocity
+    Nandle const Crec2(0.070);     // Second correlation constant for the recirculation velocity
+    Nandle const CjetTemp(0.849);  // Correlation constant for the jet temperature rise
+    Nandle const CrecTemp(1.385);  // Correlation constant for the recirculation temperature rise
+    Nandle const CrecFlow1(0.415); // First correlation constant for the recirculation flow rate
+    Nandle const CrecFlow2(0.466); // Second correlation constant for the recirculation flow rate
 
     namespace {
         // These were static variables within different functions. They were pulled out into the namespace
@@ -276,8 +276,8 @@ namespace CrossVentMgr {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Ctd;     // DO loop counter for surfaces
         int SurfNum; // Surface number
-        Real64 Hjet;
-        Real64 Hrec;
+        Nandle Hjet;
+        Nandle Hrec;
 
         // Initialize HAT and HA
         HAT_J = 0.0;
@@ -439,7 +439,7 @@ namespace CrossVentMgr {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
 
-        Real64 const MinUin(0.2);
+        Nandle const MinUin(0.2);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -451,22 +451,22 @@ namespace CrossVentMgr {
         int Ctd;               // counter
         int Ctd2;              // counter
         int OPtr;              // counter
-        Real64 Uin;            // Inflow air velocity [m/s]
-        Real64 CosPhi;         // Angle (in degrees) between the wind and the outward normal of the dominant surface
-        Real64 SurfNorm;       // Outward normal of surface
-        Real64 SumToZone(0.0); // Sum of velocities through
-        Real64 MaxFlux(0.0);
+        Nandle Uin;            // Inflow air velocity [m/s]
+        Nandle CosPhi;         // Angle (in degrees) between the wind and the outward normal of the dominant surface
+        Nandle SurfNorm;       // Outward normal of surface
+        Nandle SumToZone(0.0); // Sum of velocities through
+        Nandle MaxFlux(0.0);
         int MaxSurf(0);
-        Real64 XX;
-        Real64 YY;
-        Real64 ZZ;
-        Real64 XX_Wall;
-        Real64 YY_Wall;
-        Real64 ZZ_Wall;
-        Real64 ActiveSurfNum;
+        Nandle XX;
+        Nandle YY;
+        Nandle ZZ;
+        Nandle XX_Wall;
+        Nandle YY_Wall;
+        Nandle ZZ_Wall;
+        Nandle ActiveSurfNum;
         int NSides;      // Number of sides in surface
-        Real64 Wroom;    // Room width
-        Real64 Aroom;    // Room area cross section
+        Nandle Wroom;    // Room width
+        Nandle Aroom;    // Room area cross section
         int NodeNum1(0); // The first node number in an AirflowNetwork linkage data
         int NodeNum2(0); // The Second node number in an AirflowNetwork linkage data
 
@@ -579,7 +579,7 @@ namespace CrossVentMgr {
             ZZ /= double(NSides);
         }
 
-        Real64 const Wroom_2(pow_2(Wroom));
+        Nandle const Wroom_2(pow_2(Wroom));
         for (Ctd = PosZ_Wall(2 * ZoneNum - 1); Ctd <= PosZ_Wall(2 * ZoneNum); ++Ctd) {
             if ((Surface(APos_Wall(Ctd)).Sides == 3) || (Surface(APos_Wall(Ctd)).Sides == 4)) {
                 XX_Wall = Surface(APos_Wall(Ctd)).Centroid.x;
@@ -739,7 +739,7 @@ namespace CrossVentMgr {
         }
         for (Ctd = 1; Ctd <= AirflowNetworkSurfaceUCSDCV(0, ZoneNum); ++Ctd) {
             if (CVJetRecFlows(Ctd, ZoneNum).Uin != 0) {
-                Real64 dstarexp = max(Dstar(ZoneNum) / (6.0 * std::sqrt(CVJetRecFlows(Ctd, ZoneNum).Area)), 1.0);
+                Nandle dstarexp = max(Dstar(ZoneNum) / (6.0 * std::sqrt(CVJetRecFlows(Ctd, ZoneNum).Area)), 1.0);
                 CVJetRecFlows(Ctd, ZoneNum).Vjet =
                     CVJetRecFlows(Ctd, ZoneNum).Uin * std::sqrt(CVJetRecFlows(Ctd, ZoneNum).Area) * 6.3 * std::log(dstarexp) / Dstar(ZoneNum);
                 CVJetRecFlows(Ctd, ZoneNum).Yjet =
@@ -880,18 +880,18 @@ namespace CrossVentMgr {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 GainsFrac;    // Fraction of lower subzone internal gains that mix as opposed to forming plumes
-        Real64 ConvGains;    // Total convective gains in the room
-        Real64 ConvGainsJet; // Total convective gains released in jet subzone
-        Real64 ConvGainsRec; // Total convective gains released in recirculation subzone
-        Real64 MCp_Total;    // Total capacity rate into the zone - assumed to enter at low level
-        Real64 ZTAveraged;
+        Nandle GainsFrac;    // Fraction of lower subzone internal gains that mix as opposed to forming plumes
+        Nandle ConvGains;    // Total convective gains in the room
+        Nandle ConvGainsJet; // Total convective gains released in jet subzone
+        Nandle ConvGainsRec; // Total convective gains released in recirculation subzone
+        Nandle MCp_Total;    // Total capacity rate into the zone - assumed to enter at low level
+        Nandle ZTAveraged;
 
         int Ctd;
-        Real64 MCpT_Total;
-        Real64 L;
-        Real64 ZoneMult; // total zone multiplier
-        Real64 RetAirConvGain;
+        Nandle MCpT_Total;
+        Nandle L;
+        Nandle ZoneMult; // total zone multiplier
+        Nandle RetAirConvGain;
 
         GainsFrac = 0.0;
         ZoneMult = Zone(ZoneNum).Multiplier * Zone(ZoneNum).ListMultiplier;

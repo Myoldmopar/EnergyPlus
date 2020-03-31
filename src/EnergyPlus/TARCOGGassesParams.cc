@@ -90,9 +90,9 @@ namespace TARCOGGassesParams {
 
     // REAL(r64), parameter :: pi       = 3.14159265358979323846d0
     // REAL(r64), parameter :: UniversalGasConst = 8314.462175d0 !(J/mol*K)
-    Real64 const alpha1(0.5);                // accomodation coefficient for low pressure gas calculations
-    Real64 const alpha2(0.5);                // accomodation coefficient for low pressure gas calculations
-    Real64 const InputDataTolerance(1.0e-7); // coefficient used for input data tolerance in case for displaying error message
+    Nandle const alpha1(0.5);                // accomodation coefficient for low pressure gas calculations
+    Nandle const alpha2(0.5);                // accomodation coefficient for low pressure gas calculations
+    Nandle const InputDataTolerance(1.0e-7); // coefficient used for input data tolerance in case for displaying error message
 
     // REAL(r64) :: gcon(maxgas,3), gvis(maxgas,3), gcp(maxgas,3), grho(maxgas,3), wght(maxgas)
 

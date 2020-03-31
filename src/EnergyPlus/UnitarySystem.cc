@@ -102,8 +102,8 @@ namespace UnitarySystems {
         bool initUnitarySystemsErrFlag(false);
         bool initUnitarySystemsErrorsFound(false);
         bool initLoadBasedControlFlowFracFlagReady(true);
-        Real64 initLoadBasedControlCntrlZoneTerminalUnitMassFlowRateMax(0.0);
-        Real64 initUnitarySystemsQActual(0.0);
+        Nandle initLoadBasedControlCntrlZoneTerminalUnitMassFlowRateMax(0.0);
+        Nandle initUnitarySystemsQActual(0.0);
     } // namespace
 
     // MODULE PARAMETER DEFINITIONS
@@ -118,22 +118,22 @@ namespace UnitarySystems {
     std::vector<DesignSpecMSHP> designSpecMSHP;
     static std::string const fluidNameSteam("STEAM");
     static std::string const blankString("");
-    Real64 m_massFlow1(0.0);           // Mass flow rate in operating mode 1 (CompOn) [kg/s]
-    Real64 m_massFlow2(0.0);           // Mass flow rate in operating mode 2 (CompOff) [kg/s]
-    Real64 m_runTimeFraction1(0.0);    // Fan runtime fraction in operating mode 1 (CompOn)
-    Real64 m_runTimeFraction2(0.0);    // Fan runtime fraction in operating mode 2 (CompOff)
-    Real64 CompOnMassFlow(0.0);        // Supply air mass flow rate w/ compressor ON [kg/s]
-    Real64 CompOffMassFlow(0.0);       // Supply air mass flow rate w/ compressor OFF [kg/s]
-    Real64 CompOnFlowRatio(0.0);       // fan flow ratio when coil on
-    Real64 CompOffFlowRatio(0.0);      // fan flow ratio when coil off
-    Real64 FanSpeedRatio(0.0);         // ratio of air flow ratio passed to fan object
-    Real64 CoolHeatPLRRat(1.0);        // ratio of cooling to heating PLR, used for cycling fan RH control
-    Real64 OnOffAirFlowRatioSave(0.0); // Saves the OnOffAirFlowRatio calculated in RegulaFalsi calls.
-    Real64 QToCoolSetPt(0.0);          // load to cooling set point {W}
-    Real64 QToHeatSetPt(0.0);          // load to heating set point {W}
+    Nandle m_massFlow1(0.0);           // Mass flow rate in operating mode 1 (CompOn) [kg/s]
+    Nandle m_massFlow2(0.0);           // Mass flow rate in operating mode 2 (CompOff) [kg/s]
+    Nandle m_runTimeFraction1(0.0);    // Fan runtime fraction in operating mode 1 (CompOn)
+    Nandle m_runTimeFraction2(0.0);    // Fan runtime fraction in operating mode 2 (CompOff)
+    Nandle CompOnMassFlow(0.0);        // Supply air mass flow rate w/ compressor ON [kg/s]
+    Nandle CompOffMassFlow(0.0);       // Supply air mass flow rate w/ compressor OFF [kg/s]
+    Nandle CompOnFlowRatio(0.0);       // fan flow ratio when coil on
+    Nandle CompOffFlowRatio(0.0);      // fan flow ratio when coil off
+    Nandle FanSpeedRatio(0.0);         // ratio of air flow ratio passed to fan object
+    Nandle CoolHeatPLRRat(1.0);        // ratio of cooling to heating PLR, used for cycling fan RH control
+    Nandle OnOffAirFlowRatioSave(0.0); // Saves the OnOffAirFlowRatio calculated in RegulaFalsi calls.
+    Nandle QToCoolSetPt(0.0);          // load to cooling set point {W}
+    Nandle QToHeatSetPt(0.0);          // load to heating set point {W}
     bool HeatingLoad(false);           // True when zone needs heating
     bool CoolingLoad(false);           // True when zone needs cooling
-    Real64 MoistureLoad(0.0);          // Dehumidification Load (W)
+    Nandle MoistureLoad(0.0);          // Dehumidification Load (W)
 
     // Supply Air Sizing Option
     int const None(1);
@@ -260,10 +260,10 @@ namespace UnitarySystems {
                               bool &HeatActive,
                               bool &CoolActive,
                               int const ZoneOAUnitNum,
-                              Real64 const OAUCoilOutTemp,
+                              Nandle const OAUCoilOutTemp,
                               bool const ZoneEquipment,
-                              Real64 &sysOutputProvided,
-                              Real64 &latOutputProvided)
+                              Nandle &sysOutputProvided,
+                              Nandle &latOutputProvided)
     {
         simulateSys(Name,
                     FirstHVACIteration,
@@ -285,10 +285,10 @@ namespace UnitarySystems {
                                  bool &HeatActive,
                                  bool &CoolActive,
                                  int const ZoneOAUnitNum,
-                                 Real64 const OAUCoilOutTemp,
+                                 Nandle const OAUCoilOutTemp,
                                  bool const ZoneEquipment,
-                                 Real64 &sysOutputProvided,
-                                 Real64 &latOutputProvided)
+                                 Nandle &sysOutputProvided,
+                                 Nandle &latOutputProvided)
     {
         int CompOn = 0;
 
@@ -308,7 +308,7 @@ namespace UnitarySystems {
 
         // MassFlowRateMaxAvail issues are impeding non-VAV air loop equipment by limiting air flow
         // temporarily open up flow limits while simulating, and then set this same value at the INLET after this parent has simulated
-        Real64 tempMassFlowRateMaxAvail = DataLoopNode::Node(this->AirInNode).MassFlowRateMaxAvail;
+        Nandle tempMassFlowRateMaxAvail = DataLoopNode::Node(this->AirInNode).MassFlowRateMaxAvail;
         DataLoopNode::Node(this->AirInNode).MassFlowRateMaxAvail = this->m_DesignMassFlowRate;
 
         if (this->m_OKToPrintSizing) {
@@ -424,7 +424,7 @@ namespace UnitarySystems {
                 inputProcessor->getObjectDefMaxArgs(cCurrentModuleObject, TotalArgs, NumAlphas, NumNumbers);
                 int IOStatus = 0;
                 Array1D_string Alphas(NumAlphas);
-                Array1D<Real64> Numbers(NumNumbers, 0.0);
+                Array1D<Nandle> Numbers(NumNumbers, 0.0);
                 Array1D_bool lNumericBlanks(NumNumbers, true);
                 Array1D_bool lAlphaBlanks(NumAlphas, true);
                 Array1D_string cAlphaFields(NumAlphas);
@@ -464,7 +464,7 @@ namespace UnitarySystems {
                 } else {
                 }
 
-                Real64 loc_m_NoLoadAirFlowRateRatio(1.0);
+                Nandle loc_m_NoLoadAirFlowRateRatio(1.0);
                 if (fields.find("no_load_supply_air_flow_rate_ratio") != fields.end()) { // not required field
                     loc_m_NoLoadAirFlowRateRatio = fields.at("no_load_supply_air_flow_rate_ratio");
                 }
@@ -496,8 +496,8 @@ namespace UnitarySystems {
                         }
                     } else if (numSpeedInputs < maxSpeeds) {
                         ShowSevereError(cCurrentModuleObject + ": Error getting inputs for system named: " + thisObjectName);
-                        ShowContinueError("Number of speed inputs (" + General::TrimSigDigits(Real64(numSpeedInputs), 0) +
-                                          " is less than number of speeds (" + General::TrimSigDigits(Real64(maxSpeeds), 0) + ").");
+                        ShowContinueError("Number of speed inputs (" + General::TrimSigDigits(Nandle(numSpeedInputs), 0) +
+                                          " is less than number of speeds (" + General::TrimSigDigits(Nandle(maxSpeeds), 0) + ").");
                         errorsFound = true;
                     }
                 }
@@ -558,7 +558,7 @@ namespace UnitarySystems {
         return index;
     }
 
-    void UnitarySys::initUnitarySystems(int const &AirLoopNum, bool const &FirstHVACIteration, int const ZoneOAUnitNum, Real64 const OAUCoilOutTemp)
+    void UnitarySys::initUnitarySystems(int const &AirLoopNum, bool const &FirstHVACIteration, int const ZoneOAUnitNum, Nandle const OAUCoilOutTemp)
     {
         static std::string const routineName("InitUnitarySystems");
         bool errorsFound = false; // error flag for mining functions
@@ -725,7 +725,7 @@ namespace UnitarySystems {
                 this->MaxCoolCoilFluidFlow = WaterCoils::GetCoilMaxWaterFlowRate(CoolingCoilType, CoolingCoilName, initUnitarySystemsErrorsFound);
 
                 if (this->MaxCoolCoilFluidFlow > 0.0) {
-                    Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CoolCoilLoopNum).FluidName,
+                    Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CoolCoilLoopNum).FluidName,
                                                                    DataGlobals::CWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->CoolCoilLoopNum).FluidIndex,
                                                                    routineName);
@@ -774,7 +774,7 @@ namespace UnitarySystems {
                         WaterCoils::GetCoilMaxWaterFlowRate(HeatingCoilType, this->m_HeatingCoilName, initUnitarySystemsErrorsFound);
 
                     if (this->MaxHeatCoilFluidFlow > 0.0) {
-                        Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidName,
+                        Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidName,
                                                                        DataGlobals::HWInitConvTemp,
                                                                        DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidIndex,
                                                                        routineName);
@@ -785,8 +785,8 @@ namespace UnitarySystems {
                     this->MaxHeatCoilFluidFlow = SteamCoils::GetCoilMaxSteamFlowRate(this->m_HeatingCoilIndex, initUnitarySystemsErrorsFound);
                     if (this->MaxHeatCoilFluidFlow > 0.0) {
                         int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                        Real64 TempSteamIn = 100.0;
-                        Real64 SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
+                        Nandle TempSteamIn = 100.0;
+                        Nandle SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
                         this->MaxHeatCoilFluidFlow *= SteamDensity;
                     }
                 }
@@ -832,7 +832,7 @@ namespace UnitarySystems {
                     WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", this->m_SuppHeatCoilName, initUnitarySystemsErrorsFound);
 
                 if (this->m_MaxSuppCoilFluidFlow > 0.0) {
-                    Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidName,
+                    Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidName,
                                                                    DataGlobals::CWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidIndex,
                                                                    routineName);
@@ -866,8 +866,8 @@ namespace UnitarySystems {
                 this->m_MaxSuppCoilFluidFlow = SteamCoils::GetCoilMaxSteamFlowRate(this->m_SuppHeatCoilIndex, initUnitarySystemsErrorsFound);
                 if (this->m_MaxSuppCoilFluidFlow > 0.0) {
                     int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                    Real64 TempSteamIn = 100.0;
-                    Real64 SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
+                    Nandle TempSteamIn = 100.0;
+                    Nandle SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
                     this->m_MaxSuppCoilFluidFlow *= SteamDensity;
                 }
 
@@ -903,7 +903,7 @@ namespace UnitarySystems {
 
             if ((this->m_HeatRecActive) && (!this->m_MyPlantScanFlag)) {
 
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_HRLoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_HRLoopNum).FluidName,
                                                                DataGlobals::HWInitConvTemp,
                                                                DataPlant::PlantLoop(this->m_HRLoopNum).FluidIndex,
                                                                routineName);
@@ -931,10 +931,10 @@ namespace UnitarySystems {
                         CoolingCoilType = "Coil:Cooling:Water:DetailedGeometry";
                     }
                     WaterCoils::SimulateWaterCoilComponents(this->m_CoolingCoilName, FirstHVACIteration, this->m_CoolingCoilIndex);
-                    Real64 CoilMaxVolFlowRate =
+                    Nandle CoilMaxVolFlowRate =
                         WaterCoils::GetCoilMaxWaterFlowRate(CoolingCoilType, this->m_CoolingCoilName, initUnitarySystemsErrorsFound);
                     if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
-                        Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CoolCoilLoopNum).FluidName,
+                        Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CoolCoilLoopNum).FluidName,
                                                                        DataGlobals::CWInitConvTemp,
                                                                        DataPlant::PlantLoop(this->CoolCoilLoopNum).FluidIndex,
                                                                        routineName);
@@ -957,10 +957,10 @@ namespace UnitarySystems {
                     // IF water coil max water flow rate is DataSizing::AutoSized, simulate once in order to mine max flow rate
                     if (this->m_HeatingCoilType_Num == DataHVACGlobals::Coil_HeatingWater) {
                         WaterCoils::SimulateWaterCoilComponents(this->m_HeatingCoilName, FirstHVACIteration, this->m_HeatingCoilIndex);
-                        Real64 CoilMaxVolFlowRate =
+                        Nandle CoilMaxVolFlowRate =
                             WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", this->m_HeatingCoilName, initUnitarySystemsErrorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
-                            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidName,
+                            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidName,
                                                                            DataGlobals::CWInitConvTemp,
                                                                            DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidIndex,
                                                                            routineName);
@@ -974,11 +974,11 @@ namespace UnitarySystems {
                                                                 this->m_HeatingCoilIndex,
                                                                 1.0,
                                                                 initUnitarySystemsQActual); // QCoilReq, simulate any load > 0 to get max capacity
-                        Real64 CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_HeatingCoilIndex, initUnitarySystemsErrorsFound);
+                        Nandle CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_HeatingCoilIndex, initUnitarySystemsErrorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
                             int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                            Real64 TempSteamIn = 100.0;
-                            Real64 SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
+                            Nandle TempSteamIn = 100.0;
+                            Nandle SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
                             this->MaxHeatCoilFluidFlow = CoilMaxVolFlowRate * SteamDensity;
                         }
                     }
@@ -998,10 +998,10 @@ namespace UnitarySystems {
                     if (this->m_SuppHeatCoilType_Num == DataHVACGlobals::Coil_HeatingWater) {
                         // If water coil max water flow rate is DataSizing::AutoSized, simulate once in order to mine max flow rate
                         WaterCoils::SimulateWaterCoilComponents(this->m_SuppHeatCoilName, FirstHVACIteration, this->m_SuppHeatCoilIndex);
-                        Real64 CoilMaxVolFlowRate =
+                        Nandle CoilMaxVolFlowRate =
                             WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", this->m_SuppHeatCoilName, initUnitarySystemsErrorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
-                            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidName,
+                            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidName,
                                                                            DataGlobals::CWInitConvTemp,
                                                                            DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidIndex,
                                                                            routineName);
@@ -1014,11 +1014,11 @@ namespace UnitarySystems {
                                                                 this->m_SuppHeatCoilIndex,
                                                                 1.0,
                                                                 initUnitarySystemsQActual); // QCoilReq, simulate any load > 0 to get max capacity
-                        Real64 CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_SuppHeatCoilIndex, initUnitarySystemsErrorsFound);
+                        Nandle CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_SuppHeatCoilIndex, initUnitarySystemsErrorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
                             int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                            Real64 TempSteamIn = 100.0;
-                            Real64 SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
+                            Nandle TempSteamIn = 100.0;
+                            Nandle SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
                             this->m_MaxSuppCoilFluidFlow = CoilMaxVolFlowRate * SteamDensity;
                         }
                     }
@@ -1041,7 +1041,7 @@ namespace UnitarySystems {
 
         // Init maximum available Heat Recovery flow rate
         if ((this->m_HeatRecActive) && (!this->m_MyPlantScanFlag)) {
-            Real64 mdotHR = 0.0;
+            Nandle mdotHR = 0.0;
             if (ScheduleManager::GetCurrentScheduleValue(this->m_SysAvailSchedPtr) > 0.0) {
                 if (FirstHVACIteration) {
                     mdotHR = this->m_DesignHeatRecMassFlowRate;
@@ -1098,7 +1098,7 @@ namespace UnitarySystems {
                 this->m_CoolingCoilType_Num == DataHVACGlobals::Coil_CoolingWaterDetailed) {
 
                 //     set water-side mass flow rates
-                Real64 mdot = this->MaxCoolCoilFluidFlow;
+                Nandle mdot = this->MaxCoolCoilFluidFlow;
                 PlantUtilities::SetComponentFlowRate(mdot,
                                                      this->CoolCoilFluidInletNode,
                                                      this->CoolCoilFluidOutletNodeNum,
@@ -1115,7 +1115,7 @@ namespace UnitarySystems {
             if (this->m_HeatingCoilType_Num == DataHVACGlobals::Coil_HeatingWater) {
 
                 //     set water-side mass flow rates
-                Real64 mdot = this->MaxHeatCoilFluidFlow;
+                Nandle mdot = this->MaxHeatCoilFluidFlow;
                 PlantUtilities::SetComponentFlowRate(mdot,
                                                      this->HeatCoilFluidInletNode,
                                                      this->HeatCoilFluidOutletNodeNum,
@@ -1133,7 +1133,7 @@ namespace UnitarySystems {
             if (this->m_HeatingCoilType_Num == DataHVACGlobals::Coil_HeatingSteam) {
 
                 //     set water-side mass flow rates
-                Real64 mdot = this->MaxHeatCoilFluidFlow;
+                Nandle mdot = this->MaxHeatCoilFluidFlow;
                 PlantUtilities::SetComponentFlowRate(mdot,
                                                      this->HeatCoilFluidInletNode,
                                                      this->HeatCoilFluidOutletNodeNum,
@@ -1155,7 +1155,7 @@ namespace UnitarySystems {
             if (this->m_SuppHeatCoilType_Num == DataHVACGlobals::Coil_HeatingWater) {
 
                 //     set steam-side mass flow rates
-                Real64 mdot = this->m_MaxSuppCoilFluidFlow;
+                Nandle mdot = this->m_MaxSuppCoilFluidFlow;
                 PlantUtilities::SetComponentFlowRate(mdot,
                                                      this->m_SuppCoilFluidInletNode,
                                                      this->m_SuppCoilFluidOutletNodeNum,
@@ -1178,7 +1178,7 @@ namespace UnitarySystems {
             if (this->m_SuppHeatCoilType_Num == DataHVACGlobals::Coil_HeatingSteam) {
 
                 //     set air-side and steam-side mass flow rates
-                Real64 mdot = this->m_MaxSuppCoilFluidFlow;
+                Nandle mdot = this->m_MaxSuppCoilFluidFlow;
                 PlantUtilities::SetComponentFlowRate(mdot,
                                                      this->m_SuppCoilFluidInletNode,
                                                      this->m_SuppCoilFluidOutletNodeNum,
@@ -1266,7 +1266,7 @@ namespace UnitarySystems {
 
         // water/steam coil initialization
         if (this->CoolCoilFluidInletNode > 0) {
-            Real64 mdot = 0.0;
+            Nandle mdot = 0.0;
             PlantUtilities::SetComponentFlowRate(mdot,
                                                  this->CoolCoilFluidInletNode,
                                                  this->CoolCoilFluidOutletNodeNum,
@@ -1276,7 +1276,7 @@ namespace UnitarySystems {
                                                  this->CoolCoilCompNum);
         }
         if (this->HeatCoilFluidInletNode > 0) {
-            Real64 mdot = 0.0;
+            Nandle mdot = 0.0;
             PlantUtilities::SetComponentFlowRate(mdot,
                                                  this->HeatCoilFluidInletNode,
                                                  this->HeatCoilFluidOutletNodeNum,
@@ -1286,7 +1286,7 @@ namespace UnitarySystems {
                                                  this->HeatCoilCompNum);
         }
         if (this->m_SuppCoilFluidInletNode > 0) {
-            Real64 mdot = 0.0;
+            Nandle mdot = 0.0;
             PlantUtilities::SetComponentFlowRate(mdot,
                                                  this->m_SuppCoilFluidInletNode,
                                                  this->m_SuppCoilFluidOutletNodeNum,
@@ -1306,7 +1306,7 @@ namespace UnitarySystems {
     void UnitarySys::checkNodeSetPoint(int const AirLoopNum,       // number of the current air loop being simulated
                                        int const ControlNode,      // Node to test for set point
                                        int const CoilType,         // True if cooling coil, then test for HumRatMax set point
-                                       Real64 const OAUCoilOutTemp // the coil inlet temperature of OutdoorAirUnit
+                                       Nandle const OAUCoilOutTemp // the coil inlet temperature of OutdoorAirUnit
     )
     {
 
@@ -1366,10 +1366,10 @@ namespace UnitarySystems {
         }
     }
 
-    void UnitarySys::frostControlSetPointLimit(Real64 &TempSetPoint,       // temperature setpoint of the sensor node
-                                               Real64 &HumRatSetPoint,     // humidity ratio setpoint of the sensor node
-                                               Real64 const BaroPress,     // baromtric pressure, Pa [N/m^2]
-                                               Real64 const TfrostControl, // minimum temperature limit for forst control
+    void UnitarySys::frostControlSetPointLimit(Nandle &TempSetPoint,       // temperature setpoint of the sensor node
+                                               Nandle &HumRatSetPoint,     // humidity ratio setpoint of the sensor node
+                                               Nandle const BaroPress,     // baromtric pressure, Pa [N/m^2]
+                                               Nandle const TfrostControl, // minimum temperature limit for forst control
                                                int const ControlMode       // temperature or humidity control mode
     )
     {
@@ -1391,7 +1391,7 @@ namespace UnitarySystems {
         int const RunOnLatent(2);   // identifier for humidity (latent load) control
         static std::string const routineName("FrostControlSetPointLimit");
 
-        Real64 AirMassFlow = DataLoopNode::Node(this->CoolCoilInletNodeNum).MassFlowRate;
+        Nandle AirMassFlow = DataLoopNode::Node(this->CoolCoilInletNodeNum).MassFlowRate;
         if (ControlMode == RunOnSensible && AirMassFlow > DataHVACGlobals::SmallAirVolFlow &&
             TempSetPoint < DataLoopNode::Node(this->CoolCoilInletNodeNum).Temp) {
             if (TempSetPoint < TfrostControl) {
@@ -1400,7 +1400,7 @@ namespace UnitarySystems {
             }
         } else if (ControlMode == RunOnLatent && AirMassFlow > DataHVACGlobals::SmallAirVolFlow &&
                    HumRatSetPoint < DataLoopNode::Node(this->CoolCoilInletNodeNum).HumRat) {
-            Real64 HumRatioSat = Psychrometrics::PsyWFnTdpPb(TfrostControl, BaroPress, routineName);
+            Nandle HumRatioSat = Psychrometrics::PsyWFnTdpPb(TfrostControl, BaroPress, routineName);
             if (HumRatioSat > HumRatSetPoint) {
                 HumRatSetPoint = HumRatioSat;
                 this->m_FrostControlStatus = 2;
@@ -1448,8 +1448,8 @@ namespace UnitarySystems {
         int Iter;                  // iteration count
         int MSHPIndex;             // Index to design Specification object
         int BranchNum;             // Index to branch on air loop
-        Real64 SystemFlow;         // AirloopHVAC flow rate [m3/s]
-        Real64 BranchFanFlow;      // branch fan flow rate [m3/s]
+        Nandle SystemFlow;         // AirloopHVAC flow rate [m3/s]
+        Nandle BranchFanFlow;      // branch fan flow rate [m3/s]
         bool ErrFound;             // logical error flag
         std::string FanType;       // fan type
         std::string m_FanName;     // fan name
@@ -1457,10 +1457,10 @@ namespace UnitarySystems {
         std::string HXCoilName;    // cooling coil name in HXAssisted parent
         int ActualCoolCoilType;    // cooling coil type in HXAssisted parent
         int SaveCurDuctType;       // used during sizing to save the current duct type
-        Real64 QActual;            // water coil output [W]
-        Real64 capacityMultiplier; // used for ASHRAE model sizing
+        Nandle QActual;            // water coil output [W]
+        Nandle capacityMultiplier; // used for ASHRAE model sizing
 
-        Real64 TempSize;  // DataSizing::AutoSized value of input field
+        Nandle TempSize;  // DataSizing::AutoSized value of input field
         int FieldNum = 2; // IDD numeric field number where input field description is found
         int SizingMethod; // Integer representation of sizing method (e.g., DataHVACGlobals::CoolingAirflowSizing, DataSizing::HeatingCapacitySizing,
                           // etc.)
@@ -1468,9 +1468,9 @@ namespace UnitarySystems {
         bool SizingDesRunThisSys;         // checks if sizing was performed
         int NumAirLoopZones(0);           // number of zone inlet nodes in an air loop
         int ZoneInSysIndex(0);            // number of zone inlet nodes counter in an airloop
-        Real64 SumOfMassFlowRateMax(0.0); // the sum of zone inlet mass flow rates
+        Nandle SumOfMassFlowRateMax(0.0); // the sum of zone inlet mass flow rates
         int ZoneInletNodeNum(0);          // zone inlet nodes node number
-        Real64 minNoLoadFlow;             // used for sizing MaxNoCoolHeatVolFlow for SingleZoneVAV method
+        Nandle minNoLoadFlow;             // used for sizing MaxNoCoolHeatVolFlow for SingleZoneVAV method
         //////////// hoisted into namespace ////////////////////////////////////////////////
         // static int NumUnitarySystemsSized( 0 ); // counter used to delete UnitarySystemNumericFields array after last system is sized
         ////////////////////////////////////////////////////////////////////////////////////
@@ -1532,10 +1532,10 @@ namespace UnitarySystems {
         DataSizing::ZoneCoolingOnlyFan = false;
         DataSizing::ZoneHeatingOnlyFan = false;
         bool IsAutoSize = false;
-        Real64 SysCoolingFlow = 0.0;
-        Real64 SysHeatingFlow = 0.0;
-        Real64 CoolCapAtPeak = 0.0;
-        Real64 HeatCapAtPeak = 0.0;
+        Nandle SysCoolingFlow = 0.0;
+        Nandle SysHeatingFlow = 0.0;
+        Nandle CoolCapAtPeak = 0.0;
+        Nandle HeatCapAtPeak = 0.0;
 
         if (DataSizing::CurSysNum > 0 && DataSizing::CurOASysNum == 0 && this->m_FanExists) {
             if (this->m_FanType_Num == DataHVACGlobals::FanType_SystemModelObject) {
@@ -2793,7 +2793,7 @@ namespace UnitarySystems {
                     loc_m_HeatingCoilName = UtilityRoutines::MakeUPPERCase(fields.at("heating_coil_name"));
                 }
 
-                Real64 loc_m_HeatingSizingRatio(1.0);
+                Nandle loc_m_HeatingSizingRatio(1.0);
                 if (fields.find("dx_heating_coil_sizing_ratio") != fields.end()) { // not required field, has default
                     loc_m_HeatingSizingRatio = fields.at("dx_heating_coil_sizing_ratio");
                 }
@@ -2813,7 +2813,7 @@ namespace UnitarySystems {
                     loc_m_ISHundredPercentDOASDXCoil = UtilityRoutines::MakeUPPERCase(fields.at("use_doas_dx_cooling_coil"));
                 }
 
-                Real64 loc_DesignMinOutletTemp(2.0);
+                Nandle loc_DesignMinOutletTemp(2.0);
                 if (fields.find("minimum_supply_air_temperature") != fields.end()) { // not required field, has default (2C), and autosizable
                     auto tempFieldVal = fields.at("minimum_supply_air_temperature");
                     if (tempFieldVal == "Autosize") {
@@ -2843,7 +2843,7 @@ namespace UnitarySystems {
                     loc_m_CoolingSAFMethod = UtilityRoutines::MakeUPPERCase(fields.at("cooling_supply_air_flow_rate_method"));
                 }
 
-                Real64 loc_m_CoolingSAFMethod_SAFlow(-999.0);
+                Nandle loc_m_CoolingSAFMethod_SAFlow(-999.0);
                 if (fields.find("cooling_supply_air_flow_rate") != fields.end()) { // not required field, autosizable
                     auto tempFieldVal = fields.at("cooling_supply_air_flow_rate");
                     if (tempFieldVal == "Autosize") {
@@ -2853,17 +2853,17 @@ namespace UnitarySystems {
                     }
                 }
 
-                Real64 loc_m_CoolingSAFMethod_SAFlowPerFloorArea(-999.0);
+                Nandle loc_m_CoolingSAFMethod_SAFlowPerFloorArea(-999.0);
                 if (fields.find("cooling_supply_air_flow_rate_per_floor_area") != fields.end()) { // not required field
                     loc_m_CoolingSAFMethod_SAFlowPerFloorArea = fields.at("cooling_supply_air_flow_rate_per_floor_area");
                 }
 
-                Real64 loc_m_CoolingSAFMethod_FracOfAutosizedCoolingSAFlow(-999.0);
+                Nandle loc_m_CoolingSAFMethod_FracOfAutosizedCoolingSAFlow(-999.0);
                 if (fields.find("cooling_fraction_of_autosized_cooling_supply_air_flow_rate") != fields.end()) { // not required field
                     loc_m_CoolingSAFMethod_FracOfAutosizedCoolingSAFlow = fields.at("cooling_fraction_of_autosized_cooling_supply_air_flow_rate");
                 }
 
-                Real64 loc_m_CoolingSAFMethod_FlowPerCoolingCapacity(-999.0);
+                Nandle loc_m_CoolingSAFMethod_FlowPerCoolingCapacity(-999.0);
                 if (fields.find("cooling_supply_air_flow_rate_per_unit_of_capacity") != fields.end()) { // not required field
                     loc_m_CoolingSAFMethod_FlowPerCoolingCapacity = fields.at("cooling_supply_air_flow_rate_per_unit_of_capacity");
                 }
@@ -2873,7 +2873,7 @@ namespace UnitarySystems {
                     loc_m_HeatingSAFMethod = UtilityRoutines::MakeUPPERCase(fields.at("heating_supply_air_flow_rate_method"));
                 }
 
-                Real64 loc_m_HeatingSAFMethod_SAFlow(-999.0);
+                Nandle loc_m_HeatingSAFMethod_SAFlow(-999.0);
                 if (fields.find("heating_supply_air_flow_rate") != fields.end()) { // not required field
                     auto tempFieldVal = fields.at("heating_supply_air_flow_rate");
                     if (tempFieldVal == "Autosize") {
@@ -2883,17 +2883,17 @@ namespace UnitarySystems {
                     }
                 }
 
-                Real64 loc_m_HeatingSAFMethod_SAFlowPerFloorArea(-999.0);
+                Nandle loc_m_HeatingSAFMethod_SAFlowPerFloorArea(-999.0);
                 if (fields.find("heating_supply_air_flow_rate_per_floor_area") != fields.end()) { // not required field
                     loc_m_HeatingSAFMethod_SAFlowPerFloorArea = fields.at("heating_supply_air_flow_rate_per_floor_area");
                 }
 
-                Real64 loc_m_HeatingSAFMethod_FracOfAutosizedHeatingSAFlow(-999.0);
+                Nandle loc_m_HeatingSAFMethod_FracOfAutosizedHeatingSAFlow(-999.0);
                 if (fields.find("heating_fraction_of_autosized_heating_supply_air_flow_rate") != fields.end()) { // not required field
                     loc_m_HeatingSAFMethod_FracOfAutosizedHeatingSAFlow = fields.at("heating_fraction_of_autosized_heating_supply_air_flow_rate");
                 }
 
-                Real64 loc_m_HeatingSAFMethod_FlowPerHeatingCapacity(-999.0);
+                Nandle loc_m_HeatingSAFMethod_FlowPerHeatingCapacity(-999.0);
                 if (fields.find("heating_supply_air_flow_rate_per_unit_of_capacity") != fields.end()) { // not required field
                     loc_m_HeatingSAFMethod_FlowPerHeatingCapacity = fields.at("heating_supply_air_flow_rate_per_unit_of_capacity");
                 }
@@ -2903,7 +2903,7 @@ namespace UnitarySystems {
                     loc_m_NoCoolHeatSAFMethod = UtilityRoutines::MakeUPPERCase(fields.at("no_load_supply_air_flow_rate_method"));
                 }
 
-                Real64 loc_m_NoCoolHeatSAFMethod_SAFlow(-999.0);
+                Nandle loc_m_NoCoolHeatSAFMethod_SAFlow(-999.0);
                 if (fields.find("no_load_supply_air_flow_rate") != fields.end()) { // not required field
                     auto tempFieldVal = fields.at("no_load_supply_air_flow_rate");
                     if (tempFieldVal == "Autosize") {
@@ -2913,34 +2913,34 @@ namespace UnitarySystems {
                     }
                 }
 
-                Real64 loc_m_NoCoolHeatSAFMethod_SAFlowPerFloorArea(-999.0);
+                Nandle loc_m_NoCoolHeatSAFMethod_SAFlowPerFloorArea(-999.0);
                 if (fields.find("no_load_supply_air_flow_rate_per_floor_area") != fields.end()) { // not required field
                     loc_m_NoCoolHeatSAFMethod_SAFlowPerFloorArea = fields.at("no_load_supply_air_flow_rate_per_floor_area");
                 }
 
-                Real64 loc_m_NoCoolHeatSAFMethod_FracOfAutosizedCoolingSAFlow(-999.0);
+                Nandle loc_m_NoCoolHeatSAFMethod_FracOfAutosizedCoolingSAFlow(-999.0);
                 if (fields.find("no_load_fraction_of_autosized_cooling_supply_air_flow_rate") != fields.end()) { // not required field
                     loc_m_NoCoolHeatSAFMethod_FracOfAutosizedCoolingSAFlow = fields.at("no_load_fraction_of_autosized_cooling_supply_air_flow_rate");
                 }
 
-                Real64 loc_m_NoCoolHeatSAFMethod_FracOfAutosizedHeatingSAFlow(-999.0);
+                Nandle loc_m_NoCoolHeatSAFMethod_FracOfAutosizedHeatingSAFlow(-999.0);
                 if (fields.find("no_load_fraction_of_autosized_heating_supply_air_flow_rate") != fields.end()) { // not required field
                     loc_m_NoCoolHeatSAFMethod_FracOfAutosizedHeatingSAFlow = fields.at("no_load_fraction_of_autosized_heating_supply_air_flow_rate");
                 }
 
-                Real64 loc_m_NoCoolHeatSAFMethod_FlowPerCoolingCapacity(-999.0);
+                Nandle loc_m_NoCoolHeatSAFMethod_FlowPerCoolingCapacity(-999.0);
                 if (fields.find("no_load_supply_air_flow_rate_per_unit_of_capacity_during_cooling_operation") != fields.end()) { // not required field
                     loc_m_NoCoolHeatSAFMethod_FlowPerCoolingCapacity =
                         fields.at("no_load_supply_air_flow_rate_per_unit_of_capacity_during_cooling_operation");
                 }
 
-                Real64 loc_m_NoCoolHeatSAFMethod_FlowPerHeatingCapacity(-999.0);
+                Nandle loc_m_NoCoolHeatSAFMethod_FlowPerHeatingCapacity(-999.0);
                 if (fields.find("no_load_supply_air_flow_rate_per_unit_of_capacity_during_heating_operation") != fields.end()) { // not required field
                     loc_m_NoCoolHeatSAFMethod_FlowPerHeatingCapacity =
                         fields.at("no_load_supply_air_flow_rate_per_unit_of_capacity_during_heating_operation");
                 }
 
-                Real64 loc_DesignMaxOutletTemp(80.0);
+                Nandle loc_DesignMaxOutletTemp(80.0);
                 if (fields.find("maximum_supply_air_temperature") != fields.end()) { // not required field, has default of 80 C
                     auto tempFieldVal = fields.at("maximum_supply_air_temperature");
                     if (tempFieldVal == "Autosize") {
@@ -2950,7 +2950,7 @@ namespace UnitarySystems {
                     }
                 }
 
-                Real64 loc_m_MaxOATSuppHeat(21.0);
+                Nandle loc_m_MaxOATSuppHeat(21.0);
                 if (fields.find("maximum_outdoor_dry_bulb_temperature_for_supplemental_heater_operation") !=
                     fields.end()) { // not required field, has default
                     loc_m_MaxOATSuppHeat = fields.at("maximum_outdoor_dry_bulb_temperature_for_supplemental_heater_operation");
@@ -2961,42 +2961,42 @@ namespace UnitarySystems {
                     loc_condenserInletNodeName = UtilityRoutines::MakeUPPERCase(fields.at("outdoor_dry_bulb_temperature_sensor_node_name"));
                 }
 
-                Real64 loc_m_MaxONOFFCyclesperHour(2.5);
+                Nandle loc_m_MaxONOFFCyclesperHour(2.5);
                 if (fields.find("maximum_cycling_rate") != fields.end()) { // not required field, has default
                     loc_m_MaxONOFFCyclesperHour = fields.at("maximum_cycling_rate");
                 }
 
-                Real64 loc_m_HPTimeConstant(60.0);
+                Nandle loc_m_HPTimeConstant(60.0);
                 if (fields.find("heat_pump_time_constant") != fields.end()) { // not required field, has default
                     loc_m_HPTimeConstant = fields.at("heat_pump_time_constant");
                 }
 
-                Real64 loc_m_OnCyclePowerFraction(0.01);
+                Nandle loc_m_OnCyclePowerFraction(0.01);
                 if (fields.find("fraction_of_on_cycle_power_use") != fields.end()) { // not required field, has default
                     loc_m_OnCyclePowerFraction = fields.at("fraction_of_on_cycle_power_use");
                 }
 
-                Real64 loc_m_FanDelayTime(60.0);
+                Nandle loc_m_FanDelayTime(60.0);
                 if (fields.find("heat_pump_fan_delay_time") != fields.end()) { // not required field, has default
                     loc_m_FanDelayTime = fields.at("heat_pump_fan_delay_time");
                 }
 
-                Real64 loc_m_AncillaryOnPower(0.0);
+                Nandle loc_m_AncillaryOnPower(0.0);
                 if (fields.find("ancillary_on_cycle_electric_power") != fields.end()) { // not required field, has default
                     loc_m_AncillaryOnPower = fields.at("ancillary_on_cycle_electric_power");
                 }
 
-                Real64 loc_m_AncillaryOffPower(0.0);
+                Nandle loc_m_AncillaryOffPower(0.0);
                 if (fields.find("ancillary_off_cycle_electric_power") != fields.end()) { // not required field, has default
                     loc_m_AncillaryOffPower = fields.at("ancillary_off_cycle_electric_power");
                 }
 
-                Real64 loc_m_DesignHRWaterVolumeFlow(0.0);
+                Nandle loc_m_DesignHRWaterVolumeFlow(0.0);
                 if (fields.find("design_heat_recovery_water_flow_rate") != fields.end()) { // not required field, has default
                     loc_m_DesignHRWaterVolumeFlow = fields.at("design_heat_recovery_water_flow_rate");
                 }
 
-                Real64 loc_m_MaxHROutletWaterTemp(80.0);
+                Nandle loc_m_MaxHROutletWaterTemp(80.0);
                 if (fields.find("maximum_temperature_for_heat_recovery") != fields.end()) { // not required field, has default
                     loc_m_MaxHROutletWaterTemp = fields.at("maximum_temperature_for_heat_recovery");
                 }
@@ -3023,7 +3023,7 @@ namespace UnitarySystems {
 
                 int FanInletNode = 0;
                 int FanOutletNode = 0;
-                Real64 FanVolFlowRate = 0.0;
+                Nandle FanVolFlowRate = 0.0;
                 int CoolingCoilInletNode = 0;
                 int CoolingCoilOutletNode = 0;
                 int HeatingCoilInletNode = 0;
@@ -3119,7 +3119,7 @@ namespace UnitarySystems {
                     }
                 }
 
-                Real64 TotalFloorAreaOnAirLoop = 0.0;
+                Nandle TotalFloorAreaOnAirLoop = 0.0;
                 int AirLoopNumber = 0;
                 bool AirNodeFound = false;
                 bool AirLoopFound = false;
@@ -4044,8 +4044,8 @@ namespace UnitarySystems {
 
                         if (thisSys.MaxHeatCoilFluidFlow > 0.0) {
                             int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                            Real64 TempSteamIn = 100.0;
-                            Real64 SteamDensity =
+                            Nandle TempSteamIn = 100.0;
+                            Nandle SteamDensity =
                                 FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, getUnitarySystemInput);
                             thisSys.MaxHeatCoilFluidFlow *= SteamDensity;
                             errFlag = false;
@@ -5576,8 +5576,8 @@ namespace UnitarySystems {
 
                             if (thisSys.m_MaxSuppCoilFluidFlow > 0.0) {
                                 int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                                Real64 TempSteamIn = 100.0;
-                                Real64 SteamDensity =
+                                Nandle TempSteamIn = 100.0;
+                                Nandle SteamDensity =
                                     FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, getUnitarySystemInput);
                                 thisSys.m_MaxSuppCoilFluidFlow =
                                     SteamCoils::GetCoilMaxSteamFlowRate(thisSys.m_SuppHeatCoilIndex, errFlag) * SteamDensity;
@@ -7196,7 +7196,7 @@ namespace UnitarySystems {
 
         // Locals
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 QActual;
+        Nandle QActual;
 
         std::string CompName = this->m_SuppHeatCoilName;
         int CoilType_Num = this->m_SuppHeatCoilType_Num;
@@ -7229,10 +7229,10 @@ namespace UnitarySystems {
     void UnitarySys::controlUnitarySystemtoLoad(int const AirLoopNum,          // Primary air loop number
                                                 bool const FirstHVACIteration, // True when first HVAC iteration
                                                 int &CompOn,                   // Determines if compressor is on or off
-                                                Real64 const OAUCoilOutTemp,   // the coil inlet temperature of OutdoorAirUnit
+                                                Nandle const OAUCoilOutTemp,   // the coil inlet temperature of OutdoorAirUnit
                                                 bool HXUnitOn,                 // Flag to control HX for HXAssisted Cooling Coil
-                                                Real64 &sysOutputProvided,     // system sensible output at supply air node
-                                                Real64 &latOutputProvided      // sytsem latent output at supply air node
+                                                Nandle &sysOutputProvided,     // system sensible output at supply air node
+                                                Nandle &latOutputProvided      // sytsem latent output at supply air node
     )
     {
 
@@ -7240,10 +7240,10 @@ namespace UnitarySystems {
         //       AUTHOR         Richard Raustad, FSEC
         //       DATE WRITTEN   February 2013
 
-        Real64 SuppPLR = 0.0;       // supplemental heating part-load ratio
-        Real64 ZoneLoad = 0.0;      // zone load (W)
-        Real64 SupHeaterLoad = 0.0; // additional heating required by supplemental heater (W)
-        Real64 OnOffAirFlowRatio = 1.0;
+        Nandle SuppPLR = 0.0;       // supplemental heating part-load ratio
+        Nandle ZoneLoad = 0.0;      // zone load (W)
+        Nandle SupHeaterLoad = 0.0; // additional heating required by supplemental heater (W)
+        Nandle OnOffAirFlowRatio = 1.0;
         this->updateUnitarySystemControl(AirLoopNum,
                                          this->CoolCoilOutletNodeNum,
                                          this->m_SystemCoolControlNodeNum,
@@ -7254,7 +7254,7 @@ namespace UnitarySystems {
                                          this->DesignMaxOutletTemp);
 
         // will not be running supplemental heater on this CALL (simulate with supplemental heater off)
-        Real64 FullSensibleOutput = 0.0;
+        Nandle FullSensibleOutput = 0.0;
         // using furnace module logic
         // first check to see if cycling fan with economizer can meet the load
         if (AirLoopNum > 0) {
@@ -7289,9 +7289,9 @@ namespace UnitarySystems {
             this->setAverageAirFlow(this->m_CoolingPartLoadFrac, OnOffAirFlowRatio);
             // anything else need to be reset here when system is shut down on low flow?
         }
-        Real64 CoolPLR = this->m_CoolingPartLoadFrac;
-        Real64 HeatPLR = this->m_HeatingPartLoadFrac;
-        Real64 HeatCoilLoad = HeatPLR * this->m_DesignHeatingCapacity;
+        Nandle CoolPLR = this->m_CoolingPartLoadFrac;
+        Nandle HeatPLR = this->m_HeatingPartLoadFrac;
+        Nandle HeatCoilLoad = HeatPLR * this->m_DesignHeatingCapacity;
 
         if (this->CoolCoilFluidInletNode > 0) {
             PlantUtilities::SetComponentFlowRate(DataLoopNode::Node(this->CoolCoilFluidInletNode).MassFlowRate,
@@ -7393,10 +7393,10 @@ namespace UnitarySystems {
     void UnitarySys::controlUnitarySystemtoSP(int const AirLoopNum,          // Primary air loop number
                                               bool const FirstHVACIteration, // True when first HVAC iteration
                                               int &CompOn,                   // compressor on/off control
-                                              Real64 const OAUCoilOutTemp,   // the coil inlet temperature of OutdoorAirUnit
+                                              Nandle const OAUCoilOutTemp,   // the coil inlet temperature of OutdoorAirUnit
                                               bool HXUnitOn,                 // Flag to control HX for HXAssisted Cooling Coil
-                                              Real64 &sysOutputProvided,     // sensible output at supply air node
-                                              Real64 &latOutputProvided      // latent output at supply air node
+                                              Nandle &sysOutputProvided,     // sensible output at supply air node
+                                              Nandle &latOutputProvided      // latent output at supply air node
     )
     {
 
@@ -7408,11 +7408,11 @@ namespace UnitarySystems {
         // This subroutine manages component simulation.
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 PartLoadRatio = 0.0;     // coil operating part-load ratio
-        Real64 OnOffAirFlowRatio = 1.0; // Setpoint based coil control does not use this variable
-        Real64 CoilCoolHeatRat = 1.0;   // ratio of cooling to heating PLR for cycling fan RH control
-        Real64 ZoneLoad = 0.0;
-        Real64 HeatCoilLoad = -999.0;
+        Nandle PartLoadRatio = 0.0;     // coil operating part-load ratio
+        Nandle OnOffAirFlowRatio = 1.0; // Setpoint based coil control does not use this variable
+        Nandle CoilCoolHeatRat = 1.0;   // ratio of cooling to heating PLR for cycling fan RH control
+        Nandle ZoneLoad = 0.0;
+        Nandle HeatCoilLoad = -999.0;
 
         // CALL the series of components that simulate a Unitary System
         if (this->ATMixerExists) {
@@ -7551,11 +7551,11 @@ namespace UnitarySystems {
     void UnitarySys::updateUnitarySystemControl(int const AirLoopNum,  // number of the current air loop being simulated
                                                 int const OutNode,     // coil outlet node number
                                                 int const ControlNode, // control node number
-                                                Real64 &OnOffAirFlowRatio,
+                                                Nandle &OnOffAirFlowRatio,
                                                 bool const FirstHVACIteration,
-                                                Real64 const OAUCoilOutletTemp, // "ONLY" for zoneHVAC:OutdoorAirUnit
-                                                Real64 &ZoneLoad,
-                                                Real64 const MaxOutletTemp // limits heating coil outlet temp [C]
+                                                Nandle const OAUCoilOutletTemp, // "ONLY" for zoneHVAC:OutdoorAirUnit
+                                                Nandle &ZoneLoad,
+                                                Nandle const MaxOutletTemp // limits heating coil outlet temp [C]
     )
     {
 
@@ -7632,7 +7632,7 @@ namespace UnitarySystems {
                 }
 
                 if (this->m_DehumidControlType_Num != DehumCtrlType::None) {
-                    Real64 H2OHtOfVap = Psychrometrics::PsyHfgAirFnWTdb(DataLoopNode::Node(this->NodeNumOfControlledZone).HumRat,
+                    Nandle H2OHtOfVap = Psychrometrics::PsyHfgAirFnWTdb(DataLoopNode::Node(this->NodeNumOfControlledZone).HumRat,
                                                                         DataLoopNode::Node(this->NodeNumOfControlledZone).Temp);
 
                     // positive MoistureLoad means no dehumidification load
@@ -7672,7 +7672,7 @@ namespace UnitarySystems {
 
                 } else { // Not Outdoor Air Unit. Either airloop or zone equipment
                     if (AirLoopNum > 0) economizerFlag = DataAirLoop::AirLoopControlInfo(AirLoopNum).EconoActive;
-                    Real64 humRatMaxSP = 1.0;
+                    Nandle humRatMaxSP = 1.0;
                     this->m_DesiredOutletHumRat = humRatMaxSP;
                     if (ControlNode == 0) {
                         this->m_DesiredOutletTemp = 0.0;
@@ -7739,9 +7739,9 @@ namespace UnitarySystems {
 
     void UnitarySys::controlUnitarySystemOutput(int const AirLoopNum,          // Index to air loop
                                                 bool const FirstHVACIteration, // True when first HVAC iteration
-                                                Real64 &OnOffAirFlowRatio,     // ratio of heating PLR to cooling PLR (is this correct?)
-                                                Real64 const ZoneLoad,
-                                                Real64 &FullSensibleOutput,
+                                                Nandle &OnOffAirFlowRatio,     // ratio of heating PLR to cooling PLR (is this correct?)
+                                                Nandle const ZoneLoad,
+                                                Nandle &FullSensibleOutput,
                                                 bool HXUnitOn, // Flag to control HX for HXAssisted Cooling Coil
                                                 int CompOn)
     {
@@ -7760,21 +7760,21 @@ namespace UnitarySystems {
         int const MaxIter(100); // maximum number of iterations
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        std::vector<Real64> Par(17);      // parameters passed to RegulaFalsi function
+        std::vector<Nandle> Par(17);      // parameters passed to RegulaFalsi function
         int SpeedNum;                     // multi-speed coil speed number
-        Real64 SensOutputOn;              // sensible output at PLR = 1 [W]
-        Real64 LatOutputOn;               // latent output at PLR = 1 [W]
-        Real64 TempLoad;                  // represents either a sensible or latent load [W]
-        Real64 TempSysOutput;             // represents either a sensible or latent capacity [W]
-        Real64 TempSensOutput;            // iterative sensible capacity [W]
-        Real64 TempLatOutput;             // iterative latent capacity [W]
-        Real64 TempMinPLR;                // iterative minimum PLR
-        Real64 TempMaxPLR;                // iterative maximum PLR
-        Real64 CoolingOnlySensibleOutput; // use to calculate dehumidification induced heating [W]
-        Real64 CpAir;                     // specific heat of air [J/kg_C]
-        Real64 FullLoadAirOutletTemp;     // saved full load outlet air temperature [C]
-        Real64 FullLoadAirOutletHumRat;   // saved full load outlet air humidity ratio [kg/kg]
-        Real64 NoLoadOutletTemp;          // outlet temp of system with coils off [C]
+        Nandle SensOutputOn;              // sensible output at PLR = 1 [W]
+        Nandle LatOutputOn;               // latent output at PLR = 1 [W]
+        Nandle TempLoad;                  // represents either a sensible or latent load [W]
+        Nandle TempSysOutput;             // represents either a sensible or latent capacity [W]
+        Nandle TempSensOutput;            // iterative sensible capacity [W]
+        Nandle TempLatOutput;             // iterative latent capacity [W]
+        Nandle TempMinPLR;                // iterative minimum PLR
+        Nandle TempMaxPLR;                // iterative maximum PLR
+        Nandle CoolingOnlySensibleOutput; // use to calculate dehumidification induced heating [W]
+        Nandle CpAir;                     // specific heat of air [J/kg_C]
+        Nandle FullLoadAirOutletTemp;     // saved full load outlet air temperature [C]
+        Nandle FullLoadAirOutletHumRat;   // saved full load outlet air humidity ratio [kg/kg]
+        Nandle NoLoadOutletTemp;          // outlet temp of system with coils off [C]
 
         std::string CompName = this->Name;
         int OutletNode = this->AirOutNode;
@@ -7783,19 +7783,19 @@ namespace UnitarySystems {
             return;
         }
 
-        Real64 PartLoadRatio = 0.0; // Get no load result
+        Nandle PartLoadRatio = 0.0; // Get no load result
         // fan and coil PLR are disconnected when using ASHRAE model, don't confuse these for other models
         this->FanPartLoadRatio = 0.0;
         int SolFlag = 0;    // # of iterations IF positive, -1 means failed to converge, -2 means bounds are incorrect
         int SolFlagLat = 0; // # of iterations IF positive, -1 means failed to converge, -2 means bounds are incorrect
 
-        Real64 SensOutputOff = 0.0;
-        Real64 LatOutputOff = 0.0;
-        Real64 CoolPLR = 0.0;
-        Real64 HeatPLR = 0.0;
+        Nandle SensOutputOff = 0.0;
+        Nandle LatOutputOff = 0.0;
+        Nandle CoolPLR = 0.0;
+        Nandle HeatPLR = 0.0;
         int CompressorONFlag = 0;
-        Real64 HeatCoilLoad = 0.0;
-        Real64 SupHeaterLoad = 0.0;
+        Nandle HeatCoilLoad = 0.0;
+        Nandle SupHeaterLoad = 0.0;
 
         this->m_WSHPRuntimeFrac = 0.0;
 
@@ -8294,14 +8294,14 @@ namespace UnitarySystems {
             // must test to see if load is bounded by capacity before calling RegulaFalsi
             if ((HeatingLoad && ZoneLoad < SensOutputOn) || (CoolingLoad && ZoneLoad > SensOutputOn)) {
                 if ((HeatingLoad && ZoneLoad > SensOutputOff) || (CoolingLoad && ZoneLoad < SensOutputOff)) {
-                    Real64 SensOutput;
-                    Real64 LatOutput;
+                    Nandle SensOutput;
+                    Nandle LatOutput;
                     if (this->m_CoolingCoilSubType_Num == DataHVACGlobals::CoilDX_SubcoolReheat) {
                         if (CoolingLoad && this->LoadSHR > 0.0) {
                             int CoilInletNode = coilCoolingDXs[this->m_CoolingCoilIndex].evapInletNodeIndex;
                             this->CoilSHR = 0.0;
-                            Real64 LowSpeedCoilSen;
-                            Real64 LowSpeedCoilLat;
+                            Nandle LowSpeedCoilSen;
+                            Nandle LowSpeedCoilLat;
                             CoolPLR = 0.0;
                             HeatPLR = 0.0;
                             this->m_CoolingSpeedNum = 1;
@@ -8332,21 +8332,21 @@ namespace UnitarySystems {
                                                           HeatCoilLoad,
                                                           SupHeaterLoad,
                                                           CompressorONFlag);
-                            Real64 ZoneLatLoad = ZoneLoad * (1.0 / this->LoadSHR - 1.0);
-                            Real64 SenPLR = (ZoneLoad - SensOutputOff) / (SensOutputOn - SensOutputOff);
-                            Real64 LatPLR = (ZoneLatLoad - LatOutputOff) / (LatOutputOn - LatOutputOff);
-                            Real64 totalRate = DataLoopNode::Node(this->AirOutNode).MassFlowRate *
+                            Nandle ZoneLatLoad = ZoneLoad * (1.0 / this->LoadSHR - 1.0);
+                            Nandle SenPLR = (ZoneLoad - SensOutputOff) / (SensOutputOn - SensOutputOff);
+                            Nandle LatPLR = (ZoneLatLoad - LatOutputOff) / (LatOutputOn - LatOutputOff);
+                            Nandle totalRate = DataLoopNode::Node(this->AirOutNode).MassFlowRate *
                                                (DataLoopNode::Node(CoilInletNode).Enthalpy - DataLoopNode::Node(this->AirOutNode).Enthalpy);
-                            Real64 minAirHumRat = min(DataLoopNode::Node(CoilInletNode).HumRat, DataLoopNode::Node(this->AirOutNode).HumRat);
-                            Real64 sensRate = DataLoopNode::Node(this->AirOutNode).MassFlowRate *
+                            Nandle minAirHumRat = min(DataLoopNode::Node(CoilInletNode).HumRat, DataLoopNode::Node(this->AirOutNode).HumRat);
+                            Nandle sensRate = DataLoopNode::Node(this->AirOutNode).MassFlowRate *
                                               (Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(CoilInletNode).Temp, minAirHumRat) -
                                                Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(this->AirOutNode).Temp, minAirHumRat));
-                            Real64 latRate = totalRate - sensRate;
+                            Nandle latRate = totalRate - sensRate;
                             if (LatPLR > 1.0 || LatPLR < 0.0) {
                                 this->CoilSHR = this->LoadSHR;
                             } else {
-                                Real64 coilSens = sensRate * SenPLR;
-                                Real64 coilLat = latRate * LatPLR;
+                                Nandle coilSens = sensRate * SenPLR;
+                                Nandle coilLat = latRate * LatPLR;
                                 this->CoilSHR = coilSens / (coilSens + coilLat);
                             }
                             if (this->m_NumOfSpeedCooling > 1) {
@@ -8361,8 +8361,8 @@ namespace UnitarySystems {
                                 this->CoilSHR = this->LoadSHR;
                             }
                             if (this->m_NumOfSpeedCooling > 1 && ZoneLoad < SensOutputOn) {
-                                Real64 SenSPR;
-                                Real64 LatSPR;
+                                Nandle SenSPR;
+                                Nandle LatSPR;
                                 this->FullOutput[1] = SensOutputOn;
                                 this->FullLatOutput[1] = LatOutputOn;
                                 for (SpeedNum = 2; SpeedNum <= this->m_NumOfSpeedCooling; ++SpeedNum) {
@@ -8397,8 +8397,8 @@ namespace UnitarySystems {
                                     if (LatSPR > 1.0 || LatSPR < 0.0) {
                                         this->CoilSHR = this->LoadSHR;
                                     } else {
-                                        Real64 coilSens = sensRate * SenSPR + (1.0 - SenSPR) * LowSpeedCoilSen;
-                                        Real64 coilLat = latRate * LatSPR + (1.0 - LatSPR) * LowSpeedCoilLat;
+                                        Nandle coilSens = sensRate * SenSPR + (1.0 - SenSPR) * LowSpeedCoilSen;
+                                        Nandle coilLat = latRate * LatSPR + (1.0 - LatSPR) * LowSpeedCoilLat;
                                         this->CoilSHR = coilSens / (coilSens + coilLat);
                                     }
                                     this->SpeedSHR[SpeedNum] = this->CoilSHR;
@@ -9079,8 +9079,8 @@ namespace UnitarySystems {
 
     void UnitarySys::initLoadBasedControl(int const AirLoopNum, // number of the current air loop being simulated
                                           bool const FirstHVACIteration,
-                                          Real64 &OnOffAirFlowRatio,
-                                          Real64 &ZoneLoad)
+                                          Nandle &OnOffAirFlowRatio,
+                                          Nandle &ZoneLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -9107,17 +9107,17 @@ namespace UnitarySystems {
         // static bool MyAirLoopPass( true ); // one time allocation flag // InitLoadBasedControlAirLoopPass
         // static int AirLoopPass( 0 ); // Number of air loop pass // AirLoopPassCounter
         // static bool FlowFracFlagReady( true ); // one time flag for calculating flow fraction // InitLoadBasedControlFlowFracFlagReady
-        // static Real64 CntrlZoneTerminalUnitMassFlowRateMax( 0.0 ); // Maximum mass flow rate through controlled zone //
+        // static Nandle CntrlZoneTerminalUnitMassFlowRateMax( 0.0 ); // Maximum mass flow rate through controlled zone //
         // InitLoadBasedControlCntrlZoneTerminalUnitMassFlowRateMax
         ////////////////////////////////////////////////////////////////////////////////////
         // inlet node and system outlet node
-        Real64 MaxTemp = 0.0; // Maximum temperature used in latent loss calculation
-        Real64 QZnReq = 0.0;
-        Real64 QActual = 0.0;
-        Real64 SensOutputOff = 0.0;
-        Real64 LatOutputOff = 0.0;
-        Real64 HeatCoilLoad = 0.0;
-        Real64 SupHeaterLoad = 0.0;
+        Nandle MaxTemp = 0.0; // Maximum temperature used in latent loss calculation
+        Nandle QZnReq = 0.0;
+        Nandle QActual = 0.0;
+        Nandle SensOutputOff = 0.0;
+        Nandle LatOutputOff = 0.0;
+        Nandle HeatCoilLoad = 0.0;
+        Nandle SupHeaterLoad = 0.0;
         int CompOn = 0;
 
         // if (initLoadBasedControlOneTimeFlag) {
@@ -9148,9 +9148,9 @@ namespace UnitarySystems {
                     // IF water coil max water flow rate is DataSizing::AutoSized, simulate once in order to mine max flow rate
                     if (this->m_HeatingCoilType_Num == DataHVACGlobals::Coil_HeatingWater) {
                         WaterCoils::SimulateWaterCoilComponents(this->m_HeatingCoilName, FirstHVACIteration, this->m_HeatingCoilIndex);
-                        Real64 CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", this->m_HeatingCoilName, errorsFound);
+                        Nandle CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", this->m_HeatingCoilName, errorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
-                            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidName,
+                            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidName,
                                                                            DataGlobals::CWInitConvTemp,
                                                                            DataPlant::PlantLoop(this->HeatCoilLoopNum).FluidIndex,
                                                                            routineName);
@@ -9164,11 +9164,11 @@ namespace UnitarySystems {
                                                                 this->m_HeatingCoilIndex,
                                                                 1.0,
                                                                 QActual); // QCoilReq, simulate any load > 0 to get max capacity
-                        Real64 CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_HeatingCoilIndex, errorsFound);
+                        Nandle CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_HeatingCoilIndex, errorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
                             int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                            Real64 TempSteamIn = 100.0;
-                            Real64 SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
+                            Nandle TempSteamIn = 100.0;
+                            Nandle SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
                             this->MaxHeatCoilFluidFlow = CoilMaxVolFlowRate * SteamDensity;
                         }
                     }
@@ -9188,9 +9188,9 @@ namespace UnitarySystems {
                     if (this->m_SuppHeatCoilType_Num == DataHVACGlobals::Coil_HeatingWater) {
                         // IF water coil max water flow rate is DataSizing::AutoSized, simulate once in order to mine max flow rate
                         WaterCoils::SimulateWaterCoilComponents(this->m_SuppHeatCoilName, FirstHVACIteration, this->m_SuppHeatCoilIndex);
-                        Real64 CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", this->m_SuppHeatCoilName, errorsFound);
+                        Nandle CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", this->m_SuppHeatCoilName, errorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
-                            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidName,
+                            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidName,
                                                                            DataGlobals::CWInitConvTemp,
                                                                            DataPlant::PlantLoop(this->m_SuppCoilLoopNum).FluidIndex,
                                                                            routineName);
@@ -9203,11 +9203,11 @@ namespace UnitarySystems {
                                                                 this->m_SuppHeatCoilIndex,
                                                                 1.0,
                                                                 QActual); // QCoilReq, simulate any load > 0 to get max capacity
-                        Real64 CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_SuppHeatCoilIndex, errorsFound);
+                        Nandle CoilMaxVolFlowRate = SteamCoils::GetCoilMaxSteamFlowRate(this->m_SuppHeatCoilIndex, errorsFound);
                         if (CoilMaxVolFlowRate != DataSizing::AutoSize) {
                             int SteamIndex = 0; // Function GetSatDensityRefrig will look up steam index if 0 is passed
-                            Real64 TempSteamIn = 100.0;
-                            Real64 SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
+                            Nandle TempSteamIn = 100.0;
+                            Nandle SteamDensity = FluidProperties::GetSatDensityRefrig(fluidNameSteam, TempSteamIn, 1.0, SteamIndex, routineName);
                             this->m_MaxSuppCoilFluidFlow = CoilMaxVolFlowRate * SteamDensity;
                         }
                     }
@@ -9288,10 +9288,10 @@ namespace UnitarySystems {
         // Calcuate air distribution losses
         //  IF (.NOT. FirstHVACIteration .AND. AirLoopPass .EQ. 1 .AND. AirflowNetworkFanActivated) THEN
         if (!FirstHVACIteration && AirflowNetwork::AirflowNetworkFanActivated) {
-            Real64 DeltaMassRate = 0.0;
+            Nandle DeltaMassRate = 0.0;
             int ZoneInNode = this->m_ZoneInletNode;
-            Real64 MinHumRat = DataLoopNode::Node(ZoneInNode).HumRat;
-            Real64 MassFlowRate = DataLoopNode::Node(ZoneInNode).MassFlowRate / this->ControlZoneMassFlowFrac;
+            Nandle MinHumRat = DataLoopNode::Node(ZoneInNode).HumRat;
+            Nandle MassFlowRate = DataLoopNode::Node(ZoneInNode).MassFlowRate / this->ControlZoneMassFlowFrac;
             if (DataLoopNode::Node(this->AirOutNode).Temp < DataLoopNode::Node(this->NodeNumOfControlledZone).Temp)
                 MinHumRat = DataLoopNode::Node(this->AirOutNode).HumRat;
             if (AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone) {
@@ -9567,8 +9567,8 @@ namespace UnitarySystems {
         this->m_MoistureLoadPredicted = MoistureLoad;
     }
 
-    void UnitarySys::setOnOffMassFlowRate(Real64 &OnOffAirFlowRatio, // ratio of coil on to coil off air flow rate
-                                          Real64 const PartLoadRatio // coil part-load ratio
+    void UnitarySys::setOnOffMassFlowRate(Nandle &OnOffAirFlowRatio, // ratio of coil on to coil off air flow rate
+                                          Nandle const PartLoadRatio // coil part-load ratio
     )
     {
 
@@ -9944,8 +9944,8 @@ namespace UnitarySystems {
         this->setAverageAirFlow(PartLoadRatio, OnOffAirFlowRatio);
     }
 
-    void UnitarySys::setAverageAirFlow(Real64 const PartLoadRatio, // unit part load ratio
-                                       Real64 &OnOffAirFlowRatio   // ratio of compressor ON airflow to AVERAGE airflow over timestep
+    void UnitarySys::setAverageAirFlow(Nandle const PartLoadRatio, // unit part load ratio
+                                       Nandle &OnOffAirFlowRatio   // ratio of compressor ON airflow to AVERAGE airflow over timestep
     )
     {
 
@@ -9961,13 +9961,13 @@ namespace UnitarySystems {
         // The air flow rate in cooling, heating, and no cooling or heating can be dIFferent.
         // Calculate the air flow rate based on initializations.
 
-        Real64 AverageUnitMassFlow = 0.0; // average supply air mass flow rate over time step
+        Nandle AverageUnitMassFlow = 0.0; // average supply air mass flow rate over time step
         bool FanOn = false;
 
         m_runTimeFraction1 = 0.0;
         m_runTimeFraction2 = 0.0;
 
-        Real64 FanPartLoadRatio = PartLoadRatio;
+        Nandle FanPartLoadRatio = PartLoadRatio;
         if (this->m_SimASHRAEModel) FanPartLoadRatio = this->FanPartLoadRatio;
         int SpeedNum = max(this->m_CoolingSpeedNum, this->m_HeatingSpeedNum);
         int InletNode = this->AirInNode;
@@ -10066,14 +10066,14 @@ namespace UnitarySystems {
 
     void UnitarySys::calcUnitarySystemToLoad(int const AirLoopNum,          // index to air loop
                                              bool const FirstHVACIteration, // True when first HVAC iteration
-                                             Real64 const CoolPLR,          // operating cooling part-load ratio []
-                                             Real64 const HeatPLR,          // operating cooling part-load ratio []
-                                             Real64 &OnOffAirFlowRatio,     // ratio of heating PLR to cooling PLR (is this correct?)
-                                             Real64 &SensOutput,            // sensible capacity (W)
-                                             Real64 &LatOutput,             // latent capacity (W)
+                                             Nandle const CoolPLR,          // operating cooling part-load ratio []
+                                             Nandle const HeatPLR,          // operating cooling part-load ratio []
+                                             Nandle &OnOffAirFlowRatio,     // ratio of heating PLR to cooling PLR (is this correct?)
+                                             Nandle &SensOutput,            // sensible capacity (W)
+                                             Nandle &LatOutput,             // latent capacity (W)
                                              bool HXUnitOn,                 // Flag to control HX for HXAssisted Cooling Coil
-                                             Real64 HeatCoilLoad,           // Adjusted load to heating coil when SAT exceeds max limit (W)
-                                             Real64 SuppCoilLoad,           // Adjusted load to supp heating coil when SAT exceeds max limit (W)
+                                             Nandle HeatCoilLoad,           // Adjusted load to heating coil when SAT exceeds max limit (W)
+                                             Nandle SuppCoilLoad,           // Adjusted load to supp heating coil when SAT exceeds max limit (W)
                                              int const CompOn               // Determines if compressor is on or off
     )
     {
@@ -10086,7 +10086,7 @@ namespace UnitarySystems {
         // This subroutine calculates the resulting performance of the unitary system given
         // the operating PLR. System output is calculated with respect to zone condition.
 
-        Real64 CoilCoolHeatRat = 0.0; // ratio of cooling to heating PLR for cycling fan RH control
+        Nandle CoilCoolHeatRat = 0.0; // ratio of cooling to heating PLR for cycling fan RH control
 
         int InletNode = this->AirInNode;
 
@@ -10145,12 +10145,12 @@ namespace UnitarySystems {
                 // operate the heating coil without regard to coil outlet temperature
                 this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, HeatCoilLoad);
                 if (DataLoopNode::Node(this->HeatCoilOutletNodeNum).Temp > this->DesignMaxOutletTemp && !this->m_SimASHRAEModel) {
-                    Real64 MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
-                    Real64 CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
-                    Real64 CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
-                    Real64 CpAir = (CpAirIn + CpAirOut) / 2;
-                    Real64 HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
-                    Real64 MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
+                    Nandle MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
+                    Nandle CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
+                    Nandle CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
+                    Nandle CpAir = (CpAirIn + CpAirOut) / 2;
+                    Nandle HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
+                    Nandle MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
                     this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, MaxHeatCoilLoad);
                     HeatCoilLoad = MaxHeatCoilLoad;
                 }
@@ -10170,12 +10170,12 @@ namespace UnitarySystems {
                 if (this->m_HeatCoilExists) {
                     this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, HeatCoilLoad);
                     if (DataLoopNode::Node(this->HeatCoilOutletNodeNum).Temp > this->DesignMaxOutletTemp && !this->m_SimASHRAEModel) {
-                        Real64 MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
-                        Real64 CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
-                        Real64 CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
-                        Real64 CpAir = (CpAirIn + CpAirOut) / 2;
-                        Real64 HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
-                        Real64 MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
+                        Nandle MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
+                        Nandle CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
+                        Nandle CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
+                        Nandle CpAir = (CpAirIn + CpAirOut) / 2;
+                        Nandle HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
+                        Nandle MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
                         this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, MaxHeatCoilLoad);
                     }
                 }
@@ -10186,12 +10186,12 @@ namespace UnitarySystems {
             if (this->m_HeatCoilExists) {
                 this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, HeatCoilLoad);
                 if (DataLoopNode::Node(this->HeatCoilOutletNodeNum).Temp > this->DesignMaxOutletTemp && !this->m_SimASHRAEModel) {
-                    Real64 MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
-                    Real64 CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
-                    Real64 CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
-                    Real64 CpAir = (CpAirIn + CpAirOut) / 2;
-                    Real64 HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
-                    Real64 MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
+                    Nandle MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
+                    Nandle CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
+                    Nandle CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
+                    Nandle CpAir = (CpAirIn + CpAirOut) / 2;
+                    Nandle HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
+                    Nandle MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
                     this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, MaxHeatCoilLoad);
                 }
             }
@@ -10209,12 +10209,12 @@ namespace UnitarySystems {
                 if (this->m_HeatCoilExists) {
                     this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, HeatCoilLoad);
                     if (DataLoopNode::Node(this->HeatCoilOutletNodeNum).Temp > this->DesignMaxOutletTemp && !this->m_SimASHRAEModel) {
-                        Real64 MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
-                        Real64 CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
-                        Real64 CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
-                        Real64 CpAir = (CpAirIn + CpAirOut) / 2;
-                        Real64 HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
-                        Real64 MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
+                        Nandle MDotAir = DataLoopNode::Node(this->HeatCoilInletNodeNum).MassFlowRate;
+                        Nandle CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilInletNodeNum).HumRat);
+                        Nandle CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->HeatCoilOutletNodeNum).HumRat);
+                        Nandle CpAir = (CpAirIn + CpAirOut) / 2;
+                        Nandle HCDeltaT = this->DesignMaxOutletTemp - DataLoopNode::Node(this->HeatCoilInletNodeNum).Temp;
+                        Nandle MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
                         this->calcUnitaryHeatingSystem(AirLoopNum, FirstHVACIteration, HeatPLR, HeatingCompOn, OnOffAirFlowRatio, MaxHeatCoilLoad);
                     }
                 }
@@ -10233,16 +10233,16 @@ namespace UnitarySystems {
             }
         }
 
-        Real64 SuppPLR = this->m_SuppHeatPartLoadFrac;
+        Nandle SuppPLR = this->m_SuppHeatPartLoadFrac;
         if (this->m_SuppCoilExists) {
             this->calcUnitarySuppHeatingSystem(FirstHVACIteration, SuppPLR, SuppCoilLoad);
             if ((DataLoopNode::Node(this->m_SuppCoilAirOutletNode).Temp > this->DesignMaxOutletTemp) && SuppPLR > 0.0 && !this->m_SimASHRAEModel) {
-                Real64 MDotAir = DataLoopNode::Node(this->m_SuppCoilAirInletNode).MassFlowRate;
-                Real64 CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->m_SuppCoilAirInletNode).HumRat);
-                Real64 CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->m_SuppCoilAirOutletNode).HumRat);
-                Real64 CpAir = (CpAirIn + CpAirOut) / 2;
-                Real64 HCDeltaT = max(0.0, this->DesignMaxOutletTemp - DataLoopNode::Node(this->m_SuppCoilAirInletNode).Temp);
-                Real64 MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
+                Nandle MDotAir = DataLoopNode::Node(this->m_SuppCoilAirInletNode).MassFlowRate;
+                Nandle CpAirIn = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->m_SuppCoilAirInletNode).HumRat);
+                Nandle CpAirOut = Psychrometrics::PsyCpAirFnW(DataLoopNode::Node(this->m_SuppCoilAirOutletNode).HumRat);
+                Nandle CpAir = (CpAirIn + CpAirOut) / 2;
+                Nandle HCDeltaT = max(0.0, this->DesignMaxOutletTemp - DataLoopNode::Node(this->m_SuppCoilAirInletNode).Temp);
+                Nandle MaxHeatCoilLoad = MDotAir * CpAir * HCDeltaT;
                 this->calcUnitarySuppHeatingSystem(FirstHVACIteration, SuppPLR, MaxHeatCoilLoad);
                 SuppCoilLoad = MaxHeatCoilLoad;
             }
@@ -10258,16 +10258,16 @@ namespace UnitarySystems {
         calculateCapacity(SensOutput, LatOutput);
     }
 
-    void UnitarySys::calculateCapacity(Real64 &SensOutput, Real64 &LatOutput)
+    void UnitarySys::calculateCapacity(Nandle &SensOutput, Nandle &LatOutput)
     {
 
         // Check delta T (outlet to reference temp), IF positive use reference HumRat ELSE outlet humrat to calculate
         // sensible capacity as MdotDeltaH at constant humidity ratio
         int OutletNode = this->AirOutNode;
-        Real64 AirMassFlow = DataLoopNode::Node(OutletNode).MassFlowRate;
-        Real64 RefTemp = 0.0;
-        Real64 RefHumRat = 0.0;
-        Real64 MinHumRatio = 0.0;
+        Nandle AirMassFlow = DataLoopNode::Node(OutletNode).MassFlowRate;
+        Nandle RefTemp = 0.0;
+        Nandle RefHumRat = 0.0;
+        Nandle MinHumRatio = 0.0;
         if (this->m_ControlType == ControlType::Setpoint) {
             RefTemp = DataLoopNode::Node(this->AirInNode).Temp;
             RefHumRat = DataLoopNode::Node(this->AirInNode).HumRat;
@@ -10331,10 +10331,10 @@ namespace UnitarySystems {
 
     void UnitarySys::calcUnitaryCoolingSystem(int const AirLoopNum,          // index to air loop
                                               bool const FirstHVACIteration, // True when first HVAC iteration
-                                              Real64 const PartLoadRatio,    // coil operating part-load ratio
+                                              Nandle const PartLoadRatio,    // coil operating part-load ratio
                                               int const CompOn,              // compressor control (0=off, 1=on)
-                                              Real64 const OnOffAirFlowRatio,
-                                              Real64 const CoilCoolHeatRat, // ratio of cooling to heating PLR for cycling fan RH control
+                                              Nandle const OnOffAirFlowRatio,
+                                              Nandle const CoilCoolHeatRat, // ratio of cooling to heating PLR for cycling fan RH control
                                               bool const HXUnitOn           // Flag to control HX for HXAssisted Cooling Coil
     )
     {
@@ -10348,10 +10348,10 @@ namespace UnitarySystems {
 
         // Locals
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OutsideDryBulbTemp; // outdoor temperature (C)
-        Real64 mdot;               // water side flow rate (kg/s)
-        Real64 QActual;            // actual coil output (W)
-        Real64 OutdoorPressure;    // Outdoor barometric pressure at condenser (Pa)
+        Nandle OutsideDryBulbTemp; // outdoor temperature (C)
+        Nandle mdot;               // water side flow rate (kg/s)
+        Nandle QActual;            // actual coil output (W)
+        Nandle OutdoorPressure;    // Outdoor barometric pressure at condenser (Pa)
         bool errFlag;              // returned flag from called routine
         bool HeatingActive;        // dummy variable for UserDefined coil which are passed back indicating if coil is on or off. Not needed here since
                                    // coil is wrapped by UnitarySystem.
@@ -10361,7 +10361,7 @@ namespace UnitarySystems {
         // Simulate the coil component
         std::string CompName = this->m_CoolingCoilName;
         int CompIndex = this->m_CoolingCoilIndex;
-        Real64 CoilPLR = 1.0;
+        Nandle CoilPLR = 1.0;
         if (this->m_CondenserNodeNum != 0) {
             OutdoorPressure = DataLoopNode::Node(this->m_CondenserNodeNum).Press;
             // IF node is not connected to anything, pressure = default, use weather data
@@ -10424,7 +10424,7 @@ namespace UnitarySystems {
                        (SELECT_CASE_var == DataHVACGlobals::CoilWater_CoolingHXAssisted)) {
 
                 if (this->m_CoolingCoilType_Num == DataHVACGlobals::CoilWater_CoolingHXAssisted) {
-                    Real64 mdot =
+                    Nandle mdot =
                         min(DataLoopNode::Node(this->CoolCoilFluidOutletNodeNum).MassFlowRateMaxAvail, this->MaxCoolCoilFluidFlow * PartLoadRatio);
                     DataLoopNode::Node(this->CoolCoilFluidInletNode).MassFlowRate = mdot;
                 }
@@ -10583,10 +10583,10 @@ namespace UnitarySystems {
 
     void UnitarySys::calcUnitaryHeatingSystem(int const AirLoopNum,           // index to air loop
                                               bool const FirstHVACIteration,  // True when first HVAC iteration
-                                              Real64 const PartLoadRatio,     // coil operating part-load ratio
+                                              Nandle const PartLoadRatio,     // coil operating part-load ratio
                                               int const CompOn,               // compressor control (0=off, 1=on)
-                                              Real64 const OnOffAirFlowRatio, // ratio of on to off flow rate
-                                              Real64 HeatCoilLoad             // adjusted heating coil load if outlet temp exceeds max (W)
+                                              Nandle const OnOffAirFlowRatio, // ratio of on to off flow rate
+                                              Nandle HeatCoilLoad             // adjusted heating coil load if outlet temp exceeds max (W)
     )
     {
 
@@ -10599,10 +10599,10 @@ namespace UnitarySystems {
 
         // Locals
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OutsideDryBulbTemp; // outdoor temperature (C)
-        Real64 mdot;               // water side flow rate (kg/s)
-        Real64 QActual;            // actual output of coil (W)
-        Real64 OutdoorPressure;    // Outdoor barometric pressure at condenser (Pa)
+        Nandle OutsideDryBulbTemp; // outdoor temperature (C)
+        Nandle mdot;               // water side flow rate (kg/s)
+        Nandle QActual;            // actual output of coil (W)
+        Nandle OutdoorPressure;    // Outdoor barometric pressure at condenser (Pa)
         bool errFlag;              // returned flag from called routine
         bool HeatingActive;        // dummy variable for UserDefined coil which are passed back indicating if coil is on or off. Not needed here since
                                    // coil is wrapped by UnitarySystem.
@@ -10610,8 +10610,8 @@ namespace UnitarySystems {
                                    // coil is wrapped by UnitarySystem.
 
         std::string CompName = this->m_HeatingCoilName;
-        Real64 dummy = 0.0;
-        Real64 HeatPLR = 1.0;
+        Nandle dummy = 0.0;
+        Nandle HeatPLR = 1.0;
         if (this->m_CondenserNodeNum != 0) {
             OutdoorPressure = DataLoopNode::Node(this->m_CondenserNodeNum).Press;
             // IF node is not connected to anything, pressure = default, use weather data
@@ -10780,8 +10780,8 @@ namespace UnitarySystems {
     }
 
     void UnitarySys::calcUnitarySuppHeatingSystem(bool const FirstHVACIteration, // True when first HVAC iteration
-                                                  Real64 const PartLoadRatio,    // coil operating part-load ratio
-                                                  Real64 const SuppCoilLoad      // adjusted supp coil load when outlet temp exceeds max (W)
+                                                  Nandle const PartLoadRatio,    // coil operating part-load ratio
+                                                  Nandle const SuppCoilLoad      // adjusted supp coil load when outlet temp exceeds max (W)
     )
     {
 
@@ -10795,16 +10795,16 @@ namespace UnitarySystems {
         // Locals
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);   // Maximum number of iterations for solver
-        Real64 const Acc(1.e-3); // Accuracy of solver result
+        Nandle const Acc(1.e-3); // Accuracy of solver result
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // std::string CompName;    // Name of Unitary System object
-        Real64 SuppHeatCoilLoad; // load passed to supplemental heating coil (W)
-        Real64 QActual;          // actual coil output (W)
-        Real64 mdot;             // water coil water mass flow rate (kg/s)
-        std::vector<Real64> Par; // Parameter array passed to solver
+        Nandle SuppHeatCoilLoad; // load passed to supplemental heating coil (W)
+        Nandle QActual;          // actual coil output (W)
+        Nandle mdot;             // water coil water mass flow rate (kg/s)
+        std::vector<Nandle> Par; // Parameter array passed to solver
         int SolFla;              // Flag of solver, num iterations if >0, else error index
-        Real64 PartLoadFrac;     // temporary PLR variable
+        Nandle PartLoadFrac;     // temporary PLR variable
 
         Par.resize(5);
         // work is needed to figure out how to adjust other coil types if outlet temp exceeds maximum
@@ -10903,38 +10903,38 @@ namespace UnitarySystems {
         // Locals
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);         // Maximum number of iterations for solver
-        Real64 const Acc(1.e-3);       // Accuracy of solver result
-        Real64 const HumRatAcc(1.e-6); // Accuracy of solver result
+        Nandle const Acc(1.e-3);       // Accuracy of solver result
+        Nandle const HumRatAcc(1.e-6); // Accuracy of solver result
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FullOutput; // Sensible capacity (outlet - inlet) when the compressor is on
-        Real64 ReqOutput;  // Sensible capacity (outlet - inlet) required to meet load or setpoint temperature
+        Nandle FullOutput; // Sensible capacity (outlet - inlet) when the compressor is on
+        Nandle ReqOutput;  // Sensible capacity (outlet - inlet) required to meet load or setpoint temperature
         // for variable speed or 2 speed compressors
-        Real64 OutletTempDXCoil;       // Actual outlet temperature of the DX cooling coil
-        Real64 OutletHumRatLS;         // Actual outlet humrat of the variable speed DX cooling coil at low speed
-        Real64 OutletHumRatHS;         // Actual outlet humrat of the variable speed DX cooling coil at high speed
-        Real64 OutletHumRatDXCoil;     // Actual outlet humidity ratio of the DX cooling coil
-        std::vector<Real64> Par(14);   // Parameter array passed to solver
-        Real64 TempMinPLR;             // Used to find latent PLR when max iterations exceeded
-        Real64 TempMaxPLR;             // Used to find latent PLR when max iterations exceeded
-        Real64 TempOutletTempDXCoil;   // Used to find latent PLR when max iterations exceeded
-        Real64 TempOutletHumRatDXCoil; // Used to find latent PLR when max iterations exceeded
-        Real64 FullLoadHumRatOut;      // DX coil outlet air humidity ratio with comprssor full on
-        Real64 OutletTemp;
+        Nandle OutletTempDXCoil;       // Actual outlet temperature of the DX cooling coil
+        Nandle OutletHumRatLS;         // Actual outlet humrat of the variable speed DX cooling coil at low speed
+        Nandle OutletHumRatHS;         // Actual outlet humrat of the variable speed DX cooling coil at high speed
+        Nandle OutletHumRatDXCoil;     // Actual outlet humidity ratio of the DX cooling coil
+        std::vector<Nandle> Par(14);   // Parameter array passed to solver
+        Nandle TempMinPLR;             // Used to find latent PLR when max iterations exceeded
+        Nandle TempMaxPLR;             // Used to find latent PLR when max iterations exceeded
+        Nandle TempOutletTempDXCoil;   // Used to find latent PLR when max iterations exceeded
+        Nandle TempOutletHumRatDXCoil; // Used to find latent PLR when max iterations exceeded
+        Nandle FullLoadHumRatOut;      // DX coil outlet air humidity ratio with comprssor full on
+        Nandle OutletTemp;
         bool HeatingActive;     // dummy variable for UserDefined coil which are passed back indicating if coil is on or off.
         bool CoolingActive;     // dummy variable for UserDefined coil which are passed back indicating if coil is on or off.
-        Real64 OutdoorDryBulb;  // local variable for OutDryBulbTemp
-        Real64 mdot;            // water coil water flow rate [kg/s]
-        Real64 maxPartLoadFrac; // calculated maximum water side PLR for RegulaFalsi call (when plant limits flow max PLR != 1)
+        Nandle OutdoorDryBulb;  // local variable for OutDryBulbTemp
+        Nandle mdot;            // water coil water flow rate [kg/s]
+        Nandle maxPartLoadFrac; // calculated maximum water side PLR for RegulaFalsi call (when plant limits flow max PLR != 1)
 
         // Set local variables
         // Retrieve the load on the controlled zone
         int OutletNode = this->CoolCoilOutletNodeNum;
         int InletNode = this->CoolCoilInletNodeNum;
-        Real64 DesOutTemp = this->m_DesiredOutletTemp;
-        Real64 DesOutHumRat = this->m_DesiredOutletHumRat;
+        Nandle DesOutTemp = this->m_DesiredOutletTemp;
+        Nandle DesOutHumRat = this->m_DesiredOutletHumRat;
         int CoilType_Num = this->m_CoolingCoilType_Num;
-        Real64 LoopDXCoilMaxRTFSave = 0.0;
+        Nandle LoopDXCoilMaxRTFSave = 0.0;
         if (AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone) {
             LoopDXCoilMaxRTFSave = DataAirLoop::AirLoopAFNInfo(AirLoopNum).AFNLoopDXCoilRTF;
             DataAirLoop::AirLoopAFNInfo(AirLoopNum).AFNLoopDXCoilRTF = 0.0;
@@ -10942,21 +10942,21 @@ namespace UnitarySystems {
 
         std::string CompName = this->m_CoolingCoilName;
         int FanOpMode = this->m_FanOpMode;
-        Real64 SpeedRatio = 0.0;
+        Nandle SpeedRatio = 0.0;
         int SpeedNum = 0;
-        Real64 CycRatio = 0.0;
-        Real64 PartLoadFrac = 0.0;
+        Nandle CycRatio = 0.0;
+        Nandle PartLoadFrac = 0.0;
         int DehumidMode = 0;
         bool SensibleLoad = false;
         bool LatentLoad = false;
-        Real64 m_WSHPRuntimeFrac = 0.0;
-        Real64 dummy = 0.0;
-        Real64 SensLoad = 0.0;
+        Nandle m_WSHPRuntimeFrac = 0.0;
+        Nandle dummy = 0.0;
+        Nandle SensLoad = 0.0;
         int SolFla = 0;
         int SolFlaLat = 0;
-        Real64 NoLoadTempOut = 0.0;
-        Real64 NoLoadHumRatOut = 0.0;
-        Real64 OnOffAirFlowRatio = 0.0; // Autodesk:Init Patch to prevent use uninitialized in calls to SimVariableSpeedCoils
+        Nandle NoLoadTempOut = 0.0;
+        Nandle NoLoadHumRatOut = 0.0;
+        Nandle OnOffAirFlowRatio = 0.0; // Autodesk:Init Patch to prevent use uninitialized in calls to SimVariableSpeedCoils
 
         if (this->m_CondenserNodeNum != 0) {
             OutdoorDryBulb = DataLoopNode::Node(this->m_CondenserNodeNum).Temp;
@@ -12135,7 +12135,7 @@ namespace UnitarySystems {
     void UnitarySys::controlHeatingSystemToSP(int const AirLoopNum,          // index to air loop
                                               bool const FirstHVACIteration, // First HVAC iteration flag
                                               int &CompOn,                   // compressor on/off control
-                                              Real64 &HeatCoilLoad           // load met by heating coil
+                                              Nandle &HeatCoilLoad           // load met by heating coil
     )
     {
         // SUBROUTINE INFORMATION:
@@ -12153,22 +12153,22 @@ namespace UnitarySystems {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);    // Maximum number of iterations for solver
-        Real64 const Acc(1.0e-3); // Accuracy of solver result
+        Nandle const Acc(1.0e-3); // Accuracy of solver result
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FullOutput; // Sensible capacity (outlet - inlet) when the compressor is on
-        Real64 ReqOutput;  // Sensible capacity (outlet - inlet) required to meet load or set point temperature
+        Nandle FullOutput; // Sensible capacity (outlet - inlet) when the compressor is on
+        Nandle ReqOutput;  // Sensible capacity (outlet - inlet) required to meet load or set point temperature
 
-        std::vector<Real64> Par(11);    // Parameter array passed to solver
-        Real64 m_WSHPRuntimeFrac = 0.0; // Run time fraction of water to air hp
-        Real64 OutdoorDryBulb = 0.0;    // local variable for OutDryBulbTemp
-        Real64 OutdoorHumRat = 0.0;     // local variable for OutHumRat
-        Real64 OutdoorPressure = 0.0;   // local variable for OutBaroPress
-        Real64 OutdoorWetBulb = 0.0;    // local variable for OutWetBulbTemp
+        std::vector<Nandle> Par(11);    // Parameter array passed to solver
+        Nandle m_WSHPRuntimeFrac = 0.0; // Run time fraction of water to air hp
+        Nandle OutdoorDryBulb = 0.0;    // local variable for OutDryBulbTemp
+        Nandle OutdoorHumRat = 0.0;     // local variable for OutHumRat
+        Nandle OutdoorPressure = 0.0;   // local variable for OutBaroPress
+        Nandle OutdoorWetBulb = 0.0;    // local variable for OutWetBulbTemp
         bool HeatingActive = false;     // dummy variable for UserDefined coil which are passed back indicating if coil is on or off.
         bool CoolingActive = false;     // dummy variable for UserDefined coil which are passed back indicating if coil is on or off.
-        Real64 mdot = 0.0;              // water coil water flow rate [kg/s]
-        Real64 maxPartLoadFrac = 0.0;   // calculated maximum water side PLR for RegulaFalsi call (when plant limits flow max PLR != 1)
+        Nandle mdot = 0.0;              // water coil water flow rate [kg/s]
+        Nandle maxPartLoadFrac = 0.0;   // calculated maximum water side PLR for RegulaFalsi call (when plant limits flow max PLR != 1)
 
         // Set local variables
         // Retrieve the load on the controlled zone
@@ -12177,10 +12177,10 @@ namespace UnitarySystems {
         std::string CompName = this->m_HeatingCoilName;
         int CompIndex = this->m_HeatingCoilIndex;
         int FanOpMode = this->m_FanOpMode;
-        Real64 DesOutTemp = this->m_DesiredOutletTemp;
+        Nandle DesOutTemp = this->m_DesiredOutletTemp;
 
-        Real64 LoopHeatingCoilMaxRTFSave = 0.0;
-        Real64 LoopDXCoilMaxRTFSave = 0.0;
+        Nandle LoopHeatingCoilMaxRTFSave = 0.0;
+        Nandle LoopDXCoilMaxRTFSave = 0.0;
         if (AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone) {
             LoopHeatingCoilMaxRTFSave = DataAirLoop::AirLoopAFNInfo(AirLoopNum).AFNLoopHeatingCoilMaxRTF;
             DataAirLoop::AirLoopAFNInfo(AirLoopNum).AFNLoopHeatingCoilMaxRTF = 0.0;
@@ -12188,16 +12188,16 @@ namespace UnitarySystems {
             DataAirLoop::AirLoopAFNInfo(AirLoopNum).AFNLoopDXCoilRTF = 0.0;
         }
 
-        Real64 PartLoadFrac = 0.0;
-        Real64 SpeedRatio = 0.0;
-        Real64 CycRatio = 0.0;
+        Nandle PartLoadFrac = 0.0;
+        Nandle SpeedRatio = 0.0;
+        Nandle CycRatio = 0.0;
         int SpeedNum = 0;
-        Real64 dummy = 0.0;
+        Nandle dummy = 0.0;
         int SolFla = 0;
         bool SensibleLoad = false;
-        Real64 SensLoad = 0.0;
+        Nandle SensLoad = 0.0;
         bool LatentLoad = false;
-        Real64 OutletTemp = 0.0;
+        Nandle OutletTemp = 0.0;
 
         if (this->m_CondenserNodeNum != 0) {
             OutdoorDryBulb = DataLoopNode::Node(this->m_CondenserNodeNum).Temp;
@@ -12773,33 +12773,33 @@ namespace UnitarySystems {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         int const MaxIte(500);    // Maximum number of iterations for solver
-        Real64 const Acc(1.0e-3); // Accuracy of solver result
+        Nandle const Acc(1.0e-3); // Accuracy of solver result
         int const SolveMaxIter(50);
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FullOutput = 0.0;      // Sensible capacity (outlet - inlet) when the compressor is on
-        Real64 ReqOutput = 0.0;       // Sensible capacity (outlet - inlet) required to meet load or set point temperature
-        Real64 QCoilActual = 0.0;     // Heating coil operating capacity [W]
-        std::vector<Real64> Par(8);   // Parameter array passed to solver
-        Real64 NoLoadTempOut = 0.0;   // save outlet temp when coil is off (C)
+        Nandle FullOutput = 0.0;      // Sensible capacity (outlet - inlet) when the compressor is on
+        Nandle ReqOutput = 0.0;       // Sensible capacity (outlet - inlet) required to meet load or set point temperature
+        Nandle QCoilActual = 0.0;     // Heating coil operating capacity [W]
+        std::vector<Nandle> Par(8);   // Parameter array passed to solver
+        Nandle NoLoadTempOut = 0.0;   // save outlet temp when coil is off (C)
         bool HeatingActive = false;   // dummy variable for UserDefined coil which are passed back indicating if coil is on or off.
         bool CoolingActive = false;   // dummy variable for UserDefined coil which are passed back indicating if coil is on or off.
-        Real64 mdot = 0.0;            // water coil water flow rate [kg/s]
-        Real64 maxPartLoadFrac = 0.0; // calculated maximum water side PLR for RegulaFalsi call (when plant limits flow max PLR != 1)
-        Real64 PartLoadFrac = 0.0;
+        Nandle mdot = 0.0;            // water coil water flow rate [kg/s]
+        Nandle maxPartLoadFrac = 0.0; // calculated maximum water side PLR for RegulaFalsi call (when plant limits flow max PLR != 1)
+        Nandle PartLoadFrac = 0.0;
         int SolFla = 0.0;
         bool SensibleLoad = false;
 
         // Set local variables
         int OutletNode = this->m_SuppCoilAirOutletNode;
         int InletNode = this->m_SuppCoilAirInletNode;
-        Real64 DesOutTemp = this->m_DesiredOutletTemp;
+        Nandle DesOutTemp = this->m_DesiredOutletTemp;
         std::string CompName = this->m_SuppHeatCoilName;
         int CompIndex = this->m_SuppHeatCoilIndex;
         int FanOpMode = this->m_FanOpMode;
 
-        Real64 LoopHeatingCoilMaxRTFSave = 0.0;
-        Real64 LoopDXCoilMaxRTFSave = 0.0;
+        Nandle LoopHeatingCoilMaxRTFSave = 0.0;
+        Nandle LoopDXCoilMaxRTFSave = 0.0;
         if (AirflowNetwork::SimulateAirflowNetwork > AirflowNetwork::AirflowNetworkControlMultizone) {
             LoopHeatingCoilMaxRTFSave = DataAirLoop::AirLoopAFNInfo(AirLoopNum).AFNLoopHeatingCoilMaxRTF;
             DataAirLoop::AirLoopAFNInfo(AirLoopNum).AFNLoopHeatingCoilMaxRTF = 0.0;
@@ -13121,7 +13121,7 @@ namespace UnitarySystems {
                                         int &CompOn,                   // compresor on/off control
                                         bool const SensibleLoad,
                                         bool const LatentLoad,
-                                        Real64 const PartLoadFrac,
+                                        Nandle const PartLoadFrac,
                                         int const CoilType,
                                         int const SpeedNumber)
     {
@@ -13136,16 +13136,16 @@ namespace UnitarySystems {
         // Locals
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string CompName = ""; // Name of Unitary System object
-        Real64 SensLoad = 0.0;
-        Real64 LatLoad = 0.0;
+        Nandle SensLoad = 0.0;
+        Nandle LatLoad = 0.0;
         int CoilTypeNum = 0;
         int SpeedNum = 0;
         int CoilOutletNodeNum = 0;
         int CompIndex = 0;
-        Real64 SpeedRatio = 0.0;
-        Real64 CycRatio = 0.0;
+        Nandle SpeedRatio = 0.0;
+        Nandle CycRatio = 0.0;
 
-        Real64 dummy = 0.0;
+        Nandle dummy = 0.0;
 
         // if (present(SpeedNumber)) {
         SpeedNum = SpeedNumber;
@@ -13185,7 +13185,7 @@ namespace UnitarySystems {
             this->m_FanOpMode = 1; // why is this here?
         }
 
-        Real64 OnOffAirFlowRatio = 1.0;
+        Nandle OnOffAirFlowRatio = 1.0;
         this->setOnOffMassFlowRate(OnOffAirFlowRatio, PartLoadFrac); // 1.0d0 = PartLoadRatio
 
         this->calcPassiveSystem(AirLoopNum, FirstHVACIteration);
@@ -13333,13 +13333,13 @@ namespace UnitarySystems {
         // This subroutine calculates the set point based output of the unitary system.
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 PartLoadRatio = 0.0; // coil operating part-load ratio
+        Nandle PartLoadRatio = 0.0; // coil operating part-load ratio
         int CompOn = 0;             // compressor control (0=off, 1=on)
         bool HXUnitOn = false;
 
-        Real64 OnOffAirFlowRatio = 1.0;
-        Real64 CoilCoolHeatRat = 1.0;
-        Real64 HeatCoilLoad = 0.0;
+        Nandle OnOffAirFlowRatio = 1.0;
+        Nandle CoilCoolHeatRat = 1.0;
+        Nandle HeatCoilLoad = 0.0;
         // CALL the series of components that simulate a Unitary System
         if (this->m_FanExists && this->m_FanPlace == FanPlace::BlowThru) {
             if (this->m_FanType_Num == DataHVACGlobals::FanType_SystemModelObject) {
@@ -13408,10 +13408,10 @@ namespace UnitarySystems {
         // PURPOSE OF THIS SUBROUTINE:
         // This subroutine updates the report variable for the coils.
 
-        Real64 ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
-        Real64 QTotUnitOut = 0.0;
-        Real64 QSensUnitOut = 0.0;
+        Nandle QTotUnitOut = 0.0;
+        Nandle QSensUnitOut = 0.0;
         this->m_PartLoadFrac = 0.0;
         this->m_CompPartLoadRatio = 0.0;
         this->m_CycRatio = 0.0;
@@ -13425,14 +13425,14 @@ namespace UnitarySystems {
 
         int OutletNode = this->AirOutNode;
 
-        Real64 AirMassFlow = DataLoopNode::Node(OutletNode).MassFlowRate;
+        Nandle AirMassFlow = DataLoopNode::Node(OutletNode).MassFlowRate;
         auto const SELECT_CASE_var(this->m_ControlType);
         // Noticed that these are calculated differently.
         // That doesn't make sense except that NodeNumOfControlledZone = 0 for set point control because the control zone name is not required.
         if (SELECT_CASE_var == ControlType::Setpoint) {
             if (OutletNode > 0) {
                 int InletNode = this->AirInNode;
-                Real64 MinHumRatio = DataLoopNode::Node(InletNode).HumRat;
+                Nandle MinHumRatio = DataLoopNode::Node(InletNode).HumRat;
                 QSensUnitOut = AirMassFlow * (Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(OutletNode).Temp, MinHumRatio) -
                                               Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(InletNode).Temp, MinHumRatio)) -
                                this->m_SenLoadLoss;
@@ -13440,7 +13440,7 @@ namespace UnitarySystems {
             }
         } else {
             if (OutletNode > 0 && this->NodeNumOfControlledZone > 0) {
-                Real64 MinHumRatio = DataLoopNode::Node(this->NodeNumOfControlledZone).HumRat;
+                Nandle MinHumRatio = DataLoopNode::Node(this->NodeNumOfControlledZone).HumRat;
                 QSensUnitOut = AirMassFlow * (Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(OutletNode).Temp, MinHumRatio) -
                                               Psychrometrics::PsyHFnTdbW(DataLoopNode::Node(this->NodeNumOfControlledZone).Temp, MinHumRatio)) -
                                this->m_SenLoadLoss;
@@ -13502,7 +13502,7 @@ namespace UnitarySystems {
             }
         }
 
-        Real64 locFanElecPower = 0.0;
+        Nandle locFanElecPower = 0.0;
         if (this->m_FanType_Num == DataHVACGlobals::FanType_SystemModelObject) {
             locFanElecPower = HVACFan::fanObjs[this->m_FanIndex]->fanPower();
         } else {
@@ -13524,7 +13524,7 @@ namespace UnitarySystems {
                 this->m_SpeedRatio = max(this->m_CoolingSpeedRatio, this->m_HeatingSpeedRatio);
                 this->m_SpeedNum = max(this->m_CoolingSpeedNum, this->m_HeatingSpeedNum);
 
-                Real64 CompPartLoadFrac = this->m_CompPartLoadRatio;
+                Nandle CompPartLoadFrac = this->m_CompPartLoadRatio;
                 if (CoolingLoad) {
 
                     this->m_TotalAuxElecPower = this->m_AncillaryOnPower * CompPartLoadFrac + this->m_AncillaryOffPower * (1.0 - CompPartLoadFrac);
@@ -13565,7 +13565,7 @@ namespace UnitarySystems {
                 this->m_SpeedRatio = max(this->m_CoolingSpeedRatio, this->m_HeatingSpeedRatio);
                 this->m_SpeedNum = max(this->m_CoolingSpeedNum, this->m_HeatingSpeedNum);
 
-                Real64 CompPartLoadFrac = this->m_CompPartLoadRatio;
+                Nandle CompPartLoadFrac = this->m_CompPartLoadRatio;
                 if (HeatingLoad) {
 
                     this->m_TotalAuxElecPower = this->m_AncillaryOnPower * CompPartLoadFrac + this->m_AncillaryOffPower * (1.0 - CompPartLoadFrac);
@@ -13641,22 +13641,22 @@ namespace UnitarySystems {
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const routineName("UnitarySystemHeatRecovery");
 
-        Real64 ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
         int HeatRecInNode = this->m_HeatRecoveryInletNodeNum;
         int HeatRecOutNode = this->m_HeatRecoveryOutletNodeNum;
 
-        Real64 HeatRecInletTemp = DataLoopNode::Node(HeatRecInNode).Temp;
-        Real64 HeatRecOutletTemp = 0.0;
+        Nandle HeatRecInletTemp = DataLoopNode::Node(HeatRecInNode).Temp;
+        Nandle HeatRecOutletTemp = 0.0;
 
         // Set heat recovery mass flow rates
-        Real64 HeatRecMassFlowRate = DataLoopNode::Node(HeatRecInNode).MassFlowRate;
+        Nandle HeatRecMassFlowRate = DataLoopNode::Node(HeatRecInNode).MassFlowRate;
 
-        Real64 QHeatRec = DataHVACGlobals::MSHPWasteHeat;
+        Nandle QHeatRec = DataHVACGlobals::MSHPWasteHeat;
 
         if (HeatRecMassFlowRate > 0.0) {
 
-            Real64 CpHeatRec = FluidProperties::GetSpecificHeatGlycol(
+            Nandle CpHeatRec = FluidProperties::GetSpecificHeatGlycol(
                 DataPlant::PlantLoop(this->m_HRLoopNum).FluidName, HeatRecInletTemp, DataPlant::PlantLoop(this->m_HRLoopNum).FluidIndex, routineName);
 
             HeatRecOutletTemp = QHeatRec / (HeatRecMassFlowRate * CpHeatRec) + HeatRecInletTemp;
@@ -13682,9 +13682,9 @@ namespace UnitarySystems {
         this->m_HeatRecoveryMassFlowRate = HeatRecMassFlowRate;
     }
 
-    void UnitarySys::heatPumpRunFrac(Real64 const PLR,   // part load ratio
+    void UnitarySys::heatPumpRunFrac(Nandle const PLR,   // part load ratio
                                      bool &errFlag,      // part load factor out of range flag
-                                     Real64 &RuntimeFrac // the required run time fraction to meet part load
+                                     Nandle &RuntimeFrac // the required run time fraction to meet part load
     )
     {
 
@@ -13710,14 +13710,14 @@ namespace UnitarySystems {
         // Ernest OrlanDO Lawrence Berkeley National Laboratory.
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 PartLoadFactor; // Part load factor
-        Real64 Nmax;           // Maximum cycling rate [cycles/hr]
-        Real64 tau;            // Heat pump time constant [s]
-        Real64 pr;             // On-cycle power use fraction [~]
-        Real64 error;          // Calculation error
-        Real64 PLF1;           // ith term of part load factor
-        Real64 PLF2;           // (i+1)th term of part load factor
-        Real64 A;              // Variable for simplIFy equation
+        Nandle PartLoadFactor; // Part load factor
+        Nandle Nmax;           // Maximum cycling rate [cycles/hr]
+        Nandle tau;            // Heat pump time constant [s]
+        Nandle pr;             // On-cycle power use fraction [~]
+        Nandle error;          // Calculation error
+        Nandle PLF1;           // ith term of part load factor
+        Nandle PLF2;           // (i+1)th term of part load factor
+        Nandle A;              // Variable for simplIFy equation
         int NumIteration;      // Iteration Counter
 
         Nmax = this->m_MaxONOFFCyclesperHour;
@@ -13791,8 +13791,8 @@ namespace UnitarySystems {
         }
     }
 
-    Real64 UnitarySys::hotWaterHeatingCoilResidual(Real64 const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                   std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::hotWaterHeatingCoilResidual(Nandle const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                   std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -13809,30 +13809,30 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // Residual to be minimized to zero
+        Nandle Residuum; // Residual to be minimized to zero
 
         // Argument array dimensioning
         // Par(2) = desired air outlet temperature [C]
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp; // Outlet air temperature [C]
+        Nandle OutletAirTemp; // Outlet air temperature [C]
 
         int UnitarySysNum = int(Par[1]);
         bool FirstHVACIteration = (Par[2] > 0.0);
         bool SuppHeatingCoilFlag = (Par[4] > 0.0);
         bool LoadBased = (Par[5] > 0.0);
-        Real64 QActual = 0.0;
+        Nandle QActual = 0.0;
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
 
         if (!SuppHeatingCoilFlag) {
-            Real64 mdot =
+            Nandle mdot =
                 min(DataLoopNode::Node(thisSys.HeatCoilFluidOutletNodeNum).MassFlowRateMaxAvail, thisSys.MaxHeatCoilFluidFlow * PartLoadFrac);
             DataLoopNode::Node(thisSys.HeatCoilFluidInletNode).MassFlowRate = mdot;
             WaterCoils::SimulateWaterCoilComponents(
                 thisSys.m_HeatingCoilName, FirstHVACIteration, thisSys.m_HeatingCoilIndex, QActual, thisSys.m_FanOpMode, PartLoadFrac);
             OutletAirTemp = DataLoopNode::Node(thisSys.HeatCoilOutletNodeNum).Temp;
         } else {
-            Real64 mdot =
+            Nandle mdot =
                 min(DataLoopNode::Node(thisSys.m_SuppCoilFluidOutletNodeNum).MassFlowRateMaxAvail, thisSys.m_MaxSuppCoilFluidFlow * PartLoadFrac);
             DataLoopNode::Node(thisSys.m_SuppCoilFluidInletNode).MassFlowRate = mdot;
             WaterCoils::SimulateWaterCoilComponents(
@@ -13848,8 +13848,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::DOE2DXCoilResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                          std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::DOE2DXCoilResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                          std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -13866,7 +13866,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet temperature [C]
@@ -13875,14 +13875,14 @@ namespace UnitarySystems {
         int CoilIndex = int(Par[1]);
         int FanOpMode = int(Par[5]);
         DXCoils::CalcDoe2DXCoil(CoilIndex, On, true, PartLoadRatio, FanOpMode);
-        Real64 OutletAirTemp = DXCoils::DXCoilOutletTemp(CoilIndex);
+        Nandle OutletAirTemp = DXCoils::DXCoilOutletTemp(CoilIndex);
         Residuum = Par[2] - OutletAirTemp;
 
         return Residuum;
     }
 
-    Real64 UnitarySys::DOE2DXCoilHumRatResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::DOE2DXCoilHumRatResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -13899,7 +13899,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
@@ -13908,14 +13908,14 @@ namespace UnitarySystems {
         int CoilIndex = int(Par[1]);
         int FanOpMode = int(Par[5]);
         DXCoils::CalcDoe2DXCoil(CoilIndex, On, true, PartLoadRatio, FanOpMode);
-        Real64 OutletAirHumRat = DXCoils::DXCoilOutletHumRat(CoilIndex);
+        Nandle OutletAirHumRat = DXCoils::DXCoilOutletHumRat(CoilIndex);
         Residuum = Par[2] - OutletAirHumRat;
 
         return Residuum;
     }
 
-    Real64 UnitarySys::calcUnitarySystemLoadResidual(Real64 const PartLoadRatio,    // DX cooling coil part load ratio
-                                                     std::vector<Real64> const &Par // Function parameters
+    Nandle UnitarySys::calcUnitarySystemLoadResidual(Nandle const PartLoadRatio,    // DX cooling coil part load ratio
+                                                     std::vector<Nandle> const &Par // Function parameters
     )
     {
 
@@ -13930,7 +13930,7 @@ namespace UnitarySystems {
         // Use SolveRoot to CALL this Function to converge on a solution
 
         // Return value
-        Real64 Residuum; // Result (force to 0)
+        Nandle Residuum; // Result (force to 0)
 
         // Argument array dimensioning
         //   Parameter description example:
@@ -13946,12 +13946,12 @@ namespace UnitarySystems {
         //       Par(10) = HeatingCoilPLR       ! used to calculate latent degradation for cycling fan RH control
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 HeatPLR;    // heating coil part load ratio
-        Real64 CoolPLR;    // cooling coil part load ratio
-        Real64 SensOutput; // sensible output of system
-        Real64 LatOutput;  // latent output of system
-        Real64 HeatCoilLoad = 0.0;
-        Real64 SupHeaterLoad = 0.0;
+        Nandle HeatPLR;    // heating coil part load ratio
+        Nandle CoolPLR;    // cooling coil part load ratio
+        Nandle SensOutput; // sensible output of system
+        Nandle LatOutput;  // latent output of system
+        Nandle HeatCoilLoad = 0.0;
+        Nandle SupHeaterLoad = 0.0;
 
         // Convert parameters to usable variables
         int UnitarySysNum = int(Par[1]);
@@ -13960,8 +13960,8 @@ namespace UnitarySystems {
         bool FirstHVACIteration = (Par[2] > 0.0);
         // int FanOpMode = int(Par[3]);
         int CompOp = int(Par[4]);
-        Real64 LoadToBeMet = Par[5];
-        Real64 OnOffAirFlowRatio = Par[8];
+        Nandle LoadToBeMet = Par[5];
+        Nandle OnOffAirFlowRatio = Par[8];
 
         if (Par[6] == 1.0) {
             CoolPLR = PartLoadRatio;
@@ -14006,8 +14006,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::HXAssistedCoolCoilTempResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                      std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::HXAssistedCoolCoilTempResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                      std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14024,7 +14024,7 @@ namespace UnitarySystems {
         //  and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet temperature [C]
@@ -14044,13 +14044,13 @@ namespace UnitarySystems {
             DataLoopNode::Node(thisSys.CoolCoilFluidInletNode).MassFlowRate = thisSys.MaxCoolCoilFluidFlow * PartLoadRatio;
         }
         HVACHXAssistedCoolingCoil::CalcHXAssistedCoolingCoil(CoilIndex, FirstHVACIteration, On, PartLoadRatio, HXUnitOn, FanOpMode);
-        Real64 OutletAirTemp = HVACHXAssistedCoolingCoil::HXAssistedCoilOutletTemp(CoilIndex);
+        Nandle OutletAirTemp = HVACHXAssistedCoolingCoil::HXAssistedCoilOutletTemp(CoilIndex);
         Residuum = Par[2] - OutletAirTemp;
         return Residuum;
     }
 
-    Real64 UnitarySys::HXAssistedCoolCoilHRResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                    std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::HXAssistedCoolCoilHRResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                    std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14067,7 +14067,7 @@ namespace UnitarySystems {
         //  and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
@@ -14082,13 +14082,13 @@ namespace UnitarySystems {
         int FanOpMode = int(Par[5]);
         HVACHXAssistedCoolingCoil::CalcHXAssistedCoolingCoil(
             CoilIndex, FirstHVACIteration, On, PartLoadRatio, HXUnitOn, FanOpMode, _, economizerFlag);
-        Real64 OutletAirHumRat = HVACHXAssistedCoolingCoil::HXAssistedCoilOutletHumRat(CoilIndex);
+        Nandle OutletAirHumRat = HVACHXAssistedCoolingCoil::HXAssistedCoilOutletHumRat(CoilIndex);
         Residuum = Par[2] - OutletAirHumRat;
         return Residuum;
     }
 
-    Real64 UnitarySys::DXCoilVarSpeedResidual(Real64 const SpeedRatio,       // compressor speed ratio (1.0 is max, 0.0 is min)
-                                              std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::DXCoilVarSpeedResidual(Nandle const SpeedRatio,       // compressor speed ratio (1.0 is max, 0.0 is min)
+                                              std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -14104,19 +14104,19 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp(0.0); // outlet air temperature [C]
-        Real64 CycRatio;
+        Nandle OutletAirTemp(0.0); // outlet air temperature [C]
+        Nandle CycRatio;
         int SpeedNum;
         int FanOpMode;
         int CompOp;
-        Real64 ReqOutput;
-        Real64 dummy;
-        Real64 RuntimeFrac;
-        Real64 OnOffAirFlowRatio;
-        Real64 SensLoad;
+        Nandle ReqOutput;
+        Nandle dummy;
+        Nandle RuntimeFrac;
+        Nandle OnOffAirFlowRatio;
+        Nandle SensLoad;
 
         int CoilIndex = int(Par[1]);
         int UnitarySysNum = int(Par[3]);
@@ -14181,8 +14181,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::heatingCoilVarSpeedResidual(Real64 const SpeedRatio,       // compressor speed ratio (1.0 is max, 0.0 is min)
-                                                   std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::heatingCoilVarSpeedResidual(Nandle const SpeedRatio,       // compressor speed ratio (1.0 is max, 0.0 is min)
+                                                   std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -14198,18 +14198,18 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp(0.0); // outlet air temperature [C]
-        Real64 CycRatio;
+        Nandle OutletAirTemp(0.0); // outlet air temperature [C]
+        Nandle CycRatio;
         int SpeedNum;
         int FanOpMode;
         int CompOp;
-        Real64 ReqOutput;
-        Real64 OnOffAirFlowRatio;
-        Real64 SensLoad;
-        Real64 LatLoad;
+        Nandle ReqOutput;
+        Nandle OnOffAirFlowRatio;
+        Nandle SensLoad;
+        Nandle LatLoad;
 
         int CoilIndex = int(Par[1]);
         int UnitarySysNum = int(Par[3]);
@@ -14290,8 +14290,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::DXCoilVarSpeedHumRatResidual(Real64 const SpeedRatio,       // compressor speed ratio (1.0 is max, 0.0 is min)
-                                                    std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::DXCoilVarSpeedHumRatResidual(Nandle const SpeedRatio,       // compressor speed ratio (1.0 is max, 0.0 is min)
+                                                    std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -14307,19 +14307,19 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirHumRat(0.0); // outlet air humidity ratio
-        Real64 CycRatio;
+        Nandle OutletAirHumRat(0.0); // outlet air humidity ratio
+        Nandle CycRatio;
         int SpeedNum;
         int FanOpMode;
         int CompOp;
-        Real64 ReqOutput;
-        Real64 SensLoad;
-        Real64 LatLoad;
-        Real64 RuntimeFrac;
-        Real64 OnOffAirFlowRatio;
+        Nandle ReqOutput;
+        Nandle SensLoad;
+        Nandle LatLoad;
+        Nandle RuntimeFrac;
+        Nandle OnOffAirFlowRatio;
 
         int CoilIndex = int(Par[1]);
         int UnitarySysNum = int(Par[3]);
@@ -14384,8 +14384,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::DXCoilCyclingResidual(Real64 const CycRatio,         // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                             std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::DXCoilCyclingResidual(Nandle const CycRatio,         // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                             std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -14401,18 +14401,18 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp(0.0); // outlet air temperature [C]
-        Real64 SpeedRatio;
+        Nandle OutletAirTemp(0.0); // outlet air temperature [C]
+        Nandle SpeedRatio;
         int SpeedNum;
         int FanOpMode;
         int CompOp;
-        Real64 ReqOutput;
-        Real64 dummy;
-        Real64 SensLoad;
-        Real64 OnOffAirFlowRatio;
+        Nandle ReqOutput;
+        Nandle dummy;
+        Nandle SensLoad;
+        Nandle OnOffAirFlowRatio;
 
         //            Par(1) = REAL(UnitarySystem(UnitarySysNum)%CoolingCoilIndex,r64)
         //            Par(2) = DesOutTemp
@@ -14499,8 +14499,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::DXCoilCyclingHumRatResidual(Real64 const CycRatio,         // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                   std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::DXCoilCyclingHumRatResidual(Nandle const CycRatio,         // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                   std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14517,18 +14517,18 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirHumRat(0.0); // outlet air humidity ratio [kg/kg]
-        Real64 SpeedRatio;
+        Nandle OutletAirHumRat(0.0); // outlet air humidity ratio [kg/kg]
+        Nandle SpeedRatio;
         int SpeedNum;
         int FanOpMode;
         int CompOp;
-        Real64 ReqOutput;
-        Real64 SensLoad;
-        Real64 LatLoad;
-        Real64 OnOffAirFlowRatio;
+        Nandle ReqOutput;
+        Nandle SensLoad;
+        Nandle LatLoad;
+        Nandle OnOffAirFlowRatio;
 
         int CoilIndex = int(Par[1]);
         int UnitarySysNum = int(Par[3]);
@@ -14592,8 +14592,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::heatingCoilVarSpeedCycResidual(Real64 const CycRatio,         // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                      std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::heatingCoilVarSpeedCycResidual(Nandle const CycRatio,         // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                      std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14610,18 +14610,18 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp(0.0); // outlet air temperature [C]
-        Real64 SpeedRatio;
+        Nandle OutletAirTemp(0.0); // outlet air temperature [C]
+        Nandle SpeedRatio;
         int SpeedNum;
         int FanOpMode;
         int CompOp;
-        Real64 ReqOutput;
-        Real64 SensLoad;
-        Real64 LatLoad;
-        Real64 OnOffAirFlowRatio;
+        Nandle ReqOutput;
+        Nandle SensLoad;
+        Nandle LatLoad;
+        Nandle OnOffAirFlowRatio;
 
         //            Par(1) = REAL(UnitarySystem(UnitarySysNum)%CoolingCoilIndex,r64)
         //            Par(2) = DesOutTemp
@@ -14709,8 +14709,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::TESIceStorageCoilOutletResidual(Real64 PartLoadRatio,          // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                       std::vector<Real64> const &Par // data array
+    Nandle UnitarySys::TESIceStorageCoilOutletResidual(Nandle PartLoadRatio,          // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                       std::vector<Nandle> const &Par // data array
     )
     {
 
@@ -14727,7 +14727,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // Par( 1 ) = double( UnitarySysNum );
@@ -14735,14 +14735,14 @@ namespace UnitarySystems {
         // Par( 3 ) = 0.0; // DesOutHumRat; set to 0 if temp controlled
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp;   // outlet air temperature [C]
-        Real64 OutletAirHumRat; // outlet air humidity ratio [kg/kg]
+        Nandle OutletAirTemp;   // outlet air temperature [C]
+        Nandle OutletAirHumRat; // outlet air humidity ratio [kg/kg]
 
         int UnitarySysNum = int(Par[1]);
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
 
-        Real64 DesiredOutletTemp = Par[2];
-        Real64 DesiredOutletHumRat = Par[3];
+        Nandle DesiredOutletTemp = Par[2];
+        Nandle DesiredOutletHumRat = Par[3];
 
         PackagedThermalStorageCoil::SimTESCoil(
             thisSys.m_CoolingCoilName, thisSys.m_CoolingCoilIndex, thisSys.m_FanOpMode, thisSys.m_TESOpMode, PartLoadRatio);
@@ -14758,8 +14758,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::multiModeDXCoilResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                               std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::multiModeDXCoilResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                               std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14777,7 +14777,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet temperature [C]
@@ -14786,7 +14786,7 @@ namespace UnitarySystems {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int CoilIndex;        // index of this coil
-        Real64 OutletAirTemp; // outlet air temperature [C]
+        Nandle OutletAirTemp; // outlet air temperature [C]
         int DehumidMode;      // dehumidification mode (par3)
         int FanOpMode;        // supply air fan operating mode
 
@@ -14800,8 +14800,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::multiModeDXCoilHumRatResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                     std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::multiModeDXCoilHumRatResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                     std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14818,7 +14818,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
@@ -14829,14 +14829,14 @@ namespace UnitarySystems {
         int DehumidMode = int(Par[3]);
         int FanOpMode = int(Par[4]);
         DXCoils::SimDXCoilMultiMode("", On, false, PartLoadRatio, DehumidMode, CoilIndex, FanOpMode);
-        Real64 OutletAirHumRat = DXCoils::DXCoilOutletHumRat(CoilIndex);
+        Nandle OutletAirHumRat = DXCoils::DXCoilOutletHumRat(CoilIndex);
         Residuum = Par[2] - OutletAirHumRat;
 
         return Residuum;
     }
 
-    Real64 UnitarySys::coolWaterHumRatResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                               std::vector<Real64> const &Par // par(1) = CoolWater coil number
+    Nandle UnitarySys::coolWaterHumRatResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                               std::vector<Nandle> const &Par // par(1) = CoolWater coil number
     )
     {
 
@@ -14853,7 +14853,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
@@ -14863,18 +14863,18 @@ namespace UnitarySystems {
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
         bool FirstHVACIteration = (Par[2] > 0.0);
 
-        Real64 mdot = min(DataLoopNode::Node(thisSys.CoolCoilFluidOutletNodeNum).MassFlowRateMaxAvail, thisSys.MaxCoolCoilFluidFlow * PartLoadRatio);
+        Nandle mdot = min(DataLoopNode::Node(thisSys.CoolCoilFluidOutletNodeNum).MassFlowRateMaxAvail, thisSys.MaxCoolCoilFluidFlow * PartLoadRatio);
         DataLoopNode::Node(thisSys.CoolCoilFluidInletNode).MassFlowRate = mdot;
         WaterCoils::SimulateWaterCoilComponents(thisSys.m_CoolingCoilName, FirstHVACIteration, thisSys.m_CoolingCoilIndex, _, _, PartLoadRatio);
 
-        Real64 OutletAirHumRat = DataLoopNode::Node(thisSys.CoolCoilOutletNodeNum).HumRat;
+        Nandle OutletAirHumRat = DataLoopNode::Node(thisSys.CoolCoilOutletNodeNum).HumRat;
         Residuum = Par[3] - OutletAirHumRat;
 
         return Residuum;
     }
 
-    Real64 UnitarySys::coolWaterTempResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                             std::vector<Real64> const &Par // par(1) = CoolWater coil number
+    Nandle UnitarySys::coolWaterTempResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                             std::vector<Nandle> const &Par // par(1) = CoolWater coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -14890,20 +14890,20 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
         // par(5) = supply air fan operating mode (DataHVACGlobals::ContFanCycCoil)
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp; // outlet air humidity ratio [kg/kg]
+        Nandle OutletAirTemp; // outlet air humidity ratio [kg/kg]
 
         int UnitarySysNum = int(Par[1]);
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
         bool FirstHVACIteration = (Par[2] > 0.0);
 
-        Real64 mdot = min(DataLoopNode::Node(thisSys.CoolCoilFluidOutletNodeNum).MassFlowRateMaxAvail, thisSys.MaxCoolCoilFluidFlow * PartLoadRatio);
+        Nandle mdot = min(DataLoopNode::Node(thisSys.CoolCoilFluidOutletNodeNum).MassFlowRateMaxAvail, thisSys.MaxCoolCoilFluidFlow * PartLoadRatio);
         DataLoopNode::Node(thisSys.CoolCoilFluidInletNode).MassFlowRate = mdot;
         WaterCoils::SimulateWaterCoilComponents(thisSys.m_CoolingCoilName, FirstHVACIteration, thisSys.m_CoolingCoilIndex, _, _, PartLoadRatio);
 
@@ -14913,8 +14913,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::gasElecHeatingCoilResidual(Real64 const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                  std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::gasElecHeatingCoilResidual(Nandle const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                  std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14931,13 +14931,13 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // Residual to be minimized to zero
+        Nandle Residuum; // Residual to be minimized to zero
 
         // Argument array dimensioning
         // Par(2) = desired air outlet temperature [C]
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp; // Outlet air temperature [C]
+        Nandle OutletAirTemp; // Outlet air temperature [C]
 
         int UnitarySysNum = int(Par[1]);
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
@@ -14972,8 +14972,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::steamHeatingCoilResidual(Real64 const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::steamHeatingCoilResidual(Nandle const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -14990,14 +14990,14 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // Residual to be minimized to zero
+        Nandle Residuum; // Residual to be minimized to zero
 
         // Argument array dimensioning
         // Par(2) = desired air outlet temperature [C]
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp; // Outlet air temperature [C]
-        Real64 mdot;
+        Nandle OutletAirTemp; // Outlet air temperature [C]
+        Nandle mdot;
 
         int UnitarySysNum = int(Par[1]);
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
@@ -15022,8 +15022,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::heatWatertoAirHPTempResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                    std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::heatWatertoAirHPTempResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                    std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
 
@@ -15040,23 +15040,23 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
         // par(5) = supply air fan operating mode (DataHVACGlobals::ContFanCycCoil)
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 OutletAirTemp; // outlet air humidity ratio [kg/kg]
+        Nandle OutletAirTemp; // outlet air humidity ratio [kg/kg]
         bool errFlag;
-        Real64 RuntimeFrac;
-        Real64 dummy;
+        Nandle RuntimeFrac;
+        Nandle dummy;
 
         int UnitarySysNum = int(Par[1]);
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
 
         bool FirstHVACIteration = (Par[2] > 0.0);
-        Real64 ReqOutput = Par[4]; // RR this was a 1
+        Nandle ReqOutput = Par[4]; // RR this was a 1
 
         thisSys.heatPumpRunFrac(PartLoadRatio, errFlag, RuntimeFrac);
 
@@ -15106,8 +15106,8 @@ namespace UnitarySystems {
         return Residuum;
     }
 
-    Real64 UnitarySys::coolWatertoAirHPHumRatResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                      std::vector<Real64> const &Par // par(1) = CoolWatertoAirHP coil number
+    Nandle UnitarySys::coolWatertoAirHPHumRatResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                      std::vector<Nandle> const &Par // par(1) = CoolWatertoAirHP coil number
     )
     {
 
@@ -15124,7 +15124,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
@@ -15134,16 +15134,16 @@ namespace UnitarySystems {
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
 
         bool FirstHVACIteration = (Par[2] > 0.0);
-        Real64 ReqOutput = Par[4];
+        Nandle ReqOutput = Par[4];
         bool errFlag = false;
-        Real64 RuntimeFrac = 0.0; // heat pump runtime fraction
+        Nandle RuntimeFrac = 0.0; // heat pump runtime fraction
 
         thisSys.heatPumpRunFrac(PartLoadRatio, errFlag, RuntimeFrac);
 
         thisSys.m_CompPartLoadRatio = PartLoadRatio;
         thisSys.m_WSHPRuntimeFrac = RuntimeFrac;
 
-        Real64 dummy = 0.0;
+        Nandle dummy = 0.0;
         if (thisSys.m_CoolingCoilType_Num == DataHVACGlobals::Coil_CoolingWaterToAirHPSimple) {
             WaterToAirHeatPumpSimple::SimWatertoAirHPSimple(blankString,
                                                             thisSys.m_CoolingCoilIndex,
@@ -15174,14 +15174,14 @@ namespace UnitarySystems {
                                                 PartLoadRatio);
         }
 
-        Real64 OutletAirHumRat = DataLoopNode::Node(thisSys.CoolCoilOutletNodeNum).HumRat;
+        Nandle OutletAirHumRat = DataLoopNode::Node(thisSys.CoolCoilOutletNodeNum).HumRat;
         Residuum = Par[3] - OutletAirHumRat;
 
         return Residuum;
     }
 
-    Real64 UnitarySys::coolWatertoAirHPTempResidual(Real64 const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                                    std::vector<Real64> const &Par // par(1) = CoolWatertoAirHP coil number
+    Nandle UnitarySys::coolWatertoAirHPTempResidual(Nandle const PartLoadRatio,    // compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                                    std::vector<Nandle> const &Par // par(1) = CoolWatertoAirHP coil number
     )
     {
 
@@ -15198,7 +15198,7 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
         // par(2) = desired air outlet humidity ratio [kg/kg]
@@ -15206,13 +15206,13 @@ namespace UnitarySystems {
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         bool errFlag = false;
-        Real64 RuntimeFrac = 0.0;
+        Nandle RuntimeFrac = 0.0;
 
         int UnitarySysNum = int(Par[1]);
         UnitarySys &thisSys = unitarySys[UnitarySysNum];
 
         bool FirstHVACIteration = (Par[2] > 0.0);
-        Real64 ReqOutput = Par[4];
+        Nandle ReqOutput = Par[4];
 
         thisSys.heatPumpRunFrac(PartLoadRatio, errFlag, RuntimeFrac);
 
@@ -15225,7 +15225,7 @@ namespace UnitarySystems {
         thisSys.m_CompPartLoadRatio = PartLoadRatio;
         thisSys.m_WSHPRuntimeFrac = RuntimeFrac;
 
-        Real64 dummy = 0.0;
+        Nandle dummy = 0.0;
         if (thisSys.m_CoolingCoilType_Num == DataHVACGlobals::Coil_CoolingWaterToAirHPSimple) {
             WaterToAirHeatPumpSimple::SimWatertoAirHPSimple(blankString,
                                                             thisSys.m_CoolingCoilIndex,
@@ -15256,14 +15256,14 @@ namespace UnitarySystems {
                                                 PartLoadRatio);
         }
 
-        Real64 OutletAirTemp = DataLoopNode::Node(thisSys.CoolCoilOutletNodeNum).Temp;
+        Nandle OutletAirTemp = DataLoopNode::Node(thisSys.CoolCoilOutletNodeNum).Temp;
         Residuum = Par[3] - OutletAirTemp;
 
         return Residuum;
     }
 
-    Real64 UnitarySys::DXHeatingCoilResidual(Real64 const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
-                                             std::vector<Real64> const &Par // par(1) = DX coil number
+    Nandle UnitarySys::DXHeatingCoilResidual(Nandle const PartLoadFrac,     // Compressor cycling ratio (1.0 is continuous, 0.0 is off)
+                                             std::vector<Nandle> const &Par // par(1) = DX coil number
     )
     {
         // FUNCTION INFORMATION:
@@ -15279,21 +15279,21 @@ namespace UnitarySystems {
         // and calculates the residual as defined above
 
         // Return value
-        Real64 Residuum; // Residual to be minimized to zero
+        Nandle Residuum; // Residual to be minimized to zero
 
         int CoilIndex = int(Par[1]);
-        Real64 OnOffAirFlowFrac = Par[3];
+        Nandle OnOffAirFlowFrac = Par[3];
 
         DXCoils::CalcDXHeatingCoil(CoilIndex, PartLoadFrac, DataHVACGlobals::ContFanCycCoil, OnOffAirFlowFrac);
 
-        Real64 OutletAirTemp = DXCoils::DXCoilOutletTemp(CoilIndex);
+        Nandle OutletAirTemp = DXCoils::DXCoilOutletTemp(CoilIndex);
         Residuum = Par[2] - OutletAirTemp;
 
         return Residuum;
     }
 
-    Real64 UnitarySys::calcUnitarySystemWaterFlowResidual(Real64 const PartLoadRatio,    // coil part load ratio
-                                                          std::vector<Real64> const &Par // Function parameters
+    Nandle UnitarySys::calcUnitarySystemWaterFlowResidual(Nandle const PartLoadRatio,    // coil part load ratio
+                                                          std::vector<Nandle> const &Par // Function parameters
     )
     {
 
@@ -15308,9 +15308,9 @@ namespace UnitarySystems {
         // Use SolveRoot to CALL this Function to converge on a solution
 
         // Return value
-        Real64 Residuum; // Result (forces solution to be within tolerance)
-        Real64 HeatCoilLoad = 0.0;
-        Real64 SupHeaterLoad = 0.0;
+        Nandle Residuum; // Result (forces solution to be within tolerance)
+        Nandle HeatCoilLoad = 0.0;
+        Nandle SupHeaterLoad = 0.0;
 
         // Argument array dimensioning
         //   Parameter description example:
@@ -15337,23 +15337,23 @@ namespace UnitarySystems {
 
         bool FirstHVACIteration = (Par[2] > 0.0);
         // int ControlledZoneNum = int(Par[3]);
-        Real64 QZnReq = Par[4];
+        Nandle QZnReq = Par[4];
         int AirControlNode = int(Par[5]);
-        Real64 OnOffAirFlowRat = Par[6];
+        Nandle OnOffAirFlowRat = Par[6];
         int AirLoopNum = int(Par[7]);
         int WaterControlNode = int(Par[8]);
-        // Real64 lowWaterMdot = Par[9];
-        Real64 highWaterMdot = Par[10];
-        Real64 lowSpeedRatio = Par[11];
-        Real64 airMdot = Par[12];
-        Real64 SATempTarget = 0.0;
+        // Nandle lowWaterMdot = Par[9];
+        Nandle highWaterMdot = Par[10];
+        Nandle lowSpeedRatio = Par[11];
+        Nandle airMdot = Par[12];
+        Nandle SATempTarget = 0.0;
         bool LoadIsTarget = false;
         if (Par[13] == 0.0) {
             LoadIsTarget = true;
         } else {
             SATempTarget = Par[13];
         }
-        Real64 systemMaxAirFlowRate = Par[14];
+        Nandle systemMaxAirFlowRate = Par[14];
         bool coolingLoad = (Par[15] > 0.0);
         bool iterateOnAirOnly = (Par[16] > 1.0);
         bool HXUnitOn = true;
@@ -15378,13 +15378,13 @@ namespace UnitarySystems {
                 thisSys.FanPartLoadRatio = 1.0;
             }
             if (WaterControlNode > 0) {
-                Real64 waterMdot = highWaterMdot * PartLoadRatio;
+                Nandle waterMdot = highWaterMdot * PartLoadRatio;
                 DataLoopNode::Node(WaterControlNode).MassFlowRate = waterMdot;
             }
         }
 
-        Real64 coolingPLR = 0.0;
-        Real64 heatingPLR = 0.0;
+        Nandle coolingPLR = 0.0;
+        Nandle heatingPLR = 0.0;
 
         if (WaterControlNode > 0 && WaterControlNode == thisSys.CoolCoilFluidInletNode) {
             // cooling load using water cooling coil
@@ -15406,8 +15406,8 @@ namespace UnitarySystems {
             thisSys.m_HeatingPartLoadFrac = heatingPLR;
         }
 
-        Real64 SensOutput = 0.0;
-        Real64 LatOutput = 0.0;
+        Nandle SensOutput = 0.0;
+        Nandle LatOutput = 0.0;
         thisSys.calcUnitarySystemToLoad(AirLoopNum,
                                         FirstHVACIteration,
                                         coolingPLR,
@@ -15436,7 +15436,7 @@ namespace UnitarySystems {
     }
 
     void UnitarySys::setSpeedVariables(bool const SensibleLoad,   // True when meeting a sensible load (not a moisture load)
-                                       Real64 const PartLoadRatio // operating PLR
+                                       Nandle const PartLoadRatio // operating PLR
     )
     {
 
@@ -15449,8 +15449,8 @@ namespace UnitarySystems {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool errFlag = false;           // error flag returned from subroutine
-        Real64 RuntimeFrac = 0.0;       // heat pump runtime fraction
-        Real64 OnOffAirFlowRatio = 0.0; // compressor on to average flow rate
+        Nandle RuntimeFrac = 0.0;       // heat pump runtime fraction
+        Nandle OnOffAirFlowRatio = 0.0; // compressor on to average flow rate
 
         if (HeatingLoad && SensibleLoad) {
             this->m_CoolingSpeedRatio = 0.0;

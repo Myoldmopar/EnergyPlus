@@ -86,15 +86,15 @@ namespace Photovoltaics {
                         std::string const &GeneratorName, // user specified name of Generator
                         int &GeneratorIndex,
                         bool const RunFlag, // is PV ON or OFF as determined by schedules in ElecLoadCenter
-                        Real64 const PVLoad // electrical load on the PV (not really used... PV models assume "full on" !unused1208
+                        Nandle const PVLoad // electrical load on the PV (not really used... PV models assume "full on" !unused1208
     );
 
     void GetPVGeneratorResults(int const GeneratorType, // type of Generator !unused1208
                                int const GeneratorIndex,
-                               Real64 &GeneratorPower,  // electrical power
-                               Real64 &GeneratorEnergy, // electrical energy
-                               Real64 &ThermalPower,
-                               Real64 &ThermalEnergy);
+                               Nandle &GeneratorPower,  // electrical power
+                               Nandle &GeneratorEnergy, // electrical energy
+                               Nandle &ThermalPower,
+                               Nandle &ThermalEnergy);
 
     // *************
 
@@ -127,35 +127,35 @@ namespace Photovoltaics {
                       bool const RunFlag // BTG added intent    !flag tells whether the PV is ON or OFF
     );
 
-    void POWER(Real64 const IO,   // passed in from CalcPV
-               Real64 const IL,   // passed in from CalcPV
-               Real64 const RSER, // passed in from CalcPV
-               Real64 const AA,   // passed in from CalcPV
-               Real64 const EPS,  // passed in from CalcPV
-               Real64 &II,        // current [A]
-               Real64 &VV,        // voltage [V]
-               Real64 &PP         // power [W]
+    void POWER(Nandle const IO,   // passed in from CalcPV
+               Nandle const IL,   // passed in from CalcPV
+               Nandle const RSER, // passed in from CalcPV
+               Nandle const AA,   // passed in from CalcPV
+               Nandle const EPS,  // passed in from CalcPV
+               Nandle &II,        // current [A]
+               Nandle &VV,        // voltage [V]
+               Nandle &PP         // power [W]
     );
 
-    void NEWTON(Real64 &XX,
-                std::function<Real64(Real64 const, Real64 const, Real64 const, Real64 const, Real64 const, Real64 const)> FXX,
-                std::function<Real64(Real64 const, Real64 const, Real64 const, Real64 const, Real64 const)> DER,
-                Real64 const &II, // Autodesk Aliased to XX in some calls
-                Real64 const &VV, // Autodesk Aliased to XX in some calls
-                Real64 const IO,
-                Real64 const IL,
-                Real64 const RSER,
-                Real64 const AA,
-                Real64 const XS,
-                Real64 const EPS);
+    void NEWTON(Nandle &XX,
+                std::function<Nandle(Nandle const, Nandle const, Nandle const, Nandle const, Nandle const, Nandle const)> FXX,
+                std::function<Nandle(Nandle const, Nandle const, Nandle const, Nandle const, Nandle const)> DER,
+                Nandle const &II, // Autodesk Aliased to XX in some calls
+                Nandle const &VV, // Autodesk Aliased to XX in some calls
+                Nandle const IO,
+                Nandle const IL,
+                Nandle const RSER,
+                Nandle const AA,
+                Nandle const XS,
+                Nandle const EPS);
 
-    void SEARCH(Real64 &A, Real64 &B, Real64 &P, int &K, Real64 &IO, Real64 &IL, Real64 &RSER, Real64 &AA, Real64 const EPS, int const KMAX);
+    void SEARCH(Nandle &A, Nandle &B, Nandle &P, int &K, Nandle &IO, Nandle &IL, Nandle &RSER, Nandle &AA, Nandle const EPS, int const KMAX);
 
-    Real64 FUN(Real64 const II, Real64 const VV, Real64 const IL, Real64 const IO, Real64 const RSER, Real64 const AA);
+    Nandle FUN(Nandle const II, Nandle const VV, Nandle const IL, Nandle const IO, Nandle const RSER, Nandle const AA);
 
-    Real64 FI(Real64 const II, Real64 const VV, Real64 const IO, Real64 const RSER, Real64 const AA);
+    Nandle FI(Nandle const II, Nandle const VV, Nandle const IO, Nandle const RSER, Nandle const AA);
 
-    Real64 FV(Real64 const II, Real64 const VV, Real64 const IO, Real64 const RSER, Real64 const AA);
+    Nandle FV(Nandle const II, Nandle const VV, Nandle const IO, Nandle const RSER, Nandle const AA);
 
     // End routines for Equivalent One-Diode model as implemented by Bradley
     //************************************************************************
@@ -163,146 +163,146 @@ namespace Photovoltaics {
     // Begin supporting routines for Sandia PV model
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaModuleTemperature(Real64 const Ibc, // beam radiation on collector plane, W/m2
-                                   Real64 const Idc, // Diffuse radiation on collector plane, W/m2
-                                   Real64 const Ws,  // wind speed, m/s
-                                   Real64 const Ta,  // ambient temperature, degC
-                                   Real64 const fd,  // fraction of Idc used (empirical constant)
-                                   Real64 const a,   // empirical constant
-                                   Real64 const b    // empirical constant
+    Nandle SandiaModuleTemperature(Nandle const Ibc, // beam radiation on collector plane, W/m2
+                                   Nandle const Idc, // Diffuse radiation on collector plane, W/m2
+                                   Nandle const Ws,  // wind speed, m/s
+                                   Nandle const Ta,  // ambient temperature, degC
+                                   Nandle const fd,  // fraction of Idc used (empirical constant)
+                                   Nandle const a,   // empirical constant
+                                   Nandle const b    // empirical constant
     );
 
     // -------------------------------------------------------------------------------
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaTcellFromTmodule(Real64 const Tm,  // module temperature (deg C)
-                                  Real64 const Ibc, // beam radiation on collector plane, W/m2
-                                  Real64 const Idc, // Diffuse radiation on collector plane, W/m2
-                                  Real64 const fd,  // fraction of Idc used (empirical constant)
-                                  Real64 const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as delta T), deg C
+    Nandle SandiaTcellFromTmodule(Nandle const Tm,  // module temperature (deg C)
+                                  Nandle const Ibc, // beam radiation on collector plane, W/m2
+                                  Nandle const Idc, // Diffuse radiation on collector plane, W/m2
+                                  Nandle const fd,  // fraction of Idc used (empirical constant)
+                                  Nandle const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as delta T), deg C
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaCellTemperature(Real64 const Ibc, // beam radiation on collector plane W/m2
-                                 Real64 const Idc, // Diffuse radiation on collector plane W/m2
-                                 Real64 const Ws,  // wind speed, m/s
-                                 Real64 const Ta,  // ambient temperature, degC
-                                 Real64 const fd,  // fraction of Idc used (empirical constant)
-                                 Real64 const a,   // empirical constant
-                                 Real64 const b,   // empirical constant
-                                 Real64 const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as dTc), deg C
+    Nandle SandiaCellTemperature(Nandle const Ibc, // beam radiation on collector plane W/m2
+                                 Nandle const Idc, // Diffuse radiation on collector plane W/m2
+                                 Nandle const Ws,  // wind speed, m/s
+                                 Nandle const Ta,  // ambient temperature, degC
+                                 Nandle const fd,  // fraction of Idc used (empirical constant)
+                                 Nandle const a,   // empirical constant
+                                 Nandle const b,   // empirical constant
+                                 Nandle const DT0  // (Tc-Tm) at E=1000 W/m2 (empirical constant known as dTc), deg C
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaEffectiveIrradiance(Real64 const Tc,   // cell temperature (deg C)
-                                     Real64 const Isc,  // short-circuit current under operating conditions (A)
-                                     Real64 const Isc0, // reference Isc at Tc=25 C, Ic=1000 W/m2 (A)
-                                     Real64 const aIsc  // Isc temperature coefficient (degC^-1)
+    Nandle SandiaEffectiveIrradiance(Nandle const Tc,   // cell temperature (deg C)
+                                     Nandle const Isc,  // short-circuit current under operating conditions (A)
+                                     Nandle const Isc0, // reference Isc at Tc=25 C, Ic=1000 W/m2 (A)
+                                     Nandle const aIsc  // Isc temperature coefficient (degC^-1)
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 AbsoluteAirMass(Real64 const SolZen,  // solar zenith angle (deg)
-                           Real64 const Altitude // site altitude (m)
+    Nandle AbsoluteAirMass(Nandle const SolZen,  // solar zenith angle (deg)
+                           Nandle const Altitude // site altitude (m)
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaF1(Real64 const AMa, // absolute air mass
-                    Real64 const a0,  // empirical constant, module-specific
-                    Real64 const a1,  // empirical constant, module-specific
-                    Real64 const a2,  // empirical constant, module-specific
-                    Real64 const a3,  // empirical constant, module-specific
-                    Real64 const a4   // empirical constant, module-specific
+    Nandle SandiaF1(Nandle const AMa, // absolute air mass
+                    Nandle const a0,  // empirical constant, module-specific
+                    Nandle const a1,  // empirical constant, module-specific
+                    Nandle const a2,  // empirical constant, module-specific
+                    Nandle const a3,  // empirical constant, module-specific
+                    Nandle const a4   // empirical constant, module-specific
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaF2(Real64 const IncAng, // incidence angle (deg)
-                    Real64 const b0,     // empirical module-specific constants
-                    Real64 const b1,     // empirical module-specific constants
-                    Real64 const b2,     // empirical module-specific constants
-                    Real64 const b3,     // empirical module-specific constants
-                    Real64 const b4,     // empirical module-specific constants
-                    Real64 const b5      // empirical module-specific constants
+    Nandle SandiaF2(Nandle const IncAng, // incidence angle (deg)
+                    Nandle const b0,     // empirical module-specific constants
+                    Nandle const b1,     // empirical module-specific constants
+                    Nandle const b2,     // empirical module-specific constants
+                    Nandle const b3,     // empirical module-specific constants
+                    Nandle const b4,     // empirical module-specific constants
+                    Nandle const b5      // empirical module-specific constants
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaImp(Real64 const Tc,   // cell temperature (degC)
-                     Real64 const Ee,   // effective irradiance (W/m2)
-                     Real64 const Imp0, // current at MPP at SRC (1000 W/m2, 25 C) (A)
-                     Real64 const aImp, // Imp temperature coefficient (degC^-1)
-                     Real64 const C0,   // empirical module-specific constants
-                     Real64 const C1    // empirical module-specific constants
+    Nandle SandiaImp(Nandle const Tc,   // cell temperature (degC)
+                     Nandle const Ee,   // effective irradiance (W/m2)
+                     Nandle const Imp0, // current at MPP at SRC (1000 W/m2, 25 C) (A)
+                     Nandle const aImp, // Imp temperature coefficient (degC^-1)
+                     Nandle const C0,   // empirical module-specific constants
+                     Nandle const C1    // empirical module-specific constants
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaIsc(Real64 const Tc,   // cell temperature (deg C)
-                     Real64 const Isc0, // Isc at Tc=25 C, Ic=1000 W/m2 (A)
-                     Real64 const Ibc,  // beam radiation on collector plane (W/m2)
-                     Real64 const Idc,  // Diffuse radiation on collector plane (W/m2)
-                     Real64 const F1,   // Sandia F1 function for air mass effects
-                     Real64 const F2,   // Sandia F2 function of incidence angle
-                     Real64 const fd,   // module-specific empirical constant
-                     Real64 const aIsc  // Isc temperature coefficient (degC^-1)
+    Nandle SandiaIsc(Nandle const Tc,   // cell temperature (deg C)
+                     Nandle const Isc0, // Isc at Tc=25 C, Ic=1000 W/m2 (A)
+                     Nandle const Ibc,  // beam radiation on collector plane (W/m2)
+                     Nandle const Idc,  // Diffuse radiation on collector plane (W/m2)
+                     Nandle const F1,   // Sandia F1 function for air mass effects
+                     Nandle const F2,   // Sandia F2 function of incidence angle
+                     Nandle const fd,   // module-specific empirical constant
+                     Nandle const aIsc  // Isc temperature coefficient (degC^-1)
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaIx(Real64 const Tc,   // cell temperature (deg C)
-                    Real64 const Ee,   // effective irradiance
-                    Real64 const Ix0,  // Ix at SRC (1000 W/m2, 25 C) (A)
-                    Real64 const aIsc, // Isc temp coefficient (/C)
-                    Real64 const aImp, // Imp temp coefficient (/C)
-                    Real64 const C4,   // empirical module-specific constants
-                    Real64 const C5    // empirical module-specific constants
+    Nandle SandiaIx(Nandle const Tc,   // cell temperature (deg C)
+                    Nandle const Ee,   // effective irradiance
+                    Nandle const Ix0,  // Ix at SRC (1000 W/m2, 25 C) (A)
+                    Nandle const aIsc, // Isc temp coefficient (/C)
+                    Nandle const aImp, // Imp temp coefficient (/C)
+                    Nandle const C4,   // empirical module-specific constants
+                    Nandle const C5    // empirical module-specific constants
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaIxx(Real64 const Tc,   // cell temperature (deg C)
-                     Real64 const Ee,   // effective irradiance (W/m2 ?)
-                     Real64 const Ixx0, // Ixx at SRC (1000 W/m2, 25 C) (A)
-                     Real64 const aImp, // Imp temp coefficient (/C)
-                     Real64 const C6,   // empirical module-specific constants
-                     Real64 const C7    // empirical module-specific constants
+    Nandle SandiaIxx(Nandle const Tc,   // cell temperature (deg C)
+                     Nandle const Ee,   // effective irradiance (W/m2 ?)
+                     Nandle const Ixx0, // Ixx at SRC (1000 W/m2, 25 C) (A)
+                     Nandle const aImp, // Imp temp coefficient (/C)
+                     Nandle const C6,   // empirical module-specific constants
+                     Nandle const C7    // empirical module-specific constants
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaVmp(Real64 const Tc,          // cell temperature (deg C)
-                     Real64 const Ee,          // effective irradiance
-                     Real64 const Vmp0,        // Vmp at SRC (1000 W/m2, 25 C) (V)
-                     Real64 const NcellSer,    // # cells in series
-                     Real64 const DiodeFactor, // module-specIFic empirical constant
-                     Real64 const BVmp0,       // Vmp temperature coefficient (V/C)
-                     Real64 const mBVmp,       // change in BVmp with irradiance
-                     Real64 const C2,          // empirical module-specific constants
-                     Real64 const C3           // empirical module-specific constants
+    Nandle SandiaVmp(Nandle const Tc,          // cell temperature (deg C)
+                     Nandle const Ee,          // effective irradiance
+                     Nandle const Vmp0,        // Vmp at SRC (1000 W/m2, 25 C) (V)
+                     Nandle const NcellSer,    // # cells in series
+                     Nandle const DiodeFactor, // module-specIFic empirical constant
+                     Nandle const BVmp0,       // Vmp temperature coefficient (V/C)
+                     Nandle const mBVmp,       // change in BVmp with irradiance
+                     Nandle const C2,          // empirical module-specific constants
+                     Nandle const C3           // empirical module-specific constants
     );
 
     // -------------------------------------------------------------------------------
 
-    Real64 SandiaVoc(Real64 const Tc,          // cell temperature (deg C)
-                     Real64 const Ee,          // effective irradiance
-                     Real64 const Voc0,        // Voc at SRC (1000 W/m2, 25 C) (V)
-                     Real64 const NcellSer,    // # cells in series
-                     Real64 const DiodeFactor, // module-specIFic empirical constant
-                     Real64 const BVoc0,       // Voc temperature coefficient (V/C)
-                     Real64 const mBVoc        // change in BVoc with irradiance
+    Nandle SandiaVoc(Nandle const Tc,          // cell temperature (deg C)
+                     Nandle const Ee,          // effective irradiance
+                     Nandle const Voc0,        // Voc at SRC (1000 W/m2, 25 C) (V)
+                     Nandle const NcellSer,    // # cells in series
+                     Nandle const DiodeFactor, // module-specIFic empirical constant
+                     Nandle const BVoc0,       // Voc temperature coefficient (V/C)
+                     Nandle const mBVoc        // change in BVoc with irradiance
     );
 
     void SetVentedModuleQdotSource(int const VentModNum,
-                                   Real64 const QSource // source term in Watts
+                                   Nandle const QSource // source term in Watts
     );
 
     void GetExtVentedCavityIndex(int const SurfacePtr, int &VentCavIndex);
 
-    void GetExtVentedCavityTsColl(int const VentModNum, Real64 &TsColl);
+    void GetExtVentedCavityTsColl(int const VentModNum, Nandle &TsColl);
 
     // -------------------------------------------------------------------------------
 

@@ -121,13 +121,13 @@ namespace SingleDuct {
     struct SingleDuctAirTerminalFlowConditions
     {
         // Members
-        Real64 AirMassFlowRate;         // MassFlow through the Sys being Simulated [kg/Sec]
-        Real64 AirMassFlowRateMaxAvail; // MassFlow through the Sys being Simulated [kg/Sec]
-        Real64 AirMassFlowRateMinAvail; // MassFlow through the Sys being Simulated [kg/Sec]
-        Real64 AirTemp;                 // (C)
-        Real64 AirHumRat;               // (Kg/Kg)
-        Real64 AirEnthalpy;             // (J/Kg)
-        Real64 AirPressure;
+        Nandle AirMassFlowRate;         // MassFlow through the Sys being Simulated [kg/Sec]
+        Nandle AirMassFlowRateMaxAvail; // MassFlow through the Sys being Simulated [kg/Sec]
+        Nandle AirMassFlowRateMinAvail; // MassFlow through the Sys being Simulated [kg/Sec]
+        Nandle AirTemp;                 // (C)
+        Nandle AirHumRat;               // (Kg/Kg)
+        Nandle AirEnthalpy;             // (J/Kg)
+        Nandle AirPressure;
 
         // Default Constructor
         SingleDuctAirTerminalFlowConditions()
@@ -157,54 +157,54 @@ namespace SingleDuct {
         int ControlCompTypeNum;
         int CompErrIndex;
         std::string FanName;              // name of fan
-        Real64 MaxAirVolFlowRate;         // Max Specified Volume Flow Rate of Sys (cooling max) [m3/sec]
-        Real64 AirMassFlowRateMax;        // Max Specified Mass Flow Rate of Sys (cooling max) [kg/sec]
-        Real64 MaxHeatAirVolFlowRate;     // Max specified volume flow rate of unit at max heating [m3/s]
-        Real64 HeatAirMassFlowRateMax;    // Max Specified Mass Flow Rate of unit at max heating [kg/sec]
+        Nandle MaxAirVolFlowRate;         // Max Specified Volume Flow Rate of Sys (cooling max) [m3/sec]
+        Nandle AirMassFlowRateMax;        // Max Specified Mass Flow Rate of Sys (cooling max) [kg/sec]
+        Nandle MaxHeatAirVolFlowRate;     // Max specified volume flow rate of unit at max heating [m3/s]
+        Nandle HeatAirMassFlowRateMax;    // Max Specified Mass Flow Rate of unit at max heating [kg/sec]
         int ZoneMinAirFracMethod;         // parameter for what method is used for min flow fraction
-        Real64 ZoneMinAirFracDes;         // Fraction of supply air used as design minimum flow
-        Real64 ZoneMinAirFrac;            // Fraction of supply air used as current minimum flow
-        Real64 ZoneMinAirFracReport;      // Fraction of supply air used as minimum flow for reporting (zero if terminal unit flow is zero)
-        Real64 ZoneFixedMinAir;           // Absolute minimum supply air flow
+        Nandle ZoneMinAirFracDes;         // Fraction of supply air used as design minimum flow
+        Nandle ZoneMinAirFrac;            // Fraction of supply air used as current minimum flow
+        Nandle ZoneMinAirFracReport;      // Fraction of supply air used as minimum flow for reporting (zero if terminal unit flow is zero)
+        Nandle ZoneFixedMinAir;           // Absolute minimum supply air flow
         int ZoneMinAirFracSchPtr;         // pointer to the schedule for min flow fraction
         bool ConstantMinAirFracSetByUser; // record if user left field blank for constant min fraction.
         bool FixedMinAirSetByUser;        // record if user left field blank for constant min fraction.
-        Real64 DesignMinAirFrac;          // store user entered constant min flow fract for design
-        Real64 DesignFixedMinAir;         // store user entered constant min flow for design
+        Nandle DesignMinAirFrac;          // store user entered constant min flow fract for design
+        Nandle DesignFixedMinAir;         // store user entered constant min flow for design
         int InletNodeNum;                 // terminal unit inlet node number; damper inlet node number
         int OutletNodeNum;                // damper outlet node number for VAV; unused by CV; coil air inlet node for VAV
         // fan outlet node, coil inlet node for VAV VS Fan
         int ReheatControlNode;        // hot water inlet node for heating coil
         int ReheatCoilOutletNode;     // outlet node for heating coil
-        Real64 ReheatCoilMaxCapacity; // heating coil capacity, W
+        Nandle ReheatCoilMaxCapacity; // heating coil capacity, W
         int ReheatAirOutletNode;      // terminal unit outlet node; heating coil air outlet node
-        Real64 MaxReheatWaterVolFlow; // m3/s
-        Real64 MaxReheatSteamVolFlow; // m3/s
-        Real64 MaxReheatWaterFlow;    // kg/s
-        Real64 MaxReheatSteamFlow;    // kg/s
-        Real64 MinReheatWaterVolFlow; // m3/s
-        Real64 MinReheatSteamVolFlow; // m3/s
-        Real64 MinReheatWaterFlow;    // kg/s
-        Real64 MinReheatSteamFlow;    // kg/s
-        Real64 ControllerOffset;
-        Real64 MaxReheatTemp; // C
+        Nandle MaxReheatWaterVolFlow; // m3/s
+        Nandle MaxReheatSteamVolFlow; // m3/s
+        Nandle MaxReheatWaterFlow;    // kg/s
+        Nandle MaxReheatSteamFlow;    // kg/s
+        Nandle MinReheatWaterVolFlow; // m3/s
+        Nandle MinReheatSteamVolFlow; // m3/s
+        Nandle MinReheatWaterFlow;    // kg/s
+        Nandle MinReheatSteamFlow;    // kg/s
+        Nandle ControllerOffset;
+        Nandle MaxReheatTemp; // C
         bool MaxReheatTempSetByUser;
         int DamperHeatingAction; // ! 1=NORMAL;  2=REVERSE ACTION;  3=REVERSE ACTION WITH LIMITS
-        Real64 DamperPosition;
+        Nandle DamperPosition;
         int ADUNum;                           // index of corresponding air distribution unit
         int FluidIndex;                       // Refrigerant index
         int ErrCount1;                        // iteration limit exceeded in Hot Water Flow Calc
         int ErrCount1c;                       // iteration limit exceeded in Hot Water Flow Calc - continue
         int ErrCount2;                        // bad iterations limits in hot water flow calc
-        Real64 ZoneFloorArea;                 // Zone floor area
+        Nandle ZoneFloorArea;                 // Zone floor area
         int CtrlZoneNum;                      // Pointer to CtrlZone data structure
         int CtrlZoneInNodeIndex;              // which controlled zone inlet node number corresponds with this unit
         int ActualZoneNum;                    // Pointer to Zone data Structure
-        Real64 MaxAirVolFlowRateDuringReheat; // Maximum vol flow during reheat
-        Real64 MaxAirVolFractionDuringReheat; // Maximum vol flow fraction during reheat
-        Real64 AirMassFlowDuringReheatMax;    // Maximum mass flow during reheat
+        Nandle MaxAirVolFlowRateDuringReheat; // Maximum vol flow during reheat
+        Nandle MaxAirVolFractionDuringReheat; // Maximum vol flow fraction during reheat
+        Nandle AirMassFlowDuringReheatMax;    // Maximum mass flow during reheat
         int ZoneOutdoorAirMethod;             // Outdoor air method
-        Real64 OutdoorAirFlowRate;            // report variable for TU outdoor air flow rate
+        Nandle OutdoorAirFlowRate;            // report variable for TU outdoor air flow rate
         bool NoOAFlowInputFromUser;           // avoids OA calculation if no input specified by user
         int OARequirementsPtr;                // - Index to DesignSpecification:OutdoorAir object
         int AirLoopNum;
@@ -220,22 +220,22 @@ namespace SingleDuct {
         int IterationFailed;         // Used for RegulaFalsi error -2
         int OAPerPersonMode;         // mode for how per person rates are determined, DCV or design.
         bool EMSOverrideAirFlow;     // if true, EMS is calling to override flow rate
-        Real64 EMSMassFlowRateValue; // value EMS is directing to use for flow rate [kg/s]
-        Real64 HeatRate;             // zone air terminal sensible heating rate
-        Real64 CoolRate;             // zone air terminal sensible cooling rate
-        Real64 HeatEnergy;           // zone air terminal sensible heating energy
-        Real64 CoolEnergy;           // zone air terminal sensible cooling energy
+        Nandle EMSMassFlowRateValue; // value EMS is directing to use for flow rate [kg/s]
+        Nandle HeatRate;             // zone air terminal sensible heating rate
+        Nandle CoolRate;             // zone air terminal sensible cooling rate
+        Nandle HeatEnergy;           // zone air terminal sensible heating energy
+        Nandle CoolEnergy;           // zone air terminal sensible cooling energy
         int ZoneTurndownMinAirFracSchPtr;    // pointer to the schedule for turndown minimum airflow fraction
-        Real64 ZoneTurndownMinAirFrac;       // turndown minimum airflow fraction value, multiplier of zone design minimum air flow 
+        Nandle ZoneTurndownMinAirFrac;       // turndown minimum airflow fraction value, multiplier of zone design minimum air flow
         bool ZoneTurndownMinAirFracSchExist; // if true, if zone turndown min air frac schedule exist
         bool MyEnvrnFlag;
         bool MySizeFlag;
         bool GetGasElecHeatCoilCap;          // Gets autosized value of coil capacity
         bool PlantLoopScanFlag;              // plant loop scan flag, false if scanned
-        Real64 MassFlow1; // previous value of the terminal unit mass flow rate
-        Real64 MassFlow2; // previous value of the previous value of the mass flow rate
-        Real64 MassFlow3;
-        Real64 MassFlowDiff;
+        Nandle MassFlow1; // previous value of the terminal unit mass flow rate
+        Nandle MassFlow2; // previous value of the previous value of the mass flow rate
+        Nandle MassFlow3;
+        Nandle MassFlowDiff;
         SingleDuctAirTerminalFlowConditions sd_airterminalInlet;
         SingleDuctAirTerminalFlowConditions sd_airterminalOutlet;
 
@@ -265,7 +265,7 @@ namespace SingleDuct {
 
         void SimVAV(bool const FirstHVACIteration, int const ZoneNum, int const ZoneNodeNum);
 
-        void CalcOAMassFlow(Real64 &SAMassFlow, Real64 &AirLoopOAFrac);
+        void CalcOAMassFlow(Nandle &SAMassFlow, Nandle &AirLoopOAFrac);
 
         void SimCBVAV(bool const FirstHVACIteration, int const ZoneNum, int const ZoneNodeNum);
 
@@ -273,15 +273,15 @@ namespace SingleDuct {
 
         void SimConstVol(bool const FirstHVACIteration, int const ZoneNum, int const ZoneNodeNum);
 
-        void CalcVAVVS(bool const FirstHVACIteration, int const ZoneNode, int const HCoilType, Real64 const HWFlow, Real64 const HCoilReq, int const FanType, Real64 const AirFlow, int const FanOn, Real64 &LoadMet);
+        void CalcVAVVS(bool const FirstHVACIteration, int const ZoneNode, int const HCoilType, Nandle const HWFlow, Nandle const HCoilReq, int const FanType, Nandle const AirFlow, int const FanOn, Nandle &LoadMet);
 
-        static Real64 VAVVSCoolingResidual(Real64 const SupplyAirMassFlow, Array1D<Real64> const &Par);
+        static Nandle VAVVSCoolingResidual(Nandle const SupplyAirMassFlow, Array1D<Nandle> const &Par);
 
-        static Real64 VAVVSHWNoFanResidual(Real64 const HWMassFlow, Array1D<Real64> const &Par);
+        static Nandle VAVVSHWNoFanResidual(Nandle const HWMassFlow, Array1D<Nandle> const &Par);
 
-        static Real64 VAVVSHWFanOnResidual(Real64 const SupplyAirMassFlow, Array1D<Real64> const &Par);
+        static Nandle VAVVSHWFanOnResidual(Nandle const SupplyAirMassFlow, Array1D<Nandle> const &Par);
 
-        static Real64 VAVVSHCFanOnResidual(Real64 const HeatingFrac, Array1D<Real64> const &Par);
+        static Nandle VAVVSHCFanOnResidual(Nandle const HeatingFrac, Array1D<Nandle> const &Par);
 
         void SimConstVolNoReheat(int const ZoneNodeNum);
 
@@ -303,22 +303,22 @@ namespace SingleDuct {
         int PriInNode;                // primary air inlet node number
         int MixedAirOutNode;          // mixed air outlet node number
         int ZoneInletNode;            // zone inlet node that ultimately receives air from this mixer
-        Real64 ZoneAirTemp;           // zone air in temp
-        Real64 ZoneAirHumRat;         // zone air in hum rat
-        Real64 ZoneAirEnthalpy;       // zone air in enthalpy
-        Real64 ZoneAirPressure;       // zone air in pressure
-        Real64 ZoneAirMassFlowRate;   // zone air in mass flow rate
-        Real64 DOASTemp;              // DOAS air in temp
-        Real64 DOASHumRat;            // DOAS air in hum rat
-        Real64 DOASEnthalpy;          // DOAS air in enthalpy
-        Real64 DOASPressure;          // DOAS air in pressure
-        Real64 DOASMassFlowRate;      // DOAS air in mass flow rate
-        Real64 MixedAirTemp;          // mixed air in temp
-        Real64 MixedAirHumRat;        // mixed air in hum rat
-        Real64 MixedAirEnthalpy;      // mixed air in enthalpy
-        Real64 MixedAirPressure;      // mixed air in pressure
-        Real64 MixedAirMassFlowRate;  // mixed air in mass flow rate
-        Real64 MassFlowRateMaxAvail;  // maximum air mass flow rate allowed through component
+        Nandle ZoneAirTemp;           // zone air in temp
+        Nandle ZoneAirHumRat;         // zone air in hum rat
+        Nandle ZoneAirEnthalpy;       // zone air in enthalpy
+        Nandle ZoneAirPressure;       // zone air in pressure
+        Nandle ZoneAirMassFlowRate;   // zone air in mass flow rate
+        Nandle DOASTemp;              // DOAS air in temp
+        Nandle DOASHumRat;            // DOAS air in hum rat
+        Nandle DOASEnthalpy;          // DOAS air in enthalpy
+        Nandle DOASPressure;          // DOAS air in pressure
+        Nandle DOASMassFlowRate;      // DOAS air in mass flow rate
+        Nandle MixedAirTemp;          // mixed air in temp
+        Nandle MixedAirHumRat;        // mixed air in hum rat
+        Nandle MixedAirEnthalpy;      // mixed air in enthalpy
+        Nandle MixedAirPressure;      // mixed air in pressure
+        Nandle MixedAirMassFlowRate;  // mixed air in mass flow rate
+        Nandle MassFlowRateMaxAvail;  // maximum air mass flow rate allowed through component
         int ADUNum;                   // index of Air Distribution Unit
         int TermUnitSizingIndex;      // Pointer to TermUnitSizing and TermUnitFinalZoneSizing data for this terminal unit
         bool OneTimeInitFlag;         // true if one-time inits should be done
@@ -329,7 +329,7 @@ namespace SingleDuct {
         bool NoOAFlowInputFromUser;     // avoids OA calculation if no input specified by user
         int OARequirementsPtr;          // - Index to DesignSpecification:OutdoorAir object
         int AirLoopNum;                 // System sizing adjustments
-        Real64 DesignPrimaryAirVolRate; // System sizing adjustments, filled from design OA spec using sizing mode flags.
+        Nandle DesignPrimaryAirVolRate; // System sizing adjustments, filled from design OA spec using sizing mode flags.
         int OAPerPersonMode;            // mode for how per person rates are determined, DCV or design.
         bool printWarning;              // flag to print warnings only once
         // Default Constructor
@@ -390,7 +390,7 @@ namespace SingleDuct {
     );
 
     void SetATMixerPriFlow(int const ATMixerNum,                         // Air terminal mixer index
-                           Optional<Real64 const> PriAirMassFlowRate = _ // Air terminal mixer primary air mass flow rate [kg/s]
+                           Optional<Nandle const> PriAirMassFlowRate = _ // Air terminal mixer primary air mass flow rate [kg/s]
     );
 
     void setATMixerSizingProperties(int const &inletATMixerIndex, // index to ATMixer at inlet of zone equipment

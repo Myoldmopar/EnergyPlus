@@ -72,8 +72,8 @@ namespace HVACHXAssistedCoolingCoil {
 
     // MODULE VARIABLE DECLARATIONS:
     extern int TotalNumHXAssistedCoils;                // The total number of HXAssistedCoolingCoil compound objects
-    extern Array1D<Real64> HXAssistedCoilOutletTemp;   // Outlet temperature from this compound object
-    extern Array1D<Real64> HXAssistedCoilOutletHumRat; // Outlet humidity ratio from this compound object
+    extern Array1D<Nandle> HXAssistedCoilOutletTemp;   // Outlet temperature from this compound object
+    extern Array1D<Nandle> HXAssistedCoilOutletHumRat; // Outlet humidity ratio from this compound object
     // PUBLIC so others can access this information
     extern bool GetCoilsInputFlag; // Flag to allow input data to be retrieved from idf on first call to this subroutine
     extern Array1D_bool CheckEquipName;
@@ -120,7 +120,7 @@ namespace HVACHXAssistedCoolingCoil {
         int HXAssistedCoilInletNodeNum;  // Inlet node to HXAssistedCoolingCoil compound object
         int HXAssistedCoilOutletNodeNum; // Outlet node to HXAssistedCoolingCoil compound object
         int HXExhaustAirInletNodeNum;    // Inlet node number for air-to-air heat exchanger
-        Real64 MassFlowRate;             // Mass flow rate through HXAssistedCoolingCoil compound object
+        Nandle MassFlowRate;             // Mass flow rate through HXAssistedCoolingCoil compound object
         int MaxIterCounter;              // used in warning messages
         int MaxIterIndex;                // used in warning messages
         int ControllerIndex;             // index to water coil controller
@@ -145,13 +145,13 @@ namespace HVACHXAssistedCoolingCoil {
     void SimHXAssistedCoolingCoil(std::string const &HXAssistedCoilName, // Name of HXAssistedCoolingCoil
                                   bool const FirstHVACIteration,         // FirstHVACIteration flag
                                   int const CompOp,                      // compressor operation; 1=on, 0=off
-                                  Real64 const PartLoadRatio,            // Part load ratio of Coil:DX:CoolingBypassFactorEmpirical
+                                  Nandle const PartLoadRatio,            // Part load ratio of Coil:DX:CoolingBypassFactorEmpirical
                                   int &CompIndex,
                                   int const FanOpMode,                    // Allows the parent object to control fan operation
                                   Optional_bool_const HXUnitEnable = _,   // flag to enable heat exchanger heat recovery
-                                  Optional<Real64 const> OnOffAFR = _,    // Ratio of compressor ON air mass flow rate to AVERAGE over time step
+                                  Optional<Nandle const> OnOffAFR = _,    // Ratio of compressor ON air mass flow rate to AVERAGE over time step
                                   Optional_bool_const EconomizerFlag = _, // OA sys or air loop economizer status
-                                  Optional<Real64> QTotOut = _            // the total cooling output of unit
+                                  Optional<Nandle> QTotOut = _            // the total cooling output of unit
     );
 
     // Get Input Section of the Module
@@ -173,10 +173,10 @@ namespace HVACHXAssistedCoolingCoil {
     void CalcHXAssistedCoolingCoil(int const HXAssistedCoilNum,             // Index number for HXAssistedCoolingCoil
                                    bool const FirstHVACIteration,           // FirstHVACIteration flag
                                    int const CompOp,                        // compressor operation; 1=on, 0=off
-                                   Real64 const PartLoadRatio,              // Cooling coil part load ratio
+                                   Nandle const PartLoadRatio,              // Cooling coil part load ratio
                                    bool const HXUnitOn,                     // Flag to enable heat exchanger
                                    int const FanOpMode,                     // Allows parent object to control fan operation
-                                   Optional<Real64 const> OnOffAirFlow = _, // Ratio of compressor ON air mass flow to AVERAGE over time step
+                                   Optional<Nandle const> OnOffAirFlow = _, // Ratio of compressor ON air mass flow to AVERAGE over time step
                                    Optional_bool_const EconomizerFlag = _   // OA (or airloop) econommizer status
     );
 
@@ -187,10 +187,10 @@ namespace HVACHXAssistedCoolingCoil {
 
     void CheckHXAssistedCoolingCoilSchedule(std::string const &CompType, // unused1208
                                             std::string const &CompName,
-                                            Real64 &Value,
+                                            Nandle &Value,
                                             int &CompIndex);
 
-    Real64 GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilCapacity(std::string const &CoilType, // must match coil types in this module
                            std::string const &CoilName, // must match coil names for the coil type
                            bool &ErrorsFound            // set to true if problem
     );
@@ -249,12 +249,12 @@ namespace HVACHXAssistedCoolingCoil {
                               std::string &CoolingCoilName  // returned name of cooling coil
     );
 
-    Real64 GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
                                    std::string const &CoilName, // must match coil names for the coil type
                                    bool &ErrorsFound            // set to true if problem
     );
 
-    Real64 GetHXCoilAirFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetHXCoilAirFlowRate(std::string const &CoilType, // must match coil types in this module
                                 std::string const &CoilName, // must match coil names for the coil type
                                 bool &ErrorsFound            // set to true if problem
     );

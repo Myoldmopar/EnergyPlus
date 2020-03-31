@@ -755,7 +755,7 @@ namespace SimulationManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Array1D_string Alphas(8);
-        Array1D<Real64> Number(4);
+        Array1D<Nandle> Number(4);
         int NumAlpha;
         int NumNumber;
         int IOStat;
@@ -3185,7 +3185,7 @@ void Resimulate(bool &ResimExt, // Flag to resimulate the exterior energy use si
     // using ZoneEquipmentManager::CalcAirFlowSimple;
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 ZoneTempChange(0.0); // Dummy variable needed for calling ManageZoneAirUpdates
+    Nandle ZoneTempChange(0.0); // Dummy variable needed for calling ManageZoneAirUpdates
 
     // FLOW:
     if (ResimExt) {

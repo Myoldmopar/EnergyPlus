@@ -128,14 +128,14 @@ namespace HybridEvapCoolingModel {
         BLOCK_HEADER_OFFSET_Number = 6;
     }
 
-    bool CMode::InitializeOutdoorAirTemperatureConstraints(Real64 min, Real64 max)
+    bool CMode::InitializeOutdoorAirTemperatureConstraints(Nandle min, Nandle max)
     {
         // note If this field is blank, there should be no lower constraint on outside air temperature
         Minimum_Outdoor_Air_Temperature = min;
         Maximum_Outdoor_Air_Temperature = max;
         return true;
     }
-    bool CMode::InitializeOutdoorAirHumidityRatioConstraints(Real64 min, Real64 max)
+    bool CMode::InitializeOutdoorAirHumidityRatioConstraints(Nandle min, Nandle max)
     {
         // minimum 0.00 maximum 0.10, units kgWater / kgDryAir
         // note Mode0 will not be considerd when outside air absolute humidity is below the value in this field.
@@ -145,7 +145,7 @@ namespace HybridEvapCoolingModel {
         Maximum_Outdoor_Air_Humidity_Ratio = max;
         return true;
     }
-    bool CMode::InitializeOutdoorAirRelativeHumidityConstraints(Real64 min, Real64 max)
+    bool CMode::InitializeOutdoorAirRelativeHumidityConstraints(Nandle min, Nandle max)
     {
         // minimum 0.00,maximum 100.00, units percent, Mode0 will not be considered when the outside air relative humidity is below the value in this
         // field.
@@ -155,7 +155,7 @@ namespace HybridEvapCoolingModel {
         Maximum_Outdoor_Air_Relative_Humidity = max;
         return true;
     }
-    bool CMode::InitializeReturnAirTemperatureConstraints(Real64 min, Real64 max)
+    bool CMode::InitializeReturnAirTemperatureConstraints(Nandle min, Nandle max)
     {
         // will not be considered when the return air temperature is below the value in this field.
         // If this field is blank, there will be no lower constraint on return air temperature
@@ -163,7 +163,7 @@ namespace HybridEvapCoolingModel {
         Maximum_Return_Air_Temperature = max;
         return true;
     }
-    bool CMode::InitializeReturnAirHumidityRatioConstraints(Real64 min, Real64 max)
+    bool CMode::InitializeReturnAirHumidityRatioConstraints(Nandle min, Nandle max)
     {
         // minimum 0.00 maximum 0.10, units kgWater / kgDryAir
         // note Mode0 will not be considerd when outside air absolute humidity is below the value in this field.
@@ -173,7 +173,7 @@ namespace HybridEvapCoolingModel {
         Maximum_Return_Air_Humidity_Ratio = max;
         return true;
     }
-    bool CMode::InitializeReturnAirRelativeHumidityConstraints(Real64 min, Real64 max)
+    bool CMode::InitializeReturnAirRelativeHumidityConstraints(Nandle min, Nandle max)
     {
         // minimum 0.00,maximum 100.00, units percent, Mode0 will not be considered when the outside air relative humidity is below the value in this
         // field.
@@ -183,7 +183,7 @@ namespace HybridEvapCoolingModel {
         Maximum_Return_Air_Relative_Humidity = max;
         return true;
     }
-    bool CMode::InitializeOSAFConstraints(Real64 minOSAF, Real64 maxOSAF)
+    bool CMode::InitializeOSAFConstraints(Nandle minOSAF, Nandle maxOSAF)
     {
         // minimum 0.00, maximum 1.00, Outdoor air fractions below this value will not be considered.
         // If this field is blank, the lower constraint on outside air fraction will be 0.00,default 0.10
@@ -191,7 +191,7 @@ namespace HybridEvapCoolingModel {
         Max_OAF = maxOSAF;
         return true;
     }
-    bool CMode::InitializeMsaRatioConstraints(Real64 minMsa, Real64 maxMsa)
+    bool CMode::InitializeMsaRatioConstraints(Nandle minMsa, Nandle maxMsa)
     {
         // minimum 0.00, maximum 1.00, Supply air mass flow rate ratios below this value will not be considered.
         // Supply air mass flow rate ratio describes supply air mass flow rate as a fraction of mass flow rate associated with the value in field :
@@ -207,7 +207,7 @@ namespace HybridEvapCoolingModel {
         else
             return false;
     }
-    Real64 CMode::CalculateCurveVal(Real64 Tosa, Real64 Wosa, Real64 Tra, Real64 Wra, Real64 Msa, Real64 OSAF, int curveType)
+    Nandle CMode::CalculateCurveVal(Nandle Tosa, Nandle Wosa, Nandle Tra, Nandle Wra, Nandle Msa, Nandle OSAF, int curveType)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -237,7 +237,7 @@ namespace HybridEvapCoolingModel {
         // na
 
         // Using/Aliasing
-        Real64 Y_val = 0;
+        Nandle Y_val = 0;
 
         switch (curveType) {
         case TEMP_CURVE:
@@ -361,7 +361,7 @@ namespace HybridEvapCoolingModel {
         }
     }
 
-    bool CMode::GenerateSolutionSpace(Real64 ResolutionMsa, Real64 ResolutionOSA)
+    bool CMode::GenerateSolutionSpace(Nandle ResolutionMsa, Nandle ResolutionOSA)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -385,19 +385,19 @@ namespace HybridEvapCoolingModel {
         // na
 
         // Using/Aliasing
-        Real64 deltaMsa = Max_Msa - Min_Msa;
-        Real64 deltaOAF = Max_OAF - Min_OAF;
+        Nandle deltaMsa = Max_Msa - Min_Msa;
+        Nandle deltaOAF = Max_OAF - Min_OAF;
         if (deltaMsa < ResolutionMsa) {
             deltaMsa = ResolutionMsa;
         }
         if (deltaOAF < ResolutionOSA) {
             deltaOAF = ResolutionOSA;
         }
-        Real64 Msastep_size = (deltaMsa * ResolutionMsa);
-        Real64 OAFsteps_size = (deltaOAF * ResolutionOSA);
+        Nandle Msastep_size = (deltaMsa * ResolutionMsa);
+        Nandle OAFsteps_size = (deltaOAF * ResolutionOSA);
 
-        for (Real64 Msa_val = Max_Msa; Msa_val >= Min_Msa; Msa_val = Msa_val - Msastep_size) {
-            for (Real64 OAF_val = Max_OAF; OAF_val >= Min_OAF; OAF_val = OAF_val - OAFsteps_size) {
+        for (Nandle Msa_val = Max_Msa; Msa_val >= Min_Msa; Msa_val = Msa_val - Msastep_size) {
+            for (Nandle OAF_val = Max_OAF; OAF_val >= Min_OAF; OAF_val = OAF_val - OAFsteps_size) {
                 sol.AddItem(Msa_val, OAF_val);
             }
         }
@@ -405,7 +405,7 @@ namespace HybridEvapCoolingModel {
     }
     bool CMode::ValidateArrays(Array1D_string Alphas,
                                Array1D_string EP_UNUSED(cAlphaFields),
-                               Array1D<Real64> Numbers,
+                               Array1D<Nandle> Numbers,
                                Array1D_string EP_UNUSED(cNumericFields),
                                std::string EP_UNUSED(cCurrentModuleObject))
     {
@@ -446,7 +446,7 @@ namespace HybridEvapCoolingModel {
 
     bool Model::ParseMode(Array1D_string Alphas,
                           Array1D_string cAlphaFields,
-                          Array1D<Real64> Numbers,
+                          Array1D<Nandle> Numbers,
                           Array1D_string cNumericFields,
                           Array1D<bool> lAlphaBlanks,
                           std::string cCurrentModuleObject)
@@ -467,10 +467,10 @@ namespace HybridEvapCoolingModel {
 
     bool CMode::ParseMode(int ModeCounter,
                           std::vector<CMode> *OperatingModes,
-                          Real64 ScalingFactor,
+                          Nandle ScalingFactor,
                           Array1D_string Alphas,
                           Array1D_string cAlphaFields,
-                          Array1D<Real64> Numbers,
+                          Array1D<Nandle> Numbers,
                           Array1D_string cNumericFields,
                           Array1D<bool> lAlphaBlanks,
                           std::string cCurrentModuleObject)
@@ -731,7 +731,7 @@ namespace HybridEvapCoolingModel {
         return ErrorsFound;
     }
 
-    bool CMode::MeetsOAEnvConstraints(Real64 Tosa, Real64 Wosa, Real64 RHosa)
+    bool CMode::MeetsOAEnvConstraints(Nandle Tosa, Nandle Wosa, Nandle RHosa)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -772,7 +772,7 @@ namespace HybridEvapCoolingModel {
         }
     }
 
-    bool Model::MeetsSupplyAirTOC(Real64 Tsupplyair)
+    bool Model::MeetsSupplyAirTOC(Nandle Tsupplyair)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -791,8 +791,8 @@ namespace HybridEvapCoolingModel {
         // na
 
         // Using/Aliasing
-        Real64 MinSAT = 10;
-        Real64 MaxSAT = 20;
+        Nandle MinSAT = 10;
+        Nandle MaxSAT = 20;
         if (TsaMin_schedule_pointer > 0) {
             MinSAT = GetCurrentScheduleValue(TsaMin_schedule_pointer);
         }
@@ -803,7 +803,7 @@ namespace HybridEvapCoolingModel {
         return true;
     }
 
-    bool Model::MeetsSupplyAirRHOC(Real64 SupplyW)
+    bool Model::MeetsSupplyAirRHOC(Nandle SupplyW)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -822,8 +822,8 @@ namespace HybridEvapCoolingModel {
         // na
 
         // Using/Aliasing
-        Real64 MinRH = 0;
-        Real64 MaxRH = 1;
+        Nandle MinRH = 0;
+        Nandle MaxRH = 1;
         if (RHsaMin_schedule_pointer > 0) {
             MinRH = GetCurrentScheduleValue(RHsaMin_schedule_pointer);
         }
@@ -980,22 +980,22 @@ namespace HybridEvapCoolingModel {
         Initialized = true;
     }
 
-    Real64 Model::CheckVal_W(Real64 W, Real64 T, Real64 P)
+    Nandle Model::CheckVal_W(Nandle W, Nandle T, Nandle P)
     {
         // P must be in pascals NOT kPa
-        Real64 OutletRHtest = PsyRhFnTdbWPb(T, W, P); // could also use outlet pressure instead of fixed
-        Real64 OutletW =
+        Nandle OutletRHtest = PsyRhFnTdbWPb(T, W, P); // could also use outlet pressure instead of fixed
+        Nandle OutletW =
             PsyWFnTdbRhPb(T, OutletRHtest, P, "Humidity ratio exceeded realistic range error called in " + Name + ", check performance curve");
         return OutletW;
     }
-    Real64 Model::CheckVal_T(Real64 T)
+    Nandle Model::CheckVal_T(Nandle T)
     {
         if ((T > 100) || (T < 0)) {
             ShowWarningError("Supply air temperature exceeded realistic range error called in " + Name + ", check performance curve");
         }
         return T;
     }
-    bool Model::SetStandByMode(CMode Mode0, Real64 Tosa, Real64 Wosa, Real64 Tra, Real64 Wra)
+    bool Model::SetStandByMode(CMode Mode0, Nandle Tosa, Nandle Wosa, Nandle Tra, Nandle Wra)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -1016,8 +1016,8 @@ namespace HybridEvapCoolingModel {
         // if the map of the solution space looks valid then populate the class member oStandBy (CSetting) with the settings data (what OSAF it runs
         // at, and how much power it uses etc.
         if (Mode0.sol.MassFlowRatio.size() > 0) {
-            Real64 MsaRatio = Mode0.sol.MassFlowRatio[0];
-            Real64 OSAF = Mode0.sol.OutdoorAirFraction[0];
+            Nandle MsaRatio = Mode0.sol.MassFlowRatio[0];
+            Nandle OSAF = Mode0.sol.OutdoorAirFraction[0];
 
             oStandBy.ScaledSupply_Air_Mass_Flow_Rate = MsaRatio * ScaledSystemMaximumSupplyAirMassFlowRate;
             oStandBy.Unscaled_Supply_Air_Mass_Flow_Rate = oStandBy.ScaledSupply_Air_Mass_Flow_Rate / ScalingFactor;
@@ -1038,7 +1038,7 @@ namespace HybridEvapCoolingModel {
         return false;
     }
 
-    Real64 Model::CalculateTimeStepAverage(SYSTEMOUTPUTS val)
+    Nandle Model::CalculateTimeStepAverage(SYSTEMOUTPUTS val)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -1068,9 +1068,9 @@ namespace HybridEvapCoolingModel {
         // na
 
         // Using/Aliasing
-        Real64 averagedVal = 0;
-        Real64 MassFlowDependentDenominator = 0;
-        Real64 value = 0;
+        Nandle averagedVal = 0;
+        Nandle MassFlowDependentDenominator = 0;
+        Nandle value = 0;
 
         for (auto &thisOperatingSettings : CurrentOperatingSettings) {
             switch (val) {
@@ -1111,7 +1111,7 @@ namespace HybridEvapCoolingModel {
                 value = thisOperatingSettings.Mixed_Air_W * thisOperatingSettings.ScaledSupply_Air_Mass_Flow_Rate;
                 break;
             }
-            Real64 part_run = thisOperatingSettings.Runtime_Fraction;
+            Nandle part_run = thisOperatingSettings.Runtime_Fraction;
             averagedVal = averagedVal + value * part_run;
             MassFlowDependentDenominator = thisOperatingSettings.ScaledSupply_Air_Mass_Flow_Rate * part_run + MassFlowDependentDenominator;
         }
@@ -1159,14 +1159,14 @@ namespace HybridEvapCoolingModel {
         return averagedVal;
     }
 
-    Real64 Model::CalculatePartRuntimeFraction(Real64 MinOA_Msa,
-                                               Real64 Mvent,
-                                               Real64 RequestedCoolingLoad,
-                                               Real64 RequestedHeatingLoad,
-                                               Real64 SensibleRoomORZone,
-                                               Real64 RequestedDehumidificationLoad,
-                                               Real64 RequestedMoistureLoad,
-                                               Real64 LatentRoomORZone)
+    Nandle Model::CalculatePartRuntimeFraction(Nandle MinOA_Msa,
+                                               Nandle Mvent,
+                                               Nandle RequestedCoolingLoad,
+                                               Nandle RequestedHeatingLoad,
+                                               Nandle SensibleRoomORZone,
+                                               Nandle RequestedDehumidificationLoad,
+                                               Nandle RequestedMoistureLoad,
+                                               Nandle LatentRoomORZone)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -1189,7 +1189,7 @@ namespace HybridEvapCoolingModel {
         // na
 
         // Using/Aliasing
-        Real64 PLHumidRatio, PLDehumidRatio, PLVentRatio, PLSensibleCoolingRatio, PLSensibleHeatingRatio, PartRuntimeFraction;
+        Nandle PLHumidRatio, PLDehumidRatio, PLVentRatio, PLSensibleCoolingRatio, PLSensibleHeatingRatio, PartRuntimeFraction;
         PLHumidRatio = PLDehumidRatio = PLVentRatio = PLSensibleCoolingRatio = PLSensibleHeatingRatio = 0;
 
         if (Mvent > 0) {
@@ -1308,13 +1308,13 @@ namespace HybridEvapCoolingModel {
         bool DidWeMeetHumidificaiton = false;
         bool DidWePartlyMeetLoad = false;
         int modenumber = 0;
-        Real64 OptimalSetting_RunFractionTotalFuel = IMPLAUSIBLE_POWER;
-        Real64 Tma;
-        Real64 Wma;
-        Real64 Hsa;
-        Real64 Hma;
-        Real64 PreviousMaxiumConditioningOutput = 0;
-        Real64 PreviousMaxiumHumidOrDehumidOutput = 0;
+        Nandle OptimalSetting_RunFractionTotalFuel = IMPLAUSIBLE_POWER;
+        Nandle Tma;
+        Nandle Wma;
+        Nandle Hsa;
+        Nandle Hma;
+        Nandle PreviousMaxiumConditioningOutput = 0;
+        Nandle PreviousMaxiumHumidOrDehumidOutput = 0;
         std::string ObjectID = Name.c_str();
         int size = CurrentOperatingSettings.size();
         CSetting empty_setting;
@@ -1333,8 +1333,8 @@ namespace HybridEvapCoolingModel {
             return -1;
         } // because it should be fractional, this should only really be possible if its called from a unit test
 
-        Real64 Wosa = PsyWFnTdbRhPb(StepIns.Tosa, StepIns.RHosa, OutBaroPress);
-        Real64 Wra = PsyWFnTdbRhPb(StepIns.Tra, StepIns.RHra, InletPressure);
+        Nandle Wosa = PsyWFnTdbRhPb(StepIns.Tosa, StepIns.RHosa, OutBaroPress);
+        Nandle Wra = PsyWFnTdbRhPb(StepIns.Tra, StepIns.RHra, InletPressure);
         bool EnvironmentConditionsMet, EnvironmentConditionsMetOnce, MinVRMet, SAT_OC_Met, SAT_OC_MetOnce, SARH_OC_Met, SAHR_OC_MetOnce;
         EnvironmentConditionsMetOnce = SAT_OC_Met = SAT_OC_MetOnce = SARH_OC_Met = SAHR_OC_MetOnce = false;
 
@@ -1371,14 +1371,14 @@ namespace HybridEvapCoolingModel {
                     // Supply Air Mass Flow Rate(kg / s)
                     // Outdoor Air Fraction(0 - 1)
 
-                    Real64 MsaRatio =
+                    Nandle MsaRatio =
                         Mode.sol.MassFlowRatio[point_number]; // fractions of rated mass flow rate, so for some modes this might be low but others hi
-                    Real64 OSAF = Mode.sol.OutdoorAirFraction[point_number];
-                    Real64 ScaledMsa = ScaledSystemMaximumSupplyAirMassFlowRate * MsaRatio;
-                    Real64 UnscaledMsa = ScaledSystemMaximumSupplyAirMassFlowRate / ScalingFactor;
-                    Real64 Supply_Air_Ventilation_Volume = 0;
+                    Nandle OSAF = Mode.sol.OutdoorAirFraction[point_number];
+                    Nandle ScaledMsa = ScaledSystemMaximumSupplyAirMassFlowRate * MsaRatio;
+                    Nandle UnscaledMsa = ScaledSystemMaximumSupplyAirMassFlowRate / ScalingFactor;
+                    Nandle Supply_Air_Ventilation_Volume = 0;
                     // Calculate the ventilation mass flow rate
-                    Real64 Mvent = ScaledMsa * OSAF;
+                    Nandle Mvent = ScaledMsa * OSAF;
 
                     if (StdRhoAir > 1) {
                         Supply_Air_Ventilation_Volume = Mvent / StdRhoAir;
@@ -1450,9 +1450,9 @@ namespace HybridEvapCoolingModel {
 
         for (auto &thisSetting : Settings) {
             // Calculate the delta H
-            Real64 OSAF = thisSetting.Outdoor_Air_Fraction;
-            Real64 UnscaledMsa = thisSetting.Unscaled_Supply_Air_Mass_Flow_Rate;
-            Real64 ScaledMsa = thisSetting.ScaledSupply_Air_Mass_Flow_Rate;
+            Nandle OSAF = thisSetting.Outdoor_Air_Fraction;
+            Nandle UnscaledMsa = thisSetting.Unscaled_Supply_Air_Mass_Flow_Rate;
+            Nandle ScaledMsa = thisSetting.ScaledSupply_Air_Mass_Flow_Rate;
 
             // send the scaled Msa to calculate energy and the unscaled for sending to curves.
             Tsa = thisSetting.SupplyAirTemperature;
@@ -1464,13 +1464,13 @@ namespace HybridEvapCoolingModel {
 
             Hma = PsyHFnTdbW(Tma, Wma);
             // Calculate Enthalpy of return air
-            Real64 Hra = PsyHFnTdbW(StepIns.Tra, Wra);
+            Nandle Hra = PsyHFnTdbW(StepIns.Tra, Wra);
 
             Hsa = PsyHFnTdbW(Tsa, Wsa);
 
-            Real64 SupplyAirCp = PsyCpAirFnW(Wsa);   // J/degreesK.kg
-            Real64 ReturnAirCP = PsyCpAirFnW(Wra);   // J/degreesK.kg
-            Real64 OutdoorAirCP = PsyCpAirFnW(Wosa); // J/degreesK.kg
+            Nandle SupplyAirCp = PsyCpAirFnW(Wsa);   // J/degreesK.kg
+            Nandle ReturnAirCP = PsyCpAirFnW(Wra);   // J/degreesK.kg
+            Nandle OutdoorAirCP = PsyCpAirFnW(Wosa); // J/degreesK.kg
 
             // Calculations below of system cooling and heating capacity are ultimately reassessed when the resultant part runtime fraction is
             // assessed. However its valuable that they are calculated here to at least provide a check.
@@ -1478,25 +1478,25 @@ namespace HybridEvapCoolingModel {
             // System Sensible Cooling{ W } = m'SA {kg/s} * 0.5*(cpRA + OSAF*(cpOSA-cpRA) + cpSA) {kJ/kg-C} * (T_RA + OSAF*(T_OSA - T_RA)  - T_SA)
             // System Latent Cooling{ W } = m'SAdryair {kg/s} * L {kJ/kgWater} * (HR_RA + OSAF *(HR_OSA - HR_RA) - HR_SA) {kgWater/kgDryAir}
             // System Total Cooling{ W } = m'SAdryair {kg/s} * (h_RA + OSAF*(h_OSA - h_RA) - h_SA) {kJ/kgDryAir}
-            Real64 SystemCp = ReturnAirCP + OSAF * (OutdoorAirCP - ReturnAirCP) + SupplyAirCp; // J/degreesK.kg
-            Real64 SensibleSystem = ScaledMsa * 0.5 * SystemCp * (Tma - Tsa);           // W dynamic cp
-            Real64 MsaDry = ScaledMsa * (1 - Wsa);
-            Real64 LambdaSa = Psychrometrics::PsyHfgAirFnWTdb(0, Tsa);
-            Real64 LatentSystem = LambdaSa * MsaDry * (Wma - Wsa); // W
+            Nandle SystemCp = ReturnAirCP + OSAF * (OutdoorAirCP - ReturnAirCP) + SupplyAirCp; // J/degreesK.kg
+            Nandle SensibleSystem = ScaledMsa * 0.5 * SystemCp * (Tma - Tsa);           // W dynamic cp
+            Nandle MsaDry = ScaledMsa * (1 - Wsa);
+            Nandle LambdaSa = Psychrometrics::PsyHfgAirFnWTdb(0, Tsa);
+            Nandle LatentSystem = LambdaSa * MsaDry * (Wma - Wsa); // W
                                                                    // Total system cooling
             thisSetting.TotalSystem = (Hma - Hsa) * ScaledMsa;
             // Perform latent check
-            // Real64 latentCheck = TotalSystem - SensibleSystem;
+            // Nandle latentCheck = TotalSystem - SensibleSystem;
 
             // Zone Sensible Cooling{ W } = m'SA {kg/s} * 0.5*(cpRA+cpSA) {kJ/kg-C} * (T_RA - T_SA) {C}
             // Zone Latent Cooling{ W } = m'SAdryair {kg/s} * L {kJ/kgWater} * (HR_RA - HR_SA) {kgWater/kgDryAir}
             // Zone Total Cooling{ W } = m'SAdryair {kg/s} * (h_RA - h_SA) {kJ/kgDryAir}
-            Real64 SensibleRoomORZone = ScaledMsa * 0.5 * (SupplyAirCp + ReturnAirCP) * (StepIns.Tra - Tsa); // W dynamic cp
-            Real64 latentRoomORZone = LambdaSa * MsaDry * (Wra - Wsa);                                              // W
+            Nandle SensibleRoomORZone = ScaledMsa * 0.5 * (SupplyAirCp + ReturnAirCP) * (StepIns.Tra - Tsa); // W dynamic cp
+            Nandle latentRoomORZone = LambdaSa * MsaDry * (Wra - Wsa);                                              // W
                                                                                                                     // Total room cooling
-            Real64 TotalRoomORZone = (Hra - Hsa) * ScaledMsa;                                                // W
+            Nandle TotalRoomORZone = (Hra - Hsa) * ScaledMsa;                                                // W
                                                                                                                     // Perform latent check
-            // Real64 latentRoomORZoneCheck = TotalRoomORZone - SensibleRoomORZone;
+            // Nandle latentRoomORZoneCheck = TotalRoomORZone - SensibleRoomORZone;
 
             thisSetting.SensibleSystem = SensibleSystem;
             thisSetting.LatentSystem = LatentSystem;
@@ -1517,11 +1517,11 @@ namespace HybridEvapCoolingModel {
 
             bool Humidification_load_met = false;
 
-            Real64 RequestedDeHumdificationLoad = StepIns.ZoneDehumidificationLoad;
+            Nandle RequestedDeHumdificationLoad = StepIns.ZoneDehumidificationLoad;
             if (DehumidificationRequested && latentRoomORZone > RequestedDeHumdificationLoad) {
                 Humidification_load_met = true;
             }
-            Real64 RequestedHumdificationLoad = StepIns.ZoneMoistureLoad;
+            Nandle RequestedHumdificationLoad = StepIns.ZoneMoistureLoad;
             if (HumidificationRequested && latentRoomORZone < RequestedHumdificationLoad) {
                 Humidification_load_met = true;
             }
@@ -1544,7 +1544,7 @@ namespace HybridEvapCoolingModel {
                 thisSetting.oMode.CalculateCurveVal(StepIns.Tosa, Wosa, StepIns.Tra, Wra, UnscaledMsa, OSAF, WATER_USE);
 
             // Calculate partload fraction required to meet all requirements
-            Real64 PartRuntimeFraction = 0;
+            Nandle PartRuntimeFraction = 0;
             PartRuntimeFraction = CalculatePartRuntimeFraction(MinOA_Msa,
                                                                thisSetting.Supply_Air_Ventilation_Volume * StdRhoAir,
                                                                StepIns.RequestedCoolingLoad,
@@ -1554,7 +1554,7 @@ namespace HybridEvapCoolingModel {
                                                                StepIns.ZoneMoistureLoad,
                                                                latentRoomORZone); //
 
-            Real64 RunFractionTotalFuel =
+            Nandle RunFractionTotalFuel =
                 thisSetting.ElectricalPower * PartRuntimeFraction; // fraction can be above 1 meaning its not able to do it completely in a time step.
             thisSetting.Runtime_Fraction = PartRuntimeFraction;
 
@@ -1651,27 +1651,27 @@ namespace HybridEvapCoolingModel {
             }
         }
 
-        Real64 TimeElapsed = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + SysTimeElapsed;
+        Nandle TimeElapsed = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + SysTimeElapsed;
 
         // Use the elapsed time to only give a summary of warnings related to the number of Timesteps environmental conditions, or supply air
         // temperature constraints were not met for a given day. ideally there would be a clear flag that indicates "this is the last timestep of the
         // day, so report", but that doesn't seem to exist.
         if ((TimeElapsed > 24) && WarnOnceFlag && !WarmupFlag) {
             if (count_EnvironmentConditionsNotMet > 0)
-                ShowWarningError("In day " + RoundSigDigits((Real64)DayOfSim, 1) + " of simulation, " + Name.c_str() + " was unable to operate for " +
-                                 RoundSigDigits((Real64)count_EnvironmentConditionsNotMet, 1) +
+                ShowWarningError("In day " + RoundSigDigits((Nandle)DayOfSim, 1) + " of simulation, " + Name.c_str() + " was unable to operate for " +
+                                 RoundSigDigits((Nandle)count_EnvironmentConditionsNotMet, 1) +
                                  " timesteps because environment conditions were beyond the allowable operating range for any mode.");
             if (count_SAHR_OC_MetOnce > 0)
-                ShowWarningError("In day " + RoundSigDigits((Real64)DayOfSim, 1) + " of simulation, " + Name.c_str() +
-                                 " failed to meet supply air humidity ratio for " + RoundSigDigits(Real64(count_SAHR_OC_MetOnce), 1) +
+                ShowWarningError("In day " + RoundSigDigits((Nandle)DayOfSim, 1) + " of simulation, " + Name.c_str() +
+                                 " failed to meet supply air humidity ratio for " + RoundSigDigits(Nandle(count_SAHR_OC_MetOnce), 1) +
                                  " time steps. For these time steps For these time steps" + Name.c_str() + " was set to mode 0");
             if (count_SAT_OC_MetOnce > 0)
-                ShowWarningError("In day " + RoundSigDigits((Real64)DayOfSim, 1) + " of simulation, " + Name.c_str() +
-                                 " failed to meet supply air temperature constraints for " + RoundSigDigits(Real64(count_SAT_OC_MetOnce), 1) +
+                ShowWarningError("In day " + RoundSigDigits((Nandle)DayOfSim, 1) + " of simulation, " + Name.c_str() +
+                                 " failed to meet supply air temperature constraints for " + RoundSigDigits(Nandle(count_SAT_OC_MetOnce), 1) +
                                  " time steps. For these time steps For these time steps" + Name.c_str() + " was set to mode 0");
 
-            ShowWarningError("In day " + RoundSigDigits((Real64)DayOfSim, 1) + " of simulation, " + Name.c_str() +
-                             " failed to  satisfy sensible load for " + RoundSigDigits((Real64)count_DidWeNotMeetLoad, 1) +
+            ShowWarningError("In day " + RoundSigDigits((Nandle)DayOfSim, 1) + " of simulation, " + Name.c_str() +
+                             " failed to  satisfy sensible load for " + RoundSigDigits((Nandle)count_DidWeNotMeetLoad, 1) +
                              " time steps. For these time steps settings were selected to provide as much sensible cooling or heating as possible, "
                              "given other constraints.");
 
@@ -1712,7 +1712,7 @@ namespace HybridEvapCoolingModel {
         } else
             return -1;
     }
-    Real64 Model::CurrentPrimaryRuntimeFraction()
+    Nandle Model::CurrentPrimaryRuntimeFraction()
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Maxwell Dutton
@@ -1783,11 +1783,11 @@ namespace HybridEvapCoolingModel {
 
     // doStep is passed some variables that could have just used the class members, but this adds clarity about whats needed, especially helpful in
     // unit testing
-    void Model::doStep(Real64 RequestedCoolingLoad,       // in joules, cooling load as negitive
-                       Real64 RequestedHeatingLoad,       // in joules, heating load as positive
-                       Real64 OutputRequiredToHumidify,   // Load required to meet humidifying setpoint (>0 = a humidify load) [kgWater/s]
-                       Real64 OutputRequiredToDehumidify, // Load required to meet dehumidifying setpoint (<0 = a dehumidify load)  [kgWater/s]
-                       Real64 DesignMinVR)                // mass flow rate of design ventilation air kg/s
+    void Model::doStep(Nandle RequestedCoolingLoad,       // in joules, cooling load as negitive
+                       Nandle RequestedHeatingLoad,       // in joules, heating load as positive
+                       Nandle OutputRequiredToHumidify,   // Load required to meet humidifying setpoint (>0 = a humidify load) [kgWater/s]
+                       Nandle OutputRequiredToDehumidify, // Load required to meet dehumidifying setpoint (<0 = a dehumidify load)  [kgWater/s]
+                       Nandle DesignMinVR)                // mass flow rate of design ventilation air kg/s
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Spencer Dutton
@@ -1816,7 +1816,7 @@ namespace HybridEvapCoolingModel {
         // set requested loads to output variables
         RequestedLoadToHeatingSetpoint = RequestedHeatingLoad;
         RequestedLoadToCoolingSetpoint = RequestedCoolingLoad;
-        Real64 LambdaRa = Psychrometrics::PsyHfgAirFnWTdb(0, InletTemp);
+        Nandle LambdaRa = Psychrometrics::PsyHfgAirFnWTdb(0, InletTemp);
         RequestedHumdificationMass = OutputRequiredToHumidify;
         RequestedHumdificationLoad = OutputRequiredToHumidify * LambdaRa;                      // [W];
         RequestedHumdificationEnergy = OutputRequiredToHumidify * LambdaRa * TimeStepSys * SecInHour; // [j]
@@ -1842,8 +1842,8 @@ namespace HybridEvapCoolingModel {
         StepIns.ZoneDehumidificationLoad = RequestedDeHumdificationLoad;
         StepIns.MinimumOA = DesignMinVR;
         // calculate W humidity ratios for outdoor air and return air
-        Real64 Wosa = PsyWFnTdbRhPb(StepIns.Tosa, StepIns.RHosa, OutBaroPress);
-        Real64 Wra = PsyWFnTdbRhPb(StepIns.Tra, StepIns.RHra, InletPressure);
+        Nandle Wosa = PsyWFnTdbRhPb(StepIns.Tosa, StepIns.RHosa, OutBaroPress);
+        Nandle Wra = PsyWFnTdbRhPb(StepIns.Tra, StepIns.RHra, InletPressure);
         // Sets boolean values for each potential conditioning requirement;  CoolingRequested, HeatingRequested, VentilationRequested,
         // DehumidificationRequested, HumidificationRequested
         DetermineCoolingVentilationOrHumidificationNeeds(StepIns);
@@ -1880,13 +1880,13 @@ namespace HybridEvapCoolingModel {
             ErrorCode = SetOperatingSetting(StepIns);
         }
 
-        Real64 QTotZoneOut = 0;
+        Nandle QTotZoneOut = 0;
         // now class members QSensZoneOut = 0;
         // QLatentZoneOut = 0;
 
-        Real64 QTotSystemOut = 0;
-        Real64 QSensSystemOut = 0;
-        Real64 QLatentSystemOut = 0;
+        Nandle QTotSystemOut = 0;
+        Nandle QSensSystemOut = 0;
+        Nandle QLatentSystemOut = 0;
         // Even if its off or in standby we still need to continue to calculate standby loads
         // All powers are calculated in Watts amd energies in Joules
 
@@ -1901,9 +1901,9 @@ namespace HybridEvapCoolingModel {
         OutletHumRat = CheckVal_W(CalculateTimeStepAverage(SYSTEMOUTPUTS::SUPPLY_AIR_HR), OutletTemp, OutletPressure);
 
         OutletRH = PsyRhFnTdbWPb(OutletTemp, OutletHumRat, OutletPressure);
-        Real64 OperatingAverageMixedAirTemperature = CalculateTimeStepAverage(SYSTEMOUTPUTS::MIXED_AIR_TEMP);
-        Real64 OperatingMixedAirW = CalculateTimeStepAverage(SYSTEMOUTPUTS::MIXED_AIR_HR);
-        Real64 MixedAirEnthalpy = PsyHFnTdbW(OperatingAverageMixedAirTemperature, OperatingMixedAirW);
+        Nandle OperatingAverageMixedAirTemperature = CalculateTimeStepAverage(SYSTEMOUTPUTS::MIXED_AIR_TEMP);
+        Nandle OperatingMixedAirW = CalculateTimeStepAverage(SYSTEMOUTPUTS::MIXED_AIR_HR);
+        Nandle MixedAirEnthalpy = PsyHFnTdbW(OperatingAverageMixedAirTemperature, OperatingMixedAirW);
         OutletEnthalpy = PsyHFnTdbRhPb(OutletTemp, OutletRH, InletPressure);
         OutletMassFlowRate = CalculateTimeStepAverage(SYSTEMOUTPUTS::SUPPLY_MASS_FLOW);
 
@@ -1927,27 +1927,27 @@ namespace HybridEvapCoolingModel {
             // Calculate timestep average unit and system
             PrimaryMode = CurrentPrimaryMode();
             PrimaryModeRuntimeFraction = CurrentPrimaryRuntimeFraction();
-            Real64 Outletcp = PsyCpAirFnW(OutletHumRat); // J/degreesK.kg
-            Real64 Returncp = PsyCpAirFnW(Wra);          // J/degreesK.kg
-            Real64 Outdoorcp = PsyCpAirFnW(Wosa);        // J/degreesK.kg
+            Nandle Outletcp = PsyCpAirFnW(OutletHumRat); // J/degreesK.kg
+            Nandle Returncp = PsyCpAirFnW(Wra);          // J/degreesK.kg
+            Nandle Outdoorcp = PsyCpAirFnW(Wosa);        // J/degreesK.kg
             // Zone Sensible Cooling{ W } = m'SA {kg/s} * 0.5*(cpRA+cpSA) {kJ/kg-C} * (T_RA - T_SA) {C}
             // Zone Latent Cooling{ W } = m'SAdryair {kg/s} * L {kJ/kgWater} * (HR_RA - HR_SA) {kgWater/kgDryAir}
             // Zone Total Cooling{ W } = m'SAdryair {kg/s} * (h_RA - h_SA) {kJ/kgDryAir}
             QSensZoneOut = OutletMassFlowRate * 0.5 * (Returncp + Outletcp) * (StepIns.Tra - OutletTemp); // Watts
-            Real64 OutletMassFlowRateDry = OutletMassFlowRate * (1 - Wsa);
-            Real64 LambdaSa = Psychrometrics::PsyHfgAirFnWTdb(0, OutletTemp);
+            Nandle OutletMassFlowRateDry = OutletMassFlowRate * (1 - Wsa);
+            Nandle LambdaSa = Psychrometrics::PsyHfgAirFnWTdb(0, OutletTemp);
             QLatentZoneOutMass = OutletMassFlowRateDry * (InletHumRat - OutletHumRat); // Watts
             QLatentZoneOut = QLatentZoneOutMass * LambdaSa;
             QTotZoneOut = OutletMassFlowRateDry * (InletEnthalpy - OutletEnthalpy); // Watts
-            Real64 QLatentCheck = QTotZoneOut - QSensZoneOut;                       // Watts
+            Nandle QLatentCheck = QTotZoneOut - QSensZoneOut;                       // Watts
 
             // System Sensible Cooling{ W } = m'SA {kg/s} * 0.5*(cpRA + OSAF*(cpOSA-cpRA) + cpSA) {kJ/kg-C} * (T_RA + OSAF*(T_OSA - T_RA)  - T_SA)
             // System Latent Cooling{ W } = m'SAdryair {kg/s} * L {kJ/kgWater} * (HR_RA + OSAF *(HR_OSA - HR_RA) - HR_SA) {kgWater/kgDryAir}
             // System Total Cooling{ W } = m'SAdryair {kg/s} * (h_RA + OSAF*(h_OSA - h_RA) - h_SA) {kJ/kgDryAir}
 
-            Real64 SystemTimeStepCp = Returncp + averageOSAF * (Outdoorcp - Returncp) + Outletcp; // cpRA + OSAF*(cpOSA-cpRA) + cpSA //J/degreesK.kg
-            Real64 SystemTimeStepW = InletHumRat + averageOSAF * (Wosa - Wra) - OutletHumRat;     // HR_RA + OSAF *(HR_OSA - HR_RA) - HR_SA
-            Real64 SystemTimeStepT = StepIns.Tra + averageOSAF * (StepIns.Tosa - StepIns.Tra) - OutletTemp; // T_RA + OSAF *(T_OSA - T_RA) - T_SA
+            Nandle SystemTimeStepCp = Returncp + averageOSAF * (Outdoorcp - Returncp) + Outletcp; // cpRA + OSAF*(cpOSA-cpRA) + cpSA //J/degreesK.kg
+            Nandle SystemTimeStepW = InletHumRat + averageOSAF * (Wosa - Wra) - OutletHumRat;     // HR_RA + OSAF *(HR_OSA - HR_RA) - HR_SA
+            Nandle SystemTimeStepT = StepIns.Tra + averageOSAF * (StepIns.Tosa - StepIns.Tra) - OutletTemp; // T_RA + OSAF *(T_OSA - T_RA) - T_SA
             QSensSystemOut = 0.5 * SystemTimeStepCp * OutletMassFlowRate * SystemTimeStepT;                 // Watts
 
             QLatentSystemOut = LambdaSa * OutletMassFlowRateDry * SystemTimeStepW; // Watts

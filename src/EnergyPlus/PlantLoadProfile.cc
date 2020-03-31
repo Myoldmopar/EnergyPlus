@@ -128,7 +128,7 @@ namespace PlantLoadProfile {
 
     void PlantProfileData::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                     bool const EP_UNUSED(FirstHVACIteration),
-                                    Real64 &EP_UNUSED(CurLoad),
+                                    Nandle &EP_UNUSED(CurLoad),
                                     bool const EP_UNUSED(RunFlag))
     {
 
@@ -155,12 +155,12 @@ namespace PlantLoadProfile {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static std::string const RoutineName("SimulatePlantProfile");
-        Real64 DeltaTemp;
+        Nandle DeltaTemp;
 
         this->InitPlantProfile();
 
         if (this->MassFlowRate > 0.0) {
-            Real64 Cp =
+            Nandle Cp =
                 GetSpecificHeatGlycol(PlantLoop(this->WLoopNum).FluidName, this->InletTemp, PlantLoop(this->WLoopNum).FluidIndex, RoutineName);
             DeltaTemp = this->Power / (this->MassFlowRate * Cp);
         } else {
@@ -204,7 +204,7 @@ namespace PlantLoadProfile {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static std::string const RoutineName("InitPlantProfile");
-        Real64 FluidDensityInit;
+        Nandle FluidDensityInit;
         bool errFlag;
 
         // FLOW:
@@ -237,7 +237,7 @@ namespace PlantLoadProfile {
             FluidDensityInit =
                 GetDensityGlycol(PlantLoop(this->WLoopNum).FluidName, DataGlobals::InitConvTemp, PlantLoop(this->WLoopNum).FluidIndex, RoutineName);
 
-            Real64 MaxFlowMultiplier = GetScheduleMaxValue(this->FlowRateFracSchedule);
+            Nandle MaxFlowMultiplier = GetScheduleMaxValue(this->FlowRateFracSchedule);
 
             InitComponentNodes(0.0,
                                this->PeakVolFlowRate * FluidDensityInit * MaxFlowMultiplier,

@@ -116,41 +116,41 @@ namespace HVACStandAloneERV {
         int ExhaustAirFanIndex;         // index to exhaust air fan
         int ExhaustAirFanSchPtr;        // index to exhaust air fan schedule
         int ExhaustAirFanType_Num;      // paramter equivalent of fan type
-        Real64 SupplyAirVolFlow;        // volumetric flow rate through the supply side of the ERV
-        Real64 ExhaustAirVolFlow;       // volumetric flow rate through the exhaust side of the ERV
+        Nandle SupplyAirVolFlow;        // volumetric flow rate through the supply side of the ERV
+        Nandle ExhaustAirVolFlow;       // volumetric flow rate through the exhaust side of the ERV
         std::string ControllerName;     // name of the controller for the stand alone ERV
         bool ControllerNameDefined;     // controller for the stand alone ERV is defined
         int ControlledZoneNum;          // index to controlled zone for stand alone ERV
         int ControllerIndex;            // Pointer for updates by routines this module calls.
-        Real64 MaxSupAirMassFlow;       // air mass flow rate through the supply side of the ERV
-        Real64 MaxExhAirMassFlow;       // air mass flow rate through the exhaust side of the ERV
-        Real64 HighRHOAFlowRatio;       // ratio of outside air flow to max outside air flow
-        Real64 DesignSAFanVolFlowRate;  // SA fan volumetric flow rate
-        Real64 DesignEAFanVolFlowRate;  // EA fan volumetric flow rate
-        Real64 DesignHXVolFlowRate;     // HX (heat exchanger) volumetric flow rate
-        Real64 DesignSAFanMassFlowRate; // SA fan mass flow rate
-        Real64 DesignEAFanMassFlowRate; // EA fan mass flow rate
-        Real64 AirVolFlowPerFloorArea;  // Air flow rate per unit floor area, used for autosizing
-        Real64 AirVolFlowPerOccupant;   // Air flow rate per occupant, used for autosizing
+        Nandle MaxSupAirMassFlow;       // air mass flow rate through the supply side of the ERV
+        Nandle MaxExhAirMassFlow;       // air mass flow rate through the exhaust side of the ERV
+        Nandle HighRHOAFlowRatio;       // ratio of outside air flow to max outside air flow
+        Nandle DesignSAFanVolFlowRate;  // SA fan volumetric flow rate
+        Nandle DesignEAFanVolFlowRate;  // EA fan volumetric flow rate
+        Nandle DesignHXVolFlowRate;     // HX (heat exchanger) volumetric flow rate
+        Nandle DesignSAFanMassFlowRate; // SA fan mass flow rate
+        Nandle DesignEAFanMassFlowRate; // EA fan mass flow rate
+        Nandle AirVolFlowPerFloorArea;  // Air flow rate per unit floor area, used for autosizing
+        Nandle AirVolFlowPerOccupant;   // Air flow rate per occupant, used for autosizing
         int EconomizerOASchedPtr;       // schedule to modify outdoor air
         bool FlowError;                 // used for one-time warning message for flow imbalance (Init)
         int AvailStatus;
         std::string AvailManagerListName; // Name of an availability manager list object
         // report variables
-        Real64 ElecUseRate;       // total electric use rate (power) for supply/exhaust fans & generic HX parasitics [W]
-        Real64 ElecUseEnergy;     // electric energy use for supply fan, exhaust fan, and generic HX parasitics [J]
-        Real64 SensCoolingEnergy; // sensible cooling energy delivered by the ERV supply air to the zone [J]
-        Real64 SensCoolingRate;   // rate of sensible cooling delivered to the zone [W]
-        Real64 LatCoolingEnergy;  // latent cooling energy delivered by the ERV supply air to the zone [J]
-        Real64 LatCoolingRate;    // rate of latent cooling delivered to the zone [W]
-        Real64 TotCoolingEnergy;  // total cooling energy delivered by the ERV supply air to the zone [J]
-        Real64 TotCoolingRate;    // rate of total cooling delivered to the zone [W]
-        Real64 SensHeatingEnergy; // sensible heating energy delivered by the ERV supply air to the zone [J]
-        Real64 SensHeatingRate;   // rate of sensible heating delivered to the zone [W]
-        Real64 LatHeatingEnergy;  // latent heating energy delivered by the ERV supply air to the zone [J]
-        Real64 LatHeatingRate;    // rate of latent heating delivered to the zone [W]
-        Real64 TotHeatingEnergy;  // total heating energy delivered by the ERV supply air to the zone [J]
-        Real64 TotHeatingRate;    // rate of total heating delivered to the zone [W]
+        Nandle ElecUseRate;       // total electric use rate (power) for supply/exhaust fans & generic HX parasitics [W]
+        Nandle ElecUseEnergy;     // electric energy use for supply fan, exhaust fan, and generic HX parasitics [J]
+        Nandle SensCoolingEnergy; // sensible cooling energy delivered by the ERV supply air to the zone [J]
+        Nandle SensCoolingRate;   // rate of sensible cooling delivered to the zone [W]
+        Nandle LatCoolingEnergy;  // latent cooling energy delivered by the ERV supply air to the zone [J]
+        Nandle LatCoolingRate;    // rate of latent cooling delivered to the zone [W]
+        Nandle TotCoolingEnergy;  // total cooling energy delivered by the ERV supply air to the zone [J]
+        Nandle TotCoolingRate;    // rate of total cooling delivered to the zone [W]
+        Nandle SensHeatingEnergy; // sensible heating energy delivered by the ERV supply air to the zone [J]
+        Nandle SensHeatingRate;   // rate of sensible heating delivered to the zone [W]
+        Nandle LatHeatingEnergy;  // latent heating energy delivered by the ERV supply air to the zone [J]
+        Nandle LatHeatingRate;    // rate of latent heating delivered to the zone [W]
+        Nandle TotHeatingEnergy;  // total heating energy delivered by the ERV supply air to the zone [J]
+        Nandle TotHeatingRate;    // rate of total heating delivered to the zone [W]
         bool FirstPass;           // detects first time through for resetting sizing data
 
         // Default Constructor
@@ -178,8 +178,8 @@ namespace HVACStandAloneERV {
     void SimStandAloneERV(std::string const &CompName,   // name of the Stand Alone ERV unit
                           int const ZoneNum,             // number of zone being served unused1208
                           bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                          Real64 &SensLoadMet,           // net sensible load supplied by the ERV unit to the zone (W)
-                          Real64 &LatLoadMet,            // net latent load supplied by ERV unit to the zone (kg/s),
+                          Nandle &SensLoadMet,           // net sensible load supplied by the ERV unit to the zone (W)
+                          Nandle &LatLoadMet,            // net latent load supplied by ERV unit to the zone (kg/s),
                           int &CompIndex                 // pointer to correct component
     );
 
@@ -194,8 +194,8 @@ namespace HVACStandAloneERV {
 
     void CalcStandAloneERV(int const StandAloneERVNum,    // Unit index in ERV data structure
                            bool const FirstHVACIteration, // flag for 1st HVAC iteration in the time step
-                           Real64 &SensLoadMet,           // sensible zone load met by unit (W)
-                           Real64 &LatentMassLoadMet      // latent zone load met by unit (kg/s), dehumid = negative
+                           Nandle &SensLoadMet,           // sensible zone load met by unit (W)
+                           Nandle &LatentMassLoadMet      // latent zone load met by unit (kg/s), dehumid = negative
     );
 
     void ReportStandAloneERV(int const StandAloneERVNum); // number of the current Stand Alone ERV being simulated
@@ -204,7 +204,7 @@ namespace HVACStandAloneERV {
 
     //        Utility subroutines/functions for the HeatingCoil Module
 
-    Real64 GetSupplyAirFlowRate(std::string const &ERVType,     // must be "ZoneHVAC:EnergyRecoveryVentilator"
+    Nandle GetSupplyAirFlowRate(std::string const &ERVType,     // must be "ZoneHVAC:EnergyRecoveryVentilator"
                                 std::string const &ERVCtrlName, // must match a controller name in the ERV data structure
                                 bool &ErrorsFound               // set to true if problem
     );

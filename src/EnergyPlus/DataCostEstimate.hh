@@ -95,13 +95,13 @@ namespace DataCostEstimate {
         std::string ParentObjName; // parent instance in IDF
         std::string ParentObjKey;  // end use key for parent object
         int ParentObjIDinList;
-        Real64 PerSquareMeter;     // cost per square meter
-        Real64 PerEach;            // cost per each
-        Real64 PerKiloWattCap;     // cost per kW of nominal capacity
-        Real64 PerKWCapPerCOP;     // cost per kW of nominal capacity per COP
-        Real64 PerCubicMeter;      // cost per cubic meter
-        Real64 PerCubMeterPerSec;  // cost per cubic meter per second
-        Real64 PerUAinWattperDelK; // cost per (UA) in Watt/deltaK
+        Nandle PerSquareMeter;     // cost per square meter
+        Nandle PerEach;            // cost per each
+        Nandle PerKiloWattCap;     // cost per kW of nominal capacity
+        Nandle PerKWCapPerCOP;     // cost per kW of nominal capacity per COP
+        Nandle PerCubicMeter;      // cost per cubic meter
+        Nandle PerCubMeterPerSec;  // cost per cubic meter per second
+        Nandle PerUAinWattperDelK; // cost per (UA) in Watt/deltaK
         //  REAL(r64)    :: AnnualMaintFract   = 0.0d0 ! cost for annual service and non energy consumables
         //  REAL(r64)    :: MinorOverhallFract = 0.0d0 ! cost for minor overhalls
         //  INTEGER :: MinorOverhallYears = 0   ! year interval for minor overhalls
@@ -110,10 +110,10 @@ namespace DataCostEstimate {
         //  INTEGER :: LifeYears          = 0.0 ! expected life in years
         //  REAL(r64)    :: ValueAtReplacement = 0.0d0 ! residual value at end of life
         int LineNumber;      // number of line item in detail list
-        Real64 Qty;          // quantity in calculations (can be input)
+        Nandle Qty;          // quantity in calculations (can be input)
         std::string Units;   // Reported units
-        Real64 ValuePer;     // Cost used in final calculation
-        Real64 LineSubTotal; // line item total  Qty * ValuePer
+        Nandle ValuePer;     // Cost used in final calculation
+        Nandle LineSubTotal; // line item total  Qty * ValuePer
 
         // Default Constructor
         CostLineItemStruct()
@@ -126,15 +126,15 @@ namespace DataCostEstimate {
     struct CostAdjustmentStruct
     {
         // Members
-        Real64 LineItemTot;        // = 0.0 ! holds total from line item cost calculations
-        Real64 MiscCostperSqMeter; // = 0.0 ! holds user-defined constant cost model
-        Real64 DesignFeeFrac;      // = 0.0 ! holds user-defined fraction for design fees
-        Real64 ContractorFeeFrac;  // = 0.0 ! holds user-defined fraction for contractor fees
-        Real64 ContingencyFrac;    // = 0.0 ! holds user-defined fraction for contingencies
-        Real64 BondCostFrac;       // = 0.0 ! holds user-defined fraction for bonding costs
-        Real64 CommissioningFrac;  // = 0.0 ! holds user-defined fraction for commissioning costs
-        Real64 RegionalModifier;   // = 1.0 ! holds user-defined multiplier to account for regional diffs
-        Real64 GrandTotal;         // = 0.0 ! the Grand Total of all line items plus all other costs
+        Nandle LineItemTot;        // = 0.0 ! holds total from line item cost calculations
+        Nandle MiscCostperSqMeter; // = 0.0 ! holds user-defined constant cost model
+        Nandle DesignFeeFrac;      // = 0.0 ! holds user-defined fraction for design fees
+        Nandle ContractorFeeFrac;  // = 0.0 ! holds user-defined fraction for contractor fees
+        Nandle ContingencyFrac;    // = 0.0 ! holds user-defined fraction for contingencies
+        Nandle BondCostFrac;       // = 0.0 ! holds user-defined fraction for bonding costs
+        Nandle CommissioningFrac;  // = 0.0 ! holds user-defined fraction for commissioning costs
+        Nandle RegionalModifier;   // = 1.0 ! holds user-defined multiplier to account for regional diffs
+        Nandle GrandTotal;         // = 0.0 ! the Grand Total of all line items plus all other costs
 
         // Default Constructor
         CostAdjustmentStruct()
@@ -142,15 +142,15 @@ namespace DataCostEstimate {
         }
 
         // Member Constructor
-        CostAdjustmentStruct(Real64 const LineItemTot,        // = 0.0 ! holds total from line item cost calculations
-                             Real64 const MiscCostperSqMeter, // = 0.0 ! holds user-defined constant cost model
-                             Real64 const DesignFeeFrac,      // = 0.0 ! holds user-defined fraction for design fees
-                             Real64 const ContractorFeeFrac,  // = 0.0 ! holds user-defined fraction for contractor fees
-                             Real64 const ContingencyFrac,    // = 0.0 ! holds user-defined fraction for contingencies
-                             Real64 const BondCostFrac,       // = 0.0 ! holds user-defined fraction for bonding costs
-                             Real64 const CommissioningFrac,  // = 0.0 ! holds user-defined fraction for commissioning costs
-                             Real64 const RegionalModifier,   // = 1.0 ! holds user-defined multiplier to account for regional diffs
-                             Real64 const GrandTotal          // = 0.0 ! the Grand Total of all line items plus all other costs
+        CostAdjustmentStruct(Nandle const LineItemTot,        // = 0.0 ! holds total from line item cost calculations
+                             Nandle const MiscCostperSqMeter, // = 0.0 ! holds user-defined constant cost model
+                             Nandle const DesignFeeFrac,      // = 0.0 ! holds user-defined fraction for design fees
+                             Nandle const ContractorFeeFrac,  // = 0.0 ! holds user-defined fraction for contractor fees
+                             Nandle const ContingencyFrac,    // = 0.0 ! holds user-defined fraction for contingencies
+                             Nandle const BondCostFrac,       // = 0.0 ! holds user-defined fraction for bonding costs
+                             Nandle const CommissioningFrac,  // = 0.0 ! holds user-defined fraction for commissioning costs
+                             Nandle const RegionalModifier,   // = 1.0 ! holds user-defined multiplier to account for regional diffs
+                             Nandle const GrandTotal          // = 0.0 ! the Grand Total of all line items plus all other costs
                              )
             : LineItemTot(LineItemTot), MiscCostperSqMeter(MiscCostperSqMeter), DesignFeeFrac(DesignFeeFrac), ContractorFeeFrac(ContractorFeeFrac),
               ContingencyFrac(ContingencyFrac), BondCostFrac(BondCostFrac), CommissioningFrac(CommissioningFrac), RegionalModifier(RegionalModifier),

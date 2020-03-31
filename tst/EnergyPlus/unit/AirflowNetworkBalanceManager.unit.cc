@@ -2255,7 +2255,7 @@ TEST_F(EnergyPlusFixture, TestAFNPressureStat)
     // Read AirflowNetwork inputs
     GetAirflowNetworkInput(OutputFiles::getSingleton());
 
-    Real64 PressureSet = 0.5;
+    Nandle PressureSet = 0.5;
 
     Schedule(UtilityRoutines::FindItemInList("PRESSURE SETPOINT SCHEDULE", Schedule({1, NumSchedules}))).CurrentValue =
         PressureSet; // Pressure setpoint
@@ -4441,7 +4441,7 @@ TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AFNUserDefinedDuctViewFac
     EXPECT_EQ(AirflowNetwork::AirflowNetworkLinkageViewFactorData(1).LinkageSurfaceData(5).SurfaceName, "WEST WALL ATTIC");
     EXPECT_EQ(AirflowNetwork::AirflowNetworkLinkageViewFactorData(1).LinkageSurfaceData(5).ViewFactor, 0.02052);
 
-    Real64 const tol = 0.01;
+    Nandle const tol = 0.01;
 
     // Outside convection coefficients
     // Calculate convection resistance given a convection coefficient
@@ -4473,7 +4473,7 @@ TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AFNUserDefinedDuctViewFac
 TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirThermConductivity)
 {
 
-    Real64 const tol = 0.00001;
+    Nandle const tol = 0.00001;
 
     EXPECT_NEAR(AirflowNetwork::airThermConductivity(-30), 0.02212, tol);
     EXPECT_NEAR(AirflowNetwork::airThermConductivity(-20), 0.02212, tol);
@@ -4488,7 +4488,7 @@ TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirThermConductivity)
 TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirDynamicVisc)
 {
 
-    Real64 const tol = 0.000001;
+    Nandle const tol = 0.000001;
 
     EXPECT_NEAR(AirflowNetwork::airDynamicVisc(-30), 1.635e-5, tol);
     EXPECT_NEAR(AirflowNetwork::airDynamicVisc(-20), 1.635e-5, tol);
@@ -4503,7 +4503,7 @@ TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirDynamicVisc)
 TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirKinematicVisc)
 {
 
-    Real64 const tol = 0.000001;
+    Nandle const tol = 0.000001;
 
     EXPECT_NEAR(AirflowNetwork::airKinematicVisc(-30, 0.001, 101000), 1.169e-5, tol);
     EXPECT_NEAR(AirflowNetwork::airKinematicVisc(-20, 0.001, 101000), 1.169e-5, tol);
@@ -4518,7 +4518,7 @@ TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirKinematicVisc)
 TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirThermalDiffusivity)
 {
 
-    Real64 const tol = 0.000001;
+    Nandle const tol = 0.000001;
 
     EXPECT_NEAR(AirflowNetwork::airThermalDiffusivity(-30, 0.001, 101000), 1.578e-5, tol);
     EXPECT_NEAR(AirflowNetwork::airThermalDiffusivity(-20, 0.001, 101000), 1.578e-5, tol);
@@ -4533,7 +4533,7 @@ TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirThermalDiffusivity)
 TEST_F(EnergyPlusFixture, AirflowNetworkBalanceManager_AirPrandtl)
 {
 
-    Real64 const tol = 0.0001;
+    Nandle const tol = 0.0001;
 
     EXPECT_NEAR(AirflowNetwork::airPrandtl(-30, 0.001, 101000), 0.7362, tol);
     EXPECT_NEAR(AirflowNetwork::airPrandtl(-20, 0.001, 101000), 0.7362, tol);
@@ -4626,7 +4626,7 @@ TEST_F(EnergyPlusFixture, TestWindPressureTable)
     DataEnvironment::SiteTempGradient = 0.0; // Disconnect z from testing
 
     // Make sure we can compute the right density
-    Real64 rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho);
     // CalcWindPressure(MultizoneExternalNodeData(i).curve, 1
     //	Vref, 1
@@ -4634,12 +4634,12 @@ TEST_F(EnergyPlusFixture, TestWindPressureTable)
     // MultizoneExternalNodeData(i).azimuth, 0
     // MultizoneExternalNodeData(i).symmetricCurve, MultizoneExternalNodeData(i).useRelativeAngle);
     // Compute wind pressure with current defaults
-    Real64 windSpeed = 1.0;
-    Real64 dryBulb = DataEnvironment::OutDryBulbTempAt(10.0);
-    Real64 azimuth = 0.0;
-    Real64 windDir = DataEnvironment::WindDir;
-    Real64 humRat = DataEnvironment::OutHumRat;
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(1, false, false, azimuth, windSpeed, windDir, dryBulb, humRat);
+    Nandle windSpeed = 1.0;
+    Nandle dryBulb = DataEnvironment::OutDryBulbTempAt(10.0);
+    Nandle azimuth = 0.0;
+    Nandle windDir = DataEnvironment::WindDir;
+    Nandle humRat = DataEnvironment::OutHumRat;
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(1, false, false, azimuth, windSpeed, windDir, dryBulb, humRat);
     EXPECT_DOUBLE_EQ(0.54 * 0.5 * 1.1841123742118911, p);
     // Test on an east wall, which has a relative angle of 15 (for wind direction 105)
     azimuth = 90.0;
@@ -4707,18 +4707,18 @@ TEST_F(EnergyPlusFixture, TestWPCValue)
     DataEnvironment::OutHumRat = 0.0;        // Dry air only
     DataEnvironment::SiteTempGradient = 0.0; // Disconnect z from testing
 
-    Real64 windSpeed = 1.0;
-    Real64 dryBulb = DataEnvironment::OutDryBulbTempAt(10.0);
-    Real64 azimuth = 0.0;
-    Real64 windDir = DataEnvironment::WindDir;
-    Real64 humRat = DataEnvironment::OutHumRat;
+    Nandle windSpeed = 1.0;
+    Nandle dryBulb = DataEnvironment::OutDryBulbTempAt(10.0);
+    Nandle azimuth = 0.0;
+    Nandle windDir = DataEnvironment::WindDir;
+    Nandle humRat = DataEnvironment::OutHumRat;
 
     // Make sure we can compute the right density
-    Real64 rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho);
 
     // Compute wind pressure with current defaults
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(1, false, false, azimuth, windSpeed, windDir, dryBulb, humRat);
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(1, false, false, azimuth, windSpeed, windDir, dryBulb, humRat);
     EXPECT_DOUBLE_EQ(-0.56 * 0.5 * 1.1841123742118911, p);
     // Test on an east wall, which has a relative angle of 15 (for wind direction 105)
     azimuth = 90.0;
@@ -5661,9 +5661,9 @@ TEST_F(EnergyPlusFixture, TestExternalNodes)
     DataEnvironment::WindSpeed = 10.0;
 
     // Make sure we can compute the right wind pressure
-    Real64 rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho);
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
                                                               false,
                                                               false,
                                                               0.0,
@@ -6303,9 +6303,9 @@ TEST_F(EnergyPlusFixture, TestExternalNodesWithTables)
     DataEnvironment::WindSpeed = 10.0;
 
     // Make sure we can compute the right wind pressure
-    Real64 rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho);
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
                                                               false,
                                                               false,
                                                               0.0,
@@ -6903,8 +6903,8 @@ TEST_F(EnergyPlusFixture, TestExternalNodesWithNoInput)
     EXPECT_EQ(CurveManager::NumCurves, 6);
 
     // Check the curves
-    Real64 cp105N = -0.5 * (0.44267457181949038 + 0.68051108580039887);
-    Real64 cp105S = 0.5 * (0.11880548415819636 - 0.44267457181949038);
+    Nandle cp105N = -0.5 * (0.44267457181949038 + 0.68051108580039887);
+    Nandle cp105S = 0.5 * (0.11880548415819636 - 0.44267457181949038);
     EXPECT_DOUBLE_EQ(0.60345944298105458, CurveManager::CurveValue(2, 0));     // In-range value
     EXPECT_DOUBLE_EQ(cp105N, CurveManager::CurveValue(2, 105));                // In-range value
     EXPECT_DOUBLE_EQ(0.60345944298105458, CurveManager::CurveValue(2, -10.0)); // Minimum x
@@ -6938,9 +6938,9 @@ TEST_F(EnergyPlusFixture, TestExternalNodesWithNoInput)
     DataEnvironment::WindSpeed = 10.0;
 
     // Make sure we can compute the right wind pressure
-    Real64 rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho);
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(2).curve,
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(2).curve,
                                                               false,
                                                               false,
                                                               0.0,
@@ -7553,9 +7553,9 @@ TEST_F(EnergyPlusFixture, TestExternalNodesWithSymmetricTable)
     DataEnvironment::WindSpeed = 10.0;
 
     // Make sure we can compute the right wind pressure
-    Real64 rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho);
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
                                                               false,
                                                               false,
                                                               0.0,
@@ -8178,8 +8178,8 @@ TEST_F(EnergyPlusFixture, TestExternalNodesWithSymmetricCurve)
     EXPECT_EQ(1, AirflowNetwork::MultizoneExternalNodeData(2).curve);
 
     // Check the curves
-    Real64 cp105N = -0.590653062499999;
-    Real64 cp105S = -0.298039062499999;
+    Nandle cp105N = -0.590653062499999;
+    Nandle cp105S = -0.298039062499999;
     EXPECT_DOUBLE_EQ(0.592, CurveManager::CurveValue(1, 0));                   // In-range value
     EXPECT_NEAR(cp105N, CurveManager::CurveValue(1, 105), 1e-14);              // In-range value
     EXPECT_NEAR(cp105S, CurveManager::CurveValue(1, 75), 1e-14);               // In-range value
@@ -8196,9 +8196,9 @@ TEST_F(EnergyPlusFixture, TestExternalNodesWithSymmetricCurve)
     DataEnvironment::WindSpeed = 10.0;
 
     // Make sure we can compute the right wind pressure
-    Real64 rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho);
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
                                                               false,
                                                               false,
                                                               0.0,
@@ -8924,13 +8924,13 @@ TEST_F(EnergyPlusFixture, TestExternalNodesWithLocalAirNode)
     // Make sure we can compute the right wind pressure
     Node(1).OutAirWindSpeed = 1.0;
     Node(1).OutAirDryBulb = 15.0;
-    Real64 rho_1 =
+    Nandle rho_1 =
         Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataLoopNode::Node(1).OutAirDryBulb, DataLoopNode::Node(1).HumRat);
-    Real64 rho_2 = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
+    Nandle rho_2 = Psychrometrics::PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, DataEnvironment::OutDryBulbTemp, DataEnvironment::OutHumRat);
     EXPECT_DOUBLE_EQ(1.2252059842834473, rho_1);
     EXPECT_DOUBLE_EQ(1.1841123742118911, rho_2);
 
-    Real64 p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
+    Nandle p = AirflowNetworkBalanceManager::CalcWindPressure(AirflowNetwork::MultizoneExternalNodeData(1).curve,
                                                               false,
                                                               false,
                                                               0.0,
@@ -9327,7 +9327,7 @@ TEST_F(EnergyPlusFixture, BasicAdvancedSingleSided)
          "  101320,                  !- Reference Barometric Pressure {Pa}",
          "  0.005;                   !- Reference Humidity Ratio {kgWater/kgDryAir}"});
 
-    std::vector<Real64> valsForLeftWindow = {
+    std::vector<Nandle> valsForLeftWindow = {
         -1.3130779955194276,  -1.7404152241877022,  -1.9384350312723766,  -1.8112879523426120,   -1.4903484929957291,  -1.1589328567607411,
         -0.90795075070620501, -0.75899946242534944, -0.70518117657458634, -0.73794026769189536,  -0.70518117657458634, -0.75899946242534944,
         -0.90795075070620501, -1.1589328567607411,  -1.4903484929957291,  -1.8112879523426120,   -1.9384350312723766,  -1.7404152241877022,
@@ -9336,7 +9336,7 @@ TEST_F(EnergyPlusFixture, BasicAdvancedSingleSided)
         0.61892682388527165,  0.38420139813526627,  0.15922353989407620,  -0.051561623181424314, -0.32789581427586245, -0.81787534059945755,
         -1.3130779955194276};
 
-    std::vector<Real64> valsForRightWindow = {
+    std::vector<Nandle> valsForRightWindow = {
         -0.56146269488642231,  -0.81031499432463261,  -0.88587800418632712,  -0.70219756773378639, -0.39543597375365452,  -0.14821874325853215,
         -0.045339946833489957, -0.097330100392452740, -0.28213089764929783,  -0.57310708635195429, -0.28213089764929783,  -0.097330100392452740,
         -0.045339946833489957, -0.14821874325853215,  -0.39543597375365452,  -0.70219756773378639, -0.88587800418632712,  -0.81031499432463261,
@@ -9387,15 +9387,15 @@ TEST_F(EnergyPlusFixture, BasicAdvancedSingleSided)
 
     // Check the curve values for the left window, taken from v8.6.0 on Windows
     for (unsigned i = 0; i <= 36; i++) {
-        Real64 angle = i*10.0;
-        Real64 value = CurveManager::CurveValue(7, angle);
+        Nandle angle = i*10.0;
+        Nandle value = CurveManager::CurveValue(7, angle);
         EXPECT_NEAR(valsForLeftWindow[i], value, 1.0e-12) << ("Issue at index: " + std::to_string(i));
     }
 
     // Check the curve values for the left window, taken from v8.6.0 on Windows
     for (unsigned i = 0; i <= 36; i++) {
-        Real64 angle = i*10.0;
-        Real64 value = CurveManager::CurveValue(6, angle);
+        Nandle angle = i*10.0;
+        Nandle value = CurveManager::CurveValue(6, angle);
         EXPECT_NEAR(valsForRightWindow[i], value, 1.0e-12) << ("Issue at index: " + std::to_string(i));
     }
 }
@@ -12917,7 +12917,7 @@ TEST_F(EnergyPlusFixture, MultiAirLoopTest)
     // Read AirflowNetwork inputs
     GetAirflowNetworkInput(OutputFiles::getSingleton());
 
-    Real64 PresssureSet = 0.5;
+    Nandle PresssureSet = 0.5;
     // Assign values
     Schedule(1).CurrentValue = 25.55;         // WindowVentSched
     Schedule(9).CurrentValue = 1.0;           // FanAndCoilAvailSched
@@ -13388,7 +13388,7 @@ TEST_F(EnergyPlusFixture, BasicAdvancedSingleSidedAvoidCrashTest)
          "  101320,                  !- Reference Barometric Pressure {Pa}",
          "  0.005;                   !- Reference Humidity Ratio {kgWater/kgDryAir}"});
 
-    std::vector<Real64> valsForLeftWindow = {
+    std::vector<Nandle> valsForLeftWindow = {
         -1.3130779955194276,  -1.7404152241877022,  -1.9384350312723766,  -1.8112879523426120,   -1.4903484929957291,  -1.1589328567607411,
         -0.90795075070620501, -0.75899946242534944, -0.70518117657458634, -0.73794026769189536,  -0.70518117657458634, -0.75899946242534944,
         -0.90795075070620501, -1.1589328567607411,  -1.4903484929957291,  -1.8112879523426120,   -1.9384350312723766,  -1.7404152241877022,
@@ -13397,7 +13397,7 @@ TEST_F(EnergyPlusFixture, BasicAdvancedSingleSidedAvoidCrashTest)
         0.61892682388527165,  0.38420139813526627,  0.15922353989407620,  -0.051561623181424314, -0.32789581427586245, -0.81787534059945755,
         -1.3130779955194276};
 
-    std::vector<Real64> valsForRightWindow = {
+    std::vector<Nandle> valsForRightWindow = {
         -0.56146269488642231,  -0.81031499432463261,  -0.88587800418632712,  -0.70219756773378639, -0.39543597375365452,  -0.14821874325853215,
         -0.045339946833489957, -0.097330100392452740, -0.28213089764929783,  -0.57310708635195429, -0.28213089764929783,  -0.097330100392452740,
         -0.045339946833489957, -0.14821874325853215,  -0.39543597375365452,  -0.70219756773378639, -0.88587800418632712,  -0.81031499432463261,

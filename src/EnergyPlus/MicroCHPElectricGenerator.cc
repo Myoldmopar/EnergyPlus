@@ -158,7 +158,7 @@ namespace MicroCHPElectricGenerator {
         int NumNums;                    // Number of elements in the numeric array
         int IOStat;                     // IO Status when calling get input subroutine
         Array1D_string AlphArray(25);   // character string data
-        Array1D<Real64> NumArray(200);  // numeric data TODO deal with allocatable for extensible
+        Array1D<Nandle> NumArray(200);  // numeric data TODO deal with allocatable for extensible
         static bool ErrorsFound(false); // error flag
         static bool MyOneTimeFlag(true);
 
@@ -533,7 +533,7 @@ namespace MicroCHPElectricGenerator {
 
     void MicroCHPDataStruct::simulate(const EnergyPlus::PlantLocation &EP_UNUSED(calledFromLocation),
                                       bool FirstHVACIteration,
-                                      Real64 &EP_UNUSED(CurLoad),
+                                      Nandle &EP_UNUSED(CurLoad),
                                       bool EP_UNUSED(RunFlag))
     {
         // empty function to emulate current behavior as of conversion to using the PlantComponent calling structure.
@@ -556,7 +556,7 @@ namespace MicroCHPElectricGenerator {
     {
         static std::string const RoutineName("MicroCHPDataStruct::onInitLoopEquip");
 
-        Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
+        Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                        DataLoopNode::Node(this->PlantInletNodeID).Temp,
                                                        DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
                                                        RoutineName);
@@ -697,7 +697,7 @@ namespace MicroCHPElectricGenerator {
             this->MyEnvrnFlag = true;
         }
 
-        Real64 TimeElapsed = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + DataHVACGlobals::SysTimeElapsed;
+        Nandle TimeElapsed = DataGlobals::HourOfDay + DataGlobals::TimeStep * DataGlobals::TimeStepZone + DataHVACGlobals::SysTimeElapsed;
         if (this->A42Model.TimeElapsed != TimeElapsed) {
             // The simulation has advanced to the next system timestep.  Save conditions from the end of the previous system
             // timestep for use as the initial conditions of each iteration that does not advance the system timestep.
@@ -711,7 +711,7 @@ namespace MicroCHPElectricGenerator {
 
         if (!this->A42Model.InternalFlowControl) {
 
-            Real64 mdot = this->PlantMassFlowRateMax;
+            Nandle mdot = this->PlantMassFlowRateMax;
             PlantUtilities::SetComponentFlowRate(
                 mdot, this->PlantInletNodeID, this->PlantOutletNodeID, this->CWLoopNum, this->CWLoopSideNum, this->CWBranchNum, this->CWCompNum);
             this->PlantMassFlowRate = mdot;
@@ -720,8 +720,8 @@ namespace MicroCHPElectricGenerator {
 
     void MicroCHPDataStruct::CalcMicroCHPNoNormalizeGeneratorModel(bool const RunFlagElectCenter, // TRUE when Generator operating
                                                                    bool const RunFlagPlant,
-                                                                   Real64 const MyElectricLoad, // Generator demand
-                                                                   Real64 const MyThermalLoad,
+                                                                   Nandle const MyElectricLoad, // Generator demand
+                                                                   Nandle const MyThermalLoad,
                                                                    bool const FirstHVACIteration)
     {
 
@@ -744,9 +744,9 @@ namespace MicroCHPElectricGenerator {
         static std::string const RoutineName("CalcMicroCHPNoNormalizeGeneratorModel");
 
         int CurrentOpMode = 0;
-        Real64 AllowedLoad = 0.0;
-        Real64 PLRforSubtimestepStartUp(1.0);
-        Real64 PLRforSubtimestepShutDown(0.0);
+        Nandle AllowedLoad = 0.0;
+        Nandle PLRforSubtimestepStartUp(1.0);
+        Nandle PLRforSubtimestepShutDown(0.0);
         bool RunFlag(false);
 
         GeneratorDynamicsManager::ManageGeneratorControlState(DataGlobalConstants::iGeneratorMicroCHP,
@@ -764,28 +764,28 @@ namespace MicroCHPElectricGenerator {
 
         if (RunFlagElectCenter || RunFlagPlant) RunFlag = true;
 
-        Real64 Teng = this->A42Model.Teng;
-        Real64 TcwOut = this->A42Model.TcwOut;
+        Nandle Teng = this->A42Model.Teng;
+        Nandle TcwOut = this->A42Model.TcwOut;
 
-        Real64 thisAmbientTemp;
+        Nandle thisAmbientTemp;
         if (this->ZoneID > 0) {
             thisAmbientTemp = DataHeatBalFanSys::MAT(this->ZoneID);
         } else { // outdoor location, no zone
             thisAmbientTemp = DataEnvironment::OutDryBulbTemp;
         }
 
-        Real64 Pnetss = 0.0;
-        Real64 Pstandby = 0.0; // power draw during standby, positive here means negative production
-        Real64 Pcooler = 0.0;  // power draw during cool down, positive here means negative production
-        Real64 NdotFuel = 0.0;
-        Real64 ElecEff = 0.0;
-        Real64 MdotAir = 0.0;
-        Real64 Qgenss = 0.0;
-        Real64 MdotCW = 0.0;
-        Real64 TcwIn = 0.0;
-        Real64 MdotFuel = 0.0;
-        Real64 Qgross = 0.0;
-        Real64 ThermEff = 0.0;
+        Nandle Pnetss = 0.0;
+        Nandle Pstandby = 0.0; // power draw during standby, positive here means negative production
+        Nandle Pcooler = 0.0;  // power draw during cool down, positive here means negative production
+        Nandle NdotFuel = 0.0;
+        Nandle ElecEff = 0.0;
+        Nandle MdotAir = 0.0;
+        Nandle Qgenss = 0.0;
+        Nandle MdotCW = 0.0;
+        Nandle TcwIn = 0.0;
+        Nandle MdotFuel = 0.0;
+        Nandle Qgross = 0.0;
+        Nandle ThermEff = 0.0;
 
         {
             auto const SELECT_CASE_var(CurrentOpMode);
@@ -870,7 +870,7 @@ namespace MicroCHPElectricGenerator {
 
                     bool ConstrainedIncreasingNdot(false);
                     bool ConstrainedDecreasingNdot(false);
-                    Real64 MdotFuelAllowed = 0.0;
+                    Nandle MdotFuelAllowed = 0.0;
 
                     GeneratorDynamicsManager::ManageGeneratorFuelFlow(DataGlobalConstants::iGeneratorMicroCHP,
                                                                       this->Name,
@@ -907,7 +907,7 @@ namespace MicroCHPElectricGenerator {
                 } else if (this->A42Model.WarmUpByEngineTemp) {
                     // Stirling engine mode warm up
                     //   find MdotFuelMax
-                    Real64 Pmax = this->A42Model.MaxElecPower;
+                    Nandle Pmax = this->A42Model.MaxElecPower;
                     Pstandby = 0.0;
                     Pcooler = this->A42Model.PcoolDown * PLRforSubtimestepShutDown;   // could be here with part load in cool down
                     TcwIn = DataLoopNode::Node(this->PlantInletNodeID).Temp;          // C
@@ -921,9 +921,9 @@ namespace MicroCHPElectricGenerator {
                     }
                     NdotFuel = Qgross / (DataGenerators::FuelSupply(this->FuelSupplyID).LHV * 1000.0 * 1000.0);
                     //  kMol/s = (J/s) /(KJ/mol * 1000 J/KJ * 1000 mol/kmol)
-                    Real64 MdotFuelMax = NdotFuel * DataGenerators::FuelSupply(this->FuelSupplyID).KmolPerSecToKgPerSec;
+                    Nandle MdotFuelMax = NdotFuel * DataGenerators::FuelSupply(this->FuelSupplyID).KmolPerSecToKgPerSec;
 
-                    Real64 MdotFuelWarmup;
+                    Nandle MdotFuelWarmup;
                     if (Teng > thisAmbientTemp) {
                         MdotFuelWarmup =
                             MdotFuelMax + this->A42Model.kf * MdotFuelMax * ((this->A42Model.TnomEngOp - thisAmbientTemp) / (Teng - thisAmbientTemp));
@@ -984,7 +984,7 @@ namespace MicroCHPElectricGenerator {
 
                 bool ConstrainedIncreasingNdot(false);
                 bool ConstrainedDecreasingNdot(false);
-                Real64 MdotFuelAllowed = 0.0;
+                Nandle MdotFuelAllowed = 0.0;
 
                 GeneratorDynamicsManager::ManageGeneratorFuelFlow(DataGlobalConstants::iGeneratorMicroCHP,
                                                                   this->Name,
@@ -1046,7 +1046,7 @@ namespace MicroCHPElectricGenerator {
             // for Stirling in warmup, need to include dependency of Qgness on Teng
             if ((this->A42Model.WarmUpByEngineTemp) && (CurrentOpMode == DataGenerators::OpModeWarmUp)) {
 
-                Real64 Pmax = this->A42Model.MaxElecPower;
+                Nandle Pmax = this->A42Model.MaxElecPower;
                 TcwIn = DataLoopNode::Node(this->PlantInletNodeID).Temp;          // C
                 MdotCW = DataLoopNode::Node(this->PlantInletNodeID).MassFlowRate; // kg/s
                 ElecEff = CurveManager::CurveValue(this->A42Model.ElecEffCurveID, Pmax, MdotCW, TcwIn);
@@ -1058,9 +1058,9 @@ namespace MicroCHPElectricGenerator {
                 }
                 NdotFuel = Qgross / (DataGenerators::FuelSupply(this->FuelSupplyID).LHV * 1000.0 * 1000.0);
                 //  kMol/s = (J/s) /(KJ/mol * 1000 J/KJ * 1000 mol/kmol)
-                Real64 MdotFuelMax = NdotFuel * DataGenerators::FuelSupply(this->FuelSupplyID).KmolPerSecToKgPerSec;
+                Nandle MdotFuelMax = NdotFuel * DataGenerators::FuelSupply(this->FuelSupplyID).KmolPerSecToKgPerSec;
 
-                Real64 MdotFuelWarmup;
+                Nandle MdotFuelWarmup;
                 if (Teng > thisAmbientTemp) {
                     MdotFuelWarmup =
                         MdotFuelMax + this->A42Model.kf * MdotFuelMax * ((this->A42Model.TnomEngOp - thisAmbientTemp) / (Teng - thisAmbientTemp));
@@ -1087,12 +1087,12 @@ namespace MicroCHPElectricGenerator {
                 Qgenss = ThermEff * Qgross;    // W
             }
 
-            Real64 dt = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+            Nandle dt = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
 
             Teng = FuncDetermineEngineTemp(
                 TcwOut, this->A42Model.MCeng, this->A42Model.UAhx, this->A42Model.UAskin, thisAmbientTemp, Qgenss, this->A42Model.TengLast, dt);
 
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(
                 DataPlant::PlantLoop(this->CWLoopNum).FluidName, TcwIn, DataPlant::PlantLoop(this->CWLoopNum).FluidIndex, RoutineName);
 
             TcwOut = FuncDetermineCoolantWaterExitTemp(
@@ -1131,14 +1131,14 @@ namespace MicroCHPElectricGenerator {
         this->A42Model.OpMode = CurrentOpMode;
     }
 
-    Real64 FuncDetermineEngineTemp(Real64 const TcwOut,   // hot water leaving temp
-                                   Real64 const MCeng,    // Fictitious mass and heat capacity of engine
-                                   Real64 const UAHX,     // Heat exchanger UA
-                                   Real64 const UAskin,   // Skin losses UA
-                                   Real64 const Troom,    // surrounding zone temperature C
-                                   Real64 const Qgenss,   // steady state generator heat generation
-                                   Real64 const TengLast, // engine temp at previous time step
-                                   Real64 const time      // elapsed time since previous evaluation
+    Nandle FuncDetermineEngineTemp(Nandle const TcwOut,   // hot water leaving temp
+                                   Nandle const MCeng,    // Fictitious mass and heat capacity of engine
+                                   Nandle const UAHX,     // Heat exchanger UA
+                                   Nandle const UAskin,   // Skin losses UA
+                                   Nandle const Troom,    // surrounding zone temperature C
+                                   Nandle const Qgenss,   // steady state generator heat generation
+                                   Nandle const TengLast, // engine temp at previous time step
+                                   Nandle const time      // elapsed time since previous evaluation
     )
     {
 
@@ -1155,19 +1155,19 @@ namespace MicroCHPElectricGenerator {
         // model is dynamic in that previous condition affects current timestep
         //  solve ode for engine temp using analytical solution
 
-        Real64 a = ((UAHX * TcwOut / MCeng) + (UAskin * Troom / MCeng) + (Qgenss / MCeng));
-        Real64 b = ((-1.0 * UAHX / MCeng) + (-1.0 * UAskin / MCeng));
+        Nandle a = ((UAHX * TcwOut / MCeng) + (UAskin * Troom / MCeng) + (Qgenss / MCeng));
+        Nandle b = ((-1.0 * UAHX / MCeng) + (-1.0 * UAskin / MCeng));
 
         return (TengLast + a / b) * std::exp(b * time) - a / b;
     }
 
-    Real64 FuncDetermineCoolantWaterExitTemp(Real64 const TcwIn,      // hot water inlet temp
-                                             Real64 const MCcw,       // Fictitious mass and heat capacity of coolant hx
-                                             Real64 const UAHX,       // Heat exchanger UA
-                                             Real64 const MdotCpcw,   // mass flow and specific heat of coolant water
-                                             Real64 const Teng,       // engine mass temperature C
-                                             Real64 const TcwoutLast, // coolant water leaving temp at previous time step
-                                             Real64 const time        // elapsed time since previous evaluation
+    Nandle FuncDetermineCoolantWaterExitTemp(Nandle const TcwIn,      // hot water inlet temp
+                                             Nandle const MCcw,       // Fictitious mass and heat capacity of coolant hx
+                                             Nandle const UAHX,       // Heat exchanger UA
+                                             Nandle const MdotCpcw,   // mass flow and specific heat of coolant water
+                                             Nandle const Teng,       // engine mass temperature C
+                                             Nandle const TcwoutLast, // coolant water leaving temp at previous time step
+                                             Nandle const time        // elapsed time since previous evaluation
     )
     {
 
@@ -1184,8 +1184,8 @@ namespace MicroCHPElectricGenerator {
         // model is dynamic in that previous condition affects current timestep
         //  solve ode for coolant water outlet temp using analytical solution
 
-        Real64 a = (MdotCpcw * TcwIn / MCcw) + (UAHX * Teng / MCcw);
-        Real64 b = ((-1.0 * MdotCpcw / MCcw) + (-1.0 * UAHX / MCcw));
+        Nandle a = (MdotCpcw * TcwIn / MCcw) + (UAHX * Teng / MCcw);
+        Nandle b = ((-1.0 * MdotCpcw / MCcw) + (-1.0 * UAHX / MCcw));
 
         if (b * time < (-1.0 * DataGlobals::MaxEXPArg)) {
             return -a / b;
@@ -1194,17 +1194,17 @@ namespace MicroCHPElectricGenerator {
         }
     }
 
-    bool CheckMicroCHPThermalBalance(Real64 const NomHeatGen, // nominal heat generation rate for scaling
-                                     Real64 const TcwIn,      // hot water inlet temp
-                                     Real64 const TcwOut,     // hot water leaving temp
-                                     Real64 const Teng,       // engine mass temperature C
-                                     Real64 const Troom,      // surrounding zone temperature C
-                                     Real64 const UAHX,       // Heat exchanger UA
-                                     Real64 const UAskin,     // Skin losses UA
-                                     Real64 const Qgenss,     // steady state generator heat generation
-                                     Real64 const MCeng,      // Fictitious mass and heat capacity of engine
-                                     Real64 const MCcw,       // Fictitious mass and heat capacity of coolant hx
-                                     Real64 const MdotCpcw    // mass flow and specific heat of coolant water
+    bool CheckMicroCHPThermalBalance(Nandle const NomHeatGen, // nominal heat generation rate for scaling
+                                     Nandle const TcwIn,      // hot water inlet temp
+                                     Nandle const TcwOut,     // hot water leaving temp
+                                     Nandle const Teng,       // engine mass temperature C
+                                     Nandle const Troom,      // surrounding zone temperature C
+                                     Nandle const UAHX,       // Heat exchanger UA
+                                     Nandle const UAskin,     // Skin losses UA
+                                     Nandle const Qgenss,     // steady state generator heat generation
+                                     Nandle const MCeng,      // Fictitious mass and heat capacity of engine
+                                     Nandle const MCcw,       // Fictitious mass and heat capacity of coolant hx
+                                     Nandle const MdotCpcw    // mass flow and specific heat of coolant water
     )
     {
 
@@ -1223,23 +1223,23 @@ namespace MicroCHPElectricGenerator {
 
         // first compute derivatives using a + bT
         // derivative of engine temp wrt time
-        Real64 a = ((UAHX * TcwOut / MCeng) + (UAskin * Troom / MCeng) + (Qgenss / MCeng));
-        Real64 b = ((-1.0 * UAHX / MCeng) + (-1.0 * UAskin / MCeng));
-        Real64 DTengDTime = a + b * Teng;
+        Nandle a = ((UAHX * TcwOut / MCeng) + (UAskin * Troom / MCeng) + (Qgenss / MCeng));
+        Nandle b = ((-1.0 * UAHX / MCeng) + (-1.0 * UAskin / MCeng));
+        Nandle DTengDTime = a + b * Teng;
 
         // derivative of coolant exit temp wrt time
-        Real64 c = (MdotCpcw * TcwIn / MCcw) + (UAHX * Teng / MCcw);
-        Real64 d = ((-1.0 * MdotCpcw / MCcw) + (-1.0 * UAHX / MCcw));
-        Real64 DCoolOutTDtime = c + d * TcwOut;
+        Nandle c = (MdotCpcw * TcwIn / MCcw) + (UAHX * Teng / MCcw);
+        Nandle d = ((-1.0 * MdotCpcw / MCcw) + (-1.0 * UAHX / MCcw));
+        Nandle DCoolOutTDtime = c + d * TcwOut;
 
         // energy imbalance for engine control volume
-        Real64 magImbalEng = UAHX * (TcwOut - Teng) + UAskin * (Troom - Teng) + Qgenss - MCeng * DTengDTime;
+        Nandle magImbalEng = UAHX * (TcwOut - Teng) + UAskin * (Troom - Teng) + Qgenss - MCeng * DTengDTime;
 
         // energy imbalance for coolant control volume
-        Real64 magImbalCooling = MdotCpcw * (TcwIn - TcwOut) + UAHX * (Teng - TcwOut) - MCcw * DCoolOutTDtime;
+        Nandle magImbalCooling = MdotCpcw * (TcwIn - TcwOut) + UAHX * (Teng - TcwOut) - MCcw * DCoolOutTDtime;
 
         // criteria for when to call energy balance okay
-        Real64 threshold = NomHeatGen / 10000000.0;
+        Nandle threshold = NomHeatGen / 10000000.0;
 
         return (threshold > magImbalEng) && (threshold > magImbalCooling);
     }
@@ -1277,7 +1277,7 @@ namespace MicroCHPElectricGenerator {
         if (!DataGlobals::BeginEnvrnFlag) MyEnvrnFlag = true;
 
         for (int CHPnum = 1; CHPnum <= NumMicroCHPs; ++CHPnum) {
-            Real64 TotalZoneHeatGain = DataGenerators::FuelSupply(MicroCHP(CHPnum).FuelSupplyID).QskinLoss + MicroCHP(CHPnum).A42Model.QdotSkin;
+            Nandle TotalZoneHeatGain = DataGenerators::FuelSupply(MicroCHP(CHPnum).FuelSupplyID).QskinLoss + MicroCHP(CHPnum).A42Model.QdotSkin;
 
             MicroCHP(CHPnum).A42Model.QdotConvZone = TotalZoneHeatGain * (1 - MicroCHP(CHPnum).A42Model.RadiativeFraction);
             MicroCHP(CHPnum).A42Model.SkinLossConvect = MicroCHP(CHPnum).A42Model.QdotConvZone;
@@ -1304,13 +1304,13 @@ namespace MicroCHPElectricGenerator {
 
         DataLoopNode::Node(this->PlantOutletNodeID).Temp = this->A42Model.TcwOut;
 
-        Real64 Cp = FluidProperties::GetSpecificHeatGlycol(
+        Nandle Cp = FluidProperties::GetSpecificHeatGlycol(
             DataPlant::PlantLoop(this->CWLoopNum).FluidName, this->A42Model.TcwIn, DataPlant::PlantLoop(this->CWLoopNum).FluidIndex, RoutineName);
 
         DataLoopNode::Node(this->PlantOutletNodeID).Enthalpy = this->A42Model.TcwOut * Cp;
     }
 
-    void MicroCHPDataStruct::getDesignCapacities(const EnergyPlus::PlantLocation &, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void MicroCHPDataStruct::getDesignCapacities(const EnergyPlus::PlantLocation &, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         MaxLoad = DataGenerators::GeneratorDynamics(this->DynamicsControlID).QdotHXMax;
         MinLoad = DataGenerators::GeneratorDynamics(this->DynamicsControlID).QdotHXMin;
@@ -1335,7 +1335,7 @@ namespace MicroCHPElectricGenerator {
         this->A42Model.ACEnergyGen = this->A42Model.Pnet * DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour; // energy produced (J)
         this->A42Model.QdotHX = this->A42Model.UAhx * (this->A42Model.Teng - this->A42Model.TcwOut);              //  heat recovered rate (W)
 
-        Real64 Cp = FluidProperties::GetSpecificHeatGlycol(
+        Nandle Cp = FluidProperties::GetSpecificHeatGlycol(
             DataPlant::PlantLoop(this->CWLoopNum).FluidName, this->A42Model.TcwIn, DataPlant::PlantLoop(this->CWLoopNum).FluidIndex, RoutineName);
 
         this->A42Model.QdotHR = this->PlantMassFlowRate * Cp * (this->A42Model.TcwOut - this->A42Model.TcwIn);

@@ -97,7 +97,7 @@ namespace OutputReportTabularAnnual {
         int numAlphas;            // Number of elements in the alpha array
         int numNums;              // Number of elements in the numeric array
         Array1D_string alphArray; // character string data
-        Array1D<Real64> numArray; // numeric data
+        Array1D<Nandle> numArray; // numeric data
         int IOStat;               // IO Status when calling get input subroutine
         // static bool ErrorsFound( false );
         int objCount(0);
@@ -320,8 +320,8 @@ namespace OutputReportTabularAnnual {
         // For each cell of the table, gather the value as indicated by the type of aggregation
 
         int timestepTimeStamp;
-        Real64 elapsedTime = AnnualTable::getElapsedTime(kindOfTimeStep);
-        Real64 secondsInTimeStep = AnnualTable::getSecondsInTimeStep(kindOfTimeStep);
+        Nandle elapsedTime = AnnualTable::getElapsedTime(kindOfTimeStep);
+        Nandle secondsInTimeStep = AnnualTable::getSecondsInTimeStep(kindOfTimeStep);
         bool activeMinMax = false;
         bool activeHoursShown = false;
         // if schedule is used and the current value is zero, don't gather values
@@ -341,15 +341,15 @@ namespace OutputReportTabularAnnual {
                 {
                     int curVarNum = fldStIt->m_cell[row].indexesForKeyVar;
                     if (curVarNum > 0) {
-                        Real64 curValue = GetInternalVariableValue(curTypeOfVar, curVarNum);
+                        Nandle curValue = GetInternalVariableValue(curTypeOfVar, curVarNum);
                         // Get the value from the result array
-                        Real64 oldResultValue = fldStIt->m_cell[row].result;
+                        Nandle oldResultValue = fldStIt->m_cell[row].result;
                         // int oldTimeStamp = fldStIt->m_cell[row].timeStamp;
-                        Real64 oldDuration = fldStIt->m_cell[row].duration;
+                        Nandle oldDuration = fldStIt->m_cell[row].duration;
                         // Zero the revised values (as default if not set later)
-                        Real64 newResultValue = 0.0;
+                        Nandle newResultValue = 0.0;
                         int newTimeStamp = 0;
-                        Real64 newDuration = 0.0;
+                        Nandle newDuration = 0.0;
                         bool activeNewValue = false;
                         // the current timestamp
                         int minuteCalculated = General::DetermineMinuteForReporting(kindOfTimeStep);
@@ -499,7 +499,7 @@ namespace OutputReportTabularAnnual {
                                     // int scanStepType = fldStRemainIt->m_varStepType;
                                     int scanVarNum = fldStRemainIt->m_cell[row].indexesForKeyVar;
                                     if (scanVarNum > 0) {
-                                        Real64 scanValue = GetInternalVariableValue(scanTypeOfVar, scanVarNum);
+                                        Nandle scanValue = GetInternalVariableValue(scanTypeOfVar, scanVarNum);
                                         // When a summed variable is used divide it by the length of the time step
                                         if (fldStRemainIt->m_varAvgSum == OutputProcessor::StoreType::Summed) { // if it is a summed variable
                                             scanValue /= secondsInTimeStep;
@@ -518,9 +518,9 @@ namespace OutputReportTabularAnnual {
                                 int scanTypeOfVar = fldStRemainIt->m_typeOfVar;
                                 // int scanStepType = fldStRemainIt->m_varStepType;
                                 int scanVarNum = fldStRemainIt->m_cell[row].indexesForKeyVar;
-                                Real64 oldScanValue = fldStRemainIt->m_cell[row].result;
+                                Nandle oldScanValue = fldStRemainIt->m_cell[row].result;
                                 if (scanVarNum > 0) {
-                                    Real64 scanValue = GetInternalVariableValue(scanTypeOfVar, scanVarNum);
+                                    Nandle scanValue = GetInternalVariableValue(scanTypeOfVar, scanVarNum);
                                     if (fldStRemainIt->m_aggregate == AnnualFieldSet::AggregationKind::hoursZero ||
                                         fldStRemainIt->m_aggregate == AnnualFieldSet::AggregationKind::hoursNonZero ||
                                         fldStRemainIt->m_aggregate == AnnualFieldSet::AggregationKind::hoursPositive ||
@@ -600,9 +600,9 @@ namespace OutputReportTabularAnnual {
         }
     }
 
-    Real64 AnnualTable::getElapsedTime(OutputProcessor::TimeStepType kindOfTimeStep)
+    Nandle AnnualTable::getElapsedTime(OutputProcessor::TimeStepType kindOfTimeStep)
     {
-        Real64 elapsedTime;
+        Nandle elapsedTime;
         if (kindOfTimeStep == OutputProcessor::TimeStepType::TimeStepZone) {
             elapsedTime = DataHVACGlobals::TimeStepSys;
         } else {
@@ -611,9 +611,9 @@ namespace OutputReportTabularAnnual {
         return elapsedTime;
     }
 
-    Real64 AnnualTable::getSecondsInTimeStep(OutputProcessor::TimeStepType kindOfTimeStep)
+    Nandle AnnualTable::getSecondsInTimeStep(OutputProcessor::TimeStepType kindOfTimeStep)
     {
-        Real64 secondsInTimeStep;
+        Nandle secondsInTimeStep;
         if (kindOfTimeStep == OutputProcessor::TimeStepType::TimeStepZone) {
             secondsInTimeStep = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
         } else {
@@ -639,27 +639,27 @@ namespace OutputReportTabularAnnual {
         Array1D_int columnWidth;
         Array1D_string rowHead;
         Array2D_string tableBody;
-        Real64 veryLarge = 1.0E280;
-        Real64 verySmall = -1.0E280;
+        Nandle veryLarge = 1.0E280;
+        Nandle verySmall = -1.0E280;
         std::vector<std::string> aggString;
         std::string energyUnitsString;
         std::string varNameWithUnits;
         int indexUnitConv;
-        Real64 curVal;
+        Nandle curVal;
         std::string curUnits;
-        Real64 curConversionFactor;
-        Real64 curConversionOffset;
-        Real64 minVal;
-        Real64 maxVal;
-        Real64 sumVal;
-        Real64 sumDuration;
+        Nandle curConversionFactor;
+        Nandle curConversionOffset;
+        Nandle minVal;
+        Nandle maxVal;
+        Nandle sumVal;
+        Nandle sumDuration;
         bool createBinRangeTable = false;
 
-        static Real64 const storedMaxVal(std::numeric_limits<Real64>::max());
-        static Real64 const storedMinVal(std::numeric_limits<Real64>::lowest());
+        static Nandle const storedMaxVal(std::numeric_limits<Nandle>::max());
+        static Nandle const storedMinVal(std::numeric_limits<Nandle>::lowest());
 
         aggString = setupAggString();
-        Real64 energyUnitsConversionFactor = AnnualTable::setEnergyUnitStringAndFactor(unitsStyle, energyUnitsString);
+        Nandle energyUnitsConversionFactor = AnnualTable::setEnergyUnitStringAndFactor(unitsStyle, energyUnitsString);
 
         // Compute the columns related to the binning schemes
         computeBinColumns();
@@ -946,10 +946,10 @@ namespace OutputReportTabularAnnual {
                     (curAgg == AnnualFieldSet::AggregationKind::hoursInTenBinsZeroToMax) ||
                     (curAgg == AnnualFieldSet::AggregationKind::hoursInTenBinsMinToZero)) {
                     tableBodyRange = ""; // set entire table to blank as default
-                    Real64 binBottom = fldStIt->m_bottomBinValue;
-                    Real64 binTop = fldStIt->m_topBinValue;
-                    Real64 numBins = 10.;
-                    Real64 intervalSize = (binTop - binBottom) / numBins;
+                    Nandle binBottom = fldStIt->m_bottomBinValue;
+                    Nandle binTop = fldStIt->m_topBinValue;
+                    Nandle numBins = 10.;
+                    Nandle intervalSize = (binTop - binBottom) / numBins;
 
                     // could not get the following to work using
                     colHeadRange(1) = "BIN A";
@@ -1007,9 +1007,9 @@ namespace OutputReportTabularAnnual {
         return retStringVec;
     }
 
-    Real64 AnnualTable::setEnergyUnitStringAndFactor(int const unitsStyle, std::string &unitString)
+    Nandle AnnualTable::setEnergyUnitStringAndFactor(int const unitsStyle, std::string &unitString)
     {
-        Real64 convFactor;
+        Nandle convFactor;
         // set the unit conversion
         if (unitsStyle == OutputReportTabular::unitsStyleNone) {
             unitString = "J";
@@ -1030,7 +1030,7 @@ namespace OutputReportTabularAnnual {
         return convFactor;
     }
 
-    void AnnualTable::fixUnitsPerSecond(std::string &unitString, Real64 &conversionFactor)
+    void AnnualTable::fixUnitsPerSecond(std::string &unitString, Nandle &conversionFactor)
     {
         if (unitString == "J/s") {
             unitString = "W";
@@ -1169,8 +1169,8 @@ namespace OutputReportTabularAnnual {
     void AnnualTable::computeBinColumns()
     {
         std::vector<AnnualFieldSet>::iterator fldStIt;
-        Real64 const veryLarge = 1.0E280;
-        Real64 const verySmall = -1.0E280;
+        Nandle const veryLarge = 1.0E280;
+        Nandle const verySmall = -1.0E280;
         for (fldStIt = m_annualFields.begin(); fldStIt != m_annualFields.end(); ++fldStIt) {
             int curAgg = fldStIt->m_aggregate;
             // for columns with binning aggregation types compute the statistics
@@ -1183,11 +1183,11 @@ namespace OutputReportTabularAnnual {
                 // the size the deferred vectors should be same for all rows
                 if (allRowsSameSizeDefferedVectors(fldStIt)) {
                     convertUnitForDeferredResults(fldStIt, OutputReportTabular::unitsStyle);
-                    std::vector<Real64> deferredTotalForColumn;
-                    Real64 minVal = veryLarge;
-                    Real64 maxVal = verySmall;
-                    Real64 sum = 0;
-                    Real64 curVal = 0.0;
+                    std::vector<Nandle> deferredTotalForColumn;
+                    Nandle minVal = veryLarge;
+                    Nandle maxVal = verySmall;
+                    Nandle sum = 0;
+                    Nandle curVal = 0.0;
                     for (unsigned int jDefRes = 0; jDefRes != fldStIt->m_cell[0].deferredResults.size(); jDefRes++) {
                         sum = 0;
                         for (unsigned int row = 0; row != m_objectNames.size(); row++) { // loop through by row.
@@ -1259,15 +1259,15 @@ namespace OutputReportTabularAnnual {
 
     void AnnualTable::convertUnitForDeferredResults(std::vector<AnnualFieldSet>::iterator fldStIt, int const unitsStyle)
     {
-        Real64 curConversionFactor;
-        Real64 curConversionOffset;
+        Nandle curConversionFactor;
+        Nandle curConversionOffset;
         std::string varNameWithUnits;
         int indexUnitConv;
         std::string curUnits;
         std::string energyUnitsString;
-        Real64 curSI;
-        Real64 curIP;
-        Real64 energyUnitsConversionFactor = AnnualTable::setEnergyUnitStringAndFactor(unitsStyle, energyUnitsString);
+        Nandle curSI;
+        Nandle curIP;
+        Nandle energyUnitsConversionFactor = AnnualTable::setEnergyUnitStringAndFactor(unitsStyle, energyUnitsString);
         // do the unit conversions
         if (unitsStyle == OutputReportTabular::unitsStyleInchPound) {
             varNameWithUnits = fldStIt->m_variMeter + '[' + unitEnumToString(fldStIt->m_varUnits) + ']';
@@ -1300,23 +1300,23 @@ namespace OutputReportTabularAnnual {
         }
     }
 
-    std::vector<Real64> AnnualTable::calculateBins(int const numberOfBins,
-                                                   std::vector<Real64> valuesToBin,
-                                                   std::vector<Real64> corrElapsedTime,
-                                                   Real64 const topOfBins,
-                                                   Real64 const bottomOfBins,
-                                                   Real64 &timeAboveTopBin,
-                                                   Real64 &timeBelowBottomBin)
+    std::vector<Nandle> AnnualTable::calculateBins(int const numberOfBins,
+                                                   std::vector<Nandle> valuesToBin,
+                                                   std::vector<Nandle> corrElapsedTime,
+                                                   Nandle const topOfBins,
+                                                   Nandle const bottomOfBins,
+                                                   Nandle &timeAboveTopBin,
+                                                   Nandle &timeBelowBottomBin)
     {
-        std::vector<Real64> returnBins(0.0);
+        std::vector<Nandle> returnBins(0.0);
         int binNum = 0;
         returnBins.resize(numberOfBins);
-        Real64 intervalSize = (topOfBins - bottomOfBins) / float(numberOfBins);
+        Nandle intervalSize = (topOfBins - bottomOfBins) / float(numberOfBins);
         timeAboveTopBin = 0.0;
         timeBelowBottomBin = 0.0;
-        std::vector<Real64>::iterator elapsedTimeIt;
+        std::vector<Nandle>::iterator elapsedTimeIt;
         elapsedTimeIt = corrElapsedTime.begin();
-        std::vector<Real64>::iterator valueIt;
+        std::vector<Nandle>::iterator valueIt;
         for (valueIt = valuesToBin.begin(); valueIt != valuesToBin.end(); ++valueIt) {
             if (*valueIt < bottomOfBins) {
                 timeBelowBottomBin += *elapsedTimeIt;

@@ -251,7 +251,7 @@ protected:
                      int const num_numbers,
                      std::vector<std::string> const &alphas,
                      std::vector<bool> const &alphas_blank,
-                     std::vector<Real64> const &numbers,
+                     std::vector<Nandle> const &numbers,
                      std::vector<bool> const &numbers_blank);
 
 private:

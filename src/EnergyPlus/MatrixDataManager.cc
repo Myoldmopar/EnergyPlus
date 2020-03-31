@@ -189,7 +189,7 @@ namespace MatrixDataManager {
             // Note With change to row-major arrays the "row" and "col" usage here is transposed
             auto &matrix(MatData(MatNum).Mat2D);
             matrix.allocate(NumCols, NumRows); // This is standard order for a NumRows X NumCols matrix
-            Array2<Real64>::size_type l(0);
+            Array2<Nandle>::size_type l(0);
             for (int ElementNum = 1; ElementNum <= NumElements; ++ElementNum, l += matrix.size()) {
                 int const RowIndex = (ElementNum - 1) / NumCols + 1;
                 int const ColIndex = mod((ElementNum - 1), NumCols) + 1;
@@ -239,7 +239,7 @@ namespace MatrixDataManager {
     }
 
     void Get2DMatrix(int const Idx, // pointer index to location in MatData
-                     Array2S<Real64> Mat2D)
+                     Array2S<Nandle> Mat2D)
     {
 
         // SUBROUTINE INFORMATION:

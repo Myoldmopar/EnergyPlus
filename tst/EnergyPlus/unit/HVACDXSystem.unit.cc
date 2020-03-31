@@ -546,7 +546,7 @@ TEST_F(EnergyPlusFixture, VariableSpeedCoils_RHControl)
     DataLoopNode::Node(InletNode).HumRat = 0.012143698;
     DataLoopNode::Node(InletNode).Enthalpy = 55029.3778; // conditions at 65 % RH
     DataLoopNode::Node(ControlNode).TempSetPoint = HVACDXSystem::DXCoolingSystem(DXSystemNum).DesiredOutletTemp;
-    Real64 RHControlHumRat = 0.01119276; // humrat at 24C, 60% RH
+    Nandle RHControlHumRat = 0.01119276; // humrat at 24C, 60% RH
     DataLoopNode::Node(ControlNode).HumRatMax = RHControlHumRat;
 
     // test sensible control

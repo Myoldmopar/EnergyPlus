@@ -133,25 +133,25 @@ TEST_F(EnergyPlusFixture, ICSSolarCollectorTest_CalcPassiveExteriorBaffleGapTest
     GetUserSuppliedConvectionCoeffs = false;
 
     // SurfPtr( 1 ); // Array of indexes pointing to Surface structure in DataSurfaces
-    Real64 const VentArea(0.1);  // Area available for venting the gap [m2]
-    Real64 const Cv(0.1);        // Oriface coefficient for volume-based discharge, wind-driven [--]
-    Real64 const Cd(0.5);        // oriface coefficient for discharge,  bouyancy-driven [--]
-    Real64 const HdeltaNPL(3.0); // Height difference from neutral pressure level [m]
-    Real64 const SolAbs(0.75);   // solar absorptivity of baffle [--]
-    Real64 const AbsExt(0.8);    // thermal absorptance/emittance of baffle material [--]
-    Real64 const Tilt(0.283);    // Tilt of gap [Degrees]
-    Real64 const AspRat(0.9);    // aspect ratio of gap  Height/gap [--]
-    Real64 const GapThick(0.05); // Thickness of air space between baffle and underlying heat transfer surface
+    Nandle const VentArea(0.1);  // Area available for venting the gap [m2]
+    Nandle const Cv(0.1);        // Oriface coefficient for volume-based discharge, wind-driven [--]
+    Nandle const Cd(0.5);        // oriface coefficient for discharge,  bouyancy-driven [--]
+    Nandle const HdeltaNPL(3.0); // Height difference from neutral pressure level [m]
+    Nandle const SolAbs(0.75);   // solar absorptivity of baffle [--]
+    Nandle const AbsExt(0.8);    // thermal absorptance/emittance of baffle material [--]
+    Nandle const Tilt(0.283);    // Tilt of gap [Degrees]
+    Nandle const AspRat(0.9);    // aspect ratio of gap  Height/gap [--]
+    Nandle const GapThick(0.05); // Thickness of air space between baffle and underlying heat transfer surface
     int Roughness(1);            // Roughness index (1-6), see DataHeatBalance parameters
-    Real64 QdotSource(0.0);      // Source/sink term, e.g. electricity exported from solar cell [W]
-    Real64 TsBaffle(20.0);       // Temperature of baffle (both sides) use lagged value on input [C]
-    Real64 TaGap(22.0);          // Temperature of air gap (assumed mixed) use lagged value on input [C]
-    Real64 HcGapRpt;             // gap convection coefficient [W/m2C]
-    Real64 HrGapRpt;             // gap radiation coefficient [W/m2C]
-    Real64 IscRpt;               //
-    Real64 MdotVentRpt;          // gap air mass flow rate [kg/s]
-    Real64 VdotWindRpt;          // gap wind driven air volume flow rate [m3/s]
-    Real64 VdotBouyRpt;          // gap bouyancy driven volume flow rate [m3/s]
+    Nandle QdotSource(0.0);      // Source/sink term, e.g. electricity exported from solar cell [W]
+    Nandle TsBaffle(20.0);       // Temperature of baffle (both sides) use lagged value on input [C]
+    Nandle TaGap(22.0);          // Temperature of air gap (assumed mixed) use lagged value on input [C]
+    Nandle HcGapRpt;             // gap convection coefficient [W/m2C]
+    Nandle HrGapRpt;             // gap radiation coefficient [W/m2C]
+    Nandle IscRpt;               //
+    Nandle MdotVentRpt;          // gap air mass flow rate [kg/s]
+    Nandle VdotWindRpt;          // gap wind driven air volume flow rate [m3/s]
+    Nandle VdotBouyRpt;          // gap bouyancy driven volume flow rate [m3/s]
 
     // call to test fix to resolve crash
     CalcPassiveExteriorBaffleGap(ExtVentedCavity(1).SurfPtrs, VentArea, Cv, Cd, HdeltaNPL, SolAbs, AbsExt, Tilt, AspRat, GapThick, Roughness,

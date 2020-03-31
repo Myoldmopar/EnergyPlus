@@ -169,7 +169,7 @@ TEST_F(EnergyPlusFixture, ZoneContaminantPredictorCorrector_AddMDotOATest)
     DataContaminantBalance::ZoneAirCO2(1) = DataContaminantBalance::ZoneCO21(1);
     DataContaminantBalance::ZoneAirGC(1) = DataContaminantBalance::ZoneGC1(1);
 
-    Real64 PriorTimeStep;
+    Nandle PriorTimeStep;
 
     TimeStepSys = 15.0 / 60.0; // System timestep in hours
     PriorTimeStep = TimeStepSys;
@@ -326,7 +326,7 @@ TEST_F(EnergyPlusFixture, ZoneContaminantPredictorCorrector_CorrectZoneContamina
     DataContaminantBalance::ZoneCO21(1) = DataContaminantBalance::OutdoorCO2;
     DataContaminantBalance::ZoneGC1(1) = DataContaminantBalance::OutdoorGC;
 
-    Real64 PriorTimeStep;
+    Nandle PriorTimeStep;
 
     TimeStepSys = 15.0 / 60.0; // System timestep in hours
     PriorTimeStep = TimeStepSys;
@@ -477,7 +477,7 @@ TEST_F(EnergyPlusFixture, ZoneContaminantPredictorCorrector_MultiZoneCO2ControlT
     DataContaminantBalance::ZoneAirCO2(2) = DataContaminantBalance::ZoneCO21(2);
     DataContaminantBalance::ZoneAirCO2(3) = DataContaminantBalance::ZoneCO21(3);
 
-    Real64 PriorTimeStep;
+    Nandle PriorTimeStep;
 
     TimeStepSys = 15.0 / 60.0; // System timestep in hours
     PriorTimeStep = TimeStepSys;
@@ -685,7 +685,7 @@ TEST_F(EnergyPlusFixture, ZoneContaminantPredictorCorrector_MultiZoneGCControlTe
     DataContaminantBalance::ZoneAirGC(2) = DataContaminantBalance::ZoneGC1(2);
     DataContaminantBalance::ZoneAirGC(3) = DataContaminantBalance::ZoneGC1(3);
 
-    Real64 PriorTimeStep;
+    Nandle PriorTimeStep;
 
     TimeStepSys = 15.0 / 60.0; // System timestep in hours
     PriorTimeStep = TimeStepSys;

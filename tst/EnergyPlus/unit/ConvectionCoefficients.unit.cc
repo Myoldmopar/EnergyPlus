@@ -394,12 +394,12 @@ protected:
 TEST_F(ConvectionCoefficientsFixture, ConvectionCofficients)
 {
 
-    Real64 DeltaTemp;     // [C] temperature difference between surface and air
-    Real64 Height;        // [m] characteristic size
-    Real64 SurfTemp;      // [C] surface temperature
-    Real64 SupplyAirTemp; // [C] temperature of supply air into zone
-    Real64 AirChangeRate; // [ACH] [1/hour] supply air ACH for zone
-    Real64 Hc;
+    Nandle DeltaTemp;     // [C] temperature difference between surface and air
+    Nandle Height;        // [m] characteristic size
+    Nandle SurfTemp;      // [C] surface temperature
+    Nandle SupplyAirTemp; // [C] temperature of supply air into zone
+    Nandle AirChangeRate; // [ACH] [1/hour] supply air ACH for zone
+    Nandle Hc;
 
     DeltaTemp = 1.0;
     Height = 2.0;
@@ -587,8 +587,8 @@ TEST_F(ConvectionCoefficientsFixture, EvaluateIntHcModelsFisherPedersen)
 
     int SurfNum;
     int ConvModelEquationNum;
-    Real64 Hc;
-    Real64 HcExpectedValue;
+    Nandle Hc;
+    Nandle HcExpectedValue;
 
     SurfNum = 1;
 
@@ -620,7 +620,7 @@ TEST_F(ConvectionCoefficientsFixture, EvaluateIntHcModelsFisherPedersen)
 
 
     // Case 1 - Low ACH (should default to CalcASHRAETARPNatural)
-    Real64 ACH = 0.25;
+    Nandle ACH = 0.25;
     DataHeatBalance::Zone( 1 ).Volume = 125.0;
     DataLoopNode::Node( 1 ).MassFlowRate = 1.17653/3600.0 * DataHeatBalance::Zone( 1 ).Volume * ACH;
 
@@ -702,12 +702,12 @@ TEST_F(ConvectionCoefficientsFixture, EvaluateHnModels)
 {
 
     int SurfNum;
-    Real64 DeltaTemp;
-    Real64 CosineTilt;
-    Real64 Hn;
-    Array1D<Real64> SurfTemp;
-    Array1D<Real64> HcIn;
-    Array1D<Real64> Vhc;
+    Nandle DeltaTemp;
+    Nandle CosineTilt;
+    Nandle Hn;
+    Array1D<Nandle> SurfTemp;
+    Array1D<Nandle> HcIn;
+    Array1D<Nandle> Vhc;
 
     SurfNum = 1;
     DataSurfaces::Surface.allocate(SurfNum);
@@ -757,8 +757,8 @@ TEST_F(ConvectionCoefficientsFixture, TestCalcZoneSystemACH)
 
     int ZoneNum = 1;
     int TotalNumberofZones = 1;
-    Real64 ACHAnswer;
-    Real64 ACHExpected;
+    Nandle ACHAnswer;
+    Nandle ACHExpected;
 
     if (!allocated(DataHeatBalance::Zone)) DataHeatBalance::Zone.allocate(TotalNumberofZones);
     DataHeatBalance::Zone(ZoneNum).Volume = 100.0;
@@ -767,7 +767,7 @@ TEST_F(ConvectionCoefficientsFixture, TestCalcZoneSystemACH)
     DataHeatBalance::Zone(ZoneNum).Multiplier = 1.0;
     DataHeatBalance::Zone(ZoneNum).ListMultiplier = 1.0;
     EnergyPlus::DataEnvironment::OutBaroPress = 101400.0;
-    Real64 ZoneNode = DataHeatBalance::Zone(ZoneNum).SystemZoneNodeNumber;
+    Nandle ZoneNode = DataHeatBalance::Zone(ZoneNum).SystemZoneNodeNumber;
 
     // Test 1: Node not allocated, returns a zero ACH
     if (allocated(EnergyPlus::DataLoopNode::Node)) EnergyPlus::DataLoopNode::Node.deallocate();
@@ -788,16 +788,16 @@ TEST_F(ConvectionCoefficientsFixture, TestCalcZoneSystemACH)
 TEST_F(ConvectionCoefficientsFixture, TestCalcFisherPedersenCeilDiffuserNatConv)
 {
 
-    Real64 Hforced;
-    Real64 ACH;
-    Real64 Tsurf;
-    Real64 Tair;
-    Real64 cosTilt;
-    Real64 humRat;
-    Real64 height;
+    Nandle Hforced;
+    Nandle ACH;
+    Nandle Tsurf;
+    Nandle Tair;
+    Nandle cosTilt;
+    Nandle humRat;
+    Nandle height;
     bool isWindow;
-    Real64 ExpectedHconv;
-    Real64 CalculatedHconv;
+    Nandle ExpectedHconv;
+    Nandle CalculatedHconv;
 
     DataEnvironment::OutBaroPress = 101325.0;
 
@@ -873,9 +873,9 @@ TEST_F(ConvectionCoefficientsFixture, TestWindward)
 
     bool AgainstWind;
 
-    Real64 CosTilt;
-    Real64 Azimuth;
-    Real64 WindDirection;
+    Nandle CosTilt;
+    Nandle Azimuth;
+    Nandle WindDirection;
 
     // Test 1: Horizontal surface
     CosTilt = 1.0;
@@ -935,14 +935,14 @@ TEST_F(ConvectionCoefficientsFixture, CalcBeausoleilMorrisonMixedAssistedWall)
 
     DataGlobals::ZoneSizingCalc = true;
 
-    Real64 tolerance = 1E-3;
+    Nandle tolerance = 1E-3;
 
     // Calculate convection coefficient DeltaT and Height != 0
-    Real64 deltaTemp = 10.0;
-    Real64 height = 1.0;
-    Real64 surfTemp = 20.0;
+    Nandle deltaTemp = 10.0;
+    Nandle height = 1.0;
+    Nandle surfTemp = 20.0;
     int zoneNum = 1;
-    Real64 convCoeff = CalcBeausoleilMorrisonMixedAssistedWall(deltaTemp, height, surfTemp, zoneNum);
+    Nandle convCoeff = CalcBeausoleilMorrisonMixedAssistedWall(deltaTemp, height, surfTemp, zoneNum);
     EXPECT_NEAR(convCoeff, 2.667, tolerance);
 
     // DeltaT = 0 Error Path
@@ -992,14 +992,14 @@ TEST_F(ConvectionCoefficientsFixture, CalcBeausoleilMorrisonMixedOpposingWall)
 
     DataGlobals::ZoneSizingCalc = true;
 
-    Real64 tolerance = 1E-3;
+    Nandle tolerance = 1E-3;
 
     // Calculate convection coefficient DeltaT and Height != 0
-    Real64 deltaTemp = 10.0;
-    Real64 height = 1.0;
-    Real64 surfTemp = 20.0;
+    Nandle deltaTemp = 10.0;
+    Nandle height = 1.0;
+    Nandle surfTemp = 20.0;
     int zoneNum = 1;
-    Real64 convCoeff = CalcBeausoleilMorrisonMixedOpposingWall(deltaTemp, height, surfTemp, zoneNum);
+    Nandle convCoeff = CalcBeausoleilMorrisonMixedOpposingWall(deltaTemp, height, surfTemp, zoneNum);
     EXPECT_NEAR(convCoeff, 2.673, tolerance);
 
     // DeltaT = 0 Error Path
@@ -1049,14 +1049,14 @@ TEST_F(ConvectionCoefficientsFixture, CalcBeausoleilMorrisonMixedStableFloor)
 
     DataGlobals::ZoneSizingCalc = true;
 
-    Real64 tolerance = 1E-3;
+    Nandle tolerance = 1E-3;
 
     // Calculate convection coefficient DeltaT and Height != 0
-    Real64 deltaTemp = 10.0;
-    Real64 height = 1.0;
-    Real64 surfTemp = 20.0;
+    Nandle deltaTemp = 10.0;
+    Nandle height = 1.0;
+    Nandle surfTemp = 20.0;
     int zoneNum = 1;
-    Real64 convCoeff = CalcBeausoleilMorrisonMixedStableFloor(deltaTemp, height, surfTemp, zoneNum);
+    Nandle convCoeff = CalcBeausoleilMorrisonMixedStableFloor(deltaTemp, height, surfTemp, zoneNum);
     EXPECT_NEAR(convCoeff, 0.962, tolerance);
 
     // DeltaT = 0 Error Path
@@ -1106,14 +1106,14 @@ TEST_F(ConvectionCoefficientsFixture, CalcBeausoleilMorrisonMixedUnstableFloor)
 
     DataGlobals::ZoneSizingCalc = true;
 
-    Real64 tolerance = 1E-3;
+    Nandle tolerance = 1E-3;
 
     // Calculate convection coefficient DeltaT and Height != 0
-    Real64 deltaTemp = 10.0;
-    Real64 height = 1.0;
-    Real64 surfTemp = 20.0;
+    Nandle deltaTemp = 10.0;
+    Nandle height = 1.0;
+    Nandle surfTemp = 20.0;
     int zoneNum = 1;
-    Real64 convCoeff = CalcBeausoleilMorrisonMixedUnstableFloor(deltaTemp, height, surfTemp, zoneNum);
+    Nandle convCoeff = CalcBeausoleilMorrisonMixedUnstableFloor(deltaTemp, height, surfTemp, zoneNum);
     EXPECT_NEAR(convCoeff, 3.583, tolerance);
 
     // DeltaT = 0 Error Path
@@ -1163,14 +1163,14 @@ TEST_F(ConvectionCoefficientsFixture, CalcBeausoleilMorrisonMixedStableCeiling)
 
     DataGlobals::ZoneSizingCalc = true;
 
-    Real64 tolerance = 1E-3;
+    Nandle tolerance = 1E-3;
 
     // Calculate convection coefficient DeltaT and Height != 0
-    Real64 deltaTemp = 10.0;
-    Real64 height = 1.0;
-    Real64 surfTemp = 20.0;
+    Nandle deltaTemp = 10.0;
+    Nandle height = 1.0;
+    Nandle surfTemp = 20.0;
     int zoneNum = 1;
-    Real64 convCoeff = CalcBeausoleilMorrisonMixedStableCeiling(deltaTemp, height, surfTemp, zoneNum);
+    Nandle convCoeff = CalcBeausoleilMorrisonMixedStableCeiling(deltaTemp, height, surfTemp, zoneNum);
     EXPECT_NEAR(convCoeff, 0.937, tolerance);
 
     // DeltaT = 0 Error Path
@@ -1220,14 +1220,14 @@ TEST_F(ConvectionCoefficientsFixture, CalcBeausoleilMorrisonMixedUnstableCeiling
 
     DataGlobals::ZoneSizingCalc = true;
 
-    Real64 tolerance = 1E-3;
+    Nandle tolerance = 1E-3;
 
     // Calculate convection coefficient DeltaT and Height != 0
-    Real64 deltaTemp = 10.0;
-    Real64 height = 1.0;
-    Real64 surfTemp = 20.0;
+    Nandle deltaTemp = 10.0;
+    Nandle height = 1.0;
+    Nandle surfTemp = 20.0;
     int zoneNum = 1;
-    Real64 convCoeff = CalcBeausoleilMorrisonMixedUnstableCeiling(deltaTemp, height, surfTemp, zoneNum);
+    Nandle convCoeff = CalcBeausoleilMorrisonMixedUnstableCeiling(deltaTemp, height, surfTemp, zoneNum);
     EXPECT_NEAR(convCoeff, 3.581, tolerance);
 
     // DeltaT = 0 Error Path

@@ -101,8 +101,8 @@ public:
     int UnitarySysNum = 1;
     int NumNodes = 1; // number of zone inlet and zone exhaust nodes
     bool ErrorsFound = false;
-    Real64 const CpWater = 4180.0;  // For estimating the expected result
-    Real64 const RhoWater = 1000.0; // For estimating the expected result
+    Nandle const CpWater = 4180.0;  // For estimating the expected result
+    Nandle const RhoWater = 1000.0; // For estimating the expected result
 
 protected:
     virtual void SetUp()
@@ -469,9 +469,9 @@ TEST_F(ZoneUnitarySysTest, Test_UnitarySystemModel_factory)
     bool HeatingActive = false;
     bool CoolingActive = false;
     int OAUnitNum = 0;
-    Real64 OAUCoilOutTemp = 0.0;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle OAUCoilOutTemp = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
     DataGlobals::SysSizingCalc = false; // permits unitary system sizing
     EXPECT_EQ(compName, thisSys->Name);
     // simulate function is overloaded, but only to report back SysOutputProvided and LatOutputProvided. Either signature should give same result.
@@ -645,10 +645,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_TwoSpeedDXCoolCoil_Only)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -926,10 +926,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_MultiSpeedDXCoolCoil_Only)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -1138,10 +1138,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_MultiStageGasHeatCoil_Only)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -1373,10 +1373,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_MultiStageElecHeatCoil_Only)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -1604,10 +1604,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_ElecHeatCoil_Only)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -1818,10 +1818,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_MultiStageGasHeatCoil_Only_ContFan
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -2318,10 +2318,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_MultispeedPerformance)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -2691,10 +2691,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_WaterCoilSPControl)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -2816,8 +2816,8 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_WaterCoilSPControl)
     EXPECT_LT(DataLoopNode::Node(thisSys->AirOutNode).HumRatMax, 0.0);
     EXPECT_GT(DataLoopNode::Node(thisSys->AirOutNode).HumRat, 0.009); // and air outlet HumRat > 0.009 without dehumidification control
     EXPECT_LT(thisSys->m_CoolingPartLoadFrac, 1.0);
-    Real64 sensOnlyPartLoadFrac = thisSys->m_CoolingPartLoadFrac;
-    Real64 sensOnlyOutletAirHumRat = DataLoopNode::Node(thisSys->AirOutNode).HumRat;
+    Nandle sensOnlyPartLoadFrac = thisSys->m_CoolingPartLoadFrac;
+    Nandle sensOnlyOutletAirHumRat = DataLoopNode::Node(thisSys->AirOutNode).HumRat;
 
     // now test that the coil outlet node HumRatMax set point works for the cooling coil
     thisSys->m_DehumidControlType_Num = UnitarySys::DehumCtrlType::CoolReheat;
@@ -3042,10 +3042,10 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_WaterCoilSPControl_Latent)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -3216,7 +3216,7 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_WaterCoilSPControl_Latent)
     // Case 4 - COOLING mode - dehumidification set point at air outlet instead of coil outlet
     DataLoopNode::Node(coolingCoilAirOutletNodeIndex).HumRatMax = DataLoopNode::SensedNodeFlagValue;
     DataLoopNode::Node(thisSys->AirOutNode).HumRatMax = 0.009;
-    Real64 partLoadRatio = thisSys->m_CoolingPartLoadFrac;
+    Nandle partLoadRatio = thisSys->m_CoolingPartLoadFrac;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -3252,8 +3252,8 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_SetOnOffMassFlowRateTest)
     UnitarySys thisSys;
     UnitarySystems::numUnitarySystems = 1;
 
-    Real64 OnOffAirFlowRatio; // This is a return value
-    Real64 PartLoadRatio(1.0);
+    Nandle OnOffAirFlowRatio; // This is a return value
+    Nandle PartLoadRatio(1.0);
     DataHVACGlobals::TurnFansOn = true; // enable fan to run
 
     thisSys.m_MultiOrVarSpeedHeatCoil = true;
@@ -3716,10 +3716,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_CalcUnitaryHeatingSystem)
     int AirLoopNum(1);
     bool FirstHVACIteration(false);
     int CompOn(1);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 HeatCoilLoad(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 AirMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle HeatCoilLoad(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle AirMassFlowRate(0.0);
 
     UnitarySys thisSys;
     UnitarySystems::numUnitarySystems = 1;
@@ -3854,11 +3854,11 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_CalcUnitaryCoolingSystem)
     int CompOn(1);
     int AirLoopNum(1);
     bool FirstHVACIteration(false);
-    Real64 OnOffAirFlowRatio(1.0);
-    Real64 CoilCoolHeatRat(1.0);
-    Real64 AirMassFlowRate(0.0);
-    Real64 HotWaterMassFlowRate(0.0);
-    Real64 ColdWaterMassFlowRate(0.0);
+    Nandle OnOffAirFlowRatio(1.0);
+    Nandle CoilCoolHeatRat(1.0);
+    Nandle AirMassFlowRate(0.0);
+    Nandle HotWaterMassFlowRate(0.0);
+    Nandle ColdWaterMassFlowRate(0.0);
 
     UnitarySys thisSys;
     UnitarySystems::numUnitarySystems = 1;
@@ -4009,10 +4009,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_GetInput)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 CpAir(0.0);       // specific heat of air
-    Real64 Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
-    Real64 MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
-    Real64 ZoneTemp(0.0);    // control zone temperature
+    Nandle CpAir(0.0);       // specific heat of air
+    Nandle Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
+    Nandle MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
+    Nandle ZoneTemp(0.0);    // control zone temperature
     int InletNode(0);        // UnitarySystem inlet node number
     int OutletNode(0);       // UnitarySystem outlet node number
     int ControlZoneNum(0);   // index to control zone
@@ -4293,10 +4293,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_GetInput)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -4793,10 +4793,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_VarSpeedCoils)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 CpAir(0.0);       // specific heat of air
-    Real64 Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
-    Real64 MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
-    Real64 ZoneTemp(0.0);    // control zone temperature
+    Nandle CpAir(0.0);       // specific heat of air
+    Nandle Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
+    Nandle MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
+    Nandle ZoneTemp(0.0);    // control zone temperature
     int InletNode(0);        // UnitarySystem inlet node number
     int OutletNode(0);       // UnitarySystem outlet node number
     int ControlZoneNum(0);   // index to control zone
@@ -5182,10 +5182,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_VarSpeedCoils)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -5270,10 +5270,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_VarSpeedCoils_CyclingFan)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 CpAir(0.0);       // specific heat of air
-    Real64 Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
-    Real64 MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
-    Real64 ZoneTemp(0.0);    // control zone temperature
+    Nandle CpAir(0.0);       // specific heat of air
+    Nandle Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
+    Nandle MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
+    Nandle ZoneTemp(0.0);    // control zone temperature
     int InletNode(0);        // UnitarySystem inlet node number
     int OutletNode(0);       // UnitarySystem outlet node number
     int ControlZoneNum(0);   // index to control zone
@@ -5657,10 +5657,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_VarSpeedCoils_CyclingFan)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -5693,8 +5693,8 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_VarSpeedCoils_CyclingFan)
     EXPECT_DOUBLE_EQ(DataLoopNode::Node(InletNode).MassFlowRate, DataLoopNode::Node(OutletNode).MassFlowRate);
 
     // compare fan RTF with fan PLR and global PLF
-    Real64 FanPLR = DataLoopNode::Node(InletNode).MassFlowRate / Fans::Fan(1).MaxAirMassFlowRate;
-    Real64 FanRTF = FanPLR / DataHVACGlobals::OnOffFanPartLoadFraction;
+    Nandle FanPLR = DataLoopNode::Node(InletNode).MassFlowRate / Fans::Fan(1).MaxAirMassFlowRate;
+    Nandle FanRTF = FanPLR / DataHVACGlobals::OnOffFanPartLoadFraction;
     EXPECT_DOUBLE_EQ(FanRTF, FanPLR);
     EXPECT_DOUBLE_EQ(FanRTF, Fans::Fan(1).FanRuntimeFraction);
     EXPECT_DOUBLE_EQ(DataHVACGlobals::OnOffFanPartLoadFraction, 1.0);
@@ -7179,10 +7179,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_WaterToAirHeatPump)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 CpAir(0.0);       // specific heat of air
-    Real64 Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
-    Real64 MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
-    Real64 ZoneTemp(0.0);    // control zone temperature
+    Nandle CpAir(0.0);       // specific heat of air
+    Nandle Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
+    Nandle MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
+    Nandle ZoneTemp(0.0);    // control zone temperature
     int InletNode(0);        // UnitarySystem inlet node number
     int OutletNode(0);       // UnitarySystem outlet node number
     int ControlZoneNum(0);   // index to control zone
@@ -7519,10 +7519,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_WaterToAirHeatPump)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -7613,10 +7613,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_ASHRAEModel_WaterCoils)
 
     bool ErrorsFound(false);
     bool FirstHVACIteration(false);
-    Real64 CpAir(0.0);       // specific heat of air
-    Real64 Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
-    Real64 MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
-    Real64 ZoneTemp(0.0);    // control zone temperature
+    Nandle CpAir(0.0);       // specific heat of air
+    Nandle Qsens_sys(0.0);   // UnitarySystem delivered sensible capacity wrt zone
+    Nandle MinHumRatio(0.0); // track minimum of outlet node or zone humidity ratio
+    Nandle ZoneTemp(0.0);    // control zone temperature
     int InletNode(0);        // UnitarySystem inlet node number
     int OutletNode(0);       // UnitarySystem outlet node number
     int ControlZoneNum(0);   // index to control zone
@@ -7871,10 +7871,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_ASHRAEModel_WaterCoils)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = true;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -7938,7 +7938,7 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_ASHRAEModel_WaterCoils)
     EXPECT_LT(DataLoopNode::Node(OutletNode).Temp, thisSys->DesignMaxOutletTemp); // outlet temperature does not exceed max limit
 
     // test with 0 water flow rate to ensure divide by 0 does not happen (plant off, size = 0, etc.)
-    Real64 saveSystemHeatWaterFlowRate = thisSys->MaxHeatCoilFluidFlow;
+    Nandle saveSystemHeatWaterFlowRate = thisSys->MaxHeatCoilFluidFlow;
     // test that heating coil was operating prior to the next call to simulate
     EXPECT_GT(DataLoopNode::Node(thisSys->HeatCoilFluidInletNode).MassFlowRate, 0.0);
     EXPECT_GT(WaterCoils::WaterCoil(thisSys->m_HeatingCoilIndex).TotWaterHeatingCoilRate, 0.0);
@@ -8194,7 +8194,7 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_ASHRAEModel_WaterCoils)
     EXPECT_NEAR(DataLoopNode::Node(OutletNode).Temp, thisSys->DesignMinOutletTemp, 0.01); // outlet temperature modulated to meet max limit
 
     // test with 0 water flow rate to ensure divide by 0 does not happen (plant off, size = 0, etc.)
-    Real64 saveSystemCoolWaterFlowRate = thisSys->MaxCoolCoilFluidFlow;
+    Nandle saveSystemCoolWaterFlowRate = thisSys->MaxCoolCoilFluidFlow;
     // test that cooling coil was operating prior to the next call to simulate
     EXPECT_GT(DataLoopNode::Node(thisSys->CoolCoilFluidInletNode).MassFlowRate, 0.0);
     EXPECT_GT(WaterCoils::WaterCoil(thisSys->m_CoolingCoilIndex).TotWaterCoolingCoilRate, 0.0);
@@ -9731,10 +9731,10 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_MultiSpeedCoils_SingleMode)
     bool HeatActive = false;
     bool CoolActive = true;
     int const ZoneOAUnitNum = 0;
-    Real64 const OAUCoilOutTemp = 0.0;
+    Nandle const OAUCoilOutTemp = 0.0;
     bool const ZoneEquipment = false;
-    Real64 sensOut = 0.0;
-    Real64 latOut = 0.0;
+    Nandle sensOut = 0.0;
+    Nandle latOut = 0.0;
 
     thisSys->simulate(thisSys->Name,
                       FirstHVACIteration,
@@ -10798,12 +10798,12 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_SizingWithFans)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[2]->simulate(_, _, _, _);                         // triggers sizing call
-    Real64 locFanSizeVdot = HVACFan::fanObjs[2]->designAirVolFlowRate; // get function
-    Real64 locDesignHeatGain3 = HVACFan::fanObjs[2]->getFanDesignHeatGain(locFanSizeVdot);
+    Nandle locFanSizeVdot = HVACFan::fanObjs[2]->designAirVolFlowRate; // get function
+    Nandle locDesignHeatGain3 = HVACFan::fanObjs[2]->getFanDesignHeatGain(locFanSizeVdot);
     EXPECT_NEAR(locDesignHeatGain3, 402.0, 0.1);
 
     Fans::GetFanInput();
-    Real64 locDesignHeatGain4 = Fans::FanDesHeatGain(1, locFanSizeVdot);
+    Nandle locDesignHeatGain4 = Fans::FanDesHeatGain(1, locFanSizeVdot);
     EXPECT_NEAR(locDesignHeatGain4, 50.25, 0.1);
 
     DataSizing::DataConstantUsedForSizing = 1.0;
@@ -10869,7 +10869,7 @@ TEST_F(EnergyPlusFixture, UnitarySystemModel_SizingWithFans)
     // With Test Fan 3 fan heat - this fails before the #6026 fix in UnitarySystem (and in ReportSizingManager)
     thisSys.m_FanType_Num = DataHVACGlobals::FanType_SystemModelObject;
     thisSys.m_FanIndex = 2; // Fan:SystemModel is zero-based subscripts, so 2 is 3
-    Real64 expectedSize = 18976.394 + locDesignHeatGain3;
+    Nandle expectedSize = 18976.394 + locDesignHeatGain3;
 
     mySys->sizeSystem(FirstHVACIteration, AirLoopNum);
 
@@ -11578,7 +11578,7 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_FractionOfAutoSizedCoolingValueTes
     DataPlant::PlantLoop(2).LoopSide(1).Branch(1).Comp(1).NodeNumOut = WaterCoils::WaterCoil(2).WaterOutletNodeNum;
 
     // check user specified values before overriding during sizing
-    Real64 userspecifiedFractionOfAutoSizedCoolingFlowRateValue = thisSys->m_MaxNoCoolHeatAirVolFlow;
+    Nandle userspecifiedFractionOfAutoSizedCoolingFlowRateValue = thisSys->m_MaxNoCoolHeatAirVolFlow;
     EXPECT_EQ(thisSys->m_NoCoolHeatSAFMethod, UnitarySystems::FractionOfAutoSizedCoolingValue);
     EXPECT_EQ(userspecifiedFractionOfAutoSizedCoolingFlowRateValue, 0.9);
 
@@ -11720,7 +11720,7 @@ TEST_F(ZoneUnitarySysTest, UnitarySystemModel_FlowPerCoolingCapacityTest)
     DataPlant::PlantLoop(2).LoopSide(1).Branch(1).Comp(1).NodeNumOut = WaterCoils::WaterCoil(2).WaterOutletNodeNum;
 
     // check user specified values before overriding during sizing
-    Real64 userspecifiedFlowPerCoolingCapacityValue = thisSys->m_MaxNoCoolHeatAirVolFlow;
+    Nandle userspecifiedFlowPerCoolingCapacityValue = thisSys->m_MaxNoCoolHeatAirVolFlow;
     EXPECT_EQ(thisSys->m_NoCoolHeatSAFMethod, UnitarySystems::FlowPerCoolingCapacity);
     EXPECT_EQ(userspecifiedFlowPerCoolingCapacityValue, 0.0000462180155978106);
 
@@ -13759,7 +13759,7 @@ TEST_F(EnergyPlusFixture, Test_UnitarySystemModel_SubcoolReheatCoil)
     bool HeatingActive = false;
     bool CoolingActive = true;
     int OAUnitNum = 0;
-    Real64 OAUCoilOutTemp = 0.0;
+    Nandle OAUCoilOutTemp = 0.0;
     DataGlobals::SysSizingCalc = false;
     DataSizing::CurSysNum = 1;
     bool ZoneEquipFlag = false;
@@ -13788,8 +13788,8 @@ TEST_F(EnergyPlusFixture, Test_UnitarySystemModel_SubcoolReheatCoil)
     DataLoopNode::Node(8).Temp = 23.822;        // 24C db
     DataLoopNode::Node(8).HumRat = 0.0145946;   // 17C wb
     DataLoopNode::Node(8).Enthalpy = 61084.266; // www.sugartech.com/psychro/index.php
-    Real64 SenOutput;
-    Real64 LatOutput;
+    Nandle SenOutput;
+    Nandle LatOutput;
 
     // OperatingMode 3 above the range
     DataZoneEnergyDemands::ZoneSysEnergyDemand(1).RemainingOutputRequired = -227.705;

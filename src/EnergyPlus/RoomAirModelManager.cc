@@ -1426,7 +1426,7 @@ namespace RoomAirModelManager {
         int EquipLoop;
         int TotNumEquip;
         bool IntEquipError;
-        Real64 SumFraction;
+        Nandle SumFraction;
         std::string Name;
         int GainNum;
         int RAFNNum;
@@ -1883,7 +1883,7 @@ namespace RoomAirModelManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const BaseDischargeCoef(0.62);
+        Nandle const BaseDischargeCoef(0.62);
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -1916,22 +1916,22 @@ namespace RoomAirModelManager {
         static int Loop2(0);                     // counter
         static int i(0);                         // counter
         static int N(0);                         // counter
-        static Real64 Z1ZoneAux(0.0);            // Auxiliary variables
-        static Real64 Z2ZoneAux(0.0);            // Auxiliary variables
-        static Real64 Z1Zone(0.0);               // Auxiliary variables
-        static Real64 Z2Zone(0.0);               // Auxiliary variables
-        static Real64 CeilingHeightDiffMax(0.1); // Maximum difference between wall height and ceiling height
+        static Nandle Z1ZoneAux(0.0);            // Auxiliary variables
+        static Nandle Z2ZoneAux(0.0);            // Auxiliary variables
+        static Nandle Z1Zone(0.0);               // Auxiliary variables
+        static Nandle Z2Zone(0.0);               // Auxiliary variables
+        static Nandle CeilingHeightDiffMax(0.1); // Maximum difference between wall height and ceiling height
         bool SetZoneAux;
         Array1D_int AuxSurf;
         int MaxSurf;
         Array2D_int AuxAirflowNetworkSurf;
-        Real64 WidthFactMax;
-        Real64 HeightFactMax;
-        Real64 WidthFact;
-        Real64 HeightFact;
+        Nandle WidthFactMax;
+        Nandle HeightFactMax;
+        Nandle WidthFact;
+        Nandle HeightFact;
         static int Loop3(0);    // counter
         int ZoneEquipConfigNum; // counter
-        Real64 AinCV;
+        Nandle AinCV;
         int AirflowNetworkSurfPtr;
         int NSides;
         static bool MyOneTimeFlag(true);
@@ -2006,10 +2006,10 @@ namespace RoomAirModelManager {
                 for (SurfNum = Zone(ZNum).SurfaceFirst; SurfNum <= Zone(ZNum).SurfaceLast; ++SurfNum) {
                     if (Surface(SurfNum).Class != SurfaceClass_IntMass) {
                         // Recalculate lowest and highest height for the zone
-                        Z1Zone = std::numeric_limits<Real64>::max();
-                        Z2Zone = std::numeric_limits<Real64>::lowest();
+                        Z1Zone = std::numeric_limits<Nandle>::max();
+                        Z2Zone = std::numeric_limits<Nandle>::lowest();
                         for (int i = 1, u = Surface(SurfNum).Sides; i <= u; ++i) {
-                            Real64 const z_i(Surface(SurfNum).Vertex(i).z);
+                            Nandle const z_i(Surface(SurfNum).Vertex(i).z);
                             Z1Zone = std::min(Z1Zone, z_i);
                             Z2Zone = std::max(Z2Zone, z_i);
                         }
@@ -2125,7 +2125,7 @@ namespace RoomAirModelManager {
                 // the 0 component of the array has the number of relevant AirflowNetwork surfaces for the zone
                 AirflowNetworkSurfaceUCSDCV(0, Loop) = AuxSurf(Loop);
                 if (AuxSurf(Loop) != 0) {
-                    Real64 const ceilingHeight(ZoneCeilingHeight((Loop - 1) * 2 + 1));
+                    Nandle const ceilingHeight(ZoneCeilingHeight((Loop - 1) * 2 + 1));
                     SurfNum = 1;
                     for (Loop2 = 1; Loop2 <= AirflowNetwork::NumOfLinksMultiZone; ++Loop2) {
                         if (Surface(AirflowNetwork::MultizoneSurfaceData(Loop2).SurfNum).Zone == Loop) {
@@ -2175,9 +2175,9 @@ namespace RoomAirModelManager {
                             if (AirflowNetwork::AirflowNetworkCompData(CompNum).CompTypeNum == AirflowNetwork::CompTypeNum_DOP) {
                                 AirflowNetworkSurfPtr = AirflowNetwork::MultizoneSurfaceData(Loop2).SurfNum;
                                 NSides = Surface(AirflowNetwork::MultizoneSurfaceData(Loop2).SurfNum).Sides;
-                                Real64 z_min(std::numeric_limits<Real64>::max()), z_max(std::numeric_limits<Real64>::lowest());
+                                Nandle z_min(std::numeric_limits<Nandle>::max()), z_max(std::numeric_limits<Nandle>::lowest());
                                 for (int i = 1; i <= NSides; ++i) {
-                                    Real64 const z_i(Surface(AirflowNetworkSurfPtr).Vertex(i).z);
+                                    Nandle const z_i(Surface(AirflowNetworkSurfPtr).Vertex(i).z);
                                     z_min = std::min(z_min, z_i);
                                     z_max = std::max(z_max, z_i);
                                 }
@@ -2187,9 +2187,9 @@ namespace RoomAirModelManager {
                                        AirflowNetwork::CompTypeNum_SCR) { // surface type = CRACK
                                 AirflowNetworkSurfPtr = AirflowNetwork::MultizoneSurfaceData(Loop2).SurfNum;
                                 NSides = Surface(AirflowNetwork::MultizoneSurfaceData(Loop2).SurfNum).Sides;
-                                Real64 z_min(std::numeric_limits<Real64>::max()), z_max(std::numeric_limits<Real64>::lowest());
+                                Nandle z_min(std::numeric_limits<Nandle>::max()), z_max(std::numeric_limits<Nandle>::lowest());
                                 for (int i = 1; i <= NSides; ++i) {
-                                    Real64 const z_i(Surface(AirflowNetworkSurfPtr).Vertex(i).z);
+                                    Nandle const z_i(Surface(AirflowNetworkSurfPtr).Vertex(i).z);
                                     z_min = std::min(z_min, z_i);
                                     z_max = std::max(z_max, z_i);
                                 }
@@ -2820,7 +2820,7 @@ namespace RoomAirModelManager {
         int MaxAlphas = 0;       // Maximum number of alpha input fields
         int TotalArgs = 0;       // Total number of alpha and numeric arguments(max) for a
         Array1D_string Alphas;   // Alpha input items for object
-        Array1D<Real64> Numbers; // Numeric input items for object
+        Array1D<Nandle> Numbers; // Numeric input items for object
         bool errorfound;
 
         NumAlphas = 1;

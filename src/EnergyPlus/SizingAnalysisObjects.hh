@@ -61,10 +61,10 @@ namespace EnergyPlus {
 class SystemTimestepObject
 {
 public:
-    Real64 CurMinuteStart = 0.0;   // minutes at beginning of system timestep
-    Real64 CurMinuteEnd = 0.0;     // minutes at end of system timestep
-    Real64 TimeStepDuration = 0.0; // in fractional hours, length of timestep
-    Real64 LogDataValue = 0.0;     // raw hard value, obtained from pointer
+    Nandle CurMinuteStart = 0.0;   // minutes at beginning of system timestep
+    Nandle CurMinuteEnd = 0.0;     // minutes at end of system timestep
+    Nandle TimeStepDuration = 0.0; // in fractional hours, length of timestep
+    Nandle LogDataValue = 0.0;     // raw hard value, obtained from pointer
     int stStepsIntoZoneStep = 0;
 };
 
@@ -76,11 +76,11 @@ public:
     int dayOfSim = 0; // since start of simulation
     int hourOfDay = 0;
     int ztStepsIntoPeriod = 0;     // count of zone timesteps into period
-    Real64 stepStartMinute = 0.0;  // minutes at beginning of zone timestep
-    Real64 stepEndMinute = 0.0;    // minutes at end of zone timestep
-    Real64 timeStepDuration = 0.0; // in fractional hours, length of timestep
-    Real64 logDataValue = 0.0;
-    Real64 runningAvgDataValue = 0.0;
+    Nandle stepStartMinute = 0.0;  // minutes at beginning of zone timestep
+    Nandle stepEndMinute = 0.0;    // minutes at end of zone timestep
+    Nandle timeStepDuration = 0.0; // in fractional hours, length of timestep
+    Nandle logDataValue = 0.0;
+    Nandle runningAvgDataValue = 0.0;
     bool hasSystemSubSteps = false;
     int numSubSteps = 0;
     std::vector<SystemTimestepObject> subSteps; // nested object array for system timesteps inside here.
@@ -91,7 +91,7 @@ public:
         int daySim,
         int hourDay,
         int timeStep,
-        Real64 timeStepDurat,
+        Nandle timeStepDurat,
         int numOfTimeStepsPerHour);
 
     ZoneTimestepObject(); // default constructor
@@ -111,7 +111,7 @@ public:
     std::map<int, int> newEnvrnToSeedEnvrnMap; // key is the new HVAC sim envrionment number, produces Seed environment number
     int NumOfStepsInLogSet;                    // sum of all zone timestep steps in log
     int timeStepsInAverage;                    // breadth back in time for running average, zone timesteps
-    Real64 &p_rVariable;                       // reference to variable being loggged
+    Nandle &p_rVariable;                       // reference to variable being loggged
 
     std::vector<ZoneTimestepObject> ztStepObj; // will be sized to the sum of all steps, eg. timesteps in hour * 24 hours * 2 design days.
 
@@ -125,7 +125,7 @@ public:
 
     ZoneTimestepObject GetLogVariableDataMax();
 
-    Real64 GetLogVariableDataAtTimestamp(ZoneTimestepObject tmpztStepStamp);
+    Nandle GetLogVariableDataAtTimestamp(ZoneTimestepObject tmpztStepStamp);
 
     void ReInitLogForIteration();
 
@@ -142,7 +142,7 @@ class SizingLoggerFramework
 public:
     std::vector<SizingLog> logObjs;
 
-    int SetupVariableSizingLog(Real64 &rVariable, int stepsInAverage);
+    int SetupVariableSizingLog(Nandle &rVariable, int stepsInAverage);
 
     ZoneTimestepObject PrepareZoneTimestepStamp();
 
@@ -167,8 +167,8 @@ public:
     int plantSizingIndex = 0;
     int numTimeStepsInAvg = 0;
     ZoneTimestepObject newFoundMassFlowRateTimeStamp; // result for max mass flow, as a timestamp object
-    Real64 peakMdotCoincidentReturnTemp;
-    Real64 peakMdotCoincidentDemand;
+    Nandle peakMdotCoincidentReturnTemp;
+    Nandle peakMdotCoincidentDemand;
     bool anotherIterationDesired = false;
     int supplyInletNodeFlow_LogIndex; // loop flow rate index for vector of log objects in the logger framework
     int supplyInletNodeTemp_LogIndex; // loop return temperature index for vector of log objects in the logger framework
@@ -177,22 +177,22 @@ public:
     bool peakDemandAndFlowMismatch;
     ZoneTimestepObject NewFoundMaxDemandTimeStamp; // result for max loop demand, as a timestamp object
 
-    Real64 peakDemandReturnTemp;
-    Real64 peakDemandMassFlow;
+    Nandle peakDemandReturnTemp;
+    Nandle peakDemandMassFlow;
 
-    PlantCoinicidentAnalysis(std::string loopName, int loopIndex, int nodeNum, Real64 density, Real64 cp, int numStepsInAvg, int sizingIndex);
+    PlantCoinicidentAnalysis(std::string loopName, int loopIndex, int nodeNum, Nandle density, Nandle cp, int numStepsInAvg, int sizingIndex);
 
     void ResolveDesignFlowRate(OutputFiles &outputFiles, int const HVACSizingIterCount);
 
 private:
     std::string name = "";                // name of analysis object
-    Real64 newAdjustedMassFlowRate = 0.0; // with sizing factor included...
-    Real64 newFoundMassFlowRate = 0.0;
-    Real64 significantNormalizedChange = 0.005; // criteria for if sizing algorithm yeild a change large enough worth making another pass.
-    Real64 densityForSizing = 0.0;
-    Real64 specificHeatForSizing = 0.0;
-    Real64 previousVolDesignFlowRate = 0.0;
-    Real64 newVolDesignFlowRate = 0.0;
+    Nandle newAdjustedMassFlowRate = 0.0; // with sizing factor included...
+    Nandle newFoundMassFlowRate = 0.0;
+    Nandle significantNormalizedChange = 0.005; // criteria for if sizing algorithm yeild a change large enough worth making another pass.
+    Nandle densityForSizing = 0.0;
+    Nandle specificHeatForSizing = 0.0;
+    Nandle previousVolDesignFlowRate = 0.0;
+    Nandle newVolDesignFlowRate = 0.0;
 
     bool CheckTimeStampForNull(ZoneTimestepObject testStamp);
 };

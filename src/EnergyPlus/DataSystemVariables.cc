@@ -176,9 +176,9 @@ namespace DataSystemVariables {
     bool ReportExtShadingSunlitFrac(false);              // when true, the sunlit fraction for all surfaces are exported as a csv format output
 
     // This update the value during the warmup added for FMI
-    Real64 Elapsed_Time(0.0);       // For showing elapsed time at end of run
-    Real64 Time_Start(0.0);         // Call to CPU_Time for start time of simulation
-    Real64 Time_Finish(0.0);        // Call to CPU_Time for end time of simulation
+    Nandle Elapsed_Time(0.0);       // For showing elapsed time at end of run
+    Nandle Time_Start(0.0);         // Call to CPU_Time for start time of simulation
+    Nandle Time_Finish(0.0);        // Call to CPU_Time for end time of simulation
     std::string MinReportFrequency; // String for minimum reporting frequency
     bool SortedIDD(true);           // after processing, use sorted IDD to obtain Defs, etc.
     bool lMinimalShadowing(false);  // TRUE if MinimalShadowing is to override Solar Distribution flag

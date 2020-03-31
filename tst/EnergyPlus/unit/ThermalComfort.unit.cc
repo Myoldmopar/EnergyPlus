@@ -758,7 +758,7 @@ TEST_F(EnergyPlusFixture, ThermalComfort_CalcSurfaceWeightedMRT)
 
     int ZoneNum(1);
     int SurfNum(1);
-    Real64 RadTemp;
+    Nandle RadTemp;
 
     TH.deallocate();
     Surface.deallocate();
@@ -812,7 +812,7 @@ TEST_F(EnergyPlusFixture, ThermalComfort_CalcSurfaceWeightedMRT)
 TEST_F(EnergyPlusFixture, ThermalComfort_CalcAngleFactorMRT)
 {
 
-    Real64 RadTemp;
+    Nandle RadTemp;
 
     AngleFactorList.allocate(1);
     AngleFactorList(1).TotAngleFacSurfaces = 3;

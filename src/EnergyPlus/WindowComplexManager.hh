@@ -74,8 +74,8 @@ namespace WindowComplexManager {
     // Data
     // MODULE PARAMETER DEFINITIONS:
 
-    extern Real64 const sigma; // Stefan-Boltzmann constant
-    extern Real64 const PressureDefault;
+    extern Nandle const sigma; // Stefan-Boltzmann constant
+    extern Nandle const PressureDefault;
 
     extern int const Calculate_Geometry;
     extern int const Copy_Geometry;
@@ -104,8 +104,8 @@ namespace WindowComplexManager {
         // Members
         int NumStates; // No States for this window
         int SurfNo;    // Surface number of window
-        // Real64 Azimuth; // Window surface azimuth
-        // Real64 Tilt; // Window surface tilt
+        // Nandle Azimuth; // Window surface azimuth
+        // Nandle Tilt; // Window surface tilt
 
         // Default Constructor
         WindowIndex() : NumStates(0)
@@ -181,13 +181,13 @@ namespace WindowComplexManager {
     void ConstructBasis(int const IConst, // Index for accessing Construct array
                         BasisStruct &Basis);
 
-    void FillBasisElement(Real64 const Theta, // Central polar angle of element
-                          Real64 const Phi,   // Central azimuthal angle of element
+    void FillBasisElement(Nandle const Theta, // Central polar angle of element
+                          Nandle const Phi,   // Central azimuthal angle of element
                           int const Elem,     // Index number of element in basis
                           BasisElemDescr &BasisElem,
-                          Real64 const LowerTheta, // Lower edge of element (polar angle)
-                          Real64 const UpperTheta, // Upper edge of element (polar angle)
-                          Real64 const DPhi,       // Width of element (azimuthal angle)
+                          Nandle const LowerTheta, // Lower edge of element (polar angle)
+                          Nandle const UpperTheta, // Upper edge of element (polar angle)
+                          Nandle const DPhi,       // Width of element (azimuthal angle)
                           int const InputType      // Basis type
     );
 
@@ -206,17 +206,17 @@ namespace WindowComplexManager {
                                     BSDFStateDescr &State        // State Description
     );
 
-    Real64 SkyWeight(Vector const &DirVec); // Direction of the element to be weighted
+    Nandle SkyWeight(Vector const &DirVec); // Direction of the element to be weighted
 
-    Real64 SkyGndWeight(Vector const &PosVec); // x,y,z(=0) of ground intersection pt
+    Nandle SkyGndWeight(Vector const &PosVec); // x,y,z(=0) of ground intersection pt
 
     BSDFDaylghtPosition DaylghtAltAndAzimuth(Vector const &UnitVect); // vector which needs to be converted
 
-    Vector WorldVectFromW6(Real64 const Theta, // Polar angle in W6 Coords
-                           Real64 const Phi,   // Azimuthal angle in W6 Coords
+    Vector WorldVectFromW6(Nandle const Theta, // Polar angle in W6 Coords
+                           Nandle const Phi,   // Azimuthal angle in W6 Coords
                            int const RadType,  // Type of radiation: Front_Incident, etc.
-                           Real64 const Gamma, // Surface tilt angle, radians, world coordinate system
-                           Real64 const Alpha  // Surface azimuth, radians, world coordinate system
+                           Nandle const Gamma, // Surface tilt angle, radians, world coordinate system
+                           Nandle const Alpha  // Surface azimuth, radians, world coordinate system
     );
 
     int FindInBasis(Vector const &RayToFind,  // Ray vector direction in world CS
@@ -224,35 +224,35 @@ namespace WindowComplexManager {
                     int const ISurf,          // Window Surface number
                     int const IState,         // Complex Fenestration state number
                     BasisStruct const &Basis, // Complex Fenestration basis root
-                    Real64 &Theta,            // Theta value for ray
-                    Real64 &Phi               // Phi value for ray
+                    Nandle &Theta,            // Theta value for ray
+                    Nandle &Phi               // Phi value for ray
     );
 
     void W6CoordsFromWorldVect(Vector const &RayVect, // Ray vector direction in world CS
                                int const RadType,     // Type of radiation: Front_Incident, etc.
-                               Real64 const Gamma,    // Surface tilt angle, world coordinate system
-                               Real64 const Alpha,    // Surface azimuth, world coordinate system
-                               Real64 &Theta,         // Polar angle in W6 Coords
-                               Real64 &Phi            // Azimuthal angle in W6 Coords
+                               Nandle const Gamma,    // Surface tilt angle, world coordinate system
+                               Nandle const Alpha,    // Surface azimuth, world coordinate system
+                               Nandle &Theta,         // Polar angle in W6 Coords
+                               Nandle &Phi            // Azimuthal angle in W6 Coords
     );
 
     void CalcComplexWindowThermal(int const SurfNum,          // Surface number
                                   int &ConstrNum,             // Construction number
-                                  Real64 const HextConvCoeff, // Outside air film conductance coefficient
-                                  Real64 &SurfInsideTemp,     // Inside window surface temperature
-                                  Real64 &SurfOutsideTemp,    // Outside surface temperature (C)
-                                  Real64 &SurfOutsideEmiss,
+                                  Nandle const HextConvCoeff, // Outside air film conductance coefficient
+                                  Nandle &SurfInsideTemp,     // Inside window surface temperature
+                                  Nandle &SurfOutsideTemp,    // Outside surface temperature (C)
+                                  Nandle &SurfOutsideEmiss,
                                   int const CalcCondition // Calucation condition (summer, winter or no condition)
     );
 
     // This function check if gas with molecular weight has already been feed into coefficients and
     // feed arrays
 
-    void CheckGasCoefs(Real64 const currentWeight, int &indexNumber, Array1D<Real64> &wght, bool &feedData);
+    void CheckGasCoefs(Nandle const currentWeight, int &indexNumber, Array1D<Nandle> &wght, bool &feedData);
 
-    int SearchAscTable(Real64 const y,            // Value to be found in the table
+    int SearchAscTable(Nandle const y,            // Value to be found in the table
                        int const n,               // Number of values in the table
-                       Array1S<Real64> const ytab // Table of values, monotonic, ascending order
+                       Array1S<Nandle> const ytab // Table of values, monotonic, ascending order
     );
 
     //=================================================================================================

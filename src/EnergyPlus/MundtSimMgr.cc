@@ -97,9 +97,9 @@ namespace MundtSimMgr {
 
     // Data
     // MODULE PARAMETER DEFINITIONS:
-    Real64 const CpAir(1005.0);   // Specific heat of air
-    Real64 const MinSlope(0.001); // Bound on result from Mundt model
-    Real64 const MaxSlope(5.0);   // Bound on result from Mundt Model
+    Nandle const CpAir(1005.0);   // Specific heat of air
+    Nandle const MinSlope(0.001); // Bound on result from Mundt model
+    Nandle const MaxSlope(5.0);   // Bound on result from Mundt Model
 
     static std::string const BlankString;
 
@@ -121,14 +121,14 @@ namespace MundtSimMgr {
     Array1D_int RoomNodeIDs;         // ids of the first NumRoomNode Air Nodes
     Array1D_int ID1dSurf;            // numbers used to identify surfaces
     int MundtZoneNum(0);             // index of zones using Mundt model
-    Real64 ZoneHeight(0.0);          // zone height
-    Real64 ZoneFloorArea(0.0);       // zone floor area
-    Real64 QventCool(0.0);           // heat gain due to ventilation
-    Real64 ConvIntGain(0.0);         // heat gain due to internal gains
-    Real64 SupplyAirTemp(0.0);       // supply air temperature
-    Real64 SupplyAirVolumeRate(0.0); // supply air volume flowrate
-    Real64 ZoneAirDensity(0.0);      // zone air density
-    Real64 QsysCoolTot(0.0);         // zone sensible cooling load
+    Nandle ZoneHeight(0.0);          // zone height
+    Nandle ZoneFloorArea(0.0);       // zone floor area
+    Nandle QventCool(0.0);           // heat gain due to ventilation
+    Nandle ConvIntGain(0.0);         // heat gain due to internal gains
+    Nandle SupplyAirTemp(0.0);       // supply air temperature
+    Nandle SupplyAirVolumeRate(0.0); // supply air volume flowrate
+    Nandle ZoneAirDensity(0.0);      // zone air density
+    Nandle QsysCoolTot(0.0);         // zone sensible cooling load
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE MundtSimMgr
 
@@ -464,7 +464,7 @@ namespace MundtSimMgr {
         using Psychrometrics::PsyWFnTdpPb;
 
         // Locals
-        Real64 CpAir; // specific heat
+        Nandle CpAir; // specific heat
 
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
@@ -480,15 +480,15 @@ namespace MundtSimMgr {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int SurfNum;             // index for surfaces
         int NodeNum;             // index for air nodes
-        Real64 SumSysMCp;        // zone sum of air system MassFlowRate*Cp
-        Real64 SumSysMCpT;       // zone sum of air system MassFlowRate*Cp*T
-        Real64 MassFlowRate;     // mass flowrate
-        Real64 NodeTemp;         // node temperature
+        Nandle SumSysMCp;        // zone sum of air system MassFlowRate*Cp
+        Nandle SumSysMCpT;       // zone sum of air system MassFlowRate*Cp*T
+        Nandle MassFlowRate;     // mass flowrate
+        Nandle NodeTemp;         // node temperature
         int ZoneNode;            // index number for specified zone node
-        Real64 ZoneMassFlowRate; // zone mass flowrate
+        Nandle ZoneMassFlowRate; // zone mass flowrate
         int ZoneEquipConfigNum;  // index number for zone equipment configuration
-        Real64 ZoneMult;         // total zone multiplier
-        Real64 RetAirConvGain;
+        Nandle ZoneMult;         // total zone multiplier
+        Nandle RetAirConvGain;
 
         // FLOW:
 
@@ -688,16 +688,16 @@ namespace MundtSimMgr {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 TAirFoot;        // air temperature at the floor
-        Real64 TAirCeil;        // air temperature at the ceiling
-        Real64 TLeaving;        // air temperature leaving zone (= return air temp)
-        Real64 TControlPoint;   // air temperature at thermostat
-        Real64 Slope;           // vertical air temperature gradient (slope) from Mundt equations
-        Real64 QequipConvFloor; // convective gain at the floor due to internal heat sources
-        Real64 QSensInfilFloor; // convective gain at the floor due to infiltration
-        Real64 FloorSumHAT;     // sum of hci*area*temp at the floor
-        Real64 FloorSumHA;      // sum of hci*area at the floor
-        Real64 TThisNode;       // dummy variable for air node temp
+        Nandle TAirFoot;        // air temperature at the floor
+        Nandle TAirCeil;        // air temperature at the ceiling
+        Nandle TLeaving;        // air temperature leaving zone (= return air temp)
+        Nandle TControlPoint;   // air temperature at thermostat
+        Nandle Slope;           // vertical air temperature gradient (slope) from Mundt equations
+        Nandle QequipConvFloor; // convective gain at the floor due to internal heat sources
+        Nandle QSensInfilFloor; // convective gain at the floor due to infiltration
+        Nandle FloorSumHAT;     // sum of hci*area*temp at the floor
+        Nandle FloorSumHA;      // sum of hci*area at the floor
+        Nandle TThisNode;       // dummy variable for air node temp
         int NodeNum;            // index for air nodes
         int SurfNum;            // index for surfaces
         int SurfCounted;        // number of surfaces assciated with an air node
@@ -778,7 +778,7 @@ namespace MundtSimMgr {
     //*****************************************************************************************
 
     void SetNodeResult(int const NodeID,       // node ID
-                       Real64 const TempResult // temperature for the specified air node
+                       Nandle const TempResult // temperature for the specified air node
     )
     {
 
@@ -824,7 +824,7 @@ namespace MundtSimMgr {
     //*****************************************************************************************
 
     void SetSurfTmeanAir(int const SurfID,    // surface ID
-                         Real64 const TeffAir // temperature of air node adjacent to the specified surface
+                         Nandle const TeffAir // temperature of air node adjacent to the specified surface
     )
     {
 
@@ -921,8 +921,8 @@ namespace MundtSimMgr {
         int SurfFirst;    // index number of the first surface in the zone
         int NumOfSurfs;   // number of surfaces in the zone
         int ZoneNodeNum;  // index number of the zone node
-        Real64 DeltaTemp; // dummy variable for temperature difference
-        // Real64 TRoomAverage; // dummy variable for mean air temperature
+        Nandle DeltaTemp; // dummy variable for temperature difference
+        // Nandle TRoomAverage; // dummy variable for mean air temperature
         // FLOW:
 
         // get surface info

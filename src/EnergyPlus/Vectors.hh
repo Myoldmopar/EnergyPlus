@@ -74,26 +74,26 @@ namespace Vectors {
 
     // Functions
 
-    Real64 AreaPolygon(int const n, Array1D<Vector> &p);
+    Nandle AreaPolygon(int const n, Array1D<Vector> &p);
 
-    Real64 VecSquaredLength(Vector const &vec);
+    Nandle VecSquaredLength(Vector const &vec);
 
-    Real64 VecLength(Vector const &vec);
+    Nandle VecLength(Vector const &vec);
 
     Vector VecNegate(Vector const &vec);
 
     Vector VecNormalize(Vector const &vec);
 
-    void VecRound(Vector &vec, Real64 const roundto);
+    void VecRound(Vector &vec, Nandle const roundto);
 
     void DetermineAzimuthAndTilt(Array1D<Vector> const &Surf, // Surface Definition
                                  int const NSides,            // Number of sides to surface
-                                 Real64 &Azimuth,             // Outward Normal Azimuth Angle
-                                 Real64 &Tilt,                // Tilt angle of surface
+                                 Nandle &Azimuth,             // Outward Normal Azimuth Angle
+                                 Nandle &Tilt,                // Tilt angle of surface
                                  Vector &lcsx,
                                  Vector &lcsy,
                                  Vector &lcsz,
-                                 Real64 const surfaceArea,
+                                 Nandle const surfaceArea,
                                  Vector const &NewellSurfaceNormalVector);
 
     void PlaneEquation(Array1D<Vector> &verts, // Structure of the surface
@@ -102,7 +102,7 @@ namespace Vectors {
                        bool &error             // returns true for degenerate surface
     );
 
-    Real64 Pt2Plane(Vector const &pt,   // Point for determining the distance
+    Nandle Pt2Plane(Vector const &pt,   // Point for determining the distance
                     PlaneEq const &pleq // Equation of the plane
     );
 
@@ -113,14 +113,14 @@ namespace Vectors {
     void CompareTwoVectors(Vector const &vector1, // standard vector
                            Vector const &vector2, // standard vector
                            bool &areSame,         // true if the two vectors are the same within specified tolerance
-                           Real64 const tolerance // specified tolerance
+                           Nandle const tolerance // specified tolerance
     );
 
-    void CalcCoPlanarNess(Array1D<Vector> &Surf, int const NSides, bool &IsCoPlanar, Real64 &MaxDist, int &ErrorVertex);
+    void CalcCoPlanarNess(Array1D<Vector> &Surf, int const NSides, bool &IsCoPlanar, Nandle &MaxDist, int &ErrorVertex);
 
     std::vector<int> PointsInPlane(Array1D<Vector> &BaseSurf, int const BaseSides, Array1D<Vector> &QuerySurf, int const QuerySides, bool &ErrorFound);
 
-    Real64 CalcPolyhedronVolume(Polyhedron const &Poly);
+    Nandle CalcPolyhedronVolume(Polyhedron const &Poly);
 
 } // namespace Vectors
 

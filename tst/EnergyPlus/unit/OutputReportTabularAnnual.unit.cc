@@ -127,8 +127,8 @@ TEST_F(EnergyPlusFixture, OutputReportTabularAnnual_SetupGathering)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    Real64 extLitPow;
-    Real64 extLitUse;
+    Nandle extLitPow;
+    Nandle extLitUse;
 
     SetupOutputVariable("Exterior Lights Electric Energy",
                         OutputProcessor::Unit::J,
@@ -198,8 +198,8 @@ TEST_F(EnergyPlusFixture, OutputReportTabularAnnual_GatherResults)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    Real64 extLitPow;
-    Real64 extLitUse;
+    Nandle extLitPow;
+    Nandle extLitUse;
 
     SetupOutputVariable("Exterior Lights Electric Energy",
                         OutputProcessor::Unit::J,
@@ -328,7 +328,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabularAnnual_columnHeadersToTitleCase)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    Real64 facilUse;
+    Nandle facilUse;
     SetupOutputVariable("Misc Facility Electric Energy",
                         OutputProcessor::Unit::J,
                         facilUse,
@@ -386,7 +386,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabularAnnual_invalidAggregationOrder)
 
     ASSERT_TRUE(process_idf(idf_objects));
 
-    Real64 facilUse;
+    Nandle facilUse;
     SetupOutputVariable("Misc Facility Electric Energy",
                         OutputProcessor::Unit::J,
                         facilUse,

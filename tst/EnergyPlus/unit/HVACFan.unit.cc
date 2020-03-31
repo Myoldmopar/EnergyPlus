@@ -97,11 +97,11 @@ TEST_F(EnergyPlusFixture, SystemFanObj_TestGetFunctions1)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);                         // triggers sizing call
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
     EXPECT_NEAR(1.0000, locFanSizeVdot, 0.00000001);
-    Real64 locDesignTempRise = HVACFan::fanObjs[0]->getFanDesignTemperatureRise();
+    Nandle locDesignTempRise = HVACFan::fanObjs[0]->getFanDesignTemperatureRise();
     EXPECT_NEAR(locDesignTempRise, 0.166, 0.001);
-    Real64 locDesignHeatGain = HVACFan::fanObjs[0]->getFanDesignHeatGain(locFanSizeVdot);
+    Nandle locDesignHeatGain = HVACFan::fanObjs[0]->getFanDesignHeatGain(locFanSizeVdot);
     EXPECT_NEAR(locDesignHeatGain, 200.0, 0.1);
     EXPECT_FALSE(HVACFan::fanObjs[0]->speedControl == HVACFan::FanSystem::SpeedControlMethod::Continuous);
 }
@@ -140,7 +140,7 @@ TEST_F(EnergyPlusFixture, SystemFanObj_FanSizing1)
     DataSizing::CurOASysNum = 0;
     DataSizing::DataNonZoneNonAirloopValue = 1.00635;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);                         // triggers sizing call
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
     EXPECT_NEAR(1.00635, locFanSizeVdot, 0.00001);
     DataSizing::DataNonZoneNonAirloopValue = 0.0;
 }
@@ -189,12 +189,12 @@ TEST_F(EnergyPlusFixture, SystemFanObj_TwoSpeedFanPowerCalc1)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
     EXPECT_NEAR(1.00, locFanSizeVdot, 0.00001);
 
     HVACFan::fanObjs[0]->simulate(0.75, _, _, _); // call for flow fraction of 0.75
-    Real64 locFanElecPower = HVACFan::fanObjs[0]->fanPower();
-    Real64 locExpectPower = (0.5 * 0.125 * 100.0) + (0.5 * 1.0 * 100.0);
+    Nandle locFanElecPower = HVACFan::fanObjs[0]->fanPower();
+    Nandle locExpectPower = (0.5 * 0.125 * 100.0) + (0.5 * 1.0 * 100.0);
     EXPECT_NEAR(locFanElecPower, locExpectPower, 0.01);
 
     HVACFan::fanObjs[0]->simulate(0.5, _, _, _); // call for flow fraction of 0.5
@@ -261,12 +261,12 @@ TEST_F(EnergyPlusFixture, SystemFanObj_TwoSpeedFanPowerCalc2)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
     EXPECT_NEAR(1.00, locFanSizeVdot, 0.00001);
 
     HVACFan::fanObjs[0]->simulate(0.75, _, _, _); // call for flow fraction of 0.75
-    Real64 locFanElecPower = HVACFan::fanObjs[0]->fanPower();
-    Real64 locExpectPower = (0.5 * 0.125 * 100.0) + (0.5 * 1.0 * 100.0);
+    Nandle locFanElecPower = HVACFan::fanObjs[0]->fanPower();
+    Nandle locExpectPower = (0.5 * 0.125 * 100.0) + (0.5 * 1.0 * 100.0);
     EXPECT_NEAR(locFanElecPower, locExpectPower, 0.01);
 
     HVACFan::fanObjs[0]->simulate(0.5, _, _, _); // call for flow fraction of 0.5
@@ -320,18 +320,18 @@ TEST_F(EnergyPlusFixture, SystemFanObj_TwoSpeedFanPowerCalc3)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
     EXPECT_NEAR(1.00, locFanSizeVdot, 0.00001);
 
     // 50% of the time at speed 1 (0.5 flow) and 50% of the time at speed 2 (1.0 flow), average flow 0.75, on for entire timestep
-    Real64 designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
-    Real64 massFlow1 = 0.5 * designMassFlowRate;
-    Real64 massFlow2 = designMassFlowRate;
-    Real64 runTimeFrac1 = 0.5;
-    Real64 runTimeFrac2 = 0.5;
+    Nandle designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
+    Nandle massFlow1 = 0.5 * designMassFlowRate;
+    Nandle massFlow2 = designMassFlowRate;
+    Nandle runTimeFrac1 = 0.5;
+    Nandle runTimeFrac2 = 0.5;
     HVACFan::fanObjs[0]->simulate(_, _, _, _, massFlow1, runTimeFrac1, massFlow2, runTimeFrac2);
-    Real64 locFanElecPower = HVACFan::fanObjs[0]->fanPower();
-    Real64 locExpectPower = (runTimeFrac1 * 0.125 * 100.0) + (runTimeFrac2 * 1.0 * 100.0);
+    Nandle locFanElecPower = HVACFan::fanObjs[0]->fanPower();
+    Nandle locExpectPower = (runTimeFrac1 * 0.125 * 100.0) + (runTimeFrac2 * 1.0 * 100.0);
     EXPECT_NEAR(locFanElecPower, locExpectPower, 0.01);
 
     // 100% of the time at average flow 0.75, on for entire timestep
@@ -419,18 +419,18 @@ TEST_F(EnergyPlusFixture, SystemFanObj_TwoSpeedFanPowerCalc4)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
     EXPECT_NEAR(1.00, locFanSizeVdot, 0.00001);
 
     // 50% of the time at speed 1 (0.5 flow) and 50% of the time at speed 2 (1.0 flow), average flow 0.75, on for entire timestep
-    Real64 designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
-    Real64 massFlow1 = 0.5 * designMassFlowRate;
-    Real64 massFlow2 = designMassFlowRate;
-    Real64 runTimeFrac1 = 0.5;
-    Real64 runTimeFrac2 = 0.5;
+    Nandle designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
+    Nandle massFlow1 = 0.5 * designMassFlowRate;
+    Nandle massFlow2 = designMassFlowRate;
+    Nandle runTimeFrac1 = 0.5;
+    Nandle runTimeFrac2 = 0.5;
     HVACFan::fanObjs[0]->simulate(_, _, _, _, massFlow1, runTimeFrac1, massFlow2, runTimeFrac2);
-    Real64 locFanElecPower = HVACFan::fanObjs[0]->fanPower();
-    Real64 locExpectPower = (0.5 * pow(0.5, 3) + 0.5 * 1.0) * HVACFan::fanObjs[0]->designElecPower;
+    Nandle locFanElecPower = HVACFan::fanObjs[0]->fanPower();
+    Nandle locExpectPower = (0.5 * pow(0.5, 3) + 0.5 * 1.0) * HVACFan::fanObjs[0]->designElecPower;
     EXPECT_NEAR(locFanElecPower, locExpectPower, 0.01);
 
     // 100% of the time at average flow 0.75, on for entire timestep
@@ -468,7 +468,7 @@ TEST_F(EnergyPlusFixture, SystemFanObj_FanEnergyIndex)
 {
     // this unit test checks the functions calculating FEI
     DataEnvironment::StdRhoAir = 1.2;
-    Real64 testFEI = HVACFan::FanSystem::report_fei(1.0, 1000.0, 100.0, 1.2);
+    Nandle testFEI = HVACFan::FanSystem::report_fei(1.0, 1000.0, 100.0, 1.2);
     EXPECT_NEAR(testFEI, 0.4917, 0.001);
 }
 
@@ -508,19 +508,19 @@ TEST_F(EnergyPlusFixture, SystemFanObj_DiscreteMode_noPowerFFlowCurve)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
     EXPECT_NEAR(1.00, locFanSizeVdot, 0.00001);
 
     // 50% of the time at speed 1 (0.5 flow) and 50% of the time at speed 2 (1.0 flow), average flow 0.75, on for entire timestep
-    Real64 designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
-    Real64 massFlow1 = 0.5 * designMassFlowRate;
-    Real64 massFlow2 = designMassFlowRate;
-    Real64 runTimeFrac1 = 0.5;
-    Real64 runTimeFrac2 = 0.5;
+    Nandle designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
+    Nandle massFlow1 = 0.5 * designMassFlowRate;
+    Nandle massFlow2 = designMassFlowRate;
+    Nandle runTimeFrac1 = 0.5;
+    Nandle runTimeFrac2 = 0.5;
     HVACFan::fanObjs[0]->simulate(_, _, _, _, massFlow1, runTimeFrac1, massFlow2, runTimeFrac2);
-    Real64 locFanElecPower = HVACFan::fanObjs[0]->fanPower();
+    Nandle locFanElecPower = HVACFan::fanObjs[0]->fanPower();
     // uses flow weighted power calculation. 50% of time at 50% flow and 50% of time at 100% flow
-    Real64 locExpectPower = (0.5 * 0.5 + 0.5 * 1.0) * HVACFan::fanObjs[0]->designElecPower; // expect 75% of power
+    Nandle locExpectPower = (0.5 * 0.5 + 0.5 * 1.0) * HVACFan::fanObjs[0]->designElecPower; // expect 75% of power
     EXPECT_NEAR(locFanElecPower, locExpectPower, 0.01);
 
     // 100% of the time at average flow 0.75, on for entire timestep
@@ -611,20 +611,20 @@ TEST_F(EnergyPlusFixture, SystemFanObj_DiscreteMode_EMSPressureRiseResetTest)
     DataEnvironment::StdRhoAir = 1.0;
 
     HVACFan::fanObjs[0]->simulate(_, _, _, _);
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate;
     EXPECT_NEAR(1.00, locFanSizeVdot, 0.00001);
 
     // 50% of the time at speed 1 (0.5 flow) and 50% of the time at speed 2 (1.0 flow)
     // average flow 0.75, on for entire timestep
-    Real64 designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
-    Real64 massFlow1 = 0.5 * designMassFlowRate;
-    Real64 massFlow2 = designMassFlowRate;
-    Real64 runTimeFrac1 = 0.5;
-    Real64 runTimeFrac2 = 0.5;
+    Nandle designMassFlowRate = locFanSizeVdot * DataEnvironment::StdRhoAir;
+    Nandle massFlow1 = 0.5 * designMassFlowRate;
+    Nandle massFlow2 = designMassFlowRate;
+    Nandle runTimeFrac1 = 0.5;
+    Nandle runTimeFrac2 = 0.5;
     HVACFan::fanObjs[0]->simulate(_, _, _, _, massFlow1, runTimeFrac1, massFlow2, runTimeFrac2);
-    Real64 locFanElecPower = HVACFan::fanObjs[0]->fanPower();
+    Nandle locFanElecPower = HVACFan::fanObjs[0]->fanPower();
     // uses flow weighted power calculation. 50% of time at 50% flow and 50% of time at 100% flow
-    Real64 locExpectPower = (0.5 * 0.5 + 0.5 * 1.0) * HVACFan::fanObjs[0]->designElecPower; // expect 75% of power
+    Nandle locExpectPower = (0.5 * 0.5 + 0.5 * 1.0) * HVACFan::fanObjs[0]->designElecPower; // expect 75% of power
     EXPECT_NEAR(locFanElecPower, locExpectPower, 0.01);
 
     // reset the pressure rise to -100.0 using EMS program

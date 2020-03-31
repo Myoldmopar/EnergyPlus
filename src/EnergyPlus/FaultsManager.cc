@@ -301,7 +301,7 @@ namespace FaultsManager {
         Array1D_bool lNumericFieldBlanks(10, false);
         Array1D_string cAlphaFieldNames(10);
         Array1D_string cNumericFieldNames(10);
-        Array1D<Real64> rNumericArgs(10); // Numeric input items for object
+        Array1D<Nandle> rNumericArgs(10); // Numeric input items for object
         std::string cFaultCurrentObject;
 
         if (RunFaultMgrOnceFlag) return;
@@ -1950,7 +1950,7 @@ namespace FaultsManager {
         }
     }
 
-    Real64 FaultProperties::CalFaultOffsetAct()
+    Nandle FaultProperties::CalFaultOffsetAct()
     {
 
         // SUBROUTINE INFORMATION:
@@ -1965,8 +1965,8 @@ namespace FaultsManager {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FaultFac(0.0);  // fault modification factor
-        Real64 OffsetAct(0.0); // actual offset after applying the modification factor
+        Nandle FaultFac(0.0);  // fault modification factor
+        Nandle OffsetAct(0.0); // actual offset after applying the modification factor
 
         // Check fault availability schedules
         if (GetCurrentScheduleValue(this->AvaiSchedPtr) > 0.0) {
@@ -1984,7 +1984,7 @@ namespace FaultsManager {
         return OffsetAct;
     }
 
-    Real64 FaultPropertiesFouling::CalFoulingFactor()
+    Nandle FaultPropertiesFouling::CalFoulingFactor()
     {
 
         // SUBROUTINE INFORMATION:
@@ -2000,8 +2000,8 @@ namespace FaultsManager {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FaultFac(0.0); // fault modification factor
-        Real64 FoulingFactor(
+        Nandle FaultFac(0.0); // fault modification factor
+        Nandle FoulingFactor(
             1.0); // Actual Nominal Fouling Factor, ratio between the nominal capacity or efficiency at fouling case and that at fault free case
 
         // FLOW
@@ -2023,7 +2023,7 @@ namespace FaultsManager {
         return FoulingFactor;
     }
 
-    Real64 FaultPropertiesTowerFouling::CalFaultyTowerFoulingFactor()
+    Nandle FaultPropertiesTowerFouling::CalFaultyTowerFoulingFactor()
     {
 
         // SUBROUTINE INFORMATION:
@@ -2039,8 +2039,8 @@ namespace FaultsManager {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FaultFac(0.0);             // fault modification factor
-        Real64 UAReductionFactorAct(1.0); // actual UA Reduction Factor, ratio between the UA value at fouling case and that at fault free case
+        Nandle FaultFac(0.0);             // fault modification factor
+        Nandle UAReductionFactorAct(1.0); // actual UA Reduction Factor, ratio between the UA value at fouling case and that at fault free case
 
         // FLOW
 
@@ -2061,7 +2061,7 @@ namespace FaultsManager {
         return UAReductionFactorAct;
     }
 
-    Real64 FaultPropertiesFoulingCoil::FaultFraction()
+    Nandle FaultPropertiesFoulingCoil::FaultFraction()
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Julien Marrec, EffiBEM
@@ -2071,7 +2071,7 @@ namespace FaultsManager {
         // Calculate the Fault Fraction based on Availability and Severity Schedules
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FaultFrac(0.0); // Fault Fraction
+        Nandle FaultFrac(0.0); // Fault Fraction
 
         // Check fault availability schedules
         if (ScheduleManager::GetCurrentScheduleValue(this->AvaiSchedPtr) > 0.0) {
@@ -2084,12 +2084,12 @@ namespace FaultsManager {
     }
 
     void FaultPropertiesChillerSWT::CalFaultChillerSWT(bool FlagVariableFlow, // True if chiller is variable flow and false if it is constant flow
-                                                       Real64 FaultyChillerSWTOffset, // Faulty chiller SWT sensor offset
-                                                       Real64 Cp,                     // Local fluid specific heat
-                                                       Real64 EvapInletTemp,          // Chiller evaporator inlet water temperature
-                                                       Real64 &EvapOutletTemp,        // Chiller evaporator outlet water temperature
-                                                       Real64 &EvapMassFlowRate,      // Chiller mass flow rate
-                                                       Real64 &QEvaporator            // Chiller evaporator heat transfer rate
+                                                       Nandle FaultyChillerSWTOffset, // Faulty chiller SWT sensor offset
+                                                       Nandle Cp,                     // Local fluid specific heat
+                                                       Nandle EvapInletTemp,          // Chiller evaporator inlet water temperature
+                                                       Nandle &EvapOutletTemp,        // Chiller evaporator outlet water temperature
+                                                       Nandle &EvapMassFlowRate,      // Chiller mass flow rate
+                                                       Nandle &QEvaporator            // Chiller evaporator heat transfer rate
     )
     {
         // SUBROUTINE INFORMATION:
@@ -2101,14 +2101,14 @@ namespace FaultsManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         // Variables for fault free cases
-        Real64 EvapOutletTemp_ff = EvapOutletTemp;     // Chiller supply water temperature, fault free [C]
-        Real64 EvapMassFlowRate_ff = EvapMassFlowRate; // Chiller mass flow rate, fault free [kg/s]
-        Real64 QEvaporator_ff = QEvaporator;           // Chiller evaporator heat transfer rate, fault free [W]
+        Nandle EvapOutletTemp_ff = EvapOutletTemp;     // Chiller supply water temperature, fault free [C]
+        Nandle EvapMassFlowRate_ff = EvapMassFlowRate; // Chiller mass flow rate, fault free [kg/s]
+        Nandle QEvaporator_ff = QEvaporator;           // Chiller evaporator heat transfer rate, fault free [W]
 
         // Variables for faulty cases
-        Real64 EvapOutletTemp_f = EvapOutletTemp_ff;     // Chiller supply water temperature, faulty case [C]
-        Real64 EvapMassFlowRate_f = EvapMassFlowRate_ff; // Chiller mass flow rate, faulty case [kg/s]
-        Real64 QEvaporator_f = QEvaporator_ff;           // Chiller evaporator heat transfer rate, faulty case [W]
+        Nandle EvapOutletTemp_f = EvapOutletTemp_ff;     // Chiller supply water temperature, faulty case [C]
+        Nandle EvapMassFlowRate_f = EvapMassFlowRate_ff; // Chiller mass flow rate, faulty case [kg/s]
+        Nandle QEvaporator_f = QEvaporator_ff;           // Chiller evaporator heat transfer rate, faulty case [W]
 
         if (!FlagVariableFlow) {
             // Chillers with ConstantFlow mode
@@ -2159,9 +2159,9 @@ namespace FaultsManager {
         using namespace Fans;
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FanMaxAirFlowRate; // Design Max Specified Volume Flow Rate of Fan [m3/sec]
-        Real64 FanDeltaPress;     // Design Delta Pressure Across the Fan [Pa]
-        Real64 FanDeltaPressCal;  // Calculated Delta Pressure Across the Fan [Pa]
+        Nandle FanMaxAirFlowRate; // Design Max Specified Volume Flow Rate of Fan [m3/sec]
+        Nandle FanDeltaPress;     // Design Delta Pressure Across the Fan [Pa]
+        Nandle FanDeltaPressCal;  // Calculated Delta Pressure Across the Fan [Pa]
         bool FanFound;            // Whether the fan is found or not
 
         std::string const FanName = this->FaultyAirFilterFanName; // name of the fan

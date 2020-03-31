@@ -195,10 +195,10 @@ namespace Fans {
     void SimulateFanComponents(std::string const &CompName,
                                bool const FirstHVACIteration,
                                int &CompIndex,
-                               Optional<Real64 const> SpeedRatio,
+                               Optional<Nandle const> SpeedRatio,
                                Optional_bool_const ZoneCompTurnFansOn,  // Turn fans ON signal from ZoneHVAC component
                                Optional_bool_const ZoneCompTurnFansOff, // Turn Fans OFF signal from ZoneHVAC component
-                               Optional<Real64 const> PressureRise      // Pressure difference to use for DeltaPress
+                               Optional<Nandle const> PressureRise      // Pressure difference to use for DeltaPress
     )
     {
 
@@ -338,7 +338,7 @@ namespace Fans {
         Array1D_bool lNumericFieldBlanks;
         Array1D_bool lAlphaFieldBlanks;
         Array1D_string cAlphaArgs;
-        Array1D<Real64> rNumericArgs;
+        Array1D<Nandle> rNumericArgs;
         std::string cCurrentModuleObject;
         int NumParams;
         int MaxAlphas;
@@ -1225,30 +1225,30 @@ namespace Fans {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NVPerfNum;                     // Index to night ventialation performance object
         std::string equipName;             // Equipment name
-        Real64 RatedPower;                 // Rated fan power [W]
-        Real64 RhoAir;                     // Air density [kg/m3]
-        Real64 FanVolFlow;                 // Fan volumetric airflow [m3/s]
-        Real64 DuctStaticPress;            // Duct static pressure setpoint [Pa]
-        Real64 DeltaPressTot;              // Total pressure rise across fan [N/m2 = Pa]
-        Real64 FanOutletVelPress;          // Fan outlet velocity pressure [Pa]
-        Real64 EulerNum;                   // Fan Euler number [-]
-        Real64 NormalizedEulerNum;         // Normalized Fan Euler number [-]
-        Real64 FanDimFlow;                 // Fan dimensionless airflow [-]
-        Real64 FanSpdRadS;                 // Fan shaft rotational speed [rad/s]
-        Real64 MotorSpeed;                 // Motor shaft rotational speed [rpm]
-        Real64 XbeltMax;                   // Factor for belt max eff curve [ln hp]
-        Real64 FanTrqRatio;                // Ratio of fan torque to max fan torque [-]
-        Real64 BeltPLEff;                  // Belt normalized (part-load) efficiency [-]
-        Real64 XmotorMax;                  // Factor for motor max eff curve [ln hp]
-        Real64 MotorOutPwrRatio;           // Ratio of motor output power to max motor output power [-]
-        Real64 MotorPLEff;                 // Motor normalized (part-load) efficiency [-]
-        static Real64 VFDSpdRatio(0.0);    // Ratio of motor speed to motor max speed [-]
-        static Real64 VFDOutPwrRatio(0.0); // Ratio of VFD output power to max VFD output power [-]
+        Nandle RatedPower;                 // Rated fan power [W]
+        Nandle RhoAir;                     // Air density [kg/m3]
+        Nandle FanVolFlow;                 // Fan volumetric airflow [m3/s]
+        Nandle DuctStaticPress;            // Duct static pressure setpoint [Pa]
+        Nandle DeltaPressTot;              // Total pressure rise across fan [N/m2 = Pa]
+        Nandle FanOutletVelPress;          // Fan outlet velocity pressure [Pa]
+        Nandle EulerNum;                   // Fan Euler number [-]
+        Nandle NormalizedEulerNum;         // Normalized Fan Euler number [-]
+        Nandle FanDimFlow;                 // Fan dimensionless airflow [-]
+        Nandle FanSpdRadS;                 // Fan shaft rotational speed [rad/s]
+        Nandle MotorSpeed;                 // Motor shaft rotational speed [rpm]
+        Nandle XbeltMax;                   // Factor for belt max eff curve [ln hp]
+        Nandle FanTrqRatio;                // Ratio of fan torque to max fan torque [-]
+        Nandle BeltPLEff;                  // Belt normalized (part-load) efficiency [-]
+        Nandle XmotorMax;                  // Factor for motor max eff curve [ln hp]
+        Nandle MotorOutPwrRatio;           // Ratio of motor output power to max motor output power [-]
+        Nandle MotorPLEff;                 // Motor normalized (part-load) efficiency [-]
+        static Nandle VFDSpdRatio(0.0);    // Ratio of motor speed to motor max speed [-]
+        static Nandle VFDOutPwrRatio(0.0); // Ratio of VFD output power to max VFD output power [-]
         std::string CompName;              // component name
         std::string CompType;              // component type
         std::string SizingString;          // input field sizing description (e.g., Nominal Capacity)
         bool bPRINT = true;                // TRUE if sizing is reported to output (eio)
-        Real64 TempFlow;                   // autosized flow rate of fan [m3/s]
+        Nandle TempFlow;                   // autosized flow rate of fan [m3/s]
         int FieldNum = 2;                  // IDD numeric field number where input field description is found
         int NumFansSized = 0;              // counter used to deallocate temporary string array after all fans have been sized
 
@@ -1571,15 +1571,15 @@ namespace Fans {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RhoAir;
-        Real64 DeltaPress; // [N/m2]
-        Real64 FanEff;
-        Real64 MotInAirFrac;
-        Real64 MotEff;
-        Real64 MassFlow; // [kg/sec]
+        Nandle RhoAir;
+        Nandle DeltaPress; // [N/m2]
+        Nandle FanEff;
+        Nandle MotInAirFrac;
+        Nandle MotEff;
+        Nandle MassFlow; // [kg/sec]
         // unused0909      REAL(r64) Tin         ! [C]
         // unused0909      REAL(r64) Win
-        Real64 FanShaftPower; // power delivered to fan shaft
+        Nandle FanShaftPower; // power delivered to fan shaft
 
         int NVPerfNum;
 
@@ -1611,7 +1611,7 @@ namespace Fans {
 
             // Check fault availability schedules
             if (GetCurrentScheduleValue(FaultsManager::FaultsFouledAirFilters(iFault).AvaiSchedPtr) > 0.0) {
-                Real64 FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
+                Nandle FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
 
                 FanDesignFlowRateDec = CalFaultyFanAirFlowReduction(
                     Fan(FanNum).FanName,
@@ -1663,7 +1663,7 @@ namespace Fans {
         }
     }
 
-    void SimVariableVolumeFan(int const FanNum, Optional<Real64 const> PressureRise)
+    void SimVariableVolumeFan(int const FanNum, Optional<Nandle const> PressureRise)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1703,30 +1703,30 @@ namespace Fans {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RhoAir;
-        Real64 DeltaPress; // [N/m2 = Pa]
-        Real64 FanEff;     // Total fan efficiency - combined efficiency of fan, drive train,
+        Nandle RhoAir;
+        Nandle DeltaPress; // [N/m2 = Pa]
+        Nandle FanEff;     // Total fan efficiency - combined efficiency of fan, drive train,
         // motor and variable speed controller (if any)
-        Real64 MaxAirFlowRate;
-        Real64 MaxAirMassFlowRate;
-        Real64 MotInAirFrac;
-        Real64 MotEff;
-        Real64 MassFlow; // [kg/sec]
+        Nandle MaxAirFlowRate;
+        Nandle MaxAirMassFlowRate;
+        Nandle MotInAirFrac;
+        Nandle MotEff;
+        Nandle MassFlow; // [kg/sec]
         // unused0909      REAL(r64) Tin         ! [C]
         // unused0909      REAL(r64) Win
-        Real64 PartLoadFrac;
+        Nandle PartLoadFrac;
         // unused0909      REAL(r64) MaxFlowFrac   !Variable Volume Fan Max Flow Fraction [-]
-        Real64 MinFlowFrac;                  // Variable Volume Fan Min Flow Fraction [-]
-        static Real64 FlowFracForPower(0.0); // Variable Volume Fan Flow Fraction for power calcs[-]
-        static Real64 FlowFracActual(0.0);   // actual VAV fan flow fraction
-        Real64 FanShaftPower;                // power delivered to fan shaft
+        Nandle MinFlowFrac;                  // Variable Volume Fan Min Flow Fraction [-]
+        static Nandle FlowFracForPower(0.0); // Variable Volume Fan Flow Fraction for power calcs[-]
+        static Nandle FlowFracActual(0.0);   // actual VAV fan flow fraction
+        Nandle FanShaftPower;                // power delivered to fan shaft
         int NVPerfNum;
 
         // added to address the fan heat issue during low air flow conditions
-        Real64 MinFlowFracLimitFanHeat; // Minimum Fan Flow Fraction Limit for Fan Heat at Low Airflow [-]
-        Real64 FanPoweratLowMinimum;    // Fan Power at Low Minimum Airflow [W]
-        Real64 PartLoadFracatLowMin;
-        Real64 DeltaTAcrossFan; // Air temperature rise across the fan due to fan heat [C]
+        Nandle MinFlowFracLimitFanHeat; // Minimum Fan Flow Fraction Limit for Fan Heat at Low Airflow [-]
+        Nandle FanPoweratLowMinimum;    // Fan Power at Low Minimum Airflow [W]
+        Nandle PartLoadFracatLowMin;
+        Nandle DeltaTAcrossFan; // Air temperature rise across the fan due to fan heat [C]
 
         // Simple Variable Volume Fan - default values from DOE-2
         // Type of Fan          Coeff1       Coeff2       Coeff3        Coeff4      Coeff5
@@ -1768,7 +1768,7 @@ namespace Fans {
 
             // Check fault availability schedules
             if (GetCurrentScheduleValue(FaultsManager::FaultsFouledAirFilters(iFault).AvaiSchedPtr) > 0.0) {
-                Real64 FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
+                Nandle FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
 
                 FanDesignFlowRateDec = CalFaultyFanAirFlowReduction(
                     Fan(FanNum).FanName,
@@ -1874,7 +1874,7 @@ namespace Fans {
         }
     }
 
-    void SimOnOffFan(int const FanNum, Optional<Real64 const> SpeedRatio)
+    void SimOnOffFan(int const FanNum, Optional<Nandle const> SpeedRatio)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1917,18 +1917,18 @@ namespace Fans {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RhoAir;
-        Real64 DeltaPress; // [N/m2]
-        Real64 FanEff;
-        Real64 MassFlow;           // [kg/sec]
-        Real64 MaxAirMassFlowRate; // [kg/sec]
+        Nandle RhoAir;
+        Nandle DeltaPress; // [N/m2]
+        Nandle FanEff;
+        Nandle MassFlow;           // [kg/sec]
+        Nandle MaxAirMassFlowRate; // [kg/sec]
         // unused0909      REAL(r64) Tin         ! [C]
         // unused0909      REAL(r64) Win
-        Real64 PartLoadRatio;        // Ratio of actual mass flow rate to max mass flow rate
-        Real64 FlowFrac;             // Actual Fan Flow Fraction = actual mass flow rate / max air mass flow rate
-        Real64 FanShaftPower;        // power delivered to fan shaft
-        Real64 SpeedRaisedToPower;   // Result of the speed ratio raised to the power of n (Curve object)
-        Real64 EffRatioAtSpeedRatio; // Efficeincy ratio at current speed ratio (Curve object)
+        Nandle PartLoadRatio;        // Ratio of actual mass flow rate to max mass flow rate
+        Nandle FlowFrac;             // Actual Fan Flow Fraction = actual mass flow rate / max air mass flow rate
+        Nandle FanShaftPower;        // power delivered to fan shaft
+        Nandle SpeedRaisedToPower;   // Result of the speed ratio raised to the power of n (Curve object)
+        Nandle EffRatioAtSpeedRatio; // Efficeincy ratio at current speed ratio (Curve object)
         static int ErrCount(0);
 
         // unused0909   Tin        = Fan(FanNum)%InletAirTemp
@@ -1947,7 +1947,7 @@ namespace Fans {
 
             // Check fault availability schedules
             if (GetCurrentScheduleValue(FaultsManager::FaultsFouledAirFilters(iFault).AvaiSchedPtr) > 0.0) {
-                Real64 FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
+                Nandle FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
 
                 FanDesignFlowRateDec = CalFaultyFanAirFlowReduction(
                     Fan(FanNum).FanName,
@@ -2110,11 +2110,11 @@ namespace Fans {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RhoAir;
-        Real64 DeltaPress; // [N/m2]
-        Real64 FanEff;
-        Real64 MassFlow;           // [kg/sec]
-        Real64 Tin;                // [C]
+        Nandle RhoAir;
+        Nandle DeltaPress; // [N/m2]
+        Nandle FanEff;
+        Nandle MassFlow;           // [kg/sec]
+        Nandle Tin;                // [C]
         bool FanIsRunning = false; // There seems to be a missing else case below unless false is assumed
 
         DeltaPress = Fan(FanNum).DeltaPress;
@@ -2252,7 +2252,7 @@ namespace Fans {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NVPerfNum;
 
-        Real64 MaxAirMassFlowRate; // Fan Max mass airflow [kg/s]
+        Nandle MaxAirMassFlowRate; // Fan Max mass airflow [kg/s]
         // unused062011  REAL(r64) MinFlowFrac        ! Fan Min Volumetric airflow Fraction [-]
         // unused062011  REAL(r64) FlowFrac           ! Fan Volumetric airflow Fraction [-]
 
@@ -2269,27 +2269,27 @@ namespace Fans {
         // unused062011  REAL(r64) VFDEff             ! VFD efficiency (electrical) [-]
         // unused062011  REAL(r64) VFDInputPower      ! VFD input power for Fan being Simulated [W]
         // unused062011  REAL(r64) FanEff             ! Fan total system efficiency (fan*belt*motor*VFD) [-]
-        Real64 MotInAirFrac; // Fraction of fan power input to airstream
+        Nandle MotInAirFrac; // Fraction of fan power input to airstream
 
         // Local variables
-        Real64 RhoAir;                     // Air density [kg/m3]
-        Real64 MassFlow;                   // Fan mass airflow [kg/s]
-        Real64 FanVolFlow;                 // Fan volumetric airflow [m3/s]
-        Real64 DuctStaticPress;            // Duct static pressure setpoint [Pa]
-        Real64 DeltaPressTot;              // Total pressure rise across fan [N/m2 = Pa]
-        Real64 FanOutletVelPress;          // Fan outlet velocity pressure [Pa]
-        Real64 EulerNum;                   // Fan Euler number [-]
-        Real64 NormalizedEulerNum;         // Normalized Fan Euler number [-]
-        Real64 FanDimFlow;                 // Fan dimensionless airflow [-]
-        Real64 FanSpdRadS;                 // Fan shaft rotational speed [rad/s]
-        Real64 MotorSpeed;                 // Motor shaft rotational speed [rpm]
-        Real64 FanTrqRatio;                // Ratio of fan torque to max fan torque [-]
-        Real64 BeltPLEff;                  // Belt normalized (part-load) efficiency [-]
-        Real64 MotorOutPwrRatio;           // Ratio of motor output power to max motor output power [-]
-        Real64 MotorPLEff;                 // Motor normalized (part-load) efficiency [-]
-        static Real64 VFDSpdRatio(0.0);    // Ratio of motor speed to motor max speed [-]
-        static Real64 VFDOutPwrRatio(0.0); // Ratio of VFD output power to max VFD output power [-]
-        Real64 FanEnthalpyChange;          // Air enthalpy change due to fan, belt, and motor losses [kJ/kg]
+        Nandle RhoAir;                     // Air density [kg/m3]
+        Nandle MassFlow;                   // Fan mass airflow [kg/s]
+        Nandle FanVolFlow;                 // Fan volumetric airflow [m3/s]
+        Nandle DuctStaticPress;            // Duct static pressure setpoint [Pa]
+        Nandle DeltaPressTot;              // Total pressure rise across fan [N/m2 = Pa]
+        Nandle FanOutletVelPress;          // Fan outlet velocity pressure [Pa]
+        Nandle EulerNum;                   // Fan Euler number [-]
+        Nandle NormalizedEulerNum;         // Normalized Fan Euler number [-]
+        Nandle FanDimFlow;                 // Fan dimensionless airflow [-]
+        Nandle FanSpdRadS;                 // Fan shaft rotational speed [rad/s]
+        Nandle MotorSpeed;                 // Motor shaft rotational speed [rpm]
+        Nandle FanTrqRatio;                // Ratio of fan torque to max fan torque [-]
+        Nandle BeltPLEff;                  // Belt normalized (part-load) efficiency [-]
+        Nandle MotorOutPwrRatio;           // Ratio of motor output power to max motor output power [-]
+        Nandle MotorPLEff;                 // Motor normalized (part-load) efficiency [-]
+        static Nandle VFDSpdRatio(0.0);    // Ratio of motor speed to motor max speed [-]
+        static Nandle VFDOutPwrRatio(0.0); // Ratio of VFD output power to max VFD output power [-]
+        Nandle FanEnthalpyChange;          // Air enthalpy change due to fan, belt, and motor losses [kJ/kg]
 
         // Get inputs for night ventilation option
         NVPerfNum = Fan(FanNum).NVPerfNum;
@@ -2657,7 +2657,7 @@ namespace Fans {
         }
     }
 
-    void GetFanVolFlow(int const FanIndex, Real64 &FanVolFlow)
+    void GetFanVolFlow(int const FanIndex, Nandle &FanVolFlow)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2701,7 +2701,7 @@ namespace Fans {
         }
     }
 
-    Real64 GetFanPower(int const FanIndex)
+    Nandle GetFanPower(int const FanIndex)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2786,7 +2786,7 @@ namespace Fans {
         }
     }
 
-    Real64 GetFanDesignVolumeFlowRate(std::string const &FanType, // must match fan types in this module
+    Nandle GetFanDesignVolumeFlowRate(std::string const &FanType, // must match fan types in this module
                                       std::string const &FanName, // must match fan names for the fan type
                                       bool &ErrorsFound,          // set to true if problem
                                       Optional_int_const FanIndex // index to fan
@@ -2805,7 +2805,7 @@ namespace Fans {
         // as negative.
 
         // Return value
-        Real64 DesignVolumeFlowRate; // returned flow rate of matched fan
+        Nandle DesignVolumeFlowRate; // returned flow rate of matched fan
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichFan;
@@ -3034,8 +3034,8 @@ namespace Fans {
     void SetFanData(int const FanNum,                     // Index of fan
                     bool &ErrorsFound,                    // Set to true if certain errors found
                     std::string const &FanName,           // Name of fan
-                    Optional<Real64 const> MaxAirVolFlow, // Fan air volumetric flow rate    [m3/s]
-                    Optional<Real64 const> MinAirVolFlow  // Fan air volumetric flow rate    [m3/s]
+                    Optional<Nandle const> MaxAirVolFlow, // Fan air volumetric flow rate    [m3/s]
+                    Optional<Nandle const> MinAirVolFlow  // Fan air volumetric flow rate    [m3/s]
     )
     {
 
@@ -3101,8 +3101,8 @@ namespace Fans {
         }
     }
 
-    Real64 FanDesDT(int const FanNum,                  // index of fan in Fan array
-                    Real64 const EP_UNUSED(FanVolFlow) // fan volumetric flow rate [m3/s]
+    Nandle FanDesDT(int const FanNum,                  // index of fan in Fan array
+                    Nandle const EP_UNUSED(FanVolFlow) // fan volumetric flow rate [m3/s]
     )
     {
         // FUNCTION INFORMATION:
@@ -3122,15 +3122,15 @@ namespace Fans {
         // REFERENCES: EnergyPlus Engineering Reference
 
         // Return value
-        Real64 DesignDeltaT; // returned delta T of matched fan [delta deg C]
+        Nandle DesignDeltaT; // returned delta T of matched fan [delta deg C]
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 RhoAir;       // density of air [kg/m3]
-        Real64 CpAir;        // specific heat of air [J/kg-K]
-        Real64 DeltaP;       // fan design pressure rise [N/m2]
-        Real64 TotEff;       // fan design total efficiency
-        Real64 MotEff;       // fan design motor efficiency
-        Real64 MotInAirFrac; // fraction of motor in the air stream
+        Nandle RhoAir;       // density of air [kg/m3]
+        Nandle CpAir;        // specific heat of air [J/kg-K]
+        Nandle DeltaP;       // fan design pressure rise [N/m2]
+        Nandle TotEff;       // fan design total efficiency
+        Nandle MotEff;       // fan design motor efficiency
+        Nandle MotInAirFrac; // fraction of motor in the air stream
         //
         if (FanNum == 0) {
             DesignDeltaT = 0.0;
@@ -3150,10 +3150,10 @@ namespace Fans {
 
     } // FanDesDT
 
-    Real64 CalFaultyFanAirFlowReduction(std::string const &FanName,          // name of the fan
-                                        Real64 const FanDesignAirFlowRate,   // Fan Design Volume Flow Rate [m3/sec]
-                                        Real64 const FanDesignDeltaPress,    // Fan Design Delta Pressure [Pa]
-                                        Real64 const FanFaultyDeltaPressInc, // Increase of Fan Delta Pressure in the Faulty Case [Pa]
+    Nandle CalFaultyFanAirFlowReduction(std::string const &FanName,          // name of the fan
+                                        Nandle const FanDesignAirFlowRate,   // Fan Design Volume Flow Rate [m3/sec]
+                                        Nandle const FanDesignDeltaPress,    // Fan Design Delta Pressure [Pa]
+                                        Nandle const FanFaultyDeltaPressInc, // Increase of Fan Delta Pressure in the Faulty Case [Pa]
                                         int const FanCurvePtr                // Fan Curve Index
     )
     {
@@ -3190,9 +3190,9 @@ namespace Fans {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 FanFaultyAirFlowRate; // Fan Volume Flow Rate in the Faulty Case [m3/sec]
-        Real64 FanCalDeltaPress;     // Calculated Fan Delta Pressure for temp use [Pa]
-        Real64 FanCalDeltaPresstemp; // Calculated Fan Delta Pressure for temp use [Pa]
+        Nandle FanFaultyAirFlowRate; // Fan Volume Flow Rate in the Faulty Case [m3/sec]
+        Nandle FanCalDeltaPress;     // Calculated Fan Delta Pressure for temp use [Pa]
+        Nandle FanCalDeltaPresstemp; // Calculated Fan Delta Pressure for temp use [Pa]
 
         // FLOW
 
@@ -3226,8 +3226,8 @@ namespace Fans {
         return FanDesignAirFlowRate - FanFaultyAirFlowRate;
     }
 
-    Real64 FanDesHeatGain(int const FanNum,       // index of fan in Fan array
-                          Real64 const FanVolFlow // fan volumetric flow rate [m3/s]
+    Nandle FanDesHeatGain(int const FanNum,       // index of fan in Fan array
+                          Nandle const FanVolFlow // fan volumetric flow rate [m3/s]
     )
     {
         // FUNCTION INFORMATION:
@@ -3249,14 +3249,14 @@ namespace Fans {
         using DataSizing::CurSysNum;
 
         // Return value
-        Real64 DesignHeatGain; // returned heat gain of matched fan [W]
+        Nandle DesignHeatGain; // returned heat gain of matched fan [W]
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 DeltaP;       // fan design pressure rise [N/m2]
-        Real64 TotEff;       // fan design total efficiency
-        Real64 MotEff;       // fan design motor efficiency
-        Real64 MotInAirFrac; // fraction of motor in the air stream
-        Real64 FanPowerTot;  // total fan power consumption [W]
+        Nandle DeltaP;       // fan design pressure rise [N/m2]
+        Nandle TotEff;       // fan design total efficiency
+        Nandle MotEff;       // fan design motor efficiency
+        Nandle MotInAirFrac; // fraction of motor in the air stream
+        Nandle FanPowerTot;  // total fan power consumption [W]
         //
         if (FanNum == 0) {
             DesignHeatGain = 0.0;

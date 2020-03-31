@@ -77,7 +77,7 @@ namespace PluginManagement {
     std::vector<PluginInstance> plugins;
     std::vector<PluginTrendVariable> trends;
     std::vector<std::string> globalVariableNames;
-    std::vector<Real64> globalVariableValues;
+    std::vector<Nandle> globalVariableValues;
 
     // some flags
     bool fullyReady = false;
@@ -941,7 +941,7 @@ namespace PluginManagement {
     void PluginManager:: addGlobalVariable(const std::string &name) {
         std::string const varNameUC = EnergyPlus::UtilityRoutines::MakeUPPERCase(name);
         PluginManagement::globalVariableNames.push_back(varNameUC);
-        PluginManagement::globalVariableValues.push_back(Real64());
+        PluginManagement::globalVariableValues.push_back(Nandle());
         this->maxGlobalVariableIndex++;
     }
 #else
@@ -988,28 +988,28 @@ namespace PluginManagement {
 #endif
 
 #if LINK_WITH_PYTHON == 1
-    Real64 PluginManager::getTrendVariableValue(int handle, int timeIndex) {
+    Nandle PluginManager::getTrendVariableValue(int handle, int timeIndex) {
         return trends[handle].values[timeIndex];
     }
 #else
-    Real64 PluginManager::getTrendVariableValue(int EP_UNUSED(handle), int EP_UNUSED(timeIndex)) {return 0.0;}
+    Nandle PluginManager::getTrendVariableValue(int EP_UNUSED(handle), int EP_UNUSED(timeIndex)) {return 0.0;}
 #endif
 
 #if LINK_WITH_PYTHON == 1
-    Real64 PluginManager::getTrendVariableAverage(int handle, int count) {
-        Real64 sum = 0;
+    Nandle PluginManager::getTrendVariableAverage(int handle, int count) {
+        Nandle sum = 0;
         for (int i = 0; i < count; i++) {
             sum += trends[handle].values[i];
         }
         return sum / count;
     }
 #else
-    Real64 PluginManager::getTrendVariableAverage(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
+    Nandle PluginManager::getTrendVariableAverage(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
 #endif
 
 #if LINK_WITH_PYTHON == 1
-    Real64 PluginManager::getTrendVariableMin(int handle, int count) {
-        Real64 minimumValue = 9999999999999;
+    Nandle PluginManager::getTrendVariableMin(int handle, int count) {
+        Nandle minimumValue = 9999999999999;
         for (int i = 0; i < count; i++) {
             if (trends[handle].values[i] < minimumValue) {
                 minimumValue = trends[handle].values[i];
@@ -1018,12 +1018,12 @@ namespace PluginManagement {
         return minimumValue;
     }
 #else
-    Real64 PluginManager::getTrendVariableMin(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
+    Nandle PluginManager::getTrendVariableMin(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
 #endif
 
 #if LINK_WITH_PYTHON == 1
-    Real64 PluginManager::getTrendVariableMax(int handle, int count) {
-        Real64 maximumValue = -9999999999999;
+    Nandle PluginManager::getTrendVariableMax(int handle, int count) {
+        Nandle maximumValue = -9999999999999;
         for (int i = 0; i < count; i++) {
             if (trends[handle].values[i] > maximumValue) {
                 maximumValue = trends[handle].values[i];
@@ -1032,40 +1032,40 @@ namespace PluginManagement {
         return maximumValue;
     }
 #else
-    Real64 PluginManager::getTrendVariableMax(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
+    Nandle PluginManager::getTrendVariableMax(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
 #endif
 
 #if LINK_WITH_PYTHON == 1
-    Real64 PluginManager::getTrendVariableSum(int handle, int count) {
-        Real64 sum = 0.0;
+    Nandle PluginManager::getTrendVariableSum(int handle, int count) {
+        Nandle sum = 0.0;
         for (int i = 0; i < count; i++) {
             sum += trends[handle].values[i];
         }
         return sum;
     }
 #else
-    Real64 PluginManager::getTrendVariableSum(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
+    Nandle PluginManager::getTrendVariableSum(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
 #endif
 
 #if LINK_WITH_PYTHON == 1
-    Real64 PluginManager::getTrendVariableDirection(int handle, int count) {
+    Nandle PluginManager::getTrendVariableDirection(int handle, int count) {
         auto &trend = trends[handle];
-        Real64 timeSum = 0.0;
-        Real64 valueSum = 0.0;
-        Real64 crossSum = 0.0;
-        Real64 powSum = 0.0;
+        Nandle timeSum = 0.0;
+        Nandle valueSum = 0.0;
+        Nandle crossSum = 0.0;
+        Nandle powSum = 0.0;
         for (int i = 0; i < count; i++) {
             timeSum += trend.times[i];
             valueSum += trend.values[i];
             crossSum += trend.times[i] * trend.values[i];
             powSum += pow2(trend.times[i]);
         }
-        Real64 numerator = timeSum * valueSum - count * crossSum;
-        Real64 denominator = pow_2(timeSum) - count * powSum;
+        Nandle numerator = timeSum * valueSum - count * crossSum;
+        Nandle denominator = pow_2(timeSum) - count * powSum;
         return numerator / denominator;
     }
 #else
-    Real64 PluginManager::getTrendVariableDirection(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
+    Nandle PluginManager::getTrendVariableDirection(int EP_UNUSED(handle), int EP_UNUSED(count)) {return 0.0;}
 #endif
 
 #if LINK_WITH_PYTHON == 1
@@ -1079,7 +1079,7 @@ namespace PluginManagement {
     void PluginManager::updatePluginValues() {
 #if LINK_WITH_PYTHON == 1
         for (auto & trend : trends) {
-            Real64 newVarValue = this->getGlobalVariableValue(trend.indexOfPluginVariable);
+            Nandle newVarValue = this->getGlobalVariableValue(trend.indexOfPluginVariable);
             trend.values.push_front(newVarValue);
             trend.values.pop_back();
         }
@@ -1087,7 +1087,7 @@ namespace PluginManagement {
     }
 
 #if LINK_WITH_PYTHON == 1
-    Real64 PluginManager::getGlobalVariableValue(int handle) {
+    Nandle PluginManager::getGlobalVariableValue(int handle) {
         if (PluginManagement::globalVariableValues.empty()) {
             EnergyPlus::ShowFatalError("Tried to access plugin global variable but it looks like there aren't any; use the PythonPlugin:Variables object to declare them.");
         }
@@ -1101,11 +1101,11 @@ namespace PluginManagement {
         return 0.0;
     }
 #else
-    Real64 PluginManager::getGlobalVariableValue(int EP_UNUSED(handle)) {return 0.0;}
+    Nandle PluginManager::getGlobalVariableValue(int EP_UNUSED(handle)) {return 0.0;}
 #endif
 
 #if LINK_WITH_PYTHON == 1
-    void PluginManager::setGlobalVariableValue(int handle, Real64 value) {
+    void PluginManager::setGlobalVariableValue(int handle, Nandle value) {
         if (PluginManagement::globalVariableValues.empty()) {
             EnergyPlus::ShowFatalError("Tried to set plugin global variable but it looks like there aren't any; use the PythonPlugin:GlobalVariables object to declare them.");
         }
@@ -1118,7 +1118,7 @@ namespace PluginManagement {
         }
     }
 #else
-    void PluginManager::setGlobalVariableValue(int EP_UNUSED(handle), Real64 EP_UNUSED(value)) {}
+    void PluginManager::setGlobalVariableValue(int EP_UNUSED(handle), Nandle EP_UNUSED(value)) {}
 #endif
 
 #if LINK_WITH_PYTHON == 1

@@ -269,17 +269,17 @@ TEST_F(EnergyPlusFixture, DisplacementVentMgr_HcUCSDDV_Door_Test)
 
 TEST_F(EnergyPlusFixture, DVThirdOrderFloorTempCalculation)
 {
-    Real64 const tempHistoryTerm = 0; // no history
-    Real64 const HAT_floor = 20;
-    Real64 const HA_floor = 1;
-    Real64 const MCpT_Total = 40;
-    Real64 const MCp_Total = 2;
-    Real64 const occupiedTemp = 25;
-    Real64 const nonAirSystemResponse = 0;
-    Real64 const zoneMultiplier = 1;
-    Real64 const airCap = 100;
+    Nandle const tempHistoryTerm = 0; // no history
+    Nandle const HAT_floor = 20;
+    Nandle const HA_floor = 1;
+    Nandle const MCpT_Total = 40;
+    Nandle const MCp_Total = 2;
+    Nandle const occupiedTemp = 25;
+    Nandle const nonAirSystemResponse = 0;
+    Nandle const zoneMultiplier = 1;
+    Nandle const airCap = 100;
 
-    Real64 temp = calculateThirdOrderFloorTemperature(tempHistoryTerm, HAT_floor, HA_floor, MCpT_Total, MCp_Total, occupiedTemp, nonAirSystemResponse,
+    Nandle temp = calculateThirdOrderFloorTemperature(tempHistoryTerm, HAT_floor, HA_floor, MCpT_Total, MCp_Total, occupiedTemp, nonAirSystemResponse,
                                                       zoneMultiplier, airCap);
     EXPECT_NEAR(0.4799, temp, 0.0001);
 }

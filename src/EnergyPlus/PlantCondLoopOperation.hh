@@ -86,8 +86,8 @@ namespace PlantCondLoopOperation {
                                      int const LoopSideNum, // PlantLoop data structure LoopSide counter
                                      int const BranchNum,   // PlantLoop data structure branch counter
                                      int const CompNum,     // PlantLoop data structure component counter
-                                     Real64 &LoopDemand,
-                                     Real64 &RemLoopDemand,
+                                     Nandle &LoopDemand,
+                                     Nandle &RemLoopDemand,
                                      bool const FirstHVACIteration,
                                      bool &LoopShutDownFlag, // EMS flag to tell loop solver to shut down pumps
                                      bool &LoadDistributionWasPerformed);
@@ -151,20 +151,20 @@ namespace PlantCondLoopOperation {
                              int const LoopSideNum,
                              int const CurSchemePtr, // use as index in PlantLoop()OpScheme() data structure
                              int const ListPtr,      // use as index in PlantLoop()OpScheme() data structure
-                             Real64 const LoopDemand,
-                             Real64 &RemLoopDemand);
+                             Nandle const LoopDemand,
+                             Nandle &RemLoopDemand);
 
     void AdjustChangeInLoadForLastStageUpperRangeLimit(int const LoopNum,         // component topology
                                                        int const CurOpSchemePtr,  // currect active operation scheme
                                                        int const CurEquipListPtr, // current equipment list
-                                                       Real64 &ChangeInLoad       // positive magnitude of load change
+                                                       Nandle &ChangeInLoad       // positive magnitude of load change
     );
 
     void AdjustChangeInLoadByHowServed(int const LoopNum,     // component topology
                                        int const LoopSideNum, // component topology
                                        int const BranchNum,   // component topology
                                        int const CompNum,     // component topology
-                                       Real64 &ChangeInLoad   // positive magnitude of load change
+                                       Nandle &ChangeInLoad   // positive magnitude of load change
     );
 
     void FindCompSPLoad(int const LoopNum,
@@ -180,15 +180,15 @@ namespace PlantCondLoopOperation {
                                         int const CompNum,
                                         int const CurCompLevelOpNum, // index for Plant()%LoopSide()%Branch()%Comp()%OpScheme()
                                         int const CurSchemePtr,
-                                        Real64 const LoopDemand,
-                                        Real64 &RemLoopDemand);
+                                        Nandle const LoopDemand,
+                                        Nandle &RemLoopDemand);
 
     // End Load Calculation/Distribution Section of the Plant Loop Module
     //******************************************************************************
 
     //********************************
 
-    Real64 FindRangeVariable(int const LoopNum,      // PlantLoop data structure loop counter
+    Nandle FindRangeVariable(int const LoopNum,      // PlantLoop data structure loop counter
                              int const CurSchemePtr, // set by PL()%LoopSide()%Branch()%Comp()%OpScheme()%OpSchemePtr
                              int const CurSchemeType // identifier set in PlantData
     );
@@ -218,7 +218,7 @@ namespace PlantCondLoopOperation {
                                          int const LoopSideNum,
                                          int const BranchNum,
                                          int const CompNum,
-                                         Real64 &ChangeInLoad // positive magnitude of load change
+                                         Nandle &ChangeInLoad // positive magnitude of load change
     );
 
     //*END PLANT EMS CONTROL ROUTINES!

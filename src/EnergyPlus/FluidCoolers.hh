@@ -81,33 +81,33 @@ namespace FluidCoolers {
         PerfInputMethod PerformanceInputMethod_Num;
         bool Available;                               // need an array of logicals--load identifiers of available equipment
         bool ON;                                      // Simulate the machine at it's operating part load ratio
-        Real64 DesignWaterFlowRate;                   // Design water flow rate through the fluid cooler [m3/s]
+        Nandle DesignWaterFlowRate;                   // Design water flow rate through the fluid cooler [m3/s]
         bool DesignWaterFlowRateWasAutoSized;         // true if design water rate was autosize on input
-        Real64 DesWaterMassFlowRate;                  // Design water flow rate through the fluid cooler [kg/s]
-        Real64 HighSpeedAirFlowRate;                  // Air flow rate through the fluid cooler at high speed [m3/s]
+        Nandle DesWaterMassFlowRate;                  // Design water flow rate through the fluid cooler [kg/s]
+        Nandle HighSpeedAirFlowRate;                  // Air flow rate through the fluid cooler at high speed [m3/s]
         bool HighSpeedAirFlowRateWasAutoSized;        // true if high speed air rate was autosize on input
-        Real64 HighSpeedFanPower;                     // Fan power at high fan speed [W]
+        Nandle HighSpeedFanPower;                     // Fan power at high fan speed [W]
         bool HighSpeedFanPowerWasAutoSized;           // true if high fan power was autosize on input
-        Real64 HighSpeedFluidCoolerUA;                // UA of fluid cooler at high fan speed [W/C]
+        Nandle HighSpeedFluidCoolerUA;                // UA of fluid cooler at high fan speed [W/C]
         bool HighSpeedFluidCoolerUAWasAutoSized;      // true if high speed UA was autosized on input
-        Real64 LowSpeedAirFlowRate;                   // Air flow rate through fluid cooler at low speed [m3/s]
+        Nandle LowSpeedAirFlowRate;                   // Air flow rate through fluid cooler at low speed [m3/s]
         bool LowSpeedAirFlowRateWasAutoSized;         // true if low speed air rate was autosize on input
-        Real64 LowSpeedAirFlowRateSizingFactor;       // sizing factor for low speed air flow rate []
-        Real64 LowSpeedFanPower;                      // Fan power at low fan speed [W]
+        Nandle LowSpeedAirFlowRateSizingFactor;       // sizing factor for low speed air flow rate []
+        Nandle LowSpeedFanPower;                      // Fan power at low fan speed [W]
         bool LowSpeedFanPowerWasAutoSized;            // true if low speed fan power set to autosize on input
-        Real64 LowSpeedFanPowerSizingFactor;          // sizing factor for low speed fan power []
-        Real64 LowSpeedFluidCoolerUA;                 // UA of fluid cooler at low fan speed [W/C]
+        Nandle LowSpeedFanPowerSizingFactor;          // sizing factor for low speed fan power []
+        Nandle LowSpeedFluidCoolerUA;                 // UA of fluid cooler at low fan speed [W/C]
         bool LowSpeedFluidCoolerUAWasAutoSized;       // true if low speed UA set to autosize on input
-        Real64 LowSpeedFluidCoolerUASizingFactor;     // sizing factor for low speed UA []
-        Real64 DesignEnteringWaterTemp;               // Entering water temperature at design conditions
-        Real64 DesignLeavingWaterTemp;                // Entering water temperature at design conditions
-        Real64 DesignEnteringAirTemp;                 // Entering water temperature at design conditions
-        Real64 DesignEnteringAirWetBulbTemp;          // Entering water temperature at design condition
-        Real64 FluidCoolerMassFlowRateMultiplier;     // Maximum fluid cooler flow rate is this multiplier * design flow rate
-        Real64 FluidCoolerNominalCapacity;            // Nominal capacity of the fluid cooler [W] at high speed
-        Real64 FluidCoolerLowSpeedNomCap;             // Nominal capacity of the fluid cooler [W] at low speed
+        Nandle LowSpeedFluidCoolerUASizingFactor;     // sizing factor for low speed UA []
+        Nandle DesignEnteringWaterTemp;               // Entering water temperature at design conditions
+        Nandle DesignLeavingWaterTemp;                // Entering water temperature at design conditions
+        Nandle DesignEnteringAirTemp;                 // Entering water temperature at design conditions
+        Nandle DesignEnteringAirWetBulbTemp;          // Entering water temperature at design condition
+        Nandle FluidCoolerMassFlowRateMultiplier;     // Maximum fluid cooler flow rate is this multiplier * design flow rate
+        Nandle FluidCoolerNominalCapacity;            // Nominal capacity of the fluid cooler [W] at high speed
+        Nandle FluidCoolerLowSpeedNomCap;             // Nominal capacity of the fluid cooler [W] at low speed
         bool FluidCoolerLowSpeedNomCapWasAutoSized;   // true if previous was set to autosize on input
-        Real64 FluidCoolerLowSpeedNomCapSizingFactor; // sizing factor for low speed capacity []
+        Nandle FluidCoolerLowSpeedNomCapSizingFactor; // sizing factor for low speed capacity []
         int WaterInletNodeNum;                        // Node number on the water inlet side of the fluid cooler
         int WaterOutletNodeNum;                       // Node number on the water outlet side of the fluid cooler
         int OutdoorAirInletNodeNum;                   // Node number of outdoor air inlet for the fluid cooler
@@ -130,19 +130,19 @@ namespace FluidCoolers {
         bool beginEnvrnInit;
 
         // Report vars
-        Real64 InletWaterTemp;    // Fluid cooler inlet water temperature (C)
-        Real64 OutletWaterTemp;   // Fluid cooler outlet water temperature (C)
-        Real64 WaterMassFlowRate; // Fluid cooler water mass flow rate (m3/s)
-        Real64 Qactual;           // Fluid cooler heat rejection rate (W)
-        Real64 FanPower;          // Fluid cooler fan power (W)
-        Real64 FanEnergy;         // Fluid cooler fan energy consumption (J)
+        Nandle InletWaterTemp;    // Fluid cooler inlet water temperature (C)
+        Nandle OutletWaterTemp;   // Fluid cooler outlet water temperature (C)
+        Nandle WaterMassFlowRate; // Fluid cooler water mass flow rate (m3/s)
+        Nandle Qactual;           // Fluid cooler heat rejection rate (W)
+        Nandle FanPower;          // Fluid cooler fan power (W)
+        Nandle FanEnergy;         // Fluid cooler fan energy consumption (J)
 
         // Inlet conds
-        Real64 WaterTemp;
-        Real64 AirTemp;
-        Real64 AirHumRat;
-        Real64 AirPress;
-        Real64 AirWetBulb;
+        Nandle WaterTemp;
+        Nandle AirTemp;
+        Nandle AirHumRat;
+        Nandle AirPress;
+        Nandle AirWetBulb;
 
         // additional stuff
         int indexInArray;
@@ -191,12 +191,12 @@ namespace FluidCoolers {
 
         void calcTwoSpeed();
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation),
-                                 Real64 &EP_UNUSED(MaxLoad),
-                                 Real64 &EP_UNUSED(MinLoad),
-                                 Real64 &EP_UNUSED(OptLoad)) override;
+                                 Nandle &EP_UNUSED(MaxLoad),
+                                 Nandle &EP_UNUSED(MinLoad),
+                                 Nandle &EP_UNUSED(OptLoad)) override;
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 
@@ -207,10 +207,10 @@ namespace FluidCoolers {
 
     void GetFluidCoolerInput();
 
-    void CalcFluidCoolerOutlet(int FluidCoolerNum, Real64 _WaterMassFlowRate, Real64 AirFlowRate, Real64 UAdesign, Real64 &_OutletWaterTemp);
+    void CalcFluidCoolerOutlet(int FluidCoolerNum, Nandle _WaterMassFlowRate, Nandle AirFlowRate, Nandle UAdesign, Nandle &_OutletWaterTemp);
 
-    Real64 SimpleFluidCoolerUAResidual(Real64 UA,                 // UA of fluid cooler
-                                       Array1D<Real64> const &Par // par(1) = design fluid cooler load [W]
+    Nandle SimpleFluidCoolerUAResidual(Nandle UA,                 // UA of fluid cooler
+                                       Array1D<Nandle> const &Par // par(1) = design fluid cooler load [W]
     );
 
     void clear_state();

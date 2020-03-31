@@ -90,7 +90,7 @@ namespace DataPhotovoltaics {
     extern int const CrystallineSiPVCells;
     extern int const AmorphousSiPVCells;
 
-    extern Real64 const MinIrradiance; // [W/m2] Assume no operation if Ic is below this number (W/m2)
+    extern Nandle const MinIrradiance; // [W/m2] Assume no operation if Ic is below this number (W/m2)
     // DERIVED TYPE DEFINITIONS
 
     // INTERFACE BLOCK SPECIFICATIONS
@@ -102,7 +102,7 @@ namespace DataPhotovoltaics {
     extern int NumSimplePVModuleTypes; // count of number of input objs for simple model
     extern int NumSNLPVModuleTypes;    // count of number of input objs for Sandia model
 
-    extern Real64 ShuntResistance; // old "RSH" in common block of trnsys code
+    extern Nandle ShuntResistance; // old "RSH" in common block of trnsys code
 
     // Types
 
@@ -110,11 +110,11 @@ namespace DataPhotovoltaics {
     {
         // Members
         std::string Name;       // name as identified in Sandia database
-        Real64 AreaCol;         // effective area of solar collection
-        Real64 ActiveFraction;  // fraction of parent surface that has active solar cells
+        Nandle AreaCol;         // effective area of solar collection
+        Nandle ActiveFraction;  // fraction of parent surface that has active solar cells
         int EfficencyInputMode; // to schedule or not
         int EffSchedPtr;        // index pointer for efficiency schedule
-        Real64 PVEfficiency;    // fixed or current PV efficiency
+        Nandle PVEfficiency;    // fixed or current PV efficiency
 
         // Default Constructor
         SimplePVParamsStruct() : AreaCol(0.0), ActiveFraction(0.0), EfficencyInputMode(0), EffSchedPtr(0), PVEfficiency(0.0)
@@ -128,23 +128,23 @@ namespace DataPhotovoltaics {
         std::string Name;
         int CellsInSeries;           // cells in series [-]
         int CellType;                // type of PV cell (crystalline, amorphous )
-        Real64 Area;                 // module area [m2]
-        Real64 TauAlpha;             // tau alpha product at normal incidence [-]
-        Real64 SemiConductorBandgap; // electron bandgap [eV]
-        Real64 ShuntResistance;      // shunt resistance [ohms]
-        Real64 RefIsc;               // short circuit current at reference conditions [A/K]
-        Real64 RefVoc;               // open circuit voltage at reference conditions [V/K]
-        Real64 RefTemperature;       // temperature at reference conditions
-        Real64 RefInsolation;        // radiation at reference conditions [W/m2]
-        Real64 Imp;                  // current at max power [A]
-        Real64 Vmp;                  // voltage at max power [V]
-        Real64 TempCoefIsc;          // temperature coefficient of short circuit current
-        Real64 TempCoefVoc;          // temperature coefficient of open circuit voltage
-        Real64 NOCTAmbTemp;          // ambient temperature at NOCT [C]
-        Real64 NOCTCellTemp;         // cell temperature at NOCT [C]
-        Real64 NOCTInsolation;       // radiation at NOCT [W/m2]
-        Real64 HeatLossCoef;         // heat loss coefficient [W/m2.K]
-        Real64 HeatCapacity;         // total heat capacity (only used in TC mode 1)
+        Nandle Area;                 // module area [m2]
+        Nandle TauAlpha;             // tau alpha product at normal incidence [-]
+        Nandle SemiConductorBandgap; // electron bandgap [eV]
+        Nandle ShuntResistance;      // shunt resistance [ohms]
+        Nandle RefIsc;               // short circuit current at reference conditions [A/K]
+        Nandle RefVoc;               // open circuit voltage at reference conditions [V/K]
+        Nandle RefTemperature;       // temperature at reference conditions
+        Nandle RefInsolation;        // radiation at reference conditions [W/m2]
+        Nandle Imp;                  // current at max power [A]
+        Nandle Vmp;                  // voltage at max power [V]
+        Nandle TempCoefIsc;          // temperature coefficient of short circuit current
+        Nandle TempCoefVoc;          // temperature coefficient of open circuit voltage
+        Nandle NOCTAmbTemp;          // ambient temperature at NOCT [C]
+        Nandle NOCTCellTemp;         // cell temperature at NOCT [C]
+        Nandle NOCTInsolation;       // radiation at NOCT [W/m2]
+        Nandle HeatLossCoef;         // heat loss coefficient [W/m2.K]
+        Nandle HeatCapacity;         // total heat capacity (only used in TC mode 1)
 
         // Default Constructor
         TRNSYSPVModuleParamsStruct()
@@ -158,17 +158,17 @@ namespace DataPhotovoltaics {
     struct TRNSYSPVCalcStruct
     {
         // Members
-        Real64 Insolation;      // radiation [W/m2]
-        Real64 ArrayCurrent;    // array current at current conditions [A]
-        Real64 ArrayVoltage;    // array voltage at current conditions [V]
-        Real64 ArrayPower;      // array power at current conditions [W]
-        Real64 ArrayEfficiency; // array efficiency at current conditions [0..1]
-        Real64 CellTemp;        // array cell temperature at current conditions [C]
-        Real64 CellTempK;       // array cell temperature (for setting last cell temp) [K]
-        Real64 TimeElapsed;     // time previous update of last cell temp
-        Real64 LastCellTempK;   // array cell temperature at previous conditions [K]
-        Real64 ArrayIsc;        // array short circuit current at current conditions [A]
-        Real64 ArrayVoc;        // array open circuit voltage at current conditions [V]
+        Nandle Insolation;      // radiation [W/m2]
+        Nandle ArrayCurrent;    // array current at current conditions [A]
+        Nandle ArrayVoltage;    // array voltage at current conditions [V]
+        Nandle ArrayPower;      // array power at current conditions [W]
+        Nandle ArrayEfficiency; // array efficiency at current conditions [0..1]
+        Nandle CellTemp;        // array cell temperature at current conditions [C]
+        Nandle CellTempK;       // array cell temperature (for setting last cell temp) [K]
+        Nandle TimeElapsed;     // time previous update of last cell temp
+        Nandle LastCellTempK;   // array cell temperature at previous conditions [K]
+        Nandle ArrayIsc;        // array short circuit current at current conditions [A]
+        Nandle ArrayVoc;        // array open circuit voltage at current conditions [V]
 
         // Default Constructor
         TRNSYSPVCalcStruct()
@@ -182,56 +182,56 @@ namespace DataPhotovoltaics {
     {
         // Members
         std::string name;    // name as identified in Sandia database
-        Real64 Acoll;        // Active collector area (m2, single module)
-        Real64 NcellSer;     // Number of cells in series in a module's cell-string (unitless)
-        Real64 NparSerCells; // Number of cell-strings in parallel in module (unitless)
-        Real64 Isc0;         // Short circuit current at reference conditions (Amps)
-        Real64 Voc0;         // Open circuit voltage at reference conditions (Volts)
-        Real64 Imp0;         // Max power point current at reference conditions (Amps)
-        Real64 Vmp0;         // Voltage at max power at reference conditions (Volts)
-        Real64 aIsc;         // Normalized temperature coefficient for Isc (Amps/degC) Isc temperature coeff
-        Real64 aImp;         // Normalized temperature coefficient for Imp (1/degC) Imp temperature coeff
-        Real64 c_0;          // Empirical coefficients relating Imp to Ee (unitless)
+        Nandle Acoll;        // Active collector area (m2, single module)
+        Nandle NcellSer;     // Number of cells in series in a module's cell-string (unitless)
+        Nandle NparSerCells; // Number of cell-strings in parallel in module (unitless)
+        Nandle Isc0;         // Short circuit current at reference conditions (Amps)
+        Nandle Voc0;         // Open circuit voltage at reference conditions (Volts)
+        Nandle Imp0;         // Max power point current at reference conditions (Amps)
+        Nandle Vmp0;         // Voltage at max power at reference conditions (Volts)
+        Nandle aIsc;         // Normalized temperature coefficient for Isc (Amps/degC) Isc temperature coeff
+        Nandle aImp;         // Normalized temperature coefficient for Imp (1/degC) Imp temperature coeff
+        Nandle c_0;          // Empirical coefficients relating Imp to Ee (unitless)
         //   coefficient relating Imp to irradiance
-        Real64 c_1; // Empirical coefficients relating Imp to Ee (unitless)
+        Nandle c_1; // Empirical coefficients relating Imp to Ee (unitless)
         //   coefficient relating Voc to irradiance
-        Real64 BVoc0; // Temperature coefficient for module open-circuit-voltage at reference conditions
+        Nandle BVoc0; // Temperature coefficient for module open-circuit-voltage at reference conditions
         //   (Volts/degC)
-        Real64 mBVoc; // Coefficient for irradiance dependence of open-circuit-voltage-temperature
+        Nandle mBVoc; // Coefficient for irradiance dependence of open-circuit-voltage-temperature
         //  coefficient  (V/°C)
-        Real64 BVmp0; // Temperature coefficient for module maximum-power-voltage at reference conditions
+        Nandle BVmp0; // Temperature coefficient for module maximum-power-voltage at reference conditions
         //   (V/°C)
-        Real64 mBVmp; // Cofficient for irradiance dependence of maximum-power-voltage-temperature
+        Nandle mBVmp; // Cofficient for irradiance dependence of maximum-power-voltage-temperature
         //   coefficient (V/°C)
-        Real64 DiodeFactor; // Empirically determined 'diode factor' for individual cells (unitless)
-        Real64 c_2;         // Empirical coefficients relating Vmp to Ee (unitless)
+        Nandle DiodeFactor; // Empirically determined 'diode factor' for individual cells (unitless)
+        Nandle c_2;         // Empirical coefficients relating Vmp to Ee (unitless)
         //   (coefficient relating Vmp to irradiance)
-        Real64 c_3; // Empirical coefficients relating Vmp to Ee (unitless)
+        Nandle c_3; // Empirical coefficients relating Vmp to Ee (unitless)
         //   (coefficient relating Vmp to irradiance)
-        Real64 a_0; // Empirical coefficients for f1(AMa) polynomial (unitless)
-        Real64 a_1; // Empirical coefficients for f1(AMa) polynomial (unitless)
-        Real64 a_2; // Empirical coefficients for f1(AMa) polynomial (unitless)
-        Real64 a_3; // Empirical coefficients for f1(AMa) polynomial (unitless)
-        Real64 a_4; // Empirical coefficients for f1(AMa) polynomial (unitless)
-        Real64 b_0; // Empirical coefficients for f1(AOI) polynomial (unitless)
-        Real64 b_1; // Empirical coefficients for f1(AOI) polynomial (unitless)
-        Real64 b_2; // Empirical coefficients for f1(AOI) polynomial (unitless)
-        Real64 b_3; // Empirical coefficients for f1(AOI) polynomial (unitless)
-        Real64 b_4; // Empirical coefficients for f1(AOI) polynomial (unitless)
-        Real64 b_5; // Empirical coefficients for f1(AOI) polynomial (unitless)
-        Real64 DT0; // Temperature difference between Tc and Tm at Eo (°C),
+        Nandle a_0; // Empirical coefficients for f1(AMa) polynomial (unitless)
+        Nandle a_1; // Empirical coefficients for f1(AMa) polynomial (unitless)
+        Nandle a_2; // Empirical coefficients for f1(AMa) polynomial (unitless)
+        Nandle a_3; // Empirical coefficients for f1(AMa) polynomial (unitless)
+        Nandle a_4; // Empirical coefficients for f1(AMa) polynomial (unitless)
+        Nandle b_0; // Empirical coefficients for f1(AOI) polynomial (unitless)
+        Nandle b_1; // Empirical coefficients for f1(AOI) polynomial (unitless)
+        Nandle b_2; // Empirical coefficients for f1(AOI) polynomial (unitless)
+        Nandle b_3; // Empirical coefficients for f1(AOI) polynomial (unitless)
+        Nandle b_4; // Empirical coefficients for f1(AOI) polynomial (unitless)
+        Nandle b_5; // Empirical coefficients for f1(AOI) polynomial (unitless)
+        Nandle DT0; // Temperature difference between Tc and Tm at Eo (°C),
         // (This is d(Tc) in Sandia database)
-        Real64 fd; // Fraction of diffuse irradiance used by module (unitless)
-        Real64 a;  // Empirical coefficient for module temp.at low wind,
+        Nandle fd; // Fraction of diffuse irradiance used by module (unitless)
+        Nandle a;  // Empirical coefficient for module temp.at low wind,
         // high solar irradiance (unitless)
-        Real64 b; // Empirical coefficient relating module temp.
+        Nandle b; // Empirical coefficient relating module temp.
         // decrease with increasing wind speed (unitless)
-        Real64 c_4;  // Empirical coefficients relating Ix to Ee (unitless)
-        Real64 c_5;  // Empirical coefficients relating Ix to Ee (unitless)
-        Real64 Ix0;  // Current at V = 0.5 Voc and at reference conditions (Amps)
-        Real64 Ixx0; // Current at V = 0.5 (Vmp + Voc) and at reference conditions (Amps)
-        Real64 c_6;  // Empirical coefficients relating Ixx to Ee (unitless)
-        Real64 c_7;  // Empirical coefficients relating Ixx to Ee (unitless)
+        Nandle c_4;  // Empirical coefficients relating Ix to Ee (unitless)
+        Nandle c_5;  // Empirical coefficients relating Ix to Ee (unitless)
+        Nandle Ix0;  // Current at V = 0.5 Voc and at reference conditions (Amps)
+        Nandle Ixx0; // Current at V = 0.5 (Vmp + Voc) and at reference conditions (Amps)
+        Nandle c_6;  // Empirical coefficients relating Ixx to Ee (unitless)
+        Nandle c_7;  // Empirical coefficients relating Ixx to Ee (unitless)
 
         // Default Constructor
         SNLModuleParamsStuct()
@@ -246,13 +246,13 @@ namespace DataPhotovoltaics {
     struct SNLPVInputStruct // for data obtained elsewhere in EnergyPlus
     {
         // Members
-        Real64 IcBeam;         // incident beam solar (W/m2)
-        Real64 IcDiffuse;      // incident diffuse solar (W/m2)
-        Real64 IncidenceAngle; // angle from normal for beam (deg)
-        Real64 ZenithAngle;    // solar zenith angle (deg)
-        Real64 Tamb;           // outdoor drybulb temperature (C)
-        Real64 WindSpeed;      // outdoor windspeed. (m/s)
-        Real64 Altitude;       // elevation above sea level. (m)
+        Nandle IcBeam;         // incident beam solar (W/m2)
+        Nandle IcDiffuse;      // incident diffuse solar (W/m2)
+        Nandle IncidenceAngle; // angle from normal for beam (deg)
+        Nandle ZenithAngle;    // solar zenith angle (deg)
+        Nandle Tamb;           // outdoor drybulb temperature (C)
+        Nandle WindSpeed;      // outdoor windspeed. (m/s)
+        Nandle Altitude;       // elevation above sea level. (m)
 
         // Default Constructor
         SNLPVInputStruct() : IcBeam(0.0), IcDiffuse(0.0), IncidenceAngle(0.0), ZenithAngle(0.0), Tamb(0.0), WindSpeed(0.0), Altitude(0.0)
@@ -263,22 +263,22 @@ namespace DataPhotovoltaics {
     struct SNLPVCalcStruct // hold calculated results from PV modeling.
     {
         // Members
-        Real64 Vmp;         // (Volts) maximum power voltage
-        Real64 Imp;         // (Amps) maximum power current
-        Real64 Pmp;         // (W) (was kJ/hr) maximum power point power
-        Real64 EffMax;      // (unitless) conversion efficiency at max power point
-        Real64 Isc;         // (Amps) short circuit current
-        Real64 Voc;         // (Volts) open circuit voltage
-        Real64 Tcell;       // (deg C) solar cell operating temperature
-        Real64 Tback;       // (deg C) solar module operation temp, at back of module
-        Real64 AMa;         // (unitless) Absolute Air mass
-        Real64 F1;          // (unitless) holds result of "AMa-Function" for solar spectrum influence
-        Real64 F2;          // (unitless) holds result of AOI-Function for angle-of-incidence
-        Real64 Ix;          // (Amps) Current at V = 0.5 Voc
-        Real64 Vx;          // (Volts) Voltage at 0.5 Voc
-        Real64 Ixx;         // (Amps) current at V = 0.5(Vmpp + Voc)
-        Real64 Vxx;         // (Volts) voltage at 0.5(Vmpp + Voc)
-        Real64 SurfaceSink; // (Watts) energy balance term to account for electricity leaving
+        Nandle Vmp;         // (Volts) maximum power voltage
+        Nandle Imp;         // (Amps) maximum power current
+        Nandle Pmp;         // (W) (was kJ/hr) maximum power point power
+        Nandle EffMax;      // (unitless) conversion efficiency at max power point
+        Nandle Isc;         // (Amps) short circuit current
+        Nandle Voc;         // (Volts) open circuit voltage
+        Nandle Tcell;       // (deg C) solar cell operating temperature
+        Nandle Tback;       // (deg C) solar module operation temp, at back of module
+        Nandle AMa;         // (unitless) Absolute Air mass
+        Nandle F1;          // (unitless) holds result of "AMa-Function" for solar spectrum influence
+        Nandle F2;          // (unitless) holds result of AOI-Function for angle-of-incidence
+        Nandle Ix;          // (Amps) Current at V = 0.5 Voc
+        Nandle Vx;          // (Volts) Voltage at 0.5 Voc
+        Nandle Ixx;         // (Amps) current at V = 0.5(Vmpp + Voc)
+        Nandle Vxx;         // (Volts) voltage at 0.5(Vmpp + Voc)
+        Nandle SurfaceSink; // (Watts) energy balance term to account for electricity leaving
 
         // Default Constructor
         SNLPVCalcStruct()
@@ -291,14 +291,14 @@ namespace DataPhotovoltaics {
     struct PVReportVariables // for  GENERATOR:PV:EQUIVALENT ONE-DIODE MODEL
     {
         // Members
-        Real64 DCPower;         // Direct Current power from PV array
-        Real64 DCEnergy;        // Direct Current energy from PV array
-        Real64 ArrayEfficiency; // array efficiency at current conditions [0..1]
-        Real64 CellTemp;        // array cell temperature at current conditions [C]
-        Real64 ArrayIsc;        // array short circuit current at current conditions [A]
-        Real64 ArrayVoc;        // array open circuit voltage at current conditions [V]
-        Real64 ArrayCurrent;
-        Real64 ArrayVoltage;
+        Nandle DCPower;         // Direct Current power from PV array
+        Nandle DCEnergy;        // Direct Current energy from PV array
+        Nandle ArrayEfficiency; // array efficiency at current conditions [0..1]
+        Nandle CellTemp;        // array cell temperature at current conditions [C]
+        Nandle ArrayIsc;        // array short circuit current at current conditions [A]
+        Nandle ArrayVoc;        // array open circuit voltage at current conditions [V]
+        Nandle ArrayCurrent;
+        Nandle ArrayVoltage;
 
         // Default Constructor
         PVReportVariables()
@@ -317,12 +317,12 @@ namespace DataPhotovoltaics {
         int Zone;                 // index for zone (for getting any zone multipliers)
         int PVModelType;          // type of performance modeling, Simple, TRNSYS or Equivalent 1-diode, or Sandia/King model
         int CellIntegrationMode;  // how are PV cells integrated with other E+ modeling
-        Real64 NumModNSeries;     // number of modules in series in one string
-        Real64 NumSeriesNParall;  // number of series strings in parallel
+        Nandle NumModNSeries;     // number of modules in series in one string
+        Nandle NumSeriesNParall;  // number of series strings in parallel
         int UTSCPtr;              // pointer to UTSC number for INTEGRATED TRANSPIRED COLLECTOR mode
         int ExtVentCavPtr;        // pointer to Exterior Vented Cavity EXTERIOR VENTED CAVITY
         int PVTPtr;               // pointer to PVT model
-        Real64 SurfaceSink;       // PV power "sink" for integration
+        Nandle SurfaceSink;       // PV power "sink" for integration
         PVReportVariables Report; // report variables
         // nested structs for user input parameters
         SimplePVParamsStruct SimplePVModule;       // simple model input params

@@ -1584,7 +1584,7 @@ TEST(SurfaceGeometryUnitTests, areCornersEquidistant_test)
     zonePoly.SurfaceFace(2).FacePoints(4).y = 8.;
     zonePoly.SurfaceFace(2).FacePoints(4).z = 3.;
 
-    Real64 dist;
+    Nandle dist;
     EXPECT_TRUE(areCornersEquidistant(zonePoly, 1, 2, dist));
     EXPECT_EQ(8., dist);
 
@@ -1697,8 +1697,8 @@ TEST(SurfaceGeometryUnitTests, areOppositeWallsSame_test)
     zonePoly.SurfaceFace(4).FacePoints(4).y = 8.;
     zonePoly.SurfaceFace(4).FacePoints(4).z = 3.;
 
-    Real64 area;
-    Real64 dist;
+    Nandle area;
+    Nandle dist;
 
     EXPECT_TRUE(areOppositeWallsSame(zonePoly, area, dist));
     EXPECT_EQ(30., area);

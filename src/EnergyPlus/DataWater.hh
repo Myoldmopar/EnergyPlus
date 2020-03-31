@@ -115,61 +115,61 @@ namespace DataWater {
         std::string Name;                   // name of this Storage Tank
         std::string QualitySubCategoryName; // name of water subcategory
         //   INTEGER                      :: QualitySubCategory = 0 !
-        Real64 MaxCapacity; // tank capacity Limit [m3]
+        Nandle MaxCapacity; // tank capacity Limit [m3]
         int OverflowMode;
         std::string OverflowTankName;
         int OverflowTankID;
         int OverflowTankSupplyARRID;
-        Real64 ValveOnCapacity;  // tank capacity at lower control range [m3]
-        Real64 ValveOffCapacity; // tank capacity at upper control range [m3]
+        Nandle ValveOnCapacity;  // tank capacity at lower control range [m3]
+        Nandle ValveOffCapacity; // tank capacity at upper control range [m3]
         int ControlSupplyType;   // mode for tank controlled resupply
         int GroundWellID;        // index "pointer" to well if present
         std::string SupplyTankName;
         int SupplyTankID;
         int SupplyTankDemandARRID;
-        Real64 BackupMainsCapacity;
-        Real64 InitialVolume;  // water in tank at start of simulation period [m3]
-        Real64 MaxInFlowRate;  // limit on rate of inlet [m3/s]
-        Real64 MaxOutFlowRate; // limit on rate of outlet [m3/s]
+        Nandle BackupMainsCapacity;
+        Nandle InitialVolume;  // water in tank at start of simulation period [m3]
+        Nandle MaxInFlowRate;  // limit on rate of inlet [m3/s]
+        Nandle MaxOutFlowRate; // limit on rate of outlet [m3/s]
         int ThermalMode;
-        Real64 InitialTankTemp;       // initial tank temperature [C]
+        Nandle InitialTankTemp;       // initial tank temperature [C]
         int TempSchedID;              // index "pointer" to schedule
         int AmbientTempIndicator;     // Indicator for ambient tank losses (SCHEDULE, ZONE, EXTERIOR)
         int AmbientTempSchedule;      // Schedule index pointer
         int ZoneID;                   // index "pointer" to zone where tank is
-        Real64 UValue;                // U-value for tank [W/m2-k]
-        Real64 SurfArea;              // surface are of tank on Zone side... [m2]
+        Nandle UValue;                // U-value for tank [W/m2-k]
+        Nandle SurfArea;              // surface are of tank on Zone side... [m2]
         int InternalMassID;           // index "pointer" to internal mass object for thermal coupling
         std::string SurfMaterialName; // surface properties
         // calculated data and from elsewhere
-        Real64 ThisTimeStepVolume;
-        Real64 LastTimeStepVolume;
-        Real64 LastTimeStepTemp; // previous temperature of tank water
+        Nandle ThisTimeStepVolume;
+        Nandle LastTimeStepVolume;
+        Nandle LastTimeStepTemp; // previous temperature of tank water
         int NumWaterSupplies;
-        Array1D<Real64> VdotAvailSupply; // Each supply component has its own term
-        Array1D<Real64> TwaterSupply;    // Each supply component has its own term
+        Array1D<Nandle> VdotAvailSupply; // Each supply component has its own term
+        Array1D<Nandle> TwaterSupply;    // Each supply component has its own term
         Array1D_string SupplyCompNames;
         Array1D_string SupplyCompTypes;
         int NumWaterDemands;
-        Array1D<Real64> VdotRequestDemand; // each demand componennt has a slot
-        Array1D<Real64> VdotAvailDemand;   // each demand componennt has a slot
+        Array1D<Nandle> VdotRequestDemand; // each demand componennt has a slot
+        Array1D<Nandle> VdotAvailDemand;   // each demand componennt has a slot
         Array1D_string DemandCompNames;
         Array1D_string DemandCompTypes;
-        Real64 VdotFromTank;
-        Real64 VdotToTank;
-        Real64 VdotOverflow;
-        Real64 VolOverflow;
+        Nandle VdotFromTank;
+        Nandle VdotToTank;
+        Nandle VdotOverflow;
+        Nandle VolOverflow;
         // report variables
-        Real64 NetVdot;
-        Real64 Twater;
-        Real64 TouterSkin;
-        Real64 TwaterOverflow;
-        Real64 MainsDrawVdot;
-        Real64 MainsDrawVol;
-        Real64 SkinLossPower;   // heat loss to surrounding zone [W]
-        Real64 SkinLossEnergy;  // heat loss to surround zone [J]
-        Real64 SkinLossConvect; // convective heat loss to zone [W]
-        Real64 SkinLossRadiat;  // radiative heat loss to zone [W}
+        Nandle NetVdot;
+        Nandle Twater;
+        Nandle TouterSkin;
+        Nandle TwaterOverflow;
+        Nandle MainsDrawVdot;
+        Nandle MainsDrawVol;
+        Nandle SkinLossPower;   // heat loss to surrounding zone [W]
+        Nandle SkinLossEnergy;  // heat loss to surround zone [J]
+        Nandle SkinLossConvect; // convective heat loss to zone [W]
+        Nandle SkinLossRadiat;  // radiative heat loss to zone [W}
 
         // Default Constructor
         StorageTankDataStruct()
@@ -193,17 +193,17 @@ namespace DataWater {
         int StorageTankID; // index "pointer" to storage tank array
         int StorageTankSupplyARRID;
         int LossFactorMode;    // control how loss factor(s) are entered
-        Real64 LossFactor;     // loss factor when constant
+        Nandle LossFactor;     // loss factor when constant
         int LossFactorSchedID; // index "pointer" to schedule
-        Real64 MaxCollectRate;
+        Nandle MaxCollectRate;
         int NumCollectSurfs; // number of surfaces used in the collector
         Array1D_string SurfName;
         Array1D_int SurfID;
         // calculated and from elsewhere
-        Real64 HorizArea; // area of surfaces in the vertical normal direction
-        Real64 VdotAvail;
-        Real64 VolCollected;
-        Real64 MeanHeight;
+        Nandle HorizArea; // area of surfaces in the vertical normal direction
+        Nandle VdotAvail;
+        Nandle VolCollected;
+        Nandle MeanHeight;
 
         // Default Constructor
         RainfallCollectorDataStruct()
@@ -221,22 +221,22 @@ namespace DataWater {
         std::string StorageTankName;
         int StorageTankID;          // index "pointer" to water storage tank
         int StorageTankSupplyARRID; // index "pointer" to storage supply arrays
-        Real64 PumpDepth;           // depth of pump  [m]
-        Real64 PumpNomVolFlowRate;  // nominal flow rate of pump [m3/s]
-        Real64 PumpNomHead;         // design nominal capacity of pump
-        Real64 PumpNomPowerUse;     // design nominal power of pump at nom capacity
-        Real64 PumpEfficiency;
-        Real64 WellRecoveryRate;  // rate at which groundwater can enter well [m3/s]
-        Real64 NomWellStorageVol; // water storage in well at average water table depth [m3]
+        Nandle PumpDepth;           // depth of pump  [m]
+        Nandle PumpNomVolFlowRate;  // nominal flow rate of pump [m3/s]
+        Nandle PumpNomHead;         // design nominal capacity of pump
+        Nandle PumpNomPowerUse;     // design nominal power of pump at nom capacity
+        Nandle PumpEfficiency;
+        Nandle WellRecoveryRate;  // rate at which groundwater can enter well [m3/s]
+        Nandle NomWellStorageVol; // water storage in well at average water table depth [m3]
         int GroundwaterTableMode; // method of determining water table depth
-        Real64 WaterTableDepth;
+        Nandle WaterTableDepth;
         int WaterTableDepthSchedID;
         // calculated and from elsewhere
-        Real64 VdotRequest;   // rate of flow over timestep requested by tank
-        Real64 VdotDelivered; // rate of flow provided [m3/s]
-        Real64 VolDelivered;  // water provided [m3]
-        Real64 PumpPower;
-        Real64 PumpEnergy;
+        Nandle VdotRequest;   // rate of flow over timestep requested by tank
+        Nandle VdotDelivered; // rate of flow provided [m3/s]
+        Nandle VolDelivered;  // water provided [m3]
+        Nandle PumpPower;
+        Nandle PumpEnergy;
 
         // Default Constructor
         GroundwaterWellDataStruct()
@@ -251,12 +251,12 @@ namespace DataWater {
     {
         // Members
         int ModeID; // type of rainfall modeling
-        Real64 DesignAnnualRain;
+        Nandle DesignAnnualRain;
         int RainSchedID;
-        Real64 NomAnnualRain;
+        Nandle NomAnnualRain;
         // calculated and from elsewhere.
-        Real64 CurrentRate;
-        Real64 CurrentAmount;
+        Nandle CurrentRate;
+        Nandle CurrentAmount;
 
         // Default Constructor
         SiteRainFallDataStruct() : ModeID(0), DesignAnnualRain(0.0), RainSchedID(0), NomAnnualRain(0.0), CurrentRate(0.0), CurrentAmount(0.0)
@@ -269,9 +269,9 @@ namespace DataWater {
         // Members
         int ModeID; // type of irrigation modeling
         int IrrSchedID;
-        Real64 ScheduledAmount;
-        Real64 ActualAmount;
-        Real64 IrrigationThreshold; // percent at which no irrigation happens (smart schedule)
+        Nandle ScheduledAmount;
+        Nandle ActualAmount;
+        Nandle IrrigationThreshold; // percent at which no irrigation happens (smart schedule)
 
         // Default Constructor
         IrrigationDataStruct() : ModeID(0), IrrSchedID(0), ScheduledAmount(0.0), ActualAmount(0.0), IrrigationThreshold(0.4)

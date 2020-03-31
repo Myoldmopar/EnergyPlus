@@ -85,7 +85,7 @@ namespace DesiccantDehumidifiers {
     extern int NumDesicDehums;        // number of desiccant dehumidifiers of all types
     extern int NumSolidDesicDehums;   // number of solid desiccant dehumidifiers
     extern int NumGenericDesicDehums; // number of generic desiccant dehumidifiers
-    extern Real64 TempSteamIn;        // steam coil steam inlet temperature
+    extern Nandle TempSteamIn;        // steam coil steam inlet temperature
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE <module_name>
 
@@ -111,10 +111,10 @@ namespace DesiccantDehumidifiers {
         int RegenAirOutNode;      // regen air outlet node of dehumidifier
         int RegenFanInNode;       // regen fan inlet node
         int ControlType;          // type of controls
-        Real64 HumRatSet;         // humidity ratio setpoint [kg water / kg air]
-        Real64 NomProcAirVolFlow; // nominal process air flow rate [m3/s]
-        Real64 NomProcAirVel;     // nominal process air velocity [m/s]
-        Real64 NomRotorPower;     // rotor power consumption at full output [W]
+        Nandle HumRatSet;         // humidity ratio setpoint [kg water / kg air]
+        Nandle NomProcAirVolFlow; // nominal process air flow rate [m3/s]
+        Nandle NomProcAirVel;     // nominal process air velocity [m/s]
+        Nandle NomRotorPower;     // rotor power consumption at full output [W]
         int RegenCoilIndex;       // Index for regen coil
         int RegenFanIndex;        // Index for regen fan
         int regenFanType_Num;     // Fan type number (see DataHVACGlobals)
@@ -126,39 +126,39 @@ namespace DesiccantDehumidifiers {
         int RegenEnergyCurvefV;   // number of regen energy f(v) curve
         int RegenVelCurvefTW;     // number of regen velocity f(edb,ew) curve
         int RegenVelCurvefV;      // number of regen velocity f(v) curve
-        Real64 NomRegenTemp;      // nominal regen temperature for regen energy curve [C]
+        Nandle NomRegenTemp;      // nominal regen temperature for regen energy curve [C]
         // Possible future inputs, hardwired for now depending on which performance model is in use, unit off if out of bounds
-        Real64 MinProcAirInTemp;   // min allowable process inlet air temperature [C]
-        Real64 MaxProcAirInTemp;   // max allowable process inlet air temperature [C]
-        Real64 MinProcAirInHumRat; // min allowable process inlet air humidity ratio [kg water / kg air]
-        Real64 MaxProcAirInHumRat; // max allowable process inlet air humidity ratio [kg water / kg air]
+        Nandle MinProcAirInTemp;   // min allowable process inlet air temperature [C]
+        Nandle MaxProcAirInTemp;   // max allowable process inlet air temperature [C]
+        Nandle MinProcAirInHumRat; // min allowable process inlet air humidity ratio [kg water / kg air]
+        Nandle MaxProcAirInHumRat; // max allowable process inlet air humidity ratio [kg water / kg air]
         // Internal Data
         int SchedPtr;                  // index of availability schedule
-        Real64 NomProcAirMassFlow;     // nominal process air mass flow rate [kg/s]
-        Real64 NomRegenAirMassFlow;    // nominal regeneration air mass flow rate [kg/s]
-        Real64 ProcAirInTemp;          // process inlet air temperature [C]
-        Real64 ProcAirInHumRat;        // process inlet air humidity ratio [kg water / kg air]
-        Real64 ProcAirInEnthalpy;      // process inlet air specific enthalpy [J/kg]
-        Real64 ProcAirInMassFlowRate;  // process inlet air mass flow rate [kg/s]
-        Real64 ProcAirOutTemp;         // process outlet air temperature [C]
-        Real64 ProcAirOutHumRat;       // process outlet air humidity ratio [kg water / kg air]
-        Real64 ProcAirOutEnthalpy;     // process outlet air specific enthalpy [J/kg]
-        Real64 ProcAirOutMassFlowRate; // process outlet air mass flow rate [kg/s]
-        Real64 RegenAirInTemp;         // regen inlet air temperature [C]
-        Real64 RegenAirInHumRat;       // regen inlet air humidity ratio [kg water / kg air]
-        Real64 RegenAirInEnthalpy;     // regen inlet air specific enthalpy [J/kg]
-        Real64 RegenAirInMassFlowRate; // regen inlet air mass flow rate [kg/s]
-        Real64 RegenAirVel;            // regen air velocity [m/s]
+        Nandle NomProcAirMassFlow;     // nominal process air mass flow rate [kg/s]
+        Nandle NomRegenAirMassFlow;    // nominal regeneration air mass flow rate [kg/s]
+        Nandle ProcAirInTemp;          // process inlet air temperature [C]
+        Nandle ProcAirInHumRat;        // process inlet air humidity ratio [kg water / kg air]
+        Nandle ProcAirInEnthalpy;      // process inlet air specific enthalpy [J/kg]
+        Nandle ProcAirInMassFlowRate;  // process inlet air mass flow rate [kg/s]
+        Nandle ProcAirOutTemp;         // process outlet air temperature [C]
+        Nandle ProcAirOutHumRat;       // process outlet air humidity ratio [kg water / kg air]
+        Nandle ProcAirOutEnthalpy;     // process outlet air specific enthalpy [J/kg]
+        Nandle ProcAirOutMassFlowRate; // process outlet air mass flow rate [kg/s]
+        Nandle RegenAirInTemp;         // regen inlet air temperature [C]
+        Nandle RegenAirInHumRat;       // regen inlet air humidity ratio [kg water / kg air]
+        Nandle RegenAirInEnthalpy;     // regen inlet air specific enthalpy [J/kg]
+        Nandle RegenAirInMassFlowRate; // regen inlet air mass flow rate [kg/s]
+        Nandle RegenAirVel;            // regen air velocity [m/s]
         std::string DehumType;         // Type of desiccant dehumidifier
         int DehumTypeCode;             // Type of desiccant dehumidifier, integer code
-        Real64 WaterRemove;            // water removed [kg]
-        Real64 WaterRemoveRate;        // water removal rate [kg/s]
-        Real64 SpecRegenEnergy;        // specific regen energy [J/kg of water removed]
-        Real64 QRegen;                 // regen energy rate requested from regen coil [W]
-        Real64 RegenEnergy;            // regen energy requested from regen coil [J]
-        Real64 ElecUseEnergy;          // electricity consumption [J]
-        Real64 ElecUseRate;            // electricity consumption rate [W]
-        Real64 PartLoad;               // fraction of dehumidification capacity required to meet setpoint
+        Nandle WaterRemove;            // water removed [kg]
+        Nandle WaterRemoveRate;        // water removal rate [kg/s]
+        Nandle SpecRegenEnergy;        // specific regen energy [J/kg of water removed]
+        Nandle QRegen;                 // regen energy rate requested from regen coil [W]
+        Nandle RegenEnergy;            // regen energy requested from regen coil [J]
+        Nandle ElecUseEnergy;          // electricity consumption [J]
+        Nandle ElecUseRate;            // electricity consumption rate [W]
+        Nandle PartLoad;               // fraction of dehumidification capacity required to meet setpoint
         int RegenCapErrorIndex1;       // recurring error message index for insufficient regen coil capacity
         int RegenCapErrorIndex2;       // recurring error message index for insufficient regen coil capacity
         int RegenCapErrorIndex3;       // recurring error message index for insufficient regen coil capacity
@@ -176,13 +176,13 @@ namespace DesiccantDehumidifiers {
         std::string CoolingCoilName;       // name of cooling coil used with desiccant heat exchanger
         int coolingCoil_TypeNum;           // type of cooling coil, DataHVACGlobals coil type constants
         int Preheat;                       // determine condenser waste heat usage for pre heating regen air
-        Real64 RegenSetPointTemp;          // heating set-point for regeneration air [C]
-        Real64 ExhaustFanMaxVolFlowRate;   // exhaust fan maximum allowable air flow rate [m3/s]
-        Real64 ExhaustFanMaxMassFlowRate;  // exhaust fan maximum allowable air mass flow rate [kg/s]
-        Real64 ExhaustFanMaxPower;         // exhaust fan maximum allowable power [W]
-        Real64 ExhaustFanPower;            // exhaust fan power for reporting [W]
-        Real64 ExhaustFanElecConsumption;  // exhaust fan electric consumption for reporting [J]
-        Real64 CompanionCoilCapacity;      // DX coil capacity for dehumidifier companion cooling coil [W]
+        Nandle RegenSetPointTemp;          // heating set-point for regeneration air [C]
+        Nandle ExhaustFanMaxVolFlowRate;   // exhaust fan maximum allowable air flow rate [m3/s]
+        Nandle ExhaustFanMaxMassFlowRate;  // exhaust fan maximum allowable air mass flow rate [kg/s]
+        Nandle ExhaustFanMaxPower;         // exhaust fan maximum allowable power [W]
+        Nandle ExhaustFanPower;            // exhaust fan power for reporting [W]
+        Nandle ExhaustFanElecConsumption;  // exhaust fan electric consumption for reporting [J]
+        Nandle CompanionCoilCapacity;      // DX coil capacity for dehumidifier companion cooling coil [W]
         int RegenFanPlacement;             // placement of the fan used for regeneration air flow
         int ControlNodeNum;                // node number of control node
         int ExhaustFanCurveIndex;          // exhaust fan curve object index
@@ -210,8 +210,8 @@ namespace DesiccantDehumidifiers {
         int CompNum;                       // plant loop component index for water heating coil
         int HotWaterCoilMaxIterIndex;      // Index to recurring warning message
         int HotWaterCoilMaxIterIndex2;     // Index to recurring warning message
-        Real64 MaxCoilFluidFlow;           // hot water or steam mass flow rate regen. heating coil [kg/s]
-        Real64 RegenCoilCapacity;          // hot water or steam coil operating capacity [W]
+        Nandle MaxCoilFluidFlow;           // hot water or steam mass flow rate regen. heating coil [kg/s]
+        Nandle RegenCoilCapacity;          // hot water or steam coil operating capacity [W]
 
         // Default Constructor
         DesiccantDehumidifierData()
@@ -253,17 +253,17 @@ namespace DesiccantDehumidifiers {
     );
 
     void ControlDesiccantDehumidifier(int const DesicDehumNum,      // number of the current dehumidifier being simulated
-                                      Real64 &HumRatNeeded,         // process air leaving humidity ratio set by controller [kg water/kg air]
+                                      Nandle &HumRatNeeded,         // process air leaving humidity ratio set by controller [kg water/kg air]
                                       bool const FirstHVACIteration // TRUE if 1st HVAC simulation of system timestep !unused1208
     );
 
     void CalcSolidDesiccantDehumidifier(int const DesicDehumNum,      // number of the current dehumidifier being simulated
-                                        Real64 const HumRatNeeded,    // process air leaving humidity ratio set by controller [kgWater/kgDryAir]
+                                        Nandle const HumRatNeeded,    // process air leaving humidity ratio set by controller [kgWater/kgDryAir]
                                         bool const FirstHVACIteration // TRUE if 1st HVAC simulation of system timestep
     );
 
     void CalcGenericDesiccantDehumidifier(int const DesicDehumNum,      // number of the current dehumidifier being simulated
-                                          Real64 const HumRatNeeded,    // process air leaving humidity ratio set by controller [kg water/kg air]
+                                          Nandle const HumRatNeeded,    // process air leaving humidity ratio set by controller [kg water/kg air]
                                           bool const FirstHVACIteration // TRUE if 1st HVAC simulation of system timestep
     );
 
@@ -273,12 +273,12 @@ namespace DesiccantDehumidifiers {
 
     void CalcNonDXHeatingCoils(int const DesicDehumNum,              // Desiccant dehumidifier unit index
                                bool const FirstHVACIteration,        // flag for first HVAC iteration in the time step
-                               Real64 const RegenCoilLoad,           // heating coil load to be met (Watts)
-                               Optional<Real64> RegenCoilLoadmet = _ // heating load met
+                               Nandle const RegenCoilLoad,           // heating coil load to be met (Watts)
+                               Optional<Nandle> RegenCoilLoadmet = _ // heating load met
     );
 
-    Real64 HotWaterCoilResidual(Real64 const HWFlow,       // hot water flow rate in kg/s
-                                Array1D<Real64> const &Par // Par(5) is the requested coil load
+    Nandle HotWaterCoilResidual(Nandle const HWFlow,       // hot water flow rate in kg/s
+                                Array1D<Nandle> const &Par // Par(5) is the requested coil load
     );
 
     int GetProcAirInletNodeNum(std::string const &DesicDehumName,

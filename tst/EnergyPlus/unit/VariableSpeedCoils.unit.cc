@@ -2755,24 +2755,24 @@ TEST_F(EnergyPlusFixture, VariableSpeedCoils_Test_CalcTotCap_VSWSHP)
 
     VariableSpeedCoils::GetVarSpeedCoilInput();
 
-    Real64 LSInletDBTemp = 24.0; // conditions at 24 DB / 20 Wb found at http://www.sugartech.co.za/psychro/index.php
-    Real64 LSInletHumRat = 0.013019367;
-    Real64 LSInletEnth = 57256.90248;
-    Real64 LSInletWBTemp = 20.0;
-    Real64 AirMassFlowRatio = VariableSpeedCoils::VarSpeedCoil(1).MSRatedAirVolFlowRate(1);
-    Real64 WaterMassFlowRatio = 0.0;
-    Real64 LSMassFlowRate = 1.45;
-    Real64 CBFSpeed = 0.000001;
-    Real64 MSRatedTotCap = VariableSpeedCoils::VarSpeedCoil(1).MSRatedTotCap(1);
+    Nandle LSInletDBTemp = 24.0; // conditions at 24 DB / 20 Wb found at http://www.sugartech.co.za/psychro/index.php
+    Nandle LSInletHumRat = 0.013019367;
+    Nandle LSInletEnth = 57256.90248;
+    Nandle LSInletWBTemp = 20.0;
+    Nandle AirMassFlowRatio = VariableSpeedCoils::VarSpeedCoil(1).MSRatedAirVolFlowRate(1);
+    Nandle WaterMassFlowRatio = 0.0;
+    Nandle LSMassFlowRate = 1.45;
+    Nandle CBFSpeed = 0.000001;
+    Nandle MSRatedTotCap = VariableSpeedCoils::VarSpeedCoil(1).MSRatedTotCap(1);
     int MSCapFTemp = VariableSpeedCoils::VarSpeedCoil(1).MSCCapFTemp(1);
     int MSCapAirFFlow = VariableSpeedCoils::VarSpeedCoil(1).MSCCapAirFFlow(1);
     int MSCapWaterFFlow = VariableSpeedCoils::VarSpeedCoil(1).MSCCapWaterFFlow(1);
-    Real64 QLoadTotal = 0.0;
-    Real64 QLoadTotal1 = 0.0;
-    Real64 QLoadTotal2 = 0.0;
-    Real64 SHR = VariableSpeedCoils::VarSpeedCoil(1).MSRatedSHR(1);
-    Real64 SSInletTemp = 24.0;
-    Real64 InletAirPressure = 101320.0;
+    Nandle QLoadTotal = 0.0;
+    Nandle QLoadTotal1 = 0.0;
+    Nandle QLoadTotal2 = 0.0;
+    Nandle SHR = VariableSpeedCoils::VarSpeedCoil(1).MSRatedSHR(1);
+    Nandle SSInletTemp = 24.0;
+    Nandle InletAirPressure = 101320.0;
 
     VariableSpeedCoils::CalcTotCapSHR_VSWSHP(LSInletDBTemp, LSInletHumRat, LSInletEnth, LSInletWBTemp, AirMassFlowRatio, WaterMassFlowRatio,
                                              LSMassFlowRate, CBFSpeed, MSRatedTotCap, MSCapFTemp, MSCapAirFFlow, MSCapWaterFFlow, 0.0, 0, 0, 0,
@@ -2780,12 +2780,12 @@ TEST_F(EnergyPlusFixture, VariableSpeedCoils_Test_CalcTotCap_VSWSHP)
                                              VariableSpeedCoils::VarSpeedCoil(1).capModFacTotal);
 
     // same calculations as in CalcTotCapSHR_VSWSHP (except CapFTemp term is 1 so no need to add that calc here)
-    Real64 hDelta = MSRatedTotCap / LSMassFlowRate;                      // Change in air enthalpy across the cooling coil [J/kg]
-    Real64 hADP = LSInletEnth - hDelta / (1.0 - CBFSpeed);               // Apparatus dew point enthalpy [J/kg]
-    Real64 tADP = Psychrometrics::PsyTsatFnHPb(hADP, InletAirPressure);  // Apparatus dew point temperature [C]
-    Real64 wADP = Psychrometrics::PsyWFnTdbH(tADP, hADP);                // Apparatus dew point humidity ratio [kg/kg]
-    Real64 hTinwADP = Psychrometrics::PsyHFnTdbW(LSInletDBTemp, wADP);   // Enthalpy at inlet dry-bulb and wADP [J/kg]
-    Real64 SHRCalc = min((hTinwADP - hADP) / (LSInletEnth - hADP), 1.0); // temporary calculated value of SHR
+    Nandle hDelta = MSRatedTotCap / LSMassFlowRate;                      // Change in air enthalpy across the cooling coil [J/kg]
+    Nandle hADP = LSInletEnth - hDelta / (1.0 - CBFSpeed);               // Apparatus dew point enthalpy [J/kg]
+    Nandle tADP = Psychrometrics::PsyTsatFnHPb(hADP, InletAirPressure);  // Apparatus dew point temperature [C]
+    Nandle wADP = Psychrometrics::PsyWFnTdbH(tADP, hADP);                // Apparatus dew point humidity ratio [kg/kg]
+    Nandle hTinwADP = Psychrometrics::PsyHFnTdbW(LSInletDBTemp, wADP);   // Enthalpy at inlet dry-bulb and wADP [J/kg]
+    Nandle SHRCalc = min((hTinwADP - hADP) / (LSInletEnth - hADP), 1.0); // temporary calculated value of SHR
 
     // expect SHR to be < 1
     EXPECT_NEAR(SHR, 0.5275102, 0.000001);
@@ -2794,10 +2794,10 @@ TEST_F(EnergyPlusFixture, VariableSpeedCoils_Test_CalcTotCap_VSWSHP)
     EXPECT_NEAR(QLoadTotal2, 0.0, 0.00001);
     EXPECT_NEAR(QLoadTotal, 33861.7200, 0.00001);
 
-    Real64 OutletTemp = LSInletDBTemp - (1.0 - CBFSpeed) * (LSInletDBTemp - tADP);
-    Real64 OutletHumRat = LSInletHumRat - (1.0 - CBFSpeed) * (LSInletHumRat - wADP);
-    Real64 OutletEnthalpy = LSInletEnth - hDelta;
-    Real64 OutletAirRH = Psychrometrics::PsyRhFnTdbWPb(OutletTemp, OutletHumRat, InletAirPressure);
+    Nandle OutletTemp = LSInletDBTemp - (1.0 - CBFSpeed) * (LSInletDBTemp - tADP);
+    Nandle OutletHumRat = LSInletHumRat - (1.0 - CBFSpeed) * (LSInletHumRat - wADP);
+    Nandle OutletEnthalpy = LSInletEnth - hDelta;
+    Nandle OutletAirRH = Psychrometrics::PsyRhFnTdbWPb(OutletTemp, OutletHumRat, InletAirPressure);
 
     // outlet conditions should be very near the saturation curve
     EXPECT_NEAR(OutletTemp, tADP, 0.0001);

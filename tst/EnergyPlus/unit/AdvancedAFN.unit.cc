@@ -78,8 +78,8 @@ TEST_F(EnergyPlusFixture, AdvancedAFNTest_Test1)
 {
 
     int AirflowNetworkNumOfOccuVentCtrls;
-    Real64 TimeOpenElapsed;
-    Real64 TimeCloseElapsed;
+    Nandle TimeOpenElapsed;
+    Nandle TimeCloseElapsed;
     int OpenStatus;
     int OpenProbStatus;
     int CloseProbStatus;

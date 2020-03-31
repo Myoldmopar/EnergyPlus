@@ -87,13 +87,13 @@ namespace HighTempRadiantSystem {
     // MODULE VARIABLE DECLARATIONS:
     // Standard, run-of-the-mill variables...
     extern int NumOfHighTempRadSys;              // Number of hydronic low tempererature radiant systems
-    extern Array1D<Real64> QHTRadSource;         // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> QHTRadSrcAvg;         // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
+    extern Array1D<Nandle> QHTRadSource;         // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> QHTRadSrcAvg;         // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
     // Record keeping variables used to calculate QHTRadSrcAvg locally
-    extern Array1D<Real64> LastQHTRadSrc;      // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    extern Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastQHTRadSrc;      // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    extern Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     extern Array1D_bool MySizeFlag;
     extern Array1D_bool CheckEquipName;
 
@@ -111,33 +111,33 @@ namespace HighTempRadiantSystem {
         std::string ZoneName;   // Name of zone the system is serving
         int ZonePtr;            // Point to this zone in the Zone derived type
         int HeaterType;         // Type of heater (gas or electric)
-        Real64 MaxPowerCapac;   // Maximum capacity of the radiant heater in Watts
-        Real64 CombustionEffic; // Combustion efficiency (only valid for a gas heater)
-        Real64 FracRadiant;     // Fraction of heater power that is given off as radiant heat
-        Real64 FracLatent;      // Fraction of heater power that is given off as latent heat
-        Real64 FracLost;        // Fraction of heater power that is lost to the outside environment
-        Real64 FracConvect;     // Fraction of heater power that is given off as convective heat
+        Nandle MaxPowerCapac;   // Maximum capacity of the radiant heater in Watts
+        Nandle CombustionEffic; // Combustion efficiency (only valid for a gas heater)
+        Nandle FracRadiant;     // Fraction of heater power that is given off as radiant heat
+        Nandle FracLatent;      // Fraction of heater power that is given off as latent heat
+        Nandle FracLost;        // Fraction of heater power that is lost to the outside environment
+        Nandle FracConvect;     // Fraction of heater power that is given off as convective heat
         // (by definition this is 1 minus the sum of all other fractions)
         int ControlType;                   // Control type for the system (MAT, MRT, or op temp)
-        Real64 ThrottlRange;               // Throttling range for heating [C]
+        Nandle ThrottlRange;               // Throttling range for heating [C]
         std::string SetptSched;            // Schedule name for the zone setpoint temperature
         int SetptSchedPtr;                 // Schedule index for the zone setpoint temperature
-        Real64 FracDistribPerson;          // Fraction of fraction radiant incident on a "person" in the space
+        Nandle FracDistribPerson;          // Fraction of fraction radiant incident on a "person" in the space
         int TotSurfToDistrib;              // Total number of surfaces the heater sends radiation to
         Array1D_string SurfaceName;        // Surface name in the list of surfaces heater sends radiation to
         Array1D_int SurfacePtr;            // Surface number in the list of surfaces heater sends radiation to
-        Array1D<Real64> FracDistribToSurf; // Fraction of fraction radiant incident on the surface
+        Array1D<Nandle> FracDistribToSurf; // Fraction of fraction radiant incident on the surface
         // Other parameters
         // Report data
-        Real64 ElecPower;     // system electric consumption in Watts
-        Real64 ElecEnergy;    // system electric consumption in Joules
-        Real64 GasPower;      // system gas consumption in Watts
-        Real64 GasEnergy;     // system gas consumption in Joules
-        Real64 HeatPower;     // actual heating sent to zone (convective and radiative) in Watts
-        Real64 HeatEnergy;    // actual heating sent to zone (convective and radiative) in Joules
+        Nandle ElecPower;     // system electric consumption in Watts
+        Nandle ElecEnergy;    // system electric consumption in Joules
+        Nandle GasPower;      // system gas consumption in Watts
+        Nandle GasEnergy;     // system gas consumption in Joules
+        Nandle HeatPower;     // actual heating sent to zone (convective and radiative) in Watts
+        Nandle HeatEnergy;    // actual heating sent to zone (convective and radiative) in Joules
         int HeatingCapMethod; // - Method for High Temperature Radiant heating capacity scalable sizing calculation (HeatingDesignCapacity,
                               // CapacityPerFloorArea, FracOfAutosizedHeatingCapacity)
-        Real64
+        Nandle
             ScaledHeatingCapacity; // - High Temperature Radiant scaled maximum heating capacity {W} or scalable variable for sizing in {-}, or {W/m2}
 
         // Default Constructor
@@ -169,7 +169,7 @@ namespace HighTempRadiantSystem {
 
     void SimHighTempRadiantSystem(std::string const &CompName,   // name of the low temperature radiant system
                                   bool const FirstHVACIteration, // TRUE if 1st HVAC simulation of system timestep
-                                  Real64 &LoadMet,               // load met by the radiant system, in Watts
+                                  Nandle &LoadMet,               // load met by the radiant system, in Watts
                                   int &CompIndex);
 
     void GetHighTempRadiantSystem(bool &ErrorsFound); // Error flag if problems encountered on reading user input
@@ -187,7 +187,7 @@ namespace HighTempRadiantSystem {
     );
 
     void UpdateHighTempRadiantSystem(int const RadSysNum, // Index for the low temperature radiant system under consideration within the derived types
-                                     Real64 &LoadMet      // load met by the radiant system, in Watts
+                                     Nandle &LoadMet      // load met by the radiant system, in Watts
     );
 
     void UpdateHTRadSourceValAvg(bool &HighTempRadSysOn); // .TRUE. if the radiant system has run this zone time step
@@ -197,7 +197,7 @@ namespace HighTempRadiantSystem {
     void
     ReportHighTempRadiantSystem(int const RadSysNum); // Index for the low temperature radiant system under consideration within the derived types
 
-    Real64 SumHATsurf(int const ZoneNum); // Zone number
+    Nandle SumHATsurf(int const ZoneNum); // Zone number
 
 } // namespace HighTempRadiantSystem
 

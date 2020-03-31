@@ -80,8 +80,8 @@ TEST_F(EnergyPlusFixture, OutputReportData_getVariableKeys)
     int numDigitsShownTest = 3;
     AnnualFieldSet fldStTest = AnnualFieldSet(varNameTest, kindOfAggregationTest, numDigitsShownTest);
 
-    Real64 extLitPow;
-    Real64 extLitUse;
+    Nandle extLitPow;
+    Nandle extLitUse;
 
     SetupOutputVariable("Exterior Lights Electric Energy", OutputProcessor::Unit::J, extLitUse, "Zone", "Sum", "Lite1", _, "Electricity",
                         "Exterior Lights", "General");

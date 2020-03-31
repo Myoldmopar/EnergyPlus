@@ -477,9 +477,9 @@ TEST_F(SQLiteFixture, SQLiteProcedures_DaylightMaping)
     zone->CeilingHeight = 3;
     zone->Volume = 302;
 
-    Array1D<Real64> XValue({50.1, 51.3});
-    Array1D<Real64> YValue({50.1, 52.1});
-    Array2D<Real64> IllumValue(2, 2, {1, 3, 2, 4});
+    Array1D<Nandle> XValue({50.1, 51.3});
+    Array1D<Nandle> YValue({50.1, 52.1});
+    Array2D<Nandle> IllumValue(2, 2, {1, 3, 2, 4});
 
     EnergyPlus::sqlite->sqliteBegin();
     EnergyPlus::sqlite->addZoneData(1, *zone);

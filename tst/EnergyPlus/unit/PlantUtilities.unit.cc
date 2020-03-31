@@ -68,7 +68,7 @@ TEST_F(EnergyPlusFixture, PlantUtilities_RegisterPlantCompDesignFlowTest1)
 {
     // first call just puts first value in array
     int TestNodeNum1 = 123;
-    Real64 TestFlowRate1 = 45.6;
+    Nandle TestFlowRate1 = 45.6;
     SaveNumPlantComps = 0;
     RegisterPlantCompDesignFlow(TestNodeNum1, TestFlowRate1);
     EXPECT_EQ(TestNodeNum1, CompDesWaterFlow(1).SupNode);
@@ -76,13 +76,13 @@ TEST_F(EnergyPlusFixture, PlantUtilities_RegisterPlantCompDesignFlowTest1)
 
     // second call searches array and since node not found adds an entry to array
     int TestNodeNum2 = 234;
-    Real64 TestFlowRate2 = 56.7;
+    Nandle TestFlowRate2 = 56.7;
     RegisterPlantCompDesignFlow(TestNodeNum2, TestFlowRate2);
     EXPECT_EQ(TestNodeNum2, CompDesWaterFlow(2).SupNode);
     EXPECT_EQ(TestFlowRate2, CompDesWaterFlow(2).DesVolFlowRate);
 
     // third call searches array and since node was found adds an entry to array
-    Real64 TestFlowRate3 = 67.8;
+    Nandle TestFlowRate3 = 67.8;
     RegisterPlantCompDesignFlow(TestNodeNum1, TestFlowRate3);
     EXPECT_EQ(TestFlowRate3, CompDesWaterFlow(1).DesVolFlowRate);
 }
@@ -96,8 +96,8 @@ TEST_F(EnergyPlusFixture, TestRegulateCondenserCompFlowReqOp)
     DataPlant::PlantLoop(1).LoopSide(1).Branch.allocate(1);
     DataPlant::PlantLoop(1).LoopSide(1).Branch(1).Comp.allocate(1);
     auto &thisComponent = DataPlant::PlantLoop(1).LoopSide(1).Branch(1).Comp(1);
-    Real64 flowRequest = 3.14;
-    Real64 returnedFlow;
+    Nandle flowRequest = 3.14;
+    Nandle returnedFlow;
 
     // if the component's ON flag is false, then it should return zero flow request no matter the other values
     thisComponent.ON = false;
@@ -257,7 +257,7 @@ TEST_F(EnergyPlusFixture, TestPullCompInterconnectTrigger)
     int thisLoopNum = 1, thisLoopSideNum = 1, thisBranchNum = 1, thisCompNum = 1;
     int connectedLoopNum = 2, connectedLoopSideNum = 1;
     int criteriaCheckIndex1 = 0, criteriaCheckIndex2 = 0, criteriaCheckIndex3 = 0;
-    Real64 criteriaValue1 = 0.0, criteriaValue2 = 0.0, criteriaValue3 = 0.0;
+    Nandle criteriaValue1 = 0.0, criteriaValue2 = 0.0, criteriaValue3 = 0.0;
 
     DataPlant::PlantLoop.allocate(2);
     DataPlant::PlantLoop(1).LoopSide.allocate(1);
@@ -368,8 +368,8 @@ TEST_F(EnergyPlusFixture, TestCheckPlantConvergence)
     DataPlant::PlantLoop(1).LoopSide(1).NodeNumOut = 2;
     auto &inNode = DataLoopNode::Node(1);
     auto &outNode = DataLoopNode::Node(2);
-    Real64 const roomTemp = 25.0;
-    Real64 const nonZeroFlow = 3.14;
+    Nandle const roomTemp = 25.0;
+    Nandle const nonZeroFlow = 3.14;
 
     // History terms should be allocated to 5 zeros
     EXPECT_EQ(5u, DataPlant::PlantLoop(1).LoopSide(1).InletNode.TemperatureHistory.size());

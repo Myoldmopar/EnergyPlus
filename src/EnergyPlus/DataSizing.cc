@@ -146,7 +146,7 @@ namespace DataSizing {
     int const Ventilation(3);
 
     // parameter for autosize
-    Real64 const AutoSize(-99999.0);
+    Nandle const AutoSize(-99999.0);
 
     // parameter for (time-of-peak) sizing format
     ObjexxFCL::gio::Fmt PeakHrMinFmt("(I2.2,':',I2.2,':00')");
@@ -232,7 +232,7 @@ namespace DataSizing {
     int NumTimeStepsInAvg(0);                       // number of time steps in the averaging window for the design flow and load sequences
     int SaveNumPlantComps(0);                       // Number of components using water as an energy source or sink (e.g. water coils)
     int DataTotCapCurveIndex(0);                    // index to total capacity as a function of temperature curve
-    Real64 DataTotCapCurveValue(0);                 // value of total capacity as a function of temperature curve for CoilVRF_FluidTCtrl_*
+    Nandle DataTotCapCurveValue(0);                 // value of total capacity as a function of temperature curve for CoilVRF_FluidTCtrl_*
     int DataPltSizCoolNum(0);                       // index to cooling plant sizing data
     int DataPltSizHeatNum(0);                       // index to heating plant sizing data
     int DataWaterLoopNum(0);                        // index to plant water loop
@@ -261,60 +261,60 @@ namespace DataSizing {
     bool ZoneHeatingOnlyFan(false);                 // TRUE if zone unit only does heating and contains a fam (such as Unit Heater)
     bool ZoneSizingRunDone(false);                  // True if a zone sizing run has been successfully completed.
     bool DataErrorsFound(false);                    // used for simulation termination when errors are found
-    Real64 AutoVsHardSizingThreshold(0.1);          // criteria threshold used to determine if user hard size and autosize disagree 10%
-    Real64 AutoVsHardSizingDeltaTempThreshold(1.5); // temperature criteria threshold for autosize versus hard size [C]
-    Real64 DataCoilSizingAirInTemp(0.0);            // saves sizing data for use in coil object reporting
-    Real64 DataCoilSizingAirInHumRat(0.0);          // saves sizing data for use in coil object reporting
-    Real64 DataCoilSizingAirOutTemp(0.0);           // saves sizing data for use in coil object reporting
-    Real64 DataCoilSizingAirOutHumRat(0.0);         // saves sizing data for use in coil object reporting
-    Real64 DataCoilSizingFanCoolLoad(0.0);          // saves sizing data for use in coil object reporting
-    Real64 DataCoilSizingCapFT(1.0);                // saves sizing data for use in coil object reporting
+    Nandle AutoVsHardSizingThreshold(0.1);          // criteria threshold used to determine if user hard size and autosize disagree 10%
+    Nandle AutoVsHardSizingDeltaTempThreshold(1.5); // temperature criteria threshold for autosize versus hard size [C]
+    Nandle DataCoilSizingAirInTemp(0.0);            // saves sizing data for use in coil object reporting
+    Nandle DataCoilSizingAirInHumRat(0.0);          // saves sizing data for use in coil object reporting
+    Nandle DataCoilSizingAirOutTemp(0.0);           // saves sizing data for use in coil object reporting
+    Nandle DataCoilSizingAirOutHumRat(0.0);         // saves sizing data for use in coil object reporting
+    Nandle DataCoilSizingFanCoolLoad(0.0);          // saves sizing data for use in coil object reporting
+    Nandle DataCoilSizingCapFT(1.0);                // saves sizing data for use in coil object reporting
     bool DataDesAccountForFanHeat(true);            // include fan heat when true
-    Real64 DataDesInletWaterTemp(0.0);              // coil inlet water temperture used for warning messages
-    Real64 DataDesInletAirHumRat(0.0);              // coil inlet air humidity ratio used for warning messages
-    Real64 DataDesInletAirTemp(0.0);                // coil inlet air temperature used for warning messages
-    Real64 DataDesOutletAirTemp(0.0);               // coil outlet air temperature used for sizing
-    Real64 DataDesOutletAirHumRat(0.0);             // coil air outlet humidity ratio used in sizing calculations [kg water / kg dry air]
-    Real64 DataCoolCoilCap(0.0);                    // cooling coil capacity used for sizing with scalable inputs [W]
-    Real64 DataFlowUsedForSizing(0.0);              // air flow rate used for sizing with scalable inputs [m3/s]
-    Real64 DataAirFlowUsedForSizing(0.0);           // air flow rate used for sizing with scalable inputs [m3/s]
-    Real64 DataWaterFlowUsedForSizing(0.0);         // water flow rate used for sizing with scalable inputs [m3/s]
-    Real64 DataCapacityUsedForSizing(0.0);          // capacity used for sizing with scalable inputs [W]
-    Real64 DataDesignCoilCapacity(0.0);             // calculated capacity of coil at end of UA calculation
-    Real64 DataHeatSizeRatio(1.0);                  // heating coil size as a ratio of cooling coil capacity
-    Real64 DataEMSOverride(0.0);                    // value of EMS variable used to override autosizing
-    Real64 DataBypassFrac(0.0);                     // value of bypass fraction for Coil:Cooling:DX:TwoStageWithHumidityControlMode coils
-    Real64 DataFracOfAutosizedCoolingAirflow(1.0);  // fraction of design cooling supply air flow rate
-    Real64 DataFracOfAutosizedHeatingAirflow(1.0);  // fraction of design heating supply air flow rate
-    Real64 DataFlowPerCoolingCapacity(0.0);         // cooling supply air flow per unit cooling capacity
-    Real64 DataFlowPerHeatingCapacity(0.0);         // heating supply air flow per unit heating capacity
-    Real64 DataFracOfAutosizedCoolingCapacity(1.0); // fraction of autosized cooling capacity
-    Real64 DataFracOfAutosizedHeatingCapacity(1.0); // fraction of autosized heating capacit
-    Real64 DataAutosizedCoolingCapacity(0.0);       // Autosized cooling capacity used for multiplying flow per capacity to get flow rate
-    Real64 DataAutosizedHeatingCapacity(0.0);       // Autosized heating capacit used for multiplying flow per capacity to get flow rate
-    Real64 DataConstantUsedForSizing(0.0);          // base value used for sizing inputs that are ratios of other inputs
-    Real64 DataFractionUsedForSizing(0.0);          // fractional value of base value used for sizing inputs that are ratios of other inputs
-    Real64 DataNonZoneNonAirloopValue(0.0);         // used when equipment is not located in a zone or airloop
+    Nandle DataDesInletWaterTemp(0.0);              // coil inlet water temperture used for warning messages
+    Nandle DataDesInletAirHumRat(0.0);              // coil inlet air humidity ratio used for warning messages
+    Nandle DataDesInletAirTemp(0.0);                // coil inlet air temperature used for warning messages
+    Nandle DataDesOutletAirTemp(0.0);               // coil outlet air temperature used for sizing
+    Nandle DataDesOutletAirHumRat(0.0);             // coil air outlet humidity ratio used in sizing calculations [kg water / kg dry air]
+    Nandle DataCoolCoilCap(0.0);                    // cooling coil capacity used for sizing with scalable inputs [W]
+    Nandle DataFlowUsedForSizing(0.0);              // air flow rate used for sizing with scalable inputs [m3/s]
+    Nandle DataAirFlowUsedForSizing(0.0);           // air flow rate used for sizing with scalable inputs [m3/s]
+    Nandle DataWaterFlowUsedForSizing(0.0);         // water flow rate used for sizing with scalable inputs [m3/s]
+    Nandle DataCapacityUsedForSizing(0.0);          // capacity used for sizing with scalable inputs [W]
+    Nandle DataDesignCoilCapacity(0.0);             // calculated capacity of coil at end of UA calculation
+    Nandle DataHeatSizeRatio(1.0);                  // heating coil size as a ratio of cooling coil capacity
+    Nandle DataEMSOverride(0.0);                    // value of EMS variable used to override autosizing
+    Nandle DataBypassFrac(0.0);                     // value of bypass fraction for Coil:Cooling:DX:TwoStageWithHumidityControlMode coils
+    Nandle DataFracOfAutosizedCoolingAirflow(1.0);  // fraction of design cooling supply air flow rate
+    Nandle DataFracOfAutosizedHeatingAirflow(1.0);  // fraction of design heating supply air flow rate
+    Nandle DataFlowPerCoolingCapacity(0.0);         // cooling supply air flow per unit cooling capacity
+    Nandle DataFlowPerHeatingCapacity(0.0);         // heating supply air flow per unit heating capacity
+    Nandle DataFracOfAutosizedCoolingCapacity(1.0); // fraction of autosized cooling capacity
+    Nandle DataFracOfAutosizedHeatingCapacity(1.0); // fraction of autosized heating capacit
+    Nandle DataAutosizedCoolingCapacity(0.0);       // Autosized cooling capacity used for multiplying flow per capacity to get flow rate
+    Nandle DataAutosizedHeatingCapacity(0.0);       // Autosized heating capacit used for multiplying flow per capacity to get flow rate
+    Nandle DataConstantUsedForSizing(0.0);          // base value used for sizing inputs that are ratios of other inputs
+    Nandle DataFractionUsedForSizing(0.0);          // fractional value of base value used for sizing inputs that are ratios of other inputs
+    Nandle DataNonZoneNonAirloopValue(0.0);         // used when equipment is not located in a zone or airloop
     int DataZoneUsedForSizing(0);                   // pointer to control zone for air loop equipment
     int DataZoneNumber(0);                          // a pointer to a served by zoneHVAC equipment
     int NumZoneHVACSizing(0);                       // Number of design specification zone HVAC sizing objects
     int NumAirTerminalSizingSpec(0);                // Number of design specfication air terminal sizing objects
     int NumAirTerminalUnits(0);                     // Number of air terminal units (same as total number of zone inlet nodes)
-    Real64 DXCoolCap(0.0);                          // The ARI cooling capacity of a DX unit.
-    Real64 GlobalHeatSizingFactor(0.0);             // the global heating sizing ratio
-    Real64 GlobalCoolSizingFactor(0.0);             // the global cooling sizing ratio
-    Real64 SuppHeatCap(0.0);                        // the heating capacity of the supplemental heater in a unitary system
-    Real64 UnitaryHeatCap(0.0);                     // the heating capacity of a unitary system
-    Array1D<Real64> ZoneSizThermSetPtHi;            // highest zone thermostat setpoint during zone sizing calcs
-    Array1D<Real64> ZoneSizThermSetPtLo;            // lowest zone thermostat setpoint during zone sizing calcs
+    Nandle DXCoolCap(0.0);                          // The ARI cooling capacity of a DX unit.
+    Nandle GlobalHeatSizingFactor(0.0);             // the global heating sizing ratio
+    Nandle GlobalCoolSizingFactor(0.0);             // the global cooling sizing ratio
+    Nandle SuppHeatCap(0.0);                        // the heating capacity of the supplemental heater in a unitary system
+    Nandle UnitaryHeatCap(0.0);                     // the heating capacity of a unitary system
+    Array1D<Nandle> ZoneSizThermSetPtHi;            // highest zone thermostat setpoint during zone sizing calcs
+    Array1D<Nandle> ZoneSizThermSetPtLo;            // lowest zone thermostat setpoint during zone sizing calcs
     Array1D_string CoolPeakDateHrMin;               // date:hr:min of cooling peak
     Array1D_string HeatPeakDateHrMin;               // date:hr:min of heating peak
     char SizingFileColSep;                          // Character to separate columns in sizing outputs
     int DataDesicDehumNum(0);                       // index to desiccant dehumidifier
     bool DataDesicRegCoil(false);                   // TRUE if heating coil desiccant regeneration coil
     bool HRFlowSizingFlag(false);                   // True, if it is a heat recovery heat exchanger flow sizing
-    Real64 DataWaterCoilSizCoolDeltaT(0.0);         // used for sizing cooling coil water design flow rate
-    Real64 DataWaterCoilSizHeatDeltaT(0.0);         // used for sizing heating coil water design flow rate
+    Nandle DataWaterCoilSizCoolDeltaT(0.0);         // used for sizing cooling coil water design flow rate
+    Nandle DataWaterCoilSizHeatDeltaT(0.0);         // used for sizing heating coil water design flow rate
     bool DataNomCapInpMeth(false);                  // True if heating coil is sized by CoilPerfInpMeth == NomCa
     int DataFanEnumType(-1);                        // Fan type used during sizing
     int DataFanIndex(-1);                           // Fan index used during sizing
@@ -346,49 +346,49 @@ namespace DataSizing {
     // used only for Facility Load Component Summary
     Array1D<FacilitySizingData> CalcFacilitySizing; // Data for zone sizing
     FacilitySizingData CalcFinalFacilitySizing;     // Final data for zone sizing
-    Array1D<Real64> VbzByZone;                      // saved value of ZoneOAUnc which is Vbz used in 62.1 tabular report
-    Array1D<Real64> VdzClgByZone;    // saved value of cooling based ZoneSA which is Vdz used in 62.1 tabular report (also used for zone level Vps)
-    Array1D<Real64> VdzMinClgByZone; // minimum discarge flow for cooling, Vdz includes secondary and primary flows for dual path
-    Array1D<Real64> VdzHtgByZone;    // saved value of heating based ZoneSA which is Vdz used in 62.1 tabular report (also used for zone level Vps)
-    Array1D<Real64> VdzMinHtgByZone; // minimum discharge flow for heating, Vdz includes secondary and primary flows for dual path
-    Array1D<Real64> ZdzClgByZone;    // minimum discharge outdoor-air fraction for cooling
-    Array1D<Real64> ZdzHtgByZone;    // minimum discharge outdoor-air fraction for heating
-    Array1D<Real64> VpzClgByZone;    // saved value of cooling based ZonePA which is Vpz used in 62.1 tabular report
-    Array1D<Real64> VpzMinClgByZone; // saved value of minimum cooling based ZonePA which is VpzClg-min used in 62.1 tabular report
-    Array1D<Real64> VpzHtgByZone;    // saved value of heating based ZonePA which is Vpz used in 62.1 tabular report
-    Array1D<Real64> VpzMinHtgByZone; // saved value of minimum heating based ZonePA which is VpzHtg-min used in 62.1 tabular report
-    Array1D<Real64> VpzClgSumBySys;  // sum of saved value of cooling based ZonePA which is Vpz-sum used in 62.1 tabular report
-    Array1D<Real64> VpzHtgSumBySys;  // sum of saved value of heating based ZonePA which is Vpz-sum used in 62.1 tabular report
-    Array1D<Real64> PzSumBySys;      // sum of design people for system, Pz_sum
-    Array1D<Real64> PsBySys;         // sum of peak concurrent people by system, Ps
-    Array1D<Real64> DBySys;          // Population Diversity by system
-    Array1D<Real64> SumRpxPzBySys;   // Sum of per person OA times number of people by system, No D yet
-    Array1D<Real64> SumRaxAzBySys;   // sum of per area OA time zone area by system, does not get altered by D
+    Array1D<Nandle> VbzByZone;                      // saved value of ZoneOAUnc which is Vbz used in 62.1 tabular report
+    Array1D<Nandle> VdzClgByZone;    // saved value of cooling based ZoneSA which is Vdz used in 62.1 tabular report (also used for zone level Vps)
+    Array1D<Nandle> VdzMinClgByZone; // minimum discarge flow for cooling, Vdz includes secondary and primary flows for dual path
+    Array1D<Nandle> VdzHtgByZone;    // saved value of heating based ZoneSA which is Vdz used in 62.1 tabular report (also used for zone level Vps)
+    Array1D<Nandle> VdzMinHtgByZone; // minimum discharge flow for heating, Vdz includes secondary and primary flows for dual path
+    Array1D<Nandle> ZdzClgByZone;    // minimum discharge outdoor-air fraction for cooling
+    Array1D<Nandle> ZdzHtgByZone;    // minimum discharge outdoor-air fraction for heating
+    Array1D<Nandle> VpzClgByZone;    // saved value of cooling based ZonePA which is Vpz used in 62.1 tabular report
+    Array1D<Nandle> VpzMinClgByZone; // saved value of minimum cooling based ZonePA which is VpzClg-min used in 62.1 tabular report
+    Array1D<Nandle> VpzHtgByZone;    // saved value of heating based ZonePA which is Vpz used in 62.1 tabular report
+    Array1D<Nandle> VpzMinHtgByZone; // saved value of minimum heating based ZonePA which is VpzHtg-min used in 62.1 tabular report
+    Array1D<Nandle> VpzClgSumBySys;  // sum of saved value of cooling based ZonePA which is Vpz-sum used in 62.1 tabular report
+    Array1D<Nandle> VpzHtgSumBySys;  // sum of saved value of heating based ZonePA which is Vpz-sum used in 62.1 tabular report
+    Array1D<Nandle> PzSumBySys;      // sum of design people for system, Pz_sum
+    Array1D<Nandle> PsBySys;         // sum of peak concurrent people by system, Ps
+    Array1D<Nandle> DBySys;          // Population Diversity by system
+    Array1D<Nandle> SumRpxPzBySys;   // Sum of per person OA times number of people by system, No D yet
+    Array1D<Nandle> SumRaxAzBySys;   // sum of per area OA time zone area by system, does not get altered by D
     Array1D<std::string> PeakPsOccurrenceDateTimeStringBySys;    // string describing when Ps peak occurs
     Array1D<std::string> PeakPsOccurrenceEnvironmentStringBySys; // string describing Environment when Ps peak occurs
-    Array1D<Real64> VouBySys;                                    // uncorrected system outdoor air requirement, for std 62.1 VRP
-    Array1D<Real64> VpsClgBySys;                                 // System primary airflow Vps, for cooling for std 62.1 VRP
-    Array1D<Real64> VpsHtgBySys;                                 // system primary airflow Vps, for heating for std 62.1 VRP
-    Array1D<Real64> FaByZoneHeat;                                // saved value of Fa used in 62.1 tabular report
-    Array1D<Real64> FbByZoneCool;                                // saved value of Fb used in 62.1 tabular report
-    Array1D<Real64> FbByZoneHeat;                                // saved value of Fb used in 62.1 tabular report
-    Array1D<Real64> FcByZoneCool;                                // saved value of Fc used in 62.1 tabular report
-    Array1D<Real64> FcByZoneHeat;                                // saved value of Fc used in 62.1 tabular report
-    Array1D<Real64> XsBySysCool;                                 // saved value of Xs used in 62.1 tabular report
-    Array1D<Real64> XsBySysHeat;                                 // saved value of Xs used in 62.1 tabular report
-    Array1D<Real64> EvzByZoneCool;                               // saved value of Evz (zone vent effy) used in 62.1 tabular report
-    Array1D<Real64> EvzByZoneHeat;                               // saved value of Evz (zone vent effy) used in 62.1 tabular report
-    Array1D<Real64> EvzByZoneCoolPrev;                           // saved value of Evz (zone vent effy) used in 62.1 tabular report
-    Array1D<Real64> EvzByZoneHeatPrev;                           // saved value of Evz (zone vent effy) used in 62.1 tabular report
-    Array1D<Real64> VotClgBySys;     // saved value of cooling ventilation required at primary AHU, used in 62.1 tabular report
-    Array1D<Real64> VotHtgBySys;     // saved value of heating ventilation required at primary AHU, used in 62.1 tabular report
-    Array1D<Real64> VozSumClgBySys;  // saved value of cooling ventilation required at clg zones
-    Array1D<Real64> VozSumHtgBySys;  // saved value of cooling ventilation required at htg zones
-    Array1D<Real64> TotCoolCapTemp;  // scratch variable used for calulating peak load [W]
-    Array1D<Real64> EvzMinBySysHeat; // saved value of EvzMin used in 62.1 tabular report
-    Array1D<Real64> EvzMinBySysCool; // saved value of EvzMin used in 62.1 tabular report
-    Array1D<Real64> FaByZoneCool;    // triggers allocation in UpdateSysSizing
-    Array1D<Real64> SensCoolCapTemp; // triggers allocation in UpdateSysSizing
+    Array1D<Nandle> VouBySys;                                    // uncorrected system outdoor air requirement, for std 62.1 VRP
+    Array1D<Nandle> VpsClgBySys;                                 // System primary airflow Vps, for cooling for std 62.1 VRP
+    Array1D<Nandle> VpsHtgBySys;                                 // system primary airflow Vps, for heating for std 62.1 VRP
+    Array1D<Nandle> FaByZoneHeat;                                // saved value of Fa used in 62.1 tabular report
+    Array1D<Nandle> FbByZoneCool;                                // saved value of Fb used in 62.1 tabular report
+    Array1D<Nandle> FbByZoneHeat;                                // saved value of Fb used in 62.1 tabular report
+    Array1D<Nandle> FcByZoneCool;                                // saved value of Fc used in 62.1 tabular report
+    Array1D<Nandle> FcByZoneHeat;                                // saved value of Fc used in 62.1 tabular report
+    Array1D<Nandle> XsBySysCool;                                 // saved value of Xs used in 62.1 tabular report
+    Array1D<Nandle> XsBySysHeat;                                 // saved value of Xs used in 62.1 tabular report
+    Array1D<Nandle> EvzByZoneCool;                               // saved value of Evz (zone vent effy) used in 62.1 tabular report
+    Array1D<Nandle> EvzByZoneHeat;                               // saved value of Evz (zone vent effy) used in 62.1 tabular report
+    Array1D<Nandle> EvzByZoneCoolPrev;                           // saved value of Evz (zone vent effy) used in 62.1 tabular report
+    Array1D<Nandle> EvzByZoneHeatPrev;                           // saved value of Evz (zone vent effy) used in 62.1 tabular report
+    Array1D<Nandle> VotClgBySys;     // saved value of cooling ventilation required at primary AHU, used in 62.1 tabular report
+    Array1D<Nandle> VotHtgBySys;     // saved value of heating ventilation required at primary AHU, used in 62.1 tabular report
+    Array1D<Nandle> VozSumClgBySys;  // saved value of cooling ventilation required at clg zones
+    Array1D<Nandle> VozSumHtgBySys;  // saved value of cooling ventilation required at htg zones
+    Array1D<Nandle> TotCoolCapTemp;  // scratch variable used for calulating peak load [W]
+    Array1D<Nandle> EvzMinBySysHeat; // saved value of EvzMin used in 62.1 tabular report
+    Array1D<Nandle> EvzMinBySysCool; // saved value of EvzMin used in 62.1 tabular report
+    Array1D<Nandle> FaByZoneCool;    // triggers allocation in UpdateSysSizing
+    Array1D<Nandle> SensCoolCapTemp; // triggers allocation in UpdateSysSizing
 
     // Clears the global data in DataSizing.
     // Needed for unit tests, should not be normally called.
@@ -580,37 +580,37 @@ namespace DataSizing {
         SensCoolCapTemp.deallocate();
     }
 
-    Real64 TermUnitSizingData::applyTermUnitSizingCoolFlow(Real64 const &coolFlowWithOA, // Cooling flow rate with MinOA limit applied
-                                                           Real64 const &coolFlowNoOA    // Cooling flow rate without MinOA limit applied
+    Nandle TermUnitSizingData::applyTermUnitSizingCoolFlow(Nandle const &coolFlowWithOA, // Cooling flow rate with MinOA limit applied
+                                                           Nandle const &coolFlowNoOA    // Cooling flow rate without MinOA limit applied
     )
     {
         // Apply DesignSpecification:AirTerminal:Sizing to cooling flow (could be vol flow or mass flow)
-        Real64 coolFlowRatio = 1.0;
+        Nandle coolFlowRatio = 1.0;
         if (this->SpecDesCoolSATRatio > 0.0) {
             coolFlowRatio = this->SpecDesSensCoolingFrac / this->SpecDesCoolSATRatio;
         } else {
             coolFlowRatio = this->SpecDesSensCoolingFrac;
         }
-        Real64 adjustedFlow = coolFlowNoOA * coolFlowRatio + (coolFlowWithOA - coolFlowNoOA) * this->SpecMinOAFrac;
+        Nandle adjustedFlow = coolFlowNoOA * coolFlowRatio + (coolFlowWithOA - coolFlowNoOA) * this->SpecMinOAFrac;
         return adjustedFlow;
     }
 
-    Real64 TermUnitSizingData::applyTermUnitSizingHeatFlow(Real64 const &heatFlowWithOA, // Heating flow rate with MinOA limit applied
-                                                           Real64 const &heatFlowNoOA    // Heating flow rate without MinOA limit applied
+    Nandle TermUnitSizingData::applyTermUnitSizingHeatFlow(Nandle const &heatFlowWithOA, // Heating flow rate with MinOA limit applied
+                                                           Nandle const &heatFlowNoOA    // Heating flow rate without MinOA limit applied
     )
     {
         // Apply DesignSpecification:AirTerminal:Sizing to heating flow (could be vol flow or mass flow)
-        Real64 heatFlowRatio = 1.0;
+        Nandle heatFlowRatio = 1.0;
         if (this->SpecDesHeatSATRatio > 0.0) {
             heatFlowRatio = this->SpecDesSensHeatingFrac / this->SpecDesHeatSATRatio;
         } else {
             heatFlowRatio = this->SpecDesSensHeatingFrac;
         }
-        Real64 adjustedFlow = heatFlowNoOA * heatFlowRatio + (heatFlowWithOA - heatFlowNoOA) * this->SpecMinOAFrac;
+        Nandle adjustedFlow = heatFlowNoOA * heatFlowRatio + (heatFlowWithOA - heatFlowNoOA) * this->SpecMinOAFrac;
         return adjustedFlow;
     }
 
-    void ZoneSizingData::scaleZoneCooling(Real64 const ratio // Scaling ratio
+    void ZoneSizingData::scaleZoneCooling(Nandle const ratio // Scaling ratio
     )
     {
         // Apply scaling ratio to TermUnitFinalZoneSizing cooling flow and load
@@ -621,7 +621,7 @@ namespace DataSizing {
         this->CoolLoadSeq = this->CoolLoadSeq * ratio;
     }
 
-    void ZoneSizingData::scaleZoneHeating(Real64 const ratio // Scaling ratio
+    void ZoneSizingData::scaleZoneHeating(Nandle const ratio // Scaling ratio
     )
     {
         // Apply scaling ratio to TermUnitFinalZoneSizing heating flow and load

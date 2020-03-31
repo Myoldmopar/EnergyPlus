@@ -89,22 +89,22 @@ namespace HVACInterfaceManager {
         int DemandSideInletPumpType;
         // Following report variables are used in uncontrolled common pipe
         int FlowDir; // Direction in which flow is in Common Pipe
-        Real64 Flow; // Flow in the Common Pipe
-        Real64 Temp;
+        Nandle Flow; // Flow in the Common Pipe
+        Nandle Temp;
         // Following report variables are used in two way common pipe
-        Real64 SecCPLegFlow;     // Mass flow in the secondary side Common pipe leg
-        Real64 PriCPLegFlow;     // Mass flow in the primary side Common pipe leg
-        Real64 SecToPriFlow;     // Mass flow in the pipe from Secondary to primary side
-        Real64 PriToSecFlow;     // Mass flow in the pipe from primary to Secondary side
-        Real64 PriInTemp;        // Temperature at primary inlet node
-        Real64 PriOutTemp;       // Temperature at primary outlet node
-        Real64 SecInTemp;        // Temperature at secondary inlet node
-        Real64 SecOutTemp;       // Temperature at secondary outlet node
-        Real64 PriInletSetPoint; // Setpoint at Primary inlet node
-        Real64 SecInletSetPoint; // Setpoint at Secondary inlet node
+        Nandle SecCPLegFlow;     // Mass flow in the secondary side Common pipe leg
+        Nandle PriCPLegFlow;     // Mass flow in the primary side Common pipe leg
+        Nandle SecToPriFlow;     // Mass flow in the pipe from Secondary to primary side
+        Nandle PriToSecFlow;     // Mass flow in the pipe from primary to Secondary side
+        Nandle PriInTemp;        // Temperature at primary inlet node
+        Nandle PriOutTemp;       // Temperature at primary outlet node
+        Nandle SecInTemp;        // Temperature at secondary inlet node
+        Nandle SecOutTemp;       // Temperature at secondary outlet node
+        Nandle PriInletSetPoint; // Setpoint at Primary inlet node
+        Nandle SecInletSetPoint; // Setpoint at Secondary inlet node
         bool PriInletControlled; // True if Primary inlet node is controlled
         bool SecInletControlled; // True if secondary inlet is controlled
-        Real64 PriFlowRequest;   // total flow request on supply side.
+        Nandle PriFlowRequest;   // total flow request on supply side.
 
         // Default Constructor
         CommonPipeData()
@@ -138,17 +138,17 @@ namespace HVACInterfaceManager {
 
     //***************
 
-    void UpdateHalfLoopInletTemp(int const LoopNum, int const TankInletLoopSide, Real64 &TankOutletTemp);
+    void UpdateHalfLoopInletTemp(int const LoopNum, int const TankInletLoopSide, Nandle &TankOutletTemp);
 
-    void UpdateCommonPipe(int const LoopNum, int const TankInletLoopSide, int const CommonPipeType, Real64 &MixedOutletTemp);
+    void UpdateCommonPipe(int const LoopNum, int const TankInletLoopSide, int const CommonPipeType, Nandle &MixedOutletTemp);
 
     void ManageSingleCommonPipe(int const LoopNum,           // plant loop number
                                 int const LoopSide,          // plant loop side number
-                                Real64 const TankOutletTemp, // inlet temperature to the common pipe passed in from the capacitance calculation
-                                Real64 &MixedOutletTemp      // inlet temperature to the common pipe passed in from the capacitance calculation
+                                Nandle const TankOutletTemp, // inlet temperature to the common pipe passed in from the capacitance calculation
+                                Nandle &MixedOutletTemp      // inlet temperature to the common pipe passed in from the capacitance calculation
     );
 
-    void ManageTwoWayCommonPipe(int const LoopNum, int const LoopSide, Real64 const TankOutletTemp);
+    void ManageTwoWayCommonPipe(int const LoopNum, int const LoopSide, Nandle const TankOutletTemp);
 
     void SetupCommonPipes();
 

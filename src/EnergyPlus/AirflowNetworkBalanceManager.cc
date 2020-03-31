@@ -242,10 +242,10 @@ namespace AirflowNetworkBalanceManager {
     } // namespace
 
     // Report variables
-    Array1D<Real64> PZ;
+    Array1D<Nandle> PZ;
     // Inverse matrix
-    Array1D<Real64> MA;
-    Array1D<Real64> MV;
+    Array1D<Nandle> MA;
+    Array1D<Nandle> MV;
     Array1D_int IVEC;
     Array1D_int SplitterNodeNumbers;
 
@@ -277,18 +277,18 @@ namespace AirflowNetworkBalanceManager {
     int DisSysNumOfLinks(0);
     int NumOfExtNodes(0);
     int AirflowNetworkNumOfExtSurfaces(0);
-    Real64 IncAng(0.0);                     // Wind incidence angle relative to facade normal (deg)
-    Array1D<Real64> FacadeAng(5);           // Facade azimuth angle (for walls, angle of outward normal to facade measured clockwise from North) (deg)
+    Nandle IncAng(0.0);                     // Wind incidence angle relative to facade normal (deg)
+    Array1D<Nandle> FacadeAng(5);           // Facade azimuth angle (for walls, angle of outward normal to facade measured clockwise from North) (deg)
     int WindDirNum;                         // Wind direction number
-    Real64 WindAng;                         // Wind direction angle (degrees clockwise from North)
+    Nandle WindAng;                         // Wind direction angle (degrees clockwise from North)
     int SupplyFanInletNode(0);              // Supply air fan inlet node number
     int SupplyFanOutletNode(0);             // Supply air fan outlet node number
     int SupplyFanType(0);                   // Supply air fan type
-    Real64 OnOffFanRunTimeFraction(0.0);    // Run time fraction for an On/Off fan flow rate
-    Real64 MaxOnOffFanRunTimeFraction(0.0); // max Run time fraction for an On/Off fan flow rate among airloops
-    Real64 CurrentEndTime(0.0);             // Current end time
-    Real64 CurrentEndTimeLast(0.0);         // last end time
-    Real64 TimeStepSysLast(0.0);            // last system time step
+    Nandle OnOffFanRunTimeFraction(0.0);    // Run time fraction for an On/Off fan flow rate
+    Nandle MaxOnOffFanRunTimeFraction(0.0); // max Run time fraction for an On/Off fan flow rate among airloops
+    Nandle CurrentEndTime(0.0);             // Current end time
+    Nandle CurrentEndTimeLast(0.0);         // last end time
+    Nandle TimeStepSysLast(0.0);            // last system time step
     int AirflowNetworkNumOfOccuVentCtrls(0);
     int IntraZoneNumOfNodes(0);
     int IntraZoneNumOfLinks(0);
@@ -298,8 +298,8 @@ namespace AirflowNetworkBalanceManager {
     int NumOfOAFans(0);              // number of OutdoorAir fans
     int NumOfReliefFans(0);          // number of OutdoorAir relief fans
 
-    Array1D<Real64> LoopPartLoadRatio;
-    Array1D<Real64> LoopOnOffFanRunTimeFraction;
+    Array1D<Nandle> LoopPartLoadRatio;
+    Array1D<Nandle> LoopOnOffFanRunTimeFraction;
     Array1D<bool> LoopOnOffFlag;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE AirflowNetworkBalanceManager:
@@ -349,7 +349,7 @@ namespace AirflowNetworkBalanceManager {
         NumOfExtNodes = 0;
         AirflowNetworkNumOfExtSurfaces = 0;
         IncAng = 0.0;
-        FacadeAng = Array1D<Real64>(5);
+        FacadeAng = Array1D<Nandle>(5);
         WindDirNum = 0; // added default value
         WindAng = 0;    // added default value
         SupplyFanInletNode = 0;
@@ -436,7 +436,7 @@ namespace AirflowNetworkBalanceManager {
                     }
                 }
             }
-            Real64 FanMassFlowRate = 0.0;
+            Nandle FanMassFlowRate = 0.0;
             int FanOperModeCyc = 0;
             AFNSupplyFanType = 0;
 
@@ -557,8 +557,8 @@ namespace AirflowNetworkBalanceManager {
                 auto const &fields = instance.value();
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
 
-                Real64 temperature{fields.at("reference_temperature")};
-                Real64 pressure(101325.0);
+                Nandle temperature{fields.at("reference_temperature")};
+                Nandle pressure(101325.0);
                 if (fields.find("reference_barometric_pressure") != fields.end()) { // not required field, has default value
                     pressure = fields.at("reference_barometric_pressure");
                     if (std::abs((pressure - StdBaroPress) / StdBaroPress) > 0.1) { // 10% off
@@ -572,7 +572,7 @@ namespace AirflowNetworkBalanceManager {
                         success = false;
                     }
                 }
-                Real64 humidity{fields.at("reference_humidity_ratio")};
+                Nandle humidity{fields.at("reference_humidity_ratio")};
                 // globalSolverObject.referenceConditions.emplace_back(thisObjectName, temperature, pressure, humidity);
                 referenceConditions.emplace(std::piecewise_construct,
                                             std::forward_as_tuple(thisObjectName),
@@ -604,14 +604,14 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 coeff{fields.at("air_mass_flow_coefficient_at_reference_conditions")}; // Required field
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient_at_reference_conditions")}; // Required field
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent") != fields.end()) { // not required field, has default value
                     expnt = fields.at("air_mass_flow_exponent");
                 }
-                Real64 refT = defaultReferenceConditions.temperature;
-                Real64 refP = defaultReferenceConditions.pressure;
-                Real64 refW = defaultReferenceConditions.humidityRatio;
+                Nandle refT = defaultReferenceConditions.temperature;
+                Nandle refP = defaultReferenceConditions.pressure;
+                Nandle refW = defaultReferenceConditions.humidityRatio;
                 if (!conditionsAreDefaulted) {
                     if (fields.find("reference_crack_conditions") != fields.end()) { // not required field, *should* have default value
                         auto result = referenceConditions.find(fields.at("reference_crack_conditions"));
@@ -653,8 +653,8 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 coeff{fields.at("air_mass_flow_coefficient_when_the_zone_exhaust_fan_is_off_at_reference_conditions")}; // Required field
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient_when_the_zone_exhaust_fan_is_off_at_reference_conditions")}; // Required field
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent_when_the_zone_exhaust_fan_is_off") != fields.end()) { // not required field, has default value
                     expnt = fields.at("air_mass_flow_exponent_when_the_zone_exhaust_fan_is_off");
                 }
@@ -667,7 +667,7 @@ namespace AirflowNetworkBalanceManager {
                     ShowSevereError(RoutineName + ": " + CurrentModuleObject + " = " + thisObjectName + " is not found in Fan:ZoneExhaust objects.");
                     success = false;
                 }
-                Real64 flowRate;
+                Nandle flowRate;
 
                 GetFanVolFlow(fanIndex, flowRate);
                 flowRate *= StdRhoAir;
@@ -685,9 +685,9 @@ namespace AirflowNetworkBalanceManager {
                     success = false;
                 }
 
-                Real64 refT = defaultReferenceConditions.temperature;
-                Real64 refP = defaultReferenceConditions.pressure;
-                Real64 refW = defaultReferenceConditions.humidityRatio;
+                Nandle refT = defaultReferenceConditions.temperature;
+                Nandle refP = defaultReferenceConditions.pressure;
+                Nandle refW = defaultReferenceConditions.humidityRatio;
                 if (!conditionsAreDefaulted) {
                     if (fields.find("reference_crack_conditions") != fields.end()) { // not required field, *should* have default value
                         auto result = referenceConditions.find(fields.at("reference_crack_conditions"));
@@ -742,8 +742,8 @@ namespace AirflowNetworkBalanceManager {
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
                 std::string mixer_name = UtilityRoutines::MakeUPPERCase(fields.at("outdoor_air_mixer_name"));
-                Real64 coeff{fields.at("air_mass_flow_coefficient_when_no_outdoor_air_flow_at_reference_conditions")};
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient_when_no_outdoor_air_flow_at_reference_conditions")};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent_when_no_outdoor_air_flow") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent_when_no_outdoor_air_flow");
                 }
@@ -755,9 +755,9 @@ namespace AirflowNetworkBalanceManager {
                     success = false;
                 }
 
-                Real64 refT = defaultReferenceConditions.temperature;
-                Real64 refP = defaultReferenceConditions.pressure;
-                Real64 refW = defaultReferenceConditions.humidityRatio;
+                Nandle refT = defaultReferenceConditions.temperature;
+                Nandle refP = defaultReferenceConditions.pressure;
+                Nandle refW = defaultReferenceConditions.humidityRatio;
                 if (!conditionsAreDefaulted) {
                     if (fields.find("reference_crack_conditions") != fields.end()) { // not required field, *should* have default value
                         auto result = referenceConditions.find(fields.at("reference_crack_conditions"));
@@ -802,8 +802,8 @@ namespace AirflowNetworkBalanceManager {
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
                 std::string mixer_name = UtilityRoutines::MakeUPPERCase(fields.at("outdoor_air_mixer_name"));
-                Real64 coeff{fields.at("air_mass_flow_coefficient_when_no_outdoor_air_flow_at_reference_conditions")};
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient_when_no_outdoor_air_flow_at_reference_conditions")};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent_when_no_outdoor_air_flow") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent_when_no_outdoor_air_flow");
                 }
@@ -815,9 +815,9 @@ namespace AirflowNetworkBalanceManager {
                     success = false;
                 }
 
-                Real64 refT = defaultReferenceConditions.temperature;
-                Real64 refP = defaultReferenceConditions.pressure;
-                Real64 refW = defaultReferenceConditions.humidityRatio;
+                Nandle refT = defaultReferenceConditions.temperature;
+                Nandle refP = defaultReferenceConditions.pressure;
+                Nandle refW = defaultReferenceConditions.humidityRatio;
                 if (!conditionsAreDefaulted) {
                     if (fields.find("reference_crack_conditions") != fields.end()) { // not required field, *should* have default value
                         auto result = referenceConditions.find(fields.at("reference_crack_conditions"));
@@ -859,8 +859,8 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 coeff{fields.at("air_mass_flow_coefficient_when_opening_is_closed")};
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient_when_opening_is_closed")};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent_when_opening_is_closed") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent_when_opening_is_closed");
                 }
@@ -881,36 +881,36 @@ namespace AirflowNetworkBalanceManager {
                     }
                 }
 
-                Real64 extra{0.0};
+                Nandle extra{0.0};
                 if (fields.find("extra_crack_length_or_height_of_pivoting_axis") != fields.end()) {
                     extra = fields.at("extra_crack_length_or_height_of_pivoting_axis");
                 }
 
-                Real64 N{fields.at("number_of_sets_of_opening_factor_data")};
+                Nandle N{fields.at("number_of_sets_of_opening_factor_data")};
 
-                std::vector<Real64> factors(N);
-                std::vector<Real64> cds(N);
-                std::vector<Real64> width_factors(N);
-                std::vector<Real64> height_factors(N);
-                std::vector<Real64> start_height_factors(N);
+                std::vector<Nandle> factors(N);
+                std::vector<Nandle> cds(N);
+                std::vector<Nandle> width_factors(N);
+                std::vector<Nandle> height_factors(N);
+                std::vector<Nandle> start_height_factors(N);
 
-                // Real64 factor{0.0};
+                // Nandle factor{0.0};
                 // if (fields.find("opening_factor_1") != fields.end()) {
                 //    factor = fields.at("opening_factor_1");
                 //}
-                Real64 cd{0.001};
+                Nandle cd{0.001};
                 if (fields.find("discharge_coefficient_for_opening_factor_1") != fields.end()) {
                     cd = fields.at("discharge_coefficient_for_opening_factor_1");
                 }
-                Real64 width_factor{0.0};
+                Nandle width_factor{0.0};
                 if (fields.find("width_factor_for_opening_factor_1") != fields.end()) {
                     width_factor = fields.at("width_factor_for_opening_factor_1");
                 }
-                Real64 height_factor{0.0};
+                Nandle height_factor{0.0};
                 if (fields.find("height_factor_for_opening_factor_1") != fields.end()) {
                     height_factor = fields.at("height_factor_for_opening_factor_1");
                 }
-                Real64 start_height_factor{0.0};
+                Nandle start_height_factor{0.0};
                 if (fields.find("start_height_factor_for_opening_factor_1") != fields.end()) {
                     start_height_factor = fields.at("start_height_factor_for_opening_factor_1");
                 }
@@ -921,7 +921,7 @@ namespace AirflowNetworkBalanceManager {
                 height_factors[0] = height_factor;
                 start_height_factors[0] = start_height_factor;
 
-                Real64 factor{fields.at("opening_factor_2")};
+                Nandle factor{fields.at("opening_factor_2")};
                 cd = 1.0;
                 if (fields.find("discharge_coefficient_for_opening_factor_2") != fields.end()) {
                     cd = fields.at("discharge_coefficient_for_opening_factor_2");
@@ -1122,13 +1122,13 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 coeff{fields.at("air_mass_flow_coefficient_when_opening_is_closed")};
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient_when_opening_is_closed")};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent_when_opening_is_closed") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent_when_opening_is_closed");
                 }
-                Real64 diff{fields.at("minimum_density_difference_for_two_way_flow")};
-                Real64 dischargeCoeff{fields.at("discharge_coefficient")};
+                Nandle diff{fields.at("minimum_density_difference_for_two_way_flow")};
+                Nandle dischargeCoeff{fields.at("discharge_coefficient")};
 
                 MultizoneCompSimpleOpeningData(i).Name = thisObjectName;       // Name of large simple opening component
                 MultizoneCompSimpleOpeningData(i).FlowCoef = coeff;            // Air Mass Flow Coefficient When Window or Door Is Closed
@@ -1152,16 +1152,16 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 coeff{fields.at("air_mass_flow_coefficient_when_opening_is_closed")};
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient_when_opening_is_closed")};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent_when_opening_is_closed") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent_when_opening_is_closed");
                 }
-                Real64 angle{90.0};
+                Nandle angle{90.0};
                 if (fields.find("sloping_plane_angle") != fields.end()) {
                     angle = fields.at("sloping_plane_angle");
                 }
-                Real64 dischargeCoeff{fields.at("discharge_coefficient")};
+                Nandle dischargeCoeff{fields.at("discharge_coefficient")};
 
                 MultizoneCompHorOpeningData(i).Name = thisObjectName;       // Name of large simple opening component
                 MultizoneCompHorOpeningData(i).FlowCoef = coeff;            // Air Mass Flow Coefficient When Window or Door Is Closed
@@ -1185,16 +1185,16 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 ela{fields.at("effective_leakage_area")};
-                Real64 cd{1.0};
+                Nandle ela{fields.at("effective_leakage_area")};
+                Nandle cd{1.0};
                 if (fields.find("discharge_coefficient") != fields.end()) {
                     cd = fields.at("discharge_coefficient");
                 }
-                Real64 dp{4.0};
+                Nandle dp{4.0};
                 if (fields.find("reference_pressure_difference") != fields.end()) {
                     dp = fields.at("reference_pressure_difference");
                 }
-                Real64 expnt{0.65};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent");
                 }
@@ -1223,8 +1223,8 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 coeff{fields.at("air_mass_flow_coefficient")};
-                Real64 expnt{0.65};
+                Nandle coeff{fields.at("air_mass_flow_coefficient")};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent");
                 }
@@ -1249,10 +1249,10 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 elr{fields.at("effective_leakage_ratio")};
-                Real64 maxflow{fields.at("maximum_flow_rate")};
-                Real64 dp{fields.at("reference_pressure_difference")};
-                Real64 expnt{0.65};
+                Nandle elr{fields.at("effective_leakage_ratio")};
+                Nandle maxflow{fields.at("maximum_flow_rate")};
+                Nandle dp{fields.at("reference_pressure_difference")};
+                Nandle expnt{0.65};
                 if (fields.find("air_mass_flow_exponent") != fields.end()) {
                     expnt = fields.at("air_mass_flow_exponent");
                 }
@@ -1279,30 +1279,30 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 L{fields.at("duct_length")};
-                Real64 D{fields.at("hydraulic_diameter")};
-                Real64 A{fields.at("cross_section_area")};
-                Real64 e{0.0009};
+                Nandle L{fields.at("duct_length")};
+                Nandle D{fields.at("hydraulic_diameter")};
+                Nandle A{fields.at("cross_section_area")};
+                Nandle e{0.0009};
                 if (fields.find("surface_roughness") != fields.end()) {
                     e = fields.at("surface_roughness");
                 }
-                Real64 dlc{0.0};
+                Nandle dlc{0.0};
                 if (fields.find("coefficient_for_local_dynamic_loss_due_to_fitting") != fields.end()) {
                     dlc = fields.at("coefficient_for_local_dynamic_loss_due_to_fitting");
                 }
-                Real64 U{0.943};
+                Nandle U{0.943};
                 if (fields.find("heat_transmittance_coefficient_u_factor_for_duct_wall_construction") != fields.end()) {
                     U = fields.at("heat_transmittance_coefficient_u_factor_for_duct_wall_construction");
                 }
-                Real64 Um{0.001};
+                Nandle Um{0.001};
                 if (fields.find("overall_moisture_transmittance_coefficient_from_air_to_air") != fields.end()) {
                     Um = fields.at("overall_moisture_transmittance_coefficient_from_air_to_air");
                 }
-                Real64 hout{0.0};
+                Nandle hout{0.0};
                 if (fields.find("outside_convection_coefficient") != fields.end()) {
                     hout = fields.at("outside_convection_coefficient");
                 }
-                Real64 hin{0.0};
+                Nandle hin{0.0};
                 if (fields.find("inside_convection_coefficient") != fields.end()) {
                     hin = fields.at("inside_convection_coefficient");
                 }
@@ -1355,7 +1355,7 @@ namespace AirflowNetworkBalanceManager {
 
                 bool FanErrorFound = false;
                 int fanIndex;
-                Real64 flowRate = 0.0;
+                Nandle flowRate = 0.0;
                 int fanType_Num = 0;
                 int inletNode;
                 int outletNode;
@@ -1461,8 +1461,8 @@ namespace AirflowNetworkBalanceManager {
 
                 std::string coil_name = fields.at("coil_name");
                 std::string coil_type = fields.at("coil_object_type");
-                Real64 L{fields.at("air_path_length")};
-                Real64 D{fields.at("air_path_hydraulic_diameter")};
+                Nandle L{fields.at("air_path_length")};
+                Nandle D{fields.at("air_path_hydraulic_diameter")};
 
                 DisSysCompCoilData(i).Name = UtilityRoutines::MakeUPPERCase(coil_name); // Name of associated EPlus coil component
                 DisSysCompCoilData(i).EPlusType = coil_type;                            // coil type
@@ -1487,8 +1487,8 @@ namespace AirflowNetworkBalanceManager {
 
                 std::string hx_name = fields.at("heatexchanger_name");
                 std::string hx_type = fields.at("heatexchanger_object_type");
-                Real64 L{fields.at("air_path_length")};
-                Real64 D{fields.at("air_path_hydraulic_diameter")};
+                Nandle L{fields.at("air_path_length")};
+                Nandle D{fields.at("air_path_hydraulic_diameter")};
 
                 DisSysCompHXData(i).Name = UtilityRoutines::MakeUPPERCase(hx_name); // Name of associated EPlus heat exchange component
                 DisSysCompHXData(i).EPlusType = hx_type;                            // coil type
@@ -1514,8 +1514,8 @@ namespace AirflowNetworkBalanceManager {
 
                 std::string tu_name = fields.at("terminal_unit_name");
                 std::string tu_type = fields.at("terminal_unit_object_type");
-                Real64 L{fields.at("air_path_length")};
-                Real64 D{fields.at("air_path_hydraulic_diameter")};
+                Nandle L{fields.at("air_path_length")};
+                Nandle D{fields.at("air_path_hydraulic_diameter")};
 
                 DisSysCompTermUnitData(i).Name = UtilityRoutines::MakeUPPERCase(tu_name); // Name of associated EPlus coil component
                 DisSysCompTermUnitData(i).EPlusType = tu_type;                            // Terminal unit type
@@ -1538,7 +1538,7 @@ namespace AirflowNetworkBalanceManager {
                 auto const &thisObjectName = UtilityRoutines::MakeUPPERCase(instance.key());
                 inputProcessor->markObjectAsUsed(CurrentModuleObject, instance.key()); // Temporary workaround
 
-                Real64 dp{fields.at("pressure_difference_across_the_component")};
+                Nandle dp{fields.at("pressure_difference_across_the_component")};
 
                 DisSysCompCPDData(i).Name = thisObjectName; // Name of constant pressure drop component
                 DisSysCompCPDData(i).A = 1.0;               // cross section area
@@ -1630,16 +1630,16 @@ namespace AirflowNetworkBalanceManager {
         Array1D_string Alphas;         // Alpha input items for object
         Array1D_string cAlphaFields;   // Alpha field names
         Array1D_string cNumericFields; // Numeric field names
-        Array1D<Real64> Numbers;       // Numeric input items for object
+        Array1D<Nandle> Numbers;       // Numeric input items for object
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;   // Logical array, numeric field input BLANK = .TRUE.
         static int MaxNums(0);         // Maximum number of numeric input fields
         static int MaxAlphas(0);       // Maximum number of alpha input fields
         static int TotalArgs(0);       // Total number of alpha and numeric arguments (max) for a
         bool Errorfound1;
-        Real64 minHeight;
-        Real64 maxHeight;
-        Real64 baseratio;
+        Nandle minHeight;
+        Nandle maxHeight;
+        Nandle baseratio;
 
         // Formats
         static constexpr auto Format_110("! <AirflowNetwork Model:Control>, No Multizone or Distribution/Multizone with Distribution/Multizone "
@@ -3163,7 +3163,7 @@ namespace AirflowNetworkBalanceManager {
         print(outputFiles.eio, "AirflowNetwork Model:Wind Direction, ");
 
         int numWinDirs = 11;
-        Real64 angleDelta = 30.0;
+        Nandle angleDelta = 30.0;
         if (AirflowNetworkNumOfSingleSideZones > 0) {
             numWinDirs = 35;
             angleDelta = 10.0;
@@ -5767,17 +5767,17 @@ namespace AirflowNetworkBalanceManager {
         int NodeNum;
         static bool OneTimeFlag(true);
         static bool ErrorsFound(false);
-        Real64 GlobalOpenFactor;
-        Real64 ZonePressure1;
-        Real64 ZonePressure2;
-        Real64 PressureSet;
-        Real64 LocalAzimuth;
-        Real64 LocalWindSpeed;
-        Real64 LocalWindDir;
-        Real64 LocalHumRat;
-        Real64 LocalDryBulb;
-        Array1D<Real64> Par; // Pressure setpoint
-        Real64 const ErrorToler(0.00001);
+        Nandle GlobalOpenFactor;
+        Nandle ZonePressure1;
+        Nandle ZonePressure2;
+        Nandle PressureSet;
+        Nandle LocalAzimuth;
+        Nandle LocalWindSpeed;
+        Nandle LocalWindDir;
+        Nandle LocalHumRat;
+        Nandle LocalDryBulb;
+        Array1D<Nandle> Par; // Pressure setpoint
+        Nandle const ErrorToler(0.00001);
         int const MaxIte(20);
         int SolFla;
         static int ErrCountVar(0);
@@ -5786,10 +5786,10 @@ namespace AirflowNetworkBalanceManager {
         static int ErrIndexHighPre(0);
         static int ErrIndexVar(0);
         static int ErrIndexLowPre(0);
-        Real64 MinExhaustMassFlowrate;
-        Real64 MaxExhaustMassFlowrate;
-        Real64 MinReliefMassFlowrate;
-        Real64 MaxReliefMassFlowrate;
+        Nandle MinExhaustMassFlowrate;
+        Nandle MaxExhaustMassFlowrate;
+        Nandle MinReliefMassFlowrate;
+        Nandle MaxReliefMassFlowrate;
         int AirLoopNum;
 
         // Validate supply and return connections
@@ -6125,8 +6125,8 @@ namespace AirflowNetworkBalanceManager {
         }
     }
 
-    Real64 AFNPressureResidual(Real64 const ControllerMassFlowRate, // Pressure setpoint
-                               Array1D<Real64> const &Par           // par(1) = PressureSet
+    Nandle AFNPressureResidual(Nandle const ControllerMassFlowRate, // Pressure setpoint
+                               Array1D<Nandle> const &Par           // par(1) = PressureSet
     )
     {
         // FUNCTION INFORMATION:
@@ -6147,7 +6147,7 @@ namespace AirflowNetworkBalanceManager {
         // na
 
         // Return value
-        Real64 AFNPressureResidual;
+        Nandle AFNPressureResidual;
 
         // Argument array dimensioning
 
@@ -6165,8 +6165,8 @@ namespace AirflowNetworkBalanceManager {
         //  na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 PressureSet;
-        Real64 ZonePressure;
+        Nandle PressureSet;
+        Nandle ZonePressure;
 
         PressureSet = Par(1);
 
@@ -6191,7 +6191,7 @@ namespace AirflowNetworkBalanceManager {
         return AFNPressureResidual;
     }
 
-    static int makeTable(const std::string &name, const int gridIndex, const std::vector<Real64> &y)
+    static int makeTable(const std::string &name, const int gridIndex, const std::vector<Nandle> &y)
     {
         // Add a new table and performance curve
         std::string contextString = "CalcWindPressureCoeffs: Creating table \"" + name + "\"";
@@ -6255,20 +6255,20 @@ namespace AirflowNetworkBalanceManager {
         // SUBROUTINE PARAMETER DEFINITIONS
         //  index 1 is wind incidence angle (0,30,60,...,300,330 deg)
         //  index 2 is side ratio (0.25,1.0,4.0),
-        static Array2D<Real64> const CPHighRiseWall(
+        static Array2D<Nandle> const CPHighRiseWall(
             3,
             12,
-            reshape2<Real64, int>({0.60, 0.54, 0.23,  -0.25, -0.61, -0.55, -0.51, -0.55, -0.61, -0.25, 0.23,  0.54,
+            reshape2<Nandle, int>({0.60, 0.54, 0.23,  -0.25, -0.61, -0.55, -0.51, -0.55, -0.61, -0.25, 0.23,  0.54,
                                    0.60, 0.48, 0.04,  -0.56, -0.56, -0.42, -0.37, -0.42, -0.56, -0.56, 0.04,  0.48,
                                    0.60, 0.44, -0.26, -0.70, -0.53, -0.32, -0.22, -0.32, -0.53, -0.70, -0.26, 0.44},
                                   {3, 12})); // Surface-averaged wind-pressure coefficient array for walls // Explicit reshape2 template args are
                                              // work-around for VC++2013 bug
         //  index 1 is wind incidence angle (0,30,60,...,300,330 deg)
         //  index 2 is side ratio (0.25,0.5,1.0),
-        static Array2D<Real64> const CPHighRiseRoof(
+        static Array2D<Nandle> const CPHighRiseRoof(
             3,
             12,
-            reshape2<Real64, int>({-0.28, -0.69, -0.72, -0.76, -0.72, -0.69, -0.28, -0.69, -0.72, -0.76, -0.72, -0.69,
+            reshape2<Nandle, int>({-0.28, -0.69, -0.72, -0.76, -0.72, -0.69, -0.28, -0.69, -0.72, -0.76, -0.72, -0.69,
                                    -0.47, -0.52, -0.70, -0.76, -0.70, -0.52, -0.47, -0.52, -0.70, -0.76, -0.70, -0.52,
                                    -0.70, -0.55, -0.55, -0.70, -0.55, -0.55, -0.70, -0.55, -0.55, -0.70, -0.55, -0.55},
                                   {3, 12})); // Surface-averaged wind-pressure coefficient array for roof // Explicit reshape2 template args are
@@ -6281,21 +6281,21 @@ namespace AirflowNetworkBalanceManager {
         int FacadeNum;         // Facade number
         int ExtNum;            // External number
         int AFNZnNum;          // Zone number
-        Real64 SideRatio;      // For vertical facades, width of facade / width of adjacent facade
-        Real64 SR;             // SideRatio restricted to 0.25 to 4.0 range
-        Real64 SideRatioFac;   // LOG(SideRatio)
-        Real64 IncRad;         // IncAng in radians
+        Nandle SideRatio;      // For vertical facades, width of facade / width of adjacent facade
+        Nandle SR;             // SideRatio restricted to 0.25 to 4.0 range
+        Nandle SideRatioFac;   // LOG(SideRatio)
+        Nandle IncRad;         // IncAng in radians
         int IAng;              // Incidence angle index; used in interpolation
-        Real64 DelAng;         // Incidence angle difference; used in interpolation
-        Real64 WtAng;          // Incidence angle weighting factor; used in interpolation
+        Nandle DelAng;         // Incidence angle difference; used in interpolation
+        Nandle WtAng;          // Incidence angle weighting factor; used in interpolation
         int ISR;               // Side ratio index, for interpolation
-        Real64 WtSR;           // Side ratio weighting factor; used in interpolation
+        Nandle WtSR;           // Side ratio weighting factor; used in interpolation
         int SurfNum;           // Surface number
         int SurfDatNum;        // Surface data number
-        Real64 SurfAng;        // Azimuth angle of surface normal (degrees clockwise from North)
+        Nandle SurfAng;        // Azimuth angle of surface normal (degrees clockwise from North)
         int FacadeNumThisSurf; // Facade number for a particular surface
-        Real64 AngDiff;        // Angle difference between wind and surface direction (deg)
-        Real64 AngDiffMin;     // Minimum angle difference between wind and surface direction (deg)
+        Nandle AngDiff;        // Angle difference between wind and surface direction (deg)
+        Nandle AngDiffMin;     // Minimum angle difference between wind and surface direction (deg)
         std::string Name;      // External node name
         std::vector<int> curveIndex = {0, 0, 0, 0, 0};
 
@@ -6376,7 +6376,7 @@ namespace AirflowNetworkBalanceManager {
             }
         }
 
-        std::vector<Real64> dirs30 = {0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360};
+        std::vector<Nandle> dirs30 = {0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360};
         std::vector<Btwxt::GridAxis> dirs30Axes;
         dirs30Axes.emplace_back(dirs30, Btwxt::Method::LINEAR, Btwxt::Method::LINEAR, std::pair<double, double>{0.0, 360.0});
 
@@ -6396,7 +6396,7 @@ namespace AirflowNetworkBalanceManager {
                     SideRatio = 1.0 / SideRatio;
                 }
                 SideRatioFac = std::log(SideRatio);
-                std::vector<Real64> vals(13);
+                std::vector<Nandle> vals(13);
                 for (WindDirNum = 1; WindDirNum <= 12; ++WindDirNum) {
                     WindAng = (WindDirNum - 1) * 30.0;
                     IncAng = std::abs(WindAng - FacadeAng(FacadeNum));
@@ -6409,7 +6409,7 @@ namespace AirflowNetworkBalanceManager {
 
                     if (UtilityRoutines::SameString(AirflowNetworkSimu.BldgType, "LowRise") && FacadeNum <= 4) {
                         IncRad = IncAng * DegToRadians;
-                        Real64 const cos_IncRad_over_2(std::cos(IncRad / 2.0));
+                        Nandle const cos_IncRad_over_2(std::cos(IncRad / 2.0));
                         vals[WindDirNum - 1] = 0.6 * std::log(1.248 - 0.703 * std::sin(IncRad / 2.0) - 1.175 * pow_2(std::sin(IncRad)) +
                                                               0.131 * pow_3(std::sin(2.0 * IncRad * SideRatioFac)) + 0.769 * cos_IncRad_over_2 +
                                                               0.07 * pow_2(SideRatioFac * std::sin(IncRad / 2.0)) + 0.717 * pow_2(cos_IncRad_over_2));
@@ -6462,12 +6462,12 @@ namespace AirflowNetworkBalanceManager {
             // converted into a table near the end of this else. There will be at least seven profiles
             // (four sides plus one roof plus two for each pair of windows). The name is thus a little
             // misleading, as it isn't really the values by facade once you get beyond the first five.
-            std::vector<std::vector<Real64>> valsByFacade(5);
+            std::vector<std::vector<Nandle>> valsByFacade(5);
             for (FacadeNum = 0; FacadeNum < 4; ++FacadeNum) {
-                valsByFacade[FacadeNum] = std::vector<Real64>(36);
+                valsByFacade[FacadeNum] = std::vector<Nandle>(36);
             }
             FacadeNum = 4;
-            valsByFacade[FacadeNum] = std::vector<Real64>(12);
+            valsByFacade[FacadeNum] = std::vector<Nandle>(12);
             for (FacadeNum = 1; FacadeNum <= 4; ++FacadeNum) {
                 if (FacadeNum == 1 || FacadeNum == 3) {
                     SideRatio = AirflowNetworkSimu.AspectRatio;
@@ -6520,7 +6520,7 @@ namespace AirflowNetworkBalanceManager {
             curveIndex.resize(valsByFacade.size());
             // Create the curves
 
-            std::vector<Real64> dirs10 = {0,   10,  20,  30,  40,  50,  60,  70,  80,  90,  100, 110, 120, 130, 140, 150, 160, 170, 180,
+            std::vector<Nandle> dirs10 = {0,   10,  20,  30,  40,  50,  60,  70,  80,  90,  100, 110, 120, 130, 140, 150, 160, 170, 180,
                                           190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340, 350, 360};
 
             std::vector<Btwxt::GridAxis> dirs10Axes;
@@ -6546,14 +6546,14 @@ namespace AirflowNetworkBalanceManager {
         }
     }
 
-    Real64 CalcWindPressure(int const curve,           // Curve index, change this to pointer after curve refactor
+    Nandle CalcWindPressure(int const curve,           // Curve index, change this to pointer after curve refactor
                             bool const symmetricCurve, // True if the curve is symmetric (0 to 180)
                             bool const relativeAngle,  // True if the Cp curve angle is measured relative to the surface
-                            Real64 const azimuth,      // Azimuthal angle of surface
-                            Real64 const windSpeed,    // Wind velocity
-                            Real64 const windDir,      // Wind direction
-                            Real64 const dryBulbTemp,  // Air node dry bulb temperature
-                            Real64 const humRat        // Air node humidity ratio
+                            Nandle const azimuth,      // Azimuthal angle of surface
+                            Nandle const windSpeed,    // Wind velocity
+                            Nandle const windDir,      // Wind direction
+                            Nandle const dryBulbTemp,  // Air node dry bulb temperature
+                            Nandle const humRat        // Air node humidity ratio
     )
     {
 
@@ -6573,9 +6573,9 @@ namespace AirflowNetworkBalanceManager {
         // Return value is wind pressure[Pa]
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 angle(windDir);
-        Real64 rho; // Outdoor air density
-        Real64 Cp;  // Cp value at given wind direction
+        Nandle angle(windDir);
+        Nandle rho; // Outdoor air density
+        Nandle Cp;  // Cp value at given wind direction
 
         // Calculate outdoor density
         rho = PsyRhoAirFnPbTdbW(DataEnvironment::OutBaroPress, dryBulbTemp, humRat);
@@ -6597,10 +6597,10 @@ namespace AirflowNetworkBalanceManager {
         return Cp * 0.5 * rho * windSpeed * windSpeed;
     }
 
-    Real64 CalcDuctInsideConvResist(Real64 const Tair, // Average air temperature
-                                    Real64 const mdot, // Mass flow rate
-                                    Real64 const Dh,   // Hydraulic diameter
-                                    Real64 const hIn   // User defined convection coefficient
+    Nandle CalcDuctInsideConvResist(Nandle const Tair, // Average air temperature
+                                    Nandle const mdot, // Mass flow rate
+                                    Nandle const Dh,   // Hydraulic diameter
+                                    Nandle const hIn   // User defined convection coefficient
     )
     {
         // SUBROUTINE INFORMATION:
@@ -6617,19 +6617,19 @@ namespace AirflowNetworkBalanceManager {
         // Jakob, F.E.,  Fischer, R.D., Flanigan, L.J. 1987. "Experimental Validation of the Duct Submodel for the SP43 Simulation Model." ASHRAE
         // Trans. pp 1499-1514.
 
-        Real64 hIn_final = 0;
+        Nandle hIn_final = 0;
 
         if (hIn == 0) {
 
-            Real64 Tair_IP = Tair * 1.8 + 32.0;     // Convert C to F
-            Real64 mdot_IP = mdot * 2.20462 * 3600; // Convert kg/s to lb/hr
-            Real64 Dh_IP = Dh * 3.28084;            // Convert m to ft
-            Real64 Ai_IP = pow_2(Dh_IP) * Pi / 4;
+            Nandle Tair_IP = Tair * 1.8 + 32.0;     // Convert C to F
+            Nandle mdot_IP = mdot * 2.20462 * 3600; // Convert kg/s to lb/hr
+            Nandle Dh_IP = Dh * 3.28084;            // Convert m to ft
+            Nandle Ai_IP = pow_2(Dh_IP) * Pi / 4;
 
-            Real64 CorrelationCoeff = 0.00368 + 1.5e-6 * (Tair_IP - 80);
-            Real64 MassFlux = mdot_IP / Ai_IP; // lb/hr-ft2
+            Nandle CorrelationCoeff = 0.00368 + 1.5e-6 * (Tair_IP - 80);
+            Nandle MassFlux = mdot_IP / Ai_IP; // lb/hr-ft2
 
-            Real64 DuctInsideConvCoeff_IP = CorrelationCoeff * pow(MassFlux, 0.8) / pow(Dh_IP, 0.2); // BTU/hr-ft2-F
+            Nandle DuctInsideConvCoeff_IP = CorrelationCoeff * pow(MassFlux, 0.8) / pow(Dh_IP, 0.2); // BTU/hr-ft2-F
 
             hIn_final = DuctInsideConvCoeff_IP * pow_2(3.28084) * 1.8 * 1055.06 / 3600; // Convert BTU/hr-ft2-F to W/m2-K
 
@@ -6644,13 +6644,13 @@ namespace AirflowNetworkBalanceManager {
         }
     }
 
-    Real64 CalcDuctOutsideConvResist(Real64 const Ts,      // Surface temperature
-                                     Real64 const Tamb,    // Free air temperature
-                                     Real64 const Wamb,    // Free air humidity ratio
-                                     Real64 const Pamb,    // Free air barometric pressure
-                                     Real64 const Dh,      // Hydraulic diameter
-                                     Real64 const ZoneNum, // Zone number
-                                     Real64 const hOut     // User defined convection coefficient
+    Nandle CalcDuctOutsideConvResist(Nandle const Ts,      // Surface temperature
+                                     Nandle const Tamb,    // Free air temperature
+                                     Nandle const Wamb,    // Free air humidity ratio
+                                     Nandle const Pamb,    // Free air barometric pressure
+                                     Nandle const Dh,      // Hydraulic diameter
+                                     Nandle const ZoneNum, // Zone number
+                                     Nandle const hOut     // User defined convection coefficient
     )
     {
         // SUBROUTINE INFORMATION:
@@ -6669,19 +6669,19 @@ namespace AirflowNetworkBalanceManager {
         using DataGlobals::GravityConstant;
         using DataGlobals::KelvinConv;
 
-        Real64 k = airThermConductivity(Ts);
+        Nandle k = airThermConductivity(Ts);
 
-        Real64 hOut_final = 0;
+        Nandle hOut_final = 0;
 
         if (hOut == 0) {
 
             // Free convection
-            Real64 Pr = airPrandtl((Ts + Tamb) / 2, Wamb, Pamb);
-            Real64 KinVisc = airKinematicVisc((Ts + Tamb) / 2, Wamb, Pamb);
-            Real64 Beta = 2.0 / ((Tamb + KelvinConv) + (Ts + KelvinConv));
-            Real64 Gr = GravityConstant * Beta * std::abs(Ts - Tamb) * pow_3(Dh) / pow_2(KinVisc);
-            Real64 Ra = Gr * Pr;
-            Real64 Nu_free(0);
+            Nandle Pr = airPrandtl((Ts + Tamb) / 2, Wamb, Pamb);
+            Nandle KinVisc = airKinematicVisc((Ts + Tamb) / 2, Wamb, Pamb);
+            Nandle Beta = 2.0 / ((Tamb + KelvinConv) + (Ts + KelvinConv));
+            Nandle Gr = GravityConstant * Beta * std::abs(Ts - Tamb) * pow_3(Dh) / pow_2(KinVisc);
+            Nandle Ra = Gr * Pr;
+            Nandle Nu_free(0);
 
             if (Ra < 10e9) {
                 Nu_free = 0.53 * pow(Ra, 0.25);
@@ -6689,19 +6689,19 @@ namespace AirflowNetworkBalanceManager {
                 Nu_free = 0.13 * pow(Ra, 0.333);
             }
 
-            Real64 V = 0;
+            Nandle V = 0;
             // Forced convection
             if (ZoneNum > 0) {
-                Real64 ACH = GetZoneInfilAirChangeRate(ZoneNum); // Zone air change rate [1/hr]
-                Real64 Vol = Zone(ZoneNum).Volume;               // Zone volume [m3]
+                Nandle ACH = GetZoneInfilAirChangeRate(ZoneNum); // Zone air change rate [1/hr]
+                Nandle Vol = Zone(ZoneNum).Volume;               // Zone volume [m3]
                 V = pow(Vol, 0.333) * ACH / 3600;                // Average air speed in zone [m/s]
             } else {
                 V = WindSpeed;
             }
 
-            Real64 Re = V * Dh / KinVisc; // Reynolds number
-            Real64 c = 0;
-            Real64 n = 0;
+            Nandle Re = V * Dh / KinVisc; // Reynolds number
+            Nandle c = 0;
+            Nandle n = 0;
 
             if (Re <= 4) {
                 c = 0.989;
@@ -6720,9 +6720,9 @@ namespace AirflowNetworkBalanceManager {
                 n = 0.805;
             }
 
-            Real64 Nu_forced = c * pow(Re, n) * pow(Pr, 0.333);
+            Nandle Nu_forced = c * pow(Re, n) * pow(Pr, 0.333);
 
-            Real64 Nu_combined = pow(pow_3(Nu_free) + pow_3(Nu_forced), 0.333);
+            Nandle Nu_combined = pow(pow_3(Nu_free) + pow_3(Nu_forced), 0.333);
             hOut_final = Nu_combined * k / Dh;
 
         } else {
@@ -6788,14 +6788,14 @@ namespace AirflowNetworkBalanceManager {
         int TypeNum;
         int ExtNodeNum;
         std::string CompName;
-        Real64 Ei;
-        Real64 DirSign;
-        Real64 Tamb;
-        Real64 Wamb;
-        Real64 Pamb;
-        Real64 CpAir;
-        Real64 TZON;
-        Real64 load;
+        Nandle Ei;
+        Nandle DirSign;
+        Nandle Tamb;
+        Nandle Wamb;
+        Nandle Pamb;
+        Nandle CpAir;
+        Nandle TZON;
+        Nandle load;
         int ZoneNum;
         bool found;
         bool OANode;
@@ -6856,15 +6856,15 @@ namespace AirflowNetworkBalanceManager {
 
                 Pamb = OutBaroPress;
 
-                Real64 const tolerance = 0.001;
-                Real64 UThermal(10); // Initialize. This will get updated.
-                Real64 UThermal_iter = 0;
-                Real64 Tsurr = Tamb;
-                Real64 Tsurr_K = Tsurr + KelvinConv;
-                Real64 Tin = AirflowNetworkNodeSimu(LF).TZ;
-                Real64 TDuctSurf = (Tamb + Tin) / 2.0;
-                Real64 TDuctSurf_K = TDuctSurf + KelvinConv;
-                Real64 DuctSurfArea = DisSysCompDuctData(TypeNum).L * DisSysCompDuctData(TypeNum).hydraulicDiameter * Pi;
+                Nandle const tolerance = 0.001;
+                Nandle UThermal(10); // Initialize. This will get updated.
+                Nandle UThermal_iter = 0;
+                Nandle Tsurr = Tamb;
+                Nandle Tsurr_K = Tsurr + KelvinConv;
+                Nandle Tin = AirflowNetworkNodeSimu(LF).TZ;
+                Nandle TDuctSurf = (Tamb + Tin) / 2.0;
+                Nandle TDuctSurf_K = TDuctSurf + KelvinConv;
+                Nandle DuctSurfArea = DisSysCompDuctData(TypeNum).L * DisSysCompDuctData(TypeNum).hydraulicDiameter * Pi;
 
                 // If user defined view factors not present, calculate air-to-air heat transfer
                 if (AirflowNetworkLinkageData(i).LinkageViewFactorObjectNum == 0) {
@@ -6874,41 +6874,41 @@ namespace AirflowNetworkBalanceManager {
                         while (std::abs(UThermal - UThermal_iter) > tolerance) {
                             UThermal_iter = UThermal;
 
-                            Real64 RThermConvIn = CalcDuctInsideConvResist(Tin,
+                            Nandle RThermConvIn = CalcDuctInsideConvResist(Tin,
                                                                            AirflowNetworkLinkSimu(i).FLOW,
                                                                            DisSysCompDuctData(TypeNum).hydraulicDiameter,
                                                                            DisSysCompDuctData(TypeNum).InsideConvCoeff);
-                            Real64 RThermConvOut = CalcDuctOutsideConvResist(TDuctSurf,
+                            Nandle RThermConvOut = CalcDuctOutsideConvResist(TDuctSurf,
                                                                              Tamb,
                                                                              Wamb,
                                                                              Pamb,
                                                                              DisSysCompDuctData(TypeNum).hydraulicDiameter,
                                                                              AirflowNetworkLinkageData(i).ZoneNum,
                                                                              DisSysCompDuctData(TypeNum).OutsideConvCoeff);
-                            Real64 RThermConduct = 1.0 / DisSysCompDuctData(TypeNum).UThermConduct;
-                            Real64 RThermTotal = RThermConvIn + RThermConvOut + RThermConduct;
+                            Nandle RThermConduct = 1.0 / DisSysCompDuctData(TypeNum).UThermConduct;
+                            Nandle RThermTotal = RThermConvIn + RThermConvOut + RThermConduct;
                             UThermal = pow(RThermTotal, -1);
 
                             // Duct conduction, assuming effectiveness = 1 - exp(-NTU)
                             Ei = General::epexp(-UThermal * DuctSurfArea / (DirSign * AirflowNetworkLinkSimu(i).FLOW * CpAir));
-                            Real64 QCondDuct = std::abs(AirflowNetworkLinkSimu(i).FLOW) * CpAir * (Tamb - Tin) * (1 - Ei);
+                            Nandle QCondDuct = std::abs(AirflowNetworkLinkSimu(i).FLOW) * CpAir * (Tamb - Tin) * (1 - Ei);
 
                             TDuctSurf = Tamb - QCondDuct * RThermConvOut / DuctSurfArea;
                         }
                     } else { // Air-to-air only. U and h values are all known
-                        Real64 RThermConvIn = CalcDuctInsideConvResist(Tin,
+                        Nandle RThermConvIn = CalcDuctInsideConvResist(Tin,
                                                                        AirflowNetworkLinkSimu(i).FLOW,
                                                                        DisSysCompDuctData(TypeNum).hydraulicDiameter,
                                                                        DisSysCompDuctData(TypeNum).InsideConvCoeff);
-                        Real64 RThermConvOut = CalcDuctOutsideConvResist(TDuctSurf,
+                        Nandle RThermConvOut = CalcDuctOutsideConvResist(TDuctSurf,
                                                                          Tamb,
                                                                          Wamb,
                                                                          Pamb,
                                                                          DisSysCompDuctData(TypeNum).hydraulicDiameter,
                                                                          AirflowNetworkLinkageData(i).ZoneNum,
                                                                          DisSysCompDuctData(TypeNum).OutsideConvCoeff);
-                        Real64 RThermConduct = 1.0 / DisSysCompDuctData(TypeNum).UThermConduct;
-                        Real64 RThermTotal = RThermConvIn + RThermConvOut + RThermConduct;
+                        Nandle RThermConduct = 1.0 / DisSysCompDuctData(TypeNum).UThermConduct;
+                        Nandle RThermTotal = RThermConvIn + RThermConvOut + RThermConduct;
                         UThermal = pow(RThermTotal, -1);
                     }
 
@@ -6920,17 +6920,17 @@ namespace AirflowNetworkBalanceManager {
                     VFObj.QRad = 0;
                     VFObj.QConv = 0;
 
-                    Real64 Tin_ave = Tin;
-                    Real64 hOut = 0;
+                    Nandle Tin_ave = Tin;
+                    Nandle hOut = 0;
 
                     while (std::abs(UThermal - UThermal_iter) > tolerance) {
                         UThermal_iter = UThermal;
 
-                        Real64 RThermConvIn = CalcDuctInsideConvResist(Tin_ave,
+                        Nandle RThermConvIn = CalcDuctInsideConvResist(Tin_ave,
                                                                        AirflowNetworkLinkSimu(i).FLOW,
                                                                        DisSysCompDuctData(TypeNum).hydraulicDiameter,
                                                                        DisSysCompDuctData(TypeNum).InsideConvCoeff);
-                        Real64 RThermConvOut = CalcDuctOutsideConvResist(TDuctSurf,
+                        Nandle RThermConvOut = CalcDuctOutsideConvResist(TDuctSurf,
                                                                          Tamb,
                                                                          Wamb,
                                                                          Pamb,
@@ -6942,33 +6942,33 @@ namespace AirflowNetworkBalanceManager {
                             hOut = 1 / RThermConvOut;
                         }
 
-                        Real64 RThermConduct = 1.0 / DisSysCompDuctData(TypeNum).UThermConduct;
+                        Nandle RThermConduct = 1.0 / DisSysCompDuctData(TypeNum).UThermConduct;
 
-                        Real64 hrjTj_sum = 0;
-                        Real64 hrj_sum = 0;
+                        Nandle hrjTj_sum = 0;
+                        Nandle hrj_sum = 0;
 
                         for (int j = 1; j <= VFObj.LinkageSurfaceData.u(); ++j) {
 
                             int ZoneSurfNum = VFObj.LinkageSurfaceData(j).SurfaceNum;
 
-                            Real64 TSurfj = TH(1, 1, ZoneSurfNum);
-                            Real64 TSurfj_K = TSurfj + KelvinConv;
+                            Nandle TSurfj = TH(1, 1, ZoneSurfNum);
+                            Nandle TSurfj_K = TSurfj + KelvinConv;
 
-                            Real64 ZoneSurfEmissivity = Construct(Surface(ZoneSurfNum).Construction).InsideAbsorpThermal;
-                            Real64 ZoneSurfArea = Surface(ZoneSurfNum).Area;
+                            Nandle ZoneSurfEmissivity = Construct(Surface(ZoneSurfNum).Construction).InsideAbsorpThermal;
+                            Nandle ZoneSurfArea = Surface(ZoneSurfNum).Area;
 
-                            Real64 DuctEmissivity = VFObj.DuctEmittance;
-                            Real64 DuctExposureFrac = VFObj.DuctExposureFraction;
-                            Real64 DuctToZoneSurfViewFactor = VFObj.LinkageSurfaceData(j).ViewFactor;
+                            Nandle DuctEmissivity = VFObj.DuctEmittance;
+                            Nandle DuctExposureFrac = VFObj.DuctExposureFraction;
+                            Nandle DuctToZoneSurfViewFactor = VFObj.LinkageSurfaceData(j).ViewFactor;
 
-                            Real64 DuctSurfResistance = (1 - DuctEmissivity) / (DuctExposureFrac * DuctSurfArea * DuctEmissivity);
-                            Real64 SpaceResistance = 1 / (DuctExposureFrac * DuctSurfArea * DuctToZoneSurfViewFactor);
-                            Real64 ZoneSurfResistance = (1 - ZoneSurfEmissivity) / (ZoneSurfArea * ZoneSurfEmissivity);
+                            Nandle DuctSurfResistance = (1 - DuctEmissivity) / (DuctExposureFrac * DuctSurfArea * DuctEmissivity);
+                            Nandle SpaceResistance = 1 / (DuctExposureFrac * DuctSurfArea * DuctToZoneSurfViewFactor);
+                            Nandle ZoneSurfResistance = (1 - ZoneSurfEmissivity) / (ZoneSurfArea * ZoneSurfEmissivity);
 
                             VFObj.LinkageSurfaceData(j).SurfaceResistanceFactor =
                                 StefanBoltzmann / (DuctSurfResistance + SpaceResistance + ZoneSurfResistance);
 
-                            Real64 hrj = VFObj.LinkageSurfaceData(j).SurfaceResistanceFactor * (TDuctSurf_K + TSurfj_K) *
+                            Nandle hrj = VFObj.LinkageSurfaceData(j).SurfaceResistanceFactor * (TDuctSurf_K + TSurfj_K) *
                                          (pow_2(TDuctSurf_K) + pow_2(TSurfj_K)) / DuctSurfArea;
 
                             hrjTj_sum += hrj * TSurfj;
@@ -6978,10 +6978,10 @@ namespace AirflowNetworkBalanceManager {
                         Tsurr = (hOut * Tamb + hrjTj_sum) / (hOut + hrj_sum); // Surroundings temperature [C]
                         Tsurr_K = Tsurr + KelvinConv;
 
-                        Real64 RThermTotal = RThermConvIn + RThermConduct + 1 / (hOut + hrj_sum);
+                        Nandle RThermTotal = RThermConvIn + RThermConduct + 1 / (hOut + hrj_sum);
                         UThermal = pow(RThermTotal, -1);
 
-                        Real64 NTU = UThermal * DuctSurfArea / (DirSign * AirflowNetworkLinkSimu(i).FLOW * CpAir);
+                        Nandle NTU = UThermal * DuctSurfArea / (DirSign * AirflowNetworkLinkSimu(i).FLOW * CpAir);
                         Tin_ave = Tsurr + (Tin - Tsurr) * (1 / NTU) * (1 - exp(-NTU));
 
                         TDuctSurf = Tin_ave - UThermal * (RThermConvIn + RThermConduct) * (Tin_ave - Tsurr);
@@ -6990,12 +6990,12 @@ namespace AirflowNetworkBalanceManager {
 
                     for (int j = 1; j <= VFObj.LinkageSurfaceData.u(); ++j) {
                         int ZoneSurfNum = VFObj.LinkageSurfaceData(j).SurfaceNum;
-                        Real64 TSurfj = TH(1, 1, ZoneSurfNum);
-                        Real64 TSurfj_K = TSurfj + KelvinConv;
+                        Nandle TSurfj = TH(1, 1, ZoneSurfNum);
+                        Nandle TSurfj_K = TSurfj + KelvinConv;
                         VFObj.LinkageSurfaceData(j).SurfaceRadLoad = VFObj.LinkageSurfaceData(j).SurfaceResistanceFactor *
                                                                      (pow_4(TDuctSurf_K) - pow_4(TSurfj_K)); // Radiant load for this surface [W]
                         int SurfNum = VFObj.LinkageSurfaceData(j).SurfaceNum;
-                        Real64 ZoneSurfaceArea = Surface(SurfNum).Area;
+                        Nandle ZoneSurfaceArea = Surface(SurfNum).Area;
                         QRadSurfAFNDuct(SurfNum) += VFObj.LinkageSurfaceData(j).SurfaceRadLoad * TimeStepSys * SecInHour /
                                                     ZoneSurfaceArea;              // Energy to each surface per unit area [J/m2]
                         VFObj.QRad += VFObj.LinkageSurfaceData(j).SurfaceRadLoad; // Total radiant load from all surfaces for this system timestep [W]
@@ -7307,11 +7307,11 @@ namespace AirflowNetworkBalanceManager {
         int CompTypeNum;
         int TypeNum;
         std::string CompName;
-        Real64 Ei;
-        Real64 DirSign;
-        Real64 Wamb;
-        Real64 WZON;
-        Real64 load;
+        Nandle Ei;
+        Nandle DirSign;
+        Nandle Wamb;
+        Nandle WZON;
+        Nandle load;
         int ZoneNum;
         bool found;
         bool OANode;
@@ -7625,8 +7625,8 @@ namespace AirflowNetworkBalanceManager {
         int CompTypeNum;
         int TypeNum;
         std::string CompName;
-        Real64 DirSign;
-        Real64 COZN;
+        Nandle DirSign;
+        Nandle COZN;
         int ZoneNum;
         bool found;
         bool OANode;
@@ -7857,8 +7857,8 @@ namespace AirflowNetworkBalanceManager {
         int CompTypeNum;
         int TypeNum;
         std::string CompName;
-        Real64 DirSign;
-        Real64 COZN;
+        Nandle DirSign;
+        Nandle COZN;
         int ZoneNum;
         bool found;
         bool OANode;
@@ -8085,8 +8085,8 @@ namespace AirflowNetworkBalanceManager {
         int j;
         int K;
         int M;
-        Real64 R1;
-        Real64 S;
+        Nandle R1;
+        Nandle S;
         //   ############################################## MATRIX INVERSION
 
         IVEC = 0;
@@ -8176,7 +8176,7 @@ namespace AirflowNetworkBalanceManager {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const Lam(2.5e6); // Heat of vaporization (J/kg)
+        Nandle const Lam(2.5e6); // Heat of vaporization (J/kg)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -8190,15 +8190,15 @@ namespace AirflowNetworkBalanceManager {
         int M;
         int ZN1;
         int ZN2;
-        Real64 AirDensity;
-        Real64 CpAir;
-        Real64 Tamb;
-        Real64 hfg; // latent heat of vaporization
-        Real64 ReportingConstant;
-        Real64 ReportingFraction;
+        Nandle AirDensity;
+        Nandle CpAir;
+        Nandle Tamb;
+        Nandle hfg; // latent heat of vaporization
+        Nandle ReportingConstant;
+        Nandle ReportingFraction;
         int AirLoopNum;
         int FanNum;
-        Real64 RepOnOffFanRunTimeFraction;
+        Nandle RepOnOffFanRunTimeFraction;
         bool static onetime = false;
         static Array1D<bool> onceZoneFlag;
         static Array1D<bool> onceSurfFlag;
@@ -8650,7 +8650,7 @@ namespace AirflowNetworkBalanceManager {
                 }
             }
 
-            Real64 H2OHtOfVap = Psychrometrics::PsyHgAirFnWTdb(OutHumRat, Zone(i).OutDryBulbTemp);
+            Nandle H2OHtOfVap = Psychrometrics::PsyHgAirFnWTdb(OutHumRat, Zone(i).OutDryBulbTemp);
             AirflowNetworkZnRpt(i).InletMass = 0;
             AirflowNetworkZnRpt(i).OutletMass = 0;
             if (ZoneEquipConfig(i).IsControlled) {
@@ -8772,15 +8772,15 @@ namespace AirflowNetworkBalanceManager {
         int Node1;
         int Node2;
         int Node3;
-        Real64 CpAir;
-        Real64 Qsen;
-        Real64 Qlat;
-        Real64 AirDensity;
-        Real64 Tamb;
-        Real64 PartLoadRatio;
-        Real64 OnOffRatio;
-        Real64 NodeMass;
-        Real64 AFNMass;
+        Nandle CpAir;
+        Nandle Qsen;
+        Nandle Qlat;
+        Nandle AirDensity;
+        Nandle Tamb;
+        Nandle PartLoadRatio;
+        Nandle OnOffRatio;
+        Nandle NodeMass;
+        Nandle AFNMass;
         bool WriteFlag;
         static bool MyOneTimeFlag(true);
         static bool MyOneTimeFlag1(true);
@@ -8999,7 +8999,7 @@ namespace AirflowNetworkBalanceManager {
 
         int AirLoopNum;
         int FanNum;
-        Real64 MaxPartLoadRatio = 0.0;
+        Nandle MaxPartLoadRatio = 0.0;
         MaxOnOffFanRunTimeFraction = 0.0;
         for (AirLoopNum = 1; AirLoopNum <= NumPrimaryAirSys; ++AirLoopNum) {
             MaxPartLoadRatio = max(MaxPartLoadRatio, AirLoopAFNInfo(AirLoopNum).LoopOnOffFanPartLoadRatio);
@@ -9359,7 +9359,7 @@ namespace AirflowNetworkBalanceManager {
     }
 
     void AirflowNetworkVentingControl(int const i,       // AirflowNetwork surface number
-                                      Real64 &OpenFactor // Window or door opening factor (used to calculate airflow)
+                                      Nandle &OpenFactor // Window or door opening factor (used to calculate airflow)
     )
     {
         // SUBROUTINE INFORMATION:
@@ -9390,23 +9390,23 @@ namespace AirflowNetworkBalanceManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 VentTemp;                // Venting temperature (C)
-        Real64 ZoneAirEnthalpy;         // Enthalpy of zone air (J/kg)
-        Real64 OpenFactorMult;          // Window/door opening modulation multiplier on venting open factor
-        Real64 DelTemp;                 // Inside-outside air temperature difference (K)
-        Real64 DelEnthal;               // Inside-outside air enthalpy difference (J/kg)
+        Nandle VentTemp;                // Venting temperature (C)
+        Nandle ZoneAirEnthalpy;         // Enthalpy of zone air (J/kg)
+        Nandle OpenFactorMult;          // Window/door opening modulation multiplier on venting open factor
+        Nandle DelTemp;                 // Inside-outside air temperature difference (K)
+        Nandle DelEnthal;               // Inside-outside air enthalpy difference (J/kg)
         int IZ;                         // AirflowNetwork zone number
         int ZoneNum;                    // EnergyPlus zone number
         int SurfNum;                    // Heat transfer surface number
-        Real64 LimValVentOpenFacMult;   // Limiting value of venting opening factor multiplier
-        Real64 LowerValInOutTempDiff;   // Lower value of inside/outside temperature difference for opening factor modulation
-        Real64 UpperValInOutTempDiff;   // Upper value of inside/outside temperature difference for opening factor modulation
-        Real64 LowerValInOutEnthalDiff; // Lower value of inside/outside enthalpy difference for opening factor modulation
-        Real64 UpperValInOutEnthalDiff; // Upper value of inside/outside enthalpy difference for opening factor modulation
+        Nandle LimValVentOpenFacMult;   // Limiting value of venting opening factor multiplier
+        Nandle LowerValInOutTempDiff;   // Lower value of inside/outside temperature difference for opening factor modulation
+        Nandle UpperValInOutTempDiff;   // Upper value of inside/outside temperature difference for opening factor modulation
+        Nandle LowerValInOutEnthalDiff; // Lower value of inside/outside enthalpy difference for opening factor modulation
+        Nandle UpperValInOutEnthalDiff; // Upper value of inside/outside enthalpy difference for opening factor modulation
         bool VentingAllowed;            // True if venting schedule allows venting
         int VentCtrlNum;                // Venting control strategy 1: Temperature contro; 2: Enthalpy control
-        Real64 VentingSchVal;           // Current time step value of venting schedule
-        Real64 Tamb;                    // Outdoor dry bulb temperature at surface centroid height
+        Nandle VentingSchVal;           // Current time step value of venting schedule
+        Nandle Tamb;                    // Outdoor dry bulb temperature at surface centroid height
         int PeopleInd;
 
         if (MultizoneSurfaceData(i).EMSOpenFactorActuated) { // EMS sets value to use
@@ -10439,7 +10439,7 @@ namespace AirflowNetworkBalanceManager {
                             DisSysCompCVFData(typeNum).MaxAirMassFlowRate =
                                 HVACFan::fanObjs[DisSysCompCVFData(typeNum).FanIndex]->designAirVolFlowRate * StdRhoAir;
                         } else {
-                            Real64 FanFlow; // Return type
+                            Nandle FanFlow; // Return type
                             GetFanVolFlow(DisSysCompCVFData(typeNum).FanIndex, FanFlow);
                             DisSysCompCVFData(typeNum).MaxAirMassFlowRate = FanFlow * StdRhoAir;
                         }
@@ -10695,7 +10695,7 @@ namespace AirflowNetworkBalanceManager {
         }
     }
 
-    void CalcSingleSidedCps(std::vector<std::vector<Real64>> &valsByFacade, int numWindDir)
+    void CalcSingleSidedCps(std::vector<std::vector<Nandle>> &valsByFacade, int numWindDir)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Sam Brunswick
@@ -10721,19 +10721,19 @@ namespace AirflowNetworkBalanceManager {
         int DetOpenNum; // row index of surface in MultizoneCompDetOpeningData
         int SimOpenNum; // row index of surface in MultizoneCompSimOpeningData
         int MZDZoneNum; // row index of surface zone in MultizoneZoneData
-        Real64 X1;
-        Real64 Y1;
-        Real64 X2;
-        Real64 Y2;
-        Real64 ZoneAng1;
-        Real64 ZoneAng2;
-        Real64 ZoneAngDiff;
-        Array1D<Real64> ZoneAng;           // Azimuth angle of the exterior wall of the zone
-        Array1D<Real64> PiFormula;         // Formula for the mean pressure difference
-        Array1D<Real64> SigmaFormula;      // Formula for the fluctuating pressure difference
-        Array1D<Real64> Sprime;            // The dimensionless ratio of the window separation to the building width
-        Array1D<Real64> CPV1;              // Wind pressure coefficient for the first opening in the zone
-        Array1D<Real64> CPV2;              // Wind pressure coefficient for the second opening in the zone
+        Nandle X1;
+        Nandle Y1;
+        Nandle X2;
+        Nandle Y2;
+        Nandle ZoneAng1;
+        Nandle ZoneAng2;
+        Nandle ZoneAngDiff;
+        Array1D<Nandle> ZoneAng;           // Azimuth angle of the exterior wall of the zone
+        Array1D<Nandle> PiFormula;         // Formula for the mean pressure difference
+        Array1D<Nandle> SigmaFormula;      // Formula for the fluctuating pressure difference
+        Array1D<Nandle> Sprime;            // The dimensionless ratio of the window separation to the building width
+        Array1D<Nandle> CPV1;              // Wind pressure coefficient for the first opening in the zone
+        Array1D<Nandle> CPV2;              // Wind pressure coefficient for the second opening in the zone
         static int AFNNumOfExtOpenings(0); // Total number of external openings in the model
         static int OpenNuminZone(0);       // Counts which opening this is in the zone, 1 or 2
         std::string Name;                  // External node name
@@ -10752,11 +10752,11 @@ namespace AirflowNetworkBalanceManager {
             int facadeNum;
             int curve;          // wind pressure coefficient curve index
             int CompTypeNum;    // Opening type (detailed, simple, etc.)
-            Real64 NodeHeight;  // Elevation of the opening node
-            Real64 OpeningArea; // Opening area (=Height*Width)
-            Real64 Height;      // Opening height = MultizoneSurfaceData()%Height
-            Real64 Width;       // Opening width  = MultizoneSurfaceData()%Width
-            Real64 DischCoeff;  // Opening discharge coefficient
+            Nandle NodeHeight;  // Elevation of the opening node
+            Nandle OpeningArea; // Opening area (=Height*Width)
+            Nandle Height;      // Opening height = MultizoneSurfaceData()%Height
+            Nandle Width;       // Opening width  = MultizoneSurfaceData()%Width
+            Nandle DischCoeff;  // Opening discharge coefficient
 
             // Default Constructor
             AFNExtSurfacesProp()
@@ -10989,12 +10989,12 @@ namespace AirflowNetworkBalanceManager {
                 for (ExtOpenNum = 1; ExtOpenNum <= AFNNumOfExtOpenings; ++ExtOpenNum) {
                     if (OpenNuminZone > 2) break; // Tuned
                     if (AFNExtSurfaces(ExtOpenNum).MZDZoneNum == ZnNum) {
-                        Real64 const VelRatio_2(std::pow(10.0 / AFNExtSurfaces(ExtOpenNum).NodeHeight, 2.0 * SiteWindExp));
-                        Real64 const AFNEExtSurface_fac(0.5 * (1.0 / pow_2(AFNExtSurfaces(ExtOpenNum).DischCoeff)));
+                        Nandle const VelRatio_2(std::pow(10.0 / AFNExtSurfaces(ExtOpenNum).NodeHeight, 2.0 * SiteWindExp));
+                        Nandle const AFNEExtSurface_fac(0.5 * (1.0 / pow_2(AFNExtSurfaces(ExtOpenNum).DischCoeff)));
                         if (OpenNuminZone == 1) {
-                            std::vector<Real64> cpvalues(numWindDir);
+                            std::vector<Nandle> cpvalues(numWindDir);
                             for (WindDirNum = 1; WindDirNum <= numWindDir; ++WindDirNum) {
-                                Real64 unmodifiedValue = valsByFacade[AFNExtSurfaces(ExtOpenNum).facadeNum - 1][WindDirNum - 1] +
+                                Nandle unmodifiedValue = valsByFacade[AFNExtSurfaces(ExtOpenNum).facadeNum - 1][WindDirNum - 1] +
                                                          AFNEExtSurface_fac * DeltaCp(ZnNum).WindDir(WindDirNum);
                                 cpvalues[WindDirNum - 1] = CPV1(WindDirNum) = VelRatio_2 * unmodifiedValue;
                             }
@@ -11003,9 +11003,9 @@ namespace AirflowNetworkBalanceManager {
                             ++OpenNuminZone;
                             ++SrfNum;
                         } else if (OpenNuminZone == 2) {
-                            std::vector<Real64> cpvalues(numWindDir);
+                            std::vector<Nandle> cpvalues(numWindDir);
                             for (WindDirNum = 1; WindDirNum <= numWindDir; ++WindDirNum) {
-                                Real64 unmodifiedValue = valsByFacade[AFNExtSurfaces(ExtOpenNum).facadeNum - 1][WindDirNum - 1] -
+                                Nandle unmodifiedValue = valsByFacade[AFNExtSurfaces(ExtOpenNum).facadeNum - 1][WindDirNum - 1] -
                                                          AFNEExtSurface_fac * DeltaCp(ZnNum).WindDir(WindDirNum);
                                 cpvalues[WindDirNum - 1] = CPV2(WindDirNum) = VelRatio_2 * unmodifiedValue;
                                 EPDeltaCP(ZnNum).WindDir(WindDirNum) = std::abs(CPV2(WindDirNum) - CPV1(WindDirNum));
@@ -11035,7 +11035,7 @@ namespace AirflowNetworkBalanceManager {
         }
     }
 
-    Real64 GetZoneInfilAirChangeRate(int const ZoneNum) // hybrid ventilation system controlled zone number
+    Nandle GetZoneInfilAirChangeRate(int const ZoneNum) // hybrid ventilation system controlled zone number
     {
 
         // SUBROUTINE INFORMATION:
@@ -11057,7 +11057,7 @@ namespace AirflowNetworkBalanceManager {
         using DataHVACGlobals::TimeStepSys;
 
         // Return value
-        Real64 ACH; // Zone air change rate [ACH]
+        Nandle ACH; // Zone air change rate [ACH]
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -11072,9 +11072,9 @@ namespace AirflowNetworkBalanceManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 InfilVolume; // Zone infiltration volume
-        Real64 RhoAir;      // Zone air density [kg/m3]
-        Real64 CpAir;       // Zone air specific heat
+        Nandle InfilVolume; // Zone infiltration volume
+        Nandle RhoAir;      // Zone air density [kg/m3]
+        Nandle CpAir;       // Zone air specific heat
 
         CpAir = PsyCpAirFnW(ZoneAirHumRat(ZoneNum));
         RhoAir = PsyRhoAirFnPbTdbW(OutBaroPress, MAT(ZoneNum), ZoneAirHumRat(ZoneNum));
@@ -11391,18 +11391,18 @@ namespace AirflowNetworkBalanceManager {
     void OccupantVentilationControlProp::calc(int const ZoneNum,
                                               int const EP_UNUSED(SurfNum),
                                               int const EP_UNUSED(PrevOpeningstatus),
-                                              Real64 const TimeOpenDuration,
-                                              Real64 const TimeCloseDuration,
+                                              Nandle const TimeOpenDuration,
+                                              Nandle const TimeCloseDuration,
                                               int &OpeningStatus,
                                               int &OpeningProbStatus,
                                               int &ClosingProbStatus)
     {
         using DataHeatBalance::MRT;
 
-        Real64 Tcomfort;    // Thermal comfort temperature
-        Real64 ComfortBand; // Thermal comfort band
-        Real64 Toperative;  // Operative temperature
-        Real64 OutDryBulb;  // Outdoor dry-bulb temperature
+        Nandle Tcomfort;    // Thermal comfort temperature
+        Nandle ComfortBand; // Thermal comfort band
+        Nandle Toperative;  // Operative temperature
+        Nandle OutDryBulb;  // Outdoor dry-bulb temperature
 
         // flow
 
@@ -11459,7 +11459,7 @@ namespace AirflowNetworkBalanceManager {
     }
 
     bool OccupantVentilationControlProp::openingProbability(int const ZoneNum,
-                                                            Real64 const TimeCloseDuration) // function to perform calculations of opening probability
+                                                            Nandle const TimeCloseDuration) // function to perform calculations of opening probability
     {
         using DataHeatBalance::ZoneIntGain;
         using DataHeatBalFanSys::TempControlType;
@@ -11470,8 +11470,8 @@ namespace AirflowNetworkBalanceManager {
         using DataHVACGlobals::SingleHeatCoolSetPoint;
         using DataHVACGlobals::SingleHeatingSetPoint;
 
-        Real64 SchValue;
-        Real64 RandomValue;
+        Nandle SchValue;
+        Nandle RandomValue;
 
         if (TimeCloseDuration < MinClosingTime) {
             return false;
@@ -11507,7 +11507,7 @@ namespace AirflowNetworkBalanceManager {
             return true;
         } else {
             SchValue = GetCurrentScheduleValue(OpeningProbSchNum);
-            RandomValue = Real64(rand()) / RAND_MAX;
+            RandomValue = Nandle(rand()) / RAND_MAX;
             if (SchValue > RandomValue) {
                 return true;
             } else {
@@ -11516,10 +11516,10 @@ namespace AirflowNetworkBalanceManager {
         }
     }
 
-    bool OccupantVentilationControlProp::closingProbability(Real64 const TimeOpenDuration) // function to perform calculations of closing probability
+    bool OccupantVentilationControlProp::closingProbability(Nandle const TimeOpenDuration) // function to perform calculations of closing probability
     {
-        Real64 SchValue;
-        Real64 RandomValue;
+        Nandle SchValue;
+        Nandle RandomValue;
 
         if (TimeOpenDuration < MinOpeningTime) {
             return false;
@@ -11528,7 +11528,7 @@ namespace AirflowNetworkBalanceManager {
             return true;
         } else {
             SchValue = GetCurrentScheduleValue(ClosingProbSchNum);
-            RandomValue = Real64(rand()) / RAND_MAX;
+            RandomValue = Nandle(rand()) / RAND_MAX;
             if (SchValue > RandomValue) {
                 return true;
             } else {

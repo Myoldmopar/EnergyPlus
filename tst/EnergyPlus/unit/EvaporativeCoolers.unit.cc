@@ -84,12 +84,12 @@ TEST_F(EnergyPlusFixture, EvapCoolers_SecondaryAirOutletCondition)
 
     // set up arguments
     int OperatingMode(EvaporativeCoolers::None);
-    Real64 AirMassFlowSec(0.0);
-    Real64 const EDBTSec(20.0);
-    Real64 const EWBTSec(15.0);
-    Real64 const EHumRatSec(0.0085);
-    Real64 QHXTotal(0.0);
-    Real64 QHXLatent(0.0);
+    Nandle AirMassFlowSec(0.0);
+    Nandle const EDBTSec(20.0);
+    Nandle const EWBTSec(15.0);
+    Nandle const EHumRatSec(0.0085);
+    Nandle QHXTotal(0.0);
+    Nandle QHXLatent(0.0);
 
     // make the call for zero secondary air flow rate
     CalcSecondaryAirOutletCondition(EvapCoolNum, OperatingMode, AirMassFlowSec, EDBTSec, EWBTSec, EHumRatSec, QHXTotal, QHXLatent);
@@ -142,10 +142,10 @@ TEST_F(EnergyPlusFixture, EvapCoolers_IndEvapCoolerOutletTemp)
 
     // set up arguments
     int DryOrWetOperatingMode(EvaporativeCoolers::DryFull);
-    Real64 const AirMassFlowSec(1.0);
-    Real64 const EDBTSec(14.0);
-    Real64 const EWBTSec(11.0);
-    Real64 const EHumRatSec(0.0075);
+    Nandle const AirMassFlowSec(1.0);
+    Nandle const EDBTSec(14.0);
+    Nandle const EWBTSec(11.0);
+    Nandle const EHumRatSec(0.0075);
 
     // testing full capacity in dry operating mode
     CalcIndirectRDDEvapCoolerOutletTemp(EvapCoolNum, DryOrWetOperatingMode, AirMassFlowSec, EDBTSec, EWBTSec, EHumRatSec);
@@ -167,8 +167,8 @@ TEST_F(EnergyPlusFixture, EvapCoolers_SizeIndEvapCoolerTest)
 {
 
     int const EvapCoolNum(1);
-    Real64 PrimaryAirDesignFlow(0.0);
-    Real64 SecondaryAirDesignFlow(0.0);
+    Nandle PrimaryAirDesignFlow(0.0);
+    Nandle SecondaryAirDesignFlow(0.0);
 
     DataSizing::SysSizingRunDone = true;
     DataSizing::NumSysSizInput = 1;
@@ -259,8 +259,8 @@ TEST_F(EnergyPlusFixture, EvapCoolers_SizeDirEvapCoolerTest)
 {
 
     int const EvapCoolNum(1);
-    Real64 PrimaryAirDesignFlow(0.0);
-    Real64 RecirWaterPumpDesignPower(0.0);
+    Nandle PrimaryAirDesignFlow(0.0);
+    Nandle RecirWaterPumpDesignPower(0.0);
 
     DataSizing::SysSizingRunDone = true;
     DataSizing::NumSysSizInput = 1;
@@ -330,12 +330,12 @@ TEST_F(EnergyPlusFixture, EvaporativeCoolers_CalcSecondaryAirOutletCondition)
 
     // set up arguments
     int OperatingMode(EvaporativeCoolers::None);
-    Real64 AirMassFlowSec(0.0);
-    Real64 const EDBTSec(20.0);
-    Real64 const EWBTSec(15.0);
-    Real64 const EHumRatSec(0.0085);
-    Real64 QHXTotal(0.0);
-    Real64 QHXLatent(0.0);
+    Nandle AirMassFlowSec(0.0);
+    Nandle const EDBTSec(20.0);
+    Nandle const EWBTSec(15.0);
+    Nandle const EHumRatSec(0.0085);
+    Nandle QHXTotal(0.0);
+    Nandle QHXLatent(0.0);
 
     // make the call for zero secondary air flow rate
     EvaporativeCoolers::CalcSecondaryAirOutletCondition(
@@ -390,10 +390,10 @@ TEST_F(EnergyPlusFixture, EvaporativeCoolers_CalcIndirectRDDEvapCoolerOutletTemp
 
     // set up arguments
     int DryOrWetOperatingMode(EvaporativeCoolers::DryFull);
-    Real64 const AirMassFlowSec(1.0);
-    Real64 const EDBTSec(14.0);
-    Real64 const EWBTSec(11.0);
-    Real64 const EHumRatSec(0.0075);
+    Nandle const AirMassFlowSec(1.0);
+    Nandle const EDBTSec(14.0);
+    Nandle const EWBTSec(11.0);
+    Nandle const EHumRatSec(0.0075);
 
     // testing full capacity in dry operating mode
     EvaporativeCoolers::CalcIndirectRDDEvapCoolerOutletTemp(EvapCoolNum, DryOrWetOperatingMode, AirMassFlowSec, EDBTSec, EWBTSec, EHumRatSec);
@@ -427,7 +427,7 @@ TEST_F(EnergyPlusFixture, EvaporativeCoolers_IndEvapCoolerPower)
 
     // set up arguments
     int DryWetMode(EvaporativeCoolers::DryFull);
-    Real64 FlowRatio(1.0);
+    Nandle FlowRatio(1.0);
 
     CurveNum = 1;
     EvaporativeCoolers::EvapCond(EvapCoolNum).FanPowerModifierCurveIndex = CurveNum;
@@ -554,10 +554,10 @@ TEST_F(EnergyPlusFixture, DefaultAutosizeIndEvapCoolerTest)
 {
 
     int const EvapCoolNum(1);
-    Real64 PrimaryAirDesignFlow(0.0);
-    Real64 SecondaryAirDesignFlow(0.0);
-    Real64 SecondaryFanPower(0.0);
-    Real64 RecirculatingWaterPumpPower(0.0);
+    Nandle PrimaryAirDesignFlow(0.0);
+    Nandle SecondaryAirDesignFlow(0.0);
+    Nandle SecondaryFanPower(0.0);
+    Nandle RecirculatingWaterPumpPower(0.0);
 
     DataSizing::SysSizingRunDone = true;
     DataSizing::NumSysSizInput = 1;
@@ -650,8 +650,8 @@ TEST_F(EnergyPlusFixture, DefaultAutosizeDirEvapCoolerTest)
 {
 
     int const EvapCoolNum(1);
-    Real64 PrimaryAirDesignFlow(0.0);
-    Real64 RecirWaterPumpDesignPower(0.0);
+    Nandle PrimaryAirDesignFlow(0.0);
+    Nandle RecirWaterPumpDesignPower(0.0);
 
     DataSizing::SysSizingRunDone = true;
     DataSizing::NumSysSizInput = 1;
@@ -785,8 +785,8 @@ TEST_F(EnergyPlusFixture, EvaporativeCoolers_IndirectRDDEvapCoolerOperatingMode)
     thisEvapCooler.SecInletHumRat = thisEvapCooler.InletHumRat;
     thisEvapCooler.SecInletWetBulbTemp = thisEvapCooler.InletWetBulbTemp;
     // set up arguments
-    Real64 const TdbOutSysWetMin(22.0);
-    Real64 const TdbOutSysDryMin(25.5);
+    Nandle const TdbOutSysWetMin(22.0);
+    Nandle const TdbOutSysDryMin(25.5);
     // set desired outlet teperature below the wet operation
     // minimum temperature to force it to wet full operation
     thisEvapCooler.DesiredOutletTemp = 21.0;

@@ -121,17 +121,17 @@ namespace HVACFan {
     }
 
     void FanSystem::simulate(
-        Optional<Real64 const> flowFraction, // when used, this directs the fan to set the flow at this flow fraction = current flow/ max design flow
+        Optional<Nandle const> flowFraction, // when used, this directs the fan to set the flow at this flow fraction = current flow/ max design flow
                                              // rate.  It is not exactly the same as the legacy speed ratio that was used with SimulateFanComponents.
         Optional_bool_const zoneCompTurnFansOn,  // can be used as turn fans ON signal from ZoneHVAC component
         Optional_bool_const zoneCompTurnFansOff, // can be used as turn Fans OFF signal from ZoneHVAC component
-        Optional<Real64 const>
+        Optional<Nandle const>
             pressureRise, // Pressure difference to use for DeltaPress, for rating DX coils at a different pressure without entire duct system
-        Optional<Real64 const> massFlowRate1,    // Mass flow rate in operating mode 1 [kg/s]
-        Optional<Real64 const> runTimeFraction1, // Run time fraction in operating mode 1
-        Optional<Real64 const> massFlowRate2,    // Mass flow rate in operating mode 2 [kg/s]
-        Optional<Real64 const> runTimeFraction2, // Run time fraction in opearating mode 2
-        Optional<Real64 const> pressureRise2     // Pressure difference for operating mode 2
+        Optional<Nandle const> massFlowRate1,    // Mass flow rate in operating mode 1 [kg/s]
+        Optional<Nandle const> runTimeFraction1, // Run time fraction in operating mode 1
+        Optional<Nandle const> massFlowRate2,    // Mass flow rate in operating mode 2 [kg/s]
+        Optional<Nandle const> runTimeFraction2, // Run time fraction in opearating mode 2
+        Optional<Nandle const> pressureRise2     // Pressure difference for operating mode 2
     )
     {
 
@@ -157,13 +157,13 @@ namespace HVACFan {
         }
         if (present(pressureRise) && present(massFlowRate1) && present(runTimeFraction1) && present(massFlowRate2) && present(runTimeFraction2) &&
             present(pressureRise2)) {
-            Real64 flowRatio1 = massFlowRate1 / m_maxAirMassFlowRate;
-            Real64 flowRatio2 = massFlowRate2 / m_maxAirMassFlowRate;
+            Nandle flowRatio1 = massFlowRate1 / m_maxAirMassFlowRate;
+            Nandle flowRatio2 = massFlowRate2 / m_maxAirMassFlowRate;
             calcSimpleSystemFan(_, pressureRise, flowRatio1, runTimeFraction1, flowRatio2, runTimeFraction2, pressureRise2);
         } else if (!present(pressureRise) && present(massFlowRate1) && present(runTimeFraction1) && present(massFlowRate2) &&
                    present(runTimeFraction2) && !present(pressureRise2)) {
-            Real64 flowRatio1 = massFlowRate1 / m_maxAirMassFlowRate;
-            Real64 flowRatio2 = massFlowRate2 / m_maxAirMassFlowRate;
+            Nandle flowRatio1 = massFlowRate1 / m_maxAirMassFlowRate;
+            Nandle flowRatio2 = massFlowRate2 / m_maxAirMassFlowRate;
             calcSimpleSystemFan(flowFraction, _, flowRatio1, runTimeFraction1, flowRatio2, runTimeFraction2, _);
         } else if (present(pressureRise) && present(flowFraction)) {
             calcSimpleSystemFan(flowFraction, pressureRise, _, _, _, _, _);
@@ -232,7 +232,7 @@ namespace HVACFan {
     {
         std::string static const routineName = "FanSystem::set_size ";
 
-        Real64 tempFlow = designAirVolFlowRate;
+        Nandle tempFlow = designAirVolFlowRate;
         bool bPRINT = true;
         DataSizing::DataAutosizable = true;
         DataSizing::DataEMSOverrideON = m_maxAirFlowRateEMSOverrideOn;
@@ -294,7 +294,7 @@ namespace HVACFan {
                 }
             }
         }
-        Real64 rhoAir = Psychrometrics::PsyRhoAirFnPbTdbW(DataLoopNode::Node(inletNodeNum).Press, m_inletAirTemp, m_inletAirHumRat);
+        Nandle rhoAir = Psychrometrics::PsyRhoAirFnPbTdbW(DataLoopNode::Node(inletNodeNum).Press, m_inletAirTemp, m_inletAirHumRat);
         m_designPointFEI = report_fei(designAirVolFlowRate, designElecPower, deltaPress, rhoAir);
 
         OutputReportPredefined::PreDefTableEntry(OutputReportPredefined::pdchFanType, name, m_fanType);
@@ -314,7 +314,7 @@ namespace HVACFan {
         m_objSizingFlag = false;
     }
 
-    Real64 FanSystem::report_fei(Real64 const designFlowRate, Real64 const designElecPower, Real64 const designDeltaPress, Real64 inletRhoAir)
+    Nandle FanSystem::report_fei(Nandle const designFlowRate, Nandle const designElecPower, Nandle const designDeltaPress, Nandle inletRhoAir)
     {
         // PURPOSE OF THIS SUBROUTINE:
         // Calculate the Fan Energy Index
@@ -324,15 +324,15 @@ namespace HVACFan {
         // AANSI / AMCA Standard 208 - 18: Calculation of the Fan Energy Index, 2018.
 
         // Calculate reference fan shaft power
-        Real64 refFanShaftPower = (designFlowRate + 0.118) * (designDeltaPress + 100 * inletRhoAir / DataEnvironment::StdRhoAir) / (1000 * 0.66);
+        Nandle refFanShaftPower = (designFlowRate + 0.118) * (designDeltaPress + 100 * inletRhoAir / DataEnvironment::StdRhoAir) / (1000 * 0.66);
 
         // Calculate reference reference fan transmission efficiency
-        Real64 refFanTransEff = 0.96 * pow((refFanShaftPower / (refFanShaftPower + 1.64)), 0.05);
+        Nandle refFanTransEff = 0.96 * pow((refFanShaftPower / (refFanShaftPower + 1.64)), 0.05);
 
         // Calculate reference reference fan motor efficiency
-        Real64 refFanMotorOutput = refFanShaftPower / refFanTransEff;
+        Nandle refFanMotorOutput = refFanShaftPower / refFanTransEff;
 
-        Real64 refFanMotorEff;
+        Nandle refFanMotorEff;
         if (refFanMotorOutput < 185.0) {
             refFanMotorEff = -0.003812 * pow(std::log10(refFanMotorOutput), 4) + 0.025834 * pow(std::log10(refFanMotorOutput), 3) -
                              0.072577 * pow(std::log10(refFanMotorOutput), 2) + 0.125559 * std::log10(refFanMotorOutput) + 0.850274;
@@ -341,9 +341,9 @@ namespace HVACFan {
         }
 
         // Calculate reference reference fan motor controller  efficiency
-        Real64 refFanMotorCtrlEff = 1;
+        Nandle refFanMotorCtrlEff = 1;
 
-        Real64 refFanElecPower = refFanShaftPower / (refFanTransEff * refFanMotorEff * refFanMotorCtrlEff);
+        Nandle refFanElecPower = refFanShaftPower / (refFanTransEff * refFanMotorEff * refFanMotorCtrlEff);
 
         if (designElecPower > 0.0) {
             return refFanElecPower * 1000 / designElecPower;
@@ -381,7 +381,7 @@ namespace HVACFan {
         Array1D_string alphaArgs;
         Array1D_string alphaFieldNames;
         Array1D_bool isAlphaFieldBlank;
-        Array1D<Real64> numericArgs;
+        Array1D<Nandle> numericArgs;
         Array1D_string numericFieldNames;
         Array1D_bool isNumericFieldBlank;
         int objectNum = inputProcessor->getObjectItemNum(locCurrentModuleObject, objectName);
@@ -646,21 +646,21 @@ namespace HVACFan {
     }
 
     void
-    FanSystem::calcSimpleSystemFan(Optional<Real64 const> flowFraction, // Flow fraction for entire timestep (not used if flow ratios are present)
-                                   Optional<Real64 const> pressureRise, // Pressure difference to use for DeltaPress
-                                   Optional<Real64 const> flowRatio1,   // Flow ratio in operating mode 1
-                                   Optional<Real64 const> runTimeFrac1, // Run time fraction in operating mode 1
-                                   Optional<Real64 const> flowRatio2,   // Flow ratio in operating mode 2
-                                   Optional<Real64 const> runTimeFrac2, // Run time fraction in operating mode 2
-                                   Optional<Real64 const> pressureRise2 // Pressure difference to use for operating mode 2
+    FanSystem::calcSimpleSystemFan(Optional<Nandle const> flowFraction, // Flow fraction for entire timestep (not used if flow ratios are present)
+                                   Optional<Nandle const> pressureRise, // Pressure difference to use for DeltaPress
+                                   Optional<Nandle const> flowRatio1,   // Flow ratio in operating mode 1
+                                   Optional<Nandle const> runTimeFrac1, // Run time fraction in operating mode 1
+                                   Optional<Nandle const> flowRatio2,   // Flow ratio in operating mode 2
+                                   Optional<Nandle const> runTimeFrac2, // Run time fraction in operating mode 2
+                                   Optional<Nandle const> pressureRise2 // Pressure difference to use for operating mode 2
     )
     {
-        std::vector<Real64> localPressureRise; // [0] is operating mode 1, [1] is operating mode 2
-        Real64 localFlowFraction;
-        Real64 localFanTotEff;
-        std::vector<Real64> localAirMassFlow;
-        std::vector<Real64> localFlowRatio;
-        std::vector<Real64> localRunTimeFrac;
+        std::vector<Nandle> localPressureRise; // [0] is operating mode 1, [1] is operating mode 2
+        Nandle localFlowFraction;
+        Nandle localFanTotEff;
+        std::vector<Nandle> localAirMassFlow;
+        std::vector<Nandle> localFlowRatio;
+        std::vector<Nandle> localRunTimeFrac;
         bool localUseFlowRatiosAndRunTimeFracs = false;
 
         int localNumModes = 1; // Number of operating modes, 1 or 2 ( e.g. heating, ventilating, cooling)
@@ -720,14 +720,14 @@ namespace HVACFan {
             }
         }
 
-        Real64 localFaultMaxAirMassFlow = 0.0;
+        Nandle localFaultMaxAirMassFlow = 0.0;
         bool faultActive = false;
-        Real64 localFaultPressureRise = 0.0;
+        Nandle localFaultPressureRise = 0.0;
         if (m_faultyFilterFlag && (FaultsManager::NumFaultyAirFilter > 0) && (!DataGlobals::WarmupFlag) && (!DataGlobals::DoingSizing) &&
             DataGlobals::DoWeathSim && (!m_eMSMaxMassFlowOverrideOn) && (!m_eMSFanPressureOverrideOn)) {
             if (ScheduleManager::GetCurrentScheduleValue(FaultsManager::FaultsFouledAirFilters(m_faultyFilterIndex).AvaiSchedPtr) > 0) {
                 faultActive = true;
-                Real64 FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
+                Nandle FanDesignFlowRateDec = 0; // Decrease of the Fan Design Volume Flow Rate [m3/sec]
                 FanDesignFlowRateDec = Fans::CalFaultyFanAirFlowReduction(
                     name,
                     designAirVolFlowRate,
@@ -799,15 +799,15 @@ namespace HVACFan {
                     }
                     if (localUseFlowRatiosAndRunTimeFracs) {
                         // Use flow ratios and runtimefractions pass from parent (allows fan to cycle at a specified speed)
-                        Real64 locRunTimeFraction(0.0);
+                        Nandle locRunTimeFraction(0.0);
                         if (DataHVACGlobals::OnOffFanPartLoadFraction >= 1.0) {
                             locRunTimeFraction = localRunTimeFrac[mode];
                         } else {
                             locRunTimeFraction = max(0.0, min(1.0, localRunTimeFrac[mode] / DataHVACGlobals::OnOffFanPartLoadFraction));
                         }
-                        Real64 locFlowRatio = localFlowRatio[mode]; // Current mode flow rate / max flow rate
-                        Real64 locLowSpeedFanRunTimeFrac = 0.0;
-                        Real64 locHiSpeedFanRunTimeFrac = 0.0;
+                        Nandle locFlowRatio = localFlowRatio[mode]; // Current mode flow rate / max flow rate
+                        Nandle locLowSpeedFanRunTimeFrac = 0.0;
+                        Nandle locHiSpeedFanRunTimeFrac = 0.0;
                         if (m_numSpeeds == 1) { // CV or OnOff
                             localFanTotEff = m_fanTotalEff;
                             locHiSpeedFanRunTimeFrac = locRunTimeFraction * locFlowRatio;
@@ -835,7 +835,7 @@ namespace HVACFan {
                                         break;
                                     }
                                 }
-                                Real64 locLowSpeedTimeFrac = (m_flowFractionAtSpeed[hiSideSpeed] - locFlowRatio) /
+                                Nandle locLowSpeedTimeFrac = (m_flowFractionAtSpeed[hiSideSpeed] - locFlowRatio) /
                                                              (m_flowFractionAtSpeed[hiSideSpeed] - m_flowFractionAtSpeed[lowSideSpeed]);
                                 locLowSpeedFanRunTimeFrac = locLowSpeedTimeFrac * localRunTimeFrac[mode];
                                 locHiSpeedFanRunTimeFrac = (1 - locLowSpeedTimeFrac) * localRunTimeFrac[mode];
@@ -856,9 +856,9 @@ namespace HVACFan {
                         }
                     } else {
                         // Use localFlowFraction which is not locked at a particular flow ratio (legacy method for fan:onoff)
-                        Real64 locFanRunTimeFraction(0.0);
-                        Real64 locLowSpeedFanRunTimeFrac = 0.0;
-                        Real64 locHiSpeedFanRunTimeFrac = 0.0;
+                        Nandle locFanRunTimeFraction(0.0);
+                        Nandle locLowSpeedFanRunTimeFrac = 0.0;
+                        Nandle locHiSpeedFanRunTimeFrac = 0.0;
                         if (DataHVACGlobals::OnOffFanPartLoadFraction >= 1.0) {
                             locFanRunTimeFraction = localFlowFraction;
                         } else {
@@ -916,8 +916,8 @@ namespace HVACFan {
                 }
                 case SpeedControlMethod::Continuous: {
                     localFanTotEff = m_fanTotalEff;
-                    Real64 locFlowRatio(0.0);
-                    Real64 locFanRunTimeFraction(0.0);
+                    Nandle locFlowRatio(0.0);
+                    Nandle locFanRunTimeFraction(0.0);
                     if (localUseFlowRatiosAndRunTimeFracs) {
                         locFlowRatio = localFlowRatio[mode];
                         locFanRunTimeFraction = localRunTimeFrac[mode];
@@ -926,28 +926,28 @@ namespace HVACFan {
                         locFanRunTimeFraction = 1.0;
                     }
 
-                    Real64 localFlowFractionForPower = max(m_minPowerFlowFrac, locFlowRatio);
-                    Real64 localPowerFraction(0.0);
+                    Nandle localFlowFractionForPower = max(m_minPowerFlowFrac, locFlowRatio);
+                    Nandle localPowerFraction(0.0);
                     if (DataHVACGlobals::NightVentOn) {
                         localPowerFraction = 1.0; // not sure why, but legacy fan had this for night ventilation
                     } else {
                         localPowerFraction = CurveManager::CurveValue(powerModFuncFlowFractionCurveIndex, localFlowFractionForPower);
                     }
-                    Real64 localfanPower = max(0.0,
+                    Nandle localfanPower = max(0.0,
                                                locFanRunTimeFraction * localPowerFraction * m_maxAirMassFlowRate * localPressureRise[mode] /
                                                    (localFanTotEff * m_rhoAirStdInit));
-                    Real64 fanShaftPower = m_motorEff * localfanPower;
-                    Real64 localpowerLossToAir = fanShaftPower + (localfanPower - fanShaftPower) * m_motorInAirFrac;
+                    Nandle fanShaftPower = m_motorEff * localfanPower;
+                    Nandle localpowerLossToAir = fanShaftPower + (localfanPower - fanShaftPower) * m_motorInAirFrac;
                     m_outletAirEnthalpy = m_inletAirEnthalpy + localpowerLossToAir / localAirMassFlow[mode]; // this will get revised later
                     m_outletAirHumRat = m_inletAirHumRat;                                                    // this will get revised later
                     m_outletAirTemp = Psychrometrics::PsyTdbFnHW(m_outletAirEnthalpy, m_outletAirHumRat);    // this will get revised later
                     // When fan air flow is less than 10%, the fan power curve is linearized between the 10% to 0% to
                     //  avoid the unrealistic high temperature rise across the fan.
-                    Real64 deltaTAcrossFan = m_outletAirTemp - m_inletAirTemp;
+                    Nandle deltaTAcrossFan = m_outletAirTemp - m_inletAirTemp;
                     if (deltaTAcrossFan > 20.0) {
-                        Real64 minFlowFracLimitFanHeat = 0.10;
-                        Real64 powerFractionAtLowMin = 0.0;
-                        Real64 fanPoweratLowMinimum = 0.0;
+                        Nandle minFlowFracLimitFanHeat = 0.10;
+                        Nandle powerFractionAtLowMin = 0.0;
+                        Nandle fanPoweratLowMinimum = 0.0;
                         if (localFlowFractionForPower < minFlowFracLimitFanHeat) {
                             powerFractionAtLowMin = CurveManager::CurveValue(powerModFuncFlowFractionCurveIndex, minFlowFracLimitFanHeat);
                             fanPoweratLowMinimum =
@@ -973,7 +973,7 @@ namespace HVACFan {
             } // end of operating mode loop
 
             if (m_outletAirMassFlowRate > 0.0) {
-                Real64 fanShaftPower = m_motorEff * m_fanPower; // power delivered to shaft
+                Nandle fanShaftPower = m_motorEff * m_fanPower; // power delivered to shaft
                 m_powerLossToAir = fanShaftPower + (m_fanPower - fanShaftPower) * m_motorInAirFrac;
                 m_outletAirEnthalpy = m_inletAirEnthalpy + m_powerLossToAir / m_outletAirMassFlowRate;
                 // This fan does not change the moisture or Mass Flow across the component
@@ -1013,7 +1013,7 @@ namespace HVACFan {
         }
 
         if (m_heatLossesDestination == ThermalLossDestination::zoneGains) {
-            Real64 powerLossToZone = m_fanPower - m_powerLossToAir;
+            Nandle powerLossToZone = m_fanPower - m_powerLossToAir;
             m_qdotConvZone = powerLossToZone * (1.0 - m_zoneRadFract);
             m_qdotRadZone = powerLossToZone * m_zoneRadFract;
         }
@@ -1070,26 +1070,26 @@ namespace HVACFan {
         m_deltaTemp = m_outletAirTemp - m_inletAirTemp;
     }
 
-    Real64 FanSystem::fanPower() const
+    Nandle FanSystem::fanPower() const
     {
         return m_fanPower;
     }
 
-    Real64 FanSystem::powerLossToAir() const
+    Nandle FanSystem::powerLossToAir() const
     {
         return m_powerLossToAir;
     }
 
-    Real64 FanSystem::maxAirMassFlowRate() const
+    Nandle FanSystem::maxAirMassFlowRate() const
     {
         return m_maxAirMassFlowRate;
     }
 
-    Real64 FanSystem::getFanDesignTemperatureRise() const
+    Nandle FanSystem::getFanDesignTemperatureRise() const
     {
         if (!m_objSizingFlag) {
-            Real64 cpAir = Psychrometrics::PsyCpAirFnW(DataPrecisionGlobals::constant_zero);
-            Real64 designDeltaT = (deltaPress / (m_rhoAirStdInit * cpAir * m_fanTotalEff)) * (m_motorEff + m_motorInAirFrac * (1.0 - m_motorEff));
+            Nandle cpAir = Psychrometrics::PsyCpAirFnW(DataPrecisionGlobals::constant_zero);
+            Nandle designDeltaT = (deltaPress / (m_rhoAirStdInit * cpAir * m_fanTotalEff)) * (m_motorEff + m_motorInAirFrac * (1.0 - m_motorEff));
             return designDeltaT;
         } else {
             // TODO throw warning, exception, call sizing?
@@ -1098,17 +1098,17 @@ namespace HVACFan {
         }
     }
 
-    Real64 FanSystem::getFanDesignHeatGain(Real64 const FanVolFlow // fan volume flow rate [m3/s]
+    Nandle FanSystem::getFanDesignHeatGain(Nandle const FanVolFlow // fan volume flow rate [m3/s]
     )
     {
         if (!m_objSizingFlag) {
-            Real64 fanPowerTot = (FanVolFlow * deltaPress) / m_fanTotalEff;
-            Real64 designHeatGain = m_motorEff * fanPowerTot + (fanPowerTot - m_motorEff * fanPowerTot) * m_motorInAirFrac;
+            Nandle fanPowerTot = (FanVolFlow * deltaPress) / m_fanTotalEff;
+            Nandle designHeatGain = m_motorEff * fanPowerTot + (fanPowerTot - m_motorEff * fanPowerTot) * m_motorInAirFrac;
             return designHeatGain;
         } else {
             set_size();
-            Real64 fanPowerTot = (FanVolFlow * deltaPress) / m_fanTotalEff;
-            Real64 designHeatGain = m_motorEff * fanPowerTot + (fanPowerTot - m_motorEff * fanPowerTot) * m_motorInAirFrac;
+            Nandle fanPowerTot = (FanVolFlow * deltaPress) / m_fanTotalEff;
+            Nandle designHeatGain = m_motorEff * fanPowerTot + (fanPowerTot - m_motorEff * fanPowerTot) * m_motorInAirFrac;
             return designHeatGain;
         }
     }

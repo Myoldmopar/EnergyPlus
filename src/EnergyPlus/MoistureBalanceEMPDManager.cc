@@ -139,31 +139,31 @@ namespace MoistureBalanceEMPDManager {
         InitEnvrnFlag = true;
     }
 
-    Real64 CalcDepthFromPeriod(Real64 const period,          // in seconds
+    Nandle CalcDepthFromPeriod(Nandle const period,          // in seconds
                                MaterialProperties const &mat // material
     )
     {
 
         // Assume T, RH, P
-        Real64 const T = 24.0; // C
-        Real64 const RH = 0.45;
-        Real64 const P_amb = 101325; // Pa
+        Nandle const T = 24.0; // C
+        Nandle const RH = 0.45;
+        Nandle const P_amb = 101325; // Pa
 
         // Calculate saturation vapor pressure at assumed temperature
-        Real64 const PV_sat = Psychrometrics::PsyPsatFnTemp(T, "CalcDepthFromPeriod");
+        Nandle const PV_sat = Psychrometrics::PsyPsatFnTemp(T, "CalcDepthFromPeriod");
 
         // Calculate slope of moisture sorption curve
-        Real64 const slope_MC = mat.MoistACoeff * mat.MoistBCoeff * std::pow(RH, mat.MoistBCoeff - 1) +
+        Nandle const slope_MC = mat.MoistACoeff * mat.MoistBCoeff * std::pow(RH, mat.MoistBCoeff - 1) +
                                 mat.MoistCCoeff * mat.MoistDCoeff * std::pow(RH, mat.MoistDCoeff - 1);
 
         // Equation for the diffusivity of water vapor in air
-        Real64 const diffusivity_air = 2.0e-7 * std::pow(T + 273.15, 0.81) / P_amb;
+        Nandle const diffusivity_air = 2.0e-7 * std::pow(T + 273.15, 0.81) / P_amb;
 
         // Convert mu to diffusivity [kg/m^2-s-Pa]
-        Real64 const EMPDdiffusivity = diffusivity_air / mat.EMPDmu;
+        Nandle const EMPDdiffusivity = diffusivity_air / mat.EMPDmu;
 
         // Calculate penetration depth
-        Real64 const PenetrationDepth = std::sqrt(EMPDdiffusivity * PV_sat * period / (mat.Density * slope_MC * DataGlobals::Pi));
+        Nandle const PenetrationDepth = std::sqrt(EMPDdiffusivity * PV_sat * period / (mat.Density * slope_MC * DataGlobals::Pi));
 
         return PenetrationDepth;
     }
@@ -191,7 +191,7 @@ namespace MoistureBalanceEMPDManager {
         int MaterNum;                     // Counter to keep track of the material number
         int MaterialNumAlpha;             // Number of material alpha names being passed
         int MaterialNumProp;              // Number of material properties being passed
-        Array1D<Real64> MaterialProps(9); // Temporary array to transfer material properties
+        Array1D<Nandle> MaterialProps(9); // Temporary array to transfer material properties
         static bool ErrorsFound(false);   // If errors detected in input
 
         int EMPDMat; // EMPD Moisture Material additional properties for each base material
@@ -396,7 +396,7 @@ namespace MoistureBalanceEMPDManager {
         for (SurfNum = 1; SurfNum <= TotSurfaces; ++SurfNum) {
             ZoneNum = Surface(SurfNum).Zone;
             if (!Surface(SurfNum).HeatTransSurf) continue;
-            Real64 const rv_air_in_initval = min(PsyRhovFnTdbWPb_fast(MAT(ZoneNum), max(ZoneAirHumRat(ZoneNum), 1.0e-5), OutBaroPress),
+            Nandle const rv_air_in_initval = min(PsyRhovFnTdbWPb_fast(MAT(ZoneNum), max(ZoneAirHumRat(ZoneNum), 1.0e-5), OutBaroPress),
                                                  PsyRhovFnTdbRh(MAT(ZoneNum), 1.0, "InitMoistureBalanceEMPD"));
             RVSurfaceOld(SurfNum) = rv_air_in_initval;
             RVSurface(SurfNum) = rv_air_in_initval;
@@ -440,9 +440,9 @@ namespace MoistureBalanceEMPDManager {
     }
 
     void CalcMoistureBalanceEMPD(int const SurfNum,
-                                 Real64 const TempSurfIn, // INSIDE SURFACE TEMPERATURE at current time step
-                                 Real64 const TempZone,   // Zone temperature at current time step.
-                                 Real64 &TempSat          // Saturated surface temperature.
+                                 Nandle const TempSurfIn, // INSIDE SURFACE TEMPERATURE at current time step
+                                 Nandle const TempZone,   // Zone temperature at current time step.
+                                 Nandle &TempSat          // Saturated surface temperature.
     )
     {
 
@@ -475,7 +475,7 @@ namespace MoistureBalanceEMPDManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        // Real64 const Lam( 2500000.0 ); // Heat of vaporization (J/kg)
+        // Nandle const Lam( 2500000.0 ); // Heat of vaporization (J/kg)
         static std::string const RoutineName("CalcMoistureEMPD");
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -488,26 +488,26 @@ namespace MoistureBalanceEMPDManager {
         int NOFITR;           // Number of iterations
         int MatNum;           // Material number at interior layer
         int ConstrNum;        // Construction number
-        Real64 hm_deep_layer; // Overall deep-layer transfer coefficient
-        Real64 RSurfaceLayer; // Mass transfer resistance between actual surface and surface layer node
-        Real64 Taver;         // Average zone temperature between current time and previous time
+        Nandle hm_deep_layer; // Overall deep-layer transfer coefficient
+        Nandle RSurfaceLayer; // Mass transfer resistance between actual surface and surface layer node
+        Nandle Taver;         // Average zone temperature between current time and previous time
         //    REAL(r64)    :: Waver     ! Average zone humidity ratio between current time and previous time
-        Real64 RHaver; // Average zone relative humidity {0-1} between current time and previous time
-        Real64 RVaver; // Average zone vapor density
-        Real64 dU_dRH;
+        Nandle RHaver; // Average zone relative humidity {0-1} between current time and previous time
+        Nandle RVaver; // Average zone vapor density
+        Nandle dU_dRH;
         int Flag; // Convergence flag (0 - converged)
         static bool OneTimeFlag(true);
-        Real64 PVsurf;        // Surface vapor pressure
-        Real64 PV_surf_layer; // Vapor pressure of surface layer
-        Real64 PV_deep_layer;
-        Real64 PVsat; // saturation vapor pressure at the surface
-        Real64 RH_surf_layer_old;
-        Real64 RH_deep_layer_old;
-        Real64 EMPDdiffusivity;
-        Real64 Rcoating;
-        Real64 RH_surf_layer;
-        Real64 RH_surf_layer_tmp;
-        Real64 RH_deep_layer;
+        Nandle PVsurf;        // Surface vapor pressure
+        Nandle PV_surf_layer; // Vapor pressure of surface layer
+        Nandle PV_deep_layer;
+        Nandle PVsat; // saturation vapor pressure at the surface
+        Nandle RH_surf_layer_old;
+        Nandle RH_deep_layer_old;
+        Nandle EMPDdiffusivity;
+        Nandle Rcoating;
+        Nandle RH_surf_layer;
+        Nandle RH_surf_layer_tmp;
+        Nandle RH_deep_layer;
 
         if (BeginEnvrnFlag && OneTimeFlag) {
             InitMoistureBalanceEMPD();
@@ -523,17 +523,17 @@ namespace MoistureBalanceEMPDManager {
         auto const &rv_surface_old(RVSurfaceOld(SurfNum));     // input
         auto const &h_mass_conv_in_fd(HMassConvInFD(SurfNum)); // input
         auto const &rho_vapor_air_in(RhoVaporAirIn(SurfNum));  // input
-        Real64 RHZone;
-        Real64 mass_flux_surf_deep;
-        Real64 mass_flux_surf_deep_max;
-        Real64 mass_flux_zone_surf;
-        Real64 mass_flux_zone_surf_max;
-        Real64 mass_flux_surf_layer;
-        Real64 mass_flux_deep_layer;
-        Real64 mass_flux_zone;
+        Nandle RHZone;
+        Nandle mass_flux_surf_deep;
+        Nandle mass_flux_surf_deep_max;
+        Nandle mass_flux_zone_surf;
+        Nandle mass_flux_zone_surf_max;
+        Nandle mass_flux_surf_layer;
+        Nandle mass_flux_deep_layer;
+        Nandle mass_flux_zone;
         auto &rv_surf_layer(RVSurfLayer(SurfNum));              // output
         auto const &rv_surf_layer_old(RVSurfLayerOld(SurfNum)); // input
-        Real64 hm_surf_layer;
+        Nandle hm_surf_layer;
         auto &rv_deep_layer(RVDeepLayer(SurfNum));       // output
         auto const &rv_deep_old(RVdeepOld(SurfNum));     // input
         auto &heat_flux_latent(HeatFluxLatent(SurfNum)); // output

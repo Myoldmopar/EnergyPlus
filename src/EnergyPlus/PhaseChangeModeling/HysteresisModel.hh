@@ -72,59 +72,59 @@ namespace HysteresisPhaseChange {
     class HysteresisPhaseChange
     {
 
-        Real64 getEnthalpy(Real64 T, Real64 Tc, Real64 tau1, Real64 tau2);
+        Nandle getEnthalpy(Nandle T, Nandle Tc, Nandle tau1, Nandle tau2);
 
-        Real64 specHeat(Real64 temperaturePrev,
-                        Real64 temperatureCurrent,
-                        Real64 criticalTemperature,
-                        Real64 tau1,
-                        Real64 tau2,
-                        Real64 EnthalpyOld,
-                        Real64 EnthalpyNew);
+        Nandle specHeat(Nandle temperaturePrev,
+                        Nandle temperatureCurrent,
+                        Nandle criticalTemperature,
+                        Nandle tau1,
+                        Nandle tau2,
+                        Nandle EnthalpyOld,
+                        Nandle EnthalpyNew);
 
     public:
         // members are pretty much all accessed outside of the class in one way or another (by the static factory, etc.)
         std::string name;
-        Real64 enthalpyM;
-        Real64 enthalpyF;
+        Nandle enthalpyM;
+        Nandle enthalpyF;
 
         // input parameters
-        Real64 totalLatentHeat;
-        Real64 specificHeatLiquid;
-        Real64 deltaTempMeltingHigh;
-        Real64 peakTempMelting;
-        Real64 deltaTempMeltingLow;
-        Real64 specificHeatSolid;
-        Real64 deltaTempFreezingHigh;
-        Real64 peakTempFreezing;
-        Real64 deltaTempFreezingLow;
+        Nandle totalLatentHeat;
+        Nandle specificHeatLiquid;
+        Nandle deltaTempMeltingHigh;
+        Nandle peakTempMelting;
+        Nandle deltaTempMeltingLow;
+        Nandle specificHeatSolid;
+        Nandle deltaTempFreezingHigh;
+        Nandle peakTempFreezing;
+        Nandle deltaTempFreezingLow;
 
         // additional thermal propreties
-        Real64 fullySolidThermalConductivity;
-        Real64 fullyLiquidThermalConductivity;
-        Real64 fullySolidDensity;
-        Real64 fullyLiquidDensity;
+        Nandle fullySolidThermalConductivity;
+        Nandle fullyLiquidThermalConductivity;
+        Nandle fullySolidDensity;
+        Nandle fullyLiquidDensity;
 
         // history and state terms
         bool phaseChangeTransition;
-        Real64 enthOld;
-        Real64 enthNew;
-        Real64 enthRev;
-        Real64 CpOld;
-        Real64 specHeatTransition;
+        Nandle enthOld;
+        Nandle enthNew;
+        Nandle enthRev;
+        Nandle CpOld;
+        Nandle specHeatTransition;
 
         // the factory for this class
         static HysteresisPhaseChange *factory(const std::string &objectName);
 
         // the Cp calculation function for this class
-        Real64 getCurrentSpecificHeat(
-            Real64 prevTempTD, Real64 updatedTempTDT, Real64 phaseChangeTempReverse, int prevPhaseChangeState, int &phaseChangeState);
+        Nandle getCurrentSpecificHeat(
+            Nandle prevTempTD, Nandle updatedTempTDT, Nandle phaseChangeTempReverse, int prevPhaseChangeState, int &phaseChangeState);
 
         // the conductivity calculation function for this class
-        Real64 getConductivity(Real64 T);
+        Nandle getConductivity(Nandle T);
 
         // the density calculation function for this class
-        Real64 getDensity(Real64 T);
+        Nandle getDensity(Nandle T);
 
         // and the destructor
         virtual ~HysteresisPhaseChange()

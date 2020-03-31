@@ -104,7 +104,7 @@ namespace PhotovoltaicThermalCollectors {
 
     int const SimplePVTmodel(1001);
 
-    Real64 const SimplePVTWaterSizeFactor(1.905e-5); // [ m3/s/m2 ] average of collectors in SolarCollectors.idf
+    Nandle const SimplePVTWaterSizeFactor(1.905e-5); // [ m3/s/m2 ] average of collectors in SolarCollectors.idf
 
     static bool GetInputFlag(true); // First time, input is "gotten"
 
@@ -146,7 +146,7 @@ namespace PhotovoltaicThermalCollectors {
 
     void PVTCollectorStruct::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                       bool const FirstHVACIteration,
-                                      Real64 &EP_UNUSED(CurLoad),
+                                      Nandle &EP_UNUSED(CurLoad),
                                       bool const EP_UNUSED(RunFlag))
     {
 
@@ -561,7 +561,7 @@ namespace PhotovoltaicThermalCollectors {
 
                 if (SELECT_CASE_var == WorkingFluidEnum::LIQUID) {
 
-                    Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->WLoopNum).FluidName,
+                    Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->WLoopNum).FluidName,
                                                                    DataGlobals::HWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->WLoopNum).FluidIndex,
                                                                    RoutineName);
@@ -634,7 +634,7 @@ namespace PhotovoltaicThermalCollectors {
             SizingDesRunThisAirSys = false;
         }
 
-        Real64 DesignVolFlowRateDes = 0.0; // Autosize design volume flow for reporting
+        Nandle DesignVolFlowRateDes = 0.0; // Autosize design volume flow for reporting
         int PltSizNum = 0;                 // Plant Sizing index corresponding to CurLoopNum
         bool ErrorsFound = false;
 
@@ -688,7 +688,7 @@ namespace PhotovoltaicThermalCollectors {
 
             } else { // Hardsized with sizing data
                 if (this->DesignVolFlowRate > 0.0 && DesignVolFlowRateDes > 0.0 && DataPlant::PlantFinalSizesOkayToReport) {
-                    Real64 DesignVolFlowRateUser = this->DesignVolFlowRate;
+                    Nandle DesignVolFlowRateUser = this->DesignVolFlowRate;
                     ReportSizingManager::ReportSizingOutput("SolarCollector:FlatPlate:PhotovoltaicThermal",
                                                             this->Name,
                                                             "Design Size Design Flow Rate [m3/s]",
@@ -741,7 +741,7 @@ namespace PhotovoltaicThermalCollectors {
                             }
                         }
                     }
-                    Real64 DesMassFlow = DataEnvironment::StdRhoAir * DesignVolFlowRateDes;
+                    Nandle DesMassFlow = DataEnvironment::StdRhoAir * DesignVolFlowRateDes;
                     this->MaxMassFlowRate = DesMassFlow;
                 }
                 if (!HardSizeNoDesRun) {
@@ -752,7 +752,7 @@ namespace PhotovoltaicThermalCollectors {
                         this->SizingInit = false;
                     } else {
                         if (this->DesignVolFlowRate > 0.0 && DesignVolFlowRateDes > 0.0) {
-                            Real64 DesignVolFlowRateUser = this->DesignVolFlowRate;
+                            Nandle DesignVolFlowRateUser = this->DesignVolFlowRate;
                             ReportSizingManager::ReportSizingOutput("SolarCollector:FlatPlate:PhotovoltaicThermal",
                                                                     this->Name,
                                                                     "Design Size Design Flow Rate [m3/s]",
@@ -871,17 +871,17 @@ namespace PhotovoltaicThermalCollectors {
             }
         }
 
-        Real64 mdot = this->MassFlowRate;
-        Real64 Tinlet = DataLoopNode::Node(InletNode).Temp;
+        Nandle mdot = this->MassFlowRate;
+        Nandle Tinlet = DataLoopNode::Node(InletNode).Temp;
 
         if (this->PVTModelType == SimplePVTmodel) {
 
-            Real64 BypassFraction(0.0);
-            Real64 PotentialOutletTemp(0.0);
+            Nandle BypassFraction(0.0);
+            Nandle PotentialOutletTemp(0.0);
 
             if (this->HeatingUseful && this->BypassDamperOff && (mdot > 0.0)) {
 
-                Real64 Eff(0.0);
+                Nandle Eff(0.0);
 
                 {
                     auto const SELECT_CASE_var(this->Simple.ThermEfficMode);
@@ -894,11 +894,11 @@ namespace PhotovoltaicThermalCollectors {
                     }
                 }
 
-                Real64 PotentialHeatGain = DataHeatBalance::QRadSWOutIncident(this->SurfNum) * Eff * this->AreaCol;
+                Nandle PotentialHeatGain = DataHeatBalance::QRadSWOutIncident(this->SurfNum) * Eff * this->AreaCol;
 
                 if (this->WorkingFluidType == WorkingFluidEnum::AIR) {
-                    Real64 Winlet = DataLoopNode::Node(InletNode).HumRat;
-                    Real64 CpInlet = Psychrometrics::PsyCpAirFnW(Winlet);
+                    Nandle Winlet = DataLoopNode::Node(InletNode).HumRat;
+                    Nandle CpInlet = Psychrometrics::PsyCpAirFnW(Winlet);
                     if (mdot * CpInlet > 0.0) {
                         PotentialOutletTemp = Tinlet + PotentialHeatGain / (mdot * CpInlet);
                     } else {
@@ -920,7 +920,7 @@ namespace PhotovoltaicThermalCollectors {
                         BypassFraction = 0.0;
                     }
                 } else if (this->WorkingFluidType == WorkingFluidEnum::LIQUID) {
-                    Real64 CpInlet = Psychrometrics::CPHW(Tinlet);
+                    Nandle CpInlet = Psychrometrics::CPHW(Tinlet);
                     if (mdot * CpInlet != 0.0) { // protect divide by zero
                         PotentialOutletTemp = Tinlet + PotentialHeatGain / (mdot * CpInlet);
                     } else {
@@ -941,10 +941,10 @@ namespace PhotovoltaicThermalCollectors {
 
             } else if (this->CoolingUseful && this->BypassDamperOff && (mdot > 0.0)) {
                 // calculate cooling using energy balance
-                Real64 HrGround(0.0);
-                Real64 HrAir(0.0);
-                Real64 HcExt(0.0);
-                Real64 HrSky(0.0);
+                Nandle HrGround(0.0);
+                Nandle HrAir(0.0);
+                Nandle HcExt(0.0);
+                Nandle HrSky(0.0);
 
                 ConvectionCoefficients::InitExteriorConvectionCoeff(this->SurfNum,
                                                                     0.0,
@@ -956,12 +956,12 @@ namespace PhotovoltaicThermalCollectors {
                                                                     HrGround,
                                                                     HrAir);
 
-                Real64 WetBulbInlet(0.0);
-                Real64 DewPointInlet(0.0);
-                Real64 CpInlet(0.0);
+                Nandle WetBulbInlet(0.0);
+                Nandle DewPointInlet(0.0);
+                Nandle CpInlet(0.0);
 
                 if (this->WorkingFluidType == WorkingFluidEnum::AIR) {
-                    Real64 Winlet = DataLoopNode::Node(InletNode).HumRat;
+                    Nandle Winlet = DataLoopNode::Node(InletNode).HumRat;
                     CpInlet = Psychrometrics::PsyCpAirFnW(Winlet);
                     WetBulbInlet = Psychrometrics::PsyTwbFnTdbWPb(Tinlet, Winlet, DataEnvironment::OutBaroPress, RoutineName);
                     DewPointInlet = Psychrometrics::PsyTdpFnTdbTwbPb(Tinlet, WetBulbInlet, DataEnvironment::OutBaroPress, RoutineName);
@@ -969,7 +969,7 @@ namespace PhotovoltaicThermalCollectors {
                     CpInlet = Psychrometrics::CPHW(Tinlet);
                 }
 
-                Real64 Tcollector =
+                Nandle Tcollector =
                     (2.0 * mdot * CpInlet * Tinlet + this->AreaCol * (HrGround * DataEnvironment::OutDryBulbTemp + HrSky * DataEnvironment::SkyTemp +
                                                                       HrAir * DataSurfaces::Surface(this->SurfNum).OutDryBulbTemp +
                                                                       HcExt * DataSurfaces::Surface(this->SurfNum).OutDryBulbTemp)) /
@@ -1059,7 +1059,7 @@ namespace PhotovoltaicThermalCollectors {
         }
     }
 
-    void GetPVTThermalPowerProduction(int const PVindex, Real64 &ThermalPower, Real64 &ThermalEnergy)
+    void GetPVTThermalPowerProduction(int const PVindex, Nandle &ThermalPower, Nandle &ThermalEnergy)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1172,7 +1172,7 @@ namespace PhotovoltaicThermalCollectors {
     void simPVTfromOASys(int const index, bool const FirstHVACIteration)
     {
         PlantLocation dummyLoc(0, 0, 0, 0);
-        Real64 dummyCurLoad(0.0);
+        Nandle dummyCurLoad(0.0);
         bool dummyRunFlag(true);
 
         PVT(index).simulate(dummyLoc, FirstHVACIteration, dummyCurLoad, dummyRunFlag);

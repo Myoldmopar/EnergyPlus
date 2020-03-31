@@ -102,20 +102,20 @@ namespace DataAirSystems {
         int NumMeteredVars;
         int NumSubComps;
         int EnergyTransComp; // 1=EnergyTransfer, 0=No EnergyTransfer  Flag needed for reporting
-        Real64 Capacity;     // ventilation load factor
+        Nandle Capacity;     // ventilation load factor
         int OpMode;
-        Real64 TotPlantSupplyElec;
-        Real64 PlantSupplyElecEff;
-        Real64 PeakPlantSupplyElecEff;
-        Real64 TotPlantSupplyGas;
-        Real64 PlantSupplyGasEff;
-        Real64 PeakPlantSupplyGasEff;
-        Real64 TotPlantSupplyPurch;
-        Real64 PlantSupplyPurchEff;
-        Real64 PeakPlantSupplyPurchEff;
-        Real64 TotPlantSupplyOther;
-        Real64 PlantSupplyOtherEff;
-        Real64 PeakPlantSupplyOtherEff;
+        Nandle TotPlantSupplyElec;
+        Nandle PlantSupplyElecEff;
+        Nandle PeakPlantSupplyElecEff;
+        Nandle TotPlantSupplyGas;
+        Nandle PlantSupplyGasEff;
+        Nandle PeakPlantSupplyGasEff;
+        Nandle TotPlantSupplyPurch;
+        Nandle PlantSupplyPurchEff;
+        Nandle PeakPlantSupplyPurchEff;
+        Nandle TotPlantSupplyOther;
+        Nandle PlantSupplyOtherEff;
+        Nandle PeakPlantSupplyOtherEff;
         int AirSysToPlantPtr;              // =0 No plant loop connection, >0 index to AirSysToPlant array
         Array1D<MeterData> MeteredVar;     // Index of energy output report data
         Array1D<SubcomponentData> SubComp; // Component list
@@ -210,8 +210,8 @@ namespace DataAirSystems {
     {
         // Members
         std::string Name;                // name of the system
-        Real64 DesignVolFlowRate;        // the design total supply air flow rate (m3/s)
-        Real64 DesignReturnFlowFraction; // the design return flow rate as a fraction of supply flow assuming no exhaust (0 to 1)
+        Nandle DesignVolFlowRate;        // the design total supply air flow rate (m3/s)
+        Nandle DesignReturnFlowFraction; // the design return flow rate as a fraction of supply flow assuming no exhaust (0 to 1)
         int NumControllers;              // number of controllers on this air path
         Array1D_string ControllerName;   // name of each controller on this system
         Array1D_string ControllerType;   // type of each controller on this system
@@ -252,7 +252,7 @@ namespace DataAirSystems {
         fanModelTypeEnum retFanModelTypeEnum; // indicates which type of fan model to call for return fan, legacy or new OO
         int RetFanNum;                        // index of the return fan in the Fan data structure when model type is structArrayLegacyFanModels
         int retFanVecIndex;    // index in fan object vector for return fan when model type is objectVectorOOFanSystemModel, zero-based index
-        Real64 FanDesCoolLoad; // design fan heat gain for the air loop [W]
+        Nandle FanDesCoolLoad; // design fan heat gain for the air loop [W]
 
         // Default Constructor
         DefinePrimaryAirSystem()
@@ -422,7 +422,7 @@ namespace DataAirSystems {
     // Functions
     void clear_state();
 
-    Real64 calcFanDesignHeatGain(int const &dataFanEnumType, int const &dataFanIndex, Real64 const &desVolFlow);
+    Nandle calcFanDesignHeatGain(int const &dataFanEnumType, int const &dataFanIndex, Nandle const &desVolFlow);
 
 } // namespace DataAirSystems
 

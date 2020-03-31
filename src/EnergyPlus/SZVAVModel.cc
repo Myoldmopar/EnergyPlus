@@ -92,11 +92,11 @@ namespace SZVAVModel {
                         bool const &FirstHVACIteration,
                         bool const &CoolingLoad,
                         bool const &HeatingLoad,
-                        Real64 const &ZoneLoad,
-                        Real64 &OnOffAirFlowRatio,
+                        Nandle const &ZoneLoad,
+                        Nandle &OnOffAirFlowRatio,
                         bool const &HXUnitOn,
                         int const &AirLoopNum,
-                        Real64 &PartLoadRatio,
+                        Nandle &PartLoadRatio,
                         int const &CompressorONFlag)
     {
 
@@ -104,19 +104,19 @@ namespace SZVAVModel {
         int SolFlag(0);            // return flag from RegulaFalsi for sensible load
         std::string MessagePrefix; // label for warning reporting
 
-        Array1D<Real64> Par(18); // parameters passed to RegulaFalsi function
-        Real64 lowBoundaryLoad(0.0);
-        Real64 highBoundaryLoad(0.0);
-        Real64 minHumRat(0.0);
-        Real64 outletTemp(0.0);
+        Array1D<Nandle> Par(18); // parameters passed to RegulaFalsi function
+        Nandle lowBoundaryLoad(0.0);
+        Nandle highBoundaryLoad(0.0);
+        Nandle minHumRat(0.0);
+        Nandle outletTemp(0.0);
         bool coilActive(false);
-        Real64 AirMassFlow(0.0);
+        Nandle AirMassFlow(0.0);
 
-        Real64 maxCoilFluidFlow(0.0);
-        Real64 maxOutletTemp(0.0);
-        Real64 minAirMassFlow(0.0);
-        Real64 maxAirMassFlow(0.0);
-        Real64 lowSpeedFanRatio(0.0);
+        Nandle maxCoilFluidFlow(0.0);
+        Nandle maxOutletTemp(0.0);
+        Nandle minAirMassFlow(0.0);
+        Nandle maxAirMassFlow(0.0);
+        Nandle lowSpeedFanRatio(0.0);
         int coilFluidInletNode(0);
         int coilFluidOutletNode(0);
         int coilLoopNum(0);
@@ -126,8 +126,8 @@ namespace SZVAVModel {
         int coilAirInletNode(0);
         int coilAirOutletNode(0);
 
-        Real64 TempSensOutput; // iterative sensible capacity [W]
-                               //		Real64 TempLatOutput; // iterative latent capacity [W]
+        Nandle TempSensOutput; // iterative sensible capacity [W]
+                               //		Nandle TempLatOutput; // iterative latent capacity [W]
 
         // set up mode specific variables to use in common function calls
         if (CoolingLoad) {
@@ -200,13 +200,13 @@ namespace SZVAVModel {
         if (HXUnitOn) Par(18) = 1.0;
 
         int InletNode = SZVAVModel.AirInNode;
-        Real64 InletTemp = DataLoopNode::Node(InletNode).Temp;
+        Nandle InletTemp = DataLoopNode::Node(InletNode).Temp;
         int OutletNode = SZVAVModel.AirOutNode;
-        Real64 ZoneTemp = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).Temp;
-        Real64 ZoneHumRat = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).HumRat;
+        Nandle ZoneTemp = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).Temp;
+        Nandle ZoneHumRat = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).HumRat;
         // initialize flow variables to 0
-        Real64 lowWaterMdot = 0.0;
-        Real64 SupHeaterLoad = 0.0;
+        Nandle lowWaterMdot = 0.0;
+        Nandle SupHeaterLoad = 0.0;
 
         // model attempts to control air flow rate and coil capacity in specific operating regions:
         // Region 1 (R1) - minimum air flow rate at modulated coil capacity (up to min/max temperature limits)
@@ -512,11 +512,11 @@ namespace SZVAVModel {
                         bool const &FirstHVACIteration,
                         bool const &CoolingLoad,
                         bool const &HeatingLoad,
-                        Real64 const &ZoneLoad,
-                        Real64 &OnOffAirFlowRatio,
+                        Nandle const &ZoneLoad,
+                        Nandle &OnOffAirFlowRatio,
                         bool const &EP_UNUSED(HXUnitOn),
                         int const &AirLoopNum,
-                        Real64 &PartLoadRatio,
+                        Nandle &PartLoadRatio,
                         int const &CompressorONFlag)
     {
 
@@ -524,19 +524,19 @@ namespace SZVAVModel {
         int SolFlag(0);            // return flag from RegulaFalsi for sensible load
         std::string MessagePrefix; // label for warning reporting
 
-        Array1D<Real64> Par(17); // parameters passed to RegulaFalsi function
-        Real64 lowBoundaryLoad(0.0);
-        Real64 highBoundaryLoad(0.0);
-        Real64 minHumRat(0.0);
-        Real64 outletTemp(0.0);
+        Array1D<Nandle> Par(17); // parameters passed to RegulaFalsi function
+        Nandle lowBoundaryLoad(0.0);
+        Nandle highBoundaryLoad(0.0);
+        Nandle minHumRat(0.0);
+        Nandle outletTemp(0.0);
         bool coilActive(false);
-        Real64 AirMassFlow(0.0);
+        Nandle AirMassFlow(0.0);
 
-        Real64 maxCoilFluidFlow(0.0);
-        Real64 maxOutletTemp(0.0);
-        Real64 minAirMassFlow(0.0);
-        Real64 maxAirMassFlow(0.0);
-        Real64 lowSpeedFanRatio(0.0);
+        Nandle maxCoilFluidFlow(0.0);
+        Nandle maxOutletTemp(0.0);
+        Nandle minAirMassFlow(0.0);
+        Nandle maxAirMassFlow(0.0);
+        Nandle lowSpeedFanRatio(0.0);
         int coilFluidInletNode(0);
         int coilFluidOutletNode(0);
         int coilLoopNum(0);
@@ -546,8 +546,8 @@ namespace SZVAVModel {
         int coilAirInletNode(0);
         int coilAirOutletNode(0);
 
-        Real64 TempSensOutput; // iterative sensible capacity [W]
-                               //		Real64 TempLatOutput; // iterative latent capacity [W]
+        Nandle TempSensOutput; // iterative sensible capacity [W]
+                               //		Nandle TempLatOutput; // iterative latent capacity [W]
 
         // set up mode specific variables to use in common function calls
         if (CoolingLoad) {
@@ -618,13 +618,13 @@ namespace SZVAVModel {
         Par(17) = double(CompressorONFlag); // ** not used, gets rid of warning (unused variable) in PTUnit version of SZVAV
 
         int InletNode = SZVAVModel.AirInNode;
-        Real64 InletTemp = DataLoopNode::Node(InletNode).Temp;
+        Nandle InletTemp = DataLoopNode::Node(InletNode).Temp;
         int OutletNode = SZVAVModel.AirOutNode;
-        Real64 ZoneTemp = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).Temp;
-        Real64 ZoneHumRat = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).HumRat;
+        Nandle ZoneTemp = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).Temp;
+        Nandle ZoneHumRat = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).HumRat;
         // initialize flow variables to 0
-        Real64 lowWaterMdot = 0.0;
-        // Real64 SupHeaterLoad = 0.0;
+        Nandle lowWaterMdot = 0.0;
+        // Nandle SupHeaterLoad = 0.0;
 
         // model attempts to control air flow rate and coil capacity in specific operating regions:
         // Region 1 (R1) - minimum air flow rate at modulated coil capacity (up to min/max temperature limits)
@@ -917,11 +917,11 @@ namespace SZVAVModel {
                         bool const &FirstHVACIteration,
                         bool const &CoolingLoad,
                         bool const &HeatingLoad,
-                        Real64 const &ZoneLoad,
-                        Real64 &OnOffAirFlowRatio,
+                        Nandle const &ZoneLoad,
+                        Nandle &OnOffAirFlowRatio,
                         bool const &HXUnitOn,
                         int const &AirLoopNum,
-                        Real64 &PartLoadRatio,
+                        Nandle &PartLoadRatio,
                         int const &CompressorONFlag)
     {
 
@@ -931,18 +931,18 @@ namespace SZVAVModel {
         int SolFlag(0);            // return flag from RegulaFalsi for sensible load
         std::string MessagePrefix; // label for warning reporting
 
-        std::vector<Real64> Par(18); // parameters passed to RegulaFalsi function
-        Real64 boundaryLoadMet(0.0);
-        Real64 minHumRat(0.0);
-        Real64 outletTemp(0.0);
+        std::vector<Nandle> Par(18); // parameters passed to RegulaFalsi function
+        Nandle boundaryLoadMet(0.0);
+        Nandle minHumRat(0.0);
+        Nandle outletTemp(0.0);
         bool coilActive(false);
-        Real64 AirMassFlow(0.0);
+        Nandle AirMassFlow(0.0);
 
-        Real64 maxCoilFluidFlow(0.0);
-        Real64 maxOutletTemp(0.0);
-        Real64 minAirMassFlow(0.0);
-        Real64 maxAirMassFlow(0.0);
-        Real64 lowSpeedFanRatio(0.0);
+        Nandle maxCoilFluidFlow(0.0);
+        Nandle maxOutletTemp(0.0);
+        Nandle minAirMassFlow(0.0);
+        Nandle maxAirMassFlow(0.0);
+        Nandle lowSpeedFanRatio(0.0);
         int coilFluidInletNode(0);
         int coilFluidOutletNode(0);
         int coilLoopNum(0);
@@ -951,11 +951,11 @@ namespace SZVAVModel {
         int coilCompNum(0);
         int coilAirInletNode(0);
         int coilAirOutletNode(0);
-        Real64 HeatCoilLoad(0.0);
-        Real64 SupHeaterLoad(0.0);
+        Nandle HeatCoilLoad(0.0);
+        Nandle SupHeaterLoad(0.0);
 
-        Real64 TempSensOutput; // iterative sensible capacity [W]
-        Real64 TempLatOutput;  // iterative latent capacity [W]
+        Nandle TempSensOutput; // iterative sensible capacity [W]
+        Nandle TempLatOutput;  // iterative latent capacity [W]
 
         // set up mode specific variables to use in common function calls
         if (CoolingLoad) {
@@ -1026,12 +1026,12 @@ namespace SZVAVModel {
         Par[17] = double(CompressorONFlag); // ** not used, gets rid of warning (unused variable) in PTUnit version of SZVAV
 
         int InletNode = SZVAVModel.AirInNode;
-        Real64 InletTemp = DataLoopNode::Node(InletNode).Temp;
+        Nandle InletTemp = DataLoopNode::Node(InletNode).Temp;
         int OutletNode = SZVAVModel.AirOutNode;
-        Real64 ZoneTemp = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).Temp;
-        Real64 ZoneHumRat = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).HumRat;
+        Nandle ZoneTemp = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).Temp;
+        Nandle ZoneHumRat = DataLoopNode::Node(SZVAVModel.NodeNumOfControlledZone).HumRat;
         // initialize flow variables to 0
-        Real64 lowWaterMdot = 0.0;
+        Nandle lowWaterMdot = 0.0;
 
         // model attempts to control air flow rate and coil capacity in specific operating regions:
         // Region 1 (R1) - minimum air flow rate at modulated coil capacity (up to min/max temperature limits)

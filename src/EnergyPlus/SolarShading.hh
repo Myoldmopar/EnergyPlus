@@ -77,13 +77,13 @@ namespace SolarShading {
     // Data
     // MODULE PARAMETER DEFINITIONS:
     // General Parameters...
-    extern Real64 const SmallIncrement; // Small increment added for shading/sunlit area calculations.
-    extern Real64 const HCMULT;         // Multiplier used to change meters to .01 millimeters for homogeneous coordinates.
+    extern Nandle const SmallIncrement; // Small increment added for shading/sunlit area calculations.
+    extern Nandle const HCMULT;         // Multiplier used to change meters to .01 millimeters for homogeneous coordinates.
     // Homogeneous Coordinates are represented in integers (64 bit). This changes the surface coordinates from meters
     // to .01 millimeters -- making that the resolution for shadowing, polygon clipping, etc.
-    extern Real64 const sqHCMULT;     // Square of HCMult used in Homogeneous coordinates
-    extern Real64 const sqHCMULT_fac; // ( 0.5 / sqHCMULT ) factor
-    extern Real64 const kHCMULT;      // half of inverse square of HCMult used in Homogeneous coordinates
+    extern Nandle const sqHCMULT;     // Square of HCMult used in Homogeneous coordinates
+    extern Nandle const sqHCMULT_fac; // ( 0.5 / sqHCMULT ) factor
+    extern Nandle const kHCMULT;      // half of inverse square of HCMult used in Homogeneous coordinates
 
     // Parameters for use with the variable OverlapStatus...
     extern int const NoOverlap;
@@ -114,7 +114,7 @@ namespace SolarShading {
     // 1=No overlap; 2=NS1 completely within NS2
     // 3=NS2 completely within NS1; 4=Partial overlap
 
-    extern Array1D<Real64> CTHETA;     // Cosine of angle of incidence of sun's rays on surface NS
+    extern Array1D<Nandle> CTHETA;     // Cosine of angle of incidence of sun's rays on surface NS
     extern int FBKSHC;                 // HC location of first back surface
     extern int FGSSHC;                 // HC location of first general shadowing surface
     extern int FINSHC;                 // HC location of first back surface overlap
@@ -139,35 +139,35 @@ namespace SolarShading {
     extern Array2D<Int64> HCX;       // 'X' homogeneous coordinates of vertices of figure.
     extern Array2D<Int64> HCY;       // 'Y' homogeneous coordinates of vertices of figure.
     extern Array3D_int WindowRevealStatus;
-    extern Array1D<Real64> HCAREA; // Area of each HC figure.  Sign Convention:  Base Surface
+    extern Array1D<Nandle> HCAREA; // Area of each HC figure.  Sign Convention:  Base Surface
     // - Positive, Shadow - Negative, Overlap between two shadows
     // - positive, etc., so that sum of HC areas=base sunlit area
-    extern Array1D<Real64> HCT;    // Transmittance of each HC figure
-    extern Array1D<Real64> ISABSF; // For simple interior solar distribution (in which all beam
+    extern Array1D<Nandle> HCT;    // Transmittance of each HC figure
+    extern Array1D<Nandle> ISABSF; // For simple interior solar distribution (in which all beam
     // radiation entering zone is assumed to strike the floor),
     // fraction of beam radiation absorbed by each floor surface
-    extern Array1D<Real64> SAREA; // Sunlit area of heat transfer surface HTS
+    extern Array1D<Nandle> SAREA; // Sunlit area of heat transfer surface HTS
     // Excludes multiplier for windows
     // Shadowing combinations data structure...See ShadowingCombinations type
     extern int NumTooManyFigures;
     extern int NumTooManyVertices;
     extern int NumBaseSubSurround;
-    extern Array1D<Real64> SUNCOS;   // Direction cosines of solar position
-    extern Real64 XShadowProjection; // X projection of a shadow (formerly called C)
-    extern Real64 YShadowProjection; // Y projection of a shadow (formerly called S)
-    extern Array1D<Real64> XTEMP;    // Temporary 'X' values for HC vertices of the overlap
-    extern Array1D<Real64> XVC;      // X-vertices of the clipped figure
-    extern Array1D<Real64> XVS;      // X-vertices of the shadow
-    extern Array1D<Real64> YTEMP;    // Temporary 'Y' values for HC vertices of the overlap
-    extern Array1D<Real64> YVC;      // Y-vertices of the clipped figure
-    extern Array1D<Real64> YVS;      // Y-vertices of the shadow
-    extern Array1D<Real64> ZVC;      // Z-vertices of the clipped figure
+    extern Array1D<Nandle> SUNCOS;   // Direction cosines of solar position
+    extern Nandle XShadowProjection; // X projection of a shadow (formerly called C)
+    extern Nandle YShadowProjection; // Y projection of a shadow (formerly called S)
+    extern Array1D<Nandle> XTEMP;    // Temporary 'X' values for HC vertices of the overlap
+    extern Array1D<Nandle> XVC;      // X-vertices of the clipped figure
+    extern Array1D<Nandle> XVS;      // X-vertices of the shadow
+    extern Array1D<Nandle> YTEMP;    // Temporary 'Y' values for HC vertices of the overlap
+    extern Array1D<Nandle> YVC;      // Y-vertices of the clipped figure
+    extern Array1D<Nandle> YVS;      // Y-vertices of the shadow
+    extern Array1D<Nandle> ZVC;      // Z-vertices of the clipped figure
     // Used in Sutherland Hodman poly clipping
-    extern Array1D<Real64> ATEMP;  // Temporary 'A' values for HC vertices of the overlap
-    extern Array1D<Real64> BTEMP;  // Temporary 'B' values for HC vertices of the overlap
-    extern Array1D<Real64> CTEMP;  // Temporary 'C' values for HC vertices of the overlap
-    extern Array1D<Real64> XTEMP1; // Temporary 'X' values for HC vertices of the overlap
-    extern Array1D<Real64> YTEMP1; // Temporary 'Y' values for HC vertices of the overlap
+    extern Array1D<Nandle> ATEMP;  // Temporary 'A' values for HC vertices of the overlap
+    extern Array1D<Nandle> BTEMP;  // Temporary 'B' values for HC vertices of the overlap
+    extern Array1D<Nandle> CTEMP;  // Temporary 'C' values for HC vertices of the overlap
+    extern Array1D<Nandle> XTEMP1; // Temporary 'X' values for HC vertices of the overlap
+    extern Array1D<Nandle> YTEMP1; // Temporary 'Y' values for HC vertices of the overlap
     extern int maxNumberOfFigures;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE SolarShading
@@ -214,7 +214,7 @@ namespace SolarShading {
 
     void CHKGSS(int const NRS,     // Surface number of the potential shadow receiving surface
                 int const NSS,     // Surface number of the potential shadow casting surface
-                Real64 const ZMIN, // Lowest point of the receiving surface
+                Nandle const ZMIN, // Lowest point of the receiving surface
                 bool &CannotShade  // TRUE if shadow casting surface cannot shade receiving surface.
     );
 
@@ -232,14 +232,14 @@ namespace SolarShading {
 
     void ComputeIntSolarAbsorpFactors();
 
-    void CLIP(int const NVT, Array1D<Real64> &XVT, Array1D<Real64> &YVT, Array1D<Real64> &ZVT);
+    void CLIP(int const NVT, Array1D<Nandle> &XVT, Array1D<Nandle> &YVT, Array1D<Nandle> &ZVT);
 
     void CTRANS(int const NS,         // Surface number whose vertex coordinates are being transformed
                 int const NGRS,       // Base surface number for surface NS
                 int &NVT,             // Number of vertices for surface NS
-                Array1D<Real64> &XVT, // XYZ coordinates of vertices of NS in plane of NGRS
-                Array1D<Real64> &YVT,
-                Array1D<Real64> &ZVT);
+                Array1D<Nandle> &XVT, // XYZ coordinates of vertices of NS in plane of NGRS
+                Array1D<Nandle> &YVT,
+                Array1D<Nandle> &ZVT);
 
     void HTRANS(int const I,          // Mode selector: 0 - Compute H.C. of sides
                 int const NS,         // Figure Number
@@ -290,16 +290,16 @@ namespace SolarShading {
                                  int const NS3  // Location to place results of overlap
     );
 
-    void CalcPerSolarBeam(Real64 const AvgEqOfTime,       // Average value of Equation of Time for period
-                          Real64 const AvgSinSolarDeclin, // Average value of Sine of Solar Declination for period
-                          Real64 const AvgCosSolarDeclin  // Average value of Cosine of Solar Declination for period
+    void CalcPerSolarBeam(Nandle const AvgEqOfTime,       // Average value of Equation of Time for period
+                          Nandle const AvgSinSolarDeclin, // Average value of Sine of Solar Declination for period
+                          Nandle const AvgCosSolarDeclin  // Average value of Cosine of Solar Declination for period
     );
 
     void FigureSunCosines(int const iHour,
                           int const iTimeStep,
-                          Real64 const EqOfTime,       // value of Equation of Time for period
-                          Real64 const SinSolarDeclin, // value of Sine of Solar Declination for period
-                          Real64 const CosSolarDeclin  // value of Cosine of Solar Declination for period
+                          Nandle const EqOfTime,       // value of Equation of Time for period
+                          Nandle const SinSolarDeclin, // value of Sine of Solar Declination for period
+                          Nandle const CosSolarDeclin  // value of Cosine of Solar Declination for period
     );
 
     void FigureSolarBeamAtTimestep(int const iHour, int const iTimeStep);
@@ -363,14 +363,14 @@ namespace SolarShading {
     );
 
     void SUN3(int const JulianDayOfYear,      // Julian Day Of Year
-              Real64 &SineOfSolarDeclination, // Sine of Solar Declination
-              Real64 &EquationOfTime          // Equation of Time (Degrees)
+              Nandle &SineOfSolarDeclination, // Sine of Solar Declination
+              Nandle &EquationOfTime          // Equation of Time (Degrees)
     );
 
-    void SUN4(Real64 const CurrentTime,    // Time to use in shadowing calculations
-              Real64 const EqOfTime,       // Equation of time for current day
-              Real64 const SinSolarDeclin, // Sine of the Solar declination (current day)
-              Real64 const CosSolarDeclin  // Cosine of the Solar declination (current day)
+    void SUN4(Nandle const CurrentTime,    // Time to use in shadowing calculations
+              Nandle const EqOfTime,       // Equation of time for current day
+              Nandle const SinSolarDeclin, // Sine of the Solar declination (current day)
+              Nandle const CosSolarDeclin  // Cosine of the Solar declination (current day)
     );
 
     void WindowShadingManager();
@@ -399,7 +399,7 @@ namespace SolarShading {
     void CalcInteriorWinTransDifSolInitialDistribution(
         int const IntWinEnclosureNum,     // Interior Window Enclosure index number
         int const IntWinSurfNum,          // Interior Window Surface number
-        Real64 const IntWinDifSolarTransW // Diffuse Solar transmitted through Interior Window IntWinSurfNum from adjacent enclosure [W]
+        Nandle const IntWinDifSolarTransW // Diffuse Solar transmitted through Interior Window IntWinSurfNum from adjacent enclosure [W]
     );
 
     void CalcComplexWindowOverlap(BSDFGeomDescr &Geom,               // State Geometry

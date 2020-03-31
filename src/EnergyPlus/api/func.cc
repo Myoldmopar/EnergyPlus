@@ -75,16 +75,16 @@ Glycol glycolNew(const char* glycolName) {
 void glycolDelete(Glycol glycol) {
     delete reinterpret_cast<EnergyPlus::FluidProperties::GlycolAPI *>(glycol);
 }
-Real64 glycolSpecificHeat(Glycol glycol, Real64 temperature) {
+Nandle glycolSpecificHeat(Glycol glycol, Nandle temperature) {
     return reinterpret_cast<EnergyPlus::FluidProperties::GlycolAPI *>(glycol)->specificHeat(temperature);
 }
-Real64 glycolDensity(Glycol glycol, Real64 temperature) {
+Nandle glycolDensity(Glycol glycol, Nandle temperature) {
     return reinterpret_cast<EnergyPlus::FluidProperties::GlycolAPI *>(glycol)->density(temperature);
 }
-Real64 glycolConductivity(Glycol glycol, Real64 temperature) {
+Nandle glycolConductivity(Glycol glycol, Nandle temperature) {
     return reinterpret_cast<EnergyPlus::FluidProperties::GlycolAPI *>(glycol)->conductivity(temperature);
 }
-Real64 glycolViscosity(Glycol glycol, Real64 temperature) {
+Nandle glycolViscosity(Glycol glycol, Nandle temperature) {
     return reinterpret_cast<EnergyPlus::FluidProperties::GlycolAPI *>(glycol)->viscosity(temperature);
 }
 
@@ -95,138 +95,138 @@ Refrigerant refrigerantNew(const char* refrigerantName) {
 void refrigerantDelete(Refrigerant refrigerant) {
     delete reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant);
 }
-Real64 refrigerantSaturationPressure(Refrigerant refrigerant, Real64 temperature) {
+Nandle refrigerantSaturationPressure(Refrigerant refrigerant, Nandle temperature) {
     return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->saturationPressure(temperature);
 }
-Real64 refrigerantSaturationTemperature(Refrigerant refrigerant, Real64 pressure) {
+Nandle refrigerantSaturationTemperature(Refrigerant refrigerant, Nandle pressure) {
     return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->saturationTemperature(pressure);
 }
-Real64 refrigerantSaturatedEnthalpy(Refrigerant refrigerant, Real64 temperature, Real64 quality) {
+Nandle refrigerantSaturatedEnthalpy(Refrigerant refrigerant, Nandle temperature, Nandle quality) {
     return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->saturatedEnthalpy(temperature, quality);
 }
-Real64 refrigerantSaturatedDensity(Refrigerant refrigerant, Real64 temperature, Real64 quality) {
+Nandle refrigerantSaturatedDensity(Refrigerant refrigerant, Nandle temperature, Nandle quality) {
     return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->saturatedDensity(temperature, quality);
 }
-Real64 refrigerantSaturatedSpecificHeat(Refrigerant refrigerant, Real64 temperature, Real64 quality) {
+Nandle refrigerantSaturatedSpecificHeat(Refrigerant refrigerant, Nandle temperature, Nandle quality) {
     return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->saturatedSpecificHeat(temperature, quality);
 }
-//Real64 refrigerantSuperHeatedEnthalpy(Refrigerant refrigerant, Real64 temperature, Real64 pressure) {
+//Nandle refrigerantSuperHeatedEnthalpy(Refrigerant refrigerant, Nandle temperature, Nandle pressure) {
 //    return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->superHeatedEnthalpy(temperature, pressure);
 //}
-//Real64 refrigerantSuperHeatedPressure(Refrigerant refrigerant, Real64 temperature, Real64 enthalpy) {
+//Nandle refrigerantSuperHeatedPressure(Refrigerant refrigerant, Nandle temperature, Nandle enthalpy) {
 //    return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->superHeatedPressure(temperature, enthalpy);
 //}
-//Real64 refrigerantSuperHeatedDensity(Refrigerant refrigerant, Real64 temperature, Real64 pressure) {
+//Nandle refrigerantSuperHeatedDensity(Refrigerant refrigerant, Nandle temperature, Nandle pressure) {
 //    return reinterpret_cast<EnergyPlus::FluidProperties::RefrigerantAPI *>(refrigerant)->superHeatedDensity(temperature, pressure);
 //}
 
-Real64 psyRhoFnPbTdbW(Real64 const pb, Real64 const tdb, Real64 const dw) {
+Nandle psyRhoFnPbTdbW(Nandle const pb, Nandle const tdb, Nandle const dw) {
     // barometric pressure (Pascals)
     // dry bulb temperature (Celsius)
     // humidity ratio (kgWater/kgDryAir)
     return EnergyPlus::Psychrometrics::PsyRhoAirFnPbTdbW_fast(pb, tdb, dw);
 }
-Real64 psyHfgAirFnWTdb(Real64 const T) {
+Nandle psyHfgAirFnWTdb(Nandle const T) {
     // input temperature {Celsius}
     return EnergyPlus::Psychrometrics::PsyHfgAirFnWTdb(0.0, T); // humidity ratio is not used
 }
-Real64 psyHgAirFnWTdb(Real64 const T) {
+Nandle psyHgAirFnWTdb(Nandle const T) {
     // input temperature {Celsius}
     return EnergyPlus::Psychrometrics::PsyHgAirFnWTdb(0.0, T); // humidity ratio is not used
 }
-Real64 psyHFnTdbW(Real64 const TDB, Real64 const dW) {
+Nandle psyHFnTdbW(Nandle const TDB, Nandle const dW) {
     // dry-bulb temperature {C}
     // humidity ratio
     return EnergyPlus::Psychrometrics::PsyHFnTdbW_fast(TDB, dW);
 }
-Real64 psyCpAirFnW(Real64 const dw) {
+Nandle psyCpAirFnW(Nandle const dw) {
     // humidity ratio {kgWater/kgDryAir}
     // input temperature {Celsius}
     return EnergyPlus::Psychrometrics::PsyCpAirFnW(dw);
 }
-Real64 psyTdbFnHW(Real64 const H, Real64 const dW) {
+Nandle psyTdbFnHW(Nandle const H, Nandle const dW) {
     // enthalpy {J/kg}
     // humidity ratio
     return EnergyPlus::Psychrometrics::PsyTdbFnHW(H, dW);
 }
-Real64 psyRhovFnTdbWPb(Real64 const Tdb, Real64 const dW, Real64 const PB) {
+Nandle psyRhovFnTdbWPb(Nandle const Tdb, Nandle const dW, Nandle const PB) {
     // dry-bulb temperature {C}
     // humidity ratio
     // Barometric Pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyRhovFnTdbWPb_fast(Tdb, dW, PB);
 }
-Real64 psyTwbFnTdbWPb(Real64 const Tdb, Real64 const W, Real64 const Pb) {
+Nandle psyTwbFnTdbWPb(Nandle const Tdb, Nandle const W, Nandle const Pb) {
     // dry-bulb temperature {C}
     // humidity ratio
     // barometric pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyTwbFnTdbWPb(Tdb, W, Pb);
 }
-Real64 psyVFnTdbWPb(Real64 const TDB, Real64 const dW, Real64 const PB) {
+Nandle psyVFnTdbWPb(Nandle const TDB, Nandle const dW, Nandle const PB) {
     // dry-bulb temperature {C}
     // humidity ratio
     // barometric pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyVFnTdbWPb(TDB, dW, PB);
 }
-Real64 psyWFnTdbH(Real64 const TDB, Real64 const H) {
+Nandle psyWFnTdbH(Nandle const TDB, Nandle const H) {
     // dry-bulb temperature {C}
     // enthalpy {J/kg}
     std::string dummyString;
     return EnergyPlus::Psychrometrics::PsyWFnTdbH(TDB, H, dummyString, true);
 }
-Real64 psyPsatFnTemp(Real64 const T) {
+Nandle psyPsatFnTemp(Nandle const T) {
     // dry-bulb temperature {C}
     return EnergyPlus::Psychrometrics::PsyPsatFnTemp(T);
 }
-Real64 psyTsatFnHPb(Real64 const H, Real64 const Pb) {
+Nandle psyTsatFnHPb(Nandle const H, Nandle const Pb) {
     // enthalpy {J/kg}
     // barometric pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyTsatFnHPb(H, Pb);
 }
-Real64 psyRhovFnTdbRh(Real64 const Tdb, Real64 const RH) {
+Nandle psyRhovFnTdbRh(Nandle const Tdb, Nandle const RH) {
     // dry-bulb temperature {C}
     // relative humidity value (0.0-1.0)
     return EnergyPlus::Psychrometrics::PsyRhovFnTdbRh(Tdb, RH);
 }
-Real64 psyRhFnTdbRhov(Real64 const Tdb, Real64 const Rhovapor) {
+Nandle psyRhFnTdbRhov(Nandle const Tdb, Nandle const Rhovapor) {
     // dry-bulb temperature {C}
     // vapor density in air {kg/m3}
     return EnergyPlus::Psychrometrics::PsyRhFnTdbRhov(Tdb, Rhovapor);
 }
-Real64 psyRhFnTdbWPb(Real64 const TDB, Real64 const dW, Real64 const PB) {
+Nandle psyRhFnTdbWPb(Nandle const TDB, Nandle const dW, Nandle const PB) {
     // dry-bulb temperature {C}
     // humidity ratio
     // barometric pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyRhFnTdbWPb(TDB, dW, PB);
 }
-Real64 psyWFnTdpPb(Real64 const TDP, Real64 const PB) {
+Nandle psyWFnTdpPb(Nandle const TDP, Nandle const PB) {
     // dew-point temperature {C}
     // barometric pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyWFnTdpPb(TDP, PB);
 }
-Real64 psyWFnTdbRhPb(Real64 const TDB, Real64 const RH, Real64 const PB) {
+Nandle psyWFnTdbRhPb(Nandle const TDB, Nandle const RH, Nandle const PB) {
     // dry-bulb temperature {C}
     // relative humidity value (0.0-1.0)
     // barometric pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyWFnTdbRhPb(TDB, RH, PB);
 }
-Real64 psyWFnTdbTwbPb(Real64 const TDB, Real64 const TWBin, Real64 const PB) {
+Nandle psyWFnTdbTwbPb(Nandle const TDB, Nandle const TWBin, Nandle const PB) {
     // dry-bulb temperature {C}
     // wet-bulb temperature {C}
     // barometric pressure {Pascals}
     return EnergyPlus::Psychrometrics::PsyWFnTdbTwbPb(TDB, TWBin, PB);
 }
-Real64 psyHFnTdbRhPb(Real64 const TDB, Real64 const RH, Real64 const PB) {
+Nandle psyHFnTdbRhPb(Nandle const TDB, Nandle const RH, Nandle const PB) {
     // dry-bulb temperature {C}
     // relative humidity value (0.0 - 1.0)
     // barometric pressure (N/M**2) {Pascals}
     return EnergyPlus::Psychrometrics::PsyHFnTdbRhPb(TDB, RH, PB);
 }
-Real64 psyTdpFnWPb(Real64 const W, Real64 const PB) {
+Nandle psyTdpFnWPb(Nandle const W, Nandle const PB) {
     // humidity ratio
     // barometric pressure (N/M**2) {Pascals}
     return EnergyPlus::Psychrometrics::PsyTdpFnWPb(W, PB);
 }
-Real64 psyTdpFnTdbTwbPb(Real64 const TDB, Real64 const TWB, Real64 const PB) {
+Nandle psyTdpFnTdbTwbPb(Nandle const TDB, Nandle const TWB, Nandle const PB) {
     // dry-bulb temperature {C}
     // wet-bulb temperature {C}
     // barometric pressure (N/M**2) {Pascals}

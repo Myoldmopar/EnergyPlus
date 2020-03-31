@@ -140,14 +140,14 @@ namespace HWBaseboardRadiator {
 
     // MODULE VARIABLE DECLARATIONS:
     int NumHWBaseboards(0);
-    Array1D<Real64> QBBRadSource;         // Need to keep the last value in case we are still iterating
-    Array1D<Real64> QBBRadSrcAvg;         // Need to keep the last value in case we are still iterating
-    Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
+    Array1D<Nandle> QBBRadSource;         // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> QBBRadSrcAvg;         // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
 
     // Record keeping variables used to calculate QBBRadSrcAvg locally
-    Array1D<Real64> LastQBBRadSrc;      // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastQBBRadSrc;      // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastSysTimeElapsed; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastTimeStepSys;    // Need to keep the last value in case we are still iterating
     Array1D_bool MySizeFlag;
     Array1D_bool CheckEquipName;
     Array1D_bool SetLoopIndexFlag; // get loop number flag
@@ -164,7 +164,7 @@ namespace HWBaseboardRadiator {
                         int const ActualZoneNum,
                         int const ControlledZoneNum,
                         bool const FirstHVACIteration,
-                        Real64 &PowerMet,
+                        Nandle &PowerMet,
                         int &CompIndex)
     {
 
@@ -186,9 +186,9 @@ namespace HWBaseboardRadiator {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int BaseboardNum;               // Index of unit in baseboard array
         static bool GetInputFlag(true); // One time get input flag
-        Real64 QZnReq;                  // Zone load not yet satisfied
-        Real64 MaxWaterFlow;
-        Real64 MinWaterFlow;
+        Nandle QZnReq;                  // Zone load not yet satisfied
+        Nandle MaxWaterFlow;
+        Nandle MinWaterFlow;
 
         if (GetInputFlag) {
             GetHWBaseboardInput();
@@ -311,15 +311,15 @@ namespace HWBaseboardRadiator {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("GetHWBaseboardInput:");
-        Real64 const MaxFraction(1.0);
-        Real64 const MinFraction(0.0);
-        Real64 const MaxWaterTempAvg(150.0);        // Maximum limit of average water temperature in degree C
-        Real64 const MinWaterTempAvg(20.0);         // Minimum limit of average water temperature in degree C
-        Real64 const HighWaterMassFlowRate(10.0);   // Maximum limit of water mass flow rate in kg/s
-        Real64 const LowWaterMassFlowRate(0.00001); // Minimum limit of water mass flow rate in kg/s
-        Real64 const MaxWaterFlowRate(10.0);        // Maximum limit of water volume flow rate in m3/s
-        Real64 const MinWaterFlowRate(0.00001);     // Minimum limit of water volume flow rate in m3/s
-        Real64 const WaterMassFlowDefault(0.063);   // Default water mass flow rate in kg/s
+        Nandle const MaxFraction(1.0);
+        Nandle const MinFraction(0.0);
+        Nandle const MaxWaterTempAvg(150.0);        // Maximum limit of average water temperature in degree C
+        Nandle const MinWaterTempAvg(20.0);         // Minimum limit of average water temperature in degree C
+        Nandle const HighWaterMassFlowRate(10.0);   // Maximum limit of water mass flow rate in kg/s
+        Nandle const LowWaterMassFlowRate(0.00001); // Minimum limit of water mass flow rate in kg/s
+        Nandle const MaxWaterFlowRate(10.0);        // Maximum limit of water volume flow rate in m3/s
+        Nandle const MinWaterFlowRate(0.00001);     // Minimum limit of water volume flow rate in m3/s
+        Nandle const WaterMassFlowDefault(0.063);   // Default water mass flow rate in kg/s
         //    INTEGER, PARAMETER   :: MaxDistribSurfaces    = 20         ! Maximum number of surfaces that a baseboard heater can radiate to
         int const MinDistribSurfaces(1);                  // Minimum number of surfaces that a baseboard heater can radiate to
         int const iHeatCAPMAlphaNum(5);                   // get input index to HW baseboard heating capacity sizing method
@@ -329,7 +329,7 @@ namespace HWBaseboardRadiator {
             5); //  get input index to HW baseboard heating capacity sizing as fraction of autozized heating capacity
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AllFracsSummed; // Sum of the fractions radiant
+        Nandle AllFracsSummed; // Sum of the fractions radiant
         int BaseboardNum;      // Baseboard number
         int NumAlphas;         // Number of Alphas for each GetobjectItem call
         int NumNumbers;        // Number of Numbers for each GetobjectItem call
@@ -759,8 +759,8 @@ namespace HWBaseboardRadiator {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const Constant(0.0062); // Constant of linear equation for air mass flow rate
-        Real64 const Coeff(0.0000275); // Correlation coefficient to capacity
+        Nandle const Constant(0.0062); // Constant of linear equation for air mass flow rate
+        Nandle const Coeff(0.0000275); // Correlation coefficient to capacity
         static std::string const RoutineName("BaseboardRadiatorWater:InitHWBaseboard");
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -777,9 +777,9 @@ namespace HWBaseboardRadiator {
         int WaterInletNode;
         int ZoneNode;
         int ZoneNum;
-        Real64 RhoAirStdInit;
-        Real64 rho; // local fluid density
-        Real64 Cp;  // local fluid specific heat
+        Nandle RhoAirStdInit;
+        Nandle rho; // local fluid density
+        Nandle Cp;  // local fluid specific heat
         bool errFlag;
 
         // Do the one time initializations
@@ -955,10 +955,10 @@ namespace HWBaseboardRadiator {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const AirInletTempStd(18.0); // I=B=R rating document
-        Real64 const CPAirStd(1005.0);      // Average specific heat of air at between 25C and 40C in J/kg-k
-        Real64 const Constant(0.0062);      // Constant of linear equation for air mass flow rate
-        Real64 const Coeff(0.0000275);      // Correlation coefficient to capacity
+        Nandle const AirInletTempStd(18.0); // I=B=R rating document
+        Nandle const CPAirStd(1005.0);      // Average specific heat of air at between 25C and 40C in J/kg-k
+        Nandle const Constant(0.0062);      // Constant of linear equation for air mass flow rate
+        Nandle const Coeff(0.0000275);      // Correlation coefficient to capacity
         static std::string const RoutineName("SizeHWBaseboard");
         static std::string const RoutineNameFull("BaseboardRadiatorWater:SizeHWBaseboard");
 
@@ -971,28 +971,28 @@ namespace HWBaseboardRadiator {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int PltSizNum;     // do loop index for plant sizing
         int PltSizHeatNum; // index of plant sizing object for 1st heating loop
-        Real64 DesCoilLoad;
-        Real64 WaterInletTempStd;
-        Real64 WaterOutletTempStd;
-        Real64 AirOutletTempStd;
-        Real64 DeltaT1;
-        Real64 DeltaT2;
-        Real64 LMTD;
-        Real64 AirMassFlowRate;
-        Real64 WaterMassFlowRateStd;
-        Real64 rho;                     // local fluid density
-        Real64 Cp;                      // local fluid specific heat
+        Nandle DesCoilLoad;
+        Nandle WaterInletTempStd;
+        Nandle WaterOutletTempStd;
+        Nandle AirOutletTempStd;
+        Nandle DeltaT1;
+        Nandle DeltaT2;
+        Nandle LMTD;
+        Nandle AirMassFlowRate;
+        Nandle WaterMassFlowRateStd;
+        Nandle rho;                     // local fluid density
+        Nandle Cp;                      // local fluid specific heat
         bool ErrorsFound;               // If errors detected in input
         bool FlowAutoSize;              // Indicator to autosize for maximum water vloume flow
         bool CapAutoSize;               // Indicator to autosize for capacity
-        Real64 WaterVolFlowRateMaxDes;  // Design maximum water volume flow for reproting
-        Real64 WaterVolFlowRateMaxUser; // User hard-sized maximum water volume flow for reproting
-        Real64 RatedCapacityDes;        // Design rated capacity for reproting
+        Nandle WaterVolFlowRateMaxDes;  // Design maximum water volume flow for reproting
+        Nandle WaterVolFlowRateMaxUser; // User hard-sized maximum water volume flow for reproting
+        Nandle RatedCapacityDes;        // Design rated capacity for reproting
 
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         int FieldNum = 1;         // IDD numeric field number where input field description is found
         int SizingMethod; // Integer representation of sizing method name (e.g., CoolingAirflowSizing, HeatingAirflowSizing, CoolingCapacitySizing,
                           // HeatingCapacitySizing, etc.)
@@ -1242,7 +1242,7 @@ namespace HWBaseboardRadiator {
         }
     }
 
-    void CalcHWBaseboard(int &BaseboardNum, Real64 &LoadMet)
+    void CalcHWBaseboard(int &BaseboardNum, Nandle &LoadMet)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Russ Taylor
@@ -1277,7 +1277,7 @@ namespace HWBaseboardRadiator {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MinFrac(0.0005); // Minimum fraction that delivers radiant heats to surfaces
+        Nandle const MinFrac(0.0005); // Minimum fraction that delivers radiant heats to surfaces
         static std::string const RoutineName("CalcHWBaseboard");
 
         // INTERFACE BLOCK SPECIFICATIONS
@@ -1288,26 +1288,26 @@ namespace HWBaseboardRadiator {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneNum;
-        Real64 RadHeat;
-        Real64 BBHeat;
-        Real64 AirInletTemp;
-        Real64 AirOutletTemp;
-        Real64 WaterInletTemp;
-        Real64 WaterOutletTemp;
-        Real64 WaterMassFlowRate;
-        Real64 AirMassFlowRate;
-        Real64 CapacitanceAir;
-        Real64 CapacitanceWater;
-        Real64 CapacitanceMax;
-        Real64 CapacitanceMin;
-        Real64 CapacityRatio;
-        Real64 NTU;
-        Real64 Effectiveness;
-        Real64 AA;
-        Real64 BB;
-        Real64 CC;
-        Real64 QZnReq;
-        Real64 Cp;
+        Nandle RadHeat;
+        Nandle BBHeat;
+        Nandle AirInletTemp;
+        Nandle AirOutletTemp;
+        Nandle WaterInletTemp;
+        Nandle WaterOutletTemp;
+        Nandle WaterMassFlowRate;
+        Nandle AirMassFlowRate;
+        Nandle CapacitanceAir;
+        Nandle CapacitanceWater;
+        Nandle CapacitanceMax;
+        Nandle CapacitanceMin;
+        Nandle CapacityRatio;
+        Nandle NTU;
+        Nandle Effectiveness;
+        Nandle AA;
+        Nandle BB;
+        Nandle CC;
+        Nandle QZnReq;
+        Nandle Cp;
 
         ZoneNum = HWBaseboard(BaseboardNum).ZonePtr;
         QZnReq = ZoneSysEnergyDemand(ZoneNum).RemainingOutputReqToHeatSP;
@@ -1583,7 +1583,7 @@ namespace HWBaseboardRadiator {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
+        Nandle const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -1596,7 +1596,7 @@ namespace HWBaseboardRadiator {
         int BaseboardNum;         // Counter for the baseboard
         int SurfNum;              // Pointer to the Surface derived type
         int ZoneNum;              // Pointer to the Zone derived type
-        Real64 ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
+        Nandle ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
 
         // FLOW:
         // Initialize arrays
@@ -1678,7 +1678,7 @@ namespace HWBaseboardRadiator {
         HWBaseboard(BaseboardNum).RadEnergy = HWBaseboard(BaseboardNum).RadPower * TimeStepSys * SecInHour;
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
 
         // FUNCTION INFORMATION:
@@ -1704,14 +1704,14 @@ namespace HWBaseboardRadiator {
         using namespace DataHeatBalSurface;
 
         // Return value
-        Real64 SumHATsurf;
+        Nandle SumHATsurf;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // Surface number
-        Real64 Area; // Effective surface area
+        Nandle Area; // Effective surface area
 
         // FLOW:
         SumHATsurf = 0.0;

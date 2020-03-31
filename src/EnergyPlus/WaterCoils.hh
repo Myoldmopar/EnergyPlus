@@ -70,9 +70,9 @@ namespace WaterCoils {
     extern int const MaxPolynomOrder;
     extern int const MaxOrderedPairs;
 
-    extern Real64 const PolyConvgTol;
-    extern Real64 const MinWaterMassFlowFrac;
-    extern Real64 const MinAirMassFlow;
+    extern Nandle const PolyConvgTol;
+    extern Nandle const MinWaterMassFlowFrac;
+    extern Nandle const MinAirMassFlow;
 
     // coil types in this module
     extern int const WaterCoil_SimpleHeating;
@@ -146,99 +146,99 @@ namespace WaterCoils {
         std::string Schedule;             // WaterCoil Operation Schedule
         int SchedPtr;                     // Pointer to the correct schedule
         bool RequestingAutoSize;          // True if this coil has appropriate autosize fields
-        Real64 InletAirMassFlowRate;      // MassFlow through the WaterCoil being Simulated [kg/s]
-        Real64 OutletAirMassFlowRate;     // MassFlow throught the WaterCoil being Simulated[kg/s]
-        Real64 InletAirTemp;              // Inlet Air Temperature Operating Condition [C]
-        Real64 OutletAirTemp;             // Outlet Air Temperature Operating Condition [C]
-        Real64 InletAirHumRat;            // Inlet Air Humidity Ratio Operating Condition
-        Real64 OutletAirHumRat;           // Outlet Air Humidity Ratio Calculated Condition
-        Real64 InletAirEnthalpy;          // Inlet Air enthalpy [J/kg]
-        Real64 OutletAirEnthalpy;         // Outlet Air enthalpy [J/kg]
-        Real64 TotWaterCoilLoad;          // Total Load on the Coil [W]
-        Real64 SenWaterCoilLoad;          // Sensible Load on the Coil [W]
-        Real64 TotWaterHeatingCoilEnergy; // Total Heating Coil energy of the Coil [J]
-        Real64 TotWaterCoolingCoilEnergy; // Total Cooling Coil energy of the Coil [J]
-        Real64 SenWaterCoolingCoilEnergy; // Sensible Cooling Coil energy of the Coil [J]
-        Real64 DesWaterHeatingCoilRate;   // Design Heating Coil Rate used for sizing [W]
-        Real64 TotWaterHeatingCoilRate;   // Total Heating Coil Rate on the Coil [W]
-        Real64 DesWaterCoolingCoilRate;   // Design Cooling Coil Rate used for sizing [W]
-        Real64 TotWaterCoolingCoilRate;   // Total Cooling Coil Rate on the Coil [W]
-        Real64 SenWaterCoolingCoilRate;   // Sensible Cooling Coil Rate on the Coil [W]
-        Real64 UACoil;                    // WaterCoil UA Value
-        Real64 LeavingRelHum;             // Simple Coil Latent Model requires User input for leaving RH
-        Real64 DesiredOutletTemp;
-        Real64 DesiredOutletHumRat;
-        Real64 InletWaterTemp;          // Inlet Water Temperature [C]
-        Real64 OutletWaterTemp;         // Outlet Water Temperature [C]
-        Real64 InletWaterMassFlowRate;  // Inlet Water Mass Flow Rate [Kg/s]
-        Real64 OutletWaterMassFlowRate; // Outlet Water Mass Flow Rate [Kg/s]
-        Real64 MaxWaterVolFlowRate;     // Maximum water Volume flow rate [m3/s]
-        Real64 MaxWaterMassFlowRate;    // Maximum water mass flow rate [Kg/s]
-        Real64 InletWaterEnthalpy;      // Inlet Water Enthalpy
-        Real64 OutletWaterEnthalpy;     // Outlet Water Enthalpy
+        Nandle InletAirMassFlowRate;      // MassFlow through the WaterCoil being Simulated [kg/s]
+        Nandle OutletAirMassFlowRate;     // MassFlow throught the WaterCoil being Simulated[kg/s]
+        Nandle InletAirTemp;              // Inlet Air Temperature Operating Condition [C]
+        Nandle OutletAirTemp;             // Outlet Air Temperature Operating Condition [C]
+        Nandle InletAirHumRat;            // Inlet Air Humidity Ratio Operating Condition
+        Nandle OutletAirHumRat;           // Outlet Air Humidity Ratio Calculated Condition
+        Nandle InletAirEnthalpy;          // Inlet Air enthalpy [J/kg]
+        Nandle OutletAirEnthalpy;         // Outlet Air enthalpy [J/kg]
+        Nandle TotWaterCoilLoad;          // Total Load on the Coil [W]
+        Nandle SenWaterCoilLoad;          // Sensible Load on the Coil [W]
+        Nandle TotWaterHeatingCoilEnergy; // Total Heating Coil energy of the Coil [J]
+        Nandle TotWaterCoolingCoilEnergy; // Total Cooling Coil energy of the Coil [J]
+        Nandle SenWaterCoolingCoilEnergy; // Sensible Cooling Coil energy of the Coil [J]
+        Nandle DesWaterHeatingCoilRate;   // Design Heating Coil Rate used for sizing [W]
+        Nandle TotWaterHeatingCoilRate;   // Total Heating Coil Rate on the Coil [W]
+        Nandle DesWaterCoolingCoilRate;   // Design Cooling Coil Rate used for sizing [W]
+        Nandle TotWaterCoolingCoilRate;   // Total Cooling Coil Rate on the Coil [W]
+        Nandle SenWaterCoolingCoilRate;   // Sensible Cooling Coil Rate on the Coil [W]
+        Nandle UACoil;                    // WaterCoil UA Value
+        Nandle LeavingRelHum;             // Simple Coil Latent Model requires User input for leaving RH
+        Nandle DesiredOutletTemp;
+        Nandle DesiredOutletHumRat;
+        Nandle InletWaterTemp;          // Inlet Water Temperature [C]
+        Nandle OutletWaterTemp;         // Outlet Water Temperature [C]
+        Nandle InletWaterMassFlowRate;  // Inlet Water Mass Flow Rate [Kg/s]
+        Nandle OutletWaterMassFlowRate; // Outlet Water Mass Flow Rate [Kg/s]
+        Nandle MaxWaterVolFlowRate;     // Maximum water Volume flow rate [m3/s]
+        Nandle MaxWaterMassFlowRate;    // Maximum water mass flow rate [Kg/s]
+        Nandle InletWaterEnthalpy;      // Inlet Water Enthalpy
+        Nandle OutletWaterEnthalpy;     // Outlet Water Enthalpy
         // These are the additional Geometry and Design Variables for Detailed Flat Fin Coil
-        Real64 TubeOutsideSurfArea; // Tube Primary Surface Area
-        Real64 TotTubeInsideArea;   // Total Tube inside Surface Area
-        Real64 FinSurfArea;         // Fin Surface Area
-        Real64 MinAirFlowArea;
-        Real64 CoilDepth;
-        Real64 FinDiam; // Fin Diameter or the Coil Height
-        Real64 FinThickness;
-        Real64 TubeInsideDiam;  // Inner diameter of Tubes
-        Real64 TubeOutsideDiam; // Outer Diameter of the Tubes
-        Real64 TubeThermConductivity;
-        Real64 FinThermConductivity;
-        Real64 FinSpacing; // Fin Spacing or Distance
-        Real64 TubeDepthSpacing;
+        Nandle TubeOutsideSurfArea; // Tube Primary Surface Area
+        Nandle TotTubeInsideArea;   // Total Tube inside Surface Area
+        Nandle FinSurfArea;         // Fin Surface Area
+        Nandle MinAirFlowArea;
+        Nandle CoilDepth;
+        Nandle FinDiam; // Fin Diameter or the Coil Height
+        Nandle FinThickness;
+        Nandle TubeInsideDiam;  // Inner diameter of Tubes
+        Nandle TubeOutsideDiam; // Outer Diameter of the Tubes
+        Nandle TubeThermConductivity;
+        Nandle FinThermConductivity;
+        Nandle FinSpacing; // Fin Spacing or Distance
+        Nandle TubeDepthSpacing;
         int NumOfTubeRows;
         int NumOfTubesPerRow;
         // BEGIN calculated parameters for detailed flat fin coil
-        Real64 EffectiveFinDiam;
-        Real64 TotCoilOutsideSurfArea;
-        Real64 CoilEffectiveInsideDiam;
-        Real64 GeometryCoef1;
-        Real64 GeometryCoef2;
-        Array1D<Real64> DryFinEfficncyCoef;
-        Real64 SatEnthlCurveConstCoef;
-        Real64 SatEnthlCurveSlope;
-        Real64 EnthVsTempCurveAppxSlope;
-        Real64 EnthVsTempCurveConst;
-        Real64 MeanWaterTempSaved;
-        Real64 InWaterTempSaved;
-        Real64 OutWaterTempSaved;
-        Real64 SurfAreaWetSaved;
-        Real64 SurfAreaWetFraction;
+        Nandle EffectiveFinDiam;
+        Nandle TotCoilOutsideSurfArea;
+        Nandle CoilEffectiveInsideDiam;
+        Nandle GeometryCoef1;
+        Nandle GeometryCoef2;
+        Array1D<Nandle> DryFinEfficncyCoef;
+        Nandle SatEnthlCurveConstCoef;
+        Nandle SatEnthlCurveSlope;
+        Nandle EnthVsTempCurveAppxSlope;
+        Nandle EnthVsTempCurveConst;
+        Nandle MeanWaterTempSaved;
+        Nandle InWaterTempSaved;
+        Nandle OutWaterTempSaved;
+        Nandle SurfAreaWetSaved;
+        Nandle SurfAreaWetFraction;
         // END calculated parameters for detailed flat fin coil
         // Design Input Variables to the Design Detailed Simple inputs model
-        Real64 DesInletWaterTemp;   // Entering water temperature at Design(C)
-        Real64 DesAirVolFlowRate;   // Entering Air Volume Flow Rate Design( m3/s)
-        Real64 DesInletAirTemp;     // Entering air dry bulb temperature at Design(C)
-        Real64 DesInletAirHumRat;   // Entering air humidity ratio at design conditions
-        Real64 DesTotWaterCoilLoad; // Total heat transfer rate at Design(Watt)
-        Real64 DesSenWaterCoilLoad; // Sensible heat transfer rate at Design(Watt)
+        Nandle DesInletWaterTemp;   // Entering water temperature at Design(C)
+        Nandle DesAirVolFlowRate;   // Entering Air Volume Flow Rate Design( m3/s)
+        Nandle DesInletAirTemp;     // Entering air dry bulb temperature at Design(C)
+        Nandle DesInletAirHumRat;   // Entering air humidity ratio at design conditions
+        Nandle DesTotWaterCoilLoad; // Total heat transfer rate at Design(Watt)
+        Nandle DesSenWaterCoilLoad; // Sensible heat transfer rate at Design(Watt)
         // BEGIN calculated parameters for Design Detailed Simple inputs model
-        Real64 DesAirMassFlowRate;   // Design Air MassFlow through the WaterCoil [kg/Sec]
-        Real64 UACoilTotal;          // Overall external dry UA (W/C)
-        Real64 UACoilInternal;       // Overall internal UA(W/C)
-        Real64 UACoilExternal;       // Overall external heat transfer coefficient(W/C)
-        Real64 UACoilInternalDes;    // Overall design internal UA(W/C)
-        Real64 UACoilExternalDes;    // Overall design external heat transfer coefficient(W/C)
-        Real64 DesOutletAirTemp;     // Leaving air temperature at rating(C)
-        Real64 DesOutletAirHumRat;   // Humidity ratio of air leaving at design capacity.
-        Real64 DesOutletWaterTemp;   // Temp of Liquid Leaving the Coil at design Capacity
+        Nandle DesAirMassFlowRate;   // Design Air MassFlow through the WaterCoil [kg/Sec]
+        Nandle UACoilTotal;          // Overall external dry UA (W/C)
+        Nandle UACoilInternal;       // Overall internal UA(W/C)
+        Nandle UACoilExternal;       // Overall external heat transfer coefficient(W/C)
+        Nandle UACoilInternalDes;    // Overall design internal UA(W/C)
+        Nandle UACoilExternalDes;    // Overall design external heat transfer coefficient(W/C)
+        Nandle DesOutletAirTemp;     // Leaving air temperature at rating(C)
+        Nandle DesOutletAirHumRat;   // Humidity ratio of air leaving at design capacity.
+        Nandle DesOutletWaterTemp;   // Temp of Liquid Leaving the Coil at design Capacity
         int HeatExchType;            // Heat exchanger configuration, default to Cross Flow
         int CoolingCoilAnalysisMode; // Mode Of analysis, Simple=1 and Detailed =2
         //    Simple= AllWet-AllDry, Detailed= PartWet-PartDry
-        Real64 UACoilInternalPerUnitArea; // Internal overall heat transfer coefficient(W/m2 C)
-        Real64 UAWetExtPerUnitArea;       // External overall heat transfer coefficient(W/m2 C)
-        Real64 UADryExtPerUnitArea;       // External overall heat transfer coefficient(W/m2 C)
-        Real64 SurfAreaWetFractionSaved;  // Previous saved value, for numerical efficiency.
+        Nandle UACoilInternalPerUnitArea; // Internal overall heat transfer coefficient(W/m2 C)
+        Nandle UAWetExtPerUnitArea;       // External overall heat transfer coefficient(W/m2 C)
+        Nandle UADryExtPerUnitArea;       // External overall heat transfer coefficient(W/m2 C)
+        Nandle SurfAreaWetFractionSaved;  // Previous saved value, for numerical efficiency.
         // END calculated parameters for Design Inputs Detailed coil
         // variables for simple heating coil with variable UA
-        Real64 UACoilVariable;                 // WaterCoil UA value when variable (simple heating coil only)
-        Real64 RatioAirSideToWaterSideConvect; // "r" value for coil,
-        Real64 AirSideNominalConvect;          // nominal rating point air side convection term (fin_effic*(hc*A))
-        Real64 LiquidSideNominalConvect;       // nominal rating point water side convection term (hc*A)
+        Nandle UACoilVariable;                 // WaterCoil UA value when variable (simple heating coil only)
+        Nandle RatioAirSideToWaterSideConvect; // "r" value for coil,
+        Nandle AirSideNominalConvect;          // nominal rating point air side convection term (fin_effic*(hc*A))
+        Nandle LiquidSideNominalConvect;       // nominal rating point water side convection term (hc*A)
         int Control;                           // Const Vol =1;  Variable Vol = 2
         int AirInletNodeNum;
         int AirOutletNodeNum;
@@ -253,8 +253,8 @@ namespace WaterCoils {
         std::string CondensateCollectName; // name of water source e.g. water storage tank
         int CondensateTankID;              // index "pointer" to Storage TAnk array WaterStorage
         int CondensateTankSupplyARRID;     // index pointe to supply Vdot array in WaterStorage
-        Real64 CondensateVdot;             // rate of water condensation from air stream [m3/s]
-        Real64 CondensateVol;              // amount of water condensed from air stream [m3]
+        Nandle CondensateVdot;             // rate of water condensation from air stream [m3/s]
+        Nandle CondensateVol;              // amount of water condensed from air stream [m3]
         // end variables for water system interactions
         // COIL:Water:SimpleHeating Coil Performance Input Method
         int CoilPerfInpMeth;            // 1 = UA and Design Water Flow Rate; 2 = Nominal Capacity
@@ -262,14 +262,14 @@ namespace WaterCoils {
         // Operational fault parameters
         bool FaultyCoilFoulingFlag;     // True if the coil has fouling fault
         int FaultyCoilFoulingIndex;     // Index of the fault object corresponding to the coil
-        Real64 FaultyCoilFoulingFactor; // Coil fouling factor [m2K/W]
-        Real64 OriginalUACoilVariable;
-        Real64 OriginalUACoilExternal;
-        Real64 OriginalUACoilInternal;
+        Nandle FaultyCoilFoulingFactor; // Coil fouling factor [m2K/W]
+        Nandle OriginalUACoilVariable;
+        Nandle OriginalUACoilExternal;
+        Nandle OriginalUACoilInternal;
 
         bool DesiccantRegenerationCoil; // true if it is a regeneration air heating coil defined in Desiccant Dehumidifier system
         int DesiccantDehumNum;          // index to desiccant dehumidifier object
-        Real64 DesignWaterDeltaTemp;    // water deltaT for coil sizing [K]
+        Nandle DesignWaterDeltaTemp;    // water deltaT for coil sizing [K]
         bool UseDesignWaterDeltaTemp;   // is true, the DesignWaterDeltaTemp is used for sizing coil design water flow rate
         std::string ControllerName;     // controller name used by water coil
         int ControllerIndex;            // controller index used by water coil
@@ -326,9 +326,9 @@ namespace WaterCoils {
     void SimulateWaterCoilComponents(std::string const &CompName,
                                      bool const FirstHVACIteration,
                                      int &CompIndex,
-                                     Optional<Real64> QActual = _,
+                                     Optional<Nandle> QActual = _,
                                      Optional_int_const FanOpMode = _,
-                                     Optional<Real64 const> PartLoadRatio = _);
+                                     Optional<Nandle const> PartLoadRatio = _);
 
     // Get Input Section of the Module
     //******************************************************************************
@@ -359,21 +359,21 @@ namespace WaterCoils {
 
     void CalcSimpleHeatingCoil(int const CoilNum,          // index to heating coil
                                int const FanOpMode,        // fan operating mode
-                               Real64 const PartLoadRatio, // part-load ratio of heating coil
+                               Nandle const PartLoadRatio, // part-load ratio of heating coil
                                int const CalcMode          // 1 = design calc; 2 = simulation calculation
     );
 
     void CalcDetailFlatFinCoolingCoil(int const CoilNum,
                                       int const CalcMode,
                                       int const FanOpMode,       // fan operating mode
-                                      Real64 const PartLoadRatio // part-load ratio of heating coil
+                                      Nandle const PartLoadRatio // part-load ratio of heating coil
     );
 
     void CoolingCoil(int const CoilNum,
                      bool const FirstHVACIteration,
                      int const CalcMode,
                      int const FanOpMode,       // fan operating mode
-                     Real64 const PartLoadRatio // part-load ratio of heating coil
+                     Nandle const PartLoadRatio // part-load ratio of heating coil
     );
 
     // End Algorithm Section of the Module
@@ -381,85 +381,85 @@ namespace WaterCoils {
     // Coil Completely Dry Subroutine for Cooling Coil
 
     void CoilCompletelyDry(int const CoilNum,
-                           Real64 const WaterTempIn,  // Entering water temperature
-                           Real64 const AirTempIn,    // Entering air dry bulb temperature
-                           Real64 const CoilUA,       // Overall heat transfer coefficient
-                           Real64 &OutletWaterTemp,   // Leaving water temperature
-                           Real64 &OutletAirTemp,     // Leaving air dry bulb temperature
-                           Real64 &OutletAirHumRat,   // Leaving air humidity ratio
-                           Real64 &Q,                 // Heat transfer rate
+                           Nandle const WaterTempIn,  // Entering water temperature
+                           Nandle const AirTempIn,    // Entering air dry bulb temperature
+                           Nandle const CoilUA,       // Overall heat transfer coefficient
+                           Nandle &OutletWaterTemp,   // Leaving water temperature
+                           Nandle &OutletAirTemp,     // Leaving air dry bulb temperature
+                           Nandle &OutletAirHumRat,   // Leaving air humidity ratio
+                           Nandle &Q,                 // Heat transfer rate
                            int const FanOpMode,       // fan operating mode
-                           Real64 const PartLoadRatio // part-load ratio of heating coil
+                           Nandle const PartLoadRatio // part-load ratio of heating coil
     );
 
     // Coil Completely Wet Subroutine for Cooling Coil
 
     void CoilCompletelyWet(int const CoilNum,            // Number of Coil
-                           Real64 const WaterTempIn,     // Water temperature IN to this function (C)
-                           Real64 const AirTempIn,       // Air dry bulb temperature IN to this function(C)
-                           Real64 const AirHumRat,       // Air Humidity Ratio IN to this funcation (C)
-                           Real64 const UAInternalTotal, // Internal overall heat transfer coefficient(W/m2 C)
-                           Real64 const UAExternalTotal, // External overall heat transfer coefficient(W/m2 C)
-                           Real64 &OutletWaterTemp,      // Leaving water temperature (C)
-                           Real64 &OutletAirTemp,        // Leaving air dry bulb temperature(C)
-                           Real64 &OutletAirHumRat,      // Leaving air humidity ratio
-                           Real64 &TotWaterCoilLoad,     // Total heat transfer rate(W)
-                           Real64 &SenWaterCoilLoad,     // Sensible heat transfer rate(W)
-                           Real64 &SurfAreaWetFraction,  // Fraction of surface area wet
-                           Real64 &AirInletCoilSurfTemp, // Surface temperature at air entrance(C)
+                           Nandle const WaterTempIn,     // Water temperature IN to this function (C)
+                           Nandle const AirTempIn,       // Air dry bulb temperature IN to this function(C)
+                           Nandle const AirHumRat,       // Air Humidity Ratio IN to this funcation (C)
+                           Nandle const UAInternalTotal, // Internal overall heat transfer coefficient(W/m2 C)
+                           Nandle const UAExternalTotal, // External overall heat transfer coefficient(W/m2 C)
+                           Nandle &OutletWaterTemp,      // Leaving water temperature (C)
+                           Nandle &OutletAirTemp,        // Leaving air dry bulb temperature(C)
+                           Nandle &OutletAirHumRat,      // Leaving air humidity ratio
+                           Nandle &TotWaterCoilLoad,     // Total heat transfer rate(W)
+                           Nandle &SenWaterCoilLoad,     // Sensible heat transfer rate(W)
+                           Nandle &SurfAreaWetFraction,  // Fraction of surface area wet
+                           Nandle &AirInletCoilSurfTemp, // Surface temperature at air entrance(C)
                            int const FanOpMode,          // fan operating mode
-                           Real64 const PartLoadRatio    // part-load ratio of heating coil
+                           Nandle const PartLoadRatio    // part-load ratio of heating coil
     );
 
     // Coil Part Wet Part Dry Subroutine for Cooling Coil
 
     void CoilPartWetPartDry(int const CoilNum,             // Number of Coil
                             bool const FirstHVACIteration, // Saving Old values
-                            Real64 const InletWaterTemp,   // Entering liquid temperature(C)
-                            Real64 const InletAirTemp,     // Entering air dry bulb temperature(C)
-                            Real64 const AirDewPointTemp,  // Entering air dew point(C)
-                            Real64 &OutletWaterTemp,       // Leaving liquid temperature(C)
-                            Real64 &OutletAirTemp,         // Leaving air dry bulb temperature(C)
-                            Real64 &OutletAirHumRat,       // Leaving air humidity ratio
-                            Real64 &TotWaterCoilLoad,      // Total heat transfer rate (W)
-                            Real64 &SenWaterCoilLoad,      // Sensible heat transfer rate (W)
-                            Real64 &SurfAreaWetFraction,   // Fraction of surface area wet
+                            Nandle const InletWaterTemp,   // Entering liquid temperature(C)
+                            Nandle const InletAirTemp,     // Entering air dry bulb temperature(C)
+                            Nandle const AirDewPointTemp,  // Entering air dew point(C)
+                            Nandle &OutletWaterTemp,       // Leaving liquid temperature(C)
+                            Nandle &OutletAirTemp,         // Leaving air dry bulb temperature(C)
+                            Nandle &OutletAirHumRat,       // Leaving air humidity ratio
+                            Nandle &TotWaterCoilLoad,      // Total heat transfer rate (W)
+                            Nandle &SenWaterCoilLoad,      // Sensible heat transfer rate (W)
+                            Nandle &SurfAreaWetFraction,   // Fraction of surface area wet
                             int const FanOpMode,           // fan operating mode
-                            Real64 const PartLoadRatio     // part-load ratio of heating coil
+                            Nandle const PartLoadRatio     // part-load ratio of heating coil
     );
 
     // Calculating coil UA for Cooling Coil
 
-    Real64 CalcCoilUAbyEffectNTU(int const CoilNum,
-                                 Real64 const CapacityStream1,     // Capacity rate of stream1.(W/C)
-                                 Real64 const EnergyInStreamOne,   // Inlet state of stream1.(C)
-                                 Real64 const CapacityStream2,     // Capacity rate of stream2.(W/C)
-                                 Real64 const EnergyInStreamTwo,   // Inlet state of stream2.(C)
-                                 Real64 const DesTotalHeatTransfer // Heat transfer rate(W)
+    Nandle CalcCoilUAbyEffectNTU(int const CoilNum,
+                                 Nandle const CapacityStream1,     // Capacity rate of stream1.(W/C)
+                                 Nandle const EnergyInStreamOne,   // Inlet state of stream1.(C)
+                                 Nandle const CapacityStream2,     // Capacity rate of stream2.(W/C)
+                                 Nandle const EnergyInStreamTwo,   // Inlet state of stream2.(C)
+                                 Nandle const DesTotalHeatTransfer // Heat transfer rate(W)
     );
 
     // Calculating coil outlet stream conditions and coil UA for Cooling Coil
 
     void CoilOutletStreamCondition(int const CoilNum,
-                                   Real64 const CapacityStream1,   // Capacity rate of stream1(W/C)
-                                   Real64 const EnergyInStreamOne, // Inlet state of stream1 (C)
-                                   Real64 const CapacityStream2,   // Capacity rate of stream2 (W/C)
-                                   Real64 const EnergyInStreamTwo, // Inlet state of stream2 (C)
-                                   Real64 const CoilUA,            // Heat transfer rateW)
-                                   Real64 &EnergyOutStreamOne,     // Outlet state of stream1 (C)
-                                   Real64 &EnergyOutStreamTwo      // Outlet state of stream2 (C)
+                                   Nandle const CapacityStream1,   // Capacity rate of stream1(W/C)
+                                   Nandle const EnergyInStreamOne, // Inlet state of stream1 (C)
+                                   Nandle const CapacityStream2,   // Capacity rate of stream2 (W/C)
+                                   Nandle const EnergyInStreamTwo, // Inlet state of stream2 (C)
+                                   Nandle const CoilUA,            // Heat transfer rateW)
+                                   Nandle &EnergyOutStreamOne,     // Outlet state of stream1 (C)
+                                   Nandle &EnergyOutStreamTwo      // Outlet state of stream2 (C)
     );
 
     // Subroutine for caculating outlet condition if coil is wet , for Cooling Coil
 
     void WetCoilOutletCondition(int const CoilNum,
-                                Real64 const AirTempIn,      // Entering air dry bulb temperature(C)
-                                Real64 const EnthAirInlet,   // Entering air enthalpy(J/kg)
-                                Real64 const EnthAirOutlet,  // Leaving air enthalpy(J/kg)
-                                Real64 const UACoilExternal, // Heat transfer coefficient for external surface (W/C)
-                                Real64 &OutletAirTemp,       // Leaving air dry bulb temperature(C)
-                                Real64 &OutletAirHumRat,     // Leaving air humidity ratio
-                                Real64 &SenWaterCoilLoad     // Sensible heat transfer rate(W)
+                                Nandle const AirTempIn,      // Entering air dry bulb temperature(C)
+                                Nandle const EnthAirInlet,   // Entering air enthalpy(J/kg)
+                                Nandle const EnthAirOutlet,  // Leaving air enthalpy(J/kg)
+                                Nandle const UACoilExternal, // Heat transfer coefficient for external surface (W/C)
+                                Nandle &OutletAirTemp,       // Leaving air dry bulb temperature(C)
+                                Nandle &OutletAirHumRat,     // Leaving air humidity ratio
+                                Nandle &SenWaterCoilLoad     // Sensible heat transfer rate(W)
     );
 
     // Beginning of Update subroutines for the WaterCoil Module
@@ -481,41 +481,41 @@ namespace WaterCoils {
     // Beginning of Coil Utility subroutines for the Detailed Model
     // *****************************************************************************
 
-    void CalcDryFinEffCoef(Real64 const OutTubeEffFinDiamRatio, Array1D<Real64> &PolynomCoef);
+    void CalcDryFinEffCoef(Nandle const OutTubeEffFinDiamRatio, Array1D<Nandle> &PolynomCoef);
 
-    void CalcIBesselFunc(Real64 const BessFuncArg, int const BessFuncOrd, Real64 &IBessFunc, int &ErrorCode);
+    void CalcIBesselFunc(Nandle const BessFuncArg, int const BessFuncOrd, Nandle &IBessFunc, int &ErrorCode);
 
-    void CalcKBesselFunc(Real64 const BessFuncArg, int const BessFuncOrd, Real64 &KBessFunc, int &ErrorCode);
+    void CalcKBesselFunc(Nandle const BessFuncArg, int const BessFuncOrd, Nandle &KBessFunc, int &ErrorCode);
 
-    void CalcPolynomCoef(Array2<Real64> const &OrderedPair, Array1D<Real64> &PolynomCoef);
+    void CalcPolynomCoef(Array2<Nandle> const &OrderedPair, Array1D<Nandle> &PolynomCoef);
 
-    Real64 SimpleHeatingCoilUAResidual(Real64 const UA,           // UA of coil
-                                       Array1D<Real64> const &Par // par(1) = design coil load [W]
+    Nandle SimpleHeatingCoilUAResidual(Nandle const UA,           // UA of coil
+                                       Array1D<Nandle> const &Par // par(1) = design coil load [W]
     );
 
-    Real64 SimpleCoolingCoilUAResidual(Real64 const UA,           // UA of coil
-                                       Array1D<Real64> const &Par // par(1) = design coil load [W]
+    Nandle SimpleCoolingCoilUAResidual(Nandle const UA,           // UA of coil
+                                       Array1D<Nandle> const &Par // par(1) = design coil load [W]
     );
 
     // Iterate Routine for Cooling Coil
 
-    void CoilAreaFracIter(Real64 &NewSurfAreaWetFrac,       // Out Value of variable
-                          Real64 const SurfAreaFracCurrent, // Driver Value
-                          Real64 const ErrorCurrent,        // Objective Function
-                          Real64 &SurfAreaFracPrevious,     // First Previous value of Surf Area Fraction
-                          Real64 &ErrorPrevious,            // First Previous value of error
-                          Real64 &SurfAreaFracLast,         // Second Previous value of Surf Area Fraction
-                          Real64 &ErrorLast,                // Second Previous value of error
+    void CoilAreaFracIter(Nandle &NewSurfAreaWetFrac,       // Out Value of variable
+                          Nandle const SurfAreaFracCurrent, // Driver Value
+                          Nandle const ErrorCurrent,        // Objective Function
+                          Nandle &SurfAreaFracPrevious,     // First Previous value of Surf Area Fraction
+                          Nandle &ErrorPrevious,            // First Previous value of error
+                          Nandle &SurfAreaFracLast,         // Second Previous value of Surf Area Fraction
+                          Nandle &ErrorLast,                // Second Previous value of error
                           int const IterNum,                // Number of Iterations
                           int &icvg                         // Iteration convergence flag
     );
 
     void CheckWaterCoilSchedule(std::string const &CompType, // unused1208
                                 std::string const &CompName,
-                                Real64 &Value,
+                                Nandle &Value,
                                 int &CompIndex);
 
-    Real64 GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
+    Nandle GetCoilMaxWaterFlowRate(std::string const &CoilType, // must match coil types in this module
                                    std::string const &CoilName, // must match coil names for the coil type
                                    bool &ErrorsFound            // set to true if problem
     );
@@ -542,11 +542,11 @@ namespace WaterCoils {
 
     void SetCoilDesFlow(std::string const &CoilType, // must match coil types in this module
                         std::string const &CoilName, // must match coil names for the coil type
-                        Real64 const CoilDesFlow,    // coil volumetric air flow rate [m3/s]
+                        Nandle const CoilDesFlow,    // coil volumetric air flow rate [m3/s]
                         bool &ErrorsFound            // set to true if problem
     );
 
-    Real64 GetWaterCoilDesAirFlow(std::string const &CoilType, // must match coil types in this module
+    Nandle GetWaterCoilDesAirFlow(std::string const &CoilType, // must match coil types in this module
                                   std::string const &CoilName, // must match coil names for the coil type
                                   bool &ErrorsFound            // set to true if problem
     );
@@ -561,23 +561,23 @@ namespace WaterCoils {
                                        bool &NodeNotFound       // true if matching air outlet node not found
     );
 
-    Real64 TdbFnHRhPb(Real64 const H,  // specific enthalpy {J/kg}
-                      Real64 const RH, // relative humidity value (0.0-1.0)
-                      Real64 const PB  // barometric pressure {Pascals}
+    Nandle TdbFnHRhPb(Nandle const H,  // specific enthalpy {J/kg}
+                      Nandle const RH, // relative humidity value (0.0-1.0)
+                      Nandle const PB  // barometric pressure {Pascals}
     );
 
-    Real64 EnthalpyResidual(Real64 const Tprov,        // test value of Tdb [C]
-                            Array1D<Real64> const &Par // Par(1) = desired enthaply H [J/kg]
+    Nandle EnthalpyResidual(Nandle const Tprov,        // test value of Tdb [C]
+                            Array1D<Nandle> const &Par // Par(1) = desired enthaply H [J/kg]
     );
 
-    Real64 EstimateHEXSurfaceArea(int const CoilNum); // coil number, [-]
+    Nandle EstimateHEXSurfaceArea(int const CoilNum); // coil number, [-]
 
     int GetWaterCoilIndex(std::string const &CoilType, // must match coil types in this module
                           std::string const &CoilName, // must match coil names for the coil type
                           bool &ErrorsFound            // set to true if problem
     );
 
-    Real64 GetWaterCoilCapacity(std::string const &CoilType, // must match coil types in this module
+    Nandle GetWaterCoilCapacity(std::string const &CoilType, // must match coil types in this module
                                 std::string const &CoilName, // must match coil names for the coil type
                                 bool &ErrorsFound            // set to true if problem
     );
@@ -608,9 +608,9 @@ namespace WaterCoils {
     // estimate heating coil design inlet water temperature for autosizing UA-value
     void EstimateCoilInletWaterTemp(int const CoilNum,                // index to heating coil
                                     int const FanOpMode,              // fan operating mode
-                                    Real64 const PartLoadRatio,       // part-load ratio of heating coil
-                                    Real64 const UAMax,               // maximum UA-Value
-                                    Real64 &DesCoilInletWaterTempUsed // estimated coil design inlet water temperature
+                                    Nandle const PartLoadRatio,       // part-load ratio of heating coil
+                                    Nandle const UAMax,               // maximum UA-Value
+                                    Nandle &DesCoilInletWaterTempUsed // estimated coil design inlet water temperature
     );
 
     // End of Coil Utility subroutines

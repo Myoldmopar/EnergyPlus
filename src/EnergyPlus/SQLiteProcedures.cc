@@ -93,7 +93,7 @@ std::unique_ptr<SQLite> CreateSQLiteDatabase()
         if (numberOfSQLiteObjects == 1) {
             Array1D_string alphas(5);
             int numAlphas;
-            Array1D<Real64> numbers(2);
+            Array1D<Nandle> numbers(2);
             int numNumbers;
             int status;
 
@@ -1388,11 +1388,11 @@ void SQLite::createSQLiteReportDictionaryRecord(int const reportVariableReportID
 }
 
 void SQLite::createSQLiteReportDataRecord(int const recordIndex,
-                                          Real64 const value,
+                                          Nandle const value,
                                           Optional_int_const reportingInterval,
-                                          Optional<Real64 const> minValue,
+                                          Optional<Nandle const> minValue,
                                           Optional_int_const minValueDate,
-                                          Optional<Real64 const> maxValue,
+                                          Optional<Nandle const> maxValue,
                                           Optional_int_const maxValueDate,
                                           Optional_int_const minutesPerTimeStep)
 {
@@ -1509,8 +1509,8 @@ void SQLite::createSQLiteTimeIndexRecord(int const reportingInterval,
                                          Optional_int_const month,
                                          Optional_int_const dayOfMonth,
                                          Optional_int_const hour,
-                                         Optional<Real64 const> endMinute,
-                                         Optional<Real64 const> startMinute,
+                                         Optional<Nandle const> endMinute,
+                                         Optional<Nandle const> startMinute,
                                          Optional_int_const dst,
                                          Optional_string_const dayType,
                                          bool const warmupFlag)
@@ -1690,16 +1690,16 @@ void SQLite::createYearlyTimeIndexRecord(int const simulationYear, int const cur
 
 void SQLite::addSQLiteZoneSizingRecord(std::string const &zoneName,   // the name of the zone
                                        std::string const &loadType,   // the description of the input variable
-                                       Real64 const calcDesLoad,      // the value from the sizing calculation [W]
-                                       Real64 const userDesLoad,      // the value from the sizing calculation modified by user input [W]
-                                       Real64 const calcDesFlow,      // calculated design air flow rate [m3/s]
-                                       Real64 const userDesFlow,      // user input or modified design air flow rate [m3/s]
+                                       Nandle const calcDesLoad,      // the value from the sizing calculation [W]
+                                       Nandle const userDesLoad,      // the value from the sizing calculation modified by user input [W]
+                                       Nandle const calcDesFlow,      // calculated design air flow rate [m3/s]
+                                       Nandle const userDesFlow,      // user input or modified design air flow rate [m3/s]
                                        std::string const &desDayName, // the name of the design day that produced the peak
                                        std::string const &peakHrMin,  // time stamp of the peak
-                                       Real64 const peakTemp,         // temperature at peak [C]
-                                       Real64 const peakHumRat,       // humidity ratio at peak [kg water/kg dry air]
-                                       Real64 const minOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
-                                       Real64 const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
+                                       Nandle const peakTemp,         // temperature at peak [C]
+                                       Nandle const peakHumRat,       // humidity ratio at peak [kg water/kg dry air]
+                                       Nandle const minOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
+                                       Nandle const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
 )
 {
     if (m_writeOutputToSQLite) {
@@ -1729,9 +1729,9 @@ void SQLite::addSQLiteZoneSizingRecord(std::string const &zoneName,   // the nam
 void SQLite::addSQLiteSystemSizingRecord(std::string const &SysName,      // the name of the system
                                          std::string const &LoadType,     // either "Cooling" or "Heating"
                                          std::string const &PeakLoadType, // either "Sensible" or "Total"
-                                         Real64 const &UserDesCap,        // User  Design Capacity
-                                         Real64 const &CalcDesVolFlow,    // Calculated Cooling Design Air Flow Rate
-                                         Real64 const &UserDesVolFlow,    // User Cooling Design Air Flow Rate
+                                         Nandle const &UserDesCap,        // User  Design Capacity
+                                         Nandle const &CalcDesVolFlow,    // Calculated Cooling Design Air Flow Rate
+                                         Nandle const &UserDesVolFlow,    // User Cooling Design Air Flow Rate
                                          std::string const &DesDayName,   // the name of the design day that produced the peak
                                          std::string const &PeakHrMin     // time stamp of the peak
 )
@@ -1757,7 +1757,7 @@ void SQLite::addSQLiteSystemSizingRecord(std::string const &SysName,      // the
 void SQLite::addSQLiteComponentSizingRecord(std::string const &compType, // the type of the component
                                             std::string const &compName, // the name of the component
                                             std::string const &varDesc,  // the description of the input variable
-                                            Real64 const varValue        // the value from the sizing calculation
+                                            Nandle const varValue        // the value from the sizing calculation
 )
 {
     if (m_writeOutputToSQLite) {
@@ -1786,7 +1786,7 @@ void SQLite::createSQLiteDaylightMapTitle(int const mapNum,
                                           int const zone,
                                           std::string const &refPt1,
                                           std::string const &refPt2,
-                                          Real64 const zCoord)
+                                          Nandle const zCoord)
 {
     if (m_writeOutputToSQLite) {
         // for some reason it is adding extra mapNumbers that are getting UNIQUE constraint ignored.
@@ -1810,10 +1810,10 @@ void SQLite::createSQLiteDaylightMap(int const mapNum,
                                      int const dayOfMonth,
                                      int const hourOfDay,
                                      int const nX,
-                                     Array1D<Real64> const &x,
+                                     Array1D<Nandle> const &x,
                                      int const nY,
-                                     Array1D<Real64> const &y,
-                                     Array2<Real64> const &illuminance)
+                                     Array1D<Nandle> const &y,
+                                     Array2<Nandle> const &illuminance)
 {
     if (m_writeOutputToSQLite) {
         ++m_hourlyReportIndex;

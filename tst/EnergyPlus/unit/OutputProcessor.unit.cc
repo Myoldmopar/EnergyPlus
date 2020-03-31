@@ -3231,17 +3231,17 @@ namespace OutputProcessor {
         inputProcessor->preScanReportingVariables();
         InitializeOutput();
 
-        Real64 ilgrGarage;
-        Real64 ilgrLiving;
-        Real64 ilgrAttic;
+        Nandle ilgrGarage;
+        Nandle ilgrLiving;
+        Nandle ilgrAttic;
 
         SetupOutputVariable("Zone Total Internal Latent Gain Rate", OutputProcessor::Unit::J, ilgrGarage, "Zone", "Sum", "Garage");
         SetupOutputVariable("Zone Total Internal Latent Gain Rate", OutputProcessor::Unit::J, ilgrLiving, "Zone", "Sum", "Living");
         SetupOutputVariable("Zone Total Internal Latent Gain Rate", OutputProcessor::Unit::J, ilgrAttic, "Zone", "Sum", "Attic");
 
-        Real64 isgrGarage;
-        Real64 isgrLiving;
-        Real64 isgrAttic;
+        Nandle isgrGarage;
+        Nandle isgrLiving;
+        Nandle isgrAttic;
 
         SetupOutputVariable("Zone Total Internal Sensible Gain Rate", OutputProcessor::Unit::J, isgrGarage, "Zone", "Sum", "Garage");
         SetupOutputVariable("Zone Total Internal Sensible Gain Rate", OutputProcessor::Unit::J, isgrLiving, "Zone", "Sum", "Living");
@@ -3288,17 +3288,17 @@ namespace OutputProcessor {
         inputProcessor->preScanReportingVariables();
         InitializeOutput();
 
-        Real64 ilgrGarage;
-        Real64 ilgrLiving1;
-        Real64 ilgrLiving2;
+        Nandle ilgrGarage;
+        Nandle ilgrLiving1;
+        Nandle ilgrLiving2;
 
         SetupOutputVariable("Zone Total Internal Latent Gain Rate", OutputProcessor::Unit::J, ilgrGarage, "Zone", "Sum", "Garage");
         SetupOutputVariable("Zone Total Internal Latent Gain Rate", OutputProcessor::Unit::J, ilgrLiving1, "Zone", "Sum", "Living1");
         SetupOutputVariable("Zone Total Internal Latent Gain Rate", OutputProcessor::Unit::J, ilgrLiving2, "Zone", "Sum", "Living2");
 
-        Real64 isgrGarage;
-        Real64 isgrLiving;
-        Real64 isgrAttic;
+        Nandle isgrGarage;
+        Nandle isgrLiving;
+        Nandle isgrAttic;
 
         SetupOutputVariable("Zone Total Internal Sensible Gain Rate", OutputProcessor::Unit::J, isgrGarage, "Zone", "Sum", "Garage");
         SetupOutputVariable("Zone Total Internal Sensible Gain Rate", OutputProcessor::Unit::J, isgrLiving, "Zone", "Sum", "Living1");
@@ -3516,7 +3516,7 @@ namespace OutputProcessor {
 
         GetReportVariableInput(OutputFiles::getSingleton());
 
-        Real64 cooling_consumption = 0.;
+        Nandle cooling_consumption = 0.;
         SetupOutputVariable("Chiller Electric Energy",
                             OutputProcessor::Unit::J,
                             cooling_consumption,
@@ -3530,7 +3530,7 @@ namespace OutputProcessor {
                             "Plant");
 
 
-        Real64 light_consumption = 0.;
+        Nandle light_consumption = 0.;
         SetupOutputVariable("Lights Electric Energy",
                             OutputProcessor::Unit::J,
                             light_consumption,
@@ -3546,7 +3546,7 @@ namespace OutputProcessor {
                             1,
                             1);
 
-        Real64 fuel_oil_co2 = 0.;
+        Nandle fuel_oil_co2 = 0.;
         SetupOutputVariable("Environmental Impact Fuel Oil #2 CO2 Emissions Mass",
                             OutputProcessor::Unit::kg,
                             fuel_oil_co2,
@@ -3616,7 +3616,7 @@ namespace OutputProcessor {
         ASSERT_TRUE(process_idf(idf_objects));
 
         GetReportVariableInput(OutputFiles::getSingleton());
-        Real64 fuel_used = 999;
+        Nandle fuel_used = 999;
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler1");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler2");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler3");
@@ -3647,7 +3647,7 @@ namespace OutputProcessor {
         ASSERT_TRUE(process_idf(idf_objects));
 
         GetReportVariableInput(OutputFiles::getSingleton());
-        Real64 fuel_used = 999;
+        Nandle fuel_used = 999;
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler1");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler2");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler3");
@@ -3676,7 +3676,7 @@ namespace OutputProcessor {
         ASSERT_TRUE(process_idf(idf_objects));
 
         GetReportVariableInput(OutputFiles::getSingleton());
-        Real64 fuel_used = 999;
+        Nandle fuel_used = 999;
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler1");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler2");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler3");
@@ -3707,7 +3707,7 @@ namespace OutputProcessor {
         ASSERT_TRUE(process_idf(idf_objects));
 
         GetReportVariableInput(OutputFiles::getSingleton());
-        Real64 vol_flow = 999;
+        Nandle vol_flow = 999;
         SetupOutputVariable(
             "AFN Linkage Node 1 to Node 2 Volume Flow Rate", OutputProcessor::Unit::m3_s, vol_flow, "System", "Average", "Zn003:Wall001");
         SetupOutputVariable(
@@ -3757,7 +3757,7 @@ namespace OutputProcessor {
         ASSERT_TRUE(process_idf(idf_objects));
 
         GetReportVariableInput(OutputFiles::getSingleton());
-        Real64 vol_flow = 999;
+        Nandle vol_flow = 999;
         SetupOutputVariable(
             "AFN Linkage Node 1 to Node 2 Volume Flow Rate", OutputProcessor::Unit::m3_s, vol_flow, "System", "Average", "ZN003:WALL001");
         SetupOutputVariable(
@@ -3892,7 +3892,7 @@ namespace OutputProcessor {
         });
 
         ASSERT_TRUE(process_idf(idf_objects));
-        Real64 light_consumption = 0;
+        Nandle light_consumption = 0;
         SetupOutputVariable("Lights Electric Energy",
                             OutputProcessor::Unit::J,
                             light_consumption,
@@ -3963,7 +3963,7 @@ namespace OutputProcessor {
                             "SPACE5-1",
                             1,
                             1);
-        Real64 zone_infil_total_loss = 0;
+        Nandle zone_infil_total_loss = 0;
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE1-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE2-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE3-1");
@@ -4114,7 +4114,7 @@ namespace OutputProcessor {
         GetReportVariableInput(OutputFiles::getSingleton());
         SetupOutputVariable(
             "Site Outdoor Air Drybulb Temperature", OutputProcessor::Unit::C, DataEnvironment::OutDryBulbTemp, "Zone", "Average", "Environment");
-        Real64 light_consumption = 999;
+        Nandle light_consumption = 999;
         SetupOutputVariable("Lights Electric Energy",
                             OutputProcessor::Unit::J,
                             light_consumption,
@@ -4185,7 +4185,7 @@ namespace OutputProcessor {
                             "SPACE5-1",
                             1,
                             1);
-        Real64 zone_infil_total_loss = 999;
+        Nandle zone_infil_total_loss = 999;
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE1-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE2-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE3-1");
@@ -4358,7 +4358,7 @@ namespace OutputProcessor {
         GetReportVariableInput(OutputFiles::getSingleton());
         SetupOutputVariable(
             "Site Outdoor Air Drybulb Temperature", OutputProcessor::Unit::C, DataEnvironment::OutDryBulbTemp, "Zone", "Average", "Environment");
-        Real64 light_consumption = 999;
+        Nandle light_consumption = 999;
         SetupOutputVariable("Lights Electric Energy",
                             OutputProcessor::Unit::J,
                             light_consumption,
@@ -4429,14 +4429,14 @@ namespace OutputProcessor {
                             "SPACE5-1",
                             1,
                             1);
-        Real64 zone_infil_total_loss = 999;
+        Nandle zone_infil_total_loss = 999;
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE1-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE2-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE3-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE4-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE5-1");
-        Real64 fuel_used = 999;
-        Real64 boiler_load = 999;
+        Nandle fuel_used = 999;
+        Nandle boiler_load = 999;
         SetupOutputVariable("Boiler Heating Rate", OutputProcessor::Unit::W, boiler_load, "System", "Average", "Boiler1");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler1");
 
@@ -4615,7 +4615,7 @@ namespace OutputProcessor {
         GetReportVariableInput(OutputFiles::getSingleton());
         SetupOutputVariable(
             "Site Outdoor Air Drybulb Temperature", OutputProcessor::Unit::C, DataEnvironment::OutDryBulbTemp, "Zone", "Average", "Environment");
-        Real64 light_consumption = 999;
+        Nandle light_consumption = 999;
         SetupOutputVariable("Lights Electric Energy",
                             OutputProcessor::Unit::J,
                             light_consumption,
@@ -4686,14 +4686,14 @@ namespace OutputProcessor {
                             "SPACE5-1",
                             1,
                             1);
-        Real64 zone_infil_total_loss = 999;
+        Nandle zone_infil_total_loss = 999;
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE1-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE2-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE3-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE4-1");
         SetupOutputVariable("Zone Infiltration Total Heat Loss Energy", OutputProcessor::Unit::J, zone_infil_total_loss, "System", "Sum", "SPACE5-1");
-        Real64 fuel_used = 999;
-        Real64 boiler_load = 999;
+        Nandle fuel_used = 999;
+        Nandle boiler_load = 999;
         SetupOutputVariable("Boiler Heating Rate", OutputProcessor::Unit::W, boiler_load, "System", "Average", "Boiler1");
         SetupOutputVariable("Boiler Gas Rate", OutputProcessor::Unit::W, fuel_used, "System", "Average", "Boiler1");
 
@@ -4954,7 +4954,7 @@ namespace OutputProcessor {
         GetReportVariableInput(OutputFiles::getSingleton());
         SetupOutputVariable(
             "Site Outdoor Air Drybulb Temperature", OutputProcessor::Unit::C, DataEnvironment::OutDryBulbTemp, "Zone", "Average", "Environment");
-        Real64 light_consumption = 999;
+        Nandle light_consumption = 999;
         SetupOutputVariable("Lights Electric Energy",
                             OutputProcessor::Unit::J,
                             light_consumption,
@@ -5035,7 +5035,7 @@ namespace OutputProcessor {
         GetReportVariableInput(OutputFiles::getSingleton());
         SetupOutputVariable(
             "Site Outdoor Air Drybulb Temperature", OutputProcessor::Unit::C, DataEnvironment::OutDryBulbTemp, "Zone", "Average", "Environment");
-        Real64 light_consumption = 999;
+        Nandle light_consumption = 999;
         SetupOutputVariable("Lights Electric Energy",
                             OutputProcessor::Unit::J,
                             light_consumption,
@@ -5195,7 +5195,7 @@ namespace OutputProcessor {
 
         ASSERT_TRUE(process_idf(idf_objects));
         bool errors_found = false;
-        Real64 transferredenergy = 0;
+        Nandle transferredenergy = 0;
         DataGlobals::NumOfZones = 1;
         DataHVACGlobals::NumPrimaryAirSys = 1;
         DataAirSystems::PrimaryAirSystem.allocate(DataHVACGlobals::NumPrimaryAirSys);

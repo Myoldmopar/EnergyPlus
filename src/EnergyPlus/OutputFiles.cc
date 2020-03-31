@@ -190,12 +190,12 @@ public:
 
     using arg_formatter::operator();
 
-    static constexpr bool should_be_fixed_output(const Real64 value)
+    static constexpr bool should_be_fixed_output(const Nandle value)
     {
         return (value >= 0.099999999999999995 || value <= -0.099999999999999995) || (value == 0.0) || (value == -0.0);
     }
 
-    static bool fixed_will_fit(const Real64 value, const int places)
+    static bool fixed_will_fit(const Nandle value, const int places)
     {
         if (value < 1.0 && value > -1.0) {
             return true;
@@ -216,7 +216,7 @@ public:
         return str;
     }
 
-    static std::string write_to_string(const Real64 value, fmt::format_specs &specs)
+    static std::string write_to_string(const Nandle value, fmt::format_specs &specs)
     {
         std::string str;
 
@@ -245,10 +245,10 @@ public:
         return out();
     }
 
-    iterator operator()(Real64 const value)
+    iterator operator()(Nandle const value)
     {
         if (specs()) {
-            const auto next_float = [](const Real64 value) {
+            const auto next_float = [](const Nandle value) {
                 if (std::signbit(value)) {
                     if (value == -0.0) {
                         return value;

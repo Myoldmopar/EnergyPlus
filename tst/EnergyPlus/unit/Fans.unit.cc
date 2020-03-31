@@ -134,7 +134,7 @@ TEST_F(EnergyPlusFixture, Fans_ConstantVolume_EMSPressureRiseResetTest)
     // simulate the fan
     Fans::SimSimpleFan(FanNum);
     // fan power = MassFlow * DeltaPress / (FanEff * RhoAir)
-    Real64 Result_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.DeltaPress / (thisFan.FanEff * thisFan.RhoAirStdInit));
+    Nandle Result_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.DeltaPress / (thisFan.FanEff * thisFan.RhoAirStdInit));
     EXPECT_DOUBLE_EQ(Result_FanPower, thisFan.FanPower); // expects 300 W
 
     // negative fan pressure rise set using EMS
@@ -143,7 +143,7 @@ TEST_F(EnergyPlusFixture, Fans_ConstantVolume_EMSPressureRiseResetTest)
     // simulate the fan with negative pressure rise
     // set using fans EMS actuator for Pressure Rise
     Fans::SimSimpleFan(FanNum);
-    Real64 Result2_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.EMSFanPressureValue / (thisFan.FanEff * thisFan.RhoAirStdInit));
+    Nandle Result2_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.EMSFanPressureValue / (thisFan.FanEff * thisFan.RhoAirStdInit));
     EXPECT_DOUBLE_EQ(Result2_FanPower, thisFan.FanPower); // expects zero
 }
 TEST_F(EnergyPlusFixture, Fans_OnOff_EMSPressureRiseResetTest)
@@ -181,7 +181,7 @@ TEST_F(EnergyPlusFixture, Fans_OnOff_EMSPressureRiseResetTest)
     // simulate the fan
     Fans::SimOnOffFan(FanNum);
     // fan power = MassFlow * DeltaPress / (FanEff * RhoAir)
-    Real64 Result_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.DeltaPress / (thisFan.FanEff * thisFan.RhoAirStdInit));
+    Nandle Result_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.DeltaPress / (thisFan.FanEff * thisFan.RhoAirStdInit));
     EXPECT_DOUBLE_EQ(Result_FanPower, thisFan.FanPower); // expects 300 W
 
     // negative fan pressure rise set using EMS
@@ -190,7 +190,7 @@ TEST_F(EnergyPlusFixture, Fans_OnOff_EMSPressureRiseResetTest)
     // simulate the fan with negative pressure rise
     // set using fans EMS actuator for Pressure Rise
     Fans::SimOnOffFan(FanNum);
-    Real64 Result2_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.EMSFanPressureValue / (thisFan.FanEff * thisFan.RhoAirStdInit));
+    Nandle Result2_FanPower = max(0.0, thisFan.MaxAirMassFlowRate * thisFan.EMSFanPressureValue / (thisFan.FanEff * thisFan.RhoAirStdInit));
     EXPECT_DOUBLE_EQ(Result2_FanPower, thisFan.FanPower); // expects zero
 }
 TEST_F(EnergyPlusFixture, Fans_VariableVolume_EMSPressureRiseResetTest)
@@ -234,11 +234,11 @@ TEST_F(EnergyPlusFixture, Fans_VariableVolume_EMSPressureRiseResetTest)
     // simulate the fan
     Fans::SimVariableVolumeFan(FanNum);
     // fan power = PartLoadFrac * MassFlow * DeltaPress / (FanEff * RhoAir)
-    Real64 FlowRatio = 1.0;
-    Real64 PartLoadFrac = thisFan.FanCoeff(1) + thisFan.FanCoeff(2) * FlowRatio + thisFan.FanCoeff(3) * FlowRatio * FlowRatio +
+    Nandle FlowRatio = 1.0;
+    Nandle PartLoadFrac = thisFan.FanCoeff(1) + thisFan.FanCoeff(2) * FlowRatio + thisFan.FanCoeff(3) * FlowRatio * FlowRatio +
                           thisFan.FanCoeff(4) * FlowRatio * FlowRatio * FlowRatio;
 
-    Real64 Result_FanPower = max(0.0, PartLoadFrac * thisFan.MaxAirMassFlowRate * thisFan.DeltaPress / (thisFan.FanEff * thisFan.RhoAirStdInit));
+    Nandle Result_FanPower = max(0.0, PartLoadFrac * thisFan.MaxAirMassFlowRate * thisFan.DeltaPress / (thisFan.FanEff * thisFan.RhoAirStdInit));
     EXPECT_DOUBLE_EQ(Result_FanPower, thisFan.FanPower); // expects 300 W
 
     // negative fan pressure rise set using EMS
@@ -247,7 +247,7 @@ TEST_F(EnergyPlusFixture, Fans_VariableVolume_EMSPressureRiseResetTest)
     // simulate the fan with negative pressure rise
     // set using fans EMS actuator for Pressure Rise
     Fans::SimVariableVolumeFan(FanNum);
-    Real64 Result2_FanPower =
+    Nandle Result2_FanPower =
         max(0.0, PartLoadFrac * thisFan.MaxAirMassFlowRate * thisFan.EMSFanPressureValue / (thisFan.FanEff * thisFan.RhoAirStdInit));
     EXPECT_DOUBLE_EQ(Result2_FanPower, thisFan.FanPower); // expects zero
 }

@@ -137,7 +137,7 @@ namespace HeatPumpWaterToWaterCOOLING {
         return nullptr; // LCOV_EXCL_LINE
     }
 
-    void GshpPeCoolingSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad,
+    void GshpPeCoolingSpecs::simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad,
                   bool EP_UNUSED(RunFlag)) {
         // Simulate the model for the Demand "MyLoad"
         if (calledFromLocation.loopNum == this->LoadLoopNum) { // chilled water loop
@@ -161,9 +161,9 @@ namespace HeatPumpWaterToWaterCOOLING {
     }
 
     void GshpPeCoolingSpecs::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation),
-                             Real64 &MaxLoad,
-                             Real64 &MinLoad,
-                             Real64 &OptLoad) {
+                             Nandle &MaxLoad,
+                             Nandle &MinLoad,
+                             Nandle &OptLoad) {
         MinLoad = this->NomCap * this->MinPartLoadRat;
         MaxLoad = this->NomCap * this->MaxPartLoadRat;
         OptLoad = this->NomCap * this->OptPartLoadRat;
@@ -239,7 +239,7 @@ namespace HeatPumpWaterToWaterCOOLING {
         int NumNums;                  // Number of elements in the numeric array
         int IOStat;                   // IO Status when calling get input subroutine
         Array1D_string AlphArray(5);  // character string data
-        Array1D<Real64> NumArray(23); // numeric data
+        Array1D<Nandle> NumArray(23); // numeric data
 
         static bool ErrorsFound(false);
 
@@ -530,7 +530,7 @@ namespace HeatPumpWaterToWaterCOOLING {
             this->MustRun = true;
 
             this->beginEnvironFlag = false;
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                    DataGlobals::CWInitConvTemp,
                                    DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                    RoutineName);
@@ -579,7 +579,7 @@ namespace HeatPumpWaterToWaterCOOLING {
         this->QSource = 0.0;
     }
 
-    void GshpPeCoolingSpecs::calculate(Real64 &MyLoad)
+    void GshpPeCoolingSpecs::calculate(Nandle &MyLoad)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR
@@ -589,10 +589,10 @@ namespace HeatPumpWaterToWaterCOOLING {
         //       RE-ENGINEERED  Mar2000
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const gamma(1.114); // Expnasion Coefficient
-        Real64 const HeatBalTol(0.0005);
-        Real64 const RelaxParam(0.6);
-        Real64 const SmallNum(1.0e-20);
+        Nandle const gamma(1.114); // Expnasion Coefficient
+        Nandle const HeatBalTol(0.0005);
+        Nandle const RelaxParam(0.6);
+        Nandle const SmallNum(1.0e-20);
         int const IterationLimit(500);
         static std::string const RoutineName("CalcGshpModel");
         static std::string const RoutineNameLoadSideRefridgTemp("CalcGSHPModel:LoadSideRefridgTemp");
@@ -603,37 +603,37 @@ namespace HeatPumpWaterToWaterCOOLING {
         static ObjexxFCL::gio::Fmt fmtLD("*");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SourceSideEffect;      // Source Side effectiveness
-        Real64 LoadSideEffect;        // Load Side effectiveness
-        Real64 SourceSideRefridgTemp; // Source Side temperature
-        Real64 LoadSideRefridgTemp;   // Load Side temperature
-        Real64 SourceSidePressure;    // Source Side pressure
-        Real64 LoadSidePressure;      // Load Side pressure
-        Real64 SuctionPr;             // Suction Pressure
-        Real64 DischargePr;           // Discharge Pressure
-        Real64 CompressInletTemp;     // Compressor inlet temperature
-        Real64 MassRef;               // mass flow rate of refrigerant
-        Real64 SourceSideOutletEnth;  // Enthalpy at Source Side pressure
-        Real64 LoadSideOutletEnth;    // Enthalpy at Condensor Pressure
-        Real64 initialQSource;        // Guess Source Side Heat rate
-        Real64 initialQLoad;          // Guess Load Side Heat rate
-        Real64 qual;                  // quality
-        Real64 SuperHeatEnth;
-        Real64 T110;
-        Real64 T111;
-        Real64 CompSuctionTemp;
-        Real64 CompSuctionEnth;
-        Real64 CompSuctionDensity;
-        Real64 CompSuctionSatTemp;
+        Nandle SourceSideEffect;      // Source Side effectiveness
+        Nandle LoadSideEffect;        // Load Side effectiveness
+        Nandle SourceSideRefridgTemp; // Source Side temperature
+        Nandle LoadSideRefridgTemp;   // Load Side temperature
+        Nandle SourceSidePressure;    // Source Side pressure
+        Nandle LoadSidePressure;      // Load Side pressure
+        Nandle SuctionPr;             // Suction Pressure
+        Nandle DischargePr;           // Discharge Pressure
+        Nandle CompressInletTemp;     // Compressor inlet temperature
+        Nandle MassRef;               // mass flow rate of refrigerant
+        Nandle SourceSideOutletEnth;  // Enthalpy at Source Side pressure
+        Nandle LoadSideOutletEnth;    // Enthalpy at Condensor Pressure
+        Nandle initialQSource;        // Guess Source Side Heat rate
+        Nandle initialQLoad;          // Guess Load Side Heat rate
+        Nandle qual;                  // quality
+        Nandle SuperHeatEnth;
+        Nandle T110;
+        Nandle T111;
+        Nandle CompSuctionTemp;
+        Nandle CompSuctionEnth;
+        Nandle CompSuctionDensity;
+        Nandle CompSuctionSatTemp;
         std::string ErrString;
-        Real64 DutyFactor;
+        Nandle DutyFactor;
         int IterationCount;
 
-        static Real64 CurrentSimTime(0.0);
-        static Real64 PrevSimTime(0.0);
+        static Nandle CurrentSimTime(0.0);
+        static Nandle PrevSimTime(0.0);
 
-        Real64 CpSourceSide; // local temporary for fluid specific heat
-        Real64 CpLoadSide;   // local temporary for fluid specific heat
+        Nandle CpSourceSide; // local temporary for fluid specific heat
+        Nandle CpLoadSide;   // local temporary for fluid specific heat
 
         if (PrevSimTime != CurrentSimTime) {
             PrevSimTime = CurrentSimTime;
@@ -963,7 +963,7 @@ namespace HeatPumpWaterToWaterCOOLING {
             // set node flow rates;  for these load based models
             // assume that the sufficient Source Side flow rate available
 
-            Real64 const ReportingConstant = DataHVACGlobals::TimeStepSys * SecInHour;
+            Nandle const ReportingConstant = DataHVACGlobals::TimeStepSys * SecInHour;
 
             this->Energy = this->Power * ReportingConstant;
             this->QSourceEnergy = QSource * ReportingConstant;

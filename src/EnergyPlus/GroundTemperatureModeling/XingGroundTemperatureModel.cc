@@ -123,7 +123,7 @@ std::shared_ptr<XingGroundTempsModel> XingGroundTempsModel::XingGTMFactory(int o
 
 //******************************************************************************
 
-Real64 XingGroundTempsModel::getGroundTemp()
+Nandle XingGroundTempsModel::getGroundTemp()
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -140,19 +140,19 @@ Real64 XingGroundTempsModel::getGroundTemp()
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
     int n;
-    Real64 static tp(NumDaysInYear); // Period of soil temperature cycle
-    Real64 Ts_1;                     // Amplitude of surface temperature
-    Real64 Ts_2;                     // Amplitude of surface temperature
-    Real64 PL_1;                     // Phase shift of surface temperature
-    Real64 PL_2;                     // Phase shift of surface temperature
+    Nandle static tp(NumDaysInYear); // Period of soil temperature cycle
+    Nandle Ts_1;                     // Amplitude of surface temperature
+    Nandle Ts_2;                     // Amplitude of surface temperature
+    Nandle PL_1;                     // Phase shift of surface temperature
+    Nandle PL_2;                     // Phase shift of surface temperature
 
-    Real64 term1;
-    Real64 term2;
-    Real64 term3;
-    Real64 term4;
+    Nandle term1;
+    Nandle term2;
+    Nandle term3;
+    Nandle term4;
 
-    Real64 retVal;
-    Real64 summation;
+    Nandle retVal;
+    Nandle summation;
 
     // Inits
     Ts_1 = surfTempAmplitude_1;
@@ -177,7 +177,7 @@ Real64 XingGroundTempsModel::getGroundTemp()
 
 //******************************************************************************
 
-Real64 XingGroundTempsModel::getGroundTempAtTimeInMonths(Real64 _depth, int _month)
+Nandle XingGroundTempsModel::getGroundTempAtTimeInMonths(Nandle _depth, int _month)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell
@@ -192,7 +192,7 @@ Real64 XingGroundTempsModel::getGroundTempAtTimeInMonths(Real64 _depth, int _mon
     using WeatherManager::NumDaysInYear;
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 const aveDaysInMonth = NumDaysInYear / 12;
+    Nandle const aveDaysInMonth = NumDaysInYear / 12;
 
     depth = _depth;
 
@@ -210,7 +210,7 @@ Real64 XingGroundTempsModel::getGroundTempAtTimeInMonths(Real64 _depth, int _mon
 
 //******************************************************************************
 
-Real64 XingGroundTempsModel::getGroundTempAtTimeInSeconds(Real64 _depth, Real64 seconds)
+Nandle XingGroundTempsModel::getGroundTempAtTimeInSeconds(Nandle _depth, Nandle seconds)
 {
     // SUBROUTINE INFORMATION:
     //       AUTHOR         Matt Mitchell

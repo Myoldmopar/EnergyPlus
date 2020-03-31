@@ -93,127 +93,127 @@ namespace General {
 
     // Functions
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x [,Par]) = 0
-                   std::function<Real64(Real64 const, std::vector<Real64> const &)> f,
-                   Real64 const X_0,         // 1st bound of interval that contains the solution
-                   Real64 const X_1,         // 2nd bound of interval that contains the solution
-                   std::vector<Real64> const &Par // array with additional parameters used for function evaluation
+                   Nandle &XRes,     // value of x that solves f(x [,Par]) = 0
+                   std::function<Nandle(Nandle const, std::vector<Nandle> const &)> f,
+                   Nandle const X_0,         // 1st bound of interval that contains the solution
+                   Nandle const X_1,         // 2nd bound of interval that contains the solution
+                   std::vector<Nandle> const &Par // array with additional parameters used for function evaluation
     );
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x [,Par]) = 0
-                   std::function<Real64(Real64 const, Array1D<Real64> const &)> f,
-                   Real64 const X_0,         // 1st bound of interval that contains the solution
-                   Real64 const X_1,         // 2nd bound of interval that contains the solution
-                   Array1D<Real64> const &Par // array with additional parameters used for function evaluation
+                   Nandle &XRes,     // value of x that solves f(x [,Par]) = 0
+                   std::function<Nandle(Nandle const, Array1D<Nandle> const &)> f,
+                   Nandle const X_0,         // 1st bound of interval that contains the solution
+                   Nandle const X_1,         // 2nd bound of interval that contains the solution
+                   Array1D<Nandle> const &Par // array with additional parameters used for function evaluation
     );
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x [,Par]) = 0
-                   std::function<Real64(Real64 const, Array1D<Real64> const &)> f,
-                   Real64 const X_0,           // 1st bound of interval that contains the solution
-                   Real64 const X_1,           // 2nd bound of interval that contains the solution
-                   Array1D<Real64> const &Par, // array with additional parameters used for function evaluation
+                   Nandle &XRes,     // value of x that solves f(x [,Par]) = 0
+                   std::function<Nandle(Nandle const, Array1D<Nandle> const &)> f,
+                   Nandle const X_0,           // 1st bound of interval that contains the solution
+                   Nandle const X_1,           // 2nd bound of interval that contains the solution
+                   Array1D<Nandle> const &Par, // array with additional parameters used for function evaluation
                    int const AlgorithmTypeNum, // ALgorithm selection
-                   Real64 &XX_0,               // Low bound obtained with maximum number of allowed iterations
-                   Real64 &XX_1                // Hign bound obtained with maximum number of allowed iterations
+                   Nandle &XX_0,               // Low bound obtained with maximum number of allowed iterations
+                   Nandle &XX_1                // Hign bound obtained with maximum number of allowed iterations
     );
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x) = 0
-                   std::function<Real64(Real64 const)> f,
-                   Real64 const X_0, // 1st bound of interval that contains the solution
-                   Real64 const X_1  // 2nd bound of interval that contains the solution
+                   Nandle &XRes,     // value of x that solves f(x) = 0
+                   std::function<Nandle(Nandle const)> f,
+                   Nandle const X_0, // 1st bound of interval that contains the solution
+                   Nandle const X_1  // 2nd bound of interval that contains the solution
     );
 
-    void SolveRoot(Real64 const Eps, // required absolute accuracy
+    void SolveRoot(Nandle const Eps, // required absolute accuracy
                    int const MaxIte, // maximum number of allowed iterations
                    int &Flag,        // integer storing exit status
-                   Real64 &XRes,     // value of x that solves f(x) = 0
-                   std::function<Real64(Real64 const)> f,
-                   Real64 const X_0,           // 1st bound of interval that contains the solution
-                   Real64 const X_1,           // 2nd bound of interval that contains the solution
+                   Nandle &XRes,     // value of x that solves f(x) = 0
+                   std::function<Nandle(Nandle const)> f,
+                   Nandle const X_0,           // 1st bound of interval that contains the solution
+                   Nandle const X_1,           // 2nd bound of interval that contains the solution
                    int const AlgorithmTypeNum, // ALgorithm selection
-                   Real64 &XX_0,               // Low bound obtained with maximum number of allowed iterations
-                   Real64 &XX_1                // Hign bound obtained with maximum number of allowed iterations
+                   Nandle &XX_0,               // Low bound obtained with maximum number of allowed iterations
+                   Nandle &XX_1                // Hign bound obtained with maximum number of allowed iterations
     );
 
-    Real64 InterpSw(Real64 const SwitchFac, // Switching factor: 0.0 if glazing is unswitched, = 1.0 if fully switched
-                    Real64 const A,         // Glazing property in unswitched state
-                    Real64 const B          // Glazing property in fully switched state
+    Nandle InterpSw(Nandle const SwitchFac, // Switching factor: 0.0 if glazing is unswitched, = 1.0 if fully switched
+                    Nandle const A,         // Glazing property in unswitched state
+                    Nandle const B          // Glazing property in fully switched state
     );
 
-    Real64 InterpBlind(Real64 const ProfAng,           // Profile angle (rad)
-                       Array1A<Real64> const PropArray // Array of blind properties
+    Nandle InterpBlind(Nandle const ProfAng,           // Profile angle (rad)
+                       Array1A<Nandle> const PropArray // Array of blind properties
     );
 
-    Real64 InterpProfAng(Real64 const ProfAng,           // Profile angle (rad)
-                         Array1S<Real64> const PropArray // Array of blind properties
+    Nandle InterpProfAng(Nandle const ProfAng,           // Profile angle (rad)
+                         Array1S<Nandle> const PropArray // Array of blind properties
     );
 
-    //	Real64
+    //	Nandle
     //	InterpSlatAng(
-    //		Real64 const SlatAng, // Slat angle (rad)
+    //		Nandle const SlatAng, // Slat angle (rad)
     //		bool const VarSlats, // True if slat angle is variable
-    //		Array1A< Real64 > const PropArray // Array of blind properties as function of slat angle
+    //		Array1A< Nandle > const PropArray // Array of blind properties as function of slat angle
     //	);
 
-    Real64 InterpSlatAng(Real64 const SlatAng,           // Slat angle (rad)
+    Nandle InterpSlatAng(Nandle const SlatAng,           // Slat angle (rad)
                          bool const VarSlats,            // True if slat angle is variable
-                         Array1S<Real64> const PropArray // Array of blind properties as function of slat angle
+                         Array1S<Nandle> const PropArray // Array of blind properties as function of slat angle
     );
 
-    Real64 InterpProfSlatAng(Real64 const ProfAng,           // Profile angle (rad)
-                             Real64 const SlatAng,           // Slat angle (rad)
+    Nandle InterpProfSlatAng(Nandle const ProfAng,           // Profile angle (rad)
+                             Nandle const SlatAng,           // Slat angle (rad)
                              bool const VarSlats,            // True if variable-angle slats
-                             Array2A<Real64> const PropArray // Array of blind properties
+                             Array2A<Nandle> const PropArray // Array of blind properties
     );
 
-    Real64 BlindBeamBeamTrans(Real64 const ProfAng,        // Solar profile angle (rad)
-                              Real64 const SlatAng,        // Slat angle (rad)
-                              Real64 const SlatWidth,      // Slat width (m)
-                              Real64 const SlatSeparation, // Slat separation (distance between surfaces of adjacent slats) (m)
-                              Real64 const SlatThickness   // Slat thickness (m)
+    Nandle BlindBeamBeamTrans(Nandle const ProfAng,        // Solar profile angle (rad)
+                              Nandle const SlatAng,        // Slat angle (rad)
+                              Nandle const SlatWidth,      // Slat width (m)
+                              Nandle const SlatSeparation, // Slat separation (distance between surfaces of adjacent slats) (m)
+                              Nandle const SlatThickness   // Slat thickness (m)
     );
 
-    Real64 POLYF(Real64 const X,         // Cosine of angle of incidence
-                 Array1A<Real64> const A // Polynomial coefficients
+    Nandle POLYF(Nandle const X,         // Cosine of angle of incidence
+                 Array1A<Nandle> const A // Polynomial coefficients
     );
 
-    Real64 POLYF(Real64 const X,         // Cosine of angle of incidence
-                 Array1<Real64> const &A // Polynomial coefficients
+    Nandle POLYF(Nandle const X,         // Cosine of angle of incidence
+                 Array1<Nandle> const &A // Polynomial coefficients
     );
 
-    Real64 POLYF(Real64 const X,          // Cosine of angle of incidence
-                 Array1S<Real64> const &A // Polynomial coefficients
+    Nandle POLYF(Nandle const X,          // Cosine of angle of incidence
+                 Array1S<Nandle> const &A // Polynomial coefficients
     );
 
-    Real64 POLY1F(Real64 &X,         // independent variable
-                  Array1A<Real64> A, // array of polynomial coefficients
+    Nandle POLY1F(Nandle &X,         // independent variable
+                  Array1A<Nandle> A, // array of polynomial coefficients
                   int &N             // number of terms in polynomial
     );
 
-    Real64 POLY2F(Real64 &X,         // independent variable
-                  Array1A<Real64> A, // array of polynomial coefficients
+    Nandle POLY2F(Nandle &X,         // independent variable
+                  Array1A<Nandle> A, // array of polynomial coefficients
                   int &N             // number of terms in polynomial
     );
 
-    std::string TrimSigDigits(Real64 const RealValue, int const SigDigits);
+    std::string TrimSigDigits(Nandle const RealValue, int const SigDigits);
 
     std::string TrimSigDigits(int const IntegerValue,
                               Optional_int_const SigDigits = _ // ignored
     );
 
-    std::string RoundSigDigits(Real64 const RealValue, int const SigDigits);
+    std::string RoundSigDigits(Nandle const RealValue, int const SigDigits);
 
     std::string RoundSigDigits(int const IntegerValue,
                                Optional_int_const SigDigits = _ // ignored
@@ -223,10 +223,10 @@ namespace General {
 
     std::string &strip_trailing_zeros(std::string &InputString);
 
-    void MovingAvg(Array1A<Real64> const DataIn, // input data that needs smoothing
+    void MovingAvg(Array1A<Nandle> const DataIn, // input data that needs smoothing
                    int const NumDataItems,       // number of values in DataIn
                    int const NumItemsInAvg,      // number of items in the averaging window
-                   Array1A<Real64> SmoothedData  // output data after smoothing
+                   Array1A<Nandle> SmoothedData  // output data after smoothing
     );
 
     void ProcessDateString(std::string const &String,
@@ -271,18 +271,18 @@ namespace General {
                             int const &monthNumber // January = 1
     );
 
-    Real64 SafeDivide(Real64 const a, Real64 const b);
+    Nandle SafeDivide(Nandle const a, Nandle const b);
 
-    void Invert3By3Matrix(Array2A<Real64> const A, // Input 3X3 Matrix
-                          Array2A<Real64> InverseA // Output 3X3 Matrix - Inverse Of A
+    void Invert3By3Matrix(Array2A<Nandle> const A, // Input 3X3 Matrix
+                          Array2A<Nandle> InverseA // Output 3X3 Matrix - Inverse Of A
     );
 
-    void Iterate(Real64 &ResultX,  // ResultX is the final Iteration result passed back to the calling routine
-                 Real64 const Tol, // Tolerance for Convergence
-                 Real64 const X0,  // Current value of X
-                 Real64 const Y0,  // Current value of the function Y(X)
-                 Real64 &X1,       // First Previous values of X
-                 Real64 &Y1,       // First Previous values of Y(X1)
+    void Iterate(Nandle &ResultX,  // ResultX is the final Iteration result passed back to the calling routine
+                 Nandle const Tol, // Tolerance for Convergence
+                 Nandle const X0,  // Current value of X
+                 Nandle const Y0,  // Current value of the function Y(X)
+                 Nandle &X1,       // First Previous values of X
+                 Nandle &Y1,       // First Previous values of Y(X1)
                  int const Iter,   // Number of iterations
                  int &Cnvg         // Convergence flag  Cnvg = 0:  Not converged
     );
@@ -329,28 +329,28 @@ namespace General {
 
     int LogicalToInteger(bool const Flag);
 
-    Real64 GetCurrentHVACTime();
+    Nandle GetCurrentHVACTime();
 
-    Real64 GetPreviousHVACTime();
+    Nandle GetPreviousHVACTime();
 
     std::string CreateHVACTimeIntervalString();
 
-    std::string CreateTimeString(Real64 const Time); // Time in seconds
+    std::string CreateTimeString(Nandle const Time); // Time in seconds
 
-    std::string CreateTimeIntervalString(Real64 const StartTime, // Start of current interval in seconds
-                                         Real64 const EndTime    // End of current interval in seconds
+    std::string CreateTimeIntervalString(Nandle const StartTime, // Start of current interval in seconds
+                                         Nandle const EndTime    // End of current interval in seconds
     );
 
-    void ParseTime(Real64 const Time, // Time value in seconds
+    void ParseTime(Nandle const Time, // Time value in seconds
                    int &Hours,        // Number of hours
                    int &Minutes,      // Number of minutes < 60
-                   Real64 &Seconds    // Number of seconds < 60
+                   Nandle &Seconds    // Number of seconds < 60
     );
 
     void ScanForReports(
         std::string const &reportName, bool &DoReport, Optional_string_const ReportKey = _, Optional_string Option1 = _, Optional_string Option2 = _);
 
-    inline void ReallocateRealArray(Array1D<Real64> &Array,
+    inline void ReallocateRealArray(Array1D<Nandle> &Array,
                                     int &ArrayMax,     // Current and resultant dimension for Array
                                     int const ArrayInc // increment for redimension
     )
@@ -389,9 +389,9 @@ namespace General {
 
     std::vector<std::string> splitString(const std::string &string, char delimiter);
 
-    Real64 epexp(Real64 x);
+    Nandle epexp(Nandle x);
 
-    Real64 epexp(Real64 x, Real64 defaultHigh);
+    Nandle epexp(Nandle x, Nandle defaultHigh);
 } // namespace General
 
 } // namespace EnergyPlus

@@ -357,10 +357,10 @@ namespace DataPlant {
         using namespace DataLoopNode;
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Real64 InletAvgTemp;
-        Real64 InletAvgMdot;
-        Real64 OutletAvgTemp;
-        Real64 OutletAvgMdot;
+        Nandle InletAvgTemp;
+        Nandle InletAvgMdot;
+        Nandle OutletAvgTemp;
+        Nandle OutletAvgMdot;
 
         if (FirstHVACIteration) {
             return false;
@@ -395,7 +395,7 @@ namespace DataPlant {
     }
 
     void HalfLoopData::PushBranchFlowCharacteristics(int const BranchNum,
-                                                             Real64 const ValueToPush,
+                                                             Nandle const ValueToPush,
                                                              bool const FirstHVACIteration // TRUE if First HVAC iteration of Time step
     ) {
 
@@ -436,8 +436,8 @@ namespace DataPlant {
         int ComponentInletNode;
         int ComponentOutletNode;
         int ComponentTypeOfNum;
-        Real64 MassFlowRateFound;
-        Real64 MassFlow;
+        Nandle MassFlowRateFound;
+        Nandle MassFlow;
         bool PlantIsRigid;
 
         auto &this_branch(this->Branch(BranchNum));
@@ -540,7 +540,7 @@ namespace DataPlant {
         }
     }
 
-    void HalfLoopData::SimulateAllLoopSideBranches(Real64 const ThisLoopSideFlow, bool const FirstHVACIteration, bool &LoopShutDownFlag)
+    void HalfLoopData::SimulateAllLoopSideBranches(Nandle const ThisLoopSideFlow, bool const FirstHVACIteration, bool &LoopShutDownFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -598,7 +598,7 @@ namespace DataPlant {
         }
     }
 
-    void HalfLoopData::AdjustPumpFlowRequestByEMSControls(int const BranchNum, int const CompNum, Real64 &FlowToRequest) {
+    void HalfLoopData::AdjustPumpFlowRequestByEMSControls(int const BranchNum, int const CompNum, Nandle &FlowToRequest) {
 
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Brent Griffith
@@ -633,7 +633,7 @@ namespace DataPlant {
     void HalfLoopData::DisableAnyBranchPumpsConnectedToUnloadedEquipment() {
         for (int branchNum = 2; branchNum <= this->TotalBranches - 1; ++branchNum) {
             auto &branch = this->Branch(branchNum);
-            Real64 totalDispatchedLoadOnBranch = 0.0;
+            Nandle totalDispatchedLoadOnBranch = 0.0;
             for (int compNum = 1; compNum <= branch.TotalComponents; ++compNum) {
                 auto &component = branch.Comp(compNum);
                 auto &t = component.TypeOf_Num;
@@ -650,9 +650,9 @@ namespace DataPlant {
         }
     }
 
-    Real64 HalfLoopData::EvaluateLoopSetPointLoad(int const FirstBranchNum,
+    Nandle HalfLoopData::EvaluateLoopSetPointLoad(int const FirstBranchNum,
                                                   int const LastBranchNum,
-                                                  Real64 ThisLoopSideFlow) {
+                                                  Nandle ThisLoopSideFlow) {
 
         // FUNCTION INFORMATION:
         //       AUTHOR         Edwin Lee
@@ -661,14 +661,14 @@ namespace DataPlant {
         //       RE-ENGINEERED  na
 
         // Return value
-        Real64 LoadToLoopSetPoint = 0.0; // function result
+        Nandle LoadToLoopSetPoint = 0.0; // function result
 
         static std::string const RoutineName("PlantLoopSolver::EvaluateLoopSetPointLoad");
         static std::string const RoutineNameAlt("PlantSupplySide:EvaluateLoopSetPointLoad");
 
         //~ General variables
-        Real64 SumMdotTimesTemp = 0.0;
-        Real64 SumMdot = 0.0;
+        Nandle SumMdotTimesTemp = 0.0;
+        Nandle SumMdot = 0.0;
 
         auto &thisPlantLoop = DataPlant::PlantLoop(this->myLoopNum);
 
@@ -680,8 +680,8 @@ namespace DataPlant {
             thisPlantLoop.CommonPipeType != DataPlant::CommonPipe_No) {
             const int OtherSide = 3 - this->myLoopSideNum;
             const int otherSideOutletNodeNum = thisPlantLoop.LoopSide(OtherSide).NodeNumOut;
-            Real64 commonPipeFlow = DataLoopNode::Node(otherSideOutletNodeNum).MassFlowRate - ThisLoopSideFlow;
-            Real64 otherSideExitingTemperature = DataLoopNode::Node(otherSideOutletNodeNum).Temp;
+            Nandle commonPipeFlow = DataLoopNode::Node(otherSideOutletNodeNum).MassFlowRate - ThisLoopSideFlow;
+            Nandle otherSideExitingTemperature = DataLoopNode::Node(otherSideOutletNodeNum).Temp;
             SumMdotTimesTemp += otherSideExitingTemperature * commonPipeFlow;
             SumMdot += commonPipeFlow;
         }
@@ -697,8 +697,8 @@ namespace DataPlant {
             int StartingComponent = this->Branch(BranchCounter).lastComponentSimulated + 1;
             int EnteringNodeNum = this->Branch(BranchCounter).Comp(StartingComponent).NodeNumIn;
 
-            Real64 EnteringTemperature = DataLoopNode::Node(EnteringNodeNum).Temp;
-            Real64 MassFlowRate = DataLoopNode::Node(EnteringNodeNum).MassFlowRate;
+            Nandle EnteringTemperature = DataLoopNode::Node(EnteringNodeNum).Temp;
+            Nandle MassFlowRate = DataLoopNode::Node(EnteringNodeNum).MassFlowRate;
 
             SumMdotTimesTemp += EnteringTemperature * MassFlowRate;
             SumMdot += MassFlowRate;
@@ -708,11 +708,11 @@ namespace DataPlant {
             return 0.0;
         }
 
-        Real64 WeightedInletTemp = SumMdotTimesTemp / SumMdot;
+        Nandle WeightedInletTemp = SumMdotTimesTemp / SumMdot;
 
         if (thisPlantLoop.FluidType == DataLoopNode::NodeType_Water) {
 
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(thisPlantLoop.FluidName, WeightedInletTemp,
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(thisPlantLoop.FluidName, WeightedInletTemp,
                                                                thisPlantLoop.FluidIndex, RoutineName);
 
             {
@@ -721,9 +721,9 @@ namespace DataPlant {
                 if (SELECT_CASE_var == DataPlant::SingleSetPoint) {
 
                     // Pick up the loop setpoint temperature
-                    Real64 LoopSetPointTemperature = this->TempSetPoint;
+                    Nandle LoopSetPointTemperature = this->TempSetPoint;
                     // Calculate the delta temperature
-                    Real64 DeltaTemp = LoopSetPointTemperature - WeightedInletTemp;
+                    Nandle DeltaTemp = LoopSetPointTemperature - WeightedInletTemp;
 
                     // Calculate the demand on the loop
                     LoadToLoopSetPoint = SumMdot * Cp * DeltaTemp;
@@ -731,14 +731,14 @@ namespace DataPlant {
                 } else if (SELECT_CASE_var == DataPlant::DualSetPointDeadBand) {
 
                     // Get the range of setpoints
-                    Real64 LoopSetPointTemperatureHi = DataLoopNode::Node(thisPlantLoop.TempSetPointNodeNum).TempSetPointHi;
-                    Real64 LoopSetPointTemperatureLo = DataLoopNode::Node(thisPlantLoop.TempSetPointNodeNum).TempSetPointLo;
+                    Nandle LoopSetPointTemperatureHi = DataLoopNode::Node(thisPlantLoop.TempSetPointNodeNum).TempSetPointHi;
+                    Nandle LoopSetPointTemperatureLo = DataLoopNode::Node(thisPlantLoop.TempSetPointNodeNum).TempSetPointLo;
 
                     // Calculate the demand on the loop
                     if (SumMdot > 0.0) {
-                        Real64 LoadToHeatingSetPoint =
+                        Nandle LoadToHeatingSetPoint =
                             SumMdot * Cp * (LoopSetPointTemperatureLo - WeightedInletTemp);
-                        Real64 LoadToCoolingSetPoint =
+                        Nandle LoadToCoolingSetPoint =
                             SumMdot * Cp * (LoopSetPointTemperatureHi - WeightedInletTemp);
                         // Possible combinations:
                         // 1  LoadToHeatingSetPoint > 0 & LoadToCoolingSetPoint > 0 -->  Heating required
@@ -793,7 +793,7 @@ namespace DataPlant {
 
         } else if (thisPlantLoop.FluidType == DataLoopNode::NodeType_Steam) {
 
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(thisPlantLoop.FluidName, WeightedInletTemp,
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(thisPlantLoop.FluidName, WeightedInletTemp,
                                                                thisPlantLoop.FluidIndex, RoutineName);
 
             {
@@ -802,19 +802,19 @@ namespace DataPlant {
                 if (SELECT_CASE_var == DataPlant::SingleSetPoint) {
 
                     // Pick up the loop setpoint temperature
-                    Real64 LoopSetPointTemperature = this->TempSetPoint;
+                    Nandle LoopSetPointTemperature = this->TempSetPoint;
 
                     // Calculate the delta temperature
-                    Real64 DeltaTemp = LoopSetPointTemperature - WeightedInletTemp;
+                    Nandle DeltaTemp = LoopSetPointTemperature - WeightedInletTemp;
 
-                    Real64 EnthalpySteamSatVapor =
+                    Nandle EnthalpySteamSatVapor =
                         FluidProperties::GetSatEnthalpyRefrig(fluidNameSteam, LoopSetPointTemperature, 1.0,
                                                               this->refrigIndex, RoutineNameAlt);
-                    Real64 EnthalpySteamSatLiquid =
+                    Nandle EnthalpySteamSatLiquid =
                         FluidProperties::GetSatEnthalpyRefrig(fluidNameSteam, LoopSetPointTemperature, 0.0,
                                                               this->refrigIndex, RoutineNameAlt);
 
-                    Real64 LatentHeatSteam = EnthalpySteamSatVapor - EnthalpySteamSatLiquid;
+                    Nandle LatentHeatSteam = EnthalpySteamSatVapor - EnthalpySteamSatLiquid;
 
                     // Calculate the demand on the loop
                     LoadToLoopSetPoint = SumMdot * (Cp * DeltaTemp + LatentHeatSteam);
@@ -830,7 +830,7 @@ namespace DataPlant {
         return LoadToLoopSetPoint;
     }
 
-    Real64 HalfLoopData::CalcOtherSideDemand(Real64 ThisLoopSideFlow) {
+    Nandle HalfLoopData::CalcOtherSideDemand(Nandle ThisLoopSideFlow) {
     
         // FUNCTION INFORMATION:
         //       AUTHOR         Edwin Lee
@@ -849,7 +849,7 @@ namespace DataPlant {
         return this->EvaluateLoopSetPointLoad(1, 1, ThisLoopSideFlow);
     }
 
-    Real64 HalfLoopData::SetupLoopFlowRequest(int const OtherSide) {
+    Nandle HalfLoopData::SetupLoopFlowRequest(int const OtherSide) {
 
         // FUNCTION INFORMATION:
         //       AUTHOR:          Dan Fisher, Edwin Lee
@@ -868,7 +868,7 @@ namespace DataPlant {
         //  to determine what the LoopSide should flow
 
         //~ Initialize
-        Real64 LoopFlow = 0.0; // Once all flow requests are evaluated, this is the desired flow on this side
+        Nandle LoopFlow = 0.0; // Once all flow requests are evaluated, this is the desired flow on this side
 
         // reference
         auto &loop(DataPlant::PlantLoop(this->myLoopNum));
@@ -877,12 +877,12 @@ namespace DataPlant {
         for (int LoopSideCounter = DataPlant::DemandSide;
              LoopSideCounter <= DataPlant::SupplySide; ++LoopSideCounter) {
             // Clear things out for this LoopSide
-            Real64 InletBranchRequestNeedAndTurnOn = 0.0;
-            Real64 InletBranchRequestNeedIfOn = 0.0;
-            Real64 ParallelBranchRequestsNeedAndTurnOn(0.0);
-            Real64 ParallelBranchRequestsNeedIfOn(0.0);
-            Real64 OutletBranchRequestNeedAndTurnOn = 0.0;
-            Real64 OutletBranchRequestNeedIfOn = 0.0;
+            Nandle InletBranchRequestNeedAndTurnOn = 0.0;
+            Nandle InletBranchRequestNeedIfOn = 0.0;
+            Nandle ParallelBranchRequestsNeedAndTurnOn(0.0);
+            Nandle ParallelBranchRequestsNeedIfOn(0.0);
+            Nandle OutletBranchRequestNeedAndTurnOn = 0.0;
+            Nandle OutletBranchRequestNeedIfOn = 0.0;
 
             // reference
             auto &loop_side(loop.LoopSide(LoopSideCounter));
@@ -896,8 +896,8 @@ namespace DataPlant {
             int const NumBranchesOnThisLoopSide = loop_side.TotalBranches;
             int ParallelBranchIndex = 0;
             for (int BranchCounter = 1; BranchCounter <= NumBranchesOnThisLoopSide; ++BranchCounter) {
-                Real64 ThisBranchFlowRequestNeedAndTurnOn = 0.0;
-                Real64 ThisBranchFlowRequestNeedIfOn = 0.0;
+                Nandle ThisBranchFlowRequestNeedAndTurnOn = 0.0;
+                Nandle ThisBranchFlowRequestNeedIfOn = 0.0;
 
                 // reference
                 auto &branch(loop_side.Branch(BranchCounter));
@@ -1124,9 +1124,9 @@ namespace DataPlant {
                     // 3a.  search the loop side with branch pumps and find the steps available with non-zero Myloads
                     // 3b.  search the loop side with branch pumps and find the steps available with zero Myloads
                     //					LoadedConstantSpeedBranchFlowRateSteps = 0.0;
-                    Real64 LoadedConstantSpeedBranchFlowRateSteps_sum = 0.0;
+                    Nandle LoadedConstantSpeedBranchFlowRateSteps_sum = 0.0;
                     this_loop_side.noLoadConstantSpeedBranchFlowRateSteps = 0.0;
-                    Real64 NoLoadConstantSpeedBranchFlowRateSteps_sum = 0.0;
+                    Nandle NoLoadConstantSpeedBranchFlowRateSteps_sum = 0.0;
                     int ParallelBranchIndex = 0;
                     int const NumBranchesOnThisLoopSide = loop_side.TotalBranches;
                     auto const &loop_branches(loop_side.Branch);
@@ -1146,13 +1146,13 @@ namespace DataPlant {
                     }
 
                     // 4. allocate which branches to use,
-                    Real64 tmpLoopFlow = max(this_loop_side.flowRequestFinal, other_loop_side.flowRequestFinal);
-                    Real64 MaxBranchPumpLoopSideFlow =
+                    Nandle tmpLoopFlow = max(this_loop_side.flowRequestFinal, other_loop_side.flowRequestFinal);
+                    Nandle MaxBranchPumpLoopSideFlow =
                         LoadedConstantSpeedBranchFlowRateSteps_sum + NoLoadConstantSpeedBranchFlowRateSteps_sum;
                     tmpLoopFlow = min(tmpLoopFlow, MaxBranchPumpLoopSideFlow);
                     //  4b. first use all the branches with non-zero MyLoad
                     if (tmpLoopFlow > LoadedConstantSpeedBranchFlowRateSteps_sum) {
-                        Real64 AccumFlowSteps = LoadedConstantSpeedBranchFlowRateSteps_sum;
+                        Nandle AccumFlowSteps = LoadedConstantSpeedBranchFlowRateSteps_sum;
                         ParallelBranchIndex = 0;
                         for (int BranchCounter = 1; BranchCounter <= NumBranchesOnThisLoopSide; ++BranchCounter) {
                             if (BranchCounter > 1 && BranchCounter < NumBranchesOnThisLoopSide) {
@@ -1219,11 +1219,11 @@ namespace DataPlant {
         bool LoopShutDownFlag = false;
     
         // First thing is to setup mass flow request information
-        Real64 ThisLoopSideFlowRequest = this->SetupLoopFlowRequest(OtherSide);
+        Nandle ThisLoopSideFlowRequest = this->SetupLoopFlowRequest(OtherSide);
     
         // Now we know what the loop would "like" to run at, let's see the pump
         // operation range (min/max avail) to see whether it is possible this time around
-        Real64 ThisLoopSideFlow = this->DetermineLoopSideFlowRate(ThisSideInletNode, ThisLoopSideFlowRequest);
+        Nandle ThisLoopSideFlow = this->DetermineLoopSideFlowRate(ThisSideInletNode, ThisLoopSideFlowRequest);
 
         for (auto &branch : this->Branch) {
             branch.lastComponentSimulated = 0;
@@ -1280,7 +1280,7 @@ namespace DataPlant {
     }
     
     void HalfLoopData::ResolveParallelFlows(
-        Real64 const ThisLoopSideFlow, // [kg/s]  total flow to be split
+        Nandle const ThisLoopSideFlow, // [kg/s]  total flow to be split
         bool const FirstHVACIteration  // TRUE if First HVAC iteration of Time step
     ) {
 
@@ -1323,12 +1323,12 @@ namespace DataPlant {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int NumActiveBranches;        // Active branch counter
-        Real64 ActiveFlowRate;        // The flow available when cycling through branches
-        Real64 PassiveFlowRate;       // The flow available when cycling through branches
-        Real64 FracFlow;              // The flow available when cycling through branches
-        Real64 ThisBranchRequestFrac; // The request ratio
-        Real64 totalMax;              // The flow available when cycling through branches
-        Real64 FlowRemaining;         // The flow available when cycling through branches
+        Nandle ActiveFlowRate;        // The flow available when cycling through branches
+        Nandle PassiveFlowRate;       // The flow available when cycling through branches
+        Nandle FracFlow;              // The flow available when cycling through branches
+        Nandle ThisBranchRequestFrac; // The request ratio
+        Nandle totalMax;              // The flow available when cycling through branches
+        Nandle FlowRemaining;         // The flow available when cycling through branches
         int OutletNum;                // Splitter outlet
         int MixerBranchOut;
         int SplitterBranchIn;  // As the name implies
@@ -1338,16 +1338,16 @@ namespace DataPlant {
         int BranchNum;         // intermediate value used for better readabilty
         int iBranch;           // DO loop counter for cycling through branches
         int NumSplitOutlets;   // As the name implies
-        Real64 BranchFlowReq;
-        Real64 BranchMinAvail;
-        Real64 BranchMaxAvail;
-        Real64 ParallelBranchMaxAvail;
-        Real64 ParallelBranchMinAvail;
-        Real64 TotParallelBranchFlowReq;
+        Nandle BranchFlowReq;
+        Nandle BranchMinAvail;
+        Nandle BranchMaxAvail;
+        Nandle ParallelBranchMaxAvail;
+        Nandle ParallelBranchMinAvail;
+        Nandle TotParallelBranchFlowReq;
         int FirstNodeOnBranchIn;
         int FirstNodeOnBranchOut;
-        Real64 StartingFlowRate;
-        Real64 ThisBranchRequest;
+        Nandle StartingFlowRate;
+        Nandle ThisBranchRequest;
         int CompCounter;
         int CompInletNode;
         int CompOutletNode;
@@ -1689,7 +1689,7 @@ namespace DataPlant {
     }
 
     void HalfLoopData::SimulateLoopSideBranchGroup(
-        int const FirstBranchNum, int const LastBranchNum, Real64 FlowRequest, bool const FirstHVACIteration, bool &LoopShutDownFlag)
+        int const FirstBranchNum, int const LastBranchNum, Nandle FlowRequest, bool const FirstHVACIteration, bool &LoopShutDownFlag)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1718,7 +1718,7 @@ namespace DataPlant {
         bool const DoNotGetCompSizFac(false);
 
         //~ General variables
-        Real64 LoadToLoopSetPoint;
+        Nandle LoadToLoopSetPoint;
         PlantLocation PumpLocation;
         LoadToLoopSetPoint = 0.0;
 
@@ -1971,7 +1971,7 @@ namespace DataPlant {
         static std::string const RoutineName("PlantLoopSolver::UpdateAnyLoopDemandAlterations");
 
         // Init to zero, so that if we don't find anything, we exit early
-        Real64 ComponentMassFlowRate(0.0);
+        Nandle ComponentMassFlowRate(0.0);
 
         auto const &this_comp(this->Branch(BranchNum).Comp(CompNum));
 
@@ -2013,21 +2013,21 @@ namespace DataPlant {
         if (ComponentMassFlowRate < MassFlowTolerance) return;
 
         // Get an average temperature for the property call
-        Real64 const InletTemp(Node(InletNode).Temp);
-        Real64 const OutletTemp(Node(OutletNode).Temp);
-        Real64 const AverageTemp((InletTemp + OutletTemp) / 2.0);
-        Real64 const ComponentCp(
+        Nandle const InletTemp(Node(InletNode).Temp);
+        Nandle const OutletTemp(Node(OutletNode).Temp);
+        Nandle const AverageTemp((InletTemp + OutletTemp) / 2.0);
+        Nandle const ComponentCp(
             GetSpecificHeatGlycol(PlantLoop(this->myLoopNum).FluidName, AverageTemp, PlantLoop(this->myLoopNum).FluidIndex, RoutineName));
 
         // Calculate the load altered by this component
-        Real64 const LoadAlteration(ComponentMassFlowRate * ComponentCp * (OutletTemp - InletTemp));
+        Nandle const LoadAlteration(ComponentMassFlowRate * ComponentCp * (OutletTemp - InletTemp));
 
         // Now alter the module level variables
         this->CurrentAlterationsToDemand += LoadAlteration;
         this->UpdatedDemandToLoopSetPoint = this->InitialDemandToLoopSetPoint - this->CurrentAlterationsToDemand;
     }
 
-    void HalfLoopData::SimulateSinglePump(PlantLocation const SpecificPumpLocation, Real64 &SpecificPumpFlowRate)
+    void HalfLoopData::SimulateSinglePump(PlantLocation const SpecificPumpLocation, Nandle &SpecificPumpFlowRate)
     {
 
         // SUBROUTINE INFORMATION:
@@ -2067,7 +2067,7 @@ namespace DataPlant {
     }
 
     void HalfLoopData::SimulateAllLoopSidePumps(Optional<PlantLocation const> SpecificPumpLocation,
-                                                        Optional<Real64 const> SpecificPumpFlowRate) {
+                                                        Optional<Nandle const> SpecificPumpFlowRate) {
 
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Edwin Lee
@@ -2097,7 +2097,7 @@ namespace DataPlant {
         }
 
         // If we have a flow rate to hit, then go for it, otherwise, just operate in request mode with zero flow
-        Real64 FlowToRequest;
+        Nandle FlowToRequest;
         if (present(SpecificPumpFlowRate)) {
             FlowToRequest = SpecificPumpFlowRate;
         } else {
@@ -2123,8 +2123,8 @@ namespace DataPlant {
                             loop_side_branch(PumpBranchNum).PumpIndex, pump.PumpHeatToFluid);
 
             //~ Pull some state information from the pump outlet node
-            Real64 const ThisPumpMinAvail = DataLoopNode::Node(PumpOutletNode).MassFlowRateMinAvail;
-            Real64 const ThisPumpMaxAvail = DataLoopNode::Node(PumpOutletNode).MassFlowRateMaxAvail;
+            Nandle const ThisPumpMinAvail = DataLoopNode::Node(PumpOutletNode).MassFlowRateMinAvail;
+            Nandle const ThisPumpMaxAvail = DataLoopNode::Node(PumpOutletNode).MassFlowRateMaxAvail;
 
             //~ Now update the data structure
             pump.CurrentMinAvail = ThisPumpMinAvail;
@@ -2137,11 +2137,11 @@ namespace DataPlant {
         }
     }
 
-    Real64 HalfLoopData::DetermineLoopSideFlowRate(int ThisSideInletNode, Real64 ThisSideLoopFlowRequest)
+    Nandle HalfLoopData::DetermineLoopSideFlowRate(int ThisSideInletNode, Nandle ThisSideLoopFlowRequest)
     {
-        Real64 ThisLoopSideFlow = ThisSideLoopFlowRequest;
-        Real64 TotalPumpMinAvailFlow = 0.0;
-        Real64 TotalPumpMaxAvailFlow = 0.0;
+        Nandle ThisLoopSideFlow = ThisSideLoopFlowRequest;
+        Nandle TotalPumpMinAvailFlow = 0.0;
+        Nandle TotalPumpMaxAvailFlow = 0.0;
         if (allocated(this->Pumps)) {
 
             //~ Initialize pump values
@@ -2202,12 +2202,12 @@ namespace DataPlant {
         //  hard code things to a single split/mix setting it to the mixer number
         int const SplitterInNode = this->Splitter.NodeNumIn;
         // Initialize Mixer outlet temp and mass flow rate
-        Real64 MixerOutletTemp = 0.0;
-        Real64 MixerOutletMassFlow = 0.0;
-        Real64 MixerOutletMassFlowMaxAvail = 0.0;
-        Real64 MixerOutletMassFlowMinAvail = 0.0;
-        Real64 MixerOutletPress = 0.0;
-        Real64 MixerOutletQuality = 0.0;
+        Nandle MixerOutletTemp = 0.0;
+        Nandle MixerOutletMassFlow = 0.0;
+        Nandle MixerOutletMassFlowMaxAvail = 0.0;
+        Nandle MixerOutletMassFlowMinAvail = 0.0;
+        Nandle MixerOutletPress = 0.0;
+        Nandle MixerOutletQuality = 0.0;
 
         // Calculate Mixer outlet mass flow rate
         for (int InletNodeNum = 1; InletNodeNum <= this->Mixer.TotalInletNodes; ++InletNodeNum) {
@@ -2219,8 +2219,8 @@ namespace DataPlant {
         for (int InletNodeNum = 1; InletNodeNum <= this->Mixer.TotalInletNodes; ++InletNodeNum) {
             int const MixerInletNode = this->Mixer.NodeNumIn(InletNodeNum);
             if (MixerOutletMassFlow > 0.0) {
-                Real64 const MixerInletMassFlow = DataLoopNode::Node(MixerInletNode).MassFlowRate;
-                Real64 const MassFrac = MixerInletMassFlow / MixerOutletMassFlow;
+                Nandle const MixerInletMassFlow = DataLoopNode::Node(MixerInletNode).MassFlowRate;
+                Nandle const MassFrac = MixerInletMassFlow / MixerOutletMassFlow;
                 // mass flow weighted temp and enthalpy for each mixer inlet
                 MixerOutletTemp += MassFrac * DataLoopNode::Node(MixerInletNode).Temp;
                 MixerOutletQuality += MassFrac * DataLoopNode::Node(MixerInletNode).Quality;

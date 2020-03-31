@@ -49,6 +49,6 @@
 #define EnergyPlusBase_h_INCLUDED
 
 typedef float Real32;  // Platform-specific: C++ has no defined precision floating point types
-typedef double Real64; // Platform-specific: C++ has no defined precision floating point types
+typedef double Nandle; // Platform-specific: C++ has no defined precision floating point types
 
 #endif

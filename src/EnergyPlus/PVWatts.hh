@@ -88,25 +88,25 @@ namespace PVWatts {
 
     struct DCPowerOutput
     {
-        Real64 poa;  // Plane of array irradiance
-        Real64 tpoa; // Transmitted plane of array irradiance
-        Real64 pvt;  // PV Cell temperature
-        Real64 dc;   // DC power output
+        Nandle poa;  // Plane of array irradiance
+        Nandle tpoa; // Transmitted plane of array irradiance
+        Nandle pvt;  // PV Cell temperature
+        Nandle dc;   // DC power output
     };
 
     struct IrradianceOutput
     {
-        Real64 solazi;
-        Real64 solzen;
-        Real64 solalt;
-        Real64 aoi;
-        Real64 stilt;
-        Real64 sazi;
-        Real64 rot;
-        Real64 btd;
-        Real64 ibeam;
-        Real64 iskydiff;
-        Real64 ignddiff;
+        Nandle solazi;
+        Nandle solzen;
+        Nandle solalt;
+        Nandle aoi;
+        Nandle stilt;
+        Nandle sazi;
+        Nandle rot;
+        Nandle btd;
+        Nandle ibeam;
+        Nandle iskydiff;
+        Nandle ignddiff;
         int sunup;
     };
 
@@ -134,83 +134,83 @@ namespace PVWatts {
 
         // User inputs
         std::string m_name;
-        Real64 m_dcSystemCapacity;
+        Nandle m_dcSystemCapacity;
         ModuleType m_moduleType;
         ArrayType m_arrayType;
-        Real64 m_systemLosses;
+        Nandle m_systemLosses;
         GeometryType m_geometryType;
-        Real64 m_tilt;
-        Real64 m_azimuth;
+        Nandle m_tilt;
+        Nandle m_azimuth;
         int m_surfaceNum;
-        Real64 m_groundCoverageRatio;
+        Nandle m_groundCoverageRatio;
 
         // Internal properties and data structures
-        Real64 m_gamma;
+        Nandle m_gamma;
         bool m_useARGlass;
         int m_trackMode;
-        Real64 m_inoct;
+        Nandle m_inoct;
         int m_shadeMode1x;
         std::unique_ptr<pvwatts_celltemp> m_tccalc;
 
         // State variables
-        Real64 m_lastCellTemperature;        // last cell temperature
-        Real64 m_lastPlaneOfArrayIrradiance; // last cell plane of array irradiance
-        Real64 m_cellTemperature;
-        Real64 m_planeOfArrayIrradiance;
+        Nandle m_lastCellTemperature;        // last cell temperature
+        Nandle m_lastPlaneOfArrayIrradiance; // last cell plane of array irradiance
+        Nandle m_cellTemperature;
+        Nandle m_planeOfArrayIrradiance;
 
         // Output variables
-        Real64 m_outputDCPower;
-        Real64 m_outputDCEnergy;
+        Nandle m_outputDCPower;
+        Nandle m_outputDCEnergy;
 
     public:
         static PVWattsGenerator createFromIdfObj(int objNum);
 
         PVWattsGenerator(const std::string &name,
-                         const Real64 dcSystemCapacity,
+                         const Nandle dcSystemCapacity,
                          ModuleType moduleType,
                          ArrayType arrayType,
-                         Real64 systemLosses = 0.14,
+                         Nandle systemLosses = 0.14,
                          GeometryType geometryType = GeometryType::TILT_AZIMUTH,
-                         Real64 tilt = 20.0,
-                         Real64 azimuth = 180.0,
+                         Nandle tilt = 20.0,
+                         Nandle azimuth = 180.0,
                          size_t surfaceNum = 0,
-                         Real64 groundCoverageRatio = 0.4);
+                         Nandle groundCoverageRatio = 0.4);
 
         void setupOutputVariables();
 
-        Real64 getDCSystemCapacity();
+        Nandle getDCSystemCapacity();
         ModuleType getModuleType();
         ArrayType getArrayType();
-        Real64 getSystemLosses();
+        Nandle getSystemLosses();
         GeometryType getGeometryType();
-        Real64 getTilt();
-        Real64 getAzimuth();
+        Nandle getTilt();
+        Nandle getAzimuth();
         DataSurfaces::SurfaceData &getSurface();
-        Real64 getGroundCoverageRatio();
+        Nandle getGroundCoverageRatio();
 
-        Real64 getCellTempearture();
-        Real64 getPlaneOfArrayIrradiance();
-        void setCellTemperature(Real64 cellTemp);
-        void setPlaneOfArrayIrradiance(Real64 poa);
+        Nandle getCellTempearture();
+        Nandle getPlaneOfArrayIrradiance();
+        void setCellTemperature(Nandle cellTemp);
+        void setPlaneOfArrayIrradiance(Nandle poa);
 
         void calc();
 
-        void getResults(Real64 &GeneratorPower, Real64 &GeneratorEnergy, Real64 &ThermalPower, Real64 &ThermalEnergy);
+        void getResults(Nandle &GeneratorPower, Nandle &GeneratorEnergy, Nandle &ThermalPower, Nandle &ThermalEnergy);
 
         IrradianceOutput processIrradiance(int year,
                                            int month,
                                            int day,
                                            int hour,
-                                           Real64 minute,
-                                           Real64 ts_hour,
-                                           Real64 lat,
-                                           Real64 lon,
-                                           Real64 tz,
-                                           Real64 dn,
-                                           Real64 df,
-                                           Real64 alb);
+                                           Nandle minute,
+                                           Nandle ts_hour,
+                                           Nandle lat,
+                                           Nandle lon,
+                                           Nandle tz,
+                                           Nandle dn,
+                                           Nandle df,
+                                           Nandle alb);
 
-        DCPowerOutput powerout(Real64 &shad_beam, Real64 shad_diff, Real64 dni, Real64 alb, Real64 wspd, Real64 tdry, IrradianceOutput &irr_st);
+        DCPowerOutput powerout(Nandle &shad_beam, Nandle shad_diff, Nandle dni, Nandle alb, Nandle wspd, Nandle tdry, IrradianceOutput &irr_st);
     };
 
     extern std::map<int, PVWattsGenerator> PVWattsGenerators;

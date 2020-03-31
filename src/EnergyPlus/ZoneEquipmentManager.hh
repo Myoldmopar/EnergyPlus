@@ -69,7 +69,7 @@ namespace ZoneEquipmentManager {
     // DERIVED TYPE DEFINITIONS
 
     // MODULE VARIABLE DECLARATIONS:
-    extern Array1D<Real64> AvgData; // scratch array for storing averaged data
+    extern Array1D<Nandle> AvgData; // scratch array for storing averaged data
     extern int NumOfTimeStepInDay; // number of zone time steps in a day
     extern bool GetZoneEquipmentInputFlag;
     extern bool SizeZoneEquipmentOneTimeFlag;
@@ -126,16 +126,16 @@ namespace ZoneEquipmentManager {
     void DistributeSystemOutputRequired(int const ActualZoneNum, bool const FirstHVACIteration);
 
     void UpdateSystemOutputRequired(int const ZoneNum,
-                                    Real64 const SysOutputProvided,         // sensible output provided by zone equipment (W)
-                                    Real64 const LatOutputProvided,         // latent output provided by zone equipment (kg/s)
+                                    Nandle const SysOutputProvided,         // sensible output provided by zone equipment (W)
+                                    Nandle const LatOutputProvided,         // latent output provided by zone equipment (kg/s)
                                     Optional_int_const EquipPriorityNum = _ // index in PrioritySimOrder for this update
     );
 
     void CalcZoneMassBalance(bool const FirstHVACIteration);
 
     void CalcZoneReturnFlows(int const ZoneNum,
-                             Real64 &ExpTotalReturnMassFlow,  // Expected total return air mass flow rate
-                             Real64 &FinalTotalReturnMassFlow // Final total return air mass flow rate
+                             Nandle &ExpTotalReturnMassFlow,  // Expected total return air mass flow rate
+                             Nandle &FinalTotalReturnMassFlow // Final total return air mass flow rate
     );
 
     void CalcAirFlowSimple(int const SysTimestepLoop = 0,              // System time step index
@@ -144,7 +144,7 @@ namespace ZoneEquipmentManager {
 
     void GetStandAloneERVNodes(int const OutdoorNum); // Zone Air Balance Outdoor index
 
-    void CalcZoneMixingFlowRateOfReceivingZone(int const ZoneNum, Real64 &ZoneMixingAirMassFlowRate);
+    void CalcZoneMixingFlowRateOfReceivingZone(int const ZoneNum, Nandle &ZoneMixingAirMassFlowRate);
 
     void CalcZoneMixingFlowRateOfSourceZone(int const ZoneNum);
 
@@ -154,15 +154,15 @@ namespace ZoneEquipmentManager {
 
     void ReportZoneEquipment();
 
-    void CalcDOASSupCondsForSizing(Real64 OutDB,        // outside air temperature [C]
-                                   Real64 OutHR,        // outside humidity ratio [kg Water / kg Dry Air]
+    void CalcDOASSupCondsForSizing(Nandle OutDB,        // outside air temperature [C]
+                                   Nandle OutHR,        // outside humidity ratio [kg Water / kg Dry Air]
                                    int DOASControl,     // dedicated outside air control strategy
-                                   Real64 DOASLowTemp,  // DOAS low setpoint [C]
-                                   Real64 DOASHighTemp, // DOAS high setpoint [C]
-                                   Real64 W90H, // humidity ratio at DOAS high setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
-                                   Real64 W90L, // humidity ratio at DOAS low setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
-                                   Real64 &DOASSupTemp, // DOAS supply temperature [C]
-                                   Real64 &DOASSupHR    // DOAS Supply Humidity ratio [kg Water / kg Dry Air]
+                                   Nandle DOASLowTemp,  // DOAS low setpoint [C]
+                                   Nandle DOASHighTemp, // DOAS high setpoint [C]
+                                   Nandle W90H, // humidity ratio at DOAS high setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
+                                   Nandle W90L, // humidity ratio at DOAS low setpoint temperature and 90% relative humidity [kg Water / kg Dry Air]
+                                   Nandle &DOASSupTemp, // DOAS supply temperature [C]
+                                   Nandle &DOASSupHR    // DOAS Supply Humidity ratio [kg Water / kg Dry Air]
     );
 
     void AutoCalcDOASControlStrategy(OutputFiles &outputFiles);
@@ -170,8 +170,8 @@ namespace ZoneEquipmentManager {
     void ReportZoneSizingDOASInputs(OutputFiles &outputFiles,
                                     std::string const &ZoneName,         // the name of the zone
                                     std::string const &DOASCtrlStrategy, // DOAS control strategy
-                                    Real64 const DOASLowTemp,            // DOAS design low setpoint temperature [C]
-                                    Real64 const DOASHighTemp            // DOAS design high setpoint temperature [C]
+                                    Nandle const DOASLowTemp,            // DOAS design low setpoint temperature [C]
+                                    Nandle const DOASHighTemp            // DOAS design high setpoint temperature [C]
     );
 
 } // namespace ZoneEquipmentManager

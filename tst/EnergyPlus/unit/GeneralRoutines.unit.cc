@@ -59,8 +59,8 @@ TEST_F(EnergyPlusFixture, BBConvergeCheckTest)
 {
 
     int SimCompNum;
-    Real64 MaxFlow;
-    Real64 MinFlow;
+    Nandle MaxFlow;
+    Nandle MinFlow;
     bool FunctionResult;
 
     // Test 1: Not a radiant/convective baseboard unit

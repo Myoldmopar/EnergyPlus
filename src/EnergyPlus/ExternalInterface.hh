@@ -68,10 +68,10 @@ namespace EnergyPlus {
 namespace ExternalInterface {
 
     // MODULE VARIABLE DECLARATIONS:
-    extern Real64 tComm;
-    extern Real64 tStop;
-    extern Real64 tStart;
-    extern Real64 hStep;
+    extern Nandle tComm;
+    extern Nandle tStop;
+    extern Nandle tStart;
+    extern Nandle hStep;
     extern bool FlagReIni;
     extern std::string FMURootWorkingFolder;
     extern int LEN_FMU_ROOT_DIR;
@@ -120,7 +120,7 @@ namespace ExternalInterface {
 
         std::string Name;     // Variable name in EnergyPlus
         std::string VarKey;   // Key value in EnergyPlus
-        Real64 RTSValue;      // Real value of variable at the Zone Time Step
+        Nandle RTSValue;      // Real value of variable at the Zone Time Step
         int ITSValue;         // Integer value of variable at the Zone Time Step
         int VarIndex;         // Index Value of variable
         int VarType;          // Type of variable at the Zone Time Step
@@ -136,7 +136,7 @@ namespace ExternalInterface {
     {
 
         std::string Name;    // Name of fmu output variable --> schedule in energyplus
-        Real64 RealVarValue; // = Real value at the Zone Time Step
+        Nandle RealVarValue; // = Real value at the Zone Time Step
         int ValueReference;  // = fmiValueReference specific to FMU variable
 
         // Default Constructor
@@ -149,7 +149,7 @@ namespace ExternalInterface {
     {
 
         std::string Name;    // Name of fmu output variable --> variable in energyplus
-        Real64 RealVarValue; // = Real value at the Zone Time Step
+        Nandle RealVarValue; // = Real value at the Zone Time Step
         int ValueReference;  // = fmiValueReference specific to FMU variable
 
         // Default Constructor
@@ -162,7 +162,7 @@ namespace ExternalInterface {
     {
 
         std::string Name;    // Name of fmu output variable --> actuator in energyplus
-        Real64 RealVarValue; // = Real value at the Zone Time Step
+        Nandle RealVarValue; // = Real value at the Zone Time Step
         int ValueReference;  // = fmiValueReference specific to FMU variable
 
         // Default Constructor
@@ -266,7 +266,7 @@ namespace ExternalInterface {
     {
 
         std::string Name;                  // FMU Filename
-        Real64 TimeOut;                    // Default TimeOut value
+        Nandle TimeOut;                    // Default TimeOut value
         int Visible;                       // Default Visible value
         int Interactive;                   // Default Interactive value
         int LoggingOn;                     // Default LoggingOn value
@@ -357,7 +357,7 @@ namespace ExternalInterface {
 
     void VerifyExternalInterfaceObject();
 
-    Real64 GetCurSimStartTimeSeconds();
+    Nandle GetCurSimStartTimeSeconds();
 
     std::string trim(std::string const &str);
 

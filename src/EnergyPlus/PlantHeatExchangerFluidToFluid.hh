@@ -72,17 +72,17 @@ namespace PlantHeatExchangerFluidToFluid {
         // Members
         int inletNodeNum;                      // plant loop inlet node index
         int outletNodeNum;                     // plant loop outlet node index
-        Real64 MassFlowRateMin;                // minimum (hardware) flow rate for component [kg/s]
-        Real64 MassFlowRateMax;                // maximum (hardware) flow rate for component [kg/s]
-        Real64 DesignVolumeFlowRate;           // design flow rate [m3/s]
+        Nandle MassFlowRateMin;                // minimum (hardware) flow rate for component [kg/s]
+        Nandle MassFlowRateMax;                // maximum (hardware) flow rate for component [kg/s]
+        Nandle DesignVolumeFlowRate;           // design flow rate [m3/s]
         bool DesignVolumeFlowRateWasAutoSized; // true if design flow rate was autosize on input
-        Real64 MyLoad;                         // current load request of supply equip for op scheme control[W]
-        Real64 MinLoad;                        // reports back size for load dispatch routines [W]
-        Real64 MaxLoad;                        // reports back size for load dispatch [W]
-        Real64 OptLoad;                        // reports back size for load dispatch [W]
-        Real64 InletTemp;                      // current inlet fluid temperature [C]
-        Real64 InletMassFlowRate;              // current inlet mass flow rate [kg/s]
-        Real64 OutletTemp;                     // component outlet temperature [C]
+        Nandle MyLoad;                         // current load request of supply equip for op scheme control[W]
+        Nandle MinLoad;                        // reports back size for load dispatch routines [W]
+        Nandle MaxLoad;                        // reports back size for load dispatch [W]
+        Nandle OptLoad;                        // reports back size for load dispatch [W]
+        Nandle InletTemp;                      // current inlet fluid temperature [C]
+        Nandle InletMassFlowRate;              // current inlet mass flow rate [kg/s]
+        Nandle OutletTemp;                     // component outlet temperature [C]
 
         // Default Constructor
         PlantConnectionStruct()
@@ -110,14 +110,14 @@ namespace PlantHeatExchangerFluidToFluid {
         std::string Name;
         int AvailSchedNum;
         int HeatExchangeModelType;
-        Real64 UA;
+        Nandle UA;
         bool UAWasAutoSized; // true is UA was autosized on input
         int ControlMode;
         int SetPointNodeNum;
-        Real64 TempControlTol;
+        Nandle TempControlTol;
         int ControlSignalTemp;
-        Real64 MinOperationTemp;
-        Real64 MaxOperationTemp;
+        Nandle MinOperationTemp;
+        Nandle MaxOperationTemp;
         PlantConnectionStruct DemandSideLoop; // plant connections and data for the side of HX connected to demand side
         PlantConnectionStruct SupplySideLoop;
         std::string HeatTransferMeteringEndUse;
@@ -125,11 +125,11 @@ namespace PlantHeatExchangerFluidToFluid {
         int ComponentTypeOfNum;
         PlantLocatorStruct OtherCompSupplySideLoop;
         PlantLocatorStruct OtherCompDemandSideLoop;
-        Real64 SizingFactor;
-        Real64 HeatTransferRate;
-        Real64 HeatTransferEnergy;
-        Real64 Effectiveness;
-        Real64 OperationStatus;
+        Nandle SizingFactor;
+        Nandle HeatTransferRate;
+        Nandle HeatTransferEnergy;
+        Nandle Effectiveness;
+        Nandle OperationStatus;
         int DmdSideModulatSolvNoConvergeErrorCount;
         int DmdSideModulatSolvNoConvergeErrorIndex;
         int DmdSideModulatSolvFailErrorCount;
@@ -152,9 +152,9 @@ namespace PlantHeatExchangerFluidToFluid {
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void setupOutputVars();
 
@@ -162,14 +162,14 @@ namespace PlantHeatExchangerFluidToFluid {
 
         void size();
 
-        void calculate(Real64 SupSideMdot, Real64 DmdSideMdot);
+        void calculate(Nandle SupSideMdot, Nandle DmdSideMdot);
 
-        void control(int LoopNum, Real64 MyLoad, bool FirstHVACIteration);
+        void control(int LoopNum, Nandle MyLoad, bool FirstHVACIteration);
 
-        void findDemandSideLoopFlow(Real64 TargetSupplySideLoopLeavingTemp, int HXActionMode);
+        void findDemandSideLoopFlow(Nandle TargetSupplySideLoopLeavingTemp, int HXActionMode);
 
-        Real64 demandSideFlowResidual(Real64 DmdSideMassFlowRate,
-                                      Array1D<Real64> const &Par // Par(1) = HX index number
+        Nandle demandSideFlowResidual(Nandle DmdSideMassFlowRate,
+                                      Array1D<Nandle> const &Par // Par(1) = HX index number
         );
     };
 

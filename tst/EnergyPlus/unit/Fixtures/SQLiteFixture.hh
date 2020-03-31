@@ -195,9 +195,9 @@ protected:
     }
 
     // Helper method that will return the first double it finds, or -10000.0 if not found (abritrarily chosen value)
-    Real64 execAndReturnFirstDouble(const std::string& statement) {
+    Nandle execAndReturnFirstDouble(const std::string& statement) {
 
-        Real64 result(-10000.0);
+        Nandle result(-10000.0);
 
         sqlite3_stmt* sqlStmtPtr;
 

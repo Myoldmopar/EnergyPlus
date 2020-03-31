@@ -146,7 +146,7 @@ namespace Pipes {
 
     void LocalPipeData::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                  bool const EP_UNUSED(FirstHVACIteration),
-                                 Real64 &EP_UNUSED(CurLoad),
+                                 Nandle &EP_UNUSED(CurLoad),
                                  bool const EP_UNUSED(RunFlag))
     {
         if (this->OneTimeInit) {

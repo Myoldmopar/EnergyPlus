@@ -66,29 +66,29 @@ namespace PlantCentralGSHP {
     extern bool getWrapperInputFlag;    // When TRUE, calls subroutine to read input file.
     extern int numWrappers;             // Number of Wrappers specified in input
     extern int numChillerHeaters;       // Number of Chiller/heaters specified in input
-    extern Real64 CondenserFanPower;    // Condenser Fan Power (fan cycles with compressor) [W]
-    extern Real64 ChillerCapFT;         // Chiller/heater capacity fraction (evaluated as a function of temperature)
-    extern Real64 ChillerEIRFT;         // Chiller/heater electric input ratio (EIR = 1 / COP) as a function of temperature
-    extern Real64 ChillerEIRFPLR;       // Chiller/heater EIR as a function of part-load ratio (PLR)
-    extern Real64 ChillerPartLoadRatio; // Chiller/heater part-load ratio (PLR)
-    extern Real64 ChillerCyclingRatio;  // Chiller/heater cycling ratio
-    extern Real64 ChillerFalseLoadRate; // Chiller/heater false load over and above the water-side load [W]
+    extern Nandle CondenserFanPower;    // Condenser Fan Power (fan cycles with compressor) [W]
+    extern Nandle ChillerCapFT;         // Chiller/heater capacity fraction (evaluated as a function of temperature)
+    extern Nandle ChillerEIRFT;         // Chiller/heater electric input ratio (EIR = 1 / COP) as a function of temperature
+    extern Nandle ChillerEIRFPLR;       // Chiller/heater EIR as a function of part-load ratio (PLR)
+    extern Nandle ChillerPartLoadRatio; // Chiller/heater part-load ratio (PLR)
+    extern Nandle ChillerCyclingRatio;  // Chiller/heater cycling ratio
+    extern Nandle ChillerFalseLoadRate; // Chiller/heater false load over and above the water-side load [W]
 
     extern Array1D_bool CheckEquipName;
 
     struct CGSHPNodeData
     {
         // Members
-        Real64 Temp;                 // {C}
-        Real64 TempMin;              // {C}
-        Real64 TempSetPoint;         // SensedNodeFlagValue ! {C}
-        Real64 MassFlowRate;         // {kg/s}
-        Real64 MassFlowRateMin;      // {kg/s}
-        Real64 MassFlowRateMax;      // SensedNodeFlagValue ! {kg/s}
-        Real64 MassFlowRateMinAvail; // {kg/s}
-        Real64 MassFlowRateMaxAvail; // {kg/s}
-        Real64 MassFlowRateSetPoint; // {kg/s}
-        Real64 MassFlowRateRequest;  // {kg/s}
+        Nandle Temp;                 // {C}
+        Nandle TempMin;              // {C}
+        Nandle TempSetPoint;         // SensedNodeFlagValue ! {C}
+        Nandle MassFlowRate;         // {kg/s}
+        Nandle MassFlowRateMin;      // {kg/s}
+        Nandle MassFlowRateMax;      // SensedNodeFlagValue ! {kg/s}
+        Nandle MassFlowRateMinAvail; // {kg/s}
+        Nandle MassFlowRateMaxAvail; // {kg/s}
+        Nandle MassFlowRateSetPoint; // {kg/s}
+        Nandle MassFlowRateRequest;  // {kg/s}
 
         CGSHPNodeData()
             : Temp(0.0), TempMin(0.0), TempSetPoint(0.0), MassFlowRate(0.0), MassFlowRateMin(0.0), MassFlowRateMax(0.0), MassFlowRateMinAvail(0.0),
@@ -113,49 +113,49 @@ namespace PlantCentralGSHP {
     struct CHReportVars
     {
         int CurrentMode;                  // 0-off; 1-cooling only; 2-heating-only; 3-simutaneouls heat/cool
-        Real64 ChillerPartLoadRatio;      // Chiller PLR (Load/Capacity)
-        Real64 ChillerCyclingRatio;       // Chiller cycling ratio (time on/time step)
-        Real64 ChillerFalseLoad;          // Chiller false load over and above water side load [J]
-        Real64 ChillerFalseLoadRate;      // Chiller false load rate over and above water side load [W]
-        Real64 CoolingPower;              // Chiller power, W
-        Real64 HeatingPower;              // Chiller power, W
-        Real64 QEvap;                     // Evaporator heat transfer rate [W]
-        Real64 QCond;                     // Condenser heat transfer rate [W]
-        Real64 CoolingEnergy;             // Chiller electric consumption [J]
-        Real64 HeatingEnergy;             // Chiller electric consumption [J]
-        Real64 EvapEnergy;                // Evaporator heat transfer energy [J]
-        Real64 CondEnergy;                // Condenser heat transfer energy [J]
-        Real64 CondInletTemp;             // Condenser inlet temperature [C]
-        Real64 EvapInletTemp;             // Evaporator inlet temperature [C]
-        Real64 CondOutletTemp;            // Condenser outlet temperature [C]
-        Real64 EvapOutletTemp;            // Evaporator outlet temperature [C]
-        Real64 Evapmdot;                  // Evaporator mass flow rate [kg/s]
-        Real64 Condmdot;                  // Condenser mass flow rate [kg/s]
-        Real64 ActualCOP;                 // Coefficient of performance
-        Real64 ChillerCapFT;              // Chiller capacity curve output value
-        Real64 ChillerEIRFT;              // Chiller EIRFT curve output value
-        Real64 ChillerEIRFPLR;            // Chiller EIRFPLR curve output value
-        Real64 CondenserFanPowerUse;      // Air-cooled condenser fan power [W]
-        Real64 CondenserFanEnergy;        // Air-cooled condenser fan energy [J]
-        Real64 ChillerPartLoadRatioSimul; // Chiller PLR (Load/Capacity) for simul clg/htg mode
-        Real64 ChillerCyclingRatioSimul;  // Chiller cycling ratio (time on/time step) for simul clg/htg mode
-        Real64 ChillerFalseLoadSimul;     // Chiller false load for simul clg/htg mode [J]
-        Real64 ChillerFalseLoadRateSimul; // Chiller false load rate for simul clg/htg mode [W]
-        Real64 CoolingPowerSimul;         // Chiller power for simul clg/htg mode [W]
-        Real64 QEvapSimul;                // Evaporator heat transfer rate for simul clg/htg mode [W]
-        Real64 QCondSimul;                // Evaporator heat transfer rate for simul clg/htg mode [W]
-        Real64 CoolingEnergySimul;        // Chiller electric consumption for simul clg/htg mode [J]
-        Real64 EvapEnergySimul;           // Evaporator heat transfer energy for simul clg/htg mode [J]
-        Real64 CondEnergySimul;           // Condenser heat transfer energy for simul clg/htg mode [J]
-        Real64 EvapInletTempSimul;        // Evaporator inlet temperature for simul clg/htg mode [C]
-        Real64 EvapOutletTempSimul;       // Evaporator outlet temperature for simul clg/htg mode [C]
-        Real64 EvapmdotSimul;             // Evaporator mass flow rate for simul clg/htg mode [kg/s]
-        Real64 CondInletTempSimul;        // Condenser inlet temperature for simul clg/htg mode [C]
-        Real64 CondOutletTempSimul;       // Condenser outlet temperature for simul clg/htg mode [C]
-        Real64 CondmdotSimul;             // Condenser mass flow rate for simul clg/htg mode [kg/s]
-        Real64 ChillerCapFTSimul;         // Chiller capacity curve output value for simul clg/htg mode
-        Real64 ChillerEIRFTSimul;         // Chiller EIRFT curve output value for simul clg/htg mode
-        Real64 ChillerEIRFPLRSimul;       // Chiller EIRFPLR curve output value for simul clg/htg mode
+        Nandle ChillerPartLoadRatio;      // Chiller PLR (Load/Capacity)
+        Nandle ChillerCyclingRatio;       // Chiller cycling ratio (time on/time step)
+        Nandle ChillerFalseLoad;          // Chiller false load over and above water side load [J]
+        Nandle ChillerFalseLoadRate;      // Chiller false load rate over and above water side load [W]
+        Nandle CoolingPower;              // Chiller power, W
+        Nandle HeatingPower;              // Chiller power, W
+        Nandle QEvap;                     // Evaporator heat transfer rate [W]
+        Nandle QCond;                     // Condenser heat transfer rate [W]
+        Nandle CoolingEnergy;             // Chiller electric consumption [J]
+        Nandle HeatingEnergy;             // Chiller electric consumption [J]
+        Nandle EvapEnergy;                // Evaporator heat transfer energy [J]
+        Nandle CondEnergy;                // Condenser heat transfer energy [J]
+        Nandle CondInletTemp;             // Condenser inlet temperature [C]
+        Nandle EvapInletTemp;             // Evaporator inlet temperature [C]
+        Nandle CondOutletTemp;            // Condenser outlet temperature [C]
+        Nandle EvapOutletTemp;            // Evaporator outlet temperature [C]
+        Nandle Evapmdot;                  // Evaporator mass flow rate [kg/s]
+        Nandle Condmdot;                  // Condenser mass flow rate [kg/s]
+        Nandle ActualCOP;                 // Coefficient of performance
+        Nandle ChillerCapFT;              // Chiller capacity curve output value
+        Nandle ChillerEIRFT;              // Chiller EIRFT curve output value
+        Nandle ChillerEIRFPLR;            // Chiller EIRFPLR curve output value
+        Nandle CondenserFanPowerUse;      // Air-cooled condenser fan power [W]
+        Nandle CondenserFanEnergy;        // Air-cooled condenser fan energy [J]
+        Nandle ChillerPartLoadRatioSimul; // Chiller PLR (Load/Capacity) for simul clg/htg mode
+        Nandle ChillerCyclingRatioSimul;  // Chiller cycling ratio (time on/time step) for simul clg/htg mode
+        Nandle ChillerFalseLoadSimul;     // Chiller false load for simul clg/htg mode [J]
+        Nandle ChillerFalseLoadRateSimul; // Chiller false load rate for simul clg/htg mode [W]
+        Nandle CoolingPowerSimul;         // Chiller power for simul clg/htg mode [W]
+        Nandle QEvapSimul;                // Evaporator heat transfer rate for simul clg/htg mode [W]
+        Nandle QCondSimul;                // Evaporator heat transfer rate for simul clg/htg mode [W]
+        Nandle CoolingEnergySimul;        // Chiller electric consumption for simul clg/htg mode [J]
+        Nandle EvapEnergySimul;           // Evaporator heat transfer energy for simul clg/htg mode [J]
+        Nandle CondEnergySimul;           // Condenser heat transfer energy for simul clg/htg mode [J]
+        Nandle EvapInletTempSimul;        // Evaporator inlet temperature for simul clg/htg mode [C]
+        Nandle EvapOutletTempSimul;       // Evaporator outlet temperature for simul clg/htg mode [C]
+        Nandle EvapmdotSimul;             // Evaporator mass flow rate for simul clg/htg mode [kg/s]
+        Nandle CondInletTempSimul;        // Condenser inlet temperature for simul clg/htg mode [C]
+        Nandle CondOutletTempSimul;       // Condenser outlet temperature for simul clg/htg mode [C]
+        Nandle CondmdotSimul;             // Condenser mass flow rate for simul clg/htg mode [kg/s]
+        Nandle ChillerCapFTSimul;         // Chiller capacity curve output value for simul clg/htg mode
+        Nandle ChillerEIRFTSimul;         // Chiller EIRFT curve output value for simul clg/htg mode
+        Nandle ChillerEIRFPLRSimul;       // Chiller EIRFPLR curve output value for simul clg/htg mode
 
         CHReportVars()
             : CurrentMode(0), ChillerPartLoadRatio(0.0), ChillerCyclingRatio(0.0), ChillerFalseLoad(0.0), ChillerFalseLoadRate(0.0),
@@ -208,52 +208,52 @@ namespace PlantCentralGSHP {
         int DeltaTErrCount;               // Evaporator delta T equals 0 for variable flow chiller warning messages
         int DeltaTErrCountIndex;          // Index to evaporator delta T = 0 for variable flow chiller warning messages
         int CondMassFlowIndex;            // Index to condenser mass flow rate
-        Real64 RefCapCooling;             // Reference cooling-mode evaporator capacity [W]
+        Nandle RefCapCooling;             // Reference cooling-mode evaporator capacity [W]
         bool RefCapCoolingWasAutoSized;   // true if reference cooling capacity was autosize on input
-        Real64 RefCOPCooling;             // Reference cooling-mode COP
-        Real64 TempRefEvapOutCooling;     // Reference cooling-mode evaporator leaving temperature [C]
-        Real64 TempRefCondInCooling;      // Reference cooling-mode condenser entering temperature [C]
-        Real64 TempRefCondOutCooling;     // Reference cooling-mode condenser leaving temperature [C]
-        Real64 MaxPartLoadRatCooling;     // Maximum Part load ratio in cooling mode
-        Real64 OptPartLoadRatCooling;     // Optimum Part load ratio in cooling mode
-        Real64 MinPartLoadRatCooling;     // minimum Part load ratio in cooling mode
-        Real64 ClgHtgToCoolingCapRatio;   // ratio of clg/htg-mode evaporator capacity to cooling-mode evap. cap
-        Real64 ClgHtgtoCogPowerRatio;     // ratio of clg/htg-mode evaporator power to cooling-mode evap. power
-        Real64 RefCapClgHtg;              // Reference clg/htg-mode evaporator capacity [W]
-        Real64 RefCOPClgHtg;              // Reference clg/htg-mode COP
-        Real64 RefPowerClgHtg;            // Reference clg/htg-mode evaporator power [W]
-        Real64 TempRefEvapOutClgHtg;      // Reference clg/htg-mode evaporator leaving temperature [C]
-        Real64 TempRefCondInClgHtg;       // Reference clg/htg-mode condenser entering temperature [C]
-        Real64 TempRefCondOutClgHtg;      // Reference clg/htg-mode condenser leaving temperature [C]
-        Real64 TempLowLimitEvapOut;       // Low temperature shut off [C]
-        Real64 MaxPartLoadRatClgHtg;      // Maximum Part load ratio in simultaneous heating/cooling mode
-        Real64 OptPartLoadRatClgHtg;      // Optimum Part load ratio in simultaneous heating/cooling mode
-        Real64 MinPartLoadRatClgHtg;      // minimum Part load ratio in simultaneous heating/cooling mode
+        Nandle RefCOPCooling;             // Reference cooling-mode COP
+        Nandle TempRefEvapOutCooling;     // Reference cooling-mode evaporator leaving temperature [C]
+        Nandle TempRefCondInCooling;      // Reference cooling-mode condenser entering temperature [C]
+        Nandle TempRefCondOutCooling;     // Reference cooling-mode condenser leaving temperature [C]
+        Nandle MaxPartLoadRatCooling;     // Maximum Part load ratio in cooling mode
+        Nandle OptPartLoadRatCooling;     // Optimum Part load ratio in cooling mode
+        Nandle MinPartLoadRatCooling;     // minimum Part load ratio in cooling mode
+        Nandle ClgHtgToCoolingCapRatio;   // ratio of clg/htg-mode evaporator capacity to cooling-mode evap. cap
+        Nandle ClgHtgtoCogPowerRatio;     // ratio of clg/htg-mode evaporator power to cooling-mode evap. power
+        Nandle RefCapClgHtg;              // Reference clg/htg-mode evaporator capacity [W]
+        Nandle RefCOPClgHtg;              // Reference clg/htg-mode COP
+        Nandle RefPowerClgHtg;            // Reference clg/htg-mode evaporator power [W]
+        Nandle TempRefEvapOutClgHtg;      // Reference clg/htg-mode evaporator leaving temperature [C]
+        Nandle TempRefCondInClgHtg;       // Reference clg/htg-mode condenser entering temperature [C]
+        Nandle TempRefCondOutClgHtg;      // Reference clg/htg-mode condenser leaving temperature [C]
+        Nandle TempLowLimitEvapOut;       // Low temperature shut off [C]
+        Nandle MaxPartLoadRatClgHtg;      // Maximum Part load ratio in simultaneous heating/cooling mode
+        Nandle OptPartLoadRatClgHtg;      // Optimum Part load ratio in simultaneous heating/cooling mode
+        Nandle MinPartLoadRatClgHtg;      // minimum Part load ratio in simultaneous heating/cooling mode
         CGSHPNodeData EvapInletNode;      // Chiller heater evaperator inlet node
         CGSHPNodeData EvapOutletNode;     // Chiller heater evaperator outlet node
         CGSHPNodeData CondInletNode;      // Chiller heater condenser inlet node
         CGSHPNodeData CondOutletNode;     // Chiller heater condenser outlet node
-        Real64 EvapVolFlowRate;           // Reference water volumetric flow rate through the evaporator [m3/s]
+        Nandle EvapVolFlowRate;           // Reference water volumetric flow rate through the evaporator [m3/s]
         bool EvapVolFlowRateWasAutoSized; // true if evaporator flow rate was autosize on input
-        Real64 tmpEvapVolFlowRate;        // temporary ref water vol flow rate for intermediate sizing [m3/s]
-        Real64 CondVolFlowRate;           // Reference water volumetric flow rate through the condenser [m3/s]
+        Nandle tmpEvapVolFlowRate;        // temporary ref water vol flow rate for intermediate sizing [m3/s]
+        Nandle CondVolFlowRate;           // Reference water volumetric flow rate through the condenser [m3/s]
         bool CondVolFlowRateWasAutoSized; // true if condenser flow rate was autosize on input
-        Real64 tmpCondVolFlowRate;        // temporary ref water vol flow rate for intermediate sizing [m3/s]
-        Real64 CondMassFlowRateMax;       // Reference water mass flow rate through condenser [kg/s]
-        Real64 EvapMassFlowRateMax;       // Reference water mass flow rate through evaporator [kg/s]
-        Real64 Evapmdot;                  // Evaporator mass flow rate [kg/s]
-        Real64 Condmdot;                  // Condenser mass flow rate [kg/s]
-        Real64 DesignHotWaterVolFlowRate; // Design hot water volumetric flow rate through the condenser [m3/s]
-        Real64 OpenMotorEff;              // Open chiller motor efficiency [fraction, 0 to 1]
-        Real64 SizFac;                    // sizing factor
-        Real64 RefCap;                    // Reference evaporator capacity [W]
-        Real64 RefCOP;                    // Reference COP
-        Real64 TempRefEvapOut;            // Reference evaporator leaving temperature [C]
-        Real64 TempRefCondIn;             // Reference condenser entering temperature [C]
-        Real64 TempRefCondOut;            // Reference condenser leaving temperature [C]
-        Real64 OptPartLoadRat;            // Optimal operating fraction of full load
-        Real64 ChillerEIRFPLRMin;         // Minimum value of PLR from EIRFPLR curve
-        Real64 ChillerEIRFPLRMax;         // Maximum value of PLR from EIRFPLR curve
+        Nandle tmpCondVolFlowRate;        // temporary ref water vol flow rate for intermediate sizing [m3/s]
+        Nandle CondMassFlowRateMax;       // Reference water mass flow rate through condenser [kg/s]
+        Nandle EvapMassFlowRateMax;       // Reference water mass flow rate through evaporator [kg/s]
+        Nandle Evapmdot;                  // Evaporator mass flow rate [kg/s]
+        Nandle Condmdot;                  // Condenser mass flow rate [kg/s]
+        Nandle DesignHotWaterVolFlowRate; // Design hot water volumetric flow rate through the condenser [m3/s]
+        Nandle OpenMotorEff;              // Open chiller motor efficiency [fraction, 0 to 1]
+        Nandle SizFac;                    // sizing factor
+        Nandle RefCap;                    // Reference evaporator capacity [W]
+        Nandle RefCOP;                    // Reference COP
+        Nandle TempRefEvapOut;            // Reference evaporator leaving temperature [C]
+        Nandle TempRefCondIn;             // Reference condenser entering temperature [C]
+        Nandle TempRefCondOut;            // Reference condenser leaving temperature [C]
+        Nandle OptPartLoadRat;            // Optimal operating fraction of full load
+        Nandle ChillerEIRFPLRMin;         // Minimum value of PLR from EIRFPLR curve
+        Nandle ChillerEIRFPLRMax;         // Maximum value of PLR from EIRFPLR curve
         CHReportVars Report;
 
         ChillerHeaterSpecs()
@@ -278,39 +278,39 @@ namespace PlantCentralGSHP {
 
     struct WrapperReportVars
     {
-        Real64 Power;                  // Wrapper power, W
-        Real64 QCHW;                   // Chilled water heat transfer rate [W]
-        Real64 QHW;                    // Hot Water heat transfer rate [W]
-        Real64 QGLHE;                  // Geo-field heat transfer rate [W]
-        Real64 TotElecCooling;         // Wrapper cooling electric consumption [J]
-        Real64 TotElecHeating;         // Wrapper heating electric consumption [J]
-        Real64 CoolingEnergy;          // Chilled water heat transfer energy [J]
-        Real64 HeatingEnergy;          // Hot Water heat transfer energy [J]
-        Real64 GLHEEnergy;             // Geo-field heat transfer energy [J]
-        Real64 TotElecCoolingPwr;      // Wrapper cooling electric consumption rate [W]
-        Real64 TotElecHeatingPwr;      // Wrapper heating electric consumption rate [W]
-        Real64 CoolingRate;            // Chilled water heat transfer rate [W]
-        Real64 HeatingRate;            // Hot Water heat transfer rate [W]
-        Real64 GLHERate;               // Geo-field heat transfer rate [W]
-        Real64 CHWInletTemp;           // Chilled water inlet temperature [C]
-        Real64 HWInletTemp;            // Hot water inlet temperature [C]
-        Real64 GLHEInletTemp;          // Geo-field inlet temperature [C]
-        Real64 CHWOutletTemp;          // Chilled water Outlet temperature [C]
-        Real64 HWOutletTemp;           // Hot water Outlet temperature [C]
-        Real64 GLHEOutletTemp;         // Geo-field Outlet temperature [C]
-        Real64 CHWmdot;                // Chilled water mass flow rate [kg/s]
-        Real64 HWmdot;                 // Hot water mass flow rate [kg/s]
-        Real64 GLHEmdot;               // Geo-field mass flow rate [kg/s]
-        Real64 TotElecCoolingSimul;    // Wrapper cooling electric consumption [J]
-        Real64 CoolingEnergySimul;     // Chilled water heat transfer energy [J]
-        Real64 TotElecCoolingPwrSimul; // Wrapper cooling electric consumption rate [W]
-        Real64 CoolingRateSimul;       // Chilled water heat transfer rate [W]
-        Real64 CHWInletTempSimul;      // Chilled water inlet temperature [C]
-        Real64 GLHEInletTempSimul;     // Geo-field inlet temperature [C]
-        Real64 CHWOutletTempSimul;     // Chilled water Outlet temperature [C]
-        Real64 GLHEOutletTempSimul;    // Geo-field Outlet temperature [C]
-        Real64 CHWmdotSimul;           // Chilled water mass flow rate [kg/s]
-        Real64 GLHEmdotSimul;          // Geo-field mass flow rate [kg/s]
+        Nandle Power;                  // Wrapper power, W
+        Nandle QCHW;                   // Chilled water heat transfer rate [W]
+        Nandle QHW;                    // Hot Water heat transfer rate [W]
+        Nandle QGLHE;                  // Geo-field heat transfer rate [W]
+        Nandle TotElecCooling;         // Wrapper cooling electric consumption [J]
+        Nandle TotElecHeating;         // Wrapper heating electric consumption [J]
+        Nandle CoolingEnergy;          // Chilled water heat transfer energy [J]
+        Nandle HeatingEnergy;          // Hot Water heat transfer energy [J]
+        Nandle GLHEEnergy;             // Geo-field heat transfer energy [J]
+        Nandle TotElecCoolingPwr;      // Wrapper cooling electric consumption rate [W]
+        Nandle TotElecHeatingPwr;      // Wrapper heating electric consumption rate [W]
+        Nandle CoolingRate;            // Chilled water heat transfer rate [W]
+        Nandle HeatingRate;            // Hot Water heat transfer rate [W]
+        Nandle GLHERate;               // Geo-field heat transfer rate [W]
+        Nandle CHWInletTemp;           // Chilled water inlet temperature [C]
+        Nandle HWInletTemp;            // Hot water inlet temperature [C]
+        Nandle GLHEInletTemp;          // Geo-field inlet temperature [C]
+        Nandle CHWOutletTemp;          // Chilled water Outlet temperature [C]
+        Nandle HWOutletTemp;           // Hot water Outlet temperature [C]
+        Nandle GLHEOutletTemp;         // Geo-field Outlet temperature [C]
+        Nandle CHWmdot;                // Chilled water mass flow rate [kg/s]
+        Nandle HWmdot;                 // Hot water mass flow rate [kg/s]
+        Nandle GLHEmdot;               // Geo-field mass flow rate [kg/s]
+        Nandle TotElecCoolingSimul;    // Wrapper cooling electric consumption [J]
+        Nandle CoolingEnergySimul;     // Chilled water heat transfer energy [J]
+        Nandle TotElecCoolingPwrSimul; // Wrapper cooling electric consumption rate [W]
+        Nandle CoolingRateSimul;       // Chilled water heat transfer rate [W]
+        Nandle CHWInletTempSimul;      // Chilled water inlet temperature [C]
+        Nandle GLHEInletTempSimul;     // Geo-field inlet temperature [C]
+        Nandle CHWOutletTempSimul;     // Chilled water Outlet temperature [C]
+        Nandle GLHEOutletTempSimul;    // Geo-field Outlet temperature [C]
+        Nandle CHWmdotSimul;           // Chilled water mass flow rate [kg/s]
+        Nandle GLHEmdotSimul;          // Geo-field mass flow rate [kg/s]
 
         WrapperReportVars()
             : Power(0.0), QCHW(0.0), QHW(0.0), QGLHE(0.0), TotElecCooling(0.0), TotElecHeating(0.0), CoolingEnergy(0.0), HeatingEnergy(0.0),
@@ -337,15 +337,15 @@ namespace PlantCentralGSHP {
         int GLHEInletNodeNum;       // Node number on the inlet side of the plant (GLHE Water side)
         int GLHEOutletNodeNum;      // Node number on the outlet side of the plant (GLHE Water side)
         int NumOfComp;              // Number of Components under the wrapper
-        Real64 CHWMassFlowRate;     // Chilled water mass flow rate
-        Real64 HWMassFlowRate;      // Hot water mass flow rate
-        Real64 GLHEMassFlowRate;    // Condenser water mass flow rate
-        Real64 CHWMassFlowRateMax;  // Maximum chilled water mass flow rate
-        Real64 HWMassFlowRateMax;   // Maximum hot water mass flow rate
-        Real64 GLHEMassFlowRateMax; // Maximum condenser water mass flow rate
-        Real64 WrapperCoolingLoad;  // Cooling demand for the central heat pump system
-        Real64 WrapperHeatingLoad;  // Heating demand for the central heat pump system
-        Real64 AncillaryPower;      // Wrapper Ancillary Power
+        Nandle CHWMassFlowRate;     // Chilled water mass flow rate
+        Nandle HWMassFlowRate;      // Hot water mass flow rate
+        Nandle GLHEMassFlowRate;    // Condenser water mass flow rate
+        Nandle CHWMassFlowRateMax;  // Maximum chilled water mass flow rate
+        Nandle HWMassFlowRateMax;   // Maximum hot water mass flow rate
+        Nandle GLHEMassFlowRateMax; // Maximum condenser water mass flow rate
+        Nandle WrapperCoolingLoad;  // Cooling demand for the central heat pump system
+        Nandle WrapperHeatingLoad;  // Heating demand for the central heat pump system
+        Nandle AncillaryPower;      // Wrapper Ancillary Power
         Array1D<WrapperComponentSpecs> WrapperComp;
         Array1D<ChillerHeaterSpecs> ChillerHeater; // Dimension to number of machines
         bool CoolSetPointErrDone;                  // true if setpoint warning issued
@@ -368,10 +368,10 @@ namespace PlantCentralGSHP {
         int CHWMassFlowIndex;                      // Chilled water flow index
         int HWMassFlowIndex;                       // Hot water flow index
         int GLHEMassFlowIndex;                     // Condenser side flow index
-        Real64 SizingFactor;                       // Sizing factor to adjust the capacity
-        Real64 CHWVolFlowRate;                     // Chilled water volume flow rate [kg/s]
-        Real64 HWVolFlowRate;                      // Hot water volume flow rate [kg/s]
-        Real64 GLHEVolFlowRate;                    // Geo-field volume flow rate [kg/s]
+        Nandle SizingFactor;                       // Sizing factor to adjust the capacity
+        Nandle CHWVolFlowRate;                     // Chilled water volume flow rate [kg/s]
+        Nandle HWVolFlowRate;                      // Hot water volume flow rate [kg/s]
+        Nandle GLHEVolFlowRate;                    // Geo-field volume flow rate [kg/s]
         bool MyWrapperFlag;
         bool MyWrapperEnvrnFlag;
         bool SimulClgDominant;
@@ -394,21 +394,21 @@ namespace PlantCentralGSHP {
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void getSizingFactor(Real64 &SizFac) override;
+        void getSizingFactor(Nandle &SizFac) override;
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
         void setupOutputVars();
 
-        void initialize(Real64 MyLoad, // Demand Load
+        void initialize(Nandle MyLoad, // Demand Load
                         int LoopNum    // Loop Number Index
         );
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
         void SizeWrapper();
 
-        void CalcWrapperModel(Real64 &MyLoad, int LoopNum);
+        void CalcWrapperModel(Nandle &MyLoad, int LoopNum);
 
         void CalcChillerModel();
 

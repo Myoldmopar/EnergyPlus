@@ -315,17 +315,17 @@ namespace MixedAir {
 
     // Functions
 
-    Real64 OAGetFlowRate(int OAPtr)
+    Nandle OAGetFlowRate(int OAPtr)
     {
-        Real64 FlowRate(0);
+        Nandle FlowRate(0);
         if ((OAPtr > 0) && (OAPtr <= NumOAControllers) && (StdRhoAir != 0)) {
             FlowRate = OAController(OAPtr).OAMassFlow / StdRhoAir;
         }
         return FlowRate;
     }
-    Real64 OAGetMinFlowRate(int OAPtr)
+    Nandle OAGetMinFlowRate(int OAPtr)
     {
-        Real64 MinFlowRate(0);
+        Nandle MinFlowRate(0);
         if ((OAPtr > 0) && (OAPtr <= NumOAControllers)) {
             MinFlowRate = OAController(OAPtr).MinOA;
         }
@@ -337,7 +337,7 @@ namespace MixedAir {
             OAController(OAPtr).ManageDemand = aState;
         }
     }
-    void OASetDemandManagerVentilationFlow(int OAPtr, Real64 aFlow)
+    void OASetDemandManagerVentilationFlow(int OAPtr, Nandle aFlow)
     {
         if ((OAPtr > 0) && (OAPtr <= NumOAControllers)) {
             OAController(OAPtr).DemandLimitFlowRate = aFlow * StdRhoAir;
@@ -623,7 +623,7 @@ namespace MixedAir {
         OAHeatingCoil = false;
         OACoolingCoil = false;
         OAHX = false;
-        Real64 AirloopPLR;
+        Nandle AirloopPLR;
         int FanOpMode;
 
         {
@@ -748,10 +748,10 @@ namespace MixedAir {
                 if (Sim) {
                     bool HeatingActive = false;
                     bool CoolingActive = false;
-                    Real64 OAUCoilOutTemp = 0.0;
+                    Nandle OAUCoilOutTemp = 0.0;
                     bool ZoneEquipFlag = false;
-                    Real64 sensOut = 0.0;
-                    Real64 latOut = 0.0;
+                    Nandle sensOut = 0.0;
+                    Nandle latOut = 0.0;
                     OutsideAirSys(OASysNum).compPointer[CompIndex]->simulate(CompName,
                                                                              FirstHVACIteration,
                                                                              AirLoopNum,
@@ -863,10 +863,10 @@ namespace MixedAir {
                     bool HeatingActive = false;
                     bool CoolingActive = false;
                     int const OAUnitNum = 0;
-                    Real64 const OAUCoilOutTemp = 0.0;
+                    Nandle const OAUCoilOutTemp = 0.0;
                     bool const ZoneEquipment = false;
-                    Real64 sysOut = 0.0;
-                    Real64 latOut = 0.0;
+                    Nandle sysOut = 0.0;
+                    Nandle latOut = 0.0;
                     HVACVariableRefrigerantFlow::SimulateVRF(CompName,
                         FirstHVACIteration,
                         ControlledZoneNum,
@@ -999,7 +999,7 @@ namespace MixedAir {
         int NumNums;   // Number of real numbers returned by GetObjectItem
         int NumAlphas; // Number of alphanumerics returned by GetObjectItem
         int IOStat;
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
         Array1D_string AlphArray;
         int OASysNum;
         int CompNum;
@@ -1386,7 +1386,7 @@ namespace MixedAir {
         int VentMechNum;     // Number of VENTILATION:MECHANICAL objects
         int groupNum;        // Index to group in extensible VENTILATION:MECHANICAL object
         int IOStat;          // Status of GetObjectItem call
-        Array1D<Real64> NumArray;
+        Array1D<Nandle> NumArray;
         Array1D_string AlphArray;
         std::string CurrentModuleObject; // Object type for getting and messages
         Array1D_string cAlphaFields;     // Alpha field names
@@ -2126,7 +2126,7 @@ namespace MixedAir {
         int NumArg;    // Number of arguments from GetObjectDefMaxArgs call
         int OutAirNum;
         int IOStat;
-        Array1D<Real64> NumArray;        // array that holds numeric input values
+        Array1D<Nandle> NumArray;        // array that holds numeric input values
         Array1D_string AlphArray;        // array that holds alpha input values
         std::string CurrentModuleObject; // Object type for getting and messages
         Array1D_string cAlphaFields;     // Alpha field names
@@ -2225,7 +2225,7 @@ namespace MixedAir {
                                    int const OutAirNum,
                                    Array1D_string const &AlphArray,
                                    int &NumAlphas,
-                                   Array1D<Real64> const &NumArray,
+                                   Array1D<Nandle> const &NumArray,
                                    int &NumNums,
                                    Array1D_bool const &lNumericBlanks, // Unused
                                    Array1D_bool const &lAlphaBlanks,
@@ -2285,7 +2285,7 @@ namespace MixedAir {
         int OASysNum;          // Used to find OA System index for OA Controller
         int OASysIndex;        // Index to OA System
         bool OASysFound;       // OA Controller found OA System index
-        Real64 OAFlowRatio;    // Ratio of minimum OA flow rate to maximum OA flow rate
+        Nandle OAFlowRatio;    // Ratio of minimum OA flow rate to maximum OA flow rate
 
         OAController(OutAirNum).Name = AlphArray(1);
         OAController(OutAirNum).ControllerType = CurrentModuleObject;
@@ -2684,8 +2684,8 @@ namespace MixedAir {
         bool OASysFound;                               // Logical determines if OA system found
         bool AirLoopFound;                             // Logical determines if primary air loop found
         bool ErrorsFound;                              // Errors found getting input
-        Real64 RhoAirStdInit;                          // Standard air density
-        Real64 TotalPeopleOAFlow;                      // Total outside air required for PEOPLE objects served by this OA controller
+        Nandle RhoAirStdInit;                          // Standard air density
+        Nandle TotalPeopleOAFlow;                      // Total outside air required for PEOPLE objects served by this OA controller
         int MixedAirNode;                              // Controller:OutdoorAir mixed air node
         int AirLoopZoneInfoZoneNum;                    // Index to AirLoopZoneInfo structure
         int NumZone;                                   // Zone number in AirLoopZoneInfo structure
@@ -2709,8 +2709,8 @@ namespace MixedAir {
         std::string zoneName;
         int jZone;
 
-        Real64 rSchVal;
-        Real64 rOffset;
+        Nandle rSchVal;
+        Nandle rOffset;
         int i;
         int iEco;
 
@@ -2848,7 +2848,7 @@ namespace MixedAir {
 
             if (AirLoopNum > 0) {
                 // Fix #3001 (CR 8225) moved here as part of #5119
-                Real64 DesSupplyVolFlowRate = AirLoopFlow(AirLoopNum).DesSupply / StdRhoAir;
+                Nandle DesSupplyVolFlowRate = AirLoopFlow(AirLoopNum).DesSupply / StdRhoAir;
                 if ((thisOAController.MinOA - DesSupplyVolFlowRate) > 0.0001) {
                     ShowWarningError("InitOAController: Minimum Outdoor Air Flow Rate for Controller:OutdoorAir=" + thisOAController.Name +
                                      " is greater than Design Supply Air Flow Rate for AirLoopHVAC=" + PrimaryAirSystem(AirLoopNum).Name + ".");
@@ -3572,19 +3572,19 @@ namespace MixedAir {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OutAirMinFrac; // Local variable used to calculate min OA fraction
+        Nandle OutAirMinFrac; // Local variable used to calculate min OA fraction
 
-        Real64 MechVentOutsideAirMinFrac;     // fraction of OA specified by mechanical ventilation object
-        Real64 MechVentOAMassFlow;            // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
-        Real64 MinOASchedVal;                 // value of the minimum outside air schedule
-        Real64 OASignal;                      // Outside air flow rate fraction (0.0 to 1.0)
+        Nandle MechVentOutsideAirMinFrac;     // fraction of OA specified by mechanical ventilation object
+        Nandle MechVentOAMassFlow;            // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
+        Nandle MinOASchedVal;                 // value of the minimum outside air schedule
+        Nandle OASignal;                      // Outside air flow rate fraction (0.0 to 1.0)
         bool AirLoopCyclingFan;               // Type of air loop fan (TRUE if Fan:OnOff)
         bool HighHumidityOperationFlag;       // TRUE if zone humidistat senses a high humidity condition
-        Real64 RecircTemp;                    // - return air temp, used for custom economizer control calculation
-        Real64 MixedAirTempAtMinOAFlow;       // - mixed air temperature at min flow rate, used for custom economizer control calculation
-        Real64 RecircMassFlowRateAtMinOAFlow; // recirc air mass flow rate at min OA, used for custom economizer control calculation
-        Real64 ReliefMassFlowAtMinOA;         // relief air mass flow rate at min OA, used for custom economizer control calculation
-        Real64 SysSA(0.0);                    // System supply air mass flow rate [kg/s]
+        Nandle RecircTemp;                    // - return air temp, used for custom economizer control calculation
+        Nandle MixedAirTempAtMinOAFlow;       // - mixed air temperature at min flow rate, used for custom economizer control calculation
+        Nandle RecircMassFlowRateAtMinOAFlow; // recirc air mass flow rate at min OA, used for custom economizer control calculation
+        Nandle ReliefMassFlowAtMinOA;         // relief air mass flow rate at min OA, used for custom economizer control calculation
+        Nandle SysSA(0.0);                    // System supply air mass flow rate [kg/s]
         MinOASchedVal = 1.0;
 
         if (AirLoopNum > 0) {
@@ -3725,16 +3725,16 @@ namespace MixedAir {
 
         // Apply Minimum Fraction of Outdoor Air Schedule
         if (this->MinOAflowSchPtr > 0) {
-            Real64 MinOAflowfracVal = GetCurrentScheduleValue(this->MinOAflowSchPtr);
+            Nandle MinOAflowfracVal = GetCurrentScheduleValue(this->MinOAflowSchPtr);
             MinOAflowfracVal = min(max(MinOAflowfracVal, 0.0), 1.0);
             OutAirMinFrac = max(MinOAflowfracVal, OutAirMinFrac);
             this->OAMassFlow = max(this->OAMassFlow, this->MixMassFlow * MinOAflowfracVal);
         }
 
         // Apply Maximum Fraction of Outdoor Air Schedule
-        Real64 currentMaxOAMassFlowRate = this->MaxOAMassFlowRate;
+        Nandle currentMaxOAMassFlowRate = this->MaxOAMassFlowRate;
         if (this->MaxOAflowSchPtr > 0) {
-            Real64 MaxOAflowfracVal = GetCurrentScheduleValue(this->MaxOAflowSchPtr);
+            Nandle MaxOAflowfracVal = GetCurrentScheduleValue(this->MaxOAflowSchPtr);
             MaxOAflowfracVal = min(max(MaxOAflowfracVal, 0.0), 1.0);
             currentMaxOAMassFlowRate = min(this->MaxOAMassFlowRate, this->MixMassFlow * MaxOAflowfracVal);
             OutAirMinFrac = min(MaxOAflowfracVal, OutAirMinFrac);
@@ -3834,8 +3834,8 @@ namespace MixedAir {
     }
 
     void VentilationMechanicalProps::CalcMechVentController(
-        Real64 &SysSA,             // System supply air mass flow rate [kg/s]
-        Real64 &MechVentOAMassFlow // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
+        Nandle &SysSA,             // System supply air mass flow rate [kg/s]
+        Nandle &MechVentOAMassFlow // outside air mass flow rate calculated by mechanical ventilation object [kg/s]
     )
     {
         using DataContaminantBalance::ZoneSysContDemand;
@@ -3853,43 +3853,43 @@ namespace MixedAir {
         static std::string const CurrentModuleObject(CurrentModuleObjects(CMO_MechVentilation));
 
         // new local variables for DCV
-        Real64 ZoneOAPeople; // Zone OA flow rate based on number of occupants [m3/s]
-        Real64 ZoneOAArea;   // Zone OA flow rate based on space floor area [m3/s]
-        Real64 ZoneOAFlow;   // Zone OA flow rate based on simple flow [m3/s]
-        Real64 ZoneOAACH;    // Zone OA flow rate based on air changes per hour [m3/s]
-        Real64 ZoneOABZ;     // Zone breathing-zone OA flow rate [m3/s]
-        Real64 ZoneOAMin;    // Minimum Zone OA flow rate when the zone is unoccupied (i.e. ZoneOAPeople = 0)
+        Nandle ZoneOAPeople; // Zone OA flow rate based on number of occupants [m3/s]
+        Nandle ZoneOAArea;   // Zone OA flow rate based on space floor area [m3/s]
+        Nandle ZoneOAFlow;   // Zone OA flow rate based on simple flow [m3/s]
+        Nandle ZoneOAACH;    // Zone OA flow rate based on air changes per hour [m3/s]
+        Nandle ZoneOABZ;     // Zone breathing-zone OA flow rate [m3/s]
+        Nandle ZoneOAMin;    // Minimum Zone OA flow rate when the zone is unoccupied (i.e. ZoneOAPeople = 0)
         // used for "ProportionalControl" System outdoor air method
-        Real64 ZoneOAMax; // Maximum Zone OA flow rate (ZoneOAPeople + ZoneOAArea)
+        Nandle ZoneOAMax; // Maximum Zone OA flow rate (ZoneOAPeople + ZoneOAArea)
         // used for "ProportionalControl" System outdoor air method
-        Real64 ZoneOA;        // Zone OA flow rate [m3/s]
-        Real64 ZoneOAFrac;    // Zone OA fraction (as a fraction of actual supply air flow rate)
-        Real64 ZoneEz;        // Zone air distribution effectiveness
-        Real64 ZoneSA;        // Zone supply air flow rate
-        Real64 ZonePA;        // Zone primary air flow rate
-        Real64 SysOAuc;       // System uncorrected OA flow rate
-        Real64 SysOA;         // System supply OA volume flow rate [m3/s]
-        Real64 SysOAMassFlow; // System supply OA mass flow rate [kg/s]
-        Real64 SysEv;         // System ventilation efficiency
-        Real64 NodeTemp;      // node temperature
-        Real64 NodeHumRat;    // node humidity ratio
-        Real64 MassFlowRate;  // Temporary variable
-        Real64 ZoneLoad;      // Zone loads
+        Nandle ZoneOA;        // Zone OA flow rate [m3/s]
+        Nandle ZoneOAFrac;    // Zone OA fraction (as a fraction of actual supply air flow rate)
+        Nandle ZoneEz;        // Zone air distribution effectiveness
+        Nandle ZoneSA;        // Zone supply air flow rate
+        Nandle ZonePA;        // Zone primary air flow rate
+        Nandle SysOAuc;       // System uncorrected OA flow rate
+        Nandle SysOA;         // System supply OA volume flow rate [m3/s]
+        Nandle SysOAMassFlow; // System supply OA mass flow rate [kg/s]
+        Nandle SysEv;         // System ventilation efficiency
+        Nandle NodeTemp;      // node temperature
+        Nandle NodeHumRat;    // node humidity ratio
+        Nandle MassFlowRate;  // Temporary variable
+        Nandle ZoneLoad;      // Zone loads
         std::string ZoneName; // Zone name
         int OAIndex;          // index to design specification outdoor air objects
         int PeopleNum;
-        Real64 ZoneMaxCO2;                // Breathing-zone CO2 concentartion
-        Real64 ZoneMinCO2;                // Minimum CO2 concentration in zone
-        Real64 ZoneContamControllerSched; // Schedule value for ZoneControl:ContaminantController
-        Real64 CO2PeopleGeneration;       // CO2 generation from people at design level
+        Nandle ZoneMaxCO2;                // Breathing-zone CO2 concentartion
+        Nandle ZoneMinCO2;                // Minimum CO2 concentration in zone
+        Nandle ZoneContamControllerSched; // Schedule value for ZoneControl:ContaminantController
+        Nandle CO2PeopleGeneration;       // CO2 generation from people at design level
 
-        static Real64 Ep(1.0); // zone primary air fraction
-        static Real64 Er(0.0); // zone secondary recirculation fraction
-        static Real64 Fa(1.0); // temporary variable used in multi-path VRP calc
-        static Real64 Fb(1.0);
-        static Real64 Fc(1.0);
-        static Real64 Xs(1.0);  // uncorrected system outdoor air fraction
-        static Real64 Evz(1.0); // zone ventilation efficiency
+        static Nandle Ep(1.0); // zone primary air fraction
+        static Nandle Er(0.0); // zone secondary recirculation fraction
+        static Nandle Fa(1.0); // temporary variable used in multi-path VRP calc
+        static Nandle Fb(1.0);
+        static Nandle Fc(1.0);
+        static Nandle Xs(1.0);  // uncorrected system outdoor air fraction
+        static Nandle Evz(1.0); // zone ventilation efficiency
 
         int PriNode;   // primary node of zone terminal unit
         int InletNode; // outlet node of zone terminal unit
@@ -3943,7 +3943,7 @@ namespace MixedAir {
                 for (int ZoneIndex = 1; ZoneIndex <= this->NumofVentMechZones; ++ZoneIndex) {
                     int ZoneNum = this->VentMechZone(ZoneIndex);
                     auto const &curZone(Zone(ZoneNum));
-                    Real64 curZoneOASchValue = GetCurrentScheduleValue(this->ZoneOASchPtr(ZoneIndex));
+                    Nandle curZoneOASchValue = GetCurrentScheduleValue(this->ZoneOASchPtr(ZoneIndex));
 
                     // Calc the zone OA flow rate based on the people component
                     // ZoneIntGain(ZoneNum)%NOFOCC is the number of occupants of a zone at each time step, already counting the occupant schedule
@@ -4023,7 +4023,7 @@ namespace MixedAir {
                         auto &curZoneEquipConfig(ZoneEquipConfig(ZoneEquipConfigNum));
                         auto &curZoneSysEnergyDemand(ZoneSysEnergyDemand(ZoneEquipConfigNum));
                         ZoneName = curZone.Name;
-                        Real64 curZoneOASchValue = GetCurrentScheduleValue(this->ZoneOASchPtr(ZoneIndex));
+                        Nandle curZoneOASchValue = GetCurrentScheduleValue(this->ZoneOASchPtr(ZoneIndex));
 
                         // Calc the zone OA flow rate based on the people component
                         // ZoneIntGain(ZoneNum)%NOFOCC is the number of occupants of a zone at each time step, already counting the occupant schedule
@@ -4416,7 +4416,7 @@ namespace MixedAir {
     }
 
     void OAControllerProps::CalcOAEconomizer(
-        int const AirLoopNum, Real64 const OutAirMinFrac, Real64 &OASignal, bool &HighHumidityOperationFlag, bool const FirstHVACIteration)
+        int const AirLoopNum, Nandle const OutAirMinFrac, Nandle &OASignal, bool &HighHumidityOperationFlag, bool const FirstHVACIteration)
     {
         using DataAirLoop::OutsideAirSys;
         using DataLoopNode::Node;
@@ -4427,23 +4427,23 @@ namespace MixedAir {
         static std::string const RoutineName("CalcOAEconomizer: ");
         static std::string const CurrentModuleObject(CurrentModuleObjects(CMO_OAController));
         int const MaxIte(500);                 // Maximum number of iterations
-        Real64 const Acc(0.0001);              // Accuracy of result
+        Nandle const Acc(0.0001);              // Accuracy of result
         bool AirLoopEconoLockout;              // Economizer lockout flag
         bool AirLoopNightVent;                 // Night Ventilation flag for air loop
         bool EconomizerOperationFlag;          // TRUE if OA economizer is active
-        Real64 EconomizerAirFlowScheduleValue; // value of economizer operation schedule (push-button type control schedule)
-        Real64 MaximumOAFracBySetPoint;        // The maximum OA fraction due to freezing cooling coil check
-        Real64 OutAirSignal;                   // Used to set OA mass flow rate
-        static Array1D<Real64> Par(6);         // Par(1) = mixed air node number //Tuned Made static
+        Nandle EconomizerAirFlowScheduleValue; // value of economizer operation schedule (push-button type control schedule)
+        Nandle MaximumOAFracBySetPoint;        // The maximum OA fraction due to freezing cooling coil check
+        Nandle OutAirSignal;                   // Used to set OA mass flow rate
+        static Array1D<Nandle> Par(6);         // Par(1) = mixed air node number //Tuned Made static
                                                // Par(2) = return air node number
                                                // Par(3) = outside air node number
                                                // Par(4) = mixed air mass flow rate
                                                // Par(5) = FirstHVACIteration
                                                // Par(6) = AirLoopNum
         int SolFla;                            // Flag of solver
-        Real64 lowFlowResiduum;                // result of low OA flow calculation (Tmixedair_sp - Tmixedair)
-        Real64 highFlowResiduum;               // result of high OA flow calculation (Tmixedair_sp - Tmixedair)
-        Real64 minOAFrac;
+        Nandle lowFlowResiduum;                // result of low OA flow calculation (Tmixedair_sp - Tmixedair)
+        Nandle highFlowResiduum;               // result of high OA flow calculation (Tmixedair_sp - Tmixedair)
+        Nandle minOAFrac;
 
         if (AirLoopNum > 0) {
             // Check lockout with heating for any airloop - will lockout economizer even on airloops without a unitary system
@@ -4734,9 +4734,9 @@ namespace MixedAir {
                     AirLoopControlInfo(AirLoopNum).HeatRecoveryBypass = true;
                     this->HeatRecoveryBypassStatus = 1;
                 } else if (this->HeatRecoveryBypassControlType == BypassWhenOAFlowGreaterThanMinimum) {
-                    Real64 OAMassFlowMin = OutAirMinFrac * AirLoopFlow(AirLoopNum).DesSupply;
-                    Real64 OAMassFlowActual = OASignal * this->MixMassFlow;
-                    Real64 reasonablySmallMassFlow = 1e-6;
+                    Nandle OAMassFlowMin = OutAirMinFrac * AirLoopFlow(AirLoopNum).DesSupply;
+                    Nandle OAMassFlowActual = OASignal * this->MixMassFlow;
+                    Nandle reasonablySmallMassFlow = 1e-6;
                     if (OAMassFlowActual > (OAMassFlowMin + reasonablySmallMassFlow)) {
                         AirLoopControlInfo(AirLoopNum).HeatRecoveryBypass = true;
                         this->HeatRecoveryBypassStatus = 1;
@@ -4806,10 +4806,10 @@ namespace MixedAir {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 RecircMassFlowRate;
-        Real64 RecircPressure;
-        Real64 RecircEnthalpy;
-        Real64 RecircHumRat;
+        Nandle RecircMassFlowRate;
+        Nandle RecircPressure;
+        Nandle RecircEnthalpy;
+        Nandle RecircHumRat;
 
         // Define a recirculation mass flow rate
         RecircMassFlowRate = OAMixer(OAMixerNum).RetMassFlowRate - OAMixer(OAMixerNum).RelMassFlowRate;
@@ -4885,7 +4885,7 @@ namespace MixedAir {
         static std::string const CurrentModuleObject(CurrentModuleObjects(CMO_OAController));
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OAFlowRatio;   // Used for error checking
+        Nandle OAFlowRatio;   // Used for error checking
         std::string CompType; // Component type
         std::string CompName; // Component name
         std::string CoilName;
@@ -5171,8 +5171,8 @@ namespace MixedAir {
     // Beginning Utility Section of the Module
     //******************************************************************************
 
-    Real64 MixedAirControlTempResidual(Real64 const OASignal,     // Relative outside air flow rate (0 to 1)
-                                       Array1D<Real64> const &Par // par(1) = mixed node number
+    Nandle MixedAirControlTempResidual(Nandle const OASignal,     // Relative outside air flow rate (0 to 1)
+                                       Array1D<Nandle> const &Par // par(1) = mixed node number
     )
     {
 
@@ -5196,7 +5196,7 @@ namespace MixedAir {
         using Psychrometrics::PsyTdbFnHW;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -5219,14 +5219,14 @@ namespace MixedAir {
         int MixNode;               // mixed air node number
         int RetNode;               // return air node number
         int OANode;                // outside air node number
-        Real64 MixMassFlowRate;    // mixed air mass flow rare [kg/s]
-        Real64 OAMassFlowRate;     // outside air mass flow rate [kg/s]
-        Real64 RecircMassFlowRate; // recirculated air mass flow rate [kg/s]
-        Real64 RecircEnth;         // recirculated air specific enthalpy [J/kg]
-        Real64 RecircHumRat;       // recirculated air humidity ratio [kg water/kg dry air]
-        Real64 MixEnth;            // mixed air specific enthalpy [J/kg]
-        Real64 MixHumRat;          // mixed air humidity ratio [kg water/kg dry air]
-        Real64 MixTemp;            // mixed air temperature [C]
+        Nandle MixMassFlowRate;    // mixed air mass flow rare [kg/s]
+        Nandle OAMassFlowRate;     // outside air mass flow rate [kg/s]
+        Nandle RecircMassFlowRate; // recirculated air mass flow rate [kg/s]
+        Nandle RecircEnth;         // recirculated air specific enthalpy [J/kg]
+        Nandle RecircHumRat;       // recirculated air humidity ratio [kg water/kg dry air]
+        Nandle MixEnth;            // mixed air specific enthalpy [J/kg]
+        Nandle MixHumRat;          // mixed air humidity ratio [kg water/kg dry air]
+        Nandle MixTemp;            // mixed air temperature [C]
 
         MixNode = int(Par(1));
         RetNode = int(Par(2));
@@ -5245,8 +5245,8 @@ namespace MixedAir {
         return Residuum;
     }
 
-    Real64 MultiCompControlTempResidual(Real64 const OASignal,     // Relative outside air flow rate (0 to 1)
-                                        Array1D<Real64> const &Par // par(1) = mixed node number
+    Nandle MultiCompControlTempResidual(Nandle const OASignal,     // Relative outside air flow rate (0 to 1)
+                                        Array1D<Nandle> const &Par // par(1) = mixed node number
     )
     {
 
@@ -5270,7 +5270,7 @@ namespace MixedAir {
         using Psychrometrics::PsyTdbFnHW;
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -5296,9 +5296,9 @@ namespace MixedAir {
         int MixNode;            // mixed air node number
         int RelNode;            // return air node number
         int OANode;             // outside air node number
-        Real64 MixMassFlowRate; // mixed air mass flow rare [kg/s]
-        Real64 OAMassFlowRate;  // outside air mass flow rate [kg/s]
-        Real64 ExhMassFlow;
+        Nandle MixMassFlowRate; // mixed air mass flow rare [kg/s]
+        Nandle OAMassFlowRate;  // outside air mass flow rate [kg/s]
+        Nandle ExhMassFlow;
         bool FirstHVACIteration;
         int AirloopNum;
         int OASysNum;
@@ -6224,8 +6224,8 @@ namespace MixedAir {
         GlobalNames::VerifyUniqueInterObjectName(OAControllerUniqueNames, OAControllerName, ObjectType, FieldName, ErrorsFound);
     }
 
-    void OAControllerProps::Checksetpoints(Real64 const OutAirMinFrac,   // Local variable used to calculate min OA fraction
-                                           Real64 &OutAirSignal,         // Used to set OA mass flow rate
+    void OAControllerProps::Checksetpoints(Nandle const OutAirMinFrac,   // Local variable used to calculate min OA fraction
+                                           Nandle &OutAirSignal,         // Used to set OA mass flow rate
                                            bool &EconomizerOperationFlag // logical used to show economizer status
     )
     {
@@ -6263,7 +6263,7 @@ namespace MixedAir {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 OADPTemp; // Dew Point Temperature calculation
+        Nandle OADPTemp; // Dew Point Temperature calculation
 
         if (this->TempLim != BlankNumeric && this->OATemp > this->TempLim) {
             OutAirSignal = OutAirMinFrac;

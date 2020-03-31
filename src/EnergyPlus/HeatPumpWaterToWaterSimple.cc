@@ -156,7 +156,7 @@ namespace HeatPumpWaterToWaterSimple {
         return nullptr;
     }
 
-    void GshpSpecs::simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad, bool const EP_UNUSED(RunFlag))
+    void GshpSpecs::simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad, bool const EP_UNUSED(RunFlag))
     {
         if (this->WWHPPlantTypeOfNum == DataPlant::TypeOf_HPWaterEFCooling) {
             if (calledFromLocation.loopNum == this->LoadLoopNum) { // chilled water loop
@@ -201,10 +201,10 @@ namespace HeatPumpWaterToWaterSimple {
         } // TypeOfEquip
     }
 
-    void GshpSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void GshpSpecs::getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         bool initFirstHVAC = true;
-        Real64 initCurLoad = 0.0;
+        Nandle initCurLoad = 0.0;
         this->InitWatertoWaterHP(this->WWHPPlantTypeOfNum, this->Name, initFirstHVAC, initCurLoad);
         if (calledFromLocation.loopNum == this->LoadLoopNum) {
             if (this->WWHPPlantTypeOfNum == DataPlant::TypeOf_HPWaterEFCooling) {
@@ -227,7 +227,7 @@ namespace HeatPumpWaterToWaterSimple {
         }
     }
 
-    void GshpSpecs::getSizingFactor(Real64 &sizingFactor)
+    void GshpSpecs::getSizingFactor(Nandle &sizingFactor)
     {
         sizingFactor = this->sizFac;
     }
@@ -651,7 +651,7 @@ namespace HeatPumpWaterToWaterSimple {
     void GshpSpecs::InitWatertoWaterHP(int const GSHPTypeNum,                  // Type of GSHP
                                        std::string const &EP_UNUSED(GSHPName), // User Specified Name of GSHP
                                        bool const EP_UNUSED(FirstHVACIteration),
-                                       Real64 const MyLoad // Demand Load
+                                       Nandle const MyLoad // Demand Load
     )
     {
 
@@ -693,12 +693,12 @@ namespace HeatPumpWaterToWaterSimple {
         int LoadSideOutletNode;            // Load Side Outlet Node
         int SourceSideInletNode;           // Source Side Inlet Node
         int SourceSideOutletNode;          // Source Side Outlet Node
-        static Real64 CurrentSimTime(0.0); // Current Simulation Time
-        static Real64 PrevSimTime(0.0);    // Previous Simulation Time
+        static Nandle CurrentSimTime(0.0); // Current Simulation Time
+        static Nandle PrevSimTime(0.0);    // Previous Simulation Time
 
         int LoopNum;
         int LoopSideNum;
-        Real64 rho; // local fluid density
+        Nandle rho; // local fluid density
 
         this->MustRun = true; // Reset MustRun flag to TRUE
         LoadSideInletNode = this->LoadSideInletNodeNum;
@@ -938,10 +938,10 @@ namespace HeatPumpWaterToWaterSimple {
         // do sizing related calculations and reporting for cooling heat pumps
         bool errorsFound(false);
         static std::string const RoutineName("sizeCoolingWaterToWaterHP");
-        Real64 tmpLoadSideVolFlowRate = this->RatedLoadVolFlowCool;
-        Real64 tmpSourceSideVolFlowRate = this->RatedSourceVolFlowCool;
-        Real64 tmpCoolingCap = this->RatedCapCool;
-        Real64 tmpPowerDraw = this->RatedPowerCool;
+        Nandle tmpLoadSideVolFlowRate = this->RatedLoadVolFlowCool;
+        Nandle tmpSourceSideVolFlowRate = this->RatedSourceVolFlowCool;
+        Nandle tmpCoolingCap = this->RatedCapCool;
+        Nandle tmpPowerDraw = this->RatedPowerCool;
 
         // if companion heating coil known, update info from that
         if (this->companionIdentified) {
@@ -965,22 +965,22 @@ namespace HeatPumpWaterToWaterSimple {
                     // store flow rate right away regardless of PlantFirstSizesOkayToFinalize so that data are available
                     this->RatedLoadVolFlowCool = tmpLoadSideVolFlowRate;
                 }
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                DataGlobals::CWInitConvTemp,
                                                                DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                RoutineName);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                    DataGlobals::CWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                    RoutineName);
                 tmpCoolingCap = Cp * rho * DataSizing::PlantSizData(pltLoadSizNum).DeltaT * tmpLoadSideVolFlowRate;
             } else if (this->companionIdentified && this->RatedLoadVolFlowHeat > 0.0) {
                 tmpLoadSideVolFlowRate = this->RatedLoadVolFlowHeat;
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                DataGlobals::CWInitConvTemp,
                                                                DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                RoutineName);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                    DataGlobals::CWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                    RoutineName);
@@ -1002,7 +1002,7 @@ namespace HeatPumpWaterToWaterSimple {
                     }
                 } else {
                     if (this->RatedCapCool > 0.0 && tmpCoolingCap > 0.0) {
-                        Real64 nomCoolingCapUser = this->RatedCapCool;
+                        Nandle nomCoolingCapUser = this->RatedCapCool;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Cooling",
@@ -1048,7 +1048,7 @@ namespace HeatPumpWaterToWaterSimple {
                     }
                 } else {
                     if (this->RatedLoadVolFlowCool > 0.0 && tmpLoadSideVolFlowRate > 0.0) {
-                        Real64 nomLoadSideVolFlowUser = this->RatedLoadVolFlowCool;
+                        Nandle nomLoadSideVolFlowUser = this->RatedLoadVolFlowCool;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Cooling",
@@ -1136,11 +1136,11 @@ namespace HeatPumpWaterToWaterSimple {
         if (!this->ratedLoadVolFlowCoolWasAutoSized) tmpLoadSideVolFlowRate = this->RatedLoadVolFlowCool;
         int pltSourceSizNum = DataPlant::PlantLoop(this->SourceLoopNum).PlantSizNum;
         if (pltSourceSizNum > 0) {
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
                                                            DataGlobals::CWInitConvTemp,
                                                            DataPlant::PlantLoop(this->SourceLoopNum).FluidIndex,
                                                            RoutineName);
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
                                                                DataGlobals::CWInitConvTemp,
                                                                DataPlant::PlantLoop(this->SourceLoopNum).FluidIndex,
                                                                RoutineName);
@@ -1165,7 +1165,7 @@ namespace HeatPumpWaterToWaterSimple {
             }
         } else {
             if (this->RatedSourceVolFlowCool > 0.0 && tmpSourceSideVolFlowRate > 0.0) {
-                Real64 nomSourceSideVolFlowUser = this->RatedSourceVolFlowCool;
+                Nandle nomSourceSideVolFlowUser = this->RatedSourceVolFlowCool;
                 if (DataPlant::PlantFinalSizesOkayToReport) {
                     if (DataGlobals::DoPlantSizing) {
                         ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Cooling",
@@ -1211,7 +1211,7 @@ namespace HeatPumpWaterToWaterSimple {
             }
         } else {
             if (this->RatedPowerCool > 0.0 && tmpPowerDraw > 0.0) {
-                Real64 nomPowerDrawUser = this->RatedPowerCool;
+                Nandle nomPowerDrawUser = this->RatedPowerCool;
                 if (DataPlant::PlantFinalSizesOkayToReport) {
                     if (DataGlobals::DoPlantSizing) {
                         ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Cooling",
@@ -1265,10 +1265,10 @@ namespace HeatPumpWaterToWaterSimple {
         // do sizing related calculations and reporting for heating heat pumps
         bool errorsFound(false);
         static std::string const RoutineName("sizeHeatingWaterToWaterHP");
-        Real64 tmpLoadSideVolFlowRate = this->RatedLoadVolFlowHeat;
-        Real64 tmpSourceSideVolFlowRate = this->RatedSourceVolFlowHeat;
-        Real64 tmpHeatingCap = this->RatedCapHeat;
-        Real64 tmpPowerDraw = this->RatedPowerHeat;
+        Nandle tmpLoadSideVolFlowRate = this->RatedLoadVolFlowHeat;
+        Nandle tmpSourceSideVolFlowRate = this->RatedSourceVolFlowHeat;
+        Nandle tmpHeatingCap = this->RatedCapHeat;
+        Nandle tmpPowerDraw = this->RatedPowerHeat;
 
         // if companion cooling coil known, update info from that
         if (this->companionIdentified) {
@@ -1293,22 +1293,22 @@ namespace HeatPumpWaterToWaterSimple {
                     // PlantFirstSizesOkayToFinalize is true
                     this->RatedLoadVolFlowHeat = tmpLoadSideVolFlowRate;
                 }
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                DataGlobals::HWInitConvTemp,
                                                                DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                RoutineName);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                    DataGlobals::HWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                    RoutineName);
                 tmpHeatingCap = Cp * rho * DataSizing::PlantSizData(pltLoadSizNum).DeltaT * tmpLoadSideVolFlowRate;
             } else if (this->companionIdentified && this->RatedLoadVolFlowCool > 0.0) {
                 tmpLoadSideVolFlowRate = this->RatedLoadVolFlowCool;
-                Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                DataGlobals::HWInitConvTemp,
                                                                DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                RoutineName);
-                Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
+                Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoadLoopNum).FluidName,
                                                                    DataGlobals::HWInitConvTemp,
                                                                    DataPlant::PlantLoop(this->LoadLoopNum).FluidIndex,
                                                                    RoutineName);
@@ -1330,7 +1330,7 @@ namespace HeatPumpWaterToWaterSimple {
                     }
                 } else {
                     if (this->RatedCapHeat > 0.0 && tmpHeatingCap > 0.0) {
-                        Real64 nomHeatingCapUser = this->RatedCapHeat;
+                        Nandle nomHeatingCapUser = this->RatedCapHeat;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Heating",
@@ -1375,7 +1375,7 @@ namespace HeatPumpWaterToWaterSimple {
                     }
                 } else {
                     if (this->RatedLoadVolFlowHeat > 0.0 && tmpLoadSideVolFlowRate > 0.0) {
-                        Real64 nomLoadSideVolFlowUser = this->RatedLoadVolFlowHeat;
+                        Nandle nomLoadSideVolFlowUser = this->RatedLoadVolFlowHeat;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Heating",
@@ -1463,11 +1463,11 @@ namespace HeatPumpWaterToWaterSimple {
         if (!this->ratedLoadVolFlowHeatWasAutoSized) tmpLoadSideVolFlowRate = this->RatedLoadVolFlowHeat;
         int pltSourceSizNum = DataPlant::PlantLoop(this->SourceLoopNum).PlantSizNum;
         if (pltSourceSizNum > 0) {
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
                                                            DataGlobals::HWInitConvTemp,
                                                            DataPlant::PlantLoop(this->SourceLoopNum).FluidIndex,
                                                            RoutineName);
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->SourceLoopNum).FluidName,
                                                                DataGlobals::HWInitConvTemp,
                                                                DataPlant::PlantLoop(this->SourceLoopNum).FluidIndex,
                                                                RoutineName);
@@ -1491,7 +1491,7 @@ namespace HeatPumpWaterToWaterSimple {
             }
         } else {
             if (this->RatedSourceVolFlowHeat > 0.0 && tmpSourceSideVolFlowRate > 0.0) {
-                Real64 nomSourceSideVolFlowUser = this->RatedSourceVolFlowHeat;
+                Nandle nomSourceSideVolFlowUser = this->RatedSourceVolFlowHeat;
                 if (DataPlant::PlantFinalSizesOkayToReport) {
                     if (DataGlobals::DoPlantSizing) {
                         ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Heating",
@@ -1537,7 +1537,7 @@ namespace HeatPumpWaterToWaterSimple {
             }
         } else {
             if (this->RatedPowerHeat > 0.0 && tmpPowerDraw > 0.0) {
-                Real64 nomPowerDrawUser = this->RatedPowerHeat;
+                Nandle nomPowerDrawUser = this->RatedPowerHeat;
                 if (DataPlant::PlantFinalSizesOkayToReport) {
                     if (DataGlobals::DoPlantSizing) {
                         ReportSizingManager::ReportSizingOutput("HeatPump:WaterToWater:EquationFit:Heating",
@@ -1583,7 +1583,7 @@ namespace HeatPumpWaterToWaterSimple {
         }
     }
 
-    void GshpSpecs::CalcWatertoWaterHPCooling(Real64 const MyLoad)
+    void GshpSpecs::CalcWatertoWaterHPCooling(Nandle const MyLoad)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Kenneth Tang
@@ -1606,46 +1606,46 @@ namespace HeatPumpWaterToWaterSimple {
         using FluidProperties::GetSpecificHeatGlycol;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CelsiustoKelvin(KelvinConv); // Conversion from Celsius to Kelvin
-        Real64 const Tref(283.15);                // Reference Temperature for performance curves,10C [K]
+        Nandle const CelsiustoKelvin(KelvinConv); // Conversion from Celsius to Kelvin
+        Nandle const Tref(283.15);                // Reference Temperature for performance curves,10C [K]
         static std::string const RoutineName("CalcWatertoWaterHPCooling");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CoolCapRated;               // Rated Cooling Capacity [W]
-        Real64 CoolPowerRated;             // Rated Cooling Power Consumption[W]
-        Real64 LoadSideVolFlowRateRated;   // Rated Load Side Volumetric Flow Rate [m3/s]
-        Real64 SourceSideVolFlowRateRated; // Rated Source Side Volumetric Flow Rate [m3/s]
-        Real64 CoolCapCoeff1;              // 1st coefficient of the cooling capacity performance curve
-        Real64 CoolCapCoeff2;              // 2nd coefficient of the cooling capacity performance curve
-        Real64 CoolCapCoeff3;              // 3rd coefficient of the cooling capacity performance curve
-        Real64 CoolCapCoeff4;              // 4th coefficient of the cooling capacity performance curve
-        Real64 CoolCapCoeff5;              // 5th coefficient of the cooling capacity performance curve
-        Real64 CoolPowerCoeff1;            // 1st coefficient of the cooling power consumption curve
-        Real64 CoolPowerCoeff2;            // 2nd coefficient of the cooling power consumption curve
-        Real64 CoolPowerCoeff3;            // 3rd coefficient of the cooling power consumption curve
-        Real64 CoolPowerCoeff4;            // 4th coefficient of the cooling power consumption curve
-        Real64 CoolPowerCoeff5;            // 5th coefficient of the cooling power consumption curve
+        Nandle CoolCapRated;               // Rated Cooling Capacity [W]
+        Nandle CoolPowerRated;             // Rated Cooling Power Consumption[W]
+        Nandle LoadSideVolFlowRateRated;   // Rated Load Side Volumetric Flow Rate [m3/s]
+        Nandle SourceSideVolFlowRateRated; // Rated Source Side Volumetric Flow Rate [m3/s]
+        Nandle CoolCapCoeff1;              // 1st coefficient of the cooling capacity performance curve
+        Nandle CoolCapCoeff2;              // 2nd coefficient of the cooling capacity performance curve
+        Nandle CoolCapCoeff3;              // 3rd coefficient of the cooling capacity performance curve
+        Nandle CoolCapCoeff4;              // 4th coefficient of the cooling capacity performance curve
+        Nandle CoolCapCoeff5;              // 5th coefficient of the cooling capacity performance curve
+        Nandle CoolPowerCoeff1;            // 1st coefficient of the cooling power consumption curve
+        Nandle CoolPowerCoeff2;            // 2nd coefficient of the cooling power consumption curve
+        Nandle CoolPowerCoeff3;            // 3rd coefficient of the cooling power consumption curve
+        Nandle CoolPowerCoeff4;            // 4th coefficient of the cooling power consumption curve
+        Nandle CoolPowerCoeff5;            // 5th coefficient of the cooling power consumption curve
 
-        Real64 LoadSideMassFlowRate;   // Load Side Mass Flow Rate [kg/s]
-        Real64 LoadSideInletTemp;      // Load Side Inlet Temperature [C]
-        Real64 LoadSideOutletTemp;     // Load side Outlet Temperature [C]
-        Real64 SourceSideMassFlowRate; // Source Side Mass Flow Rate [kg/s]
-        Real64 SourceSideInletTemp;    // Source Side Inlet Temperature [C]
-        Real64 SourceSideOutletTemp;   // Source Side Outlet Temperature [C]
+        Nandle LoadSideMassFlowRate;   // Load Side Mass Flow Rate [kg/s]
+        Nandle LoadSideInletTemp;      // Load Side Inlet Temperature [C]
+        Nandle LoadSideOutletTemp;     // Load side Outlet Temperature [C]
+        Nandle SourceSideMassFlowRate; // Source Side Mass Flow Rate [kg/s]
+        Nandle SourceSideInletTemp;    // Source Side Inlet Temperature [C]
+        Nandle SourceSideOutletTemp;   // Source Side Outlet Temperature [C]
 
-        Real64 func1;         // Portion of the heat transfer and power equation
-        Real64 func2;         // Portion of the heat transfer and power equation
-        Real64 func3;         // Portion of the heat transfer and power equation
-        Real64 func4;         // Portion of the heat transfer and power equation
-        Real64 Power;         // Power Consumption [W]
-        Real64 QLoad;         // Cooling Capacity [W]
-        Real64 QSource;       // Source Side Heat Transfer Rate [W]
-        Real64 PartLoadRatio; // Part-Load Ratio
-        Real64 ReportingConstant;
-        Real64 rhoLoadSide;
-        Real64 rhoSourceSide;
-        Real64 CpLoadSide;
-        Real64 CpSourceSide;
+        Nandle func1;         // Portion of the heat transfer and power equation
+        Nandle func2;         // Portion of the heat transfer and power equation
+        Nandle func3;         // Portion of the heat transfer and power equation
+        Nandle func4;         // Portion of the heat transfer and power equation
+        Nandle Power;         // Power Consumption [W]
+        Nandle QLoad;         // Cooling Capacity [W]
+        Nandle QSource;       // Source Side Heat Transfer Rate [W]
+        Nandle PartLoadRatio; // Part-Load Ratio
+        Nandle ReportingConstant;
+        Nandle rhoLoadSide;
+        Nandle rhoSourceSide;
+        Nandle CpLoadSide;
+        Nandle CpSourceSide;
 
         //  LOAD LOCAL VARIABLES FROM DATA STRUCTURE
         LoadSideVolFlowRateRated = this->RatedLoadVolFlowCool;
@@ -1765,7 +1765,7 @@ namespace HeatPumpWaterToWaterSimple {
         this->reportSourceSideOutletTemp = SourceSideOutletTemp;
     }
 
-    void GshpSpecs::CalcWatertoWaterHPHeating(Real64 const MyLoad)
+    void GshpSpecs::CalcWatertoWaterHPHeating(Nandle const MyLoad)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Kenneth Tang
@@ -1788,45 +1788,45 @@ namespace HeatPumpWaterToWaterSimple {
         using FluidProperties::GetSpecificHeatGlycol;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const CelsiustoKelvin(KelvinConv); // Conversion from Celsius to Kelvin
-        Real64 const Tref(283.15);                // Reference Temperature for performance curves,10C [K]
+        Nandle const CelsiustoKelvin(KelvinConv); // Conversion from Celsius to Kelvin
+        Nandle const Tref(283.15);                // Reference Temperature for performance curves,10C [K]
         static std::string const RoutineName("CalcWatertoWaterHPHeating");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 HeatCapRated;               // Rated Heating Capacity [W]
-        Real64 HeatPowerRated;             // Rated Heating Compressor Power[W]
-        Real64 LoadSideVolFlowRateRated;   // Rated Load Side Volumetric Flow Rate [m3/s]
-        Real64 SourceSideVolFlowRateRated; // Rated Source Side Volumetric Flow Rate [m3/s]
-        Real64 HeatCapCoeff1;              // 1st coefficient of the heating capacity performance curve
-        Real64 HeatCapCoeff2;              // 2nd coefficient of the heating capacity performance curve
-        Real64 HeatCapCoeff3;              // 3rd coefficient of the heating capacity performance curve
-        Real64 HeatCapCoeff4;              // 4th coefficient of the heating capacity performance curve
-        Real64 HeatCapCoeff5;              // 5th coefficient of the heating capacity performance curve
-        Real64 HeatPowerCoeff1;            // 1st coefficient of the heating power consumption curve
-        Real64 HeatPowerCoeff2;            // 2nd coefficient of the heating power consumption curve
-        Real64 HeatPowerCoeff3;            // 3rd coefficient of the heating power consumption curve
-        Real64 HeatPowerCoeff4;            // 4th coefficient of the heating power consumption curve
-        Real64 HeatPowerCoeff5;            // 5th coefficient of the heating power consumption curve
-        Real64 LoadSideMassFlowRate;       // Load Side Mass Flow Rate [kg/s]
-        Real64 LoadSideInletTemp;          // Load Side Inlet Temperature [C]
-        Real64 LoadSideOutletTemp;         // Load side Outlet Temperature [C]
-        Real64 SourceSideMassFlowRate;     // Source Side Mass Flow Rate [kg/s]
-        Real64 SourceSideInletTemp;        // Source Side Inlet Temperature [C]
-        Real64 SourceSideOutletTemp;       // Source Side Outlet Temperature [C]
-        Real64 func1;                      // Portion of the heat transfer and power equation
-        Real64 func2;                      // Portion of the heat transfer and power equation
-        Real64 func3;                      // Portion of the heat transfer and power equation
-        Real64 func4;                      // Portion of the heat transfer and power equation
-        Real64 Power;                      // Power Consumption [W]
-        Real64 QLoad;                      // Cooling Capacity [W]
-        Real64 QSource;                    // Source Side Heat Transfer Rate [W]
-        Real64 PartLoadRatio;              // Part Load Ratio
-        Real64 ReportingConstant;
-        Real64 rhoLoadSide;
-        Real64 rhoSourceSide;
-        Real64 CpLoadSide;
-        Real64 CpSourceSide;
+        Nandle HeatCapRated;               // Rated Heating Capacity [W]
+        Nandle HeatPowerRated;             // Rated Heating Compressor Power[W]
+        Nandle LoadSideVolFlowRateRated;   // Rated Load Side Volumetric Flow Rate [m3/s]
+        Nandle SourceSideVolFlowRateRated; // Rated Source Side Volumetric Flow Rate [m3/s]
+        Nandle HeatCapCoeff1;              // 1st coefficient of the heating capacity performance curve
+        Nandle HeatCapCoeff2;              // 2nd coefficient of the heating capacity performance curve
+        Nandle HeatCapCoeff3;              // 3rd coefficient of the heating capacity performance curve
+        Nandle HeatCapCoeff4;              // 4th coefficient of the heating capacity performance curve
+        Nandle HeatCapCoeff5;              // 5th coefficient of the heating capacity performance curve
+        Nandle HeatPowerCoeff1;            // 1st coefficient of the heating power consumption curve
+        Nandle HeatPowerCoeff2;            // 2nd coefficient of the heating power consumption curve
+        Nandle HeatPowerCoeff3;            // 3rd coefficient of the heating power consumption curve
+        Nandle HeatPowerCoeff4;            // 4th coefficient of the heating power consumption curve
+        Nandle HeatPowerCoeff5;            // 5th coefficient of the heating power consumption curve
+        Nandle LoadSideMassFlowRate;       // Load Side Mass Flow Rate [kg/s]
+        Nandle LoadSideInletTemp;          // Load Side Inlet Temperature [C]
+        Nandle LoadSideOutletTemp;         // Load side Outlet Temperature [C]
+        Nandle SourceSideMassFlowRate;     // Source Side Mass Flow Rate [kg/s]
+        Nandle SourceSideInletTemp;        // Source Side Inlet Temperature [C]
+        Nandle SourceSideOutletTemp;       // Source Side Outlet Temperature [C]
+        Nandle func1;                      // Portion of the heat transfer and power equation
+        Nandle func2;                      // Portion of the heat transfer and power equation
+        Nandle func3;                      // Portion of the heat transfer and power equation
+        Nandle func4;                      // Portion of the heat transfer and power equation
+        Nandle Power;                      // Power Consumption [W]
+        Nandle QLoad;                      // Cooling Capacity [W]
+        Nandle QSource;                    // Source Side Heat Transfer Rate [W]
+        Nandle PartLoadRatio;              // Part Load Ratio
+        Nandle ReportingConstant;
+        Nandle rhoLoadSide;
+        Nandle rhoSourceSide;
+        Nandle CpLoadSide;
+        Nandle CpSourceSide;
 
         //  LOAD LOCAL VARIABLES FROM DATA STRUCTURE
         LoadSideVolFlowRateRated = this->RatedLoadVolFlowHeat;

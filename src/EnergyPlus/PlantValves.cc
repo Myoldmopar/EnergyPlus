@@ -122,12 +122,12 @@ namespace PlantValves {
         TemperValve.deallocate();
     }
 
-    void TemperValveData::simulate(const PlantLocation &EP_UNUSED(calledFromLocation), bool EP_UNUSED(FirstHVACIteration), Real64 &EP_UNUSED(CurLoad),
+    void TemperValveData::simulate(const PlantLocation &EP_UNUSED(calledFromLocation), bool EP_UNUSED(FirstHVACIteration), Nandle &EP_UNUSED(CurLoad),
                                    bool EP_UNUSED(RunFlag)) {
         this->initialize();
         this->calculate();
         PlantUtilities::SafeCopyPlantNode(this->PltInletNodeNum, this->PltOutletNodeNum);
-        Real64 mdot = this->MixedMassFlowRate * this->FlowDivFract;
+        Nandle mdot = this->MixedMassFlowRate * this->FlowDivFract;
         if (this->LoopNum > 0) {
             PlantUtilities::SetComponentFlowRate(mdot,
                                                  this->PltInletNodeNum,
@@ -140,8 +140,8 @@ namespace PlantValves {
         }
     }
 
-    void TemperValveData::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad,
-                                              Real64 &OptLoad) {
+    void TemperValveData::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad,
+                                              Nandle &OptLoad) {
         MaxLoad = 0.0;
         MinLoad = 0.0;
         OptLoad = 0.0;
@@ -170,7 +170,7 @@ namespace PlantValves {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Item;                        // Item to be "gotten"
         Array1D_string Alphas(6);        // Alpha items for object
-        Array1D<Real64> Numbers(1);      // Numeric items for object
+        Array1D<Nandle> Numbers(1);      // Numeric items for object
         int NumAlphas;                   // Number of Alphas for each GetObjectItem call
         int NumNumbers;                  // Number of Numbers for each GetObjectItem call
         int IOStatus;                    // Used in GetObjectItem
@@ -450,9 +450,9 @@ namespace PlantValves {
         //     that should be diverted.  See update routine for setting flow rates.
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Tin;  // local working variable for Inlet Temperature (C)
-        Real64 Tset; // local working variable for Setpoint Temperature (C)
-        Real64 Ts2;  // local Working Variable for Stream 2 outlet Temperature (C)
+        Nandle Tin;  // local working variable for Inlet Temperature (C)
+        Nandle Tset; // local working variable for Setpoint Temperature (C)
+        Nandle Ts2;  // local Working Variable for Stream 2 outlet Temperature (C)
 
         if (DataGlobals::KickOffSimulation) return;
 

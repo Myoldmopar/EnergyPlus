@@ -90,32 +90,32 @@ namespace DataGlobals {
     extern int const ksHVACSizeRunPeriodDesign; // a weather period design day run during HVAC Sizing Simulation
     extern int const ksReadAllWeatherData;      // a weather period for reading all weather data prior to the simulation
 
-    extern Real64 const MaxEXPArg; // maximum exponent in EXP() function
-    extern Real64 const Pi;        // Pi 3.1415926535897932384626435
-    extern Real64 const PiOvr2;    // Pi/2
-    extern Real64 const TwoPi;     // 2*Pi 6.2831853071795864769252868
-    extern Real64 const GravityConstant;
-    extern Real64 const DegToRadians;                  // Conversion for Degrees to Radians
-    extern Real64 const RadToDeg;                      // Conversion for Radians to Degrees
-    extern Real64 const SecInHour;                     // Conversion for hours to seconds
-    extern Real64 const HoursInDay;                    // Number of Hours in Day
-    extern Real64 const SecsInDay;                     // Number of seconds in Day
-    extern Real64 const BigNumber;                     // Max Number real used for initializations
-    extern Real64 const rTinyValue;                    // Tiny value to replace use of TINY(x)
+    extern Nandle const MaxEXPArg; // maximum exponent in EXP() function
+    extern Nandle const Pi;        // Pi 3.1415926535897932384626435
+    extern Nandle const PiOvr2;    // Pi/2
+    extern Nandle const TwoPi;     // 2*Pi 6.2831853071795864769252868
+    extern Nandle const GravityConstant;
+    extern Nandle const DegToRadians;                  // Conversion for Degrees to Radians
+    extern Nandle const RadToDeg;                      // Conversion for Radians to Degrees
+    extern Nandle const SecInHour;                     // Conversion for hours to seconds
+    extern Nandle const HoursInDay;                    // Number of Hours in Day
+    extern Nandle const SecsInDay;                     // Number of seconds in Day
+    extern Nandle const BigNumber;                     // Max Number real used for initializations
+    extern Nandle const rTinyValue;                    // Tiny value to replace use of TINY(x)
     extern std::string::size_type const MaxNameLength; // Maximum Name Length in Characters -- should be the same
     // as MaxAlphaArgLength in InputProcessor module
 
-    extern Real64 const KelvinConv;        // Conversion factor for C to K and K to C
-    extern Real64 const InitConvTemp;      // [deg C], standard init vol to mass flow conversion temp
-    extern Real64 const AutoCalculate;     // automatically calculate some fields.
-    extern Real64 const CWInitConvTemp;    // [deg C], standard init chilled water vol to mass flow conversion temp
-    extern Real64 const HWInitConvTemp;    // [deg C], standard init hot water vol to mass flow conversion temp
-    extern Real64 const SteamInitConvTemp; // [deg C], standard init steam vol to mass flow conversion temp
+    extern Nandle const KelvinConv;        // Conversion factor for C to K and K to C
+    extern Nandle const InitConvTemp;      // [deg C], standard init vol to mass flow conversion temp
+    extern Nandle const AutoCalculate;     // automatically calculate some fields.
+    extern Nandle const CWInitConvTemp;    // [deg C], standard init chilled water vol to mass flow conversion temp
+    extern Nandle const HWInitConvTemp;    // [deg C], standard init hot water vol to mass flow conversion temp
+    extern Nandle const SteamInitConvTemp; // [deg C], standard init steam vol to mass flow conversion temp
 
-    extern Real64 const StefanBoltzmann;   // Stefan-Boltzmann constant in W/(m2*K4)
-    extern Real64 const UniversalGasConst; // (J/mol*K)
+    extern Nandle const StefanBoltzmann;   // Stefan-Boltzmann constant in W/(m2*K4)
+    extern Nandle const UniversalGasConst; // (J/mol*K)
 
-    extern Real64 const convertJtoGJ; // Conversion factor for J to GJ
+    extern Nandle const convertJtoGJ; // Conversion factor for J to GJ
 
     // Parameters for EMS Calling Points
     extern int const emsCallFromZoneSizing;                           // Identity where EMS called from
@@ -226,13 +226,13 @@ namespace DataGlobals {
     extern bool EndHourFlag;                         // True at the end of each hour (last time step of hour)
     extern int PreviousHour;                         // Previous Hour Index
     extern int HourOfDay;                            // Counter for hours in a simulation day
-    extern Real64 WeightPreviousHour;                // Weighting of value for previous hour
-    extern Real64 WeightNow;                         // Weighting of value for current hour
+    extern Nandle WeightPreviousHour;                // Weighting of value for previous hour
+    extern Nandle WeightNow;                         // Weighting of value for current hour
     extern int NumOfDayInEnvrn;                      // Number of days in the simulation for a particular environment
     extern int NumOfTimeStepInHour;                  // Number of time steps in each hour of the simulation
     extern int NumOfZones;                           // Total number of Zones for simulation
     extern int TimeStep;                             // Counter for time steps (fractional hours)
-    extern Real64 TimeStepZone;                      // Zone time step in fractional hours
+    extern Nandle TimeStepZone;                      // Zone time step in fractional hours
     extern bool WarmupFlag;                          // True during the warmup portion of a simulation
     extern int OutputFileStandard;                   // Unit number for the standard output file (hourly data only)
     extern std::ostream *eso_stream;                 // Internal stream used for eso output (used for performance)
@@ -270,10 +270,10 @@ namespace DataGlobals {
     extern bool DisplayZoneAirHeatBalanceOffBalance; // True when selection for  "DisplayZoneAirHeatBalanceOffBalance" is entered
     extern bool DisplayInputInAudit;                 // True when environmental variable "DisplayInputInAudit" is used
     extern bool CreateMinimalSurfaceVariables;       // True when selection for  "CreateMinimalSurfaceVariables" is entered
-    extern Real64 CurrentTime;                       // CurrentTime, in fractional hours, from start of day. Uses Loads time step.
+    extern Nandle CurrentTime;                       // CurrentTime, in fractional hours, from start of day. Uses Loads time step.
     extern int SimTimeSteps;                         // Number of (Loads) timesteps since beginning of run period (environment).
     extern int MinutesPerTimeStep;                   // Minutes per time step calculated from NumTimeStepInHour (number of minutes per load time step)
-    extern Real64 TimeStepZoneSec;                   // Seconds per time step
+    extern Nandle TimeStepZoneSec;                   // Seconds per time step
     extern bool MetersHaveBeenInitialized;
     extern bool KickOffSimulation;                 // Kick off simulation -- meaning run each environment for 1 or 2 time steps.
     extern bool KickOffSizing;                     // Kick off sizing -- meaning run each environment for 1 or 2 time steps.

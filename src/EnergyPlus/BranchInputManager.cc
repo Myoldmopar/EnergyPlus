@@ -1355,7 +1355,7 @@ namespace BranchInputManager {
         Array1D_string Alphas;   // Used to retrieve names from IDF
         Array1D_int NodeNums;    // Possible Array of Node Numbers (only 1 allowed)
         int NumNumbers;          // Used to retrieve numbers from IDF
-        Array1D<Real64> Numbers; // Used to retrieve numbers from IDF
+        Array1D<Nandle> Numbers; // Used to retrieve numbers from IDF
         Array1D_string cAlphaFields;
         Array1D_string cNumericFields;
         Array1D_bool lNumericBlanks;
@@ -1626,7 +1626,7 @@ namespace BranchInputManager {
         int NumAlphas;         // Used to retrieve Branch list from IDF
         Array1D_string Alphas; // Used to retrieve names from IDF
         int NumNumbers;
-        Array1D<Real64> Numbers; // Not used in this object
+        Array1D<Nandle> Numbers; // Not used in this object
         Array1D_string cAlphaFields;
         Array1D_string cNumericFields;
         Array1D_bool lNumericBlanks;
@@ -1779,7 +1779,7 @@ namespace BranchInputManager {
         int NumAlphas;           // Used to retrieve names from IDF
         Array1D_string Alphas;   // Used to retrieve names from IDF
         int NumNumbers;          // Used to retrieve numbers from IDF
-        Array1D<Real64> Numbers; // Used to retrieve numbers from IDF
+        Array1D<Nandle> Numbers; // Used to retrieve numbers from IDF
         Array1D_string cAlphaFields;
         Array1D_string cNumericFields;
         Array1D_bool lNumericBlanks;
@@ -2042,7 +2042,7 @@ namespace BranchInputManager {
         int NumAlphas;           // Used to retrieve names from IDF
         Array1D_string Alphas;   // Used to retrieve names from IDF
         int NumNumbers;          // Used to retrieve numbers from IDF
-        Array1D<Real64> Numbers; // Used to retrieve numbers from IDF
+        Array1D<Nandle> Numbers; // Used to retrieve numbers from IDF
         Array1D_string cAlphaFields;
         Array1D_string cNumericFields;
         Array1D_bool lNumericBlanks;
@@ -2287,7 +2287,7 @@ namespace BranchInputManager {
         int NumAlphas;           // Used to retrieve names from IDF
         Array1D_string Alphas;   // Used to retrieve names from IDF
         int NumNumbers;          // Used to retrieve numbers from IDF
-        Array1D<Real64> Numbers; // Used to retrieve numbers from IDF
+        Array1D<Nandle> Numbers; // Used to retrieve numbers from IDF
         Array1D_string cAlphaFields;
         Array1D_string cNumericFields;
         Array1D_bool lNumericBlanks;
@@ -2480,7 +2480,7 @@ namespace BranchInputManager {
                                        std::string &FoundPlantLoopName,
                                        int &FoundPlantLoopNum,
                                        std::string &FoundSupplyDemand,
-                                       Real64 &FoundVolFlowRate,
+                                       Nandle &FoundVolFlowRate,
                                        bool &MatchedPlantLoop)
     {
 
@@ -2520,7 +2520,7 @@ namespace BranchInputManager {
         int NumParams;
         Array1D_string Alphas;
         int NumAlphas;
-        Array1D<Real64> Numbers;
+        Array1D<Nandle> Numbers;
         int NumNumbers;
         int IOStat;
 
@@ -2560,7 +2560,7 @@ namespace BranchInputManager {
                                            std::string &FoundCondLoopName,
                                            int &FoundCondLoopNum,
                                            std::string &FoundSupplyDemand,
-                                           Real64 &FoundVolFlowRate,
+                                           Nandle &FoundVolFlowRate,
                                            bool &MatchedCondLoop)
     {
 
@@ -2600,7 +2600,7 @@ namespace BranchInputManager {
         int NumParams;
         Array1D_string Alphas;
         int NumAlphas;
-        Array1D<Real64> Numbers;
+        Array1D<Nandle> Numbers;
         int NumNumbers;
         int IOStat;
 
@@ -2640,7 +2640,7 @@ namespace BranchInputManager {
                                      std::string &FoundAirLoopName,
                                      int &FoundAirLoopNum,
                                      std::string &FoundAir,
-                                     Real64 &FoundVolFlowRate,
+                                     Nandle &FoundVolFlowRate,
                                      bool &MatchedAirLoop)
     {
 
@@ -2680,7 +2680,7 @@ namespace BranchInputManager {
         int NumParams;
         Array1D_string Alphas;
         int NumAlphas;
-        Array1D<Real64> Numbers;
+        Array1D<Nandle> Numbers;
         int NumNumbers;
         int IOStat;
 
@@ -2749,7 +2749,7 @@ namespace BranchInputManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string FoundLoopName;
         int FoundLoopNum;
-        Real64 FoundLoopVolFlowRate;
+        Nandle FoundLoopVolFlowRate;
 
         LoopSupplyDemandAir = BlankString;
         FoundLoopName = BlankString;

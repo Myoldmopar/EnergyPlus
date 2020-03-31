@@ -141,33 +141,33 @@ namespace OutputReportTabularAnnual {
         std::vector<std::string> m_objectNames;     // for each row of annual table
         std::vector<AnnualFieldSet> m_annualFields; // for each column
 
-        Real64 getElapsedTime(OutputProcessor::TimeStepType kindOfTimeStep);
+        Nandle getElapsedTime(OutputProcessor::TimeStepType kindOfTimeStep);
 
-        Real64 getSecondsInTimeStep(OutputProcessor::TimeStepType kindOfTimeStep);
+        Nandle getSecondsInTimeStep(OutputProcessor::TimeStepType kindOfTimeStep);
 
         void computeBinColumns();
 
         std::vector<std::string> setupAggString();
 
-        Real64 setEnergyUnitStringAndFactor(int const unitsStyle, std::string &unitString);
+        Nandle setEnergyUnitStringAndFactor(int const unitsStyle, std::string &unitString);
 
         int columnCountForAggregation(AnnualFieldSet::AggregationKind curAgg);
 
         std::string trim(const std::string &str);
 
-        void fixUnitsPerSecond(std::string &unitString, Real64 &conversionFactor);
+        void fixUnitsPerSecond(std::string &unitString, Nandle &conversionFactor);
 
         bool allRowsSameSizeDefferedVectors(std::vector<AnnualFieldSet>::iterator fldStIt);
 
         void convertUnitForDeferredResults(std::vector<AnnualFieldSet>::iterator fldStIt, int const unitsStyle);
 
-        std::vector<Real64> calculateBins(int const numberOfBins,
-                                          std::vector<Real64> const valuesToBin,
-                                          std::vector<Real64> const corrElapsedTime,
-                                          Real64 const topOfBins,
-                                          Real64 const bottomOfBins,
-                                          Real64 &timeAboveTopBin,
-                                          Real64 &timeBelowBottomBin);
+        std::vector<Nandle> calculateBins(int const numberOfBins,
+                                          std::vector<Nandle> const valuesToBin,
+                                          std::vector<Nandle> const corrElapsedTime,
+                                          Nandle const topOfBins,
+                                          Nandle const bottomOfBins,
+                                          Nandle &timeAboveTopBin,
+                                          Nandle &timeBelowBottomBin);
 
     }; // class AnnualTable
 

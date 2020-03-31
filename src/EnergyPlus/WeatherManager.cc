@@ -175,8 +175,8 @@ namespace WeatherManager {
     int const GregorianToJulian(1); // JGDate argument for Gregorian to Julian Date conversion
     int const JulianToGregorian(2); // JGDate argument for Julian to Gregorian Date conversion
 
-    Real64 const Sigma(5.6697e-8);    // Stefan-Boltzmann constant
-    Real64 const TKelvin(KelvinConv); // conversion from Kelvin to Celsius
+    Nandle const Sigma(5.6697e-8);    // Stefan-Boltzmann constant
+    Nandle const TKelvin(KelvinConv); // conversion from Kelvin to Celsius
 
     static std::string const BlankString;
     Array1D_string const DaysOfWeek(7, {"SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"});
@@ -190,7 +190,7 @@ namespace WeatherManager {
 
     bool Debugout(false);
 
-    // Real64 CalcWaterMainsTempCurrent( 0 );
+    // Nandle CalcWaterMainsTempCurrent( 0 );
 
     // DERIVED TYPE DEFINITIONS:
 
@@ -220,23 +220,23 @@ namespace WeatherManager {
         bool GetEnvironmentFirstCall(true);
         bool PrntEnvHeaders(true);
     } // namespace
-    Real64 WeatherFileLatitude(0.0);
-    Real64 WeatherFileLongitude(0.0);
-    Real64 WeatherFileTimeZone(0.0);
-    Real64 WeatherFileElevation(0.0);
+    Nandle WeatherFileLatitude(0.0);
+    Nandle WeatherFileLongitude(0.0);
+    Nandle WeatherFileTimeZone(0.0);
+    Nandle WeatherFileElevation(0.0);
     int WeatherFileUnitNumber;                           // File unit number for the weather file
-    Array1D<Real64> GroundTempsFCFromEPWHeader(12, 0.0); // F or C factor method
-    Array1D<Real64> GroundReflectances(12, 0.2);         // User Specified Ground Reflectances !EPTeam: Using DP causes big diffs
-    Real64 SnowGndRefModifier(1.0);                      // Modifier to ground reflectance during snow
-    Real64 SnowGndRefModifierForDayltg(1.0);             // Modifier to ground reflectance during snow for daylighting
+    Array1D<Nandle> GroundTempsFCFromEPWHeader(12, 0.0); // F or C factor method
+    Array1D<Nandle> GroundReflectances(12, 0.2);         // User Specified Ground Reflectances !EPTeam: Using DP causes big diffs
+    Nandle SnowGndRefModifier(1.0);                      // Modifier to ground reflectance during snow
+    Nandle SnowGndRefModifierForDayltg(1.0);             // Modifier to ground reflectance during snow for daylighting
     int WaterMainsTempsMethod(0);                        // Water mains temperature calculation method
     int WaterMainsTempsSchedule(0);                      // Water mains temperature schedule
-    Real64 WaterMainsTempsAnnualAvgAirTemp(0.0);         // Annual average outdoor air temperature (C)
-    Real64 WaterMainsTempsMaxDiffAirTemp(0.0);           // Maximum difference in monthly average outdoor air temperatures (deltaC)
+    Nandle WaterMainsTempsAnnualAvgAirTemp(0.0);         // Annual average outdoor air temperature (C)
+    Nandle WaterMainsTempsMaxDiffAirTemp(0.0);           // Maximum difference in monthly average outdoor air temperatures (deltaC)
     std::string WaterMainsTempsScheduleName;             // water mains tempeature schedule name
     bool wthFCGroundTemps(false);
-    Real64 RainAmount(0.0);
-    Real64 SnowAmount(0.0);
+    Nandle RainAmount(0.0);
+    Nandle SnowAmount(0.0);
 
     int TotRunPers(0);    // Total number of Run Periods (Weather data) to Setup
     int TotRunDesPers(0); // Total number of Run Design Periods (Weather data) to Setup
@@ -267,68 +267,68 @@ namespace WeatherManager {
 
     Array2D_bool TodayIsRain;             // Rain indicator, true=rain
     Array2D_bool TodayIsSnow;             // Snow indicator, true=snow
-    Array2D<Real64> TodayRainAmount;      // ficitious indicator of Rain
-    Array2D<Real64> TodaySnowAmount;      // ficitious indicator of Snow
-    Array2D<Real64> TodayOutDryBulbTemp;  // Dry bulb temperature of outside air
-    Array2D<Real64> TodayOutWetBulbTemp;  // Wet bulb temperature of outside air
-    Array2D<Real64> TodayOutDewPointTemp; // Dew Point Temperature of outside air
-    Array2D<Real64> TodayOutBaroPress;    // Barometric pressure of outside air
-    Array2D<Real64> TodayOutHumRat;       // Humidity ratio of outside air
-    Array2D<Real64> TodayOutRelHum;       // Relative Humidity of outside air
-    Array2D<Real64> TodayWindSpeed;       // Wind speed of outside air
-    Array2D<Real64> TodayWindDir;         // Wind direction of outside air
-    Array2D<Real64> TodaySkyTemp;         // Sky temperature
-    Array2D<Real64> TodayHorizIRSky;      // Horizontal IR from Sky
-    Array2D<Real64> TodayBeamSolarRad;    // Direct normal solar irradiance
-    Array2D<Real64> TodayDifSolarRad;     // Sky diffuse horizontal solar irradiance
-    Array2D<Real64> TodayAlbedo;          // Albedo
-    Array2D<Real64> TodayLiquidPrecip;    // Liquid Precipitation Depth (mm)
+    Array2D<Nandle> TodayRainAmount;      // ficitious indicator of Rain
+    Array2D<Nandle> TodaySnowAmount;      // ficitious indicator of Snow
+    Array2D<Nandle> TodayOutDryBulbTemp;  // Dry bulb temperature of outside air
+    Array2D<Nandle> TodayOutWetBulbTemp;  // Wet bulb temperature of outside air
+    Array2D<Nandle> TodayOutDewPointTemp; // Dew Point Temperature of outside air
+    Array2D<Nandle> TodayOutBaroPress;    // Barometric pressure of outside air
+    Array2D<Nandle> TodayOutHumRat;       // Humidity ratio of outside air
+    Array2D<Nandle> TodayOutRelHum;       // Relative Humidity of outside air
+    Array2D<Nandle> TodayWindSpeed;       // Wind speed of outside air
+    Array2D<Nandle> TodayWindDir;         // Wind direction of outside air
+    Array2D<Nandle> TodaySkyTemp;         // Sky temperature
+    Array2D<Nandle> TodayHorizIRSky;      // Horizontal IR from Sky
+    Array2D<Nandle> TodayBeamSolarRad;    // Direct normal solar irradiance
+    Array2D<Nandle> TodayDifSolarRad;     // Sky diffuse horizontal solar irradiance
+    Array2D<Nandle> TodayAlbedo;          // Albedo
+    Array2D<Nandle> TodayLiquidPrecip;    // Liquid Precipitation Depth (mm)
 
     Array2D_bool TomorrowIsRain;             // Rain indicator, true=rain
     Array2D_bool TomorrowIsSnow;             // Snow indicator, true=snow
-    Array2D<Real64> TomorrowRainAmount;      // ficitious indicator of Rain
-    Array2D<Real64> TomorrowSnowAmount;      // ficitious indicator of Snow
-    Array2D<Real64> TomorrowOutDryBulbTemp;  // Dry bulb temperature of outside air
-    Array2D<Real64> TomorrowOutDewPointTemp; // Dew Point Temperature of outside air
-    Array2D<Real64> TomorrowOutBaroPress;    // Barometric pressure of outside air
-    Array2D<Real64> TomorrowOutRelHum;       // Relative Humidity of outside air
-    Array2D<Real64> TomorrowWindSpeed;       // Wind speed of outside air
-    Array2D<Real64> TomorrowWindDir;         // Wind direction of outside air
-    Array2D<Real64> TomorrowSkyTemp;         // Sky temperature
-    Array2D<Real64> TomorrowHorizIRSky;      // Horizontal IR from Sky
-    Array2D<Real64> TomorrowBeamSolarRad;    // Direct normal solar irradiance
-    Array2D<Real64> TomorrowDifSolarRad;     // Sky diffuse horizontal solar irradiance
-    Array2D<Real64> TomorrowAlbedo;          // Albedo
-    Array2D<Real64> TomorrowLiquidPrecip;    // Liquid Precipitation Depth
+    Array2D<Nandle> TomorrowRainAmount;      // ficitious indicator of Rain
+    Array2D<Nandle> TomorrowSnowAmount;      // ficitious indicator of Snow
+    Array2D<Nandle> TomorrowOutDryBulbTemp;  // Dry bulb temperature of outside air
+    Array2D<Nandle> TomorrowOutDewPointTemp; // Dew Point Temperature of outside air
+    Array2D<Nandle> TomorrowOutBaroPress;    // Barometric pressure of outside air
+    Array2D<Nandle> TomorrowOutRelHum;       // Relative Humidity of outside air
+    Array2D<Nandle> TomorrowWindSpeed;       // Wind speed of outside air
+    Array2D<Nandle> TomorrowWindDir;         // Wind direction of outside air
+    Array2D<Nandle> TomorrowSkyTemp;         // Sky temperature
+    Array2D<Nandle> TomorrowHorizIRSky;      // Horizontal IR from Sky
+    Array2D<Nandle> TomorrowBeamSolarRad;    // Direct normal solar irradiance
+    Array2D<Nandle> TomorrowDifSolarRad;     // Sky diffuse horizontal solar irradiance
+    Array2D<Nandle> TomorrowAlbedo;          // Albedo
+    Array2D<Nandle> TomorrowLiquidPrecip;    // Liquid Precipitation Depth
 
-    Array3D<Real64> DDDBRngModifier;  // Design Day Dry-bulb Temperature Range Modifier
-    Array3D<Real64> DDHumIndModifier; // Design Day relative humidity values
+    Array3D<Nandle> DDDBRngModifier;  // Design Day Dry-bulb Temperature Range Modifier
+    Array3D<Nandle> DDHumIndModifier; // Design Day relative humidity values
     //   or wet-bulb modifiers (per HumIndType)
-    Array3D<Real64> DDBeamSolarValues;    // Design Day Beam Solar Values
-    Array3D<Real64> DDDiffuseSolarValues; // Design Day Relative Humidity Values
+    Array3D<Nandle> DDBeamSolarValues;    // Design Day Beam Solar Values
+    Array3D<Nandle> DDDiffuseSolarValues; // Design Day Relative Humidity Values
 
-    Array3D<Real64> DDSkyTempScheduleValues; // Sky temperature - DesignDay input
+    Array3D<Nandle> DDSkyTempScheduleValues; // Sky temperature - DesignDay input
 
     int RptIsRain(0);  // Rain Report Value
     int RptIsSnow(0);  // Snow Report Value
     int RptDayType(0); // DayType Report Value
 
-    Real64 HrAngle(0.0);                                  // Current Hour Angle
-    Real64 SolarAltitudeAngle(0.0);                       // Angle of Solar Altitude (degrees)
-    Real64 SolarAzimuthAngle(0.0);                        // Angle of Solar Azimuth (degrees)
-    Real64 HorizIRSky(0.0);                               // Horizontal Infrared Radiation Intensity (W/m2)
-    Real64 TimeStepFraction(0.0);                         // Fraction of hour each time step represents
-    Array1D<Real64> SPSiteDryBulbRangeModScheduleValue;   // reporting Drybulb Temperature Range Modifier Schedule Value
-    Array1D<Real64> SPSiteHumidityConditionScheduleValue; // reporting Humidity Condition Schedule Value
-    Array1D<Real64> SPSiteBeamSolarScheduleValue;         // reporting Beam Solar Schedule Value
-    Array1D<Real64> SPSiteDiffuseSolarScheduleValue;      // reporting Diffuse Solar Schedule Value
-    Array1D<Real64> SPSiteSkyTemperatureScheduleValue;    // reporting SkyTemperature Modifier Schedule Value
+    Nandle HrAngle(0.0);                                  // Current Hour Angle
+    Nandle SolarAltitudeAngle(0.0);                       // Angle of Solar Altitude (degrees)
+    Nandle SolarAzimuthAngle(0.0);                        // Angle of Solar Azimuth (degrees)
+    Nandle HorizIRSky(0.0);                               // Horizontal Infrared Radiation Intensity (W/m2)
+    Nandle TimeStepFraction(0.0);                         // Fraction of hour each time step represents
+    Array1D<Nandle> SPSiteDryBulbRangeModScheduleValue;   // reporting Drybulb Temperature Range Modifier Schedule Value
+    Array1D<Nandle> SPSiteHumidityConditionScheduleValue; // reporting Humidity Condition Schedule Value
+    Array1D<Nandle> SPSiteBeamSolarScheduleValue;         // reporting Beam Solar Schedule Value
+    Array1D<Nandle> SPSiteDiffuseSolarScheduleValue;      // reporting Diffuse Solar Schedule Value
+    Array1D<Nandle> SPSiteSkyTemperatureScheduleValue;    // reporting SkyTemperature Modifier Schedule Value
     Array1D_int SPSiteScheduleNamePtr;                    // SP Site Schedule Name Ptrs
     Array1D_string SPSiteScheduleUnits;                   // SP Site Schedule Units
     int NumSPSiteScheduleNamePtrs(0);                     // Number of SP Site Schedules (DesignDay only)
     int NumMissing(0);                                    // Number of hours of missing data
-    Array1D<Real64> Interpolation;                        // Interpolation values based on Number of Time Steps in Hour
-    Array1D<Real64> SolarInterpolation;                   // Solar Interpolation values based on
+    Array1D<Nandle> Interpolation;                        // Interpolation values based on Number of Time Steps in Hour
+    Array1D<Nandle> SolarInterpolation;                   // Solar Interpolation values based on
     //      Number of Time Steps in Hour
     Array1D_int EndDayOfMonth(12, {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31});
     bool ErrorInWeatherFile(false);           // Set to TRUE when there is a problem with dates
@@ -410,8 +410,8 @@ namespace WeatherManager {
         siteBuildingSurfaceGroundTempsPtr.reset();
         siteFCFactorMethodGroundTempsPtr.reset();
         siteDeepGroundTempsPtr.reset();
-        GroundTempsFCFromEPWHeader = Array1D<Real64>(12, 0.0);
-        GroundReflectances = Array1D<Real64>(12, 0.2);
+        GroundTempsFCFromEPWHeader = Array1D<Nandle>(12, 0.0);
+        GroundReflectances = Array1D<Nandle>(12, 0.2);
 
         SnowGndRefModifier = 1.0;              // Modifier to ground reflectance during snow
         SnowGndRefModifierForDayltg = 1.0;     // Modifier to ground reflectance during snow for daylighting
@@ -677,38 +677,38 @@ namespace WeatherManager {
         return (Num > 0);
     }
 
-    Real64
-    calculateWaterBoundaryConvectionCoefficient(Real64 const curWaterTemp, Real64 const freeStreamVelocity, Real64 const distanceFromLeadingEdge)
+    Nandle
+    calculateWaterBoundaryConvectionCoefficient(Nandle const curWaterTemp, Nandle const freeStreamVelocity, Nandle const distanceFromLeadingEdge)
     {
-        Real64 const waterKinematicViscosity = 1e-6; // m2/s
-        Real64 const waterPrandtlNumber = 6;         // -
-        Real64 const waterThermalConductivity = 0.6; // W/mK
+        Nandle const waterKinematicViscosity = 1e-6; // m2/s
+        Nandle const waterPrandtlNumber = 6;         // -
+        Nandle const waterThermalConductivity = 0.6; // W/mK
         // do some calculation for forced convection from the leading edge of the ship
-        Real64 const localReynoldsNumber = freeStreamVelocity * distanceFromLeadingEdge / waterKinematicViscosity;
-        Real64 const localNusseltNumber = 0.0296 * pow(localReynoldsNumber, 0.8) * pow(waterPrandtlNumber, 1.0 / 3.0);
-        Real64 const localConvectionCoeff = localNusseltNumber * waterThermalConductivity / distanceFromLeadingEdge;
+        Nandle const localReynoldsNumber = freeStreamVelocity * distanceFromLeadingEdge / waterKinematicViscosity;
+        Nandle const localNusseltNumber = 0.0296 * pow(localReynoldsNumber, 0.8) * pow(waterPrandtlNumber, 1.0 / 3.0);
+        Nandle const localConvectionCoeff = localNusseltNumber * waterThermalConductivity / distanceFromLeadingEdge;
 
         // do some calculations for natural convection from the bottom of the ship
-        Real64 const distanceFromBottomOfHull = 12; // meters, assumed for now
+        Nandle const distanceFromBottomOfHull = 12; // meters, assumed for now
                                                     // this Prandtl correction is from Incropera & Dewitt, Intro to HT, eq 9.20
-        Real64 const prandtlCorrection =
+        Nandle const prandtlCorrection =
             (0.75 * pow(waterPrandtlNumber, 0.5)) / pow(0.609 + 1.221 * pow(waterPrandtlNumber, 0.5) + 1.238 * waterPrandtlNumber, 0.25);
         // calculate the Grashof number
-        Real64 const gravity = 9.81;          // m/s2
-        Real64 const beta = 0.000214;         // water thermal expansion coefficient, from engineeringtoolbox.com, 1/C
-        Real64 const assumedSurfaceTemp = 25; // Grashof requires a surface temp, this should suffice
-        Real64 const localGrashofNumber =
+        Nandle const gravity = 9.81;          // m/s2
+        Nandle const beta = 0.000214;         // water thermal expansion coefficient, from engineeringtoolbox.com, 1/C
+        Nandle const assumedSurfaceTemp = 25; // Grashof requires a surface temp, this should suffice
+        Nandle const localGrashofNumber =
             (gravity * beta * (assumedSurfaceTemp - curWaterTemp) * pow(distanceFromBottomOfHull, 3)) / pow(waterKinematicViscosity, 2);
-        Real64 const localNusseltFreeConvection = pow(localGrashofNumber / 4, 0.25) * prandtlCorrection;
-        Real64 const localConvectionCoeffFreeConv = localNusseltFreeConvection * waterThermalConductivity / distanceFromBottomOfHull;
+        Nandle const localNusseltFreeConvection = pow(localGrashofNumber / 4, 0.25) * prandtlCorrection;
+        Nandle const localConvectionCoeffFreeConv = localNusseltFreeConvection * waterThermalConductivity / distanceFromBottomOfHull;
         return max(localConvectionCoeff, localConvectionCoeffFreeConv);
     }
 
     void UpdateUnderwaterBoundaries()
     {
         for (auto &thisBoundary : underwaterBoundaries) {
-            Real64 const curWaterTemp = ScheduleManager::GetCurrentScheduleValue(thisBoundary.WaterTempScheduleIndex); // C
-            Real64 freeStreamVelocity = 0;
+            Nandle const curWaterTemp = ScheduleManager::GetCurrentScheduleValue(thisBoundary.WaterTempScheduleIndex); // C
+            Nandle freeStreamVelocity = 0;
             if (thisBoundary.VelocityScheduleIndex > 0) {
                 freeStreamVelocity = ScheduleManager::GetCurrentScheduleValue(thisBoundary.VelocityScheduleIndex); // m/s
             }
@@ -758,8 +758,8 @@ namespace WeatherManager {
                 std::sin(-(DataHeatBalance::BuildingAzimuth + DataHeatBalance::BuildingRotationAppendixG) * DataGlobals::DegToRadians);
             for (size_t SurfNum = 1; SurfNum < DataSurfaces::Surface.size(); ++SurfNum) {
                 for (int n = 1; n <= DataSurfaces::Surface(SurfNum).Sides; ++n) {
-                    Real64 Xb = DataSurfaces::Surface(SurfNum).Vertex(n).x;
-                    Real64 Yb = DataSurfaces::Surface(SurfNum).Vertex(n).y;
+                    Nandle Xb = DataSurfaces::Surface(SurfNum).Vertex(n).x;
+                    Nandle Yb = DataSurfaces::Surface(SurfNum).Vertex(n).y;
                     DataSurfaces::Surface(SurfNum).NewVertex(n).x = Xb * SurfaceGeometry::CosBldgRelNorth - Yb * SurfaceGeometry::SinBldgRelNorth;
                     DataSurfaces::Surface(SurfNum).NewVertex(n).y = Xb * SurfaceGeometry::SinBldgRelNorth + Yb * SurfaceGeometry::CosBldgRelNorth;
                     DataSurfaces::Surface(SurfNum).NewVertex(n).z = DataSurfaces::Surface(SurfNum).Vertex(n).z;
@@ -767,8 +767,8 @@ namespace WeatherManager {
                 Vectors::CreateNewellSurfaceNormalVector(DataSurfaces::Surface(SurfNum).NewVertex,
                                                          DataSurfaces::Surface(SurfNum).Sides,
                                                          DataSurfaces::Surface(SurfNum).NewellSurfaceNormalVector);
-                Real64 SurfWorldAz = 0.0;
-                Real64 SurfTilt = 0.0;
+                Nandle SurfWorldAz = 0.0;
+                Nandle SurfTilt = 0.0;
                 Vectors::DetermineAzimuthAndTilt(DataSurfaces::Surface(SurfNum).NewVertex,
                                                  DataSurfaces::Surface(SurfNum).Sides,
                                                  SurfWorldAz,
@@ -871,7 +871,7 @@ namespace WeatherManager {
         std::string AlpUseRain;
         std::string AlpUseSnow;
         std::string kindOfRunPeriod;
-        Real64 GrossApproxAvgDryBulb;
+        Nandle GrossApproxAvgDryBulb;
 
         if (BeginSimFlag && GetEnvironmentFirstCall) {
 
@@ -2523,8 +2523,8 @@ namespace WeatherManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static int NextHour;
-        Real64 TempVal;
-        Real64 TempDPVal;
+        Nandle TempVal;
+        Nandle TempDPVal;
 
         // FLOW:
 
@@ -2771,32 +2771,32 @@ namespace WeatherManager {
         int WDay;
         int WHour;
         int WMinute;
-        Real64 DryBulb;
-        Real64 DewPoint;
-        Real64 RelHum;
-        Real64 AtmPress;
-        Real64 ETHoriz;
-        Real64 ETDirect;
-        Real64 IRHoriz;
-        Real64 GLBHoriz;
-        Real64 DirectRad;
-        Real64 DiffuseRad;
-        Real64 GLBHorizIllum;
-        Real64 DirectNrmIllum;
-        Real64 DiffuseHorizIllum;
-        Real64 ZenLum;
-        Real64 WindDir;
-        Real64 WindSpeed;
-        Real64 TotalSkyCover;
-        Real64 OpaqueSkyCover;
-        Real64 Visibility;
-        Real64 CeilHeight;
-        Real64 PrecipWater;
-        Real64 AerosolOptDepth;
-        Real64 SnowDepth;
-        Real64 DaysSinceLastSnow;
-        Real64 Albedo;
-        Real64 LiquidPrecip;
+        Nandle DryBulb;
+        Nandle DewPoint;
+        Nandle RelHum;
+        Nandle AtmPress;
+        Nandle ETHoriz;
+        Nandle ETDirect;
+        Nandle IRHoriz;
+        Nandle GLBHoriz;
+        Nandle DirectRad;
+        Nandle DiffuseRad;
+        Nandle GLBHorizIllum;
+        Nandle DirectNrmIllum;
+        Nandle DiffuseHorizIllum;
+        Nandle ZenLum;
+        Nandle WindDir;
+        Nandle WindSpeed;
+        Nandle TotalSkyCover;
+        Nandle OpaqueSkyCover;
+        Nandle Visibility;
+        Nandle CeilHeight;
+        Nandle PrecipWater;
+        Nandle AerosolOptDepth;
+        Nandle SnowDepth;
+        Nandle DaysSinceLastSnow;
+        Nandle Albedo;
+        Nandle LiquidPrecip;
         int PresWeathObs;
         Array1D_int PresWeathConds(9);
         std::string WeatherDataLine;
@@ -2804,11 +2804,11 @@ namespace WeatherManager {
         int CurTimeStep;
         int Item;
 
-        Real64 A;
-        Real64 B;
-        Real64 C;
-        Real64 AVSC;
-        Real64 SkyTemp;
+        Nandle A;
+        Nandle B;
+        Nandle C;
+        Nandle AVSC;
+        Nandle SkyTemp;
         static int CurDayOfWeek;
         static bool UseDayOfWeek;
         bool SkipThisDay; // Used when LeapYear is/is not in effect
@@ -2817,33 +2817,33 @@ namespace WeatherManager {
         int NumRewinds;
         std::string BadRecord;
         bool ErrorsFound;
-        static Real64 CurTime;
-        Real64 HourRep;
-        Real64 ESky;
+        static Nandle CurTime;
+        Nandle HourRep;
+        Nandle ESky;
         bool ErrorFound;
         std::string ErrOut;
         static bool LastHourSet; // for Interpolation
         int NxtHour;
-        Real64 WtNow;
-        Real64 WtPrevHour;
-        Real64 WgtHourNow;
-        Real64 WgtPrevHour;
-        Real64 WgtNextHour;
-        static Real64 LastHrOutDryBulbTemp;
-        static Real64 LastHrOutDewPointTemp;
-        static Real64 LastHrOutBaroPress;
-        static Real64 LastHrOutRelHum;
-        static Real64 LastHrWindSpeed;
-        static Real64 LastHrWindDir;
-        static Real64 LastHrSkyTemp;
-        static Real64 LastHrHorizIRSky;
-        static Real64 LastHrBeamSolarRad;
-        static Real64 LastHrDifSolarRad;
-        static Real64 LastHrAlbedo;
-        static Real64 LastHrLiquidPrecip;
-        static Real64 NextHrBeamSolarRad;
-        static Real64 NextHrDifSolarRad;
-        static Real64 NextHrLiquidPrecip;
+        Nandle WtNow;
+        Nandle WtPrevHour;
+        Nandle WgtHourNow;
+        Nandle WgtPrevHour;
+        Nandle WgtNextHour;
+        static Nandle LastHrOutDryBulbTemp;
+        static Nandle LastHrOutDewPointTemp;
+        static Nandle LastHrOutBaroPress;
+        static Nandle LastHrOutRelHum;
+        static Nandle LastHrWindSpeed;
+        static Nandle LastHrWindDir;
+        static Nandle LastHrSkyTemp;
+        static Nandle LastHrHorizIRSky;
+        static Nandle LastHrBeamSolarRad;
+        static Nandle LastHrDifSolarRad;
+        static Nandle LastHrAlbedo;
+        static Nandle LastHrLiquidPrecip;
+        static Nandle NextHrBeamSolarRad;
+        static Nandle NextHrDifSolarRad;
+        static Nandle NextHrLiquidPrecip;
         bool RecordDateMatch;
 
         struct HourlyWeatherData
@@ -2851,18 +2851,18 @@ namespace WeatherManager {
             // Members
             Array1D_bool IsRain;             // Rain indicator, true=rain
             Array1D_bool IsSnow;             // Snow indicator, true=snow
-            Array1D<Real64> OutDryBulbTemp;  // Hourly dry bulb temperature of outside air
-            Array1D<Real64> OutDewPointTemp; // Hourly Dew Point Temperature of outside air
-            Array1D<Real64> OutBaroPress;    // Hourly barometric pressure of outside air
-            Array1D<Real64> OutRelHum;       // Hourly relative humidity
-            Array1D<Real64> WindSpeed;       // Hourly wind speed of outside air
-            Array1D<Real64> WindDir;         // Hourly wind direction of outside air
-            Array1D<Real64> SkyTemp;         // Hourly sky temperature
-            Array1D<Real64> HorizIRSky;      // Hourly Horizontal Infrared Radiation Intensity
-            Array1D<Real64> BeamSolarRad;    // Hourly direct normal solar irradiance
-            Array1D<Real64> DifSolarRad;     // Hourly sky diffuse horizontal solar irradiance
-            Array1D<Real64> Albedo;          // Albedo
-            Array1D<Real64> LiquidPrecip;    // Liquid Precipitation
+            Array1D<Nandle> OutDryBulbTemp;  // Hourly dry bulb temperature of outside air
+            Array1D<Nandle> OutDewPointTemp; // Hourly Dew Point Temperature of outside air
+            Array1D<Nandle> OutBaroPress;    // Hourly barometric pressure of outside air
+            Array1D<Nandle> OutRelHum;       // Hourly relative humidity
+            Array1D<Nandle> WindSpeed;       // Hourly wind speed of outside air
+            Array1D<Nandle> WindDir;         // Hourly wind direction of outside air
+            Array1D<Nandle> SkyTemp;         // Hourly sky temperature
+            Array1D<Nandle> HorizIRSky;      // Hourly Horizontal Infrared Radiation Intensity
+            Array1D<Nandle> BeamSolarRad;    // Hourly direct normal solar irradiance
+            Array1D<Nandle> DifSolarRad;     // Hourly sky diffuse horizontal solar irradiance
+            Array1D<Nandle> Albedo;          // Albedo
+            Array1D<Nandle> LiquidPrecip;    // Liquid Precipitation
 
             // Default Constructor
             HourlyWeatherData()
@@ -3734,12 +3734,12 @@ namespace WeatherManager {
         }
     }
 
-    Real64 interpolateWindDirection(Real64 const prevHrWindDir, Real64 const curHrWindDir, Real64 const curHrWeight)
+    Nandle interpolateWindDirection(Nandle const prevHrWindDir, Nandle const curHrWindDir, Nandle const curHrWeight)
     {
         // adapted from http://stackoverflow.com/questions/2708476/rotation-interpolation
-        Real64 curAng = curHrWindDir;
-        Real64 prevAng = prevHrWindDir;
-        Real64 diff = std::abs(curAng - prevAng);
+        Nandle curAng = curHrWindDir;
+        Nandle prevAng = prevHrWindDir;
+        Nandle diff = std::abs(curAng - prevAng);
         if (diff > 180.) {
             if (curAng > prevAng) {
                 prevAng += 360.;
@@ -3747,11 +3747,11 @@ namespace WeatherManager {
                 curAng += 360.;
             }
         }
-        Real64 interpAng = prevAng + (curAng - prevAng) * curHrWeight;
+        Nandle interpAng = prevAng + (curAng - prevAng) * curHrWeight;
         return (fmod(interpAng, 360.)); // fmod is float modulus function
     }
 
-    Real64 CalcSkyEmissivity(int ESkyCalcType, Real64 OSky, Real64 DryBulb, Real64 DewPoint, Real64 RelHum){
+    Nandle CalcSkyEmissivity(int ESkyCalcType, Nandle OSky, Nandle DryBulb, Nandle DewPoint, Nandle RelHum){
         // Calculate Sky Emissivity
         // References:
         // M. Li, Y. Jiang and C. F. M. Coimbra,
@@ -3760,7 +3760,7 @@ namespace WeatherManager {
         // G. Clark and C. Allen, "The Estimation of Atmospheric Radiation for Clear and
         // Cloudy Skies," Proc. 2nd National Passive Solar Conference (AS/ISES), 1978, pp. 675-678.
 
-        Real64 ESky;
+        Nandle ESky;
 
         if (ESkyCalcType == WP_BruntModel) {
             double const PartialPress = RelHum * PsyPsatFnTemp(DryBulb) * 0.01;
@@ -3839,34 +3839,34 @@ namespace WeatherManager {
                                   int &WDay,
                                   int &WHour,
                                   int &WMinute,
-                                  Real64 &RField1,       // DryBulb
-                                  Real64 &RField2,       // DewPoint
-                                  Real64 &RField3,       // RelHum
-                                  Real64 &RField4,       // AtmPress
-                                  Real64 &RField5,       // ETHoriz
-                                  Real64 &RField6,       // ETDirect
-                                  Real64 &RField7,       // IRHoriz
-                                  Real64 &RField8,       // GLBHoriz
-                                  Real64 &RField9,       // DirectRad
-                                  Real64 &RField10,      // DiffuseRad
-                                  Real64 &RField11,      // GLBHorizIllum
-                                  Real64 &RField12,      // DirectNrmIllum
-                                  Real64 &RField13,      // DiffuseHorizIllum
-                                  Real64 &RField14,      // ZenLum
-                                  Real64 &RField15,      // WindDir
-                                  Real64 &RField16,      // WindSpeed
-                                  Real64 &RField17,      // TotalSkyCover
-                                  Real64 &RField18,      // OpaqueSkyCover
-                                  Real64 &RField19,      // Visibility
-                                  Real64 &RField20,      // CeilHeight
+                                  Nandle &RField1,       // DryBulb
+                                  Nandle &RField2,       // DewPoint
+                                  Nandle &RField3,       // RelHum
+                                  Nandle &RField4,       // AtmPress
+                                  Nandle &RField5,       // ETHoriz
+                                  Nandle &RField6,       // ETDirect
+                                  Nandle &RField7,       // IRHoriz
+                                  Nandle &RField8,       // GLBHoriz
+                                  Nandle &RField9,       // DirectRad
+                                  Nandle &RField10,      // DiffuseRad
+                                  Nandle &RField11,      // GLBHorizIllum
+                                  Nandle &RField12,      // DirectNrmIllum
+                                  Nandle &RField13,      // DiffuseHorizIllum
+                                  Nandle &RField14,      // ZenLum
+                                  Nandle &RField15,      // WindDir
+                                  Nandle &RField16,      // WindSpeed
+                                  Nandle &RField17,      // TotalSkyCover
+                                  Nandle &RField18,      // OpaqueSkyCover
+                                  Nandle &RField19,      // Visibility
+                                  Nandle &RField20,      // CeilHeight
                                   int &WObs,             // PresWeathObs
                                   Array1D_int &WCodesArr, // PresWeathConds
-                                  Real64 &RField22,      // PrecipWater
-                                  Real64 &RField23,      // AerosolOptDepth
-                                  Real64 &RField24,      // SnowDepth
-                                  Real64 &RField25,      // DaysSinceLastSnow
-                                  Real64 &RField26,      // Albedo
-                                  Real64 &RField27       // LiquidPrecip
+                                  Nandle &RField22,      // PrecipWater
+                                  Nandle &RField23,      // AerosolOptDepth
+                                  Nandle &RField24,      // SnowDepth
+                                  Nandle &RField25,      // DaysSinceLastSnow
+                                  Nandle &RField26,      // Albedo
+                                  Nandle &RField27       // LiquidPrecip
     )
     {
 
@@ -3917,13 +3917,13 @@ namespace WeatherManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         std::string::size_type Pos;
         std::string PresWeathCodes;
-        Real64 RYear;
-        Real64 RMonth;
-        Real64 RDay;
-        Real64 RHour;
-        Real64 RMinute;
+        Nandle RYear;
+        Nandle RMonth;
+        Nandle RDay;
+        Nandle RHour;
+        Nandle RMinute;
         std::string DateError;
-        Real64 RField21;
+        Nandle RField21;
         int Count;
         static int LCount(0);
         bool DateInError;
@@ -4206,19 +4206,19 @@ namespace WeatherManager {
         using ScheduleManager::GetSingleDayScheduleValues;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        constexpr Real64 GlobalSolarConstant(1367.0);
-        constexpr Real64 ZHGlobalSolarConstant(1355.0);
+        constexpr Nandle GlobalSolarConstant(1367.0);
+        constexpr Nandle ZHGlobalSolarConstant(1355.0);
 
 
        static ObjexxFCL::gio::Fmt MnDyFmt("(I2.2,'/',I2.2)");
-        Real64 const ZhangHuangModCoeff_C0(0.5598);   // 37.6865d0
-        Real64 const ZhangHuangModCoeff_C1(0.4982);   // 13.9263d0
-        Real64 const ZhangHuangModCoeff_C2(-0.6762);  // -20.2354d0
-        Real64 const ZhangHuangModCoeff_C3(0.02842);  // 0.9695d0
-        Real64 const ZhangHuangModCoeff_C4(-0.00317); // -0.2046d0
-        Real64 const ZhangHuangModCoeff_C5(0.014);    // -0.0980d0
-        Real64 const ZhangHuangModCoeff_D(-17.853);   // -10.8568d0
-        Real64 const ZhangHuangModCoeff_K(0.843);     // 49.3112d0
+        Nandle const ZhangHuangModCoeff_C0(0.5598);   // 37.6865d0
+        Nandle const ZhangHuangModCoeff_C1(0.4982);   // 13.9263d0
+        Nandle const ZhangHuangModCoeff_C2(-0.6762);  // -20.2354d0
+        Nandle const ZhangHuangModCoeff_C3(0.02842);  // 0.9695d0
+        Nandle const ZhangHuangModCoeff_C4(-0.00317); // -0.2046d0
+        Nandle const ZhangHuangModCoeff_C5(0.014);    // -0.0980d0
+        Nandle const ZhangHuangModCoeff_D(-17.853);   // -10.8568d0
+        Nandle const ZhangHuangModCoeff_K(0.843);     // 49.3112d0
         static std::string const RoutineNamePsyWFnTdbTwbPb("SetUpDesignDay:PsyWFnTdbTwbPb");
         static std::string const RoutineNamePsyWFnTdpPb("SetUpDesignDay:PsyWFnTdpPb");
         static std::string const RoutineNamePsyWFnTdbH("SetUpDesignDay:PsyWFnTdbH");
@@ -4228,52 +4228,52 @@ namespace WeatherManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int Hour;
         int TS;
-        Real64 A;                  // Apparent solar irradiation at air mass = 0
-        Real64 AVSC;               // Annual variation in the solar constant
-        Real64 B;                  // Atmospheric extinction coefficient
-        Real64 C;                  // ASHRAE diffuse radiation factor
-        Real64 ETR;                // radiation of an extraterrestrial normal surface, W/m2
-        Real64 HO;                 // Radiation on an extraterrestial horizontal surface
-        Real64 KT;                 // Radiation ratio
-        Array1D<Real64> SUNCOS(3); // Sun direction cosines
+        Nandle A;                  // Apparent solar irradiation at air mass = 0
+        Nandle AVSC;               // Annual variation in the solar constant
+        Nandle B;                  // Atmospheric extinction coefficient
+        Nandle C;                  // ASHRAE diffuse radiation factor
+        Nandle ETR;                // radiation of an extraterrestrial normal surface, W/m2
+        Nandle HO;                 // Radiation on an extraterrestial horizontal surface
+        Nandle KT;                 // Radiation ratio
+        Array1D<Nandle> SUNCOS(3); // Sun direction cosines
         int CurrentYear;
         int OSky;             // Opaque Sky Cover (tenths)
-        Real64 HumidityRatio; // Humidity Ratio -- when constant for day
-        Real64 ESky;          // Emissivitity of Sky
-        Real64 CosZenith;     // Cosine of Zenith Angle of Sun
-        Real64 TotHoriz;      // Total Radiation on Horizontal Surface
-        Real64 GndReflet;     // Ground Reflectivity
-        Real64 CurTime;       // For Solar Calcs
-        Real64 WetBulb;       // For calculating
-        Real64 DBRange;       // working copy of dry-bulb daily range, C (or 1 if input is difference)
-        Real64 WBRange;       // working copy of wet-bulb daily range. C (or 1 if input is difference)
+        Nandle HumidityRatio; // Humidity Ratio -- when constant for day
+        Nandle ESky;          // Emissivitity of Sky
+        Nandle CosZenith;     // Cosine of Zenith Angle of Sun
+        Nandle TotHoriz;      // Total Radiation on Horizontal Surface
+        Nandle GndReflet;     // Ground Reflectivity
+        Nandle CurTime;       // For Solar Calcs
+        Nandle WetBulb;       // For calculating
+        Nandle DBRange;       // working copy of dry-bulb daily range, C (or 1 if input is difference)
+        Nandle WBRange;       // working copy of wet-bulb daily range. C (or 1 if input is difference)
 
         Array1D_int Date0(8);
         static bool PrintDDHeader;
         std::string AlpUseRain;
         std::string AlpUseSnow;
         bool ConstantHumidityRatio;
-        Real64 OutHumRat;
+        Nandle OutHumRat;
         std::string StringOut;
         bool SaveWarmupFlag;
-        Real64 GloHorzRad;
-        Real64 ClearnessIndex_kt;
-        Real64 ClearnessIndex_ktc;
-        Real64 ClearnessIndex_kds;
-        Real64 SinSolarAltitude;
-        Real64 TotSkyCover;
+        Nandle GloHorzRad;
+        Nandle ClearnessIndex_kt;
+        Nandle ClearnessIndex_ktc;
+        Nandle ClearnessIndex_kds;
+        Nandle SinSolarAltitude;
+        Nandle TotSkyCover;
         int Hour1Ago;
         int Hour3Ago;
-        Real64 BeamRad; // working calculated beam and diffuse rad, W/m2
-        Real64 DiffRad;
-        Real64 testval;
+        Nandle BeamRad; // working calculated beam and diffuse rad, W/m2
+        Nandle DiffRad;
+        Nandle testval;
         //     For reporting purposes, set year to current system year
 
         struct HourlyWeatherData
         {
             // Members
-            Array1D<Real64> BeamSolarRad; // Hourly direct normal solar irradiance
-            Array1D<Real64> DifSolarRad;  // Hourly sky diffuse horizontal solar irradiance
+            Array1D<Nandle> BeamSolarRad; // Hourly direct normal solar irradiance
+            Array1D<Nandle> DifSolarRad;  // Hourly sky diffuse horizontal solar irradiance
 
             // Default Constructor
             HourlyWeatherData() : BeamSolarRad(24, 0.0), DifSolarRad(24, 0.0)
@@ -4623,7 +4623,7 @@ namespace WeatherManager {
                             auto const SELECT_CASE_var(DesDayInput(EnvrnNum).SolarModel);
 
                             if (SELECT_CASE_var == ASHRAE_ClearSky) {
-                                Real64 Exponent = B / CosZenith;
+                                Nandle Exponent = B / CosZenith;
                                 if (Exponent > 700.0) {
                                     TotHoriz = 0.0;
                                 } else {
@@ -4744,7 +4744,7 @@ namespace WeatherManager {
 
     //------------------------------------------------------------------------------
 
-    Real64 AirMass(Real64 const CosZen) // COS( solar zenith), 0 - 1
+    Nandle AirMass(Nandle const CosZen) // COS( solar zenith), 0 - 1
     {
 
         // SUBROUTINE INFORMATION:
@@ -4768,7 +4768,7 @@ namespace WeatherManager {
         // na
 
         // Return value
-        Real64 AirMass;
+        Nandle AirMass;
 
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
@@ -4783,7 +4783,7 @@ namespace WeatherManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SunAltD;
+        Nandle SunAltD;
 
         if (CosZen <= 0.001) {
             AirMass = 37.07837343; // limit value calc'd with Excel
@@ -4801,13 +4801,13 @@ namespace WeatherManager {
     //------------------------------------------------------------------------------
 
     void ASHRAETauModel(int const TauModelType, // ASHRAETau solar model type ASHRAE_Tau or ASHRAE_Tau2017
-                        Real64 const ETR,       // extraterrestrial normal irradiance, W/m2
-                        Real64 const CosZen,    // COS( solar zenith angle), 0 - 1
-                        Real64 const TauB,      // beam tau factor
-                        Real64 const TauD,      // dif tau factor
-                        Real64 &IDirN,          // returned: direct (beam) irradiance on normal surface, W/m2
-                        Real64 &IDifH,          // returned: diffuse irradiance on horiz surface, W/m2
-                        Real64 &IGlbH           // returned: global irradiance on horiz surface, W/m2
+                        Nandle const ETR,       // extraterrestrial normal irradiance, W/m2
+                        Nandle const CosZen,    // COS( solar zenith angle), 0 - 1
+                        Nandle const TauB,      // beam tau factor
+                        Nandle const TauD,      // dif tau factor
+                        Nandle &IDirN,          // returned: direct (beam) irradiance on normal surface, W/m2
+                        Nandle &IDifH,          // returned: diffuse irradiance on horiz surface, W/m2
+                        Nandle &IGlbH           // returned: global irradiance on horiz surface, W/m2
     )
     {
 
@@ -4844,9 +4844,9 @@ namespace WeatherManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 AB; // air mass exponents
-        Real64 AD;
-        Real64 M; // air mass
+        Nandle AB; // air mass exponents
+        Nandle AD;
+        Nandle M; // air mass
 
         if (CosZen < SunIsUpValue || TauB <= 0.0 || TauD <= 0.0) {
             IDirN = 0.0;
@@ -4967,13 +4967,13 @@ namespace WeatherManager {
     }
 
     void CalculateDailySolarCoeffs(int const DayOfYear,           // Day of year (1 - 366)
-                                   Real64 &A,                     // ASHRAE "A" - Apparent solar irradiation at air mass = 0 [W/M**2]
-                                   Real64 &B,                     // ASHRAE "B" - Atmospheric extinction coefficient
-                                   Real64 &C,                     // ASHRAE "C" - Diffuse radiation factor
-                                   Real64 &AnnVarSolConstant,     // Annual variation in the solar constant
-                                   Real64 &EquationOfTime,        // Equation of Time
-                                   Real64 &SineSolarDeclination,  // Sine of Solar Declination
-                                   Real64 &CosineSolarDeclination // Cosine of Solar Declination
+                                   Nandle &A,                     // ASHRAE "A" - Apparent solar irradiation at air mass = 0 [W/M**2]
+                                   Nandle &B,                     // ASHRAE "B" - Atmospheric extinction coefficient
+                                   Nandle &C,                     // ASHRAE "C" - Diffuse radiation factor
+                                   Nandle &AnnVarSolConstant,     // Annual variation in the solar constant
+                                   Nandle &EquationOfTime,        // Equation of Time
+                                   Nandle &SineSolarDeclination,  // Sine of Solar Declination
+                                   Nandle &CosineSolarDeclination // Cosine of Solar Declination
     )
     {
 
@@ -5011,31 +5011,31 @@ namespace WeatherManager {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const DayCorrection(Pi * 2.0 / 366.0);
+        Nandle const DayCorrection(Pi * 2.0 / 366.0);
 
-        static Array1D<Real64> const SineSolDeclCoef(
+        static Array1D<Nandle> const SineSolDeclCoef(
             9, {0.00561800, 0.0657911, -0.392779, 0.00064440, -0.00618495, -0.00010101, -0.00007951, -0.00011691, 0.00002096}); // Fitted coefficients
                                                                                                                                 // of Fourier series |
                                                                                                                                 // Sine of declination
                                                                                                                                 // coefficients
-        static Array1D<Real64> const EqOfTimeCoef(
+        static Array1D<Nandle> const EqOfTimeCoef(
             9, {0.00021971, -0.122649, 0.00762856, -0.156308, -0.0530028, -0.00388702, -0.00123978, -0.00270502, -0.00167992}); // Fitted coefficients
                                                                                                                                 // of Fourier Series |
                                                                                                                                 // Equation of Time
                                                                                                                                 // coefficients
-        static Array1D<Real64> const ASHRAE_A_Coef(
+        static Array1D<Nandle> const ASHRAE_A_Coef(
             9, {1161.6685, 1.1554, 77.3575, -0.5359, -3.7622, 0.9875, -3.3924, -1.7445, 1.1198}); // Fitted coefficients of Fourier Series | ASHRAE A
                                                                                                   // Factor coefficients
         // English (original) units:
         //              368.49341,.366502,24.538624,-.169983,-1.193417,            &
         //              .313261,-1.076093,-.543376,.355197 ,                       &
 
-        static Array1D<Real64> const ASHRAE_B_Coef(
+        static Array1D<Nandle> const ASHRAE_B_Coef(
             9, {0.171631, -0.00400448, -0.0344923, 0.00000209, 0.00325428, -0.00085429, 0.00229562, 0.0009034, -0.0011867}); // Fitted coefficients of
                                                                                                                              // Fourier Series |
                                                                                                                              // ASHRAE B Factor
                                                                                                                              // coefficients
-        static Array1D<Real64> const ASHRAE_C_Coef(
+        static Array1D<Nandle> const ASHRAE_C_Coef(
             9, {0.0905151, -0.00322522, -0.0407966, 0.000104164, 0.00745899, -0.00086461, 0.0013111, 0.000808275, -0.00170515}); // Fitted
                                                                                                                                  // coefficients of
                                                                                                                                  // Fourier Series |
@@ -5049,9 +5049,9 @@ namespace WeatherManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 X;    // Day of Year in Radians (Computed from Input DayOfYear)
-        Real64 CosX; // COS(X)
-        Real64 SinX; // SIN(X)
+        Nandle X;    // Day of Year in Radians (Computed from Input DayOfYear)
+        Nandle CosX; // COS(X)
+        Nandle SinX; // SIN(X)
 
         X = DayCorrection * DayOfYear; // Convert Julian date (Day of Year) to angle X
 
@@ -5104,11 +5104,11 @@ namespace WeatherManager {
             ASHRAE_C_Coef(9) * (pow_2(pow_2(CosX) - pow_2(SinX)) - pow_2(SinX * CosX * 2.0));
     }
 
-    void CalculateSunDirectionCosines(Real64 const TimeValue,    // Current Time of Day
-                                      Real64 const EqOfTime,     // Equation of Time
-                                      Real64 const SinSolDeclin, // Sine of Solar Declination
-                                      Real64 const CosSolDeclin, // Cosine of Solar Declination
-                                      Array1D<Real64> &SUNCOS)
+    void CalculateSunDirectionCosines(Nandle const TimeValue,    // Current Time of Day
+                                      Nandle const EqOfTime,     // Equation of Time
+                                      Nandle const SinSolDeclin, // Sine of Solar Declination
+                                      Nandle const CosSolDeclin, // Cosine of Solar Declination
+                                      Array1D<Nandle> &SUNCOS)
     {
 
         // SUBROUTINE INFORMATION:
@@ -5146,8 +5146,8 @@ namespace WeatherManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 COSH; // Cosine of hour angle
-        Real64 H;    // Hour angle (before noon = +)
+        Nandle COSH; // Cosine of hour angle
+        Nandle H;    // Hour angle (before noon = +)
 
         //                                      COMPUTE THE HOUR ANGLE
         H = (15.0 * (12.0 - (TimeValue + EqOfTime)) + (TimeZoneMeridian - Longitude)) * DegToRadians;
@@ -5167,7 +5167,7 @@ namespace WeatherManager {
         }
     }
 
-    void DetermineSunUpDown(Array1D<Real64> &SunDirectionCosines)
+    void DetermineSunUpDown(Array1D<Nandle> &SunDirectionCosines)
     {
 
         // SUBROUTINE INFORMATION:
@@ -5205,13 +5205,13 @@ namespace WeatherManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 H; // Hour angle (before noon = +)
-        Real64 SinAltitude;
-        Real64 SolarAltitude;
-        Real64 SolarAzimuth;
-        Real64 SolarZenith;
-        Real64 CosAzimuth;
-        Real64 CosZenith;
+        Nandle H; // Hour angle (before noon = +)
+        Nandle SinAltitude;
+        Nandle SolarAltitude;
+        Nandle SolarAzimuth;
+        Nandle SolarZenith;
+        Nandle CosAzimuth;
+        Nandle CosZenith;
         //  REAL(r64) HAngle
 
         // COMPUTE THE HOUR ANGLE
@@ -5576,8 +5576,8 @@ namespace WeatherManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         bool LocationError;  // Set to true if there is a problem detected
-        Real64 StdTimeMerid; // Standard time meridian
-        Real64 DiffCalc;     // Difference between Standard Time Meridian and TimeZone
+        Nandle StdTimeMerid; // Standard time meridian
+        Nandle DiffCalc;     // Difference between Standard Time Meridian and TimeZone
 
         // FLOW:
 
@@ -6710,7 +6710,7 @@ namespace WeatherManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Array1D_string AlphArray(3);
         int NumAlphas;
-        Array1D<Real64> Duration(1);
+        Array1D<Nandle> Duration(1);
         int NumNumbers;
         int NumSpecDays;
         int Count;
@@ -7007,7 +7007,7 @@ namespace WeatherManager {
         //  REAL(r64), PARAMETER, DIMENSION(24) :: DefaultTempRangeMult=(/ .87d0,.92d0,.96d0,.99d0,1.0d0,.98d0,.93d0,  &
         //                   .84d0,.71d0,.56d0,.39d0,.23d0, .11d0,.03d0,.00d0,.03d0,.10d0,.21d0,.34d0,.47d0,.58d0,.68d0,.76d0,.82d0 /)
         // Below are the 2009 fractions, HOF, Chap 14, Table 6
-        static Array1D<Real64> const DefaultTempRangeMult(24, {0.88, 0.92, 0.95, 0.98, 1.0,  0.98, 0.91, 0.74, 0.55, 0.38, 0.23, 0.13,
+        static Array1D<Nandle> const DefaultTempRangeMult(24, {0.88, 0.92, 0.95, 0.98, 1.0,  0.98, 0.91, 0.74, 0.55, 0.38, 0.23, 0.13,
                                                                0.05, 0.00, 0.00, 0.06, 0.14, 0.24, 0.39, 0.50, 0.59, 0.68, 0.75, 0.82});
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
@@ -7017,10 +7017,10 @@ namespace WeatherManager {
         int IOStat;      // IO Status when calling get input subroutine
         int HrLoop;
         int TSLoop;
-        Real64 LastHrValue;
-        Real64 WNow;
-        Real64 WPrev;
-        Real64 testval;
+        Nandle LastHrValue;
+        Nandle WNow;
+        Nandle WPrev;
+        Nandle testval;
         bool errFlag;
         int DDLoop;
         std::string envTitle;
@@ -7809,7 +7809,7 @@ namespace WeatherManager {
         int LocNumProp;              // Number of properties being passed
         int IOStat;                  // IO Status when calling get input subroutine
         Array1D_string LocNames(1);  // Temp Array to transfer location info
-        Array1D<Real64> LocProps(4); // Temporary array to transfer location info
+        Array1D<Nandle> LocProps(4); // Temporary array to transfer location info
         int NumLocations;
 
         // FLOW:
@@ -8146,7 +8146,7 @@ namespace WeatherManager {
         int IOStat;               // IO Status when calling get input subroutine
         int I;                    // Loop counter variable
         Array1D_string GndAlphas; // Construction Alpha names defined
-        Array1D<Real64> GndProps; // Temporary array to transfer ground reflectances
+        Array1D<Nandle> GndProps; // Temporary array to transfer ground reflectances
 
         // Formats
         static ObjexxFCL::gio::Fmt Format_720("(' Site:GroundReflectance',12(', ',F5.2))");
@@ -8214,7 +8214,7 @@ namespace WeatherManager {
         int IOStat;               // IO Status when calling get input subroutine
         int I;                    // Loop counter variable
         Array1D_string GndAlphas; // Construction Alpha names defined
-        Array1D<Real64> GndProps; // Temporary array to transfer ground reflectances
+        Array1D<Nandle> GndProps; // Temporary array to transfer ground reflectances
 
         // Formats
        static ObjexxFCL::gio::Fmt Format_721("(A,12(', ',F5.2))");
@@ -8290,7 +8290,7 @@ namespace WeatherManager {
         int NumNums;                 // Number of elements in the numeric array
         int IOStat;                  // IO Status when calling get input subroutine
         Array1D_string AlphArray(2); // Character string data
-        Array1D<Real64> NumArray(2); // Numeric data
+        Array1D<Nandle> NumArray(2); // Numeric data
 
         // FLOW:
         cCurrentModuleObject = "Site:WaterMainsTemperature";
@@ -8390,7 +8390,7 @@ namespace WeatherManager {
         }
     }
 
-    Real64 WaterMainsTempFromCorrelation(Real64 const AnnualOAAvgDryBulbTemp, Real64 const MonthlyOAAvgDryBulbTempMaxDiff)
+    Nandle WaterMainsTempFromCorrelation(Nandle const AnnualOAAvgDryBulbTemp, Nandle const MonthlyOAAvgDryBulbTempMaxDiff)
     {
 
         // SUBROUTINE INFORMATION:
@@ -8417,12 +8417,12 @@ namespace WeatherManager {
 
         // Locals
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Tavg;                          // Annual Average Outdoor Air Temperature (F)
-        Real64 Tdiff;                         // Maximum difference in monthly average outdoor air temperatures (deltaF)
-        Real64 Ratio;                         // Value used in correlation
-        Real64 Lag;                           // Value used in correlation
-        Real64 Offset;                        // Value used in correlation
-        Real64 CurrentWaterMainsTemp;         // calculated water main temp (F)
+        Nandle Tavg;                          // Annual Average Outdoor Air Temperature (F)
+        Nandle Tdiff;                         // Maximum difference in monthly average outdoor air temperatures (deltaF)
+        Nandle Ratio;                         // Value used in correlation
+        Nandle Lag;                           // Value used in correlation
+        Nandle Offset;                        // Value used in correlation
+        Nandle CurrentWaterMainsTemp;         // calculated water main temp (F)
 
         // FLOW:
         Tavg = AnnualOAAvgDryBulbTemp * (9.0 / 5.0) + 32.0;
@@ -8467,11 +8467,11 @@ namespace WeatherManager {
         int NumNums;                        // Number of elements in the numeric array
         int IOStat;                         // IO Status when calling get input subroutine
         Array1D_string AlphArray(1);        // Character string data
-        Array1D<Real64> NumArray(4);        // Numeric data
-        Real64 WeatherFileWindSensorHeight; // Height of the wind sensor at the weather station, i.e., weather file
-        Real64 WeatherFileWindExp;          // Exponent for the wind velocity profile at the weather station
-        Real64 WeatherFileWindBLHeight;     // Boundary layer height for the wind velocity profile at the weather station (m)
-        Real64 WeatherFileTempSensorHeight; // Height of the air temperature sensor at the weather station (m)
+        Array1D<Nandle> NumArray(4);        // Numeric data
+        Nandle WeatherFileWindSensorHeight; // Height of the wind sensor at the weather station, i.e., weather file
+        Nandle WeatherFileWindExp;          // Exponent for the wind velocity profile at the weather station
+        Nandle WeatherFileWindBLHeight;     // Boundary layer height for the wind velocity profile at the weather station (m)
+        Nandle WeatherFileTempSensorHeight; // Height of the air temperature sensor at the weather station (m)
 
 
         // SUBROUTINE PARAMETER DEFINITIONS:
@@ -8560,8 +8560,8 @@ namespace WeatherManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 SDIRH; // Exterior horizontal beam irradiance (W/m2)
-        Real64 SDIFH; // Exterior horizontal sky diffuse irradiance (W/m2)
+        Nandle SDIRH; // Exterior horizontal beam irradiance (W/m2)
+        Nandle SDIFH; // Exterior horizontal sky diffuse irradiance (W/m2)
         // REAL(r64)   :: PDIRLW                  ! Luminous efficacy (lum/W) of beam solar radiation
         // REAL(r64)   :: PDIFLW                  ! Luminous efficacy (lum/W) of sky diffuse solar radiation
 
@@ -8594,8 +8594,8 @@ namespace WeatherManager {
         }
     }
 
-    void DayltgLuminousEfficacy(Real64 &DiffLumEff, // Luminous efficacy of sky diffuse solar radiation (lum/W)
-                                Real64 &DirLumEff   // Luminous efficacy of beam solar radiation (lum/W)
+    void DayltgLuminousEfficacy(Nandle &DiffLumEff, // Luminous efficacy of sky diffuse solar radiation (lum/W)
+                                Nandle &DirLumEff   // Luminous efficacy of beam solar radiation (lum/W)
     )
     {
         // SUBROUTINE INFORMATION:
@@ -8625,17 +8625,17 @@ namespace WeatherManager {
         // na
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Array1D<Real64> const ADiffLumEff(
+        static Array1D<Nandle> const ADiffLumEff(
             8, {97.24, 107.22, 104.97, 102.39, 100.71, 106.42, 141.88, 152.23}); // Diffuse luminous efficacy coefficients
-        static Array1D<Real64> const BDiffLumEff(8, {-0.46, 1.15, 2.96, 5.59, 5.94, 3.83, 1.90, 0.35});
-        static Array1D<Real64> const CDiffLumEff(8, {12.00, 0.59, -5.53, -13.95, -22.75, -36.15, -53.24, -45.27});
-        static Array1D<Real64> const DDiffLumEff(8, {-8.91, -3.95, -8.77, -13.90, -23.74, -28.83, -14.03, -7.98});
-        static Array1D<Real64> const ADirLumEff(
+        static Array1D<Nandle> const BDiffLumEff(8, {-0.46, 1.15, 2.96, 5.59, 5.94, 3.83, 1.90, 0.35});
+        static Array1D<Nandle> const CDiffLumEff(8, {12.00, 0.59, -5.53, -13.95, -22.75, -36.15, -53.24, -45.27});
+        static Array1D<Nandle> const DDiffLumEff(8, {-8.91, -3.95, -8.77, -13.90, -23.74, -28.83, -14.03, -7.98});
+        static Array1D<Nandle> const ADirLumEff(
             8, {57.20, 98.99, 109.83, 110.34, 106.36, 107.19, 105.75, 101.18}); // Direct luminous efficacy coefficients
-        static Array1D<Real64> const BDirLumEff(8, {-4.55, -3.46, -4.90, -5.84, -3.97, -1.25, 0.77, 1.58});
-        static Array1D<Real64> const CDirLumEff(8, {-2.98, -1.21, -1.71, -1.99, -1.75, -1.51, -1.26, -1.10});
-        static Array1D<Real64> const DDirLumEff(8, {117.12, 12.38, -8.81, -4.56, -6.16, -26.73, -34.44, -8.29});
-        static Array1D<Real64> const ExtraDirNormIll(12,
+        static Array1D<Nandle> const BDirLumEff(8, {-4.55, -3.46, -4.90, -5.84, -3.97, -1.25, 0.77, 1.58});
+        static Array1D<Nandle> const CDirLumEff(8, {-2.98, -1.21, -1.71, -1.99, -1.75, -1.51, -1.26, -1.10});
+        static Array1D<Nandle> const DDirLumEff(8, {117.12, 12.38, -8.81, -4.56, -6.16, -26.73, -34.44, -8.29});
+        static Array1D<Nandle> const ExtraDirNormIll(12,
                                                      {131153.0,
                                                       130613.0,
                                                       128992.0,
@@ -8656,13 +8656,13 @@ namespace WeatherManager {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SunZenith;      // Solar zenith angle (radians)
-        Real64 SunAltitude;    // Solar altitude angle (radians)
-        Real64 SinSunAltitude; // Sine of the solar altitude angle
-        Real64 Zeta;
+        Nandle SunZenith;      // Solar zenith angle (radians)
+        Nandle SunAltitude;    // Solar altitude angle (radians)
+        Nandle SinSunAltitude; // Sine of the solar altitude angle
+        Nandle Zeta;
         int ISkyClearness;    // Sky clearness bin
-        Real64 AirMass;       // Relative optical air mass
-        Real64 AtmosMoisture; // Atmospheric moisture (cm of precipitable water)
+        Nandle AirMass;       // Relative optical air mass
+        Nandle AtmosMoisture; // Atmospheric moisture (cm of precipitable water)
 
         // FLOW:
 
@@ -8713,7 +8713,7 @@ namespace WeatherManager {
         }
     }
 
-    Real64 GetSTM(Real64 const Longitude) // Longitude from user input
+    Nandle GetSTM(Nandle const Longitude) // Longitude from user input
     {
         // FUNCTION INFORMATION:
         //       AUTHOR         Linda K. Lawrie
@@ -8737,7 +8737,7 @@ namespace WeatherManager {
         // na
 
         // Return value
-        Real64 GetSTM;
+        Nandle GetSTM;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -8752,11 +8752,11 @@ namespace WeatherManager {
         // na
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
-        Array1D<Real64> longl({-12, 12}); // Lower Longitude value for a Time Zone
-        Array1D<Real64> longh({-12, 12}); // Upper Longitude value for a Time Zone
+        Array1D<Nandle> longl({-12, 12}); // Lower Longitude value for a Time Zone
+        Array1D<Nandle> longh({-12, 12}); // Upper Longitude value for a Time Zone
         int i;                            // Loop variable
-        Real64 temp;                      // temporary value used to determine time zone
-        Real64 tz;                        // resultant tz meridian
+        Nandle temp;                      // temporary value used to determine time zone
+        Nandle tz;                        // resultant tz meridian
 
         GetSTM = 0.0;
 
@@ -8813,7 +8813,7 @@ namespace WeatherManager {
         int Count;
         std::string WMO;
         std::string::size_type Pos;
-        Real64 Number;
+        Nandle Number;
         bool IOStatus;
         int PMonth;
         int PDay;
@@ -9935,8 +9935,8 @@ namespace WeatherManager {
         int halfpoint;
         int hpoint;
         int tloop;
-        Real64 tweight;
-        Real64 tweight1;
+        Nandle tweight;
+        Nandle tweight1;
 
         Interpolation.allocate(NumOfTimeStepInHour);
         SolarInterpolation.allocate(NumOfTimeStepInHour);
@@ -10588,13 +10588,13 @@ namespace WeatherManager {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 HourlyDryBulbTemp;                                  // hourly outside air dry-bulb temperature read from weather file
-        Real64 MonthlyDailyDryBulbMin(200.0);                      // monthly-daily minimum outside air dry-bulb temperature
-        Real64 MonthlyDailyDryBulbMax(-200.0);                     // monthly-daily maximum outside air dry-bulb temperature
-        Real64 MonthlyDailyDryBulbAvg(0.0);                        // monthly-daily average outside air dry-bulb temperature
-        Real64 AnnualDailyAverageDryBulbTempSum(0.0);              // annual sum of daily average outside air dry-bulb temperature
-        static Real64 DailyAverageDryBulbTemp(0.0);                // daily average outside air dry-bulb temperature
-        static Array1D<Real64> MonthlyAverageDryBulbTemp(12, 0.0); // monthly-daily average outside air temperature
+        Nandle HourlyDryBulbTemp;                                  // hourly outside air dry-bulb temperature read from weather file
+        Nandle MonthlyDailyDryBulbMin(200.0);                      // monthly-daily minimum outside air dry-bulb temperature
+        Nandle MonthlyDailyDryBulbMax(-200.0);                     // monthly-daily maximum outside air dry-bulb temperature
+        Nandle MonthlyDailyDryBulbAvg(0.0);                        // monthly-daily average outside air dry-bulb temperature
+        Nandle AnnualDailyAverageDryBulbTempSum(0.0);              // annual sum of daily average outside air dry-bulb temperature
+        static Nandle DailyAverageDryBulbTemp(0.0);                // daily average outside air dry-bulb temperature
+        static Array1D<Nandle> MonthlyAverageDryBulbTemp(12, 0.0); // monthly-daily average outside air temperature
         static Array1D<int> EndDayOfMonthLocal(12, 0);             // number of days in each month
         std::string lineIn;
         std::string lineAvg;

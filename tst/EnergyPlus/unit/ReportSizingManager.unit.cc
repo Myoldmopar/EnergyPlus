@@ -113,12 +113,12 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_GetCoilDesFlowT)
 
     // one-time argument initialization
     int const sysNum = 1;
-    Real64 const CpAir = 4179;
+    Nandle const CpAir = 4179;
 
     // argument return values
-    Real64 designFlowValue;
-    Real64 designExitTemp;
-    Real64 designExitHumRat;
+    Nandle designFlowValue;
+    Nandle designExitTemp;
+    Nandle designExitHumRat;
 
     DataSizing::SysSizInput(1).CoolingPeakLoadType = DataSizing::TotalCoolingLoad;
     DataSizing::FinalSysSizing(1).CoolingPeakLoadType = DataSizing::TotalCoolingLoad;
@@ -215,12 +215,12 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_GetCoilDesFlowT_NoPeak)
 
     // one-time argument initialization
     int const sysNum = 1;
-    Real64 const CpAir = 4179;
+    Nandle const CpAir = 4179;
 
     // argument return values
-    Real64 designFlowValue;
-    Real64 designExitTemp;
-    Real64 designExitHumRat;
+    Nandle designFlowValue;
+    Nandle designExitTemp;
+    Nandle designExitHumRat;
 
     DataSizing::SysSizInput(1).CoolingPeakLoadType = DataSizing::TotalCoolingLoad;
     DataSizing::FinalSysSizing(1).CoolingPeakLoadType = DataSizing::TotalCoolingLoad;
@@ -263,7 +263,7 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_RequestSizingSystem)
     std::string CompType;       // component type
     std::string SizingString;   // input field sizing description
     int SizingType;             // integer type of sizing requested
-    Real64 SizingResult;        // autosized value of coil input field
+    Nandle SizingResult;        // autosized value of coil input field
     bool PrintWarning;          // true when sizing information is reported in the eio file
     std::string CallingRoutine; // calling routine
 
@@ -409,15 +409,15 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_RequestSizingSystemWithFans)
     DataSizing::CurOASysNum = 0;
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[0]->simulate(_, _, _, _);                         // triggers sizing call
-    Real64 locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
-    Real64 locDesignHeatGain1 = HVACFan::fanObjs[0]->getFanDesignHeatGain(locFanSizeVdot);
+    Nandle locFanSizeVdot = HVACFan::fanObjs[0]->designAirVolFlowRate; // get function
+    Nandle locDesignHeatGain1 = HVACFan::fanObjs[0]->getFanDesignHeatGain(locFanSizeVdot);
     EXPECT_NEAR(locDesignHeatGain1, 100.0, 0.1);
 
     fanName = "TEST FAN 2";
     HVACFan::fanObjs.emplace_back(new HVACFan::FanSystem(fanName)); // call constructor
     HVACFan::fanObjs[1]->simulate(_, _, _, _);                      // triggers sizing call
     locFanSizeVdot = HVACFan::fanObjs[1]->designAirVolFlowRate;     // get function
-    Real64 locDesignHeatGain2 = HVACFan::fanObjs[1]->getFanDesignHeatGain(locFanSizeVdot);
+    Nandle locDesignHeatGain2 = HVACFan::fanObjs[1]->getFanDesignHeatGain(locFanSizeVdot);
     EXPECT_NEAR(locDesignHeatGain2, 200.0, 0.1);
 
     fanName = "TEST FAN 3";
@@ -425,18 +425,18 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_RequestSizingSystemWithFans)
     DataEnvironment::StdRhoAir = 1.2;
     HVACFan::fanObjs[2]->simulate(_, _, _, _);                  // triggers sizing call
     locFanSizeVdot = HVACFan::fanObjs[2]->designAirVolFlowRate; // get function
-    Real64 locDesignHeatGain3 = HVACFan::fanObjs[2]->getFanDesignHeatGain(locFanSizeVdot);
+    Nandle locDesignHeatGain3 = HVACFan::fanObjs[2]->getFanDesignHeatGain(locFanSizeVdot);
     EXPECT_NEAR(locDesignHeatGain3, 400.0, 0.1);
 
     GetFanInput();
-    Real64 locDesignHeatGain4 = FanDesHeatGain(1, locFanSizeVdot);
+    Nandle locDesignHeatGain4 = FanDesHeatGain(1, locFanSizeVdot);
     EXPECT_NEAR(locDesignHeatGain4, 50.0, 0.1);
 
     std::string CompName;       // component name
     std::string CompType;       // component type
     std::string SizingString;   // input field sizing description
     int SizingType;             // integer type of sizing requested
-    Real64 SizingResult;        // autosized value of coil input field
+    Nandle SizingResult;        // autosized value of coil input field
     bool PrintWarning;          // true when sizing information is reported in the eio file
     std::string CallingRoutine; // calling routine
 
@@ -488,7 +488,7 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_RequestSizingSystemWithFans)
     // dx cooling coil capacity sizing
     ReportSizingManager::RequestSizing(CompType, CompName, SizingType, SizingString, SizingResult, PrintWarning, CallingRoutine);
     EXPECT_NEAR(18882.0, SizingResult, 0.1);
-    Real64 dxCoilSizeNoFan = SizingResult;
+    Nandle dxCoilSizeNoFan = SizingResult;
 
     // With Test Fan 4 fan heat
     PrimaryAirSystem(CurSysNum).SupFanNum = 1;
@@ -503,7 +503,7 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_RequestSizingSystemWithFans)
     CallingRoutine = "RequestSizing";
     DataIsDXCoil = true;
     // Expect coil size to increase by fan heat for fan 4
-    Real64 expectedDXCoilSize = dxCoilSizeNoFan + locDesignHeatGain4;
+    Nandle expectedDXCoilSize = dxCoilSizeNoFan + locDesignHeatGain4;
 
     // dx cooling coil capacity sizing
     ReportSizingManager::RequestSizing(CompType, CompName, SizingType, SizingString, SizingResult, PrintWarning, CallingRoutine);
@@ -537,7 +537,7 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_RequestSizingZone)
     std::string CompType;       // component type
     std::string SizingString;   // input field sizing description
     int SizingType;             // integerized type of sizing requested
-    Real64 SizingResult;        // autosized value of coil input field
+    Nandle SizingResult;        // autosized value of coil input field
     bool PrintWarning;          // true when sizing information is reported in the eio file
     std::string CallingRoutine; // calling routine
 
@@ -601,8 +601,8 @@ TEST_F(SQLiteFixture, ReportSizingManager_SQLiteRecordReportSizingOutputTest)
     std::string CompType;
     std::string VarDesc;
     std::string UsrDesc;
-    Real64 VarValue;
-    Real64 UsrValue;
+    Nandle VarValue;
+    Nandle UsrValue;
 
     // input values
     CompType = "BOILER:HOTWATER";
@@ -634,10 +634,10 @@ TEST_F(EnergyPlusFixture, setOAFracForZoneEqSizing_Test)
     DataSizing::ZoneEqSizing(DataSizing::CurZoneEqNum).ATMixerVolFlow = 0.0;
     DataEnvironment::StdRhoAir = 1.23;
 
-    Real64 oaFrac = 0.0;
-    Real64 DesMassFlow = 0.685;
-    Real64 massFlowRate = DataEnvironment::StdRhoAir * DataSizing::ZoneEqSizing(DataSizing::CurZoneEqNum).OAVolFlow;
-    Real64 oaFrac_Test = massFlowRate / DesMassFlow;
+    Nandle oaFrac = 0.0;
+    Nandle DesMassFlow = 0.685;
+    Nandle massFlowRate = DataEnvironment::StdRhoAir * DataSizing::ZoneEqSizing(DataSizing::CurZoneEqNum).OAVolFlow;
+    Nandle oaFrac_Test = massFlowRate / DesMassFlow;
 
     ZoneEqSizingData &zoneEqSizing = DataSizing::ZoneEqSizing(1);
 
@@ -677,9 +677,9 @@ TEST_F(EnergyPlusFixture, setZoneCoilInletConditions)
     zoneEqSizing.ATMixerVolFlow = 0.0;
     DataEnvironment::StdRhoAir = 1.23;
 
-    Real64 DesMassFlow = 0.685;
-    Real64 massFlowRate = DataEnvironment::StdRhoAir * zoneEqSizing.OAVolFlow;
-    Real64 oaFrac = massFlowRate / DesMassFlow;
+    Nandle DesMassFlow = 0.685;
+    Nandle massFlowRate = DataEnvironment::StdRhoAir * zoneEqSizing.OAVolFlow;
+    Nandle oaFrac = massFlowRate / DesMassFlow;
 
     // Test heating mode coil inlet temperature
     zoneEqSizing.ATMixerHeatPriDryBulb = 22.0;
@@ -690,16 +690,16 @@ TEST_F(EnergyPlusFixture, setZoneCoilInletConditions)
     // ATMixer flow rate = 0 and ZoneEqSizing.OAVolFlow = 0 so coilInlet condition = zone condition
     zoneEqSizing.ATMixerVolFlow = 0.0;
     zoneEqSizing.OAVolFlow = 0.0;
-    Real64 zoneCond = finalZoneSizing.ZoneTempAtHeatPeak;
-    Real64 calcCoilInletCond = zoneCond;
-    Real64 coilInletCond = setHeatCoilInletTempForZoneEqSizing(oaFrac, zoneEqSizing, finalZoneSizing);
+    Nandle zoneCond = finalZoneSizing.ZoneTempAtHeatPeak;
+    Nandle calcCoilInletCond = zoneCond;
+    Nandle coilInletCond = setHeatCoilInletTempForZoneEqSizing(oaFrac, zoneEqSizing, finalZoneSizing);
     EXPECT_EQ(coilInletCond, calcCoilInletCond);
 
     // ATMixer flow rate > 0 and ZoneEqSizing.OAVolFlow = 0 so coilInlet condition based on mixed return and ATMixer condition
     zoneEqSizing.ATMixerVolFlow = 1.0;
     zoneEqSizing.OAVolFlow = 0.0;
     zoneCond = finalZoneSizing.ZoneRetTempAtHeatPeak;
-    Real64 oaCond = zoneEqSizing.ATMixerHeatPriDryBulb;
+    Nandle oaCond = zoneEqSizing.ATMixerHeatPriDryBulb;
     calcCoilInletCond = (oaFrac * oaCond) + ((1.0 - oaFrac) * zoneCond);
     coilInletCond = setHeatCoilInletTempForZoneEqSizing(oaFrac, zoneEqSizing, finalZoneSizing);
     EXPECT_EQ(coilInletCond, calcCoilInletCond);
@@ -882,7 +882,7 @@ TEST_F(EnergyPlusFixture, ReportSizingManager_FanPeak)
     std::string CompType;       // component type
     std::string SizingString;   // input field sizing description
     int SizingType;             // integerized type of sizing requested
-    Real64 SizingResult;        // autosized value of coil input field
+    Nandle SizingResult;        // autosized value of coil input field
     bool PrintWarning;          // true when sizing information is reported in the eio file
     std::string CallingRoutine; // calling routine
 

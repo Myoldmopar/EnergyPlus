@@ -202,8 +202,8 @@ namespace SizingManager {
         static int LastDayOfMonth(0);
         static int CtrlZoneNum(0);       // controlled zone index
         static int ZoneNum(0);           // index into the Zone data array for the controlled zone
-        static Real64 TempAtPeak(0.0);   // Outside temperature at peak cooling/heating for reporting
-        static Real64 HumRatAtPeak(0.0); // Outside humidity ratio at peak cooling/heating for reporting
+        static Nandle TempAtPeak(0.0);   // Outside temperature at peak cooling/heating for reporting
+        static Nandle HumRatAtPeak(0.0); // Outside humidity ratio at peak cooling/heating for reporting
         static int TimeStepAtPeak(0);    // time step number at heat or cool peak
         static int DDNum(0);             // Design Day index
         static int AirLoopNum(0);        // air loop index
@@ -215,9 +215,9 @@ namespace SizingManager {
         int iZoneCalcIter;   // index for repeating the zone sizing calcs
         static bool runZeroingOnce(true);
         bool isUserReqCompLoadReport;
-        Real64 DOASHeatGainRateAtHtPk(0.0); // zone heat gain rate from the DOAS at the heating peak [W]
-        Real64 DOASHeatGainRateAtClPk(0.0); // zone heat gain rate from the DOAS at the cooling peak [W]
-        Real64 TStatSetPtAtPk(0.0);         // thermostat set point at peak
+        Nandle DOASHeatGainRateAtHtPk(0.0); // zone heat gain rate from the DOAS at the heating peak [W]
+        Nandle DOASHeatGainRateAtClPk(0.0); // zone heat gain rate from the DOAS at the cooling peak [W]
+        Nandle TStatSetPtAtPk(0.0);         // thermostat set point at peak
 
         // FLOW:
 
@@ -752,7 +752,7 @@ namespace SizingManager {
                 std::string coolPeakLoadKind = "";
                 std::string coolPeakDDDate = "";
                 int coolPeakDD = 0;
-                Real64 coolCap = 0.;
+                Nandle coolCap = 0.;
                 if (FinalSysSizing(AirLoopNum).CoolingPeakLoadType == SensibleCoolingLoad) {
                     coolPeakLoadKind = "Sensible";
                     coolPeakDDDate = SysSizPeakDDNum(AirLoopNum).cSensCoolPeakDDDate;
@@ -880,9 +880,9 @@ namespace SizingManager {
 
             for (int AirLoopNum = 1; AirLoopNum <= NumPrimaryAirSys; ++AirLoopNum) {
                 // Mine data from ATUs to find new design heating flow rates and new maximum flow rates
-                Real64 airLoopMaxFlowRateSum(0.0);
-                Real64 airLoopHeatingMinimumFlowRateSum(0.0);
-                Real64 airLoopHeatingMaximumFlowRateSum(0.0);
+                Nandle airLoopMaxFlowRateSum(0.0);
+                Nandle airLoopHeatingMinimumFlowRateSum(0.0);
+                Nandle airLoopHeatingMaximumFlowRateSum(0.0);
 
                 // sum up heating and max flows for any single duct systems, store 62.1 values by zone
                 if (allocated(SingleDuct::sd_airterminal) && SingleDuct::NumSDAirTerminal > 0) {
@@ -996,7 +996,7 @@ namespace SizingManager {
                                 // Calculate the design OA flow rate for this zone
                                 bool UseOccSchFlag = false;
                                 bool UseMinOASchFlag = false;
-                                Real64 designOAductFlow(0.0);
+                                Nandle designOAductFlow(0.0);
                                 designOAductFlow =
                                     DataZoneEquipment::CalcDesignSpecificationOutdoorAir(DualDuct::dd_airterminal(dualDuctATUNum).OARequirementsPtr,
                                                                                          DualDuct::dd_airterminal(dualDuctATUNum).ActualZoneNum,
@@ -1284,7 +1284,7 @@ namespace SizingManager {
                             "AirLoopHVAC", curName, "User Heating Air Flow Ratio []", FinalSysSizing(AirLoopNum).SysAirMinFlowRat);
                         OutputReportPredefined::PreDefTableEntry(
                             OutputReportPredefined::pdchSysSizUserHeatFlowRatio, curName, FinalSysSizing(AirLoopNum).SysAirMinFlowRat, 4);
-                        Real64 calcSysAirMinFlowRat(0.0);
+                        Nandle calcSysAirMinFlowRat(0.0);
                         if (FinalSysSizing(AirLoopNum).DesMainVolFlow > 0.0) { // protect div by zero
                             calcSysAirMinFlowRat = FinalSysSizing(AirLoopNum).DesHeatVolFlow / FinalSysSizing(AirLoopNum).DesMainVolFlow;
                         }
@@ -1407,20 +1407,20 @@ namespace SizingManager {
                         } else {
                             termUnitSizingIndex = DataAirLoop::AirToZoneNodeInfo(AirLoopNum).TermUnitHeatSizingIndex(zoneNum);
                         }
-                        Real64 Er = TermUnitFinalZoneSizing(termUnitSizingIndex)
+                        Nandle Er = TermUnitFinalZoneSizing(termUnitSizingIndex)
                                         .ZoneSecondaryRecirculation; // user input in Zone Air Distribution design spec object
 
                         if (Er > 0.0) { // multi path zone
                             // Find Evz for cooling
-                            Real64 Ep_Clg = TermUnitFinalZoneSizing(termUnitSizingIndex)
+                            Nandle Ep_Clg = TermUnitFinalZoneSizing(termUnitSizingIndex)
                                                 .ZonePrimaryAirFraction; // as adjusted in ManageSystemSizingAdjustments();
-                            Real64 Fa_Clg = Ep_Clg + (1.0 - Ep_Clg) * Er;
+                            Nandle Fa_Clg = Ep_Clg + (1.0 - Ep_Clg) * Er;
                             FaByZoneCool(termUnitSizingIndex) = Fa_Clg;
-                            Real64 Fb_Clg = Ep_Clg;
+                            Nandle Fb_Clg = Ep_Clg;
                             FbByZoneCool(termUnitSizingIndex) = Fb_Clg;
-                            Real64 Ez_Clg = TermUnitFinalZoneSizing(termUnitSizingIndex)
+                            Nandle Ez_Clg = TermUnitFinalZoneSizing(termUnitSizingIndex)
                                                 .ZoneADEffCooling; // user input in Zone Air Distribution design spec object
-                            Real64 Fc_Clg = 1.0 - (1.0 - Ez_Clg) * (1.0 - Er) * (1 - Ep_Clg);
+                            Nandle Fc_Clg = 1.0 - (1.0 - Ez_Clg) * (1.0 - Er) * (1 - Ep_Clg);
                             FcByZoneCool(termUnitSizingIndex) = Fc_Clg;
                             DataSizing::EvzByZoneCool(termUnitSizingIndex) =
                                 (Fa_Clg + DataSizing::XsBySysCool(AirLoopNum) * Fb_Clg - DataSizing::ZdzClgByZone(termUnitSizingIndex) * Fc_Clg) /
@@ -1428,15 +1428,15 @@ namespace SizingManager {
                             // note that SimAirServingZones::LimitZoneVentEff is intended only for single path per I/O ref
 
                             // find Evz for heating
-                            Real64 Ep_Htg = TermUnitFinalZoneSizing(termUnitSizingIndex)
+                            Nandle Ep_Htg = TermUnitFinalZoneSizing(termUnitSizingIndex)
                                                 .ZonePrimaryAirFractionHtg; // as adjusted in ManageSystemSizingAdjustments();
-                            Real64 Fa_Htg = Ep_Htg + (1.0 - Ep_Htg) * Er;
+                            Nandle Fa_Htg = Ep_Htg + (1.0 - Ep_Htg) * Er;
                             FaByZoneHeat(termUnitSizingIndex) = Fa_Htg;
-                            Real64 Fb_Htg = Ep_Htg;
+                            Nandle Fb_Htg = Ep_Htg;
                             FbByZoneCool(termUnitSizingIndex) = Fb_Htg;
-                            Real64 Ez_Htg = TermUnitFinalZoneSizing(termUnitSizingIndex)
+                            Nandle Ez_Htg = TermUnitFinalZoneSizing(termUnitSizingIndex)
                                                 .ZoneADEffHeating; // user input in Zone Air Distribution design spec object
-                            Real64 Fc_Htg = 1.0 - (1.0 - Ez_Htg) * (1.0 - Er) * (1 - Ep_Htg);
+                            Nandle Fc_Htg = 1.0 - (1.0 - Ez_Htg) * (1.0 - Er) * (1 - Ep_Htg);
                             FcByZoneHeat(termUnitSizingIndex) = Fc_Htg;
                             DataSizing::EvzByZoneHeat(termUnitSizingIndex) =
                                 (Fa_Htg + DataSizing::XsBySysHeat(AirLoopNum) * Fb_Htg - DataSizing::ZdzHtgByZone(termUnitSizingIndex) * Fc_Htg) /
@@ -1668,16 +1668,16 @@ namespace SizingManager {
             // System Ventilation Parameters, (Table 4)
 
             // first do some summations needed
-            Real64 RpPzSum(0.0);
-            Real64 RaAzSum(0.0);
-            Real64 AzSum(0.0);
-            Real64 VbzSum(0.0);
-            Real64 VozClgSum(0.0);
-            Real64 VozHtgSum(0.0);
-            Real64 VdzClgSum(0.0);
-            Real64 VdzHtgSum(0.0);
-            Real64 VpzMinClgSum(0.0);
-            Real64 VpzMinHtgSum(0.0);
+            Nandle RpPzSum(0.0);
+            Nandle RaAzSum(0.0);
+            Nandle AzSum(0.0);
+            Nandle VbzSum(0.0);
+            Nandle VozClgSum(0.0);
+            Nandle VozHtgSum(0.0);
+            Nandle VdzClgSum(0.0);
+            Nandle VdzHtgSum(0.0);
+            Nandle VpzMinClgSum(0.0);
+            Nandle VpzMinHtgSum(0.0);
             // make two passes, one for cooled zones and one for heated zones, if a zone is the same on the second pass, skip it
             for (int coolHeatPass = 1; coolHeatPass <= 2; ++coolHeatPass) {
                 int numZones = 0;
@@ -1963,7 +1963,7 @@ namespace SizingManager {
                 DataGlobals::HourOfDay = hrOfDay;                   // avoid crash in schedule manager
                 for (int TS = 1; TS <= NumOfTimeStepInHour; ++TS) { // loop over all timesteps in hour
                     DataGlobals::TimeStep = TS;                     // avoid crash in schedule manager
-                    Real64 TSfraction(0.0);
+                    Nandle TSfraction(0.0);
                     if (NumOfTimeStepInHour > 0.0) TSfraction = 1.0 / double(NumOfTimeStepInHour);
                     for (int AirLoopNum = 1; AirLoopNum <= NumPrimaryAirSys; ++AirLoopNum) { // loop over all the air systems
                         int SysSizNum = UtilityRoutines::FindItemInList(
@@ -1972,16 +1972,16 @@ namespace SizingManager {
                         if (FinalSysSizing(AirLoopNum).OAAutoSized) {
 
                             // Loop over all zones connected to air loop
-                            Real64 TotConcurrentPeopleOnSys = 0.0;
+                            Nandle TotConcurrentPeopleOnSys = 0.0;
                             for (int zoneNumOnLoop = 1; zoneNumOnLoop <= DataAirLoop::AirLoopZoneInfo(AirLoopNum).NumZones; ++zoneNumOnLoop) {
                                 int CtrlZoneNum = DataAirLoop::AirLoopZoneInfo(AirLoopNum).ActualZoneNumber(zoneNumOnLoop);
 
                                 for (int PeopleNum = 1; PeopleNum <= DataHeatBalance::TotPeople; ++PeopleNum) {
                                     if (DataHeatBalance::People(PeopleNum).ZonePtr == FinalZoneSizing(CtrlZoneNum).ActualZoneNum) {
-                                        Real64 PeopleInZone = (DataHeatBalance::People(PeopleNum).NumberOfPeople *
+                                        Nandle PeopleInZone = (DataHeatBalance::People(PeopleNum).NumberOfPeople *
                                                                DataHeatBalance::Zone(FinalZoneSizing(CtrlZoneNum).ActualZoneNum).Multiplier *
                                                                DataHeatBalance::Zone(FinalZoneSizing(CtrlZoneNum).ActualZoneNum).ListMultiplier);
-                                        Real64 schMultiplier =
+                                        Nandle schMultiplier =
                                             ScheduleManager::LookUpScheduleValue(DataHeatBalance::People(PeopleNum).NumberOfPeoplePtr, hrOfDay, TS);
                                         PeopleInZone = PeopleInZone * schMultiplier;
                                         TotConcurrentPeopleOnSys += PeopleInZone;
@@ -1997,7 +1997,7 @@ namespace SizingManager {
                                 std::string MonthDayString;
                                 static ObjexxFCL::gio::Fmt MnDyFmt("(I2.2,'/',I2.2)");
                                 ObjexxFCL::gio::write(MonthDayString, MnDyFmt) << Month << DayOfMonth;
-                                Real64 TimeHrsFraction = (double(hrOfDay) - 1.0) + double(TS) * TSfraction;
+                                Nandle TimeHrsFraction = (double(hrOfDay) - 1.0) + double(TS) * TSfraction;
                                 int TimeHrsInt = int(TimeHrsFraction);
                                 int TimeMinsInt = nint((TimeHrsFraction - TimeHrsInt) * 60.0);
                                 if (TimeMinsInt == 60) {
@@ -2073,7 +2073,7 @@ namespace SizingManager {
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 
@@ -2139,7 +2139,7 @@ namespace SizingManager {
                                     int const OAIndex,
                                     Array1D_string const &Alphas,
                                     int &NumAlphas,
-                                    Array1D<Real64> const &Numbers,
+                                    Array1D<Nandle> const &Numbers,
                                     int &NumNumbers,
                                     Array1D_bool const &EP_UNUSED(lNumericBlanks), // Unused
                                     Array1D_bool const &lAlphaBlanks,
@@ -2339,7 +2339,7 @@ namespace SizingManager {
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 
@@ -3972,18 +3972,18 @@ namespace SizingManager {
     void ReportZoneSizing(OutputFiles &outputFiles,
                           std::string const &ZoneName,   // the name of the zone
                           std::string const &LoadType,   // the description of the input variable
-                          Real64 const CalcDesLoad,      // the value from the sizing calculation [W]
-                          Real64 const UserDesLoad,      // the value from the sizing calculation modified by user input [W]
-                          Real64 const CalcDesFlow,      // calculated design air flow rate [m3/s]
-                          Real64 const UserDesFlow,      // user input or modified design air flow rate [m3/s]
+                          Nandle const CalcDesLoad,      // the value from the sizing calculation [W]
+                          Nandle const UserDesLoad,      // the value from the sizing calculation modified by user input [W]
+                          Nandle const CalcDesFlow,      // calculated design air flow rate [m3/s]
+                          Nandle const UserDesFlow,      // user input or modified design air flow rate [m3/s]
                           std::string const &DesDayName, // the name of the design day that produced the peak
                           std::string const &PeakHrMin,  // time stamp of the peak
-                          Real64 const PeakTemp,         // temperature at peak [C]
-                          Real64 const PeakHumRat,       // humidity ratio at peak [kg water/kg dry air]
-                          Real64 const FloorArea,        // zone floor area [m2]
-                          Real64 const TotOccs,          // design number of occupants for the zone
-                          Real64 const MinOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
-                          Real64 const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
+                          Nandle const PeakTemp,         // temperature at peak [C]
+                          Nandle const PeakHumRat,       // humidity ratio at peak [kg water/kg dry air]
+                          Nandle const FloorArea,        // zone floor area [m2]
+                          Nandle const TotOccs,          // design number of occupants for the zone
+                          Nandle const MinOAVolFlow,     // zone design minimum outside air flow rate [m3/s]
+                          Nandle const DOASHeatAddRate   // zone design heat addition rate from the DOAS [W]
     )
     {
 
@@ -4071,9 +4071,9 @@ namespace SizingManager {
                          std::string const &SysName,      // the name of the zone
                          std::string const &LoadType,     // either "Cooling" or "Heating"
                          std::string const &PeakLoadKind, // either "Sensible" or "Total"
-                         Real64 const &UserDesCap,        // User  Design Capacity
-                         Real64 const &CalcDesVolFlow,    // Calculated  Design Air Flow Rate
-                         Real64 const &UserDesVolFlow,    // User Design Air Flow Rate
+                         Nandle const &UserDesCap,        // User  Design Capacity
+                         Nandle const &CalcDesVolFlow,    // Calculated  Design Air Flow Rate
+                         Nandle const &UserDesVolFlow,    // User Design Air Flow Rate
                          std::string const &DesDayName,   // the name of the design day that produced the peak
                          std::string const &DesDayDate,   // the date that produced the peak
                          int const &TimeStepIndex         // time step of the peak
@@ -4214,7 +4214,7 @@ namespace SizingManager {
         Array1D_string Alphas;           // Alpha input items for object
         Array1D_string cAlphaFields;     // Alpha field names
         Array1D_string cNumericFields;   // Numeric field names
-        Array1D<Real64> Numbers;         // Numeric input items for object
+        Array1D<Nandle> Numbers;         // Numeric input items for object
         Array1D_bool lAlphaBlanks;       // Logical array, alpha field input BLANK = .TRUE.
         Array1D_bool lNumericBlanks;     // Logical array, numeric field input BLANK = .TRUE.
 
@@ -4847,17 +4847,17 @@ namespace SizingManager {
         } else if (CallIndicator == DuringDay) {
             int TimeStepInDay = (HourOfDay - 1) * NumOfTimeStepInHour + TimeStep;
             // save the results of the ideal zone component calculation in the CalcZoneSizing sequence variables
-            Real64 sumCoolLoad = 0.;
-            Real64 sumHeatLoad = 0.;
-            Real64 wghtdCoolZoneTemp = 0.;
-            Real64 wghtdHeatZoneTemp = 0.;
-            Real64 wghtdCoolHumRat = 0.;
-            Real64 wghtdHeatHumRat = 0.;
-            Real64 wghtdCoolDOASHeatAdd = 0.;
-            Real64 wghtdCoolDOASLatAdd = 0.;
+            Nandle sumCoolLoad = 0.;
+            Nandle sumHeatLoad = 0.;
+            Nandle wghtdCoolZoneTemp = 0.;
+            Nandle wghtdHeatZoneTemp = 0.;
+            Nandle wghtdCoolHumRat = 0.;
+            Nandle wghtdHeatHumRat = 0.;
+            Nandle wghtdCoolDOASHeatAdd = 0.;
+            Nandle wghtdCoolDOASLatAdd = 0.;
             for (int CtrlZoneNum = 1; CtrlZoneNum <= NumOfZones; ++CtrlZoneNum) {
                 if (!ZoneEquipConfig(CtrlZoneNum).IsControlled) continue;
-                Real64 curCoolLoad = CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).CoolLoadSeq(TimeStepInDay);
+                Nandle curCoolLoad = CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).CoolLoadSeq(TimeStepInDay);
                 if (curCoolLoad > 0.0) {
                     sumCoolLoad += curCoolLoad;
                     wghtdCoolZoneTemp += CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).CoolZoneTempSeq(TimeStepInDay) * curCoolLoad;
@@ -4865,7 +4865,7 @@ namespace SizingManager {
                     wghtdCoolDOASHeatAdd += CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).DOASHeatAddSeq(TimeStepInDay) * curCoolLoad;
                     wghtdCoolDOASLatAdd += CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).DOASLatAddSeq(TimeStepInDay) * curCoolLoad;
                 }
-                Real64 curHeatLoad = CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).HeatLoadSeq(TimeStepInDay);
+                Nandle curHeatLoad = CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).HeatLoadSeq(TimeStepInDay);
                 if (curHeatLoad > 0.0) {
                     sumHeatLoad += curHeatLoad;
                     wghtdHeatZoneTemp += CalcZoneSizing(CurOverallSimDay, CtrlZoneNum).HeatZoneTempSeq(TimeStepInDay) * curHeatLoad;
@@ -4945,21 +4945,21 @@ namespace SizingManager {
 
             if (DataSizing::NumAirTerminalSizingSpec > 0) {
                 // Apply DesignSpecification:AirTerminal:Sizing adjustments - default ratios are 1.0
-                Real64 minOAFrac = thisTUSizing.SpecMinOAFrac;
+                Nandle minOAFrac = thisTUSizing.SpecMinOAFrac;
                 // Outdoor air
                 thisTUFZSizing.MinOA = thisFZSizing.MinOA * minOAFrac;
                 thisTUFZSizing.TotalOAFromPeople = thisFZSizing.TotalOAFromPeople * minOAFrac;
                 thisTUFZSizing.TotalOAFromArea = thisFZSizing.TotalOAFromArea * minOAFrac;
-                Real64 minOACoolMassFlow = thisTUFZSizing.MinOA * thisFZSizing.DesCoolDens;
-                Real64 minOAHeatMassFlow = thisTUFZSizing.MinOA * thisFZSizing.DesHeatDens;
+                Nandle minOACoolMassFlow = thisTUFZSizing.MinOA * thisFZSizing.DesCoolDens;
+                Nandle minOAHeatMassFlow = thisTUFZSizing.MinOA * thisFZSizing.DesHeatDens;
                 // Cooling
-                Real64 coolFlowRatio = 1.0;
+                Nandle coolFlowRatio = 1.0;
                 if (thisTUSizing.SpecDesCoolSATRatio > 0.0) {
                     coolFlowRatio = thisTUSizing.SpecDesSensCoolingFrac / thisTUSizing.SpecDesCoolSATRatio;
                 } else {
                     coolFlowRatio = thisTUSizing.SpecDesSensCoolingFrac;
                 }
-                Real64 coolLoadRatio = thisTUSizing.SpecDesSensCoolingFrac;
+                Nandle coolLoadRatio = thisTUSizing.SpecDesSensCoolingFrac;
                 thisTUFZSizing.DesCoolLoad = thisFZSizing.DesCoolLoad * coolLoadRatio;
                 thisTUFZSizing.CoolMassFlow = thisFZSizing.CoolMassFlow * coolFlowRatio; // this field in TUFSizing doesn't appear to be used
                 thisTUFZSizing.CoolLoadSeq = thisFZSizing.CoolLoadSeq * coolLoadRatio;   // this field in TUFSizing doesn't appear to be used
@@ -4989,13 +4989,13 @@ namespace SizingManager {
                                                        thisTUFZSizing.DesCoolVolFlow * thisTUFZSizing.DesCoolMinAirFlowFrac);
 
                 // Heating
-                Real64 heatFlowRatio = 1.0;
+                Nandle heatFlowRatio = 1.0;
                 if (thisTUSizing.SpecDesHeatSATRatio > 0.0) {
                     heatFlowRatio = thisTUSizing.SpecDesSensHeatingFrac / thisTUSizing.SpecDesHeatSATRatio;
                 } else {
                     heatFlowRatio = thisTUSizing.SpecDesSensHeatingFrac;
                 }
-                Real64 heatLoadRatio = thisTUSizing.SpecDesSensHeatingFrac;
+                Nandle heatLoadRatio = thisTUSizing.SpecDesSensHeatingFrac;
                 thisTUFZSizing.DesHeatLoad = thisFZSizing.DesHeatLoad * heatLoadRatio;
                 thisTUFZSizing.HeatMassFlow = thisFZSizing.HeatMassFlow * heatFlowRatio; // this field in TUFSizing doesn't appear to be used
                 thisTUFZSizing.HeatLoadSeq = thisFZSizing.HeatLoadSeq * heatLoadRatio;   // this field in TUFSizing doesn't appear to be used

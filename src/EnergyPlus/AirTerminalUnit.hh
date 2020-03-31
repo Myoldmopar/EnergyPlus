@@ -117,14 +117,14 @@ protected: // Assignment
 
 public:                                                  // Methods
     virtual void simulate(bool const FirstHVACIteration, // TRUE if first HVAC iteration in time step
-                          Real64 &NonAirSysOutput        // convective cooling by the beam system [W]
+                          Nandle &NonAirSysOutput        // convective cooling by the beam system [W]
                           ) = 0;
 
     virtual int getZoneIndex() = 0;
 
     virtual int getAirLoopNum() = 0;
 
-    virtual Real64 getPrimAirDesignVolFlow() = 0;
+    virtual Nandle getPrimAirDesignVolFlow() = 0;
 
     virtual int getTermUnitSizingIndex() = 0;
 
@@ -135,9 +135,9 @@ protected:                              // Data
     int aDUNum;                         // index of this unit in the corresponding air distribution unit structure
     int airAvailSchedNum;               // index to schedule for pimary air availability
     bool airAvailable;                  // true if primary air is available
-    Real64 vDotDesignPrimAir;           // Design primary air volume flow rate m3/s (autosizable)
+    Nandle vDotDesignPrimAir;           // Design primary air volume flow rate m3/s (autosizable)
     bool vDotDesignPrimAirWasAutosized; // true if user input for design air flow was autsized on input
-    Real64 mDotDesignPrimAir;           // Design primary air mass flow rate kg/s
+    Nandle mDotDesignPrimAir;           // Design primary air mass flow rate kg/s
     int airInNodeNum;                   // unit air inlet system node number, air enters into air terminal unit
     int airOutNodeNum;                  // unit air outlet system node number, air enters into zone from air terminal
     int zoneIndex;                      // zone index for this air terminal unit

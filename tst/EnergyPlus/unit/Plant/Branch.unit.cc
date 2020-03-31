@@ -66,7 +66,7 @@ TEST_F(EnergyPlusFixture, Plant_Topology_Branch_MaxAbsLoad)
     b.Comp[0].MyLoad = 20000;
     b.Comp[1].MyLoad = 21000;
     b.Comp[2].MyLoad = 22000;
-    Real64 maxLoad = b.max_abs_Comp_MyLoad();
+    Nandle maxLoad = b.max_abs_Comp_MyLoad();
     ASSERT_NEAR(22000, maxLoad, 0.001);
 
     b.Comp[0].MyLoad = 22000;

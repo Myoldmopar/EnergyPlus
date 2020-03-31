@@ -67,11 +67,11 @@ namespace DataPlant {
         int NodeNumOut;          // Component outlet node number
         int NumMeteredVars;
         int NumSubComps;
-        Real64 LoopLoadFrac; // Fraction of loop load met by component
-        Real64 TotPlantSupplyElec;
-        Real64 TotPlantSupplyGas;
-        Real64 TotPlantSupplyPurch;
-        Real64 TotPlantSupplyOther;
+        Nandle LoopLoadFrac; // Fraction of loop load met by component
+        Nandle TotPlantSupplyElec;
+        Nandle TotPlantSupplyGas;
+        Nandle TotPlantSupplyPurch;
+        Nandle TotPlantSupplyOther;
         PlantConnection ConnectPlant;  // Index of energy output report data
         Array1D<MeterData> MeteredVar; // Index of energy output report data
         Array1D<SubcomponentData> SubComp;

@@ -178,21 +178,21 @@ TEST_F(EnergyPlusFixture, SecondaryDXHeatingCoilSingleSpeed_Test4)
     EXPECT_DOUBLE_EQ(1.0, DXCoil(DXCoilNum).SecCoilSHR);
 
     //// set up arguments
-    Real64 const EvapAirMassFlow = 1.2;
-    Real64 const TotalHeatRemovalRate = 5500.0;
-    Real64 const PartLoadRatio = 1.0;
-    Real64 const SecCoilRatedSHR = 1.0;
-    Real64 const EvapInletDryBulb = 10.0;
-    Real64 const EvapInletHumRat = 0.003;
-    Real64 const EvapInletWetBulb = 4.5;
-    Real64 const EvapInletEnthalpy = 17607.0;
-    Real64 const CondInletDryBulb = 20.0;
-    Real64 const SecCoilFlowFraction = 1.0;
+    Nandle const EvapAirMassFlow = 1.2;
+    Nandle const TotalHeatRemovalRate = 5500.0;
+    Nandle const PartLoadRatio = 1.0;
+    Nandle const SecCoilRatedSHR = 1.0;
+    Nandle const EvapInletDryBulb = 10.0;
+    Nandle const EvapInletHumRat = 0.003;
+    Nandle const EvapInletWetBulb = 4.5;
+    Nandle const EvapInletEnthalpy = 17607.0;
+    Nandle const CondInletDryBulb = 20.0;
+    Nandle const SecCoilFlowFraction = 1.0;
     int const SecCoilSHRFT = 0;
     int const SecCoilSHRFF = 0;
 
     // output variable
-    Real64 SHRTest;
+    Nandle SHRTest;
 
     // make the call
     SHRTest =

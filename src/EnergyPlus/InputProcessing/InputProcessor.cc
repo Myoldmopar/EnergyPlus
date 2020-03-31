@@ -490,7 +490,7 @@ bool InputProcessor::findDefault(std::string &default_value, json const &schema_
     return false;
 }
 
-bool InputProcessor::findDefault(Real64 &default_value, json const &schema_field_obj)
+bool InputProcessor::findDefault(Nandle &default_value, json const &schema_field_obj)
 {
     auto const &find_default = schema_field_obj.find("default");
     default_value = 0;
@@ -509,7 +509,7 @@ bool InputProcessor::findDefault(Real64 &default_value, json const &schema_field
     return false;
 }
 
-bool InputProcessor::getDefaultValue(std::string const &objectWord, std::string const &fieldName, Real64 &value)
+bool InputProcessor::getDefaultValue(std::string const &objectWord, std::string const &fieldName, Nandle &value)
 {
     auto find_iterators = objectCacheMap.find(objectWord);
     if (find_iterators == objectCacheMap.end()) {
@@ -624,7 +624,7 @@ void InputProcessor::setObjectItemValue(json const &ep_object,
                                         bool within_max_fields,
                                         Array1S_string Alphas,
                                         int &NumAlphas,
-                                        Array1D<Real64> &Numbers,
+                                        Array1D<Nandle> &Numbers,
                                         int &NumNumbers,
                                         Optional<Array1D_bool> NumBlank,
                                         Optional<Array1D_bool> AlphaBlank,
@@ -711,7 +711,7 @@ void InputProcessor::getObjectItem(std::string const &Object,
                                    int const Number,
                                    Array1S_string Alphas,
                                    int &NumAlphas,
-                                   Array1D<Real64> &Numbers,
+                                   Array1D<Nandle> &Numbers,
                                    int &NumNumbers,
                                    int &Status,
                                    Optional<Array1D_bool> NumBlank,

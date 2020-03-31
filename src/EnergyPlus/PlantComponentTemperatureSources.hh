@@ -76,22 +76,22 @@ namespace PlantComponentTemperatureSources {
         std::string Name;                       // user identifier
         int InletNodeNum;                       // Node number on the inlet side of the plant
         int OutletNodeNum;                      // Node number on the outlet side of the plant
-        Real64 DesVolFlowRate;                  // m**3/s - design nominal volumetric flow rate
+        Nandle DesVolFlowRate;                  // m**3/s - design nominal volumetric flow rate
         bool DesVolFlowRateWasAutoSized;        // true if design flow rate was autosized on input
-        Real64 MassFlowRateMax;                 // kg/s - design mass flow rate
+        Nandle MassFlowRateMax;                 // kg/s - design mass flow rate
         bool EMSOverrideOnMassFlowRateMax;      // if true EMS is calling to override maximum mass flow
-        Real64 EMSOverrideValueMassFlowRateMax; // value to use if EMS is overriding max mass flow
-        Real64 MassFlowRate;
+        Nandle EMSOverrideValueMassFlowRateMax; // value to use if EMS is overriding max mass flow
+        Nandle MassFlowRate;
         int TempSpecType; // temperature specification type
         std::string TempSpecScheduleName;
         int TempSpecScheduleNum;
-        Real64 BoundaryTemp;
-        Real64 OutletTemp; // may be different if the flow is off
-        Real64 InletTemp;
-        Real64 HeatRate;
-        Real64 HeatEnergy;
+        Nandle BoundaryTemp;
+        Nandle OutletTemp; // may be different if the flow is off
+        Nandle InletTemp;
+        Nandle HeatRate;
+        Nandle HeatEnergy;
         PlantLocation Location;
-        Real64 SizFac; // sizing factor
+        Nandle SizFac; // sizing factor
         bool CheckEquipName;
         bool MyFlag;
         bool MyEnvironFlag;
@@ -109,7 +109,7 @@ namespace PlantComponentTemperatureSources {
         // Destructor
         ~WaterSourceSpecs() = default;
 
-        void initialize(Real64 &MyLoad);
+        void initialize(Nandle &MyLoad);
 
         void setupOutputVars();
 
@@ -119,11 +119,11 @@ namespace PlantComponentTemperatureSources {
 
         void update();
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void getSizingFactor(Real64 &_SizFac) override;
+        void getSizingFactor(Nandle &_SizFac) override;
 
         void onInitLoopEquip(const PlantLocation &EP_UNUSED(calledFromLocation)) override;
 

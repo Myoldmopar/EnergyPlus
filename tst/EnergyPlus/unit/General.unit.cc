@@ -67,7 +67,7 @@ TEST_F(EnergyPlusFixture, General_ParseTime)
 {
     int Hours;
     int Minutes;
-    Real64 Seconds;
+    Nandle Seconds;
     { // Time = 0
         General::ParseTime(0, Hours, Minutes, Seconds);
         EXPECT_EQ(0, Hours);
@@ -241,11 +241,11 @@ TEST_F(EnergyPlusFixture, General_CreateTimeIntervalString)
     }
 }
 
-Real64 Residual(Real64 const Frac)
+Nandle Residual(Nandle const Frac)
 {
-    Real64 Residual;
-    Real64 Request = 1.10;
-    Real64 Actual;
+    Nandle Residual;
+    Nandle Request = 1.10;
+    Nandle Actual;
 
     Actual = 1.0 + 2.0 * Frac + 10.0 * Frac * Frac;
 
@@ -254,11 +254,11 @@ Real64 Residual(Real64 const Frac)
     return Residual;
 }
 
-Real64 ResidualTest(Real64 const Frac, Array1<Real64> const &Par)
+Nandle ResidualTest(Nandle const Frac, Array1<Nandle> const &Par)
 {
-    Real64 ResidualTest;
-    Real64 Request = 1.0+1.0e-12;
-    Real64 Actual;
+    Nandle ResidualTest;
+    Nandle Request = 1.0+1.0e-12;
+    Nandle Actual;
 
     Actual = 1.0 + 2.0 * Frac + 10.0 * Frac * Frac;
 
@@ -272,10 +272,10 @@ TEST_F(EnergyPlusFixture, General_SolveRootTest)
 
     using DataHVACGlobals::HVACSystemRootFinding;
 
-    Real64 ErrorToler = 0.00001;
+    Nandle ErrorToler = 0.00001;
     int MaxIte = 30;
     int SolFla;
-    Real64 Frac;
+    Nandle Frac;
 
     General::SolveRoot(ErrorToler, MaxIte, SolFla, Frac, Residual, 0.0, 1.0);
     EXPECT_EQ(-1, SolFla);
@@ -304,8 +304,8 @@ TEST_F(EnergyPlusFixture, General_SolveRootTest)
 
     // Add a unit test to deal with vary small X value for #6515
     HVACSystemRootFinding.HVACSystemRootSolver = DataHVACGlobals::HVACSystemRootSolverAlgorithm::RegulaFalsi;
-    Real64 small = 1.0e-11;
-    Array1D<Real64> Par; // Function parameters
+    Nandle small = 1.0e-11;
+    Array1D<Nandle> Par; // Function parameters
     Par.allocate(2);
     Par(1) = 1.0;
     Par(2) = 1.0;
@@ -372,8 +372,8 @@ TEST(General, nthDayOfWeekOfMonth_test)
 TEST_F(EnergyPlusFixture, General_EpexpTest)
 {
     //Global exp function test
-    Real64 x;
-    Real64 y;
+    Nandle x;
+    Nandle y;
 
     // Negative value
     x = -69.0;

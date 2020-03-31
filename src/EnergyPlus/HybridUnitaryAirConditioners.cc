@@ -113,8 +113,8 @@ namespace HybridUnitaryAirConditioners {
     //***************
     void SimZoneHybridUnitaryAirConditioners(std::string const &CompName,    // name of the packaged terminal heat pump
                                              int const ZoneNum,              // number of zone being served
-                                             Real64 &SensibleOutputProvided, // sensible capacity delivered to zone cooling is negative
-                                             Real64 &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
+                                             Nandle &SensibleOutputProvided, // sensible capacity delivered to zone cooling is negative
+                                             Nandle &LatentOutputProvided,   // Latent add/removal  (kg/s), dehumid = negative
                                              int &CompIndex                  // index to zone hvac unit
     )
     {
@@ -340,8 +340,8 @@ namespace HybridUnitaryAirConditioners {
 
     void CalcZoneHybridUnitaryAirConditioners(int const UnitNum,              // unit number
                                               int const ZoneNum,              // number of zone being served
-                                              Real64 &SensibleOutputProvided, // sensible capacity delivered to zone cooling negitive
-                                              Real64 &LatentOutputProvided    // Latent add/removal  (kg/s), dehumid = negative
+                                              Nandle &SensibleOutputProvided, // sensible capacity delivered to zone cooling negitive
+                                              Nandle &LatentOutputProvided    // Latent add/removal  (kg/s), dehumid = negative
     )
     {
         // SUBROUTINE INFORMATION:
@@ -366,17 +366,17 @@ namespace HybridUnitaryAirConditioners {
         using namespace Psychrometrics;
         using DataEnvironment::StdRhoAir;
 
-        Real64 EnvDryBulbT, AirTempRoom, EnvRelHumm, RoomRelHum, DesignMinVR;
+        Nandle EnvDryBulbT, AirTempRoom, EnvRelHumm, RoomRelHum, DesignMinVR;
 
-        Real64 ZoneCoolingLoad =
+        Nandle ZoneCoolingLoad =
             ZoneSysEnergyDemand(ZoneNum).RemainingOutputReqToCoolSP; // Remaining load required to meet cooling setpoint (<0 is a cooling load)
-        Real64 ZoneHeatingLoad =
+        Nandle ZoneHeatingLoad =
             ZoneSysEnergyDemand(ZoneNum).RemainingOutputReqToHeatSP; // Remaining load required to meet heating setpoint (>0 is a heating load)
-        Real64 OutputRequiredToHumidify =
+        Nandle OutputRequiredToHumidify =
             ZoneSysMoistureDemand(ZoneNum)
                 .OutputRequiredToHumidifyingSP; // Load required to meet humidifying setpoint (>0 = a humidify load) [kgWater/s]
 
-        Real64 OutputRequiredToDehumidify =
+        Nandle OutputRequiredToDehumidify =
             ZoneSysMoistureDemand(ZoneNum)
                 .OutputRequiredToDehumidifyingSP; // Load required to meet dehumidifying setpoint (<0 = a dehumidify load)  [kgWater/s]
 
@@ -396,7 +396,7 @@ namespace HybridUnitaryAirConditioners {
                                                         ZoneNum,
                                                         UseOccSchFlag,
                                                         UseMinOASchFlag); //[m3/s]
-        Real64 DesignMinVRMassFlow = 0;
+        Nandle DesignMinVRMassFlow = 0;
         if (StdRhoAir > 1) {
             DesignMinVRMassFlow = DesignMinVR * StdRhoAir;
         } else {
@@ -486,7 +486,7 @@ namespace HybridUnitaryAirConditioners {
         using DataSizing::OARequirements; // to find DesignSpecification:OutdoorAir pointer
         std::string CurrentModuleObject;  // Object type for getting and error messages
         Array1D_string Alphas;            // Alpha items for object
-        Array1D<Real64> Numbers;          // Numeric items for object
+        Array1D<Nandle> Numbers;          // Numeric items for object
         Array1D_string cAlphaFields;      // Alpha field names
         Array1D_string cNumericFields;    // Numeric field names
         Array1D_bool lAlphaBlanks;        // Logical array, alpha field input BLANK = .TRUE.

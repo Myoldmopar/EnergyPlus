@@ -157,13 +157,13 @@ namespace SolarShading {
     // Data
     // MODULE PARAMETER DEFINITIONS:
     // General Parameters...
-    Real64 const SmallIncrement(1.0e-10); // Small increment added for shading/sunlit area calculations.
-    Real64 const HCMULT(100000.0);        // Multiplier used to change meters to .01 millimeters for homogeneous coordinates.
+    Nandle const SmallIncrement(1.0e-10); // Small increment added for shading/sunlit area calculations.
+    Nandle const HCMULT(100000.0);        // Multiplier used to change meters to .01 millimeters for homogeneous coordinates.
     // Homogeneous Coordinates are represented in integers (64 bit). This changes the surface coordinates from meters
     // to .01 millimeters -- making that the resolution for shadowing, polygon clipping, etc.
-    Real64 const sqHCMULT(HCMULT *HCMULT);         // Square of HCMult used in Homogeneous coordinates
-    Real64 const sqHCMULT_fac(0.5 / sqHCMULT);     // ( 0.5 / sqHCMULT ) factor
-    Real64 const kHCMULT(1.0 / (HCMULT * HCMULT)); // half of inverse square of HCMult used in Homogeneous coordinates
+    Nandle const sqHCMULT(HCMULT *HCMULT);         // Square of HCMult used in Homogeneous coordinates
+    Nandle const sqHCMULT_fac(0.5 / sqHCMULT);     // ( 0.5 / sqHCMULT ) factor
+    Nandle const kHCMULT(1.0 / (HCMULT * HCMULT)); // half of inverse square of HCMult used in Homogeneous coordinates
 
     // Parameters for use with the variable OverlapStatus...
     int const NoOverlap(1);
@@ -195,7 +195,7 @@ namespace SolarShading {
     // 1=No overlap; 2=NS1 completely within NS2
     // 3=NS2 completely within NS1; 4=Partial overlap
 
-    Array1D<Real64> CTHETA;        // Cosine of angle of incidence of sun's rays on surface NS
+    Array1D<Nandle> CTHETA;        // Cosine of angle of incidence of sun's rays on surface NS
     int FBKSHC;                    // HC location of first back surface
     int FGSSHC;                    // HC location of first general shadowing surface
     int FINSHC;                    // HC location of first back surface overlap
@@ -232,35 +232,35 @@ namespace SolarShading {
     Array2D<Int64> HCX;       // 'X' homogeneous coordinates of vertices of figure.
     Array2D<Int64> HCY;       // 'Y' homogeneous coordinates of vertices of figure.
     Array3D_int WindowRevealStatus;
-    Array1D<Real64> HCAREA; // Area of each HC figure.  Sign Convention:  Base Surface
+    Array1D<Nandle> HCAREA; // Area of each HC figure.  Sign Convention:  Base Surface
     // - Positive, Shadow - Negative, Overlap between two shadows
     // - positive, etc., so that sum of HC areas=base sunlit area
-    Array1D<Real64> HCT;    // Transmittance of each HC figure
-    Array1D<Real64> ISABSF; // For simple interior solar distribution (in which all beam
+    Array1D<Nandle> HCT;    // Transmittance of each HC figure
+    Array1D<Nandle> ISABSF; // For simple interior solar distribution (in which all beam
     // radiation entering zone is assumed to strike the floor),
     // fraction of beam radiation absorbed by each floor surface
-    Array1D<Real64> SAREA; // Sunlit area of heat transfer surface HTS
+    Array1D<Nandle> SAREA; // Sunlit area of heat transfer surface HTS
     // Excludes multiplier for windows
     // Shadowing combinations data structure...See ShadowingCombinations type
     int NumTooManyFigures(0);
     int NumTooManyVertices(0);
     int NumBaseSubSurround(0);
-    Array1D<Real64> SUNCOS(3); // Direction cosines of solar position
-    Real64 XShadowProjection;  // X projection of a shadow (formerly called C)
-    Real64 YShadowProjection;  // Y projection of a shadow (formerly called S)
-    Array1D<Real64> XTEMP;     // Temporary 'X' values for HC vertices of the overlap
-    Array1D<Real64> XVC;       // X-vertices of the clipped figure
-    Array1D<Real64> XVS;       // X-vertices of the shadow
-    Array1D<Real64> YTEMP;     // Temporary 'Y' values for HC vertices of the overlap
-    Array1D<Real64> YVC;       // Y-vertices of the clipped figure
-    Array1D<Real64> YVS;       // Y-vertices of the shadow
-    Array1D<Real64> ZVC;       // Z-vertices of the clipped figure
+    Array1D<Nandle> SUNCOS(3); // Direction cosines of solar position
+    Nandle XShadowProjection;  // X projection of a shadow (formerly called C)
+    Nandle YShadowProjection;  // Y projection of a shadow (formerly called S)
+    Array1D<Nandle> XTEMP;     // Temporary 'X' values for HC vertices of the overlap
+    Array1D<Nandle> XVC;       // X-vertices of the clipped figure
+    Array1D<Nandle> XVS;       // X-vertices of the shadow
+    Array1D<Nandle> YTEMP;     // Temporary 'Y' values for HC vertices of the overlap
+    Array1D<Nandle> YVC;       // Y-vertices of the clipped figure
+    Array1D<Nandle> YVS;       // Y-vertices of the shadow
+    Array1D<Nandle> ZVC;       // Z-vertices of the clipped figure
     // Used in Sutherland Hodman poly clipping
-    Array1D<Real64> ATEMP;  // Temporary 'A' values for HC vertices of the overlap
-    Array1D<Real64> BTEMP;  // Temporary 'B' values for HC vertices of the overlap
-    Array1D<Real64> CTEMP;  // Temporary 'C' values for HC vertices of the overlap
-    Array1D<Real64> XTEMP1; // Temporary 'X' values for HC vertices of the overlap
-    Array1D<Real64> YTEMP1; // Temporary 'Y' values for HC vertices of the overlap
+    Array1D<Nandle> ATEMP;  // Temporary 'A' values for HC vertices of the overlap
+    Array1D<Nandle> BTEMP;  // Temporary 'B' values for HC vertices of the overlap
+    Array1D<Nandle> CTEMP;  // Temporary 'C' values for HC vertices of the overlap
+    Array1D<Nandle> XTEMP1; // Temporary 'X' values for HC vertices of the overlap
+    Array1D<Nandle> YTEMP1; // Temporary 'Y' values for HC vertices of the overlap
     int maxNumberOfFigures(0);
 
 #ifdef EP_NO_OPENGL
@@ -271,16 +271,16 @@ namespace SolarShading {
 
     int const NPhi = 6;                      // Number of altitude angle steps for sky integration
     int const NTheta = 24;                   // Number of azimuth angle steps for sky integration
-    Real64 const Eps = 1.e-10;               // Small number
-    Real64 const DPhi = PiOvr2 / NPhi;       // Altitude step size
-    Real64 const DTheta = 2.0 * Pi / NTheta; // Azimuth step size
-    Real64 const DThetaDPhi = DTheta * DPhi; // Product of DTheta and DPhi
-    Real64 const PhiMin = 0.5 * DPhi;        // Minimum altitude
+    Nandle const Eps = 1.e-10;               // Small number
+    Nandle const DPhi = PiOvr2 / NPhi;       // Altitude step size
+    Nandle const DTheta = 2.0 * Pi / NTheta; // Azimuth step size
+    Nandle const DThetaDPhi = DTheta * DPhi; // Product of DTheta and DPhi
+    Nandle const PhiMin = 0.5 * DPhi;        // Minimum altitude
 
-    std::vector<Real64> sin_Phi;
-    std::vector<Real64> cos_Phi;
-    std::vector<Real64> sin_Theta;
-    std::vector<Real64> cos_Theta;
+    std::vector<Nandle> sin_Phi;
+    std::vector<Nandle> cos_Phi;
+    std::vector<Nandle> sin_Theta;
+    std::vector<Nandle> cos_Theta;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE SolarShading
 
@@ -551,13 +551,13 @@ namespace SolarShading {
 
         // Initialize these once
         for (int IPhi = 1; IPhi <= NPhi; ++IPhi) {   // Loop over patch altitude values
-            Real64 Phi = PhiMin + (IPhi - 1) * DPhi; // 7.5,22.5,37.5,52.5,67.5,82.5 for NPhi = 6
+            Nandle Phi = PhiMin + (IPhi - 1) * DPhi; // 7.5,22.5,37.5,52.5,67.5,82.5 for NPhi = 6
             sin_Phi.push_back(std::sin(Phi));
             cos_Phi.push_back(std::cos(Phi));
         }
 
         for (int ITheta = 1; ITheta <= NTheta; ++ITheta) { // Loop over patch azimuth values
-            Real64 Theta = (ITheta - 1) * DTheta;          // 0,15,30,....,330,345 for NTheta = 24
+            Nandle Theta = (ITheta - 1) * DTheta;          // 0,15,30,....,330,345 for NTheta = 24
             sin_Theta.push_back(std::sin(Theta));
             cos_Theta.push_back(std::cos(Theta));
         }
@@ -2459,36 +2459,36 @@ namespace SolarShading {
 
         // Locals
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Array1D<Real64> const EpsilonLimit(
+        static Array1D<Nandle> const EpsilonLimit(
             7, {1.065, 1.23, 1.5, 1.95, 2.8, 4.5, 6.2}); // Upper limit of bins of the sky clearness parameter, Epsilon
         // Circumsolar brightening coefficients; index corresponds to range of Epsilon, the sky clearness parameter
-        static Array1D<Real64> const F11R(8, {-0.0083117, 0.1299457, 0.3296958, 0.5682053, 0.8730280, 1.1326077, 1.0601591, 0.6777470});
-        static Array1D<Real64> const F12R(8, {0.5877285, 0.6825954, 0.4868735, 0.1874525, -0.3920403, -1.2367284, -1.5999137, -0.3272588});
-        static Array1D<Real64> const F13R(8, {-0.0620636, -0.1513752, -0.2210958, -0.2951290, -0.3616149, -0.4118494, -0.3589221, -0.2504286});
+        static Array1D<Nandle> const F11R(8, {-0.0083117, 0.1299457, 0.3296958, 0.5682053, 0.8730280, 1.1326077, 1.0601591, 0.6777470});
+        static Array1D<Nandle> const F12R(8, {0.5877285, 0.6825954, 0.4868735, 0.1874525, -0.3920403, -1.2367284, -1.5999137, -0.3272588});
+        static Array1D<Nandle> const F13R(8, {-0.0620636, -0.1513752, -0.2210958, -0.2951290, -0.3616149, -0.4118494, -0.3589221, -0.2504286});
         // Horizon/zenith brightening coefficient array; index corresponds to range of Epsilon, the sky clearness parameter
-        static Array1D<Real64> const F21R(8, {-0.0596012, -0.0189325, 0.0554140, 0.1088631, 0.2255647, 0.2877813, 0.2642124, 0.1561313});
-        static Array1D<Real64> const F22R(8, {0.0721249, 0.0659650, -0.0639588, -0.1519229, -0.4620442, -0.8230357, -1.1272340, -1.3765031});
-        static Array1D<Real64> const F23R(8, {-0.0220216, -0.0288748, -0.0260542, -0.0139754, 0.0012448, 0.0558651, 0.1310694, 0.2506212});
+        static Array1D<Nandle> const F21R(8, {-0.0596012, -0.0189325, 0.0554140, 0.1088631, 0.2255647, 0.2877813, 0.2642124, 0.1561313});
+        static Array1D<Nandle> const F22R(8, {0.0721249, 0.0659650, -0.0639588, -0.1519229, -0.4620442, -0.8230357, -1.1272340, -1.3765031});
+        static Array1D<Nandle> const F23R(8, {-0.0220216, -0.0288748, -0.0260542, -0.0139754, 0.0012448, 0.0558651, 0.1310694, 0.2506212});
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
-        Real64 CosZenithAng;           // Cosine of solar zenith angle
-        Real64 ZenithAng;              // Solar zenith angle (radians)
-        Real64 ZenithAngDeg;           // Solar zenith angle (degrees)
-        Real64 F1;                     // Circumsolar brightening coefficient
-        Real64 F2;                     // Horizon/zenith brightening coefficient
-        Real64 Epsilon;                // Sky clearness parameter
-        Real64 Delta;                  // Sky brightness parameter
-        Real64 CosIncAngBeamOnSurface; // Cosine of incidence angle of beam solar on surface
-        Real64 IncAng;                 // Incidence angle of beam solar on surface (radians)
+        Nandle CosZenithAng;           // Cosine of solar zenith angle
+        Nandle ZenithAng;              // Solar zenith angle (radians)
+        Nandle ZenithAngDeg;           // Solar zenith angle (degrees)
+        Nandle F1;                     // Circumsolar brightening coefficient
+        Nandle F2;                     // Horizon/zenith brightening coefficient
+        Nandle Epsilon;                // Sky clearness parameter
+        Nandle Delta;                  // Sky brightness parameter
+        Nandle CosIncAngBeamOnSurface; // Cosine of incidence angle of beam solar on surface
+        Nandle IncAng;                 // Incidence angle of beam solar on surface (radians)
         int SurfNum;                   // Surface number
         int EpsilonBin;                // Sky clearness (Epsilon) bin index
-        Real64 AirMass;                // Relative air mass
-        Real64 AirMassH;               // Intermediate variable for relative air mass calculation
-        Real64 CircumSolarFac;         // Ratio of cosine of incidence angle to cosine of zenith angle
-        Real64 KappaZ3;                // Intermediate variable
-        Real64 ViewFactorSkyGeom;      // Geometrical sky view factor
-        Real64 const cosine_tolerance(0.0001);
+        Nandle AirMass;                // Relative air mass
+        Nandle AirMassH;               // Intermediate variable for relative air mass calculation
+        Nandle CircumSolarFac;         // Ratio of cosine of incidence angle to cosine of zenith angle
+        Nandle KappaZ3;                // Intermediate variable
+        Nandle ViewFactorSkyGeom;      // Geometrical sky view factor
+        Nandle const cosine_tolerance(0.0001);
 
         // FLOW:
 #ifdef EP_Count_Calls
@@ -2617,7 +2617,7 @@ namespace SolarShading {
         int N;                // Loop Control (vertex counter)
         int NVRS;             // Number of vertices of the receiving surface
         int NVBS;             // Number of vertices of the back surface
-        Real64 DOTP;          // Dot product of C and D
+        Nandle DOTP;          // Dot product of C and D
         std::string CharDotP; // for error messages
         std::string VTString;
 
@@ -2657,7 +2657,7 @@ namespace SolarShading {
 
     void CHKGSS(int const NRS,     // Surface number of the potential shadow receiving surface
                 int const NSS,     // Surface number of the potential shadow casting surface
-                Real64 const ZMIN, // Lowest point of the receiving surface
+                Nandle const ZMIN, // Lowest point of the receiving surface
                 bool &CannotShade  // TRUE if shadow casting surface cannot shade receiving surface.
     )
     {
@@ -2691,7 +2691,7 @@ namespace SolarShading {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Real64 TolValue(0.0003);
+        static Nandle TolValue(0.0003);
 
         // INTERFACE BLOCK SPECIFICATIONS
         // na
@@ -2710,7 +2710,7 @@ namespace SolarShading {
         auto const &surface_C(Surface(NSS));
         if (surface_C.OutNormVec(3) > 0.9999) return; // Shadow Casting Surface is horizontal and facing upward
         auto const &vertex_C(surface_C.Vertex);
-        Real64 ZMAX(vertex_C(1).z);
+        Nandle ZMAX(vertex_C(1).z);
         for (int i = 2, e = surface_C.Sides; i <= e; ++i) {
             ZMAX = std::max(ZMAX, vertex_C(i).z);
         }
@@ -2727,7 +2727,7 @@ namespace SolarShading {
         Vector const CVec(cross(BVec, AVec)); // Vector perpendicular to surface at vertex 2
 
         int const NVSS = surface_C.Sides; // Number of vertices of the shadow casting surface
-        Real64 DOTP(0.0);                 // Dot Product
+        Nandle DOTP(0.0);                 // Dot Product
         for (int I = 1; I <= NVSS; ++I) {
             DOTP = dot(CVec, vertex_C(I) - vertex_R_2);
             if (DOTP > TolValue) break; // DO loop
@@ -2809,9 +2809,9 @@ namespace SolarShading {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int N;                      // Loop Control
         int NVT;                    // Number of vertices
-        static Array1D<Real64> XVT; // X Vertices of
-        static Array1D<Real64> YVT; // Y vertices of
-        static Array1D<Real64> ZVT; // Z vertices of
+        static Array1D<Nandle> XVT; // X Vertices of
+        static Array1D<Nandle> YVT; // Y vertices of
+        static Array1D<Nandle> ZVT; // Z vertices of
 
         int NS1; // Number of the figure being overlapped
         int NS2; // Number of the figure doing overlapping
@@ -2821,16 +2821,16 @@ namespace SolarShading {
         bool inside;
 
         bool Out;
-        Real64 X1; // ,SX,SY,SZ
-        Real64 Y1;
-        Real64 Z1;
-        Real64 X2;
-        Real64 Y2;
-        Real64 Z2;
-        Real64 BX;
-        Real64 BY;
-        Real64 BZ;
-        Real64 BMAX;
+        Nandle X1; // ,SX,SY,SZ
+        Nandle Y1;
+        Nandle Z1;
+        Nandle X2;
+        Nandle Y2;
+        Nandle Z2;
+        Nandle BX;
+        Nandle BY;
+        Nandle BZ;
+        Nandle BMAX;
         //  INTEGER M
 
         if (OneTimeFlag) {
@@ -3152,11 +3152,11 @@ namespace SolarShading {
         using General::RoundSigDigits;
         using namespace DataWindowEquivalentLayer;
 
-        Real64 AreaSum;       // Intermediate calculation value
+        Nandle AreaSum;       // Intermediate calculation value
         int Lay;              // Window glass layer number
-        Real64 AbsDiffTotWin; // Sum of a window's glass layer solar absorptances
-        Real64 TestFractSum;
-        Real64 HorizAreaSum;
+        Nandle AbsDiffTotWin; // Sum of a window's glass layer solar absorptances
+        Nandle TestFractSum;
+        Nandle HorizAreaSum;
 
         if (!allocated(ISABSF)) {
             ISABSF.allocate(TotSurfaces);
@@ -3264,7 +3264,7 @@ namespace SolarShading {
         } // enclosure loop
     }
 
-    void CLIP(int const NVT, Array1D<Real64> &XVT, Array1D<Real64> &YVT, Array1D<Real64> &ZVT)
+    void CLIP(int const NVT, Array1D<Nandle> &XVT, Array1D<Nandle> &YVT, Array1D<Nandle> &ZVT)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3305,17 +3305,17 @@ namespace SolarShading {
         int NABOVE(0);    // Number of vertices of shadow casting surface. above the plane of receiving surface
         int NEXT(0);      // First vertex above plane of receiving surface
         int NON(0);       // Number of vertices of shadow casting surface. on plane of receiving surface
-        Real64 XIN(0.0);  // X of entry point of shadow casting surface. into plane of receiving surface
-        Real64 XOUT(0.0); // X of exit point of shadow casting surface. from plane of receiving surface
-        Real64 YIN(0.0);  // Y of entry point of shadow casting surface. into plane of receiving surface
-        Real64 YOUT(0.0); // Y of exit point of shadow casting surface. from plane of receiving surface
+        Nandle XIN(0.0);  // X of entry point of shadow casting surface. into plane of receiving surface
+        Nandle XOUT(0.0); // X of exit point of shadow casting surface. from plane of receiving surface
+        Nandle YIN(0.0);  // Y of entry point of shadow casting surface. into plane of receiving surface
+        Nandle YOUT(0.0); // Y of exit point of shadow casting surface. from plane of receiving surface
         //  INTEGER NVS      ! Number of vertices of the shadow/clipped surface
 
         // Determine if the shadow casting surface. is above, below, or intersects with the plane of the receiving surface
 
         NumVertInShadowOrClippedSurface = NVS;
         for (int N = 1; N <= NVT; ++N) {
-            Real64 const ZVT_N(ZVT(N));
+            Nandle const ZVT_N(ZVT(N));
             if (ZVT_N > 0.0) {
                 ++NABOVE;
             } else if (ZVT_N == 0.0) {
@@ -3342,7 +3342,7 @@ namespace SolarShading {
 
             NVS = NABOVE + 2;
             NumVertInShadowOrClippedSurface = NABOVE + 2;
-            Real64 ZVT_N, ZVT_P(ZVT(1));
+            Nandle ZVT_N, ZVT_P(ZVT(1));
             XVT(NVT + 1) = XVT(1);
             YVT(NVT + 1) = YVT(1);
             ZVT(NVT + 1) = ZVT_P;
@@ -3350,12 +3350,12 @@ namespace SolarShading {
                 ZVT_N = ZVT_P;
                 ZVT_P = ZVT(P);
                 if (ZVT_N >= 0.0 && ZVT_P < 0.0) { // Line enters plane of receiving surface
-                    Real64 const ZVT_fac(1.0 / (ZVT_P - ZVT_N));
+                    Nandle const ZVT_fac(1.0 / (ZVT_P - ZVT_N));
                     XIN = (ZVT_P * XVT(N) - ZVT_N * XVT(P)) * ZVT_fac;
                     YIN = (ZVT_P * YVT(N) - ZVT_N * YVT(P)) * ZVT_fac;
                 } else if (ZVT_N <= 0.0 && ZVT_P > 0.0) { // Line exits plane of receiving surface
                     NEXT = N + 1;
-                    Real64 const ZVT_fac(1.0 / (ZVT_P - ZVT_N));
+                    Nandle const ZVT_fac(1.0 / (ZVT_P - ZVT_N));
                     XOUT = (ZVT_P * XVT(N) - ZVT_N * XVT(P)) * ZVT_fac;
                     YOUT = (ZVT_P * YVT(N) - ZVT_N * YVT(P)) * ZVT_fac;
                 }
@@ -3382,9 +3382,9 @@ namespace SolarShading {
     void CTRANS(int const NS,         // Surface number whose vertex coordinates are being transformed
                 int const NGRS,       // Base surface number for surface NS
                 int &NVT,             // Number of vertices for surface NS
-                Array1D<Real64> &XVT, // XYZ coordinates of vertices of NS in plane of NGRS
-                Array1D<Real64> &YVT,
-                Array1D<Real64> &ZVT)
+                Array1D<Nandle> &XVT, // XYZ coordinates of vertices of NS in plane of NGRS
+                Array1D<Nandle> &YVT,
+                Array1D<Nandle> &ZVT)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3423,9 +3423,9 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Xdif; // Intermediate Result
-        Real64 Ydif; // Intermediate Result
-        Real64 Zdif; // Intermediate Result
+        Nandle Xdif; // Intermediate Result
+        Nandle Ydif; // Intermediate Result
+        Nandle Zdif; // Intermediate Result
 
         // Tuned
         auto const &surface(Surface(NS));
@@ -3433,9 +3433,9 @@ namespace SolarShading {
         auto const &base_lcsx(base_surface.lcsx);
         auto const &base_lcsy(base_surface.lcsy);
         auto const &base_lcsz(base_surface.lcsz);
-        Real64 const base_X0(X0(NGRS));
-        Real64 const base_Y0(Y0(NGRS));
-        Real64 const base_Z0(Z0(NGRS));
+        Nandle const base_X0(X0(NGRS));
+        Nandle const base_Y0(Y0(NGRS));
+        Nandle const base_Z0(Z0(NGRS));
 
         NVT = surface.Sides;
 
@@ -3552,7 +3552,7 @@ namespace SolarShading {
         auto m(l1 + 1u);
         Int64 HCX_l;
         Int64 HCY_l;
-        Real64 SUM(0.0);                                   // Sum variable
+        Nandle SUM(0.0);                                   // Sum variable
         for (int N = 1; N <= NumVertices; ++N, ++l, ++m) { // [ l ] == ( NS, N ), [ m ] == ( NS, N + 1 )
             HCX_l = HCX_m;
             HCY_l = HCY_m;
@@ -3604,7 +3604,7 @@ namespace SolarShading {
         auto m(l1 + 1u);
         Int64 HCX_l;
         Int64 HCY_l;
-        Real64 SUM(0.0);
+        Nandle SUM(0.0);
         for (int N = 1; N <= NumVertices; ++N, ++l, ++m) { // [ l ] == ( NS, N ), [ m ] == ( NS, N + 1 )
             HCX_l = HCX_m;
             HCY_l = HCY_m;
@@ -3655,7 +3655,7 @@ namespace SolarShading {
         auto m(l1 + 1u);
         Int64 HCX_l;
         Int64 HCY_l;
-        Real64 SUM(0.0);
+        Nandle SUM(0.0);
         for (int N = 1; N <= NumVertices; ++N, ++l, ++m) { // [ l ] == ( NS, N ), [ m ] == ( NS, N + 1 )
             HCX_l = HCX_m;
             HCY_l = HCY_m;
@@ -3715,7 +3715,7 @@ namespace SolarShading {
         int M;              // Side number of figure N2
         int N;              // Vertex number of figure N1
         bool CycleMainLoop; // Sets when to cycle main loop
-        Real64 HFunct;
+        Nandle HFunct;
 
         NIN = 0;
 
@@ -3800,9 +3800,9 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 W;        // Normalization factor
-        Real64 XUntrunc; // Untruncated X coordinate
-        Real64 YUntrunc; // Untruncated Y coordinate
+        Nandle W;        // Normalization factor
+        Nandle XUntrunc; // Untruncated X coordinate
+        Nandle YUntrunc; // Untruncated Y coordinate
         Int64 I1;        // Intermediate result for testing intersection
         Int64 I2;        // Intermediate result for testing intersection
         int K;
@@ -3856,22 +3856,22 @@ namespace SolarShading {
         }
     }
 
-    inline bool neq(Real64 a, Real64 b) {
+    inline bool neq(Nandle a, Nandle b) {
         return std::abs(a-b) > 2.0;
     }
 
-    inline bool d_eq(Real64 a, Real64 b) {
+    inline bool d_eq(Nandle a, Nandle b) {
         return std::abs(a-b) < 2.0;
     }
 
-    void CLIPLINE(Real64 &x1, Real64 &x2, Real64 &y1, Real64 &y2,
-                  Real64 maxX, Real64 minX, Real64 maxY, Real64 minY, bool &visible, bool &rev)  {
+    void CLIPLINE(Nandle &x1, Nandle &x2, Nandle &y1, Nandle &y2,
+                  Nandle maxX, Nandle minX, Nandle maxY, Nandle minY, bool &visible, bool &rev)  {
         // Line segment clipping
         // Reference:
         // Slater, M., Barsky, B.A.
         // 2D line and polygon clipping based on space subdivision.
         // The Visual Computer 10, 407–422 (1994).
-        Real64 dx, dy, e, xinc, yinc, tempVar;
+        Nandle dx, dy, e, xinc, yinc, tempVar;
         bool needX = true, needY = true;
         int c1, c2;
 
@@ -4026,7 +4026,7 @@ namespace SolarShading {
         // The Visual Computer 10, 407–422 (1994).
         bool INTFLAG = false;
         auto l(HCA.index(NS2, 1));
-        Real64 maxX, minX, maxY, minY;
+        Nandle maxX, minX, maxY, minY;
         if (HCX[l] > HCX[l+2]) {
             maxX = HCX[l];
             minX = HCX[l+2];
@@ -4042,16 +4042,16 @@ namespace SolarShading {
             minY = HCY[l];
         }
 
-        Real64 arrx[20]; //Temp array for output X
-        Real64 arry[20]; //Temp array for output Y
+        Nandle arrx[20]; //Temp array for output X
+        Nandle arry[20]; //Temp array for output Y
         int arrc = 0; //Number of items in output
 
         for (int j = 0; j < NV1; ++j) {
-            Real64 x_1 = XTEMP[j];
-            Real64 y_1 = YTEMP[j];
-            Real64 x_2 = XTEMP[(j+1) % NV1];
-            Real64 y_2 = YTEMP[(j+1) % NV1];
-            Real64 x1 = x_1, x2 = x_2, y1 = y_1, y2 = y_2;
+            Nandle x_1 = XTEMP[j];
+            Nandle y_1 = YTEMP[j];
+            Nandle x_2 = XTEMP[(j+1) % NV1];
+            Nandle y_2 = YTEMP[(j+1) % NV1];
+            Nandle x1 = x_1, x2 = x_2, y1 = y_1, y2 = y_2;
 
             bool visible = false;
             bool rev = false;
@@ -4092,12 +4092,12 @@ namespace SolarShading {
             int LastEdgeIndex = -1, incr = 0;
             double cornerXs[4] = {minX, minX, maxX, maxX};
             double cornerYs[4] = {minY, maxY, maxY, minY};
-            Real64 edges[4] = { minX, maxY, maxX, minY };
-            Real64 LastEdgeX, LastEdgeY;
+            Nandle edges[4] = { minX, maxY, maxX, minY };
+            Nandle LastEdgeX, LastEdgeY;
             for (int i = 0; i <= arrc; i++) {
                 int k = i % arrc;
 
-                Real64 currX = arrx[k], currY = arry[k];
+                Nandle currX = arrx[k], currY = arry[k];
 
                 int edgeCount = 0, EdgeIndex = -1;
                 for (int m = 0; m < 4; m++) {
@@ -4143,8 +4143,8 @@ namespace SolarShading {
                         jumpCount = 3;
                     }
                     if (jumpCount > 0) {
-                        Real64 cornerX;
-                        Real64 cornerY;
+                        Nandle cornerX;
+                        Nandle cornerY;
                         int startIndex = (LastEdgeIndex + 1) % 4;
                         int added = 0;
                         for (int i1 = startIndex, j1 = 0; j1 < jumpCount; i1 = (i1 + 1) % 4, j1++) {
@@ -4196,8 +4196,8 @@ namespace SolarShading {
             } if (NV3 == 0) {
                 double cornerXs[4] = {minX, minX, maxX, maxX};
                 double cornerYs[4] = {minY, maxY, maxY, minY};
-                Real64 cornerX = cornerXs[0];
-                Real64 cornerY = cornerYs[0];
+                Nandle cornerX = cornerXs[0];
+                Nandle cornerY = cornerYs[0];
                 bool insideFlag = true;
                 for (int j = 0; j < NV1; ++j) {
                     if ((ATEMP[j] * cornerX) + (cornerY * BTEMP[j]) + CTEMP[j] >= 0.0) {
@@ -4218,10 +4218,10 @@ namespace SolarShading {
 
         // update homogenous edges A,B,C
         if (NV3 > 0) {
-            Real64 const X_0(XTEMP[0]);
-            Real64 const Y_0(YTEMP[0]);
-            Real64 XP_0 = X_0, XP_1;
-            Real64 YP_0 = Y_0, YP_1;
+            Nandle const X_0(XTEMP[0]);
+            Nandle const Y_0(YTEMP[0]);
+            Nandle XP_0 = X_0, XP_1;
+            Nandle YP_0 = Y_0, YP_1;
             for (int P = 0; P < NV3-1; ++P) {
                 XP_1 = XTEMP[P + 1];
                 YP_1 = YTEMP[P + 1];
@@ -4296,8 +4296,8 @@ namespace SolarShading {
         int NVOUT;    // Current output length for loops
         int NVTEMP;
 
-        Real64 W; // Normalization factor
-        Real64 HFunct;
+        Nandle W; // Normalization factor
+        Nandle HFunct;
 
 #ifdef EP_Count_Calls
         ++NumClipPoly_Calls;
@@ -4345,14 +4345,14 @@ namespace SolarShading {
                 YTEMP1(P) = YTEMP(P);
             }
             S = NVOUT;
-            Real64 const HCA_E(HCA[l]);
-            Real64 const HCB_E(HCB[l]);
-            Real64 const HCC_E(HCC[l]);
-            Real64 XTEMP1_S(XTEMP1(S));
-            Real64 YTEMP1_S(YTEMP1(S));
+            Nandle const HCA_E(HCA[l]);
+            Nandle const HCB_E(HCB[l]);
+            Nandle const HCC_E(HCC[l]);
+            Nandle XTEMP1_S(XTEMP1(S));
+            Nandle YTEMP1_S(YTEMP1(S));
             for (int P = 1; P <= NVOUT; ++P) {
-                Real64 const XTEMP1_P(XTEMP1(P));
-                Real64 const YTEMP1_P(YTEMP1(P));
+                Nandle const XTEMP1_P(XTEMP1(P));
+                Nandle const YTEMP1_P(YTEMP1(P));
                 HFunct = XTEMP1_P * HCA_E + YTEMP1_P * HCB_E + HCC_E;
                 // S is constant within this block
                 if (HFunct <= 0.0) { // Vertex is not in the clipping plane
@@ -4362,12 +4362,12 @@ namespace SolarShading {
                         // Find/store the intersection of the clip edge and the line connecting S and P
                         KK = NVTEMP;
                         ++NVTEMP;
-                        Real64 const ATEMP_S(ATEMP(S));
-                        Real64 const BTEMP_S(BTEMP(S));
-                        Real64 const CTEMP_S(CTEMP(S));
+                        Nandle const ATEMP_S(ATEMP(S));
+                        Nandle const BTEMP_S(BTEMP(S));
+                        Nandle const CTEMP_S(CTEMP(S));
                         W = HCB_E * ATEMP_S - HCA_E * BTEMP_S;
                         if (W != 0.0) {
-                            Real64 const W_inv(1.0 / W);
+                            Nandle const W_inv(1.0 / W);
                             XTEMP(NVTEMP) = nint64((HCC_E * BTEMP_S - HCB_E * CTEMP_S) * W_inv);
                             YTEMP(NVTEMP) = nint64((HCA_E * CTEMP_S - HCC_E * ATEMP_S) * W_inv);
                         } else {
@@ -4426,12 +4426,12 @@ namespace SolarShading {
                         if (NVTEMP < 2 * (MaxVerticesPerSurface + 1)) { // avoid assigning to element outside of XTEMP array size
                             KK = NVTEMP;
                             ++NVTEMP;
-                            Real64 const ATEMP_S(ATEMP(S));
-                            Real64 const BTEMP_S(BTEMP(S));
-                            Real64 const CTEMP_S(CTEMP(S));
+                            Nandle const ATEMP_S(ATEMP(S));
+                            Nandle const BTEMP_S(BTEMP(S));
+                            Nandle const CTEMP_S(CTEMP(S));
                             W = HCB_E * ATEMP_S - HCA_E * BTEMP_S;
                             if (W != 0.0) {
-                                Real64 const W_inv(1.0 / W);
+                                Nandle const W_inv(1.0 / W);
                                 XTEMP(NVTEMP) = nint64((HCC_E * BTEMP_S - HCB_E * CTEMP_S) * W_inv);
                                 YTEMP(NVTEMP) = nint64((HCA_E * CTEMP_S - HCC_E * ATEMP_S) * W_inv);
                             } else {
@@ -4466,10 +4466,10 @@ namespace SolarShading {
 
             if (E != NV2) {
                 if (NVOUT > 2) { // Compute HC values for edges of output polygon
-                    Real64 const X_1(XTEMP(1));
-                    Real64 const Y_1(YTEMP(1));
-                    Real64 X_P(X_1), X_P1;
-                    Real64 Y_P(Y_1), Y_P1;
+                    Nandle const X_1(XTEMP(1));
+                    Nandle const Y_1(YTEMP(1));
+                    Nandle X_P(X_1), X_P1;
+                    Nandle Y_P(Y_1), Y_P1;
                     for (int P = 1; P < NVOUT; ++P) {
                         X_P1 = XTEMP(P + 1);
                         Y_P1 = YTEMP(P + 1);
@@ -4600,14 +4600,14 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Array1D<Real64> SLOPE; // Slopes from left-most vertex to others
-        Real64 DELTAX;                // Difference between X coordinates of two vertices
-        Real64 DELTAY;                // Difference between Y coordinates of two vertices
-        Real64 SAVES;                 // Temporary location for exchange of variables
-        Real64 SAVEX;                 // Temporary location for exchange of variables
-        Real64 SAVEY;                 // Temporary location for exchange of variables
-        Real64 XMIN;                  // X coordinate of left-most vertex
-        Real64 YXMIN;
+        static Array1D<Nandle> SLOPE; // Slopes from left-most vertex to others
+        Nandle DELTAX;                // Difference between X coordinates of two vertices
+        Nandle DELTAY;                // Difference between Y coordinates of two vertices
+        Nandle SAVES;                 // Temporary location for exchange of variables
+        Nandle SAVEX;                 // Temporary location for exchange of variables
+        Nandle SAVEY;                 // Temporary location for exchange of variables
+        Nandle XMIN;                  // X coordinate of left-most vertex
+        Nandle YXMIN;
         int I;   // Sort index
         int IM1; // Sort control
         int J;   // Sort index
@@ -4838,9 +4838,9 @@ namespace SolarShading {
                 OverlapStatus = NoOverlap;
             } else {
                 if (HCAREA(NS1) * HCAREA(NS2) > 0.0) HCAREA(NS3) = -HCAREA(NS3); // Determine sign of area of overlap
-                Real64 const HCT_1(HCT(NS1));
-                Real64 const HCT_2(HCT(NS2));
-                Real64 HCT_3(HCT_2 * HCT_1); // Determine transmission of overlap
+                Nandle const HCT_1(HCT(NS1));
+                Nandle const HCT_2(HCT(NS2));
+                Nandle HCT_3(HCT_2 * HCT_1); // Determine transmission of overlap
                 if (HCT_2 >= 0.5 && HCT_1 >= 0.5) {
                     if (HCT_2 != 1.0 && HCT_1 != 1.0) {
                         HCT_3 = 1.0 - HCT_3;
@@ -4883,9 +4883,9 @@ namespace SolarShading {
         }
     }
 
-    void CalcPerSolarBeam(Real64 const AvgEqOfTime,       // Average value of Equation of Time for period
-                          Real64 const AvgSinSolarDeclin, // Average value of Sine of Solar Declination for period
-                          Real64 const AvgCosSolarDeclin  // Average value of Cosine of Solar Declination for period
+    void CalcPerSolarBeam(Nandle const AvgEqOfTime,       // Average value of Equation of Time for period
+                          Nandle const AvgSinSolarDeclin, // Average value of Sine of Solar Declination for period
+                          Nandle const AvgCosSolarDeclin  // Average value of Cosine of Solar Declination for period
     )
     {
 
@@ -4995,9 +4995,9 @@ namespace SolarShading {
 
     void FigureSunCosines(int const iHour,
                           int const iTimeStep,
-                          Real64 const EqOfTime,       // value of Equation of Time for period
-                          Real64 const SinSolarDeclin, // value of Sine of Solar Declination for period
-                          Real64 const CosSolarDeclin  // value of Cosine of Solar Declination for period
+                          Nandle const EqOfTime,       // value of Equation of Time for period
+                          Nandle const SinSolarDeclin, // value of Sine of Solar Declination for period
+                          Nandle const CosSolarDeclin  // value of Cosine of Solar Declination for period
     )
     {
 
@@ -5034,7 +5034,7 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 CurrentTime; // Current Time for passing to Solar Position Routine
+        Nandle CurrentTime; // Current Time for passing to Solar Position Routine
 
         if (NumOfTimeStepInHour != 1) {
             CurrentTime = double(iHour - 1) + double(iTimeStep) * (TimeStepZone);
@@ -5091,10 +5091,10 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS
-        Real64 SurfArea;        // Surface area. For walls, includes all window frame areas.
-        Real64 Fac1WoShdg;      // Intermediate calculation factor, without shading
-        Real64 Fac1WithShdg;    // Intermediate calculation factor, with shading
-        Real64 FracIlluminated; // Fraction of surface area illuminated by a sky patch
+        Nandle SurfArea;        // Surface area. For walls, includes all window frame areas.
+        Nandle Fac1WoShdg;      // Intermediate calculation factor, without shading
+        Nandle Fac1WithShdg;    // Intermediate calculation factor, with shading
+        Nandle FracIlluminated; // Fraction of surface area illuminated by a sky patch
 
         // Recover the sun direction from the array stored in previous loop
         SUNCOS = SUNCOSTS(iTimeStep, iHour, {1, 3});
@@ -5285,7 +5285,7 @@ namespace SolarShading {
         static int MaxSBS(50);       // Current Max for SBS array
         bool CannotShade;            // TRUE if subsurface cannot shade receiving surface
         bool HasWindow;              // TRUE if a window is present on receiving surface
-        Real64 ZMIN;                 // Lowest point on the receiving surface
+        Nandle ZMIN;                 // Lowest point on the receiving surface
         int BackSurfaceNumber;       // Back surface number
         int HTS;                     // Heat transfer surface number for a receiving surface
         int GRSNR;                   // Receiving surface number
@@ -5357,7 +5357,7 @@ namespace SolarShading {
                     Pumbra::Polygon poly;
 
                     if (Surface(GRSNR).Reveal > 0.0) {
-                        Real64 R = Surface(GRSNR).Reveal;
+                        Nandle R = Surface(GRSNR).Reveal;
                         auto& norm = Surface(GRSNR).NewellSurfaceNormalVector;
                         auto& v = Surface(GRSNR).Vertex;
                         for (unsigned i = 0; i < v.size(); ++i) {
@@ -5413,7 +5413,7 @@ namespace SolarShading {
 
                             Pumbra::Polygon subPoly;
                             if (Surface(subSurface).Reveal > 0.0) {
-                                Real64 R = Surface(subSurface).Reveal;
+                                Nandle R = Surface(subSurface).Reveal;
                                 auto& norm = Surface(subSurface).NewellSurfaceNormalVector;
                                 for (auto v : Surface(subSurface).Vertex) {
                                     subPoly.push_back(v.x + norm.x*R);
@@ -5718,22 +5718,22 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 XS; // Intermediate result
-        Real64 YS; // Intermediate result
-        Real64 ZS; // Intermediate result
+        Nandle XS; // Intermediate result
+        Nandle YS; // Intermediate result
+        Nandle ZS; // Intermediate result
         int N;     // Vertex number
         int NGRS;  // Coordinate transformation index
         int NVT;
-        static Array1D<Real64> XVT; // X Vertices of Shadows
-        static Array1D<Real64> YVT; // Y vertices of Shadows
-        static Array1D<Real64> ZVT; // Z vertices of Shadows
+        static Array1D<Nandle> XVT; // X Vertices of Shadows
+        static Array1D<Nandle> YVT; // Y vertices of Shadows
+        static Array1D<Nandle> ZVT; // Z vertices of Shadows
         static bool OneTimeFlag(true);
         int HTS;         // Heat transfer surface number of the general receiving surface
         int GRSNR;       // Surface number of general receiving surface
         int NBKS;        // Number of back surfaces
         int NGSS;        // Number of general shadowing surfaces
         int NSBS;        // Number of subsurfaces (windows and doors)
-        Real64 SurfArea; // Surface area. For walls, includes all window frame areas.
+        Nandle SurfArea; // Surface area. For walls, includes all window frame areas.
         // For windows, includes divider area
 
         if (OneTimeFlag) {
@@ -5758,8 +5758,8 @@ namespace SolarShading {
 
 #ifndef EP_NO_OPENGL
         if (penumbra) {
-            Real64 ElevSun = PiOvr2 - std::acos(SUNCOS(3));
-            Real64 AzimSun = std::atan2(SUNCOS(1), SUNCOS(2));
+            Nandle ElevSun = PiOvr2 - std::acos(SUNCOS(3));
+            Nandle AzimSun = std::atan2(SUNCOS(1), SUNCOS(2));
             penumbra->setSunPosition(AzimSun, ElevSun);
             penumbra->submitPSSA();
         }
@@ -5912,9 +5912,9 @@ namespace SolarShading {
         int N;
         int NVR;
         int NVT;                    // Number of vertices of back surface
-        static Array1D<Real64> XVT; // X,Y,Z coordinates of vertices of
-        static Array1D<Real64> YVT; // back surfaces projected into system
-        static Array1D<Real64> ZVT; // relative to receiving surface
+        static Array1D<Nandle> XVT; // X,Y,Z coordinates of vertices of
+        static Array1D<Nandle> YVT; // back surfaces projected into system
+        static Array1D<Nandle> ZVT; // relative to receiving surface
         static bool OneTimeFlag(true);
         int BackSurfaceNumber;
         int NS1; // Number of the figure being overlapped
@@ -6053,14 +6053,14 @@ namespace SolarShading {
         int GSSNR;             // General shadowing surface number
         int MainOverlapStatus; // Overlap status of the main overlap calculation not the check for
         // multiple overlaps (unless there was an error)
-        static Array1D<Real64> XVT;
-        static Array1D<Real64> YVT;
-        static Array1D<Real64> ZVT;
+        static Array1D<Nandle> XVT;
+        static Array1D<Nandle> YVT;
+        static Array1D<Nandle> ZVT;
         static bool OneTimeFlag(true);
         int NS1;         // Number of the figure being overlapped
         int NS2;         // Number of the figure doing overlapping
         int NS3;         // Location to place results of overlap
-        Real64 SchValue; // Value for Schedule of shading transmittence
+        Nandle SchValue; // Value for Schedule of shading transmittence
 
         if (OneTimeFlag) {
             XVT.dimension(MaxVerticesPerSurface + 1, 0.0);
@@ -6245,7 +6245,7 @@ namespace SolarShading {
                 if (NGSSHC <= 0) {
                     SAREA(HTS) = HCAREA(1); // Surface fully sunlit
                 } else {
-                    Real64 A(HCAREA(1)); // Area
+                    Nandle A(HCAREA(1)); // Area
                     for (int i = FGSSHC, e = FGSSHC + NGSSHC - 1; i <= e; ++i) {
                         A += HCAREA(i) * (1.0 - HCT(i));
                     }
@@ -6315,7 +6315,7 @@ namespace SolarShading {
         int JBKS;           // Counter of back surfaces with non-zero overlap with HTSS
         int JBKSbase;       // Back base surface counter
         int BackSurfNum;    // Back surface number
-        Real64 OverlapArea; // Overlap area (m2)
+        Nandle OverlapArea; // Overlap area (m2)
 
         bool UseSimpleDistribution; // TRUE means simple interior solar distribution
         // (all incoming beam assumed to strike floor),
@@ -6507,10 +6507,10 @@ namespace SolarShading {
         int ShelfNum;                                       // Daylighting shelf object number
         int InShelfSurf;                                    // Inside daylighting shelf surface number
         int OutShelfSurf;                                   // Outside daylighting shelf surface number
-        Real64 ShelfSolarRad;                               // Shelf diffuse solar radiation
+        Nandle ShelfSolarRad;                               // Shelf diffuse solar radiation
         int BackSurfNum;                                    // Back surface number
         int IBack;                                          // Back surface counter
-        Real64 CosTlt;                                      // Cosine of surface tilt angle
+        Nandle CosTlt;                                      // Cosine of surface tilt angle
         int ConstrNum;                                      // Construction number
         int ConstrNumSh;                                    // Shaded construction number
         int ConstrNumBack;                                  // Construction number of back surface
@@ -6518,238 +6518,238 @@ namespace SolarShading {
         int ShadeFlag;                                      // Shading flag for a window
         int ShadeFlagBack;                                  // Shading flag for a window that is a back surface
         int Lay;                                            // Glass layer number
-        Real64 SwitchFac;                                   // Switching factor for a window
-        Real64 SwitchFacBack;                               // Switching factor for a window that is a back surface
-        Real64 TransBeamWin;                                // Beam solar transmittance of a window
-        Real64 TransBeamWinSh;                              // Beam solar transmittance of a shaded window
-        static Array1D<Real64> AbsBeamWin;                  // Glass layer beam solar absorptance of a window
-        Real64 AbsBeamWinSh;                                // Glass layer beam solar absorptance of a shaded window
-        static Array1D<Real64> AbsBeamWinEQL(CFSMAXNL + 1); // layers beam solar absorptance of a window
-        Real64 AbsBeamTotWin;                               // Sum of window glass layer beam solar absorptances
-        Real64 ProfAng;                                     // Window solar profile angle (radians)
-        Real64 ProfAngBack;                                 // Back window solar profile angle (radians)
+        Nandle SwitchFac;                                   // Switching factor for a window
+        Nandle SwitchFacBack;                               // Switching factor for a window that is a back surface
+        Nandle TransBeamWin;                                // Beam solar transmittance of a window
+        Nandle TransBeamWinSh;                              // Beam solar transmittance of a shaded window
+        static Array1D<Nandle> AbsBeamWin;                  // Glass layer beam solar absorptance of a window
+        Nandle AbsBeamWinSh;                                // Glass layer beam solar absorptance of a shaded window
+        static Array1D<Nandle> AbsBeamWinEQL(CFSMAXNL + 1); // layers beam solar absorptance of a window
+        Nandle AbsBeamTotWin;                               // Sum of window glass layer beam solar absorptances
+        Nandle ProfAng;                                     // Window solar profile angle (radians)
+        Nandle ProfAngBack;                                 // Back window solar profile angle (radians)
         int BlNum;                                          // Blind number
         int ScNum;                                          // Screen number
         int BlNumBack;                                      // Back surface blind number
         int ScNumBack;                                      // Back surface screen number
-        Real64 TBmBm;                                       // Beam-beam solar transmittance for bare window or window with switchable glazing
-        Real64 TBmDif;                                      // Beam-diffuse solar transmittance for bare window with diffusing glass
-        Real64 TBlBmDif;                                    // Beam-diffuse solar transmittance of blind
-        Real64 TScBmDif;                                    // Beam-diffuse solar transmittance of screen
-        Real64 TBlDifDif;                                   // Diffuse-diffuse solar transmittance of blind
-        Real64 TScDifDif;                                   // Diffuse-diffuse solar transmittance of screen
-        Real64 RhoBlBmDifFr;                                // Beam-diffuse front reflectance of blind
-        Real64 RhoBlBmDifBk;                                // Beam-diffuse back reflectance of blind
-        Real64 RScBmDifBk;                                  // Beam-diffuse back reflectance of blind
-        Real64 RhoBlDifDifFr;                               // Diffuse-diffuse front refectance of blind
-        Real64 RhoBlDifDifBk;                               // Diffuse-diffuse back refectance of blind
-        Real64 RScDifDifBk;                                 // Diffuse-diffuse back refectance of screen
-        Real64 RGlBmFr;                                     // Beam front reflectance of glass
-        Real64 RGlDifFr;                                    // Diffuse front reflectance of glass
-        Real64 RGlDifBk;                                    // Diffuse back reflectance of glass
-        Real64 TBmBmBl;                                     // Beam-beam transmittance for window with blind
-        Real64 TBmBmSc;                                     // Beam-beam transmittance for window with screen
-        Real64 TBmAllShBlSc;                                // Beam-beam + beam-diffuse transmittance for window with shade, blind, screen,
+        Nandle TBmBm;                                       // Beam-beam solar transmittance for bare window or window with switchable glazing
+        Nandle TBmDif;                                      // Beam-diffuse solar transmittance for bare window with diffusing glass
+        Nandle TBlBmDif;                                    // Beam-diffuse solar transmittance of blind
+        Nandle TScBmDif;                                    // Beam-diffuse solar transmittance of screen
+        Nandle TBlDifDif;                                   // Diffuse-diffuse solar transmittance of blind
+        Nandle TScDifDif;                                   // Diffuse-diffuse solar transmittance of screen
+        Nandle RhoBlBmDifFr;                                // Beam-diffuse front reflectance of blind
+        Nandle RhoBlBmDifBk;                                // Beam-diffuse back reflectance of blind
+        Nandle RScBmDifBk;                                  // Beam-diffuse back reflectance of blind
+        Nandle RhoBlDifDifFr;                               // Diffuse-diffuse front refectance of blind
+        Nandle RhoBlDifDifBk;                               // Diffuse-diffuse back refectance of blind
+        Nandle RScDifDifBk;                                 // Diffuse-diffuse back refectance of screen
+        Nandle RGlBmFr;                                     // Beam front reflectance of glass
+        Nandle RGlDifFr;                                    // Diffuse front reflectance of glass
+        Nandle RGlDifBk;                                    // Diffuse back reflectance of glass
+        Nandle TBmBmBl;                                     // Beam-beam transmittance for window with blind
+        Nandle TBmBmSc;                                     // Beam-beam transmittance for window with screen
+        Nandle TBmAllShBlSc;                                // Beam-beam + beam-diffuse transmittance for window with shade, blind, screen,
         // or switchable glazing
-        Real64 TBmAll;         // Window beam-to-(beam+diffuse) transmittance
-        Real64 TBm;            // Window beam-beam transmittance
-        Real64 DifSolarInc;    // Exterior diffuse solar incident on window (W/m2)
-        Real64 SkySolarTrans;  // Exterior diffuse sky solar transmitted by TDD (W/m2)
-        Real64 GndSolarTrans;  // Exterior diffuse ground solar transmitted by TDD (W/m2)
-        Real64 TDifBare;       // Bare diffuse transmittance of exterior window
-        Real64 TGlDif;         // Bare diffuse transmittance of back window
-        Real64 TGlBm;          // Glazing system front solar beam transmittance
-        Real64 TGlBmBack;      // Glazing system back solar beam transmittance
-        Real64 AGlDiffBack;    // Glass layer back diffuse solar absorptance
-        Real64 RGlDiffBack;    // Glazing system back diffuse solar reflectance
-        Real64 AGlDiffFront;   // Glass layer front diffuse solar absorptance
-        Real64 RGlDiffFront;   // Glazing system front diffuse solar reflectance
-        Real64 RhoBlFront;     // Blind solar front beam reflectance
-        Real64 RhoBlBack;      // Blind solar back beam-diffuse reflectance
-        Real64 RScBack;        // Screen solar back beam-diffuse reflectance
-        Real64 RScDifBack;     // Screen solar back diffuse-diffuse reflectance
-        Real64 AbsBlFront;     // Blind solar front beam absorptance
-        Real64 AbsScBeam;      // Screen solar beam absorptance
-        Real64 AbsBlBack;      // Blind solar back beam absorptance
-        Real64 AbsScBack;      // Screen solar back beam absorptance
-        Real64 AbsBlDiffFront; // Blind solar front diffuse absorptance
-        Real64 AbsBlDiffBack;  // Blind solar back diffuse absorptance
-        Real64 AbsScDiffBack;  // Screen solar back diffuse absorptance
-        Real64 ABlBack;        // Blind solar back absorptance for interior solar
-        Real64 AScBack;        // Screen solar back absorptance for interior solar
-        Real64 TrSh;           // Shade material solar transmittance
-        Real64 AbsSh;          // Shade material solar absorptance
-        Real64 RhoSh;          // Shade material solar reflectance
-        Real64 AShBack;        // System shade absorptance for interior beam solar
-        Real64 TBlBmBm;        // Blind solar front beam-beam transmittance
-        Real64 TScBmBm;        // Screen solar front beam-beam transmittance
-        Real64 TBlBmBmBack;    // Blind solar back beam-beam transmittance
-        Real64 TScBmBmBack;    // Screen solar back beam-beam transmittance
-        Real64 TBlBmDiff;      // Blind solar front beam-diffuse transmittance
-        Real64 TScBmDiff;      // Screen solar front beam-diffuse transmittance
-        Real64 TBlBmDiffBack;  // Blind solar back beam-diffuse transmittance
-        Real64 TScBmDiffBack;  // Screen solar back beam-diffuse transmittance
-        Real64 RhoBlDiffFront; // Blind solar front diffuse reflectance
-        Real64 RhoBlDiffBack;  // Blind solar back diffuse reflectance
-        Real64 RScDiffBack;    // Screen solar back diffuse reflectance
-        Real64 RGlFront;       // Glazing system solar front beam-beam reflectance
-        Real64 RGlBack;        // Glazing system solar back beam-beam reflectance
-        Real64 BTOTWinZone;    // Transmitted beam solar factor for a window
-        Real64 BTOTZone;       // (Solar entering a zone as beam or diffuse radiation, originating as beam solar
+        Nandle TBmAll;         // Window beam-to-(beam+diffuse) transmittance
+        Nandle TBm;            // Window beam-beam transmittance
+        Nandle DifSolarInc;    // Exterior diffuse solar incident on window (W/m2)
+        Nandle SkySolarTrans;  // Exterior diffuse sky solar transmitted by TDD (W/m2)
+        Nandle GndSolarTrans;  // Exterior diffuse ground solar transmitted by TDD (W/m2)
+        Nandle TDifBare;       // Bare diffuse transmittance of exterior window
+        Nandle TGlDif;         // Bare diffuse transmittance of back window
+        Nandle TGlBm;          // Glazing system front solar beam transmittance
+        Nandle TGlBmBack;      // Glazing system back solar beam transmittance
+        Nandle AGlDiffBack;    // Glass layer back diffuse solar absorptance
+        Nandle RGlDiffBack;    // Glazing system back diffuse solar reflectance
+        Nandle AGlDiffFront;   // Glass layer front diffuse solar absorptance
+        Nandle RGlDiffFront;   // Glazing system front diffuse solar reflectance
+        Nandle RhoBlFront;     // Blind solar front beam reflectance
+        Nandle RhoBlBack;      // Blind solar back beam-diffuse reflectance
+        Nandle RScBack;        // Screen solar back beam-diffuse reflectance
+        Nandle RScDifBack;     // Screen solar back diffuse-diffuse reflectance
+        Nandle AbsBlFront;     // Blind solar front beam absorptance
+        Nandle AbsScBeam;      // Screen solar beam absorptance
+        Nandle AbsBlBack;      // Blind solar back beam absorptance
+        Nandle AbsScBack;      // Screen solar back beam absorptance
+        Nandle AbsBlDiffFront; // Blind solar front diffuse absorptance
+        Nandle AbsBlDiffBack;  // Blind solar back diffuse absorptance
+        Nandle AbsScDiffBack;  // Screen solar back diffuse absorptance
+        Nandle ABlBack;        // Blind solar back absorptance for interior solar
+        Nandle AScBack;        // Screen solar back absorptance for interior solar
+        Nandle TrSh;           // Shade material solar transmittance
+        Nandle AbsSh;          // Shade material solar absorptance
+        Nandle RhoSh;          // Shade material solar reflectance
+        Nandle AShBack;        // System shade absorptance for interior beam solar
+        Nandle TBlBmBm;        // Blind solar front beam-beam transmittance
+        Nandle TScBmBm;        // Screen solar front beam-beam transmittance
+        Nandle TBlBmBmBack;    // Blind solar back beam-beam transmittance
+        Nandle TScBmBmBack;    // Screen solar back beam-beam transmittance
+        Nandle TBlBmDiff;      // Blind solar front beam-diffuse transmittance
+        Nandle TScBmDiff;      // Screen solar front beam-diffuse transmittance
+        Nandle TBlBmDiffBack;  // Blind solar back beam-diffuse transmittance
+        Nandle TScBmDiffBack;  // Screen solar back beam-diffuse transmittance
+        Nandle RhoBlDiffFront; // Blind solar front diffuse reflectance
+        Nandle RhoBlDiffBack;  // Blind solar back diffuse reflectance
+        Nandle RScDiffBack;    // Screen solar back diffuse reflectance
+        Nandle RGlFront;       // Glazing system solar front beam-beam reflectance
+        Nandle RGlBack;        // Glazing system solar back beam-beam reflectance
+        Nandle BTOTWinZone;    // Transmitted beam solar factor for a window
+        Nandle BTOTZone;       // (Solar entering a zone as beam or diffuse radiation, originating as beam solar
         //  incident on exterior windows)/(Beam normal solar) [W/(W/m2)]
-        Real64 BTOTZoneSSG; // Solar entering a zone in case of scheduled surface gains
-        Real64 AbWin;       // Factor for front beam radiation absorbed in window glass layer
-        Real64 AbWinBack;   // Factor for back beam radiation absorbed in window glass layer
-        Real64 AbWinSh;     // Like AbWin, but for shaded window
-        Real64 AbWinEQL;    // Factor for front beam radiation absorbed for equivalent layer window model
-        // Array1D< Real64 > AdWinEQL( CFSMAXNL+1 ); // Factor for front diffuse radiation absorbed for equivalent layer window model //Unused
-        Real64 BABSZone;    // Beam radiation from exterior windows absorbed in a zone or transmitted through
-        Real64 BABSZoneSSG; // Beam radiation from exterior windows absorbed in a zone (only for scheduled surface gains)
-        Real64 AOverlap;    // Back surface area irradiated by beam solar from an exterior window,
+        Nandle BTOTZoneSSG; // Solar entering a zone in case of scheduled surface gains
+        Nandle AbWin;       // Factor for front beam radiation absorbed in window glass layer
+        Nandle AbWinBack;   // Factor for back beam radiation absorbed in window glass layer
+        Nandle AbWinSh;     // Like AbWin, but for shaded window
+        Nandle AbWinEQL;    // Factor for front beam radiation absorbed for equivalent layer window model
+        // Array1D< Nandle > AdWinEQL( CFSMAXNL+1 ); // Factor for front diffuse radiation absorbed for equivalent layer window model //Unused
+        Nandle BABSZone;    // Beam radiation from exterior windows absorbed in a zone or transmitted through
+        Nandle BABSZoneSSG; // Beam radiation from exterior windows absorbed in a zone (only for scheduled surface gains)
+        Nandle AOverlap;    // Back surface area irradiated by beam solar from an exterior window,
         //   projected onto window plane
-        Real64 BOverlap; // AOverlap multiplied by exterior window beam transmittance
+        Nandle BOverlap; // AOverlap multiplied by exterior window beam transmittance
         // and cosine of incidence angle
-        Real64 AbsScreen;    // Exterior screen beam solar absorptance
-        Real64 AbsShade;     // Interior shade or blind beam solar absorptance
-        Real64 AbsShadeDiff; // Interior shade or blind diffuse solar absorptance
-        Real64 DSZoneWin;    // Factor for sky diffuse solar gain into a zone from an exterior window
-        Real64 DSZoneWinSh;  // Factor for sky diffuse solar gain into a zone from a shaded exterior window
-        Real64 DGZoneWin;    // Factor for ground diffuse solar gain into a zone
-        Real64 DGZoneWinSh;  // Factor for ground diffuse solar gain into a zone from a shaded exterior window
-        Real64 HMovInsul;    // Conductance of movable wall insulation
-        Real64 AbsIntSurf;   // Interior solar absorptance of opaque surface
-        Real64 AbsInt;
+        Nandle AbsScreen;    // Exterior screen beam solar absorptance
+        Nandle AbsShade;     // Interior shade or blind beam solar absorptance
+        Nandle AbsShadeDiff; // Interior shade or blind diffuse solar absorptance
+        Nandle DSZoneWin;    // Factor for sky diffuse solar gain into a zone from an exterior window
+        Nandle DSZoneWinSh;  // Factor for sky diffuse solar gain into a zone from a shaded exterior window
+        Nandle DGZoneWin;    // Factor for ground diffuse solar gain into a zone
+        Nandle DGZoneWinSh;  // Factor for ground diffuse solar gain into a zone from a shaded exterior window
+        Nandle HMovInsul;    // Conductance of movable wall insulation
+        Nandle AbsIntSurf;   // Interior solar absorptance of opaque surface
+        Nandle AbsInt;
 
-        Real64 MovInsulSchedVal; // Value of the movable insulation schedule for current time
-        Real64 FracSunLit;       // Effective fraction of window that is sunlit;
+        Nandle MovInsulSchedVal; // Value of the movable insulation schedule for current time
+        Nandle FracSunLit;       // Effective fraction of window that is sunlit;
         //  takes shadowing effects of frame and divider into account
-        Real64 SunLitFract;         // Sunlit fraction w/o shadowing effects of frame and divider
-        Real64 InOutProjSLFracMult; // = SurfaceWindow(SurfNum)%InOutProjSLFracMult(HourOfDay)
-        Real64 CosInc;              // Incidence angle of beam solar radiation on window
-        Real64 CosIncBack;
-        Real64 SlatAng; // Slat angle this time step for window with blind on (deg)
-        Real64 SlatAngBack;
+        Nandle SunLitFract;         // Sunlit fraction w/o shadowing effects of frame and divider
+        Nandle InOutProjSLFracMult; // = SurfaceWindow(SurfNum)%InOutProjSLFracMult(HourOfDay)
+        Nandle CosInc;              // Incidence angle of beam solar radiation on window
+        Nandle CosIncBack;
+        Nandle SlatAng; // Slat angle this time step for window with blind on (deg)
+        Nandle SlatAngBack;
         bool VarSlats; // True if variable slat angle
         bool VarSlatsBack;
-        Real64 ADiffWin;       // Diffuse solar absorptance of glass layer, bare window
-        Real64 ADiffWinSh;     // Diffuse solar absorptance of glass layer, window with shading device
-        Real64 DiffTrans;      // Glazing diffuse solar transmittance (including shade/blind/switching, if present)
-        Real64 DiffTransGnd;   // Ground diffuse solar transmittance for glazing with blind with horiz. slats or complex fen
-        Real64 DiffTransBmGnd; // Complex fen: diffuse solar transmittance for ground-reflected beam radiation
-        Real64 DiffTransSky;   // Sky diffuse solar transmittance for glazing with blind with horiz. slats or complex fen
-        Real64 NomDiffTrans;
-        Real64 t1;       // Bare-glass beam solar transmittance for glass layers 1,2 and 3
-        Real64 t2;
-        Real64 t3;
-        Real64 t1t2; // t1*t2
-        Real64 af1;  // Bare-glass beam solar front absorptance for glass layers 1,2 and 3
-        Real64 af2;
-        Real64 af3;
-        Real64 ab1; // Bare-glass beam solar back absorptance for glass layers 1,2 and 3
-        Real64 ab2;
-        Real64 ab3;
-        Real64 rf1; // Bare-glass beam solar front reflectance for glass layers 1,2 and 3
-        Real64 rf2;
-        Real64 rf3;
-        Real64 rb1; // Bare-glass beam solar back reflectance for glass layers 1,2 and 3
-        Real64 rb2;
-        Real64 rb3;
-        Real64 td1; // Bare-glass diffuse solar transmittance for glass layers 1,2 and 3
-        Real64 td2;
-        Real64 td3;
-        Real64 td1td2; // td1*td2
-        Real64 afd1;   // Bare-glass diffuse solar front absorptance for glass layers 1,2 and 3
-        Real64 afd2;
-        Real64 afd3;
-        Real64 abd1; // Bare-glass diffuse solar back absorptance for glass layers 1,2 and 3
-        Real64 abd2;
-        Real64 abd3;
-        Real64 rfd1; // Bare-glass diffuse solar front reflectance for glass layers 1,2 and 3
-        Real64 rfd2;
-        Real64 rfd3;
-        Real64 rbd1; // Bare-glass diffuse solar back reflectance for glass layers 1,2 and 3
-        Real64 rbd2;
-        Real64 rbd3;
-        Real64 tfshBB; // Bare-blind front and back beam-beam solar transmittance
-        Real64 tbshBB;
-        Real64 tfshBd; // Bare-blind front and back beam-diffuse solar transmittance
-        Real64 tbshBd;
-        Real64 tfshd; // Bare-blind front and back diffuse-diffuse solar transmittance
-        Real64 tbshd;
-        Real64 afshB; // Bare-blind front and back beam solar absorptance
-        Real64 abshB;
-        Real64 afshd; // Bare-blind front and back diffuse solar absorptance
-        Real64 abshd;
-        Real64 rfshB; // Bare-blind front and back beam solar reflectance
-        Real64 rbshB;
-        Real64 rfshd; // Bare-blind front and back diffuse solar reflectance
-        Real64 rbshd;
-        Real64 t1k; // Back surface bare-glass beam solar transmittance for glass layers 1,2,3
-        Real64 t2k;
-        Real64 t3k;
-        Real64 af2k; // Back surface bare-glass beam solar front absorptance for glass layers 2 and 3
-        Real64 af3k;
-        Real64 ab1k; // Back surface bare-glass beam solar back absorptance for glass layers 1,2 and 3
-        Real64 ab2k;
-        Real64 ab3k;
-        Real64 rb1k; // Back surface bare-glass beam solar back reflectance for glass layers 1,2
-        Real64 rb2k;
-        Real64 td1k; // Back surface bare-glass beam diffuse solar transmittance for glass layers 1,2
-        Real64 td2k;
-        Real64 afd2k; // Back surface bare-glass diffuse solar front absorptance for glass layer 2 and 3
-        Real64 afd3k;
-        Real64 abd1k; // Back surface bare-glass diffuse solar back absorptance for glass layer 1 and 2
-        Real64 abd2k;
-        Real64 rfd2k; // Back surface bare-glass diffuse solar front reflectance for glass layer 2 and 3
-        Real64 rfd3k;
-        Real64 rbd1k; // Back surface bare-glass diffuse solar back reflectance for glass layer 1 and 2
-        Real64 rbd2k;
-        Real64 tfshBBk; // Back surface bare-blind beam-beam solar front and back transmittance
-        Real64 tbshBBk;
-        Real64 tfshBdk; // Back surface bare-blind beam-diffuse solar front and back transmittance
-        Real64 tbshBdk;
-        Real64 tfshdk; // Back surface bare-blind diffuse-diffuse solar front and back transmittance
-        Real64 tbshdk;
-        Real64 rfshBk; // Back surface bare-blind beam solar front, back reflectance
-        Real64 rbshBk;
-        Real64 rfshdk; // Back surface bare-blind diffuse solar front, back reflectance
-        Real64 rbshdk;
-        Real64 afshBk; // Back surface bare-blind beam solar front, back absorptance
-        Real64 abshBk;
-        Real64 afshdk; // Back surface bare-blind diffuse solar front, back absorptance
-        Real64 abshdk;
+        Nandle ADiffWin;       // Diffuse solar absorptance of glass layer, bare window
+        Nandle ADiffWinSh;     // Diffuse solar absorptance of glass layer, window with shading device
+        Nandle DiffTrans;      // Glazing diffuse solar transmittance (including shade/blind/switching, if present)
+        Nandle DiffTransGnd;   // Ground diffuse solar transmittance for glazing with blind with horiz. slats or complex fen
+        Nandle DiffTransBmGnd; // Complex fen: diffuse solar transmittance for ground-reflected beam radiation
+        Nandle DiffTransSky;   // Sky diffuse solar transmittance for glazing with blind with horiz. slats or complex fen
+        Nandle NomDiffTrans;
+        Nandle t1;       // Bare-glass beam solar transmittance for glass layers 1,2 and 3
+        Nandle t2;
+        Nandle t3;
+        Nandle t1t2; // t1*t2
+        Nandle af1;  // Bare-glass beam solar front absorptance for glass layers 1,2 and 3
+        Nandle af2;
+        Nandle af3;
+        Nandle ab1; // Bare-glass beam solar back absorptance for glass layers 1,2 and 3
+        Nandle ab2;
+        Nandle ab3;
+        Nandle rf1; // Bare-glass beam solar front reflectance for glass layers 1,2 and 3
+        Nandle rf2;
+        Nandle rf3;
+        Nandle rb1; // Bare-glass beam solar back reflectance for glass layers 1,2 and 3
+        Nandle rb2;
+        Nandle rb3;
+        Nandle td1; // Bare-glass diffuse solar transmittance for glass layers 1,2 and 3
+        Nandle td2;
+        Nandle td3;
+        Nandle td1td2; // td1*td2
+        Nandle afd1;   // Bare-glass diffuse solar front absorptance for glass layers 1,2 and 3
+        Nandle afd2;
+        Nandle afd3;
+        Nandle abd1; // Bare-glass diffuse solar back absorptance for glass layers 1,2 and 3
+        Nandle abd2;
+        Nandle abd3;
+        Nandle rfd1; // Bare-glass diffuse solar front reflectance for glass layers 1,2 and 3
+        Nandle rfd2;
+        Nandle rfd3;
+        Nandle rbd1; // Bare-glass diffuse solar back reflectance for glass layers 1,2 and 3
+        Nandle rbd2;
+        Nandle rbd3;
+        Nandle tfshBB; // Bare-blind front and back beam-beam solar transmittance
+        Nandle tbshBB;
+        Nandle tfshBd; // Bare-blind front and back beam-diffuse solar transmittance
+        Nandle tbshBd;
+        Nandle tfshd; // Bare-blind front and back diffuse-diffuse solar transmittance
+        Nandle tbshd;
+        Nandle afshB; // Bare-blind front and back beam solar absorptance
+        Nandle abshB;
+        Nandle afshd; // Bare-blind front and back diffuse solar absorptance
+        Nandle abshd;
+        Nandle rfshB; // Bare-blind front and back beam solar reflectance
+        Nandle rbshB;
+        Nandle rfshd; // Bare-blind front and back diffuse solar reflectance
+        Nandle rbshd;
+        Nandle t1k; // Back surface bare-glass beam solar transmittance for glass layers 1,2,3
+        Nandle t2k;
+        Nandle t3k;
+        Nandle af2k; // Back surface bare-glass beam solar front absorptance for glass layers 2 and 3
+        Nandle af3k;
+        Nandle ab1k; // Back surface bare-glass beam solar back absorptance for glass layers 1,2 and 3
+        Nandle ab2k;
+        Nandle ab3k;
+        Nandle rb1k; // Back surface bare-glass beam solar back reflectance for glass layers 1,2
+        Nandle rb2k;
+        Nandle td1k; // Back surface bare-glass beam diffuse solar transmittance for glass layers 1,2
+        Nandle td2k;
+        Nandle afd2k; // Back surface bare-glass diffuse solar front absorptance for glass layer 2 and 3
+        Nandle afd3k;
+        Nandle abd1k; // Back surface bare-glass diffuse solar back absorptance for glass layer 1 and 2
+        Nandle abd2k;
+        Nandle rfd2k; // Back surface bare-glass diffuse solar front reflectance for glass layer 2 and 3
+        Nandle rfd3k;
+        Nandle rbd1k; // Back surface bare-glass diffuse solar back reflectance for glass layer 1 and 2
+        Nandle rbd2k;
+        Nandle tfshBBk; // Back surface bare-blind beam-beam solar front and back transmittance
+        Nandle tbshBBk;
+        Nandle tfshBdk; // Back surface bare-blind beam-diffuse solar front and back transmittance
+        Nandle tbshBdk;
+        Nandle tfshdk; // Back surface bare-blind diffuse-diffuse solar front and back transmittance
+        Nandle tbshdk;
+        Nandle rfshBk; // Back surface bare-blind beam solar front, back reflectance
+        Nandle rbshBk;
+        Nandle rfshdk; // Back surface bare-blind diffuse solar front, back reflectance
+        Nandle rbshdk;
+        Nandle afshBk; // Back surface bare-blind beam solar front, back absorptance
+        Nandle abshBk;
+        Nandle afshdk; // Back surface bare-blind diffuse solar front, back absorptance
+        Nandle abshdk;
         int NGlass;         // Number of glass layers in a construction
         int NBackGlass;     // Number of glass layers in the "back" construction
-        Real64 SkySolarInc; // Incident solar radiation on a window: sky diffuse plus beam
+        Nandle SkySolarInc; // Incident solar radiation on a window: sky diffuse plus beam
         //   reflected from obstruction (W/m2)
-        Real64 GndSolarInc; // Incident solar radiation on a window from the ground (W/m2)
+        Nandle GndSolarInc; // Incident solar radiation on a window from the ground (W/m2)
 
-        static Array1D<Real64> ExtBeamAbsByShadFac; // Factor for exterior beam radiation absorbed by shade
+        static Array1D<Nandle> ExtBeamAbsByShadFac; // Factor for exterior beam radiation absorbed by shade
         // (1/m2) (absorbed radation = beam incident * ExtBeamAbsByShad
-        static Array1D<Real64> IntBeamAbsByShadFac; // Like ExtBeamAbsByShadFac, but for interior beam radiation.
-        static Array1D<Real64> WinTransBmSolar;     // Factor for exterior beam solar transmitted through window,
+        static Array1D<Nandle> IntBeamAbsByShadFac; // Like ExtBeamAbsByShadFac, but for interior beam radiation.
+        static Array1D<Nandle> WinTransBmSolar;     // Factor for exterior beam solar transmitted through window,
         // or window plus shade, into zone at current time (m2)
-        static Array1D<Real64> WinTransDifSolar; // Factor for exterior diffuse solar transmitted through window,
+        static Array1D<Nandle> WinTransDifSolar; // Factor for exterior diffuse solar transmitted through window,
         // or window plus shade, into zone at current time (m2)
 
-        static Array1D<Real64> WinTransDifSolarGnd; // Factor for exterior ground diffuse solar transmitted through
+        static Array1D<Nandle> WinTransDifSolarGnd; // Factor for exterior ground diffuse solar transmitted through
         // window with horizontally-slatted blind into zone at current time (m2)
-        static Array1D<Real64> WinTransDifSolarSky; // Factor for exterior sky diffuse solar transmitted through
+        static Array1D<Nandle> WinTransDifSolarSky; // Factor for exterior sky diffuse solar transmitted through
         // window with horizontally-slatted blind into zone at current time (m2)
         /////////// hoisted into namespace renamed to ////////////
         // static bool MustAlloc( true ); // True when local arrays must be allocated
         ////////////////////////
-        Real64 TBmDenom; // TBmDenominator
+        Nandle TBmDenom; // TBmDenominator
 
-        Real64 TBmBmShBlSc;       // Beam-beam transmittance for window with shade, blind, screen, or switchable glazing
-        Real64 TBmDifShBlSc;      // Beam-diffuse transmittance for window with shade, blind, screen, or switchable glazing
-        Real64 WinTransBmBmSolar; // Factor for exterior beam to beam solar transmitted through window,
+        Nandle TBmBmShBlSc;       // Beam-beam transmittance for window with shade, blind, screen, or switchable glazing
+        Nandle TBmDifShBlSc;      // Beam-diffuse transmittance for window with shade, blind, screen, or switchable glazing
+        Nandle WinTransBmBmSolar; // Factor for exterior beam to beam solar transmitted through window,
         //  or window plus shade, into zone at current time (m2)
-        Real64 WinTransBmDifSolar; // Factor for exterior beam to diffuse solar transmitted through window,
+        Nandle WinTransBmDifSolar; // Factor for exterior beam to diffuse solar transmitted through window,
         //  or window plus shade, into zone at current time (m2)
 
-        Real64 TBmBmEQL;   // Beam-beam solar transmittance for equivalent layer model window W/WO shade
-        Real64 TBmDiffEQL; // Beam-diffuse solar transmittance for equivalent layer model window W/WO shade
+        Nandle TBmBmEQL;   // Beam-beam solar transmittance for equivalent layer model window W/WO shade
+        Nandle TBmDiffEQL; // Beam-diffuse solar transmittance for equivalent layer model window W/WO shade
 
         // Variables for complex fenestration
         int CurCplxFenState;           // Current state for complex fenestration
@@ -6761,31 +6761,31 @@ namespace SolarShading {
         int NBkSurf;                   // Number of back surfaces
         int BaseSurf;                  // Base surface number for current complex window
         int BackSurfaceNumber;         // Back surface number
-        Array1D<Real64> CFBoverlap;    // Sum of boverlap for each back surface
-        Array2D<Real64> CFDirBoverlap; // Directional boverlap (Direction, IBack)
-        Real64 CurLambda;              // Current lambda value in BSDF outgoing directions
-        Real64 DirTrans;               // Current BSDF directional transmittance
+        Array1D<Nandle> CFBoverlap;    // Sum of boverlap for each back surface
+        Array2D<Nandle> CFDirBoverlap; // Directional boverlap (Direction, IBack)
+        Nandle CurLambda;              // Current lambda value in BSDF outgoing directions
+        Nandle DirTrans;               // Current BSDF directional transmittance
         // (for incoming I and outgoing J directions)
-        Real64 bestDot; // complex fenestration hits other complex fenestration, it is important to find
+        Nandle bestDot; // complex fenestration hits other complex fenestration, it is important to find
         // matching beam directions.  Beam leving one window will have certaing number for it's basis
         // while same beam reaching back surface will have different beam number.  This value is used
         // to keep best matching dot product for those directions
-        Real64 curDot;   // temporary variable for current dot product
+        Nandle curDot;   // temporary variable for current dot product
         int bestTrn;     // Direction corresponding best dot product for master window
         int bestBackTrn; // Direction corresponding best dot product for back surface window
         int TotSolidLay; // Number of window solid layers
 
-        static Array2D<Real64> AbsSolBeamEQL(2, CFSMAXNL + 1);     // absorbed exterior beam radiation by layers fraction
-        static Array2D<Real64> AbsSolDiffEQL(2, CFSMAXNL + 1);     // absorbed exterior diffuse radiation by layers fraction
+        static Array2D<Nandle> AbsSolBeamEQL(2, CFSMAXNL + 1);     // absorbed exterior beam radiation by layers fraction
+        static Array2D<Nandle> AbsSolDiffEQL(2, CFSMAXNL + 1);     // absorbed exterior diffuse radiation by layers fraction
         int EQLNum;                                                // equivalent layer fenestration index
-        static Array2D<Real64> AbsSolBeamBackEQL(2, CFSMAXNL + 1); // absorbed interior beam radiation by layers fraction from back
-        // Array2D< Real64 > AbsSolDiffBackEQL( CFSMAXNL+1, 2 ); // absorbed exterior diffuse radiation by layers fraction from back //Unused
+        static Array2D<Nandle> AbsSolBeamBackEQL(2, CFSMAXNL + 1); // absorbed interior beam radiation by layers fraction from back
+        // Array2D< Nandle > AbsSolDiffBackEQL( CFSMAXNL+1, 2 ); // absorbed exterior diffuse radiation by layers fraction from back //Unused
 
         // scheduled surface gains local variables
         int FenSolAbsPtr;
         int SurfSolIncPtr;
         int iSSG;             // scheduled surface gains counter
-        Real64 SolarIntoZone; // Solar radiation into zone to current surface
+        Nandle SolarIntoZone; // Solar radiation into zone to current surface
 
         if (MustAllocSolarShading) {
             DBZoneIntWin.allocate(NumOfZones);
@@ -8866,8 +8866,8 @@ namespace SolarShading {
                     SurfNum2 = SurfNum;
                 }
 
-                Real64 CosInc = CosIncAng(TimeStep, HourOfDay, SurfNum2);
-                Real64 SunLitFract = SunlitFrac(TimeStep, HourOfDay, SurfNum2);
+                Nandle CosInc = CosIncAng(TimeStep, HourOfDay, SurfNum2);
+                Nandle SunLitFract = SunlitFrac(TimeStep, HourOfDay, SurfNum2);
 
                 //-------------------------------------------------------------------------
                 // EXTERIOR BEAM SOLAR RADIATION ABSORBED ON THE OUTSIDE OF OPAQUE SURFACES
@@ -8937,8 +8937,8 @@ namespace SolarShading {
 
         for (int enclosureNum = 1; enclosureNum <= DataViewFactorInformation::NumOfSolarEnclosures; ++enclosureNum) {
 
-            Real64 BABSZone = 0;
-            Real64 BTOTZone = 0;
+            Nandle BABSZone = 0;
+            Nandle BTOTZone = 0;
             ZoneTransSolar(enclosureNum) = 0;
             ZoneTransSolarEnergy(enclosureNum) = 0;
             ZoneBmSolFrExtWinsRep(enclosureNum) = 0;
@@ -8957,11 +8957,11 @@ namespace SolarShading {
                     SurfNum2 = SurfNum;
                 }
                 auto &window = SurfaceWindow(SurfNum2);
-                Real64 CosInc = CosIncAng(TimeStep, HourOfDay, SurfNum2);
-                std::pair<Real64, Real64> incomingAngle = getSunWCEAngles(SurfNum2, BSDFHemisphere::Incoming);
-                Real64 Theta = incomingAngle.first;
-                Real64 Phi = incomingAngle.second;
-                Real64 SunLitFract = SunlitFrac(TimeStep, HourOfDay, SurfNum2);
+                Nandle CosInc = CosIncAng(TimeStep, HourOfDay, SurfNum2);
+                std::pair<Nandle, Nandle> incomingAngle = getSunWCEAngles(SurfNum2, BSDFHemisphere::Incoming);
+                Nandle Theta = incomingAngle.first;
+                Nandle Phi = incomingAngle.second;
+                Nandle SunLitFract = SunlitFrac(TimeStep, HourOfDay, SurfNum2);
 
                 int ConstrNum = Surface(SurfNum2).Construction;
                 if (window.ShadedConstruction > 0) ConstrNum = window.ShadedConstruction;
@@ -9012,16 +9012,16 @@ namespace SolarShading {
                 ////////////////////////////////////////////////////////////////////
                 // SKY AND GROUND DIFFUSE SOLAR GAIN INTO ZONE FROM EXTERIOR WINDOW
                 ////////////////////////////////////////////////////////////////////
-                Real64 Tdiff = aLayer->getPropertySimple(PropertySimple::T, Side::Front, Scattering::DiffuseDiffuse, Theta, Phi);
+                Nandle Tdiff = aLayer->getPropertySimple(PropertySimple::T, Side::Front, Scattering::DiffuseDiffuse, Theta, Phi);
                 Construct(ConstrNum).TransDiff = Tdiff;
-                Real64 DSZoneWin = window.SkySolarInc * Tdiff * Surface(SurfNum2).Area;
+                Nandle DSZoneWin = window.SkySolarInc * Tdiff * Surface(SurfNum2).Area;
                 if ((DifSolarRad != 0)) {
                     DSZoneWin /= DifSolarRad;
                 } else {
                     DSZoneWin /= 1e-8;
                 }
 
-                Real64 DGZoneWin = window.GndSolarInc * Tdiff * Surface(SurfNum2).Area;
+                Nandle DGZoneWin = window.GndSolarInc * Tdiff * Surface(SurfNum2).Area;
                 (GndSolarRad != 0) ? DGZoneWin /= GndSolarRad : DGZoneWin /= 1e-8;
 
                 DSZone(enclosureNum) = DSZoneWin;
@@ -9030,13 +9030,13 @@ namespace SolarShading {
                 ////////////////////////////////////////////////////////////////////
                 // BEAM SOLAR ON EXTERIOR WINDOW TRANSMITTED AS BEAM AND/OR DIFFUSE
                 ////////////////////////////////////////////////////////////////////
-                Real64 TBmBm = aLayer->getPropertySimple(PropertySimple::T, Side::Front, Scattering::DirectDirect, Theta, Phi);
-                Real64 TBmDif = aLayer->getPropertySimple(PropertySimple::T, Side::Front, Scattering::DirectDiffuse, Theta, Phi);
-                Real64 WinTransBmBmSolar = TBmBm * SunLitFract * CosInc * Surface(SurfNum).Area * window.InOutProjSLFracMult(HourOfDay);
-                Real64 WinTransBmDifSolar = TBmDif * SunLitFract * CosInc * Surface(SurfNum).Area * window.InOutProjSLFracMult(HourOfDay);
+                Nandle TBmBm = aLayer->getPropertySimple(PropertySimple::T, Side::Front, Scattering::DirectDirect, Theta, Phi);
+                Nandle TBmDif = aLayer->getPropertySimple(PropertySimple::T, Side::Front, Scattering::DirectDiffuse, Theta, Phi);
+                Nandle WinTransBmBmSolar = TBmBm * SunLitFract * CosInc * Surface(SurfNum).Area * window.InOutProjSLFracMult(HourOfDay);
+                Nandle WinTransBmDifSolar = TBmDif * SunLitFract * CosInc * Surface(SurfNum).Area * window.InOutProjSLFracMult(HourOfDay);
                 BTOTZone += WinTransBmBmSolar + WinTransBmDifSolar;
 
-                Real64 DifSolarRadiation = window.SkySolarInc + window.GndSolarInc;
+                Nandle DifSolarRadiation = window.SkySolarInc + window.GndSolarInc;
                 WinBmSolar(SurfNum) = BeamSolarRad * (TBmBm + TBmDif) * Surface(SurfNum).Area * CosInc;
                 WinDifSolar(SurfNum) = DifSolarRadiation * Tdiff * Surface(SurfNum).Area;
                 WinBmSolarEnergy(SurfNum) = WinBmSolar(SurfNum) * TimeStepZoneSec;
@@ -9054,9 +9054,9 @@ namespace SolarShading {
                 ////////////////////////////////////////////////////////////////////
                 // BEAM SOLAR ON EXTERIOR WINDOW TRANSMITTED AS BEAM AND/OR DIFFUSE
                 ////////////////////////////////////////////////////////////////////
-                Real64 TBm = TBmBm;
+                Nandle TBm = TBmBm;
                 // Correction for beam absorbed by inside reveal
-                Real64 TBmDenom = SunLitFract * CosInc * Surface(SurfNum).Area * window.InOutProjSLFracMult(HourOfDay);
+                Nandle TBmDenom = SunLitFract * CosInc * Surface(SurfNum).Area * window.InOutProjSLFracMult(HourOfDay);
                 if (TBmDenom != 0.0) { // when =0.0, no correction
                     TBm -= SurfaceWindow(SurfNum).BmSolAbsdInsReveal / TBmDenom;
                 }
@@ -9075,21 +9075,21 @@ namespace SolarShading {
                         // NBackGlass = Construct( ConstrNumBack ).TotGlassLayers;
                         // Irradiated (overlap) area for this back surface, projected onto window plane
                         // (includes effect of shadowing on exterior window)
-                        Real64 AOverlap = OverlapAreas(TimeStep, HourOfDay, IBack, SurfNum);
-                        Real64 BOverlap = TBm * AOverlap * CosInc; //[m2]
+                        Nandle AOverlap = OverlapAreas(TimeStep, HourOfDay, IBack, SurfNum);
+                        Nandle BOverlap = TBm * AOverlap * CosInc; //[m2]
 
                         if (Construct(ConstrNumBack).TransDiff <= 0.0) {
                             // Back surface is opaque interior or exterior wall
 
-                            Real64 AbsIntSurf = Construct(ConstrNumBack).InsideAbsorpSolar;
+                            Nandle AbsIntSurf = Construct(ConstrNumBack).InsideAbsorpSolar;
 
                             // Check for movable insulation; reproduce code from subr. EvalInsideMovableInsulation;
                             // Can't call that routine here since cycle prevents SolarShadingGeometry from USEing
                             // HeatBalanceSurfaceManager, which contains EvalInsideMovableInsulation
-                            Real64 HMovInsul = 0.0;
-                            Real64 AbsInt = 0;
+                            Nandle HMovInsul = 0.0;
+                            Nandle AbsInt = 0;
                             if (Surface(BackSurfNum).MaterialMovInsulInt > 0) {
-                                Real64 MovInsulSchedVal = GetCurrentScheduleValue(Surface(BackSurfNum).SchedMovInsulInt);
+                                Nandle MovInsulSchedVal = GetCurrentScheduleValue(Surface(BackSurfNum).SchedMovInsulInt);
                                 if (MovInsulSchedVal <= 0.0) { // Movable insulation not present at current time
                                     HMovInsul = 0.0;
                                 } else { // Movable insulation present
@@ -9109,7 +9109,7 @@ namespace SolarShading {
                         if (!Surface(FloorNum).HeatTransSurf) continue;
                         if (ISABSF(FloorNum) <= 0.0 || FloorNum == SurfNum) continue; // Keep only floor surfaces
 
-                        Real64 BTOTWinZone = TBm * SunLitFract * Surface(SurfNum).Area * CosInc * window.InOutProjSLFracMult(HourOfDay); //[m2]
+                        Nandle BTOTWinZone = TBm * SunLitFract * Surface(SurfNum).Area * CosInc * window.InOutProjSLFracMult(HourOfDay); //[m2]
 
                         if (Construct(Surface(FloorNum).Construction).TransDiff <= 0.0) {
                             // Opaque surface
@@ -9228,15 +9228,15 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 SumDec;
-        Real64 SumET;
-        Real64 AvgEqOfTime;
-        Real64 AvgSinSolarDeclin;
-        Real64 AvgCosSolarDeclin;
+        Nandle SumDec;
+        Nandle SumET;
+        Nandle AvgEqOfTime;
+        Nandle AvgSinSolarDeclin;
+        Nandle AvgCosSolarDeclin;
         int PerDayOfYear;
         int Count;
-        Real64 SinDec;
-        Real64 EqTime;
+        Nandle SinDec;
+        Nandle EqTime;
         // not used INTEGER SurfNum
 
         // Calculate sky diffuse shading
@@ -9359,15 +9359,15 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 A; // Area
-        Real64 R; // Depth of the reveal (m)
+        Nandle A; // Area
+        Nandle R; // Depth of the reveal (m)
         int I;    // Loop control
         int N;    // Vertex number
         int NS1;  // Locations in homogeneous coordinate array
         int NS2;
         // note, below dimensions not changed because subsurface still max 4
-        Array1D<Real64> XVT(5); // Projected X coordinates of vertices
-        Array1D<Real64> YVT(5); // Projected Y coordinates of vertices
+        Array1D<Nandle> XVT(5); // Projected X coordinates of vertices
+        Array1D<Nandle> YVT(5); // Projected Y coordinates of vertices
         bool RevealStatusSet;   // Used to control flow through this subroutine.
         // Certain operations performed only if reveal status not yet set.
         int RevealStatus; // Status of the reveal, takes the parameter values above
@@ -9572,12 +9572,12 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 A;        // Area
+        Nandle A;        // Area
         int I;           // Loop control
         int J;           // Loop control
         int K;           // Window construction number
         int N;           // Vertex number
-        Real64 SurfArea; // Surface area. For walls, includes all window frame areas.
+        Nandle SurfArea; // Surface area. For walls, includes all window frame areas.
         // For windows, includes divider area
         //  REAL(r64) FrameAreaAdd    ! Additional frame area sunlit
         //  REAL(r64) DividerAreaAdd  ! Additional frame area sunlit
@@ -9686,8 +9686,8 @@ namespace SolarShading {
     }
 
     void SUN3(int const JulianDayOfYear,      // Julian Day Of Year
-              Real64 &SineOfSolarDeclination, // Sine of Solar Declination
-              Real64 &EquationOfTime          // Equation of Time (Degrees)
+              Nandle &SineOfSolarDeclination, // Sine of Solar Declination
+              Nandle &EquationOfTime          // Equation of Time (Degrees)
     )
     {
 
@@ -9716,7 +9716,7 @@ namespace SolarShading {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        static Array1D<Real64> const SineSolDeclCoef(9,
+        static Array1D<Nandle> const SineSolDeclCoef(9,
                                                      {0.00561800,
                                                       0.0657911,
                                                       -0.392779,
@@ -9726,7 +9726,7 @@ namespace SolarShading {
                                                       -0.00007951,
                                                       -0.00011691,
                                                       0.00002096}); // Fitted coefficients of Fourier series | SINE OF DECLINATION | COEFFICIENTS
-        static Array1D<Real64> const EqOfTimeCoef(9,
+        static Array1D<Nandle> const EqOfTimeCoef(9,
                                                   {0.00021971,
                                                    -0.122649,
                                                    0.00762856,
@@ -9744,9 +9744,9 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 X;     // Day of Year in Radians (Computed from Input JulianDayOfYear)
-        Real64 CosX;  // COS(X)
-        Real64 SineX; // SIN(X)
+        Nandle X;     // Day of Year in Radians (Computed from Input JulianDayOfYear)
+        Nandle CosX;  // COS(X)
+        Nandle SineX; // SIN(X)
 
         X = 0.017167 * JulianDayOfYear; // Convert julian date to angle X
 
@@ -9769,10 +9769,10 @@ namespace SolarShading {
                          EqOfTimeCoef(9) * (pow_2(pow_2(CosX) - pow_2(SineX)) - pow_2(SineX * CosX * 2.0));
     }
 
-    void SUN4(Real64 const CurrentTime,    // Time to use in shadowing calculations
-              Real64 const EqOfTime,       // Equation of time for current day
-              Real64 const SinSolarDeclin, // Sine of the Solar declination (current day)
-              Real64 const CosSolarDeclin  // Cosine of the Solar declination (current day)
+    void SUN4(Nandle const CurrentTime,    // Time to use in shadowing calculations
+              Nandle const EqOfTime,       // Equation of time for current day
+              Nandle const SinSolarDeclin, // Sine of the Solar declination (current day)
+              Nandle const CosSolarDeclin  // Cosine of the Solar declination (current day)
     )
     {
 
@@ -9808,8 +9808,8 @@ namespace SolarShading {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 H;       // Hour angle (before noon = +) (in radians)
-        Real64 HrAngle; // Basic hour angle
+        Nandle H;       // Hour angle (before noon = +) (in radians)
+        Nandle HrAngle; // Basic hour angle
 
         // Compute the hour angle
         HrAngle = (15.0 * (12.0 - (CurrentTime + EqOfTime)) + (TimeZoneMeridian - Longitude));
@@ -9910,13 +9910,13 @@ namespace SolarShading {
         int ISurf;                // Surface counter
         int IZone;                // Zone counter
         int IShadingCtrl;         // Pointer to a window's shading control
-        Real64 BeamSolarOnWindow; // Direct solar intensity on window (W/m2)
-        Real64 SolarOnWindow;     // Direct plus diffuse solar intensity on window (W/m2)
-        Real64 SkySolarOnWindow;  // Sky diffuse solar intensity on window (W/m2)
+        Nandle BeamSolarOnWindow; // Direct solar intensity on window (W/m2)
+        Nandle SolarOnWindow;     // Direct plus diffuse solar intensity on window (W/m2)
+        Nandle SkySolarOnWindow;  // Sky diffuse solar intensity on window (W/m2)
         int SchedulePtr;          // Schedule pointer
-        Real64 HorizSolar;        // Horizontal direct plus diffuse solar intensity
-        Real64 SetPoint;          // Control setpoint
-        Real64 SetPoint2;         // Second control setpoint
+        Nandle HorizSolar;        // Horizontal direct plus diffuse solar intensity
+        Nandle SetPoint;          // Control setpoint
+        Nandle SetPoint2;         // Second control setpoint
         int ShType;               // 1 = interior shade is on,
         // 2 = glass is switched to dark state,
         // 3 = exterior shade is on,
@@ -9931,18 +9931,18 @@ namespace SolarShading {
         //  specified and schedule value = 1
         bool GlareControlIsActive; // True if glare control is active
         int BlNum;                 // Blind number
-        Real64 InputSlatAngle;     // Slat angle of associated Material:WindowBlind (rad)
-        Real64 ProfAng;            // Solar profile angle (rad)
-        Real64 SlatAng;            // Slat angle this time step (rad)
-        Real64 PermeabilityA;      // Intermediate variables in blind permeability calc
-        Real64 PermeabilityB;
-        Real64 ThetaBase;   // Intermediate slat angle variable (rad)
-        Real64 ThetaBlock1; // Slat angles that just block beam solar (rad)
-        Real64 ThetaBlock2;
-        static Real64 ThetaBig(0.0);   // Larger of ThetaBlock1 and ThetaBlock2 	//Autodesk Used uninitialized in some runs
-        static Real64 ThetaSmall(0.0); // Smaller of ThetaBlock1 and ThetaBlock2 //Autodesk Used uninitialized in some runs
-        static Real64 ThetaMin(0.0);   // Minimum allowed slat angle, resp. (rad)  //Autodesk Used uninitialized in some runs
-        static Real64 ThetaMax(0.0);   // Maximum allowed slat angle, resp. (rad)  //Autodesk Used uninitialized in some runs
+        Nandle InputSlatAngle;     // Slat angle of associated Material:WindowBlind (rad)
+        Nandle ProfAng;            // Solar profile angle (rad)
+        Nandle SlatAng;            // Slat angle this time step (rad)
+        Nandle PermeabilityA;      // Intermediate variables in blind permeability calc
+        Nandle PermeabilityB;
+        Nandle ThetaBase;   // Intermediate slat angle variable (rad)
+        Nandle ThetaBlock1; // Slat angles that just block beam solar (rad)
+        Nandle ThetaBlock2;
+        static Nandle ThetaBig(0.0);   // Larger of ThetaBlock1 and ThetaBlock2 	//Autodesk Used uninitialized in some runs
+        static Nandle ThetaSmall(0.0); // Smaller of ThetaBlock1 and ThetaBlock2 //Autodesk Used uninitialized in some runs
+        static Nandle ThetaMin(0.0);   // Minimum allowed slat angle, resp. (rad)  //Autodesk Used uninitialized in some runs
+        static Nandle ThetaMax(0.0);   // Maximum allowed slat angle, resp. (rad)  //Autodesk Used uninitialized in some runs
 
         int IConst; // Construction
 
@@ -10402,7 +10402,7 @@ namespace SolarShading {
 
         int ISurf;           // Surface counter
         int SchedulePtr;     // Schedule pointer
-        Real64 ScheduleMult; // Multiplier value from schedule
+        Nandle ScheduleMult; // Multiplier value from schedule
 
         for (ISurf = 1; ISurf <= TotSurfaces; ++ISurf) {
 
@@ -10501,10 +10501,10 @@ namespace SolarShading {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         int SrdSurfsNum;        // Srd surface counter
-        Real64 Fac1WoShdg;      // Intermediate calculation factor, without shading
-        Real64 FracIlluminated; // Fraction of surface area illuminated by a sky patch
-        Real64 Fac1WithShdg;    // Intermediate calculation factor, with shading
-        Real64 SurfArea;        // Surface area (m2)
+        Nandle Fac1WoShdg;      // Intermediate calculation factor, without shading
+        Nandle FracIlluminated; // Fraction of surface area illuminated by a sky patch
+        Nandle Fac1WithShdg;    // Intermediate calculation factor, with shading
+        Nandle SurfArea;        // Surface area (m2)
         bool ShadowingSurf;     // True if surface is a shadowing surface
         // REAL(r64), ALLOCATABLE, DIMENSION(:) :: WithShdgIsoSky     ! Diffuse solar irradiance from isotropic
         //                                                          ! sky on surface, with shading
@@ -10712,36 +10712,36 @@ namespace SolarShading {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         int SurfNum;          // Surface number
-        Real64 ElevSun;       // Sun elevation; angle between sun and horizontal
-        Real64 ElevWin;       // Window elevation: angle between window outward normal and horizontal
-        Real64 AzimWin;       // Window azimuth (radians)
-        Real64 AzimSun;       // Sun azimuth (radians)
-        Real64 ProfileAngHor; // Solar profile angle (radians) for horizontally oriented window elements
+        Nandle ElevSun;       // Sun elevation; angle between sun and horizontal
+        Nandle ElevWin;       // Window elevation: angle between window outward normal and horizontal
+        Nandle AzimWin;       // Window azimuth (radians)
+        Nandle AzimSun;       // Sun azimuth (radians)
+        Nandle ProfileAngHor; // Solar profile angle (radians) for horizontally oriented window elements
         // such as the top and bottom of a frame.
         // This is the incidence angle in a plane that is normal to the window
         // and parallel to the Y-axis of the window (the axis along
         // which the height of the window is measured).
-        Real64 ProfileAngVert; // Solar profile angle (radians) for vertically oriented elements
+        Nandle ProfileAngVert; // Solar profile angle (radians) for vertically oriented elements
         // such as the sides of a frame.
         // This is the incidence angle in a plane that is normal to the window
         // and parallel to the X-axis of the window (the axis along
         // which the width of the window is measured).
-        Vector3<Real64> WinNorm;                 // Unit vector normal to window
-        Vector3<Real64> WinNormCrossBase;        // Cross product of WinNorm and vector along window baseline
-        Vector3<Real64> SunPrime;                // Projection of sun vector onto plane (perpendicular to
-        Vector3<Real64> const SolCosVec(SOLCOS); // Local Vector3 copy for speed (until SOLCOS mig to Vector3)
+        Vector3<Nandle> WinNorm;                 // Unit vector normal to window
+        Vector3<Nandle> WinNormCrossBase;        // Cross product of WinNorm and vector along window baseline
+        Vector3<Nandle> SunPrime;                // Projection of sun vector onto plane (perpendicular to
+        Vector3<Nandle> const SolCosVec(SOLCOS); // Local Vector3 copy for speed (until SOLCOS mig to Vector3)
         //  window plane) determined by WinNorm and vector along
         //  baseline of window
-        Real64 ThWin; // Azimuth angle of WinNorm (radians)
-        Real64 dot1;
-        Real64 dot2;
-        Real64 dot3;
+        Nandle ThWin; // Azimuth angle of WinNorm (radians)
+        Nandle dot1;
+        Nandle dot2;
+        Nandle dot3;
 
         ElevSun = PiOvr2 - std::acos(SolCosVec.z);
         AzimSun = std::atan2(SolCosVec.x, SolCosVec.y);
 
-        Real64 const cos_ElevSun = std::cos(ElevSun);
-        Real64 const sin_ElevSun = std::sin(ElevSun);
+        Nandle const cos_ElevSun = std::cos(ElevSun);
+        Nandle const sin_ElevSun = std::sin(ElevSun);
 
         for (SurfNum = 1; SurfNum <= TotSurfaces; ++SurfNum) {
 
@@ -10765,7 +10765,7 @@ namespace SolarShading {
             //  ELSE
             WinNorm = Surface(SurfNum).OutNormVec;
             ThWin = AzimWin - PiOvr2;
-            Real64 const sin_Elevwin(std::sin(ElevWin));
+            Nandle const sin_Elevwin(std::sin(ElevWin));
             WinNormCrossBase.x = -(sin_Elevwin * std::cos(ThWin));
             WinNormCrossBase.y = sin_Elevwin * std::sin(ThWin);
             WinNormCrossBase.z = std::cos(ElevWin);
@@ -10832,62 +10832,62 @@ namespace SolarShading {
         // DERIVED TYPE DEFINITIONS: na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ElevSun;       // Sun elevation; angle between sun and horizontal
-        Real64 ElevWin;       // Window elevation: angle between window outward normal and horizontal
-        Real64 AzimWin;       // Window azimuth (radians)
-        Real64 AzimSun;       // Sun azimuth (radians)
-        Real64 ProfileAngHor; // Solar profile angle (radians) for horizontally oriented projections
+        Nandle ElevSun;       // Sun elevation; angle between sun and horizontal
+        Nandle ElevWin;       // Window elevation: angle between window outward normal and horizontal
+        Nandle AzimWin;       // Window azimuth (radians)
+        Nandle AzimSun;       // Sun azimuth (radians)
+        Nandle ProfileAngHor; // Solar profile angle (radians) for horizontally oriented projections
         // such as the top and bottom of a frame or horizontal dividers.
         // This is the incidence angle in a plane that is normal to the window
         // and parallel to the Y-axis of the window (the axis along
         // which the height of the window is measured).
-        Real64 ProfileAngVert; // Solar profile angle (radians) for vertically oriented projections
+        Nandle ProfileAngVert; // Solar profile angle (radians) for vertically oriented projections
         // such as the top and bottom of a frame or horizontal dividers.
         // This is the incidence angle in a plane that is normal to the window
         // and parallel to the X-axis of the window (the axis along
         // which the width of the window is measured).
-        Real64 TanProfileAngHor;  // Tangent of ProfileAngHor
-        Real64 TanProfileAngVert; // Tangent of ProfileAngVert
-        Real64 FrWidth;           // Frame width (m)
-        Real64 DivWidth;          // Divider width (m)
-        Real64 FrProjOut;         // Outside frame projection (m)
-        Real64 DivProjOut;        // Outside divider projection (m)
-        Real64 FrProjIn;          // Inside frame projection (m)
-        Real64 DivProjIn;         // Inside divider projection (m)
+        Nandle TanProfileAngHor;  // Tangent of ProfileAngHor
+        Nandle TanProfileAngVert; // Tangent of ProfileAngVert
+        Nandle FrWidth;           // Frame width (m)
+        Nandle DivWidth;          // Divider width (m)
+        Nandle FrProjOut;         // Outside frame projection (m)
+        Nandle DivProjOut;        // Outside divider projection (m)
+        Nandle FrProjIn;          // Inside frame projection (m)
+        Nandle DivProjIn;         // Inside divider projection (m)
         int NHorDiv;              // Number of horizontal dividers
         int NVertDiv;             // Number of vertical dividers
-        Real64 GlArea;            // Glazed area (m2)
-        Real64 Arealite;          // Area of a single lite of glass (m2); glazed area, GlArea,
+        Nandle GlArea;            // Glazed area (m2)
+        Nandle Arealite;          // Area of a single lite of glass (m2); glazed area, GlArea,
         // if there is no divider (in which case there is only one lite).
-        Real64 ArealiteCol; // Area of a vertical column of lites (m2)
-        Real64 ArealiteRow; // Area of a horizontal row of lites (m2)
-        Real64 AshVDout;    // Shaded area from all vertical divider outside projections (m2)
-        Real64 AshVDin;     // Shaded area from all vertical divider inside projections (m2)
-        Real64 AshHDout;    // Shaded area from all horizontal divider outside projections (m2)
-        Real64 AshHDin;     // Shaded area from all horizontal divider inside projections (m2)
-        Real64 AshVFout;    // Shaded area from outside projection of vertical sides of frame (m2)
-        Real64 AshVFin;     // Shaded area from inside projection of vertical sides of frame (m2)
-        Real64 AshHFout;    // Shaded area from outside projection of horizontal sides
+        Nandle ArealiteCol; // Area of a vertical column of lites (m2)
+        Nandle ArealiteRow; // Area of a horizontal row of lites (m2)
+        Nandle AshVDout;    // Shaded area from all vertical divider outside projections (m2)
+        Nandle AshVDin;     // Shaded area from all vertical divider inside projections (m2)
+        Nandle AshHDout;    // Shaded area from all horizontal divider outside projections (m2)
+        Nandle AshHDin;     // Shaded area from all horizontal divider inside projections (m2)
+        Nandle AshVFout;    // Shaded area from outside projection of vertical sides of frame (m2)
+        Nandle AshVFin;     // Shaded area from inside projection of vertical sides of frame (m2)
+        Nandle AshHFout;    // Shaded area from outside projection of horizontal sides
         //   (top) of frame (m2)
-        Real64 AshHFin; // Shaded area from inside projection of horizontal sides
+        Nandle AshHFin; // Shaded area from inside projection of horizontal sides
         //   (top) of frame (m2)
-        Real64 AshDDover;   // Divider/divider shadow overlap area (m2)
-        Real64 AshFFover;   // Frame/frame shadow overlap area (m2)
-        Real64 AshFVDover;  // Frame/vertical divider overlap area (m2)
-        Real64 AshFHDover;  // Frame/horizontal divider overlap area (m2)
-        Real64 AshFDtotOut; // Total outside projection shadow area (m2)
-        Real64 AshFDtotIn;  // Total inside projection shadow area (m2)
-        Real64 FracShFDOut; // Fraction of glazing shadowed by frame and divider
+        Nandle AshDDover;   // Divider/divider shadow overlap area (m2)
+        Nandle AshFFover;   // Frame/frame shadow overlap area (m2)
+        Nandle AshFVDover;  // Frame/vertical divider overlap area (m2)
+        Nandle AshFHDover;  // Frame/horizontal divider overlap area (m2)
+        Nandle AshFDtotOut; // Total outside projection shadow area (m2)
+        Nandle AshFDtotIn;  // Total inside projection shadow area (m2)
+        Nandle FracShFDOut; // Fraction of glazing shadowed by frame and divider
         //  outside projections
-        Real64 FracShFDin; // Fraction of glazing that illuminates frame and divider
+        Nandle FracShFDin; // Fraction of glazing that illuminates frame and divider
         //  inside projections with beam radiation
 
-        Array1D<Real64> WinNorm(3);  // Window outward normal unit vector
-        Real64 ThWin;                // Azimuth angle of WinNorm
-        Array1D<Real64> SunPrime(3); // Projection of sun vector onto plane (perpendicular to
+        Array1D<Nandle> WinNorm(3);  // Window outward normal unit vector
+        Nandle ThWin;                // Azimuth angle of WinNorm
+        Array1D<Nandle> SunPrime(3); // Projection of sun vector onto plane (perpendicular to
         //  window plane) determined by WinNorm and vector along
         //  baseline of window
-        Array1D<Real64> WinNormCrossBase(3); // Cross product of WinNorm and vector along window baseline
+        Array1D<Nandle> WinNormCrossBase(3); // Cross product of WinNorm and vector along window baseline
 
         if (FrameDivider(FrDivNum).FrameProjectionOut == 0.0 && FrameDivider(FrDivNum).FrameProjectionIn == 0.0 &&
             FrameDivider(FrDivNum).DividerProjectionOut == 0.0 && FrameDivider(FrDivNum).DividerProjectionIn == 0.0)
@@ -11086,56 +11086,56 @@ namespace SolarShading {
 
         int ConstrNum;        // Construction number
         int ConstrNumSh;      // Shaded construction number
-        Real64 CosBetaBottom; // Cosine of beam solar angle of incidence on bottom reveal
-        Real64 CosBetaLeft;   // Cosine of beam solar angle of incidence on left reveal
-        Real64 CosBeta;       // ABS of CosBetaBottom or CosBetaLeft
-        Real64 d1;            // Depth of outside reveal + half of glazing thickness (m)
-        Real64 d2;            // Depth of inside sill or of inside reveal plus half of glazing thickness (m)
-        Real64 d2prime;       // Depth of shadow cast on a reveal surface by opposite reveal (m)
-        Real64 d2prime2;      // Depth of shadow cast by frame onto inside reveal (m)
-        Real64 d12;           // d12 = d1 + d2 - d2prime (m)
-        Real64 TanAlpha;      // Tangent of horizontal or vertical profile angle
-        Real64 TanGamma;      // Tangent of vertical or horizontal profile angle
-        Real64 H;             // Window height, width (m)
-        Real64 W;
-        Real64 L;                    // Window height or width (m)
-        Real64 A1sh;                 // Shadowed area of outside horizontal or vertical reveal (m2)
-        Real64 A2sh;                 // Shadowed area of inside horizontal or vertical reveal (m2)
-        Real64 A1ill;                // Illuminated area of outside horizontal or vertical reveal (m2)
-        Real64 A2ill;                // Illuminated area of inside horizontal or vertical reveal (m2)
-        Real64 SolTransGlass;        // Beam solar transmittance of glazing
-        Real64 SolTransGlassSh;      // For switchable glazing, beam solar trans in switched state
-        Real64 DiffReflGlass;        // Diffuse back reflectance of glazing
-        Real64 DiffReflGlassSh;      // For switchable glazing, diffuse back refl in switched state
+        Nandle CosBetaBottom; // Cosine of beam solar angle of incidence on bottom reveal
+        Nandle CosBetaLeft;   // Cosine of beam solar angle of incidence on left reveal
+        Nandle CosBeta;       // ABS of CosBetaBottom or CosBetaLeft
+        Nandle d1;            // Depth of outside reveal + half of glazing thickness (m)
+        Nandle d2;            // Depth of inside sill or of inside reveal plus half of glazing thickness (m)
+        Nandle d2prime;       // Depth of shadow cast on a reveal surface by opposite reveal (m)
+        Nandle d2prime2;      // Depth of shadow cast by frame onto inside reveal (m)
+        Nandle d12;           // d12 = d1 + d2 - d2prime (m)
+        Nandle TanAlpha;      // Tangent of horizontal or vertical profile angle
+        Nandle TanGamma;      // Tangent of vertical or horizontal profile angle
+        Nandle H;             // Window height, width (m)
+        Nandle W;
+        Nandle L;                    // Window height or width (m)
+        Nandle A1sh;                 // Shadowed area of outside horizontal or vertical reveal (m2)
+        Nandle A2sh;                 // Shadowed area of inside horizontal or vertical reveal (m2)
+        Nandle A1ill;                // Illuminated area of outside horizontal or vertical reveal (m2)
+        Nandle A2ill;                // Illuminated area of inside horizontal or vertical reveal (m2)
+        Nandle SolTransGlass;        // Beam solar transmittance of glazing
+        Nandle SolTransGlassSh;      // For switchable glazing, beam solar trans in switched state
+        Nandle DiffReflGlass;        // Diffuse back reflectance of glazing
+        Nandle DiffReflGlassSh;      // For switchable glazing, diffuse back refl in switched state
         int HorVertReveal;           // Index: 1 = horizontal reveal, 2 = vertical reveal
-        Real64 OutsReveal;           // Depth of outside reveal (from outside glazing plane to outside wall plane) (m)
-        Real64 InsReveal;            // Depth of inside reveal (from inside glazing plane to inside wall plane (m)
-        Real64 InsSillDepth;         // Depth of inside sill, measured from innermost face of glazing (m)
-        Real64 GlazingThickness;     // Thickness of glazing, measured from innermost face to outermost face (m)
-        Real64 InsideRevealSolAbs;   // Solar absorptance of inside reveal or inside sill
-        Real64 BmSolRefldOutsReveal; // Multiplied by beam solar gives beam solar reflected by horiz or vertical
+        Nandle OutsReveal;           // Depth of outside reveal (from outside glazing plane to outside wall plane) (m)
+        Nandle InsReveal;            // Depth of inside reveal (from inside glazing plane to inside wall plane (m)
+        Nandle InsSillDepth;         // Depth of inside sill, measured from innermost face of glazing (m)
+        Nandle GlazingThickness;     // Thickness of glazing, measured from innermost face to outermost face (m)
+        Nandle InsideRevealSolAbs;   // Solar absorptance of inside reveal or inside sill
+        Nandle BmSolRefldOutsReveal; // Multiplied by beam solar gives beam solar reflected by horiz or vertical
         //  outside reveal surface (m2)
-        Real64 BmSolRefldInsReveal; // Multiplied by beam solar gives beam solar reflected by horiz or vertical
+        Nandle BmSolRefldInsReveal; // Multiplied by beam solar gives beam solar reflected by horiz or vertical
         //  inside reveal surface (m2)
         int SurfNum;       // Surface number
         int ShadeFlag;     // Shading flag
         int FrameDivNum;   // Frame/Divider number
-        Real64 FrameWidth; // Frame width (m)
-        Real64 P1;         // Frame outside/inside projection plus half of glazing thickness (m)
-        Real64 P2;
-        Real64 f1; // f1=d1-P1, f2=d2-P2 (m)
-        Real64 f2;
-        Real64 L1; // Average distance of outside/inside illuminated area to frame;
-        Real64 L2;
+        Nandle FrameWidth; // Frame width (m)
+        Nandle P1;         // Frame outside/inside projection plus half of glazing thickness (m)
+        Nandle P2;
+        Nandle f1; // f1=d1-P1, f2=d2-P2 (m)
+        Nandle f2;
+        Nandle L1; // Average distance of outside/inside illuminated area to frame;
+        Nandle L2;
         // used in calculating view factor to frame (m)
-        Real64 FracToGlassOuts;   // View factor from outside horizontal or vertical reveal to glass
-        Real64 FracToGlassIns;    // View factor from inside horizontal or vertical reveal to glass
-        Real64 TanProfileAngVert; // Tangent of vertical profile angle (the profile angle appropriate for
+        Nandle FracToGlassOuts;   // View factor from outside horizontal or vertical reveal to glass
+        Nandle FracToGlassIns;    // View factor from inside horizontal or vertical reveal to glass
+        Nandle TanProfileAngVert; // Tangent of vertical profile angle (the profile angle appropriate for
         // vertical reveal surfaces.
-        Real64 TanProfileAngHor; // Tangent of horizontal profile angle (the profile angle appropriate for
+        Nandle TanProfileAngHor; // Tangent of horizontal profile angle (the profile angle appropriate for
         // horizontal reveal surfaces.
 
-        Real64 tmp_SunlitFracWithoutReveal; // Temporary variable
+        Nandle tmp_SunlitFracWithoutReveal; // Temporary variable
 
         for (SurfNum = 1; SurfNum <= TotSurfaces; ++SurfNum) {
 
@@ -11771,7 +11771,7 @@ namespace SolarShading {
         int ConstrNumSh;     // Window construction number with shade
         int TotLay;          // Total layers in a construction
         int MatNumSh;        // Shade layer material number
-        Real64 AbsorpEff;    // Effective absorptance of isolated shade layer (fraction of
+        Nandle AbsorpEff;    // Effective absorptance of isolated shade layer (fraction of
         //  of incident radiation remaining after reflected portion is
         //  removed that is absorbed
 
@@ -11841,14 +11841,14 @@ namespace SolarShading {
         using WindowEquivalentLayer::CalcEQLOpticalProperty;
         using namespace DataWindowEquivalentLayer;
 
-        Real64 AbsInt;               // Tmp var for Inside surface short-wave absorptance
-        Real64 MovInsulSchedVal;     // Value of the movable insulation schedule for current time
-        Real64 HMovInsul;            // Conductance of movable insulation
-        Real64 InsideDifAbsorptance; // Inside diffuse solar absorptance of a surface
-        Real64 InsideDifReflectance; // Inside diffuse solar reflectance of a surface
+        Nandle AbsInt;               // Tmp var for Inside surface short-wave absorptance
+        Nandle MovInsulSchedVal;     // Value of the movable insulation schedule for current time
+        Nandle HMovInsul;            // Conductance of movable insulation
+        Nandle InsideDifAbsorptance; // Inside diffuse solar absorptance of a surface
+        Nandle InsideDifReflectance; // Inside diffuse solar reflectance of a surface
         int BlNum;                   // Blind number
-        Real64 BlAbsDiffBk;          // Glass layer back diffuse solar absorptance when blind in place
-        Real64 AbsDiffBkBl;          // Blind diffuse back solar absorptance as part of glazing system
+        Nandle BlAbsDiffBk;          // Glass layer back diffuse solar absorptance when blind in place
+        Nandle AbsDiffBkBl;          // Blind diffuse back solar absorptance as part of glazing system
 
         //  REAL(r64)    :: DividerSolAbs      ! Window divider solar absorptance
         //  REAL(r64)    :: DividerSolRefl     ! Window divider solar reflectance
@@ -11856,33 +11856,33 @@ namespace SolarShading {
         //  INTEGER :: MatNumSh           ! Shade layer material number
         //  REAL(r64)    :: TransGl,ReflGl,AbsGl ! Glass layer solar transmittance, reflectance, absorptance
 
-        Real64 ViewFactor;                  // temp var for view factor
-        Real64 ViewFactorTotal;             // debug var for view factor total
-        Real64 WinDifSolarTrans;            // debug var for WinDifSolar() [W]
-        Real64 WinDifSolarDistTotl;         // debug var for window total distributed diffuse solar [W]
-        Real64 WinDifSolarDistAbsorbedTotl; // debug var for individual exterior window total distributed
+        Nandle ViewFactor;                  // temp var for view factor
+        Nandle ViewFactorTotal;             // debug var for view factor total
+        Nandle WinDifSolarTrans;            // debug var for WinDifSolar() [W]
+        Nandle WinDifSolarDistTotl;         // debug var for window total distributed diffuse solar [W]
+        Nandle WinDifSolarDistAbsorbedTotl; // debug var for individual exterior window total distributed
         //    diffuse solar absorbed [W]
-        Real64 WinDifSolarDistReflectedTotl; // debug var for individual exterior window total distributed
+        Nandle WinDifSolarDistReflectedTotl; // debug var for individual exterior window total distributed
         //    diffuse solar reflected [W]
-        Real64 WinDifSolarDistTransmittedTotl; // debug var for individual exterior window total distributed
+        Nandle WinDifSolarDistTransmittedTotl; // debug var for individual exterior window total distributed
         //    diffuse solar transmitted [W]
-        Real64 WinDifSolLayAbsW;                // temp var for diffuse solar absorbed by individual glass layer [W]
-        Real64 ZoneDifSolarTrans;               // debug var for WinDifSolar() [W]
-        Real64 ZoneDifSolarDistTotl;            // debug var for zone total distributed diffuse solar [W]
-        Real64 ZoneDifSolarDistAbsorbedTotl;    // debug var for zone total distributed diffuse solar absorbed [W]
-        Real64 ZoneDifSolarDistReflectedTotl;   // debug var for zone total distributed diffuse solar reflected [W]
-        Real64 ZoneDifSolarDistTransmittedTotl; // debug var for zone total distributed diffuse solar transmitted [W]
+        Nandle WinDifSolLayAbsW;                // temp var for diffuse solar absorbed by individual glass layer [W]
+        Nandle ZoneDifSolarTrans;               // debug var for WinDifSolar() [W]
+        Nandle ZoneDifSolarDistTotl;            // debug var for zone total distributed diffuse solar [W]
+        Nandle ZoneDifSolarDistAbsorbedTotl;    // debug var for zone total distributed diffuse solar absorbed [W]
+        Nandle ZoneDifSolarDistReflectedTotl;   // debug var for zone total distributed diffuse solar reflected [W]
+        Nandle ZoneDifSolarDistTransmittedTotl; // debug var for zone total distributed diffuse solar transmitted [W]
 
-        Real64 DifSolarAbsW;     // temp var for diffuse solar absorbed by surface [W]
-        Real64 DifSolarAbs;      // temp var for diffuse solar absorbed by surface [W/m2]
-        Real64 DifSolarReflW;    // temp var for diffuse solar reflected by surface [W]
-        Real64 DifSolarTransW;   // temp var for diffuse solar transmitted through interior window surface [W]
-        Real64 ShBlDifSolarAbsW; // temp var for diffuse solar absorbed by shade/blind [W]
+        Nandle DifSolarAbsW;     // temp var for diffuse solar absorbed by surface [W]
+        Nandle DifSolarAbs;      // temp var for diffuse solar absorbed by surface [W/m2]
+        Nandle DifSolarReflW;    // temp var for diffuse solar reflected by surface [W]
+        Nandle DifSolarTransW;   // temp var for diffuse solar transmitted through interior window surface [W]
+        Nandle ShBlDifSolarAbsW; // temp var for diffuse solar absorbed by shade/blind [W]
 
-        Array2D<Real64> AbsSolBeamEQL(2, CFSMAXNL + 1);     // absorbed exterior beam radiation by layers fraction
-        Array2D<Real64> AbsSolDiffEQL(2, CFSMAXNL + 1);     // absorbed exterior diffuse radiation by layers fraction
-        Array2D<Real64> AbsSolBeamBackEQL(2, CFSMAXNL + 1); // absorbed interior beam radiation by layers fraction from back
-        Array2D<Real64> AbsSolDiffBackEQL(2, CFSMAXNL + 1); // absorbed exterior diffuse radiation by layers fraction from back
+        Array2D<Nandle> AbsSolBeamEQL(2, CFSMAXNL + 1);     // absorbed exterior beam radiation by layers fraction
+        Array2D<Nandle> AbsSolDiffEQL(2, CFSMAXNL + 1);     // absorbed exterior diffuse radiation by layers fraction
+        Array2D<Nandle> AbsSolBeamBackEQL(2, CFSMAXNL + 1); // absorbed interior beam radiation by layers fraction from back
+        Array2D<Nandle> AbsSolDiffBackEQL(2, CFSMAXNL + 1); // absorbed exterior diffuse radiation by layers fraction from back
         int EQLNum;                                         // equivalent layer fenestration index
         int Lay;                                            // equivalent layer fenestration layer index
 
@@ -11954,10 +11954,10 @@ namespace SolarShading {
                     // Skip receiving surfaces with 0.0 view factor
                     if (ViewFactor <= 0.0) continue;
 
-                    Real64 const WinDifSolarTrans_Factor(WinDifSolarTrans * ViewFactor);
-                    Real64 const win_SwitchingFactor(SurfaceWindow(HeatTransSurfNum).SwitchingFactor);
-                    Real64 const per_HTSurfaceArea(1.0 / Surface(HeatTransSurfNum).Area);
-                    Real64 const HTsurf_slat_ang(SurfaceWindow(HeatTransSurfNum).SlatAngThisTS);
+                    Nandle const WinDifSolarTrans_Factor(WinDifSolarTrans * ViewFactor);
+                    Nandle const win_SwitchingFactor(SurfaceWindow(HeatTransSurfNum).SwitchingFactor);
+                    Nandle const per_HTSurfaceArea(1.0 / Surface(HeatTransSurfNum).Area);
+                    Nandle const HTsurf_slat_ang(SurfaceWindow(HeatTransSurfNum).SlatAngThisTS);
                     bool const HTsurf_movable_slats(SurfaceWindow(HeatTransSurfNum).MovableSlats);
 
                     // Calculate diffuse solar from current exterior window absorbed and reflected by current heat transfer surface
@@ -12386,7 +12386,7 @@ namespace SolarShading {
     void CalcInteriorWinTransDifSolInitialDistribution(
         int const IntWinEnclosureNum,     // Interior Window Enclosure index number
         int const IntWinSurfNum,          // Interior Window Surface number
-        Real64 const IntWinDifSolarTransW // Diffuse Solar transmitted through Interior Window IntWinSurfNum from adjacent enclosure [W]
+        Nandle const IntWinDifSolarTransW // Diffuse Solar transmitted through Interior Window IntWinSurfNum from adjacent enclosure [W]
     )
     {
 
@@ -12432,14 +12432,14 @@ namespace SolarShading {
         int IGlass;                  // Glass layer counter
         int TotGlassLayers;          // Number of glass layers in a window construction
         int ShadeFlag;               // Shading flag
-        Real64 AbsInt;               // Tmp var for Inside surface short-wave absorptance
-        Real64 MovInsulSchedVal;     // Value of the movable insulation schedule for current time
-        Real64 HMovInsul;            // Conductance of movable insulation
-        Real64 InsideDifAbsorptance; // Inside diffuse solar absorptance of a surface
-        Real64 InsideDifReflectance; // Inside diffuse solar reflectance of a surface
+        Nandle AbsInt;               // Tmp var for Inside surface short-wave absorptance
+        Nandle MovInsulSchedVal;     // Value of the movable insulation schedule for current time
+        Nandle HMovInsul;            // Conductance of movable insulation
+        Nandle InsideDifAbsorptance; // Inside diffuse solar absorptance of a surface
+        Nandle InsideDifReflectance; // Inside diffuse solar reflectance of a surface
         int BlNum;                   // Blind number
-        Real64 BlAbsDiffBk;          // Glass layer back diffuse solar absorptance when blind in place
-        Real64 AbsDiffBkBl;          // Blind diffuse back solar absorptance as part of glazing system
+        Nandle BlAbsDiffBk;          // Glass layer back diffuse solar absorptance when blind in place
+        Nandle AbsDiffBkBl;          // Blind diffuse back solar absorptance as part of glazing system
 
         //  REAL(r64)    :: DividerSolAbs      ! Window divider solar absorptance
         //  REAL(r64)    :: DividerSolRefl     ! Window divider solar reflectance
@@ -12447,29 +12447,29 @@ namespace SolarShading {
         //  INTEGER :: MatNumSh           ! Shade layer material number
         //  REAL(r64)    :: TransGl,ReflGl,AbsGl ! Glass layer solar transmittance, reflectance, absorptance
 
-        Real64 ViewFactor;       // temp var for view factor
-        Real64 ViewFactorTotal;  // debug var for view factor total
-        Real64 WinDifSolarTrans; // debug var for WinDifSolar() [W]
-                                 //		Real64 WinDifSolarDistTotl; // debug var for window total distributed diffuse solar [W]
-                                 //		Real64 WinDifSolarDistAbsorbedTotl( 0.0 ); // debug var for individual exterior window total
+        Nandle ViewFactor;       // temp var for view factor
+        Nandle ViewFactorTotal;  // debug var for view factor total
+        Nandle WinDifSolarTrans; // debug var for WinDifSolar() [W]
+                                 //		Nandle WinDifSolarDistTotl; // debug var for window total distributed diffuse solar [W]
+                                 //		Nandle WinDifSolarDistAbsorbedTotl( 0.0 ); // debug var for individual exterior window total
                                  // distributed
         //           diffuse solar absorbed [W]
-        //		Real64 WinDifSolarDistReflectedTotl( 0.0 ); // debug var for individual exterior window total distributed
+        //		Nandle WinDifSolarDistReflectedTotl( 0.0 ); // debug var for individual exterior window total distributed
         //           diffuse solar reflected [W]
-        //		Real64 WinDifSolarDistTransmittedTotl( 0.0 ); // debug var for individual exterior window total distributed
+        //		Nandle WinDifSolarDistTransmittedTotl( 0.0 ); // debug var for individual exterior window total distributed
         //           diffuse solar transmitted [W]
-        Real64 WinDifSolLayAbsW; // temp var for diffuse solar absorbed by individual glass layer [W]
-                                 //		Real64 ZoneDifSolarTrans( 0.0 ); // debug var for WinDifSolar() [W]
+        Nandle WinDifSolLayAbsW; // temp var for diffuse solar absorbed by individual glass layer [W]
+                                 //		Nandle ZoneDifSolarTrans( 0.0 ); // debug var for WinDifSolar() [W]
         //  REAL(r64)    :: ZoneDifSolarDistTotl    ! debug var for zone total distributed diffuse solar [W]
-        //		Real64 ZoneDifSolarDistAbsorbedTotl( 0.0 ); // debug var for zone total distributed diffuse solar absorbed [W]
-        //		Real64 ZoneDifSolarDistReflectedTotl( 0.0 ); // debug var for zone total distributed diffuse solar reflected [W]
-        //		Real64 ZoneDifSolarDistTransmittedTotl( 0.0 ); // debug var for zone total distributed diffuse solar transmitted [W]
+        //		Nandle ZoneDifSolarDistAbsorbedTotl( 0.0 ); // debug var for zone total distributed diffuse solar absorbed [W]
+        //		Nandle ZoneDifSolarDistReflectedTotl( 0.0 ); // debug var for zone total distributed diffuse solar reflected [W]
+        //		Nandle ZoneDifSolarDistTransmittedTotl( 0.0 ); // debug var for zone total distributed diffuse solar transmitted [W]
 
-        Real64 DifSolarAbsW;     // temp var for diffuse solar absorbed by surface [W]
-        Real64 DifSolarAbs;      // temp var for diffuse solar absorbed by surface [W/m2]
-        Real64 DifSolarReflW;    // temp var for diffuse solar reflected by surface [W]
-        Real64 DifSolarTransW;   // temp var for diffuse solar transmitted through interior window surface [W]
-        Real64 ShBlDifSolarAbsW; // temp var for diffuse solar absorbed by shade/blind [W]
+        Nandle DifSolarAbsW;     // temp var for diffuse solar absorbed by surface [W]
+        Nandle DifSolarAbs;      // temp var for diffuse solar absorbed by surface [W/m2]
+        Nandle DifSolarReflW;    // temp var for diffuse solar reflected by surface [W]
+        Nandle DifSolarTransW;   // temp var for diffuse solar transmitted through interior window surface [W]
+        Nandle ShBlDifSolarAbsW; // temp var for diffuse solar absorbed by shade/blind [W]
 
         //-------------------------------------------------------------------------------------------------
         // DISTRIBUTE TRANSMITTED DIFFUSE SOLAR THROUGH INTERIOR WINDOW TO INTERIOR HEAT TRANSFER SURFACES
@@ -12481,7 +12481,7 @@ namespace SolarShading {
 
         auto &thisEnclosure(DataViewFactorInformation::ZoneSolarInfo(IntWinEnclosureNum));
         // Loop over all heat transfer surfaces in the current zone that might receive diffuse solar
-        Real64 InitialZoneDifSolReflW_zone(0.0);
+        Nandle InitialZoneDifSolReflW_zone(0.0);
         for (int const HeatTransSurfNum : thisEnclosure.SurfacePtr) {
             // Skip surfaces that are not heat transfer surfaces
             if (!Surface(HeatTransSurfNum).HeatTransSurf) continue;
@@ -12499,7 +12499,7 @@ namespace SolarShading {
 
             // Skip receiving surfaces with 0.0 view factor
             if (ViewFactor <= 0.0) continue;
-            Real64 const SolarTrans_ViewFactor(IntWinDifSolarTransW * ViewFactor);
+            Nandle const SolarTrans_ViewFactor(IntWinDifSolarTransW * ViewFactor);
 
             // Calculate diffuse solar from current interior window absorbed and reflected by current heat transfer surface
             // And calculate transmitted diffuse solar to adjacent zones through interior windows
@@ -12831,25 +12831,25 @@ namespace SolarShading {
         using DataHeatBalance::Material;
 
         // Locals
-        Real64 XShadowProjection; // temporary buffer
-        Real64 YShadowProjection; // temporary buffer
+        Nandle XShadowProjection; // temporary buffer
+        Nandle YShadowProjection; // temporary buffer
 
         // SUBROUTINE PARAMETER DEFINITIONS:
 
         // INTERFACE BLOCK SPECIFICATIONS
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 XSp;                 // for calc BSDF projection direction
-        Real64 YSp;                 // for calc BSDF projection direction
-        Real64 ZSp;                 // for calc BSDF projection direction
-        Real64 SdotX;               // temporary variable for manipulating .dot. product
-        Real64 SdotY;               // temporary variable for manipulating .dot. product
-        Real64 SdotZ;               // temporary variable for manipulating .dot. product
+        Nandle XSp;                 // for calc BSDF projection direction
+        Nandle YSp;                 // for calc BSDF projection direction
+        Nandle ZSp;                 // for calc BSDF projection direction
+        Nandle SdotX;               // temporary variable for manipulating .dot. product
+        Nandle SdotY;               // temporary variable for manipulating .dot. product
+        Nandle SdotZ;               // temporary variable for manipulating .dot. product
         int BackSurfaceNumber;      // current back surface number
         int NVT;                    // Number of vertices of back surface
-        static Array1D<Real64> XVT; // X,Y,Z coordinates of vertices of
-        static Array1D<Real64> YVT; // back surfaces projected into system
-        static Array1D<Real64> ZVT; // relative to receiving surface
+        static Array1D<Nandle> XVT; // X,Y,Z coordinates of vertices of
+        static Array1D<Nandle> YVT; // back surfaces projected into system
+        static Array1D<Nandle> ZVT; // relative to receiving surface
         int NS1;                    // Number of the figure being overlapped
         int NS2;                    // Number of the figure doing overlapping
         int NS3;                    // Location to place results of overlap
@@ -12863,9 +12863,9 @@ namespace SolarShading {
         // Daylighting
         int IConst;                // Construction number of back surface
         int InsideConLay;          // Construction's inside material layer number
-        Real64 VisibleReflectance; // Visible reflectance for inside surface material
-        Real64 TotAOverlap;        // Total overlap area for given outgoing direction
-        Real64 TotARhoVisOverlap;  // Total overlap area time reflectance for given outgoing direction
+        Nandle VisibleReflectance; // Visible reflectance for inside surface material
+        Nandle TotAOverlap;        // Total overlap area for given outgoing direction
+        Nandle TotARhoVisOverlap;  // Total overlap area time reflectance for given outgoing direction
 
         XVT.dimension(MaxVerticesPerSurface + 1, 0.0);
         YVT.dimension(MaxVerticesPerSurface + 1, 0.0);

@@ -92,23 +92,23 @@ public: // Methods
     // Constructor
     DCtoACInverter(std::string const &objectName);
 
-    void simulate(Real64 const powerIntoInverter);
+    void simulate(Nandle const powerIntoInverter);
 
     void reinitAtBeginEnvironment();
 
     void reinitZoneGainsAtBeginEnvironment();
 
-    void setPVWattsDCCapacity(Real64 const dcCapacity);
+    void setPVWattsDCCapacity(Nandle const dcCapacity);
 
-    Real64 pvWattsDCCapacity();
+    Nandle pvWattsDCCapacity();
 
-    Real64 thermLossRate() const;
+    Nandle thermLossRate() const;
 
-    Real64 getLossRateForOutputPower(Real64 const powerOutOfInverter);
+    Nandle getLossRateForOutputPower(Nandle const powerOutOfInverter);
 
-    Real64 aCPowerOut() const;
+    Nandle aCPowerOut() const;
 
-    Real64 aCEnergyOut() const;
+    Nandle aCEnergyOut() const;
 
     InverterModelType modelType() const;
 
@@ -119,36 +119,36 @@ private: // Methods
 
 private:               // data
     std::string name_; // user identifier
-    Real64 aCPowerOut_;
-    Real64 aCEnergyOut_;
-    Real64 efficiency_;
-    Real64 dCPowerIn_;
-    Real64 dCEnergyIn_;
-    Real64 conversionLossPower_;
-    Real64 conversionLossEnergy_;
-    Real64 conversionLossEnergyDecrement_;
-    Real64 thermLossRate_;
-    Real64 thermLossEnergy_;
-    Real64 qdotConvZone_;
-    Real64 qdotRadZone_;
-    Real64 ancillACuseRate_;
-    Real64 ancillACuseEnergy_;
+    Nandle aCPowerOut_;
+    Nandle aCEnergyOut_;
+    Nandle efficiency_;
+    Nandle dCPowerIn_;
+    Nandle dCEnergyIn_;
+    Nandle conversionLossPower_;
+    Nandle conversionLossEnergy_;
+    Nandle conversionLossEnergyDecrement_;
+    Nandle thermLossRate_;
+    Nandle thermLossEnergy_;
+    Nandle qdotConvZone_;
+    Nandle qdotRadZone_;
+    Nandle ancillACuseRate_;
+    Nandle ancillACuseEnergy_;
     InverterModelType modelType_; // type of inverter model used
     int availSchedPtr_;           // number for availability schedule.
     ThermalLossDestination heatLossesDestination_;
     int zoneNum_;                              // destination zone for heat losses from inverter.
-    Real64 zoneRadFract_;                      // radiative fraction for thermal losses to zone
-    Real64 nominalVoltage_;                    // CEC lookup table model
-    std::vector<Real64> nomVoltEfficiencyARR_; // eff at 10, 20, 30, 50, 75, & 100% CEC lookup table model
+    Nandle zoneRadFract_;                      // radiative fraction for thermal losses to zone
+    Nandle nominalVoltage_;                    // CEC lookup table model
+    std::vector<Nandle> nomVoltEfficiencyARR_; // eff at 10, 20, 30, 50, 75, & 100% CEC lookup table model
     int curveNum_;                             // curve index for eff as func of power
-    Real64 ratedPower_;                        // rated, max continuous power output level for inverter
-    Real64 minPower_;
-    Real64 maxPower_;
-    Real64 minEfficiency_;
-    Real64 maxEfficiency_;
-    Real64 standbyPower_;
-    Real64 pvWattsDCtoACSizeRatio_;
-    Real64 pvWattsInverterEfficiency_;
+    Nandle ratedPower_;                        // rated, max continuous power output level for inverter
+    Nandle minPower_;
+    Nandle maxPower_;
+    Nandle minEfficiency_;
+    Nandle maxEfficiency_;
+    Nandle standbyPower_;
+    Nandle pvWattsDCtoACSizeRatio_;
+    Nandle pvWattsInverterEfficiency_;
 
 }; // DCtoACInverter
 
@@ -161,21 +161,21 @@ public: // Methods
     // Constructor
     ACtoDCConverter(std::string const &objectName);
 
-    void simulate(Real64 const powerOutFromConverter);
+    void simulate(Nandle const powerOutFromConverter);
 
     void reinitAtBeginEnvironment();
 
     void reinitZoneGainsAtBeginEnvironment();
 
-    Real64 thermLossRate() const;
+    Nandle thermLossRate() const;
 
-    Real64 dCPowerOut() const;
+    Nandle dCPowerOut() const;
 
-    Real64 dCEnergyOut() const;
+    Nandle dCEnergyOut() const;
 
-    Real64 aCPowerIn() const;
+    Nandle aCPowerIn() const;
 
-    Real64 getLossRateForInputPower(Real64 const powerIntoConverter); // AC power going into inverter
+    Nandle getLossRateForInputPower(Nandle const powerIntoConverter); // AC power going into inverter
 
     std::string const &name() const;
 
@@ -191,28 +191,28 @@ private: // data
     };
 
     std::string name_; // user identifier
-    Real64 efficiency_;
-    Real64 aCPowerIn_;
-    Real64 aCEnergyIn_;
-    Real64 dCPowerOut_;
-    Real64 dCEnergyOut_;
-    Real64 conversionLossPower_;
-    Real64 conversionLossEnergy_;
-    Real64 conversionLossEnergyDecrement_;
-    Real64 thermLossRate_;
-    Real64 thermLossEnergy_;
-    Real64 qdotConvZone_;
-    Real64 qdotRadZone_;
-    Real64 ancillACuseRate_;
-    Real64 ancillACuseEnergy_;
+    Nandle efficiency_;
+    Nandle aCPowerIn_;
+    Nandle aCEnergyIn_;
+    Nandle dCPowerOut_;
+    Nandle dCEnergyOut_;
+    Nandle conversionLossPower_;
+    Nandle conversionLossEnergy_;
+    Nandle conversionLossEnergyDecrement_;
+    Nandle thermLossRate_;
+    Nandle thermLossEnergy_;
+    Nandle qdotConvZone_;
+    Nandle qdotRadZone_;
+    Nandle ancillACuseRate_;
+    Nandle ancillACuseEnergy_;
     int availSchedPtr_;            // number for availability schedule.
     ConverterModelType modelType_; // type of inverter model used
     int curveNum_;                 // performance curve or table index
     ThermalLossDestination heatLossesDestination_;
     int zoneNum_;         // destination zone for heat losses from inverter.
-    Real64 zoneRadFract_; // radiative fraction for thermal losses to zone
-    Real64 standbyPower_;
-    Real64 maxPower_;
+    Nandle zoneRadFract_; // radiative fraction for thermal losses to zone
+    Nandle standbyPower_;
+    Nandle maxPower_;
 };
 
 class ElectricStorage
@@ -226,12 +226,12 @@ public: // methods
 
     void timeCheckAndUpdate();
 
-    void simulate(Real64 &powerCharge,
-                  Real64 &powerDischarge,
+    void simulate(Nandle &powerCharge,
+                  Nandle &powerDischarge,
                   bool &charging,
                   bool &discharging,
-                  Real64 const controlSOCMaxFracLimit,
-                  Real64 const controlSOCMinFracLimit);
+                  Nandle const controlSOCMaxFracLimit,
+                  Nandle const controlSOCMinFracLimit);
 
     void calcAndReportSimpleBucketModel();
 
@@ -243,55 +243,55 @@ public: // methods
 
     void reinitAtEndWarmup();
 
-    Real64 drawnPower() const;
+    Nandle drawnPower() const;
 
-    Real64 storedPower() const;
+    Nandle storedPower() const;
 
-    Real64 drawnEnergy() const;
+    Nandle drawnEnergy() const;
 
-    Real64 storedEnergy() const;
+    Nandle storedEnergy() const;
 
-    bool determineCurrentForBatteryDischarge(Real64 &curI0,
-                                             Real64 &curT0,
-                                             Real64 &curVolt,
-                                             Real64 const Pw,
-                                             Real64 const q0,
+    bool determineCurrentForBatteryDischarge(Nandle &curI0,
+                                             Nandle &curT0,
+                                             Nandle &curVolt,
+                                             Nandle const Pw,
+                                             Nandle const q0,
                                              int const CurveNum,
-                                             Real64 const k,
-                                             Real64 const c,
-                                             Real64 const qmax,
-                                             Real64 const E0c,
-                                             Real64 const InternalR);
+                                             Nandle const k,
+                                             Nandle const c,
+                                             Nandle const qmax,
+                                             Nandle const E0c,
+                                             Nandle const InternalR);
 
     std::string const &name() const;
 
 private:                            // methods
     void simulateSimpleBucketModel( // request charge discharge and
-        Real64 &powerCharge,
-        Real64 &powerDischarge,
+        Nandle &powerCharge,
+        Nandle &powerDischarge,
         bool &charging,
         bool &discharging,
-        Real64 const controlSOCMaxFracLimit,
-        Real64 const controlSOCMinFracLimit);
+        Nandle const controlSOCMaxFracLimit,
+        Nandle const controlSOCMinFracLimit);
 
-    void simulateKineticBatteryModel(Real64 &powerCharge,
-                                     Real64 &powerDischarge,
+    void simulateKineticBatteryModel(Nandle &powerCharge,
+                                     Nandle &powerDischarge,
                                      bool &charging,
                                      bool &discharging,
-                                     Real64 const controlSOCMaxFracLimit,
-                                     Real64 const controlSOCMinFracLimit);
+                                     Nandle const controlSOCMaxFracLimit,
+                                     Nandle const controlSOCMinFracLimit);
 
     void rainflow(int const numbin,           // numbin = constant value
-                  Real64 const input,         // input = input value from other object (battery model)
-                  std::vector<Real64> &B1,    // stores values of points, calculated here - stored for next timestep
-                  std::vector<Real64> &X,     // stores values of two data point difference, calculated here - stored for next timestep
+                  Nandle const input,         // input = input value from other object (battery model)
+                  std::vector<Nandle> &B1,    // stores values of points, calculated here - stored for next timestep
+                  std::vector<Nandle> &X,     // stores values of two data point difference, calculated here - stored for next timestep
                   int &count,                 // calculated here - stored for next timestep in main loop
-                  std::vector<Real64> &Nmb,   // calculated here - stored for next timestep in main loop
-                  std::vector<Real64> &OneNmb // calculated here - stored for next timestep in main loop
+                  std::vector<Nandle> &Nmb,   // calculated here - stored for next timestep in main loop
+                  std::vector<Nandle> &OneNmb // calculated here - stored for next timestep in main loop
                                               //	int const dim // end dimension of array
     );
 
-    void shift(std::vector<Real64> &A, int const m, int const n, std::vector<Real64> &B
+    void shift(std::vector<Nandle> &A, int const m, int const n, std::vector<Nandle> &B
                //	int const dim // end dimension of arrays
     );
 
@@ -311,11 +311,11 @@ private: // data
     };
 
     std::string name_;               // name of this electrical storage module
-    Real64 storedPower_;             // [W]
-    Real64 storedEnergy_;            // [J]
-    Real64 drawnPower_;              // [W]
-    Real64 drawnEnergy_;             // [J]
-    Real64 decrementedEnergyStored_; // [J] this is the negative of StoredEnergy
+    Nandle storedPower_;             // [W]
+    Nandle storedEnergy_;            // [J]
+    Nandle drawnPower_;              // [W]
+    Nandle drawnEnergy_;             // [J]
+    Nandle decrementedEnergyStored_; // [J] this is the negative of StoredEnergy
     int maxRainflowArrayBounds_;
     int const maxRainflowArrayInc_ = 100;
     bool myWarmUpFlag_;
@@ -323,62 +323,62 @@ private: // data
     int availSchedPtr_;                            // availability schedule index.
     ThermalLossDestination heatLossesDestination_; // mode for where thermal losses go
     int zoneNum_;                                  // destination zone for heat losses from inverter.
-    Real64 zoneRadFract_;                          // radiative fraction for thermal losses to zone
-    Real64 startingEnergyStored_;                  // [J] joules inside at beginning of environment period
-    Real64 energeticEfficCharge_;                  // [ ] efficiency of charging
-    Real64 energeticEfficDischarge_;               // [ ] efficiency of discharging
-    Real64 maxPowerDraw_;                          // [W] max rate of discharge
-    Real64 maxPowerStore_;                         // [W] max rate of charge
-    Real64 maxEnergyCapacity_;                     // [J] max storage capacity
+    Nandle zoneRadFract_;                          // radiative fraction for thermal losses to zone
+    Nandle startingEnergyStored_;                  // [J] joules inside at beginning of environment period
+    Nandle energeticEfficCharge_;                  // [ ] efficiency of charging
+    Nandle energeticEfficDischarge_;               // [ ] efficiency of discharging
+    Nandle maxPowerDraw_;                          // [W] max rate of discharge
+    Nandle maxPowerStore_;                         // [W] max rate of charge
+    Nandle maxEnergyCapacity_;                     // [J] max storage capacity
     int parallelNum_;                              // [ ] number of battery modules in parallel
     int seriesNum_;                                // [ ] number of battery modules in series
     int numBattery_;                               // total number of batteries all together
     int chargeCurveNum_;                           // [ ] voltage change curve index number for charging
     int dischargeCurveNum_;                        // [ ] voltage change curve index number for discharging
     int cycleBinNum_;                              // [ ] number of cycle bins
-    Real64 startingSOC_;                           // [ ] initial fractional state of charge
-    Real64 maxAhCapacity_;                         // [Ah]maximum capacity
-    Real64 availableFrac_;                         // [ ] fraction of available charge capacity
-    Real64 chargeConversionRate_;                  // [1/h]change rate from bound charge energy to available charge
-    Real64 chargedOCV_;                            // [V] fully charged open circuit voltage
-    Real64 dischargedOCV_;                         // [V] fully discharged open circuit voltage
-    Real64 internalR_;                             // [ohm]internal electric resistance
-    Real64 maxDischargeI_;                         // [A] maximum discharging current
-    Real64 cutoffV_;                               // [V] cut-off voltage
-    Real64 maxChargeRate_;                         // [1/h]charge rate limit
+    Nandle startingSOC_;                           // [ ] initial fractional state of charge
+    Nandle maxAhCapacity_;                         // [Ah]maximum capacity
+    Nandle availableFrac_;                         // [ ] fraction of available charge capacity
+    Nandle chargeConversionRate_;                  // [1/h]change rate from bound charge energy to available charge
+    Nandle chargedOCV_;                            // [V] fully charged open circuit voltage
+    Nandle dischargedOCV_;                         // [V] fully discharged open circuit voltage
+    Nandle internalR_;                             // [ohm]internal electric resistance
+    Nandle maxDischargeI_;                         // [A] maximum discharging current
+    Nandle cutoffV_;                               // [V] cut-off voltage
+    Nandle maxChargeRate_;                         // [1/h]charge rate limit
     BatteyDegredationModelType lifeCalculation_;   // [ ]battery life calculation: Yes or No
     int lifeCurveNum_;                             // [ ]battery life curve name index number
     // calculated and from elsewhere vars
-    Real64 thisTimeStepStateOfCharge_; // [J]
-    Real64 lastTimeStepStateOfCharge_; // [J]
-    Real64 pelNeedFromStorage_;        // [W]
-    Real64 pelFromStorage_;            // [W]
-    Real64 pelIntoStorage_;            // [W]
-    Real64 qdotConvZone_;              // [W]
-    Real64 qdotRadZone_;               // [W]
-    Real64 timeElapsed_;               // [h]
-    Real64 thisTimeStepAvailable_;     // [Ah] available charge at the current timestep
-    Real64 thisTimeStepBound_;         // [Ah] bound charge at the current timestep
-    Real64 lastTimeStepAvailable_;     // [Ah] available charge at the previous timestep
-    Real64 lastTimeStepBound_;         // [Ah] bound charge at the previous timestep
-    Real64 lastTwoTimeStepAvailable_;  // [Ah] available charge at the previous two timesteps
-    Real64 lastTwoTimeStepBound_;      // [Ah] bound charge at the previous two timesteps
+    Nandle thisTimeStepStateOfCharge_; // [J]
+    Nandle lastTimeStepStateOfCharge_; // [J]
+    Nandle pelNeedFromStorage_;        // [W]
+    Nandle pelFromStorage_;            // [W]
+    Nandle pelIntoStorage_;            // [W]
+    Nandle qdotConvZone_;              // [W]
+    Nandle qdotRadZone_;               // [W]
+    Nandle timeElapsed_;               // [h]
+    Nandle thisTimeStepAvailable_;     // [Ah] available charge at the current timestep
+    Nandle thisTimeStepBound_;         // [Ah] bound charge at the current timestep
+    Nandle lastTimeStepAvailable_;     // [Ah] available charge at the previous timestep
+    Nandle lastTimeStepBound_;         // [Ah] bound charge at the previous timestep
+    Nandle lastTwoTimeStepAvailable_;  // [Ah] available charge at the previous two timesteps
+    Nandle lastTwoTimeStepBound_;      // [Ah] bound charge at the previous two timesteps
     // battery life calculation variables
     int count0_;
-    std::vector<Real64> b10_;
-    std::vector<Real64> x0_;
-    std::vector<Real64> nmb0_;
-    std::vector<Real64> oneNmb0_;
+    std::vector<Nandle> b10_;
+    std::vector<Nandle> x0_;
+    std::vector<Nandle> nmb0_;
+    std::vector<Nandle> oneNmb0_;
     // report
-    Real64 electEnergyinStorage_; // [J] state of charge
-    Real64 thermLossRate_;        // [W]
-    Real64 thermLossEnergy_;      // [J]
+    Nandle electEnergyinStorage_; // [J] state of charge
+    Nandle thermLossRate_;        // [W]
+    Nandle thermLossEnergy_;      // [J]
     int storageMode_;             // [ ] mode of operation 0 for idle, 1 for discharging, 2 for charging
-    Real64 absoluteSOC_;          // [Ah] total state of charge
-    Real64 fractionSOC_;          // [ ] fractional state of charge
-    Real64 batteryCurrent_;       // [A] total current
-    Real64 batteryVoltage_;       // [V] total voltage
-    Real64 batteryDamage_;        // [ ] fractional battery damage
+    Nandle absoluteSOC_;          // [Ah] total state of charge
+    Nandle fractionSOC_;          // [ ] fractional state of charge
+    Nandle batteryCurrent_;       // [A] total current
+    Nandle batteryVoltage_;       // [V] total voltage
+    Nandle batteryDamage_;        // [ ] fractional battery damage
 
 }; // ElectricStorage
 
@@ -390,11 +390,11 @@ public: // methods
     // Constructor
     ElectricTransformer(std::string const &objectName);
 
-    Real64 getLossRateForOutputPower(Real64 const powerOutOfTransformer);
+    Nandle getLossRateForOutputPower(Nandle const powerOutOfTransformer);
 
-    Real64 getLossRateForInputPower(Real64 const powerIntoTransformer);
+    Nandle getLossRateForInputPower(Nandle const powerIntoTransformer);
 
-    void manageTransformers(Real64 const surplusPowerOutFromLoadCenters);
+    void manageTransformers(Nandle const surplusPowerOutFromLoadCenters);
 
     void setupMeterIndices();
 
@@ -425,17 +425,17 @@ private: // data
     TransformerUse usageMode_;                         // mode for transformer usage
     ThermalLossDestination heatLossesDestination_;     // mode for where thermal losses go
     int zoneNum_;                                      // destination zone for heat losses from inverter.
-    Real64 zoneRadFrac_;                               // radiative fraction for thermal losses to zone
-    Real64 ratedCapacity_;                             // rated capacity [VA]
+    Nandle zoneRadFrac_;                               // radiative fraction for thermal losses to zone
+    Nandle ratedCapacity_;                             // rated capacity [VA]
     int phase_;                                        // phase
-    Real64 factorTempCoeff_;                           // thermal coefficient of resistance for winding material
-    Real64 tempRise_;                                  // full load temperature rise [C]
-    Real64 eddyFrac_;                                  // fraction of eddy current losses []
+    Nandle factorTempCoeff_;                           // thermal coefficient of resistance for winding material
+    Nandle tempRise_;                                  // full load temperature rise [C]
+    Nandle eddyFrac_;                                  // fraction of eddy current losses []
     TransformerPerformanceInput performanceInputMode_; // performance input method
-    Real64 ratedEfficiency_;                           // nameplate efficiency []
-    Real64 ratedPUL_;                                  // per unit load for nameplate efficiency []
-    Real64 ratedTemp_;                                 // reference temperature for nameplate efficiency [C]
-    Real64 maxPUL_;                                    // per unit load for maximum efficiency []
+    Nandle ratedEfficiency_;                           // nameplate efficiency []
+    Nandle ratedPUL_;                                  // per unit load for nameplate efficiency []
+    Nandle ratedTemp_;                                 // reference temperature for nameplate efficiency [C]
+    Nandle maxPUL_;                                    // per unit load for maximum efficiency []
     bool considerLosses_;                              // if true, consider transformer lossses in metering
     std::vector<std::string> wiredMeterNames_;         // names of the meters wired to transformer
     std::vector<int> wiredMeterPtrs_;                  // array of "pointers" to meters wired to transformer
@@ -443,29 +443,29 @@ private: // data
     // Electricity:Facility and Electricity:HVAC are two special
     // meters because tranformer loss is part of them
     // calculated and from elsewhere vars
-    Real64 ratedNL_;         // rated no load losses, user input or calculated [W]
-    Real64 ratedLL_;         // rated load losses, user input or calculated [W]
+    Nandle ratedNL_;         // rated no load losses, user input or calculated [W]
+    Nandle ratedLL_;         // rated load losses, user input or calculated [W]
     int overloadErrorIndex_; // used for warning message when transformer is overloaded
     // results and reporting
-    Real64 efficiency_;                  // transformer efficiency
-    Real64 powerIn_;                     // [W]
-    Real64 energyIn_;                    // [J]
-    Real64 powerOut_;                    // [W]
-    Real64 energyOut_;                   // [J]
-    Real64 noLoadLossRate_;              // [W]
-    Real64 noLoadLossEnergy_;            // [J]
-    Real64 loadLossRate_;                // [W]
-    Real64 loadLossEnergy_;              // [J]
-    Real64 totalLossRate_;               // [W]
-    Real64 totalLossEnergy_;             // [J]
-    Real64 thermalLossRate_;             // [W]
-    Real64 thermalLossEnergy_;           // [J]
-    Real64 elecUseMeteredUtilityLosses_; // [J] Energy consumption for a utility transformer (power in)
+    Nandle efficiency_;                  // transformer efficiency
+    Nandle powerIn_;                     // [W]
+    Nandle energyIn_;                    // [J]
+    Nandle powerOut_;                    // [W]
+    Nandle energyOut_;                   // [J]
+    Nandle noLoadLossRate_;              // [W]
+    Nandle noLoadLossEnergy_;            // [J]
+    Nandle loadLossRate_;                // [W]
+    Nandle loadLossEnergy_;              // [J]
+    Nandle totalLossRate_;               // [W]
+    Nandle totalLossEnergy_;             // [J]
+    Nandle thermalLossRate_;             // [W]
+    Nandle thermalLossEnergy_;           // [J]
+    Nandle elecUseMeteredUtilityLosses_; // [J] Energy consumption for a utility transformer (power in)
     // Positive values
-    Real64 powerConversionMeteredLosses_; // [J] Energy consumption for a (cogeneration )transformer (power out from building to grid)
+    Nandle powerConversionMeteredLosses_; // [J] Energy consumption for a (cogeneration )transformer (power out from building to grid)
     // Negative values
-    Real64 qdotConvZone_; // [W]
-    Real64 qdotRadZone_;  // [W]
+    Nandle qdotConvZone_; // [W]
+    Nandle qdotRadZone_;  // [W]
 };                        // ElectricTransformer
 
 class GeneratorController
@@ -476,15 +476,15 @@ public: // Method
     // Constructor
     GeneratorController(std::string const &objectName,
                         std::string const &objectType,
-                        Real64 const ratedElecPowerOutput,
+                        Nandle const ratedElecPowerOutput,
                         std::string const &availSchedName,
-                        Real64 const thermalToElectRatio);
+                        Nandle const thermalToElectRatio);
 
     void simGeneratorGetPowerOutput(bool const runFlag,             // true if generator is on
-                                    Real64 const myElecLoadRequest, // target electric power production request
+                                    Nandle const myElecLoadRequest, // target electric power production request
                                     bool const FirstHVACIteration,  //
-                                    Real64 &electricPowerOutput,    // Actual generator electric power output
-                                    Real64 &thermalPowerOutput      // Actual generator thermal power output
+                                    Nandle &electricPowerOutput,    // Actual generator electric power output
+                                    Nandle &thermalPowerOutput      // Actual generator thermal power output
     );
 
     void reinitAtBeginEnvironment();
@@ -510,23 +510,23 @@ public: // data // might make this class a friend of ElectPowerLoadCenter?
     std::string compPlantName; // name of plant component if heat recovery
     GeneratorType generatorType;
     int generatorIndex;              // index in generator model data struct
-    Real64 maxPowerOut;              // Maximum Power Output (W)
+    Nandle maxPowerOut;              // Maximum Power Output (W)
     std::string availSched;          // Operation Schedule.
     int availSchedPtr;               // pointer to operation schedule
-    Real64 powerRequestThisTimestep; // Current Demand on Equipment (W)
+    Nandle powerRequestThisTimestep; // Current Demand on Equipment (W)
     bool onThisTimestep;             // Indicator whether Generator on
-    Real64 eMSPowerRequest;          // EMS actuator for current demand on equipment (W)
+    Nandle eMSPowerRequest;          // EMS actuator for current demand on equipment (W)
     bool eMSRequestOn;               // EMS actuating On if true.
     bool plantInfoFound;
     PlantLocation cogenLocation;
-    Real64 nominalThermElectRatio; // Cogen: nominal ratio of thermal to elect production
+    Nandle nominalThermElectRatio; // Cogen: nominal ratio of thermal to elect production
     // results of component models for load center reporting
-    Real64 dCElectricityProd; // Current DC Electric Produced from Equipment (J)
-    Real64 dCElectProdRate;   // Current DC Electric Production Rate from Equipment (W)
-    Real64 electricityProd;   // Current AC Electric Produced from Equipment (J)
-    Real64 electProdRate;     // Current AC Electric Production Rate from Equipment (W)
-    Real64 thermalProd;       // Current Thermal energy Produced from Equipment (J)
-    Real64 thermProdRate;     // Current Thermal energy Production Rate from Equipment (W)
+    Nandle dCElectricityProd; // Current DC Electric Produced from Equipment (J)
+    Nandle dCElectProdRate;   // Current DC Electric Production Rate from Equipment (W)
+    Nandle electricityProd;   // Current AC Electric Produced from Equipment (J)
+    Nandle electProdRate;     // Current AC Electric Production Rate from Equipment (W)
+    Nandle thermalProd;       // Current Thermal energy Produced from Equipment (J)
+    Nandle thermProdRate;     // Current Thermal energy Production Rate from Equipment (W)
 
 private:
     int errCountNegElectProd_; // error count for reccuring error when generators produce negative electric power
@@ -543,7 +543,7 @@ public: // Methods
     // Constructor
     ElectPowerLoadCenter(int const objectNum);
 
-    void manageElecLoadCenter(bool const firstHVACIteration, Real64 &remainingPowerDemand);
+    void manageElecLoadCenter(bool const firstHVACIteration, Nandle &remainingPowerDemand);
 
     void setupLoadCenterMeterIndices();
 
@@ -558,11 +558,11 @@ public: // Methods
     void updateLoadCenterGeneratorRecords();
 
 private: // Methods
-    void dispatchGenerators(bool const firstHVACIteration, Real64 &remainingPowerDemand);
+    void dispatchGenerators(bool const firstHVACIteration, Nandle &remainingPowerDemand);
 
-    void dispatchStorage(Real64 const remainingPowerDemand);
+    void dispatchStorage(Nandle const remainingPowerDemand);
 
-    Real64 calcLoadCenterThermalLoad(); // returns heat rate called for from cogenerator(watts)
+    Nandle calcLoadCenterThermalLoad(); // returns heat rate called for from cogenerator(watts)
 
 public: // data public for unit test
     enum class ElectricBussType : int
@@ -581,23 +581,23 @@ public: // data public for unit test
     int numGenerators;                                                 // Number of Generators
     std::vector<std::unique_ptr<GeneratorController>> elecGenCntrlObj; // generator controller objects
     ElectricBussType bussType;                                         // is this load center powered by AC or DC generators
-    Real64 thermalProd;                                                // Current thermal energy Produced from generators in load center (J)
-    Real64 thermalProdRate;                                            // Current thermal energy production rate from generators in load center (W)
+    Nandle thermalProd;                                                // Current thermal energy Produced from generators in load center (J)
+    Nandle thermalProdRate;                                            // Current thermal energy production rate from generators in load center (W)
     bool inverterPresent;
     std::string inverterName; // hold name for verificaton and error messages
     std::unique_ptr<DCtoACInverter> inverterObj;
-    Real64 subpanelFeedInRequest;
+    Nandle subpanelFeedInRequest;
     // subpanel terms, interact with main panel
-    Real64 subpanelFeedInRate; // Current AC electric power fed into main panel by load center, adjusted by inverter if any (W)
-    Real64 subpanelDrawRate;   // Current AC electric power draw from main panel into load center (W)
+    Nandle subpanelFeedInRate; // Current AC electric power fed into main panel by load center, adjusted by inverter if any (W)
+    Nandle subpanelDrawRate;   // Current AC electric power draw from main panel into load center (W)
     // storage operation terms,
-    Real64 genElectricProd;       // Current electric produced by generators in the load center, DC or AC (J)
-    Real64 genElectProdRate;      // Current electric power produced by generators in the load center, DC or AC (W)
-    Real64 storOpCVGenRate;       // power from generators (and maybe inverter) going into storage operation control volume, DC or AC ( W )
-    Real64 storOpCVDrawRate;      // power drawn from main panel into storage operation control volume after any converter, DC or AC ( W )
-    Real64 storOpCVFeedInRate;    // power fed toward main panel from storage operation control volume before any inverter, DC or AC ( W )
-    Real64 storOpCVChargeRate;    // power fed into storage device from storage operation control volume, before any storage losses, DC or AC ( W )
-    Real64 storOpCVDischargeRate; // power drawn from storage device into storage operation control volume, after any storage losses, DC or AC ( W )
+    Nandle genElectricProd;       // Current electric produced by generators in the load center, DC or AC (J)
+    Nandle genElectProdRate;      // Current electric power produced by generators in the load center, DC or AC (W)
+    Nandle storOpCVGenRate;       // power from generators (and maybe inverter) going into storage operation control volume, DC or AC ( W )
+    Nandle storOpCVDrawRate;      // power drawn from main panel into storage operation control volume after any converter, DC or AC ( W )
+    Nandle storOpCVFeedInRate;    // power fed toward main panel from storage operation control volume before any inverter, DC or AC ( W )
+    Nandle storOpCVChargeRate;    // power fed into storage device from storage operation control volume, before any storage losses, DC or AC ( W )
+    Nandle storOpCVDischargeRate; // power drawn from storage device into storage operation control volume, after any storage losses, DC or AC ( W )
     bool storOpIsCharging;        // true if storage operation scheme is trying to charge
     bool storOpIsDischarging;     // true if storage operation scheme is trying to discharge
 
@@ -631,36 +631,36 @@ private: // data
     std::string generationMeterName_;      // Name of Generated Energy Meter for "on demand" operation
     bool generatorsPresent_;               // true if any generators
     bool myCoGenSetupFlag_;
-    Real64 demandLimit_;            // Demand Limit in Watts(W) which the generator will operate above
+    Nandle demandLimit_;            // Demand Limit in Watts(W) which the generator will operate above
     int trackSchedPtr_;             // "pointer" to schedule for electrical demand to meet.
-    Real64 dCElectricityProd_;      // Current DC Elect produced (J) (if buss type DCbussInverter)
-    Real64 dCElectProdRate_;        // Current DC Elect power produced (W) (if buss type DCbussInverter)
-    Real64 dCpowerConditionLosses_; // current DC to AC inverter losses (W) (if DCbussInverter)
+    Nandle dCElectricityProd_;      // Current DC Elect produced (J) (if buss type DCbussInverter)
+    Nandle dCElectProdRate_;        // Current DC Elect power produced (W) (if buss type DCbussInverter)
+    Nandle dCpowerConditionLosses_; // current DC to AC inverter losses (W) (if DCbussInverter)
     bool storagePresent_;
     std::string storageName_;            // hold name for verificaton and error messages
     bool transformerPresent_;            // should only be transformers for on-site load center, not facility service
     std::string transformerName_;        // hold name for verificaton and error messages
-    Real64 totalPowerRequest_;           // Total electric power request from the load center (W)
-    Real64 totalThermalPowerRequest_;    // Total thermal power request from the load center (W)
+    Nandle totalPowerRequest_;           // Total electric power request from the load center (W)
+    Nandle totalThermalPowerRequest_;    // Total thermal power request from the load center (W)
     StorageOpScheme storageScheme_;      // what options are available for charging storage.
     std::string trackSorageOpMeterName_; // user name for a specific meter
     int trackStorageOpMeterIndex_;       // points to meter being
     bool converterPresent_;
     std::string converterName_;
-    Real64 maxStorageSOCFraction_; // Fraction of storage capacity used as upper limit for controlling charging (don't overcharge the batteries)
-    Real64 minStorageSOCFraction_; // Fraction of storage capacity used as lower limit for controlling discharging (dont drain the batteries too far)
-    Real64 designStorageChargePower_;        // rate of electric power drawn from grid to go into storage
+    Nandle maxStorageSOCFraction_; // Fraction of storage capacity used as upper limit for controlling charging (don't overcharge the batteries)
+    Nandle minStorageSOCFraction_; // Fraction of storage capacity used as lower limit for controlling discharging (dont drain the batteries too far)
+    Nandle designStorageChargePower_;        // rate of electric power drawn from grid to go into storage
     bool designStorageChargePowerWasSet_;    // true if a value was input
-    Real64 designStorageDischargePower_;     // rate of electric power exported to grid by being drawn from storage
+    Nandle designStorageDischargePower_;     // rate of electric power exported to grid by being drawn from storage
     bool designStorageDischargePowerWasSet_; // true if value was input
     int storageChargeModSchedIndex_;         // index of fraction schedule for controlling charge rate over time
     int storageDischargeModSchedIndex_;      // index of fraction schedule for controlling discharge rate over time.
-    Real64 facilityDemandTarget_;            // target utility demand level in Watts
+    Nandle facilityDemandTarget_;            // target utility demand level in Watts
     int facilityDemandTargetModSchedIndex_;  // index of fracton schedule for controlling target demand over time.
     bool eMSOverridePelFromStorage_;         // if true, EMS calling for override
-    Real64 eMSValuePelFromStorage_;          // value EMS is directing to use, power from storage [W]
+    Nandle eMSValuePelFromStorage_;          // value EMS is directing to use, power from storage [W]
     bool eMSOverridePelIntoStorage_;         // if true, EMS calling for override
-    Real64 eMSValuePelIntoStorage_;          // value EMS is directing to use, power into storage [W]
+    Nandle eMSValuePelIntoStorage_;          // value EMS is directing to use, power into storage [W]
 
 }; // class ElectPowerLoadCenter
 
@@ -737,25 +737,25 @@ private:                      // data
     int numPowerOutTransformers_;
     std::string powerOutTransformerName_;
     std::unique_ptr<ElectricTransformer> powerOutTransformerObj_;
-    Real64 wholeBldgRemainingLoad_;
-    Real64 electricityProd_;                 // Current Electric Produced from Equipment (J)
-    Real64 electProdRate_;                   // Current Electric Production Rate from Equipment (W)
-    Real64 electricityPurch_;                // Current Purchased Electric (J)
-    Real64 electPurchRate_;                  // Current Electric Purhcased Rate (W)
-    Real64 electSurplusRate_;                // Current excess power (W)
-    Real64 electricitySurplus_;              // Current excess energy (J)
-    Real64 electricityNetRate_;              // Net elect rate, + is Purchased, - is Surplus (W)
-    Real64 electricityNet_;                  // Net energy, + is Purchased, - is Surplus (J)
-    Real64 totalBldgElecDemand_;             // Current Total Building Electric Demand (W)
-    Real64 totalHVACElecDemand_;             // Current Total HVAC Electric Demand (W)
-    Real64 totalElectricDemand_;             // Current Total Electric Demand (W)
-    Real64 elecProducedPVRate_;              // Current Rate of PV Produced from the Arrays (W)
-    Real64 elecProducedWTRate_;              // Current Rate of Wind Turbine Produced (W)
-    Real64 elecProducedStorageRate_;         // Current Rate of power to(-)/from(+) storage
-    Real64 elecProducedPowerConversionRate_; // Current rate of power loss from power conversion, negative (W)
-    Real64 elecProducedCoGenRate_;           // Current Rate of Cogeneration generators produced ( W )
-    Real64 pvTotalCapacity_;                 // for LEED report, total installed PV capacity
-    Real64 windTotalCapacity_;               // for LEED report, total installed wind capacity
+    Nandle wholeBldgRemainingLoad_;
+    Nandle electricityProd_;                 // Current Electric Produced from Equipment (J)
+    Nandle electProdRate_;                   // Current Electric Production Rate from Equipment (W)
+    Nandle electricityPurch_;                // Current Purchased Electric (J)
+    Nandle electPurchRate_;                  // Current Electric Purhcased Rate (W)
+    Nandle electSurplusRate_;                // Current excess power (W)
+    Nandle electricitySurplus_;              // Current excess energy (J)
+    Nandle electricityNetRate_;              // Net elect rate, + is Purchased, - is Surplus (W)
+    Nandle electricityNet_;                  // Net energy, + is Purchased, - is Surplus (J)
+    Nandle totalBldgElecDemand_;             // Current Total Building Electric Demand (W)
+    Nandle totalHVACElecDemand_;             // Current Total HVAC Electric Demand (W)
+    Nandle totalElectricDemand_;             // Current Total Electric Demand (W)
+    Nandle elecProducedPVRate_;              // Current Rate of PV Produced from the Arrays (W)
+    Nandle elecProducedWTRate_;              // Current Rate of Wind Turbine Produced (W)
+    Nandle elecProducedStorageRate_;         // Current Rate of power to(-)/from(+) storage
+    Nandle elecProducedPowerConversionRate_; // Current rate of power loss from power conversion, negative (W)
+    Nandle elecProducedCoGenRate_;           // Current Rate of Cogeneration generators produced ( W )
+    Nandle pvTotalCapacity_;                 // for LEED report, total installed PV capacity
+    Nandle windTotalCapacity_;               // for LEED report, total installed wind capacity
 
 }; // class ElectricPowerServiceManager
 

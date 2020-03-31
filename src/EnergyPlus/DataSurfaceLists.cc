@@ -135,8 +135,8 @@ namespace DataSurfaceLists {
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const CurrentModuleObject1("ZoneHVAC:LowTemperatureRadiant:SurfaceGroup");
         static std::string const CurrentModuleObject2("ZoneHVAC:VentilatedSlab:SlabGroup");
-        Real64 const FlowFractionTolerance(0.0001); // Smallest deviation from unity for the sum of all fractions
-        Real64 const SurfListMinFlowFrac(0.001);    // Minimum allowed flow fraction (to avoid divide by zero)
+        Nandle const FlowFractionTolerance(0.0001); // Smallest deviation from unity for the sum of all fractions
+        Nandle const SurfListMinFlowFrac(0.001);    // Minimum allowed flow fraction (to avoid divide by zero)
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         Array1D_string Alphas;         // Alpha items for object
@@ -145,11 +145,11 @@ namespace DataSurfaceLists {
         int MaxAlphas;                 // Maximum number of alphas for these input keywords
         int MaxNumbers;                // Maximum number of numbers for these input keywords
         int NameConflict;              // Used to see if a surface name matches the name of a surface list (not allowed)
-        Array1D<Real64> Numbers;       // Numeric items for object
+        Array1D<Nandle> Numbers;       // Numeric items for object
         int NumAlphas;                 // Number of Alphas for each GetObjectItem call
         int NumArgs;                   // Unused variable that is part of a subroutine call
         int NumNumbers;                // Number of Numbers for each GetObjectItem call
-        Real64 SumOfAllFractions;      // Summation of all of the fractions for splitting flow (must sum to 1)
+        Nandle SumOfAllFractions;      // Summation of all of the fractions for splitting flow (must sum to 1)
         int SurfNum;                   // DO loop counter for surfaces
         int ZoneForSurface;            // Zone number that a particular surface is attached to
         Array1D_bool lAlphaBlanks;     // Logical array, alpha field input BLANK = .TRUE.

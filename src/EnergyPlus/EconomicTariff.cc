@@ -1023,7 +1023,7 @@ namespace EconomicTariff {
         bool isNotNumeric;
         int jBlk;               // loop index for blocks
         int alphaOffset;        // offset used in blocks for alpha array
-        Real64 hugeNumber(0.0); // Autodesk Value not used but suppresses warning about HUGE_() call
+        Nandle hugeNumber(0.0); // Autodesk Value not used but suppresses warning about HUGE_() call
         int jFld;
         std::string CurrentModuleObject; // for ease in renaming.
 
@@ -2742,17 +2742,17 @@ namespace EconomicTariff {
         using ScheduleManager::GetCurrentScheduleValue;
 
         int iTariff;
-        Real64 curInstantValue;
-        Real64 curDemand;
-        Real64 curEnergy;
+        Nandle curInstantValue;
+        Nandle curDemand;
+        Nandle curEnergy;
         bool isGood;
         int curSeason;
         int curMonth;
         int curPeriod;
-        Real64 curRTPprice;    // real time price
-        Real64 curRTPbaseline; // real time price customer baseline load
-        Real64 curRTPenergy;   // energy applied to real time price
-        Real64 curRTPcost;     // cost for energy for current time
+        Nandle curRTPprice;    // real time price
+        Nandle curRTPbaseline; // real time price customer baseline load
+        Nandle curRTPenergy;   // energy applied to real time price
+        Nandle curRTPcost;     // cost for energy for current time
 
         if (numTariff >= 1) {
             for (iTariff = 1; iTariff <= numTariff; ++iTariff) {
@@ -2881,13 +2881,13 @@ namespace EconomicTariff {
         using OutputReportTabular::WriteTabularFiles;
 
         // values used in specific operations
-        Array1D<Real64> a(MaxNumMonths);
+        Array1D<Nandle> a(MaxNumMonths);
         int aPt;
-        Array1D<Real64> b(MaxNumMonths);
+        Array1D<Nandle> b(MaxNumMonths);
         int bPt;
-        Array1D<Real64> c(MaxNumMonths);
+        Array1D<Nandle> c(MaxNumMonths);
         int cPt;
-        Array1D<Real64> d(MaxNumMonths);
+        Array1D<Nandle> d(MaxNumMonths);
 
         int iTariff;
         int jStep;
@@ -2896,11 +2896,11 @@ namespace EconomicTariff {
         int curStep;
         int const noVar(0);
 
-        Real64 hugeValue;
-        Real64 annualAggregate;
+        Nandle hugeValue;
+        Nandle annualAggregate;
         int annualCnt;
 
-        hugeValue = HUGE_(Real64());
+        hugeValue = HUGE_(Nandle());
         //  Clear the isEvaluated flags for all economics variables.
         for (nVar = 1; nVar <= numEconVar; ++nVar) {
             econVar(nVar).isEvaluated = false;
@@ -3248,7 +3248,7 @@ namespace EconomicTariff {
         }
     }
 
-    void pushStack(Array1A<Real64> const monthlyArray, int const variablePointer)
+    void pushStack(Array1A<Nandle> const monthlyArray, int const variablePointer)
     {
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
         //    DATE WRITTEN   July 2004
@@ -3264,7 +3264,7 @@ namespace EconomicTariff {
 
         monthlyArray.dim(MaxNumMonths);
 
-        Array1D<Real64> curMonthlyArray(MaxNumMonths);
+        Array1D<Nandle> curMonthlyArray(MaxNumMonths);
         int const sizeIncrement(50);
 
         curMonthlyArray = monthlyArray;
@@ -3320,7 +3320,7 @@ namespace EconomicTariff {
         stack(topOfStack).values = curMonthlyArray;
     }
 
-    void popStack(Array1A<Real64> monthlyArray, int &variablePointer)
+    void popStack(Array1A<Nandle> monthlyArray, int &variablePointer)
     {
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
         //    DATE WRITTEN   July 2004
@@ -3354,10 +3354,10 @@ namespace EconomicTariff {
 
         int curTariff;
         int indexInChg;
-        Array1D<Real64> sourceVals(MaxNumMonths);
-        Array1D<Real64> costPer(MaxNumMonths);
-        Array1D<Real64> resultChg(MaxNumMonths);
-        Array1D<Real64> seasonMask(MaxNumMonths);
+        Array1D<Nandle> sourceVals(MaxNumMonths);
+        Array1D<Nandle> costPer(MaxNumMonths);
+        Array1D<Nandle> resultChg(MaxNumMonths);
+        Array1D<Nandle> seasonMask(MaxNumMonths);
 
         curTariff = econVar(usingVariable).tariffIndx;
         indexInChg = econVar(usingVariable).index;
@@ -3413,14 +3413,14 @@ namespace EconomicTariff {
         int indexInChg;
         int iBlk;
         int jMonth;
-        Array1D<Real64> sourceVals(MaxNumMonths);
-        Array1D<Real64> blkSzMult(MaxNumMonths);
-        Array1D<Real64> remainVals(MaxNumMonths);
-        Array1D<Real64> resultChg(MaxNumMonths);
-        Array1D<Real64> amountForBlk(MaxNumMonths);
-        Array1D<Real64> curBlkSz(MaxNumMonths);
-        Array1D<Real64> curBlkCost(MaxNumMonths);
-        Array1D<Real64> seasonMask(MaxNumMonths);
+        Array1D<Nandle> sourceVals(MaxNumMonths);
+        Array1D<Nandle> blkSzMult(MaxNumMonths);
+        Array1D<Nandle> remainVals(MaxNumMonths);
+        Array1D<Nandle> resultChg(MaxNumMonths);
+        Array1D<Nandle> amountForBlk(MaxNumMonths);
+        Array1D<Nandle> curBlkSz(MaxNumMonths);
+        Array1D<Nandle> curBlkCost(MaxNumMonths);
+        Array1D<Nandle> seasonMask(MaxNumMonths);
         bool flagAllZero;
 
         curTariff = econVar(usingVariable).tariffIndx;
@@ -3523,19 +3523,19 @@ namespace EconomicTariff {
 
         int curTariff;
         int indexInChg;
-        Array1D<Real64> baselineVals(MaxNumMonths);
-        Array1D<Real64> adjustmentVals(MaxNumMonths);
-        Array1D<Real64> multiplierVals(MaxNumMonths);
-        Array1D<Real64> offsetVals(MaxNumMonths);
-        Array1D<Real64> seasonFromMask(MaxNumMonths);
-        Array1D<Real64> seasonToMask(MaxNumMonths);
+        Array1D<Nandle> baselineVals(MaxNumMonths);
+        Array1D<Nandle> adjustmentVals(MaxNumMonths);
+        Array1D<Nandle> multiplierVals(MaxNumMonths);
+        Array1D<Nandle> offsetVals(MaxNumMonths);
+        Array1D<Nandle> seasonFromMask(MaxNumMonths);
+        Array1D<Nandle> seasonToMask(MaxNumMonths);
         bool isMonthly(false);
-        Array1D<Real64> adjSeasonal(MaxNumMonths);
-        Array1D<Real64> adjPeak(MaxNumMonths);
-        Array1D<Real64> maxAdjBase(MaxNumMonths);
-        Real64 maximumVal;
+        Array1D<Nandle> adjSeasonal(MaxNumMonths);
+        Array1D<Nandle> adjPeak(MaxNumMonths);
+        Array1D<Nandle> maxAdjBase(MaxNumMonths);
+        Nandle maximumVal;
         int iMonth;
-        Array1D<Real64> finalResult(MaxNumMonths);
+        Array1D<Nandle> finalResult(MaxNumMonths);
 
         curTariff = econVar(usingVariable).tariffIndx;
         indexInChg = econVar(usingVariable).index;
@@ -3610,7 +3610,7 @@ namespace EconomicTariff {
         if (isMonthly) {
             adjSeasonal = adjustmentVals;
         } else {
-            maximumVal = -HUGE_(Real64());
+            maximumVal = -HUGE_(Nandle());
             for (iMonth = 1; iMonth <= MaxNumMonths; ++iMonth) {
                 if (seasonFromMask(iMonth) == 1) {
                     if (adjustmentVals(iMonth) > maximumVal) {
@@ -3650,10 +3650,10 @@ namespace EconomicTariff {
 
         int curTariff;
         int indexInQual;
-        Array1D<Real64> sourceVals(MaxNumMonths);
-        Array1D<Real64> thresholdVals(MaxNumMonths);
+        Array1D<Nandle> sourceVals(MaxNumMonths);
+        Array1D<Nandle> thresholdVals(MaxNumMonths);
         Array1D_int monthsQualify(MaxNumMonths);
-        Array1D<Real64> seasonMask(MaxNumMonths);
+        Array1D<Nandle> seasonMask(MaxNumMonths);
         bool curIsMaximum;
         bool curIsConsecutive;
         int curNumberOfMonths;
@@ -3858,8 +3858,8 @@ namespace EconomicTariff {
         int iTariff;
         int jPeriod;
         int kMonth;
-        Array1D<Real64> monthVal(MaxNumMonths);
-        Real64 bigNumber(0.0); // Autodesk Value not used but suppresses warning about HUGE_() call
+        Array1D<Nandle> monthVal(MaxNumMonths);
+        Nandle bigNumber(0.0); // Autodesk Value not used but suppresses warning about HUGE_() call
 
         bigNumber = HUGE_(bigNumber);
         for (iTariff = 1; iTariff <= numTariff; ++iTariff) {
@@ -4045,17 +4045,17 @@ namespace EconomicTariff {
         int gasFacilMeter;
         int distCoolFacilMeter;
         int distHeatFacilMeter;
-        Real64 elecTotalEne;
-        Real64 gasTotalEne;
-        Real64 distCoolTotalEne;
-        Real64 distHeatTotalEne;
-        Real64 otherTotalEne;
-        Real64 elecTotalCost;
-        Real64 gasTotalCost;
-        Real64 otherTotalCost;
-        Real64 distCoolTotalCost;
-        Real64 distHeatTotalCost;
-        Real64 allTotalCost;
+        Nandle elecTotalEne;
+        Nandle gasTotalEne;
+        Nandle distCoolTotalEne;
+        Nandle distHeatTotalEne;
+        Nandle otherTotalEne;
+        Nandle elecTotalCost;
+        Nandle gasTotalCost;
+        Nandle otherTotalCost;
+        Nandle distCoolTotalCost;
+        Nandle distHeatTotalCost;
+        Nandle allTotalCost;
         std::string elecTariffNames;
         std::string gasTariffNames;
         std::string distCoolTariffNames;
@@ -4207,10 +4207,10 @@ namespace EconomicTariff {
         // other local variables
         int elecFacilMeter;
         int gasFacilMeter;
-        Real64 elecTotalCost;
-        Real64 gasTotalCost;
-        Real64 otherTotalCost;
-        Real64 allTotalCost;
+        Nandle elecTotalCost;
+        Nandle gasTotalCost;
+        Nandle otherTotalCost;
+        Nandle allTotalCost;
         std::string outString; // an arbitarilty long string
         int curStep;
         int indexInChg;
@@ -4219,7 +4219,7 @@ namespace EconomicTariff {
         int lStep;
         std::string SIunit;
         int unitConvIndex(0);
-        Real64 perAreaUnitConv(0.0);
+        Nandle perAreaUnitConv(0.0);
         std::string perAreaUnitName;
 
         // compute floor area if no ABUPS
@@ -4647,16 +4647,16 @@ namespace EconomicTariff {
         }
     }
 
-    void getMaxAndSum(int const varPointer, Real64 &sumResult, Real64 &maxResult)
+    void getMaxAndSum(int const varPointer, Nandle &sumResult, Nandle &maxResult)
     {
         //    AUTHOR         Jason Glazer of GARD Analytics, Inc.
         //    DATE WRITTEN   July 2004
 
         //    Get the annual maximum and sum for the econVariable.
 
-        Real64 sumVal;
-        Real64 maximumVal(0.0); // Autodesk Value not used but suppresses warning about HUGE_() call
-        Real64 curVal;
+        Nandle sumVal;
+        Nandle maximumVal(0.0); // Autodesk Value not used but suppresses warning about HUGE_() call
+        Nandle curVal;
         int jMonth;
 
         sumVal = 0.0;
@@ -4692,9 +4692,9 @@ namespace EconomicTariff {
         Array1D_int columnWidth;
         Array1D_string rowHead;
         Array2D_string tableBody;
-        Real64 sumVal;
-        Real64 maximumVal;
-        Real64 curVal;
+        Nandle sumVal;
+        Nandle maximumVal;
+        Nandle curVal;
         int curIndex;
         int curCatPt;
         int curCategory;
@@ -4847,8 +4847,8 @@ namespace EconomicTariff {
 
         int totalVarPt;
         int totEneVarPt;
-        Real64 annualTotal;
-        Real64 annEneTotal;
+        Nandle annualTotal;
+        Nandle annEneTotal;
         int iTariff;
         int jMonth;
         int kTariff;
@@ -5026,7 +5026,7 @@ namespace EconomicTariff {
         MinTariffIndex.deallocate();
     }
 
-    void GetMonthlyCostForResource(int const inResourceNumber, Array1A<Real64> outMonthlyCosts)
+    void GetMonthlyCostForResource(int const inResourceNumber, Array1A<Nandle> outMonthlyCosts)
     {
         //       AUTHOR         Jason Glazer
         //       DATE WRITTEN   May 2010

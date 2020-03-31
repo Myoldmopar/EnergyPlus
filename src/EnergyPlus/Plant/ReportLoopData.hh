@@ -61,13 +61,13 @@ namespace DataPlant {
         std::string NodeNameIn;  // Node name for the inlet to this loop
         int NodeNumOut;          // Node number for the outlet to this loop
         std::string NodeNameOut; // Node name for the outlet to this loop
-        Real64 Electric;
-        Real64 Gas;
-        Real64 Purchased;
-        Real64 OtherEnergy;
+        Nandle Electric;
+        Nandle Gas;
+        Nandle Purchased;
+        Nandle OtherEnergy;
         int TotalBranches; // Total number of branches on the loop
-        Real64 LoopVentLoad;
-        Real64 VentLoadFrac;
+        Nandle LoopVentLoad;
+        Nandle VentLoadFrac;
         Array1D<ReportBranchData> Branch; // Branch data
 
         // Default Constructor

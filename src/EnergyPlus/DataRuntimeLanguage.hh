@@ -262,7 +262,7 @@ namespace DataRuntimeLanguage {
         std::string UniqueIDName;    // unique id for internal var, All uppercase
         std::string Units;           // registered units, used for reporting and checks.
         int PntrVarTypeUsed;         // data type used: integer (PntrInteger) or real (PntrReal)
-        Real64 * RealValue; // POINTER to the REAL value that is being accessed
+        Nandle * RealValue; // POINTER to the REAL value that is being accessed
         int * IntValue;      // POINTER to the Integer value that is being accessed
 
         // Default Constructor
@@ -299,7 +299,7 @@ namespace DataRuntimeLanguage {
         int PntrVarTypeUsed;           // data type used: integer (PntrInteger), real (PntrReal)
         // or logical (PntrLogical)
         bool * Actuated;     // POINTER to the logical value that signals EMS is actuating
-        Real64 * RealValue; // POINTER to the REAL value that is being actuated
+        Nandle * RealValue; // POINTER to the REAL value that is being actuated
         int * IntValue;      // POINTER to the Integer value that is being actuated
         bool * LogValue;     // POINTER to the Logical value that is being actuated
 
@@ -347,7 +347,7 @@ namespace DataRuntimeLanguage {
         // Members
         // instance data structure for the values taken by Erl variables, nested structure in ErlVariable
         int Type;           // value type, eg. ValueNumber,
-        Real64 Number;      // numeric value instance for Erl variable
+        Nandle Number;      // numeric value instance for Erl variable
         std::string String; // string data types in Erl (not used yet)
         int Variable;       // Pointer to another Erl variable
         //  Might be good to change names to VariableNum and ExpressionNum just to be clear
@@ -364,7 +364,7 @@ namespace DataRuntimeLanguage {
 
         // Member Constructor
         ErlValueType(int const Type,            // value type, eg. ValueNumber,
-                     Real64 const Number,       // numeric value instance for Erl variable
+                     Nandle const Number,       // numeric value instance for Erl variable
                      std::string const &String, // string data types in Erl (not used yet)
                      int const Variable,        // Pointer to another Erl variable
                      int const Expression,      // Pointer to another Erl expression (e.g. compound operators)
@@ -459,9 +459,9 @@ namespace DataRuntimeLanguage {
         std::string Name;
         int ErlVariablePointer;       // the Erl variable being logged in trend
         int LogDepth;                 // number of timesteps back
-        Array1D<Real64> TrendValARR;  // the main storage of trend data
-        Array1D<Real64> tempTrendARR; // temporary holder during push
-        Array1D<Real64> TimeARR;      // hours back in time for trend points
+        Array1D<Nandle> TrendValARR;  // the main storage of trend data
+        Array1D<Nandle> tempTrendARR; // temporary holder during push
+        Array1D<Nandle> TimeARR;      // hours back in time for trend points
 
         // Default Constructor
         TrendVariableType() : ErlVariablePointer(0), LogDepth(0)

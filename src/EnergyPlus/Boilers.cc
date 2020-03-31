@@ -150,7 +150,7 @@ namespace Boilers {
 
     void BoilerSpecs::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                bool const EP_UNUSED(FirstHVACIteration),
-                               Real64 &CurLoad,
+                               Nandle &CurLoad,
                                bool const RunFlag)
     {
         auto &sim_component(DataPlant::PlantLoop(this->LoopNum).LoopSide(this->LoopSideNum).Branch(this->BranchNum).Comp(this->CompNum));
@@ -159,14 +159,14 @@ namespace Boilers {
         this->UpdateBoilerRecords(CurLoad, RunFlag);
     }
 
-    void BoilerSpecs::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void BoilerSpecs::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
         MinLoad = this->NomCap * this->MinPartLoadRat;
         MaxLoad = this->NomCap * this->MaxPartLoadRat;
         OptLoad = this->NomCap * this->OptPartLoadRat;
     }
 
-    void BoilerSpecs::getSizingFactor(Real64 &SizFactor)
+    void BoilerSpecs::getSizingFactor(Nandle &SizFactor)
     {
         SizFactor = this->SizFac;
     }
@@ -535,7 +535,7 @@ namespace Boilers {
 
         if (this->MyEnvrnFlag && DataGlobals::BeginEnvrnFlag && (DataPlant::PlantFirstSizesOkayToFinalize)) {
             // if ( ! PlantFirstSizeCompleted ) SizeBoiler( BoilerNum );
-            Real64 const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+            Nandle const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                  DataGlobals::HWInitConvTemp,
                                                                  DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                  RoutineName);
@@ -626,19 +626,19 @@ namespace Boilers {
         bool ErrorsFound(false); // If errors detected in input
 
         // grab some initial values for capacity and flow rate
-        Real64 tmpNomCap = this->NomCap;                 // local nominal capacity cooling power
-        Real64 tmpBoilerVolFlowRate = this->VolFlowRate; // local boiler design volume flow rate
+        Nandle tmpNomCap = this->NomCap;                 // local nominal capacity cooling power
+        Nandle tmpBoilerVolFlowRate = this->VolFlowRate; // local boiler design volume flow rate
 
         int const PltSizNum = DataPlant::PlantLoop(this->LoopNum).PlantSizNum; // Plant Sizing index corresponding to CurLoopNum
 
         if (PltSizNum > 0) {
             if (DataSizing::PlantSizData(PltSizNum).DesVolFlowRate >= DataHVACGlobals::SmallWaterVolFlow) {
 
-                Real64 const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                      DataGlobals::HWInitConvTemp,
                                                                      DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                      RoutineName);
-                Real64 const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+                Nandle const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                                          DataGlobals::HWInitConvTemp,
                                                                          DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                                          RoutineName);
@@ -657,7 +657,7 @@ namespace Boilers {
                     }
                 } else { // Hard-sized with sizing data
                     if (this->NomCap > 0.0 && tmpNomCap > 0.0) {
-                        Real64 const NomCapUser = this->NomCap; // Hardsized nominal capacity for reporting
+                        Nandle const NomCapUser = this->NomCap; // Hardsized nominal capacity for reporting
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             ReportSizingManager::ReportSizingOutput("Boiler:HotWater",
                                                                     this->Name,
@@ -709,7 +709,7 @@ namespace Boilers {
                     }
                 } else {
                     if (this->VolFlowRate > 0.0 && tmpBoilerVolFlowRate > 0.0) {
-                        Real64 VolFlowRateUser = this->VolFlowRate; // Hardsized volume flow for reporting
+                        Nandle VolFlowRateUser = this->VolFlowRate; // Hardsized volume flow for reporting
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             ReportSizingManager::ReportSizingOutput("Boiler:HotWater",
                                                                     this->Name,
@@ -761,7 +761,7 @@ namespace Boilers {
         }
     }
 
-    void BoilerSpecs::CalcBoilerModel(Real64 const MyLoad,    // W - hot water demand to be met by boiler
+    void BoilerSpecs::CalcBoilerModel(Nandle const MyLoad,    // W - hot water demand to be met by boiler
                                       bool const RunFlag,     // TRUE if boiler operating
                                       int const EquipFlowCtrl // Flow control mode for the equipment
     )
@@ -794,14 +794,14 @@ namespace Boilers {
 
         int const BoilerInletNode = this->BoilerInletNodeNum;
         int const BoilerOutletNode = this->BoilerOutletNodeNum;
-        Real64 BoilerNomCap = this->NomCap;                         // W - boiler nominal capacity
-        Real64 const BoilerMaxPLR = this->MaxPartLoadRat;           // boiler maximum part load ratio
-        Real64 const BoilerMinPLR = this->MinPartLoadRat;           // boiler minimum part load ratio
-        Real64 BoilerEff = this->Effic;                             // boiler efficiency
-        Real64 const TempUpLimitBout = this->TempUpLimitBoilerOut;  // C - boiler high temperature limit
-        Real64 const BoilerMassFlowRateMax = this->DesMassFlowRate; // Max Design Boiler Mass Flow Rate converted from Volume Flow Rate
+        Nandle BoilerNomCap = this->NomCap;                         // W - boiler nominal capacity
+        Nandle const BoilerMaxPLR = this->MaxPartLoadRat;           // boiler maximum part load ratio
+        Nandle const BoilerMinPLR = this->MinPartLoadRat;           // boiler minimum part load ratio
+        Nandle BoilerEff = this->Effic;                             // boiler efficiency
+        Nandle const TempUpLimitBout = this->TempUpLimitBoilerOut;  // C - boiler high temperature limit
+        Nandle const BoilerMassFlowRateMax = this->DesMassFlowRate; // Max Design Boiler Mass Flow Rate converted from Volume Flow Rate
 
-        Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+        Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                                            DataLoopNode::Node(BoilerInletNode).Temp,
                                                            DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                                            RoutineName);
@@ -818,8 +818,8 @@ namespace Boilers {
         // If there is a fault of boiler fouling (zrp_Nov2016)
         if (this->FaultyBoilerFoulingFlag && (!DataGlobals::WarmupFlag) && (!DataGlobals::DoingSizing) && (!DataGlobals::KickOffSimulation)) {
             int FaultIndex = this->FaultyBoilerFoulingIndex;
-            Real64 NomCap_ff = BoilerNomCap;
-            Real64 BoilerEff_ff = BoilerEff;
+            Nandle NomCap_ff = BoilerNomCap;
+            Nandle BoilerEff_ff = BoilerEff;
 
             // calculate the Faulty Boiler Fouling Factor using fault information
             this->FaultyBoilerFoulingFactor = FaultsManager::FaultsBoilerFouling(FaultIndex).CalFoulingFactor();
@@ -833,7 +833,7 @@ namespace Boilers {
         this->BoilerLoad = MyLoad;
 
         // Initialize the delta temperature to zero
-        Real64 BoilerDeltaTemp; // C - boiler inlet to outlet temperature difference, set in all necessary code paths so no initialization required
+        Nandle BoilerDeltaTemp; // C - boiler inlet to outlet temperature difference, set in all necessary code paths so no initialization required
 
         if (DataPlant::PlantLoop(this->LoopNum).LoopSide(this->LoopSideNum).FlowLock == 0) {
             // Either set the flow to the Constant value or calculate the flow for the variable volume
@@ -908,8 +908,8 @@ namespace Boilers {
         this->BoilerPLR = max(this->BoilerPLR, BoilerMinPLR);
 
         // calculate theoretical fuel use based on nominal thermal efficiency
-        Real64 const TheorFuelUse = this->BoilerLoad / BoilerEff; // Theoretical (stoichiometric) fuel use
-        Real64 EffCurveOutput = 1.0;                              // Output of boiler efficiency curve
+        Nandle const TheorFuelUse = this->BoilerLoad / BoilerEff; // Theoretical (stoichiometric) fuel use
+        Nandle EffCurveOutput = 1.0;                              // Output of boiler efficiency curve
 
         // calculate normalized efficiency based on curve object type
         if (this->EfficiencyCurvePtr > 0) {
@@ -992,7 +992,7 @@ namespace Boilers {
         if (this->BoilerLoad > 0.0) this->ParasiticElecPower = this->ParasiticElecLoad * this->BoilerPLR;
     }
 
-    void BoilerSpecs::UpdateBoilerRecords(Real64 const MyLoad, // boiler operating load
+    void BoilerSpecs::UpdateBoilerRecords(Nandle const MyLoad, // boiler operating load
                                           bool const RunFlag   // boiler on when TRUE
     )
     {
@@ -1003,7 +1003,7 @@ namespace Boilers {
         // PURPOSE OF THIS SUBROUTINE:
         // boiler simulation reporting
 
-        Real64 const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
+        Nandle const ReportingConstant = DataHVACGlobals::TimeStepSys * DataGlobals::SecInHour;
         int const BoilerInletNode = this->BoilerInletNodeNum;
         int const BoilerOutletNode = this->BoilerOutletNodeNum;
 

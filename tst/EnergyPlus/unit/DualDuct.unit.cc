@@ -82,9 +82,9 @@ TEST_F(EnergyPlusFixture, TestDualDuctOAMassFlowRateUsingStdRhoAir)
     // DATE WRITTEN: Jul. 2016
     // TEST: #5769
 
-    Real64 SAMassFlow;
-    Real64 AirLoopOAFrac;
-    Real64 OAMassFlow;
+    Nandle SAMassFlow;
+    Nandle AirLoopOAFrac;
+    Nandle OAMassFlow;
 
     int numOfdd_airterminals = 2;
 
@@ -466,8 +466,8 @@ TEST_F(EnergyPlusFixture, DualDuctVAVAirTerminals_MinFlowTurnDownTest)
     int ColdInNode = thisDDAirTerminal.ColdAirInletNodeNum;
 
     // calculate mass flow rates
-    Real64 SysMinMassFlowRes = 1.0 * DataEnvironment::StdRhoAir * 0.30 * 1.0; // min flow rate at 1.0 turndown fraction
-    Real64 SysMaxMassFlowRes = 1.0 * DataEnvironment::StdRhoAir;              // inputs from dual duct VAV AT
+    Nandle SysMinMassFlowRes = 1.0 * DataEnvironment::StdRhoAir * 0.30 * 1.0; // min flow rate at 1.0 turndown fraction
+    Nandle SysMaxMassFlowRes = 1.0 * DataEnvironment::StdRhoAir;              // inputs from dual duct VAV AT
 
     DataZoneEnergyDemands::ZoneSysEnergyDemand(ZoneNum).RemainingOutputRequired = 2000.0;
     DataLoopNode::Node(ZoneNodeNum).Temp = 20.0;

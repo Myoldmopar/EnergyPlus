@@ -1781,7 +1781,7 @@ TEST_F(EnergyPlusFixture, ChillerAbsorption_Calc)
     // set conditions for test
     int AbsChillNum = 1;
     int EquipFlowCtrl = 1;
-    Real64 AbsChillEvapLoad;
+    Nandle AbsChillEvapLoad;
     bool AbsChillRunFlag = true;
     // check chiller inputs
     EXPECT_EQ(BLASTAbsorber(AbsChillNum).NomCap, 100000.0);
@@ -1802,12 +1802,12 @@ TEST_F(EnergyPlusFixture, ChillerAbsorption_Calc)
     Node(GeneratorInletNode).MassFlowRateMax = BLASTAbsorber(AbsChillNum).GenMassFlowRateMax;
     Node(GeneratorInletNode).MassFlowRateMaxAvail = BLASTAbsorber(AbsChillNum).GenMassFlowRateMax;
     // calc evap load
-    Real64 CpFluid = 4179.0;
-    Real64 EvapMassFlowRate = DataLoopNode::Node(EvapInletNode).MassFlowRate;
+    Nandle CpFluid = 4179.0;
+    Nandle EvapMassFlowRate = DataLoopNode::Node(EvapInletNode).MassFlowRate;
     AbsChillEvapLoad = EvapMassFlowRate * CpFluid * (DataLoopNode::Node(EvapOutletNode).TempSetPoint - DataLoopNode::Node(EvapInletNode).Temp);
     BLASTAbsorber(AbsChillNum).NomCap = 2.0 * abs(AbsChillEvapLoad);
     // generator hot water mass flow rate is calculated proportional to evap mass flow rate for flow mode = LeavingSetPointModulated
-    Real64 GenMassFlowRateTestResult =
+    Nandle GenMassFlowRateTestResult =
         (Node(EvapInletNode).MassFlowRate / BLASTAbsorber(AbsChillNum).EvapMassFlowRateMax) * BLASTAbsorber(AbsChillNum).GenMassFlowRateMax;
     // lock the evap flow at test condition specified
     int LoopNum = BLASTAbsorber(AbsChillNum).CWLoopNum;

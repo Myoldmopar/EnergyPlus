@@ -102,7 +102,7 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ChWCoil)
     DataPlant::PlantLoop(1).LoopSide(2).Branch(1).Comp(1).NodeNumIn = chWInletNodeNum;
     DataPlant::PlantLoop(1).LoopSide(2).Branch(1).Comp(1).NodeNumOut = chWOutletNodeNum;
 
-    Real64 airVdot(0.052);   // air flow rate in m3/s
+    Nandle airVdot(0.052);   // air flow rate in m3/s
     bool isAutoSized(false); // true if autosized
     coilSelectionReportObj->setCoilAirFlow(coil1Name, coil1Type, airVdot, isAutoSized);
     auto &c1(coilSelectionReportObj->coilSelectionDataObjs[0]);
@@ -112,7 +112,7 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ChWCoil)
     EXPECT_EQ(isAutoSized, c1->volFlowIsAutosized);
 
     int loopNum = 1;
-    Real64 waterVdot = 0.05;
+    Nandle waterVdot = 0.05;
     // First with no plant sizing objects defined
     isAutoSized = false; // true if autosized
     coilSelectionReportObj->setCoilWaterFlowNodeNums(coil1Name, coil1Type, waterVdot, isAutoSized, chWInletNodeNum, chWOutletNodeNum, loopNum);
@@ -153,12 +153,12 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ChWCoil)
     EXPECT_EQ(DataPlant::PlantLoop(1).Name, c1b->plantLoopName);
     EXPECT_NEAR(999.9, c1b->rhoFluid, 0.1);
     EXPECT_NEAR(4197.9, c1b->cpFluid, 0.1);
-    Real64 expFlow = waterVdot * c1b->rhoFluid;
+    Nandle expFlow = waterVdot * c1b->rhoFluid;
     EXPECT_NEAR(expFlow, c1b->coilDesWaterMassFlow, 0.01);
     EXPECT_EQ("Yes", c1b->coilWaterFlowAutoMsg);
 
-    Real64 uA = 1000.00;
-    Real64 sizingCap = 500.0;
+    Nandle uA = 1000.00;
+    Nandle sizingCap = 500.0;
     int curSysNum = 1;
     int curZoneEqNum = 0;
     isAutoSized = true; // true if autosized
@@ -182,7 +182,7 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ChWCoil)
     EXPECT_EQ(curZoneEqNum, c2->zoneEqNum);
 
     // This coil serves zones 2 and 3 - rmLatentAtPeak is summed for all applicable zones
-    Real64 zoneCoolingLatentLoad = 1000.0;
+    Nandle zoneCoolingLatentLoad = 1000.0;
     int zoneNum = 1;
     coilSelectionReportObj->setZoneLatentLoadCoolingIdealPeak(zoneNum, zoneCoolingLatentLoad);
     EXPECT_EQ(0.0, c2->rmLatentAtPeak);
@@ -210,7 +210,7 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ChWCoil)
     EXPECT_EQ(curZoneEqNum, c3->zoneEqNum);
 
     // This coil serves zones 2 and 3 - rmLatentAtPeak is summed for all applicable zones
-    Real64 zoneHeatingLatentLoad = 100.0;
+    Nandle zoneHeatingLatentLoad = 100.0;
     zoneNum = 1;
     coilSelectionReportObj->setZoneLatentLoadHeatingIdealPeak(zoneNum, zoneHeatingLatentLoad);
     EXPECT_EQ(0.0, c3->rmLatentAtPeak);
@@ -253,7 +253,7 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_SteamCoil)
     DataPlant::PlantLoop(1).LoopSide(2).Branch(1).Comp(1).NodeNumIn = wInletNodeNum;
     DataPlant::PlantLoop(1).LoopSide(2).Branch(1).Comp(1).NodeNumOut = wOutletNodeNum;
 
-    Real64 airVdot(0.052);   // air flow rate in m3/s
+    Nandle airVdot(0.052);   // air flow rate in m3/s
     bool isAutoSized(false); // true if autosized
     coilSelectionReportObj->setCoilAirFlow(coil1Name, coil1Type, airVdot, isAutoSized);
     auto &c1(coilSelectionReportObj->coilSelectionDataObjs[0]);
@@ -263,7 +263,7 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_SteamCoil)
     EXPECT_EQ(isAutoSized, c1->volFlowIsAutosized);
 
     int loopNum = 1;
-    Real64 waterVdot = 0.05;
+    Nandle waterVdot = 0.05;
     // First with no plant sizing objects defined
     isAutoSized = false; // true if autosized
     coilSelectionReportObj->setCoilWaterFlowNodeNums(coil1Name, coil1Type, waterVdot, isAutoSized, wInletNodeNum, wOutletNodeNum, loopNum);
@@ -288,7 +288,7 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_SteamCoil)
     EXPECT_EQ(DataPlant::PlantLoop(1).Name, c1b->plantLoopName);
     EXPECT_NEAR(0.6, c1b->rhoFluid, 0.01);
     EXPECT_NEAR(4216.0, c1b->cpFluid, 0.1);
-    Real64 expFlow = waterVdot * c1b->rhoFluid;
+    Nandle expFlow = waterVdot * c1b->rhoFluid;
     EXPECT_NEAR(expFlow, c1b->coilDesWaterMassFlow, 0.01);
     EXPECT_EQ("Yes", c1b->coilWaterFlowAutoMsg);
 
@@ -322,10 +322,10 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ZoneEqCoil)
     DataZoneEquipment::ZoneEquipList(curZoneEqNum).EquipType(2) = "ZoneHVAC:UnitHeater";
     DataZoneEquipment::ZoneEquipList(curZoneEqNum).EquipType_Num(2) = DataHVACGlobals::ZoneEquipTypeOf_UnitVentilator;
 
-    Real64 totGrossCap = 500.0;
-    Real64 sensGrossCap = 500.0;
-    Real64 airFlowRate = 0.11;
-    Real64 waterFlowRate = 0.0;
+    Nandle totGrossCap = 500.0;
+    Nandle sensGrossCap = 500.0;
+    Nandle airFlowRate = 0.11;
+    Nandle waterFlowRate = 0.0;
 
     coilSelectionReportObj->setCoilFinalSizes(coil1Name, coil1Type, totGrossCap, sensGrossCap, airFlowRate, waterFlowRate);
     auto &c1(coilSelectionReportObj->coilSelectionDataObjs[0]);
@@ -334,19 +334,19 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ZoneEqCoil)
     EXPECT_EQ(airFlowRate, c1->coilRefAirVolFlowFinal);
     EXPECT_EQ(waterFlowRate, c1->coilRefWaterVolFlowFinal);
 
-    Real64 RatedCoilTotCap = 400.0;
-    Real64 RatedCoilSensCap = 399.0;
-    Real64 RatedAirMassFlow = 0.001;
-    Real64 RatedCoilInDb = -999.0;
-    Real64 RatedCoilInHumRat = -999.0;
-    Real64 RatedCoilInWb = 20.0;
-    Real64 RatedCoilOutDb = -999.0;
-    Real64 RatedCoilOutHumRat = -999.0;
-    Real64 RatedCoilOutWb = 30.0;
-    Real64 RatedCoilOadbRef = 24.0;
-    Real64 RatedCoilOawbRef = 16.0;
-    Real64 RatedCoilBpFactor = 0.2;
-    Real64 RatedCoilEff = 0.8;
+    Nandle RatedCoilTotCap = 400.0;
+    Nandle RatedCoilSensCap = 399.0;
+    Nandle RatedAirMassFlow = 0.001;
+    Nandle RatedCoilInDb = -999.0;
+    Nandle RatedCoilInHumRat = -999.0;
+    Nandle RatedCoilInWb = 20.0;
+    Nandle RatedCoilOutDb = -999.0;
+    Nandle RatedCoilOutHumRat = -999.0;
+    Nandle RatedCoilOutWb = 30.0;
+    Nandle RatedCoilOadbRef = 24.0;
+    Nandle RatedCoilOawbRef = 16.0;
+    Nandle RatedCoilBpFactor = 0.2;
+    Nandle RatedCoilEff = 0.8;
 
     // First without setting coil inlet/outlet conditions
     coilSelectionReportObj->setRatedCoilConditions(coil1Name,
@@ -408,43 +408,43 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ZoneEqCoil)
     EXPECT_EQ(RatedCoilOutHumRat, c1->ratedCoilOutHumRat);
     EXPECT_NEAR(63371.3, c1->ratedCoilOutEnth, 0.1);
 
-    Real64 entAirDryBulbTemp = 24.0;
+    Nandle entAirDryBulbTemp = 24.0;
     coilSelectionReportObj->setCoilEntAirTemp(coil1Name, coil1Type, entAirDryBulbTemp, curSysNum, curZoneEqNum);
     EXPECT_EQ(entAirDryBulbTemp, c1->coilDesEntTemp);
     EXPECT_EQ(curSysNum, c1->airloopNum);
     EXPECT_EQ(curZoneEqNum, c1->zoneEqNum);
 
-    Real64 entAirHumRat = 0.004;
+    Nandle entAirHumRat = 0.004;
     coilSelectionReportObj->setCoilEntAirHumRat(coil1Name, coil1Type, entAirHumRat);
     EXPECT_EQ(entAirHumRat, c1->coilDesEntHumRat);
 
-    Real64 entWaterTemp = 60.0;
+    Nandle entWaterTemp = 60.0;
     coilSelectionReportObj->setCoilEntWaterTemp(coil1Name, coil1Type, entWaterTemp);
     EXPECT_EQ(entWaterTemp, c1->coilDesWaterEntTemp);
 
-    Real64 lvgWaterTemp = 50.0;
+    Nandle lvgWaterTemp = 50.0;
     coilSelectionReportObj->setCoilLvgWaterTemp(coil1Name, coil1Type, lvgWaterTemp);
     EXPECT_EQ(lvgWaterTemp, c1->coilDesWaterLvgTemp);
 
-    Real64 CoilWaterDeltaT = 50.0;
+    Nandle CoilWaterDeltaT = 50.0;
     coilSelectionReportObj->setCoilWaterDeltaT(coil1Name, coil1Type, CoilWaterDeltaT);
     EXPECT_EQ(CoilWaterDeltaT, c1->coilDesWaterTempDiff);
 
-    Real64 lvgAirDryBulbTemp = 12.0;
+    Nandle lvgAirDryBulbTemp = 12.0;
     coilSelectionReportObj->setCoilLvgAirTemp(coil1Name, coil1Type, lvgAirDryBulbTemp);
     EXPECT_EQ(lvgAirDryBulbTemp, c1->coilDesLvgTemp);
 
-    Real64 lvgAirHumRat = 0.006;
+    Nandle lvgAirHumRat = 0.006;
     coilSelectionReportObj->setCoilLvgAirHumRat(coil1Name, coil1Type, lvgAirHumRat);
     EXPECT_EQ(lvgAirHumRat, c1->coilDesLvgHumRat);
 
     int zoneNum = 1;
-    Real64 zoneCoolingLatentLoad = 1234.0;
+    Nandle zoneCoolingLatentLoad = 1234.0;
     coilSelectionReportObj->setZoneLatentLoadCoolingIdealPeak(zoneNum, zoneCoolingLatentLoad);
     // Expect zero because it's a heating coil
     EXPECT_EQ(0.0, c1->rmLatentAtPeak);
 
-    Real64 zoneHeatingLatentLoad = 4321.0;
+    Nandle zoneHeatingLatentLoad = 4321.0;
     coilSelectionReportObj->setZoneLatentLoadHeatingIdealPeak(zoneNum, zoneHeatingLatentLoad);
     // Expect zero because doZoneEqSetup isn't currently executed
     EXPECT_EQ(0.0, c1->rmLatentAtPeak);
@@ -473,10 +473,10 @@ TEST_F(EnergyPlusFixture, ReportCoilSelection_ZoneEqCoil)
     DataSizing::FinalZoneSizing(curZoneEqNum).HeatDesTemp = 30.0;
     DataSizing::FinalZoneSizing(curZoneEqNum).HeatDesHumRat = 0.007;
 
-    Real64 fanHeatGain = 1.3;
-    Real64 coilCapFunTempFac = 1.0;
-    Real64 DXFlowPerCapMinRatio = 0.00004;
-    Real64 DXFlowPerCapMaxRatio = 0.00006;
+    Nandle fanHeatGain = 1.3;
+    Nandle coilCapFunTempFac = 1.0;
+    Nandle DXFlowPerCapMinRatio = 0.00004;
+    Nandle DXFlowPerCapMaxRatio = 0.00006;
     DataEnvironment::StdRhoAir = 1.2;
     DataSizing::DataFlowUsedForSizing = airFlowRate / DataEnvironment::StdRhoAir;
 

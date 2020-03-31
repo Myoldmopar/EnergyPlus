@@ -62,16 +62,16 @@ namespace DisplacementVentMgr {
     // na
 
     // MODULE VARIABLE DECLARATIONS:
-    extern Real64 HAT_MX;                  // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone
-    extern Real64 HA_MX;                   // HA_MX Convection Coefficient times Area for the upper subzone
-    extern Real64 HAT_OC;                  // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone
-    extern Real64 HA_OC;                   // HA_OC Convection Coefficient times Area for the lower subzone
-    extern Real64 HAT_FLOOR;               // HAT_FLOOR Convection Coefficient times Area times Temperature for the floor(?) subzone
-    extern Real64 HA_FLOOR;                // HA_FLOOR Convection Coefficient times Area for the floor(?) subzone
-    extern Real64 HeightFloorSubzoneTop;   // Assumed thickness of floor subzone
-    extern Real64 ThickOccupiedSubzoneMin; // Minimum thickness of occupied subzone
-    extern Real64 HeightIntMass;           // Height of internal mass surfaces, assumed vertical, cannot exceed ceiling height
-    extern Real64 HeightIntMassDefault;    // Default height of internal mass surfaces
+    extern Nandle HAT_MX;                  // HAT_MX Convection Coefficient times Area times Temperature for the upper subzone
+    extern Nandle HA_MX;                   // HA_MX Convection Coefficient times Area for the upper subzone
+    extern Nandle HAT_OC;                  // HAT_OC Convection Coefficient times Area times Temperature for the lower subzone
+    extern Nandle HA_OC;                   // HA_OC Convection Coefficient times Area for the lower subzone
+    extern Nandle HAT_FLOOR;               // HAT_FLOOR Convection Coefficient times Area times Temperature for the floor(?) subzone
+    extern Nandle HA_FLOOR;                // HA_FLOOR Convection Coefficient times Area for the floor(?) subzone
+    extern Nandle HeightFloorSubzoneTop;   // Assumed thickness of floor subzone
+    extern Nandle ThickOccupiedSubzoneMin; // Minimum thickness of occupied subzone
+    extern Nandle HeightIntMass;           // Height of internal mass surfaces, assumed vertical, cannot exceed ceiling height
+    extern Nandle HeightIntMassDefault;    // Default height of internal mass surfaces
 
     // SUBROUTINE SPECIFICATIONS:
 
@@ -85,19 +85,19 @@ namespace DisplacementVentMgr {
 
     //**************************************************************************************************
 
-    void HcUCSDDV(int const ZoneNum, Real64 const FractionHeight);
+    void HcUCSDDV(int const ZoneNum, Nandle const FractionHeight);
 
     //**************************************************************************************************
 
-    Real64 calculateThirdOrderFloorTemperature(Real64 temperatureHistoryTerm,
-                                               Real64 HAT_floor,
-                                               Real64 HA_floor,
-                                               Real64 MCpT_Total,
-                                               Real64 MCp_Total,
-                                               Real64 occupiedTemp,
-                                               Real64 nonAirSystemResponse,
-                                               Real64 zoneMultiplier,
-                                               Real64 airCap);
+    Nandle calculateThirdOrderFloorTemperature(Nandle temperatureHistoryTerm,
+                                               Nandle HAT_floor,
+                                               Nandle HA_floor,
+                                               Nandle MCpT_Total,
+                                               Nandle MCp_Total,
+                                               Nandle occupiedTemp,
+                                               Nandle nonAirSystemResponse,
+                                               Nandle zoneMultiplier,
+                                               Nandle airCap);
 
     void CalcUCSDDV(int const ZoneNum); // Which Zonenum
 

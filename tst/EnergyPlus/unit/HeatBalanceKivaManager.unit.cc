@@ -200,7 +200,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceKiva_SetInitialBCs)
 
     // Test Initial Indoor Temperature input of 15C with Cooling/Heating Setpoints of 24C/20C
 
-    Real64 zoneAssumedTemperature1 = 15.0;
+    Nandle zoneAssumedTemperature1 = 15.0;
     HeatBalanceKivaManager::KivaInstanceMap kv1(fnd, 0, {}, 0, zoneAssumedTemperature1, 1.0, 0, &km);
 
     kv1.zoneControlNum = 1;
@@ -208,14 +208,14 @@ TEST_F(EnergyPlusFixture, HeatBalanceKiva_SetInitialBCs)
 
     kv1.setInitialBoundaryConditions(kivaweather, 1, 1, 1);
 
-    Real64 expectedResult1 = kv1.instance.bcs->slabConvectiveTemp;
+    Nandle expectedResult1 = kv1.instance.bcs->slabConvectiveTemp;
 
     EXPECT_NEAR(expectedResult1, zoneAssumedTemperature1 + DataGlobals::KelvinConv, 0.001);
 
     // Test using default Initial Indoor Temperature with Cooling/Heating Setpoints of 24C/20C
 
-    Real64 coolingSetpoint2 = 24.0;
-    Real64 zoneAssumedTemperature2 = -9999;
+    Nandle coolingSetpoint2 = 24.0;
+    Nandle zoneAssumedTemperature2 = -9999;
     HeatBalanceKivaManager::KivaInstanceMap kv2(fnd, 0, {}, 0, zoneAssumedTemperature2, 1.0, 0, &km);
 
     kv2.zoneControlNum = 1;
@@ -223,7 +223,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceKiva_SetInitialBCs)
 
     kv2.setInitialBoundaryConditions(kivaweather, 1, 1, 1);
 
-    Real64 expectedResult2 = kv2.instance.bcs->slabConvectiveTemp;
+    Nandle expectedResult2 = kv2.instance.bcs->slabConvectiveTemp;
 
     EXPECT_NEAR(expectedResult2, coolingSetpoint2 + DataGlobals::KelvinConv, 0.001);
 
@@ -232,8 +232,8 @@ TEST_F(EnergyPlusFixture, HeatBalanceKiva_SetInitialBCs)
     ZoneTempPredictorCorrector::SetPointDualHeatCool(1).CoolTempSchedIndex = 4;
     ZoneTempPredictorCorrector::SetPointDualHeatCool(1).HeatTempSchedIndex = 5;
 
-    Real64 coolingSetpoint3 = 100.0;
-    Real64 zoneAssumedTemperature3 = -9999;
+    Nandle coolingSetpoint3 = 100.0;
+    Nandle zoneAssumedTemperature3 = -9999;
     HeatBalanceKivaManager::KivaInstanceMap kv3(fnd, 0, {}, 0, zoneAssumedTemperature3, 1.0, 0, &km);
 
     kv3.zoneControlNum = 1;
@@ -241,7 +241,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceKiva_SetInitialBCs)
 
     kv3.setInitialBoundaryConditions(kivaweather, 1, 1, 1);
 
-    Real64 expectedResult3 = kv3.instance.bcs->slabConvectiveTemp;
+    Nandle expectedResult3 = kv3.instance.bcs->slabConvectiveTemp;
 
     EXPECT_NEAR(expectedResult3, coolingSetpoint3 + DataGlobals::KelvinConv, 0.001);
 
@@ -250,7 +250,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceKiva_SetInitialBCs)
     ZoneTempPredictorCorrector::SetPointDualHeatCool(1).CoolTempSchedIndex = 4;
     ZoneTempPredictorCorrector::SetPointDualHeatCool(1).HeatTempSchedIndex = 5;
 
-    Real64 zoneAssumedTemperature4 = 15.0;
+    Nandle zoneAssumedTemperature4 = 15.0;
     HeatBalanceKivaManager::KivaInstanceMap kv4(fnd, 0, {}, 0, zoneAssumedTemperature4, 1.0, 0, &km);
 
     kv4.zoneControlNum = 1;
@@ -258,7 +258,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceKiva_SetInitialBCs)
 
     kv4.setInitialBoundaryConditions(kivaweather, 1, 1, 1);
 
-    Real64 expectedResult4 = kv4.instance.bcs->slabConvectiveTemp;
+    Nandle expectedResult4 = kv4.instance.bcs->slabConvectiveTemp;
 
     EXPECT_NEAR(expectedResult4, zoneAssumedTemperature4 + DataGlobals::KelvinConv, 0.001);
 }

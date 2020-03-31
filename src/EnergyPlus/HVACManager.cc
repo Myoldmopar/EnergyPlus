@@ -191,7 +191,7 @@ namespace HVACManager {
 
     // Array1D_bool CrossMixingReportFlag; // TRUE when Cross Mixing is active based on controls
     // Array1D_bool MixingReportFlag; // TRUE when Mixing is active based on controls
-    // Array1D< Real64 > VentMCP; // product of mass rate and Cp for each Venitlation object
+    // Array1D< Nandle > VentMCP; // product of mass rate and Cp for each Venitlation object
 
     namespace {
         // These were static variables within different functions. They were pulled out into the namespace
@@ -316,8 +316,8 @@ namespace HVACManager {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 PriorTimeStep;       // magnitude of time step for previous history terms
-        Real64 ZoneTempChange(0.0); // change in zone air temperature from timestep t-1 to t
+        Nandle PriorTimeStep;       // magnitude of time step for previous history terms
+        Nandle ZoneTempChange(0.0); // change in zone air temperature from timestep t-1 to t
         int NodeNum;
         bool ReportDebug;
         int ZoneNum;
@@ -745,10 +745,10 @@ namespace HVACManager {
         int AirSysNum;
         int StackDepth;
         std::string HistoryTrace;
-        Real64 SlopeHumRat;
-        Real64 SlopeMdot;
-        Real64 SlopeTemps;
-        Real64 AvgValue;
+        Nandle SlopeHumRat;
+        Nandle SlopeMdot;
+        Nandle SlopeTemps;
+        Nandle AvgValue;
         bool FoundOscillationByDuplicate;
         int ZoneNum;
         int NodeIndex;
@@ -2009,7 +2009,7 @@ namespace HVACManager {
         int TermInletNode;
         int SupplyIndex;
         int SupplyNode;
-        Real64 FlowRatio;
+        Nandle FlowRatio;
 
         for (AirLoopIndex = 1; AirLoopIndex <= NumPrimaryAirSys; ++AirLoopIndex) { // loop over the primary air loops
             for (SupplyIndex = 1; SupplyIndex <= AirToZoneNodeInfo(AirLoopIndex).NumSupplyNodes;
@@ -2410,18 +2410,18 @@ namespace HVACManager {
         int ZoneB;                         // Mated zone number for pair pf zones sharing refrigeration door opening
         int VentNum;                       // Counter for ventilation statements
         int FanNum;                        // Counter for exhaust fans
-        Real64 AirDensity;                 // Density of air (kg/m^3)
-        Real64 CpAir;                      // Heat capacity of air (J/kg-C)
-        Real64 ADSCorrectionFactor;        // Correction factor of air flow model values when ADS is simulated
-        Real64 H2OHtOfVap;                 // Heat of vaporization of air
-        Real64 TotalLoad;                  // Total loss or gain
+        Nandle AirDensity;                 // Density of air (kg/m^3)
+        Nandle CpAir;                      // Heat capacity of air (J/kg-C)
+        Nandle ADSCorrectionFactor;        // Correction factor of air flow model values when ADS is simulated
+        Nandle H2OHtOfVap;                 // Heat of vaporization of air
+        Nandle TotalLoad;                  // Total loss or gain
         int MixNum;                        // Counter for MIXING and Cross Mixing statements
-        static Array1D<Real64> MixSenLoad; // Mixing sensible loss or gain
-        static Array1D<Real64> MixLatLoad; // Mixing latent loss or gain
+        static Array1D<Nandle> MixSenLoad; // Mixing sensible loss or gain
+        static Array1D<Nandle> MixLatLoad; // Mixing latent loss or gain
         int j;                             // Index in a do-loop
         int VentZoneNum;                   // Number of ventilation object per zone
-        Real64 VentZoneMassflow;           // Total mass flow rate per zone
-        Real64 VentZoneAirTemp;            // Average Zone inlet temperature
+        Nandle VentZoneMassflow;           // Total mass flow rate per zone
+        Nandle VentZoneAirTemp;            // Average Zone inlet temperature
 
         ZoneTotalExfiltrationHeatLoss = 0.0;
         ZoneTotalExhaustHeatLoss = 0.0;
@@ -2922,7 +2922,7 @@ namespace HVACManager {
         static int ZoneNum(0);           // zone index
         int LightNum;                    // Lights object index
         int SurfNum;                     // Surface index
-        static Real64 CycFanMaxVal(0.0); // max value of cycling fan schedule
+        static Nandle CycFanMaxVal(0.0); // max value of cycling fan schedule
 
         if (!AirLoopsSimOnce) return;
 
@@ -3068,7 +3068,7 @@ namespace HVACManager {
         int ZoneNum;
         int NodeIndex;
         int NodeNum;
-        Array1D<Real64> tmpRealARR(ConvergLogStackDepth);
+        Array1D<Nandle> tmpRealARR(ConvergLogStackDepth);
 
         for (ZoneNum = 1; ZoneNum <= NumOfZones; ++ZoneNum) {
 
@@ -3099,7 +3099,7 @@ namespace HVACManager {
             for (int AirLoopNum = 1; AirLoopNum <= NumPrimaryAirSys; ++AirLoopNum) {
                 auto &thisAirLoopFlow(AirLoopFlow(AirLoopNum));
                 if (!thisAirLoopFlow.FlowError) {
-                    Real64 unbalancedExhaustDelta = thisAirLoopFlow.SupFlow - thisAirLoopFlow.OAFlow - thisAirLoopFlow.SysRetFlow;
+                    Nandle unbalancedExhaustDelta = thisAirLoopFlow.SupFlow - thisAirLoopFlow.OAFlow - thisAirLoopFlow.SysRetFlow;
                     if (unbalancedExhaustDelta > SmallMassFlow) {
                         ShowSevereError("CheckAirLoopFlowBalance: AirLoopHVAC " + DataAirSystems::PrimaryAirSystem(AirLoopNum).Name +
                                         " is unbalanced. Supply is > return plus outdoor air.");

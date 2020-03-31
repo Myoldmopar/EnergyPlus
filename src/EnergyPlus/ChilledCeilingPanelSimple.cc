@@ -121,14 +121,14 @@ namespace CoolingPanelSimple {
 
     // MODULE VARIABLE DECLARATIONS:
     int NumCoolingPanels(0);
-    Array1D<Real64> CoolingPanelSource;   // Need to keep the last value in case we are still iterating
-    Array1D<Real64> CoolingPanelSrcAvg;   // Need to keep the last value in case we are still iterating
-    Array1D<Real64> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
+    Array1D<Nandle> CoolingPanelSource;   // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> CoolingPanelSrcAvg;   // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> ZeroSourceSumHATsurf; // Equal to the SumHATsurf for all the walls in a zone with no source
 
     // Record keeping variables used to calculate CoolingPanelSrcAvg locally
-    Array1D<Real64> LastCoolingPanelSrc; // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastSysTimeElapsed;  // Need to keep the last value in case we are still iterating
-    Array1D<Real64> LastTimeStepSys;     // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastCoolingPanelSrc; // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastSysTimeElapsed;  // Need to keep the last value in case we are still iterating
+    Array1D<Nandle> LastTimeStepSys;     // Need to keep the last value in case we are still iterating
     Array1D_bool CheckEquipName;
     Array1D_bool SetLoopIndexFlag; // get loop number flag
 
@@ -167,7 +167,7 @@ namespace CoolingPanelSimple {
                          int const ActualZoneNum,
                          int const ControlledZoneNum,
                          bool const FirstHVACIteration,
-                         Real64 &PowerMet,
+                         Nandle &PowerMet,
                          int &CompIndex)
     {
 
@@ -190,9 +190,9 @@ namespace CoolingPanelSimple {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int CoolingPanelNum; // Index of unit in baseboard array
-        Real64 QZnReq;       // Zone load not yet satisfied
-        Real64 MaxWaterFlow;
-        Real64 MinWaterFlow;
+        Nandle QZnReq;       // Zone load not yet satisfied
+        Nandle MaxWaterFlow;
+        Nandle MinWaterFlow;
 
         if (GetInputFlag) {
             GetCoolingPanelInput();
@@ -291,15 +291,15 @@ namespace CoolingPanelSimple {
 
         // SUBROUTINE PARAMETER DEFINITIONS:
         static std::string const RoutineName("GetCoolingPanelInput:");
-        Real64 const MaxFraction(1.0);
-        Real64 const MinFraction(0.0);
-        Real64 const MaxWaterTempAvg(30.0);       // Maximum limit of average water temperature in degree C
-        Real64 const MinWaterTempAvg(0.0);        // Minimum limit of average water temperature in degree C
-        Real64 const MaxWaterFlowRate(10.0);      // Maximum limit of water volume flow rate in m3/s
-        Real64 const MinWaterFlowRate(0.00001);   // Minimum limit of water volume flow rate in m3/s
-        Real64 const WaterMassFlowDefault(0.063); // Default water mass flow rate in kg/s
+        Nandle const MaxFraction(1.0);
+        Nandle const MinFraction(0.0);
+        Nandle const MaxWaterTempAvg(30.0);       // Maximum limit of average water temperature in degree C
+        Nandle const MinWaterTempAvg(0.0);        // Minimum limit of average water temperature in degree C
+        Nandle const MaxWaterFlowRate(10.0);      // Maximum limit of water volume flow rate in m3/s
+        Nandle const MinWaterFlowRate(0.00001);   // Minimum limit of water volume flow rate in m3/s
+        Nandle const WaterMassFlowDefault(0.063); // Default water mass flow rate in kg/s
         int const MinDistribSurfaces(1);          // Minimum number of surfaces that a baseboard heater can radiate to
-        Real64 const MinThrottlingRange(0.5);     // Smallest throttling range allowed in degrees Celsius
+        Nandle const MinThrottlingRange(0.5);     // Smallest throttling range allowed in degrees Celsius
         static std::string const MeanAirTemperature("MeanAirTemperature");
         static std::string const MeanRadiantTemperature("MeanRadiantTemperature");
         static std::string const OperativeTemperature("OperativeTemperature");
@@ -312,7 +312,7 @@ namespace CoolingPanelSimple {
         static std::string const VariableOff("VariableOff");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 AllFracsSummed; // Sum of the fractions radiant
+        Nandle AllFracsSummed; // Sum of the fractions radiant
         int CoolingPanelNum;   // Cooling panel number
         int CoolPanelNumI;     // For loop index
         int NumAlphas;         // Number of Alphas for each GetobjectItem call
@@ -785,8 +785,8 @@ namespace CoolingPanelSimple {
         int Loop;
         int ZoneNode;
         int ZoneNum;
-        Real64 rho; // local fluid density
-        Real64 Cp;  // local fluid specific heat
+        Nandle rho; // local fluid density
+        Nandle Cp;  // local fluid specific heat
         bool errFlag;
 
         // Do the one time initializations
@@ -974,19 +974,19 @@ namespace CoolingPanelSimple {
         std::string CompName;     // component name
         std::string CompType;     // component type
         bool IsAutoSize(false);   // Indicator to autosize
-        Real64 DesCoilLoad;       // design autosized or user specified capacity
+        Nandle DesCoilLoad;       // design autosized or user specified capacity
         int SizingMethod;         // Integer representation of sizing method name (e.g. CoolingCapacitySizing, HeatingCapacitySizing)
         int FieldNum = 1;         // IDD numeric field number where input field description is found
         bool PrintFlag;           // TRUE when sizing information is reported in the eio file
         std::string SizingString; // input field sizing description (e.g., Nominal Capacity)
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         int CapSizingMethod(0);   // capacity sizing methods (HeatingDesignCapacity, CapacityPerFloorArea, FractionOfAutosizedCoolingCapacity, and
                                   // FractionOfAutosizedHeatingCapacity )
         int PltSizCoolNum(0);     // index of plant sizing object for 1st cooling loop
-        Real64 rho;
-        Real64 Cp;
-        Real64 WaterVolFlowMaxCoolDes(0.0);  // Design chilled water flow for reporting
-        Real64 WaterVolFlowMaxCoolUser(0.0); // User hard-sized chilled water flow for reporting
+        Nandle rho;
+        Nandle Cp;
+        Nandle WaterVolFlowMaxCoolDes(0.0);  // Design chilled water flow for reporting
+        Nandle WaterVolFlowMaxCoolUser(0.0); // User hard-sized chilled water flow for reporting
 
         DesCoilLoad = 0.0;
         DataScalableCapSizingON = false;
@@ -1153,13 +1153,13 @@ namespace CoolingPanelSimple {
         bool SizeCoolingPanelUA;
 
         // These initializations are mainly the calculation of the UA value for the heat exchanger formulation of the simple cooling panel
-        Real64 Cp;
-        Real64 MDot;
-        Real64 MDotXCp;
-        Real64 Qrated;
-        Real64 Tinletr;
-        Real64 Tzoner;
-        Real64 RatCapToTheoMax; // Ratio of unit capacity to theoretical maximum output based on rated parameters
+        Nandle Cp;
+        Nandle MDot;
+        Nandle MDotXCp;
+        Nandle Qrated;
+        Nandle Tinletr;
+        Nandle Tzoner;
+        Nandle RatCapToTheoMax; // Ratio of unit capacity to theoretical maximum output based on rated parameters
 
         SizeCoolingPanelUA = true;
         Cp = 4120.0; // Just an approximation, don't need to get an exact number
@@ -1243,42 +1243,42 @@ namespace CoolingPanelSimple {
         using ScheduleManager::GetCurrentScheduleValue;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const MinFrac(0.0005); // Minimum fraction that delivers radiant heats to surfaces
+        Nandle const MinFrac(0.0005); // Minimum fraction that delivers radiant heats to surfaces
         int const Maxiter(20);        // Maximum number of iterations to achieve tolerance
-        Real64 const IterTol(0.005);  // Tolerance of 0.5%
+        Nandle const IterTol(0.005);  // Tolerance of 0.5%
         static std::string const RoutineName("CalcCoolingPanel");
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int ZoneNum;
         int iter;
-        Real64 RadHeat;
-        Real64 CoolingPanelCool;
-        Real64 WaterInletTemp;
-        Real64 WaterOutletTemp;
-        Real64 WaterMassFlowRate;
-        Real64 WaterMassFlowRateMax;
-        Real64 CapacitanceWater;
-        Real64 NTU;
-        Real64 Effectiveness;
-        Real64 QZnReq;
-        Real64 Cp;
-        Real64 Tzone;
-        Real64 Xr;
-        Real64 MCpEpsAct;
-        Real64 MCpEpsLow;
-        Real64 MCpEpsHigh;
-        Real64 MdotLow;
-        Real64 MdotHigh;
-        Real64 FracGuess;
-        Real64 MdotGuess;
-        Real64 MCpEpsGuess;
-        Real64 ControlTemp;
-        Real64 SetPointTemp;
-        Real64 OffTempCool;
-        Real64 FullOnTempCool;
-        Real64 MassFlowFrac;
-        Real64 DewPointTemp;
-        Real64 LoadMet;
+        Nandle RadHeat;
+        Nandle CoolingPanelCool;
+        Nandle WaterInletTemp;
+        Nandle WaterOutletTemp;
+        Nandle WaterMassFlowRate;
+        Nandle WaterMassFlowRateMax;
+        Nandle CapacitanceWater;
+        Nandle NTU;
+        Nandle Effectiveness;
+        Nandle QZnReq;
+        Nandle Cp;
+        Nandle Tzone;
+        Nandle Xr;
+        Nandle MCpEpsAct;
+        Nandle MCpEpsLow;
+        Nandle MCpEpsHigh;
+        Nandle MdotLow;
+        Nandle MdotHigh;
+        Nandle FracGuess;
+        Nandle MdotGuess;
+        Nandle MCpEpsGuess;
+        Nandle ControlTemp;
+        Nandle SetPointTemp;
+        Nandle OffTempCool;
+        Nandle FullOnTempCool;
+        Nandle MassFlowFrac;
+        Nandle DewPointTemp;
+        Nandle LoadMet;
         bool CoolingPanelOn;
         bool ModifiedWaterInletTemp;
 
@@ -1501,7 +1501,7 @@ namespace CoolingPanelSimple {
         this->RadPower = RadHeat;
     }
 
-    void CoolingPanelParams::SetCoolingPanelControlTemp(Real64 &ControlTemp, int const ZoneNum)
+    void CoolingPanelParams::SetCoolingPanelControlTemp(Nandle &ControlTemp, int const ZoneNum)
     {
 
         // SUBROUTINE INFORMATION:
@@ -1673,14 +1673,14 @@ namespace CoolingPanelSimple {
         using General::RoundSigDigits;
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
+        Nandle const SmallestArea(0.001); // Smallest area in meters squared (to avoid a divide by zero)
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         int RadSurfNum;           // Counter for surfaces receiving radiation from radiant heater
         int CoolingPanelNum;      // Counter for the baseboard
         int SurfNum;              // Pointer to the Surface derived type
         int ZoneNum;              // Pointer to the Zone derived type
-        Real64 ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
+        Nandle ThisSurfIntensity; // temporary for W/m2 term for rad on a surface
 
         // FLOW:
         // Initialize arrays
@@ -1751,7 +1751,7 @@ namespace CoolingPanelSimple {
         this->RadEnergy = this->RadPower * TimeStepSys * SecInHour;
     }
 
-    Real64 SumHATsurf(int const ZoneNum) // Zone number
+    Nandle SumHATsurf(int const ZoneNum) // Zone number
     {
 
         // FUNCTION INFORMATION:
@@ -1777,11 +1777,11 @@ namespace CoolingPanelSimple {
         using DataSurfaces::SurfaceWindow;
 
         // Return value
-        Real64 SumHATsurf;
+        Nandle SumHATsurf;
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int SurfNum; // Surface number
-        Real64 Area; // Effective surface area
+        Nandle Area; // Effective surface area
 
         // FLOW:
         SumHATsurf = 0.0;

@@ -127,7 +127,7 @@ namespace PlantComponentTemperatureSources {
         return nullptr; // LCOV_EXCL_LINE
     }
 
-    void WaterSourceSpecs::initialize(Real64 &MyLoad)
+    void WaterSourceSpecs::initialize(Nandle &MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -171,7 +171,7 @@ namespace PlantComponentTemperatureSources {
         // Initialize critical Demand Side Variables at the beginning of each environment
         if (this->MyEnvironFlag && DataGlobals::BeginEnvrnFlag && (DataPlant::PlantFirstSizesOkayToFinalize)) {
 
-            Real64 rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->Location.loopNum).FluidName,
+            Nandle rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->Location.loopNum).FluidName,
                                                            DataGlobals::InitConvTemp,
                                                            DataPlant::PlantLoop(this->Location.loopNum).FluidIndex,
                                                            RoutineName);
@@ -199,13 +199,13 @@ namespace PlantComponentTemperatureSources {
         }
 
         // Calculate specific heat
-        Real64 cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->Location.loopNum).FluidName,
+        Nandle cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->Location.loopNum).FluidName,
                                                            this->BoundaryTemp,
                                                            DataPlant::PlantLoop(this->Location.loopNum).FluidIndex,
                                                            RoutineName);
 
         // Calculate deltaT
-        Real64 delta_temp = this->BoundaryTemp - this->InletTemp;
+        Nandle delta_temp = this->BoundaryTemp - this->InletTemp;
 
         // If deltaT is zero then we cannot calculate a flow request, but we may still want one
         //   If myload is greater than zero, then lets request full flow at the current temperature as it may still be meeting load
@@ -295,8 +295,8 @@ namespace PlantComponentTemperatureSources {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool ErrorsFound(false);        // If errors detected in input
-        Real64 DesVolFlowRateUser(0.0); // Hardsized design volume flow rate for reporting
-        Real64 tmpVolFlowRate = this->DesVolFlowRate;
+        Nandle DesVolFlowRateUser(0.0); // Hardsized design volume flow rate for reporting
+        Nandle tmpVolFlowRate = this->DesVolFlowRate;
         int PltSizNum = DataPlant::PlantLoop(this->Location.loopNum).PlantSizNum;
 
         if (PltSizNum > 0) {
@@ -377,7 +377,7 @@ namespace PlantComponentTemperatureSources {
 
         if (this->MassFlowRate > 0.0) {
             this->OutletTemp = this->BoundaryTemp;
-            Real64 Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->Location.loopNum).FluidName,
+            Nandle Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->Location.loopNum).FluidName,
                                                                this->BoundaryTemp,
                                                                DataPlant::PlantLoop(this->Location.loopNum).FluidIndex,
                                                                RoutineName);
@@ -397,7 +397,7 @@ namespace PlantComponentTemperatureSources {
 
     void WaterSourceSpecs::simulate(const PlantLocation &EP_UNUSED(calledFromLocation),
                                     bool EP_UNUSED(FirstHVACIteration),
-                                    Real64 &CurLoad,
+                                    Nandle &CurLoad,
                                     bool EP_UNUSED(RunFlag))
     {
         this->initialize(CurLoad);
@@ -405,7 +405,7 @@ namespace PlantComponentTemperatureSources {
         this->update();
     }
 
-    void WaterSourceSpecs::getDesignCapacities(const EnergyPlus::PlantLocation &, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad)
+    void WaterSourceSpecs::getDesignCapacities(const EnergyPlus::PlantLocation &, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad)
     {
 
         MaxLoad = DataGlobals::BigNumber;
@@ -413,14 +413,14 @@ namespace PlantComponentTemperatureSources {
         OptLoad = DataGlobals::BigNumber;
     }
 
-    void WaterSourceSpecs::getSizingFactor(Real64 &_SizFac)
+    void WaterSourceSpecs::getSizingFactor(Nandle &_SizFac)
     {
         _SizFac = this->SizFac;
     }
 
     void WaterSourceSpecs::onInitLoopEquip(const PlantLocation &)
     {
-        Real64 myLoad = 0.0;
+        Nandle myLoad = 0.0;
         this->initialize(myLoad);
         this->autosize();
     }

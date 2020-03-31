@@ -129,8 +129,8 @@ namespace HeatRecovery {
 
     // Data
     // MODULE PARAMETER DEFINITIONS:
-    Real64 const KELVZERO(273.16);
-    Real64 const SMALL(1.e-10);
+    Nandle const KELVZERO(273.16);
+    Nandle const SMALL(1.e-10);
 
     // Heat exchanger performance data type
     int const BALANCEDHX_PERFDATATYPE1(1);
@@ -163,9 +163,9 @@ namespace HeatRecovery {
     int NumAirToAirGenericExchs(0);     // number of air to air generic heat exchangers
     int NumDesiccantBalancedExchs(0);   // number of desiccant balanced heat exchangers
     int NumDesBalExchsPerfDataType1(0); // number of desiccant balanced heat exchanger performance data maps
-    Real64 FullLoadOutAirTemp(0.0);     // Used with desiccant HX empirical model, water coils use inlet node condition
+    Nandle FullLoadOutAirTemp(0.0);     // Used with desiccant HX empirical model, water coils use inlet node condition
     // DX coils use DXCoilFullLoadOutAirTemp when coil is ON otherwise inlet node
-    Real64 FullLoadOutAirHumRat(0.0); // Used with desiccant HX empirical model, water coils use inlet node condition
+    Nandle FullLoadOutAirHumRat(0.0); // Used with desiccant HX empirical model, water coils use inlet node condition
     // DX coils use DXCoilFullLoadOutAirHumRat when coil is ON otherwise inlet node
     bool GetInputFlag(true);           // First time, input is "gotten"
     bool CalledFromParentObject(true); // Indicates that HX is called from parent object (this object is not on a branch)
@@ -220,7 +220,7 @@ namespace HeatRecovery {
                          bool const FirstHVACIteration,           // TRUE if 1st HVAC simulation of system timestep
                          int &CompIndex,                          // Pointer to Component
                          int const FanOpMode,                     // Supply air fan operating mode
-                         Optional<Real64 const> HXPartLoadRatio,  // Part load ratio requested of DX compressor
+                         Optional<Nandle const> HXPartLoadRatio,  // Part load ratio requested of DX compressor
                          Optional_bool_const HXUnitEnable,        // Flag to operate heat exchanger
                          Optional_int_const CompanionCoilIndex,   // index of companion cooling coil
                          Optional_bool_const RegenInletIsOANode,  // flag to determine if supply inlet is OA node, if so air flow cycles
@@ -246,7 +246,7 @@ namespace HeatRecovery {
         int HeatExchNum; // index of unit being simulated
         bool HXUnitOn;   // flag to enable heat exchanger
         // unused0509  INTEGER      :: FanModeOperation          ! supply air fan operating mode
-        Real64 PartLoadRatio; // Part load ratio requested of DX compressor
+        Nandle PartLoadRatio; // Part load ratio requested of DX compressor
         bool RegInIsOANode;   // local variable to set RegenInletIsOANode optional argument
         int CompanionCoilNum; // Index to companion cooling coil
 
@@ -1293,12 +1293,12 @@ namespace HeatRecovery {
         int ExIndex;   // do loop index
         int SupInNode; // supply air inlet node number
         int SecInNode; // secondary air inlet node number
-        Real64 CMin0;  // minimum capacity flow
-        Real64 CMax0;  // maximum capacity flow
-        Real64 Eps0;   // effectiveness at rated conditions
-        Real64 NTU0;   // NTU at rated conditions
-        Real64 RhoAir; // air density at outside pressure & standard temperature and humidity
-        Real64 CpAir;  // heat capacity of air
+        Nandle CMin0;  // minimum capacity flow
+        Nandle CMax0;  // maximum capacity flow
+        Nandle Eps0;   // effectiveness at rated conditions
+        Nandle NTU0;   // NTU at rated conditions
+        Nandle RhoAir; // air density at outside pressure & standard temperature and humidity
+        Nandle CpAir;  // heat capacity of air
         // of humidity ratio and temperature
         //////////// hoisted into namespace ////////////////////////////////////////////////
         // static bool MyOneTimeAllocate( true );
@@ -1308,7 +1308,7 @@ namespace HeatRecovery {
         int ErrStat;            // error status returned by CalculateNTUfromEpsAndZ
         bool FatalError;        // fatal error flag
         bool LocalWarningError; // warning error flag
-        Real64 Z;               // Min/max flow ratio
+        Nandle Z;               // Min/max flow ratio
         //  LOGICAL,SAVE        :: ZoneEquipmentListChecked = .FALSE.  ! True after the Zone Equipment List has been checked for items
 
         if (MyOneTimeAllocate) {
@@ -1626,7 +1626,7 @@ namespace HeatRecovery {
         int BalDesDehumPerfIndex; // index of dehum performance data1 object
         int SizingMethod;         // integer representation of sizing method (e.g., CoolingAirflowSizing, HeatingCapacitySizing, etc.)
         int FieldNum;             // IDD numeric field index where input field description is found
-        Real64 TempSize;          // autosized value of coil input field
+        Nandle TempSize;          // autosized value of coil input field
         std::string CompName;     // component name
         std::string CompType;     // component type
         std::string SizingString; // input field sizing description
@@ -1785,33 +1785,33 @@ namespace HeatRecovery {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool UnitOn;                // unit on flag
-        Real64 SupBypassMassFlow;   // supply air mass flow rate bypassing unit [kg/s]
-        Real64 UnitSupMassFlow;     // supply air mass flow rate passing through the unit [kg/s]
-        Real64 SecBypassMassFlow;   // secondary air mass flow rate bypassing unit [kg/s]
-        Real64 UnitSecMassFlow;     // secondary air mass flow rate passing through the unit [kg/s]
-        Real64 QuotSup;             // ratio of supply nominal m*T to actual m*T
-        Real64 QuotExh;             // ratio of secondary nominal m*T to actual m*T
-        Real64 Deno;                // denominator of UA calculation
-        Real64 CSup;                // supply air capacitance rate [J/C/s]
-        Real64 CSec;                // secondary air capacitance rate [J/C/s]
-        Real64 CMin;                // minimum air capacitance rate [J/C/s]
-        Real64 Z;                   // Ratio of minimum air capacitance rate to maximum air capacitance rate
-        Real64 NTU;                 // Number of heat transfer units
-        Real64 Eps;                 // epsilon, the unit effectiveness
-        Real64 UA;                  // present UA
-        Real64 TempSupOut;          // unit supply outlet temperature [C]
-        Real64 HumRatSupOut;        // unit supply outlet humidity ratio [kg water / kg dry air]
-        Real64 EnthSupOut;          // unit supply outlet enthalpy [J/kg]
-        Real64 TempSupOutSat;       // unit supply outlet temperature at saturation (at EnthSupOut) [C]
-        Real64 QTrans;              // heat transferred in the heat exchanger [W]
-        Real64 ElecCons;            // electricity consumption rate [W]
-        Real64 TempSecOut;          // unit secondary outlet temperature [C]
-        Real64 HumRatSecOut;        // unit secondary outlet humidity ratio [kg water / kg dry air]
-        Real64 EnthSecOut;          // unit secondary outlet enthalpy [J/kgC]
-        Real64 TempSecOutSat;       // unit secondary outlet temperature at saturation (at EnthsSecOut) [C]
-        Real64 SensHeatRecRate;     // sensible heat recovery rate to supply air (heating +, cooling -)
-        Real64 LatHeatRecRate;      // latent heat recovery rate to supply air (heating [humidify] +, cooling [dehumidify] -)
-        Real64 TotHeatRecRate;      // total heat recovery rate to supply air (heating +, cooling -)
+        Nandle SupBypassMassFlow;   // supply air mass flow rate bypassing unit [kg/s]
+        Nandle UnitSupMassFlow;     // supply air mass flow rate passing through the unit [kg/s]
+        Nandle SecBypassMassFlow;   // secondary air mass flow rate bypassing unit [kg/s]
+        Nandle UnitSecMassFlow;     // secondary air mass flow rate passing through the unit [kg/s]
+        Nandle QuotSup;             // ratio of supply nominal m*T to actual m*T
+        Nandle QuotExh;             // ratio of secondary nominal m*T to actual m*T
+        Nandle Deno;                // denominator of UA calculation
+        Nandle CSup;                // supply air capacitance rate [J/C/s]
+        Nandle CSec;                // secondary air capacitance rate [J/C/s]
+        Nandle CMin;                // minimum air capacitance rate [J/C/s]
+        Nandle Z;                   // Ratio of minimum air capacitance rate to maximum air capacitance rate
+        Nandle NTU;                 // Number of heat transfer units
+        Nandle Eps;                 // epsilon, the unit effectiveness
+        Nandle UA;                  // present UA
+        Nandle TempSupOut;          // unit supply outlet temperature [C]
+        Nandle HumRatSupOut;        // unit supply outlet humidity ratio [kg water / kg dry air]
+        Nandle EnthSupOut;          // unit supply outlet enthalpy [J/kg]
+        Nandle TempSupOutSat;       // unit supply outlet temperature at saturation (at EnthSupOut) [C]
+        Nandle QTrans;              // heat transferred in the heat exchanger [W]
+        Nandle ElecCons;            // electricity consumption rate [W]
+        Nandle TempSecOut;          // unit secondary outlet temperature [C]
+        Nandle HumRatSecOut;        // unit secondary outlet humidity ratio [kg water / kg dry air]
+        Nandle EnthSecOut;          // unit secondary outlet enthalpy [J/kgC]
+        Nandle TempSecOutSat;       // unit secondary outlet temperature at saturation (at EnthsSecOut) [C]
+        Nandle SensHeatRecRate;     // sensible heat recovery rate to supply air (heating +, cooling -)
+        Nandle LatHeatRecRate;      // latent heat recovery rate to supply air (heating [humidify] +, cooling [dehumidify] -)
+        Nandle TotHeatRecRate;      // total heat recovery rate to supply air (heating +, cooling -)
         bool EconomizerActiveFlag;  // local representing the economizer status when PRESENT
         bool HighHumCtrlActiveFlag; // local representing high humidity control when PRESENT
 
@@ -1953,7 +1953,7 @@ namespace HeatRecovery {
                                      int const FanOpMode,                   // Supply air fan operating mode (1=cycling, 2=constant)
                                      Optional_bool_const EconomizerFlag,    // economizer flag pass by air loop or OA sys
                                      Optional_bool_const HighHumCtrlFlag,   // high humidity control flag passed by airloop or OA sys
-                                     Optional<Real64 const> HXPartLoadRatio //
+                                     Optional<Nandle const> HXPartLoadRatio //
     )
     {
 
@@ -1990,7 +1990,7 @@ namespace HeatRecovery {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const ErrorTol(0.001); // error tolerence
+        Nandle const ErrorTol(0.001); // error tolerence
 
         // INTERFACE BLOCK SPECIFICATIONS:
         // na
@@ -2002,39 +2002,39 @@ namespace HeatRecovery {
         bool UnitOn;           // unit on flag
         bool FrostControlFlag; // unit is in frost control mode when TRUE
         int SupOutNode;
-        Real64 Error;           // iteration loop error variable
-        Real64 Iter;            // iteration counter
-        Real64 ControlFraction; // fraction of effectiveness when rotary HX speed or plate bypass modulation is used for
+        Nandle Error;           // iteration loop error variable
+        Nandle Iter;            // iteration counter
+        Nandle ControlFraction; // fraction of effectiveness when rotary HX speed or plate bypass modulation is used for
         // temperature control
-        Real64 RhoSup;              // supply air density at actual pressure, temperature and humidity conditions [kg/m3]
-        Real64 RhoSec;              // secondary air density at actual pressure, temperature and humidity conditions [kg/m3]
-        Real64 RhoStd;              // standard air density at actual pressure, 20C dry-bulb temp and 0.0 absolute humidity [kg/m3]
-        Real64 CSup;                // supply air heat capacity rate [W/K]
-        Real64 CSec;                // secondary air heat capacity rate [W/K]
-        Real64 CMin;                // minimum air heat capacity rate [W/K]
-        Real64 QSensTrans;          // sensible heat transferred by the heat exchanger [W]
-        Real64 QTotTrans;           // total heat (sensible + latent) transferred by the heat exchanger [W]
-        Real64 TempSecOutSat;       // secondary air outlet temperature at saturation (at EnthsSecOut) [C]
-        Real64 HXSecAirVolFlowRate; // air volume flow rate of the secondary air stream through the heat exchanger [m3/sec]
-        Real64 HXSupAirVolFlowRate; // air volume flow rate of the supply air stream through the heat exchanger [m3/sec]
-        Real64 HXAvgAirVolFlowRate; // average air volume flow rate through the heat exchanger [m3/sec]
-        Real64 HXAirVolFlowRatio;   // ratio of avg actual air volume flow through HX to nominal HX air volume flow [-]
-        Real64 HXTempSetPoint;      // setpoint temperature at supply outlet node of HX when ControlToTemperatureSetPoint = Yes
-        Real64 MassFlowSecIn;       // secondary air mass flow rate at HX inlet
+        Nandle RhoSup;              // supply air density at actual pressure, temperature and humidity conditions [kg/m3]
+        Nandle RhoSec;              // secondary air density at actual pressure, temperature and humidity conditions [kg/m3]
+        Nandle RhoStd;              // standard air density at actual pressure, 20C dry-bulb temp and 0.0 absolute humidity [kg/m3]
+        Nandle CSup;                // supply air heat capacity rate [W/K]
+        Nandle CSec;                // secondary air heat capacity rate [W/K]
+        Nandle CMin;                // minimum air heat capacity rate [W/K]
+        Nandle QSensTrans;          // sensible heat transferred by the heat exchanger [W]
+        Nandle QTotTrans;           // total heat (sensible + latent) transferred by the heat exchanger [W]
+        Nandle TempSecOutSat;       // secondary air outlet temperature at saturation (at EnthsSecOut) [C]
+        Nandle HXSecAirVolFlowRate; // air volume flow rate of the secondary air stream through the heat exchanger [m3/sec]
+        Nandle HXSupAirVolFlowRate; // air volume flow rate of the supply air stream through the heat exchanger [m3/sec]
+        Nandle HXAvgAirVolFlowRate; // average air volume flow rate through the heat exchanger [m3/sec]
+        Nandle HXAirVolFlowRatio;   // ratio of avg actual air volume flow through HX to nominal HX air volume flow [-]
+        Nandle HXTempSetPoint;      // setpoint temperature at supply outlet node of HX when ControlToTemperatureSetPoint = Yes
+        Nandle MassFlowSecIn;       // secondary air mass flow rate at HX inlet
         //  REAL(r64)    :: MassFlowSecOut      ! secondary air mass flow rate at HX outlet
-        Real64 MassFlowSupIn;       // supply air mass flow rate at HX inlet
-        Real64 MassFlowSupOut;      // supply air mass flow rate through HX core outlet
-        Real64 MassFlowSupBypass;   // supply air bypass mass flow rate around HX core
-        Real64 TempSupIn;           // supply side temperature of air entering HX
-        Real64 TempSupOut;          // supply side temperature of air leaving HX core
-        Real64 HumRatSupIn;         // supply side humidity ratio of air entering HX
-        Real64 TempSecIn;           // secondary side temperature of air entering HX
-        Real64 SensHeatRecRate;     // sensible heat recovery rate to supply air (heating +, cooling -)
-        Real64 LatHeatRecRate;      // latent heat recovery rate to supply air (heating [humidify] +, cooling [dehumidify] -)
-        Real64 TotHeatRecRate;      // total heat recovery rate to supply air (heating +, cooling -)
+        Nandle MassFlowSupIn;       // supply air mass flow rate at HX inlet
+        Nandle MassFlowSupOut;      // supply air mass flow rate through HX core outlet
+        Nandle MassFlowSupBypass;   // supply air bypass mass flow rate around HX core
+        Nandle TempSupIn;           // supply side temperature of air entering HX
+        Nandle TempSupOut;          // supply side temperature of air leaving HX core
+        Nandle HumRatSupIn;         // supply side humidity ratio of air entering HX
+        Nandle TempSecIn;           // secondary side temperature of air entering HX
+        Nandle SensHeatRecRate;     // sensible heat recovery rate to supply air (heating +, cooling -)
+        Nandle LatHeatRecRate;      // latent heat recovery rate to supply air (heating [humidify] +, cooling [dehumidify] -)
+        Nandle TotHeatRecRate;      // total heat recovery rate to supply air (heating +, cooling -)
         bool EconomizerActiveFlag;  // local representing the economizer status when PRESENT
         bool HighHumCtrlActiveFlag; // local representing high humidity control when PRESENT
-        Real64 AirSidePLR;
+        Nandle AirSidePLR;
 
         // Initialize local variables
         UnitOn = true;
@@ -2430,7 +2430,7 @@ namespace HeatRecovery {
                                        bool const HXUnitOn,           // flag to simulate heat exchager heat recovery
                                        bool const FirstHVACIteration, // First HVAC iteration flag
                                        int const FanOpMode,           // Supply air fan operating mode (1=cycling, 2=constant)
-                                       Real64 const PartLoadRatio,    // Part load ratio requested of DX compressor
+                                       Nandle const PartLoadRatio,    // Part load ratio requested of DX compressor
                                        int const CompanionCoilIndex,  // index of companion cooling coil
                                        bool const RegenInletIsOANode, // Flag to determine if regen side inlet is OANode, if so this air stream cycles
                                        Optional_bool_const EconomizerFlag, // economizer flag pass by air loop or OA sys
@@ -2474,45 +2474,45 @@ namespace HeatRecovery {
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         bool UnitOn;                   // unit on flag
-        Real64 RhoStd;                 // standard air density at actual pressure, 20C dry-bulb temp and 0.0 absolute humidity [kg/m3]
-        Real64 CSup;                   // supply air heat capacity rate [W/K]
-        Real64 CSec;                   // secondary air heat capacity rate [W/K]
-        Real64 TempSecOutSat;          // secondary air outlet temperature at saturation (at EnthsSecOut) [C]
-        Real64 SensHeatRecRate;        // sensible heat recovery rate to supply air (heating +, cooling -)
-        Real64 TotHeatRecRate;         // total heat recovery rate to supply air (heating +, cooling -)
-        Real64 ProcessSensHeatRecRate; // process sensible heat recovery rate (heating +, cooling -)
-        Real64 ProcessTotHeatRecRate;  // process total heat recovery rate (heating +, cooling -)
-        Real64 ProcessLatHeatRecRate;  // process latent heat recovery rate (heating [humidify] +, cooling [dehumidify] -)
-        Real64 SupInMassFlow;          // Supply side HX mass flow rate
-        Real64 SecInMassFlow;          // Secondary side HX mass flow rate
+        Nandle RhoStd;                 // standard air density at actual pressure, 20C dry-bulb temp and 0.0 absolute humidity [kg/m3]
+        Nandle CSup;                   // supply air heat capacity rate [W/K]
+        Nandle CSec;                   // secondary air heat capacity rate [W/K]
+        Nandle TempSecOutSat;          // secondary air outlet temperature at saturation (at EnthsSecOut) [C]
+        Nandle SensHeatRecRate;        // sensible heat recovery rate to supply air (heating +, cooling -)
+        Nandle TotHeatRecRate;         // total heat recovery rate to supply air (heating +, cooling -)
+        Nandle ProcessSensHeatRecRate; // process sensible heat recovery rate (heating +, cooling -)
+        Nandle ProcessTotHeatRecRate;  // process total heat recovery rate (heating +, cooling -)
+        Nandle ProcessLatHeatRecRate;  // process latent heat recovery rate (heating [humidify] +, cooling [dehumidify] -)
+        Nandle SupInMassFlow;          // Supply side HX mass flow rate
+        Nandle SecInMassFlow;          // Secondary side HX mass flow rate
 
-        Real64 Coeff1;                  // coefficient1 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 Coeff2;                  // coefficient2 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 Coeff3;                  // coefficient3 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 Coeff4;                  // coefficient4 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 Coeff5;                  // coefficient5 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 Coeff6;                  // coefficient6 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 Coeff7;                  // coefficient7 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 Coeff8;                  // coefficient8 to empirical model (used for both temperature and humidity ratio equations)
-        Real64 BalFaceVelActual;        // operating face velocity [m/s]
-        Real64 FullLoadSupOutTemp(0);   // empirical model supply outlet temperature [C]
-        Real64 FullLoadSupOutHumRat(0); // empirical model supply outlet humidity ratio [kg/kg]
-        Real64 FullLoadDeltaT;          // empirical model heat exchanger delta temperature [C]
-        Real64 FullLoadDeltaW;          // empirical model heat exchanger delta humidity ratio [kg/kg]
-        Real64 T_RegenInTemp;           // empirical model supply (regen) inlet temperature for temperature equation [C]
-        Real64 T_RegenInHumRat;         // empirical model supply (regen) inlet humidity ratio for temperature equation [kg/kg]
-        Real64 T_ProcInTemp;            // empirical model secondary (process) inlet temperature for temperature equation [C]
-        Real64 T_ProcInHumRat;          // empirical model secondary (process) inlet humidity ratio for temperature equation [kg/kg]
-        Real64 T_FaceVel;               // empirical model face velocity for temperature equation [m/s]
-        Real64 H_RegenInTemp;           // empirical model supply (regen) inlet temperature for humidity ratio equation [C]
-        Real64 H_RegenInHumRat;         // empirical model supply (regen) inlet humidity ratio for humidity ratio equation [kg/kg]
-        Real64 H_ProcInTemp;            // empirical model secondary (process) inlet temperature for humidity ratio equation [C]
-        Real64 H_ProcInHumRat;          // empirical model secondary (process) inlet humidity ratio for humidity ratio equation [kg/kg]
-        Real64 H_FaceVel;               // empirical model face velocity for humidity ratio equation [m/s]
-        Real64 MaxHumRatNeeded;         // maximum humidity ratio setpoint for balanced desiccant HX [kg/kg]
-        Real64 MinHumRatNeeded;         // minimum humidity ratio setpoint for balanced desiccant HX [kg/kg]
-        Real64 HXPartLoadRatio;         // local heat exchanger part-load ratio
-        Real64 TestSaturationEnthalpy;  // enthalpy used to test for regeneration outlet condition over saturation curve (J/kg)
+        Nandle Coeff1;                  // coefficient1 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle Coeff2;                  // coefficient2 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle Coeff3;                  // coefficient3 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle Coeff4;                  // coefficient4 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle Coeff5;                  // coefficient5 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle Coeff6;                  // coefficient6 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle Coeff7;                  // coefficient7 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle Coeff8;                  // coefficient8 to empirical model (used for both temperature and humidity ratio equations)
+        Nandle BalFaceVelActual;        // operating face velocity [m/s]
+        Nandle FullLoadSupOutTemp(0);   // empirical model supply outlet temperature [C]
+        Nandle FullLoadSupOutHumRat(0); // empirical model supply outlet humidity ratio [kg/kg]
+        Nandle FullLoadDeltaT;          // empirical model heat exchanger delta temperature [C]
+        Nandle FullLoadDeltaW;          // empirical model heat exchanger delta humidity ratio [kg/kg]
+        Nandle T_RegenInTemp;           // empirical model supply (regen) inlet temperature for temperature equation [C]
+        Nandle T_RegenInHumRat;         // empirical model supply (regen) inlet humidity ratio for temperature equation [kg/kg]
+        Nandle T_ProcInTemp;            // empirical model secondary (process) inlet temperature for temperature equation [C]
+        Nandle T_ProcInHumRat;          // empirical model secondary (process) inlet humidity ratio for temperature equation [kg/kg]
+        Nandle T_FaceVel;               // empirical model face velocity for temperature equation [m/s]
+        Nandle H_RegenInTemp;           // empirical model supply (regen) inlet temperature for humidity ratio equation [C]
+        Nandle H_RegenInHumRat;         // empirical model supply (regen) inlet humidity ratio for humidity ratio equation [kg/kg]
+        Nandle H_ProcInTemp;            // empirical model secondary (process) inlet temperature for humidity ratio equation [C]
+        Nandle H_ProcInHumRat;          // empirical model secondary (process) inlet humidity ratio for humidity ratio equation [kg/kg]
+        Nandle H_FaceVel;               // empirical model face velocity for humidity ratio equation [m/s]
+        Nandle MaxHumRatNeeded;         // maximum humidity ratio setpoint for balanced desiccant HX [kg/kg]
+        Nandle MinHumRatNeeded;         // minimum humidity ratio setpoint for balanced desiccant HX [kg/kg]
+        Nandle HXPartLoadRatio;         // local heat exchanger part-load ratio
+        Nandle TestSaturationEnthalpy;  // enthalpy used to test for regeneration outlet condition over saturation curve (J/kg)
         static std::string const ThisSub("CalcDesiccantBalancedHeatExch:  "); // Used to pass to Psyc routines
         static std::string const ThisSubTSat("CalcDesiccantBalancedHeatExch:   TSat");
         static std::string const ThisSubTSatFullLoadOutTemp("CalcDesiccantBalancedHeatExch:   TSat-FullLoadOutTemp");
@@ -2521,7 +2521,7 @@ namespace HeatRecovery {
         static std::string const ThisSubTestSatSec("CalcDesiccantBalancedHeatExch:   TestSatSec");
         static std::string const ThisSubTSatSecOutHumRat("CalcDesiccantBalancedHeatExch:   TSat-SecOutHumRat");
 
-        Real64 AverageMassFlowRate; // average of supply (regen) and secondary (process) mass flow rates [kg/s]
+        Nandle AverageMassFlowRate; // average of supply (regen) and secondary (process) mass flow rates [kg/s]
         bool EconomizerActiveFlag;  // local representing the economizer status when PRESENT
         bool HighHumCtrlActiveFlag; // local representing high humidity control when PRESENT
 
@@ -2818,7 +2818,7 @@ namespace HeatRecovery {
         // SUBROUTINE ARGUMENT DEFINITIONS:
 
         // SUBROUTINE PARAMETER DEFINITIONS:
-        Real64 const ErrorTol(0.001); // error tolerence for iteration loop
+        Nandle const ErrorTol(0.001); // error tolerence for iteration loop
         // na
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -2828,29 +2828,29 @@ namespace HeatRecovery {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 DFFraction;          // fraction of timestep ERV is in frost control mode
-        Real64 RhoSup;              // density of supply air [kg/m3]
-        Real64 RhoSec;              // density of secondary air [kg/m3]
-        Real64 Error;               // iteration loop error variable
-        Real64 Iter;                // iteration counter
-        Real64 CSup;                // mdot Cp of supply air [W/K]
-        Real64 CSec;                // mdot Cp of secondary air [W/K]
-        Real64 CMin;                // minimum mdot Cp of supply or secondary air [W/K]
-        Real64 QTotTrans;           // total heat transfer by ERV [W]
-        Real64 QSensTrans;          // sensible heat transfer by ERV [W]
-        Real64 HXSecAirVolFlowRate; // air volume flow rate of the secondary air stream through the heat exchanger [m3/sec]
-        Real64 HXSupAirVolFlowRate; // air volume flow rate of the supply air stream through the heat exchanger [m3/sec]
-        Real64 HXAvgAirVolFlowRate; // average air volume flow rate through the heat exchanger [m3/sec]
-        Real64 HXAirVolFlowRatio;   // nominal to actual air volume flow ratio
-        Real64 MassFlowSupIn;       // supply air mass flow rate at HX inlet
-        Real64 MassFlowSupOut;      // supply air mass flow rate through HX core outlet
-        Real64 MassFlowSupBypass;   // supply air bypass mass flow rate around HX core
-        Real64 TempSupIn;           // supply side temperature of air entering HX
-        Real64 TempSupOut;          // supply side temperature of air leaving HX core
-        Real64 HumRatSupIn;         // supply side humidity ratio of air entering HX
-        Real64 TempSecIn;           // secondary side temperature of air entering HX
-        Real64 TempSecOut;          // secondary side temperature of air leaving HX core
-        Real64 TempThreshold;       // threshold temperature below which frost control is active
+        Nandle DFFraction;          // fraction of timestep ERV is in frost control mode
+        Nandle RhoSup;              // density of supply air [kg/m3]
+        Nandle RhoSec;              // density of secondary air [kg/m3]
+        Nandle Error;               // iteration loop error variable
+        Nandle Iter;                // iteration counter
+        Nandle CSup;                // mdot Cp of supply air [W/K]
+        Nandle CSec;                // mdot Cp of secondary air [W/K]
+        Nandle CMin;                // minimum mdot Cp of supply or secondary air [W/K]
+        Nandle QTotTrans;           // total heat transfer by ERV [W]
+        Nandle QSensTrans;          // sensible heat transfer by ERV [W]
+        Nandle HXSecAirVolFlowRate; // air volume flow rate of the secondary air stream through the heat exchanger [m3/sec]
+        Nandle HXSupAirVolFlowRate; // air volume flow rate of the supply air stream through the heat exchanger [m3/sec]
+        Nandle HXAvgAirVolFlowRate; // average air volume flow rate through the heat exchanger [m3/sec]
+        Nandle HXAirVolFlowRatio;   // nominal to actual air volume flow ratio
+        Nandle MassFlowSupIn;       // supply air mass flow rate at HX inlet
+        Nandle MassFlowSupOut;      // supply air mass flow rate through HX core outlet
+        Nandle MassFlowSupBypass;   // supply air bypass mass flow rate around HX core
+        Nandle TempSupIn;           // supply side temperature of air entering HX
+        Nandle TempSupOut;          // supply side temperature of air leaving HX core
+        Nandle HumRatSupIn;         // supply side humidity ratio of air entering HX
+        Nandle TempSecIn;           // secondary side temperature of air entering HX
+        Nandle TempSecOut;          // secondary side temperature of air leaving HX core
+        Nandle TempThreshold;       // threshold temperature below which frost control is active
 
         ExchCond(ExNum).SupOutMassFlow = ExchCond(ExNum).SupInMassFlow;
         ExchCond(ExNum).SecOutMassFlow = ExchCond(ExNum).SecInMassFlow;
@@ -3189,7 +3189,7 @@ namespace HeatRecovery {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 ReportingConstant;
+        Nandle ReportingConstant;
 
         ReportingConstant = TimeStepSys * SecInHour;
         ExchCond(ExNum).ElecUseEnergy = ExchCond(ExNum).ElecUseRate * ReportingConstant;
@@ -3203,7 +3203,7 @@ namespace HeatRecovery {
         AirToAirHXElecPower = ExchCond(ExNum).ElecUseRate;
     }
 
-    Real64 SafeDiv(Real64 const a, Real64 const b)
+    Nandle SafeDiv(Nandle const a, Nandle const b)
     {
 
         // SUBROUTINE INFORMATION:
@@ -3225,7 +3225,7 @@ namespace HeatRecovery {
         // na
 
         // Return value
-        Real64 c;
+        Nandle c;
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
@@ -3250,10 +3250,10 @@ namespace HeatRecovery {
         return c;
     }
 
-    void CalculateEpsFromNTUandZ(Real64 const NTU,  // number of transfer units
-                                 Real64 const Z,    // capacity rate ratio
+    void CalculateEpsFromNTUandZ(Nandle const NTU,  // number of transfer units
+                                 Nandle const Z,    // capacity rate ratio
                                  int const FlowArr, // flow arrangement
-                                 Real64 &Eps        // heat exchanger effectiveness
+                                 Nandle &Eps        // heat exchanger effectiveness
     )
     {
 
@@ -3299,7 +3299,7 @@ namespace HeatRecovery {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 Temp; // temporary variable
+        Nandle Temp; // temporary variable
 
         // check input validity
         if (Z < 0.0 || Z > 1.0) {
@@ -3336,11 +3336,11 @@ namespace HeatRecovery {
         }
     }
 
-    void CalculateNTUfromEpsAndZ(Real64 &NTU,       // number of transfer units
+    void CalculateNTUfromEpsAndZ(Nandle &NTU,       // number of transfer units
                                  int &Err,          // error indicator
-                                 Real64 const Z,    // capacity rate ratio
+                                 Nandle const Z,    // capacity rate ratio
                                  int const FlowArr, // flow arrangement
-                                 Real64 const Eps   // heat exchanger effectiveness
+                                 Nandle const Eps   // heat exchanger effectiveness
     )
     {
 
@@ -3444,8 +3444,8 @@ namespace HeatRecovery {
         }
     }
 
-    Real64 GetNTUforCrossFlowBothUnmixed(Real64 const Eps, // heat exchanger effectiveness
-                                         Real64 const Z    // capacity rate ratio
+    Nandle GetNTUforCrossFlowBothUnmixed(Nandle const Eps, // heat exchanger effectiveness
+                                         Nandle const Z    // capacity rate ratio
     )
     {
 
@@ -3474,13 +3474,13 @@ namespace HeatRecovery {
         // na
 
         // Return value
-        Real64 NTU; // result variable; number of transfer units
+        Nandle NTU; // result variable; number of transfer units
 
         // Locals
         // FUNCTION ARGUMENT DEFINITIONS:
 
         // FUNCTION PARAMETER DEFINITIONS:
-        Real64 const Acc(0.0001); // Accuracy of result
+        Nandle const Acc(0.0001); // Accuracy of result
         int const MaxIte(500);    // Maximum number of iterations
 
         // INTERFACE BLOCK SPECIFICATIONS:
@@ -3492,9 +3492,9 @@ namespace HeatRecovery {
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
 
         int SolFla;               // Flag of solver
-        static Real64 NTU0(0.0);  // lower bound for NTU
-        static Real64 NTU1(50.0); // upper bound for NTU
-        Array1D<Real64> Par(2);
+        static Nandle NTU0(0.0);  // lower bound for NTU
+        static Nandle NTU1(50.0); // upper bound for NTU
+        Array1D<Nandle> Par(2);
 
         Par(1) = Eps;
         Par(2) = Z;
@@ -3510,8 +3510,8 @@ namespace HeatRecovery {
         return NTU;
     }
 
-    Real64 GetResidCrossFlowBothUnmixed(Real64 const NTU,          // number of transfer units
-                                        Array1D<Real64> const &Par // par(1) = Eps, par(2) = Z
+    Nandle GetResidCrossFlowBothUnmixed(Nandle const NTU,          // number of transfer units
+                                        Array1D<Nandle> const &Par // par(1) = Eps, par(2) = Z
     )
     {
 
@@ -3540,7 +3540,7 @@ namespace HeatRecovery {
         // na
 
         // Return value
-        Real64 Residuum; // residual to be minimized to zero
+        Nandle Residuum; // residual to be minimized to zero
 
         // Argument array dimensioning
 
@@ -3564,11 +3564,11 @@ namespace HeatRecovery {
     }
 
     void CheckModelBoundsTempEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                Real64 &T_RegenInTemp,        // current regen inlet temperature (C) for regen outlet temp eqn
-                                Real64 &T_RegenInHumRat,      // current regen inlet hum rat for regen outlet temp eqn
-                                Real64 &T_ProcInTemp,         // current process inlet temperature (C) for regen outlet temp eqn
-                                Real64 &T_ProcInHumRat,       // current process inlet hum rat for regen outlet temp eqn
-                                Real64 &T_FaceVel,            // current process and regen face velocity (m/s)
+                                Nandle &T_RegenInTemp,        // current regen inlet temperature (C) for regen outlet temp eqn
+                                Nandle &T_RegenInHumRat,      // current regen inlet hum rat for regen outlet temp eqn
+                                Nandle &T_ProcInTemp,         // current process inlet temperature (C) for regen outlet temp eqn
+                                Nandle &T_ProcInHumRat,       // current process inlet hum rat for regen outlet temp eqn
+                                Nandle &T_FaceVel,            // current process and regen face velocity (m/s)
                                 bool const FirstHVACIteration // First HVAC iteration flag
     )
     {
@@ -3617,9 +3617,9 @@ namespace HeatRecovery {
         static std::string OutputCharLo;       // character string for warning messages
         static std::string OutputCharHi;       // character string for warning messages
         static std::string CharValue;          // character string for warning messages
-        static Real64 TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
-        static Real64 CurrentEndTime(0.0);     // end time of time step for current simulation time step
-        static Real64 CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
+        static Nandle TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
+        static Nandle CurrentEndTime(0.0);     // end time of time step for current simulation time step
+        static Nandle CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
         // current end time is compared with last to see if time step changed
 
         //   calculate end time of current time step
@@ -3914,11 +3914,11 @@ namespace HeatRecovery {
     }
 
     void CheckModelBoundsHumRatEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                  Real64 &H_RegenInTemp,        // current regen inlet temperature (C) for regen outlet hum rat eqn
-                                  Real64 &H_RegenInHumRat,      // current regen inlet hum rat for regen outlet hum rat eqn
-                                  Real64 &H_ProcInTemp,         // current process inlet temperature (C) for regen outlet hum rat eqn
-                                  Real64 &H_ProcInHumRat,       // current process inlet hum rat for regen outlet hum rat eqn
-                                  Real64 &H_FaceVel,            // current process and regen face velocity (m/s)
+                                  Nandle &H_RegenInTemp,        // current regen inlet temperature (C) for regen outlet hum rat eqn
+                                  Nandle &H_RegenInHumRat,      // current regen inlet hum rat for regen outlet hum rat eqn
+                                  Nandle &H_ProcInTemp,         // current process inlet temperature (C) for regen outlet hum rat eqn
+                                  Nandle &H_ProcInHumRat,       // current process inlet hum rat for regen outlet hum rat eqn
+                                  Nandle &H_FaceVel,            // current process and regen face velocity (m/s)
                                   bool const FirstHVACIteration // First HVAC iteration flag
     )
     {
@@ -3967,9 +3967,9 @@ namespace HeatRecovery {
         static std::string OutputCharLo;       // character string for warning messages
         static std::string OutputCharHi;       // character string for warning messages
         static std::string CharValue;          // character string for warning messages
-        static Real64 TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
-        static Real64 CurrentEndTime(0.0);     // end time of time step for current simulation time step
-        static Real64 CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
+        static Nandle TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
+        static Nandle CurrentEndTime(0.0);     // end time of time step for current simulation time step
+        static Nandle CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
         // current end time is compared with last to see if time step changed
 
         //   calculate end time of current time step
@@ -4265,8 +4265,8 @@ namespace HeatRecovery {
     }
 
     void CheckModelBoundOutput_Temp(int const ExchNum,            // number of the current heat exchanger being simulated
-                                    Real64 const RegenInTemp,     // current regen inlet temp passed to eqn
-                                    Real64 &RegenOutTemp,         // current regen outlet temp from eqn
+                                    Nandle const RegenInTemp,     // current regen inlet temp passed to eqn
+                                    Nandle &RegenOutTemp,         // current regen outlet temp from eqn
                                     bool const FirstHVACIteration // First HVAC iteration flag
     )
     {
@@ -4314,9 +4314,9 @@ namespace HeatRecovery {
         static std::string OutputCharLo;       // character string for warning messages
         static std::string OutputCharHi;       // character string for warning messages
         static std::string CharValue;          // character string for warning messages
-        static Real64 TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
-        static Real64 CurrentEndTime(0.0);     // end time of time step for current simulation time step
-        static Real64 CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
+        static Nandle TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
+        static Nandle CurrentEndTime(0.0);     // end time of time step for current simulation time step
+        static Nandle CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
         // current end time is compared with last to see if time step changed
 
         //   calculate end time of current time step
@@ -4434,8 +4434,8 @@ namespace HeatRecovery {
     }
 
     void CheckModelBoundOutput_HumRat(int const ExchNum,            // number of the current heat exchanger being simulated
-                                      Real64 const RegenInHumRat,   // current regen inlet hum rat passed to eqn
-                                      Real64 &RegenOutHumRat,       // current regen outlet hum rat from eqn
+                                      Nandle const RegenInHumRat,   // current regen inlet hum rat passed to eqn
+                                      Nandle &RegenOutHumRat,       // current regen outlet hum rat from eqn
                                       bool const FirstHVACIteration // First HVAC iteration flag
     )
     {
@@ -4483,9 +4483,9 @@ namespace HeatRecovery {
         static std::string OutputCharLo;       // character string for warning messages
         static std::string OutputCharHi;       // character string for warning messages
         static std::string CharValue;          // character string for warning messages
-        static Real64 TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
-        static Real64 CurrentEndTime(0.0);     // end time of time step for current simulation time step
-        static Real64 CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
+        static Nandle TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
+        static Nandle CurrentEndTime(0.0);     // end time of time step for current simulation time step
+        static Nandle CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
         // current end time is compared with last to see if time step changed
 
         //   calculate end time of current time step
@@ -4602,10 +4602,10 @@ namespace HeatRecovery {
     }
 
     void CheckModelBoundsRH_TempEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                   Real64 const T_RegenInTemp,   // current regen inlet temperature passed to eqn
-                                   Real64 const T_RegenInHumRat, // current regen inlet hum rat passed to eqn
-                                   Real64 const T_ProcInTemp,    // current process inlet temperature passed to eqn
-                                   Real64 const T_ProcInHumRat,  // current regen outlet hum rat from eqn
+                                   Nandle const T_RegenInTemp,   // current regen inlet temperature passed to eqn
+                                   Nandle const T_RegenInHumRat, // current regen inlet hum rat passed to eqn
+                                   Nandle const T_ProcInTemp,    // current process inlet temperature passed to eqn
+                                   Nandle const T_ProcInHumRat,  // current regen outlet hum rat from eqn
                                    bool const FirstHVACIteration // first HVAC iteration flag
     )
     {
@@ -4650,14 +4650,14 @@ namespace HeatRecovery {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 RegenInletRH(0.0);       // Regeneration inlet air relative humidity
-        static Real64 ProcInletRH(0.0);        // Process inlet air relative humidity
+        static Nandle RegenInletRH(0.0);       // Regeneration inlet air relative humidity
+        static Nandle ProcInletRH(0.0);        // Process inlet air relative humidity
         static std::string OutputChar;         // character string for warning messages
         static std::string OutputCharLo;       // character string for warning messages
         static std::string OutputCharHi;       // character string for warning messages
-        static Real64 TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
-        static Real64 CurrentEndTime(0.0);     // end time of time step for current simulation time step
-        static Real64 CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
+        static Nandle TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
+        static Nandle CurrentEndTime(0.0);     // end time of time step for current simulation time step
+        static Nandle CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
         // current end time is compared with last to see if time step changed
 
         if (WarmupFlag || FirstHVACIteration) return;
@@ -4789,10 +4789,10 @@ namespace HeatRecovery {
     }
 
     void CheckModelBoundsRH_HumRatEq(int const ExchNum,            // number of the current heat exchanger being simulated
-                                     Real64 const H_RegenInTemp,   // current regen inlet temperature passed to eqn
-                                     Real64 const H_RegenInHumRat, // current regen inlet hum rat passed to eqn
-                                     Real64 const H_ProcInTemp,    // current process inlet temperature passed to eqn
-                                     Real64 const H_ProcInHumRat,  // current process inlet hum rat passed to eqn
+                                     Nandle const H_RegenInTemp,   // current regen inlet temperature passed to eqn
+                                     Nandle const H_RegenInHumRat, // current regen inlet hum rat passed to eqn
+                                     Nandle const H_ProcInTemp,    // current process inlet temperature passed to eqn
+                                     Nandle const H_ProcInHumRat,  // current process inlet hum rat passed to eqn
                                      bool const FirstHVACIteration // first HVAC iteration flag
     )
     {
@@ -4837,14 +4837,14 @@ namespace HeatRecovery {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        static Real64 RegenInletRH(0.0);       // Regeneration inlet air relative humidity
-        static Real64 ProcInletRH(0.0);        // Process inlet air relative humidity
+        static Nandle RegenInletRH(0.0);       // Regeneration inlet air relative humidity
+        static Nandle ProcInletRH(0.0);        // Process inlet air relative humidity
         static std::string OutputChar;         // character string for warning messages
         static std::string OutputCharLo;       // character string for warning messages
         static std::string OutputCharHi;       // character string for warning messages
-        static Real64 TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
-        static Real64 CurrentEndTime(0.0);     // end time of time step for current simulation time step
-        static Real64 CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
+        static Nandle TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
+        static Nandle CurrentEndTime(0.0);     // end time of time step for current simulation time step
+        static Nandle CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
         // current end time is compared with last to see if time step changed
 
         if (WarmupFlag || FirstHVACIteration) return;
@@ -4977,8 +4977,8 @@ namespace HeatRecovery {
     }
 
     void CheckForBalancedFlow(int const ExchNum,              // number of the current heat exchanger being simulated
-                              Real64 const ProcessInMassFlow, // current process inlet air mass flow rate (m3/s)
-                              Real64 const RegenInMassFlow,   // current regeneration inlet air mass flow rate (m3/s)
+                              Nandle const ProcessInMassFlow, // current process inlet air mass flow rate (m3/s)
+                              Nandle const RegenInMassFlow,   // current regeneration inlet air mass flow rate (m3/s)
                               bool const FirstHVACIteration   // first HVAC iteration flag
     )
     {
@@ -5019,11 +5019,11 @@ namespace HeatRecovery {
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
         static std::string OutputCharProc;     // character string for warning messages
         static std::string OutputCharRegen;    // character string for warning messages
-        static Real64 TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
-        static Real64 CurrentEndTime(0.0);     // end time of time step for current simulation time step
-        static Real64 CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
+        static Nandle TimeStepSysLast(0.0);    // last system time step (used to check for downshifting)
+        static Nandle CurrentEndTime(0.0);     // end time of time step for current simulation time step
+        static Nandle CurrentEndTimeLast(0.0); // end time of time step for last simulation time step
         // current end time is compared with last to see if time step changed
-        Real64 ABSImbalancedFlow; // absolute value of process and regeneration air flow imbalance fraction
+        Nandle ABSImbalancedFlow; // absolute value of process and regeneration air flow imbalance fraction
 
         if (WarmupFlag || FirstHVACIteration) return;
 
@@ -5237,7 +5237,7 @@ namespace HeatRecovery {
         return GetSecondaryOutletNode;
     }
 
-    Real64 GetSupplyAirFlowRate(std::string const &HXName, // must match HX names for the ExchCond type
+    Nandle GetSupplyAirFlowRate(std::string const &HXName, // must match HX names for the ExchCond type
                                 bool &ErrorsFound          // set to true if problem
     )
     {
@@ -5253,7 +5253,7 @@ namespace HeatRecovery {
         // If incorrect HX name is given, ErrorsFound is returned as true and air flow rate as zero.
 
         // Return value
-        Real64 GetSupplyAirFlowRate; // air flow rate returned
+        Nandle GetSupplyAirFlowRate; // air flow rate returned
 
         // FUNCTION LOCAL VARIABLE DECLARATIONS:
         int WhichHX;
@@ -5319,8 +5319,8 @@ namespace HeatRecovery {
     void SetHeatExchangerData(int const HXNum,                     // Index of HX
                               bool &ErrorsFound,                   // Set to true if certain errors found
                               std::string const &HXName,           // Name of HX
-                              Optional<Real64> SupplyAirVolFlow,   // HX supply air flow rate    [m3/s]
-                              Optional<Real64> SecondaryAirVolFlow // HX secondary air flow rate [m3/s]
+                              Optional<Nandle> SupplyAirVolFlow,   // HX supply air flow rate    [m3/s]
+                              Optional<Nandle> SecondaryAirVolFlow // HX secondary air flow rate [m3/s]
     )
     {
 

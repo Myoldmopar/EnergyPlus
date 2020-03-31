@@ -110,23 +110,23 @@ namespace DemandManager {
         std::string Name;         // Name of DEMAND MANAGER LIST
         int Meter;                // Index to meter to demand limit
         int LimitSchedule;        // Schedule index for demand limit
-        Real64 SafetyFraction;    // Multiplier applied to demand limit schedule
+        Nandle SafetyFraction;    // Multiplier applied to demand limit schedule
         int BillingSchedule;      // Schedule index for billing month periods
-        Real64 BillingPeriod;     // Current billing period value
+        Nandle BillingPeriod;     // Current billing period value
         int PeakSchedule;         // Schedule index for billing month periods
         int AveragingWindow;      // Number of timesteps for averaging demand window
-        Array1D<Real64> History;  // Demand window history
+        Array1D<Nandle> History;  // Demand window history
         int ManagerPriority;      // Indicator for priority (SEQUENTIAL, OPTIMAL, ALL)
         int NumOfManager;         // Number of DEMAND MANAGERs
         Array1D_int Manager;      // Indexes for DEMAND MANAGERs
-        Real64 MeterDemand;       // Meter demand at this timestep
-        Real64 AverageDemand;     // Current demand over the demand window
-        Real64 PeakDemand;        // Peak demand in the billing month so far
-        Real64 ScheduledLimit;    // Scheduled demand limit
-        Real64 DemandLimit;       // Scheduled demand limit * Safety Fraction
-        Real64 AvoidedDemand;     // Demand avoided by active DEMAND MANAGERs
-        Real64 OverLimit;         // Amount that demand limit is exceeded
-        Real64 OverLimitDuration; // Number of hours that demand limit is exceeded
+        Nandle MeterDemand;       // Meter demand at this timestep
+        Nandle AverageDemand;     // Current demand over the demand window
+        Nandle PeakDemand;        // Peak demand in the billing month so far
+        Nandle ScheduledLimit;    // Scheduled demand limit
+        Nandle DemandLimit;       // Scheduled demand limit * Safety Fraction
+        Nandle AvoidedDemand;     // Demand avoided by active DEMAND MANAGERs
+        Nandle OverLimit;         // Amount that demand limit is exceeded
+        Nandle OverLimitDuration; // Number of hours that demand limit is exceeded
 
         // Default Constructor
         DemandManagerListData()
@@ -155,16 +155,16 @@ namespace DemandManager {
         int RotationDuration;    // Rotation duration (min)
         int ElapsedRotationTime; // Elapsed time for the current rotation (min)
         int RotatedLoadNum;      // Index for rotated load
-        Real64 LowerLimit;       // Lowest demand limit as fraction of design level
+        Nandle LowerLimit;       // Lowest demand limit as fraction of design level
         // Lowest heating setpoint for thermostats
-        Real64 UpperLimit; // Not used for demand limit
+        Nandle UpperLimit; // Not used for demand limit
         // Highest cooling setpoint for thermostats
         int NumOfLoads;   // Number of load objects
         Array1D_int Load; // Pointers to load objects
 
         // Additional fields related to DemandManager:Ventilation
-        Real64 FixedRate;      // m3 per person
-        Real64 ReductionRatio; // % of reduction
+        Nandle FixedRate;      // m3 per person
+        Nandle ReductionRatio; // % of reduction
 
         // Default Constructor
         DemandManagerData()

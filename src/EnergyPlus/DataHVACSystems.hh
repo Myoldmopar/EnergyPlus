@@ -72,10 +72,10 @@ namespace EnergyPlus {
             bool &HeatActive,
             bool &CoolActive,
             int const OAUnitNum,         // If the system is an equipment of OutdoorAirUnit
-            Real64 const OAUCoilOutTemp, // the coil inlet temperature of OutdoorAirUnit
+            Nandle const OAUCoilOutTemp, // the coil inlet temperature of OutdoorAirUnit
             bool const ZoneEquipment,    // TRUE if called as zone equipment
-            Real64 &sysOutputProvided,   // sensible output at supply air node
-            Real64 &latOutputProvided    // latent output at supply air node
+            Nandle &sysOutputProvided,   // sensible output at supply air node
+            Nandle &latOutputProvided    // latent output at supply air node
         ) = 0;
 
         virtual void sizeSystem(bool const FirstHVACIteration, int const AirLoopNum) = 0;

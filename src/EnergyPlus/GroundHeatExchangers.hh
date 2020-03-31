@@ -71,8 +71,8 @@ namespace EnergyPlus {
         // DERIVED TYPE DEFINITIONS
 
         // MODULE PARAMETER DEFINITIONS
-        extern Real64 const hrsPerDay;   // Number of hours in a day
-        extern Real64 const hrsPerMonth; // Number of hours in month
+        extern Nandle const hrsPerDay;   // Number of hours in a day
+        extern Nandle const hrsPerMonth; // Number of hours in month
         extern int const maxTSinHr;      // Max number of time step in a hour
 
         // MODULE VARIABLE DECLARATIONS:
@@ -85,11 +85,11 @@ namespace EnergyPlus {
             virtual ~thermoPhysicialPropsStruct() {
             }
 
-            Real64 k;           // Thermal conductivity [W/m-K]
-            Real64 rho;         // Density [kg/m3]
-            Real64 cp;          // Specific heat [J/kg-K]
-            Real64 rhoCp;       // Specific heat capacity [J/kg-K]
-            Real64 diffusivity; // Thermal diffusivity [m2/s]
+            Nandle k;           // Thermal conductivity [W/m-K]
+            Nandle rho;         // Density [kg/m3]
+            Nandle cp;          // Specific heat [J/kg-K]
+            Nandle rhoCp;       // Specific heat capacity [J/kg-K]
+            Nandle diffusivity; // Thermal diffusivity [m2/s]
 
             thermoPhysicialPropsStruct() : k(0.0), rho(0.0), cp(0.0), rhoCp(0.0), diffusivity(0.0) {
             }
@@ -101,11 +101,11 @@ namespace EnergyPlus {
             }
 
             // Members
-            Real64 outDia;      // Outer diameter of the pipe [m]
-            Real64 innerDia;    // Inner diameter of the pipe [m]
-            Real64 outRadius;   // Outer radius of the pipe [m]
-            Real64 innerRadius; // Inner radius of the pipe [m]
-            Real64 thickness;   // Thickness of the pipe wall [m]
+            Nandle outDia;      // Outer diameter of the pipe [m]
+            Nandle innerDia;    // Inner diameter of the pipe [m]
+            Nandle outRadius;   // Outer radius of the pipe [m]
+            Nandle innerRadius; // Inner radius of the pipe [m]
+            Nandle thickness;   // Thickness of the pipe wall [m]
 
             pipePropsStruct() : outDia(0.0), innerDia(0.0), outRadius(0.0), innerRadius(0.0), thickness(0.0) {
             }
@@ -118,12 +118,12 @@ namespace EnergyPlus {
 
             // Members
             std::string name;                 // Name
-            Real64 bhTopDepth;                // Depth of top of borehole {m}
-            Real64 bhLength;                  // Length of borehole from top of borehole {m}
-            Real64 bhDiameter;                // Diameter of borehole {m}
+            Nandle bhTopDepth;                // Depth of top of borehole {m}
+            Nandle bhLength;                  // Length of borehole from top of borehole {m}
+            Nandle bhDiameter;                // Diameter of borehole {m}
             thermoPhysicialPropsStruct grout; // Grout properties
             pipePropsStruct pipe;             // Pipe properties
-            Real64 bhUTubeDist;               // U-tube, shank-to-shank spacking {m}
+            Nandle bhUTubeDist;               // U-tube, shank-to-shank spacking {m}
 
             GLHEVertPropsStruct() : bhTopDepth(0.0), bhLength(0.0), bhDiameter(0.0), bhUTubeDist(0.0) {
             }
@@ -134,9 +134,9 @@ namespace EnergyPlus {
             ~MyCartesian() {
             }
 
-            Real64 x;
-            Real64 y;
-            Real64 z;
+            Nandle x;
+            Nandle y;
+            Nandle z;
 
             MyCartesian() : x(0.0), y(0.0), z(0.0) {
             }
@@ -149,11 +149,11 @@ namespace EnergyPlus {
 
             // Members
             std::string name;                           // Name
-            Real64 xLoc;                                // X-direction location {m}
-            Real64 yLoc;                                // Y-direction location {m}
-            Real64 dl_i;                                // Discretized bh length between points
-            Real64 dl_ii;                               // Discretized bh length between points
-            Real64 dl_j;                                // Discretized bh length between points
+            Nandle xLoc;                                // X-direction location {m}
+            Nandle yLoc;                                // Y-direction location {m}
+            Nandle dl_i;                                // Discretized bh length between points
+            Nandle dl_ii;                               // Discretized bh length between points
+            Nandle dl_j;                                // Discretized bh length between points
             std::shared_ptr<GLHEVertPropsStruct> props; // Properties
             std::vector<MyCartesian>
                     pointLocations_i; // Discretized point locations for when computing temperature response of other boreholes on this bh
@@ -174,7 +174,7 @@ namespace EnergyPlus {
             std::string name;                           // Name
             int numBHinXDirection;                      // Number of boreholes in X direction
             int numBHinYDirection;                      // Number of boreholes in Y direction
-            Real64 bhSpacing;                           // Borehole center-to-center spacing {m}
+            Nandle bhSpacing;                           // Borehole center-to-center spacing {m}
             std::shared_ptr<GLHEVertPropsStruct> props; // Properties
 
             GLHEVertArrayStruct() : numBHinXDirection(0), numBHinYDirection(0), bhSpacing(0.0) {
@@ -190,11 +190,11 @@ namespace EnergyPlus {
             std::string name;                                              // Name
             int numBoreholes;                                              // Number of boreholes
             int numGFuncPairs;                                             // Number of g-function pairs
-            Real64 gRefRatio;                                              // Reference ratio of g-function set
-            Real64 maxSimYears;                                            // Maximum length of simulation in years
-            Array1D<Real64> time;                                          // response time in seconds
-            Array1D<Real64> LNTTS;                                         // natural log of Non Dimensional Time Ln(t/ts)
-            Array1D<Real64> GFNC;                                          // G-function ( Non Dimensional temperature response factors)
+            Nandle gRefRatio;                                              // Reference ratio of g-function set
+            Nandle maxSimYears;                                            // Maximum length of simulation in years
+            Array1D<Nandle> time;                                          // response time in seconds
+            Array1D<Nandle> LNTTS;                                         // natural log of Non Dimensional Time Ln(t/ts)
+            Array1D<Nandle> GFNC;                                          // G-function ( Non Dimensional temperature response factors)
             std::shared_ptr<GLHEVertPropsStruct> props;                    // Properties
             std::vector<std::shared_ptr<GLHEVertSingleStruct>> myBorholes; // Boreholes used by this response factors object
 
@@ -221,36 +221,36 @@ namespace EnergyPlus {
             pipePropsStruct pipe;
             thermoPhysicialPropsStruct grout;
             std::shared_ptr<GLHEResponseFactorsStruct> myRespFactors;
-            Real64 designFlow;            // Design volumetric flow rate			[m3/s]
-            Real64 designMassFlow;        // Design mass flow rate				[kg/s]
-            Real64 tempGround;            // The far field temperature of the ground   [degC]
-            Array1D<Real64> QnMonthlyAgg; // Monthly aggregated normalized heat extraction/rejection rate [W/m]
-            Array1D<Real64> QnHr;         // Hourly aggregated normalized heat extraction/rejection rate [W/m]
-            Array1D<Real64> QnSubHr; // Contains the sub-hourly heat extraction/rejection rate normalized by the total active length of bore holes  [W/m]
+            Nandle designFlow;            // Design volumetric flow rate			[m3/s]
+            Nandle designMassFlow;        // Design mass flow rate				[kg/s]
+            Nandle tempGround;            // The far field temperature of the ground   [degC]
+            Array1D<Nandle> QnMonthlyAgg; // Monthly aggregated normalized heat extraction/rejection rate [W/m]
+            Array1D<Nandle> QnHr;         // Hourly aggregated normalized heat extraction/rejection rate [W/m]
+            Array1D<Nandle> QnSubHr; // Contains the sub-hourly heat extraction/rejection rate normalized by the total active length of bore holes  [W/m]
             int prevHour;
             int AGG;               // Minimum Hourly History required
             int SubAGG;            // Minimum sub-hourly History
             Array1D_int LastHourN; // Stores the Previous hour's N for past hours until the minimum sub-hourly history
-            Real64 bhTemp;         // [degC]
-            Real64 massFlowRate;   // [kg/s]
-            Real64 outletTemp;     // [degC]
-            Real64 inletTemp;      // [degC]
-            Real64 aveFluidTemp;   // [degC]
-            Real64 QGLHE;          // [W] heat transfer rate
+            Nandle bhTemp;         // [degC]
+            Nandle massFlowRate;   // [kg/s]
+            Nandle outletTemp;     // [degC]
+            Nandle inletTemp;      // [degC]
+            Nandle aveFluidTemp;   // [degC]
+            Nandle QGLHE;          // [W] heat transfer rate
             bool myFlag;
             bool myEnvrnFlag;
             bool gFunctionsExist;
-            Real64 lastQnSubHr;
-            Real64 HXResistance;    // The thermal resistance of the GHX, (K per W/m)
-            Real64 totalTubeLength; // The total length of pipe. NumBoreholes * BoreholeDepth OR Pi * Dcoil * NumCoils
-            Real64 timeSS;          // Steady state time
-            Real64 timeSSFactor;    // Steady state time factor for calculation
+            Nandle lastQnSubHr;
+            Nandle HXResistance;    // The thermal resistance of the GHX, (K per W/m)
+            Nandle totalTubeLength; // The total length of pipe. NumBoreholes * BoreholeDepth OR Pi * Dcoil * NumCoils
+            Nandle timeSS;          // Steady state time
+            Nandle timeSSFactor;    // Steady state time factor for calculation
             std::shared_ptr<BaseGroundTempsModel> groundTempModel;
 
             // some statics pulled out into member variables
             bool firstTime;
             int numErrorCalls;
-            Real64 ToutNew;
+            Nandle ToutNew;
             int PrevN;                // The saved value of N at previous time step
             bool updateCurSimTime; // Used to reset the CurSimTime to reset after WarmupFlag
             bool triggerDesignDayReset;
@@ -276,7 +276,7 @@ namespace EnergyPlus {
 
             inline bool isEven(int const val);
 
-            Real64 interpGFunc(Real64);
+            Nandle interpGFunc(Nandle);
 
             void makeThisGLHECacheAndCompareWithFileCache();
 
@@ -286,16 +286,16 @@ namespace EnergyPlus {
 
             void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-            void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Real64 &CurLoad,
+            void simulate(const PlantLocation &calledFromLocation, bool const FirstHVACIteration, Nandle &CurLoad,
                           bool const RunFlag) override;
 
             static PlantComponent *factory(int const objectType, std::string objectName);
 
-            virtual Real64 getGFunc(Real64) = 0;
+            virtual Nandle getGFunc(Nandle) = 0;
 
             virtual void initGLHESimVars() = 0;
 
-            virtual Real64 calcHXResistance() = 0;
+            virtual Nandle calcHXResistance() = 0;
 
             virtual void getAnnualTimeConstant() = 0;
         };
@@ -306,36 +306,36 @@ namespace EnergyPlus {
             }
 
             // Members
-            Real64 bhDiameter;  // Diameter of borehole {m}
-            Real64 bhRadius;    // Radius of borehole {m}
-            Real64 bhLength;    // Length of borehole {m}
-            Real64 bhUTubeDist; // Distance between u-tube legs {m}
+            Nandle bhDiameter;  // Diameter of borehole {m}
+            Nandle bhRadius;    // Radius of borehole {m}
+            Nandle bhLength;    // Length of borehole {m}
+            Nandle bhUTubeDist; // Distance between u-tube legs {m}
 
             // Parameters for the multipole method
-            Real64 theta_1;
-            Real64 theta_2;
-            Real64 theta_3;
-            Real64 sigma;
+            Nandle theta_1;
+            Nandle theta_2;
+            Nandle theta_3;
+            Nandle sigma;
 
             nlohmann::json myCacheData;
 
-            std::vector<Real64> GFNC_shortTimestep;
-            std::vector<Real64> LNTTS_shortTimestep;
+            std::vector<Nandle> GFNC_shortTimestep;
+            std::vector<Nandle> LNTTS_shortTimestep;
 
             GLHEVert() : bhDiameter(0.0), bhRadius(0.0), bhLength(0.0), bhUTubeDist(0.0), theta_1(0.0), theta_2(0.0),
                          theta_3(0.0), sigma(0.0) {
             }
 
-            std::vector<Real64> distances(MyCartesian const &point_i, MyCartesian const &point_j);
+            std::vector<Nandle> distances(MyCartesian const &point_i, MyCartesian const &point_j);
 
-            Real64 calcResponse(std::vector<Real64> const &dists, Real64 const &currTime);
+            Nandle calcResponse(std::vector<Nandle> const &dists, Nandle const &currTime);
 
-            Real64 integral(MyCartesian const &point_i, std::shared_ptr<GLHEVertSingleStruct> const &bh_j,
-                            Real64 const &currTime);
+            Nandle integral(MyCartesian const &point_i, std::shared_ptr<GLHEVertSingleStruct> const &bh_j,
+                            Nandle const &currTime);
 
-            Real64
+            Nandle
             doubleIntegral(std::shared_ptr<GLHEVertSingleStruct> const &bh_i,
-                           std::shared_ptr<GLHEVertSingleStruct> const &bh_j, Real64 const &currTime);
+                           std::shared_ptr<GLHEVertSingleStruct> const &bh_j, Nandle const &currTime);
 
             void calcShortTimestepGFunctions();
 
@@ -343,13 +343,13 @@ namespace EnergyPlus {
 
             void calcGFunctions();
 
-            Real64 calcHXResistance();
+            Nandle calcHXResistance();
 
             void initGLHESimVars();
 
             void getAnnualTimeConstant();
 
-            Real64 getGFunc(Real64 const time);
+            Nandle getGFunc(Nandle const time);
 
             void makeThisGLHECacheStruct();
 
@@ -357,19 +357,19 @@ namespace EnergyPlus {
 
             void writeGLHECacheToFile();
 
-            Real64 calcBHAverageResistance();
+            Nandle calcBHAverageResistance();
 
-            Real64 calcBHTotalInternalResistance();
+            Nandle calcBHTotalInternalResistance();
 
-            Real64 calcBHGroutResistance();
+            Nandle calcBHGroutResistance();
 
-            Real64 calcPipeConductionResistance();
+            Nandle calcPipeConductionResistance();
 
-            Real64 calcPipeConvectionResistance();
+            Nandle calcPipeConvectionResistance();
 
-            Real64 frictionFactor(Real64 const reynoldsNum);
+            Nandle frictionFactor(Nandle const reynoldsNum);
 
-            Real64 calcPipeResistance();
+            Nandle calcPipeResistance();
 
             void combineShortAndLongTimestepGFunctions();
         };
@@ -382,20 +382,20 @@ namespace EnergyPlus {
 
             // Members
             bool verticalConfig;  // HX Configuration Flag
-            Real64 coilDiameter;  // Diameter of the slinky coils [m]
-            Real64 coilPitch;     // Center-to-center slinky coil spacing [m]
-            Real64 coilDepth;     // Average depth of the coil [m]
-            Real64 trenchDepth;   // Trench depth from ground surface to trench bottom [m]
-            Real64 trenchLength;  // Length of single trench [m]
+            Nandle coilDiameter;  // Diameter of the slinky coils [m]
+            Nandle coilPitch;     // Center-to-center slinky coil spacing [m]
+            Nandle coilDepth;     // Average depth of the coil [m]
+            Nandle trenchDepth;   // Trench depth from ground surface to trench bottom [m]
+            Nandle trenchLength;  // Length of single trench [m]
             int numTrenches;      // Number of parallel trenches [m]
-            Real64 trenchSpacing; // Spacing between parallel trenches [m]
+            Nandle trenchSpacing; // Spacing between parallel trenches [m]
             int numCoils;         // Number of coils
             int monthOfMinSurfTemp;
-            Real64 maxSimYears;
-            Real64 minSurfTemp;
-            Array1D<Real64> X0;
-            Array1D<Real64> Y0;
-            Real64 Z0;
+            Nandle maxSimYears;
+            Nandle minSurfTemp;
+            Array1D<Nandle> X0;
+            Array1D<Nandle> Y0;
+            Nandle Z0;
 
             GLHESlinky()
                     : verticalConfig(false), coilDiameter(0.0), coilPitch(0.0), coilDepth(0.0), trenchDepth(0.0),
@@ -403,7 +403,7 @@ namespace EnergyPlus {
                       trenchSpacing(0.0), numCoils(0), monthOfMinSurfTemp(0), maxSimYears(0.0), minSurfTemp(0.0) {
             }
 
-            Real64 calcHXResistance();
+            Nandle calcHXResistance();
 
             void calcGFunctions();
 
@@ -411,25 +411,25 @@ namespace EnergyPlus {
 
             void getAnnualTimeConstant();
 
-            Real64 doubleIntegral(int const m, int const n, int const m1, int const n1, Real64 const t, int const I0,
+            Nandle doubleIntegral(int const m, int const n, int const m1, int const n1, Nandle const t, int const I0,
                                   int const J0);
 
-            Real64 integral(int const m, int const n, int const m1, int const n1, Real64 const t, Real64 const eta,
-                            Real64 const J0);
+            Nandle integral(int const m, int const n, int const m1, int const n1, Nandle const t, Nandle const eta,
+                            Nandle const J0);
 
-            Real64 distance(int const m, int const n, int const m1, int const n1, Real64 const eta, Real64 const theta);
+            Nandle distance(int const m, int const n, int const m1, int const n1, Nandle const eta, Nandle const theta);
 
-            Real64 distanceToFictRing(int const m, int const n, int const m1, int const n1, Real64 const eta,
-                                      Real64 const theta);
+            Nandle distanceToFictRing(int const m, int const n, int const m1, int const n1, Nandle const eta,
+                                      Nandle const theta);
 
-            Real64 distToCenter(int const m, int const n, int const m1, int const n1);
+            Nandle distToCenter(int const m, int const n, int const m1, int const n1);
 
-            Real64 nearFieldResponseFunction(int const m, int const n, int const m1, int const n1, Real64 const eta,
-                                             Real64 const theta, Real64 const t);
+            Nandle nearFieldResponseFunction(int const m, int const n, int const m1, int const n1, Nandle const eta,
+                                             Nandle const theta, Nandle const t);
 
-            Real64 midFieldResponseFunction(int const m, int const n, int const m1, int const n1, Real64 const t);
+            Nandle midFieldResponseFunction(int const m, int const n, int const m1, int const n1, Nandle const t);
 
-            Real64 getGFunc(Real64 const time);
+            Nandle getGFunc(Nandle const time);
 
             void makeThisGLHECacheStruct();
 
@@ -457,8 +457,8 @@ namespace EnergyPlus {
 
         std::shared_ptr<GLHEVertArrayStruct> GetVertArray(std::string const &objectName);
 
-        std::vector<Real64>
-        TDMA(std::vector<Real64> a, std::vector<Real64> b, std::vector<Real64> c, std::vector<Real64> d);
+        std::vector<Nandle>
+        TDMA(std::vector<Nandle> a, std::vector<Nandle> b, std::vector<Nandle> c, std::vector<Nandle> d);
 
         // Object Data
         extern std::vector<GLHEVert> verticalGLHE;                                            // Vertical GLHEs

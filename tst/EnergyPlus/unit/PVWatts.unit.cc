@@ -192,7 +192,7 @@ TEST_F(EnergyPlusFixture, PVWattsGenerator_Calc)
     pvwa.setCellTemperature(30.345);
     pvwa.setPlaneOfArrayIrradiance(92.257);
     pvwa.calc();
-    Real64 generatorPower, generatorEnergy, thermalPower, thermalEnergy;
+    Nandle generatorPower, generatorEnergy, thermalPower, thermalEnergy;
     pvwa.getResults(generatorPower, generatorEnergy, thermalPower, thermalEnergy);
     EXPECT_DOUBLE_EQ(thermalPower, 0.0);
     EXPECT_DOUBLE_EQ(thermalEnergy, 0.0);

@@ -205,8 +205,8 @@ TEST_F(EnergyPlusFixture, WindowEquivalentLayer_VBMaximizeBeamSolar)
     // GitHub issue 5750
     int SurfNum(0);
     int VBMatNum(0);
-    Real64 ProfAngVer(0);
-    static Array2D<Real64> AbsSolBeam(2, CFSMAXNL + 1);
+    Nandle ProfAngVer(0);
+    static Array2D<Nandle> AbsSolBeam(2, CFSMAXNL + 1);
 
     std::string const idf_objects = delimited_string({
 
@@ -562,8 +562,8 @@ TEST_F(EnergyPlusFixture, WindowEquivalentLayer_VBBlockBeamSolar)
     // GitHub issue 5750
     int SurfNum(0);
     int VBMatNum(0);
-    Real64 ProfAngVer(0);
-    static Array2D<Real64> AbsSolBeam(2, CFSMAXNL + 1);
+    Nandle ProfAngVer(0);
+    static Array2D<Nandle> AbsSolBeam(2, CFSMAXNL + 1);
 
     std::string const idf_objects = delimited_string({
 
@@ -913,7 +913,7 @@ TEST_F(EnergyPlusFixture, WindowEquivalentLayer_VBBlockBeamSolar)
     DaylightingManager::ProfileAngle(SurfNum, DataEnvironment::SOLCOS, DataHeatBalance::Horizontal, ProfAngVer);
     EXPECT_NEAR(90.0 - DataGlobals::RadToDeg * ProfAngVer, DataSurfaces::SurfaceWindow(SurfNum).SlatAngThisTSDeg, 0.0001);
     // get the slat angle from profile angle
-    Real64 SlateAngleBlockBeamSolar = VB_CriticalSlatAngle(DataGlobals::RadToDeg * ProfAngVer);
+    Nandle SlateAngleBlockBeamSolar = VB_CriticalSlatAngle(DataGlobals::RadToDeg * ProfAngVer);
     EXPECT_NEAR(SlateAngleBlockBeamSolar, DataSurfaces::SurfaceWindow(SurfNum).SlatAngThisTSDeg, 0.0001);
 }
 
@@ -1240,22 +1240,22 @@ TEST_F(EnergyPlusFixture, WindowEquivalentLayer_AirGapOutdoorVentedTest)
     SimulationManager::ManageSimulation(OutputFiles::getSingleton());
 
     int EQLNum(1);
-    Array1D<Real64> T({1, CFSMAXNL}, 0.0);
-    Array1D<Real64> Q({0, CFSMAXNL}, 0.0);
-    Array1D<Real64> JB({0, CFSMAXNL}, 0.0);
-    Array1D<Real64> QOCF({1, CFSMAXNL}, 0.0);
-    Array1D<Real64> H({0, CFSMAXNL + 1}, 0.0);
-    Array1D<Real64> JF({1, CFSMAXNL + 1}, 0.0);
-    Array1D<Real64> Source({1, CFSMAXNL + 1}, 0.0);
+    Array1D<Nandle> T({1, CFSMAXNL}, 0.0);
+    Array1D<Nandle> Q({0, CFSMAXNL}, 0.0);
+    Array1D<Nandle> JB({0, CFSMAXNL}, 0.0);
+    Array1D<Nandle> QOCF({1, CFSMAXNL}, 0.0);
+    Array1D<Nandle> H({0, CFSMAXNL + 1}, 0.0);
+    Array1D<Nandle> JF({1, CFSMAXNL + 1}, 0.0);
+    Array1D<Nandle> Source({1, CFSMAXNL + 1}, 0.0);
 
-    Real64 HcIn = 1.5;
-    Real64 HcOut = 6.0;
-    Real64 TOL = 0.001;
-    Real64 TIN = 301.5;
-    Real64 Tout = 310.0;
-    Real64 TRMIN = 301.5;
-    Real64 TRMOUT = 308.0;
-    Real64 QOCFRoom = 0.0;
+    Nandle HcIn = 1.5;
+    Nandle HcOut = 6.0;
+    Nandle TOL = 0.001;
+    Nandle TIN = 301.5;
+    Nandle Tout = 310.0;
+    Nandle TRMIN = 301.5;
+    Nandle TRMOUT = 308.0;
+    Nandle QOCFRoom = 0.0;
     H(0) = HcOut;
     H(1) = 0.0;
     H(2) = HcIn;
@@ -1564,22 +1564,22 @@ TEST_F(EnergyPlusFixture, WindowEquivalentLayer_AirGapIndoorVentedTest)
     SimulationManager::ManageSimulation(OutputFiles::getSingleton());
 
     int EQLNum(1);
-    Array1D<Real64> T({1, CFSMAXNL}, 0.0);
-    Array1D<Real64> Q({0, CFSMAXNL}, 0.0);
-    Array1D<Real64> JB({0, CFSMAXNL}, 0.0);
-    Array1D<Real64> QOCF({1, CFSMAXNL}, 0.0);
-    Array1D<Real64> H({0, CFSMAXNL + 1}, 0.0);
-    Array1D<Real64> JF({1, CFSMAXNL + 1}, 0.0);
-    Array1D<Real64> Source({1, CFSMAXNL + 1}, 0.0);
+    Array1D<Nandle> T({1, CFSMAXNL}, 0.0);
+    Array1D<Nandle> Q({0, CFSMAXNL}, 0.0);
+    Array1D<Nandle> JB({0, CFSMAXNL}, 0.0);
+    Array1D<Nandle> QOCF({1, CFSMAXNL}, 0.0);
+    Array1D<Nandle> H({0, CFSMAXNL + 1}, 0.0);
+    Array1D<Nandle> JF({1, CFSMAXNL + 1}, 0.0);
+    Array1D<Nandle> Source({1, CFSMAXNL + 1}, 0.0);
 
-    Real64 HcIn = 1.5;
-    Real64 HcOut = 6.0;
-    Real64 TOL = 0.001;
-    Real64 TIN = 301.5;
-    Real64 Tout = 310.0;
-    Real64 TRMIN = 301.5;
-    Real64 TRMOUT = 308.0;
-    Real64 QOCFRoom = 0.0;
+    Nandle HcIn = 1.5;
+    Nandle HcOut = 6.0;
+    Nandle TOL = 0.001;
+    Nandle TIN = 301.5;
+    Nandle Tout = 310.0;
+    Nandle TRMIN = 301.5;
+    Nandle TRMOUT = 308.0;
+    Nandle QOCFRoom = 0.0;
     H(0) = HcOut;
     H(1) = 0.0;
     H(2) = HcIn;

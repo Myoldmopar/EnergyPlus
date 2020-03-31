@@ -62,44 +62,44 @@ namespace TARCOGCommon {
 
     bool IsShadingLayer(int const layertype);
 
-    Real64 LDSumMax(Real64 const Width, Real64 const Height);
+    Nandle LDSumMax(Nandle const Width, Nandle const Height);
 
-    Real64 LDSumMean(Real64 const Width, Real64 const Height);
+    Nandle LDSumMean(Nandle const Width, Nandle const Height);
 
-    void modifyHcGap(Array1D<Real64> const &hcgap, // Convective coefficient for gap
-                     Array1D<Real64> const &qv,    // Heat flow from ventilation [W/m2]
-                     Array1D<Real64> const &hcv,   // Convective heat flow coefficient due to ventilation
-                     Array1D<Real64> &hcgapMod,    // Modified heat flow coefficient for gap
+    void modifyHcGap(Array1D<Nandle> const &hcgap, // Convective coefficient for gap
+                     Array1D<Nandle> const &qv,    // Heat flow from ventilation [W/m2]
+                     Array1D<Nandle> const &hcv,   // Convective heat flow coefficient due to ventilation
+                     Array1D<Nandle> &hcgapMod,    // Modified heat flow coefficient for gap
                      int const nlayer,             // Number of layers
-                     Real64 const edgeGlCorrFac    // Edge of glass correction factor
+                     Nandle const edgeGlCorrFac    // Edge of glass correction factor
     );
 
     void matrixQBalance(int const nlayer,
-                        Array2<Real64> &a,
-                        Array1D<Real64> &b,
-                        Array1D<Real64> const &thick,
-                        Array1D<Real64> const &hcgas,
-                        Array1D<Real64> &hcgapMod,
-                        Array1D<Real64> const &asol,
-                        Array1D<Real64> const &qv,
-                        Array1D<Real64> const &hcv,
-                        Real64 const Tin,
-                        Real64 const Tout,
-                        Real64 const Gin,
-                        Real64 const Gout,
-                        Array1D<Real64> const &theta,
-                        Array1D<Real64> const &tir,
-                        Array1D<Real64> const &rir,
-                        Array1D<Real64> const &emis,
-                        Real64 const edgeGlCorrFac);
+                        Array2<Nandle> &a,
+                        Array1D<Nandle> &b,
+                        Array1D<Nandle> const &thick,
+                        Array1D<Nandle> const &hcgas,
+                        Array1D<Nandle> &hcgapMod,
+                        Array1D<Nandle> const &asol,
+                        Array1D<Nandle> const &qv,
+                        Array1D<Nandle> const &hcv,
+                        Nandle const Tin,
+                        Nandle const Tout,
+                        Nandle const Gin,
+                        Nandle const Gout,
+                        Array1D<Nandle> const &theta,
+                        Array1D<Nandle> const &tir,
+                        Array1D<Nandle> const &rir,
+                        Array1D<Nandle> const &emis,
+                        Nandle const edgeGlCorrFac);
 
-    void EquationsSolver(Array2<Real64> &a, Array1D<Real64> &b, int const n, int &nperr, std::string &ErrorMessage);
+    void EquationsSolver(Array2<Nandle> &a, Array1D<Nandle> &b, int const n, int &nperr, std::string &ErrorMessage);
 
-    void ludcmp(Array2<Real64> &a, int const n, Array1D_int &indx, Real64 &d, int &nperr, std::string &ErrorMessage);
+    void ludcmp(Array2<Nandle> &a, int const n, Array1D_int &indx, Nandle &d, int &nperr, std::string &ErrorMessage);
 
-    void lubksb(Array2A<Real64> const a, int const n, const Array1D_int &indx, Array1D<Real64> &b);
+    void lubksb(Array2A<Nandle> const a, int const n, const Array1D_int &indx, Array1D<Nandle> &b);
 
-    Real64 pos(Real64 const x);
+    Nandle pos(Nandle const x);
 
 } // namespace TARCOGCommon
 

@@ -72,13 +72,13 @@ namespace ChillerGasAbsorption {
         // Part of Type that directly corresponds with IDD definition
         std::string Name;                 // user identifier
         std::string FuelType;             // Type of Fuel - DIESEL, GASOLINE, GAS
-        Real64 NomCoolingCap;             // W - design nominal capacity of Absorber
+        Nandle NomCoolingCap;             // W - design nominal capacity of Absorber
         bool NomCoolingCapWasAutoSized;   // true if nominal capacity was autosize on input
-        Real64 NomHeatCoolRatio;          // ratio of heating to cooling capacity
-        Real64 FuelCoolRatio;             // ratio of fuel input to cooling output
-        Real64 FuelHeatRatio;             // ratio of fuel input to heating output
-        Real64 ElecCoolRatio;             // ratio of electricity input to cooling output
-        Real64 ElecHeatRatio;             // ratio of electricity input to heating output
+        Nandle NomHeatCoolRatio;          // ratio of heating to cooling capacity
+        Nandle FuelCoolRatio;             // ratio of fuel input to cooling output
+        Nandle FuelHeatRatio;             // ratio of fuel input to heating output
+        Nandle ElecCoolRatio;             // ratio of electricity input to cooling output
+        Nandle ElecHeatRatio;             // ratio of electricity input to heating output
         int ChillReturnNodeNum;           // Node number on the inlet side of the plant
         int ChillSupplyNodeNum;           // Node number on the outlet side of the plant
         bool ChillSetPointErrDone;        // flag to report missing setpoint on CW outlet
@@ -89,18 +89,18 @@ namespace ChillerGasAbsorption {
         int HeatSupplyNodeNum;            // absorber steam outlet node number, water side
         bool HeatSetPointErrDone;         // flag to report missing setpoint on HW outlet
         bool HeatSetPointSetToLoop;       // flag to use overall loop setpoint
-        Real64 MinPartLoadRat;            // min allowed operating frac full load
-        Real64 MaxPartLoadRat;            // max allowed operating frac full load
-        Real64 OptPartLoadRat;            // optimal operating frac full load
-        Real64 TempDesCondReturn;         // design secondary loop fluid temperature at the Absorber condenser side inlet
-        Real64 TempDesCHWSupply;          // design chilled water supply temperature
-        Real64 EvapVolFlowRate;           // m**3/s - design nominal water volumetric flow rate through the evaporator
+        Nandle MinPartLoadRat;            // min allowed operating frac full load
+        Nandle MaxPartLoadRat;            // max allowed operating frac full load
+        Nandle OptPartLoadRat;            // optimal operating frac full load
+        Nandle TempDesCondReturn;         // design secondary loop fluid temperature at the Absorber condenser side inlet
+        Nandle TempDesCHWSupply;          // design chilled water supply temperature
+        Nandle EvapVolFlowRate;           // m**3/s - design nominal water volumetric flow rate through the evaporator
         bool EvapVolFlowRateWasAutoSized; // true if evaporator flow rate was autosize on input
-        Real64 CondVolFlowRate;           // m**3/s - design nominal water volumetric flow rate through the condenser
+        Nandle CondVolFlowRate;           // m**3/s - design nominal water volumetric flow rate through the condenser
         bool CondVolFlowRateWasAutoSized; // true if condenser flow rate was autosize on input
-        Real64 HeatVolFlowRate;           // m**3/s - design nominal water volumetric flow rate through the heater side
+        Nandle HeatVolFlowRate;           // m**3/s - design nominal water volumetric flow rate through the heater side
         bool HeatVolFlowRateWasAutoSized; // true if hot water flow rate was autosize on input
-        Real64 SizFac;                    // sizing factor
+        Nandle SizFac;                    // sizing factor
         int CoolCapFTCurve;               // cooling capacity as a function of temperature curve (chilled water temp,
         // condenser water temp)
         int FuelCoolFTCurve; // Fuel-Input-to cooling output Ratio Function of Temperature Curve (chilled
@@ -113,12 +113,12 @@ namespace ChillerGasAbsorption {
         int FuelHeatFHPLRCurve;  // Fuel Input to heat output ratio during heating only function
         bool isEnterCondensTemp; // if using entering conderser water temperature is TRUE, exiting is FALSE
         bool isWaterCooled;      // if water cooled it is TRUE
-        Real64 CHWLowLimitTemp;  // Chilled Water Lower Limit Temperature
-        Real64 FuelHeatingValue;
+        Nandle CHWLowLimitTemp;  // Chilled Water Lower Limit Temperature
+        Nandle FuelHeatingValue;
         // Calculated design values
-        Real64 DesCondMassFlowRate; // design nominal mass flow rate of water through the condenser [kg/s]
-        Real64 DesHeatMassFlowRate; // design nominal mass flow rate of water through the hot water side [kg/s]
-        Real64 DesEvapMassFlowRate; // design nominal mass flow rate of water through chilled water side [kg/s]
+        Nandle DesCondMassFlowRate; // design nominal mass flow rate of water through the condenser [kg/s]
+        Nandle DesHeatMassFlowRate; // design nominal mass flow rate of water through the hot water side [kg/s]
+        Nandle DesEvapMassFlowRate; // design nominal mass flow rate of water through chilled water side [kg/s]
         // other values used during simulation
         int DeltaTempCoolErrCount; // error count for Delta Temp = 0 while cooling
         int DeltaTempHeatErrCount; // error count for Delta Temp = 0 while heating
@@ -140,42 +140,42 @@ namespace ChillerGasAbsorption {
         bool envrnFlag;
         bool plantScanFlag;
         bool oneTimeFlag;
-        Real64 oldCondSupplyTemp; // save the last iteration value of leaving condenser water temperature
+        Nandle oldCondSupplyTemp; // save the last iteration value of leaving condenser water temperature
 
         // Originally on report variable structure
-        Real64 CoolingLoad;             // cooling load on the chiller (previously called QEvap)
-        Real64 CoolingEnergy;           // variable to track total cooling load for period (was EvapEnergy)
-        Real64 HeatingLoad;             // heating load on the chiller
-        Real64 HeatingEnergy;           // heating energy
-        Real64 TowerLoad;               // load on the cooling tower/condenser (previously called QCond)
-        Real64 TowerEnergy;             // variable to track total tower load for a period (was CondEnergy)
-        Real64 FuelUseRate;             // instantaneous use of gas for period
-        Real64 FuelEnergy;              // variable to track total fuel used for a period
-        Real64 CoolFuelUseRate;         // instantaneous use of gas for period for cooling
-        Real64 CoolFuelEnergy;          // variable to track total fuel used for a period for cooling
-        Real64 HeatFuelUseRate;         // instantaneous use of gas for period for heating
-        Real64 HeatFuelEnergy;          // variable to track total fuel used for a period for heating
-        Real64 ElectricPower;           // parasitic electric power used (was PumpingPower)
-        Real64 ElectricEnergy;          // track the total electricity used for a period (was PumpingEnergy)
-        Real64 CoolElectricPower;       // parasitic electric power used  for cooling
-        Real64 CoolElectricEnergy;      // track the total electricity used for a period for cooling
-        Real64 HeatElectricPower;       // parasitic electric power used  for heating
-        Real64 HeatElectricEnergy;      // track the total electricity used for a period for heating
-        Real64 ChillReturnTemp;         // reporting: evaporator inlet temperature (was EvapInletTemp)
-        Real64 ChillSupplyTemp;         // reporting: evaporator outlet temperature (was EvapOutletTemp)
-        Real64 ChillWaterFlowRate;      // reporting: evaporator mass flow rate (was Evapmdot)
-        Real64 CondReturnTemp;          // reporting: condenser inlet temperature (was CondInletTemp)
-        Real64 CondSupplyTemp;          // reporting: condenser outlet temperature (was CondOutletTemp)
-        Real64 CondWaterFlowRate;       // reporting: condenser mass flow rate (was Condmdot)
-        Real64 HotWaterReturnTemp;      // reporting: hot water return (inlet) temperature
-        Real64 HotWaterSupplyTemp;      // reporting: hot water supply (outlet) temperature
-        Real64 HotWaterFlowRate;        // reporting: hot water mass flow rate
-        Real64 CoolPartLoadRatio;       // operating part load ratio (load/capacity for cooling)
-        Real64 HeatPartLoadRatio;       // operating part load ratio (load/capacity for heating)
-        Real64 CoolingCapacity;         // current capacity after temperature adjustment
-        Real64 HeatingCapacity;         // current heating capacity
-        Real64 FractionOfPeriodRunning; // fraction of the time period that the unit is operating
-        Real64 FuelCOP;                 // reporting: cooling output/fuel input = CoolingLoad/CoolFuelUseRate
+        Nandle CoolingLoad;             // cooling load on the chiller (previously called QEvap)
+        Nandle CoolingEnergy;           // variable to track total cooling load for period (was EvapEnergy)
+        Nandle HeatingLoad;             // heating load on the chiller
+        Nandle HeatingEnergy;           // heating energy
+        Nandle TowerLoad;               // load on the cooling tower/condenser (previously called QCond)
+        Nandle TowerEnergy;             // variable to track total tower load for a period (was CondEnergy)
+        Nandle FuelUseRate;             // instantaneous use of gas for period
+        Nandle FuelEnergy;              // variable to track total fuel used for a period
+        Nandle CoolFuelUseRate;         // instantaneous use of gas for period for cooling
+        Nandle CoolFuelEnergy;          // variable to track total fuel used for a period for cooling
+        Nandle HeatFuelUseRate;         // instantaneous use of gas for period for heating
+        Nandle HeatFuelEnergy;          // variable to track total fuel used for a period for heating
+        Nandle ElectricPower;           // parasitic electric power used (was PumpingPower)
+        Nandle ElectricEnergy;          // track the total electricity used for a period (was PumpingEnergy)
+        Nandle CoolElectricPower;       // parasitic electric power used  for cooling
+        Nandle CoolElectricEnergy;      // track the total electricity used for a period for cooling
+        Nandle HeatElectricPower;       // parasitic electric power used  for heating
+        Nandle HeatElectricEnergy;      // track the total electricity used for a period for heating
+        Nandle ChillReturnTemp;         // reporting: evaporator inlet temperature (was EvapInletTemp)
+        Nandle ChillSupplyTemp;         // reporting: evaporator outlet temperature (was EvapOutletTemp)
+        Nandle ChillWaterFlowRate;      // reporting: evaporator mass flow rate (was Evapmdot)
+        Nandle CondReturnTemp;          // reporting: condenser inlet temperature (was CondInletTemp)
+        Nandle CondSupplyTemp;          // reporting: condenser outlet temperature (was CondOutletTemp)
+        Nandle CondWaterFlowRate;       // reporting: condenser mass flow rate (was Condmdot)
+        Nandle HotWaterReturnTemp;      // reporting: hot water return (inlet) temperature
+        Nandle HotWaterSupplyTemp;      // reporting: hot water supply (outlet) temperature
+        Nandle HotWaterFlowRate;        // reporting: hot water mass flow rate
+        Nandle CoolPartLoadRatio;       // operating part load ratio (load/capacity for cooling)
+        Nandle HeatPartLoadRatio;       // operating part load ratio (load/capacity for heating)
+        Nandle CoolingCapacity;         // current capacity after temperature adjustment
+        Nandle HeatingCapacity;         // current heating capacity
+        Nandle FractionOfPeriodRunning; // fraction of the time period that the unit is operating
+        Nandle FuelCOP;                 // reporting: cooling output/fuel input = CoolingLoad/CoolFuelUseRate
 
         // Default Constructor
         GasAbsorberSpecs()
@@ -202,15 +202,15 @@ namespace ChillerGasAbsorption {
 
         static PlantComponent *factory(std::string const &objectName);
 
-        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Real64 &CurLoad, bool RunFlag) override;
+        void simulate(const PlantLocation &calledFromLocation, bool FirstHVACIteration, Nandle &CurLoad, bool RunFlag) override;
 
-        void getDesignCapacities(const PlantLocation &calledFromLocation, Real64 &MaxLoad, Real64 &MinLoad, Real64 &OptLoad) override;
+        void getDesignCapacities(const PlantLocation &calledFromLocation, Nandle &MaxLoad, Nandle &MinLoad, Nandle &OptLoad) override;
 
-        void getSizingFactor(Real64 &SizFac) override;
+        void getSizingFactor(Nandle &SizFac) override;
 
         void onInitLoopEquip(const PlantLocation &calledFromLocation) override;
 
-        void getDesignTemperatures(Real64 &TempDesCondIn, Real64 &TempDesEvapOut) override;
+        void getDesignTemperatures(Nandle &TempDesCondIn, Nandle &TempDesEvapOut) override;
 
         void initialize();
 
@@ -218,15 +218,15 @@ namespace ChillerGasAbsorption {
 
         void size();
 
-        void calculateChiller(Real64 &MyLoad);
+        void calculateChiller(Nandle &MyLoad);
 
-        void calculateHeater(Real64 &MyLoad, bool RunFlag);
+        void calculateHeater(Nandle &MyLoad, bool RunFlag);
 
-        void updateCoolRecords(Real64 MyLoad, // current load
+        void updateCoolRecords(Nandle MyLoad, // current load
                                bool RunFlag   // TRUE if Absorber operating
         );
 
-        void updateHeatRecords(Real64 MyLoad, // current load
+        void updateHeatRecords(Nandle MyLoad, // current load
                                bool RunFlag   // TRUE if Absorber operating
         );
     };

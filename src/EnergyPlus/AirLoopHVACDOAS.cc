@@ -245,9 +245,9 @@ namespace AirLoopHVACDOAS {
 
     void AirLoopMixer::CalcAirLoopMixer()
     {
-        Real64 OutletTemp = 0.0;
-        Real64 OutletHumRat = 0.0;
-        Real64 MassSum = 0.0;
+        Nandle OutletTemp = 0.0;
+        Nandle OutletHumRat = 0.0;
+        Nandle MassSum = 0.0;
         int InletNum;
 
         for (int i = 1; i <= this->numOfInletNodes; i++) {
@@ -311,7 +311,7 @@ namespace AirLoopHVACDOAS {
         return nullptr;
     }
 
-    void AirLoopSplitter::CalcAirLoopSplitter(Real64 Temp, Real64 HumRat)
+    void AirLoopSplitter::CalcAirLoopSplitter(Nandle Temp, Nandle HumRat)
     {
         for (int i = 0; i < this->numOfOutletNodes; i++) {
             DataLoopNode::Node(this->OutletNodeNum[i]).Temp = Temp;
@@ -840,7 +840,7 @@ namespace AirLoopHVACDOAS {
     {
         int LoopOA;
         int NodeNum;
-        Real64 SchAvailValue;
+        Nandle SchAvailValue;
         static Array1D_bool MyEnvrnFlag; // Used for initializations each begin environment flag
         static bool MyOneTimeFlag(true); // Initialization flag
         std::string RoutineName = "AirLoopDOAS::initAirLoopDOAS";
@@ -853,7 +853,7 @@ namespace AirLoopHVACDOAS {
         }
 
         if (DataGlobals::BeginEnvrnFlag && MyEnvrnFlag(this->m_AirLoopDOASNum + 1)) {
-            Real64 rho;
+            Nandle rho;
             DataSizing::CurSysNum = this->m_OASystemNum;
             for (int CompNum = 1; CompNum <= DataAirLoop::OutsideAirSys(this->m_OASystemNum).NumComponents; ++CompNum) {
                 std::string CompType = DataAirLoop::OutsideAirSys(this->m_OASystemNum).ComponentType(CompNum);
@@ -867,7 +867,7 @@ namespace AirLoopHVACDOAS {
 
                 if (UtilityRoutines::SameString(CompType, "COIL:HEATING:WATER")) {
                     WaterCoils::SimulateWaterCoilComponents(CompName, FirstHVACIteration, this->m_HeatCoilNum);
-                    Real64 CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", CompName, ErrorsFound);
+                    Nandle CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Heating:Water", CompName, ErrorsFound);
                     rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->HWLoopNum).FluidName,
                                                             DataGlobals::HWInitConvTemp,
                                                             DataPlant::PlantLoop(this->HWLoopNum).FluidIndex,
@@ -883,7 +883,7 @@ namespace AirLoopHVACDOAS {
                 }
                 if (UtilityRoutines::SameString(CompType, "COIL:COOLING:WATER")) {
                     WaterCoils::SimulateWaterCoilComponents(CompName, FirstHVACIteration, this->m_CoolCoilNum);
-                    Real64 CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Cooling:Water", CompName, ErrorsFound);
+                    Nandle CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Cooling:Water", CompName, ErrorsFound);
                     rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                             DataGlobals::CWInitConvTemp,
                                                             DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
@@ -899,7 +899,7 @@ namespace AirLoopHVACDOAS {
                 }
                 if (UtilityRoutines::SameString(CompType, "COIL:COOLING:WATER:DETAILEDGEOMETRY")) {
                     WaterCoils::SimulateWaterCoilComponents(CompName, FirstHVACIteration, this->m_CoolCoilNum);
-                    Real64 CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Cooling:Water:DetailedGeometry", CompName, ErrorsFound);
+                    Nandle CoilMaxVolFlowRate = WaterCoils::GetCoilMaxWaterFlowRate("Coil:Cooling:Water:DetailedGeometry", CompName, ErrorsFound);
                     rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->CWLoopNum).FluidName,
                                                             DataGlobals::CWInitConvTemp,
                                                             DataPlant::PlantLoop(this->CWLoopNum).FluidIndex,
@@ -960,8 +960,8 @@ namespace AirLoopHVACDOAS {
             }
         }
         ManageOutsideAirSystem(this->OASystemName, FirstHVACIteration, 0, this->m_OASystemNum);
-        Real64 Temp = DataLoopNode::Node(this->m_OutletNodeNum).Temp;
-        Real64 HumRat = DataLoopNode::Node(this->m_OutletNodeNum).HumRat;
+        Nandle Temp = DataLoopNode::Node(this->m_OutletNodeNum).Temp;
+        Nandle HumRat = DataLoopNode::Node(this->m_OutletNodeNum).HumRat;
         DataLoopNode::Node(this->m_OutletNodeNum).Enthalpy = Psychrometrics::PsyHFnTdbW(Temp, HumRat);
 
         this->m_CompPointerAirLoopSplitter->CalcAirLoopSplitter(Temp, HumRat);
@@ -969,7 +969,7 @@ namespace AirLoopHVACDOAS {
 
     void AirLoopDOAS::SizingAirLoopDOAS()
     {
-        Real64 SizingMassFlow = 0;
+        Nandle SizingMassFlow = 0;
         int AirLoopNum;
 
         for (int AirLoop = 1; AirLoop <= this->NumOfAirLoops; AirLoop++) {
@@ -1055,9 +1055,9 @@ namespace AirLoopHVACDOAS {
     void CheckConvergence()
     {
 
-        Real64 maxDiff;
-        Real64 Diff;
-        Real64 OldTemp;
+        Nandle maxDiff;
+        Nandle Diff;
+        Nandle OldTemp;
         for (std::size_t loop = 0; loop < airloopDOAS.size(); ++loop) {
             maxDiff = 0.0;
             Diff = std::abs(airloopDOAS[loop].m_CompPointerAirLoopSplitter->InletTemp -

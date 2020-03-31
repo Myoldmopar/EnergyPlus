@@ -135,7 +135,7 @@ namespace OutsideEnergySources {
     }
 
     void OutsideEnergySourceSpecs::simulate(const PlantLocation &EP_UNUSED(calledFromLocation), bool EP_UNUSED(FirstHVACIteration),
-                                            Real64 &CurLoad, bool RunFlag) {
+                                            Nandle &CurLoad, bool RunFlag) {
         this->initialize(CurLoad);
         this->calculate(RunFlag, CurLoad);
     }
@@ -145,8 +145,8 @@ namespace OutsideEnergySources {
         this->size();
     }
 
-    void OutsideEnergySourceSpecs::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Real64 &MaxLoad,
-                                                       Real64 &MinLoad, Real64 &OptLoad) {
+    void OutsideEnergySourceSpecs::getDesignCapacities(const PlantLocation &EP_UNUSED(calledFromLocation), Nandle &MaxLoad,
+                                                       Nandle &MinLoad, Nandle &OptLoad) {
         MinLoad = 0.0;
         MaxLoad = this->NomCap;
         OptLoad = this->NomCap;
@@ -245,7 +245,7 @@ namespace OutsideEnergySources {
 
     }
 
-    void OutsideEnergySourceSpecs::initialize(Real64 MyLoad)
+    void OutsideEnergySourceSpecs::initialize(Nandle MyLoad)
     {
 
         // SUBROUTINE INFORMATION:
@@ -374,7 +374,7 @@ namespace OutsideEnergySources {
         }
         if (!DataGlobals::BeginEnvrnFlag) this->BeginEnvrnInitFlag = true;
 
-        Real64 TempPlantMassFlow(0.0);
+        Nandle TempPlantMassFlow(0.0);
         if (std::abs(MyLoad) > 0.0) {
             TempPlantMassFlow = DataPlant::PlantLoop(this->LoopNum).MaxMassFlowRate;
         }
@@ -410,15 +410,15 @@ namespace OutsideEnergySources {
 
         int const PltSizNum = DataPlant::PlantLoop(this->LoopNum).PlantSizNum;
         if (PltSizNum > 0) {
-            Real64 const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+            Nandle const rho = FluidProperties::GetDensityGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                    DataGlobals::InitConvTemp,
                                                                  DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                    "SizeDistrict" + typeName);
-            Real64 const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
+            Nandle const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(this->LoopNum).FluidName,
                                        DataGlobals::InitConvTemp,
                                                                      DataPlant::PlantLoop(this->LoopNum).FluidIndex,
                                        "SizeDistrict" + typeName);
-            Real64 const NomCapDes = Cp * rho * DataSizing::PlantSizData(PltSizNum).DeltaT * DataSizing::PlantSizData(PltSizNum).DesVolFlowRate;
+            Nandle const NomCapDes = Cp * rho * DataSizing::PlantSizData(PltSizNum).DeltaT * DataSizing::PlantSizData(PltSizNum).DesVolFlowRate;
             if (DataPlant::PlantFirstSizesOkayToFinalize) {
                 if (this->NomCapWasAutoSized) {
                     this->NomCap = NomCapDes;
@@ -431,7 +431,7 @@ namespace OutsideEnergySources {
                     }
                 } else { // Hard-size with sizing data
                     if (this->NomCap > 0.0 && NomCapDes > 0.0) {
-                        Real64 const NomCapUser = this->NomCap;
+                        Nandle const NomCapUser = this->NomCap;
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             ReportSizingManager::ReportSizingOutput("District" + typeName,
                                                this->Name,
@@ -471,7 +471,7 @@ namespace OutsideEnergySources {
         }
     }
 
-    void OutsideEnergySourceSpecs::calculate(bool runFlag, Real64 MyLoad)
+    void OutsideEnergySourceSpecs::calculate(bool runFlag, Nandle MyLoad)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Dan Fisher
@@ -484,15 +484,15 @@ namespace OutsideEnergySources {
 
         // set inlet and outlet nodes
         int const LoopNum = this->LoopNum;
-        Real64 const LoopMinTemp = DataPlant::PlantLoop(LoopNum).MinTemp;
-        Real64 const LoopMaxTemp = DataPlant::PlantLoop(LoopNum).MaxTemp;
+        Nandle const LoopMinTemp = DataPlant::PlantLoop(LoopNum).MinTemp;
+        Nandle const LoopMaxTemp = DataPlant::PlantLoop(LoopNum).MaxTemp;
 
-        Real64 const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(LoopNum).FluidName, this->InletTemp, DataPlant::PlantLoop(LoopNum).FluidIndex, RoutineName);
+        Nandle const Cp = FluidProperties::GetSpecificHeatGlycol(DataPlant::PlantLoop(LoopNum).FluidName, this->InletTemp, DataPlant::PlantLoop(LoopNum).FluidIndex, RoutineName);
 
         //  apply power limit from input
-        Real64 CapFraction = ScheduleManager::GetCurrentScheduleValue(this->CapFractionSchedNum);
+        Nandle CapFraction = ScheduleManager::GetCurrentScheduleValue(this->CapFractionSchedNum);
         CapFraction = max(0.0, CapFraction); // ensure non negative
-        Real64 const CurrentCap = this->NomCap * CapFraction;
+        Nandle const CurrentCap = this->NomCap * CapFraction;
         if (std::abs(MyLoad) > CurrentCap) {
             MyLoad = sign(CurrentCap, MyLoad);
         }

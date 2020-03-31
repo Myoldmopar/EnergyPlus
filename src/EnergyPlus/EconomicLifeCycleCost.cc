@@ -168,16 +168,16 @@ namespace EconomicLifeCycleCost {
     std::string LCCname;                          // Name
     int discountConvension(disConvEndOfYear);     // Discounting Convention
     int inflationApproach(inflAppConstantDollar); // Inflation Approach
-    Real64 realDiscountRate(0.0);                 // Real Discount Rate
-    Real64 nominalDiscountRate(0.0);              // Nominal Discount Rate
-    Real64 inflation(0.0);                        // Inflation
+    Nandle realDiscountRate(0.0);                 // Real Discount Rate
+    Nandle nominalDiscountRate(0.0);              // Nominal Discount Rate
+    Nandle inflation(0.0);                        // Inflation
     int baseDateMonth(0);                         // Base Date Month (1=Jan, 12=Dec)
     int baseDateYear(0);                          // Base Date Year  1900-2100
     int serviceDateMonth(0);                      // Service Date Month (1=Jan, 12=Dec)
     int serviceDateYear(0);                       // Service Date Year 1900-2100
     int lengthStudyYears(0);                      // Length of Study Period in Years
     int lengthStudyTotalMonths(0);                // Length of Study expressed in months (years x 12)
-    Real64 taxRate(0.0);                          // Tax rate
+    Nandle taxRate(0.0);                          // Tax rate
     int depreciationMethod(depMethNone);          // Depreciation Method
     // derived
     int lastDateMonth(0); // Last Date Month (the month before the base date month)
@@ -202,22 +202,22 @@ namespace EconomicLifeCycleCost {
     int numResourcesUsed;
 
     // present value factors
-    Array1D<Real64> SPV;
-    Array2D<Real64> energySPV; // yearly equivalent to FEMP UPV* values
+    Array1D<Nandle> SPV;
+    Array2D<Nandle> energySPV; // yearly equivalent to FEMP UPV* values
 
     // arrays related to computing after tax cashflow and present value
-    Array1D<Real64> DepreciatedCapital;
-    Array1D<Real64> TaxableIncome;
-    Array1D<Real64> Taxes;
-    Array1D<Real64> AfterTaxCashFlow;
-    Array1D<Real64> AfterTaxPresentValue;
+    Array1D<Nandle> DepreciatedCapital;
+    Array1D<Nandle> TaxableIncome;
+    Array1D<Nandle> Taxes;
+    Array1D<Nandle> AfterTaxCashFlow;
+    Array1D<Nandle> AfterTaxPresentValue;
 
     Array1D_string const
         MonthNames(12, {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"});
 
     // arrays related to escalated energy costs
-    Array1D<Real64> EscalatedTotEnergy;
-    Array2D<Real64> EscalatedEnergy;
+    Array1D<Nandle> EscalatedTotEnergy;
+    Array2D<Nandle> EscalatedEnergy;
 
     // SUBROUTINE SPECIFICATIONS FOR MODULE <module_name>:
 
@@ -364,7 +364,7 @@ namespace EconomicLifeCycleCost {
         int NumAlphas;                   // Number of elements in the alpha array
         int NumNums;                     // Number of elements in the numeric array
         Array1D_string AlphaArray;       // character string data
-        Array1D<Real64> NumArray;        // numeric data
+        Array1D<Nandle> NumArray;        // numeric data
         int IOStat;                      // IO Status when calling get input subroutine
         std::string CurrentModuleObject; // for ease in renaming.
         int NumObj;                      // count of objects
@@ -615,7 +615,7 @@ namespace EconomicLifeCycleCost {
         int NumAlphas;                   // Number of elements in the alpha array
         int NumNums;                     // Number of elements in the numeric array
         Array1D_string AlphaArray;       // character string data
-        Array1D<Real64> NumArray;        // numeric data
+        Array1D<Nandle> NumArray;        // numeric data
         int IOStat;                      // IO Status when calling get input subroutine
         std::string CurrentModuleObject; // for ease in renaming.
 
@@ -795,7 +795,7 @@ namespace EconomicLifeCycleCost {
         int NumAlphas;                   // Number of elements in the alpha array
         int NumNums;                     // Number of elements in the numeric array
         Array1D_string AlphaArray;       // character string data
-        Array1D<Real64> NumArray;        // numeric data
+        Array1D<Nandle> NumArray;        // numeric data
         int IOStat;                      // IO Status when calling get input subroutine
         std::string CurrentModuleObject; // for ease in renaming.
         int numComponentCostLineItems;   // number of ComponentCost:LineItem objects
@@ -923,7 +923,7 @@ namespace EconomicLifeCycleCost {
         int NumAlphas;                   // Number of elements in the alpha array
         int NumNums;                     // Number of elements in the numeric array
         Array1D_string AlphaArray;       // character string data
-        Array1D<Real64> NumArray;        // numeric data
+        Array1D<Nandle> NumArray;        // numeric data
         int IOStat;                      // IO Status when calling get input subroutine
         std::string CurrentModuleObject; // for ease in renaming.
 
@@ -1057,7 +1057,7 @@ namespace EconomicLifeCycleCost {
         int NumAlphas;                   // Number of elements in the alpha array
         int NumNums;                     // Number of elements in the numeric array
         Array1D_string AlphaArray;       // character string data
-        Array1D<Real64> NumArray;        // numeric data
+        Array1D<Nandle> NumArray;        // numeric data
         int IOStat;                      // IO Status when calling get input subroutine
         std::string CurrentModuleObject; // for ease in renaming.
         int numFldsToUse;
@@ -1253,16 +1253,16 @@ namespace EconomicLifeCycleCost {
         int month; // number of months since base date
         int firstMonth;
         int monthsBaseToService;
-        Array2D<Real64> resourceCosts;
-        Array1D<Real64> curResourceCosts(12);
+        Array2D<Nandle> resourceCosts;
+        Array1D<Nandle> curResourceCosts(12);
         Array1D_bool resourceCostNotZero;
-        Array1D<Real64> resourceCostAnnual;
-        Real64 annualCost;
+        Array1D<Nandle> resourceCostAnnual;
+        Nandle annualCost;
         int cashFlowCounter;
         int found;
         int curCategory;
-        Array1D<Real64> monthlyInflationFactor;
-        Real64 inflationPerMonth;
+        Array1D<Nandle> monthlyInflationFactor;
+        Nandle inflationPerMonth;
         int iLoop;
 
         // compute months from 1900 for base and service period
@@ -1562,15 +1562,15 @@ namespace EconomicLifeCycleCost {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Real64 totalPV;
+        Nandle totalPV;
         int curCategory;
         int curResource;
-        Real64 curDiscountRate;
+        Nandle curDiscountRate;
         int iCashFlow;
         int jYear;
         int kResource;
         int nUsePriceEsc;
-        Real64 effectiveYear;
+        Nandle effectiveYear;
 
         // identify how each cashflow should be treated
         for (iCashFlow = 1; iCashFlow <= numCashFlow; ++iCashFlow) {
@@ -1744,8 +1744,8 @@ namespace EconomicLifeCycleCost {
         // na
 
         // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-        Array1D<Real64> DepreciationPercent(SizeDepr); // values expressed as percent 5% is 5.0 (based on tables)
-        Real64 curCapital;
+        Array1D<Nandle> DepreciationPercent(SizeDepr); // values expressed as percent 5% is 5.0 (based on tables)
+        Nandle curCapital;
         int curDepYear;
         int iYear;
         int jYear;
@@ -2074,7 +2074,7 @@ namespace EconomicLifeCycleCost {
         int numRows;
         int offset;
         int numYears;
-        Real64 totalPV;
+        Nandle totalPV;
 
         if (LCCparamPresent && displayLifeCycleCostReport) {
             //---------------------------------
@@ -2515,7 +2515,7 @@ namespace EconomicLifeCycleCost {
                 tableBody(7, iYear) = RealToStr(CashFlow(costCatMinorOverhaul).yrAmount(iYear), 2);
                 tableBody(8, iYear) = RealToStr(CashFlow(costCatMajorOverhaul).yrAmount(iYear), 2);
                 tableBody(9, iYear) = RealToStr(CashFlow(costCatOtherOperational).yrAmount(iYear), 2);
-                Real64 yearly_total_cost =
+                Nandle yearly_total_cost =
                     CashFlow(costCatTotOper).yrAmount(iYear) + EscalatedTotEnergy(iYear) - CashFlow(costCatTotEnergy).yrAmount(iYear);
                 tableBody(10, iYear) = RealToStr(yearly_total_cost, 2);
             }
@@ -2792,7 +2792,7 @@ namespace EconomicLifeCycleCost {
                 rowHead(iYear) = MonthNames(baseDateMonth) + ' ' + IntToStr(baseDateYear + iYear - 1);
                 tableBody(1, iYear) = RealToStr(CashFlow(costCatTotGrand).yrAmount(iYear), 2);
                 // adjust for escalated energy costs
-                Real64 yearly_total_cost =
+                Nandle yearly_total_cost =
                     CashFlow(costCatTotGrand).yrAmount(iYear) + EscalatedTotEnergy(iYear) - CashFlow(costCatTotEnergy).yrAmount(iYear);
                 tableBody(2, iYear) = RealToStr(yearly_total_cost, 2);
                 tableBody(3, iYear) = RealToStr(CashFlow(costCatTotGrand).yrPresVal(iYear), 2);

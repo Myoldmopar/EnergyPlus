@@ -193,7 +193,7 @@ namespace SystemAvailabilityManager {
         int CtrlType;         // type of control: Stay Off, Cycle On Any,
         //   Cycle On Control Zone, or Cycle On Any - Zone Fans Only
         int CycRunTimeCntrlType;           // Cycling Run Time Control Type
-        Real64 TempTolRange;               // range in degrees C of thermostat tolerance
+        Nandle TempTolRange;               // range in degrees C of thermostat tolerance
         int CyclingTimeSteps;              // period (in Loads time steps) system will cycle on.
         int AvailStatus;                   // reports status of availability manager
         int PriorAvailStatus;              // prior status of availability manager
@@ -234,21 +234,21 @@ namespace SystemAvailabilityManager {
         std::string ZoneListName; // Zone List name
         int NumOfZones;           // Number of zones in the list
         Array1D_int ZonePtrs;     // Pointers to zones in the list
-        Real64 MaxOptStartTime;   // Maximum value of start time in hours
+        Nandle MaxOptStartTime;   // Maximum value of start time in hours
         int CtrlAlgType;          // Control algorithm: ConstantTemperatureGradient,
         // AdaptiveTemperatureGradient, AdaptiveASHRAE, ConstantStartTime
-        Real64 ConstTGradCool;    // Constant temperature gradient in cooling mode, unit: degC per hour
-        Real64 ConstTGradHeat;    // Constant temperature gradient in heating mode, unit: degC per hour
-        Real64 InitTGradCool;     // Initial value for temperature gradient in cooling mode, unit: degC per hour
-        Real64 InitTGradHeat;     // Initial value for temperature gradient in heating mode, unit: degC per hour
-        Real64 AdaptiveTGradCool; // Calculated adaptive temperature gradient in cooling mode, unit: degC per hour
-        Real64 AdaptiveTGradHeat; // Calculated adaptive temperature gradient in heating mode, unit: degC per hour
-        Real64 ConstStartTime;    // Constant start time in hours
+        Nandle ConstTGradCool;    // Constant temperature gradient in cooling mode, unit: degC per hour
+        Nandle ConstTGradHeat;    // Constant temperature gradient in heating mode, unit: degC per hour
+        Nandle InitTGradCool;     // Initial value for temperature gradient in cooling mode, unit: degC per hour
+        Nandle InitTGradHeat;     // Initial value for temperature gradient in heating mode, unit: degC per hour
+        Nandle AdaptiveTGradCool; // Calculated adaptive temperature gradient in cooling mode, unit: degC per hour
+        Nandle AdaptiveTGradHeat; // Calculated adaptive temperature gradient in heating mode, unit: degC per hour
+        Nandle ConstStartTime;    // Constant start time in hours
         int NumPreDays;           // Number of previous days for adaptive control
         int AvailStatus;          // reports status of availability manager
-        Real64 NumHoursBeforeOccupancy;
-        Real64 TempDiffHi;   // temperature difference for cooling mode
-        Real64 TempDiffLo;   // temperature difference for heating mode
+        Nandle NumHoursBeforeOccupancy;
+        Nandle TempDiffHi;   // temperature difference for cooling mode
+        Nandle TempDiffLo;   // temperature difference for heating mode
         int ATGWCZoneNumLo;  // zone index for worst case heating zone
         int ATGWCZoneNumHi;  // zone index for worst case cooling zone
         bool CycleOnFlag;    // Tracks when air loop has cycled on
@@ -257,14 +257,14 @@ namespace SystemAvailabilityManager {
         bool FirstTimeATGFlag;
         bool OverNightStartFlag; // Flag to indicate the optimum start starts before mid night.
         bool OSReportVarFlag;
-        Array1D<Real64> AdaTempGradTrdHeat; // Heating temp gradient for previous days
-        Array1D<Real64> AdaTempGradTrdCool; // Cooling temp gradient for previous days
-        Real64 AdaTempGradHeat;
-        Real64 AdaTempGradCool;
-        Real64 ATGUpdateTime1;
-        Real64 ATGUpdateTime2;
-        Real64 ATGUpdateTemp1;
-        Real64 ATGUpdateTemp2;
+        Array1D<Nandle> AdaTempGradTrdHeat; // Heating temp gradient for previous days
+        Array1D<Nandle> AdaTempGradTrdCool; // Cooling temp gradient for previous days
+        Nandle AdaTempGradHeat;
+        Nandle AdaTempGradCool;
+        Nandle ATGUpdateTime1;
+        Nandle ATGUpdateTime2;
+        Nandle ATGUpdateTemp1;
+        Nandle ATGUpdateTemp2;
 
         // Default Constructor
         DefineOptStartSysAvailManager()
@@ -284,10 +284,10 @@ namespace SystemAvailabilityManager {
     {
         // Members
         std::string Name; // Name of the object
-        Real64 Coeff1;    // 1st Coefficient of the equation
-        Real64 Coeff2;    // 2nd Coefficient of the equation
-        Real64 Coeff3;    // 3rd Coefficient of the equation
-        Real64 Coeff4;    // 4th Coefficient of the equation
+        Nandle Coeff1;    // 1st Coefficient of the equation
+        Nandle Coeff2;    // 2nd Coefficient of the equation
+        Nandle Coeff3;    // 3rd Coefficient of the equation
+        Nandle Coeff4;    // 4th Coefficient of the equation
 
         // Default Constructor
         DefineASHRAEAdaptiveOptimumStartCoeffs() : Coeff1(0.0), Coeff2(0.0), Coeff3(0.0), Coeff4(0.0)
@@ -302,8 +302,8 @@ namespace SystemAvailabilityManager {
         int MgrType;        // Integer equivalent of availability manager type
         int HotNode;        // "Hot" sensor node
         int ColdNode;       // "Cold" sensor node
-        Real64 TempDiffOn;  // Temperature difference for turn on (delta C)
-        Real64 TempDiffOff; // Temperature difference for turn off (delta C)
+        Nandle TempDiffOn;  // Temperature difference for turn on (delta C)
+        Nandle TempDiffOff; // Temperature difference for turn off (delta C)
         int AvailStatus;    // reports status of availability manager
 
         // Default Constructor
@@ -318,7 +318,7 @@ namespace SystemAvailabilityManager {
         std::string Name; // Name of the manager object
         int MgrType;      // Integer equivalent of availability manager type
         int Node;         // Sensor node
-        Real64 Temp;      // Temperature for on/off (C)
+        Nandle Temp;      // Temperature for on/off (C)
         int SchedPtr;     // Applicability schedule pointer
         int AvailStatus;  // reports status of availability manager
 
@@ -338,12 +338,12 @@ namespace SystemAvailabilityManager {
         int FanSchedPtr;           // Fan schedule pointer
         std::string VentTempSched; // Ventilation temperature schedule
         int VentTempSchedPtr;      // Ventilation temperature schedule pointer
-        Real64 VentDelT;           // Ventilation delta T [deltaC]
-        Real64 VentTempLowLim;     // ventilation temperature low limit
+        Nandle VentDelT;           // Ventilation delta T [deltaC]
+        Nandle VentTempLowLim;     // ventilation temperature low limit
         std::string CtrlZoneName;  // Name of the control zone
         int ZoneNum;               // zome number of control zone
         int ControlledZoneNum;     // controlled zone number of control zone
-        Real64 VentFlowFrac;       // the night venting flow fraction
+        Nandle VentFlowFrac;       // the night venting flow fraction
         int AvailStatus;           // reports status of availability manager
 
         // Default Constructor
@@ -368,13 +368,13 @@ namespace SystemAvailabilityManager {
         int ControlModeSchedPtr;     // Ventilation control mode schedule pointer
         int ControlMode;             // hybrid ventilation control mode
         int VentilationCtrl;         // Ventilation control type: Noaction, Close, Open
-        Real64 MinOutdoorTemp;       // Minimum Outdoor Temperature [C]
-        Real64 MaxOutdoorTemp;       // Maximum Outdoor Temperature [C]
-        Real64 MinOutdoorEnth;       // Minimum Outdoor Enthalpy [J/kg]
-        Real64 MaxOutdoorEnth;       // Maximum Outdoor Enthalpy [J/kg]
-        Real64 MinOutdoorDewPoint;   // Minimum Outdoor Dew point temperature [C]
-        Real64 MaxOutdoorDewPoint;   // Maximum Outdoor Dew Point Temperature [C]
-        Real64 MaxWindSpeed;         // Maximum Wind speed [m/s]
+        Nandle MinOutdoorTemp;       // Minimum Outdoor Temperature [C]
+        Nandle MaxOutdoorTemp;       // Maximum Outdoor Temperature [C]
+        Nandle MinOutdoorEnth;       // Minimum Outdoor Enthalpy [J/kg]
+        Nandle MaxOutdoorEnth;       // Maximum Outdoor Enthalpy [J/kg]
+        Nandle MinOutdoorDewPoint;   // Minimum Outdoor Dew point temperature [C]
+        Nandle MaxOutdoorDewPoint;   // Maximum Outdoor Dew Point Temperature [C]
+        Nandle MaxWindSpeed;         // Maximum Wind speed [m/s]
         bool UseRainIndicator;       // Use WeatherFile Rain Indicators
         std::string MinOASched;      // Minimum Outdoor Ventilation Air Schedule Name
         int MinOASchedPtr;           // Minimum Outdoor Ventilation Air Schedule pointer
@@ -396,14 +396,14 @@ namespace SystemAvailabilityManager {
         // manager is connected to air loop
         bool SimHybridVentSysAvailMgr; // Set to false when a zone has two hybrid ventilation
         // managers, one with air loop and one without
-        Real64 OperativeTemp;    // Zone air operative temperature [C]
-        Real64 CO2;              // Zone air CO2 [ppm]
-        Real64 MinOperTime;      // Minimum HVAC Operation Time [minutes]
-        Real64 MinVentTime;      // Minimum Ventilation Time [minutes]
-        Real64 TimeOperDuration; // Time duration with continuous HVAC operation [minutes]
-        Real64 TimeVentDuration; // Time duration with continuous ventilation [minutes]
-        Real64 minAdaTem;        // minimum adaptive temperature for adaptive temperature control [C]
-        Real64 maxAdaTem;        // maximum adaptive temperature for adaptive temperature control [C]
+        Nandle OperativeTemp;    // Zone air operative temperature [C]
+        Nandle CO2;              // Zone air CO2 [ppm]
+        Nandle MinOperTime;      // Minimum HVAC Operation Time [minutes]
+        Nandle MinVentTime;      // Minimum Ventilation Time [minutes]
+        Nandle TimeOperDuration; // Time duration with continuous HVAC operation [minutes]
+        Nandle TimeVentDuration; // Time duration with continuous ventilation [minutes]
+        Nandle minAdaTem;        // minimum adaptive temperature for adaptive temperature control [C]
+        Nandle maxAdaTem;        // maximum adaptive temperature for adaptive temperature control [C]
 
         // Default Constructor
         DefineHybridVentSysAvailManager()
@@ -509,12 +509,12 @@ namespace SystemAvailabilityManager {
 
     bool CoolingZoneOutOfTolerance(Array1D_int const ZonePtrList, // list of controlled zone pointers
                                    int const NumZones,            // number of zones in list
-                                   Real64 const TempTolerance     // temperature tolerance
+                                   Nandle const TempTolerance     // temperature tolerance
     );
 
     bool HeatingZoneOutOfTolerance(Array1D_int const ZonePtrList, // list of controlled zone pointers
                                    int const NumZones,            // number of zones in list
-                                   Real64 const TempTolerance     // temperature tolerance
+                                   Nandle const TempTolerance     // temperature tolerance
     );
 
     void CalcOptStartSysAvailMgr(int const SysAvailNum,                // number of the current scheduled system availability manager

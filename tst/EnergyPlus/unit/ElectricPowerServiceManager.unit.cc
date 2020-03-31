@@ -202,17 +202,17 @@ TEST_F(EnergyPlusFixture, ManageElectricPowerTest_BatteryDischargeTest)
     facilityElectricServiceObj->elecLoadCenterObjs.emplace_back(new ElectPowerLoadCenter(1));
 
     int CurveNum1 = 1;
-    Real64 k = 0.5874;
-    Real64 c = 0.37;
-    Real64 qmax = 86.1;
-    Real64 E0c = 12.6;
-    Real64 InternalR = 0.054;
+    Nandle k = 0.5874;
+    Nandle c = 0.37;
+    Nandle qmax = 86.1;
+    Nandle E0c = 12.6;
+    Nandle InternalR = 0.054;
 
-    Real64 I0 = 0.159;
-    Real64 T0 = 537.9;
-    Real64 Volt = 12.59;
-    Real64 Pw = 2.0;
-    Real64 q0 = 60.2;
+    Nandle I0 = 0.159;
+    Nandle T0 = 537.9;
+    Nandle Volt = 12.59;
+    Nandle Pw = 2.0;
+    Nandle q0 = 60.2;
 
     EXPECT_TRUE(facilityElectricServiceObj->elecLoadCenterObjs[0]->storageObj->determineCurrentForBatteryDischarge(
         I0, T0, Volt, Pw, q0, CurveNum1, k, c, qmax, E0c, InternalR));
@@ -797,7 +797,7 @@ TEST_F(EnergyPlusFixture, ManageElectricPowerTest_TransformerLossTest)
     createFacilityElectricPowerServiceObject();
     facilityElectricServiceObj->elecLoadCenterObjs.emplace_back(new ElectPowerLoadCenter(1));
     facilityElectricServiceObj->elecLoadCenterObjs[0]->transformerObj = std::unique_ptr<ElectricTransformer>(new ElectricTransformer("TRANSFORMER"));
-    Real64 expectedtransformerObjLossRate = facilityElectricServiceObj->elecLoadCenterObjs[0]->transformerObj->getLossRateForOutputPower(2000.0);
+    Nandle expectedtransformerObjLossRate = facilityElectricServiceObj->elecLoadCenterObjs[0]->transformerObj->getLossRateForOutputPower(2000.0);
     // check the transformer loss rate for load and no load condition
     EXPECT_EQ(expectedtransformerObjLossRate, 0.0);
 }
