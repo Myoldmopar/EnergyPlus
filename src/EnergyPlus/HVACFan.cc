@@ -663,6 +663,7 @@ namespace HVACFan {
         std::vector<Real64> localRunTimeFrac;
         bool localUseFlowRatiosAndRunTimeFracs = false;
 
+
         int localNumModes = 1; // Number of operating modes, 1 or 2 ( e.g. heating, ventilating, cooling)
         if (present(flowRatio2) && present(runTimeFrac2)) localNumModes = 2;
         localPressureRise.resize(2, 0.0);

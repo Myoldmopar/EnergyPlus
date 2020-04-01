@@ -663,6 +663,7 @@ namespace HVACInterfaceManager {
 
         LastTankOutletTemp = PlantLoop(LoopNum).LoopSide(TankOutletLoopSide).LastTempInterfaceTankOutlet;
 
+
         // calculate the specific heat for the capacitance calculation
         Cp = GetSpecificHeatGlycol(PlantLoop(LoopNum).FluidName, LastTankOutletTemp, PlantLoop(LoopNum).FluidIndex, RoutineName);
         // set the fraction of loop mass assigned to each half loop outlet capacitance ('tank') calculation

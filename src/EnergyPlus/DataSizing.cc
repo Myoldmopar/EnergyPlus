@@ -663,6 +663,7 @@ namespace DataSizing {
         DataCapacityUsedForSizing = 0.0;
         DataDesignCoilCapacity = 0.0;
         DataHeatSizeRatio = 1.0;
+
         DataEMSOverride = 0.0;
         DataBypassFrac = 0.0;
         DataFracOfAutosizedCoolingAirflow = 1.0;

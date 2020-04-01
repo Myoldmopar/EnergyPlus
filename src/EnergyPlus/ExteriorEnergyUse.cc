@@ -664,6 +664,7 @@ namespace ExteriorEnergyUse {
 
             ExteriorLights(Item).CurrentUse = ExteriorLights(Item).Power * TimeStepZoneSec;
 
+
             // gather for tabular reports
             if (!WarmupFlag) {
                 //      IF (DoOutputReporting .AND.  WriteTabularFiles .and. (KindOfSim == ksRunPeriodWeather)) THEN !for weather simulations only

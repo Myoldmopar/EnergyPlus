@@ -663,6 +663,7 @@ namespace RuntimeLanguageProcessor {
                     if (DeveloperFlag) ObjexxFCL::gio::write(OutputFileDebug, fmtA) << "ELSE \"" + Line + "\"";
                     if (DeveloperFlag) ObjexxFCL::gio::write(OutputFileDebug, fmtLD) << "NestedIf=" << NestedIfDepth;
                     if (NestedIfDepth == 0) {
+
                         AddError(StackNum, LineNum, "Starting IF instruction missing for the ELSE instruction.");
                         break; // Getting strange error on DEALLOCATE for the next instruction that I try to add, so doing EXIT here
                     }

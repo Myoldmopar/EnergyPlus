@@ -663,6 +663,7 @@ namespace SolarShading {
                 cAlphaArgs(aNum) = "PixelCounting";
                 if (NumNumbers >= 3) {
                     pixelRes = (unsigned)rNumericArgs(3);
+
                 }
 #ifdef EP_NO_OPENGL
                 ShowWarningError(cCurrentModuleObject + ": invalid " + cAlphaFieldNames(aNum));

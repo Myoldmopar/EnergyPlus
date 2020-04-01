@@ -663,6 +663,7 @@ namespace SZVAVModel {
         //       DONE
         //
 
+
         // Step 1: Determine boundary for region 1
         // calculate sensible load based on minimum air flow rate and specified supply air temperature limit
         if (SZVAVModel.ATMixerExists) {

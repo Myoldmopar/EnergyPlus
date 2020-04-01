@@ -663,6 +663,7 @@ namespace OutputProcessor {
 
             if (!Dup) {
                 ++NumExtraVars;
+
                 if (NumExtraVars == NumReportList) {
                     ReportList.redimension(NumReportList += 100, 0);
                 }

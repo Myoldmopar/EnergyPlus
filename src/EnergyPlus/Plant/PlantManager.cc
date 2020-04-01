@@ -663,6 +663,7 @@ namespace EnergyPlus {
                     ShowContinueError("is not the same as the " + cAlphaFieldNames(10) + '=' +
                                       Alpha(10)); // "Plant Demand Side Inlet Node Name"
                     ShowContinueError("Branch List Inlet Node Name=" +
+
                                       GetFirstBranchInletNodeName(this_demand_side.BranchList)); // TODO rename point
                     ShowContinueError(
                             "Branches in a BRANCH LIST must be listed in flow order: inlet branch, then parallel branches, then outlet branch."); // TODO

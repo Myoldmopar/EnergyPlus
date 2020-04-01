@@ -663,6 +663,7 @@ namespace PoweredInductionUnits {
                 ShowContinueError("In " + cCurrentModuleObject + " = " + PIU(PIUNum).Name);
                 ErrorsFound = true;
             }
+
             PIU(PIUNum).MaxVolHotWaterFlow = rNumericArgs(5);
             PIU(PIUNum).MinVolHotWaterFlow = rNumericArgs(6);
             PIU(PIUNum).HotControlOffset = rNumericArgs(7);

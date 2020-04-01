@@ -663,6 +663,7 @@ namespace DaylightingDevices {
 
                 if (rNumericArgs(1) > 0) {
                     TDDPipe(PipeNum).Diameter = rNumericArgs(1);
+
                 } else {
                     ShowSevereError(cCurrentModuleObject + " = " + cAlphaArgs(1) + ":  Pipe diameter must be greater than zero.");
                     ErrorsFound = true;

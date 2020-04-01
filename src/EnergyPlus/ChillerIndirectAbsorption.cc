@@ -663,6 +663,7 @@ namespace ChillerIndirectAbsorption {
                 SetupOutputVariable("Chiller Source Steam Rate", OutputProcessor::Unit::W, this->Report.QGenerator, "System", "Average", this->Name);
 
                 SetupOutputVariable("Chiller Source Steam Energy",
+
                                     OutputProcessor::Unit::J,
                                     this->Report.GeneratorEnergy,
                                     "System",

@@ -664,6 +664,7 @@ namespace WindowManager {
 
             TotLay = Construct(ConstrNum).TotLayers;
 
+
             // First layer must be glass, shade, screen or blind to be a glazing construction
             if (Material(Construct(ConstrNum).LayerPoint(1)).Group != WindowGlass && Material(Construct(ConstrNum).LayerPoint(1)).Group != Shade &&
                 Material(Construct(ConstrNum).LayerPoint(1)).Group != Screen && Material(Construct(ConstrNum).LayerPoint(1)).Group != WindowBlind &&

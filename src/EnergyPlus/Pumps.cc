@@ -663,6 +663,7 @@ namespace Pumps {
                                                                 {1},                     // Valid dimensions
                                                                 RoutineName,             // Routine name
                                                                 cCurrentModuleObject,    // Object Type
+
                                                                 PumpEquip(PumpNum).Name, // Object Name
                                                                 cAlphaFieldNames(6));    // Field Name
 

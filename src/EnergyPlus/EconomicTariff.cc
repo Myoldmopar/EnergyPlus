@@ -663,6 +663,7 @@ namespace EconomicTariff {
                 } else if (UtilityRoutines::SameString(cAlphaArgs(3), "KBTU")) {
                     tariff(iInObj).convChoice = conversionKBTU;
                     tariff(iInObj).energyConv = 9.4781712e-7;
+
                     tariff(iInObj).demandConv = 0.003412;
 
                     // Otherwise, default to kWh

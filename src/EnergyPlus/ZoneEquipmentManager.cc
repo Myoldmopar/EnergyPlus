@@ -663,6 +663,7 @@ namespace ZoneEquipmentManager {
                 DOASMassFlowRate = CalcFinalZoneSizing(ControlledZoneNum).MinOA;
                 CalcDOASSupCondsForSizing(OutDryBulbTemp,
                                           OutHumRat,
+
                                           CalcZoneSizing(CurOverallSimDay, ControlledZoneNum).DOASControlStrategy,
                                           CalcZoneSizing(CurOverallSimDay, ControlledZoneNum).DOASLowSetpoint,
                                           CalcZoneSizing(CurOverallSimDay, ControlledZoneNum).DOASHighSetpoint,

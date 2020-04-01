@@ -663,6 +663,7 @@ namespace ThermalChimney {
             for (TCZoneNum = 1; TCZoneNum <= ThermalChimneySys(Loop).TotZoneToDistrib; ++TCZoneNum) {
                 TCZoneNumCounter = ThermalChimneySys(Loop).ZonePtr(TCZoneNum);
                 Process1 += PsyHFnTdbW(MAT(TCZoneNumCounter), ZoneAirHumRat(TCZoneNumCounter)) *
+
                             ThermalChimneySys(Loop).DistanceThermChimInlet(TCZoneNum) * ThermalChimneySys(Loop).RatioThermChimAirFlow(TCZoneNum);
                 Process2 +=
                     ThermalChimneySys(Loop).RatioThermChimAirFlow(TCZoneNum) * PsyHFnTdbW(MAT(TCZoneNumCounter), ZoneAirHumRat(TCZoneNumCounter));

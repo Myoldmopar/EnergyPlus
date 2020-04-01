@@ -663,6 +663,7 @@ namespace SimAirServingZones {
                 TestUniqueNodes(TestUniqueNodesNum).NodeName = Alphas(9);
                 TestUniqueNodes(TestUniqueNodesNum).AirLoopName = Alphas(1);
                 TestUniqueNodes(TestUniqueNodesNum).FieldName = cAlphaFields(9);
+
                 TestUniqueNodes(TestUniqueNodesNum).NodeNameUsed = true;
             } else {
                 ShowSevereError(RoutineName + CurrentModuleObject + "=\"" + Alphas(1) + "\", duplicate node name/list.");

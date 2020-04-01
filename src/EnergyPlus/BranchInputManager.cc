@@ -663,6 +663,7 @@ namespace BranchInputManager {
         } else {
             if (Branch(Found).AssignedLoopName == BlankString) {
                 Branch(Found).AssignedLoopName = LoopName;
+
                 PressCurveType = Branch(Found).PressureCurveType;
                 PressCurveIndex = Branch(Found).PressureCurveIndex;
                 NumComps = Branch(Found).NumOfComponents;

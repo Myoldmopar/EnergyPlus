@@ -663,6 +663,7 @@ namespace ChillerGasAbsorption {
 
         if (this->oneTimeFlag) {
             this->setupOutputVariables();
+
             this->oneTimeFlag = false;
         }
 

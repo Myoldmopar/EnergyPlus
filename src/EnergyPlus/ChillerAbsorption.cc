@@ -663,6 +663,7 @@ namespace ChillerAbsorption {
                                                         _,
                                                         _,
                                                         this->GeneratorInletNodeNum,
+
                                                         _);
                 PlantUtilities::InterConnectTwoPlantLoopSides(
                     this->CWLoopNum, this->CWLoopSideNum, this->GenLoopNum, this->GenCompNum, DataPlant::TypeOf_Chiller_Absorption, true);

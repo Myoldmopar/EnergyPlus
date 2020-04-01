@@ -663,6 +663,7 @@ namespace HeatPumpWaterToWaterCOOLING {
                                  this->LoadCompNum);
             this->SourceSideWaterMassFlowRate = 0.0;
             PlantUtilities::SetComponentFlowRate(this->SourceSideWaterMassFlowRate,
+
                                                  this->SourceSideInletNodeNum,
                                                  this->SourceSideOutletNodeNum,
                                  this->SourceLoopNum,

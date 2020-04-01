@@ -663,6 +663,7 @@ namespace GroundHeatExchangers {
 
             DisplayString("...progress: " + ss.str() + "%");
         }
+
     }
 
     //******************************************************************************

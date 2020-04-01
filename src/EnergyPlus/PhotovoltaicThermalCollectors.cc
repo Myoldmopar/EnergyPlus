@@ -663,6 +663,7 @@ namespace PhotovoltaicThermalCollectors {
                     } else { // Hardsized
                         if (DataPlant::PlantFinalSizesOkayToReport && this->DesignVolFlowRate > 0.0) {
                             ReportSizingManager::ReportSizingOutput("SolarCollector:FlatPlate:PhotovoltaicThermal",
+
                                                                     this->Name,
                                                                     "User-Specified Design Flow Rate [m3/s]",
                                                                     this->DesignVolFlowRate);

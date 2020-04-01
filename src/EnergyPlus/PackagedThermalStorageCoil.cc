@@ -663,6 +663,7 @@ namespace PackagedThermalStorageCoil {
                          TESCoil(item).CoolingAndChargeCoolingCapFFlowCurve,   // Curve index
                          {1},                                     // Valid dimensions
                          RoutineName,                             // Routine name
+
                          cCurrentModuleObject,                    // Object Type
                          TESCoil(item).Name,                      // Object Name
                          cAlphaFieldNames(20));                   // Field Name

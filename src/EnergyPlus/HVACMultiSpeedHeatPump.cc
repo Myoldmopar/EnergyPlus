@@ -663,6 +663,7 @@ namespace HVACMultiSpeedHeatPump {
                                           lNumericBlanks,
                                           lAlphaBlanks,
                                           cAlphaFields,
+
                                           cNumericFields);
             UtilityRoutines::IsNameEmpty(Alphas(1), CurrentModuleObject, ErrorsFound);
 

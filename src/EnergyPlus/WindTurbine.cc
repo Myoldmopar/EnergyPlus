@@ -663,6 +663,7 @@ namespace WindTurbine {
     void InitWindTurbine(int const WindTurbineNum)
     {
 
+
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Daeho Kang
         //       DATE WRITTEN   Oct 2009

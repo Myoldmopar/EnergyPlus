@@ -663,6 +663,7 @@ namespace MicroturbineElectricGenerator {
 
             if (MTGenerator(GeneratorNum).CombustionAirOutletNodeNum > 0 && MTGenerator(GeneratorNum).CombustionAirInletNodeNum == 0) {
                 ShowSevereError(DataIPShortCuts::cCurrentModuleObject + " \"" + MTGenerator(GeneratorNum).Name + "\"");
+
                 ShowContinueError("A " + DataIPShortCuts::cAlphaFieldNames(15) + " must be specified when a " +
                                   DataIPShortCuts::cAlphaFieldNames(16) + " is specified.");
                 ErrorsFound = true;

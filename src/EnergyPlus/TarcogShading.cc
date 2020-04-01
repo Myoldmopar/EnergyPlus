@@ -663,6 +663,7 @@ namespace TarcogShading {
         Real64 Tdown;
         Real64 H01;
         Real64 H02;
+
         Real64 beta1;
         Real64 beta2;
         Real64 alpha1;

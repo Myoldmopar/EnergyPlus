@@ -663,6 +663,7 @@ namespace WaterToAirHeatPumpSimple {
                 SetupOutputVariable("Cooling Coil Runtime Fraction",
                                     OutputProcessor::Unit::None,
                                     SimpleWatertoAirHP(HPNum).RunFrac,
+
                                     "System",
                                     "Average",
                                     SimpleWatertoAirHP(HPNum).Name);

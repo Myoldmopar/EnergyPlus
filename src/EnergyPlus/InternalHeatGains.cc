@@ -663,6 +663,7 @@ namespace InternalHeatGains {
                             ErrorsFound = true;
                         }
                     } else { // Check values in Schedule
+
                         SchMin = GetScheduleMinValue(People(Loop).ActivityLevelPtr);
                         SchMax = GetScheduleMaxValue(People(Loop).ActivityLevelPtr);
                         if (SchMin < 0.0 || SchMax < 0.0) {

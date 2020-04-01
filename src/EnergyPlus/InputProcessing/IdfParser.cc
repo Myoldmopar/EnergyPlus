@@ -664,6 +664,7 @@ IdfParser::Token IdfParser::look_ahead(std::string const &idf, size_t index)
     return token;
 }
 
+
 IdfParser::Token IdfParser::next_token(std::string const &idf, size_t &index)
 {
     eat_whitespace(idf, index);

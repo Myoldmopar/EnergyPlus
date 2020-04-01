@@ -663,6 +663,7 @@ namespace ThermalComfort {
     }
 
     void CalcThermalComfortFanger(Optional_int_const PNum,     // People number for thermal comfort control
+
                                   Optional<Real64 const> Tset, // Temperature setpoint for thermal comfort control
                                   Optional<Real64> PMVResult   // PMV value for thermal comfort control
     )

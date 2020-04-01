@@ -663,6 +663,7 @@ namespace HVACControllers {
                     }
                 }
                 if (UtilityRoutines::SameString(AlphArray(3), "Normal")) {
+
                     ControllerProps(Num).Action = iNormalAction;
                 } else if (UtilityRoutines::SameString(AlphArray(3), "Reverse")) {
                     ControllerProps(Num).Action = iReverseAction;

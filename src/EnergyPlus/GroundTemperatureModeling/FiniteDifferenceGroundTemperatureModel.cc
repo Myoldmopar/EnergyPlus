@@ -663,6 +663,7 @@ void FiniteDiffGroundTempsModel::updateSurfaceCellTemperature()
     incidentHeatGain = (netIncidentRadiation_Wm2 - evapotransHeatLoss_Wm2) * thisCell.conductionArea;
 
     // Add any solar/evapotranspiration heat gain here
+
     numerator += thisCell.beta * incidentHeatGain;
 
     // Calculate the return temperature and leave

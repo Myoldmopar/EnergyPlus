@@ -663,6 +663,7 @@ namespace EvaporativeFluidCoolers {
             if (thisEFC.HighSpeedFanPower <= 0.0 && thisEFC.HighSpeedFanPower != DataSizing::AutoSize) {
                 ShowSevereError(DataIPShortCuts::cCurrentModuleObject + " = \"" + AlphArray(1) + "\", invalid data for \"" +
                                 DataIPShortCuts::cNumericFieldNames(2) + "\", entered value <= 0.0, but must be > 0 for " +
+
                                 DataIPShortCuts::cAlphaFieldNames(4) + " = \"" + AlphArray(4) + "\".");
                 ErrorsFound = true;
             }

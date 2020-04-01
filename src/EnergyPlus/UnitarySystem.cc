@@ -663,6 +663,7 @@ namespace UnitarySystems {
         if (this->m_MyPlantScanFlag && allocated(DataPlant::PlantLoop)) {
             if (this->m_HeatRecActive) {
                 initUnitarySystemsErrFlag = false;
+
                 PlantUtilities::ScanPlantLoopsForObject(this->Name,
                                                         DataPlant::TypeOf_UnitarySysRecovery,
                                                         this->m_HRLoopNum,

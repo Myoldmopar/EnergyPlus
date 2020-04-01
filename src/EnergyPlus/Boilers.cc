@@ -663,6 +663,7 @@ namespace Boilers {
                                                                     this->Name,
                                                                     "Design Size Nominal Capacity [W]",
                                                                     tmpNomCap,
+
                                                                     "User-Specified Nominal Capacity [W]",
                                                                     NomCapUser);
                             if (DataGlobals::DisplayExtraWarnings) {

@@ -663,6 +663,7 @@ namespace HVACVariableRefrigerantFlow {
             }
         } else if (TUCoolingLoad > 0.0 && TUHeatingLoad > 0.0 &&
                    ((CoolingLoad(VRFCond) && LastModeHeating(VRFCond)) || (HeatingLoad(VRFCond) && LastModeCooling(VRFCond)))) {
+
             VRF(VRFCond).ModeChange = true;
             // reset heat recovery startup timer
             VRF(VRFCond).HRTimer = 0.0;

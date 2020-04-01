@@ -663,6 +663,7 @@ namespace FluidCoolers {
                 ShowContinueError(
                     "Fluid cooler UA at low fan speed must be left blank when nominal fluid cooler capacity performance input method is used.");
                 ErrorsFound = true;
+
             }
             if (this->FluidCoolerLowSpeedNomCap >= this->FluidCoolerNominalCapacity) {
                 ShowSevereError(cCurrentModuleObject + " = \"" + this->Name +

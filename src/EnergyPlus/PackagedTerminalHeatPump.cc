@@ -663,6 +663,7 @@ namespace PackagedTerminalHeatPump {
         CurrentModuleObject = "ZoneHVAC:WaterToAirHeatPump";
         NumPTWSHP = inputProcessor->getNumObjectsFound(CurrentModuleObject);
         inputProcessor->getObjectDefMaxArgs(CurrentModuleObject, NumFields, NumAlphas, NumNumbers);
+
         MaxNumbers = max(MaxNumbers, NumNumbers);
         MaxAlphas = max(MaxAlphas, NumAlphas);
 

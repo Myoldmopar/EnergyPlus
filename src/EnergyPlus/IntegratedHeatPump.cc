@@ -663,6 +663,7 @@ namespace IntegratedHeatPump {
                                       0.0,
                                       OnOffAirFlowRat);
                 SimVariableSpeedCoils(BlankString,
+
                                       IntegratedHeatPumps(DXCoilNum).SHDWHWHCoilIndex,
                                       CyclingScheme,
                                       MaxONOFFCyclesperHour,

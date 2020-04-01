@@ -663,6 +663,7 @@ namespace HWBaseboardRadiator {
                                 HWBaseboard(BaseboardNum).ConvEnergy,
                                 "System",
                                 "Sum",
+
                                 HWBaseboard(BaseboardNum).EquipID);
             SetupOutputVariable("Baseboard Radiant Heating Energy",
                                 OutputProcessor::Unit::J,

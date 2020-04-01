@@ -663,6 +663,7 @@ namespace DataHeatBalance {
     Array1D<Real64> QRadSWwinAbsTot;   // Exterior beam plus diffuse solar absorbed in glass layers of window (W)
     Array2D<Real64> QRadSWwinAbsLayer; // Exterior beam plus diffuse solar absorbed in glass layers of window (W)
 
+
     Array2D<Real64> FenLaySurfTempFront;            // Front surface temperatures of fenestration layers
     Array2D<Real64> FenLaySurfTempBack;             // Back surface temperatures of fenestration layers
     Array1D<Real64> ZoneTransSolarEnergy;           // Energy of ZoneTransSolar [J]

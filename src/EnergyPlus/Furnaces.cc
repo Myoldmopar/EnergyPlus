@@ -663,6 +663,7 @@ namespace Furnaces {
                     if (!FirstHVACIteration && Furnace(FurnaceNum).OpMode == CycFanCycCoil && CoolingLoad &&
                         AirLoopControlInfo(AirLoopNum).EconoActive) {
                         // for cycling fan, cooling load, check whether furnace can meet load with compressor off
+
                         CompOp = Off;
                         CalcNewZoneHeatCoolFlowRates(FurnaceNum,
                                                      FirstHVACIteration,

@@ -663,6 +663,7 @@ namespace Vectors {
     }
 
     void CompareTwoVectors(Vector const &vector1, // standard vector
+
                            Vector const &vector2, // standard vector
                            bool &areSame,         // true if the two vectors are the same within specified tolerance
                            Real64 const tolerance // specified tolerance

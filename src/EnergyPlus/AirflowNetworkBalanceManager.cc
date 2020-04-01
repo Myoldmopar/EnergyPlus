@@ -663,6 +663,7 @@ namespace AirflowNetworkBalanceManager {
                 bool fanErrorFound = false;
                 int fanIndex;
                 GetFanIndex(thisObjectName, fanIndex, fanErrorFound);
+
                 if (fanErrorFound) {
                     ShowSevereError(RoutineName + ": " + CurrentModuleObject + " = " + thisObjectName + " is not found in Fan:ZoneExhaust objects.");
                     success = false;

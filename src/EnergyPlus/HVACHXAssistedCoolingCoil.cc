@@ -663,6 +663,7 @@ namespace HVACHXAssistedCoolingCoil {
                 UtilityRoutines::SameString(HXAssistedCoil(HXAssistedCoilNum).CoolingCoilType, "Coil:Cooling:Water:DetailedGeometry")) {
                 if (UtilityRoutines::SameString(HXAssistedCoil(HXAssistedCoilNum).CoolingCoilType, "Coil:Cooling:Water:DetailedGeometry")) {
                     HXAssistedCoil(HXAssistedCoilNum).CoolingCoilType_Num = Coil_CoolingWaterDetailed;
+
                 } else if (UtilityRoutines::SameString(HXAssistedCoil(HXAssistedCoilNum).CoolingCoilType, "Coil:Cooling:Water")) {
                     HXAssistedCoil(HXAssistedCoilNum).CoolingCoilType_Num = Coil_CoolingWater;
                 }

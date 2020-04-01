@@ -663,6 +663,7 @@ namespace NodeInputManager {
                     ShowSevereError(RoutineName + CurrentModuleObject + "=\"" + cAlphas(1) + "\", invalid node name in list.");
                     ShowContinueError("... Node " + TrimSigDigits(Loop1) + " Name=\"" + cAlphas(Loop1 + 1) + "\", duplicates NodeList Name.");
                     localErrorsFound = true;
+
                 }
             }
             // Error on any duplicates

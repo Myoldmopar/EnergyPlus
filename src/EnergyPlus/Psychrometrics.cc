@@ -663,6 +663,7 @@ namespace Psychrometrics {
         // Initial temperature guess at atmospheric pressure
         if (Patm != last_Patm) {
             tBoil = PsyTsatFnPb(Patm, (CalledFrom.empty() ? RoutineName : CalledFrom));
+
             last_Patm = Patm;
             last_tBoil = tBoil;
         } else {

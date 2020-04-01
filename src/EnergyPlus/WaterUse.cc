@@ -663,6 +663,7 @@ namespace WaterUse {
             SetupOutputVariable("Water Use Equipment Heating Energy",
                                 OutputProcessor::Unit::J,
                                 this->Energy,
+
                                 "System",
                                 "Sum",
                                 this->Name,

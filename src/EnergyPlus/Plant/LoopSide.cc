@@ -663,6 +663,7 @@ namespace DataPlant {
         // Return value
         Real64 LoadToLoopSetPoint = 0.0; // function result
 
+
         static std::string const RoutineName("PlantLoopSolver::EvaluateLoopSetPointLoad");
         static std::string const RoutineNameAlt("PlantSupplySide:EvaluateLoopSetPointLoad");
 

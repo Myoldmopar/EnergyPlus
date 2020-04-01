@@ -663,6 +663,7 @@ namespace DXCoils {
                     if (S1SensCoolingEnergyRate > 0.0) {
                         S1PLR = PartLoadRatio;
                     } else {
+
                         S1PLR = 0.0;
                     }
                     // Run stage 1+2 at full load

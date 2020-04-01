@@ -663,6 +663,7 @@ namespace TARCOGMain {
         ErrorMessage = "Normal Termination";
 
         // sol = 0.0d0
+
         // if (dir.ne.0) then
         //  do i= 1, nlayer
         //    sol(i) = dir * asol(i)

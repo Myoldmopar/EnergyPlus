@@ -663,6 +663,7 @@ namespace SolarReflectionManager {
         static int RecSurfNum(0);           // Receiving surface number
         static int SurfNum(0);              // Heat transfer surface number corresponding to RecSurfNum
         static int RecPtNum(0);             // Receiving point number
+
         static int NumRecPts(0);            // Number of receiving points on a receiving surface
         static int HitPtSurfNum(0);         // Surface number of hit point: -1 = ground,
         // 0 = sky or obstruction with receiving point below ground level,

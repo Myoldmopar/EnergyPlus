@@ -663,6 +663,7 @@ namespace EarthTube {
                     OutletAirEnthalpy = InsideEnthalpy + EarthTubeSys(Loop).FanPower / EAMFL(NZ);
                 }
                 EarthTubeSys(Loop).AirTemp = PsyTdbFnHW(OutletAirEnthalpy, OutHumRat);
+
             } else {
                 EarthTubeSys(Loop).AirTemp = EarthTubeSys(Loop).InsideAirTemp;
             }

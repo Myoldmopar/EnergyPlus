@@ -663,6 +663,7 @@ namespace UnitVentilator {
                                   UnitVent(UnitVentNum).FanType,
                                   UnitVent(UnitVentNum).FanName,
                                   NodeID(UnitVent(UnitVentNum).ATMixerOutNode),
+
                                   NodeID(UnitVent(UnitVentNum).FanOutletNode));
                 }
                 if (UnitVent(UnitVentNum).ATMixerType == ATMixer_SupplySide) {

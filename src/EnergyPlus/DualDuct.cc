@@ -663,6 +663,7 @@ namespace DualDuct {
                 }
 
                  dd_airterminal(DDNum).MaxAirVolFlowRate = NumArray(1);
+
                  dd_airterminal(DDNum).MaxAirMassFlowRate =  dd_airterminal(DDNum).MaxAirVolFlowRate * StdRhoAir;
 
                 // Register component set data - one for OA and one for RA

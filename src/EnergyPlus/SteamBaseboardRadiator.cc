@@ -663,6 +663,7 @@ namespace SteamBaseboardRadiator {
                                 "ENERGYTRANSFER",
                                 "BASEBOARD",
                                 _,
+
                                 "System");
             SetupOutputVariable("Baseboard Convective Heating Energy",
                                 OutputProcessor::Unit::J,

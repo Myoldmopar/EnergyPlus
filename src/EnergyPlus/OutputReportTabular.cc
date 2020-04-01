@@ -663,6 +663,7 @@ namespace OutputReportTabular {
         sourceFactorDiesel = 0.0;
         sourceFactorCoal = 0.0;
         sourceFactorFuelOil1 = 0.0;
+
         sourceFactorFuelOil2 = 0.0;
         sourceFactorPropane = 0.0;
         sourceFactorOtherFuel1 = 0.0;

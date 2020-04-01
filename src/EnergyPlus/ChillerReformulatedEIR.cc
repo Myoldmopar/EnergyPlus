@@ -663,6 +663,7 @@ namespace ChillerReformulatedEIR {
 
         SetupOutputVariable("Chiller Evaporator Cooling Energy",
                             OutputProcessor::Unit::J,
+
                             this->EvapEnergy,
                             "System",
                             "Sum",

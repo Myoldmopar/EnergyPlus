@@ -663,6 +663,7 @@ namespace HybridUnitaryAirConditioners {
                         ShowFatalError(RoutineName + "Errors found parsing modes");
                         ShowContinueError("... Preceding condition causes termination.");
                         break;
+
                     }
                 }
                 // add the ZoneHVAC:HybridUnitaryHVAC Scaled Maximum Supply Air Volume Flow Rate to the Component Sizing Report Summary

@@ -663,6 +663,7 @@ void ReportCoilSelection::doFinalProcessingOfCoilData()
         } else if (c->zoneEqNum > 0 && c->airloopNum > 0) { // e.g. reheat coil, has a system and is zone equipment
             c->userNameforHVACsystem += " on air system named " + DataAirSystems::PrimaryAirSystem(c->airloopNum).Name;
             c->coilLocation = "Zone Equipment";
+
         }
 
         if (c->coilDesVolFlow > 0) {

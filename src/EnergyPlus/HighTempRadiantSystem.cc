@@ -663,6 +663,7 @@ namespace HighTempRadiantSystem {
                                     "System",
                                     "Sum",
                                     HighTempRadSys(Item).Name,
+
                                     _,
                                     "ELECTRICITY",
                                     "Heating",

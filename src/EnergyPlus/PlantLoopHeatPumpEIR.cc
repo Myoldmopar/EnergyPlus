@@ -663,6 +663,7 @@ namespace EIRPlantLoopHeatPumps {
                         if (DataPlant::PlantFinalSizesOkayToReport) {
                             if (DataGlobals::DoPlantSizing) {
                                 ReportSizingManager::ReportSizingOutput(typeName,
+
                                                                         this->name,
                                                                         "Design Size Load Side Volume Flow Rate [m3/s]",
                                                                         tmpLoadVolFlow,

@@ -663,6 +663,7 @@ namespace SystemAvailabilityManager {
                                               cAlphaFieldNames,
                                               cNumericFieldNames);
                 UtilityRoutines::IsNameEmpty(cAlphaArgs(1), cCurrentModuleObject, ErrorsFound);
+
                 SchedOnSysAvailMgrData(SysAvailNum).Name = cAlphaArgs(1);
                 SchedOnSysAvailMgrData(SysAvailNum).MgrType = SysAvailMgr_ScheduledOn;
 

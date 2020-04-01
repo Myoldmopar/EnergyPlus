@@ -663,6 +663,7 @@ namespace CrossVentMgr {
                 Tin(ZoneNum) = Surface(AirflowNetwork::MultizoneSurfaceData(MaxSurf).SurfNum).OutDryBulbTemp;
             }
             Urec(ZoneNum) = 0.0;
+
             Ujet(ZoneNum) = 0.0;
             Qrec(ZoneNum) = 0.0;
             auto flows(CVJetRecFlows(_, ZoneNum));

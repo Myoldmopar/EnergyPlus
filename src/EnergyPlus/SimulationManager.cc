@@ -663,6 +663,7 @@ namespace SimulationManager {
         } // ... End environment loop.
 
         WarmupFlag = false;
+
         if (!SimsDone && DoDesDaySim) {
             if ((TotDesDays + TotRunDesPersDays) == 0) { // if sum is 0, then there was no sizing done.
                 ShowWarningError("ManageSimulation: SizingPeriod:* were requested in SimulationControl but no SizingPeriod:* objects in input.");

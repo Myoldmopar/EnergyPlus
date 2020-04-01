@@ -663,6 +663,7 @@ namespace UFADManager {
                 ZoneUCSDUE(UINum).PowerPerPlume =
                     (NumberOfOccupants * 73.0 + ZoneElecConv + ZoneGasConv + ZoneOthEqConv + ZoneHWEqConv + ZoneSteamEqConv) / NumberOfPlumes;
                 ReportSizingOutput("RoomAirSettings:UnderFloorAirDistributionExterior",
+
                                    ZoneUCSDUE(UINum).ZoneName,
                                    "Power per plume [W]",
                                    ZoneUCSDUE(UINum).PowerPerPlume);

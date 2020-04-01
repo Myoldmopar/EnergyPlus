@@ -663,6 +663,7 @@ namespace ZonePlenum {
                                                                                        NodeConnectionType_Outlet,
                                                                                        1,
                                                                                        ObjectIsNotParent);
+
             }
 
         } // end AirLoopHVAC:SupplyPlenum Loop

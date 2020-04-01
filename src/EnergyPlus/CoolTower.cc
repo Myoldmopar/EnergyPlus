@@ -663,6 +663,7 @@ namespace CoolTower {
                     AirVolFlowRate = min(AirVolFlowRate, CoolTowerSys(CoolTowerNum).MaxAirVolFlowRate);
                     WaterFlowRate = (AirVolFlowRate / (0.0125 * height_sqrt));
                     if (WaterFlowRate > CoolTowerSys(CoolTowerNum).MaxWaterFlowRate * UCFactor) {
+
                         WaterFlowRate = CoolTowerSys(CoolTowerNum).MaxWaterFlowRate * UCFactor;
                         AirVolFlowRate = 0.0125 * WaterFlowRate * height_sqrt;
                         AirVolFlowRate = min(AirVolFlowRate, CoolTowerSys(CoolTowerNum).MaxAirVolFlowRate);

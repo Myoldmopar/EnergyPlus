@@ -663,6 +663,7 @@ namespace FuelCellElectricGenerator {
                     ShowContinueError("Entered in " + DataIPShortCuts::cCurrentModuleObject + '=' + AlphArray(1));
                     ShowContinueError("Schedule was not found");
                     ErrorsFound = true;
+
                 }
 
                 // check for other FuelCell using the same Water Supply module and fill

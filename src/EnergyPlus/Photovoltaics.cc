@@ -663,6 +663,7 @@ namespace Photovoltaics {
                         PVarray(PVnum).SimplePVModule.AreaCol =
                             Surface(PVarray(PVnum).SurfacePtr).Area * PVarray(PVnum).SimplePVModule.ActiveFraction;
                     } else {
+
                         ShowSevereError("Invalid PV performance object name of " + PVarray(PVnum).PerfObjName);
                         ShowContinueError("Entered in " + cPVGeneratorObjectName + " = " + PVarray(PVnum).Name);
                         ErrorsFound = true;

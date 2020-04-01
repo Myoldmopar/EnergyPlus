@@ -663,6 +663,7 @@ namespace HVACStandAloneERV {
             if (StandAloneERV(StandAloneERVNum).ExhaustAirVolFlow == AutoSize && HXSupAirFlowRate != AutoSize) {
                 ShowSevereError(CurrentModuleObject + " \"" + StandAloneERV(StandAloneERVNum).Name + "\"");
                 ShowContinueError("... When autosizing ERV " + cNumericFields(2) + ", nominal supply air flow rate for heat exchanger with name = " +
+
                                   StandAloneERV(StandAloneERVNum).HeatExchangerName + " must also be autosized.");
             }
 

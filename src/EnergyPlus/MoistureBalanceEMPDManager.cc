@@ -663,6 +663,7 @@ namespace MoistureBalanceEMPDManager {
                 RH_surf_layer = RHZone;
             } else {
                 RH_surf_layer = RH_surf_layer_tmp;
+
             }
         } else if (RH_surf_layer_tmp < RH_deep_layer_old) {
             RH_surf_layer = RH_deep_layer_old;

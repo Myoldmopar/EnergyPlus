@@ -663,6 +663,7 @@ namespace HeatBalanceIntRadExchange {
                                CheckValue2,
                                FinalCheckValue,
                                NumIterations,
+
                                FixedRowSum);
 
                 // Calculate the script F factors

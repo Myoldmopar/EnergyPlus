@@ -663,6 +663,7 @@ namespace SurfaceGeometry {
                 } else if (SELECT_CASE_var == TarpHcOutside) {
                     String2 = "TARP";
                 } else if (SELECT_CASE_var == MoWiTTHcOutside) {
+
                     String2 = "MoWitt";
                 } else if (SELECT_CASE_var == DOE2HcOutside) {
                     String2 = "DOE-2";

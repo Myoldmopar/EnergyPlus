@@ -663,6 +663,7 @@ namespace DataHVACGlobals {
         DXElecHeatingPower = 0.0;
         ElecHeatingCoilPower = 0.0;
         AirToAirHXElecPower = 0.0;
+
         UnbalExhMassFlow = 0.0;
         BalancedExhMassFlow = 0.0;
         PlenumInducedMassFlow = 0.0;

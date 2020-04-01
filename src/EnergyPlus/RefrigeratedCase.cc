@@ -663,6 +663,7 @@ namespace RefrigeratedCase {
         int NumAlphas(0);                      // Number of Alphas for each GetObjectItem call
         int NumCases(0);                       // Number of refrigerated cases for single system
         int NumNum(0);                         // Used to cycle through input
+
         int NumNumbers(0);                     // Number of Numbers for each GetObjectItem call
         int NumDisplayCases(0);                // Counter for refrigerated cases in GetInput do loop
         int NumWalkIns(0);                     // Number of walk ins

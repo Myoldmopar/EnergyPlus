@@ -664,6 +664,7 @@ namespace WaterToAirHeatPump {
                                     "Average",
                                     WatertoAirHP(HPNum).Name);
 
+
                 SetupOutputVariable("Cooling Coil Air Mass Flow Rate",
                                     OutputProcessor::Unit::kg_s,
                                     WatertoAirHP(HPNum).OutletAirMassFlowRate,

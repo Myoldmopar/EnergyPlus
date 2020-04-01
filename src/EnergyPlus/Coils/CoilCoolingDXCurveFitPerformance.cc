@@ -663,6 +663,7 @@ void CoilCoolingDXCurveFitPerformance::calcStandardRatings(int supplyFanIndex, i
                 CycRatio = TargetNetCapacity / LowSpeedNetCoolingCap;
                 Real64 PLF = CurveManager::CurveValue(this->normalMode.speeds.back().indexPLRFPLF, CycRatio);
                 if (PLF < 0.7) {
+
                     PLF = 0.7;
                 }
                 Real64 RunTimeFraction = CycRatio / PLF;

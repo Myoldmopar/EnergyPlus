@@ -663,6 +663,7 @@ namespace WaterCoils {
             WaterCoil(CoilNum).WaterOutletNodeNum = GetOnlySingleNode(
                 AlphArray(4), ErrorsFound, CurrentModuleObject, AlphArray(1), NodeType_Water, NodeConnectionType_Outlet, 2, ObjectIsNotParent);
             WaterCoil(CoilNum).AirInletNodeNum = GetOnlySingleNode(
+
                 AlphArray(5), ErrorsFound, CurrentModuleObject, AlphArray(1), NodeType_Air, NodeConnectionType_Inlet, 1, ObjectIsNotParent);
             WaterCoil(CoilNum).AirOutletNodeNum = GetOnlySingleNode(
                 AlphArray(6), ErrorsFound, CurrentModuleObject, AlphArray(1), NodeType_Air, NodeConnectionType_Outlet, 1, ObjectIsNotParent);

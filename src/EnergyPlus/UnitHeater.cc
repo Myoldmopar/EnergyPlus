@@ -663,6 +663,7 @@ namespace UnitHeater {
             // Note that the unit heater fan electric is NOT metered because this value is already metered through the fan component
             SetupOutputVariable("Zone Unit Heater Fan Electric Energy",
                                 OutputProcessor::Unit::J,
+
                                 UnitHeat(UnitHeatNum).ElecEnergy,
                                 "System",
                                 "Sum",

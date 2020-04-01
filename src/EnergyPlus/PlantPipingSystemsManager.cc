@@ -663,6 +663,7 @@ namespace EnergyPlus {
                 }
 
                 // more work to do if there is a basement
+
                 if (thisDomain.HasBasement) {
 
                     // check if there are blank inputs related to the basement,

@@ -663,6 +663,7 @@ namespace EMSManager {
         cCurrentModuleObject = "ExternalInterface:FunctionalMockupUnitImport:To:Actuator";
         inputProcessor->getObjectDefMaxArgs(cCurrentModuleObject, TotalArgs, NumAlphas, NumNums);
         MaxNumNumbers = max(MaxNumNumbers, NumNums);
+
         MaxNumAlphas = max(MaxNumAlphas, NumAlphas);
         cCurrentModuleObject = "ExternalInterface:FunctionalMockupUnitExport:To:Variable";
         inputProcessor->getObjectDefMaxArgs(cCurrentModuleObject, TotalArgs, NumAlphas, NumNums);

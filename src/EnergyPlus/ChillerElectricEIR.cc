@@ -663,6 +663,7 @@ namespace ChillerElectricEIR {
                 }
             }
 
+
             //   Check the CAP-FT, EIR-FT, and PLR curves and warn user if different from 1.0 by more than +-10%
             if (ElectricEIRChiller(EIRChillerNum).ChillerCapFTIndex > 0) {
                 Real64 CurveVal = CurveManager::CurveValue(ElectricEIRChiller(EIRChillerNum).ChillerCapFTIndex,

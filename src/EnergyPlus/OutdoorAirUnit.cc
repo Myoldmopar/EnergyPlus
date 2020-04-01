@@ -663,6 +663,7 @@ namespace OutdoorAirUnit {
                 ListNum = inputProcessor->getObjectItemNum(CurrentModuleObjects(CO_OAEqList), ComponentListName);
                 if (ListNum > 0) {
                     inputProcessor->getObjectItem(CurrentModuleObjects(CO_OAEqList), ListNum, AlphArray, NumAlphas, NumArray, NumNums, IOStat);
+
                     NumInList = (NumAlphas - 1) / 2; // potential problem if puts in type but not name
                     if (mod(NumAlphas - 1, 2) != 0) ++NumInList;
                     OutAirUnit(OAUnitNum).NumComponents = NumInList;

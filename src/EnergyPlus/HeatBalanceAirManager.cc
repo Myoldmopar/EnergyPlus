@@ -663,6 +663,7 @@ namespace HeatBalanceAirManager {
             ZoneAirBalance(Loop).InducedAirSchedPtr = GetScheduleIndex(cAlphaArgs(4));
             if (ZoneAirBalance(Loop).InducedAirSchedPtr == 0) {
                 if (lAlphaFieldBlanks(4)) {
+
                     ShowSevereError(RoutineName + cCurrentModuleObject + "=\"" + cAlphaArgs(1) + "\"," + cAlphaFieldNames(4) +
                                     " is required but field is blank.");
                 } else {

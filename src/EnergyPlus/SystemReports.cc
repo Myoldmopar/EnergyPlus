@@ -663,6 +663,7 @@ namespace SystemReports {
                                 }
                             }
                             if (!duplicate) {
+
                                 ++ArrayCount;
                                 if (i > ArrayCount) { // Copy to lower position
                                     auto &za(ZoneSubCompToPlant(ArrayCount));

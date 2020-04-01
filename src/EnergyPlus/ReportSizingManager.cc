@@ -663,6 +663,7 @@ namespace ReportSizingManager {
                                     DDNameFanPeak = WeatherManager::DesDayInput(FinalZoneSizing(CurZoneEqNum).HeatDDNum).Title;
                                     dateTimeFanPeak =
                                         General::TrimSigDigits(WeatherManager::DesDayInput(FinalZoneSizing(CurZoneEqNum).HeatDDNum).Month) + "/" +
+
                                         General::TrimSigDigits(WeatherManager::DesDayInput(FinalZoneSizing(CurZoneEqNum).HeatDDNum).DayOfMonth) +
                                         " " + coilSelectionReportObj->getTimeText(FinalZoneSizing(CurZoneEqNum).TimeStepNumAtHeatMax);
                                 }

@@ -663,6 +663,7 @@ namespace ConductionTransferFunctionCalc {
                                 if (ipts1 > MaxCTFTerms / 2) ipts1 = MaxCTFTerms / 2;
                             }
 
+
                             dx(Layer) = dl(Layer) / double(Nodes(Layer)); // calc node spacing
                         }
 

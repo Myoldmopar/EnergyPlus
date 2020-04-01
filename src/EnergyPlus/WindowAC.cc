@@ -663,6 +663,7 @@ namespace WindowAC {
                     for (NodeNum = 1; NodeNum <= ZoneEquipConfig(CtrlZone).NumInletNodes; ++NodeNum) {
                         if (WindAC(WindACNum).AirOutNode == ZoneEquipConfig(CtrlZone).InletNode(NodeNum)) {
                             WindAC(WindACNum).ZonePtr = CtrlZone;
+
                             ZoneNodeNotFound = false;
                             break;
                         }

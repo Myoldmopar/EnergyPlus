@@ -663,6 +663,7 @@ namespace HybridEvapCoolingModel {
             ErrorsFound = true;
         }
         inter_Number = inter_Number + 2;
+
         // N8, \field Mode0  Minimum Outdoor Air Humidity Ratio
         // N9, \field Mode0  Maximum Outdoor Air Humidity Ratio
         ok = InitializeOutdoorAirHumidityRatioConstraints(Numbers(inter_Number), Numbers(inter_Number + 1));

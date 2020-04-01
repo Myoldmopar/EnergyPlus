@@ -663,6 +663,7 @@ namespace PVWatts {
         // For now, assume array has at least 3 rows.
         // This way we can use index 1 and it has a panel on both sides.
 
+
         // Get our vertices for our array.
         double verts[3][4][3]; // To allocate
         get_vertices(axis_tilt, axis_azimuth, gcr, verts, rotation);

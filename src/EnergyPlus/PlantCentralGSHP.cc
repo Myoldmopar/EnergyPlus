@@ -663,6 +663,7 @@ namespace PlantCentralGSHP {
                                                     3,
                                                     DataLoopNode::ObjectIsNotParent); // node name : connection should be careful!
             Wrapper(WrapperNum).HWOutletNodeNum = NodeInputManager::GetOnlySingleNode(DataIPShortCuts::cAlphaArgs(8),
+
                                                                                       ErrorsFound,
                                                                                       DataIPShortCuts::cCurrentModuleObject,
                                                                                       DataIPShortCuts::cAlphaArgs(1),

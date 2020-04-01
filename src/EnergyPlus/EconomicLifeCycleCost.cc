@@ -663,6 +663,7 @@ namespace EconomicLifeCycleCost {
             if (UtilityRoutines::SameString(AlphaArray(2), "Maintenance")) {
                 RecurringCosts(iInObj).category = costCatMaintenance;
             } else if (UtilityRoutines::SameString(AlphaArray(2), "Repair")) {
+
                 RecurringCosts(iInObj).category = costCatRepair;
             } else if (UtilityRoutines::SameString(AlphaArray(2), "Operation")) {
                 RecurringCosts(iInObj).category = costCatOperation;

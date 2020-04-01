@@ -663,6 +663,7 @@ namespace HVACCooledBeam {
             if (GetCurrentScheduleValue(CoolBeam(CBNum).SchedPtr) > 0.0 && Node(InAirNode).MassFlowRateMaxAvail > 0.0) {
                 Node(InAirNode).MassFlowRateMaxAvail = CoolBeam(CBNum).MaxAirMassFlow;
                 Node(InAirNode).MassFlowRateMinAvail = CoolBeam(CBNum).MaxAirMassFlow;
+
             } else {
                 Node(InAirNode).MassFlowRateMaxAvail = 0.0;
                 Node(InAirNode).MassFlowRateMinAvail = 0.0;

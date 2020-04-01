@@ -663,6 +663,7 @@ namespace TARCOGOutput {
                 ObjexxFCL::gio::write(InArgumentsFile, Format_1134) << xwght(j);
             } // j - gas mix
         }     // i - gaps
+
         ObjexxFCL::gio::write(InArgumentsFile, fmtLD);
         ObjexxFCL::gio::write(InArgumentsFile, Format_1198);
         // close(InArgumentsFile)

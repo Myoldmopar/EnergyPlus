@@ -663,6 +663,7 @@ namespace StandardRatings {
                                  int const CondenserType,        // Type of Condenser - Air Cooled, Water Cooled or Evap Cooled
                                  int const CapFTempCurveIndex,   // Index for the total cooling capacity modifier curve
                                  int const EIRFTempCurveIndex    // Index for the energy input ratio modifier curve
+
     )
     {
 

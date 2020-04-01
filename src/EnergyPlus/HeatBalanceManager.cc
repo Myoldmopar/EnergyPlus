@@ -663,6 +663,7 @@ namespace HeatBalanceManager {
         //       RE-ENGINEERED  na
 
         // PURPOSE OF THIS SUBROUTINE:
+
         // This subroutine gets the project control data before the rest of the building data (such as
         // materials) is obtained.
 

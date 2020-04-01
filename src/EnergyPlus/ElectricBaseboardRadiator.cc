@@ -664,6 +664,7 @@ namespace ElectricBaseboardRadiator {
         //       MODIFIED       August 2013 Daeho Kang, add component sizing table entries
         //                      July 2014, B. Nigusse, added scalable sizing
 
+
         // PURPOSE OF THIS SUBROUTINE:
         // This subroutine is for sizing electric baseboard components for which nominal capacities have not been
         // specified in the input.

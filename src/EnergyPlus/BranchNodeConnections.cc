@@ -663,6 +663,7 @@ namespace BranchNodeConnections {
                         FluidStreamCounts(Loop2) = true;
                     }
                 }
+
                 if (!IsValid) {
                     ShowSevereError("(Developer) Node Connection Error, Object=" + NodeConnections(Loop1).ObjectType + ':' +
                                     NodeConnections(Loop1).ObjectName);

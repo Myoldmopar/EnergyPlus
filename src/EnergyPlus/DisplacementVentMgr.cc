@@ -663,6 +663,7 @@ namespace DisplacementVentMgr {
                                                  IntGainTypeOf_RefrigerationCase,
                                                  IntGainTypeOf_RefrigerationCompressorRack,
                                                  IntGainTypeOf_RefrigerationSystemAirCooledCondenser,
+
                                                  IntGainTypeOf_RefrigerationSystemSuctionPipe,
                                                  IntGainTypeOf_RefrigerationSecondaryReceiver,
                                                  IntGainTypeOf_RefrigerationSecondaryPipe,

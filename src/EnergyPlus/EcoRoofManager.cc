@@ -664,6 +664,7 @@ namespace EcoRoofManager {
                 // clear how much it helped with stability problems. Eventually when CTF solution is replaced with a finite
                 // difference scheme this loop structure should be removed.
 
+
             }                                                                 // This loop does an iterative solution of the simultaneous equations
             Qsoil = -1.0 * (Qsoilpart1 - Qsoilpart2 * (SoilTK - KelvinConv)); // This is heat flux INTO top of the soil
             Tfold = LeafTK - KelvinConv;

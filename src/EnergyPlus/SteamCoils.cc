@@ -663,6 +663,7 @@ namespace SteamCoils {
         SteamCoil(CoilNum).InletSteamEnthalpy = Node(SteamInletNode).Enthalpy;
         SteamCoil(CoilNum).InletSteamPress = Node(SteamInletNode).Press;
         SteamCoil(CoilNum).InletSteamQuality = Node(SteamInletNode).Quality;
+
         SteamCoil(CoilNum).TotSteamHeatingCoilRate = 0.0;
         SteamCoil(CoilNum).TotSteamCoolingCoilRate = 0.0;
         SteamCoil(CoilNum).SenSteamCoolingCoilRate = 0.0;

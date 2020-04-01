@@ -663,6 +663,7 @@ namespace GeneratorFuelSupply {
             FuelSupply(FuelSupplyNum).LHV = LHVfuel;
 
             // Calculate HHV for an NdotFuel of 1.0
+
             HHVfuel = 0.0;
             for (i = 1; i <= FuelSupply(FuelSupplyNum).NumConstituents; ++i) {
                 thisGasID = FuelSupply(FuelSupplyNum).GasLibID(i);

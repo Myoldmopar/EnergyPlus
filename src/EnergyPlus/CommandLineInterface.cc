@@ -663,6 +663,7 @@ namespace CommandLineInterface {
                 IOFlags flags;
                 ObjexxFCL::gio::inquire("expanded.idf", flags);
                 FileExists = flags.exists();
+
             }
             if (FileExists) {
                 moveFile("expanded.idf", outputExpidfFileName);

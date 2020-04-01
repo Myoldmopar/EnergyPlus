@@ -663,6 +663,7 @@ namespace HeatingCoils {
 
             coil.HeatingCoilType = "Heating";
             coil.HeatingCoilModel = "Fuel";
+
             coil.HCoilType_Num = Coil_HeatingGasOrOtherFuel;
 
             coil.FuelType_Num = AssignResourceTypeNum(Alphas(3));

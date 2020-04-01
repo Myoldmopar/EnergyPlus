@@ -663,6 +663,7 @@ namespace DElightManagerF {
     }
 
     void GetInputDElightComplexFenestration(bool &ErrorsFound)
+
     {
         // Perform GetInput function for the Daylighting:DELight:ComplexFenestration object
         // Glazer - July 2016

@@ -663,6 +663,7 @@ namespace IceThermalStorage {
                     if (IterNum >= MaxIterNum && (!DataGlobals::WarmupFlag)) {
                         ++this->DischargeIterErrors;
                         if (this->DischargeIterErrors <= 25) {
+
                             ShowWarningError("Detailed Ice Storage model exceeded its internal discharging maximum iteration limit");
                             ShowContinueError("Detailed Ice Storage System Name = " + this->Name);
                             ShowContinueErrorTimeStamp("");

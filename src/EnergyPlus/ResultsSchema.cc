@@ -663,6 +663,7 @@ namespace ResultsFramework {
 
     json ReportsCollection::getJSON() const
     {
+
         json root = json::array();
 
         for (auto const &iter : reportsMap) {

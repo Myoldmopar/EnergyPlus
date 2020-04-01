@@ -663,6 +663,7 @@ void InputProcessor::setObjectItemValue(json const &ep_object,
             if (field_value.is_number()) {
                 if (field_value.is_number_integer()) {
                     Numbers(numeric_index) = field_value.get<std::int64_t>();
+
                 } else {
                     Numbers(numeric_index) = field_value.get<double>();
                 }

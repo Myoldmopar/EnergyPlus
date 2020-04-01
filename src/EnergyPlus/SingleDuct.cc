@@ -663,6 +663,7 @@ namespace SingleDuct {
             }
             if (Numbers(7) == AutoCalculate) {
                 sd_airterminal(SysNum).MaxAirVolFlowRateDuringReheat = Numbers(7);
+
             } else {
                 sd_airterminal(SysNum).MaxAirVolFlowRateDuringReheat = Numbers(7) * sd_airterminal(SysNum).ZoneFloorArea;
             }

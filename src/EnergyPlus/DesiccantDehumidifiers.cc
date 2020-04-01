@@ -663,6 +663,7 @@ namespace DesiccantDehumidifiers {
                                       ErrorsFound2,
                                       CurrentModuleObject + " = " + Alphas(1));
                     if (ErrorsFound2) ErrorsFound = true;
+
                 } else {
                     ShowSevereError(CurrentModuleObject + " = " + Alphas(1));
                     ShowContinueError("Illegal " + cAlphaFields(10) + " = " + DesicDehum(DesicDehumNum).RegenFanType);

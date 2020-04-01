@@ -664,6 +664,7 @@ namespace RootFinder {
             return;
         }
 
+
         //----------------------------------------------------------------------------
         // If the current iterate lies within the current lower and upper brackets,
         // proceed with normal processing to identify the next root candidate:

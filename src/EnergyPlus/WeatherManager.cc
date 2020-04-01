@@ -663,6 +663,7 @@ namespace WeatherManager {
                 underwaterBoundaries[i - 1].VelocityScheduleIndex = 0;
             } else {
                 underwaterBoundaries[i - 1].VelocityScheduleIndex = ScheduleManager::GetScheduleIndex(DataIPShortCuts::cAlphaArgs(3));
+
                 if (underwaterBoundaries[i - 1].WaterTempScheduleIndex == 0) {
                     ShowSevereError("Free streawm velocity schedule for \"SurfaceProperty:Underwater\" named \"" + underwaterBoundaries[i - 1].Name +
                                     "\" not found");

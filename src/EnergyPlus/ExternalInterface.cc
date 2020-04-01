@@ -663,6 +663,7 @@ namespace ExternalInterface {
             for (i = 1; i <= nInpVar; ++i) {
                 if (inpVarTypes(i) == indexVariable) { // ems-globalvariable
                     useEMS = true;
+
                     if (!isExternalInterfaceErlVariable(varInd(i))) {
                         ShowSevereError("ExternalInterface: Error, xml file \"" + simCfgFilNam + "\" declares variable \"" + inpVarNames(i) + "\",");
                         ShowContinueError("But this variable is an ordinary Erl variable, not an ExternalInterface variable.");

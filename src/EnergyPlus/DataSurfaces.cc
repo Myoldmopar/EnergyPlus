@@ -663,6 +663,7 @@ namespace DataSurfaces {
 
             Real64 const Z(Centroid.z); // Centroid value
             if (Z <= 0.0) {
+
                 OutDryBulbTemp = BaseDryTemp;
                 OutWetBulbTemp = BaseWetTemp;
             } else {

@@ -663,6 +663,7 @@ namespace MicroCHPElectricGenerator {
             this->A42Model.Qgenss = 0.0;
             this->A42Model.NdotFuel = 0.0;
             this->A42Model.MdotFuel = 0.0;
+
             this->A42Model.Teng = 20.0;
             this->A42Model.TcwIn = 20.0;
             this->A42Model.TcwOut = 20.0;

@@ -663,6 +663,7 @@ namespace HeatRecovery {
             TestCompSet(cHXTypes(ExchCond(ExchNum).ExchTypeNum),
                         ExchCond(ExchNum).Name,
                         NodeID(ExchCond(ExchNum).SecInletNode),
+
                         NodeID(ExchCond(ExchNum).SecOutletNode),
                         "Process Air Nodes");
 

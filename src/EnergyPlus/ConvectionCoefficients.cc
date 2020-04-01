@@ -663,6 +663,7 @@ namespace ConvectionCoefficients {
                                                    Surface(BaseSurf).GrossArea,
                                                    rCalcPerimeter,
                                                    Surface(SurfNum).CosTilt,
+
                                                    Surface(SurfNum).Azimuth,
                                                    Roughness,
                                                    SurfWindDir);

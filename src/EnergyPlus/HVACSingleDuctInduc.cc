@@ -663,6 +663,7 @@ namespace HVACSingleDuctInduc {
                                    .NodeNumOut;
                 InitComponentNodes(IndUnit(IUNum).MinHotWaterFlow,
                                    IndUnit(IUNum).MaxHotWaterFlow,
+
                                    HotConNode,
                                    HWOutletNode,
                                    IndUnit(IUNum).HWLoopNum,

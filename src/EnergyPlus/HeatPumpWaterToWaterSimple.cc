@@ -664,6 +664,7 @@ namespace HeatPumpWaterToWaterSimple {
         // PURPOSE OF THIS SUBROUTINE:
         // This subroutine is for initializations of the Water-to-Water HP Simple
 
+
         // METHODOLOGY EMPLOYED:
         // Uses the status flags to trigger initializations.
 

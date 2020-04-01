@@ -663,6 +663,7 @@ namespace ZoneDehumidifier {
         // Do the one time initializations
         if (MyOneTimeFlag) {
             MyEnvrnFlag.allocate(NumDehumidifiers);
+
             //    ALLOCATE(MySizeFlag(NumDehumidifiers))
             MyEnvrnFlag = true;
             //    MySizeFlag = .TRUE.

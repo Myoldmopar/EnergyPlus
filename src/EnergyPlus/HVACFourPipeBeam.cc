@@ -663,6 +663,7 @@ namespace FourPipeBeam {
                 this->airAvailable = false;
             }
             if (this->airAvailable && beamCoolingPresent && (GetCurrentScheduleValue(this->coolingAvailSchedNum) > 0.0)) {
+
                 this->coolingAvailable = true;
             } else {
                 this->coolingAvailable = false;

@@ -663,6 +663,7 @@ namespace EvaporativeCoolers {
                                          EvapCond(EvapCoolNum).EvapWaterSupplyName,
                                          ErrorsFound,
                                          EvapCond(EvapCoolNum).EvapWaterSupTankID,
+
                                          EvapCond(EvapCoolNum).EvapWaterTankDemandARRID);
             }
 

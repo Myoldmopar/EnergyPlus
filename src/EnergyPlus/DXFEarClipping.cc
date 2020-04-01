@@ -663,6 +663,7 @@ namespace DXFEarClipping {
             }
             //    if (trackit) then
             //      write(outputfiledebug,*) ' triangle=',svert,mvert,evert
+
             //      write(outputfiledebug,*) ' vertex1=',vertex(svert)%x,vertex(svert)%y
             //      write(outputfiledebug,*) ' vertex2=',vertex(mvert)%x,vertex(mvert)%y
             //      write(outputfiledebug,*) ' vertex3=',vertex(evert)%x,vertex(evert)%y

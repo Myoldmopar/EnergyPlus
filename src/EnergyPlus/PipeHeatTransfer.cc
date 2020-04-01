@@ -663,6 +663,7 @@ namespace PipeHeatTransfer {
             PipeHT(Item).FluidTemp.allocate({0, NumSections});
             PipeHT(Item).PreviousFluidTemp.allocate({0, NumSections});
             PipeHT(Item).PipeTemp.allocate({0, NumSections});
+
             PipeHT(Item).PreviousPipeTemp.allocate({0, NumSections});
 
             PipeHT(Item).TentativeFluidTemp = 0.0;

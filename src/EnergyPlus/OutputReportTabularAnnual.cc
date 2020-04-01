@@ -664,6 +664,7 @@ namespace OutputReportTabularAnnual {
         // Compute the columns related to the binning schemes
         computeBinColumns();
 
+
         // Use title case names of variables if available for column headers
         columnHeadersToTitleCase();
 

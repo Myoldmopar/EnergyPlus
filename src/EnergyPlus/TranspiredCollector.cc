@@ -663,6 +663,7 @@ namespace TranspiredCollector {
                                 UTSC(Item).Vsuction,
                                 "System",
                                 "Average",
+
                                 UTSC(Item).Name);
             SetupOutputVariable(
                 "Solar Collector Surface Temperature", OutputProcessor::Unit::C, UTSC(Item).Tcoll, "System", "Average", UTSC(Item).Name);

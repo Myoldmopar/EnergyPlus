@@ -664,6 +664,7 @@ namespace RoomAirModelUserTempPattern {
                 if (CoolLoad >= RoomAirPattern(PattrnID).TwoGradPatrn.UpperBoundHeatRateScale) {
                     Grad = RoomAirPattern(PattrnID).TwoGradPatrn.HiGradient;
 
+
                 } else if (CoolLoad <= RoomAirPattern(PattrnID).TwoGradPatrn.LowerBoundHeatRateScale) {
 
                     Grad = RoomAirPattern(PattrnID).TwoGradPatrn.LowGradient;

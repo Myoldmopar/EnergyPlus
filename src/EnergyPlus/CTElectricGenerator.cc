@@ -663,6 +663,7 @@ namespace CTElectricGenerator {
         this->HeatRecMdot = heatRecMdot;
         this->QExhaustRecovered = QExhaustRec;
         this->QLubeOilRecovered = QLubeOilRec;
+
         this->QTotalHeatRecovered = QExhaustRec + QLubeOilRec;
         this->FuelEnergyUseRate = std::abs(FuelUseRate);
         this->ExhaustEnergyRec = exhaustEnergyRec;

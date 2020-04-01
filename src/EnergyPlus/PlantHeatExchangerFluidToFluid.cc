@@ -663,6 +663,7 @@ namespace PlantHeatExchangerFluidToFluid {
                                                     _);
 
             if (this->SupplySideLoop.loopSideNum != DataPlant::SupplySide) { // throw error
+
                 ShowSevereError(RoutineName + " Invalid connections for " +
                                 DataPlant::ccSimPlantEquipTypes(DataPlant::TypeOf_FluidToFluidPlantHtExchg) + " name = \"" + this->Name + "\"");
                 ShowContinueError("The \"Loop Supply Side\" connections are not on the Supply Side of a plant loop");

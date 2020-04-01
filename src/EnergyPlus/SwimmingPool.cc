@@ -663,6 +663,7 @@ namespace SwimmingPool {
         SetupOutputVariable("Indoor Pool Water Heating Energy",
                             OutputProcessor::Unit::J,
                             this->HeatEnergy,
+
                             "System",
                             "Sum",
                             this->Name,

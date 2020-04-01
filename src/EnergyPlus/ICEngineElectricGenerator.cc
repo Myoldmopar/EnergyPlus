@@ -663,6 +663,7 @@ namespace ICEngineElectricGenerator {
         this->QTotalHeatRecovered = qTotalHeatRecovered;
         this->JacketEnergyRec = jacketEnergyRec;
         this->LubeOilEnergyRec = lubeOilEnergyRec;
+
         this->ExhaustEnergyRec = exhaustEnergyRec;
         this->QTotalHeatRecovered = (QExhaustRec + QLubeOilRec + QJacketRec);
         this->TotalHeatEnergyRec = (exhaustEnergyRec + lubeOilEnergyRec + jacketEnergyRec);

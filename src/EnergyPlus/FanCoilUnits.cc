@@ -663,6 +663,7 @@ namespace FanCoilUnits {
                 ShowContinueError("specified in " + CurrentModuleObject + " = \"" + FanCoil(FanCoilNum).Name + "\".");
                 ErrorsFound = true;
             } else {
+
                 if (!UtilityRoutines::SameString(FanCoil(FanCoilNum).FanType, "Fan:SystemModel")) {
                     GetFanType(FanCoil(FanCoilNum).FanName, FanCoil(FanCoilNum).FanType_Num, errFlag, CurrentModuleObject, FanCoil(FanCoilNum).Name);
                     {

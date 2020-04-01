@@ -664,6 +664,7 @@ namespace PondGroundHeatExchanger {
         //   Rejecter With Closed-Loop Ground-Source Heat Pump Systems.
         //   ASHRAE Transactions.  106(2):107-121.
 
+
         Real64 CalcSolarFlux; // Function return variable
 
         Real64 const WaterRefIndex(1.33); // refractive index of water

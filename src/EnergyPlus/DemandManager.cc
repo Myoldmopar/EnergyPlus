@@ -663,6 +663,7 @@ namespace DemandManager {
         using DataHeatBalance::Lights;
         using DataHeatBalance::LightsObjects;
         using DataHeatBalance::ZoneElectric;
+
         using DataHeatBalance::ZoneElectricObjects;
         using DataZoneControls::TempControlledZone;
         using DataZoneControls::TStatObjects;

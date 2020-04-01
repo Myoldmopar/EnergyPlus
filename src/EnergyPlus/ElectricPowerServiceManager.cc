@@ -663,6 +663,7 @@ ElectPowerLoadCenter::ElectPowerLoadCenter( // constructor
         if (!DataIPShortCuts::lAlphaFieldBlanks(3)) {
             // Load the Generator Control Operation Scheme
             if (UtilityRoutines::SameString(DataIPShortCuts::cAlphaArgs(3), "Baseload")) {
+
                 genOperationScheme_ = GeneratorOpScheme::baseLoad;
             } else if (UtilityRoutines::SameString(DataIPShortCuts::cAlphaArgs(3), "DemandLimit")) {
                 genOperationScheme_ = GeneratorOpScheme::demandLimit;

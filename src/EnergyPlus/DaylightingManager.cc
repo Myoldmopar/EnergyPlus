@@ -663,6 +663,7 @@ namespace DaylightingManager {
                 THSUNHR = 0.0;
                 GILSK = 0.0;
                 GILSU = 0.0;
+
                 for (IHR = 1; IHR <= 24; ++IHR) {
                     if (SUNCOSHR(IHR, 3) < SunIsUpValue) continue; // Skip if sun is below horizon //Autodesk SUNCOSHR was uninitialized here
                     PHSUN = PiOvr2 - std::acos(SUNCOSHR(IHR, 3));

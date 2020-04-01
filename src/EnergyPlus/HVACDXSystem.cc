@@ -663,6 +663,7 @@ namespace HVACDXSystem {
 
             if (DataGlobals::DoCoilDirectSolutions && DXCoolingSystem(DXCoolSysNum).CoolingCoilType_Num == CoilDX_CoolingSingleSpeed) {
                 DXCoils::DisableLatentDegradation(DXCoolingSystem(DXCoolSysNum).CoolingCoilIndex);
+
             }
 
         } // End of the DX System Loop

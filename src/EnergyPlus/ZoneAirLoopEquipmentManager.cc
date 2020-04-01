@@ -663,6 +663,7 @@ namespace ZoneAirLoopEquipmentManager {
                     SimulateDualDuct(AirDistUnit(AirDistUnitNum).EquipName(AirDistCompNum),
                                      FirstHVACIteration,
                                      ActualZoneNum,
+
                                      ZoneEquipConfig(ControlledZoneNum).ZoneNode,
                                      AirDistUnit(AirDistUnitNum).EquipIndex(AirDistCompNum));
 

@@ -663,6 +663,7 @@ namespace PurchasedAirManager {
                 PurchAir(PurchAirNum).OASenCoolEnergy = 0.0;
                 PurchAir(PurchAirNum).OALatCoolEnergy = 0.0;
                 PurchAir(PurchAirNum).OATotCoolEnergy = 0.0;
+
                 PurchAir(PurchAirNum).HtRecSenHeatEnergy = 0.0;
                 PurchAir(PurchAirNum).HtRecLatHeatEnergy = 0.0;
                 PurchAir(PurchAirNum).HtRecTotHeatEnergy = 0.0;

@@ -663,6 +663,7 @@ namespace LowTempRadiantSystem {
                         ErrorsFound = true;
                     }
                 } else {
+
                     ShowSevereError(CurrentModuleObject + " = " + HydrRadSys(Item).Name);
                     ShowContinueError("Input for " + cAlphaFields(6) + " = " + Alphas(6));
                     ShowContinueError("Blank field not allowed for " + cNumericFields(5));

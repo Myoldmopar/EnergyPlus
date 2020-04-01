@@ -664,6 +664,7 @@ namespace CoolingPanelSimple {
             ShowFatalError(RoutineName + cCMO_CoolingPanel_Simple + "Errors found getting input. Program terminates.");
         }
 
+
         // Setup Report variables for the Coils
         for (CoolingPanelNum = 1; CoolingPanelNum <= NumCoolingPanels; ++CoolingPanelNum) {
             // CurrentModuleObject='ZoneHVAC:CoolingPanel:RadiantConvective:Water'

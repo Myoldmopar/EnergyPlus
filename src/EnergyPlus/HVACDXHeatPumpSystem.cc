@@ -663,6 +663,7 @@ namespace HVACDXHeatPumpSystem {
         HPTimeConstant = 0.0;
         FanDelayTime = 0.0;
         OnOffAirFlowRatio = 1.0;
+
         TempSpeedOut = 0.0;
         TempSpeedReqst = 0.0;
         NumOfSpeeds = 0;

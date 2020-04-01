@@ -664,6 +664,7 @@ namespace SurfaceGroundHeatExchanger {
         using DataPlant::PlantLoop;
         using General::TrimSigDigits;
 
+
         // Locals
         // SUBROUTINE ARGUMENT DEFINITIONS:
         // INTEGER, INTENT(IN) :: FlowLock             ! flow initialization/condition flag    !DSU

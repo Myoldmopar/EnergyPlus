@@ -663,6 +663,7 @@ namespace FluidProperties {
                 RefrigData(NumOfRefrigerants).Name = FluidNames(Loop).Name;
                 RefrigErrorTracking(NumOfRefrigerants).Name = FluidNames(Loop).Name;
             } else if (FluidNames(Loop).IsGlycol) {
+
                 ++NumOfGlycols;
                 GlyRawData(NumOfGlycols).Name = FluidNames(Loop).Name;
             }

@@ -663,6 +663,7 @@ namespace BaseboardRadiator {
                                    DataGlobals::HWInitConvTemp,
                                    PlantLoop(Baseboard(BaseboardNum).LoopNum).FluidIndex,
                                    RoutineName);
+
             Baseboard(BaseboardNum).WaterMassFlowRateMax = rho * Baseboard(BaseboardNum).WaterVolFlowRateMax;
             InitComponentNodes(0.0,
                                Baseboard(BaseboardNum).WaterMassFlowRateMax,

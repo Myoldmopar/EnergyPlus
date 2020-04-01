@@ -663,6 +663,7 @@ namespace CostEstimateManager {
                         thisCoil = UtilityRoutines::FindItem(CostLineItem(Item).ParentObjName, DXCoil);
                     }
 
+
                     if (CostLineItem(Item).PerKiloWattCap > 0.0) {
                         if (WildcardObjNames) {
                             Real64 Qty(0.0);

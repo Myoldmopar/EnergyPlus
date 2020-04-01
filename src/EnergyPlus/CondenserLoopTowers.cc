@@ -663,6 +663,7 @@ namespace CondenserLoopTowers {
                                           IOStat,
                                           _,
                                           lAlphaFieldBlanks,
+
                                           cAlphaFieldNames,
                                           cNumericFieldNames);
             GlobalNames::VerifyUniqueInterObjectName(UniqueSimpleTowerNames, AlphArray(1), cCurrentModuleObject, cAlphaFieldNames(1), ErrorsFound);

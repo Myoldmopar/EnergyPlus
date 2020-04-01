@@ -663,6 +663,7 @@ namespace OutputReportPredefined {
     // peak heating
     int pdstSHGSpkHt;
     int pdchSHGSHtTimePeak;
+
     int pdchSHGSHtHvacHt;
     int pdchSHGSHtHvacCl;
     int pdchSHGSHtHvacATUHt;

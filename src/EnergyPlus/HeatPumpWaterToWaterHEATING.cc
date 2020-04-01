@@ -663,6 +663,7 @@ namespace HeatPumpWaterToWaterHEATING {
             // if there's no flow, turn the "heat pump off"
             if (this->LoadSideWaterMassFlowRate < MassFlowTolerance || this->SourceSideWaterMassFlowRate < MassFlowTolerance) {
                 this->LoadSideWaterMassFlowRate = 0.0;
+
                 SetComponentFlowRate(this->LoadSideWaterMassFlowRate,
                                      this->LoadSideInletNodeNum,
                                      this->LoadSideOutletNodeNum,

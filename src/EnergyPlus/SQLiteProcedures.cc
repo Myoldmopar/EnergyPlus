@@ -664,6 +664,7 @@ void SQLite::initializeNominalGasEquipmentTable()
 
     sqliteExecuteCommand(nominalGasEquipmentTableSQL);
 
+
     const std::string nominalGasEquipmentInsertSQL = "INSERT INTO NominalGasEquipment VALUES(?,?,?,?,?,?,?,?,?,?);";
 
     sqlitePrepareStatement(m_nominalGasEquipmentInsertStmt, nominalGasEquipmentInsertSQL);

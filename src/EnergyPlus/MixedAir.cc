@@ -663,6 +663,7 @@ namespace MixedAir {
                     // get water coil and controller data if not called previously
                     if (CompIndex == 0) SimulateWaterCoilComponents(CompName, FirstHVACIteration, CompIndex);
                     // iterate on OA sys controller and water coil at the same time
+
                     SolveWaterCoilController(FirstHVACIteration,
                                              AirLoopNum,
                                              CompName,

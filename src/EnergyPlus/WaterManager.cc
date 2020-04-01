@@ -663,6 +663,7 @@ namespace WaterManager {
                         InternalSetupTankDemandComponent(WaterStorage(Item).Name,
                                                          cCurrentModuleObject,
                                                          WaterStorage(Item).SupplyTankName,
+
                                                          ErrorsFound,
                                                          WaterStorage(Item).SupplyTankID,
                                                          WaterStorage(Item).SupplyTankDemandARRID);

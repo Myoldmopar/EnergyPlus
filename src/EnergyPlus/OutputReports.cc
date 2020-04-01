@@ -663,6 +663,7 @@ void DXFOut(std::string &PolygonAction,
                     ObjexxFCL::gio::write(unit, Format_705) << Surface(surf).Vertex(vv2).x << Surface(surf).Vertex(vv2).y << Surface(surf).Vertex(vv2).z;
                 }
                 mytriangles.deallocate();
+
             }
         }
     }

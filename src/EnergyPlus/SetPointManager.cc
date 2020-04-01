@@ -663,6 +663,7 @@ namespace SetPointManager {
 
         cCurrentModuleObject = "SetpointManager:SingleZone:Humidity:Maximum";
         NumSZMaxHumSetPtMgrs = inputProcessor->getNumObjectsFound(cCurrentModuleObject); // 'SetpointManager:SingleZone:Humidity:Maximum'
+
         inputProcessor->getObjectDefMaxArgs(cCurrentModuleObject, NumParams, NumAlphas, NumNums);
         MaxNumNumbers = max(MaxNumNumbers, NumNums);
         MaxNumAlphas = max(MaxNumAlphas, NumAlphas);

@@ -663,6 +663,7 @@ namespace HeatBalanceSurfaceManager {
                     iReadStatus = 0;
                     while (!bEndofErrFile && iwriteStatus == 0 && iReadStatus == 0) {
                         {
+
                             IOFlags flags;
                             ObjexxFCL::gio::read(iDElightErrorFile, fmtLD, flags) >> dRefPtIllum;
                             iReadStatus = flags.ios();

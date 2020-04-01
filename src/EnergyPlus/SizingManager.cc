@@ -663,6 +663,7 @@ namespace SizingManager {
                                      Zone(ZoneNum).TotOccupants,
                                      FinalZoneSizing(CtrlZoneNum).MinOA,
                                      DOASHeatGainRateAtClPk);
+
                     curName = FinalZoneSizing(CtrlZoneNum).ZoneName;
                     PreDefTableEntry(pdchZnClCalcDesLd, curName, CalcFinalZoneSizing(CtrlZoneNum).DesCoolLoad);
                     PreDefTableEntry(pdchZnClUserDesLd, curName, FinalZoneSizing(CtrlZoneNum).DesCoolLoad);

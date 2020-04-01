@@ -663,6 +663,7 @@ namespace PluginManagement {
         PyObject *pModuleDict = PyModule_GetDict(this->pModule);
         if (!pModuleDict) {
             EnergyPlus::ShowSevereError("Failed to read module dictionary from module \"" + this->moduleName + "\"");
+
             if (PyErr_Occurred()) {
                 PluginInstance::reportPythonError();
             } else {

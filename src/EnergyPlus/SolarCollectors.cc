@@ -663,6 +663,7 @@ namespace SolarCollectors {
 
             if (NumOfCollectors > 0) {
                 CheckEquipName.dimension(NumOfCollectors, true);
+
             }
         }
     }

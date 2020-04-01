@@ -663,6 +663,7 @@ namespace WaterThermalTanks {
                 int SchIndex;
                 if (Tank.HeatPumpNum > 0) {
                     SchIndex = HPWaterHeater(Tank.HeatPumpNum).SetPointTempSchedule;
+
                 } else if (Tank.DesuperheaterNum > 0) {
                     SchIndex = WaterHeaterDesuperheater(Tank.DesuperheaterNum).SetPointTempSchedule;
                 } else {

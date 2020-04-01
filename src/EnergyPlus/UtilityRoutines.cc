@@ -663,6 +663,7 @@ int AbortEnergyPlus()
 
     if (ResultsFramework::OutputSchema->timeSeriesAndTabularEnabled()) {
         ResultsFramework::OutputSchema->WriteReport();
+
     }
 
 #ifdef EP_Detailed_Timings

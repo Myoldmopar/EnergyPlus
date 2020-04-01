@@ -663,6 +663,7 @@ namespace HeatBalanceHAMTManager {
                                           cNumericFieldNames);
 
             vtcsid = UtilityRoutines::FindItemInList(AlphaArray(1), Surface);
+
             if (vtcsid == 0) {
                 ShowSevereError(cHAMTObject7 + ' ' + cAlphaFieldNames(1) + "=\"" + AlphaArray(1) + "\" is invalid (undefined).");
                 ShowContinueError("The basic material must be defined in addition to specifying HeatAndMoistureTransfer properties.");

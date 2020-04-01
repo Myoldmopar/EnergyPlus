@@ -663,6 +663,7 @@ namespace VariableSpeedCoils {
                     ErrorsFound |= CurveManager::CheckCurveDims(VarSpeedCoil(DXCoilNum).MSCCapAirFFlow(I), // Curve index
                                                                 {1},                                       // Valid dimensions
                                                                 RoutineName,                               // Routine name
+
                                                                 CurrentModuleObject,                       // Object Type
                                                                 VarSpeedCoil(DXCoilNum).Name,              // Object Name
                                                                 cAlphaFields(AlfaFieldIncre));             // Field Name

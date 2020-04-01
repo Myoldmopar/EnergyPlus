@@ -663,6 +663,7 @@ namespace HeatBalFiniteDiffManager {
         Real64 DeltaTimestep;      // zone timestep in seconds, for local check of properties
         Real64 ThicknessThreshold; // min thickness consistent with other thermal properties, for local check
 
+
         ConstructFD.allocate(TotConstructs);
         SigmaR.allocate(TotConstructs);
         SigmaC.allocate(TotConstructs);

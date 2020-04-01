@@ -663,6 +663,7 @@ namespace PlantCondLoopOperation {
         UniqueNames.reserve(NumSchemeLists);
         Count = 0;
         for (Num = 1; Num <= NumSchemeLists; ++Num) {
+
             if (Num <= PELists) {
                 CurrentModuleObject = "PlantEquipmentList";
                 Count = Num;

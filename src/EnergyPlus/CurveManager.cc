@@ -663,6 +663,7 @@ namespace CurveManager {
                                           Alphas,
                                           NumAlphas,
                                           Numbers,
+
                                           NumNumbers,
                                           IOStatus,
                                           lNumericFieldBlanks,
