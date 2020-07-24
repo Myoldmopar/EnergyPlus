@@ -101,6 +101,8 @@ function( ADD_SIMULATION_TEST )
    set( ENERGYPLUS_FLAGS "${ADD_SIM_TEST_ENERGYPLUS_FLAGS} -D" )
   endif()
 
+  set( ENERGYPLUS_FLAGS "${ENERGYPLUS_FLAGS} -c")
+
   # Add -r flag if BUILD_FORTRAN is on, regardless of whether we run regression/performance tests
   # So that it'll produce the CSV output automatically for convenience
   if (BUILD_FORTRAN)

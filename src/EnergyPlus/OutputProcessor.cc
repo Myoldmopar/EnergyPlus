@@ -5546,6 +5546,12 @@ void SetupOutputVariable(std::string const &VariableName,           // String Na
     static bool ErrorsFound(false); // True if Errors Found
     int localIndexGroupKey;
 
+    std::filebuf fb;
+    fb.open("output_vars.csv", std::ios::app);
+    std::ostream os(&fb);
+    os << VariableName << ',' << unitEnumToString(VariableUnit) << ',' << TimeStepTypeKey << ',' << KeyedValue << "\n";
+    fb.close();
+
     if (!OutputInitialized) InitializeOutput();
 
     // Variable name without units
@@ -5783,6 +5789,12 @@ void SetupOutputVariable(std::string const &VariableName,           // String Na
     int localIndexGroupKey;
     int Loop;
     ReportingFrequency RepFreq(ReportingFrequency::Hourly);
+
+    std::filebuf fb;
+    fb.open("output_vars.csv", std::ios::app);
+    std::ostream os(&fb);
+    os << VariableName << ',' << unitEnumToString(VariableUnit) << ',' << TimeStepTypeKey << ',' << KeyedValue << "\n";
+    fb.close();
 
     if (!OutputInitialized) InitializeOutput();
 
