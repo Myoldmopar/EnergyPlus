@@ -162,7 +162,7 @@ namespace SimulationManager {
     using namespace DataSizing;
     using namespace DataSystemVariables;
     using namespace HeatBalanceManager;
-    using namespace WeatherManager;
+    using namespace Weather;
     using namespace ExternalInterface;
 
     // MODULE PARAMETER DEFINITIONS:
@@ -385,8 +385,7 @@ namespace SimulationManager {
             bool anyEMSRan;
             ManageEMS(state,
                       EMSManager::EMSCallFrom::SetupSimulation,
-                      anyEMSRan,
-                      ObjexxFCL::Optional_int_const()); // point to finish setup processing EMS, sensor ready now
+                      anyEMSRan); // point to finish setup processing EMS, sensor ready now
 
             ProduceRDDMDD(state);
 
@@ -407,7 +406,7 @@ namespace SimulationManager {
         GetInputForLifeCycleCost(state); // must be prior to WriteTabularReports -- do here before big simulation stuff.
 
         // check for variable latitude/location/etc
-        WeatherManager::ReadVariableLocationOrientation(state);
+        Weather::ReadVariableLocationOrientation(state);
 
         // if user requested HVAC Sizing Simulation, call HVAC sizing simulation manager
         if (state.dataGlobal->DoHVACSizingSimulation) {
@@ -480,7 +479,7 @@ namespace SimulationManager {
             HVACManager::ResetNodeData(state); // Reset here, because some zone calcs rely on node data (e.g. ZoneITEquip)
 
             bool anyEMSRan;
-            ManageEMS(state, EMSManager::EMSCallFrom::BeginNewEnvironment, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point
+            ManageEMS(state, EMSManager::EMSCallFrom::BeginNewEnvironment, anyEMSRan); // calling point
 
             while ((state.dataGlobal->DayOfSim < state.dataGlobal->NumOfDayInEnvrn) || (state.dataGlobal->WarmupFlag)) { // Begin day loop ...
                 if (state.dataGlobal->stopSimulation) break;
@@ -541,12 +540,12 @@ namespace SimulationManager {
                         }
 
                         if (AnyUnderwaterBoundaries) {
-                            WeatherManager::UpdateUnderwaterBoundaries(state);
+                            Weather::UpdateUnderwaterBoundaries(state);
                         }
 
                         if (state.dataEnvrn->varyingLocationSchedIndexLat > 0 || state.dataEnvrn->varyingLocationSchedIndexLong > 0 ||
                             state.dataEnvrn->varyingOrientationSchedIndex > 0) {
-                            WeatherManager::UpdateLocationAndOrientation(state);
+                            Weather::UpdateLocationAndOrientation(state);
                         }
 
                         state.dataGlobal->BeginTimeStepFlag = true;
@@ -576,7 +575,7 @@ namespace SimulationManager {
                         ManageHeatBalance(state);
 
                         if (oneTimeUnderwaterBoundaryCheck) {
-                            AnyUnderwaterBoundaries = WeatherManager::CheckIfAnyUnderwaterBoundaries(state);
+                            AnyUnderwaterBoundaries = Weather::CheckIfAnyUnderwaterBoundaries(state);
                             oneTimeUnderwaterBoundaryCheck = false;
                         }
 

@@ -577,7 +577,7 @@ void KivaManager::readWeatherData(EnergyPlusData &state)
         if (WeatherDataLine.eof) {
             break;
         }
-        WeatherManager::InterpretWeatherDataLine(state,
+        Weather::InterpretWeatherDataLine(state,
                                                  WeatherDataLine.data,
                                                  ErrorFound,
                                                  WYear,

@@ -69,7 +69,7 @@ namespace EnergyPlus {
 class BaseGroundTempsModel;
 struct EnergyPlusData;
 
-namespace WeatherManager {
+namespace Weather {
 
     // Following are Date Types read in from EPW file or IDF
     enum class DateType
@@ -248,8 +248,8 @@ namespace WeatherManager {
         bool actualWeather = false;           // true when using actual weather data
     };
 
-    struct DayWeatherVariables // Derived Type for Storing Weather "Header" Data
-    {
+    // Derived Type for Storing Weather "Header" Data
+    struct DayWeatherVariables {
         // Members
         int DayOfYear = 0;              // Day of year for weather data
         int DayOfYear_Schedule = 0;     // Day of year in schedule
@@ -268,7 +268,7 @@ namespace WeatherManager {
     {
         // Members
         std::string Name;                  // Name
-        WeatherManager::DateType DateType = DateType::InvalidDate; // Date type as read in from IDF
+        DateType dateType = DateType::InvalidDate; // Date type as read in from IDF
         int Month = 0;                         // Start Month
         int Day = 0;                           // Start Day of month or Count for DateTypes=NthDayOfMonth
         int WeekDay = 0;                       // For Date types=NthDayOfMonth and LastDayOfMonth
@@ -743,7 +743,7 @@ struct WeatherManagerData : BaseGlobalStruct
     Array1D<Real64> GroundReflectances;         // User Specified Ground Reflectances !EPTeam: Using DP causes big diffs NOLINT(cert-err58-cpp)
     Real64 SnowGndRefModifier;                  // Modifier to ground reflectance during snow
     Real64 SnowGndRefModifierForDayltg;         // Modifier to ground reflectance during snow for daylighting
-    WeatherManager::WaterMainsTempCalcMethod WaterMainsTempsMethod; // Water mains temperature calculation method
+    Weather::WaterMainsTempCalcMethod WaterMainsTempsMethod; // Water mains temperature calculation method
     int WaterMainsTempsSchedule;                                    // Water mains temperature schedule
     Real64 WaterMainsTempsAnnualAvgAirTemp;                         // Annual average outdoor air temperature (C)
     Real64 WaterMainsTempsMaxDiffAirTemp;                           // Maximum difference in monthly average outdoor air temperatures (deltaC)
@@ -846,49 +846,49 @@ struct WeatherManagerData : BaseGlobalStruct
 
     // Object Data
     // NOLINTNEXTLINE(cert-err58-cpp)
-    WeatherManager::DayWeatherVariables
+    Weather::DayWeatherVariables
         TodayVariables; // Today's daily weather variables | Derived Type for Storing Weather "Header" Data | Day of year for weather
                         // data | Year of weather data | Month of weather data | Day of month for weather data | Day of week for
                         // weather data | Daylight Saving Time Period indicator (0=no,1=yes) | Holiday indicator (0=no holiday,
                         // non-zero=holiday type) | Sine of the solar declination angle | Cosine of the solar declination angle |
                         // Value of the equation of time formula
     // NOLINTNEXTLINE(cert-err58-cpp)
-    WeatherManager::DayWeatherVariables
+    Weather::DayWeatherVariables
         TomorrowVariables; // Tomorrow's daily weather variables | Derived Type for Storing Weather "Header" Data | Day of year for
                            // weather data | Year of weather data | Month of weather data | Day of month for weather data | Day of
                            // week for weather data | Daylight Saving Time Period indicator (0=no,1=yes) | Holiday indicator (0=no
                            // holiday, non-zero=holiday type) | Sine of the solar declination angle | Cosine of the solar declination
                            // angle | Value of the equation of time formula
     // NOLINTNEXTLINE(cert-err58-cpp)
-    EPVector<WeatherManager::DayWeatherVariables> DesignDay; // Design day environments
+    EPVector<Weather::DayWeatherVariables> DesignDay; // Design day environments
     // NOLINTNEXTLINE(cert-err58-cpp)
-    WeatherManager::MissingData Missing; // Dry Bulb Temperature (C) | Dew Point Temperature (C) | Relative Humidity (%) | Atmospheric Pressure (Pa) |
+    Weather::MissingData Missing; // Dry Bulb Temperature (C) | Dew Point Temperature (C) | Relative Humidity (%) | Atmospheric Pressure (Pa) |
                                          // Wind Direction (deg) | Wind Speed/Velocity (m/s) | Total Sky Cover (tenths) | Opaque Sky Cover (tenths) |
                                          // Visibility (km) | Ceiling Height (m) | Precipitable Water (mm) | Aerosol Optical Depth | Snow Depth (cm) |
                                          // Number of Days since last snow | Albedo | Rain/Liquid Precipitation (mm)
-    WeatherManager::MissingDataCounts Missed;              // NOLINT(cert-err58-cpp)
-    WeatherManager::RangeDataCounts OutOfRange;            // NOLINT(cert-err58-cpp)
-    EPVector<WeatherManager::DesignDayData> DesDayInput;   // Design day Input Data NOLINT(cert-err58-cpp)
-    Array1D<WeatherManager::EnvironmentData> Environment;  // Environment data NOLINT(cert-err58-cpp)
-    Array1D<WeatherManager::RunPeriodData> RunPeriodInput; // NOLINT(cert-err58-cpp)
+    Weather::MissingDataCounts Missed;              // NOLINT(cert-err58-cpp)
+    Weather::RangeDataCounts OutOfRange;            // NOLINT(cert-err58-cpp)
+    EPVector<Weather::DesignDayData> DesDayInput;   // Design day Input Data NOLINT(cert-err58-cpp)
+    Array1D<Weather::EnvironmentData> Environment;  // Environment data NOLINT(cert-err58-cpp)
+    Array1D<Weather::RunPeriodData> RunPeriodInput; // NOLINT(cert-err58-cpp)
     std::unordered_map<std::string, std::string> RunPeriodInputUniqueNames;
-    EPVector<WeatherManager::RunPeriodData> RunPeriodDesignInput; // NOLINT(cert-err58-cpp)
+    EPVector<Weather::RunPeriodData> RunPeriodDesignInput; // NOLINT(cert-err58-cpp)
     std::unordered_map<std::string, std::string> RunPeriodDesignInputUniqueNames;
-    EPVector<WeatherManager::TypicalExtremeData> TypicalExtremePeriods; // NOLINT(cert-err58-cpp)
-    WeatherManager::DaylightSavingPeriodData EPWDST;                    // Daylight Saving Period Data from EPW file NOLINT(cert-err58-cpp)
-    WeatherManager::DaylightSavingPeriodData IDFDST;                    // Daylight Saving Period Data from IDF file NOLINT(cert-err58-cpp)
-    WeatherManager::DaylightSavingPeriodData DST;                       // Daylight Saving Period Data, if active NOLINT(cert-err58-cpp)
-    EPVector<WeatherManager::WeatherProperties> WPSkyTemperature;       // NOLINT(cert-err58-cpp)
-    EPVector<WeatherManager::SpecialDayData> SpecialDays;               // NOLINT(cert-err58-cpp)
-    EPVector<WeatherManager::DataPeriodData> DataPeriods;               // NOLINT(cert-err58-cpp)
+    EPVector<Weather::TypicalExtremeData> TypicalExtremePeriods; // NOLINT(cert-err58-cpp)
+    Weather::DaylightSavingPeriodData EPWDST;                    // Daylight Saving Period Data from EPW file NOLINT(cert-err58-cpp)
+    Weather::DaylightSavingPeriodData IDFDST;                    // Daylight Saving Period Data from IDF file NOLINT(cert-err58-cpp)
+    Weather::DaylightSavingPeriodData DST;                       // Daylight Saving Period Data, if active NOLINT(cert-err58-cpp)
+    EPVector<Weather::WeatherProperties> WPSkyTemperature;       // NOLINT(cert-err58-cpp)
+    EPVector<Weather::SpecialDayData> SpecialDays;               // NOLINT(cert-err58-cpp)
+    EPVector<Weather::DataPeriodData> DataPeriods;               // NOLINT(cert-err58-cpp)
 
     std::shared_ptr<BaseGroundTempsModel> siteShallowGroundTempsPtr;
     std::shared_ptr<BaseGroundTempsModel> siteBuildingSurfaceGroundTempsPtr;
     std::shared_ptr<BaseGroundTempsModel> siteFCFactorMethodGroundTempsPtr;
     std::shared_ptr<BaseGroundTempsModel> siteDeepGroundTempsPtr;
 
-    std::vector<WeatherManager::UnderwaterBoundary> underwaterBoundaries;
-    WeatherManager::AnnualMonthlyDryBulbWeatherData OADryBulbAverage; // processes outside air drybulb temperature
+    std::vector<Weather::UnderwaterBoundary> underwaterBoundaries;
+    Weather::AnnualMonthlyDryBulbWeatherData OADryBulbAverage; // processes outside air drybulb temperature
 
     // SetCurrentWeather static vars
     int NextHour;
@@ -1032,12 +1032,12 @@ struct WeatherManagerData : BaseGlobalStruct
         this->DatesShouldBeReset = false;
         this->StartDatesCycleShouldBeReset = false; // True when start dates on repeat should be reset
         this->Jan1DatesShouldBeReset = false;       // True if Jan 1 should signal reset of dates
-        this->TodayVariables = WeatherManager::DayWeatherVariables();
-        this->TomorrowVariables = WeatherManager::DayWeatherVariables();
+        this->TodayVariables = Weather::DayWeatherVariables();
+        this->TomorrowVariables = Weather::DayWeatherVariables();
         this->DesignDay.deallocate();
-        this->Missing = WeatherManager::MissingData();
-        this->Missed = WeatherManager::MissingDataCounts();
-        this->OutOfRange = WeatherManager::RangeDataCounts();
+        this->Missing = Weather::MissingData();
+        this->Missed = Weather::MissingDataCounts();
+        this->OutOfRange = Weather::RangeDataCounts();
         this->DesDayInput.deallocate(); // Design day Input Data
         this->Environment.deallocate(); // Environment data
         this->RunPeriodInput.deallocate();
@@ -1046,29 +1046,29 @@ struct WeatherManagerData : BaseGlobalStruct
         this->RunPeriodDesignInputUniqueNames.clear();
         this->TypicalExtremePeriods.deallocate();
 
-        this->EPWDST.StDateType = WeatherManager::DateType::InvalidDate;
+        this->EPWDST.StDateType = Weather::DateType::InvalidDate;
         this->EPWDST.StWeekDay = 0;
         this->EPWDST.StMon = 0;
         this->EPWDST.StDay = 0;
-        this->EPWDST.EnDateType = WeatherManager::DateType::InvalidDate;
+        this->EPWDST.EnDateType = Weather::DateType::InvalidDate;
         this->EPWDST.EnMon = 0;
         this->EPWDST.EnDay = 0;
         this->EPWDST.EnWeekDay = 0;
 
-        this->IDFDST.StDateType = WeatherManager::DateType::InvalidDate;
+        this->IDFDST.StDateType = Weather::DateType::InvalidDate;
         this->IDFDST.StWeekDay = 0;
         this->IDFDST.StMon = 0;
         this->IDFDST.StDay = 0;
-        this->IDFDST.EnDateType = WeatherManager::DateType::InvalidDate;
+        this->IDFDST.EnDateType = Weather::DateType::InvalidDate;
         this->IDFDST.EnMon = 0;
         this->IDFDST.EnDay = 0;
         this->IDFDST.EnWeekDay = 0;
 
-        this->DST.StDateType = WeatherManager::DateType::InvalidDate;
+        this->DST.StDateType = Weather::DateType::InvalidDate;
         this->DST.StWeekDay = 0;
         this->DST.StMon = 0;
         this->DST.StDay = 0;
-        this->DST.EnDateType = WeatherManager::DateType::InvalidDate;
+        this->DST.EnDateType = Weather::DateType::InvalidDate;
         this->DST.EnMon = 0;
         this->DST.EnDay = 0;
         this->DST.EnWeekDay = 0;

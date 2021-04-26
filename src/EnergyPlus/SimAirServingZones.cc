@@ -7101,7 +7101,7 @@ void UpdateSysSizing(EnergyPlusData &state, DataGlobalConstants::CallIndicator c
 
             // EMS calling point to customize system sizing results
             bool anyEMSRan;
-            ManageEMS(state, EMSManager::EMSCallFrom::SystemSizing, anyEMSRan, ObjexxFCL::Optional_int_const());
+            ManageEMS(state, EMSManager::EMSCallFrom::SystemSizing, anyEMSRan);
 
             // EMS override point
             if (state.dataGlobal->AnyEnergyManagementSystemInModel) {

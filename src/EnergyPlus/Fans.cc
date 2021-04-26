@@ -1039,7 +1039,7 @@ void GetFanInput(EnergyPlusData &state)
     }
 
     bool anyRan;
-    ManageEMS(state, EMSManager::EMSCallFrom::ComponentGetInput, anyRan, ObjexxFCL::Optional_int_const());
+    ManageEMS(state, EMSManager::EMSCallFrom::ComponentGetInput, anyRan);
     state.dataFans->MySizeFlag.dimension(state.dataFans->NumFans, true);
 }
 

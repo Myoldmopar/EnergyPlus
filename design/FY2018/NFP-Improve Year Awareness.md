@@ -18,7 +18,7 @@ EnergyPlus already handles dates correctly when asked to by the user, this work 
 
 2. RunPeriod Consolidation: **RunPeriod** and **RunPeriod:CustomRange** will be combined into a single object that fully specifies dates. The table below gives the details on what will be added or removed from RunPeriod. See Appendix A for the new RunPeriod IDD.
 
-3. Time Consolidation: Date and time tracking and updating is now currently spread across at least three namespaces (DataEnvironment, WeatherManager, and SimulationManager). While this does present some maintenance issues, it will also be an impediment to OO conversion. Where possible, time tracking should be consolidated.
+3. Time Consolidation: Date and time tracking and updating is now currently spread across at least three namespaces (DataEnvironment, Weather, and SimulationManager). While this does present some maintenance issues, it will also be an impediment to OO conversion. Where possible, time tracking should be consolidated.
 
 4. Schedule Additions (Delayed): Currently, multiyear simulations repeat the same single year schedule, which is unlikely to a problem for many multiyear simulations. However, there are situations where schedules might change from year to year (e.g. school occupancy schedules) and some calibration studies might require more flexibility (e.g. efficiency measures applied partway through a calibration data set). In these situations, it is necessary to provide some way for users to have multiyear schedules. Currently, EnergyPlus translates all schedules into a single "Year Schedule" container. This makes it difficult to directly support multiyear schedules. For true multiyear simulations, this will need to be addressed.
 

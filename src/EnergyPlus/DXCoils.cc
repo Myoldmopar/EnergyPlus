@@ -6405,21 +6405,8 @@ void GetDXCoils(EnergyPlusData &state)
                              state.dataDXCoils->DXCoil(DXCoilNum).RatedTotCapEMSOverrideValue(1));
         }
     }
-    Alphas.deallocate();
-    cAlphaFields.deallocate();
-    cNumericFields.deallocate();
-    Numbers.deallocate();
-    lAlphaBlanks.deallocate();
-    lNumericBlanks.deallocate();
-
-    Alphas2.deallocate();
-    cAlphaFields2.deallocate();
-    cNumericFields2.deallocate();
-    Numbers2.deallocate();
-    lAlphaBlanks2.deallocate();
-    lNumericBlanks2.deallocate();
     bool anyEMSRan;
-    ManageEMS(state, EMSManager::EMSCallFrom::ComponentGetInput, anyEMSRan, ObjexxFCL::Optional_int_const());
+    ManageEMS(state, EMSManager::EMSCallFrom::ComponentGetInput, anyEMSRan);
 }
 
 void InitDXCoil(EnergyPlusData &state, int const DXCoilNum) // number of the current DX coil unit being simulated

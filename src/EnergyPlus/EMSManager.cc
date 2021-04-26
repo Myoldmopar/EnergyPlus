@@ -227,7 +227,7 @@ namespace EMSManager {
     void ManageEMS(EnergyPlusData &state,
                    EMSCallFrom const iCalledFrom,         // indicates where subroutine was called from, parameters in DataGlobals.
                    bool &anyProgramRan,                   // true if any Erl programs ran for this call
-                   Optional_int_const ProgramManagerToRun // specific program manager to run
+                   int const ProgramManagerToRun // specific program manager to run
     )
     {
 
@@ -300,7 +300,7 @@ namespace EMSManager {
                 }
             }
         } else { // call specific program manager
-            if (present(ProgramManagerToRun)) {
+            if (ProgramManagerToRun > 0) {
                 for (ErlProgramNum = 1; ErlProgramNum <= state.dataRuntimeLang->EMSProgramCallManager(ProgramManagerToRun).NumErlPrograms;
                      ++ErlProgramNum) {
                     EvaluateStack(state, state.dataRuntimeLang->EMSProgramCallManager(ProgramManagerToRun).ErlProgramARR(ErlProgramNum));

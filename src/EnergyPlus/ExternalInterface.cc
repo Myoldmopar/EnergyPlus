@@ -849,7 +849,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
     // If we have Erl variables, we need to call ManageEMS so that they get updated in the Erl data structure
     if (state.dataExternalInterface->useEMS) {
         bool anyRan;
-        ManageEMS(state, EMSManager::EMSCallFrom::ExternalInterface, anyRan, ObjexxFCL::Optional_int_const());
+        ManageEMS(state, EMSManager::EMSCallFrom::ExternalInterface, anyRan);
     }
 
     state.dataExternalInterface->FirstCallGetSetDoStep = false;
@@ -2448,7 +2448,7 @@ void CalcExternalInterface(EnergyPlusData &state)
     // If we have Erl variables, we need to call ManageEMS so that they get updated in the Erl data structure
     if (state.dataExternalInterface->useEMS) {
         bool anyRan;
-        ManageEMS(state, EMSManager::EMSCallFrom::ExternalInterface, anyRan, ObjexxFCL::Optional_int_const());
+        ManageEMS(state, EMSManager::EMSCallFrom::ExternalInterface, anyRan);
     }
 
     state.dataExternalInterface->firstCall = false; // bug fix causing external interface to send zero at the beginning of sim, Thierry Nouidui

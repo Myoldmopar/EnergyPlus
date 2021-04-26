@@ -353,7 +353,7 @@ int SizingLoggerFramework::SetupVariableSizingLog(EnergyPlusData &state, Real64 
 
 void SizingLoggerFramework::SetupSizingLogsNewEnvironment(EnergyPlusData &state)
 {
-    using namespace WeatherManager;
+    using namespace Weather;
 
     for (auto &l : logObjs) {
         l.SetupNewEnvironment(state.dataWeatherManager->Environment(state.dataWeatherManager->Envrn).SeedEnvrnNum, state.dataWeatherManager->Envrn);

@@ -95,7 +95,7 @@ namespace EnergyPlus::SizingManager {
 
 // Using/Aliasing
 using namespace HeatBalanceManager;
-using namespace WeatherManager;
+using namespace Weather;
 using namespace DataSizing;
 using DataStringGlobals::CharComma;
 using DataStringGlobals::CharSpace;
@@ -2115,7 +2115,7 @@ void DetermineSystemPopulationDiversity(EnergyPlusData &state)
     // now march through all zone timesteps for entire year to find the concurrent max
     int DaysInYear(366);  // assume leap year
     int dayOfWeekType(1); // assume year starts on Sunday
-    WeatherManager::CalcSpecialDayTypes(state);
+    Weather::CalcSpecialDayTypes(state);
     for (int DayLoop = 1; DayLoop <= DaysInYear; ++DayLoop) { // loop over all days in year
         state.dataEnvrn->HolidayIndex = state.dataWeatherManager->SpecialDayTypes(DayLoop);
         state.dataEnvrn->DayOfYear_Schedule = DayLoop;

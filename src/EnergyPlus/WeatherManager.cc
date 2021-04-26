@@ -88,7 +88,7 @@
 
 namespace EnergyPlus {
 
-namespace WeatherManager {
+namespace Weather {
 
     // MODULE INFORMATION:
     //       AUTHOR         Rick Strand
@@ -142,10 +142,7 @@ namespace WeatherManager {
         bool anyEMSRan = false;
         // Cannot call this during sizing, because EMS will not initialize properly until after simulation kickoff
         if (!state.dataGlobal->DoingSizing && !state.dataGlobal->KickOffSimulation) {
-            EMSManager::ManageEMS(state,
-                                  EMSManager::EMSCallFrom::BeginZoneTimestepBeforeSetCurrentWeather,
-                                  anyEMSRan,
-                                  ObjexxFCL::Optional_int_const()); // calling point
+            EMSManager::ManageEMS(state, EMSManager::EMSCallFrom::BeginZoneTimestepBeforeSetCurrentWeather, anyEMSRan);
         }
         SetCurrentWeather(state);
 
@@ -248,7 +245,7 @@ namespace WeatherManager {
             }
             state.dataSurface->OSCM(thisBoundary.OSCMIndex).TConv = curWaterTemp;
             state.dataSurface->OSCM(thisBoundary.OSCMIndex).HConv =
-                WeatherManager::calculateWaterBoundaryConvectionCoefficient(curWaterTemp, freeStreamVelocity, thisBoundary.distanceFromLeadingEdge);
+                Weather::calculateWaterBoundaryConvectionCoefficient(curWaterTemp, freeStreamVelocity, thisBoundary.distanceFromLeadingEdge);
             state.dataSurface->OSCM(thisBoundary.OSCMIndex).TRad = curWaterTemp;
             state.dataSurface->OSCM(thisBoundary.OSCMIndex).HRad = 0.0;
         }
@@ -1621,7 +1618,7 @@ namespace WeatherManager {
         state.dataWeatherManager->SpecialDayTypes = 0;
         for (int i = 1; i <= state.dataWeatherManager->NumSpecialDays; ++i) {
             if (state.dataWeatherManager->SpecialDays(i).WthrFile && !state.dataWeatherManager->UseSpecialDays) continue;
-            if (state.dataWeatherManager->SpecialDays(i).DateType <= DateType::MonthDay) {
+            if (state.dataWeatherManager->SpecialDays(i).dateType <= DateType::MonthDay) {
                 JDay = General::OrdinalDay(state.dataWeatherManager->SpecialDays(i).Month,
                                            state.dataWeatherManager->SpecialDays(i).Day,
                                            state.dataWeatherManager->LeapYearAdd);
@@ -1642,7 +1639,7 @@ namespace WeatherManager {
                                        state.dataWeatherManager->SpecialDays(i).ActStMon,
                                        state.dataWeatherManager->SpecialDays(i).ActStDay,
                                        state.dataWeatherManager->LeapYearAdd);
-            } else if (state.dataWeatherManager->SpecialDays(i).DateType == DateType::NthDayInMonth) {
+            } else if (state.dataWeatherManager->SpecialDays(i).dateType == DateType::NthDayInMonth) {
                 int ThisDay = state.dataWeatherManager->SpecialDays(i).WeekDay - MonWeekDay(state.dataWeatherManager->SpecialDays(i).Month) + 1;
                 if (state.dataWeatherManager->SpecialDays(i).WeekDay < MonWeekDay(state.dataWeatherManager->SpecialDays(i).Month)) {
                     ThisDay += 7;
@@ -6052,14 +6049,14 @@ namespace WeatherManager {
             DateType dateType;
             General::ProcessDateString(state, AlphArray(2), PMonth, PDay, PWeekDay, dateType, ErrorsFound);
             if (dateType == DateType::MonthDay) {
-                state.dataWeatherManager->SpecialDays(Count).DateType = dateType;
+                state.dataWeatherManager->SpecialDays(Count).dateType = dateType;
                 state.dataWeatherManager->SpecialDays(Count).Month = PMonth;
                 state.dataWeatherManager->SpecialDays(Count).Day = PDay;
                 state.dataWeatherManager->SpecialDays(Count).WeekDay = 0;
                 state.dataWeatherManager->SpecialDays(Count).CompDate = PMonth * 32 + PDay;
                 state.dataWeatherManager->SpecialDays(Count).WthrFile = false;
             } else if (dateType != DateType::InvalidDate) {
-                state.dataWeatherManager->SpecialDays(Count).DateType = dateType;
+                state.dataWeatherManager->SpecialDays(Count).dateType = dateType;
                 state.dataWeatherManager->SpecialDays(Count).Month = PMonth;
                 state.dataWeatherManager->SpecialDays(Count).Day = PDay;
                 state.dataWeatherManager->SpecialDays(Count).WeekDay = PWeekDay;
@@ -8124,7 +8121,7 @@ namespace WeatherManager {
         // File is positioned to the correct line, then backspaced.  This routine
         // reads in the line and processes as appropriate.
 
-        WeatherManager::DateType dateType;
+        Weather::DateType dateType;
         int NumHdArgs;
 
         // Strip off Header value from Line
@@ -8596,7 +8593,7 @@ namespace WeatherManager {
                                 // Process date
                                 General::ProcessDateString(state, Line.substr(0, Pos), PMonth, PDay, PWeekDay, dateType, ErrorsFound);
                                 if (dateType == DateType::MonthDay) {
-                                    state.dataWeatherManager->SpecialDays(CurCount).DateType = dateType;
+                                    state.dataWeatherManager->SpecialDays(CurCount).dateType = dateType;
                                     state.dataWeatherManager->SpecialDays(CurCount).Month = PMonth;
                                     state.dataWeatherManager->SpecialDays(CurCount).Day = PDay;
                                     state.dataWeatherManager->SpecialDays(CurCount).WeekDay = 0;
@@ -8605,7 +8602,7 @@ namespace WeatherManager {
                                     state.dataWeatherManager->SpecialDays(CurCount).DayType = 1;
                                     state.dataWeatherManager->SpecialDays(CurCount).WthrFile = true;
                                 } else if (dateType != DateType::InvalidDate) {
-                                    state.dataWeatherManager->SpecialDays(CurCount).DateType = dateType;
+                                    state.dataWeatherManager->SpecialDays(CurCount).dateType = dateType;
                                     state.dataWeatherManager->SpecialDays(CurCount).Month = PMonth;
                                     state.dataWeatherManager->SpecialDays(CurCount).Day = PDay;
                                     state.dataWeatherManager->SpecialDays(CurCount).WeekDay = PWeekDay;
@@ -9451,10 +9448,10 @@ namespace WeatherManager {
         // report site water mains temperature object user inputs and/or parameters calculated
         // from weather or stat file
 
-        std::map<WeatherManager::WaterMainsTempCalcMethod, std::string> const calcMethodMap{
-            {WeatherManager::WaterMainsTempCalcMethod::Schedule, "Schedule"},
-            {WeatherManager::WaterMainsTempCalcMethod::Correlation, "Correlation"},
-            {WeatherManager::WaterMainsTempCalcMethod::CorrelationFromWeatherFile, "CorrelationFromWeatherFile"}};
+        std::map<Weather::WaterMainsTempCalcMethod, std::string> const calcMethodMap{
+            {Weather::WaterMainsTempCalcMethod::Schedule, "Schedule"},
+            {Weather::WaterMainsTempCalcMethod::Correlation, "Correlation"},
+            {Weather::WaterMainsTempCalcMethod::CorrelationFromWeatherFile, "CorrelationFromWeatherFile"}};
 
         if (!state.files.eio.good()) {
             return;

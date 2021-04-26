@@ -1984,7 +1984,7 @@ void UpdateZoneSizing(EnergyPlusData &state, DataGlobalConstants::CallIndicator 
 
             // candidate EMS calling point to customize CalcFinalZoneSizing
             bool anyEMSRan;
-            ManageEMS(state, EMSManager::EMSCallFrom::ZoneSizing, anyEMSRan, ObjexxFCL::Optional_int_const());
+            ManageEMS(state, EMSManager::EMSCallFrom::ZoneSizing, anyEMSRan);
 
             // now apply EMS overrides (if any)
 

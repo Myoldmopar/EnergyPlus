@@ -223,13 +223,13 @@ void FiniteDiffGroundTempsModel::getWeatherData(EnergyPlusData &state)
     // RunPeriod is initialized to be one year of simulation
     // RunPeriodInput(TotRunPers).monWeekDay = 0; // Why do this?
 
-    WeatherManager::SetupEnvironmentTypes(state);
+    Weather::SetupEnvironmentTypes(state);
 
     // We reset the counter to the original number of run periods, so that GetNextEnvironment will fetch the one we added
     state.dataWeatherManager->Envrn = originalNumOfEnvn;
     Available = true;
     ErrorsFound = false;
-    WeatherManager::GetNextEnvironment(state, Available, ErrorsFound);
+    Weather::GetNextEnvironment(state, Available, ErrorsFound);
     if (ErrorsFound) {
         ShowFatalError(state, "Site:GroundTemperature:Undisturbed:FiniteDifference: error in reading weather file data");
     }
@@ -294,7 +294,7 @@ void FiniteDiffGroundTempsModel::getWeatherData(EnergyPlusData &state)
                     }
                 }
 
-                WeatherManager::ManageWeather(state);
+                Weather::ManageWeather(state);
 
                 outDryBulbTemp_num += state.dataEnvrn->OutDryBulbTemp;
                 airDensity_num += state.dataEnvrn->OutAirDensity;

@@ -243,7 +243,7 @@ void ManageHVAC(EnergyPlusData &state)
     FracTimeStepZone = TimeStepSys / state.dataGlobal->TimeStepZone;
 
     bool anyEMSRan;
-    ManageEMS(state, EMSManager::EMSCallFrom::BeginTimestepBeforePredictor, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point
+    ManageEMS(state, EMSManager::EMSCallFrom::BeginTimestepBeforePredictor, anyEMSRan); // calling point
 
     SetOutAirNodes(state);
 
@@ -385,8 +385,7 @@ void ManageHVAC(EnergyPlusData &state)
             OutputReportTabular::CalcHeatEmissionReport(state);
         }
 
-        ManageEMS(
-            state, EMSManager::EMSCallFrom::EndSystemTimestepBeforeHVACReporting, anyEMSRan, ObjexxFCL::Optional_int_const()); // EMS calling point
+        ManageEMS(state, EMSManager::EMSCallFrom::EndSystemTimestepBeforeHVACReporting, anyEMSRan); // EMS calling point
 
         // This is where output processor data is updated for System Timestep reporting
         if (!state.dataGlobal->WarmupFlag) {
@@ -491,8 +490,7 @@ void ManageHVAC(EnergyPlusData &state)
             }
             UpdateDataandReport(state, OutputProcessor::TimeStepType::TimeStepSystem);
         }
-        ManageEMS(
-            state, EMSManager::EMSCallFrom::EndSystemTimestepAfterHVACReporting, anyEMSRan, ObjexxFCL::Optional_int_const()); // EMS calling point
+        ManageEMS(state, EMSManager::EMSCallFrom::EndSystemTimestepAfterHVACReporting, anyEMSRan); // EMS calling point
         // UPDATE SYSTEM CLOCKS
         SysTimeElapsed += TimeStepSys;
 
@@ -761,7 +759,7 @@ void SimHVAC(EnergyPlusData &state)
     // Before the HVAC simulation, call ManageSetPoints to set all the HVAC
     // node setpoints
     bool anyEMSRan = false;
-    ManageEMS(state, EMSManager::EMSCallFrom::BeforeHVACManagers, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point
+    ManageEMS(state, EMSManager::EMSCallFrom::BeforeHVACManagers, anyEMSRan); // calling point
 
     ManageSetPoints(state);
 
@@ -772,8 +770,8 @@ void SimHVAC(EnergyPlusData &state)
     // the system on/off flags
     ManageSystemAvailability(state);
 
-    ManageEMS(state, EMSManager::EMSCallFrom::AfterHVACManagers, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point
-    ManageEMS(state, EMSManager::EMSCallFrom::HVACIterationLoop, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point id
+    ManageEMS(state, EMSManager::EMSCallFrom::AfterHVACManagers, anyEMSRan); // calling point
+    ManageEMS(state, EMSManager::EMSCallFrom::HVACIterationLoop, anyEMSRan); // calling point id
 
     // first explicitly call each system type with FirstHVACIteration,
 
@@ -804,7 +802,7 @@ void SimHVAC(EnergyPlusData &state)
 
         if (state.dataGlobal->stopSimulation) break;
 
-        ManageEMS(state, EMSManager::EMSCallFrom::HVACIterationLoop, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point id
+        ManageEMS(state, EMSManager::EMSCallFrom::HVACIterationLoop, anyEMSRan); // calling point id
 
         // Manages the various component simulations
         SimSelectedEquipment(state,

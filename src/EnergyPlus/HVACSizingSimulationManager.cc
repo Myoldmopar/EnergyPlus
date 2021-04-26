@@ -189,7 +189,7 @@ void HVACSizingSimulationManager::ProcessCoincidentPlantSizeAdjustments(EnergyPl
 }
 void HVACSizingSimulationManager::RedoKickOffAndResize(EnergyPlusData &state)
 {
-    using namespace WeatherManager;
+    using namespace Weather;
     using namespace SimulationManager;
     bool ErrorsFound(false);
     state.dataGlobal->KickOffSimulation = true;
@@ -217,7 +217,7 @@ void ManageHVACSizingSimulation(EnergyPlusData &state, bool &ErrorsFound)
     using EMSManager::ManageEMS;
     using ExteriorEnergyUse::ManageExteriorEnergyUse;
     using PlantPipingSystemsManager::SimulateGroundDomains;
-    using namespace WeatherManager;
+    using namespace Weather;
     using namespace HeatBalanceManager;
 
     auto &hvacSizingSimulationManager = state.dataHVACSizingSimMgr->hvacSizingSimulationManager;
@@ -292,7 +292,7 @@ void ManageHVACSizingSimulation(EnergyPlusData &state, bool &ErrorsFound)
             state.dataReportFlag->NumOfWarmupDays = 0;
 
             bool anyEMSRan;
-            ManageEMS(state, EMSManager::EMSCallFrom::BeginNewEnvironment, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point
+            ManageEMS(state, EMSManager::EMSCallFrom::BeginNewEnvironment, anyEMSRan); // calling point
 
             while ((state.dataGlobal->DayOfSim < state.dataGlobal->NumOfDayInEnvrn) || (state.dataGlobal->WarmupFlag)) { // Begin day loop ...
 
