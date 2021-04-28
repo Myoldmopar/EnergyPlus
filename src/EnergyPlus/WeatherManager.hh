@@ -327,18 +327,18 @@ namespace Weather {
         // Members
         Real64 DryBulb = 0.0;      // Dry Bulb Temperature (C)
         Real64 DewPoint = 0.0;     // Dew Point Temperature (C)
-        int RelHumid = 0;        // Relative Humidity (%)
+        Real64 RelHumid = 0.0;        // Relative Humidity (%)
         Real64 StnPres = 0.0;      // Atmospheric Pressure (Pa)
-        int WindDir = 0;         // Wind Direction (deg)
+        Real64 WindDir = 0.0;         // Wind Direction (deg)
         Real64 WindSpd = 0.0;      // Wind Speed/Velocity (m/s)
-        int TotSkyCvr = 0;       // Total Sky Cover (tenths)
-        int OpaqSkyCvr = 0;      // Opaque Sky Cover (tenths)
+        Real64 TotSkyCvr = 0.0;       // Total Sky Cover (tenths)
+        Real64 OpaqSkyCvr = 0.0;      // Opaque Sky Cover (tenths)
         Real64 Visibility = 0.0;   // Visibility (km)
-        int Ceiling = 0;         // Ceiling Height (m)
-        int PrecipWater = 0;     // Precipitable Water (mm)
+        Real64 Ceiling = 0.0;         // Ceiling Height (m)
+        Real64 PrecipWater = 0.0;     // Precipitable Water (mm)
         Real64 AerOptDepth = 0.0;  // Aerosol Optical Depth
-        int SnowDepth = 0;       // Snow Depth (cm)
-        int DaysLastSnow = 0;    // Number of Days since last snow
+        Real64 SnowDepth = 0.0;       // Snow Depth (cm)
+        Real64 DaysLastSnow = 0.0;    // Number of Days since last snow
         Real64 Albedo = 0.0;       // Albedo
         Real64 LiquidPrecip = 0.0; // Rain/Liquid Precipitation (mm)
     };
@@ -471,12 +471,6 @@ namespace Weather {
     void UpdateWeatherData(EnergyPlusData &state);
 
     void SetCurrentWeather(EnergyPlusData &state);
-
-    void ReadWeatherForDay(EnergyPlusData &state,
-                           int DayToRead,          // =1 when starting out, otherwise signifies next day
-                           int Environ,            // Environment being simulated
-                           bool BackSpaceAfterRead // True if weather file is to be backspaced after read
-    );
 
     void ReadEPlusWeatherForDay(EnergyPlusData &state,
                                 int DayToRead,          // =1 when starting out, otherwise signifies next day
@@ -704,13 +698,18 @@ namespace Weather {
                  Real64 IRHoriz);
 
     struct WeatherManagerItself {
+        std::vector<std::string> rawEPWLines;
 
+        void readEPWLines();
     };
 
 } // namespace WeatherManager
 
 struct WeatherManagerData : BaseGlobalStruct
 {
+
+    // this will ultimately, hopefully, become the only variable in this module, with everything adapted over to WeatherManager members and methods
+    Weather::WeatherManagerItself weather;
 
     // These were static variables within different functions. They were pulled out into the namespace
     // to facilitate easier unit testing of those functions.
