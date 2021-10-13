@@ -773,33 +773,84 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(LINK_WITH_PYTHON)
-  target_link_libraries(energypluslib PUBLIC ${Python_LIBRARIES})
-  if(LINK_WITH_PYTHON)
-    link_directories(${CPYTHON_LIBRARY_DIR})
-    target_include_directories(energypluslib PRIVATE ${CPYTHON_INCLUDE_DIR})
-    # On MSVC build, the python library is automatically linked (crazy I know)
-    if(NOT MSVC)
-      target_link_libraries(energypluslib ${CPYTHON_LIBRARY})
-    endif()
-    # Set the executable to console application if MSVC
-    if(MSVC)
-      set_target_properties(energypluslib PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
-    endif()
-    # Copy Python DLL to the build folder if different
-    add_custom_command(
-            TARGET energypluslib
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND}
-            -E copy_if_different ${CPYTHON_BIN} $<TARGET_FILE_DIR:energypluslib>
-    )
-    # Copy the Python stdlib into the build folder (needed by the embedded python)
-    add_custom_command(
-            TARGET energypluslib
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND}
-            -E copy_directory ${CPYTHON_STDLIB_DIR} $<TARGET_FILE_DIR:energypluslib>/lib
-    )
+  include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
+  if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release")
   endif()
+  set(CPYTHON_BUILD_TYPE "${CMAKE_BUILD_TYPE}")
+  # Add the cpython as an external project that will be included in the build
+  if(MSVC)
+    if(CMAKE_CL_64)
+      set(CPYTHON_PLATFORM x64)
+      set(CPYTHON_BUILD_DIR amd64)
+    else()
+      set(CPYTHON_PLATFORM x86)
+      set(CPYTHON_BUILD_DIR win32)
+    endif()
+    ExternalProject_Add(CPYTHON
+            DOWNLOAD_COMMAND ""
+            SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython
+            CONFIGURE_COMMAND ""
+            BUILD_COMMAND cd ${PROJECT_SOURCE_DIR}/third_party/CPython && MSBuild.exe /p:Configuration=${CPYTHON_BUILD_TYPE} /property:Platform=${CPYTHON_PLATFORM} "PCBuild/python.vcxproj" /nologo /verbosity:minimal /consoleloggerparameters:summar
+            INSTALL_COMMAND ""
+            TEST_COMMAND ""
+            )
+  else()
+    ExternalProject_Add(CPYTHON
+            DOWNLOAD_COMMAND ""
+            SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython
+            CONFIGURE_COMMAND cd ${PROJECT_SOURCE_DIR}/third_party/CPython && ./configure --disable-static --enable-shared
+            BUILD_COMMAND cd ${PROJECT_SOURCE_DIR}/third_party/CPython && make
+            INSTALL_COMMAND ""
+            TEST_COMMAND ""
+            )
+  endif()
+  set(CPYTHON_STDLIB_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/Lib)
+  if(MSVC)
+    set(CPYTHON_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/Include ${PROJECT_SOURCE_DIR}/third_party/CPython/PC)
+    set(CPYTHON_LIBRARY_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/PCBuild/${CPYTHON_BUILD_DIR})
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+      set(CPYTHON_BIN ${PROJECT_SOURCE_DIR}/third_party/CPython/PCBuild/${CPYTHON_BUILD_DIR}/python38_d.dll)
+    else()
+      set(CPYTHON_BIN ${PROJECT_SOURCE_DIR}/third_party/CPython/PCBuild/${CPYTHON_BUILD_DIR}/python38.dll)
+    endif()
+  else()
+    set(CPYTHON_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/Include ${PROJECT_SOURCE_DIR}/third_party/CPython)
+    set(CPYTHON_LIBRARY_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython)
+    set(CPYTHON_LIBRARY python3.11)
+    set(CPYTHON_BIN ${PROJECT_SOURCE_DIR}/third_party/CPython/libpython3.11.so)
+  endif()
+  #  target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX=1)
+  target_link_libraries(energypluslib PUBLIC ${CPYTHON_BIN})
+  link_directories(${CPYTHON_LIBRARY_DIR})
+  message("PYTHON DIR!  ${CPYTHON_INCLUDE_DIR}")
+  target_include_directories(energypluslib PRIVATE ${CPYTHON_INCLUDE_DIR})
+#  # On MSVC build, the python library is automatically linked (crazy I know)
+#  if(NOT MSVC)
+#    target_link_libraries(energypluslib ${CPYTHON_LIBRARY})
+#  endif()
+  # Set the executable to console application if MSVC
+  if(MSVC)
+    set_target_properties(energypluslib PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+  endif()
+  # Copy Python DLL to the build folder if different
+  add_custom_command(
+          TARGET energypluslib
+          POST_BUILD
+          COMMAND ${CMAKE_COMMAND}
+          -E copy_if_different ${CPYTHON_BIN} $<TARGET_FILE_DIR:energypluslib>
+  )
+  # Copy the Python stdlib into the build folder (needed by the embedded python)
+  add_custom_command(
+          TARGET energypluslib
+          POST_BUILD
+          COMMAND ${CMAKE_COMMAND}
+          -E copy_directory ${CPYTHON_STDLIB_DIR} $<TARGET_FILE_DIR:energypluslib>/python_standard_lib
+  )
+  file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib.linux-x86_64-3.11/*)
+  foreach(MODULE IN LISTS MODULES)
+    file(COPY "${MODULE}" DESTINATION $<TARGET_FILE_DIR:energypluslib>/python_standard_lib)
+  endforeach()
 endif()
 
 # See https://en.cppreference.com/w/cpp/filesystem#Notes
@@ -842,6 +893,10 @@ endif()
 target_link_libraries(energyplusapi PUBLIC energypluslib)
 target_link_libraries(energyplusapi PRIVATE project_options project_fp_options project_warnings)
 
+if(LINK_WITH_PYTHON)
+  target_include_directories(energyplusapi PRIVATE ${CPYTHON_INCLUDE_DIR})
+endif()
+
 set_target_properties(energyplusapi PROPERTIES INSTALL_NAME_DIR "@executable_path")
 install(
   TARGETS energyplusapi
@@ -855,6 +910,10 @@ if(APPLE OR UNIX)
 else() # windows
   add_executable(energyplus main.cc "${CMAKE_CURRENT_BINARY_DIR}/energyplus.rc")
 endif()
+if(LINK_WITH_PYTHON)
+  target_include_directories(energyplus PRIVATE ${CPYTHON_INCLUDE_DIR})
+endif()
+
 target_link_libraries(energyplus PRIVATE energyplusapi project_options project_fp_options project_warnings)
 
 set_target_properties(energyplus PROPERTIES VERSION ${ENERGYPLUS_VERSION})
@@ -952,6 +1011,9 @@ endif()
 if(BUILD_TESTING)
   # Build the test executable
   add_executable(TestEnergyPlusCallbacks test_ep_as_library.cc)
+  if(LINK_WITH_PYTHON)
+    target_include_directories(TestEnergyPlusCallbacks PRIVATE ${CPYTHON_INCLUDE_DIR})
+  endif()
   target_link_libraries(TestEnergyPlusCallbacks PRIVATE energyplusapi project_options project_fp_options project_warnings)
   add_test(NAME "API.LegacyCallbackTest"
            COMMAND ${CMAKE_COMMAND} -DSOURCE_DIR=${PROJECT_SOURCE_DIR} -DBINARY_DIR=${PROJECT_BINARY_DIR} -DIDF_FILE=1ZoneUncontrolled.idf
