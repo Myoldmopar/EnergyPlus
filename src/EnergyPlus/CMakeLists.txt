@@ -807,51 +807,66 @@ if(LINK_WITH_PYTHON)
             )
   endif()
   set(CPYTHON_STDLIB_DIR ${CPYTHON_DIR}/Lib)
+  set(CPYTHON_LIBRARY python3.11)
   if(MSVC)
     set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR}/PC)
     set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR})
     if(CMAKE_BUILD_TYPE MATCHES "Debug")
-      set(CPYTHON_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python38_d.dll)
+      set(CPYTHON_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/${CPYTHON_LIBRARY}_d.dll)
     else()
-      set(CPYTHON_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python38.dll)
+      set(CPYTHON_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/${CPYTHON_LIBRARY}.dll)
     endif()
   else()
     set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR})
     set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR})
-    set(CPYTHON_LIBRARY python3.11)
-    set(CPYTHON_BIN ${CPYTHON_DIR}/libpython3.11.so)
+    set(CPYTHON_BIN_NAME_BASE "lib${CPYTHON_LIBRARY}.so")
+    set(CPYTHON_BIN_NAME_VERSIONED "lib${CPYTHON_LIBRARY}.so.1.0")
+    set(CPYTHON_BUILT_BIN_BASE "${CPYTHON_DIR}/${CPYTHON_BIN_NAME_BASE}")
+    set(CPYTHON_BUILT_BIN_VERSIONED "${CPYTHON_DIR}/${CPYTHON_BIN_NAME_VERSIONED}")
   endif()
   #  target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX=1)
-  target_link_libraries(energypluslib PUBLIC ${CPYTHON_BIN})
+  target_link_libraries(energypluslib PUBLIC ${CPYTHON_LIBRARY})
   link_directories(${CPYTHON_LIBRARY_DIR})
-  message("PYTHON DIR!  ${CPYTHON_INCLUDE_DIR}")
+  # message("PYTHON DIR!  ${CPYTHON_INCLUDE_DIR}")
   target_include_directories(energypluslib PRIVATE ${CPYTHON_INCLUDE_DIR})
 #  # On MSVC build, the python library is automatically linked (crazy I know)
 #  if(NOT MSVC)
 #    target_link_libraries(energypluslib ${CPYTHON_LIBRARY})
 #  endif()
   # Set the executable to console application if MSVC
-  if(MSVC)
-    set_target_properties(energypluslib PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
-  endif()
+#  if(MSVC)
+#    set_target_properties(energypluslib PROPERTIES LINK_FLAGS "/SUBSYSTEM:CONSOLE")
+#  endif()
   # Copy Python DLL to the build folder if different
+#  add_custom_command(
+#          TARGET energypluslib
+#          POST_BUILD
+#          COMMAND ${CMAKE_COMMAND}
+#          -E copy_if_different ${CPYTHON_BUILT_BIN_BASE} $<TARGET_FILE_DIR:energypluslib>
+#  )
   add_custom_command(
           TARGET energypluslib
           POST_BUILD
           COMMAND ${CMAKE_COMMAND}
-          -E copy_if_different ${CPYTHON_BIN} $<TARGET_FILE_DIR:energypluslib>
+          -E copy_if_different ${CPYTHON_BUILT_BIN_VERSIONED} $<TARGET_FILE_DIR:energypluslib>
   )
-  # Copy the Python stdlib into the build folder (needed by the embedded python)
+  # and install the Python DLL if we are building a package
+  if(BUILD_PACKAGE)
+    # install(FILES $<TARGET_FILE_DIR:energypluslib>/${CPYTHON_BIN_NAME_BASE} DESTINATION "./")
+    install(FILES $<TARGET_FILE_DIR:energypluslib>/${CPYTHON_BIN_NAME_VERSIONED} DESTINATION "./")
+  endif()
+  # Copy python standard library built modules into the standard library folder
+  file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib*/*)  # TODO: Verify this on Windows/Mac
+  foreach(MODULE IN LISTS MODULES)
+    file(COPY "${MODULE}" DESTINATION $<TARGET_FILE_DIR:energypluslib>/python_standard_lib)
+  endforeach()
+    # Copy the Python stdlib into the build folder (needed by the embedded python)
   add_custom_command(
           TARGET energypluslib
           POST_BUILD
           COMMAND ${CMAKE_COMMAND}
           -E copy_directory ${CPYTHON_STDLIB_DIR} $<TARGET_FILE_DIR:energypluslib>/python_standard_lib
   )
-  file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib.linux-x86_64-3.11/*)
-  foreach(MODULE IN LISTS MODULES)
-    file(COPY "${MODULE}" DESTINATION $<TARGET_FILE_DIR:energypluslib>/python_standard_lib)
-  endforeach()
 endif()
 
 # See https://en.cppreference.com/w/cpp/filesystem#Notes
