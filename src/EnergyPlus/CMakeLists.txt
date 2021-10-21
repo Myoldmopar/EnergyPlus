@@ -778,7 +778,8 @@ if(LINK_WITH_PYTHON)
     set(CMAKE_BUILD_TYPE "Release")
   endif()
   set(CPYTHON_BUILD_TYPE "${CMAKE_BUILD_TYPE}")
-  # Add the cpython as an external project that will be included in the build
+  set(CPYTHON_DIR "${PROJECT_SOURCE_DIR}/third_party/CPython")
+  # Add cpython as an external project that will be included in the build
   if(MSVC)
     if(CMAKE_CL_64)
       set(CPYTHON_PLATFORM x64)
@@ -789,36 +790,36 @@ if(LINK_WITH_PYTHON)
     endif()
     ExternalProject_Add(CPYTHON
             DOWNLOAD_COMMAND ""
-            SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython
+            SOURCE_DIR ${CPYTHON_DIR}
             CONFIGURE_COMMAND ""
-            BUILD_COMMAND cd ${PROJECT_SOURCE_DIR}/third_party/CPython && MSBuild.exe /p:Configuration=${CPYTHON_BUILD_TYPE} /property:Platform=${CPYTHON_PLATFORM} "PCBuild/python.vcxproj" /nologo /verbosity:minimal /consoleloggerparameters:summar
+            BUILD_COMMAND cd ${CPYTHON_DIR} && MSBuild.exe /p:Configuration=${CPYTHON_BUILD_TYPE} /property:Platform=${CPYTHON_PLATFORM} "PCBuild/python.vcxproj" /nologo /verbosity:minimal /consoleloggerparameters:summar
             INSTALL_COMMAND ""
             TEST_COMMAND ""
             )
   else()
     ExternalProject_Add(CPYTHON
             DOWNLOAD_COMMAND ""
-            SOURCE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython
-            CONFIGURE_COMMAND cd ${PROJECT_SOURCE_DIR}/third_party/CPython && ./configure --disable-static --enable-shared
-            BUILD_COMMAND cd ${PROJECT_SOURCE_DIR}/third_party/CPython && make
+            SOURCE_DIR ${CPYTHON_DIR}
+            CONFIGURE_COMMAND cd ${CPYTHON_DIR} && ./configure --disable-static --enable-shared
+            BUILD_COMMAND cd ${CPYTHON_DIR} && make
             INSTALL_COMMAND ""
             TEST_COMMAND ""
             )
   endif()
-  set(CPYTHON_STDLIB_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/Lib)
+  set(CPYTHON_STDLIB_DIR ${CPYTHON_DIR}/Lib)
   if(MSVC)
-    set(CPYTHON_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/Include ${PROJECT_SOURCE_DIR}/third_party/CPython/PC)
-    set(CPYTHON_LIBRARY_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/PCBuild/${CPYTHON_BUILD_DIR})
+    set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR}/PC)
+    set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR})
     if(CMAKE_BUILD_TYPE MATCHES "Debug")
-      set(CPYTHON_BIN ${PROJECT_SOURCE_DIR}/third_party/CPython/PCBuild/${CPYTHON_BUILD_DIR}/python38_d.dll)
+      set(CPYTHON_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python38_d.dll)
     else()
-      set(CPYTHON_BIN ${PROJECT_SOURCE_DIR}/third_party/CPython/PCBuild/${CPYTHON_BUILD_DIR}/python38.dll)
+      set(CPYTHON_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python38.dll)
     endif()
   else()
-    set(CPYTHON_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/Include ${PROJECT_SOURCE_DIR}/third_party/CPython)
-    set(CPYTHON_LIBRARY_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython)
+    set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR})
+    set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR})
     set(CPYTHON_LIBRARY python3.11)
-    set(CPYTHON_BIN ${PROJECT_SOURCE_DIR}/third_party/CPython/libpython3.11.so)
+    set(CPYTHON_BIN ${CPYTHON_DIR}/libpython3.11.so)
   endif()
   #  target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX=1)
   target_link_libraries(energypluslib PUBLIC ${CPYTHON_BIN})
