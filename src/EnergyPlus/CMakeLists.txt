@@ -774,10 +774,11 @@ endif()
 
 if(LINK_WITH_PYTHON)
   include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
-  if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release")
+  set(CPYTHON_BUILD_TYPE_FLAG "")  # blank indicates release build
+  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CPYTHON_BUILD_TYPE_FLAG " -d ")  # override to debug mode if applicable
   endif()
-  set(CPYTHON_BUILD_TYPE "${CMAKE_BUILD_TYPE}")
+
   set(CPYTHON_DIR "${PROJECT_SOURCE_DIR}/third_party/CPython")
   # Add cpython as an external project that will be included in the build
   if(MSVC)
@@ -792,7 +793,8 @@ if(LINK_WITH_PYTHON)
             DOWNLOAD_COMMAND ""
             SOURCE_DIR ${CPYTHON_DIR}
             CONFIGURE_COMMAND ""
-            BUILD_COMMAND cd ${CPYTHON_DIR} && MSBuild.exe /p:Configuration=${CPYTHON_BUILD_TYPE} /property:Platform=${CPYTHON_PLATFORM} "PCBuild/python.vcxproj" /nologo /verbosity:minimal /consoleloggerparameters:summar
+            BUILD_COMMAND cd ${CPYTHON_DIR} && cmd /C ${CPYTHON_DIR}/PCbuild/build.bat ${CPYTHON_BUILD_TYPE_FLAG} -p ${CPYTHON_PLATFORM}
+            BUILD_IN_SOURCE TRUE
             INSTALL_COMMAND ""
             TEST_COMMAND ""
             )
