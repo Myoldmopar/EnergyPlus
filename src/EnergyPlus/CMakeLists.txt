@@ -801,9 +801,9 @@ if(LINK_WITH_PYTHON)
   else()
     ExternalProject_Add(CPYTHON
             DOWNLOAD_COMMAND ""
-            SOURCE_DIR ${CPYTHON_DIR}
-            CONFIGURE_COMMAND cd ${CPYTHON_DIR} && ./configure  # default is to build a static library
-            BUILD_COMMAND cd ${CPYTHON_DIR} && make -j 4
+            # SOURCE_DIR ${CPYTHON_DIR}
+            CONFIGURE_COMMAND ${PROJECT_SOURCE_DIR}/cmake/cpython_configure.sh ${CPYTHON_DIR}
+            BUILD_COMMAND ${PROJECT_SOURCE_DIR}/cmake/cpython_build.sh ${CPYTHON_DIR}
             INSTALL_COMMAND ""
             TEST_COMMAND ""
             )
@@ -822,20 +822,21 @@ if(LINK_WITH_PYTHON)
     set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR})
     set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR})
     if (UNIX AND NOT APPLE)
-      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.a")
+      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.so.1.0")
     elseif(APPLE)
-      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.a")
+      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.so.1.0")
     else()
       set(CPYTHON_BIN_NAME "${CPYTHON_LIBRARY}.dll")
     endif()
     set(CPYTHON_BUILT_BIN "${CPYTHON_DIR}/${CPYTHON_BIN_NAME}")
   endif()
   #  target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX=1)
-  add_library(cpython STATIC IMPORTED)
-  set_target_properties(cpython PROPERTIES IMPORTED_LOCATION ${CPYTHON_BUILT_BIN})
+  # add_library(cpython STATIC IMPORTED)
+  # set_target_properties(cpython PROPERTIES IMPORTED_LOCATION ${CPYTHON_BUILT_BIN})
+  add_dependencies(energypluslib CPYTHON)
   target_include_directories(energypluslib PRIVATE ${CPYTHON_INCLUDE_DIR})
   target_link_directories(energypluslib PUBLIC ${CPYTHON_LIBRARY_DIR})
-  target_link_libraries(energypluslib PUBLIC cpython)
+  target_link_libraries(energypluslib PRIVATE ${CPYTHON_BIN_NAME})
 #  # On MSVC build, the python library is automatically linked (crazy I know)
 #  if(NOT MSVC)
 #    target_link_libraries(energypluslib ${CPYTHON_LIBRARY})
@@ -846,10 +847,10 @@ if(LINK_WITH_PYTHON)
 #          COMMAND ${CMAKE_COMMAND}
 #          -E copy_if_different ${CPYTHON_BUILT_BIN} $<TARGET_FILE_DIR:energypluslib>
 #  )
-#  # and install the Python DLL if we are building a package
-#  if(BUILD_PACKAGE)
-#    install(FILES $<TARGET_FILE_DIR:energypluslib>/${CPYTHON_BIN_NAME} DESTINATION "./")
-#  endif()
+  # and install the Python DLL if we are building a package
+  if(BUILD_PACKAGE)
+    install(FILES ${CPYTHON_BUILT_BIN} DESTINATION "./")
+  endif()
   # Copy the Python stdlib into the build folder (needed by the embedded python)
   add_custom_command(
           TARGET energypluslib
