@@ -824,19 +824,16 @@ if(LINK_WITH_PYTHON)
     if (UNIX AND NOT APPLE)
       set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.so.1.0")
     elseif(APPLE)
-      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.so.1.0")
+      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.dylib")
     else()
       set(CPYTHON_BIN_NAME "${CPYTHON_LIBRARY}.dll")
     endif()
     set(CPYTHON_BUILT_BIN "${CPYTHON_DIR}/${CPYTHON_BIN_NAME}")
   endif()
-  #  target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX=1)
-  # add_library(cpython STATIC IMPORTED)
-  # set_target_properties(cpython PROPERTIES IMPORTED_LOCATION ${CPYTHON_BUILT_BIN})
   add_dependencies(energypluslib CPYTHON)
   target_include_directories(energypluslib PRIVATE ${CPYTHON_INCLUDE_DIR})
-  target_link_directories(energypluslib PUBLIC ${CPYTHON_LIBRARY_DIR})
-  target_link_libraries(energypluslib PRIVATE ${CPYTHON_BIN_NAME})
+#  target_link_directories(energypluslib PUBLIC ${CPYTHON_LIBRARY_DIR})
+#  target_link_libraries(energypluslib PRIVATE ${CPYTHON_BIN_NAME})
 #  # On MSVC build, the python library is automatically linked (crazy I know)
 #  if(NOT MSVC)
 #    target_link_libraries(energypluslib ${CPYTHON_LIBRARY})
@@ -847,6 +844,7 @@ if(LINK_WITH_PYTHON)
 #          COMMAND ${CMAKE_COMMAND}
 #          -E copy_if_different ${CPYTHON_BUILT_BIN} $<TARGET_FILE_DIR:energypluslib>
 #  )
+
   # and install the Python DLL if we are building a package
   if(BUILD_PACKAGE)
     install(FILES ${CPYTHON_BUILT_BIN} DESTINATION "./")
@@ -858,6 +856,22 @@ if(LINK_WITH_PYTHON)
           COMMAND ${CMAKE_COMMAND}
           -E copy_directory ${CPYTHON_STDLIB_DIR} $<TARGET_FILE_DIR:energypluslib>/python_standard_lib
   )
+  if(APPLE)
+    add_custom_command(
+          TARGET energypluslib
+          POST_BUILD
+          DEPENDS
+          __ALWAYSRUNME
+          COMMAND ${CMAKE_INSTALL_NAME_TOOL} -id "@executable_path/libpython3.11.dylib" "${CPYTHON_BUILT_BIN}"
+    )
+    add_custom_command(
+            TARGET energypluslib
+            POST_BUILD
+            DEPENDS
+            __ALWAYSRUNME
+            COMMAND ${CMAKE_COMMAND} -E copy "${CPYTHON_BUILT_BIN}" $<TARGET_FILE_DIR:energypluslib>
+    )
+  endif()
   # Then also copy python standard library built modules into the standard library folder
   file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib*/*)  # TODO: Verify this on Windows/Mac
   foreach(MODULE IN LISTS MODULES)
@@ -912,9 +926,20 @@ target_link_libraries(energyplusapi PRIVATE project_options project_fp_options p
 
 if(LINK_WITH_PYTHON)
   target_include_directories(energyplusapi PRIVATE ${CPYTHON_INCLUDE_DIR})
+  target_link_directories(energyplusapi PUBLIC ${CPYTHON_LIBRARY_DIR})
+  target_link_libraries(energyplusapi PRIVATE ${CPYTHON_BIN_NAME})
+  if(APPLE)
+    add_custom_command(
+            TARGET energyplusapi
+            POST_BUILD
+            DEPENDS
+            __ALWAYSRUNME
+            COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@loader_path/libpython3.11.dylib" $<TARGET_FILE:energyplusapi>
+    )
+  endif()
 endif()
 
-set_target_properties(energyplusapi PROPERTIES INSTALL_NAME_DIR "@executable_path")
+set_target_properties(energyplusapi PROPERTIES INSTALL_NAME_DIR "@loader_path")
 install(
   TARGETS energyplusapi
   RUNTIME DESTINATION ./
@@ -952,31 +977,20 @@ add_custom_command(
     -DPYTHON_API_VERSION_MAJOR="${PYTHON_API_VERSION_MAJOR}" -DPYTHON_API_VERSION_MINOR="${PYTHON_API_VERSION_MINOR}" -P
     "${PROJECT_SOURCE_DIR}/cmake/PythonSetupAPIinBuild.cmake")
 
+if(APPLE)
+  add_custom_command(
+    TARGET energyplus
+    POST_BUILD
+    DEPENDS
+    __ALWAYSRUNME
+    COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@executable_path/libpython3.11.dylib" $<TARGET_FILE:energyplus>
+  )
+endif()
+
 install(TARGETS energyplus energyplusapi DESTINATION ./)
 
 #if(LINK_WITH_PYTHON)
-  # link the executable to the dll and bring it in
-#  get_filename_component(RESOLVED_PYTHON_LIBRARY "${Python_LIBRARIES}" REALPATH)
 #  if(WIN32)
-#
-#    # In case you have both release and debug Python libraries on your system, Python_LIBRARIES might be "optimized;C:/.../python38.lib;debug;C:/.../python38_d.lib"
-#    # so it can't be used directly, we could use a generator expression to find the $<TARGET_FILE:Python::Python> library used and that'd point directly
-#    # to the DLL. But it won't work nicely for the install(code ...) command below... so we do a hack, get the optimized one always...
-#    list(LENGTH Python_LIBRARIES _LEN)
-#    if (_LEN GREATER 1)
-#      set (_Python_DOING_RELEASE FALSE)
-#      foreach(_currentArg ${Python_LIBRARIES})
-#        if ("x${_currentArg}" STREQUAL "xoptimized")
-#          set(_Python_DOING_RELEASE TRUE)
-#        elseif(_Python_DOING_RELEASE)
-#          get_filename_component(RESOLVED_PYTHON_LIBRARY "${_currentArg}" REALPATH)
-#          break()
-#        endif()
-#      endforeach()
-#    # else()
-#      # No-op, already done above
-#    endif()
-
     # Windows is being ugly and linking against the Python DLL but not running
     # unless it's close by Force it here.
 #    add_custom_command(
@@ -992,21 +1006,6 @@ install(TARGETS energyplus energyplusapi DESTINATION ./)
 #      -DEXECUTABLE_PATH=\${CMAKE_INSTALL_PREFIX}/energyplus${CMAKE_EXECUTABLE_SUFFIX}
 #      -P ${PROJECT_SOURCE_DIR}/cmake/PythonGetLibAndLinkUp.cmake
 #    )")
-#  if(APPLE)
-#    install(
-#      CODE "execute_process(
-#        COMMAND ${CMAKE_COMMAND}
-#        -DRESOLVED_PYTHON_LIB=${RESOLVED_PYTHON_LIBRARY}
-#        -DEPLUS_DYNAMIC_LIB_NAME=libenergyplusapi.${CMAKE_VERSION_MAJOR}.${CMAKE_VERSION_MINOR}.${CMAKE_VERSION_PATCH}.dylib
-#        -DEXECUTABLE_PATH=\${CMAKE_INSTALL_PREFIX}/energyplus${CMAKE_EXECUTABLE_SUFFIX}
-#        -P ${PROJECT_SOURCE_DIR}/cmake/PythonFixUpOnMac.cmake
-#      )")
-#  endif()
-  # along with the python standard lib
-#  add_custom_command(
-#    TARGET energyplusapi
-#    POST_BUILD # TODO: I don't think we want to quote the generator expression
-#    COMMAND ${Python_EXECUTABLE} "${PROJECT_SOURCE_DIR}/cmake/PythonCopyStandardLib.py" "$<TARGET_FILE:energyplusapi>" "python_standard_lib")
 #endif()
 
 if(BUILD_PACKAGE)
