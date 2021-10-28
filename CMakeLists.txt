@@ -223,6 +223,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/Products")
 
 include(cmake/ProjectMacros.cmake)
 include(cmake/CompilerFlags.cmake)
+include(cmake/PythonMacros.cmake)
 
 add_subdirectory(third_party)
 

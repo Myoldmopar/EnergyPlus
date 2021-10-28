@@ -773,115 +773,10 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(LINK_WITH_PYTHON)
-  include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
-  set(CPYTHON_BUILD_TYPE_FLAG "")  # blank indicates release build
-  if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CPYTHON_BUILD_TYPE_FLAG " -d ")  # override to debug mode if applicable
-  endif()
-
-  set(CPYTHON_DIR "${PROJECT_SOURCE_DIR}/third_party/CPython")
-  # Add cpython as an external project that will be included in the build
-  if(MSVC)
-    if(CMAKE_CL_64)
-      set(CPYTHON_PLATFORM x64)
-      set(CPYTHON_BUILD_DIR amd64)
-    else()
-      set(CPYTHON_PLATFORM x86)
-      set(CPYTHON_BUILD_DIR win32)
-    endif()
-    ExternalProject_Add(CPYTHON
-            DOWNLOAD_COMMAND ""
-            SOURCE_DIR ${CPYTHON_DIR}
-            CONFIGURE_COMMAND ""
-            BUILD_COMMAND cd ${CPYTHON_DIR} && cmd /C ${CPYTHON_DIR}/PCbuild/build.bat ${CPYTHON_BUILD_TYPE_FLAG} -p ${CPYTHON_PLATFORM}
-            BUILD_IN_SOURCE TRUE
-            INSTALL_COMMAND ""
-            TEST_COMMAND ""
-            )
-  else()
-    ExternalProject_Add(CPYTHON
-            DOWNLOAD_COMMAND ""
-            # SOURCE_DIR ${CPYTHON_DIR}
-            CONFIGURE_COMMAND ${PROJECT_SOURCE_DIR}/cmake/cpython_configure.sh ${CPYTHON_DIR}
-            BUILD_COMMAND ${PROJECT_SOURCE_DIR}/cmake/cpython_build.sh ${CPYTHON_DIR}
-            INSTALL_COMMAND ""
-            TEST_COMMAND ""
-            )
-  endif()
-  set(CPYTHON_STDLIB_DIR ${CPYTHON_DIR}/Lib)
-  set(CPYTHON_LIBRARY python3.11)
-  if(MSVC)
-    set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR}/PC)
-    set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR})
-    if(CMAKE_BUILD_TYPE MATCHES "Debug")
-      set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/${CPYTHON_LIBRARY}_d.dll)
-    else()
-      set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/${CPYTHON_LIBRARY}.dll)
-    endif()
-  else()
-    set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR})
-    set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR})
-    if (UNIX AND NOT APPLE)
-      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.so.1.0")
-    elseif(APPLE)
-      set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.dylib")
-    else()
-      set(CPYTHON_BIN_NAME "${CPYTHON_LIBRARY}.dll")
-    endif()
-    set(CPYTHON_BUILT_BIN "${CPYTHON_DIR}/${CPYTHON_BIN_NAME}")
-  endif()
-  add_dependencies(energypluslib CPYTHON)
+  set_cpython_variables()
+  create_cpython_project()
+  create_cpython_library()
   target_include_directories(energypluslib PRIVATE ${CPYTHON_INCLUDE_DIR})
-#  target_link_directories(energypluslib PUBLIC ${CPYTHON_LIBRARY_DIR})
-#  target_link_libraries(energypluslib PRIVATE ${CPYTHON_BIN_NAME})
-#  # On MSVC build, the python library is automatically linked (crazy I know)
-#  if(NOT MSVC)
-#    target_link_libraries(energypluslib ${CPYTHON_LIBRARY})
-#  endif()
-#  add_custom_command(
-#          TARGET energypluslib
-#          POST_BUILD
-#          COMMAND ${CMAKE_COMMAND}
-#          -E copy_if_different ${CPYTHON_BUILT_BIN} $<TARGET_FILE_DIR:energypluslib>
-#  )
-
-  # and install the Python DLL if we are building a package
-  if(BUILD_PACKAGE)
-    install(FILES ${CPYTHON_BUILT_BIN} DESTINATION "./")
-  endif()
-  # Copy the Python stdlib into the build folder (needed by the embedded python)
-  add_custom_command(
-          TARGET energypluslib
-          POST_BUILD
-          COMMAND ${CMAKE_COMMAND}
-          -E copy_directory ${CPYTHON_STDLIB_DIR} $<TARGET_FILE_DIR:energypluslib>/python_standard_lib
-  )
-  if(APPLE)
-    add_custom_command(
-          TARGET energypluslib
-          POST_BUILD
-          DEPENDS
-          __ALWAYSRUNME
-          COMMAND ${CMAKE_INSTALL_NAME_TOOL} -id "@executable_path/libpython3.11.dylib" "${CPYTHON_BUILT_BIN}"
-    )
-    add_custom_command(
-            TARGET energypluslib
-            POST_BUILD
-            DEPENDS
-            __ALWAYSRUNME
-            COMMAND ${CMAKE_COMMAND} -E copy "${CPYTHON_BUILT_BIN}" $<TARGET_FILE_DIR:energypluslib>
-    )
-  endif()
-  # Then also copy python standard library built modules into the standard library folder
-  file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib*/*)  # TODO: Verify this on Windows/Mac
-  foreach(MODULE IN LISTS MODULES)
-    add_custom_command(
-            TARGET energypluslib
-            POST_BUILD
-            COMMAND ${CMAKE_COMMAND}
-            -E copy "${MODULE}" $<TARGET_FILE_DIR:energypluslib>/python_standard_lib
-    )
-  endforeach()
 endif()
 
 # See https://en.cppreference.com/w/cpp/filesystem#Notes
@@ -926,20 +821,10 @@ target_link_libraries(energyplusapi PRIVATE project_options project_fp_options p
 
 if(LINK_WITH_PYTHON)
   target_include_directories(energyplusapi PRIVATE ${CPYTHON_INCLUDE_DIR})
-  target_link_directories(energyplusapi PUBLIC ${CPYTHON_LIBRARY_DIR})
-  target_link_libraries(energyplusapi PRIVATE ${CPYTHON_BIN_NAME})
-  if(APPLE)
-    add_custom_command(
-            TARGET energyplusapi
-            POST_BUILD
-            DEPENDS
-            __ALWAYSRUNME
-            COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@loader_path/libpython3.11.dylib" $<TARGET_FILE:energyplusapi>
-    )
-  endif()
+  target_link_libraries(energyplusapi PRIVATE cpython_library)
 endif()
 
-set_target_properties(energyplusapi PROPERTIES INSTALL_NAME_DIR "@loader_path")
+# set_target_properties(energyplusapi PROPERTIES INSTALL_NAME_DIR "@loader_path")
 install(
   TARGETS energyplusapi
   RUNTIME DESTINATION ./
@@ -977,14 +862,8 @@ add_custom_command(
     -DPYTHON_API_VERSION_MAJOR="${PYTHON_API_VERSION_MAJOR}" -DPYTHON_API_VERSION_MINOR="${PYTHON_API_VERSION_MINOR}" -P
     "${PROJECT_SOURCE_DIR}/cmake/PythonSetupAPIinBuild.cmake")
 
-if(APPLE)
-  add_custom_command(
-    TARGET energyplus
-    POST_BUILD
-    DEPENDS
-    __ALWAYSRUNME
-    COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@executable_path/libpython3.11.dylib" $<TARGET_FILE:energyplus>
-  )
+if(LINK_WITH_PYTHON)
+  cpython_post_exe_build_operations()
 endif()
 
 install(TARGETS energyplus energyplusapi DESTINATION ./)
@@ -1011,17 +890,16 @@ install(TARGETS energyplus energyplusapi DESTINATION ./)
 if(BUILD_PACKAGE)
   # if we are building package, we need to drop in some API/Plugin stuff
   if(LINK_WITH_PYTHON)
-    # we'll want to grab the standard lib for python plugins
-    # TODO: I don't think we want to quote the generator expression
-    install(DIRECTORY "$<TARGET_FILE_DIR:energyplus>/python_standard_lib/" DESTINATION "./python_standard_lib")
+    # we'll want to grab the standard lib and the Python shared object library for python plugins
+    install(DIRECTORY $<TARGET_FILE_DIR:energyplus>/python_standard_lib/ DESTINATION "./python_standard_lib")
+    install(FILES ${CPYTHON_BUILT_BIN} DESTINATION "./")
   endif()
   # we'll want to always provide the C API headers
   foreach(HEADER ${API_HEADERS})
     install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/${HEADER}" DESTINATION "./include/EnergyPlus/api")
   endforeach()
   # we'll want to always grab the python API wrapper
-  # TODO: I don't think we want to quote the generator expression
-  install(DIRECTORY "$<TARGET_FILE_DIR:energyplus>/pyenergyplus/" DESTINATION "./pyenergyplus")
+  install(DIRECTORY $<TARGET_FILE_DIR:energyplus>/pyenergyplus/ DESTINATION "./pyenergyplus")
 endif()
 
 if(BUILD_TESTING)
