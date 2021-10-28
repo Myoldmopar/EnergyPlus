@@ -83,7 +83,7 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
     # Then also copy python standard library built modules into the standard library folder
     file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib*/*)  # TODO: Verify this on Windows/Mac
     foreach(MODULE IN LISTS MODULES)
-        message("Copying module: ${MODULE}")
+        # message("Copying module: ${MODULE}")
         add_custom_command(
                 TARGET energyplus
                 POST_BUILD
@@ -111,14 +111,15 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
                 POST_BUILD
                 DEPENDS
                 __ALWAYSRUNME
-                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@loader_path/libpython3.11.dylib" $<TARGET_FILE:energyplusapi>
+                # COMMAND echo ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@loader_path/libpython3.11.dylib" $<TARGET_FILE:energyplusapi>
+                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "@executable_path/libpython3.11.dylib" "@loader_path/libpython3.11.dylib" $<TARGET_FILE:energyplusapi>
         )
-        add_custom_command(
-                TARGET energyplus
-                POST_BUILD
-                DEPENDS
-                __ALWAYSRUNME
-                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@executable_path/libpython3.11.dylib" $<TARGET_FILE:energyplus>
-        )
+#        add_custom_command(
+#                TARGET energyplus
+#                POST_BUILD
+#                DEPENDS
+#                __ALWAYSRUNME
+#                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@executable_path/libpython3.11.dylib" $<TARGET_FILE:energyplus>
+#        )
     endif()
 endmacro()
