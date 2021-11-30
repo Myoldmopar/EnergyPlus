@@ -2,28 +2,35 @@ macro(SET_CPYTHON_VARIABLES)
     # sets the following variables:
     # - CPYTHON_DIR: the folder containing the clone of CPython itself
     # - CPYTHON_STDLIB_DIR: the folder containing the Python standard library implementation
-    # - CPYTHON_LIBRARY: the name of the Python library, with version number
     # - CPYTHON_INCLUDE_DIR: the C include directories for compiling
     # - CPYTHON_LIBRARY_DIR: the folder containing the compiled Python shared object library file
     # - CPYTHON_BUILT_BIN: the full path to the Python shared object library file
     set(CPYTHON_DIR "${PROJECT_SOURCE_DIR}/third_party/CPython")
     set(CPYTHON_STDLIB_DIR ${CPYTHON_DIR}/Lib)
-    set(CPYTHON_LIBRARY python3.11)
     if(MSVC)
+	    if(CMAKE_CL_64)
+            set(CPYTHON_PLATFORM x64)
+            set(CPYTHON_BUILD_DIR amd64)
+        else()
+            set(CPYTHON_PLATFORM x86)
+            set(CPYTHON_BUILD_DIR win32)
+        endif()
         set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR}/PC)
         set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR})
         if(CMAKE_BUILD_TYPE MATCHES "Debug")
-            set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/${CPYTHON_LIBRARY}_d.dll)
+            set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311_d.dll)
+			set(CPYTHON_BUILT_LIB ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311_d.lib)
         else()
-            set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/${CPYTHON_LIBRARY}.dll)
+            set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311.dll)
+		    set(CPYTHON_BUILT_LIB ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311.lib)	
         endif()
     else()
         set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR})
         set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR})
         if (UNIX AND NOT APPLE)
-            set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.so.1.0")
+            set(CPYTHON_BIN_NAME "libpython3.11.so.1.0")
         elseif(APPLE)
-            set(CPYTHON_BIN_NAME "lib${CPYTHON_LIBRARY}.dylib")
+            set(CPYTHON_BIN_NAME "libpython3.11.dylib")
         endif()
         set(CPYTHON_BUILT_BIN "${CPYTHON_DIR}/${CPYTHON_BIN_NAME}")
     endif()
@@ -38,27 +45,17 @@ macro(CREATE_CPYTHON_PROJECT)
     endif()
     # Add cpython as an external project that will be included in the build
     if(MSVC)
-        if(CMAKE_CL_64)
-            set(CPYTHON_PLATFORM x64)
-            set(CPYTHON_BUILD_DIR amd64)
-        else()
-            set(CPYTHON_PLATFORM x86)
-            set(CPYTHON_BUILD_DIR win32)
-        endif()
         ExternalProject_Add(CPYTHON
-                DOWNLOAD_COMMAND ""
                 SOURCE_DIR ${CPYTHON_DIR}
-                CONFIGURE_COMMAND ""
-                BUILD_COMMAND cd ${CPYTHON_DIR} && cmd /C ${CPYTHON_DIR}/PCbuild/build.bat ${CPYTHON_BUILD_TYPE_FLAG} -p ${CPYTHON_PLATFORM}
-                BUILD_IN_SOURCE TRUE
+				CONFIGURE_COMMAND ""
+                BUILD_COMMAND cd ${CPYTHON_DIR} && ${CPYTHON_DIR}/PCbuild/build.bat # ${CPYTHON_BUILD_TYPE_FLAG} -p ${CPYTHON_PLATFORM}
                 INSTALL_COMMAND ""
                 TEST_COMMAND ""
                 )
     else()
         ExternalProject_Add(CPYTHON
-                DOWNLOAD_COMMAND ""
-                # SOURCE_DIR ${CPYTHON_DIR}
-                CONFIGURE_COMMAND cd ${CPYTHON_DIR} && ./configure --enable-shared # --enable-optimizations
+                SOURCE_DIR ${CPYTHON_DIR}
+				CONFIGURE_COMMAND cd ${CPYTHON_DIR} && ./configure --enable-shared # --enable-optimizations
                 BUILD_COMMAND cd ${CPYTHON_DIR} && make -j 4
                 INSTALL_COMMAND ""
                 TEST_COMMAND ""
@@ -69,8 +66,13 @@ endmacro()
 macro(CREATE_CPYTHON_LIBRARY)
     # Creates a library target for cpython that depends on the python shared object that is built via external project
     add_library(cpython_library SHARED IMPORTED)
-    set_property(TARGET cpython_library PROPERTY IMPORTED_LOCATION ${CPYTHON_BUILT_BIN})
-    add_dependencies(cpython_library CPYTHON)
+	if(MSVC)
+	    set_target_properties(cpython_library PROPERTIES IMPORTED_LOCATION_DEBUG ${CPYTHON_BUILT_BIN} IMPORTED_LOCATION_RELEASE ${CPYTHON_BUILT_BIN} IMPORTED_IMPLIB_DEBUG ${CPYTHON_BUILT_LIB} IMPORTED_IMPLIB_RELEASE ${CPYTHON_BUILT_LIB})
+    else()
+        set_property(TARGET cpython_library PROPERTY IMPORTED_LOCATION ${CPYTHON_BUILT_BIN})
+	endif()
+	add_dependencies(cpython_library CPYTHON)
+	target_link_directories(cpython_library INTERFACE ${CPYTHON_LIBRARY_DIR})
 endmacro()
 
 macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)

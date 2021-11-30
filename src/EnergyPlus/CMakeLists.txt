@@ -839,6 +839,7 @@ else() # windows
 endif()
 if(LINK_WITH_PYTHON)
   target_include_directories(energyplus PRIVATE ${CPYTHON_INCLUDE_DIR})
+  target_link_directories(energyplus PRIVATE ${CPYTHON_LIBRARY_DIR})
 endif()
 
 target_link_libraries(energyplus PRIVATE energyplusapi project_options project_fp_options project_warnings)
