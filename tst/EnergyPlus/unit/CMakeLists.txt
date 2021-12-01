@@ -253,6 +253,7 @@ set(test_src
 set(test_dependencies energyplusapi)
 
 if(LINK_WITH_PYTHON)
+  set_cpython_variables()  # the CPYTHON_INCLUDE_DIR things can go away with this added
   add_definitions("-DLINK_WITH_PYTHON")
   if(MSVC)
     set(CPYTHON_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/third_party/CPython/Include ${PROJECT_SOURCE_DIR}/third_party/CPython/PC)
@@ -274,7 +275,11 @@ if(CMAKE_HOST_UNIX)
   endif()
 endif()
 
-# Executable name will be EnergyPlus_tests
+# Executable name will be energyplus_tests
 # Execute energyplus_tests --help for options using gtest runner
 # Execute energyplus_tests with no arguments to run all tests
 create_test_targets(energyplus "${test_src}" "${test_dependencies}" True)
+
+if(LINK_WITH_PYTHON)
+  target_link_directories(energyplus_tests PRIVATE ${CPYTHON_LIBRARY_DIR})
+endif()

@@ -918,6 +918,7 @@ if(BUILD_TESTING)
   add_executable(TestEnergyPlusCallbacks test_ep_as_library.cc)
   if(LINK_WITH_PYTHON)
     target_include_directories(TestEnergyPlusCallbacks PRIVATE ${CPYTHON_INCLUDE_DIR})
+	target_link_directories(TestEnergyPlusCallbacks PRIVATE ${CPYTHON_LIBRARY_DIR})
   endif()
   target_link_libraries(TestEnergyPlusCallbacks PRIVATE energyplusapi project_options project_fp_options project_warnings)
   add_test(NAME "API.LegacyCallbackTest"
