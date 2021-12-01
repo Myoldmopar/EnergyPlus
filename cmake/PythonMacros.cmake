@@ -48,7 +48,7 @@ macro(CREATE_CPYTHON_PROJECT)
         ExternalProject_Add(CPYTHON
                 SOURCE_DIR ${CPYTHON_DIR}
 				CONFIGURE_COMMAND ""
-                BUILD_COMMAND cd ${CPYTHON_DIR} && ${CPYTHON_DIR}/PCbuild/build.bat # ${CPYTHON_BUILD_TYPE_FLAG} -p ${CPYTHON_PLATFORM}
+                BUILD_COMMAND cd ${CPYTHON_DIR} && ${CPYTHON_DIR}/PCbuild/build.bat ${CPYTHON_BUILD_TYPE_FLAG} -p ${CPYTHON_PLATFORM}
                 INSTALL_COMMAND ""
                 TEST_COMMAND ""
                 )
