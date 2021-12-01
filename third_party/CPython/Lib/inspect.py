@@ -2022,6 +2022,29 @@ def _signature_is_functionlike(obj):
             (isinstance(annotations, (dict)) or annotations is None) )
 
 
+def _signature_get_bound_param(spec):
+    """ Private helper to get first parameter name from a
+    __text_signature__ of a builtin method, which should
+    be in the following format: '($param1, ...)'.
+    Assumptions are that the first argument won't have
+    a default value or an annotation.
+    """
+
+    assert spec.startswith('($')
+
+    pos = spec.find(',')
+    if pos == -1:
+        pos = spec.find(')')
+
+    cpos = spec.find(':')
+    assert cpos == -1 or cpos > pos
+
+    cpos = spec.find('=')
+    assert cpos == -1 or cpos > pos
+
+    return spec[2:pos]
+
+
 def _signature_strip_non_python_syntax(signature):
     """
     Private helper function. Takes a signature in Argument Clinic's
@@ -2098,6 +2121,10 @@ def _signature_fromstr(cls, obj, s, skip_bound_arg=True):
     """Private helper to parse content of '__text_signature__'
     and return a Signature based on it.
     """
+    # Lazy import ast because it's relatively heavy and
+    # it's not used for other than this function.
+    import ast
+
     Parameter = cls._parameter_cls
 
     clean_signature, self_parameter, last_positional_only = \
@@ -2543,6 +2570,9 @@ class _ParameterKind(enum.IntEnum):
     VAR_POSITIONAL = 2
     KEYWORD_ONLY = 3
     VAR_KEYWORD = 4
+
+    def __str__(self):
+        return self._name_
 
     @property
     def description(self):

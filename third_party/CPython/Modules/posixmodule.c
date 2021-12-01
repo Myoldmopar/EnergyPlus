@@ -10,8 +10,7 @@
 #define PY_SSIZE_T_CLEAN
 
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
-#include "pycore_fileutils.h"     // _Py_closerange()
+#include "pycore_fileutils.h"
 #include "pycore_moduleobject.h"  // _PyModule_GetState()
 #ifdef MS_WINDOWS
    /* include <windows.h> early to avoid conflict with pycore_condvar.h:
@@ -22,10 +21,6 @@
       FSCTL_GET_REPARSE_POINT is not exported with WIN32_LEAN_AND_MEAN. */
 #  include <windows.h>
 #  include <pathcch.h>
-#endif
-
-#if !defined(EX_OK) && defined(EXIT_SUCCESS)
-#define EX_OK EXIT_SUCCESS
 #endif
 
 #ifdef __VXWORKS__
@@ -562,7 +557,7 @@ run_at_forkers(PyObject *lst, int reverse)
             for (i = 0; i < PyList_GET_SIZE(cpy); i++) {
                 PyObject *func, *res;
                 func = PyList_GET_ITEM(cpy, i);
-                res = _PyObject_CallNoArgs(func);
+                res = _PyObject_CallNoArg(func);
                 if (res == NULL)
                     PyErr_WriteUnraisable(func);
                 else
@@ -1184,7 +1179,7 @@ path_converter(PyObject *o, void *p)
         if (NULL == func) {
             goto error_format;
         }
-        res = _PyObject_CallNoArgs(func);
+        res = _PyObject_CallNoArg(func);
         Py_DECREF(func);
         if (NULL == res) {
             goto error_exit;
@@ -10067,11 +10062,9 @@ os_isatty_impl(PyObject *module, int fd)
 /*[clinic end generated code: output=6a48c8b4e644ca00 input=08ce94aa1eaf7b5e]*/
 {
     int return_value;
-    Py_BEGIN_ALLOW_THREADS
     _Py_BEGIN_SUPPRESS_IPH
     return_value = isatty(fd);
     _Py_END_SUPPRESS_IPH
-    Py_END_ALLOW_THREADS
     return return_value;
 }
 
@@ -13492,10 +13485,8 @@ _Py_COMP_DIAG_POP
     if (self->dir_fd != DEFAULT_DIR_FD) {
 #ifdef HAVE_FSTATAT
       if (HAVE_FSTATAT_RUNTIME) {
-        Py_BEGIN_ALLOW_THREADS
         result = fstatat(self->dir_fd, path, &st,
                          follow_symlinks ? 0 : AT_SYMLINK_NOFOLLOW);
-        Py_END_ALLOW_THREADS
       } else
 
 #endif /* HAVE_FSTATAT */
@@ -13508,14 +13499,10 @@ _Py_COMP_DIAG_POP
     else
 #endif
     {
-        Py_BEGIN_ALLOW_THREADS
-        if (follow_symlinks) {
+        if (follow_symlinks)
             result = STAT(path, &st);
-        }
-        else {
+        else
             result = LSTAT(path, &st);
-        }
-        Py_END_ALLOW_THREADS
     }
 #if defined(MS_WINDOWS) && !USE_UNICODE_WCHAR_CACHE
     PyMem_Free(path);
@@ -13780,7 +13767,7 @@ static PyMethodDef DirEntry_methods[] = {
     OS_DIRENTRY_STAT_METHODDEF
     OS_DIRENTRY_INODE_METHODDEF
     OS_DIRENTRY___FSPATH___METHODDEF
-    {"__class_getitem__",       Py_GenericAlias,
+    {"__class_getitem__",       (PyCFunction)Py_GenericAlias,
     METH_O|METH_CLASS,          PyDoc_STR("See PEP 585")},
     {NULL}
 };
@@ -14381,7 +14368,7 @@ PyOS_FSPath(PyObject *path)
                             _PyType_Name(Py_TYPE(path)));
     }
 
-    path_repr = _PyObject_CallNoArgs(func);
+    path_repr = _PyObject_CallNoArg(func);
     Py_DECREF(func);
     if (NULL == path_repr) {
         return NULL;

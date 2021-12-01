@@ -254,7 +254,7 @@ is found that matches the exception.  An expression-less except clause, if
 present, must be last; it matches any exception.  For an except clause with an
 expression, that expression is evaluated, and the clause matches the exception
 if the resulting object is "compatible" with the exception.  An object is
-compatible with an exception if the object is the class or a base class of the exception
+compatible with an exception if it is the class or a base class of the exception
 object, or a tuple containing an item that is the class or a base class of
 the exception object.
 
@@ -1017,7 +1017,7 @@ A class pattern represents a class and its positional and keyword arguments
 
 The same keyword should not be repeated in class patterns.
 
-The following is the logical flow for matching a class pattern against a
+The following is the logical flow for matching a mapping pattern against a
 subject value:
 
 #. If ``name_or_attr`` is not an instance of the builtin :class:`type` , raise

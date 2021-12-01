@@ -15,10 +15,7 @@ Data members:
 */
 
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
 #include "pycore_ceval.h"         // _Py_RecursionLimitLowerWaterMark()
-#include "pycore_code.h"          // _Py_QuickenedCount
-#include "pycore_frame.h"         // InterpreterFrame
 #include "pycore_initconfig.h"    // _PyStatus_EXCEPTION()
 #include "pycore_object.h"        // _PyObject_IS_GC()
 #include "pycore_pathconfig.h"    // _PyPathConfig_ComputeSysPath0()
@@ -26,8 +23,8 @@ Data members:
 #include "pycore_pylifecycle.h"   // _PyErr_WriteUnraisableDefaultHook()
 #include "pycore_pymem.h"         // _PyMem_SetDefaultAllocator()
 #include "pycore_pystate.h"       // _PyThreadState_GET()
-#include "pycore_structseq.h"     // PyStructSequence_InitType()
 #include "pycore_tuple.h"         // _PyTuple_FromArray()
+#include "pycore_structseq.h"     // PyStructSequence_InitType()
 
 #include "code.h"
 #include "frameobject.h"          // PyFrame_GetBack()
@@ -269,7 +266,7 @@ sys_audit_tstate(PyThreadState *ts, const char *event,
                 break;
             }
             if (canTrace) {
-                ts->cframe->use_tracing = (ts->c_tracefunc || ts->c_profilefunc) ? 255 : 0;
+                ts->cframe->use_tracing = (ts->c_tracefunc || ts->c_profilefunc);
                 ts->tracing--;
             }
             PyObject* args[2] = {eventName, eventArgs};
@@ -284,7 +281,7 @@ sys_audit_tstate(PyThreadState *ts, const char *event,
             Py_DECREF(o);
             Py_CLEAR(hook);
         }
-        ts->cframe->use_tracing = (ts->c_tracefunc || ts->c_profilefunc) ? 255 : 0;
+        ts->cframe->use_tracing = (ts->c_tracefunc || ts->c_profilefunc);
         ts->tracing--;
         if (_PyErr_Occurred(ts)) {
             goto exit;
@@ -1677,7 +1674,7 @@ _PySys_GetSizeOf(PyObject *o)
         }
     }
     else {
-        res = _PyObject_CallNoArgs(method);
+        res = _PyObject_CallNoArg(method);
         Py_DECREF(method);
     }
 
@@ -1766,19 +1763,7 @@ sys_gettotalrefcount_impl(PyObject *module)
 {
     return _Py_GetRefTotal();
 }
-
 #endif /* Py_REF_DEBUG */
-
-/*[clinic input]
-sys._getquickenedcount -> Py_ssize_t
-[clinic start generated code]*/
-
-static Py_ssize_t
-sys__getquickenedcount_impl(PyObject *module)
-/*[clinic end generated code: output=1ab259e7f91248a2 input=249d448159eca912]*/
-{
-    return _Py_QuickenedCount;
-}
 
 /*[clinic input]
 sys.getallocatedblocks -> Py_ssize_t
@@ -1816,22 +1801,25 @@ sys__getframe_impl(PyObject *module, int depth)
 /*[clinic end generated code: output=d438776c04d59804 input=c1be8a6464b11ee5]*/
 {
     PyThreadState *tstate = _PyThreadState_GET();
-    InterpreterFrame *frame = tstate->frame;
+    PyFrameObject *f = PyThreadState_GetFrame(tstate);
 
-    if (_PySys_Audit(tstate, "sys._getframe", NULL) < 0) {
+    if (_PySys_Audit(tstate, "sys._getframe", "O", f) < 0) {
+        Py_DECREF(f);
         return NULL;
     }
 
-    while (depth > 0 && frame != NULL) {
-        frame = frame->previous;
+    while (depth > 0 && f != NULL) {
+        PyFrameObject *back = PyFrame_GetBack(f);
+        Py_DECREF(f);
+        f = back;
         --depth;
     }
-    if (frame == NULL) {
+    if (f == NULL) {
         _PyErr_SetString(tstate, PyExc_ValueError,
                          "call stack is not deep enough");
         return NULL;
     }
-    return _Py_XNewRef((PyObject *)_PyFrame_GetFrameObject(frame));
+    return (PyObject*)f;
 }
 
 /*[clinic input]
@@ -1970,6 +1958,22 @@ sys_getandroidapilevel_impl(PyObject *module)
 }
 #endif   /* ANDROID_API_LEVEL */
 
+
+/*[clinic input]
+sys._deactivate_opcache
+
+Deactivate the opcode cache permanently
+[clinic start generated code]*/
+
+static PyObject *
+sys__deactivate_opcache_impl(PyObject *module)
+/*[clinic end generated code: output=00e20982bd012122 input=501eac146735ccf9]*/
+{
+    _PyEval_DeactivateOpCache();
+    Py_RETURN_NONE;
+}
+
+
 static PyMethodDef sys_methods[] = {
     /* Might as well keep this in alphabetic order */
     SYS_ADDAUDITHOOK_METHODDEF
@@ -1991,7 +1995,6 @@ static PyMethodDef sys_methods[] = {
 #endif
     SYS_GETFILESYSTEMENCODING_METHODDEF
     SYS_GETFILESYSTEMENCODEERRORS_METHODDEF
-    SYS__GETQUICKENEDCOUNT_METHODDEF
 #ifdef Py_TRACE_REFS
     {"getobjects",      _Py_GetObjects, METH_VARARGS},
 #endif
@@ -2023,6 +2026,7 @@ static PyMethodDef sys_methods[] = {
     SYS_GET_ASYNCGEN_HOOKS_METHODDEF
     SYS_GETANDROIDAPILEVEL_METHODDEF
     SYS_UNRAISABLEHOOK_METHODDEF
+    SYS__DEACTIVATE_OPCACHE_METHODDEF
     {NULL,              NULL}           /* sentinel */
 };
 
@@ -2289,10 +2293,7 @@ PySys_AddWarnOption(const wchar_t *s)
     unicode = PyUnicode_FromWideChar(s, -1);
     if (unicode == NULL)
         return;
-_Py_COMP_DIAG_PUSH
-_Py_COMP_DIAG_IGNORE_DEPR_DECLS
     PySys_AddWarnOptionUnicode(unicode);
-_Py_COMP_DIAG_POP
     Py_DECREF(unicode);
 }
 
@@ -2974,14 +2975,6 @@ _PySys_UpdateConfig(PyThreadState *tstate)
     COPY_LIST("warnoptions", config->warnoptions);
 
     SET_SYS("_xoptions", sys_create_xoptions_dict(config));
-
-    const wchar_t *stdlibdir = _Py_GetStdlibDir();
-    if (stdlibdir != NULL) {
-        SET_SYS_FROM_WSTR("_stdlib_dir", stdlibdir);
-    }
-    else {
-        PyDict_SetItemString(sysdict, "_stdlib_dir", Py_None);
-    }
 
 #undef SET_SYS_FROM_WSTR
 #undef COPY_LIST

@@ -38,12 +38,14 @@ class LockTests(test_utils.TestCase):
     def test_lock(self):
         lock = asyncio.Lock()
 
-        async def acquire_lock():
-            return await lock
+        with self.assertWarns(DeprecationWarning):
+            @asyncio.coroutine
+            def acquire_lock():
+                return (yield from lock)
 
         with self.assertRaisesRegex(
             TypeError,
-            "object Lock can't be used in 'await' expression"
+            "object is not iterable"
         ):
             self.loop.run_until_complete(acquire_lock())
 
@@ -76,16 +78,18 @@ class LockTests(test_utils.TestCase):
             asyncio.BoundedSemaphore(),
         ]
 
-        async def test(lock):
-            await asyncio.sleep(0.01)
-            self.assertFalse(lock.locked())
-            with self.assertRaisesRegex(
-                TypeError,
-                r"object \w+ can't be used in 'await' expression"
-            ):
-                with await lock:
-                    pass
-            self.assertFalse(lock.locked())
+        with self.assertWarns(DeprecationWarning):
+            @asyncio.coroutine
+            def test(lock):
+                yield from asyncio.sleep(0.01)
+                self.assertFalse(lock.locked())
+                with self.assertRaisesRegex(
+                    TypeError,
+                    "object is not iterable"
+                ):
+                    with (yield from lock):
+                        pass
+                self.assertFalse(lock.locked())
 
         for primitive in primitives:
             loop.run_until_complete(test(primitive))
@@ -720,68 +724,24 @@ class ConditionTests(test_utils.TestCase):
         self.loop.run_until_complete(f())
 
     def test_explicit_lock(self):
-        async def f(lock=None, cond=None):
-            if lock is None:
-                lock = asyncio.Lock()
-            if cond is None:
-                cond = asyncio.Condition(lock)
-            self.assertIs(cond._lock, lock)
-            self.assertFalse(lock.locked())
-            self.assertFalse(cond.locked())
-            async with cond:
-                self.assertTrue(lock.locked())
-                self.assertTrue(cond.locked())
-            self.assertFalse(lock.locked())
-            self.assertFalse(cond.locked())
-            async with lock:
-                self.assertTrue(lock.locked())
-                self.assertTrue(cond.locked())
-            self.assertFalse(lock.locked())
-            self.assertFalse(cond.locked())
-
-        # All should work in the same way.
-        self.loop.run_until_complete(f())
-        self.loop.run_until_complete(f(asyncio.Lock()))
         lock = asyncio.Lock()
-        self.loop.run_until_complete(f(lock, asyncio.Condition(lock)))
+        cond = asyncio.Condition(lock)
+
+        self.assertIs(cond._lock, lock)
+        self.assertIs(cond._loop, lock._loop)
 
     def test_ambiguous_loops(self):
-        loop = asyncio.new_event_loop()
+        loop = self.new_test_loop()
         self.addCleanup(loop.close)
 
-        async def wrong_loop_in_lock():
-            with self.assertRaises(TypeError):
-                asyncio.Lock(loop=loop)  # actively disallowed since 3.10
-            lock = asyncio.Lock()
-            lock._loop = loop  # use private API for testing
-            async with lock:
-                # acquired immediately via the fast-path
-                # without interaction with any event loop.
-                cond = asyncio.Condition(lock)
-                # cond.acquire() will trigger waiting on the lock
-                # and it will discover the event loop mismatch.
-                with self.assertRaisesRegex(
-                    RuntimeError,
-                    "is bound to a different event loop",
-                ):
-                    await cond.acquire()
+        lock = asyncio.Lock()
+        lock._loop = loop
 
-        async def wrong_loop_in_cond():
-            # Same analogy here with the condition's loop.
-            lock = asyncio.Lock()
-            async with lock:
-                with self.assertRaises(TypeError):
-                    asyncio.Condition(lock, loop=loop)
-                cond = asyncio.Condition(lock)
-                cond._loop = loop
-                with self.assertRaisesRegex(
-                    RuntimeError,
-                    "is bound to a different event loop",
-                ):
-                    await cond.wait()
+        async def _create_condition():
+            with self.assertRaises(ValueError):
+                asyncio.Condition(lock)
 
-        self.loop.run_until_complete(wrong_loop_in_lock())
-        self.loop.run_until_complete(wrong_loop_in_cond())
+        self.loop.run_until_complete(_create_condition())
 
     def test_timeout_in_block(self):
         loop = asyncio.new_event_loop()
@@ -828,12 +788,14 @@ class SemaphoreTests(test_utils.TestCase):
         sem = asyncio.Semaphore()
         self.assertEqual(1, sem._value)
 
-        async def acquire_lock():
-            return await sem
+        with self.assertWarns(DeprecationWarning):
+            @asyncio.coroutine
+            def acquire_lock():
+                return (yield from sem)
 
         with self.assertRaisesRegex(
             TypeError,
-            "object Semaphore can't be used in 'await' expression",
+            "'Semaphore' object is not iterable",
         ):
             self.loop.run_until_complete(acquire_lock())
 

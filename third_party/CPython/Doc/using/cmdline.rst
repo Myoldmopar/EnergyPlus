@@ -474,18 +474,6 @@ Miscellaneous options
    * ``-X warn_default_encoding`` issues a :class:`EncodingWarning` when the
      locale-specific default encoding is used for opening files.
      See also :envvar:`PYTHONWARNDEFAULTENCODING`.
-   * ``-X no_debug_ranges`` disables the inclusion of the tables mapping extra
-     location information (end line, start column offset and end column offset)
-     to every instruction in code objects. This is useful when smaller code
-     objects and pyc files are desired as well as suppressing the extra visual
-     location indicators when the interpreter displays tracebacks. See also
-     :envvar:`PYTHONNODEBUGRANGES`.
-   * ``-X frozen_modules`` determines whether or not frozen modules are
-     ignored by the import machinery.  A value of "on" means they get
-     imported and "off" means they are ignored.  The default is "on"
-     for non-debug builds (the normal case) and "off" for debug builds.
-     Note that the "importlib_bootstrap" and "importlib_bootstrap_external"
-     frozen modules are always used, even if this flag is set to "off".
 
    It also allows passing arbitrary values and retrieving them through the
    :data:`sys._xoptions` dictionary.
@@ -520,12 +508,6 @@ Miscellaneous options
 
    .. deprecated-removed:: 3.9 3.10
       The ``-X oldparser`` option.
-
-   .. versionadded:: 3.11
-      The ``-X no_debug_ranges`` option.
-
-   .. versionadded:: 3.11
-      The ``-X frozen_modules`` option.
 
 
 Options you shouldn't use
@@ -954,17 +936,6 @@ conflict.
 
    .. versionadded:: 3.10
 
-.. envvar:: PYTHONNODEBUGRANGES
-
-   If this variable is set, it disables the inclusion of the tables mapping
-   extra location information (end line, start column offset and end column
-   offset) to every instruction in code objects. This is useful when smaller
-   code objects and pyc files are desired as well as suppressing the extra visual
-   location indicators when the interpreter displays tracebacks.
-
-   .. versionadded:: 3.11
-
-
 
 Debug-mode variables
 ~~~~~~~~~~~~~~~~~~~~
@@ -984,12 +955,3 @@ Debug-mode variables
    shutting down the interpreter.
 
    Need Python configured with the :option:`--with-trace-refs` build option.
-
-.. envvar:: PYTHONDUMPREFSFILE=FILENAME
-
-   If set, Python will dump objects and reference counts still alive
-   after shutting down the interpreter into a file called *FILENAME*.
-
-   Need Python configured with the :option:`--with-trace-refs` build option.
-
-   .. versionadded:: 3.11

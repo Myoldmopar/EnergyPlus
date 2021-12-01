@@ -24,7 +24,7 @@ try:
 except ImportError:
     ThreadPoolExecutor = None
 
-from test.support import cpython_only
+from test.support import run_unittest, cpython_only
 from test.support import MISSING_C_DOCSTRINGS, ALWAYS_EQ
 from test.support.import_helper import DirsOnSysPath
 from test.support.os_helper import TESTFN
@@ -4066,6 +4066,13 @@ class TestBoundArguments(unittest.TestCase):
         self.assertIs(type(ba.arguments), dict)
 
 class TestSignaturePrivateHelpers(unittest.TestCase):
+    def test_signature_get_bound_param(self):
+        getter = inspect._signature_get_bound_param
+
+        self.assertEqual(getter('($self)'), 'self')
+        self.assertEqual(getter('($self, obj)'), 'self')
+        self.assertEqual(getter('($cls, /, obj)'), 'cls')
+
     def _strip_non_python_syntax(self, input,
         clean_signature, self_parameter, last_positional_only):
         computed_clean_signature, \
@@ -4343,5 +4350,19 @@ def foo():
             self.assertInspectEqual(path, module)
 
 
+def test_main():
+    run_unittest(
+        TestDecorators, TestRetrievingSourceCode, TestOneliners, TestBlockComments,
+        TestBuggyCases, TestInterpreterStack, TestClassesAndFunctions, TestPredicates,
+        TestGetcallargsFunctions, TestGetcallargsMethods,
+        TestGetcallargsUnboundMethods, TestGetattrStatic, TestGetGeneratorState,
+        TestNoEOL, TestSignatureObject, TestSignatureBind, TestParameterObject,
+        TestBoundArguments, TestSignaturePrivateHelpers,
+        TestSignatureDefinitions, TestIsDataDescriptor,
+        TestGetClosureVars, TestUnwrap, TestMain, TestReload,
+        TestGetCoroutineState, TestGettingSourceOfToplevelFrames,
+        TestGetsourceInteractive,
+    )
+
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

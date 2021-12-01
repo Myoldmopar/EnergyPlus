@@ -17,7 +17,6 @@ import subprocess
 import sys
 import threading
 import time
-import types
 import errno
 import unittest
 from unittest import mock
@@ -2165,7 +2164,8 @@ class HandleTests(test_utils.TestCase):
                         '<Handle cancelled>')
 
         # decorated function
-        cb = types.coroutine(noop)
+        with self.assertWarns(DeprecationWarning):
+            cb = asyncio.coroutine(noop)
         h = asyncio.Handle(cb, (), self.loop)
         self.assertEqual(repr(h),
                         '<Handle noop() at %s:%s>'

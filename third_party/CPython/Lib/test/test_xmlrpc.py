@@ -561,7 +561,7 @@ class DateTimeTestCase(unittest.TestCase):
 
 class BinaryTestCase(unittest.TestCase):
 
-    # XXX What should str(Binary(b"\xff")) return?  I'm choosing "\xff"
+    # XXX What should str(Binary(b"\xff")) return?  I'm chosing "\xff"
     # for now (i.e. interpreting the binary data as Latin-1-encoded
     # text).  But this feels very unsatisfactory.  Perhaps we should
     # only define repr(), and return r"Binary(b'\xff')" instead?
@@ -1504,10 +1504,16 @@ class UseBuiltinTypesTestCase(unittest.TestCase):
         self.assertTrue(server.use_builtin_types)
 
 
-def setUpModule():
-    thread_info = threading_helper.threading_setup()
-    unittest.addModuleCleanup(threading_helper.threading_cleanup, *thread_info)
+@threading_helper.reap_threads
+def test_main():
+    support.run_unittest(XMLRPCTestCase, HelperTestCase, DateTimeTestCase,
+            BinaryTestCase, FaultTestCase, UseBuiltinTypesTestCase,
+            SimpleServerTestCase, SimpleServerEncodingTestCase,
+            KeepaliveServerTestCase1, KeepaliveServerTestCase2,
+            GzipServerTestCase, GzipUtilTestCase, HeadersServerTestCase,
+            MultiPathServerTestCase, ServerProxyTestCase, FailingServerTestCase,
+            CGIHandlerTestCase, SimpleXMLRPCDispatcherTestCase)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

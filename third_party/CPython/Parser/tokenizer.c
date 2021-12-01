@@ -3,7 +3,6 @@
 
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
 
 #include <ctype.h>
 #include <assert.h>
@@ -478,7 +477,7 @@ fp_setreadl(struct tok_state *tok, const char* enc)
     Py_XSETREF(tok->decoding_readline, readline);
 
     if (pos > 0) {
-        PyObject *bufobj = _PyObject_CallNoArgs(readline);
+        PyObject *bufobj = _PyObject_CallNoArg(readline);
         if (bufobj == NULL)
             return 0;
         Py_DECREF(bufobj);
@@ -1221,12 +1220,12 @@ static int
 verify_end_of_number(struct tok_state *tok, int c, const char *kind)
 {
     /* Emit a deprecation warning only if the numeric literal is immediately
-     * followed by one of keywords which can occur after a numeric literal
+     * followed by one of keywords which can occurr after a numeric literal
      * in valid code: "and", "else", "for", "if", "in", "is" and "or".
      * It allows to gradually deprecate existing valid code without adding
      * warning before error in most cases of invalid numeric literal (which
-     * would be confusing and break existing tests).
-     * Raise a syntax error with slightly better message than plain
+     * would be confusiong and break existing tests).
+     * Raise a syntax error with slighly better message than plain
      * "invalid syntax" if the numeric literal is immediately followed by
      * other keyword or identifier.
      */

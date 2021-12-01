@@ -56,7 +56,6 @@ def temporary_filename():
         os_helper.unlink(filename)
 
 class FaultHandlerTests(unittest.TestCase):
-
     def get_output(self, code, filename=None, fd=None):
         """
         Run the specified code in Python (in a new child process) and read the

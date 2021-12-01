@@ -5,7 +5,7 @@
 
     If called from the command line, it prints the platform
     information concatenated as single string to stdout. The output
-    format is usable as part of a filename.
+    format is useable as part of a filename.
 
 """
 #    This module is maintained by Marc-Andre Lemburg <mal@egenix.com>.
@@ -116,6 +116,7 @@ import collections
 import os
 import re
 import sys
+import subprocess
 import functools
 import itertools
 
@@ -168,7 +169,7 @@ def libc_ver(executable=None, lib='', version='', chunksize=16384):
 
         Note that the function has intimate knowledge of how different
         libc versions add symbols to the executable and thus is probably
-        only usable for executables compiled using gcc.
+        only useable for executables compiled using gcc.
 
         The file is read and scanned in chunks of chunksize bytes.
 
@@ -187,10 +188,11 @@ def libc_ver(executable=None, lib='', version='', chunksize=16384):
         executable = sys.executable
 
     V = _comparable_version
-    # We use os.path.realpath()
-    # here to work around problems with Cygwin not being
-    # able to open symlinks for reading
-    executable = os.path.realpath(executable)
+    if hasattr(os.path, 'realpath'):
+        # Python 2.2 introduced os.path.realpath(); it is used
+        # here to work around problems with Cygwin not being
+        # able to open symlinks for reading
+        executable = os.path.realpath(executable)
     with open(executable, 'rb') as f:
         binary = f.read(chunksize)
         pos = 0
@@ -746,7 +748,6 @@ class _Processor:
         """
         Fall back to `uname -p`
         """
-        import subprocess
         try:
             return subprocess.check_output(
                 ['uname', '-p'],
@@ -1261,7 +1262,7 @@ _os_release_cache = None
 
 def _parse_os_release(lines):
     # These fields are mandatory fields with well-known defaults
-    # in practice all Linux distributions override NAME, ID, and PRETTY_NAME.
+    # in pratice all Linux distributions override NAME, ID, and PRETTY_NAME.
     info = {
         "NAME": "Linux",
         "ID": "linux",

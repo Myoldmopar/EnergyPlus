@@ -412,7 +412,7 @@ For example::
            multiple_results = [pool.apply_async(os.getpid, ()) for i in range(4)]
            print([res.get(timeout=1) for res in multiple_results])
 
-           # make a single worker sleep for 10 seconds
+           # make a single worker sleep for 10 secs
            res = pool.apply_async(time.sleep, (10,))
            try:
                print(res.get(timeout=1))
@@ -2250,9 +2250,8 @@ with the :class:`Pool` class.
 
    .. method:: starmap(func, iterable[, chunksize])
 
-      Like :meth:`~multiprocessing.pool.Pool.map` except that the
-      elements of the *iterable* are expected to be iterables that are
-      unpacked as arguments.
+      Like :meth:`map` except that the elements of the *iterable* are expected
+      to be iterables that are unpacked as arguments.
 
       Hence an *iterable* of ``[(1,2), (3, 4)]`` results in ``[func(1,2),
       func(3,4)]``.

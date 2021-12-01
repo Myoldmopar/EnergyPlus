@@ -29,14 +29,7 @@ PyAPI_FUNC(PyObject *) _PyObject_Call(
     PyObject *kwargs);
 
 static inline PyObject *
-_PyObject_CallNoArgsTstate(PyThreadState *tstate, PyObject *func) {
-    return _PyObject_VectorcallTstate(tstate, func, NULL, 0, NULL);
-}
-
-// Private static inline function variant of public PyObject_CallNoArgs()
-static inline PyObject *
-_PyObject_CallNoArgs(PyObject *func) {
-    PyThreadState *tstate = PyThreadState_Get();
+_PyObject_CallNoArgTstate(PyThreadState *tstate, PyObject *func) {
     return _PyObject_VectorcallTstate(tstate, func, NULL, 0, NULL);
 }
 

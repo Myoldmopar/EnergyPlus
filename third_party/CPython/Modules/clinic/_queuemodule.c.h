@@ -16,13 +16,11 @@ simplequeue_new(PyTypeObject *type, PyObject *args, PyObject *kwargs)
 {
     PyObject *return_value = NULL;
 
-    if ((type == simplequeue_get_state_by_type(type)->SimpleQueueType ||
-         type->tp_init == simplequeue_get_state_by_type(type)->SimpleQueueType->tp_init) &&
+    if ((type == simplequeue_get_state_by_type(type)->SimpleQueueType) &&
         !_PyArg_NoPositional("SimpleQueue", args)) {
         goto exit;
     }
-    if ((type == simplequeue_get_state_by_type(type)->SimpleQueueType ||
-         type->tp_init == simplequeue_get_state_by_type(type)->SimpleQueueType->tp_init) &&
+    if ((type == simplequeue_get_state_by_type(type)->SimpleQueueType) &&
         !_PyArg_NoKeywords("SimpleQueue", kwargs)) {
         goto exit;
     }
@@ -139,7 +137,7 @@ PyDoc_STRVAR(_queue_SimpleQueue_get__doc__,
 
 static PyObject *
 _queue_SimpleQueue_get_impl(simplequeueobject *self, PyTypeObject *cls,
-                            int block, PyObject *timeout_obj);
+                            int block, PyObject *timeout);
 
 static PyObject *
 _queue_SimpleQueue_get(simplequeueobject *self, PyTypeObject *cls, PyObject *const *args, Py_ssize_t nargs, PyObject *kwnames)
@@ -148,13 +146,13 @@ _queue_SimpleQueue_get(simplequeueobject *self, PyTypeObject *cls, PyObject *con
     static const char * const _keywords[] = {"block", "timeout", NULL};
     static _PyArg_Parser _parser = {"|pO:get", _keywords, 0};
     int block = 1;
-    PyObject *timeout_obj = Py_None;
+    PyObject *timeout = Py_None;
 
     if (!_PyArg_ParseStackAndKeywords(args, nargs, kwnames, &_parser,
-        &block, &timeout_obj)) {
+        &block, &timeout)) {
         goto exit;
     }
-    return_value = _queue_SimpleQueue_get_impl(self, cls, block, timeout_obj);
+    return_value = _queue_SimpleQueue_get_impl(self, cls, block, timeout);
 
 exit:
     return return_value;
@@ -248,4 +246,4 @@ _queue_SimpleQueue_qsize(simplequeueobject *self, PyObject *Py_UNUSED(ignored))
 exit:
     return return_value;
 }
-/*[clinic end generated code: output=acfaf0191d8935db input=a9049054013a1b77]*/
+/*[clinic end generated code: output=ce56b46fac150909 input=a9049054013a1b77]*/

@@ -1029,11 +1029,9 @@ class EnvironTests(mapping_tests.BasicTestMappingProtocol):
     def test___repr__(self):
         """Check that the repr() of os.environ looks like environ({...})."""
         env = os.environ
-        formatted_items = ", ".join(
-            f"{key!r}: {value!r}"
-            for key, value in env.items()
-        )
-        self.assertEqual(repr(env), f"environ({{{formatted_items}}})")
+        self.assertEqual(repr(env), 'environ({{{}}})'.format(', '.join(
+            '{!r}: {!r}'.format(key, value)
+            for key, value in env.items())))
 
     def test_get_exec_path(self):
         defpath_list = os.defpath.split(os.pathsep)

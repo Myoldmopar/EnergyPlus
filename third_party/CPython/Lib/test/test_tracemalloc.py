@@ -1082,5 +1082,15 @@ class TestCAPI(unittest.TestCase):
             self.untrack()
 
 
+def test_main():
+    support.run_unittest(
+        TestTraceback,
+        TestTracemallocEnabled,
+        TestSnapshot,
+        TestFilters,
+        TestCommandLine,
+        TestCAPI,
+    )
+
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

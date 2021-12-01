@@ -1,6 +1,6 @@
 import unittest
 import unittest.mock
-from test.support import (verbose, refcount_test,
+from test.support import (verbose, refcount_test, run_unittest,
                           cpython_only)
 from test.support.import_helper import import_module
 from test.support.os_helper import temp_dir, TESTFN, unlink
@@ -1389,27 +1389,30 @@ class PythonFinalizationTests(unittest.TestCase):
         assert_python_ok("-c", code)
 
 
-def setUpModule():
-    global enabled, debug
+def test_main():
     enabled = gc.isenabled()
     gc.disable()
     assert not gc.isenabled()
     debug = gc.get_debug()
     gc.set_debug(debug & ~gc.DEBUG_LEAK) # this test is supposed to leak
-    gc.collect() # Delete 2nd generation garbage
 
-
-def tearDownModule():
-    gc.set_debug(debug)
-    # test gc.enable() even if GC is disabled by default
-    if verbose:
-        print("restoring automatic collection")
-    # make sure to always test gc.enable()
-    gc.enable()
-    assert gc.isenabled()
-    if not enabled:
-        gc.disable()
-
+    try:
+        gc.collect() # Delete 2nd generation garbage
+        run_unittest(
+            GCTests,
+            GCCallbackTests,
+            GCTogglingTests,
+            PythonFinalizationTests)
+    finally:
+        gc.set_debug(debug)
+        # test gc.enable() even if GC is disabled by default
+        if verbose:
+            print("restoring automatic collection")
+        # make sure to always test gc.enable()
+        gc.enable()
+        assert gc.isenabled()
+        if not enabled:
+            gc.disable()
 
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

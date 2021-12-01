@@ -188,7 +188,7 @@ created.  Socket addresses are represented as follows:
 
     - ``PACKET_HOST`` (the default) - Packet addressed to the local host.
     - ``PACKET_BROADCAST`` - Physical-layer broadcast packet.
-    - ``PACKET_MULTICAST`` - Packet sent to a physical-layer multicast address.
+    - ``PACKET_MULTIHOST`` - Packet sent to a physical-layer multicast address.
     - ``PACKET_OTHERHOST`` - Packet to some other host that has been caught by
       a device driver in promiscuous mode.
     - ``PACKET_OUTGOING`` - Packet originating from the local host that is
@@ -790,9 +790,9 @@ The :mod:`socket` module also offers various network-related services:
    system if IPv6 isn't enabled)::
 
       >>> socket.getaddrinfo("example.org", 80, proto=socket.IPPROTO_TCP)
-      [(socket.AF_INET6, socket.SOCK_STREAM,
+      [(<AddressFamily.AF_INET6: 10>, <AddressFamily.SOCK_STREAM: 1>,
        6, '', ('2606:2800:220:1:248:1893:25c8:1946', 80, 0, 0)),
-       (socket.AF_INET, socket.SOCK_STREAM,
+       (<AddressFamily.AF_INET: 2>, <AddressFamily.SOCK_STREAM: 1>,
        6, '', ('93.184.216.34', 80))]
 
    .. versionchanged:: 3.2
@@ -827,8 +827,8 @@ The :mod:`socket` module also offers various network-related services:
 .. function:: gethostbyname_ex(hostname)
 
    Translate a host name to IPv4 address format, extended interface. Return a
-   triple ``(hostname, aliaslist, ipaddrlist)`` where *hostname* is the host's
-   primary host name, *aliaslist* is a (possibly
+   triple ``(hostname, aliaslist, ipaddrlist)`` where *hostname* is the primary
+   host name responding to the given *ip_address*, *aliaslist* is a (possibly
    empty) list of alternative host names for the same address, and *ipaddrlist* is
    a list of IPv4 addresses for the same interface on the same host (often but not
    always a single address). :func:`gethostbyname_ex` does not support IPv6 name

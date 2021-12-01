@@ -41,10 +41,7 @@ from pegen.grammar import (
     Rhs,
 )
 
-argparser = argparse.ArgumentParser(
-    prog="graph_grammar",
-    description="Graph a grammar tree",
-)
+argparser = argparse.ArgumentParser(prog="graph_grammar", description="Graph a grammar tree",)
 argparser.add_argument(
     "-s",
     "--start",

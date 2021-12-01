@@ -2300,9 +2300,15 @@ class MiscTestCase(unittest.TestCase):
                              not_exported={"linesep", "fcntl"})
 
 
-def tearDownModule():
+def test_main():
+    tests = (TestMailboxSuperclass, TestMaildir, TestMbox, TestMMDF, TestMH,
+             TestBabyl, TestMessage, TestMaildirMessage, TestMboxMessage,
+             TestMHMessage, TestBabylMessage, TestMMDFMessage,
+             TestMessageConversion, TestProxyFile, TestPartialFile,
+             MaildirTestCase, TestFakeMailBox, MiscTestCase)
+    support.run_unittest(*tests)
     support.reap_children()
 
 
 if __name__ == '__main__':
-    unittest.main()
+    test_main()

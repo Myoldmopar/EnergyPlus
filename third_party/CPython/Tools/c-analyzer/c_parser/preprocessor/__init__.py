@@ -19,7 +19,7 @@ from . import (
 logger = logging.getLogger(__name__)
 
 
-# Supported "source":
+# Supprted "source":
 #  * filename (string)
 #  * lines (iterable)
 #  * text (string)
@@ -156,7 +156,7 @@ def handling_errors(ignore_exc=None, *, log_err=None):
 # tools
 
 _COMPILERS = {
-    # matching distutils.ccompiler.compiler_class:
+    # matching disutils.ccompiler.compiler_class:
     'unix': _gcc.preprocess,
     'msvc': None,
     'cygwin': None,

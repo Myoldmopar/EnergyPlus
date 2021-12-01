@@ -53,11 +53,11 @@ Python/ast_opt.c              @isidentical
 
 
 # SSL
-**/*ssl*                      @python/crypto-team
-**/*.pem                      @python/crypto-team
+**/*ssl*                      @python/crypto-team @tiran
+**/*.pem                      @python/crypto-team @tiran
 
 # CSPRNG
-Python/bootstrap_hash.c       @python/crypto-team
+Python/bootstrap_hash.c       @python/crypto-team @tiran
 
 # Dates and times
 **/*datetime*                 @pganssle @abalkin

@@ -2,7 +2,7 @@
 /* Top level execution of Python code (including in __main__) */
 
 /* To help control the interfaces between the startup, execution and
- * shutdown code, the phases are split across separate modules (bootstrap,
+ * shutdown code, the phases are split across separate modules (boostrap,
  * pythonrun, shutdown)
  */
 
@@ -35,7 +35,6 @@
 #endif
 
 
-_Py_IDENTIFIER(__main__);
 _Py_IDENTIFIER(builtins);
 _Py_IDENTIFIER(excepthook);
 _Py_IDENTIFIER(flush);
@@ -943,7 +942,7 @@ print_exception(PyObject *f, PyObject *value)
                 if (end_lineno > lineno) {
                     end_offset = (error_line != NULL) ? line_size : -1;
                 }
-                // Limit the amount of '^' that we can display to
+                // Limit the ammount of '^' that we can display to
                 // the size of the text in the source line.
                 if (error_line != NULL && end_offset > line_size + 1) {
                     end_offset = line_size + 1;
@@ -962,38 +961,36 @@ print_exception(PyObject *f, PyObject *value)
         /* Don't do anything else */
     }
     else {
-        PyObject* modulename;
-
+        PyObject* moduleName;
+        const char *className;
         _Py_IDENTIFIER(__module__);
         assert(PyExceptionClass_Check(type));
+        className = PyExceptionClass_Name(type);
+        if (className != NULL) {
+            const char *dot = strrchr(className, '.');
+            if (dot != NULL)
+                className = dot+1;
+        }
 
-        modulename = _PyObject_GetAttrId(type, &PyId___module__);
-        if (modulename == NULL || !PyUnicode_Check(modulename))
+        moduleName = _PyObject_GetAttrId(type, &PyId___module__);
+        if (moduleName == NULL || !PyUnicode_Check(moduleName))
         {
-            Py_XDECREF(modulename);
-            PyErr_Clear();
+            Py_XDECREF(moduleName);
             err = PyFile_WriteString("<unknown>", f);
         }
         else {
-            if (!_PyUnicode_EqualToASCIIId(modulename, &PyId_builtins) &&
-                !_PyUnicode_EqualToASCIIId(modulename, &PyId___main__))
+            if (!_PyUnicode_EqualToASCIIId(moduleName, &PyId_builtins))
             {
-                err = PyFile_WriteObject(modulename, f, Py_PRINT_RAW);
+                err = PyFile_WriteObject(moduleName, f, Py_PRINT_RAW);
                 err += PyFile_WriteString(".", f);
             }
-            Py_DECREF(modulename);
+            Py_DECREF(moduleName);
         }
         if (err == 0) {
-            PyObject* qualname = PyType_GetQualName((PyTypeObject *)type);
-            if (qualname == NULL || !PyUnicode_Check(qualname)) {
-                Py_XDECREF(qualname);
-                PyErr_Clear();
-                err = PyFile_WriteString("<unknown>", f);
-            }
-            else {
-                err = PyFile_WriteObject(qualname, f, Py_PRINT_RAW);
-                Py_DECREF(qualname);
-            }
+            if (className == NULL)
+                      err = PyFile_WriteString("<unknown>", f);
+            else
+                      err = PyFile_WriteString(className, f);
         }
     }
     if (err == 0 && (value != Py_None)) {

@@ -2,10 +2,9 @@ import pickle
 import pickletools
 from test import support
 from test.pickletester import AbstractPickleTests
-import doctest
 import unittest
 
-class OptimizedPickleTests(AbstractPickleTests, unittest.TestCase):
+class OptimizedPickleTests(AbstractPickleTests):
 
     def dumps(self, arg, proto=None, **kwargs):
         return pickletools.optimize(pickle.dumps(arg, proto, **kwargs))
@@ -95,10 +94,11 @@ class MiscTestCase(unittest.TestCase):
         support.check__all__(self, pickletools, not_exported=not_exported)
 
 
-def load_tests(loader, tests, pattern):
-    tests.addTest(doctest.DocTestSuite(pickletools))
-    return tests
+def test_main():
+    support.run_unittest(OptimizedPickleTests)
+    support.run_unittest(MiscTestCase)
+    support.run_doctest(pickletools)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

@@ -170,7 +170,7 @@ PyDoc_STRVAR(_gdbm_gdbm_nextkey__doc__,
 
 static PyObject *
 _gdbm_gdbm_nextkey_impl(gdbmobject *self, PyTypeObject *cls, const char *key,
-                        Py_ssize_t key_length);
+                        Py_ssize_clean_t key_length);
 
 static PyObject *
 _gdbm_gdbm_nextkey(gdbmobject *self, PyTypeObject *cls, PyObject *const *args, Py_ssize_t nargs, PyObject *kwnames)
@@ -179,7 +179,7 @@ _gdbm_gdbm_nextkey(gdbmobject *self, PyTypeObject *cls, PyObject *const *args, P
     static const char * const _keywords[] = {"", NULL};
     static _PyArg_Parser _parser = {"s#:nextkey", _keywords, 0};
     const char *key;
-    Py_ssize_t key_length;
+    Py_ssize_clean_t key_length;
 
     if (!_PyArg_ParseStackAndKeywords(args, nargs, kwnames, &_parser,
         &key, &key_length)) {
@@ -303,6 +303,13 @@ dbmopen(PyObject *module, PyObject *const *args, Py_ssize_t nargs)
     if (!_PyArg_CheckPositional("open", nargs, 1, 3)) {
         goto exit;
     }
+    if (!PyUnicode_Check(args[0])) {
+        _PyArg_BadArgument("open", "argument 1", "str", args[0]);
+        goto exit;
+    }
+    if (PyUnicode_READY(args[0]) == -1) {
+        goto exit;
+    }
     filename = args[0];
     if (nargs < 2) {
         goto skip_optional;
@@ -333,4 +340,4 @@ skip_optional:
 exit:
     return return_value;
 }
-/*[clinic end generated code: output=63c507f93d84a3a4 input=a9049054013a1b77]*/
+/*[clinic end generated code: output=3b88446433e43d96 input=a9049054013a1b77]*/

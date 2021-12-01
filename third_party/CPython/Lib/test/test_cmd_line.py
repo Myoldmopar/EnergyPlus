@@ -864,10 +864,9 @@ class SyntaxErrorTests(unittest.TestCase):
     def test_decoding_error_at_the_end_of_the_line(self):
         self.check_string(br"'\u1f'")
 
-
-def tearDownModule():
+def test_main():
+    support.run_unittest(CmdLineTest, IgnoreEnvironmentTest, SyntaxErrorTests)
     support.reap_children()
 
-
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

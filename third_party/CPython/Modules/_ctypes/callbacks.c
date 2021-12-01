@@ -1,5 +1,4 @@
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
 #include "frameobject.h"
 
 #include <stdbool.h>
@@ -188,7 +187,7 @@ static void _CallPythonObject(void *mem,
             */
         } else if (dict) {
             /* Hm, shouldn't we use PyCData_AtAddress() or something like that instead? */
-            CDataObject *obj = (CDataObject *)_PyObject_CallNoArgs(cnv);
+            CDataObject *obj = (CDataObject *)_PyObject_CallNoArg(cnv);
             if (!obj) {
                 PrintError("create argument %zd:\n", i);
                 Py_DECREF(cnv);
@@ -573,7 +572,7 @@ long Call_CanUnloadNow(void)
         return E_FAIL;
     }
 
-    result = _PyObject_CallNoArgs(func);
+    result = _PyObject_CallNoArg(func);
     Py_DECREF(func);
     if (!result) {
         PyErr_WriteUnraisable(context ? context : Py_None);

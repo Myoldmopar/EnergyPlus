@@ -9,7 +9,9 @@ import sys
 from test import support
 import unittest
 
-from test.support import _4G, bigmemtest
+from test.support import (
+    _4G, bigmemtest, run_unittest
+)
 from test.support.import_helper import import_module
 from test.support.os_helper import (
     TESTFN, unlink
@@ -1939,5 +1941,14 @@ ISSUE_21872_DAT = (
 )
 
 
+def test_main():
+    run_unittest(
+        CompressorDecompressorTestCase,
+        CompressDecompressFunctionTestCase,
+        FileTestCase,
+        OpenTestCase,
+        MiscellaneousTestCase,
+    )
+
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

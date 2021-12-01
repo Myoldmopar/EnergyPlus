@@ -1100,7 +1100,7 @@ def _process_class(cls, init, repr, eq, order, unsafe_hash, frozen,
 
 
 # _dataclass_getstate and _dataclass_setstate are needed for pickling frozen
-# classes with slots.  These could be slightly more performant if we generated
+# classes with slots.  These could be slighly more performant if we generated
 # the code instead of iterating over fields.  But that can be a project for
 # another day, if performance becomes an issue.
 def _dataclass_getstate(self):
@@ -1387,7 +1387,7 @@ def make_dataclass(cls_name, fields, *, bases=(), namespace=None, init=True,
         ns['__annotations__'] = annotations
 
     # We use `types.new_class()` instead of simply `type()` to allow dynamic creation
-    # of generic dataclasses.
+    # of generic dataclassses.
     cls = types.new_class(cls_name, bases, {}, exec_body_callback)
 
     # Apply the normal decorator.

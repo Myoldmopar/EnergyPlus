@@ -827,4 +827,3 @@ Exception hierarchy
 The class hierarchy for built-in exceptions is:
 
 .. literalinclude:: ../../Lib/test/exception_hierarchy.txt
-  :language: text

@@ -395,8 +395,8 @@ TCP echo server using the :func:`asyncio.start_server` function::
         server = await asyncio.start_server(
             handle_echo, '127.0.0.1', 8888)
 
-        addrs = ', '.join(str(sock.getsockname()) for sock in server.sockets)
-        print(f'Serving on {addrs}')
+        addr = server.sockets[0].getsockname()
+        print(f'Serving on {addr}')
 
         async with server:
             await server.serve_forever()

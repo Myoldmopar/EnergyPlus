@@ -7,7 +7,6 @@
 #include "pycore_atomic.h"        // _Py_atomic_int
 #include "pycore_call.h"          // _PyObject_Call()
 #include "pycore_ceval.h"         // _PyEval_SignalReceived()
-#include "pycore_frame.h"         // InterpreterFrame
 #include "pycore_moduleobject.h"  // _PyModule_GetState()
 #include "pycore_pyerrors.h"      // _PyErr_SetString()
 #include "pycore_pylifecycle.h"   // NSIG
@@ -611,7 +610,7 @@ static PyObject *
 signal_strsignal_impl(PyObject *module, int signalnum)
 /*[clinic end generated code: output=44e12e1e3b666261 input=b77914b03f856c74]*/
 {
-    const char *res;
+    char *res;
 
     if (signalnum < 1 || signalnum >= NSIG) {
         PyErr_SetString(PyExc_ValueError,
@@ -1221,7 +1220,11 @@ signal_sigtimedwait_impl(PyObject *module, sigset_t sigset,
                          PyObject *timeout_obj)
 /*[clinic end generated code: output=59c8971e8ae18a64 input=87fd39237cf0b7ba]*/
 {
-    _PyTime_t timeout;
+    struct timespec ts;
+    siginfo_t si;
+    int res;
+    _PyTime_t timeout, deadline, monotonic;
+
     if (_PyTime_FromSecondsObject(&timeout,
                                   timeout_obj, _PyTime_ROUND_CEILING) < 0)
         return NULL;
@@ -1231,16 +1234,12 @@ signal_sigtimedwait_impl(PyObject *module, sigset_t sigset,
         return NULL;
     }
 
-    _PyTime_t deadline = _PyDeadline_Init(timeout);
-    siginfo_t si;
+    deadline = _PyTime_GetMonotonicClock() + timeout;
 
     do {
-        struct timespec ts;
-        if (_PyTime_AsTimespec(timeout, &ts) < 0) {
+        if (_PyTime_AsTimespec(timeout, &ts) < 0)
             return NULL;
-        }
 
-        int res;
         Py_BEGIN_ALLOW_THREADS
         res = sigtimedwait(&sigset, &si, &ts);
         Py_END_ALLOW_THREADS
@@ -1259,10 +1258,10 @@ signal_sigtimedwait_impl(PyObject *module, sigset_t sigset,
         if (PyErr_CheckSignals())
             return NULL;
 
-        timeout = _PyDeadline_Get(deadline);
-        if (timeout < 0) {
+        monotonic = _PyTime_GetMonotonicClock();
+        timeout = deadline - monotonic;
+        if (timeout < 0)
             break;
-        }
     } while (1);
 
     return fill_siginfo(&si);
@@ -1595,7 +1594,7 @@ signal_get_set_handlers(signal_state_t *state, PyObject *mod_dict)
         Py_XDECREF(old_func);
     }
 
-    // Install Python SIGINT handler which raises KeyboardInterrupt
+    // Instal Python SIGINT handler which raises KeyboardInterrupt
     PyObject* sigint_func = get_handler(SIGINT);
     if (sigint_func == state->default_handler) {
         PyObject *int_handler = PyMapping_GetItemString(mod_dict,
@@ -1787,7 +1786,11 @@ _PyErr_CheckSignalsTstate(PyThreadState *tstate)
      */
     _Py_atomic_store(&is_tripped, 0);
 
-    InterpreterFrame *frame = tstate->frame;
+    PyObject *frame = (PyObject *)tstate->frame;
+    if (!frame) {
+        frame = Py_None;
+    }
+
     signal_state_t *state = &signal_global_state;
     for (int i = 1; i < NSIG; i++) {
         if (!_Py_atomic_load_relaxed(&Handlers[i].tripped)) {
@@ -1818,16 +1821,8 @@ _PyErr_CheckSignalsTstate(PyThreadState *tstate)
             PyErr_WriteUnraisable(Py_None);
             continue;
         }
-        PyObject *arglist = NULL;
-        if (frame == NULL) {
-            arglist = Py_BuildValue("(iO)", i, Py_None);
-        }
-        else {
-            PyFrameObject *f = _PyFrame_GetFrameObject(frame);
-            if (f != NULL) {
-                arglist = Py_BuildValue("(iO)", i, f);
-            }
-        }
+
+        PyObject *arglist = Py_BuildValue("(iO)", i, frame);
         PyObject *result;
         if (arglist) {
             result = _PyObject_Call(tstate, func, arglist, NULL);

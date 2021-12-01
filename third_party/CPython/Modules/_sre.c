@@ -15,7 +15,7 @@
  * 2001-05-14 fl   fixes for 1.5.2 compatibility
  * 2001-07-01 fl   added BIGCHARSET support (from Martin von Loewis)
  * 2001-10-18 fl   fixed group reset issue (from Matthew Mueller)
- * 2001-10-20 fl   added split primitive; re-enable unicode for 1.6/2.0/2.1
+ * 2001-10-20 fl   added split primitive; reenable unicode for 1.6/2.0/2.1
  * 2001-10-21 fl   added sub/subn primitive
  * 2001-10-24 fl   added finditer primitive (for 2.2 only)
  * 2001-12-07 fl   fixed memory leak in sub/subn (Guido van Rossum)
@@ -389,8 +389,7 @@ getstring(PyObject* string, Py_ssize_t* p_length,
 
     /* get pointer to byte string buffer */
     if (PyObject_GetBuffer(string, view, PyBUF_SIMPLE) != 0) {
-        PyErr_Format(PyExc_TypeError, "expected string or bytes-like "
-                     "object, got '%.200s'", Py_TYPE(string)->tp_name);
+        PyErr_SetString(PyExc_TypeError, "expected string or bytes-like object");
         return NULL;
     }
 
@@ -2708,7 +2707,7 @@ static PyMethodDef pattern_methods[] = {
     _SRE_SRE_PATTERN_SCANNER_METHODDEF
     _SRE_SRE_PATTERN___COPY___METHODDEF
     _SRE_SRE_PATTERN___DEEPCOPY___METHODDEF
-    {"__class_getitem__", Py_GenericAlias, METH_O|METH_CLASS,
+    {"__class_getitem__", (PyCFunction)Py_GenericAlias, METH_O|METH_CLASS,
      PyDoc_STR("See PEP 585")},
     {NULL, NULL}
 };
@@ -2764,7 +2763,7 @@ static PyMethodDef match_methods[] = {
     _SRE_SRE_MATCH_EXPAND_METHODDEF
     _SRE_SRE_MATCH___COPY___METHODDEF
     _SRE_SRE_MATCH___DEEPCOPY___METHODDEF
-    {"__class_getitem__", Py_GenericAlias, METH_O|METH_CLASS,
+    {"__class_getitem__", (PyCFunction)Py_GenericAlias, METH_O|METH_CLASS,
      PyDoc_STR("See PEP 585")},
     {NULL, NULL}
 };

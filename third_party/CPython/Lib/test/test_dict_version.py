@@ -1,5 +1,5 @@
 """
-Test implementation of the PEP 509: dictionary versioning.
+Test implementation of the PEP 509: dictionary versionning.
 """
 import unittest
 from test.support import import_helper

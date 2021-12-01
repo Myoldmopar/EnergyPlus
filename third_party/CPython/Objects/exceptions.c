@@ -89,14 +89,9 @@ BaseException_clear(PyBaseExceptionObject *self)
 static void
 BaseException_dealloc(PyBaseExceptionObject *self)
 {
-    PyObject_GC_UnTrack(self);
-    // bpo-44348: The trashcan mechanism prevents stack overflow when deleting
-    // long chains of exceptions. For example, exceptions can be chained
-    // through the __context__ attributes or the __traceback__ attribute.
-    Py_TRASHCAN_BEGIN(self, BaseException_dealloc)
+    _PyObject_GC_UNTRACK(self);
     BaseException_clear(self);
     Py_TYPE(self)->tp_free((PyObject *)self);
-    Py_TRASHCAN_END
 }
 
 static int
@@ -2119,6 +2114,15 @@ static PyTypeObject _PyExc_UnicodeEncodeError = {
 };
 PyObject *PyExc_UnicodeEncodeError = (PyObject *)&_PyExc_UnicodeEncodeError;
 
+PyObject *
+PyUnicodeEncodeError_Create(
+    const char *encoding, const Py_UNICODE *object, Py_ssize_t length,
+    Py_ssize_t start, Py_ssize_t end, const char *reason)
+{
+    return PyObject_CallFunction(PyExc_UnicodeEncodeError, "su#nns",
+                                 encoding, object, length, start, end, reason);
+}
+
 
 /*
  *    UnicodeDecodeError extends UnicodeError
@@ -2322,6 +2326,16 @@ static PyTypeObject _PyExc_UnicodeTranslateError = {
     (initproc)UnicodeTranslateError_init, 0, BaseException_new,
 };
 PyObject *PyExc_UnicodeTranslateError = (PyObject *)&_PyExc_UnicodeTranslateError;
+
+/* Deprecated. */
+PyObject *
+PyUnicodeTranslateError_Create(
+    const Py_UNICODE *object, Py_ssize_t length,
+    Py_ssize_t start, Py_ssize_t end, const char *reason)
+{
+    return PyObject_CallFunction(PyExc_UnicodeTranslateError, "u#nns",
+                                 object, length, start, end, reason);
+}
 
 PyObject *
 _PyUnicodeTranslateError_Create(

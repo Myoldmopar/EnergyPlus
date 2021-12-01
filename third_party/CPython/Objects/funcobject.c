@@ -7,8 +7,6 @@
 #include "pycore_pyerrors.h"      // _PyErr_Occurred()
 #include "structmember.h"         // PyMemberDef
 
-static uint32_t next_func_version = 1;
-
 PyObject *
 PyFunction_NewWithQualName(PyObject *code, PyObject *globals, PyObject *qualname)
 {
@@ -24,11 +22,9 @@ PyFunction_NewWithQualName(PyObject *code, PyObject *globals, PyObject *qualname
     PyObject *name = code_obj->co_name;
     assert(name != NULL);
     Py_INCREF(name);
-
     if (!qualname) {
-        qualname = code_obj->co_qualname;
+        qualname = name;
     }
-    assert(qualname != NULL);
     Py_INCREF(qualname);
 
     PyObject *consts = code_obj->co_consts;
@@ -81,7 +77,7 @@ PyFunction_NewWithQualName(PyObject *code, PyObject *globals, PyObject *qualname
     op->func_module = module;
     op->func_annotations = NULL;
     op->vectorcall = _PyFunction_Vectorcall;
-    op->func_version = 0;
+
     _PyObject_GC_TRACK(op);
     return (PyObject *)op;
 
@@ -94,19 +90,6 @@ error:
     Py_XDECREF(module);
     Py_XDECREF(builtins);
     return NULL;
-}
-
-uint32_t _PyFunction_GetVersionForCurrentState(PyFunctionObject *func)
-{
-    if (func->func_version != 0) {
-        return func->func_version;
-    }
-    if (next_func_version == 0) {
-        return 0;
-    }
-    uint32_t v = next_func_version++;
-    func->func_version = v;
-    return v;
 }
 
 PyObject *
@@ -171,7 +154,6 @@ PyFunction_SetDefaults(PyObject *op, PyObject *defaults)
         PyErr_SetString(PyExc_SystemError, "non-tuple default args");
         return -1;
     }
-    ((PyFunctionObject *)op)->func_version = 0;
     Py_XSETREF(((PyFunctionObject *)op)->func_defaults, defaults);
     return 0;
 }
@@ -203,7 +185,6 @@ PyFunction_SetKwDefaults(PyObject *op, PyObject *defaults)
                         "non-dict keyword only default args");
         return -1;
     }
-    ((PyFunctionObject *)op)->func_version = 0;
     Py_XSETREF(((PyFunctionObject *)op)->func_kwdefaults, defaults);
     return 0;
 }
@@ -236,7 +217,6 @@ PyFunction_SetClosure(PyObject *op, PyObject *closure)
                      Py_TYPE(closure)->tp_name);
         return -1;
     }
-    ((PyFunctionObject *)op)->func_version = 0;
     Py_XSETREF(((PyFunctionObject *)op)->func_closure, closure);
     return 0;
 }
@@ -268,7 +248,6 @@ PyFunction_SetAnnotations(PyObject *op, PyObject *annotations)
                         "non-dict annotations");
         return -1;
     }
-    ((PyFunctionObject *)op)->func_version = 0;
     Py_XSETREF(((PyFunctionObject *)op)->func_annotations, annotations);
     return 0;
 }
@@ -300,8 +279,7 @@ func_get_code(PyFunctionObject *op, void *Py_UNUSED(ignored))
 static int
 func_set_code(PyFunctionObject *op, PyObject *value, void *Py_UNUSED(ignored))
 {
-    Py_ssize_t nclosure;
-    int nfree;
+    Py_ssize_t nfree, nclosure;
 
     /* Not legal to del f.func_code or to set it to anything
      * other than a code object. */
@@ -316,7 +294,7 @@ func_set_code(PyFunctionObject *op, PyObject *value, void *Py_UNUSED(ignored))
         return -1;
     }
 
-    nfree = ((PyCodeObject *)value)->co_nfreevars;
+    nfree = PyCode_GetNumFree((PyCodeObject *)value);
     nclosure = (op->func_closure == NULL ? 0 :
             PyTuple_GET_SIZE(op->func_closure));
     if (nclosure != nfree) {
@@ -327,7 +305,6 @@ func_set_code(PyFunctionObject *op, PyObject *value, void *Py_UNUSED(ignored))
                      nclosure, nfree);
         return -1;
     }
-    op->func_version = 0;
     Py_INCREF(value);
     Py_XSETREF(op->func_code, value);
     return 0;
@@ -412,7 +389,6 @@ func_set_defaults(PyFunctionObject *op, PyObject *value, void *Py_UNUSED(ignored
         return -1;
     }
 
-    op->func_version = 0;
     Py_XINCREF(value);
     Py_XSETREF(op->func_defaults, value);
     return 0;
@@ -454,7 +430,6 @@ func_set_kwdefaults(PyFunctionObject *op, PyObject *value, void *Py_UNUSED(ignor
         return -1;
     }
 
-    op->func_version = 0;
     Py_XINCREF(value);
     Py_XSETREF(op->func_kwdefaults, value);
     return 0;
@@ -504,7 +479,6 @@ func_set_annotations(PyFunctionObject *op, PyObject *value, void *Py_UNUSED(igno
             "__annotations__ must be set to a dict object");
         return -1;
     }
-    op->func_version = 0;
     Py_XINCREF(value);
     Py_XSETREF(op->func_annotations, value);
     return 0;
@@ -564,7 +538,7 @@ func_new_impl(PyTypeObject *type, PyCodeObject *code, PyObject *globals,
 /*[clinic end generated code: output=99c6d9da3a24e3be input=93611752fc2daf11]*/
 {
     PyFunctionObject *newfunc;
-    Py_ssize_t nclosure;
+    Py_ssize_t nfree, nclosure;
 
     if (name != Py_None && !PyUnicode_Check(name)) {
         PyErr_SetString(PyExc_TypeError,
@@ -576,8 +550,9 @@ func_new_impl(PyTypeObject *type, PyCodeObject *code, PyObject *globals,
                         "arg 4 (defaults) must be None or tuple");
         return NULL;
     }
+    nfree = PyTuple_GET_SIZE(code->co_freevars);
     if (!PyTuple_Check(closure)) {
-        if (code->co_nfreevars && closure == Py_None) {
+        if (nfree && closure == Py_None) {
             PyErr_SetString(PyExc_TypeError,
                             "arg 5 (closure) must be tuple");
             return NULL;
@@ -591,10 +566,10 @@ func_new_impl(PyTypeObject *type, PyCodeObject *code, PyObject *globals,
 
     /* check that the closure is well-formed */
     nclosure = closure == Py_None ? 0 : PyTuple_GET_SIZE(closure);
-    if (code->co_nfreevars != nclosure)
+    if (nfree != nclosure)
         return PyErr_Format(PyExc_ValueError,
                             "%U requires closure of length %zd, not %zd",
-                            code->co_name, code->co_nfreevars, nclosure);
+                            code->co_name, nfree, nclosure);
     if (nclosure) {
         Py_ssize_t i;
         for (i = 0; i < nclosure; i++) {
@@ -634,7 +609,6 @@ func_new_impl(PyTypeObject *type, PyCodeObject *code, PyObject *globals,
 static int
 func_clear(PyFunctionObject *op)
 {
-    op->func_version = 0;
     Py_CLEAR(op->func_code);
     Py_CLEAR(op->func_globals);
     Py_CLEAR(op->func_builtins);

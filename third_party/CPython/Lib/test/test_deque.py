@@ -1,5 +1,4 @@
 from collections import deque
-import doctest
 import unittest
 from test import support, seq_tests
 import gc
@@ -742,9 +741,8 @@ class TestBasic(unittest.TestCase):
 
     @support.cpython_only
     def test_sizeof(self):
-        MAXFREEBLOCKS = 16
         BLOCKLEN = 64
-        basesize = support.calcvobjsize('2P5n%dPP' % MAXFREEBLOCKS)
+        basesize = support.calcvobjsize('2P4nP')
         blocksize = struct.calcsize('P%dPP' % BLOCKLEN)
         self.assertEqual(object.__sizeof__(deque()), basesize)
         check = self.check_sizeof
@@ -871,7 +869,6 @@ class TestSubclass(unittest.TestCase):
         p = weakref.proxy(d)
         self.assertEqual(str(p), str(d))
         d = None
-        support.gc_collect()  # For PyPy or other GCs.
         self.assertRaises(ReferenceError, str, p)
 
     def test_strange_subclass(self):
@@ -1034,10 +1031,31 @@ h
 
 __test__ = {'libreftest' : libreftest}
 
-def load_tests(loader, tests, pattern):
-    tests.addTest(doctest.DocTestSuite())
-    return tests
+def test_main(verbose=None):
+    import sys
+    test_classes = (
+        TestBasic,
+        TestVariousIteratorArgs,
+        TestSubclass,
+        TestSubclassWithKwargs,
+        TestSequence,
+    )
 
+    support.run_unittest(*test_classes)
+
+    # verify reference counting
+    if verbose and hasattr(sys, "gettotalrefcount"):
+        import gc
+        counts = [None] * 5
+        for i in range(len(counts)):
+            support.run_unittest(*test_classes)
+            gc.collect()
+            counts[i] = sys.gettotalrefcount()
+        print(counts)
+
+    # doctests
+    from test import test_deque
+    support.run_doctest(test_deque, verbose)
 
 if __name__ == "__main__":
-    unittest.main()
+    test_main(verbose=True)

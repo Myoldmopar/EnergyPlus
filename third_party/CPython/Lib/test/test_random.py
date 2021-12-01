@@ -48,11 +48,12 @@ class TestBasicOps:
             self.gen.seed(arg)
 
         for arg in [1+2j, tuple('abc'), MySeed()]:
-            with self.assertRaises(TypeError):
+            with self.assertWarns(DeprecationWarning):
                 self.gen.seed(arg)
 
         for arg in [list(range(3)), dict(one=1)]:
-            self.assertRaises(TypeError, self.gen.seed, arg)
+            with self.assertWarns(DeprecationWarning):
+                self.assertRaises(TypeError, self.gen.seed, arg)
         self.assertRaises(TypeError, self.gen.seed, 1, 2, 3, 4)
         self.assertRaises(TypeError, type(self.gen), [])
 
@@ -104,6 +105,15 @@ class TestBasicOps:
         self.assertTrue(lst != shuffled_lst)
         self.assertRaises(TypeError, shuffle, (1, 2, 3))
 
+    def test_shuffle_random_argument(self):
+        # Test random argument to shuffle.
+        shuffle = self.gen.shuffle
+        mock_random = unittest.mock.Mock(return_value=0.5)
+        seq = bytearray(b'abcdefghijk')
+        with self.assertWarns(DeprecationWarning):
+            shuffle(seq, mock_random)
+        mock_random.assert_called_with()
+
     def test_choice(self):
         choice = self.gen.choice
         with self.assertRaises(IndexError):
@@ -154,7 +164,7 @@ class TestBasicOps:
         self.assertRaises(TypeError, self.gen.sample, dict.fromkeys('abcdef'), 2)
 
     def test_sample_on_sets(self):
-        with self.assertRaises(TypeError):
+        with self.assertWarns(DeprecationWarning):
             population = {10, 20, 30, 40, 50, 60, 70}
             self.gen.sample(population, k=5)
 
@@ -374,6 +384,23 @@ class TestBasicOps:
             restoredseq = [newgen.random() for i in range(10)]
             self.assertEqual(origseq, restoredseq)
 
+    @test.support.cpython_only
+    def test_bug_41052(self):
+        # _random.Random should not be allowed to serialization
+        import _random
+        for proto in range(pickle.HIGHEST_PROTOCOL + 1):
+            r = _random.Random()
+            self.assertRaises(TypeError, pickle.dumps, r, proto)
+
+    @test.support.cpython_only
+    def test_bug_42008(self):
+        # _random.Random should call seed with first element of arg tuple
+        import _random
+        r1 = _random.Random()
+        r1.seed(8675309)
+        r2 = _random.Random(8675309)
+        self.assertEqual(r1.random(), r2.random())
+
     def test_bug_1727780(self):
         # verify that version-2-pickles can be loaded
         # fine, whether they are created on 32-bit or 64-bit
@@ -554,25 +581,6 @@ class SystemRandom_TestBasicOps(TestBasicOps, unittest.TestCase):
             k = int(1.00001 + _log(n, 2))
             self.assertEqual(k, numbits)        # note the stronger assertion
             self.assertTrue(2**k > n > 2**(k-1))   # note the stronger assertion
-
-
-class TestRawMersenneTwister(unittest.TestCase):
-    @test.support.cpython_only
-    def test_bug_41052(self):
-        # _random.Random should not be allowed to serialization
-        import _random
-        for proto in range(pickle.HIGHEST_PROTOCOL + 1):
-            r = _random.Random()
-            self.assertRaises(TypeError, pickle.dumps, r, proto)
-
-    @test.support.cpython_only
-    def test_bug_42008(self):
-        # _random.Random should call seed with first element of arg tuple
-        import _random
-        r1 = _random.Random()
-        r1.seed(8675309)
-        r2 = _random.Random(8675309)
-        self.assertEqual(r1.random(), r2.random())
 
 
 class MersenneTwister_TestBasicOps(TestBasicOps, unittest.TestCase):

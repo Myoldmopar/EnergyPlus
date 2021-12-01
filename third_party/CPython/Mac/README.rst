@@ -192,7 +192,7 @@ Building and using a framework-based Python on macOS
 
 
 1. Why would I want a framework Python instead of a normal static Python?
--------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 The main reason is because you want to create GUI programs in Python. With the
 exception of X11/XDarwin-based GUI toolkits all GUI programs need to be run
@@ -206,7 +206,7 @@ only two places: "/Library/Framework/Python.framework" and
 "/Applications/Python <VERSION>" where ``<VERSION>`` can be e.g. "3.8",
 "2.7", etc.  This simplifies matters for users installing
 Python from a binary distribution if they want to get rid of it again. Moreover,
-due to the way frameworks work, users without admin privileges can install a
+due to the way frameworks work, usera without admin privileges can install a
 binary distribution in their home directory without recompilation.
 
 2. How does a framework Python differ from a normal static Python?
@@ -272,7 +272,7 @@ normal frameworkinstall which installs the Tools directory into
 distributions.
 
 What do all these programs do?
-==============================
+===============================
 
 "IDLE.app" is an integrated development environment for Python: editor,
 debugger, etc.
@@ -296,7 +296,7 @@ How do I create a binary distribution?
 Download and unpack the source release from https://www.python.org/download/.
 Go to the directory ``Mac/BuildScript``. There you will find a script
 ``build-installer.py`` that does all the work. This will download and build
-a number of 3rd-party libraries, configures and builds a framework Python,
+a number of 3rd-party libaries, configures and builds a framework Python,
 installs it, creates the installer package files and then packs this in a
 DMG image.  The script also builds an HTML copy of the current Python
 documentation set for this release for inclusion in the framework.  The

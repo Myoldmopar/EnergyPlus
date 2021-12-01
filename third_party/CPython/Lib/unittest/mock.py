@@ -30,7 +30,6 @@ import inspect
 import pprint
 import sys
 import builtins
-import pkgutil
 from asyncio import iscoroutinefunction
 from types import CodeType, ModuleType, MethodType
 from unittest.util import safe_repr
@@ -1005,11 +1004,6 @@ class NonCallableMock(Base):
         if _new_name in self.__dict__['_spec_asyncs']:
             return AsyncMock(**kw)
 
-        if self._mock_sealed:
-            attribute = f".{kw['name']}" if "name" in kw else "()"
-            mock_name = self._extract_mock_name() + attribute
-            raise AttributeError(mock_name)
-
         _type = type(self)
         if issubclass(_type, MagicMock) and _new_name in _async_method_magics:
             # Any asynchronous magic becomes an AsyncMock
@@ -1028,6 +1022,12 @@ class NonCallableMock(Base):
                 klass = Mock
         else:
             klass = _type.__mro__[1]
+
+        if self._mock_sealed:
+            attribute = "." + kw["name"] if "name" in kw else "()"
+            mock_name = self._extract_mock_name() + attribute
+            raise AttributeError(mock_name)
+
         return klass(**kw)
 
 
@@ -1215,11 +1215,6 @@ class Mock(CallableMixin, NonCallableMock):
       this is a new Mock (created on first access). See the
       `return_value` attribute.
 
-    * `unsafe`: By default, accessing any attribute whose name starts with
-      *assert*, *assret*, *asert*, *aseert* or *assrt* will raise an
-       AttributeError. Passing `unsafe=True` will allow access to
-      these attributes.
-
     * `wraps`: Item for the mock object to wrap. If `wraps` is not None then
       calling the Mock will pass the call through to the wrapped object
       (returning the real result). Attribute access on the mock will return a
@@ -1237,6 +1232,25 @@ class Mock(CallableMixin, NonCallableMock):
     Mocks can also be called with arbitrary keyword arguments. These will be
     used to set attributes on the mock after it is created.
     """
+
+
+def _dot_lookup(thing, comp, import_path):
+    try:
+        return getattr(thing, comp)
+    except AttributeError:
+        __import__(import_path)
+        return getattr(thing, comp)
+
+
+def _importer(target):
+    components = target.split('.')
+    import_path = components.pop(0)
+    thing = __import__(import_path)
+
+    for comp in components:
+        import_path += ".%s" % comp
+        thing = _dot_lookup(thing, comp, import_path)
+    return thing
 
 
 # _check_spec_arg_typos takes kwargs from commands like patch and checks that
@@ -1592,7 +1606,8 @@ def _get_target(target):
     except (TypeError, ValueError):
         raise TypeError("Need a valid target to patch. You supplied: %r" %
                         (target,))
-    return partial(pkgutil.resolve_name, target), attribute
+    getter = lambda: _importer(target)
+    return getter, attribute
 
 
 def _patch_object(
@@ -1647,7 +1662,7 @@ def _patch_multiple(target, spec=None, create=False, spec_set=None,
     for choosing which methods to wrap.
     """
     if type(target) is str:
-        getter = partial(pkgutil.resolve_name, target)
+        getter = lambda: _importer(target)
     else:
         getter = lambda: target
 
@@ -1827,7 +1842,7 @@ class _patch_dict(object):
     def _patch_dict(self):
         values = self.values
         if isinstance(self.in_dict, str):
-            self.in_dict = pkgutil.resolve_name(self.in_dict)
+            self.in_dict = _importer(self.in_dict)
         in_dict = self.in_dict
         clear = self.clear
 
@@ -1928,7 +1943,7 @@ magic_methods = (
 )
 
 numerics = (
-    "add sub mul matmul truediv floordiv mod lshift rshift and xor or pow"
+    "add sub mul matmul div floordiv mod lshift rshift and xor or pow truediv"
 )
 inplace = ' '.join('i%s' % n for n in numerics.split())
 right = ' '.join('r%s' % n for n in numerics.split())
@@ -2190,7 +2205,7 @@ class AsyncMockMixin(Base):
                 try:
                     result = next(effect)
                 except StopIteration:
-                    # It is impossible to propagate a StopIteration
+                    # It is impossible to propogate a StopIteration
                     # through coroutines because of PEP 479
                     raise StopAsyncIteration
                 if _is_exception(result):
@@ -2911,8 +2926,6 @@ def seal(mock):
         except AttributeError:
             continue
         if not isinstance(m, NonCallableMock):
-            continue
-        if isinstance(m._mock_children.get(attr), _SpecState):
             continue
         if m._mock_new_parent is mock:
             seal(m)

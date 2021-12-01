@@ -191,14 +191,6 @@ class _AsyncGeneratorContextManager(
 ):
     """Helper for @asynccontextmanager decorator."""
 
-    def __call__(self, func):
-        @wraps(func)
-        async def inner(*args, **kwds):
-            async with self.__class__(self.func, self.args, self.kwds):
-                return await func(*args, **kwds)
-
-        return inner
-
     async def __aenter__(self):
         # do not keep args and kwds alive unnecessarily
         # they are only needed for recreation, which is not possible anymore
@@ -236,7 +228,7 @@ class _AsyncGeneratorContextManager(
                 # was passed to athrow() and later wrapped into a RuntimeError
                 # (see PEP 479 for sync generators; async generators also
                 # have this behavior). But do this only if the exception wrapped
-                # by the RuntimeError is actually Stop(Async)Iteration (see
+                # by the RuntimeError is actully Stop(Async)Iteration (see
                 # issue29692).
                 if (
                     isinstance(value, (StopIteration, StopAsyncIteration))
@@ -495,14 +487,9 @@ class _BaseExitStack:
         """
         # We look up the special methods on the type to match the with
         # statement.
-        cls = type(cm)
-        try:
-            _enter = cls.__enter__
-            _exit = cls.__exit__
-        except AttributeError:
-            raise TypeError(f"'{cls.__module__}.{cls.__qualname__}' object does "
-                            f"not support the context manager protocol") from None
-        result = _enter(cm)
+        _cm_type = type(cm)
+        _exit = _cm_type.__exit__
+        result = _cm_type.__enter__(cm)
         self._push_cm_exit(cm, _exit)
         return result
 
@@ -553,10 +540,10 @@ class ExitStack(_BaseExitStack, AbstractContextManager):
             # Context may not be correct, so find the end of the chain
             while 1:
                 exc_context = new_exc.__context__
-                if exc_context is None or exc_context is old_exc:
+                if exc_context is old_exc:
                     # Context is already set correctly (see issue 20317)
                     return
-                if exc_context is frame_exc:
+                if exc_context is None or exc_context is frame_exc:
                     break
                 new_exc = exc_context
             # Change the end of the chain to point to the exception
@@ -627,15 +614,9 @@ class AsyncExitStack(_BaseExitStack, AbstractAsyncContextManager):
         If successful, also pushes its __aexit__ method as a callback and
         returns the result of the __aenter__ method.
         """
-        cls = type(cm)
-        try:
-            _enter = cls.__aenter__
-            _exit = cls.__aexit__
-        except AttributeError:
-            raise TypeError(f"'{cls.__module__}.{cls.__qualname__}' object does "
-                            f"not support the asynchronous context manager protocol"
-                           ) from None
-        result = await _enter(cm)
+        _cm_type = type(cm)
+        _exit = _cm_type.__aexit__
+        result = await _cm_type.__aenter__(cm)
         self._push_async_cm_exit(cm, _exit)
         return result
 
@@ -693,10 +674,10 @@ class AsyncExitStack(_BaseExitStack, AbstractAsyncContextManager):
             # Context may not be correct, so find the end of the chain
             while 1:
                 exc_context = new_exc.__context__
-                if exc_context is None or exc_context is old_exc:
+                if exc_context is old_exc:
                     # Context is already set correctly (see issue 20317)
                     return
-                if exc_context is frame_exc:
+                if exc_context is None or exc_context is frame_exc:
                     break
                 new_exc = exc_context
             # Change the end of the chain to point to the exception

@@ -28,15 +28,7 @@ import operator
 import re as stdlib_re  # Avoid confusion with the re we export.
 import sys
 import types
-import warnings
 from types import WrapperDescriptorType, MethodWrapperType, MethodDescriptorType, GenericAlias
-
-
-try:
-    from _typing import _idfunc
-except ImportError:
-    def _idfunc(_, x):
-        return x
 
 # Please keep __all__ alphabetized within each category.
 __all__ = [
@@ -151,7 +143,7 @@ def _type_convert(arg, module=None):
     return arg
 
 
-def _type_check(arg, msg, is_argument=True, module=None, *, is_class=False):
+def _type_check(arg, msg, is_argument=True, module=None):
     """Check that the argument is a type, and return it (internal helper).
 
     As a special case, accept None and return type(None) instead. Also wrap strings
@@ -164,16 +156,14 @@ def _type_check(arg, msg, is_argument=True, module=None, *, is_class=False):
     We append the repr() of the actual value (truncated to 100 chars).
     """
     invalid_generic_forms = (Generic, Protocol)
-    if not is_class:
-        invalid_generic_forms += (ClassVar,)
-        if is_argument:
-            invalid_generic_forms += (Final,)
+    if is_argument:
+        invalid_generic_forms = invalid_generic_forms + (ClassVar, Final)
 
     arg = _type_convert(arg, module=module)
     if (isinstance(arg, _GenericAlias) and
             arg.__origin__ in invalid_generic_forms):
         raise TypeError(f"{arg} is not valid as type argument")
-    if arg in (Any, NoReturn, Final):
+    if arg in (Any, NoReturn):
         return arg
     if isinstance(arg, _SpecialForm) or arg in (Generic, Protocol):
         raise TypeError(f"Plain {arg} is not valid as type argument")
@@ -664,10 +654,9 @@ class ForwardRef(_Final, _root=True):
 
     __slots__ = ('__forward_arg__', '__forward_code__',
                  '__forward_evaluated__', '__forward_value__',
-                 '__forward_is_argument__', '__forward_is_class__',
-                 '__forward_module__')
+                 '__forward_is_argument__', '__forward_module__')
 
-    def __init__(self, arg, is_argument=True, module=None, *, is_class=False):
+    def __init__(self, arg, is_argument=True, module=None):
         if not isinstance(arg, str):
             raise TypeError(f"Forward reference must be a string -- got {arg!r}")
         try:
@@ -679,7 +668,6 @@ class ForwardRef(_Final, _root=True):
         self.__forward_evaluated__ = False
         self.__forward_value__ = None
         self.__forward_is_argument__ = is_argument
-        self.__forward_is_class__ = is_class
         self.__forward_module__ = module
 
     def _evaluate(self, globalns, localns, recursive_guard):
@@ -696,11 +684,10 @@ class ForwardRef(_Final, _root=True):
                 globalns = getattr(
                     sys.modules.get(self.__forward_module__, None), '__dict__', globalns
                 )
-            type_ = _type_check(
+            type_ =_type_check(
                 eval(self.__forward_code__, globalns, localns),
                 "Forward references must evaluate to types.",
                 is_argument=self.__forward_is_argument__,
-                is_class=self.__forward_is_class__,
             )
             self.__forward_value__ = _eval_type(
                 type_, globalns, localns, recursive_guard | {self.__forward_arg__}
@@ -813,7 +800,10 @@ class TypeVar( _Final, _Immutable, _TypeVarLike, _root=True):
             raise TypeError("A single constraint is not allowed")
         msg = "TypeVar(name, constraint, ...): constraints must be types."
         self.__constraints__ = tuple(_type_check(t, msg) for t in constraints)
-        def_mod = _caller()
+        try:
+            def_mod = sys._getframe(1).f_globals.get('__name__', '__main__')  # for pickling
+        except (AttributeError, ValueError):
+            def_mod = None
         if def_mod != 'typing':
             self.__module__ = def_mod
 
@@ -916,7 +906,10 @@ class ParamSpec(_Final, _Immutable, _TypeVarLike, _root=True):
     def __init__(self, name, *, bound=None, covariant=False, contravariant=False):
         self.__name__ = name
         super().__init__(bound, covariant, contravariant)
-        def_mod = _caller()
+        try:
+            def_mod = sys._getframe(1).f_globals.get('__name__', '__main__')
+        except (AttributeError, ValueError):
+            def_mod = None
         if def_mod != 'typing':
             self.__module__ = def_mod
 
@@ -1447,7 +1440,10 @@ def _allow_reckless_class_checks(depth=3):
     The abc and functools modules indiscriminately call isinstance() and
     issubclass() on the whole MRO of a user class, which may contain protocols.
     """
-    return _caller(depth) in {'abc', 'functools', None}
+    try:
+        return sys._getframe(depth).f_globals['__name__'] in ['abc', 'functools']
+    except (AttributeError, ValueError):  # For platforms without _getframe().
+        return True
 
 
 _PROTO_ALLOWLIST = {
@@ -1804,7 +1800,7 @@ def get_type_hints(obj, globalns=None, localns=None, include_extras=False):
                 if value is None:
                     value = type(None)
                 if isinstance(value, str):
-                    value = ForwardRef(value, is_argument=False, is_class=True)
+                    value = ForwardRef(value, is_argument=False)
                 value = _eval_type(value, base_globals, base_locals)
                 hints[name] = value
         return hints if include_extras else {k: _strip_annotations(t) for k, t in hints.items()}
@@ -1836,13 +1832,7 @@ def get_type_hints(obj, globalns=None, localns=None, include_extras=False):
         if value is None:
             value = type(None)
         if isinstance(value, str):
-            # class-level forward refs were handled above, this must be either
-            # a module-level annotation or a function argument annotation
-            value = ForwardRef(
-                value,
-                is_argument=not isinstance(obj, types.ModuleType),
-                is_class=False,
-            )
+            value = ForwardRef(value)
         value = _eval_type(value, globalns, localns)
         if name in defaults and defaults[name] is None:
             value = Optional[value]
@@ -2292,7 +2282,11 @@ def NamedTuple(typename, fields=None, /, **kwargs):
     elif kwargs:
         raise TypeError("Either list of fields or keywords"
                         " can be provided to NamedTuple, not both")
-    return _make_nmtuple(typename, fields, module=_caller())
+    try:
+        module = sys._getframe(1).f_globals.get('__name__', '__main__')
+    except (AttributeError, ValueError):
+        module = None
+    return _make_nmtuple(typename, fields, module=module)
 
 _NamedTuple = type.__new__(NamedTupleMeta, 'NamedTuple', (), {})
 
@@ -2407,10 +2401,11 @@ def TypedDict(typename, fields=None, /, *, total=True, **kwargs):
                         " but not both")
 
     ns = {'__annotations__': dict(fields)}
-    module = _caller()
-    if module is not None:
+    try:
         # Setting correct module is necessary to make typed dict classes pickleable.
-        ns['__module__'] = module
+        ns['__module__'] = sys._getframe(1).f_globals.get('__name__', '__main__')
+    except (AttributeError, ValueError):
+        pass
 
     return _TypedDictMeta(typename, (), ns, total=total)
 
@@ -2437,8 +2432,6 @@ class NewType:
         num = UserId(5) + 1     # type: int
     """
 
-    __call__ = _idfunc
-
     def __init__(self, name, tp):
         self.__qualname__ = name
         if '.' in name:
@@ -2451,6 +2444,9 @@ class NewType:
 
     def __repr__(self):
         return f'{self.__module__}.{self.__qualname__}'
+
+    def __call__(self, x):
+        return x
 
     def __reduce__(self):
         return self.__qualname__
@@ -2618,20 +2614,7 @@ class TextIO(IO[str]):
         pass
 
 
-class _DeprecatedType(type):
-    def __getattribute__(cls, name):
-        if name not in ("__dict__", "__module__") and name in cls.__dict__:
-            warnings.warn(
-                f"{cls.__name__} is deprecated, import directly "
-                f"from typing instead. {cls.__name__} will be removed "
-                "in Python 3.12.",
-                DeprecationWarning,
-                stacklevel=2,
-            )
-        return super().__getattribute__(name)
-
-
-class io(metaclass=_DeprecatedType):
+class io:
     """Wrapper namespace for IO generic classes."""
 
     __all__ = ['IO', 'TextIO', 'BinaryIO']
@@ -2646,7 +2629,7 @@ sys.modules[io.__name__] = io
 Pattern = _alias(stdlib_re.Pattern, 1)
 Match = _alias(stdlib_re.Match, 1)
 
-class re(metaclass=_DeprecatedType):
+class re:
     """Wrapper namespace for re type aliases."""
 
     __all__ = ['Pattern', 'Match']

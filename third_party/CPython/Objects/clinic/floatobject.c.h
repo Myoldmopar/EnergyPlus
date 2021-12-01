@@ -208,8 +208,7 @@ float_new(PyTypeObject *type, PyObject *args, PyObject *kwargs)
     PyObject *return_value = NULL;
     PyObject *x = NULL;
 
-    if ((type == &PyFloat_Type ||
-         type->tp_init == PyFloat_Type.tp_init) &&
+    if ((type == &PyFloat_Type) &&
         !_PyArg_NoKeywords("float", kwargs)) {
         goto exit;
     }
@@ -388,4 +387,4 @@ float___format__(PyObject *self, PyObject *arg)
 exit:
     return return_value;
 }
-/*[clinic end generated code: output=122a73f4c9d25806 input=a9049054013a1b77]*/
+/*[clinic end generated code: output=bb079c3e130e4ce6 input=a9049054013a1b77]*/

@@ -187,17 +187,14 @@ class RotatingFileHandler(BaseRotatingHandler):
         Basically, see if the supplied record would cause the file to exceed
         the size limit we have.
         """
-        # See bpo-45401: Never rollover anything other than regular files
-        if os.path.exists(self.baseFilename) and not os.path.isfile(self.baseFilename):
-            return False
         if self.stream is None:                 # delay was set...
             self.stream = self._open()
         if self.maxBytes > 0:                   # are we rolling over?
             msg = "%s\n" % self.format(record)
             self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
             if self.stream.tell() + len(msg) >= self.maxBytes:
-                return True
-        return False
+                return 1
+        return 0
 
 class TimedRotatingFileHandler(BaseRotatingHandler):
     """
@@ -348,13 +345,10 @@ class TimedRotatingFileHandler(BaseRotatingHandler):
         record is not used, as we are just comparing times, but it is needed so
         the method signatures are the same
         """
-        # See bpo-45401: Never rollover anything other than regular files
-        if os.path.exists(self.baseFilename) and not os.path.isfile(self.baseFilename):
-            return False
         t = int(time.time())
         if t >= self.rolloverAt:
-            return True
-        return False
+            return 1
+        return 0
 
     def getFilesToDelete(self):
         """
@@ -841,36 +835,6 @@ class SysLogHandler(logging.Handler):
         self.address = address
         self.facility = facility
         self.socktype = socktype
-        self.socket = None
-        self.createSocket()
-
-    def _connect_unixsocket(self, address):
-        use_socktype = self.socktype
-        if use_socktype is None:
-            use_socktype = socket.SOCK_DGRAM
-        self.socket = socket.socket(socket.AF_UNIX, use_socktype)
-        try:
-            self.socket.connect(address)
-            # it worked, so set self.socktype to the used type
-            self.socktype = use_socktype
-        except OSError:
-            self.socket.close()
-            if self.socktype is not None:
-                # user didn't specify falling back, so fail
-                raise
-            use_socktype = socket.SOCK_STREAM
-            self.socket = socket.socket(socket.AF_UNIX, use_socktype)
-            try:
-                self.socket.connect(address)
-                # it worked, so set self.socktype to the used type
-                self.socktype = use_socktype
-            except OSError:
-                self.socket.close()
-                raise
-
-    def createSocket(self):
-        address = self.address
-        socktype = self.socktype
 
         if isinstance(address, str):
             self.unixsocket = True
@@ -907,6 +871,30 @@ class SysLogHandler(logging.Handler):
             self.socket = sock
             self.socktype = socktype
 
+    def _connect_unixsocket(self, address):
+        use_socktype = self.socktype
+        if use_socktype is None:
+            use_socktype = socket.SOCK_DGRAM
+        self.socket = socket.socket(socket.AF_UNIX, use_socktype)
+        try:
+            self.socket.connect(address)
+            # it worked, so set self.socktype to the used type
+            self.socktype = use_socktype
+        except OSError:
+            self.socket.close()
+            if self.socktype is not None:
+                # user didn't specify falling back, so fail
+                raise
+            use_socktype = socket.SOCK_STREAM
+            self.socket = socket.socket(socket.AF_UNIX, use_socktype)
+            try:
+                self.socket.connect(address)
+                # it worked, so set self.socktype to the used type
+                self.socktype = use_socktype
+            except OSError:
+                self.socket.close()
+                raise
+
     def encodePriority(self, facility, priority):
         """
         Encode the facility and priority. You can pass in strings or
@@ -926,10 +914,7 @@ class SysLogHandler(logging.Handler):
         """
         self.acquire()
         try:
-            sock = self.socket
-            if sock:
-                self.socket = None
-                sock.close()
+            self.socket.close()
             logging.Handler.close(self)
         finally:
             self.release()
@@ -969,10 +954,6 @@ class SysLogHandler(logging.Handler):
             # Message is a string. Convert to bytes as required by RFC 5424
             msg = msg.encode('utf-8')
             msg = prio + msg
-
-            if not self.socket:
-                self.createSocket()
-
             if self.unixsocket:
                 try:
                     self.socket.send(msg)
@@ -1419,15 +1400,12 @@ class QueueHandler(logging.Handler):
 
     def prepare(self, record):
         """
-        Prepare a record for queuing. The object returned by this method is
+        Prepares a record for queuing. The object returned by this method is
         enqueued.
 
-        The base implementation formats the record to merge the message and
-        arguments, and removes unpickleable items from the record in-place.
-        Specifically, it overwrites the record's `msg` and
-        `message` attributes with the merged message (obtained by
-        calling the handler's `format` method), and sets the `args`,
-        `exc_info` and `exc_text` attributes to None.
+        The base implementation formats the record to merge the message
+        and arguments, and removes unpickleable items from the record
+        in-place.
 
         You might want to override this method if you want to convert
         the record to a dict or JSON string, or send a modified copy

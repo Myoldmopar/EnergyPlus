@@ -334,7 +334,7 @@ class zipimporter(_bootstrap_external._LoaderBasics):
             _zip_directory_cache[self.archive] = self._files
         except ZipImportError:
             _zip_directory_cache.pop(self.archive, None)
-            self._files = {}
+            self._files = None
 
 
     def __repr__(self):

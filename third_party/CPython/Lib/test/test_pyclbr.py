@@ -222,11 +222,7 @@ class PyclbrTest(TestCase):
         cm('pickle', ignore=('partial', 'PickleBuffer'))
         cm('aifc', ignore=('_aifc_params',))  # set with = in module
         cm('sre_parse', ignore=('dump', 'groups', 'pos')) # from sre_constants import *; property
-        cm(
-            'pdb',
-            # pyclbr does not handle elegantly `typing` or properties
-            ignore=('Union', 'ModuleTarget', 'ScriptTarget'),
-        )
+        cm('pdb')
         cm('pydoc', ignore=('input', 'output',)) # properties
 
         # Tests for modules inside packages

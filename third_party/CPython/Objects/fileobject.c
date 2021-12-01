@@ -2,8 +2,7 @@
 
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
-#include "pycore_runtime.h"       // _PyRuntime
+#include "pycore_runtime.h"  // _PyRuntime
 
 #if defined(HAVE_GETC_UNLOCKED) && !defined(_Py_MEMORY_SANITIZER)
 /* clang MemorySanitizer doesn't yet understand getc_unlocked. */
@@ -191,7 +190,7 @@ PyObject_AsFileDescriptor(PyObject *o)
         return -1;
     }
     else if (meth != NULL) {
-        PyObject *fno = _PyObject_CallNoArgs(meth);
+        PyObject *fno = _PyObject_CallNoArg(meth);
         Py_DECREF(meth);
         if (fno == NULL)
             return -1;

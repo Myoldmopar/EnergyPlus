@@ -32,8 +32,8 @@ typedef struct _NRMUTEX
 } NRMUTEX;
 typedef NRMUTEX *PNRMUTEX;
 
-static PNRMUTEX
-AllocNonRecursiveMutex(void)
+PNRMUTEX
+AllocNonRecursiveMutex()
 {
     PNRMUTEX m = (PNRMUTEX)PyMem_RawMalloc(sizeof(NRMUTEX));
     if (!m)
@@ -51,7 +51,7 @@ fail:
     return NULL;
 }
 
-static VOID
+VOID
 FreeNonRecursiveMutex(PNRMUTEX mutex)
 {
     if (mutex) {
@@ -61,7 +61,7 @@ FreeNonRecursiveMutex(PNRMUTEX mutex)
     }
 }
 
-static DWORD
+DWORD
 EnterNonRecursiveMutex(PNRMUTEX mutex, DWORD milliseconds)
 {
     DWORD result = WAIT_OBJECT_0;
@@ -75,20 +75,23 @@ EnterNonRecursiveMutex(PNRMUTEX mutex, DWORD milliseconds)
             }
         }
     } else if (milliseconds != 0) {
-        /* wait at least until the deadline */
+        /* wait at least until the target */
+        _PyTime_t now = _PyTime_GetPerfCounter();
+        if (now <= 0) {
+            Py_FatalError("_PyTime_GetPerfCounter() == 0");
+        }
         _PyTime_t nanoseconds = _PyTime_FromNanoseconds((_PyTime_t)milliseconds * 1000000);
-        _PyTime_t deadline = _PyTime_Add(_PyTime_GetPerfCounter(), nanoseconds);
+        _PyTime_t target = now + nanoseconds;
         while (mutex->locked) {
-            _PyTime_t microseconds = _PyTime_AsMicroseconds(nanoseconds,
-                                                            _PyTime_ROUND_TIMEOUT);
+            _PyTime_t microseconds = _PyTime_AsMicroseconds(nanoseconds, _PyTime_ROUND_TIMEOUT);
             if (PyCOND_TIMEDWAIT(&mutex->cv, &mutex->cs, microseconds) < 0) {
                 result = WAIT_FAILED;
                 break;
             }
-            nanoseconds = deadline - _PyTime_GetPerfCounter();
-            if (nanoseconds <= 0) {
+            now = _PyTime_GetPerfCounter();
+            if (target <= now)
                 break;
-            }
+            nanoseconds = target - now;
         }
     }
     if (!mutex->locked) {
@@ -101,7 +104,7 @@ EnterNonRecursiveMutex(PNRMUTEX mutex, DWORD milliseconds)
     return result;
 }
 
-static BOOL
+BOOL
 LeaveNonRecursiveMutex(PNRMUTEX mutex)
 {
     BOOL result;
@@ -119,26 +122,26 @@ LeaveNonRecursiveMutex(PNRMUTEX mutex)
 /* NR-locks based on a kernel mutex */
 #define PNRMUTEX HANDLE
 
-static PNRMUTEX
-AllocNonRecursiveMutex(void)
+PNRMUTEX
+AllocNonRecursiveMutex()
 {
     return CreateSemaphore(NULL, 1, 1, NULL);
 }
 
-static VOID
+VOID
 FreeNonRecursiveMutex(PNRMUTEX mutex)
 {
     /* No in-use check */
     CloseHandle(mutex);
 }
 
-static DWORD
+DWORD
 EnterNonRecursiveMutex(PNRMUTEX mutex, DWORD milliseconds)
 {
     return WaitForSingleObjectEx(mutex, milliseconds, FALSE);
 }
 
-static BOOL
+BOOL
 LeaveNonRecursiveMutex(PNRMUTEX mutex)
 {
     return ReleaseSemaphore(mutex, 1, NULL);
@@ -292,11 +295,6 @@ PyThread_free_lock(PyThread_type_lock aLock)
     FreeNonRecursiveMutex(aLock) ;
 }
 
-// WaitForSingleObject() accepts timeout in milliseconds in the range
-// [0; 0xFFFFFFFE] (DWORD type). INFINITE value (0xFFFFFFFF) means no
-// timeout. 0xFFFFFFFE milliseconds is around 49.7 days.
-const DWORD TIMEOUT_MS_MAX = 0xFFFFFFFE;
-
 /*
  * Return 1 on success if the lock was acquired
  *
@@ -314,20 +312,11 @@ PyThread_acquire_lock_timed(PyThread_type_lock aLock,
 
     if (microseconds >= 0) {
         milliseconds = microseconds / 1000;
-        // Round milliseconds away from zero
-        if (microseconds % 1000 > 0) {
-            milliseconds++;
+        if (microseconds % 1000 > 0)
+            ++milliseconds;
+        if (milliseconds > PY_DWORD_MAX) {
+            Py_FatalError("Timeout larger than PY_TIMEOUT_MAX");
         }
-        if (milliseconds > (PY_TIMEOUT_T)TIMEOUT_MS_MAX) {
-            // bpo-41710: PyThread_acquire_lock_timed() cannot report timeout
-            // overflow to the caller, so clamp the timeout to
-            // [0, TIMEOUT_MS_MAX] milliseconds.
-            //
-            // _thread.Lock.acquire() and _thread.RLock.acquire() raise an
-            // OverflowError if microseconds is greater than PY_TIMEOUT_MAX.
-            milliseconds = TIMEOUT_MS_MAX;
-        }
-        assert(milliseconds != INFINITE);
     }
     else {
         milliseconds = INFINITE;

@@ -9,7 +9,6 @@
 
 #define PY_SSIZE_T_CLEAN
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
 #include "pycore_object.h"
 #include "structmember.h"         // PyMemberDef
 #include "_iomodule.h"
@@ -342,10 +341,11 @@ _enter_buffered_busy(buffered *self)
      : buffered_closed(self)))
 
 #define CHECK_CLOSED(self, error_msg) \
-    if (IS_CLOSED(self) & (Py_SAFE_DOWNCAST(READAHEAD(self), Py_off_t, Py_ssize_t) == 0)) { \
+    if (IS_CLOSED(self)) { \
         PyErr_SetString(PyExc_ValueError, error_msg); \
         return NULL; \
-    } \
+    }
+
 
 #define VALID_READ_BUFFER(self) \
     (self->readable && self->read_end != -1)
@@ -529,9 +529,6 @@ buffered_close(buffered *self, PyObject *args)
         _PyErr_ChainExceptions(exc, val, tb);
         Py_CLEAR(res);
     }
-
-    self->read_end = 0;
-    self->pos = 0;
 
 end:
     LEAVE_BUFFERED(self)
@@ -1551,7 +1548,7 @@ _bufferedreader_read_all(buffered *self)
         goto cleanup;
     }
     if (readall) {
-        tmp = _PyObject_CallNoArgs(readall);
+        tmp = _PyObject_CallNoArg(readall);
         Py_DECREF(readall);
         if (tmp == NULL)
             goto cleanup;

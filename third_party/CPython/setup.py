@@ -942,8 +942,7 @@ class PyBuildExt(build_ext):
                            extra_compile_args=['-DPy_BUILD_CORE_MODULE']))
 
         # profiler (_lsprof is for cProfile.py)
-        self.add(Extension('_lsprof', ['_lsprof.c', 'rotatingtree.c'],
-                           extra_compile_args=['-DPy_BUILD_CORE_MODULE']))
+        self.add(Extension('_lsprof', ['_lsprof.c', 'rotatingtree.c']))
         # static Unicode character database
         self.add(Extension('unicodedata', ['unicodedata.c'],
                            depends=['unicodedata_db.h', 'unicodename_db.h'],
@@ -961,8 +960,6 @@ class PyBuildExt(build_ext):
                            extra_compile_args=['-DPy_BUILD_CORE_MODULE']))
         # _statistics module
         self.add(Extension("_statistics", ["_statisticsmodule.c"]))
-        # _typing module
-        self.add(Extension("_typing", ["_typingmodule.c"]))
 
         # Modules with some UNIX dependencies -- on by default:
         # (If you have a really backward UNIX, select and socket may not be
@@ -1591,7 +1588,7 @@ class PyBuildExt(build_ext):
                 sqlite_libdir = [os.path.abspath(os.path.dirname(sqlite_libfile))]
 
         if sqlite_incdir and sqlite_libdir:
-            sqlite_srcs = [
+            sqlite_srcs = ['_sqlite/cache.c',
                 '_sqlite/connection.c',
                 '_sqlite/cursor.c',
                 '_sqlite/microprotocols.c',
@@ -1768,9 +1765,7 @@ class PyBuildExt(build_ext):
                 ('XML_POOR_ENTROPY', '1'),
             ]
             extra_compile_args = []
-            # bpo-44394: libexpat uses isnan() of math.h and needs linkage
-            # against the libm
-            expat_lib = ['m']
+            expat_lib = []
             expat_sources = ['expat/xmlparse.c',
                              'expat/xmlrole.c',
                              'expat/xmltok.c']

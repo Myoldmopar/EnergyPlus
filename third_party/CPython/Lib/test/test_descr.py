@@ -4996,11 +4996,8 @@ class DictProxyTests(unittest.TestCase):
             self.assertIn('{!r}: {!r}'.format(k, v), r)
 
 
-class AAAPTypesLongInitTest(unittest.TestCase):
+class PTypesLongInitTest(unittest.TestCase):
     # This is in its own TestCase so that it can be run before any other tests.
-    # (Hence the 'AAA' in the test class name: to make it the first
-    # item in a list sorted by name, like
-    # unittest.TestLoader.getTestCaseNames() does.)
     def test_pytype_long_ready(self):
         # Testing SF bug 551412 ...
 
@@ -5705,7 +5702,7 @@ class MroTest(unittest.TestCase):
 
     def test_incomplete_extend(self):
         """
-        Extending an uninitialized type with type->tp_mro == NULL must
+        Extending an unitialized type with type->tp_mro == NULL must
         throw a reasonable TypeError exception, instead of failing
         with PyErr_BadInternalCall.
         """
@@ -5723,7 +5720,7 @@ class MroTest(unittest.TestCase):
 
     def test_incomplete_super(self):
         """
-        Attribute lookup on a super object must be aware that
+        Attrubute lookup on a super object must be aware that
         its target type can be uninitialized (type->tp_mro == NULL).
         """
         class M(DebugHelperMeta):
@@ -5738,5 +5735,12 @@ class MroTest(unittest.TestCase):
             pass
 
 
+def test_main():
+    # Run all local test cases, with PTypesLongInitTest first.
+    support.run_unittest(PTypesLongInitTest, OperatorsTest,
+                         ClassPropertiesAndMethods, DictProxyTests,
+                         MiscTests, PicklingTests, SharedKeyTests,
+                         MroTest)
+
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

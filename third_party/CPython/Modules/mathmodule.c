@@ -54,8 +54,7 @@ raised for division by zero and mod by zero.
 
 #include "Python.h"
 #include "pycore_bitutils.h"      // _Py_bit_length()
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
-#include "pycore_dtoa.h"          // _Py_dg_infinity()
+#include "pycore_dtoa.h"
 #include "pycore_long.h"          // _PyLong_GetZero()
 #include "_math.h"
 
@@ -1183,9 +1182,6 @@ FUNC2(atan2, m_atan2,
 FUNC1(atanh, m_atanh, 0,
       "atanh($module, x, /)\n--\n\n"
       "Return the inverse hyperbolic tangent of x.")
-FUNC1(cbrt, cbrt, 0,
-      "cbrt($module, x, /)\n--\n\n"
-      "Return the cube root of x.")
 
 /*[clinic input]
 math.ceil
@@ -1207,7 +1203,7 @@ math_ceil(PyObject *module, PyObject *number)
     if (!PyFloat_CheckExact(number)) {
         PyObject *method = _PyObject_LookupSpecial(number, &PyId___ceil__);
         if (method != NULL) {
-            PyObject *result = _PyObject_CallNoArgs(method);
+            PyObject *result = _PyObject_CallNoArg(method);
             Py_DECREF(method);
             return result;
         }
@@ -1276,7 +1272,7 @@ math_floor(PyObject *module, PyObject *number)
     {
         PyObject *method = _PyObject_LookupSpecial(number, &PyId___floor__);
         if (method != NULL) {
-            PyObject *result = _PyObject_CallNoArgs(method);
+            PyObject *result = _PyObject_CallNoArg(method);
             Py_DECREF(method);
             return result;
         }
@@ -2131,7 +2127,7 @@ math_trunc(PyObject *module, PyObject *x)
                          Py_TYPE(x)->tp_name);
         return NULL;
     }
-    result = _PyObject_CallNoArgs(trunc);
+    result = _PyObject_CallNoArg(trunc);
     Py_DECREF(trunc);
     return result;
 }
@@ -2811,6 +2807,8 @@ math_pow_impl(PyObject *module, double x, double y)
                 r = y;
             else if (y < 0. && fabs(x) < 1.0) {
                 r = -y; /* result is +inf */
+                if (x == 0.) /* 0**-inf: divide-by-zero */
+                    errno = EDOM;
             }
             else
                 r = 0.;
@@ -3083,9 +3081,14 @@ math_prod_impl(PyObject *module, PyObject *iterable, PyObject *start)
     }
 
     if (result == NULL) {
-        result = _PyLong_GetOne();
+        result = PyLong_FromLong(1);
+        if (result == NULL) {
+            Py_DECREF(iter);
+            return NULL;
+        }
+    } else {
+        Py_INCREF(result);
     }
-    Py_INCREF(result);
 #ifndef SLOW_PROD
     /* Fast paths for integers keeping temporary products in C.
      * Assumes all inputs are the same type.
@@ -3101,7 +3104,7 @@ math_prod_impl(PyObject *module, PyObject *iterable, PyObject *start)
         }
         /* Loop over all the items in the iterable until we finish, we overflow
          * or we found a non integer element */
-        while (result == NULL) {
+        while(result == NULL) {
             item = PyIter_Next(iter);
             if (item == NULL) {
                 Py_DECREF(iter);
@@ -3547,7 +3550,6 @@ static PyMethodDef math_methods[] = {
     {"atan",            math_atan,      METH_O,         math_atan_doc},
     {"atan2",           (PyCFunction)(void(*)(void))math_atan2,     METH_FASTCALL,  math_atan2_doc},
     {"atanh",           math_atanh,     METH_O,         math_atanh_doc},
-    {"cbrt",            math_cbrt,      METH_O,         math_cbrt_doc},
     MATH_CEIL_METHODDEF
     {"copysign",        (PyCFunction)(void(*)(void))math_copysign,  METH_FASTCALL,  math_copysign_doc},
     {"cos",             math_cos,       METH_O,         math_cos_doc},

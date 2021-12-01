@@ -2,19 +2,18 @@
 /* Generic object operations; and implementation of None */
 
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
 #include "pycore_ceval.h"         // _Py_EnterRecursiveCall()
 #include "pycore_context.h"
-#include "pycore_initconfig.h"    // _PyStatus_EXCEPTION()
-#include "pycore_object.h"        // _PyType_CheckConsistency()
-#include "pycore_pyerrors.h"      // _PyErr_Occurred()
-#include "pycore_pylifecycle.h"   // _PyTypes_InitSlotDefs()
+#include "pycore_initconfig.h"
+#include "pycore_object.h"
+#include "pycore_pyerrors.h"
+#include "pycore_pylifecycle.h"
 #include "pycore_pymem.h"         // _PyMem_IsPtrFreed()
 #include "pycore_pystate.h"       // _PyThreadState_GET()
 #include "pycore_symtable.h"      // PySTEntry_Type
 #include "pycore_unionobject.h"   // _PyUnion_Type
-#include "frameobject.h"          // PyFrame_Type
-#include "interpreteridobject.h"  // _PyInterpreterID_Type
+#include "frameobject.h"
+#include "interpreteridobject.h"
 
 #ifdef Py_LIMITED_API
    // Prevent recursive call _Py_IncRef() <=> Py_INCREF()
@@ -561,7 +560,7 @@ PyObject_Bytes(PyObject *v)
 
     func = _PyObject_LookupSpecial(v, &PyId___bytes__);
     if (func != NULL) {
-        result = _PyObject_CallNoArgs(func);
+        result = _PyObject_CallNoArg(func);
         Py_DECREF(func);
         if (result == NULL)
             return NULL;
@@ -1125,24 +1124,25 @@ _PyObject_NextNotImplemented(PyObject *self)
 int
 _PyObject_GetMethod(PyObject *obj, PyObject *name, PyObject **method)
 {
+    PyTypeObject *tp = Py_TYPE(obj);
+    PyObject *descr;
+    descrgetfunc f = NULL;
+    PyObject **dictptr, *dict;
+    PyObject *attr;
     int meth_found = 0;
 
     assert(*method == NULL);
 
-    PyTypeObject *tp = Py_TYPE(obj);
-    if (!_PyType_IsReady(tp)) {
-        if (PyType_Ready(tp) < 0) {
-            return 0;
-        }
-    }
-
-    if (tp->tp_getattro != PyObject_GenericGetAttr || !PyUnicode_Check(name)) {
+    if (Py_TYPE(obj)->tp_getattro != PyObject_GenericGetAttr
+            || !PyUnicode_Check(name)) {
         *method = PyObject_GetAttr(obj, name);
         return 0;
     }
 
-    PyObject *descr = _PyType_Lookup(tp, name);
-    descrgetfunc f = NULL;
+    if (tp->tp_dict == NULL && PyType_Ready(tp) < 0)
+        return 0;
+
+    descr = _PyType_Lookup(tp, name);
     if (descr != NULL) {
         Py_INCREF(descr);
         if (_PyType_HasFeature(Py_TYPE(descr), Py_TPFLAGS_METHOD_DESCRIPTOR)) {
@@ -1157,22 +1157,23 @@ _PyObject_GetMethod(PyObject *obj, PyObject *name, PyObject **method)
         }
     }
 
-    PyObject **dictptr = _PyObject_GetDictPtr(obj);
-    PyObject *dict;
+    dictptr = _PyObject_GetDictPtr(obj);
     if (dictptr != NULL && (dict = *dictptr) != NULL) {
         Py_INCREF(dict);
-        PyObject *attr = PyDict_GetItemWithError(dict, name);
+        attr = PyDict_GetItemWithError(dict, name);
         if (attr != NULL) {
-            *method = Py_NewRef(attr);
+            Py_INCREF(attr);
+            *method = attr;
             Py_DECREF(dict);
             Py_XDECREF(descr);
             return 0;
         }
-        Py_DECREF(dict);
-
-        if (PyErr_Occurred()) {
-            Py_XDECREF(descr);
-            return 0;
+        else {
+            Py_DECREF(dict);
+            if (PyErr_Occurred()) {
+                Py_XDECREF(descr);
+                return 0;
+            }
         }
     }
 
@@ -1522,7 +1523,7 @@ _dir_object(PyObject *obj)
         return NULL;
     }
     /* use __dir__ */
-    result = _PyObject_CallNoArgs(dirfunc);
+    result = _PyObject_CallNoArg(dirfunc);
     Py_DECREF(dirfunc);
     if (result == NULL)
         return NULL;
@@ -1561,10 +1562,14 @@ none_repr(PyObject *op)
     return PyUnicode_FromString("None");
 }
 
+/* ARGUSED */
 static void _Py_NO_RETURN
-none_dealloc(PyObject* Py_UNUSED(ignore))
+none_dealloc(PyObject* ignore)
 {
-    _Py_FatalRefcountError("deallocating None");
+    /* This should never get called, but we also don't want to SEGV if
+     * we accidentally decref None out of existence.
+     */
+    Py_FatalError("deallocating None");
 }
 
 static PyObject *
@@ -2087,13 +2092,25 @@ finally:
 
 /* Trashcan support. */
 
-#define _PyTrash_UNWIND_LEVEL 50
-
-/* Add op to the gcstate->trash_delete_later list.  Called when the current
+/* Add op to the _PyTrash_delete_later list.  Called when the current
  * call-stack depth gets large.  op must be a currently untracked gc'ed
  * object, with refcount 0.  Py_DECREF must already have been called on it.
  */
-static void
+void
+_PyTrash_deposit_object(PyObject *op)
+{
+    PyInterpreterState *interp = _PyInterpreterState_GET();
+    struct _gc_runtime_state *gcstate = &interp->gc;
+
+    _PyObject_ASSERT(op, _PyObject_IS_GC(op));
+    _PyObject_ASSERT(op, !_PyObject_GC_IS_TRACKED(op));
+    _PyObject_ASSERT(op, Py_REFCNT(op) == 0);
+    _PyGCHead_SET_PREV(_Py_AS_GC(op), gcstate->trash_delete_later);
+    gcstate->trash_delete_later = op;
+}
+
+/* The equivalent API, using per-thread state recursion info */
+void
 _PyTrash_thread_deposit_object(PyObject *op)
 {
     PyThreadState *tstate = _PyThreadState_GET();
@@ -2104,9 +2121,37 @@ _PyTrash_thread_deposit_object(PyObject *op)
     tstate->trash_delete_later = op;
 }
 
-/* Deallocate all the objects in the gcstate->trash_delete_later list.
- * Called when the call-stack unwinds again. */
-static void
+/* Deallocate all the objects in the _PyTrash_delete_later list.  Called when
+ * the call-stack unwinds again.
+ */
+void
+_PyTrash_destroy_chain(void)
+{
+    PyInterpreterState *interp = _PyInterpreterState_GET();
+    struct _gc_runtime_state *gcstate = &interp->gc;
+
+    while (gcstate->trash_delete_later) {
+        PyObject *op = gcstate->trash_delete_later;
+        destructor dealloc = Py_TYPE(op)->tp_dealloc;
+
+        gcstate->trash_delete_later =
+            (PyObject*) _PyGCHead_PREV(_Py_AS_GC(op));
+
+        /* Call the deallocator directly.  This used to try to
+         * fool Py_DECREF into calling it indirectly, but
+         * Py_DECREF was already called on this object, and in
+         * assorted non-release builds calling Py_DECREF again ends
+         * up distorting allocation statistics.
+         */
+        _PyObject_ASSERT(op, Py_REFCNT(op) == 0);
+        ++gcstate->trash_delete_nesting;
+        (*dealloc)(op);
+        --gcstate->trash_delete_nesting;
+    }
+}
+
+/* The equivalent API, using per-thread state recursion info */
+void
 _PyTrash_thread_destroy_chain(void)
 {
     PyThreadState *tstate = _PyThreadState_GET();
@@ -2147,7 +2192,7 @@ _PyTrash_thread_destroy_chain(void)
 int
 _PyTrash_begin(PyThreadState *tstate, PyObject *op)
 {
-    if (tstate->trash_delete_nesting >= _PyTrash_UNWIND_LEVEL) {
+    if (tstate->trash_delete_nesting >= PyTrash_UNWIND_LEVEL) {
         /* Store the object (to be deallocated later) and jump past
          * Py_TRASHCAN_END, skipping the body of the deallocator */
         _PyTrash_thread_deposit_object(op);

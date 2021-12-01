@@ -7,7 +7,6 @@ import abc
 from operator import le, lt, ge, gt, eq, ne
 
 import unittest
-from test import support
 
 order_comparisons = le, lt, ge, gt
 equality_comparisons = eq, ne
@@ -806,7 +805,6 @@ class TestCopy(unittest.TestCase):
         self.assertEqual(v[c], d)
         self.assertEqual(len(v), 2)
         del c, d
-        support.gc_collect()  # For PyPy or other GCs.
         self.assertEqual(len(v), 1)
         x, y = C(), C()
         # The underlying containers are decoupled
@@ -836,7 +834,6 @@ class TestCopy(unittest.TestCase):
         self.assertEqual(v[a].i, b.i)
         self.assertEqual(v[c].i, d.i)
         del c
-        support.gc_collect()  # For PyPy or other GCs.
         self.assertEqual(len(v), 1)
 
     def test_deepcopy_weakvaluedict(self):
@@ -860,7 +857,6 @@ class TestCopy(unittest.TestCase):
         self.assertIs(t, d)
         del x, y, z, t
         del d
-        support.gc_collect()  # For PyPy or other GCs.
         self.assertEqual(len(v), 1)
 
     def test_deepcopy_bound_method(self):

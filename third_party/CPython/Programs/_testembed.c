@@ -24,18 +24,6 @@
 
 #define INIT_LOOPS 16
 
-// Ignore Py_DEPRECATED() compiler warnings: deprecated functions are
-// tested on purpose here.
-_Py_COMP_DIAG_PUSH
-_Py_COMP_DIAG_IGNORE_DEPR_DECLS
-
-
-static void error(const char *msg)
-{
-    fprintf(stderr, "ERROR: %s\n", msg);
-    fflush(stderr);
-}
-
 
 static void _testembed_Py_Initialize(void)
 {
@@ -262,13 +250,15 @@ static void bpo20891_thread(void *lockp)
 
     PyGILState_STATE state = PyGILState_Ensure();
     if (!PyGILState_Check()) {
-        error("PyGILState_Check failed!");
+        fprintf(stderr, "PyGILState_Check failed!");
         abort();
     }
 
     PyGILState_Release(state);
 
     PyThread_release_lock(lock);
+
+    PyThread_exit_thread();
 }
 
 static int test_bpo20891(void)
@@ -280,7 +270,7 @@ static int test_bpo20891(void)
        crash. */
     PyThread_type_lock lock = PyThread_allocate_lock();
     if (!lock) {
-        error("PyThread_allocate_lock failed!");
+        fprintf(stderr, "PyThread_allocate_lock failed!");
         return 1;
     }
 
@@ -288,7 +278,7 @@ static int test_bpo20891(void)
 
     unsigned long thrd = PyThread_start_new_thread(bpo20891_thread, &lock);
     if (thrd == PYTHREAD_INVALID_THREAD_ID) {
-        error("PyThread_start_new_thread failed!");
+        fprintf(stderr, "PyThread_start_new_thread failed!");
         return 1;
     }
     PyThread_acquire_lock(lock, WAIT_LOCK);
@@ -528,9 +518,6 @@ static int test_init_from_config(void)
     putenv("PYTHONPROFILEIMPORTTIME=0");
     config.import_time = 1;
 
-    putenv("PYTHONNODEBUGRANGES=0");
-    config.no_debug_ranges = 1;
-
     config.show_ref_count = 1;
     /* FIXME: test dump_refs: bpo-34223 */
 
@@ -689,7 +676,6 @@ static void set_most_env_vars(void)
     putenv("PYTHONMALLOC=malloc");
     putenv("PYTHONTRACEMALLOC=2");
     putenv("PYTHONPROFILEIMPORTTIME=1");
-    putenv("PYTHONNODEBUGRANGES=1");
     putenv("PYTHONMALLOCSTATS=1");
     putenv("PYTHONUTF8=1");
     putenv("PYTHONVERBOSE=1");
@@ -1422,12 +1408,12 @@ static int test_init_setpath(void)
 {
     char *env = getenv("TESTPATH");
     if (!env) {
-        error("missing TESTPATH env var");
+        fprintf(stderr, "missing TESTPATH env var\n");
         return 1;
     }
     wchar_t *path = Py_DecodeLocale(env, NULL);
     if (path == NULL) {
-        error("failed to decode TESTPATH");
+        fprintf(stderr, "failed to decode TESTPATH\n");
         return 1;
     }
     Py_SetPath(path);
@@ -1455,12 +1441,12 @@ static int test_init_setpath_config(void)
 
     char *env = getenv("TESTPATH");
     if (!env) {
-        error("missing TESTPATH env var");
+        fprintf(stderr, "missing TESTPATH env var\n");
         return 1;
     }
     wchar_t *path = Py_DecodeLocale(env, NULL);
     if (path == NULL) {
-        error("failed to decode TESTPATH");
+        fprintf(stderr, "failed to decode TESTPATH\n");
         return 1;
     }
     Py_SetPath(path);
@@ -1484,12 +1470,12 @@ static int test_init_setpythonhome(void)
 {
     char *env = getenv("TESTHOME");
     if (!env) {
-        error("missing TESTHOME env var");
+        fprintf(stderr, "missing TESTHOME env var\n");
         return 1;
     }
     wchar_t *home = Py_DecodeLocale(env, NULL);
     if (home == NULL) {
-        error("failed to decode TESTHOME");
+        fprintf(stderr, "failed to decode TESTHOME\n");
         return 1;
     }
     Py_SetPythonHome(home);
@@ -1676,26 +1662,15 @@ static int test_run_main(void)
 }
 
 
-static int test_run_main_loop(void)
-{
-    // bpo-40413: Calling Py_InitializeFromConfig()+Py_RunMain() multiple
-    // times must not crash.
-    for (int i=0; i<5; i++) {
-        int exitcode = test_run_main();
-        if (exitcode != 0) {
-            return exitcode;
-        }
-    }
-    return 0;
-}
-
-
 static int test_get_argc_argv(void)
 {
     PyConfig config;
     PyConfig_InitPythonConfig(&config);
 
-    wchar_t *argv[] = {L"python3", L"-c", L"pass", L"arg2"};
+    wchar_t *argv[] = {L"python3", L"-c",
+                       (L"import sys; "
+                        L"print(f'Py_RunMain(): sys.argv={sys.argv}')"),
+                       L"arg2"};
     config_set_argv(&config, Py_ARRAY_LENGTH(argv), argv);
     config_set_string(&config, &config.program_name, L"./python3");
 
@@ -1760,48 +1735,6 @@ static int test_unicode_id_init(void)
     }
     return 0;
 }
-
-
-#ifndef MS_WINDOWS
-#include "test_frozenmain.h"      // M_test_frozenmain
-
-static int test_frozenmain(void)
-{
-    // Get "_frozen_importlib" and "_frozen_importlib_external"
-    // from PyImport_FrozenModules
-    const struct _frozen *importlib = NULL, *importlib_external = NULL;
-    for (const struct _frozen *mod = PyImport_FrozenModules; mod->name != NULL; mod++) {
-        if (strcmp(mod->name, "_frozen_importlib") == 0) {
-            importlib = mod;
-        }
-        else if (strcmp(mod->name, "_frozen_importlib_external") == 0) {
-            importlib_external = mod;
-        }
-    }
-    if (importlib == NULL || importlib_external == NULL) {
-        error("cannot find frozen importlib and importlib_external");
-        return 1;
-    }
-
-    static struct _frozen frozen_modules[4] = {
-        {0, 0, 0},  // importlib
-        {0, 0, 0},  // importlib_external
-        {"__main__", M_test_frozenmain, sizeof(M_test_frozenmain)},
-        {0, 0, 0}   // sentinel
-    };
-    frozen_modules[0] = *importlib;
-    frozen_modules[1] = *importlib_external;
-
-    char* argv[] = {
-        "./argv0",
-        "-E",
-        "arg1",
-        "arg2",
-    };
-    PyImport_FrozenModules = frozen_modules;
-    return Py_FrozenMain(Py_ARRAY_LENGTH(argv), argv);
-}
-#endif  // !MS_WINDOWS
 
 
 // List frozen modules.
@@ -1911,7 +1844,6 @@ static struct TestCase TestCases[] = {
     {"test_init_warnoptions", test_init_warnoptions},
     {"test_init_set_config", test_init_set_config},
     {"test_run_main", test_run_main},
-    {"test_run_main_loop", test_run_main_loop},
     {"test_get_argc_argv", test_get_argc_argv},
 
     // Audit
@@ -1926,15 +1858,11 @@ static struct TestCase TestCases[] = {
 
     // Specific C API
     {"test_unicode_id_init", test_unicode_id_init},
-#ifndef MS_WINDOWS
-    {"test_frozenmain", test_frozenmain},
-#endif
 
     // Command
     {"list_frozen", list_frozen},
     {NULL, NULL}
 };
-
 
 int main(int argc, char *argv[])
 {

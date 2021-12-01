@@ -66,6 +66,10 @@ _HAS_IPv6 = hasattr(socket, 'AF_INET6')
 # Maximum timeout passed to select to avoid OS limitations
 MAXIMUM_SELECT_TIMEOUT = 24 * 3600
 
+# Used for deprecation and removal of `loop.create_datagram_endpoint()`'s
+# *reuse_address* parameter
+_unset = object()
+
 
 def _format_handle(handle):
     cb = handle._callback
@@ -810,7 +814,11 @@ class BaseEventLoop(events.AbstractEventLoop):
 
     def set_default_executor(self, executor):
         if not isinstance(executor, concurrent.futures.ThreadPoolExecutor):
-            raise TypeError('executor must be ThreadPoolExecutor instance')
+            warnings.warn(
+                'Using the default executor that is not an instance of '
+                'ThreadPoolExecutor is deprecated and will be prohibited '
+                'in Python 3.9',
+                DeprecationWarning, 2)
         self._default_executor = executor
 
     def _getaddrinfo_debug(self, host, port, family, type, proto, flags):
@@ -1231,7 +1239,7 @@ class BaseEventLoop(events.AbstractEventLoop):
     async def create_datagram_endpoint(self, protocol_factory,
                                        local_addr=None, remote_addr=None, *,
                                        family=0, proto=0, flags=0,
-                                       reuse_port=None,
+                                       reuse_address=_unset, reuse_port=None,
                                        allow_broadcast=None, sock=None):
         """Create datagram connection."""
         if sock is not None:
@@ -1244,7 +1252,7 @@ class BaseEventLoop(events.AbstractEventLoop):
                 # show the problematic kwargs in exception msg
                 opts = dict(local_addr=local_addr, remote_addr=remote_addr,
                             family=family, proto=proto, flags=flags,
-                            reuse_port=reuse_port,
+                            reuse_address=reuse_address, reuse_port=reuse_port,
                             allow_broadcast=allow_broadcast)
                 problems = ', '.join(f'{k}={v}' for k, v in opts.items() if v)
                 raise ValueError(
@@ -1306,6 +1314,19 @@ class BaseEventLoop(events.AbstractEventLoop):
                     raise ValueError('can not get address information')
 
             exceptions = []
+
+            # bpo-37228
+            if reuse_address is not _unset:
+                if reuse_address:
+                    raise ValueError("Passing `reuse_address=True` is no "
+                                     "longer supported, as the usage of "
+                                     "SO_REUSEPORT in UDP poses a significant "
+                                     "security concern.")
+                else:
+                    warnings.warn("The *reuse_address* parameter has been "
+                                  "deprecated as of 3.5.10 and is scheduled "
+                                  "for removal in 3.11.", DeprecationWarning,
+                                  stacklevel=2)
 
             for ((family, proto),
                  (local_address, remote_address)) in addr_pairs_info:
@@ -1390,6 +1411,7 @@ class BaseEventLoop(events.AbstractEventLoop):
             sock=None,
             backlog=100,
             ssl=None,
+            reuse_address=None,
             reuse_port=None,
             ssl_handshake_timeout=None,
             start_serving=True):
@@ -1420,6 +1442,8 @@ class BaseEventLoop(events.AbstractEventLoop):
                 raise ValueError(
                     'host/port and sock can not be specified at the same time')
 
+            if reuse_address is None:
+                reuse_address = os.name == 'posix' and sys.platform != 'cygwin'
             sockets = []
             if host == '':
                 hosts = [None]
@@ -1449,6 +1473,9 @@ class BaseEventLoop(events.AbstractEventLoop):
                                            af, socktype, proto, exc_info=True)
                         continue
                     sockets.append(sock)
+                    if reuse_address:
+                        sock.setsockopt(
+                            socket.SOL_SOCKET, socket.SO_REUSEADDR, True)
                     if reuse_port:
                         _set_reuseport(sock)
                     # Disable IPv4/IPv6 dual stack support (enabled by

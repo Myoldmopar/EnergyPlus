@@ -28,25 +28,26 @@
 #include "pythread.h"
 #include "structmember.h"
 
+#include "cache.h"
 #include "module.h"
 
 #include "sqlite3.h"
-
-typedef struct _callback_context
-{
-    PyObject *callable;
-    pysqlite_state *state;
-} callback_context;
 
 typedef struct
 {
     PyObject_HEAD
     sqlite3* db;
-    pysqlite_state *state;
 
     /* the type detection mode. Only 0, PARSE_DECLTYPES, PARSE_COLNAMES or a
      * bitwise combination thereof makes sense */
     int detect_types;
+
+    /* the timeout value in seconds for database locks */
+    double timeout;
+
+    /* for internal use in the timeout handler: when did the timeout handler
+     * first get called with count=0? */
+    double timeout_started;
 
     /* None for autocommit, otherwise a PyUnicode with the isolation level */
     PyObject* isolation_level;
@@ -63,13 +64,15 @@ typedef struct
     /* thread identification of the thread the connection was created in */
     unsigned long thread_ident;
 
-    PyObject *statement_cache;
+    pysqlite_Cache* statement_cache;
 
     /* Lists of weak references to statements and cursors used within this connection */
+    PyObject* statements;
     PyObject* cursors;
 
-    /* Counters for how many cursors were created in the connection. May be
+    /* Counters for how many statements/cursors were created in the connection. May be
      * reset to 0 at certain intervals */
+    int created_statements;
     int created_cursors;
 
     PyObject* row_factory;
@@ -82,10 +85,13 @@ typedef struct
      */
     PyObject* text_factory;
 
-    // Remember contexts used by the trace, progress, and authoriser callbacks
-    callback_context *trace_ctx;
-    callback_context *progress_ctx;
-    callback_context *authorizer_ctx;
+    /* remember references to object used in trace_callback/progress_handler/authorizer_cb */
+    PyObject* function_pinboard_trace_callback;
+    PyObject* function_pinboard_progress_handler;
+    PyObject* function_pinboard_authorizer_cb;
+
+    /* a dictionary of registered collation name => collation callable mappings */
+    PyObject* collations;
 
     /* Exception objects: borrowed refs. */
     PyObject* Warning;
@@ -99,6 +105,10 @@ typedef struct
     PyObject* ProgrammingError;
     PyObject* NotSupportedError;
 } pysqlite_Connection;
+
+extern PyTypeObject *pysqlite_ConnectionType;
+
+PyObject* _pysqlite_connection_begin(pysqlite_Connection* self);
 
 int pysqlite_connection_register_cursor(pysqlite_Connection* connection, PyObject* cursor);
 int pysqlite_check_thread(pysqlite_Connection* self);

@@ -118,7 +118,7 @@ class FileUtilTestCase(support.TempdirManager, unittest.TestCase):
 
 
 def test_suite():
-    return unittest.TestLoader().loadTestsFromTestCase(FileUtilTestCase)
+    return unittest.makeSuite(FileUtilTestCase)
 
 if __name__ == "__main__":
     run_unittest(test_suite())

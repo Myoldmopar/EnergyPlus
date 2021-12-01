@@ -2,7 +2,6 @@ import copy
 import gc
 import pickle
 import sys
-import doctest
 import unittest
 import weakref
 import inspect
@@ -1967,8 +1966,6 @@ True
 """
 
 coroutine_tests = """\
->>> from test.support import gc_collect
-
 Sending a value into a started generator:
 
 >>> def f():
@@ -2192,7 +2189,7 @@ And finalization:
 
 >>> g = f()
 >>> next(g)
->>> del g; gc_collect()  # For PyPy or other GCs.
+>>> del g
 exiting
 
 
@@ -2207,7 +2204,7 @@ GeneratorExit is not caught by except Exception:
 
 >>> g = f()
 >>> next(g)
->>> del g; gc_collect()  # For PyPy or other GCs.
+>>> del g
 finally
 
 
@@ -2372,10 +2369,15 @@ __test__ = {"tut":      tutorial_tests,
             "refleaks": refleaks_tests,
             }
 
-def load_tests(loader, tests, pattern):
-    tests.addTest(doctest.DocTestSuite())
-    return tests
+# Magic test name that regrtest.py invokes *after* importing this module.
+# This worms around a bootstrap problem.
+# Note that doctest and regrtest both look in sys.argv for a "-v" argument,
+# so this works as expected in both ways of running regrtest.
+def test_main(verbose=None):
+    from test import support, test_generators
+    support.run_unittest(__name__)
+    support.run_doctest(test_generators, verbose)
 
-
+# This part isn't needed for regrtest, but for running the test directly.
 if __name__ == "__main__":
-    unittest.main()
+    test_main(1)

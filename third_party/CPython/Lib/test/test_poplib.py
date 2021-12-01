@@ -9,7 +9,6 @@ import os
 import errno
 import threading
 
-import unittest
 from unittest import TestCase, skipUnless
 from test import support as test_support
 from test.support import hashlib_helper
@@ -539,10 +538,15 @@ class TestTimeouts(TestCase):
             poplib.POP3(HOST, self.port, timeout=0)
 
 
-def setUpModule():
+def test_main():
+    tests = [TestPOP3Class, TestTimeouts,
+             TestPOP3_SSLClass, TestPOP3_TLSClass]
     thread_info = threading_helper.threading_setup()
-    unittest.addModuleCleanup(threading_helper.threading_cleanup, *thread_info)
+    try:
+        test_support.run_unittest(*tests)
+    finally:
+        threading_helper.threading_cleanup(*thread_info)
 
 
 if __name__ == '__main__':
-    unittest.main()
+    test_main()

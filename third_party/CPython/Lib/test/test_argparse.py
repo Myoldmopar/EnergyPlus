@@ -12,6 +12,7 @@ import argparse
 
 from io import StringIO
 
+from test import support
 from test.support import os_helper
 from unittest import mock
 class StdIOBuffer(StringIO):
@@ -741,25 +742,6 @@ class TestOptionalsActionAppendWithDefault(ParserTestCase):
         ('', NS(baz=['X'])),
         ('--baz a', NS(baz=['X', 'a'])),
         ('--baz a --baz b', NS(baz=['X', 'a', 'b'])),
-    ]
-
-
-class TestConstActionsMissingConstKwarg(ParserTestCase):
-    """Tests that const gets default value of None when not provided"""
-
-    argument_signatures = [
-        Sig('-f', action='append_const'),
-        Sig('--foo', action='append_const'),
-        Sig('-b', action='store_const'),
-        Sig('--bar', action='store_const')
-    ]
-    failures = ['-f v', '--foo=bar', '--foo bar']
-    successes = [
-        ('', NS(f=None, foo=None, b=None, bar=None)),
-        ('-f', NS(f=[None], foo=None, b=None, bar=None)),
-        ('--foo', NS(f=None, foo=[None], b=None, bar=None)),
-        ('-b', NS(f=None, foo=None, b=None, bar=None)),
-        ('--bar', NS(f=None, foo=None, b=None, bar=None)),
     ]
 
 
@@ -3077,12 +3059,6 @@ class TestSetDefaults(TestCase):
         parser.set_defaults(foo=1)
         xparser.set_defaults(foo=2)
         self.assertEqual(NS(foo=2), parser.parse_args(['X']))
-
-    def test_set_defaults_on_subparser_with_namespace(self):
-        parser = argparse.ArgumentParser()
-        xparser = parser.add_subparsers().add_parser('X')
-        xparser.set_defaults(foo=1)
-        self.assertEqual(NS(foo=2), parser.parse_args(['X'], NS(foo=2)))
 
     def test_set_defaults_same_as_add_argument(self):
         parser = ErrorRaisingArgumentParser()
@@ -5415,11 +5391,13 @@ class TestExitOnError(TestCase):
             self.parser.parse_args('--integers a'.split())
 
 
-def tearDownModule():
+def test_main():
+    support.run_unittest(__name__)
     # Remove global references to avoid looking like we have refleaks.
     RFile.seen = {}
     WFile.seen = set()
 
 
+
 if __name__ == '__main__':
-    unittest.main()
+    test_main()

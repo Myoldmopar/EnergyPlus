@@ -175,7 +175,7 @@ class MimeTypes:
         but non-standard types.
         """
         type = type.lower()
-        extensions = list(self.types_map_inv[True].get(type, []))
+        extensions = self.types_map_inv[True].get(type, [])
         if not strict:
             for ext in self.types_map_inv[False].get(type, []):
                 if ext not in extensions:
@@ -530,6 +530,7 @@ def _default_mime_types():
         '.tif'    : 'image/tiff',
         '.ico'    : 'image/vnd.microsoft.icon',
         '.ras'    : 'image/x-cmu-raster',
+        '.bmp'    : 'image/x-ms-bmp',
         '.pnm'    : 'image/x-portable-anymap',
         '.pbm'    : 'image/x-portable-bitmap',
         '.pgm'    : 'image/x-portable-graymap',
@@ -552,10 +553,8 @@ def _default_mime_types():
         '.h'      : 'text/plain',
         '.ksh'    : 'text/plain',
         '.pl'     : 'text/plain',
-        '.srt'    : 'text/plain',
         '.rtx'    : 'text/richtext',
         '.tsv'    : 'text/tab-separated-values',
-        '.vtt'    : 'text/vtt',
         '.py'     : 'text/x-python',
         '.etx'    : 'text/x-setext',
         '.sgm'    : 'text/x-sgml',

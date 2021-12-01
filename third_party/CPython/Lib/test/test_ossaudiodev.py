@@ -188,7 +188,7 @@ class OSSAudioDevTests(unittest.TestCase):
         mixer.close()
         self.assertRaises(ValueError, mixer.fileno)
 
-def setUpModule():
+def test_main():
     try:
         dsp = ossaudiodev.open('w')
     except (ossaudiodev.error, OSError) as msg:
@@ -197,6 +197,7 @@ def setUpModule():
             raise unittest.SkipTest(msg)
         raise
     dsp.close()
+    support.run_unittest(__name__)
 
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

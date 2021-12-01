@@ -1029,7 +1029,7 @@ class Function(Declaration):
 
     @classmethod
     def _raw_data(self, data):
-        # XXX finish!
+        # XXX finsh!
         return data
 
     @classmethod
@@ -1255,7 +1255,7 @@ class Enum(TypeDeclaration):
 
     @classmethod
     def _raw_data(self, data):
-        # XXX finish!
+        # XXX finsih!
         return data
 
     @classmethod
@@ -1296,12 +1296,12 @@ class Statement(HighlevelParsedItem):
 
     @classmethod
     def _resolve_data(cls, data):
-        # XXX finish!
+        # XXX finsih!
         return data, None
 
     @classmethod
     def _raw_data(self, data):
-        # XXX finish!
+        # XXX finsih!
         return data
 
     @classmethod

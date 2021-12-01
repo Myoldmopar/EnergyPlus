@@ -1,5 +1,5 @@
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgsTstate()
+#include "pycore_call.h"          // _PyObject_CallNoArgTstate()
 #include "pycore_ceval.h"         // _PyEval_EvalFrame()
 #include "pycore_object.h"        // _PyObject_GC_TRACK()
 #include "pycore_pyerrors.h"      // _PyErr_Occurred()
@@ -110,7 +110,7 @@ PyObject *
 PyObject_CallNoArgs(PyObject *func)
 {
     PyThreadState *tstate = _PyThreadState_GET();
-    return _PyObject_CallNoArgsTstate(tstate, func);
+    return _PyObject_CallNoArgTstate(tstate, func);
 }
 
 
@@ -225,11 +225,28 @@ _PyObject_MakeTpCall(PyThreadState *tstate, PyObject *callable,
 }
 
 
-static PyObject *
-_PyVectorcall_Call(PyThreadState *tstate, vectorcallfunc func,
-                   PyObject *callable, PyObject *tuple, PyObject *kwargs)
+PyObject *
+PyVectorcall_Call(PyObject *callable, PyObject *tuple, PyObject *kwargs)
 {
-    assert(func != NULL);
+    PyThreadState *tstate = _PyThreadState_GET();
+    vectorcallfunc func;
+
+    /* get vectorcallfunc as in PyVectorcall_Function, but without
+     * the Py_TPFLAGS_HAVE_VECTORCALL check */
+    Py_ssize_t offset = Py_TYPE(callable)->tp_vectorcall_offset;
+    if (offset <= 0) {
+        _PyErr_Format(tstate, PyExc_TypeError,
+                      "'%.200s' object does not support vectorcall",
+                      Py_TYPE(callable)->tp_name);
+        return NULL;
+    }
+    memcpy(&func, (char *) callable + offset, sizeof(func));
+    if (func == NULL) {
+        _PyErr_Format(tstate, PyExc_TypeError,
+                      "'%.200s' object does not support vectorcall",
+                      Py_TYPE(callable)->tp_name);
+        return NULL;
+    }
 
     Py_ssize_t nargs = PyTuple_GET_SIZE(tuple);
 
@@ -256,35 +273,6 @@ _PyVectorcall_Call(PyThreadState *tstate, vectorcallfunc func,
 
 
 PyObject *
-PyVectorcall_Call(PyObject *callable, PyObject *tuple, PyObject *kwargs)
-{
-    PyThreadState *tstate = _PyThreadState_GET();
-
-    /* get vectorcallfunc as in PyVectorcall_Function, but without
-     * the Py_TPFLAGS_HAVE_VECTORCALL check */
-    Py_ssize_t offset = Py_TYPE(callable)->tp_vectorcall_offset;
-    if (offset <= 0) {
-        _PyErr_Format(tstate, PyExc_TypeError,
-                      "'%.200s' object does not support vectorcall",
-                      Py_TYPE(callable)->tp_name);
-        return NULL;
-    }
-    assert(PyCallable_Check(callable));
-
-    vectorcallfunc func;
-    memcpy(&func, (char *) callable + offset, sizeof(func));
-    if (func == NULL) {
-        _PyErr_Format(tstate, PyExc_TypeError,
-                      "'%.200s' object does not support vectorcall",
-                      Py_TYPE(callable)->tp_name);
-        return NULL;
-    }
-
-    return _PyVectorcall_Call(tstate, func, callable, tuple, kwargs);
-}
-
-
-PyObject *
 _PyObject_Call(PyThreadState *tstate, PyObject *callable,
                PyObject *args, PyObject *kwargs)
 {
@@ -298,9 +286,8 @@ _PyObject_Call(PyThreadState *tstate, PyObject *callable,
     assert(PyTuple_Check(args));
     assert(kwargs == NULL || PyDict_Check(kwargs));
 
-    vectorcallfunc vector_func = PyVectorcall_Function(callable);
-    if (vector_func != NULL) {
-        return _PyVectorcall_Call(tstate, vector_func, callable, args, kwargs);
+    if (PyVectorcall_Function(callable) != NULL) {
+        return PyVectorcall_Call(callable, args, kwargs);
     }
     else {
         call = Py_TYPE(callable)->tp_call;
@@ -402,7 +389,7 @@ PyObject_CallObject(PyObject *callable, PyObject *args)
     PyThreadState *tstate = _PyThreadState_GET();
     assert(!_PyErr_Occurred(tstate));
     if (args == NULL) {
-        return _PyObject_CallNoArgsTstate(tstate, callable);
+        return _PyObject_CallNoArgTstate(tstate, callable);
     }
     if (!PyTuple_Check(args)) {
         _PyErr_SetString(tstate, PyExc_TypeError,
@@ -468,7 +455,7 @@ _PyObject_CallFunctionVa(PyThreadState *tstate, PyObject *callable,
     }
 
     if (!format || !*format) {
-        return _PyObject_CallNoArgsTstate(tstate, callable);
+        return _PyObject_CallNoArgTstate(tstate, callable);
     }
 
     if (is_size_t) {

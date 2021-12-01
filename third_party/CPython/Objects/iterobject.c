@@ -1,8 +1,7 @@
 /* Iterator objects */
 
 #include "Python.h"
-#include "pycore_call.h"          // _PyObject_CallNoArgs()
-#include "pycore_object.h"        // _PyObject_GC_TRACK()
+#include "pycore_object.h"
 
 typedef struct {
     PyObject_HEAD
@@ -218,7 +217,7 @@ calliter_iternext(calliterobject *it)
         return NULL;
     }
 
-    result = _PyObject_CallNoArgs(it->it_callable);
+    result = _PyObject_CallNoArg(it->it_callable);
     if (result != NULL) {
         int ok;
 

@@ -136,7 +136,7 @@ from decimal import Decimal
 from itertools import groupby, repeat
 from bisect import bisect_left, bisect_right
 from math import hypot, sqrt, fabs, exp, erf, tau, log, fsum
-from operator import itemgetter, mul
+from operator import itemgetter
 from collections import Counter, namedtuple
 
 # === Exceptions ===
@@ -147,17 +147,21 @@ class StatisticsError(ValueError):
 
 # === Private utilities ===
 
-def _sum(data):
-    """_sum(data) -> (type, sum, count)
+def _sum(data, start=0):
+    """_sum(data [, start]) -> (type, sum, count)
 
     Return a high-precision sum of the given numeric data as a fraction,
     together with the type to be converted to and the count of items.
 
+    If optional argument ``start`` is given, it is added to the total.
+    If ``data`` is empty, ``start`` (defaulting to 0) is returned.
+
+
     Examples
     --------
 
-    >>> _sum([3, 2.25, 4.5, -0.5, 0.25])
-    (<class 'float'>, Fraction(19, 2), 5)
+    >>> _sum([3, 2.25, 4.5, -0.5, 1.0], 0.75)
+    (<class 'float'>, Fraction(11, 1), 5)
 
     Some sources of round-off error will be avoided:
 
@@ -180,9 +184,10 @@ def _sum(data):
     allowed.
     """
     count = 0
-    partials = {}
+    n, d = _exact_ratio(start)
+    partials = {d: n}
     partials_get = partials.get
-    T = int
+    T = _coerce(int, type(start))
     for typ, values in groupby(data, type):
         T = _coerce(T, typ)  # or raise TypeError
         for n, d in map(_exact_ratio, values):
@@ -195,7 +200,8 @@ def _sum(data):
         assert not _isfinite(total)
     else:
         # Sum all the partial sums using builtin sum.
-        total = sum(Fraction(n, d) for d, n in partials.items())
+        # FIXME is this faster if we sum them in order of the denominator?
+        total = sum(Fraction(n, d) for d, n in sorted(partials.items()))
     return (T, total, count)
 
 
@@ -246,19 +252,27 @@ def _exact_ratio(x):
     x is expected to be an int, Fraction, Decimal or float.
     """
     try:
-        return x.as_integer_ratio()
-    except AttributeError:
-        pass
+        # Optimise the common case of floats. We expect that the most often
+        # used numeric type will be builtin floats, so try to make this as
+        # fast as possible.
+        if type(x) is float or type(x) is Decimal:
+            return x.as_integer_ratio()
+        try:
+            # x may be an int, Fraction, or Integral ABC.
+            return (x.numerator, x.denominator)
+        except AttributeError:
+            try:
+                # x may be a float or Decimal subclass.
+                return x.as_integer_ratio()
+            except AttributeError:
+                # Just give up?
+                pass
     except (OverflowError, ValueError):
         # float NAN or INF.
         assert not _isfinite(x)
         return (x, None)
-    try:
-        # x may be an Integral ABC.
-        return (x.numerator, x.denominator)
-    except AttributeError:
-        msg = f"can't convert type '{type(x).__name__}' to numerator/denominator"
-        raise TypeError(msg)
+    msg = "can't convert type '{}' to numerator/denominator"
+    raise TypeError(msg.format(type(x).__name__))
 
 
 def _convert(value, T):
@@ -331,7 +345,7 @@ def mean(data):
     return _convert(total / n, T)
 
 
-def fmean(data, weights=None):
+def fmean(data):
     """Convert data to floats and compute the arithmetic mean.
 
     This runs faster than the mean() function and it always returns a float.
@@ -349,24 +363,13 @@ def fmean(data, weights=None):
             nonlocal n
             for n, x in enumerate(iterable, start=1):
                 yield x
-        data = count(data)
-    if weights is None:
+        total = fsum(count(data))
+    else:
         total = fsum(data)
-        if not n:
-            raise StatisticsError('fmean requires at least one data point')
-        return total / n
     try:
-        num_weights = len(weights)
-    except TypeError:
-        weights = list(weights)
-        num_weights = len(weights)
-    num = fsum(map(mul, data, weights))
-    if n != num_weights:
-        raise StatisticsError('data and weights must be the same length')
-    den = fsum(weights)
-    if not den:
-        raise StatisticsError('sum of weights must be non-zero')
-    return num / den
+        return total / n
+    except ZeroDivisionError:
+        raise StatisticsError('fmean requires at least one data point') from None
 
 
 def geometric_mean(data):
@@ -714,22 +717,16 @@ def _ss(data, c=None):
     lead to garbage results.
     """
     if c is not None:
-        T, total, count = _sum((d := x - c) * d for x in data)
+        T, total, count = _sum((x-c)**2 for x in data)
         return (T, total)
-    T, total, count = _sum(data)
-    mean_n, mean_d = (total / count).as_integer_ratio()
-    partials = Counter()
-    for n, d in map(_exact_ratio, data):
-        diff_n = n * mean_d - d * mean_n
-        diff_d = d * mean_d
-        partials[diff_d * diff_d] += diff_n * diff_n
-    if None in partials:
-        # The sum will be a NAN or INF. We can ignore all the finite
-        # partials, and just look at this special one.
-        total = partials[None]
-        assert not _isfinite(total)
-    else:
-        total = sum(Fraction(n, d) for d, n in partials.items())
+    c = mean(data)
+    T, total, count = _sum((x-c)**2 for x in data)
+    # The following sum should mathematically equal zero, but due to rounding
+    # error may not.
+    U, total2, count2 = _sum((x - c) for x in data)
+    assert T == U and count == count2
+    total -= total2 ** 2 / len(data)
+    assert not total < 0, 'negative sum of square deviations: %f' % total
     return (T, total)
 
 
@@ -833,9 +830,6 @@ def stdev(data, xbar=None):
     1.0810874155219827
 
     """
-    # Fixme: Despite the exact sum of squared deviations, some inaccuracy
-    # remain because there are two rounding steps.  The first occurs in
-    # the _convert() step for variance(), the second occurs in math.sqrt().
     var = variance(data, xbar)
     try:
         return var.sqrt()
@@ -852,9 +846,6 @@ def pstdev(data, mu=None):
     0.986893273527251
 
     """
-    # Fixme: Despite the exact sum of squared deviations, some inaccuracy
-    # remain because there are two rounding steps.  The first occurs in
-    # the _convert() step for pvariance(), the second occurs in math.sqrt().
     var = pvariance(data, mu)
     try:
         return var.sqrt()
@@ -922,8 +913,8 @@ def correlation(x, y, /):
     xbar = fsum(x) / n
     ybar = fsum(y) / n
     sxy = fsum((xi - xbar) * (yi - ybar) for xi, yi in zip(x, y))
-    sxx = fsum((d := xi - xbar) * d for xi in x)
-    syy = fsum((d := yi - ybar) * d for yi in y)
+    sxx = fsum((xi - xbar) ** 2.0 for xi in x)
+    syy = fsum((yi - ybar) ** 2.0 for yi in y)
     try:
         return sxy / sqrt(sxx * syy)
     except ZeroDivisionError:
@@ -966,7 +957,7 @@ def linear_regression(x, y, /):
     xbar = fsum(x) / n
     ybar = fsum(y) / n
     sxy = fsum((xi - xbar) * (yi - ybar) for xi, yi in zip(x, y))
-    sxx = fsum((d := xi - xbar) * d for xi in x)
+    sxx = fsum((xi - xbar) ** 2.0 for xi in x)
     try:
         slope = sxy / sxx   # equivalent to:  covariance(x, y) / variance(x)
     except ZeroDivisionError:
@@ -1092,11 +1083,10 @@ class NormalDist:
 
     def pdf(self, x):
         "Probability density function.  P(x <= X < x+dx) / dx"
-        variance = self._sigma * self._sigma
+        variance = self._sigma ** 2.0
         if not variance:
             raise StatisticsError('pdf() not defined when sigma is zero')
-        diff = x - self._mu
-        return exp(diff * diff / (-2.0 * variance)) / sqrt(tau * variance)
+        return exp((x - self._mu)**2.0 / (-2.0*variance)) / sqrt(tau*variance)
 
     def cdf(self, x):
         "Cumulative distribution function.  P(X <= x)"
@@ -1160,7 +1150,7 @@ class NormalDist:
         if not dv:
             return 1.0 - erf(dm / (2.0 * X._sigma * sqrt(2.0)))
         a = X._mu * Y_var - Y._mu * X_var
-        b = X._sigma * Y._sigma * sqrt(dm * dm + dv * log(Y_var / X_var))
+        b = X._sigma * Y._sigma * sqrt(dm**2.0 + dv * log(Y_var / X_var))
         x1 = (a + b) / dv
         x2 = (a - b) / dv
         return 1.0 - (fabs(Y.cdf(x1) - X.cdf(x1)) + fabs(Y.cdf(x2) - X.cdf(x2)))
@@ -1203,7 +1193,7 @@ class NormalDist:
     @property
     def variance(self):
         "Square of the standard deviation."
-        return self._sigma * self._sigma
+        return self._sigma ** 2.0
 
     def __add__(x1, x2):
         """Add a constant or another NormalDist instance.

@@ -1005,9 +1005,15 @@ class OpenTest(BaseTest):
             self.assertEqual(f.readlines(), [text])
 
 
-def tearDownModule():
+def test_main():
+    support.run_unittest(
+        BZ2FileTest,
+        BZ2CompressorTest,
+        BZ2DecompressorTest,
+        CompressDecompressTest,
+        OpenTest,
+    )
     support.reap_children()
 
-
 if __name__ == '__main__':
-    unittest.main()
+    test_main()

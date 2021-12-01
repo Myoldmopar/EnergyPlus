@@ -91,8 +91,7 @@ class CompileallTestsBase:
             os.utime(self.source_path, (2**32 - 1, 2**32 - 1))
         except (OverflowError, OSError):
             self.skipTest("filesystem doesn't support timestamps near 2**32")
-        with contextlib.redirect_stdout(io.StringIO()):
-            self.assertTrue(compileall.compile_file(self.source_path))
+        self.assertTrue(compileall.compile_file(self.source_path))
 
     def test_larger_than_32_bit_times(self):
         # This is similar to the test above but we skip it if the OS doesn't
@@ -101,8 +100,7 @@ class CompileallTestsBase:
             os.utime(self.source_path, (2**35, 2**35))
         except (OverflowError, OSError):
             self.skipTest("filesystem doesn't support large timestamps")
-        with contextlib.redirect_stdout(io.StringIO()):
-            self.assertTrue(compileall.compile_file(self.source_path))
+        self.assertTrue(compileall.compile_file(self.source_path))
 
     def recreation_check(self, metadata):
         """Check that compileall recreates bytecode when the new metadata is

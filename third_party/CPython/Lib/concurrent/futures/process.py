@@ -56,7 +56,7 @@ import weakref
 from functools import partial
 import itertools
 import sys
-from traceback import format_exception
+import traceback
 
 
 _threads_wakeups = weakref.WeakKeyDictionary()
@@ -123,7 +123,8 @@ class _RemoteTraceback(Exception):
 
 class _ExceptionWithTraceback:
     def __init__(self, exc, tb):
-        tb = ''.join(format_exception(type(exc), exc, tb))
+        tb = traceback.format_exception(type(exc), exc, tb)
+        tb = ''.join(tb)
         self.exc = exc
         self.tb = '\n"""\n%s"""' % tb
     def __reduce__(self):
@@ -165,7 +166,7 @@ class _SafeQueue(Queue):
 
     def _on_queue_feeder_error(self, e, obj):
         if isinstance(obj, _CallItem):
-            tb = format_exception(type(e), e, e.__traceback__)
+            tb = traceback.format_exception(type(e), e, e.__traceback__)
             e.__cause__ = _RemoteTraceback('\n"""\n{}"""'.format(''.join(tb)))
             work_item = self.pending_work_items.pop(obj.work_id, None)
             with self.shutdown_lock:
@@ -383,7 +384,7 @@ class _ExecutorManagerThread(threading.Thread):
                 result_item = result_reader.recv()
                 is_broken = False
             except BaseException as e:
-                cause = format_exception(type(e), e, e.__traceback__)
+                cause = traceback.format_exception(type(e), e, e.__traceback__)
 
         elif wakeup_reader in ready:
             is_broken = False

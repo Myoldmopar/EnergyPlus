@@ -82,7 +82,7 @@ typedef struct {
     Bytef *next_posi;
 } _Uint32Window;
 
-/* Initialize the buffer with an initial buffer size.
+/* Initialize the buffer with an inital buffer size.
 
    On success, return value >= 0
    On failure, return value < 0 */
@@ -310,15 +310,13 @@ zlib.compress
     /
     level: int(c_default="Z_DEFAULT_COMPRESSION") = Z_DEFAULT_COMPRESSION
         Compression level, in 0-9 or -1.
-    wbits: int(c_default="MAX_WBITS") = MAX_WBITS
-        The window buffer size and container format.
 
 Returns a bytes object containing compressed data.
 [clinic start generated code]*/
 
 static PyObject *
-zlib_compress_impl(PyObject *module, Py_buffer *data, int level, int wbits)
-/*[clinic end generated code: output=46bd152fadd66df2 input=c4d06ee5782a7e3f]*/
+zlib_compress_impl(PyObject *module, Py_buffer *data, int level)
+/*[clinic end generated code: output=d80906d73f6294c8 input=638d54b6315dbed3]*/
 {
     PyObject *RetVal;
     int flush;
@@ -338,8 +336,7 @@ zlib_compress_impl(PyObject *module, Py_buffer *data, int level, int wbits)
     zst.zalloc = PyZlib_Malloc;
     zst.zfree = PyZlib_Free;
     zst.next_in = ibuf;
-    int err = deflateInit2(&zst, level, DEFLATED, wbits, DEF_MEM_LEVEL,
-                           Z_DEFAULT_STRATEGY);
+    int err = deflateInit(&zst, level);
 
     switch (err) {
     case Z_OK:

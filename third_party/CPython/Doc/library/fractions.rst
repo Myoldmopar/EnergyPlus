@@ -42,8 +42,7 @@ another rational number, or from a string.
 
    where the optional ``sign`` may be either '+' or '-' and
    ``numerator`` and ``denominator`` (if present) are strings of
-   decimal digits (underscores may be used to delimit digits as with
-   integral literals in code).  In addition, any string that represents a finite
+   decimal digits.  In addition, any string that represents a finite
    value and is accepted by the :class:`float` constructor is also
    accepted by the :class:`Fraction` constructor.  In either form the
    input string may also have leading and/or trailing whitespace.
@@ -89,10 +88,6 @@ another rational number, or from a string.
       The :func:`math.gcd` function is now used to normalize the *numerator*
       and *denominator*. :func:`math.gcd` always return a :class:`int` type.
       Previously, the GCD type depended on *numerator* and *denominator*.
-
-   .. versionchanged:: 3.11
-      Underscores are now permitted when creating a :class:`Fraction` instance
-      from a string, following :PEP:`515` rules.
 
    .. attribute:: numerator
 

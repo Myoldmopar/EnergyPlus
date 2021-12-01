@@ -37,7 +37,7 @@ class BaseLocalTest:
             t.join()
         del t
 
-        support.gc_collect()  # For PyPy or other GCs.
+        gc.collect()
         self.assertEqual(len(weaklist), n)
 
         # XXX _threading_local keeps the local of the last stopped thread alive.
@@ -46,7 +46,7 @@ class BaseLocalTest:
 
         # Assignment to the same thread local frees it sometimes (!)
         local.someothervar = None
-        support.gc_collect()  # For PyPy or other GCs.
+        gc.collect()
         deadlist = [weak for weak in weaklist if weak() is None]
         self.assertIn(len(deadlist), (n-1, n), (n, len(deadlist)))
 
@@ -89,7 +89,7 @@ class BaseLocalTest:
             # 2) GC the cycle (triggers threadmodule.c::local_clear
             # before local_dealloc)
             del cycle
-            support.gc_collect()  # For PyPy or other GCs.
+            gc.collect()
             e1.set()
             e2.wait()
 
@@ -190,7 +190,7 @@ class BaseLocalTest:
         x.local.x = x
         wr = weakref.ref(x)
         del x
-        support.gc_collect()  # For PyPy or other GCs.
+        gc.collect()
         self.assertIsNone(wr())
 
 
@@ -201,19 +201,22 @@ class PyThreadingLocalTest(unittest.TestCase, BaseLocalTest):
     _local = _threading_local.local
 
 
-def load_tests(loader, tests, pattern):
-    tests.addTest(DocTestSuite('_threading_local'))
+def test_main():
+    suite = unittest.TestSuite()
+    suite.addTest(DocTestSuite('_threading_local'))
+    suite.addTest(unittest.makeSuite(ThreadLocalTest))
+    suite.addTest(unittest.makeSuite(PyThreadingLocalTest))
 
     local_orig = _threading_local.local
     def setUp(test):
         _threading_local.local = _thread._local
     def tearDown(test):
         _threading_local.local = local_orig
-    tests.addTests(DocTestSuite('_threading_local',
-                                setUp=setUp, tearDown=tearDown)
-                   )
-    return tests
+    suite.addTest(DocTestSuite('_threading_local',
+                               setUp=setUp, tearDown=tearDown)
+                  )
 
+    support.run_unittest(suite)
 
 if __name__ == '__main__':
-    unittest.main()
+    test_main()

@@ -297,7 +297,7 @@ Collections Abstract Base Classes -- Detailed Descriptions
 
    .. note::
       In CPython, generator-based coroutines (generators decorated with
-      :func:`types.coroutine`) are
+      :func:`types.coroutine` or :func:`asyncio.coroutine`) are
       *awaitables*, even though they do not have an :meth:`__await__` method.
       Using ``isinstance(gencoro, Awaitable)`` for them will return ``False``.
       Use :func:`inspect.isawaitable` to detect them.
@@ -315,7 +315,7 @@ Collections Abstract Base Classes -- Detailed Descriptions
 
    .. note::
       In CPython, generator-based coroutines (generators decorated with
-      :func:`types.coroutine`) are
+      :func:`types.coroutine` or :func:`asyncio.coroutine`) are
       *awaitables*, even though they do not have an :meth:`__await__` method.
       Using ``isinstance(gencoro, Coroutine)`` for them will return ``False``.
       Use :func:`inspect.isawaitable` to detect them.

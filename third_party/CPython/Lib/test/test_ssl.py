@@ -13,7 +13,6 @@ import socket
 import select
 import time
 import datetime
-import enum
 import gc
 import os
 import errno
@@ -373,7 +372,7 @@ class BasicSocketTests(unittest.TestCase):
         # Make sure that the PROTOCOL_* constants have enum-like string
         # reprs.
         proto = ssl.PROTOCOL_TLS_CLIENT
-        self.assertEqual(str(proto), 'PROTOCOL_TLS_CLIENT')
+        self.assertEqual(str(proto), '_SSLMethod.PROTOCOL_TLS_CLIENT')
         ctx = ssl.SSLContext(proto)
         self.assertIs(ctx.protocol, proto)
 
@@ -618,7 +617,7 @@ class BasicSocketTests(unittest.TestCase):
                 with self.assertWarns(DeprecationWarning) as cm:
                     ssl.SSLContext(protocol)
                 self.assertEqual(
-                    f'{protocol!r} is deprecated',
+                    f'ssl.{protocol.name} is deprecated',
                     str(cm.warning)
                 )
 
@@ -628,7 +627,7 @@ class BasicSocketTests(unittest.TestCase):
                 with self.assertWarns(DeprecationWarning) as cm:
                     ctx.minimum_version = version
                 self.assertEqual(
-                    f'ssl.{version!r} is deprecated',
+                    f'ssl.{version!s} is deprecated',
                     str(cm.warning)
                 )
 
@@ -2344,7 +2343,6 @@ class SimpleBackgroundTests(unittest.TestCase):
         self.ssl_io_loop(sock, incoming, outgoing, sslobj.unwrap)
 
 
-@support.requires_resource('network')
 class NetworkedTests(unittest.TestCase):
 
     def test_timeout_connect_ex(self):
@@ -3255,16 +3253,23 @@ class ThreadedTests(unittest.TestCase):
              client_context.wrap_socket(socket.socket(),
                                         server_hostname=hostname,
                                         suppress_ragged_eofs=False) as s:
+            # TLS 1.3 perform client cert exchange after handshake
             s.connect((HOST, server.port))
-            with self.assertRaisesRegex(
-                ssl.SSLError,
-                'alert unknown ca|EOF occurred'
-            ):
-                # TLS 1.3 perform client cert exchange after handshake
+            try:
                 s.write(b'data')
                 s.read(1000)
                 s.write(b'should have failed already')
                 s.read(1000)
+            except ssl.SSLError as e:
+                if support.verbose:
+                    sys.stdout.write("\nSSLError is %r\n" % e)
+            except OSError as e:
+                if e.errno != errno.ECONNRESET:
+                    raise
+                if support.verbose:
+                    sys.stdout.write("\nsocket.error is %r\n" % e)
+            else:
+                self.fail("Use of invalid cert should have failed!")
 
     def test_rude_shutdown(self):
         """A brutal shutdown of an SSL server should raise an OSError
@@ -4864,158 +4869,7 @@ class TestSSLDebug(unittest.TestCase):
                 s.connect((HOST, server.port))
 
 
-class TestEnumerations(unittest.TestCase):
-
-    def test_tlsversion(self):
-        class CheckedTLSVersion(enum.IntEnum):
-            MINIMUM_SUPPORTED = _ssl.PROTO_MINIMUM_SUPPORTED
-            SSLv3 = _ssl.PROTO_SSLv3
-            TLSv1 = _ssl.PROTO_TLSv1
-            TLSv1_1 = _ssl.PROTO_TLSv1_1
-            TLSv1_2 = _ssl.PROTO_TLSv1_2
-            TLSv1_3 = _ssl.PROTO_TLSv1_3
-            MAXIMUM_SUPPORTED = _ssl.PROTO_MAXIMUM_SUPPORTED
-        enum._test_simple_enum(CheckedTLSVersion, TLSVersion)
-
-    def test_tlscontenttype(self):
-        class Checked_TLSContentType(enum.IntEnum):
-            """Content types (record layer)
-
-            See RFC 8446, section B.1
-            """
-            CHANGE_CIPHER_SPEC = 20
-            ALERT = 21
-            HANDSHAKE = 22
-            APPLICATION_DATA = 23
-            # pseudo content types
-            HEADER = 0x100
-            INNER_CONTENT_TYPE = 0x101
-        enum._test_simple_enum(Checked_TLSContentType, _TLSContentType)
-
-    def test_tlsalerttype(self):
-        class Checked_TLSAlertType(enum.IntEnum):
-            """Alert types for TLSContentType.ALERT messages
-
-            See RFC 8466, section B.2
-            """
-            CLOSE_NOTIFY = 0
-            UNEXPECTED_MESSAGE = 10
-            BAD_RECORD_MAC = 20
-            DECRYPTION_FAILED = 21
-            RECORD_OVERFLOW = 22
-            DECOMPRESSION_FAILURE = 30
-            HANDSHAKE_FAILURE = 40
-            NO_CERTIFICATE = 41
-            BAD_CERTIFICATE = 42
-            UNSUPPORTED_CERTIFICATE = 43
-            CERTIFICATE_REVOKED = 44
-            CERTIFICATE_EXPIRED = 45
-            CERTIFICATE_UNKNOWN = 46
-            ILLEGAL_PARAMETER = 47
-            UNKNOWN_CA = 48
-            ACCESS_DENIED = 49
-            DECODE_ERROR = 50
-            DECRYPT_ERROR = 51
-            EXPORT_RESTRICTION = 60
-            PROTOCOL_VERSION = 70
-            INSUFFICIENT_SECURITY = 71
-            INTERNAL_ERROR = 80
-            INAPPROPRIATE_FALLBACK = 86
-            USER_CANCELED = 90
-            NO_RENEGOTIATION = 100
-            MISSING_EXTENSION = 109
-            UNSUPPORTED_EXTENSION = 110
-            CERTIFICATE_UNOBTAINABLE = 111
-            UNRECOGNIZED_NAME = 112
-            BAD_CERTIFICATE_STATUS_RESPONSE = 113
-            BAD_CERTIFICATE_HASH_VALUE = 114
-            UNKNOWN_PSK_IDENTITY = 115
-            CERTIFICATE_REQUIRED = 116
-            NO_APPLICATION_PROTOCOL = 120
-        enum._test_simple_enum(Checked_TLSAlertType, _TLSAlertType)
-
-    def test_tlsmessagetype(self):
-        class Checked_TLSMessageType(enum.IntEnum):
-            """Message types (handshake protocol)
-
-            See RFC 8446, section B.3
-            """
-            HELLO_REQUEST = 0
-            CLIENT_HELLO = 1
-            SERVER_HELLO = 2
-            HELLO_VERIFY_REQUEST = 3
-            NEWSESSION_TICKET = 4
-            END_OF_EARLY_DATA = 5
-            HELLO_RETRY_REQUEST = 6
-            ENCRYPTED_EXTENSIONS = 8
-            CERTIFICATE = 11
-            SERVER_KEY_EXCHANGE = 12
-            CERTIFICATE_REQUEST = 13
-            SERVER_DONE = 14
-            CERTIFICATE_VERIFY = 15
-            CLIENT_KEY_EXCHANGE = 16
-            FINISHED = 20
-            CERTIFICATE_URL = 21
-            CERTIFICATE_STATUS = 22
-            SUPPLEMENTAL_DATA = 23
-            KEY_UPDATE = 24
-            NEXT_PROTO = 67
-            MESSAGE_HASH = 254
-            CHANGE_CIPHER_SPEC = 0x0101
-        enum._test_simple_enum(Checked_TLSMessageType, _TLSMessageType)
-
-    def test_sslmethod(self):
-        Checked_SSLMethod = enum._old_convert_(
-                enum.IntEnum, '_SSLMethod', 'ssl',
-                lambda name: name.startswith('PROTOCOL_') and name != 'PROTOCOL_SSLv23',
-                source=ssl._ssl,
-                )
-        # This member is assigned dynamically in `ssl.py`:
-        Checked_SSLMethod.PROTOCOL_SSLv23 = Checked_SSLMethod.PROTOCOL_TLS
-        enum._test_simple_enum(Checked_SSLMethod, ssl._SSLMethod)
-
-    def test_options(self):
-        CheckedOptions = enum._old_convert_(
-                enum.IntFlag, 'Options', 'ssl',
-                lambda name: name.startswith('OP_'),
-                source=ssl._ssl,
-                )
-        enum._test_simple_enum(CheckedOptions, ssl.Options)
-
-    def test_alertdescription(self):
-        CheckedAlertDescription = enum._old_convert_(
-                enum.IntEnum, 'AlertDescription', 'ssl',
-                lambda name: name.startswith('ALERT_DESCRIPTION_'),
-                source=ssl._ssl,
-                )
-        enum._test_simple_enum(CheckedAlertDescription, ssl.AlertDescription)
-
-    def test_sslerrornumber(self):
-        Checked_SSLErrorNumber = enum._old_convert_(
-                enum.IntEnum, 'SSLErrorNumber', 'ssl',
-                lambda name: name.startswith('SSL_ERROR_'),
-                source=ssl._ssl,
-                )
-        enum._test_simple_enum(Checked_SSLErrorNumber, ssl.SSLErrorNumber)
-
-    def test_verifyflags(self):
-        CheckedVerifyFlags = enum._old_convert_(
-                enum.IntFlag, 'VerifyFlags', 'ssl',
-                lambda name: name.startswith('VERIFY_'),
-                source=ssl._ssl,
-                )
-        enum._test_simple_enum(CheckedVerifyFlags, ssl.VerifyFlags)
-
-    def test_verifymode(self):
-        CheckedVerifyMode = enum._old_convert_(
-                enum.IntEnum, 'VerifyMode', 'ssl',
-                lambda name: name.startswith('CERT_'),
-                source=ssl._ssl,
-                )
-        enum._test_simple_enum(CheckedVerifyMode, ssl.VerifyMode)
-
-
-def setUpModule():
+def test_main(verbose=False):
     if support.verbose:
         plats = {
             'Mac': platform.mac_ver,
@@ -5046,9 +4900,20 @@ def setUpModule():
         if not os.path.exists(filename):
             raise support.TestFailed("Can't read certificate file %r" % filename)
 
-    thread_info = threading_helper.threading_setup()
-    unittest.addModuleCleanup(threading_helper.threading_cleanup, *thread_info)
+    tests = [
+        ContextTests, BasicSocketTests, SSLErrorTests, MemoryBIOTests,
+        SSLObjectTests, SimpleBackgroundTests, ThreadedTests,
+        TestPostHandshakeAuth, TestSSLDebug
+    ]
 
+    if support.is_resource_enabled('network'):
+        tests.append(NetworkedTests)
+
+    thread_info = threading_helper.threading_setup()
+    try:
+        support.run_unittest(*tests)
+    finally:
+        threading_helper.threading_cleanup(*thread_info)
 
 if __name__ == "__main__":
-    unittest.main()
+    test_main()

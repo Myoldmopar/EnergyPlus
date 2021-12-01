@@ -293,13 +293,12 @@ details of bytecode instructions as :class:`Instruction` instances:
 
    .. data:: argval
 
-      resolved arg value (if any), otherwise ``None``
+      resolved arg value (if known), otherwise same as arg
 
 
    .. data:: argrepr
 
-      human readable description of operation argument (if any),
-      otherwise an empty string.
+      human readable description of operation argument
 
 
    .. data:: offset
@@ -617,6 +616,13 @@ the original TOS1.
    .. versionadded:: 3.5
 
 
+.. opcode:: SETUP_ASYNC_WITH
+
+   Creates a new frame object.
+
+   .. versionadded:: 3.5
+
+
 
 **Miscellaneous opcodes**
 
@@ -686,27 +692,26 @@ iterations of the loop.
    opcode implements ``from module import *``.
 
 
+.. opcode:: POP_BLOCK
+
+   Removes one block from the block stack.  Per frame, there is a stack of
+   blocks, denoting :keyword:`try` statements, and such.
+
+
 .. opcode:: POP_EXCEPT
 
-   Pops three values from the stack, which are used to restore the exception state.
+   Removes one block from the block stack. The popped block must be an exception
+   handler block, as implicitly created when entering an except handler.  In
+   addition to popping extraneous values from the frame stack, the last three
+   popped values are used to restore the exception state.
 
 
 .. opcode:: RERAISE
 
     Re-raises the exception currently on top of the stack. If oparg is non-zero,
-    pops an additional value from the stack which is used to set ``f_lasti``
-    of the current frame.
+    restores ``f_lasti`` of the current frame to its value when the exception was raised.
 
     .. versionadded:: 3.9
-
-
-.. opcode:: PUSH_EXC_INFO
-
-    Pops the three values from the stack. Pushes the current exception to the top of the stack.
-    Pushes the three values originally popped back to the stack.
-    Used in exception handlers.
-
-    .. versionadded:: 3.11
 
 
 .. opcode:: WITH_EXCEPT_START
@@ -717,17 +722,6 @@ iterations of the loop.
     has occurred in a :keyword:`with` statement.
 
     .. versionadded:: 3.9
-
-
-.. opcode:: POP_EXCEPT_AND_RERAISE
-
-    Pops the exception currently on top of the stack. Pops the integer value on top
-    of the stack and sets the ``f_lasti`` attribute of the frame with that value.
-    Then pops the next exception from the stack uses it to restore the current exception.
-    Finally it re-raises the originally popped exception.
-    Used in exception handler cleanup.
-
-    .. versionadded:: 3.11
 
 
 .. opcode:: LOAD_ASSERTION_ERROR
@@ -744,15 +738,18 @@ iterations of the loop.
    by :opcode:`CALL_FUNCTION` to construct a class.
 
 
-.. opcode:: BEFORE_WITH (delta)
+.. opcode:: SETUP_WITH (delta)
 
    This opcode performs several operations before a with block starts.  First,
    it loads :meth:`~object.__exit__` from the context manager and pushes it onto
    the stack for later use by :opcode:`WITH_EXCEPT_START`.  Then,
-   :meth:`~object.__enter__` is called. Finally, the result of calling the
-   ``__enter__()`` method is pushed onto the stack.
+   :meth:`~object.__enter__` is called, and a finally block pointing to *delta*
+   is pushed.  Finally, the result of calling the ``__enter__()`` method is pushed onto
+   the stack.  The next opcode will either ignore it (:opcode:`POP_TOP`), or
+   store it in (a) variable(s) (:opcode:`STORE_FAST`, :opcode:`STORE_NAME`, or
+   :opcode:`UNPACK_SEQUENCE`).
 
-   .. versionadded:: 3.11
+   .. versionadded:: 3.2
 
 
 .. opcode:: COPY_DICT_WITHOUT_KEYS
@@ -937,7 +934,7 @@ All of the following opcodes use their arguments.
    .. versionadded:: 3.9
 
 
-.. opcode:: DICT_MERGE (i)
+.. opcode:: DICT_MERGE
 
    Like :opcode:`DICT_UPDATE` but raises an exception for duplicate keys.
 
@@ -1045,6 +1042,12 @@ All of the following opcodes use their arguments.
    Loads the global named ``co_names[namei]`` onto the stack.
 
 
+.. opcode:: SETUP_FINALLY (delta)
+
+   Pushes a try block from a try-finally or try-except clause onto the block
+   stack.  *delta* points to the finally block or the first except block.
+
+
 .. opcode:: LOAD_FAST (var_num)
 
    Pushes a reference to the local ``co_varnames[var_num]`` onto the stack.
@@ -1060,33 +1063,18 @@ All of the following opcodes use their arguments.
    Deletes local ``co_varnames[var_num]``.
 
 
-.. opcode:: MAKE_CELL (i)
-
-   Creates a new cell in slot ``i``.  If that slot is empty then
-   that value is stored into the new cell.
-
-   .. versionadded:: 3.11
-
-
 .. opcode:: LOAD_CLOSURE (i)
 
-   Pushes a reference to the cell contained in slot ``i`` of the "fast locals"
-   storage.  The name of the variable is ``co_fastlocalnames[i]``.
-
-   Note that ``LOAD_CLOSURE`` is effectively an alias for ``LOAD_FAST``.
-   It exists to keep bytecode a little more readable.
-
-   .. versionchanged:: 3.11
-      ``i`` is no longer offset by the length of ``co_varnames``.
+   Pushes a reference to the cell contained in slot *i* of the cell and free
+   variable storage.  The name of the variable is ``co_cellvars[i]`` if *i* is
+   less than the length of *co_cellvars*.  Otherwise it is ``co_freevars[i -
+   len(co_cellvars)]``.
 
 
 .. opcode:: LOAD_DEREF (i)
 
-   Loads the cell contained in slot ``i`` of the "fast locals" storage.
+   Loads the cell contained in slot *i* of the cell and free variable storage.
    Pushes a reference to the object the cell contains on the stack.
-
-   .. versionchanged:: 3.11
-      ``i`` is no longer offset by the length of ``co_varnames``.
 
 
 .. opcode:: LOAD_CLASSDEREF (i)
@@ -1097,28 +1085,19 @@ All of the following opcodes use their arguments.
 
    .. versionadded:: 3.4
 
-   .. versionchanged:: 3.11
-      ``i`` is no longer offset by the length of ``co_varnames``.
-
 
 .. opcode:: STORE_DEREF (i)
 
-   Stores TOS into the cell contained in slot ``i`` of the "fast locals"
+   Stores TOS into the cell contained in slot *i* of the cell and free variable
    storage.
-
-   .. versionchanged:: 3.11
-      ``i`` is no longer offset by the length of ``co_varnames``.
 
 
 .. opcode:: DELETE_DEREF (i)
 
-   Empties the cell contained in slot ``i`` of the "fast locals" storage.
+   Empties the cell contained in slot *i* of the cell and free variable storage.
    Used by the :keyword:`del` statement.
 
    .. versionadded:: 3.2
-
-   .. versionchanged:: 3.11
-      ``i`` is no longer offset by the length of ``co_varnames``.
 
 
 .. opcode:: RAISE_VARARGS (argc)
@@ -1203,18 +1182,6 @@ All of the following opcodes use their arguments.
 
    .. versionadded:: 3.7
 
-
-.. opcode:: CALL_METHOD_KW (argc)
-
-   Calls a method in a similar fashion as :opcode:`CALL_METHOD`, but also supports keyword arguments.
-   *argc* is the number of positional and keyword arguments.
-   This opcode is designed to be used with :opcode:`LOAD_METHOD`.  TOS is a
-   tuple of keyword argument names.  Argument values are below that.
-   Below them, the two items described in :opcode:`LOAD_METHOD` are on the
-   stack (either ``self`` and an unbound method object or ``NULL`` and an
-   arbitrary callable).  All of them are popped from the stack and the return value is pushed.
-
-   .. versionadded:: 3.11
 
 .. opcode:: MAKE_FUNCTION (flags)
 

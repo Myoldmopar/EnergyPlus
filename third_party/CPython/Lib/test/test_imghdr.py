@@ -16,7 +16,6 @@ TEST_FILES = (
     ('python.pgm', 'pgm'),
     ('python.pbm', 'pbm'),
     ('python.jpg', 'jpeg'),
-    ('python-raw.jpg', 'jpeg'),  # raw JPEG without JFIF/EXIF markers
     ('python.ras', 'rast'),
     ('python.sgi', 'rgb'),
     ('python.tiff', 'tiff'),

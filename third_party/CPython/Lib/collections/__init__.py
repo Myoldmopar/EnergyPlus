@@ -236,19 +236,11 @@ class OrderedDict(dict):
         is raised.
 
         '''
-        marker = self.__marker
-        result = dict.pop(self, key, marker)
-        if result is not marker:
-            # The same as in __delitem__().
-            link = self.__map.pop(key)
-            link_prev = link.prev
-            link_next = link.next
-            link_prev.next = link_next
-            link_next.prev = link_prev
-            link.prev = None
-            link.next = None
+        if key in self:
+            result = self[key]
+            del self[key]
             return result
-        if default is marker:
+        if default is self.__marker:
             raise KeyError(key)
         return default
 

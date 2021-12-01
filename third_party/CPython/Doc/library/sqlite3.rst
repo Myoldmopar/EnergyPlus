@@ -213,7 +213,7 @@ Module functions and constants
    The :mod:`sqlite3` module internally uses a statement cache to avoid SQL parsing
    overhead. If you want to explicitly set the number of statements that are cached
    for the connection, you can set the *cached_statements* parameter. The currently
-   implemented default is to cache 128 statements.
+   implemented default is to cache 100 statements.
 
    If *uri* is true, *database* is interpreted as a URI. This allows you
    to specify options. For example, to open a database in read-only mode
@@ -402,10 +402,6 @@ Connection Objects
 
          con.create_collation("reverse", None)
 
-      .. versionchanged:: 3.11
-         The collation name can contain any Unicode character.  Earlier, only
-         ASCII characters were allowed.
-
 
    .. method:: interrupt()
 
@@ -433,11 +429,6 @@ Connection Objects
       Please consult the SQLite documentation about the possible values for the first
       argument and the meaning of the second and third argument depending on the first
       one. All necessary constants are available in the :mod:`sqlite3` module.
-
-      Passing :const:`None` as *authorizer_callback* will disable the authorizer.
-
-      .. versionchanged:: 3.11
-         Added support for disabling the authorizer using :const:`None`.
 
 
    .. method:: set_progress_handler(handler, n)
@@ -537,8 +528,8 @@ Connection Objects
 
       Using this attribute you can control what objects are returned for the ``TEXT``
       data type. By default, this attribute is set to :class:`str` and the
-      :mod:`sqlite3` module will return :class:`str` objects for ``TEXT``.
-      If you want to return :class:`bytes` instead, you can set it to :class:`bytes`.
+      :mod:`sqlite3` module will return Unicode objects for ``TEXT``. If you want to
+      return bytestrings instead, you can set it to :class:`bytes`.
 
       You can also set it to any other callable that accepts a single bytestring
       parameter and returns the resulting object.
@@ -843,20 +834,6 @@ Exceptions
 
    The base class of the other exceptions in this module.  It is a subclass
    of :exc:`Exception`.
-
-   .. attribute:: sqlite_errorcode
-
-      The numeric error code from the
-      `SQLite API <https://sqlite.org/rescode.html>`_
-
-      .. versionadded:: 3.11
-
-   .. attribute:: sqlite_errorname
-
-      The symbolic name of the numeric error code
-      from the `SQLite API <https://sqlite.org/rescode.html>`_
-
-      .. versionadded:: 3.11
 
 .. exception:: DatabaseError
 

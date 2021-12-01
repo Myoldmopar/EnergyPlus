@@ -10,7 +10,6 @@ import errno
 import os
 import threading
 import time
-import unittest
 try:
     import ssl
 except ImportError:
@@ -1145,10 +1144,18 @@ class MiscTestCase(TestCase):
         support.check__all__(self, ftplib, not_exported=not_exported)
 
 
-def setUpModule():
+def test_main():
+    tests = [TestFTPClass, TestTimeouts,
+             TestIPv6Environment,
+             TestTLS_FTPClassMixin, TestTLS_FTPClass,
+             MiscTestCase]
+
     thread_info = threading_helper.threading_setup()
-    unittest.addModuleCleanup(threading_helper.threading_cleanup, *thread_info)
+    try:
+        support.run_unittest(*tests)
+    finally:
+        threading_helper.threading_cleanup(*thread_info)
 
 
 if __name__ == '__main__':
-    unittest.main()
+    test_main()

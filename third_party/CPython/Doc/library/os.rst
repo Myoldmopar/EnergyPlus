@@ -3656,10 +3656,9 @@ written in Python, such as a mail server's external command delivery program.
 
 .. data:: EX_OK
 
-   Exit code that means no error occurred. May be taken from the defined value of
-   ``EXIT_SUCCESS`` on some platforms. Generally has a value of zero.
+   Exit code that means no error occurred.
 
-   .. availability:: Unix, Windows.
+   .. availability:: Unix.
 
 
 .. data:: EX_USAGE
@@ -4886,7 +4885,7 @@ Random numbers
    device. If the ``/dev/urandom`` device is not available or not readable, the
    :exc:`NotImplementedError` exception is raised.
 
-   On Windows, it will use ``BCryptGenRandom()``.
+   On Windows, it will use ``CryptGenRandom()``.
 
    .. seealso::
       The :mod:`secrets` module provides higher level functions. For an
@@ -4906,10 +4905,6 @@ Random numbers
       when available.  On OpenBSD 5.6 and newer, the C ``getentropy()``
       function is now used. These functions avoid the usage of an internal file
       descriptor.
-
-   .. versionchanged:: 3.11
-      On Windows, ``BCryptGenRandom()`` is used instead of ``CryptGenRandom()``
-      which is deprecated.
 
 .. data:: GRND_NONBLOCK
 

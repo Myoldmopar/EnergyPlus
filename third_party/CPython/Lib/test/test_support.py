@@ -426,14 +426,9 @@ class TestSupport(unittest.TestCase):
                              extra=extra,
                              not_exported=not_exported)
 
-        extra = {
-            'TextTestResult',
-            'findTestCases',
-            'getTestCaseNames',
-            'installHandler',
-            'makeSuite',
-        }
+        extra = {'TextTestResult', 'installHandler'}
         not_exported = {'load_tests', "TestProgram", "BaseTestSuite"}
+
         support.check__all__(self,
                              unittest,
                              ("unittest.result", "unittest.case",
@@ -714,5 +709,9 @@ class TestSupport(unittest.TestCase):
     # SuppressCrashReport
 
 
+def test_main():
+    tests = [TestSupport]
+    support.run_unittest(*tests)
+
 if __name__ == '__main__':
-    unittest.main()
+    test_main()

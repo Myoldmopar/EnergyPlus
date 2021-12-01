@@ -1942,14 +1942,6 @@ class SysLogHandlerTest(BaseTest):
         self.handled.wait()
         self.assertEqual(self.log_output, b'<11>h\xc3\xa4m-sp\xc3\xa4m')
 
-    def test_udp_reconnection(self):
-        logger = logging.getLogger("slh")
-        self.sl_hdlr.close()
-        self.handled.clear()
-        logger.error("sp\xe4m")
-        self.handled.wait(0.1)
-        self.assertEqual(self.log_output, b'<11>sp\xc3\xa4m\x00')
-
 @unittest.skipUnless(hasattr(socket, "AF_UNIX"), "Unix sockets required")
 class UnixSysLogHandlerTest(SysLogHandlerTest):
 
@@ -4401,14 +4393,6 @@ class ModuleLevelMiscTest(BaseTest):
         self.assertNotIn("Cannot recover from stack overflow.", err)
         self.assertEqual(rc, 1)
 
-    def test_get_level_names_mapping(self):
-        mapping = logging.getLevelNamesMapping()
-        self.assertEqual(logging._nameToLevel, mapping)  # value is equivalent
-        self.assertIsNot(logging._nameToLevel, mapping)  # but not the internal data
-        new_mapping = logging.getLevelNamesMapping()     # another call -> another copy
-        self.assertIsNot(mapping, new_mapping)           # verify not the same object as before
-        self.assertEqual(mapping, new_mapping)           # but equivalent in value
-
 
 class LogRecordTest(BaseTest):
     def test_str_rep(self):
@@ -5183,9 +5167,6 @@ class BaseFileTest(BaseTest):
                         msg="Log file %r does not exist" % filename)
         self.rmfiles.append(filename)
 
-    def next_rec(self):
-        return logging.LogRecord('n', logging.DEBUG, 'p', 1,
-                                 self.next_message(), None, None, None)
 
 class FileHandlerTest(BaseFileTest):
     def test_delay(self):
@@ -5198,30 +5179,16 @@ class FileHandlerTest(BaseFileTest):
         self.assertTrue(os.path.exists(self.fn))
         fh.close()
 
-    def test_emit_after_closing_in_write_mode(self):
-        # Issue #42378
-        os.unlink(self.fn)
-        fh = logging.FileHandler(self.fn, encoding='utf-8', mode='w')
-        fh.setFormatter(logging.Formatter('%(message)s'))
-        fh.emit(self.next_rec())    # '1'
-        fh.close()
-        fh.emit(self.next_rec())    # '2'
-        with open(self.fn) as fp:
-            self.assertEqual(fp.read().strip(), '1')
-
 class RotatingFileHandlerTest(BaseFileTest):
+    def next_rec(self):
+        return logging.LogRecord('n', logging.DEBUG, 'p', 1,
+                                 self.next_message(), None, None, None)
+
     def test_should_not_rollover(self):
         # If maxbytes is zero rollover never occurs
         rh = logging.handlers.RotatingFileHandler(
                 self.fn, encoding="utf-8", maxBytes=0)
         self.assertFalse(rh.shouldRollover(None))
-        rh.close()
-        # bpo-45401 - test with special file
-        # We set maxBytes to 1 so that rollover would normally happen, except
-        # for the check for regular files
-        rh = logging.handlers.RotatingFileHandler(
-                os.devnull, encoding="utf-8", maxBytes=1)
-        self.assertFalse(rh.shouldRollover(self.next_rec()))
         rh.close()
 
     def test_should_rollover(self):
@@ -5317,15 +5284,6 @@ class RotatingFileHandlerTest(BaseFileTest):
         rh.close()
 
 class TimedRotatingFileHandlerTest(BaseFileTest):
-    def test_should_not_rollover(self):
-        # See bpo-45401. Should only ever rollover regular files
-        fh = logging.handlers.TimedRotatingFileHandler(
-                os.devnull, 'S', encoding="utf-8", backupCount=1)
-        time.sleep(1.1)    # a little over a second ...
-        r = logging.makeLogRecord({'msg': 'testing - device file'})
-        self.assertFalse(fh.shouldRollover(r))
-        fh.close()
-
     # other test methods added below
     def test_rollover(self):
         fh = logging.handlers.TimedRotatingFileHandler(
@@ -5531,11 +5489,25 @@ class MiscTestCase(unittest.TestCase):
 # Set the locale to the platform-dependent default.  I have no idea
 # why the test does this, but in any case we save the current locale
 # first and restore it at the end.
-def setUpModule():
-    cm = support.run_with_locale('LC_ALL', '')
-    cm.__enter__()
-    unittest.addModuleCleanup(cm.__exit__, None, None, None)
-
+@support.run_with_locale('LC_ALL', '')
+def test_main():
+    tests = [
+        BuiltinLevelsTest, BasicFilterTest, CustomLevelsAndFiltersTest,
+        HandlerTest, MemoryHandlerTest, ConfigFileTest, SocketHandlerTest,
+        DatagramHandlerTest, MemoryTest, EncodingTest, WarningsTest,
+        ConfigDictTest, ManagerTest, FormatterTest, BufferingFormatterTest,
+        StreamHandlerTest, LogRecordFactoryTest, ChildLoggerTest,
+        QueueHandlerTest, ShutdownTest, ModuleLevelMiscTest, BasicConfigTest,
+        LoggerAdapterTest, LoggerTest, SMTPHandlerTest, FileHandlerTest,
+        RotatingFileHandlerTest,  LastResortTest, LogRecordTest,
+        ExceptionTest, SysLogHandlerTest, IPv6SysLogHandlerTest, HTTPHandlerTest,
+        NTEventLogHandlerTest, TimedRotatingFileHandlerTest,
+        UnixSocketHandlerTest, UnixDatagramHandlerTest, UnixSysLogHandlerTest,
+        MiscTestCase
+    ]
+    if hasattr(logging.handlers, 'QueueListener'):
+        tests.append(QueueListenerTest)
+    support.run_unittest(*tests)
 
 if __name__ == "__main__":
-    unittest.main()
+    test_main()
