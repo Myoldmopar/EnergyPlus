@@ -18,11 +18,11 @@ macro(SET_CPYTHON_VARIABLES)
         set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR}/PC)
         set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR})
         if(CMAKE_BUILD_TYPE MATCHES "Debug")
-            set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311_d.dll)
-			set(CPYTHON_BUILT_LIB ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311_d.lib)
+            set(CPYTHON_BUILT_BIN ${CPYTHON_LIBRARY_DIR}/python311_d.dll)
+			set(CPYTHON_BUILT_LIB ${CPYTHON_LIBRARY_DIR}/python311_d.lib)
         else()
-            set(CPYTHON_BUILT_BIN ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311.dll)
-		    set(CPYTHON_BUILT_LIB ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR}/python311.lib)	
+            set(CPYTHON_BUILT_BIN ${CPYTHON_LIBRARY_DIR}/python311.dll)
+		    set(CPYTHON_BUILT_LIB ${CPYTHON_LIBRARY_DIR}/python311.lib)	
         endif()
     else()
         set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR})
@@ -83,16 +83,32 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
             -E copy_directory ${CPYTHON_STDLIB_DIR} $<TARGET_FILE_DIR:energyplus>/python_standard_lib
     )
     # Then also copy python standard library built modules into the standard library folder
-    file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib*/*)  # TODO: Verify this on Windows/Mac
-    foreach(MODULE IN LISTS MODULES)
-        # message("Copying module: ${MODULE}")
-        add_custom_command(
+    if(MSVC)
+	    file(GLOB CPYTHON_DLLS ${CPYTHON_LIBRARY_DIR}/*.dll)
+		file(GLOB CPYTHON_PYDS ${CPYTHON_LIBRARY_DIR}/*.pyd)
+		file(GLOB CPYTHON_EXES ${CPYTHON_LIBRARY_DIR}/*.exe)
+		set(CPYTHON_ALL ${CPYTHON_DLLS} ${CPYTHON_PYDS} ${CPYTHON_EXES})
+        foreach(MODULE IN LISTS CPYTHON_ALL)
+            # message("Copying module: ${MODULE}")
+            add_custom_command(
                 TARGET energyplus
                 POST_BUILD
                 COMMAND ${CMAKE_COMMAND}
                 -E copy "${MODULE}" $<TARGET_FILE_DIR:energyplus>/python_standard_lib
-        )
-    endforeach()
+            )
+        endforeach()
+	else()
+	    file(GLOB MODULES ${PROJECT_SOURCE_DIR}/third_party/CPython/build/lib*/*)  # TODO: Verify this on Windows/Mac
+        foreach(MODULE IN LISTS MODULES)
+            # message("Copying module: ${MODULE}")
+            add_custom_command(
+                TARGET energyplus
+                POST_BUILD
+                COMMAND ${CMAKE_COMMAND}
+                -E copy "${MODULE}" $<TARGET_FILE_DIR:energyplus>/python_standard_lib
+            )
+        endforeach()
+	endif()
     if(APPLE)
         add_custom_command(
                 TARGET energyplus
