@@ -18,19 +18,19 @@ macro(SET_CPYTHON_VARIABLES)
         set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR}/PC)
         set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR}/PCBuild/${CPYTHON_BUILD_DIR})
         if(CMAKE_BUILD_TYPE MATCHES "Debug")
-            set(CPYTHON_BUILT_BIN ${CPYTHON_LIBRARY_DIR}/python311_d.dll)
-			set(CPYTHON_BUILT_LIB ${CPYTHON_LIBRARY_DIR}/python311_d.lib)
+            set(CPYTHON_BUILT_BIN ${CPYTHON_LIBRARY_DIR}/python310_d.dll)
+			set(CPYTHON_BUILT_LIB ${CPYTHON_LIBRARY_DIR}/python310_d.lib)
         else()
-            set(CPYTHON_BUILT_BIN ${CPYTHON_LIBRARY_DIR}/python311.dll)
-		    set(CPYTHON_BUILT_LIB ${CPYTHON_LIBRARY_DIR}/python311.lib)	
+            set(CPYTHON_BUILT_BIN ${CPYTHON_LIBRARY_DIR}/python310.dll)
+		    set(CPYTHON_BUILT_LIB ${CPYTHON_LIBRARY_DIR}/python310.lib)
         endif()
     else()
         set(CPYTHON_INCLUDE_DIR ${CPYTHON_DIR}/Include ${CPYTHON_DIR})
         set(CPYTHON_LIBRARY_DIR ${CPYTHON_DIR})
         if (UNIX AND NOT APPLE)
-            set(CPYTHON_BIN_NAME "libpython3.11.so.1.0")
+            set(CPYTHON_BIN_NAME "libpython3.10.so.1.0")
         elseif(APPLE)
-            set(CPYTHON_BIN_NAME "libpython3.11.dylib")
+            set(CPYTHON_BIN_NAME "libpython3.10.dylib")
         endif()
         set(CPYTHON_BUILT_BIN "${CPYTHON_DIR}/${CPYTHON_BIN_NAME}")
     endif()
@@ -115,7 +115,7 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
                 POST_BUILD
                 DEPENDS
                 __ALWAYSRUNME
-                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -id "@executable_path/libpython3.11.dylib" "${CPYTHON_BUILT_BIN}"
+                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -id "@executable_path/libpython3.10.dylib" "${CPYTHON_BUILT_BIN}"
         )
         add_custom_command(
                 TARGET energyplus
@@ -129,15 +129,14 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
                 POST_BUILD
                 DEPENDS
                 __ALWAYSRUNME
-                # COMMAND echo ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@loader_path/libpython3.11.dylib" $<TARGET_FILE:energyplusapi>
-                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "@executable_path/libpython3.11.dylib" "@loader_path/libpython3.11.dylib" $<TARGET_FILE:energyplusapi>
+                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "@executable_path/libpython3.10.dylib" "@loader_path/libpython3.10.dylib" $<TARGET_FILE:energyplusapi>
         )
 #        add_custom_command(
 #                TARGET energyplus
 #                POST_BUILD
 #                DEPENDS
 #                __ALWAYSRUNME
-#                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.11.dylib" "@executable_path/libpython3.11.dylib" $<TARGET_FILE:energyplus>
+#                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.10.dylib" "@executable_path/libpython3.10.dylib" $<TARGET_FILE:energyplus>
 #        )
     endif()
 endmacro()

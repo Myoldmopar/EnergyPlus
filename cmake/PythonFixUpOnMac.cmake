@@ -8,12 +8,12 @@
 #  using @executable_path here works well because when you are running energyplus(.exe), it should definitely just be from the run directory
 #  nothing we need to do
 # libenergyplusapi, the dynamic library
-#  like the exe, this depends on the core python dll at /usr/local/lib/libpython3.11.dylib
+#  like the exe, this depends on the core python dll at /usr/local/lib/libpython3.10.dylib
 #  we are packing up the python lib with E+, so it will technically live at @executable_path/{SomePythonLibName}, HOWEVER
 #  with the API work, the client can now call this dynamic library from other locations, where the calling executable is not in the E+ dir
 #  because of this, we are not using @executable_path/, but instead @loader_path, which will allow the nested python dylib
 #  to be found relative to the file loading it, which is this libenergyplusapi dynamic library
-# libpython3.11.dylib, the actual python library
+# libpython3.10.dylib, the actual python library
 #  this is the main python dynamic library that we distribute with e+
 #  I don't think we actually need to do anything with the -id
 #  there is also a dependency on libintl.8.dylib which we fix up using the @loader_path approach
@@ -28,13 +28,13 @@ message("PYTHON: Fixing up Python Dependencies on Mac")
 include(GetPrerequisites)
 
 # derive a few terms from the args passed in
-# set(PYTHON_LIB_FILENAME "libpython3.11.dylib") # Python dylib file name
+# set(PYTHON_LIB_FILENAME "libpython3.10.dylib") # Python dylib file name
 get_filename_component(BASE_PATH ${EXECUTABLE_PATH} DIRECTORY) # Path to the staged install tree in the build directory
 # set(LOCAL_PYTHON_LIBRARY "${BASE_PATH}/${PYTHON_LIB_FILENAME}") # Path to the Python dylib once copied into the install tree
 set(ENERGYPLUS_API_PATH "${BASE_PATH}/${EPLUS_DYNAMIC_LIB_NAME}") # Path to the EnergyPlus dylib once copied into the install tree
 
 # for the energyplus dylib, search for the python dylib prereq and change it to use @loader_path
-execute_process(COMMAND install_name_tool -change @executable_path/libpython3.11.dylib @loader_path/libpython3.11.dylib "${ENERGYPLUS_API_PATH}")
+execute_process(COMMAND install_name_tool -change @executable_path/libpython3.10.dylib @loader_path/libpython3.10.dylib "${ENERGYPLUS_API_PATH}")
 
 # and the python library itself depends on a gettext lib (on our github actions builds anyway)
 #execute_process(COMMAND "install_name_tool" -change "/usr/local/lib/${PYTHON_LIB_FILENAME}" "@loader_path/${PYTHON_LIB_FILENAME}" "${ENERGYPLUS_API_PATH}")
