@@ -39,6 +39,12 @@ doc/readthedocs/sphinx/_build_c
 # now that we have python, ignore some things
 *.pyc
 venv
+third_party/CPython/Lib/site-packages/_distutils_hack/
+third_party/CPython/Lib/site-packages/distutils-precedence.pth
+third_party/CPython/Lib/site-packages/pip*
+third_party/CPython/Lib/site-packages/pkg_resources/
+third_party/CPython/Lib/site-packages/setuptools*
+third_party/CPython/Python/frozen_modules/
 
 # Ignore build folders (at root level only, except build we ignore everywhere for doc/build in particular), if the dev chooses to put it there
 build
