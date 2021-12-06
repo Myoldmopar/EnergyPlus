@@ -91,10 +91,10 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
         foreach (MODULE IN LISTS CPYTHON_ALL)
             # message("Copying module: ${MODULE}")
             add_custom_command(
-                    TARGET energypluslib
+                    TARGET energyplusapi
                     POST_BUILD
                     COMMAND ${CMAKE_COMMAND}
-                    -E copy "${MODULE}" $<TARGET_FILE_DIR:energyplus>/python_standard_lib
+                    -E copy "${MODULE}" $<TARGET_FILE_DIR:energyplusapi>/python_standard_lib
             )
         endforeach ()
     else ()
@@ -102,10 +102,10 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
         foreach (MODULE IN LISTS MODULES)
             # message("Copying module: ${MODULE}")
             add_custom_command(
-                    TARGET energypluslib
+                    TARGET energyplusapi
                     POST_BUILD
                     COMMAND ${CMAKE_COMMAND}
-                    -E copy "${MODULE}" $<TARGET_FILE_DIR:energyplus>/python_standard_lib
+                    -E copy "${MODULE}" $<TARGET_FILE_DIR:energyplusapi>/python_standard_lib
             )
         endforeach ()
     endif ()
