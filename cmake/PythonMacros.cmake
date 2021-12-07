@@ -111,7 +111,7 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
     endif ()
     if (APPLE)
         add_custom_command(
-                TARGET energyplus
+                TARGET energyplusapi
                 POST_BUILD
                 DEPENDS
                 __ALWAYSRUNME
@@ -139,4 +139,11 @@ macro(CPYTHON_POST_EXE_BUILD_OPERATIONS)
         #                COMMAND ${CMAKE_INSTALL_NAME_TOOL} -change "/usr/local/lib/libpython3.10.dylib" "@executable_path/libpython3.10.dylib" $<TARGET_FILE:energyplus>
         #        )
     endif ()
+    add_custom_command(
+            TARGET energyplusapi
+            POST_BUILD
+            DEPENDS
+            __ALWAYSRUNME
+            COMMAND ${CMAKE_COMMAND} -E copy "${CPYTHON_BUILT_BIN}" $<TARGET_FILE_DIR:energyplusapi>
+    )
 endmacro()
