@@ -154,12 +154,7 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 # we are making *a Python 3.6 Interpreter* a required dependency, so find it here
-# If LINK_WITH_PYTHON, also request the Development (libs) at the same time, to ensure consistent version between interpreter and Development
-if(LINK_WITH_PYTHON)
-  find_package(Python 3.6 COMPONENTS Interpreter Development REQUIRED)
-else()
-  find_package(Python 3.6 COMPONENTS Interpreter REQUIRED)
-endif()
+find_package(Python 3.6 COMPONENTS Interpreter REQUIRED)
 
 if(BUILD_TESTING)
   option(ENABLE_REGRESSION_TESTING "Enable Regression Tests" OFF)
@@ -229,6 +224,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/Products")
 
 include(cmake/ProjectMacros.cmake)
 include(cmake/CompilerFlags.cmake)
+include(cmake/PythonMacros.cmake)
 
 add_subdirectory(third_party)
 
@@ -254,6 +250,7 @@ target_include_directories(project_options INTERFACE ${PROJECT_SOURCE_DIR}/third
 target_include_directories(project_options INTERFACE ${PROJECT_SOURCE_DIR}/third_party/Windows-CalcEngine/src/Tarcog/include)
 target_include_directories(project_options INTERFACE ${PROJECT_SOURCE_DIR}/third_party/Windows-CalcEngine/src/Viewer/include)
 target_include_directories(project_options INTERFACE ${PROJECT_SOURCE_DIR}/third_party/ssc)
+target_include_directories(project_options INTERFACE ${CPYTHON_INCLUDE_DIR})
 set(SAM_SKIP_TOOLS ON FORCE)
 set(SAM_SKIP_TESTS ON FORCE)
 set(SAMAPI_EXPORT OFF FORCE)
