@@ -976,7 +976,7 @@ void SizeCoolingPanel(EnergyPlusData &state, int const CoolingPanelNum)
         bool errorsFound = false;
         SizingString = state.dataChilledCeilingPanelSimple->CoolingPanelSysNumericFields(CoolingPanelNum).FieldNames(FieldNum) + " [W]";
         CapSizingMethod = ThisCP.CoolingCapMethod;
-        ZoneEqSizing(state.dataSize->CurZoneEqNum).SizingMethod(SizingMethod) = CapSizingMethod;
+        ZoneEqSizing(state.dataSize->CurZoneEqNum).sizingMethod = CapSizingMethod;
 
         if (!IsAutoSize && !state.dataSize->ZoneSizingRunDone) { // simulation continue
             if (CapSizingMethod == CoolingDesignCapacity && ThisCP.ScaledCoolingCapacity > 0.0) {

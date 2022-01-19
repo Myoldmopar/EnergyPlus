@@ -143,8 +143,8 @@ void BaseSizerWithScalableInputs::initializeWithinEP(EnergyPlusData &state,
                 state.dataSize->DataScalableSizingON = true;
             }
         } else {
-            if (int(this->zoneEqSizing.size()) > 0 && int(this->zoneEqSizing(this->curZoneEqNum).SizingMethod.size()) > 0) {
-                this->zoneAirFlowSizMethod = this->zoneEqSizing(this->curZoneEqNum).SizingMethod(int(this->sizingType));
+            if (!this->zoneEqSizing.empty() && this->zoneEqSizing(this->curZoneEqNum).sizingMethod > -1) {
+                this->zoneAirFlowSizMethod = this->zoneEqSizing(this->curZoneEqNum).sizingMethod;
             } else {
                 this->zoneAirFlowSizMethod = 0;
             }

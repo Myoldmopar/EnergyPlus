@@ -74,7 +74,7 @@ Real64 HeatingAirFlowSizer::size(EnergyPlusData &state, Real64 _originalValue, b
             } else if (this->zoneEqSizing(this->curZoneEqNum).DesignSizeFromParent) {
                 this->autoSizedValue = this->zoneEqSizing(this->curZoneEqNum).AirVolFlow;
             } else {
-                auto const SELECT_CASE_var(this->zoneEqSizing(this->curZoneEqNum).SizingMethod(DataHVACGlobals::HeatingAirflowSizing));
+                auto const SELECT_CASE_var(this->zoneEqSizing(this->curZoneEqNum).sizingMethod);
                 if ((SELECT_CASE_var == DataSizing::SupplyAirFlowRate) || (SELECT_CASE_var == DataSizing::None) ||
                     (SELECT_CASE_var == DataSizing::FlowPerFloorArea)) {
                     if (this->zoneEqSizing(this->curZoneEqNum).SystemAirFlow) {

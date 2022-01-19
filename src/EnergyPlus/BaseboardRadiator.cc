@@ -747,7 +747,7 @@ namespace BaseboardRadiator {
                     PrintFlag = false;
                     SizingString = baseboard->BaseboardParamsNumericFields(BaseboardNum).FieldNames(FieldNum) + " [W]";
                     CapSizingMethod = baseboard->Baseboard(BaseboardNum).HeatingCapMethod;
-                    ZoneEqSizing(CurZoneEqNum).SizingMethod(SizingMethod) = CapSizingMethod;
+                    ZoneEqSizing(CurZoneEqNum).sizingMethod = CapSizingMethod;
                     if (CapSizingMethod == HeatingDesignCapacity || CapSizingMethod == CapacityPerFloorArea ||
                         CapSizingMethod == FractionOfAutosizedHeatingCapacity) {
 
@@ -874,7 +874,7 @@ namespace BaseboardRadiator {
                     PrintFlag = false;
                     SizingString = baseboard->BaseboardParamsNumericFields(BaseboardNum).FieldNames(FieldNum) + " [W]";
                     CapSizingMethod = baseboard->Baseboard(BaseboardNum).HeatingCapMethod;
-                    ZoneEqSizing(CurZoneEqNum).SizingMethod(SizingMethod) = CapSizingMethod;
+                    ZoneEqSizing(CurZoneEqNum).sizingMethod = CapSizingMethod;
                     if (CapSizingMethod == HeatingDesignCapacity || CapSizingMethod == CapacityPerFloorArea ||
                         CapSizingMethod == FractionOfAutosizedHeatingCapacity) {
                         if (CapSizingMethod == HeatingDesignCapacity) {

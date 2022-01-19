@@ -4348,7 +4348,7 @@ void SizeZoneEvaporativeCoolerUnit(EnergyPlusData &state, int const UnitNum) // 
             zoneHVACIndex = ZoneEvapUnit(UnitNum).HVACSizingIndex;
             SizingMethod = DataHVACGlobals::CoolingAirflowSizing;
             SAFMethod = state.dataSize->ZoneHVACSizing(zoneHVACIndex).CoolingSAFMethod;
-            ZoneEqSizing(CurZoneEqNum).SizingMethod(SizingMethod) = SAFMethod;
+            ZoneEqSizing(CurZoneEqNum).sizingMethod = SAFMethod;
             if (SAFMethod == None || SAFMethod == SupplyAirFlowRate || SAFMethod == FlowPerFloorArea ||
                 SAFMethod == FractionOfAutosizedCoolingAirflow) {
                 if (SAFMethod == SupplyAirFlowRate) {
