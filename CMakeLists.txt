@@ -138,6 +138,13 @@ endif()
 
 option(LINK_WITH_PYTHON "Link with Python Library for Python Plugin Builds" OFF)
 
+option(LINK_WITH_SUBMODULE_LIB "Link EnergyPlus to some third party library that must be submoduled" OFF)
+if(LINK_WITH_SUBMODULE_LIB)
+  if(NOT EXISTS ${PROJECT_SOURCE_DIR}/third_party/new_library/cool_lib.h)
+    message(FATAL_ERROR "LINK_WITH_SUBMODULE_LIB enabled, but third_party/new_library/cool_lib.h does not exist, need to submodule it!")
+  endif()
+endif()
+
 # Turning ENABLE_GTEST_DEBUG_MODE ON will cause assertions and exceptions to halt the test case and unwind.
 # Turn this option OFF for automated testing.
 option(ENABLE_GTEST_DEBUG_MODE "Enable options to help debug test failures" ON)
