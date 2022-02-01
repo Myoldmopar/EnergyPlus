@@ -810,6 +810,11 @@ if ((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9.1) O
   target_link_libraries(energypluslib PRIVATE stdc++fs)
 endif()
 
+if(LINK_WITH_SUBMODULE_LIB)
+  target_link_directories(energypluslib PRIVATE ${PROJECT_SOURCE_DIR}/third_party/new_library/build/CoolLib)
+  target_link_libraries(energypluslib PRIVATE CoolLib)
+endif()
+
 # second we will create the shared library that is actually packaged with
 # EnergyPlus
 set(API_HEADERS

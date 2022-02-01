@@ -50,6 +50,8 @@ extern "C" {
 #include <FMI/main.h>
 }
 
+#include <cool_lib.h>
+
 // C++ Headers
 #include <memory>
 #include <string>
@@ -233,6 +235,8 @@ namespace SimulationManager {
         bool oneTimeUnderwaterBoundaryCheck = true;
         bool AnyUnderwaterBoundaries = false;
         int EnvCount;
+
+        std::cout << "Hey I'm using my cool lib " << MyCoolLib::add(2, 4) << std::endl;
 
         state.files.outputControl.getInput(state);
         state.dataResultsFramework->resultsFramework->setupOutputOptions(state);

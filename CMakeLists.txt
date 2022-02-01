@@ -140,7 +140,9 @@ option(LINK_WITH_PYTHON "Link with Python Library for Python Plugin Builds" OFF)
 
 option(LINK_WITH_SUBMODULE_LIB "Link EnergyPlus to some third party library that must be submoduled" OFF)
 if(LINK_WITH_SUBMODULE_LIB)
-  if(NOT EXISTS ${PROJECT_SOURCE_DIR}/third_party/new_library/cool_lib.h)
+  if(EXISTS ${PROJECT_SOURCE_DIR}/third_party/new_library/cool_lib.h)
+    message(STATUS "COOLLIB: Got the new library, great!")
+  else()
     message(FATAL_ERROR "LINK_WITH_SUBMODULE_LIB enabled, but third_party/new_library/cool_lib.h does not exist, need to submodule it!")
   endif()
 endif()
@@ -279,6 +281,11 @@ set_target_properties(generate_embeddedable_epJSON_schema PROPERTIES FOLDER "Int
 
 target_include_directories(project_options INTERFACE ${PROJECT_SOURCE_DIR}/third_party/cpgfunctionEP)
 target_include_directories(project_options INTERFACE ${PROJECT_SOURCE_DIR}/third_party/cpgfunctionEP/include)
+
+if(LINK_WITH_SUBMODULE_LIB)
+  target_include_directories(project_options INTERFACE ${PROJECT_SOURCE_DIR}/third_party/new_library)
+  add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/new_library)
+endif()
 
 if(OPENGL_FOUND)
   set(BUILD_PENUMBRA_TESTING
