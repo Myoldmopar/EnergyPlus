@@ -811,8 +811,11 @@ if ((CMAKE_COMPILER_IS_GNUCXX AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9.1) O
 endif()
 
 if(LINK_WITH_SUBMODULE_LIB)
+  add_definitions("-DLINK_WITH_SUBMODULE_LIB=1")
   target_link_directories(energypluslib PRIVATE ${PROJECT_SOURCE_DIR}/third_party/new_library/build/CoolLib)
   target_link_libraries(energypluslib PRIVATE CoolLib)
+else()
+  add_definitions("-DLINK_WITH_SUBMODULE_LIB=0")
 endif()
 
 # second we will create the shared library that is actually packaged with
@@ -884,6 +887,10 @@ add_custom_command(
     "${PROJECT_SOURCE_DIR}/cmake/PythonSetupAPIinBuild.cmake")
 
 install(TARGETS energyplus energyplusapi DESTINATION ./)
+
+if(BUILD_PACKAGE)
+  install(TARGETS CoolLib DESTINATION ./)
+endif()
 
 if(LINK_WITH_PYTHON)
   # link the executable to the dll and bring it in

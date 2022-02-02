@@ -50,7 +50,9 @@ extern "C" {
 #include <FMI/main.h>
 }
 
+#if LINK_WITH_SUBMODULE_LIB == 1
 #include <cool_lib.h>
+#endif
 
 // C++ Headers
 #include <memory>
@@ -236,7 +238,9 @@ namespace SimulationManager {
         bool AnyUnderwaterBoundaries = false;
         int EnvCount;
 
+#if LINK_WITH_SUBMODULE_LIB == 1
         std::cout << "Hey I'm using my cool lib " << MyCoolLib::add(2, 4) << std::endl;
+#endif
 
         state.files.outputControl.getInput(state);
         state.dataResultsFramework->resultsFramework->setupOutputOptions(state);
