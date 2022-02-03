@@ -143,7 +143,7 @@ if(LINK_WITH_SUBMODULE_LIB)
   if(EXISTS ${PROJECT_SOURCE_DIR}/third_party/new_library/cool_lib.h)
     message(STATUS "COOLLIB: Got the new library, great!")
   else()
-    message(FATAL_ERROR "LINK_WITH_SUBMODULE_LIB enabled, but third_party/new_library/cool_lib.h does not exist, need to submodule it!")
+    message(FATAL_ERROR "LINK_WITH_SUBMODULE_LIB enabled, but third_party/new_library/cool_lib.h does not exist, need to cd into third_party/new_library and run git submodule init then git submodule update!")
   endif()
 endif()
 

@@ -888,7 +888,7 @@ add_custom_command(
 
 install(TARGETS energyplus energyplusapi DESTINATION ./)
 
-if(BUILD_PACKAGE)
+if(BUILD_PACKAGE AND LINK_WITH_SUBMODULE_LIB)
   install(TARGETS CoolLib DESTINATION ./)
 endif()
 
