@@ -244,6 +244,9 @@ namespace EMSManager {
         // METHODOLOGY EMPLOYED:
         // Standard EnergyPlus methodology.
 
+        static int x = 0;
+        x++;
+        std::cout << x << std::endl;
         // Using/Aliasing
         using OutputProcessor::MeterType;
         using OutputProcessor::RealVariables;

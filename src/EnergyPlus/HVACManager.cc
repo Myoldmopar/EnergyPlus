@@ -233,7 +233,7 @@ void ManageHVAC(EnergyPlusData &state)
     UseZoneTimeStepHistory = true;
     PriorTimeStep = state.dataGlobal->TimeStepZone;
     NumOfSysTimeSteps = 1;
-    FracTimeStepZone = TimeStepSys / state.dataGlobal->TimeStepZone;
+    FracTimeStepZone = TimeStepSys / state.dataGlobal->TimeStepZone; // TODO: always 1?
 
     bool anyEMSRan;
     ManageEMS(state, EMSManager::EMSCallFrom::BeginTimestepBeforePredictor, anyEMSRan, ObjexxFCL::Optional_int_const()); // calling point
