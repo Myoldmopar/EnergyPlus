@@ -22,6 +22,7 @@ OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <cmath>
 #include <functional>
+#include <iostream>
 
 #include "lib_battery.h"
 
@@ -294,6 +295,8 @@ battery_state::battery_state(const battery_state& rhs) {
 }
 
 battery_state &battery_state::operator=(const battery_state &rhs) {
+    std::flush(std::cout);
+    std::cout << "(Entering battery_state::operator=) last_idx: " << last_idx << std::endl;
     if (this != &rhs) {
         last_idx = rhs.last_idx;
         V = rhs.V;
@@ -330,6 +333,7 @@ battery_state &battery_state::operator=(const battery_state &rhs) {
         else
             replacement = std::make_shared<replacement_state>(*rhs.replacement);
     }
+    std::cout << "(Leaving battery_state::operator=) last_idx: " << last_idx << std::endl;
     return *this;
 }
 
@@ -551,8 +555,14 @@ void battery_t::ChangeTimestep(double dt_hr) {
     if (dt_hr > 1)
         throw std::runtime_error("battery_t timestep must be less than or equal to 1 hour");
 
+    std::cout << "(inside ChangeTimestep) dt_hr: " << params->dt_hr << std::endl;
+    std::cout << "(inside ChangeTimestep) last_idx: " << state->last_idx << std::endl;
+    std::cout << "(inside ChangeTimestep) params->dt_hr: " << params->dt_hr << std::endl;
     auto old_hr = (double)state->last_idx * params->dt_hr;
+    std::cout << "(inside ChangeTimestep) calculated old_hr as: " << old_hr << std::endl;
     state->last_idx = (size_t)(old_hr / dt_hr);
+    std::cout << "(inside ChangeTimestep) Calculated last_idx: " << state->last_idx << std::endl;
+
     /*
     if (fabs(old_hr / dt_hr - state->last_idx) > 1e-7)
         throw std::runtime_error("battery_t dt_hr step size can only be changed to a higher step size when the current time step"
@@ -603,7 +613,9 @@ void battery_t::runCurrent(double I) {
 
 void battery_t::runPower(double P) {
     double I = calculate_current_for_power_kw(P);
+    std::cout << "(inside battery_t::runPower) before calling run(): state->last_idx is currently: " << state->last_idx << std::endl;
     run(++state->last_idx, I);
+    std::cout << "(inside battery_t::runPower) after calling run(): state->last_idx is now: " << state->last_idx << std::endl;
 }
 
 void battery_t::runThermalModel(double I, size_t lifetimeIndex) {
@@ -773,7 +785,9 @@ battery_state battery_t::get_state() { return *state; }
 battery_params battery_t::get_params() { return *params; }
 
 void battery_t::set_state(const battery_state& tmp_state) {
+    std::cout << "(inside set_state) last_idx before assignment: " << this->get_state().last_idx << std::endl;
     *state = tmp_state;
+    std::cout << "(inside set_state) last_idx after assignment: " << this->get_state().last_idx << std::endl;
 }
 
 void battery_t::update_state(double I) {

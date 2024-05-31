@@ -3912,6 +3912,7 @@ void ElectricStorage::reinitAtBeginEnvironment()
     } else if (storageModelMode_ == StorageModelType::LiIonNmcBattery) {
         // Copy the initial battery state to the last battery state
         *ssc_lastBatteryState_ = *ssc_initBatteryState_;
+        std::cout << "Reinit at begin environment" << std::endl;
         ssc_battery_->set_state(*ssc_lastBatteryState_);
     }
     myWarmUpFlag_ = true;
@@ -4012,6 +4013,7 @@ void ElectricStorage::timeCheckAndUpdate(EnergyPlusData &state)
                 }
             }
         } else if (storageModelMode_ == StorageModelType::LiIonNmcBattery) {
+            std::cout << "Inside timeCheckAndUpdate" << std::endl;
             *ssc_lastBatteryState_ = ssc_battery_->get_state();
         }
 
@@ -4365,6 +4367,7 @@ void ElectricStorage::simulateLiIonNmcBatteryModel(EnergyPlusData &state,
 {
 
     // Copy the battery state from the end of last timestep
+    std::cout << "(end of last timestep) inside simulateLiIonNmcBatteryModel" << std::endl;
     battery_state battState = *ssc_lastBatteryState_;
 
     // Set the temperature the battery sees
@@ -4375,13 +4378,17 @@ void ElectricStorage::simulateLiIonNmcBatteryModel(EnergyPlusData &state,
         // If outside, use outdoor temperature
         battState.thermal->T_room = state.dataEnvrn->OutDryBulbTemp;
     }
+    std::flush(std::cout);
     ssc_battery_->set_state(battState);
+    std::cout << "Setting to last battState" << std::endl;
+    std::flush(std::cout);
 
     // Set the SOC limits
     ssc_battery_->changeSOCLimits(controlSOCMinFracLimit * 100.0, controlSOCMaxFracLimit * 100.0);
 
     // Set the current timestep length
     if (std::lround(ssc_battery_->get_params().dt_hr * 60.0) != std::lround(state.dataHVACGlobal->TimeStepSys * 60.0)) {
+        std::cout << "(inside EnergyPlus simulate) TimeStepSys value when calling ChangeTimestep(): " << state.dataHVACGlobal->TimeStepSys << std::endl;
         ssc_battery_->ChangeTimestep(state.dataHVACGlobal->TimeStepSys);
     }
 
@@ -4399,6 +4406,7 @@ void ElectricStorage::simulateLiIonNmcBatteryModel(EnergyPlusData &state,
 
     // Store outputs
     const battery_state &battState2{ssc_battery_->get_state()};
+    std::cout << "Gathering battery outputs for EnergyPlus reporting" << std::endl;
     if (battState2.P < 0.0) { // negative for charging
         storageMode_ = 2;
         powerCharge = fabs(battState2.P) * 1000.0; // kW -> W
