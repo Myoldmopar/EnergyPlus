@@ -977,7 +977,7 @@ if(LINK_WITH_PYTHON)
       TARGET energyplusapi
       POST_BUILD # TODO: I don't think we want to quote the generator expression
       COMMAND ${CMAKE_COMMAND} -E env --unset=PIP_REQUIRE_VIRTUALENV
-      ${Python_EXECUTABLE} -m pip install --target="$<TARGET_FILE_DIR:energyplusapi>/python_lib" --upgrade energyplus-launch==3.7.2
+      ${Python_EXECUTABLE} -m pip install --target="$<TARGET_FILE_DIR:energyplusapi>/python_lib" --upgrade energyplus-launch==3.7.2 GHEDesigner==1.5
       COMMAND ${Python_EXECUTABLE} "${PROJECT_SOURCE_DIR}/cmake/PythonFixUpTclTk.py" "$<TARGET_FILE_DIR:energyplusapi>/python_lib"
     )
   endif()
