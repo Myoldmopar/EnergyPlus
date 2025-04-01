@@ -285,8 +285,8 @@ void ElectricPowerServiceManager::getPowerManagerInput(EnergyPlusData &state)
                     facilityPowerInTransformerPresent_ = true;
                 } else {
                     // should only have one transformer in input that is PowerInFromGrid
-                    ShowWarningError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                    ShowContinueError(state, format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(3), s_ipsc->cAlphaArgs(3)));
+                    ShowWarningError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                    ShowContinueError(state, fmt::format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(3), s_ipsc->cAlphaArgs(3)));
                     ShowContinueError(state,
                                       "Only one transformer with Usage PowerInFromGrid can be used, first one in input file will be used and the "
                                       "simulation continues...");
@@ -584,7 +584,7 @@ void ElectricPowerServiceManager::checkLoadCenters(EnergyPlusData &state)
         for (std::size_t j = 0; j < storageNames.size(); ++j) {
             if (storageNames[i] == storageNames[j] && i != j) {
                 ShowSevereError(state,
-                                format("ElectricPowerServiceManager::checkLoadCenters, the electrical storage device named = {} is used in more than "
+                                fmt::format("ElectricPowerServiceManager::checkLoadCenters, the electrical storage device named = {} is used in more than "
                                        "one ElectricLoadCenter:Distribution input object.",
                                        storageNames[i]));
                 ShowContinueError(state, "Electric Load Centers cannot share the same storage device.");
@@ -601,7 +601,7 @@ void ElectricPowerServiceManager::checkLoadCenters(EnergyPlusData &state)
         for (std::size_t j = 0; j < genListNames.size(); ++j) {
             if (genListNames[i] == genListNames[j] && i != j) {
                 ShowSevereError(state,
-                                format("ElectricPowerServiceManager::checkLoadCenters, the generator list named = {} is used in more than one "
+                                fmt::format("ElectricPowerServiceManager::checkLoadCenters, the generator list named = {} is used in more than one "
                                        "ElectricLoadCenter:Distribution input object.",
                                        genListNames[i]));
                 ShowContinueError(state, "Electric Load Centers cannot share the same generator list (ElectricLoadCenter:Generators).");
@@ -618,7 +618,7 @@ void ElectricPowerServiceManager::checkLoadCenters(EnergyPlusData &state)
         for (std::size_t j = 0; j < inverterNames.size(); ++j) {
             if (inverterNames[i] == inverterNames[j] && i != j) {
                 ShowSevereError(state,
-                                format("ElectricPowerServiceManager::checkLoadCenters, the inverter device named = {} is used in more than one "
+                                fmt::format("ElectricPowerServiceManager::checkLoadCenters, the inverter device named = {} is used in more than one "
                                        "ElectricLoadCenter:Distribution input object.",
                                        inverterNames[i]));
                 ShowContinueError(state, "Electric Load Centers cannot share the same inverter device.");
@@ -635,7 +635,7 @@ void ElectricPowerServiceManager::checkLoadCenters(EnergyPlusData &state)
         for (std::size_t j = 0; j < converterNames.size(); ++j) {
             if (converterNames[i] == converterNames[j] && i != j) {
                 ShowSevereError(state,
-                                format("ElectricPowerServiceManager::checkLoadCenters, the converter device named = {} is used in more than one "
+                                fmt::format("ElectricPowerServiceManager::checkLoadCenters, the converter device named = {} is used in more than one "
                                        "ElectricLoadCenter:Distribution input object.",
                                        converterNames[i]));
                 ShowContinueError(state, "Electric Load Centers cannot share the same converter device.");
@@ -652,7 +652,7 @@ void ElectricPowerServiceManager::checkLoadCenters(EnergyPlusData &state)
         for (std::size_t j = 0; j < transformerNames.size(); ++j) {
             if (transformerNames[i] == transformerNames[j] && i != j) {
                 ShowSevereError(state,
-                                format("ElectricPowerServiceManager::checkLoadCenters, the transformer device named = {} is used in more than one "
+                                fmt::format("ElectricPowerServiceManager::checkLoadCenters, the transformer device named = {} is used in more than one "
                                        "ElectricLoadCenter:Distribution input object.",
                                        transformerNames[i]));
                 ShowContinueError(state, "Electric Load Centers cannot share the same transformer device.");
@@ -788,8 +788,8 @@ ElectPowerLoadCenter::ElectPowerLoadCenter(EnergyPlusData &state, int const obje
             bussType = ElectricBussType::ACBuss;
             s_ipsc->cAlphaArgs(6) = "AlternatingCurrent (field was blank)";
         } else {
-            ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-            ShowContinueError(state, format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(6), s_ipsc->cAlphaArgs(6)));
+            ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+            ShowContinueError(state, fmt::format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(6), s_ipsc->cAlphaArgs(6)));
             errorsFound = true;
         }
 
@@ -797,8 +797,8 @@ ElectPowerLoadCenter::ElectPowerLoadCenter(EnergyPlusData &state, int const obje
             if (!s_ipsc->lAlphaFieldBlanks(7)) {
                 inverterName = s_ipsc->cAlphaArgs(7);
             } else {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("{} is blank, but buss type requires inverter.", s_ipsc->cAlphaFieldNames(7)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("{} is blank, but buss type requires inverter.", s_ipsc->cAlphaFieldNames(7)));
                 errorsFound = true;
             }
         }
@@ -807,8 +807,8 @@ ElectPowerLoadCenter::ElectPowerLoadCenter(EnergyPlusData &state, int const obje
             if (!s_ipsc->lAlphaFieldBlanks(8)) {
                 storageName_ = s_ipsc->cAlphaArgs(8);
             } else {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("{} is blank, but buss type requires storage.", s_ipsc->cAlphaFieldNames(8)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("{} is blank, but buss type requires storage.", s_ipsc->cAlphaFieldNames(8)));
                 errorsFound = true;
             }
         }
@@ -959,7 +959,7 @@ ElectPowerLoadCenter::ElectPowerLoadCenter(EnergyPlusData &state, int const obje
             for (auto const &g : elecGenCntrlObj) {
                 if (g->nominalThermElectRatio <= 0.0) {
                     ShowWarningError(state,
-                                     format("Generator operation needs to be based on following thermal loads and needs values for Rated Thermal to "
+                                     fmt::format("Generator operation needs to be based on following thermal loads and needs values for Rated Thermal to "
                                             "Electrical Power Ratio in {} named {}",
                                             s_ipsc->cCurrentModuleObject,
                                             s_ipsc->cAlphaArgs(1)));
@@ -979,10 +979,10 @@ ElectPowerLoadCenter::ElectPowerLoadCenter(EnergyPlusData &state, int const obje
             for (const auto &generatorController : elecGenCntrlObj) {
                 if (generatorController->generatorType != GeneratorType::PVWatts) {
                     errorsFound = true;
-                    ShowSevereError(state, format("{}ElectricLoadCenter:Distribution=\"{}\",", routineName, name_));
+                    ShowSevereError(state, fmt::format("{}ElectricLoadCenter:Distribution=\"{}\",", routineName, name_));
                     ShowContinueError(state, "ElectricLoadCenter:Inverter:PVWatts can only be used with Generator:PVWatts");
                     ShowContinueError(state,
-                                      format("\"{}\" is of type {}",
+                                      fmt::format("\"{}\" is of type {}",
                                              generatorController->name,
                                              GeneratorTypeNames[static_cast<int>(generatorController->generatorType)]));
                 } else {
@@ -1028,13 +1028,13 @@ ElectPowerLoadCenter::ElectPowerLoadCenter(EnergyPlusData &state, int const obje
             } else {
                 ShowWarningError(
                     state,
-                    format("Transformer named {} associated with the load center named {} should have {} set to LoadCenterPowerConditioning.",
+                    fmt::format("Transformer named {} associated with the load center named {} should have {} set to LoadCenterPowerConditioning.",
                            transformerName_,
                            name_,
                            s_ipsc->cAlphaFieldNames(3)));
             }
         } else {
-            ShowSevereError(state, format("Transformer named {}, was not found for the load center named {}", transformerName_, name_));
+            ShowSevereError(state, fmt::format("Transformer named {}, was not found for the load center named {}", transformerName_, name_));
             errorsFound = true;
         }
     }
@@ -1101,7 +1101,7 @@ ElectPowerLoadCenter::ElectPowerLoadCenter(EnergyPlusData &state, int const obje
     }
 
     if (errorsFound) {
-        ShowFatalError(state, format("{}Preceding errors terminate program.", routineName));
+        ShowFatalError(state, fmt::format("{}Preceding errors terminate program.", routineName));
     }
 }
 
@@ -1183,7 +1183,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
             // now handle EMS override
             if (g->eMSRequestOn) {
-                g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                 if (g->powerRequestThisTimestep > 0.0) {
                     g->onThisTimestep = true;
                 } else {
@@ -1217,7 +1217,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1230,7 +1230,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1244,7 +1244,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 state, g->onThisTimestep, g->powerRequestThisTimestep, firstHVACIteration, g->electProdRate, g->thermProdRate);
 
             if (g->eMSRequestOn) {
-                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0);
+                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0f);
             } else {
                 if (g->powerRequestThisTimestep > 0.0) {
                     totalPowerRequest_ += g->maxPowerOut;
@@ -1272,7 +1272,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1284,7 +1284,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 g->powerRequestThisTimestep = 0.0;
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1298,7 +1298,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 state, g->onThisTimestep, g->powerRequestThisTimestep, firstHVACIteration, g->electProdRate, g->thermProdRate);
 
             if (g->eMSRequestOn) {
-                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0);
+                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0f);
             } else {
                 if (g->powerRequestThisTimestep > 0.0) {
                     totalPowerRequest_ += g->maxPowerOut;
@@ -1328,7 +1328,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1341,7 +1341,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1355,7 +1355,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 state, g->onThisTimestep, g->powerRequestThisTimestep, firstHVACIteration, g->electProdRate, g->thermProdRate);
 
             if (g->eMSRequestOn) {
-                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0);
+                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0f);
             } else {
                 if (g->powerRequestThisTimestep > 0.0) {
                     totalPowerRequest_ += g->maxPowerOut;
@@ -1387,7 +1387,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1400,7 +1400,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
 
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1414,7 +1414,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 state, g->onThisTimestep, g->powerRequestThisTimestep, firstHVACIteration, g->electProdRate, g->thermProdRate);
 
             if (g->eMSRequestOn) {
-                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0);
+                totalPowerRequest_ += max(g->eMSPowerRequest, 0.0f);
             } else {
                 if (g->powerRequestThisTimestep > 0.0) {
                     totalPowerRequest_ += g->maxPowerOut;
@@ -1440,7 +1440,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                     g->onThisTimestep = true;
                     // now handle EMS override
                     if (g->eMSRequestOn) {
-                        g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                        g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                         if (g->powerRequestThisTimestep > 0.0) {
                             g->onThisTimestep = true;
                         } else {
@@ -1453,7 +1453,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 g->powerRequestThisTimestep = 0.0;
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1467,8 +1467,8 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 state, g->onThisTimestep, g->powerRequestThisTimestep, firstHVACIteration, g->electProdRate, g->thermProdRate);
 
             if (g->eMSRequestOn) {
-                totalThermalPowerRequest_ += (max(g->eMSPowerRequest, 0.0)) * g->nominalThermElectRatio;
-                totalPowerRequest_ += (max(g->eMSPowerRequest, 0.0));
+                totalThermalPowerRequest_ += (max(g->eMSPowerRequest, 0.0f)) * g->nominalThermElectRatio;
+                totalPowerRequest_ += (max(g->eMSPowerRequest, 0.0f));
             } else {
                 if (totalThermalPowerRequest_ < loadCenterThermalLoad && g->powerRequestThisTimestep > 0.0) {
                     Real64 excessThermalPowerRequest = totalThermalPowerRequest_ + g->maxPowerOut * g->nominalThermElectRatio - loadCenterThermalLoad;
@@ -1505,7 +1505,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                     g->onThisTimestep = true;
                     // now handle EMS override
                     if (g->eMSRequestOn) {
-                        g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                        g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                         if (g->powerRequestThisTimestep > 0.0) {
                             g->onThisTimestep = true;
                         } else {
@@ -1518,7 +1518,7 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 g->powerRequestThisTimestep = 0.0;
                 // now handle EMS override
                 if (g->eMSRequestOn) {
-                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0);
+                    g->powerRequestThisTimestep = max(g->eMSPowerRequest, 0.0f);
                     if (g->powerRequestThisTimestep > 0.0) {
                         g->onThisTimestep = true;
                     } else {
@@ -1531,8 +1531,8 @@ void ElectPowerLoadCenter::dispatchGenerators(EnergyPlusData &state,
                 state, g->onThisTimestep, g->powerRequestThisTimestep, firstHVACIteration, g->electProdRate, g->thermProdRate);
 
             if (g->eMSRequestOn) {
-                totalThermalPowerRequest_ += (max(g->eMSPowerRequest, 0.0)) * g->nominalThermElectRatio;
-                totalPowerRequest_ += (max(g->eMSPowerRequest, 0.0));
+                totalThermalPowerRequest_ += (max(g->eMSPowerRequest, 0.0f)) * g->nominalThermElectRatio;
+                totalPowerRequest_ += (max(g->eMSPowerRequest, 0.0f));
             } else {
                 if (totalThermalPowerRequest_ < loadCenterThermalLoad && g->powerRequestThisTimestep > 0.0) {
                     Real64 excessThermalPowerRequest = totalThermalPowerRequest_ + g->maxPowerOut * g->nominalThermElectRatio - loadCenterThermalLoad;
@@ -1799,13 +1799,13 @@ void ElectPowerLoadCenter::dispatchStorage(EnergyPlusData &state,
     if (eMSOverridePelFromStorage_ || eMSOverridePelIntoStorage_) {
         if (eMSOverridePelFromStorage_ && !eMSOverridePelIntoStorage_) {
             // EMS is calling for specific discharge rate
-            storOpCVDischargeRate = max(eMSValuePelFromStorage_, 0.0);
+            storOpCVDischargeRate = max(eMSValuePelFromStorage_, 0.0f);
             storOpCVChargeRate = 0.0;
             storOpIsDischarging = true;
             storOpIsCharging = false;
         } else if (!eMSOverridePelFromStorage_ && eMSOverridePelIntoStorage_) {
             // EMS is calling for specific charge rate
-            storOpCVChargeRate = max(eMSValuePelIntoStorage_, 0.0);
+            storOpCVChargeRate = max(eMSValuePelIntoStorage_, 0.0f);
             storOpCVDischargeRate = 0.0;
             storOpIsDischarging = false;
             storOpIsCharging = true;
@@ -1860,7 +1860,7 @@ void ElectPowerLoadCenter::setupLoadCenterMeterIndices(EnergyPlusData &state)
     if ((demandMeterPtr_ == 0) && (genOperationScheme_ == GeneratorOpScheme::TrackMeter)) { // throw error
         ShowFatalError(
             state,
-            format("ElectPowerLoadCenter::setupLoadCenterMeterIndices  Did not find Meter named: {} in ElectricLoadCenter:Distribution named {}",
+            fmt::format("ElectPowerLoadCenter::setupLoadCenterMeterIndices  Did not find Meter named: {} in ElectricLoadCenter:Distribution named {}",
                    demandMeterName_,
                    name_));
     }
@@ -1870,7 +1870,7 @@ void ElectPowerLoadCenter::setupLoadCenterMeterIndices(EnergyPlusData &state)
         if (trackStorageOpMeterIndex_ == 0) { //
             ShowFatalError(
                 state,
-                format("ElectPowerLoadCenter::setupLoadCenterMeterIndices  Did not find Meter named: {} in ElectricLoadCenter:Distribution named {}",
+                fmt::format("ElectPowerLoadCenter::setupLoadCenterMeterIndices  Did not find Meter named: {} in ElectricLoadCenter:Distribution named {}",
                        trackSorageOpMeterName_,
                        name_));
         }
@@ -2123,7 +2123,7 @@ GeneratorController::GeneratorController(EnergyPlusData &state,
         int ObjNum = state.dataInputProcessing->inputProcessor->getObjectItemNum(state, "Generator:PVWatts", Util::makeUPPER(objectName));
         assert(ObjNum >= 0);
         if (ObjNum == 0) {
-            ShowFatalError(state, format("Cannot find Generator:PVWatts {}", objectName));
+            ShowFatalError(state, fmt::format("Cannot find Generator:PVWatts {}", objectName));
         }
         pvwattsGenerator = PVWatts::PVWattsGenerator::createFromIdfObj(state, ObjNum);
         pvwattsGenerator->setupOutputVariables(state);
@@ -2148,8 +2148,8 @@ GeneratorController::GeneratorController(EnergyPlusData &state,
         break;
     }
     default: {
-        ShowSevereError(state, format("{}{} invalid entry.", routineName, s_ipsc->cCurrentModuleObject));
-        ShowContinueError(state, format("Invalid {} associated with generator = {}", objectType, objectName));
+        ShowSevereError(state, fmt::format("{}{} invalid entry.", routineName, s_ipsc->cCurrentModuleObject));
+        ShowContinueError(state, fmt::format("Invalid {} associated with generator = {}", objectType, objectName));
         break;
     }
     }
@@ -2339,15 +2339,15 @@ void GeneratorController::simGeneratorGetPowerOutput(EnergyPlusData &state,
     if (electricPowerOutput < 0.0) {
         if (errCountNegElectProd_ == 0) {
             ShowWarningMessage(state,
-                               format("{} named {} is producing negative electric power, check generator inputs.",
+                               fmt::format("{} named {} is producing negative electric power, check generator inputs.",
                                       GeneratorTypeNames[static_cast<int>(generatorType)],
                                       name));
-            ShowContinueError(state, format("Electric power production rate ={:.4R}", electricPowerOutput));
+            ShowContinueError(state, fmt::format("Electric power production rate ={:.4f}", electricPowerOutput));
             ShowContinueError(state, "The power will be set to zero, and the simulation continues... ");
         }
         ShowRecurringWarningErrorAtEnd(
             state,
-            format("{} named {} is producing negative electric power ", GeneratorTypeNames[static_cast<int>(generatorType)], name),
+            fmt::format("{} named {} is producing negative electric power ", GeneratorTypeNames[static_cast<int>(generatorType)], name),
             errCountNegElectProd_,
             electricPowerOutput,
             electricPowerOutput);
@@ -2629,12 +2629,12 @@ DCtoACInverter::DCtoACInverter(EnergyPlusData &state, std::string const &objectN
             } // end switch modelType
         }
     } else {
-        ShowSevereError(state, format("{} did not find inverter name = {}", routineName, objectName));
+        ShowSevereError(state, fmt::format("{} did not find inverter name = {}", routineName, objectName));
         errorsFound = true;
     }
 
     if (errorsFound) {
-        ShowFatalError(state, format("{}Preceding errors terminate program.", routineName));
+        ShowFatalError(state, fmt::format("{}Preceding errors terminate program.", routineName));
     }
 }
 
@@ -2748,8 +2748,8 @@ void DCtoACInverter::calcEfficiency(EnergyPlusData &state)
             assert(false);
         }
 
-        efficiency_ = max(efficiency_, 0.0);
-        efficiency_ = min(efficiency_, 1.0);
+        efficiency_ = max(efficiency_, 0.0f);
+        efficiency_ = min(efficiency_, 1.0f);
 
         break;
     }
@@ -3027,12 +3027,12 @@ ACtoDCConverter::ACtoDCConverter(EnergyPlusData &state, std::string const &objec
                 state, zoneNum_, name_, DataHeatBalance::IntGainType::ElectricLoadCenterConverter, &qdotConvZone_, nullptr, &qdotRadZone_);
         }
     } else {
-        ShowSevereError(state, format("{} did not find power converter name = {}", routineName, objectName));
+        ShowSevereError(state, fmt::format("{} did not find power converter name = {}", routineName, objectName));
         errorsFound = true;
     }
 
     if (errorsFound) {
-        ShowFatalError(state, format("{}Preceding errors terminate program.", routineName));
+        ShowFatalError(state, fmt::format("{}Preceding errors terminate program.", routineName));
     }
 }
 
@@ -3231,12 +3231,12 @@ ElectricStorage::ElectricStorage( // main constructor
         case StorageModelType::KIBaMBattery: {
             chargeCurveNum_ = Curve::GetCurveIndex(state, s_ipsc->cAlphaArgs(4)); // voltage calculation for charging
             if (chargeCurveNum_ == 0 && !s_ipsc->lAlphaFieldBlanks(4)) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Invalid {}={}", s_ipsc->cAlphaFieldNames(4), s_ipsc->cAlphaArgs(4)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Invalid {}={}", s_ipsc->cAlphaFieldNames(4), s_ipsc->cAlphaArgs(4)));
                 errorsFound = true;
             } else if (s_ipsc->lAlphaFieldBlanks(4)) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Invalid {} cannot be blank. But no entry found.", s_ipsc->cAlphaFieldNames(4)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Invalid {} cannot be blank. But no entry found.", s_ipsc->cAlphaFieldNames(4)));
                 errorsFound = true;
             } else {
                 errorsFound |= Curve::CheckCurveDims(state,
@@ -3249,12 +3249,12 @@ ElectricStorage::ElectricStorage( // main constructor
             }
             dischargeCurveNum_ = Curve::GetCurveIndex(state, s_ipsc->cAlphaArgs(5)); // voltage calculation for discharging
             if (dischargeCurveNum_ == 0 && !s_ipsc->lAlphaFieldBlanks(5)) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Invalid {}={}", s_ipsc->cAlphaFieldNames(5), s_ipsc->cAlphaArgs(5)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Invalid {}={}", s_ipsc->cAlphaFieldNames(5), s_ipsc->cAlphaArgs(5)));
                 errorsFound = true;
             } else if (s_ipsc->lAlphaFieldBlanks(5)) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Invalid {} cannot be blank. But no entry found.", s_ipsc->cAlphaFieldNames(5)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Invalid {} cannot be blank. But no entry found.", s_ipsc->cAlphaFieldNames(5)));
                 errorsFound = true;
             } else {
                 errorsFound |= Curve::CheckCurveDims(state,
@@ -3271,8 +3271,8 @@ ElectricStorage::ElectricStorage( // main constructor
             } else if (Util::SameString(s_ipsc->cAlphaArgs(6), "No")) {
                 lifeCalculation_ = BatteryDegradationModelType::LifeCalculationNo;
             } else {
-                ShowWarningError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(6), s_ipsc->cAlphaArgs(6)));
+                ShowWarningError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(6), s_ipsc->cAlphaArgs(6)));
                 ShowContinueError(state, "Yes or No should be selected. Default value No is used to continue simulation");
                 lifeCalculation_ = BatteryDegradationModelType::LifeCalculationNo;
             }
@@ -3280,14 +3280,14 @@ ElectricStorage::ElectricStorage( // main constructor
             if (lifeCalculation_ == BatteryDegradationModelType::LifeCalculationYes) {
                 lifeCurveNum_ = Curve::GetCurveIndex(state, s_ipsc->cAlphaArgs(7)); // Battery life calculation
                 if (lifeCurveNum_ == 0 && !s_ipsc->lAlphaFieldBlanks(7)) {
-                    ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                    ShowContinueError(state, format("Invalid {}={}", s_ipsc->cAlphaFieldNames(7), s_ipsc->cAlphaArgs(7)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                    ShowContinueError(state, fmt::format("Invalid {}={}", s_ipsc->cAlphaFieldNames(7), s_ipsc->cAlphaArgs(7)));
                     errorsFound = true;
                 } else if (s_ipsc->lAlphaFieldBlanks(7)) {
-                    ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                     ShowContinueError(
                         state,
-                        format("Invalid {} cannot be blank when {} = Yes. But no entry found.", s_ipsc->cAlphaFieldNames(7), s_ipsc->cAlphaArgs(6)));
+                        fmt::format("Invalid {} cannot be blank when {} = Yes. But no entry found.", s_ipsc->cAlphaFieldNames(7), s_ipsc->cAlphaArgs(6)));
                     errorsFound = true;
                 } else {
                     errorsFound |= Curve::CheckCurveDims(state,
@@ -3350,16 +3350,16 @@ ElectricStorage::ElectricStorage( // main constructor
             if (liIon_Vfull_ < liIon_Vexp_ || liIon_Vexp_ < liIon_Vnom_) {
                 ShowSevereError(
                     state,
-                    format(
+                    fmt::format(
                         "{}{}=\"{}\", invalid entry.", routineName, state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("{} must be greater than {},",
+                                  fmt::format("{} must be greater than {},",
                                          state.dataIPShortCut->cNumericFieldNames(10),
                                          state.dataIPShortCut->cNumericFieldNames(11)));
-                ShowContinueError(state, format("which must be greater than {}.", state.dataIPShortCut->cNumericFieldNames(12)));
+                ShowContinueError(state, fmt::format("which must be greater than {}.", state.dataIPShortCut->cNumericFieldNames(12)));
                 for (int i = 10; i <= 12; ++i) {
                     ShowContinueError(state,
-                                      format("{} = {:.3R}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
+                                      fmt::format("{} = {:.3f}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
                 }
                 errorsFound = true;
             }
@@ -3372,15 +3372,15 @@ ElectricStorage::ElectricStorage( // main constructor
             if (liIon_Qexp_ >= liIon_Qnom_) {
                 ShowSevereError(
                     state,
-                    format(
+                    fmt::format(
                         "{}{}=\"{}\", invalid entry.", routineName, state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("{} must be greater than {}.",
+                                  fmt::format("{} must be greater than {}.",
                                          state.dataIPShortCut->cNumericFieldNames(16),
                                          state.dataIPShortCut->cNumericFieldNames(15)));
                 for (int i = 15; i <= 16; ++i) {
                     ShowContinueError(state,
-                                      format("{} = {:.3R}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
+                                      fmt::format("{} = {:.3f}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
                 }
                 errorsFound = true;
             }
@@ -3601,11 +3601,11 @@ ElectricStorage::ElectricStorage( // main constructor
             } // switch storage model type
         }
     } else { // storage not found
-        ShowSevereError(state, format("{} did not find storage name = {}", routineName, objectName));
+        ShowSevereError(state, fmt::format("{} did not find storage name = {}", routineName, objectName));
         errorsFound = true;
     }
     if (errorsFound) {
-        ShowFatalError(state, format("{}Preceding errors terminate program.", routineName));
+        ShowFatalError(state, fmt::format("{}Preceding errors terminate program.", routineName));
     }
 }
 
@@ -3618,7 +3618,7 @@ Real64 checkUserEfficiencyInput(EnergyPlusData &state, Real64 userInputValue, st
     if (Util::SameString(whichType, "CHARGING")) {
         if (userInputValue < minChargeEfficiency) {
             ShowSevereError(state,
-                            format("ElectricStorage charge efficiency was too low.  This occurred for electric storage unit named {}", deviceName));
+                            fmt::format("ElectricStorage charge efficiency was too low.  This occurred for electric storage unit named {}", deviceName));
             ShowContinueError(state, "Please check your input value  for this electric storage unit and fix the charge efficiency.");
             errorsFound = true;
             return minChargeEfficiency;
@@ -3628,7 +3628,7 @@ Real64 checkUserEfficiencyInput(EnergyPlusData &state, Real64 userInputValue, st
     } else if (Util::SameString(whichType, "DISCHARGING")) {
         if (userInputValue < minDischargeEfficiency) {
             ShowSevereError(
-                state, format("ElectricStorage discharge efficiency was too low.  This occurred for electric storage unit named {}", deviceName));
+                state, fmt::format("ElectricStorage discharge efficiency was too low.  This occurred for electric storage unit named {}", deviceName));
             ShowContinueError(state, "Please check your input value  for this electric storage unit and fix the discharge efficiency.");
             errorsFound = true;
             return minDischargeEfficiency;
@@ -3661,7 +3661,7 @@ void checkChargeDischargeVoltageCurves(
         }
     }
     if (gotErrs) {
-        ShowWarningMessage(state, format("Kinetic Battery Model: {} has a charging/discharging voltage curve conflict.", nameBatt));
+        ShowWarningMessage(state, fmt::format("Kinetic Battery Model: {} has a charging/discharging voltage curve conflict.", nameBatt));
         ShowContinueError(state,
                           "Discharging voltage is higher than charging voltage which may potentially lead to an imbalance in the stored energy.");
         ShowContinueError(state, "Check the charging and discharging curves to make sure that the charging voltage is greater than discharging.");
@@ -3673,8 +3673,8 @@ void checkChargeDischargeVoltageCurves(
             Real64 dischargeVoltage = E0c + Curve::CurveValue(state, dischargeIndex, xfd); // E0c+Ad*xfd+Cd*xfd/(Dd-xfd)
             ShowContinueError(
                 state,
-                format(
-                    "Charged fraction = {:.1R}, Charging voltage = {:.3R} V, Discharging voltage = {:.3R} V", xfc, chargeVoltage, dischargeVoltage));
+                fmt::format(
+                    "Charged fraction = {:.1f}, Charging voltage = {:.3f} V, Discharging voltage = {:.3f} V", xfc, chargeVoltage, dischargeVoltage));
         }
     }
 }
@@ -3932,7 +3932,7 @@ void ElectricStorage::simulateSimpleBucketModel(EnergyPlusData &state,
         pelIntoStorage_ = 0.0;
         pelFromStorage_ = powerDischarge;
         thisTimeStepStateOfCharge_ = lastTimeStepStateOfCharge_ - powerDischarge * state.dataHVACGlobal->TimeStepSysSec / energeticEfficDischarge_;
-        thisTimeStepStateOfCharge_ = max(thisTimeStepStateOfCharge_, 0.0);
+        thisTimeStepStateOfCharge_ = max(thisTimeStepStateOfCharge_, 0.0f);
     }
 
     // updates and reports
@@ -4074,7 +4074,7 @@ void ElectricStorage::simulateKineticBatteryModel(EnergyPlusData &state,
         bool const ok = determineCurrentForBatteryDischarge(state, I0, T0, Volt, Pw, q0, dischargeCurveNum_, k, c, qmax, E0c, internalR_);
         if (!ok) {
             ShowFatalError(state,
-                           format("ElectricLoadCenter:Storage:Battery named=\"{}\". Battery discharge current could not be estimated due to "
+                           fmt::format("ElectricLoadCenter:Storage:Battery named=\"{}\". Battery discharge current could not be estimated due to "
                                   "iteration limit reached. ",
                                   name_));
             // issue #5301, need more diagnostics for this.
@@ -4120,8 +4120,8 @@ void ElectricStorage::simulateKineticBatteryModel(EnergyPlusData &state,
         Real64 newBound = lastTimeStepBound_ * std::exp(-k * state.dataHVACGlobal->TimeStepSys) +
                           q0 * (1.0 - c) * (1.0 - std::exp(-k * state.dataHVACGlobal->TimeStepSys)) -
                           I0 * (1.0 - c) * (k * state.dataHVACGlobal->TimeStepSys - 1.0 + std::exp(-k * state.dataHVACGlobal->TimeStepSys)) / k;
-        thisTimeStepAvailable_ = max(0.0, newAvailable);
-        thisTimeStepBound_ = max(0.0, newBound);
+        thisTimeStepAvailable_ = max(0.0f, newAvailable);
+        thisTimeStepBound_ = max(0.0f, newBound);
     }
 
     // Pactual = I0 * Volt;
@@ -4344,15 +4344,15 @@ bool ElectricStorage::determineCurrentForBatteryDischarge(EnergyPlusData &state,
             // Issue #5301 need more diagnostics for this case
             ShowWarningError(
                 state, "ElectricStorage::determineCurrentForBatteryDischarge, iteration limit exceeded, failed to solve for discharge current.");
-            ShowContinueError(state, format("Last timestep charge available, q0 = {:.5R}", q0));
-            ShowContinueError(state, format("New Current, Inew = {:.5R} [Amps]", Inew));
-            ShowContinueError(state, format("Power discharge per module cell, Pw = {:.5R} ", Pw));
+            ShowContinueError(state, fmt::format("Last timestep charge available, q0 = {:.5f}", q0));
+            ShowContinueError(state, fmt::format("New Current, Inew = {:.5f} [Amps]", Inew));
+            ShowContinueError(state, fmt::format("Power discharge per module cell, Pw = {:.5f} ", Pw));
             ShowContinueError(
-                state, format("Charge Conversion Rate, [1/h] change rate from bound charge energy to available charge, parameter k = {:.5R}", k));
-            ShowContinueError(state, format("parameter c = {:.5R}", c));
-            ShowContinueError(state, format("parameter qmax = {:.5R}", qmax));
-            ShowContinueError(state, format("Fully charged open circuit voltage, parameter E0c  = {:.5R}", E0c));
-            ShowContinueError(state, format("parameter InternalR = {:.5R}", InternalR));
+                state, fmt::format("Charge Conversion Rate, [1/h] change rate from bound charge energy to available charge, parameter k = {:.5f}", k));
+            ShowContinueError(state, fmt::format("parameter c = {:.5f}", c));
+            ShowContinueError(state, fmt::format("parameter qmax = {:.5f}", qmax));
+            ShowContinueError(state, fmt::format("Fully charged open circuit voltage, parameter E0c  = {:.5f}", E0c));
+            ShowContinueError(state, fmt::format("parameter InternalR = {:.5f}", InternalR));
             if (qmaxf == 0.0) {
                 ShowContinueError(state, "qmaxf was zero, would have divided by zero.");
             }
@@ -4577,9 +4577,9 @@ ElectricTransformer::ElectricTransformer(EnergyPlusData &state, std::string cons
 
         if (ratedCapacity_ == 0) {
             if (performanceInputMode_ == TransformerPerformanceInput::LossesMethod) {
-                ShowWarningError(state, format("{}{}=\"{}\".", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Specified {} = {}", s_ipsc->cAlphaFieldNames(6), s_ipsc->cAlphaArgs(6)));
-                ShowContinueError(state, format("Specified {} = {:.1R}", s_ipsc->cNumericFieldNames(2), ratedCapacity_));
+                ShowWarningError(state, fmt::format("{}{}=\"{}\".", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Specified {} = {}", s_ipsc->cAlphaFieldNames(6), s_ipsc->cAlphaArgs(6)));
+                ShowContinueError(state, fmt::format("Specified {} = {:.1f}", s_ipsc->cNumericFieldNames(2), ratedCapacity_));
                 ShowContinueError(state, "Transformer load and no load losses cannot be calculated with 0.0 rated capacity.");
                 ShowContinueError(state, "Simulation continues but transformer losses will be set to zero.");
             }
@@ -4595,8 +4595,8 @@ ElectricTransformer::ElectricTransformer(EnergyPlusData &state, std::string cons
             if (s_ipsc->lNumericFieldBlanks(11)) {
                 maxPUL_ = ratedPUL_;
             } else if (maxPUL_ <= 0 || maxPUL_ > 1) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Invalid {}=[{:.3R}].", s_ipsc->cNumericFieldNames(11), s_ipsc->rNumericArgs(11)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Invalid {}=[{:.3f}].", s_ipsc->cNumericFieldNames(11), s_ipsc->rNumericArgs(11)));
                 ShowContinueError(state, "Entered value must be > 0 and <= 1.");
                 errorsFound = true;
             }
@@ -4607,8 +4607,8 @@ ElectricTransformer::ElectricTransformer(EnergyPlusData &state, std::string cons
             considerLosses_ = false;
         } else {
             if (usageMode_ == TransformerUse::PowerInFromGrid) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(7), s_ipsc->cAlphaArgs(7)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid entry.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowContinueError(state, fmt::format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(7), s_ipsc->cAlphaArgs(7)));
                 errorsFound = true;
             }
         }
@@ -4620,7 +4620,7 @@ ElectricTransformer::ElectricTransformer(EnergyPlusData &state, std::string cons
 
             // Provide warning if no meter is wired to a transformer used to get power from the grid
             if (numWiredMeters <= 0) {
-                ShowWarningError(state, format("{}ElectricLoadCenter:Transformer=\"{}\":", routineName, name_));
+                ShowWarningError(state, fmt::format("{}ElectricLoadCenter:Transformer=\"{}\":", routineName, name_));
                 ShowContinueError(state, "ISOLATED Transformer: No meter wired to a transformer used to input power from grid");
             }
 
@@ -4761,12 +4761,12 @@ ElectricTransformer::ElectricTransformer(EnergyPlusData &state, std::string cons
         }
 
     } else {
-        ShowSevereError(state, format("{} did not find transformer name = {}", routineName, objectName));
+        ShowSevereError(state, fmt::format("{} did not find transformer name = {}", routineName, objectName));
         errorsFound = true;
     }
 
     if (errorsFound) {
-        ShowFatalError(state, format("{}Preceding errors terminate program.", routineName));
+        ShowFatalError(state, fmt::format("{}Preceding errors terminate program.", routineName));
     }
 }
 
@@ -4871,7 +4871,7 @@ void ElectricTransformer::manageTransformers(EnergyPlusData &state, Real64 const
         if ((pastElecLoad / ratedCapacity_) > 1.0) {
             if (overloadErrorIndex_ == 0) {
                 ShowSevereError(state, "Transformer Overloaded");
-                ShowContinueError(state, format("Entered in ElectricLoadCenter:Transformer ={}", name_));
+                ShowContinueError(state, fmt::format("Entered in ElectricLoadCenter:Transformer ={}", name_));
             }
             ShowRecurringSevereErrorAtEnd(state, "Transformer Overloaded: Entered in ElectricLoadCenter:Transformer =" + name_, overloadErrorIndex_);
         }
@@ -4978,7 +4978,7 @@ void ElectricTransformer::setupMeterIndices(EnergyPlusData &state)
             if (meter->resource != Constant::eResource::Electricity && meter->resource != Constant::eResource::ElectricityPurchased &&
                 meter->resource != Constant::eResource::ElectricitySurplusSold && meter->resource != Constant::eResource::ElectricityProduced &&
                 meter->resource != Constant::eResource::ElectricityNet) {
-                ShowFatalError(state, format("Non-electricity meter used for {}", name_));
+                ShowFatalError(state, fmt::format("Non-electricity meter used for {}", name_));
             }
         }
     }

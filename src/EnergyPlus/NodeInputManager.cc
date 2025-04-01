@@ -121,8 +121,8 @@ void GetNodeNums(EnergyPlusData &state,
     if (nodeFluidType != DataLoopNode::NodeFluidType::Air && nodeFluidType != DataLoopNode::NodeFluidType::Water &&
         nodeFluidType != DataLoopNode::NodeFluidType::Electric && nodeFluidType != DataLoopNode::NodeFluidType::Steam &&
         nodeFluidType != DataLoopNode::NodeFluidType::Blank) {
-        ShowSevereError(state, format("{}{}=\"{}=\", invalid fluid type.", RoutineName, objTypeStr, NodeObjectName));
-        ShowContinueError(state, format("..Invalid FluidType={}", nodeFluidType));
+        ShowSevereError(state, fmt::format("{}{}=\"{}=\", invalid fluid type.", RoutineName, objTypeStr, NodeObjectName));
+        ShowContinueError(state, fmt::format("..Invalid FluidType={}", nodeFluidType));
         ErrorsFound = true;
         ShowFatalError(state, "Preceding issue causes termination.");
     }
@@ -136,19 +136,19 @@ void GetNodeNums(EnergyPlusData &state,
                 if (nodeFluidType != DataLoopNode::NodeFluidType::Blank &&
                     state.dataLoopNodes->Node(NodeNumbers(Loop)).FluidType != DataLoopNode::NodeFluidType::Blank) {
                     if (state.dataLoopNodes->Node(NodeNumbers(Loop)).FluidType != nodeFluidType) {
-                        ShowSevereError(state, format("{}{}=\"{}=\", invalid data.", RoutineName, objTypeStr, NodeObjectName));
+                        ShowSevereError(state, fmt::format("{}{}=\"{}=\", invalid data.", RoutineName, objTypeStr, NodeObjectName));
                         if (!InputFieldName.empty()) {
                             ShowContinueError(state, fmt::format("...Ref field={}", InputFieldName));
                         }
                         ShowContinueError(
                             state,
-                            format("Existing Fluid type for node, incorrect for request. Node={}", state.dataLoopNodes->NodeID(NodeNumbers(Loop))));
+                            fmt::format("Existing Fluid type for node, incorrect for request. Node={}", state.dataLoopNodes->NodeID(NodeNumbers(Loop))));
                         ShowContinueError(
                             state,
-                            format("Existing Fluid type={}, Requested Fluid Type={}",
-                                   format("{}",
+                            fmt::format("Existing Fluid type={}, Requested Fluid Type={}",
+                                   fmt::format("{}",
                                           DataLoopNode::NodeFluidTypeNames[static_cast<int>(state.dataLoopNodes->Node(NodeNumbers(Loop)).FluidType)]),
-                                   format("{}", DataLoopNode::NodeFluidTypeNames[static_cast<int>(nodeFluidType)])));
+                                   fmt::format("{}", DataLoopNode::NodeFluidTypeNames[static_cast<int>(nodeFluidType)])));
                         ErrorsFound = true;
                     }
                 }
@@ -565,9 +565,9 @@ void GetNodeListsInput(EnergyPlusData &state, bool &ErrorsFound) // Set to true 
         state.dataNodeInputMgr->NodeLists(NCount).NumOfNodesInList = NumAlphas - 1;
         if (NumAlphas <= 1) {
             if (NumAlphas == 1) {
-                ShowSevereError(state, format("{}{}=\"{}\" does not have any nodes.", RoutineName, CurrentModuleObject, cAlphas(1)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\" does not have any nodes.", RoutineName, CurrentModuleObject, cAlphas(1)));
             } else {
-                ShowSevereError(state, format("{}{}=<blank> does not have any nodes or nodelist name.", RoutineName, CurrentModuleObject));
+                ShowSevereError(state, fmt::format("{}{}=<blank> does not have any nodes or nodelist name.", RoutineName, CurrentModuleObject));
             }
             localErrorsFound = true;
             continue;
@@ -576,10 +576,10 @@ void GetNodeListsInput(EnergyPlusData &state, bool &ErrorsFound) // Set to true 
         for (int Loop1 = 1; Loop1 <= NumAlphas - 1; ++Loop1) {
             state.dataNodeInputMgr->NodeLists(NCount).NodeNames(Loop1) = cAlphas(Loop1 + 1);
             if (cAlphas(Loop1 + 1).empty()) {
-                ShowWarningError(state, format("{}{}=\"{}\", blank node name in list.", RoutineName, CurrentModuleObject, cAlphas(1)));
+                ShowWarningError(state, fmt::format("{}{}=\"{}\", blank node name in list.", RoutineName, CurrentModuleObject, cAlphas(1)));
                 --state.dataNodeInputMgr->NodeLists(NCount).NumOfNodesInList;
                 if (state.dataNodeInputMgr->NodeLists(NCount).NumOfNodesInList <= 0) {
-                    ShowSevereError(state, format("{}{}=\"{}\" does not have any nodes.", RoutineName, CurrentModuleObject, cAlphas(1)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\" does not have any nodes.", RoutineName, CurrentModuleObject, cAlphas(1)));
                     localErrorsFound = true;
                     break;
                 }
@@ -588,8 +588,8 @@ void GetNodeListsInput(EnergyPlusData &state, bool &ErrorsFound) // Set to true 
             state.dataNodeInputMgr->NodeLists(NCount).NodeNumbers(Loop1) = AssignNodeNumber(
                 state, state.dataNodeInputMgr->NodeLists(NCount).NodeNames(Loop1), DataLoopNode::NodeFluidType::Blank, localErrorsFound);
             if (Util::SameString(state.dataNodeInputMgr->NodeLists(NCount).NodeNames(Loop1), state.dataNodeInputMgr->NodeLists(NCount).Name)) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid node name in list.", RoutineName, CurrentModuleObject, cAlphas(1)));
-                ShowContinueError(state, format("... Node {} Name=\"{}\", duplicates NodeList Name.", Loop1, cAlphas(Loop1 + 1)));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid node name in list.", RoutineName, CurrentModuleObject, cAlphas(1)));
+                ShowContinueError(state, fmt::format("... Node {} Name=\"{}\", duplicates NodeList Name.", Loop1, cAlphas(Loop1 + 1)));
                 localErrorsFound = true;
             }
         }
@@ -600,11 +600,11 @@ void GetNodeListsInput(EnergyPlusData &state, bool &ErrorsFound) // Set to true 
                 if (state.dataNodeInputMgr->NodeLists(NCount).NodeNumbers(Loop1) != state.dataNodeInputMgr->NodeLists(NCount).NodeNumbers(Loop2))
                     continue;
                 if (flagError) { // only list nodelist name once
-                    ShowSevereError(state, format("{}{}=\"{}\" has duplicate nodes:", RoutineName, CurrentModuleObject, cAlphas(1)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\" has duplicate nodes:", RoutineName, CurrentModuleObject, cAlphas(1)));
                     flagError = false;
                 }
                 ShowContinueError(state,
-                                  format("...list item={}, \"{}\", duplicate list item={}, \"{}\".",
+                                  fmt::format("...list item={}, \"{}\", duplicate list item={}, \"{}\".",
                                          Loop1,
                                          state.dataLoopNodes->NodeID(state.dataNodeInputMgr->NodeLists(NCount).NodeNumbers(Loop1)),
                                          Loop2,
@@ -622,12 +622,12 @@ void GetNodeListsInput(EnergyPlusData &state, bool &ErrorsFound) // Set to true 
                     continue;
                 ShowSevereError(
                     state,
-                    format(
+                    fmt::format(
                         "{}{}=\"{}\", invalid node name in list.", RoutineName, CurrentModuleObject, state.dataNodeInputMgr->NodeLists(Loop1).Name));
                 ShowContinueError(
                     state,
-                    format("... Node {} Name=\"{}\", duplicates NodeList Name.", Loop2, state.dataNodeInputMgr->NodeLists(Loop).NodeNames(Loop2)));
-                ShowContinueError(state, format("... NodeList=\"{}\", is duplicated.", state.dataNodeInputMgr->NodeLists(Loop1).Name));
+                    fmt::format("... Node {} Name=\"{}\", duplicates NodeList Name.", Loop2, state.dataNodeInputMgr->NodeLists(Loop).NodeNames(Loop2)));
+                ShowContinueError(state, fmt::format("... NodeList=\"{}\", is duplicated.", state.dataNodeInputMgr->NodeLists(Loop1).Name));
                 ShowContinueError(state, "... Items in NodeLists must not be the name of another NodeList.");
                 localErrorsFound = true;
             }
@@ -638,7 +638,7 @@ void GetNodeListsInput(EnergyPlusData &state, bool &ErrorsFound) // Set to true 
     rNumbers.deallocate();
 
     if (localErrorsFound) {
-        ShowFatalError(state, format("{}{}: Error getting input - causes termination.", RoutineName, CurrentModuleObject));
+        ShowFatalError(state, fmt::format("{}{}: Error getting input - causes termination.", RoutineName, CurrentModuleObject));
         ErrorsFound = true;
     }
 }
@@ -668,7 +668,7 @@ int AssignNodeNumber(EnergyPlusData &state,
     if (nodeFluidType != DataLoopNode::NodeFluidType::Air && nodeFluidType != DataLoopNode::NodeFluidType::Water &&
         nodeFluidType != DataLoopNode::NodeFluidType::Electric && nodeFluidType != DataLoopNode::NodeFluidType::Steam &&
         nodeFluidType != DataLoopNode::NodeFluidType::Blank) {
-        ShowSevereError(state, format("AssignNodeNumber: Invalid FluidType={}", nodeFluidType));
+        ShowSevereError(state, fmt::format("AssignNodeNumber: Invalid FluidType={}", nodeFluidType));
         ErrorsFound = true;
         ShowFatalError(state, "AssignNodeNumber: Preceding issue causes termination.");
     }
@@ -683,12 +683,12 @@ int AssignNodeNumber(EnergyPlusData &state,
                 if (state.dataLoopNodes->Node(NumNode).FluidType != nodeFluidType &&
                     state.dataLoopNodes->Node(NumNode).FluidType != DataLoopNode::NodeFluidType::Blank) {
                     ShowSevereError(state,
-                                    format("Existing Fluid type for node, incorrect for request. Node={}", state.dataLoopNodes->NodeID(NumNode)));
+                                    fmt::format("Existing Fluid type for node, incorrect for request. Node={}", state.dataLoopNodes->NodeID(NumNode)));
                     ShowContinueError(
                         state,
-                        format("Existing Fluid type={}, Requested Fluid Type={}",
-                               format("{}", DataLoopNode::NodeFluidTypeNames[static_cast<int>(state.dataLoopNodes->Node(NumNode).FluidType)]),
-                               format("{}", DataLoopNode::NodeFluidTypeNames[static_cast<int>(nodeFluidType)])));
+                        fmt::format("Existing Fluid type={}, Requested Fluid Type={}",
+                               fmt::format("{}", DataLoopNode::NodeFluidTypeNames[static_cast<int>(state.dataLoopNodes->Node(NumNode).FluidType)]),
+                               fmt::format("{}", DataLoopNode::NodeFluidTypeNames[static_cast<int>(nodeFluidType)])));
                     ErrorsFound = true;
                 }
             }
@@ -782,11 +782,11 @@ int GetOnlySingleNode(EnergyPlusData &state,
                 InputFieldName);
 
     if (NumNodes > 1) {
-        ShowSevereError(state, format("{}{}=\"{}=\", invalid data.", RoutineName, objTypeStr, NodeObjectName));
+        ShowSevereError(state, fmt::format("{}{}=\"{}=\", invalid data.", RoutineName, objTypeStr, NodeObjectName));
         if (!InputFieldName.empty()) {
             ShowContinueError(state, fmt::format("...Ref field={}", InputFieldName));
         }
-        ShowContinueError(state, format("Only 1st Node used from NodeList=\"{}\".", NodeName));
+        ShowContinueError(state, fmt::format("Only 1st Node used from NodeList=\"{}\".", NodeName));
         ShowContinueError(state, "...a Nodelist may not be valid in this context.");
         errFlag = true;
     } else if (NumNodes == 0) {
@@ -819,7 +819,7 @@ void InitUniqueNodeCheck(EnergyPlusData &state, std::string const &ContextName)
 
     if (!state.dataNodeInputMgr->CurCheckContextName.empty()) {
         ShowFatalError(state,
-                       format("Init Uniqueness called for \"{}, but checks for \"{}\" was already in progress.",
+                       fmt::format("Init Uniqueness called for \"{}, but checks for \"{}\" was already in progress.",
                               ContextName,
                               state.dataNodeInputMgr->CurCheckContextName));
     }
@@ -860,8 +860,8 @@ void CheckUniqueNodeNames(
     if (!CheckName.empty()) {
         int Found = Util::FindItemInList(CheckName, state.dataNodeInputMgr->UniqueNodeNames, state.dataNodeInputMgr->NumCheckNodes);
         if (Found != 0) {
-            ShowSevereError(state, format("{}=\"{}\", duplicate node names found.", state.dataNodeInputMgr->CurCheckContextName, ObjectName));
-            ShowContinueError(state, format("...for Node Type(s)={}, duplicate node name=\"{}\".", NodeTypes, CheckName));
+            ShowSevereError(state, fmt::format("{}=\"{}\", duplicate node names found.", state.dataNodeInputMgr->CurCheckContextName, ObjectName));
+            ShowContinueError(state, fmt::format("...for Node Type(s)={}, duplicate node name=\"{}\".", NodeTypes, CheckName));
             ShowContinueError(state, "...Nodes must be unique across instances of this object.");
             //          CALL ShowSevereError(state, 'Node Types='//TRIM(NodeTypes)//', Non Unique Name found='//TRIM(CheckName))
             //          CALL ShowContinueError(state, 'Context='//TRIM(CurCheckContextName))
@@ -901,9 +901,9 @@ void CheckUniqueNodeNumbers(
         int Found = Util::FindItemInList(
             state.dataLoopNodes->NodeID(CheckNumber), state.dataNodeInputMgr->UniqueNodeNames, state.dataNodeInputMgr->NumCheckNodes);
         if (Found != 0) {
-            ShowSevereError(state, format("{}=\"{}\", duplicate node names found.", state.dataNodeInputMgr->CurCheckContextName, ObjectName));
+            ShowSevereError(state, fmt::format("{}=\"{}\", duplicate node names found.", state.dataNodeInputMgr->CurCheckContextName, ObjectName));
             ShowContinueError(state,
-                              format("...for Node Type(s)={}, duplicate node name=\"{}\".", NodeTypes, state.dataLoopNodes->NodeID(CheckNumber)));
+                              fmt::format("...for Node Type(s)={}, duplicate node name=\"{}\".", NodeTypes, state.dataLoopNodes->NodeID(CheckNumber)));
             ShowContinueError(state, "...Nodes must be unique across instances of this object.");
             ErrorsFound = true;
         } else {
@@ -930,7 +930,7 @@ void EndUniqueNodeCheck(EnergyPlusData &state, std::string const &ContextName)
 
     if (state.dataNodeInputMgr->CurCheckContextName != ContextName) {
         ShowFatalError(state,
-                       format("End Uniqueness called for \"{}, but checks for \"{}\" was in progress.",
+                       fmt::format("End Uniqueness called for \"{}, but checks for \"{}\" was in progress.",
                               ContextName,
                               state.dataNodeInputMgr->CurCheckContextName));
     }
@@ -1234,9 +1234,9 @@ void CheckMarkedNodes(EnergyPlusData &state, bool &ErrorsFound)
             if (state.dataNodeInputMgr->NodeRef(NodeNum) == 0) {
                 std::string_view objType =
                     BranchNodeConnections::ConnectionObjectTypeNames[static_cast<int>(state.dataLoopNodes->MarkedNode(NodeNum).ObjectType)];
-                ShowSevereError(state, format("Node=\"{}\" did not find reference by another object.", state.dataLoopNodes->NodeID(NodeNum)));
+                ShowSevereError(state, fmt::format("Node=\"{}\" did not find reference by another object.", state.dataLoopNodes->NodeID(NodeNum)));
                 ShowContinueError(state,
-                                  format(R"(Object="{}", Name="{}", Field=[{}])",
+                                  fmt::format(R"(Object="{}", Name="{}", Field=[{}])",
                                          objType,
                                          state.dataLoopNodes->MarkedNode(NodeNum).ObjectName,
                                          state.dataLoopNodes->MarkedNode(NodeNum).FieldName));

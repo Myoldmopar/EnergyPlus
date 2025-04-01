@@ -224,10 +224,10 @@ void UpdateVariableAbsorptances(EnergyPlusData &state)
         assert(thisMaterial != nullptr);
         if (thisMaterial->absorpVarCtrlSignal == Material::VariableAbsCtrlSignal::Scheduled) {
             if (thisMaterial->absorpThermalVarSched != nullptr) {
-                state.dataHeatBalSurf->SurfAbsThermalExt(surfNum) = max(min(thisMaterial->absorpThermalVarSched->getCurrentVal(), 0.9999), 0.0001);
+                state.dataHeatBalSurf->SurfAbsThermalExt(surfNum) = max(min(thisMaterial->absorpThermalVarSched->getCurrentVal(), 0.9999f), 0.0001f);
             }
             if (thisMaterial->absorpSolarVarSched != nullptr) {
-                state.dataHeatBalSurf->SurfAbsSolarExt(surfNum) = max(min(thisMaterial->absorpThermalVarSched->getCurrentVal(), 0.9999), 0.0001);
+                state.dataHeatBalSurf->SurfAbsSolarExt(surfNum) = max(min(thisMaterial->absorpThermalVarSched->getCurrentVal(), 0.9999f), 0.0001f);
             }
         } else {
             Real64 triggerValue;
@@ -242,11 +242,11 @@ void UpdateVariableAbsorptances(EnergyPlusData &state)
             }
             if (thisMaterial->absorpThermalVarFuncIdx > 0) {
                 state.dataHeatBalSurf->SurfAbsThermalExt(surfNum) =
-                    max(min(Curve::CurveValue(state, thisMaterial->absorpThermalVarFuncIdx, triggerValue), 0.9999), 0.0001);
+                    max(min(Curve::CurveValue(state, thisMaterial->absorpThermalVarFuncIdx, triggerValue), 0.9999f), 0.0001f);
             }
             if (thisMaterial->absorpSolarVarFuncIdx > 0) {
                 state.dataHeatBalSurf->SurfAbsSolarExt(surfNum) =
-                    max(min(Curve::CurveValue(state, thisMaterial->absorpSolarVarFuncIdx, triggerValue), 0.9999), 0.0001);
+                    max(min(Curve::CurveValue(state, thisMaterial->absorpSolarVarFuncIdx, triggerValue), 0.9999f), 0.0001f);
             }
         }
     }
@@ -727,13 +727,13 @@ void GatherForPredefinedReport(EnergyPlusData &state)
               "! <FenestrationAssembly>,Construction Name,Frame and Divider Name,NFRC Product Type,"
               "Assembly U-Factor {W/m2-K},Assembly SHGC,Assembly Visible Transmittance");
     }
-    static constexpr std::string_view FenestrationAssemblyFormat("FenestrationAssembly,{},{},{},{:.3R},{:.3R},{:.3R}\n");
+    static constexpr std::string_view FenestrationAssemblyFormat("FenestrationAssembly,{},{},{},{:.3f},{:.3f},{:.3f}\n");
     std::vector<std::pair<int, int>> uniqConsFrame;
     std::pair<int, int> consAndFrame;
 
     // set up for EIO <FenestrationShadedState> output
     bool fenestrationShadedStateHeaderShown(false);
-    static constexpr std::string_view FenestrationShadedStateFormat("FenestrationShadedState,{},{:.3R},{:.3R},{:.3R},{},{},{:.3R},{:.3R},{:.3R}\n");
+    static constexpr std::string_view FenestrationShadedStateFormat("FenestrationShadedState,{},{:.3f},{:.3f},{:.3f},{},{},{:.3f},{:.3f},{:.3f}\n");
     std::vector<std::pair<int, int>> uniqShdConsFrame;
     std::pair<int, int> shdConsAndFrame;
 
@@ -795,7 +795,15 @@ void GatherForPredefinedReport(EnergyPlusData &state)
                 } else {
                     // must calculate Summer SHGC
                     if (!construct.WindowTypeEQL) {
-                        Window::CalcNominalWindowCond(state, surface.Construction, 2, nomCond, SHGCSummer, TransSolNorm, TransVisNorm, errFlag);
+                        double d_nomCond = nomCond;
+                        double d_SHGCSummer = SHGCSummer;
+                        double d_TransSolNorm = TransSolNorm;
+                        double d_TransVisNorm = TransVisNorm;
+                        Window::CalcNominalWindowCond(state, surface.Construction, 2, d_nomCond, d_SHGCSummer, d_TransSolNorm, d_TransVisNorm, errFlag);
+                        nomCond = d_nomCond;
+                        SHGCSummer = d_SHGCSummer;
+                        TransSolNorm = d_TransSolNorm;
+                        TransVisNorm = d_TransVisNorm;
                         construct.SummerSHGC = SHGCSummer;
                         construct.VisTransNorm = TransVisNorm;
                         construct.SolTransNorm = TransSolNorm;
@@ -1106,8 +1114,16 @@ void GatherForPredefinedReport(EnergyPlusData &state)
                         } else {
                             // must calculate Summer SHGC
                             if (!construct.WindowTypeEQL) {
+                                double d_nomCond = nomCond;
+                                double d_SHGCSummer = SHGCSummer;
+                                double d_TransSolNorm = TransSolNorm;
+                                double d_TransVisNorm = TransVisNorm;
                                 Window::CalcNominalWindowCond(
-                                    state, surface.Construction, 2, nomCond, SHGCSummer, TransSolNorm, TransVisNorm, errFlag);
+                                    state, surface.Construction, 2, d_nomCond, d_SHGCSummer, d_TransSolNorm, d_TransVisNorm, errFlag);
+                                nomCond = d_nomCond;
+                                SHGCSummer = d_SHGCSummer;
+                                TransSolNorm = d_TransSolNorm;
+                                TransVisNorm = d_TransVisNorm;
                             }
                         }
                         OutputReportPredefined::PreDefTableEntry(state, state.dataOutRptPredefined->pdchIntFenSHGC, surfName, SHGCSummer, 3);
@@ -2363,7 +2379,7 @@ void EvalOutsideMovableInsulation(EnergyPlusData &state)
         if (mat->group == Material::Group::Glass || mat->group == Material::Group::GlassEQL) {
             auto const *matGlass = dynamic_cast<Material::MaterialFen const *>(mat);
             assert(matGlass != nullptr);
-            state.dataHeatBalSurf->SurfAbsSolarExt(SurfNum) = max(0.0, 1.0 - matGlass->Trans - matGlass->ReflectSolBeamFront);
+            state.dataHeatBalSurf->SurfAbsSolarExt(SurfNum) = max(0.0f, 1.0f - matGlass->Trans - matGlass->ReflectSolBeamFront);
         } else {
             state.dataHeatBalSurf->SurfAbsSolarExt(SurfNum) = mat->AbsorpSolar;
         }
@@ -2396,7 +2412,7 @@ void EvalInsideMovableInsulation(EnergyPlusData &state)
         if (mat->group == Material::Group::Glass || mat->group == Material::Group::GlassEQL) { // Glass is insulating?
             auto const *matGlass = dynamic_cast<Material::MaterialFen const *>(mat);
             assert(matGlass != nullptr);
-            state.dataHeatBalSurf->SurfAbsSolarInt(SurfNum) = max(0.0, 1.0 - matGlass->Trans - matGlass->ReflectSolBeamFront);
+            state.dataHeatBalSurf->SurfAbsSolarInt(SurfNum) = max(0.0f, 1.0f - matGlass->Trans - matGlass->ReflectSolBeamFront);
         } else {
             state.dataHeatBalSurf->SurfAbsSolarInt(SurfNum) = mat->AbsorpSolar;
         }
@@ -2706,7 +2722,7 @@ void InitSolarHeatGains(EnergyPlusData &state)
         assert(equal_dimensions(state.dataSurface->SurfReflFacBmToBmSolObs,
                                 state.dataSurface->SurfReflFacBmToDiffSolGnd)); // For linear indexing
         Real64 GndReflSolarRad = 0.0;
-        Real64 GndSolarRadInc = max(state.dataEnvrn->BeamSolarRad * state.dataEnvrn->SOLCOS(3) + state.dataEnvrn->DifSolarRad, 0.0);
+        Real64 GndSolarRadInc = max(state.dataEnvrn->BeamSolarRad * state.dataEnvrn->SOLCOS(3) + state.dataEnvrn->DifSolarRad, 0.0f);
 
         for (int SurfNum = 1; SurfNum <= state.dataSurface->TotSurfaces; ++SurfNum) {
             state.dataSurface->Surface(SurfNum).IncSolMultiplier = GetSurfIncidentSolarMultiplier(state, SurfNum);
@@ -4337,7 +4353,7 @@ void ComputeIntSWAbsorpFactors(EnergyPlusData &state)
             if (thisSolEnclosure.solAbsFirstCalc) {
                 ShowWarningError(
                     state,
-                    format("ComputeIntSWAbsorbFactors: Sum of area times inside solar absorption for all surfaces is zero in Enclosure: {}",
+                    fmt::format("ComputeIntSWAbsorbFactors: Sum of area times inside solar absorption for all surfaces is zero in Enclosure: {}",
                            thisSolEnclosure.Name));
                 thisSolEnclosure.solAbsFirstCalc = false;
             }
@@ -4503,9 +4519,9 @@ void InitEMSControlledSurfaceProperties(EnergyPlusData &state)
     for (auto *mat : s_mat->materials) {
         if (mat->group != Material::Group::Regular) continue;
 
-        mat->AbsorpSolar = mat->AbsorpSolarEMSOverrideOn ? max(min(mat->AbsorpSolarEMSOverride, 0.9999), 0.0001) : mat->AbsorpSolarInput;
-        mat->AbsorpThermal = mat->AbsorpThermalEMSOverrideOn ? max(min(mat->AbsorpThermalEMSOverride, 0.9999), 0.0001) : mat->AbsorpThermalInput;
-        mat->AbsorpVisible = mat->AbsorpVisibleEMSOverrideOn ? max(min(mat->AbsorpVisibleEMSOverride, 0.9999), 0.0001) : mat->AbsorpVisibleInput;
+        mat->AbsorpSolar = mat->AbsorpSolarEMSOverrideOn ? max(min(mat->AbsorpSolarEMSOverride, 0.9999f), 0.0001f) : mat->AbsorpSolarInput;
+        mat->AbsorpThermal = mat->AbsorpThermalEMSOverrideOn ? max(min(mat->AbsorpThermalEMSOverride, 0.9999f), 0.0001f) : mat->AbsorpThermalInput;
+        mat->AbsorpVisible = mat->AbsorpVisibleEMSOverrideOn ? max(min(mat->AbsorpVisibleEMSOverride, 0.9999f), 0.0001f) : mat->AbsorpVisibleInput;
     } // loop over materials
 
     // second, loop over constructions
@@ -4587,17 +4603,17 @@ void InitEMSControlledConstructions(EnergyPlusData &state)
                                              "InitEMSControlledConstructions: EMS Construction State Actuator may be unrealistic, incompatible "
                                              "CTF timescales are being used.");
                             ShowContinueError(state,
-                                              format("Construction named = {} has CTF timesteps = {}",
+                                              fmt::format("Construction named = {} has CTF timesteps = {}",
                                                      state.dataConstruction->Construct(surface.Construction).Name,
                                                      state.dataConstruction->Construct(surface.Construction).NumHistories));
                             ShowContinueError(
                                 state,
-                                format("While construction named = {} has CTF timesteps = {}",
+                                fmt::format("While construction named = {} has CTF timesteps = {}",
                                        state.dataConstruction->Construct(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum)).Name,
                                        state.dataConstruction->Construct(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum)).NumHistories));
                             ShowContinueError(
                                 state,
-                                format("Transient heat transfer modeling may not be valid for surface name = {}, and the simulation continues",
+                                fmt::format("Transient heat transfer modeling may not be valid for surface name = {}, and the simulation continues",
                                        surface.Name));
                         }
                         if (state.dataConstruction->Construct(surface.Construction).NumCTFTerms !=
@@ -4607,16 +4623,16 @@ void InitEMSControlledConstructions(EnergyPlusData &state)
                                              "InitEMSControlledConstructions: EMS Construction State Actuator may be unrealistic, incompatible "
                                              "CTF terms are being used.");
                             ShowContinueError(state,
-                                              format("Construction named = {} has number of CTF terms = {}",
+                                              fmt::format("Construction named = {} has number of CTF terms = {}",
                                                      state.dataConstruction->Construct(surface.Construction).Name,
                                                      state.dataConstruction->Construct(surface.Construction).NumCTFTerms));
                             ShowContinueError(
                                 state,
-                                format("While construction named = {} has number of CTF terms = {}",
+                                fmt::format("While construction named = {} has number of CTF terms = {}",
                                        state.dataConstruction->Construct(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum)).Name,
                                        state.dataConstruction->Construct(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum)).NumCTFTerms));
                             ShowContinueError(state,
-                                              format("The actuator is allowed but the transient heat transfer modeling may not be valid for surface "
+                                              fmt::format("The actuator is allowed but the transient heat transfer modeling may not be valid for surface "
                                                      "name = {}, and the simulation continues",
                                                      surface.Name));
                         }
@@ -4626,15 +4642,15 @@ void InitEMSControlledConstructions(EnergyPlusData &state)
                                 // throw warning, and do not allow
                                 ShowSevereError(state, "InitEMSControlledConstructions: EMS Construction State Actuator not valid.");
                                 ShowContinueError(state,
-                                                  format("Construction named = {} has internal source/sink",
+                                                  fmt::format("Construction named = {} has internal source/sink",
                                                          state.dataConstruction->Construct(surface.Construction).Name));
                                 ShowContinueError(
                                     state,
-                                    format("While construction named = {} is not an internal source/sink construction",
+                                    fmt::format("While construction named = {} is not an internal source/sink construction",
                                            state.dataConstruction->Construct(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum)).Name));
                                 ShowContinueError(
                                     state,
-                                    format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
+                                    fmt::format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
                                            surface.Name));
 
                                 state.dataRuntimeLang->EMSConstructActuatorIsOkay(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum),
@@ -4657,18 +4673,18 @@ void InitEMSControlledConstructions(EnergyPlusData &state)
                             // throw warning, and do not allow
                             ShowSevereError(state, "InitEMSControlledConstructions: EMS Construction State Actuator not valid.");
                             ShowContinueError(state,
-                                              format("Construction named = {} has number of finite difference nodes ={}",
+                                              fmt::format("Construction named = {} has number of finite difference nodes ={}",
                                                      state.dataConstruction->Construct(surface.Construction).Name,
                                                      state.dataHeatBalFiniteDiffMgr->ConstructFD(surface.Construction).TotNodes));
                             ShowContinueError(
                                 state,
-                                format("While construction named = {}has number of finite difference nodes ={}",
+                                fmt::format("While construction named = {}has number of finite difference nodes ={}",
                                        state.dataConstruction->Construct(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum)).Name,
                                        state.dataHeatBalFiniteDiffMgr->ConstructFD(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum))
                                            .TotNodes));
                             ShowContinueError(
                                 state,
-                                format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
+                                fmt::format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
                                        surface.Name));
 
                             state.dataRuntimeLang->EMSConstructActuatorIsOkay(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum), SurfNum) =
@@ -4680,15 +4696,15 @@ void InitEMSControlledConstructions(EnergyPlusData &state)
                                 // throw warning, and do not allow
                                 ShowSevereError(state, "InitEMSControlledConstructions: EMS Construction State Actuator not valid.");
                                 ShowContinueError(state,
-                                                  format("Construction named = {} has internal source/sink",
+                                                  fmt::format("Construction named = {} has internal source/sink",
                                                          state.dataConstruction->Construct(surface.Construction).Name));
                                 ShowContinueError(
                                     state,
-                                    format("While construction named = {} is not an internal source/sink construction",
+                                    fmt::format("While construction named = {} is not an internal source/sink construction",
                                            state.dataConstruction->Construct(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum)).Name));
                                 ShowContinueError(
                                     state,
-                                    format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
+                                    fmt::format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
                                            surface.Name));
 
                                 state.dataRuntimeLang->EMSConstructActuatorIsOkay(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum),
@@ -4707,7 +4723,7 @@ void InitEMSControlledConstructions(EnergyPlusData &state)
                                         "algorithm CombinedHeatAndMoistureFiniteElement.");
                         ShowContinueError(
                             state,
-                            format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
+                            fmt::format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
                                    surface.Name));
                         state.dataRuntimeLang->EMSConstructActuatorChecked(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum), SurfNum) =
                             true;
@@ -4720,7 +4736,7 @@ void InitEMSControlledConstructions(EnergyPlusData &state)
                                         "Foundation Outside Boundary Condition.");
                         ShowContinueError(
                             state,
-                            format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
+                            fmt::format("This actuator is not allowed for surface name = {}, and the simulation continues without the override",
                                    surface.Name));
                         state.dataRuntimeLang->EMSConstructActuatorChecked(state.dataSurface->SurfEMSConstructionOverrideValue(SurfNum), SurfNum) =
                             true;
@@ -4848,29 +4864,29 @@ void UpdateNonRepresentativeSurfaceResults(EnergyPlusData &state, ObjexxFCL::Opt
                                      (state.dataHeatBalSurf->SurfTempIn(repSurfNum) - state.dataHeatBalSurfMgr->RefAirTemp(repSurfNum));
                 Real64 diff = surfConv - repSurfConv;
                 if (std::abs(diff) > 3.0 && state.dataSurface->Surface(repSurfNum).ConstituentSurfaceNums.size() == 2) {
-                    ShowWarningError(state, format("Difference in representative surface convection {:.3R} W/m2", diff));
+                    ShowWarningError(state, fmt::format("Difference in representative surface convection {:.3f} W/m2", diff));
                     ShowContinueErrorTimeStamp(state, "");
-                    ShowContinueError(state, format("  Original Surface: {}", surface.Name));
-                    ShowContinueError(state, format("    Inside surface temperature: {:.3R} C", state.dataHeatBalSurf->SurfTempIn(surfNum)));
+                    ShowContinueError(state, fmt::format("  Original Surface: {}", surface.Name));
+                    ShowContinueError(state, fmt::format("    Inside surface temperature: {:.3f} C", state.dataHeatBalSurf->SurfTempIn(surfNum)));
                     ShowContinueError(state,
-                                      format("    Inside convection coefficient: {:.3R} W/m2-K", state.dataHeatBalSurf->SurfHConvInt(surfNum)));
+                                      fmt::format("    Inside convection coefficient: {:.3f} W/m2-K", state.dataHeatBalSurf->SurfHConvInt(surfNum)));
                     ShowContinueError(state,
-                                      format("    Sunlit fraction: {:.3R}",
+                                      fmt::format("    Sunlit fraction: {:.3f}",
                                              state.dataHeatBal->SurfSunlitFrac(state.dataGlobal->HourOfDay, state.dataGlobal->TimeStep, surfNum)));
-                    ShowContinueError(state, format("    Outside absorbed solar: {:.3R} W/m2", state.dataHeatBalSurf->SurfOpaqQRadSWOutAbs(surfNum)));
+                    ShowContinueError(state, fmt::format("    Outside absorbed solar: {:.3f} W/m2", state.dataHeatBalSurf->SurfOpaqQRadSWOutAbs(surfNum)));
                     ShowContinueError(state,
-                                      format("    Outside long wave radiation: {:.3R} W/m2", state.dataHeatBalSurf->QdotRadOutRepPerArea(surfNum)));
-                    ShowContinueError(state, format("  Representative Surface: {}", state.dataSurface->Surface(repSurfNum).Name));
-                    ShowContinueError(state, format("    Inside surface temperature: {:.3R} C", state.dataHeatBalSurf->SurfTempIn(repSurfNum)));
+                                      fmt::format("    Outside long wave radiation: {:.3f} W/m2", state.dataHeatBalSurf->QdotRadOutRepPerArea(surfNum)));
+                    ShowContinueError(state, fmt::format("  Representative Surface: {}", state.dataSurface->Surface(repSurfNum).Name));
+                    ShowContinueError(state, fmt::format("    Inside surface temperature: {:.3f} C", state.dataHeatBalSurf->SurfTempIn(repSurfNum)));
                     ShowContinueError(state,
-                                      format("    Inside convection coefficient: {:.3R} W/m2-K", state.dataHeatBalSurf->SurfHConvInt(repSurfNum)));
+                                      fmt::format("    Inside convection coefficient: {:.3f} W/m2-K", state.dataHeatBalSurf->SurfHConvInt(repSurfNum)));
                     ShowContinueError(state,
-                                      format("    Sunlit fraction: {:.3R}",
+                                      fmt::format("    Sunlit fraction: {:.3f}",
                                              state.dataHeatBal->SurfSunlitFrac(state.dataGlobal->HourOfDay, state.dataGlobal->TimeStep, repSurfNum)));
                     ShowContinueError(state,
-                                      format("    Outside absorbed solar: {:.3R} W/m2", state.dataHeatBalSurf->SurfOpaqQRadSWOutAbs(repSurfNum)));
+                                      fmt::format("    Outside absorbed solar: {:.3f} W/m2", state.dataHeatBalSurf->SurfOpaqQRadSWOutAbs(repSurfNum)));
                     ShowContinueError(
-                        state, format("    Outside long wave radiation: {:.3R} W/m2", state.dataHeatBalSurf->QdotRadOutRepPerArea(repSurfNum)));
+                        state, fmt::format("    Outside long wave radiation: {:.3f} W/m2", state.dataHeatBalSurf->QdotRadOutRepPerArea(repSurfNum)));
                 }
 #endif
 
@@ -5433,7 +5449,7 @@ void CalculateZoneMRT(EnergyPlusData &state,
             if (state.dataHeatBalSurfMgr->CalculateZoneMRTfirstTime) {
                 ShowWarningError(
                     state,
-                    format("Zone areas*inside surface emissivities are summing to zero, for Zone=\"{}\"", state.dataHeatBal->Zone(ZoneNum).Name));
+                    fmt::format("Zone areas*inside surface emissivities are summing to zero, for Zone=\"{}\"", state.dataHeatBal->Zone(ZoneNum).Name));
                 ShowContinueError(state, "As a result, MRT will be set to MAT for that zone");
             }
             thisZoneHB.MRT = state.dataZoneTempPredictorCorrector->zoneHeatBalance(ZoneNum).MAT;
@@ -5452,7 +5468,7 @@ void CalculateZoneMRT(EnergyPlusData &state,
         } else {
             if (state.dataHeatBalSurfMgr->CalculateZoneMRTfirstTime) {
                 ShowWarningError(state,
-                                 format("Enclosure areas*inside surface emissivities are summing to zero, for Enclosure=\"{}\"", thisEnclosure.Name));
+                                 fmt::format("Enclosure areas*inside surface emissivities are summing to zero, for Enclosure=\"{}\"", thisEnclosure.Name));
                 ShowContinueError(state, "As a result, MRT will be set to the volume weighted average MAT for that enclosure");
             }
             Real64 sumMATVol = 0.0;
@@ -7678,7 +7694,7 @@ void CalcHeatBalanceInsideSurf2(EnergyPlusData &state,
                     (surface.HeatTransferAlgorithm == DataSurfaces::HeatTransferModel::HAMT)) {
                     int ZoneNum = surface.Zone;
                     Real64 const MAT_zone(state.dataZoneTempPredictorCorrector->zoneHeatBalance(ZoneNum).MAT);
-                    Real64 const ZoneAirHumRat_zone(max(state.dataZoneTempPredictorCorrector->zoneHeatBalance(ZoneNum).airHumRat, 1.0e-5));
+                    Real64 const ZoneAirHumRat_zone(max(state.dataZoneTempPredictorCorrector->zoneHeatBalance(ZoneNum).airHumRat, 1.0e-5f));
                     Real64 const HConvIn_surf(state.dataMstBal->HConvInFD(SurfNum) = state.dataHeatBalSurf->SurfHConvInt(SurfNum));
 
                     state.dataMstBal->RhoVaporAirIn(SurfNum) =
@@ -7979,9 +7995,9 @@ void CalcHeatBalanceInsideSurf2(EnergyPlusData &state,
                     if (construct.SourceSinkPresent) {
 
                         ShowSevereError(state, "Interior movable insulation is not valid with embedded sources/sinks");
-                        ShowContinueError(state, format("Construction {} contains an internal source or sink but also uses", construct.Name));
+                        ShowContinueError(state, fmt::format("Construction {} contains an internal source or sink but also uses", construct.Name));
                         ShowContinueError(state,
-                                          format("interior movable insulation {} for a surface with that construction.",
+                                          fmt::format("interior movable insulation {} for a surface with that construction.",
                                                  s_mat->materials(state.dataSurface->intMovInsuls(SurfNum).matNum)->Name));
                         ShowContinueError(state,
                                           "This is not currently allowed because the heat balance equations do not currently accommodate "
@@ -8150,8 +8166,12 @@ void CalcHeatBalanceInsideSurf2(EnergyPlusData &state,
 
                     // Following call determines inside surface temperature of glazing, and of
                     // frame and/or divider, if present
+                    double surfaceTemp = state.dataHeatBalSurf->SurfTempInTmp(SurfNum);
+                    double surfOutsideTemp = TH11;
                     Window::CalcWindowHeatBalance(
-                        state, SurfNum, state.dataHeatBalSurf->SurfHConvExt(SurfNum), state.dataHeatBalSurf->SurfTempInTmp(SurfNum), TH11);
+                        state, SurfNum, state.dataHeatBalSurf->SurfHConvExt(SurfNum), surfaceTemp, surfOutsideTemp);
+                    state.dataHeatBalSurf->SurfTempInTmp(SurfNum) = surfaceTemp;
+                    TH11 = surfOutsideTemp;
                     state.dataHeatBalSurf->SurfTempIn(SurfNum) = state.dataHeatBalSurf->SurfTempInTmp(SurfNum);
                 }
             }
@@ -8247,15 +8267,15 @@ void CalcHeatBalanceInsideSurf2(EnergyPlusData &state,
                 if (state.dataHeatBalSurfMgr->calcHeatBalInsideSurfErrCount < 16) {
                     if (!state.dataHeatBal->AnyCondFD) {
                         ShowWarningError(state,
-                                         format("Inside surface heat balance did not converge with Max Temp Difference [C] ={:.3R} vs Max "
-                                                "Allowed Temp Diff [C] ={:.3R}",
+                                         fmt::format("Inside surface heat balance did not converge with Max Temp Difference [C] ={:.3f} vs Max "
+                                                "Allowed Temp Diff [C] ={:.3f}",
                                                 MaxDelTemp,
                                                 state.dataHeatBal->MaxAllowedDelTemp));
                         ShowContinueErrorTimeStamp(state, "");
                     } else {
                         ShowWarningError(state,
-                                         format("Inside surface heat balance did not converge with Max Temp Difference [C] ={:.3R} vs Max "
-                                                "Allowed Temp Diff [C] ={:.6R}",
+                                         fmt::format("Inside surface heat balance did not converge with Max Temp Difference [C] ={:.3f} vs Max "
+                                                "Allowed Temp Diff [C] ={:.6f}",
                                                 MaxDelTemp,
                                                 state.dataHeatBal->MaxAllowedDelTempCondFD));
                         ShowContinueErrorTimeStamp(state, "");
@@ -8841,9 +8861,13 @@ void CalcHeatBalanceInsideSurf2CTFOnly(EnergyPlusData &state,
 
                             // Following call determines inside surface temperature of glazing, and of
                             // frame and/or divider, if present
+                            double surfaceTemp = state.dataHeatBalSurf->SurfTempInTmp(surfNum);
+                            double surfOutsideTemp = TH11;
                             Window::CalcWindowHeatBalance(
-                                state, surfNum, state.dataHeatBalSurf->SurfHConvExt(surfNum), state.dataHeatBalSurf->SurfTempInTmp(surfNum), TH11);
+                                state, surfNum, state.dataHeatBalSurf->SurfHConvExt(surfNum), surfaceTemp, surfOutsideTemp);
                             state.dataHeatBalSurf->SurfTempIn(surfNum) = state.dataHeatBalSurf->SurfTempInTmp(surfNum);
+                            state.dataHeatBalSurf->SurfTempInTmp(surfNum) = surfaceTemp;
+                            TH11 = surfOutsideTemp;
                         }
                     }
                 }
@@ -8932,8 +8956,8 @@ void CalcHeatBalanceInsideSurf2CTFOnly(EnergyPlusData &state,
                 ++state.dataHeatBalSurfMgr->calcHeatBalInsideSurfErrCount;
                 if (state.dataHeatBalSurfMgr->calcHeatBalInsideSurfErrCount < 16) {
                     ShowWarningError(state,
-                                     format("Inside surface heat balance did not converge with Max Temp Difference [C] ={:.3R} vs Max Allowed "
-                                            "Temp Diff [C] ={:.6R}",
+                                     fmt::format("Inside surface heat balance did not converge with Max Temp Difference [C] ={:.3f} vs Max Allowed "
+                                            "Temp Diff [C] ={:.6f}",
                                             MaxDelTemp,
                                             state.dataHeatBal->MaxAllowedDelTempCondFD));
                     ShowContinueErrorTimeStamp(state, "");
@@ -8974,18 +8998,18 @@ void TestSurfTempCalcHeatBalanceInsideSurf(EnergyPlusData &state, Real64 TH12, i
             if (TH12 < DataHeatBalSurface::MinSurfaceTempLimit) {
                 if (state.dataSurface->SurfLowTempErrCount(SurfNum) == 0) {
                     ShowSevereMessage(
-                        state, format(R"(Temperature (low) out of bounds [{:.2R}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
+                        state, fmt::format(R"(Temperature (low) out of bounds [{:.2f}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
                     ShowContinueErrorTimeStamp(state, "");
                     if (!zone.TempOutOfBoundsReported) {
-                        ShowContinueError(state, format("Zone=\"{}\", Diagnostic Details:", zone.Name));
+                        ShowContinueError(state, fmt::format("Zone=\"{}\", Diagnostic Details:", zone.Name));
                         if (zone.FloorArea > 0.0) {
-                            ShowContinueError(state, format("...Internal Heat Gain [{:.3R}] W/m2", zone.InternalHeatGains / zone.FloorArea));
+                            ShowContinueError(state, fmt::format("...Internal Heat Gain [{:.3f}] W/m2", zone.InternalHeatGains / zone.FloorArea));
                         } else {
-                            ShowContinueError(state, format("...Internal Heat Gain (no floor) [{:.3R}] W", zone.InternalHeatGains));
+                            ShowContinueError(state, fmt::format("...Internal Heat Gain (no floor) [{:.3f}] W", zone.InternalHeatGains));
                         }
                         if (state.afn->simulation_control.type == AirflowNetwork::ControlType::NoMultizoneOrDistribution) {
-                            ShowContinueError(state, format("...Infiltration/Ventilation [{:.3R}] m3/s", zone.NominalInfilVent));
-                            ShowContinueError(state, format("...Mixing/Cross Mixing [{:.3R}] m3/s", zone.NominalMixing));
+                            ShowContinueError(state, fmt::format("...Infiltration/Ventilation [{:.3f}] m3/s", zone.NominalInfilVent));
+                            ShowContinueError(state, fmt::format("...Mixing/Cross Mixing [{:.3f}] m3/s", zone.NominalMixing));
                         } else {
                             ShowContinueError(state, "...Airflow Network Simulation: Nominal Infiltration/Ventilation/Mixing not available.");
                         }
@@ -9017,18 +9041,18 @@ void TestSurfTempCalcHeatBalanceInsideSurf(EnergyPlusData &state, Real64 TH12, i
             } else {
                 if (state.dataSurface->SurfHighTempErrCount(SurfNum) == 0) {
                     ShowSevereMessage(
-                        state, format(R"(Temperature (high) out of bounds ({:.2R}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
+                        state, fmt::format(R"(Temperature (high) out of bounds ({:.2f}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
                     ShowContinueErrorTimeStamp(state, "");
                     if (!zone.TempOutOfBoundsReported) {
-                        ShowContinueError(state, format("Zone=\"{}\", Diagnostic Details:", zone.Name));
+                        ShowContinueError(state, fmt::format("Zone=\"{}\", Diagnostic Details:", zone.Name));
                         if (zone.FloorArea > 0.0) {
-                            ShowContinueError(state, format("...Internal Heat Gain [{:.3R}] W/m2", zone.InternalHeatGains / zone.FloorArea));
+                            ShowContinueError(state, fmt::format("...Internal Heat Gain [{:.3f}] W/m2", zone.InternalHeatGains / zone.FloorArea));
                         } else {
-                            ShowContinueError(state, format("...Internal Heat Gain (no floor) [{:.3R}] W", zone.InternalHeatGains));
+                            ShowContinueError(state, fmt::format("...Internal Heat Gain (no floor) [{:.3f}] W", zone.InternalHeatGains));
                         }
                         if (state.afn->simulation_control.type == AirflowNetwork::ControlType::NoMultizoneOrDistribution) {
-                            ShowContinueError(state, format("...Infiltration/Ventilation [{:.3R}] m3/s", zone.NominalInfilVent));
-                            ShowContinueError(state, format("...Mixing/Cross Mixing [{:.3R}] m3/s", zone.NominalMixing));
+                            ShowContinueError(state, fmt::format("...Infiltration/Ventilation [{:.3f}] m3/s", zone.NominalInfilVent));
+                            ShowContinueError(state, fmt::format("...Mixing/Cross Mixing [{:.3f}] m3/s", zone.NominalMixing));
                         } else {
                             ShowContinueError(state, "...Airflow Network Simulation: Nominal Infiltration/Ventilation/Mixing not available.");
                         }
@@ -9060,7 +9084,7 @@ void TestSurfTempCalcHeatBalanceInsideSurf(EnergyPlusData &state, Real64 TH12, i
             }
             if (zone.EnforcedReciprocity) {
                 if (WarmupSurfTemp > 3) {
-                    ShowSevereError(state, format("CalcHeatBalanceInsideSurf: Zone=\"{}\" has view factor enforced reciprocity", zone.Name));
+                    ShowSevereError(state, fmt::format("CalcHeatBalanceInsideSurf: Zone=\"{}\" has view factor enforced reciprocity", zone.Name));
                     ShowContinueError(state, " and is having temperature out of bounds errors. Please correct zone geometry and rerun.");
                     ShowFatalError(state, "CalcHeatBalanceInsideSurf: Program terminates due to preceding conditions.");
                 }
@@ -9073,18 +9097,18 @@ void TestSurfTempCalcHeatBalanceInsideSurf(EnergyPlusData &state, Real64 TH12, i
         if (!state.dataGlobal->WarmupFlag) {
             if (TH12 < DataHeatBalSurface::MinSurfaceTempLimitBeforeFatal) {
                 ShowSevereError(state,
-                                format(R"(Temperature (low) out of bounds [{:.2R}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
+                                fmt::format(R"(Temperature (low) out of bounds [{:.2f}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
                 ShowContinueErrorTimeStamp(state, "");
                 if (!zone.TempOutOfBoundsReported) {
-                    ShowContinueError(state, format("Zone=\"{}\", Diagnostic Details:", zone.Name));
+                    ShowContinueError(state, fmt::format("Zone=\"{}\", Diagnostic Details:", zone.Name));
                     if (zone.FloorArea > 0.0) {
-                        ShowContinueError(state, format("...Internal Heat Gain [{:.3R}] W/m2", zone.InternalHeatGains / zone.FloorArea));
+                        ShowContinueError(state, fmt::format("...Internal Heat Gain [{:.3f}] W/m2", zone.InternalHeatGains / zone.FloorArea));
                     } else {
-                        ShowContinueError(state, format("...Internal Heat Gain (no floor) [{:.3R}] W", zone.InternalHeatGains / zone.FloorArea));
+                        ShowContinueError(state, fmt::format("...Internal Heat Gain (no floor) [{:.3f}] W", zone.InternalHeatGains / zone.FloorArea));
                     }
                     if (state.afn->simulation_control.type == AirflowNetwork::ControlType::NoMultizoneOrDistribution) {
-                        ShowContinueError(state, format("...Infiltration/Ventilation [{:.3R}] m3/s", zone.NominalInfilVent));
-                        ShowContinueError(state, format("...Mixing/Cross Mixing [{:.3R}] m3/s", zone.NominalMixing));
+                        ShowContinueError(state, fmt::format("...Infiltration/Ventilation [{:.3f}] m3/s", zone.NominalInfilVent));
+                        ShowContinueError(state, fmt::format("...Mixing/Cross Mixing [{:.3f}] m3/s", zone.NominalMixing));
                     } else {
                         ShowContinueError(state, "...Airflow Network Simulation: Nominal Infiltration/Ventilation/Mixing not available.");
                     }
@@ -9098,18 +9122,18 @@ void TestSurfTempCalcHeatBalanceInsideSurf(EnergyPlusData &state, Real64 TH12, i
                 ShowFatalError(state, "Program terminates due to preceding condition.");
             } else {
                 ShowSevereError(state,
-                                format(R"(Temperature (high) out of bounds [{:.2R}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
+                                fmt::format(R"(Temperature (high) out of bounds [{:.2f}] for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
                 ShowContinueErrorTimeStamp(state, "");
                 if (!zone.TempOutOfBoundsReported) {
-                    ShowContinueError(state, format("Zone=\"{}\", Diagnostic Details:", zone.Name));
+                    ShowContinueError(state, fmt::format("Zone=\"{}\", Diagnostic Details:", zone.Name));
                     if (zone.FloorArea > 0.0) {
-                        ShowContinueError(state, format("...Internal Heat Gain [{:.3R}] W/m2", zone.InternalHeatGains / zone.FloorArea));
+                        ShowContinueError(state, fmt::format("...Internal Heat Gain [{:.3f}] W/m2", zone.InternalHeatGains / zone.FloorArea));
                     } else {
-                        ShowContinueError(state, format("...Internal Heat Gain (no floor) [{:.3R}] W", zone.InternalHeatGains / zone.FloorArea));
+                        ShowContinueError(state, fmt::format("...Internal Heat Gain (no floor) [{:.3f}] W", zone.InternalHeatGains / zone.FloorArea));
                     }
                     if (state.afn->simulation_control.type == AirflowNetwork::ControlType::NoMultizoneOrDistribution) {
-                        ShowContinueError(state, format("...Infiltration/Ventilation [{:.3R}] m3/s", zone.NominalInfilVent));
-                        ShowContinueError(state, format("...Mixing/Cross Mixing [{:.3R}] m3/s", zone.NominalMixing));
+                        ShowContinueError(state, fmt::format("...Infiltration/Ventilation [{:.3f}] m3/s", zone.NominalInfilVent));
+                        ShowContinueError(state, fmt::format("...Mixing/Cross Mixing [{:.3f}] m3/s", zone.NominalMixing));
                     } else {
                         ShowContinueError(state, "...Airflow Network Simulation: Nominal Infiltration/Ventilation/Mixing not available.");
                     }
@@ -9126,7 +9150,7 @@ void TestSurfTempCalcHeatBalanceInsideSurf(EnergyPlusData &state, Real64 TH12, i
             if (TH12 < -10000. || TH12 > 10000.) {
                 ShowSevereError(
                     state,
-                    format(R"(CalcHeatBalanceInsideSurf: The temperature of {:.2R} C for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
+                    fmt::format(R"(CalcHeatBalanceInsideSurf: The temperature of {:.2f} C for zone="{}", for surface="{}")", TH12, zone.Name, surfName));
                 ShowContinueError(state, "..is very far out of bounds during warmup. This may be an indication of a malformed zone.");
                 ShowContinueErrorTimeStamp(state, "");
                 ShowFatalError(state, "Program terminates due to preceding condition.");
@@ -9403,9 +9427,9 @@ void CalcOutsideSurfTemp(EnergyPlusData &state,
         if (MovInsulPresent) {
             // Note: if movable insulation is ever added back in correctly, the heat balance equations above must be fixed
             ShowSevereError(state, "Exterior movable insulation is not valid with embedded sources/sinks");
-            ShowContinueError(state, format("Construction {} contains an internal source or sink but also uses", construct.Name));
+            ShowContinueError(state, fmt::format("Construction {} contains an internal source or sink but also uses", construct.Name));
             ShowContinueError(state,
-                              format("exterior movable insulation {} for a surface with that construction.",
+                              fmt::format("exterior movable insulation {} for a surface with that construction.",
                                      s_mat->materials(state.dataSurface->extMovInsuls(SurfNum).matNum)->Name));
             ShowContinueError(state,
                               "This is not currently allowed because the heat balance equations do not currently accommodate this combination.");
@@ -9609,7 +9633,7 @@ void InitSurfacePropertyViewFactors(EnergyPlusData &state)
 
             // Check if the sum of all defined view factors > 1.0
             if (SrdSurfsViewFactor > 1.0) {
-                ShowSevereError(state, format("Illegal surrounding surfaces view factors for {}.", Surface.Name));
+                ShowSevereError(state, fmt::format("Illegal surrounding surfaces view factors for {}.", Surface.Name));
                 ShowContinueError(state, " The sum of sky, ground, and all surrounding surfaces view factors should be less than or equal to 1.0.");
             }
             if (IsSkyViewFactorSet && IsGroundViewFactorSet) {

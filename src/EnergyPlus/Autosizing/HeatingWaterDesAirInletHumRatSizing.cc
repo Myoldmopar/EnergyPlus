@@ -95,7 +95,7 @@ Real64 HeatingWaterDesAirInletHumRatSizer::size(EnergyPlusData &state, Real64 _o
             } else if (this->finalSysSizing(this->curSysNum).HeatOAOption == this->minOA) {
                 if (this->dataFlowUsedForSizing > 0.0) {
                     OutAirFrac = this->finalSysSizing(this->curSysNum).DesOutAirVolFlow / this->dataFlowUsedForSizing;
-                    OutAirFrac = min(1.0, max(0.0, OutAirFrac));
+                    OutAirFrac = min(1.0f, max(0.0f, OutAirFrac));
                 }
             }
             // coil inlet humidity ratio

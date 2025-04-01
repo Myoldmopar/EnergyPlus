@@ -599,7 +599,7 @@ namespace Constant {
     Real64 constexpr rSecsInDay = rSecsInHour * rHoursInDay;       // Number of seconds in Day
 
     Real64 constexpr BigNumber = std::numeric_limits<Real64>::max();      // Max Number real used for initializations
-    Real64 constexpr rTinyValue = std::numeric_limits<Real64>::epsilon(); // Tiny value to replace use of TINY(x)
+    Real64 constexpr rTinyValue = std::numeric_limits<double>::epsilon(); // Tiny value to replace use of TINY(x)
     std::string::size_type constexpr MaxNameLength =
         100;                          // Maximum Name Length in Characters -- should be the same as MaxAlphaArgLength in InputProcessor module
     Real64 constexpr Kelvin = 273.15; // Conversion factor for C to K and K to C

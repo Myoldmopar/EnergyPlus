@@ -110,7 +110,7 @@ FluidCoolerspecs *FluidCoolerspecs::factory(EnergyPlusData &state, DataPlant::Pl
     if (thisObj != state.dataFluidCoolers->SimpleFluidCooler.end()) return thisObj;
 
     // If we didn't find it, fatal
-    ShowFatalError(state, format("FluidCooler::factory: Error getting inputs for cooler named: {}", objectName));
+    ShowFatalError(state, fmt::format("FluidCooler::factory: Error getting inputs for cooler named: {}", objectName));
     // Shut up the compiler
     return nullptr;
 }
@@ -277,7 +277,7 @@ void GetFluidCoolerInput(EnergyPlusData &state)
                                                     DataLoopNode::ObjectIsNotParent);
             if (!OutAirNodeManager::CheckOutAirNodeNumber(state, state.dataFluidCoolers->SimpleFluidCooler(FluidCoolerNum).OutdoorAirInletNodeNum)) {
                 ShowSevereError(state,
-                                format("{}= \"{}\" {}= \"{}\" not valid.",
+                                fmt::format("{}= \"{}\" {}= \"{}\" not valid.",
                                        cCurrentModuleObject,
                                        state.dataFluidCoolers->SimpleFluidCooler(FluidCoolerNum).Name,
                                        state.dataIPShortCut->cAlphaFieldNames(5),
@@ -399,7 +399,7 @@ void GetFluidCoolerInput(EnergyPlusData &state)
                                                     DataLoopNode::ObjectIsNotParent);
             if (!OutAirNodeManager::CheckOutAirNodeNumber(state, state.dataFluidCoolers->SimpleFluidCooler(FluidCoolerNum).OutdoorAirInletNodeNum)) {
                 ShowSevereError(state,
-                                format("{}= \"{}\" {}= \"{}\" not valid.",
+                                fmt::format("{}= \"{}\" {}= \"{}\" not valid.",
                                        cCurrentModuleObject,
                                        state.dataFluidCoolers->SimpleFluidCooler(FluidCoolerNum).Name,
                                        state.dataIPShortCut->cAlphaFieldNames(5),
@@ -495,7 +495,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
     //   wetbulb temperature must be specified for the both the performance input methods
     if (this->DesignEnteringWaterTemp <= 0.0) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(3)));
@@ -503,7 +503,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
     }
     if (this->DesignEnteringAirTemp <= 0.0) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(4)));
@@ -511,7 +511,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
     }
     if (this->DesignEnteringAirWetBulbTemp <= 0.0) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(5)));
@@ -520,18 +520,18 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
     if (this->DesignEnteringWaterTemp <= this->DesignEnteringAirTemp) {
         ShowSevereError(
             state,
-            format("{}= \"{}\",{} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(3), cNumericFieldNames(4)));
+            fmt::format("{}= \"{}\",{} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(3), cNumericFieldNames(4)));
         ErrorsFound = true;
     }
     if (this->DesignEnteringAirTemp <= this->DesignEnteringAirWetBulbTemp) {
         ShowSevereError(
             state,
-            format("{}= \"{}\",{} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(4), cNumericFieldNames(5)));
+            fmt::format("{}= \"{}\",{} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(4), cNumericFieldNames(5)));
         ErrorsFound = true;
     }
     if (this->HighSpeedAirFlowRate <= 0.0 && this->HighSpeedAirFlowRate != DataSizing::AutoSize) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(7),
@@ -541,7 +541,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
     }
     if (this->DesignWaterFlowRate <= 0.0 && !this->DesignWaterFlowRateWasAutoSized) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(6),
@@ -551,7 +551,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
     }
     if (this->HighSpeedFanPower <= 0.0 && this->HighSpeedFanPower != DataSizing::AutoSize) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(8),
@@ -565,7 +565,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
         this->PerformanceInputMethod_Num = PerfInputMethod::U_FACTOR;
         if (this->HighSpeedFluidCoolerUA <= 0.0 && this->HighSpeedFluidCoolerUA != DataSizing::AutoSize) {
             ShowSevereError(state,
-                            format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                            fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                    cCurrentModuleObject,
                                    AlphArray(1),
                                    cNumericFieldNames(1),
@@ -577,7 +577,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
         this->PerformanceInputMethod_Num = PerfInputMethod::NOMINAL_CAPACITY;
         if (this->FluidCoolerNominalCapacity <= 0.0) {
             ShowSevereError(state,
-                            format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                            fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                    cCurrentModuleObject,
                                    AlphArray(1),
                                    cNumericFieldNames(2),
@@ -588,12 +588,12 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
         if (this->HighSpeedFluidCoolerUA != 0.0) {
             if (this->HighSpeedFluidCoolerUA > 0.0) {
                 ShowWarningError(state,
-                                 format("{}= \"{}\". Nominal fluid cooler capacity and design fluid cooler UA have been specified.",
+                                 fmt::format("{}= \"{}\". Nominal fluid cooler capacity and design fluid cooler UA have been specified.",
                                         cCurrentModuleObject,
                                         this->Name));
             } else {
                 ShowWarningError(state,
-                                 format("{}= \"{}\". Nominal fluid cooler capacity has been specified and design fluid cooler UA is being autosized.",
+                                 fmt::format("{}= \"{}\". Nominal fluid cooler capacity has been specified and design fluid cooler UA is being autosized.",
                                         cCurrentModuleObject,
                                         this->Name));
             }
@@ -603,7 +603,7 @@ bool FluidCoolerspecs::validateSingleSpeedInputs(EnergyPlusData &state,
             this->HighSpeedFluidCoolerUA = 0.0;
         }
     } else { // Fluid cooler performance input method is not specified as a valid "choice"
-        ShowSevereError(state, format("{}= \"{}\", invalid {} = \"{}\".", cCurrentModuleObject, AlphArray(1), cAlphaFieldNames(4), AlphArray(4)));
+        ShowSevereError(state, fmt::format("{}= \"{}\", invalid {} = \"{}\".", cCurrentModuleObject, AlphArray(1), cAlphaFieldNames(4), AlphArray(4)));
         ShowContinueError(state, R"(... must be "UFactorTimesAreaAndDesignWaterFlowRate" or "NominalCapacity".)");
         ErrorsFound = true;
     }
@@ -635,7 +635,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     //   wetbulb temperature must be specified for the both the performance input methods
     if (this->DesignEnteringWaterTemp <= 0.0) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(7)));
@@ -643,7 +643,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     }
     if (this->DesignEnteringAirTemp <= 0.0) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(8)));
@@ -651,7 +651,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     }
     if (this->DesignEnteringAirWetBulbTemp <= 0.0) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 ",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(9)));
@@ -660,20 +660,20 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     if (this->DesignEnteringWaterTemp <= this->DesignEnteringAirTemp) {
         ShowSevereError(
             state,
-            format("{} = \"{}\", {} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(7), cNumericFieldNames(8)));
+            fmt::format("{} = \"{}\", {} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(7), cNumericFieldNames(8)));
         ErrorsFound = true;
     }
     if (this->DesignEnteringAirTemp <= this->DesignEnteringAirWetBulbTemp) {
         ShowSevereError(
             state,
-            format("{} = \"{}\", {} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(8), cNumericFieldNames(9)));
+            fmt::format("{} = \"{}\", {} must be greater than {}.", cCurrentModuleObject, AlphArray(1), cNumericFieldNames(8), cNumericFieldNames(9)));
         ErrorsFound = true;
     }
 
     //   Check various inputs for both the performance input methods
     if (this->DesignWaterFlowRate <= 0.0 && !this->DesignWaterFlowRateWasAutoSized) {
         ShowSevereError(state,
-                        format("{}= \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
+                        fmt::format("{}= \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(10),
@@ -683,7 +683,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     }
     if (this->HighSpeedAirFlowRate <= 0.0 && !this->HighSpeedAirFlowRateWasAutoSized) {
         ShowSevereError(state,
-                        format("{}= \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
+                        fmt::format("{}= \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(11),
@@ -693,7 +693,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     }
     if (this->LowSpeedAirFlowRate <= 0.0 && !this->LowSpeedAirFlowRateWasAutoSized) {
         ShowSevereError(state,
-                        format("{}= \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
+                        fmt::format("{}= \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(13),
@@ -705,14 +705,14 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     //   Can't tell yet if autosized, check later in InitFluidCooler.
     if (this->HighSpeedAirFlowRate <= this->LowSpeedAirFlowRate && !this->HighSpeedAirFlowRateWasAutoSized) {
         ShowSevereError(state,
-                        format("{}= \"{}\". Fluid cooler air flow rate at low fan speed must be less than the air flow rate at high fan speed.",
+                        fmt::format("{}= \"{}\". Fluid cooler air flow rate at low fan speed must be less than the air flow rate at high fan speed.",
                                cCurrentModuleObject,
                                this->Name));
         ErrorsFound = true;
     }
     if (this->HighSpeedFanPower <= 0.0 && !this->HighSpeedFanPowerWasAutoSized) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(12),
@@ -722,7 +722,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     }
     if (this->LowSpeedFanPower <= 0.0 && !this->LowSpeedFanPowerWasAutoSized) {
         ShowSevereError(state,
-                        format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                        fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                cCurrentModuleObject,
                                AlphArray(1),
                                cNumericFieldNames(15),
@@ -732,7 +732,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
     }
     if (this->HighSpeedFanPower <= this->LowSpeedFanPower && !this->HighSpeedFanPowerWasAutoSized) {
         ShowSevereError(
-            state, format("{}= \"{}\". Fluid cooler low speed fan power must be less than high speed fan power.", cCurrentModuleObject, this->Name));
+            state, fmt::format("{}= \"{}\". Fluid cooler low speed fan power must be less than high speed fan power.", cCurrentModuleObject, this->Name));
         ErrorsFound = true;
     }
 
@@ -740,7 +740,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         this->PerformanceInputMethod_Num = PerfInputMethod::U_FACTOR;
         if (this->HighSpeedFluidCoolerUA <= 0.0 && !this->HighSpeedFluidCoolerUAWasAutoSized) {
             ShowSevereError(state,
-                            format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                            fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                    cCurrentModuleObject,
                                    AlphArray(1),
                                    cNumericFieldNames(1),
@@ -750,7 +750,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         }
         if (this->LowSpeedFluidCoolerUA <= 0.0 && !this->LowSpeedFluidCoolerUAWasAutoSized) {
             ShowSevereError(state,
-                            format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
+                            fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {} = \"{}\".",
                                    cCurrentModuleObject,
                                    AlphArray(1),
                                    cNumericFieldNames(2),
@@ -760,7 +760,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         }
         if (this->HighSpeedFluidCoolerUA <= this->LowSpeedFluidCoolerUA && !this->HighSpeedFluidCoolerUAWasAutoSized) {
             ShowSevereError(state,
-                            format("{}= \"{}\". Fluid cooler UA at low fan speed must be less than the fluid cooler UA at high fan speed.",
+                            fmt::format("{}= \"{}\". Fluid cooler UA at low fan speed must be less than the fluid cooler UA at high fan speed.",
                                    cCurrentModuleObject,
                                    this->Name));
             ErrorsFound = true;
@@ -769,7 +769,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         this->PerformanceInputMethod_Num = PerfInputMethod::NOMINAL_CAPACITY;
         if (this->FluidCoolerNominalCapacity <= 0.0) {
             ShowSevereError(state,
-                            format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
+                            fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
                                    cCurrentModuleObject,
                                    AlphArray(1),
                                    cNumericFieldNames(4),
@@ -779,7 +779,7 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         }
         if (this->FluidCoolerLowSpeedNomCap <= 0.0 && !this->FluidCoolerLowSpeedNomCapWasAutoSized) {
             ShowSevereError(state,
-                            format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
+                            fmt::format("{} = \"{}\", invalid data for \"{}\", entered value <= 0.0, but must be > 0 for {}= \"{}\".",
                                    cCurrentModuleObject,
                                    AlphArray(1),
                                    cNumericFieldNames(5),
@@ -790,13 +790,13 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         if (this->HighSpeedFluidCoolerUA != 0.0) {
             if (this->HighSpeedFluidCoolerUA > 0.0) {
                 ShowSevereError(state,
-                                format("{}= \"{}\". Nominal capacity input method and fluid cooler UA at high fan speed have been specified.",
+                                fmt::format("{}= \"{}\". Nominal capacity input method and fluid cooler UA at high fan speed have been specified.",
                                        cCurrentModuleObject,
                                        this->Name));
             } else {
                 ShowSevereError(
                     state,
-                    format("{}= \"{}\". Nominal capacity input method has been specified and fluid cooler UA at high fan speed is being autosized.",
+                    fmt::format("{}= \"{}\". Nominal capacity input method has been specified and fluid cooler UA at high fan speed is being autosized.",
                            cCurrentModuleObject,
                            this->Name));
             }
@@ -807,13 +807,13 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         if (this->LowSpeedFluidCoolerUA != 0.0) {
             if (this->LowSpeedFluidCoolerUA > 0.0) {
                 ShowSevereError(state,
-                                format("{}= \"{}\". Nominal capacity input method and fluid cooler UA at low fan speed have been specified.",
+                                fmt::format("{}= \"{}\". Nominal capacity input method and fluid cooler UA at low fan speed have been specified.",
                                        cCurrentModuleObject,
                                        this->Name));
             } else {
                 ShowSevereError(
                     state,
-                    format("{}= \"{}\". Nominal capacity input method has been specified and fluid cooler UA at low fan speed is being autosized.",
+                    fmt::format("{}= \"{}\". Nominal capacity input method has been specified and fluid cooler UA at low fan speed is being autosized.",
                            cCurrentModuleObject,
                            this->Name));
             }
@@ -823,13 +823,13 @@ bool FluidCoolerspecs::validateTwoSpeedInputs(EnergyPlusData &state,
         }
         if (this->FluidCoolerLowSpeedNomCap >= this->FluidCoolerNominalCapacity) {
             ShowSevereError(state,
-                            format("{} = \"{}\". Low-speed nominal capacity must be less than the high-speed nominal capacity.",
+                            fmt::format("{} = \"{}\". Low-speed nominal capacity must be less than the high-speed nominal capacity.",
                                    cCurrentModuleObject,
                                    this->Name));
             ErrorsFound = true;
         }
     } else { // Fluid cooler performance input method is not specified as a valid "choice"
-        ShowSevereError(state, format("{}= \"{}\", invalid {}= \"{}\".", cCurrentModuleObject, AlphArray(1), cAlphaFieldNames(4), AlphArray(4)));
+        ShowSevereError(state, fmt::format("{}= \"{}\", invalid {}= \"{}\".", cCurrentModuleObject, AlphArray(1), cAlphaFieldNames(4), AlphArray(4)));
         ShowContinueError(state, R"(... must be "UFactorTimesAreaAndDesignWaterFlowRate" or "NominalCapacity".)");
         ErrorsFound = true;
     }
@@ -954,10 +954,10 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
     // temperature
     auto ensureSizingPlantExitTempIsNotLessThanDesignEnteringAirTemp = [this, &state, PltSizCondNum]() {
         if (state.dataSize->PlantSizData(PltSizCondNum).ExitTemp <= this->DesignEnteringAirTemp && state.dataPlnt->PlantFirstSizesOkayToFinalize) {
-            ShowSevereError(state, format("Error when autosizing the UA value for fluid cooler = {}.", this->Name));
+            ShowSevereError(state, fmt::format("Error when autosizing the UA value for fluid cooler = {}.", this->Name));
             ShowContinueError(state,
-                              format("Design Loop Exit Temperature ({:.2R} C) must be greater than design entering air dry-bulb temperature "
-                                     "({:.2R} C) when autosizing the fluid cooler UA.",
+                              fmt::format("Design Loop Exit Temperature ({:.2f} C) must be greater than design entering air dry-bulb temperature "
+                                     "({:.2f} C) when autosizing the fluid cooler UA.",
                                      state.dataSize->PlantSizData(PltSizCondNum).ExitTemp,
                                      this->DesignEnteringAirTemp));
             ShowContinueError(state,
@@ -1001,7 +1001,7 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
             this->DesignLeavingWaterTemp = state.dataSize->PlantSizData(PltSizCondNum).ExitTemp;
         } else {
             if (state.dataPlnt->PlantFirstSizesOkayToFinalize) {
-                ShowSevereError(state, format("Autosizing error for fluid cooler object = {}", this->Name));
+                ShowSevereError(state, fmt::format("Autosizing error for fluid cooler object = {}", this->Name));
                 ShowFatalError(state, "Autosizing of fluid cooler condenser flow rate requires a loop Sizing:Plant object.");
             }
         }
@@ -1049,7 +1049,7 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
             } else {
                 if (state.dataPlnt->PlantFirstSizesOkayToFinalize) {
                     ShowSevereError(state, "Autosizing of fluid cooler fan power requires a loop Sizing:Plant object.");
-                    ShowFatalError(state, format(" Occurs in fluid cooler object = {}", this->Name));
+                    ShowFatalError(state, fmt::format(" Occurs in fluid cooler object = {}", this->Name));
                 }
             }
         }
@@ -1117,7 +1117,7 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
             } else {
                 if (state.dataPlnt->PlantFirstSizesOkayToFinalize) {
                     ShowSevereError(state, "Autosizing of fluid cooler air flow rate requires a loop Sizing:Plant object");
-                    ShowFatalError(state, format(" Occurs in fluid cooler object = {}", this->Name));
+                    ShowFatalError(state, fmt::format(" Occurs in fluid cooler object = {}", this->Name));
                 }
             }
         }
@@ -1186,12 +1186,12 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
                 General::SolveRoot(state, Acc, MaxIte, SolFla, UA, f, UA0, UA1);
                 if (SolFla == -1) {
                     ShowWarningError(state, "Iteration limit exceeded in calculating fluid cooler UA.");
-                    ShowContinueError(state, format("Autosizing of fluid cooler UA failed for fluid cooler = {}", this->Name));
-                    ShowContinueError(state, format("The final UA value ={:.2R} W/K, and the simulation continues...", UA));
+                    ShowContinueError(state, fmt::format("Autosizing of fluid cooler UA failed for fluid cooler = {}", this->Name));
+                    ShowContinueError(state, fmt::format("The final UA value ={:.2f} W/K, and the simulation continues...", UA));
                 } else if (SolFla == -2) {
                     CalcFluidCoolerOutlet(state, this->indexInArray, rho * tmpDesignWaterFlowRate, tmpHighSpeedAirFlowRate, UA0, OutWaterTempAtUA0);
                     CalcFluidCoolerOutlet(state, this->indexInArray, rho * tmpDesignWaterFlowRate, tmpHighSpeedAirFlowRate, UA1, OutWaterTempAtUA1);
-                    ShowSevereError(state, format("{}: The combination of design input values did not allow the calculation of a ", CalledFrom));
+                    ShowSevereError(state, fmt::format("{}: The combination of design input values did not allow the calculation of a ", CalledFrom));
                     ShowContinueError(state, "reasonable UA value. Review and revise design input values as appropriate. Specifying hard");
                     ShowContinueError(state, R"(sizes for some "autosizable" fields while autosizing other "autosizable" fields may be )");
                     ShowContinueError(state, "contributing to this problem.");
@@ -1204,21 +1204,21 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
                     ShowContinueError(state, "on the autosized values shown below or to adjust design fluid cooler air inlet dry-bulb temperature.");
                     ShowContinueError(state, "Plant:Sizing object inputs also influence these results (e.g. DeltaT and ExitTemp).");
                     ShowContinueError(state, "Inputs to the fluid cooler object:");
-                    ShowContinueError(state, format("Design Fluid Cooler Load [W]                       = {:.2R}", DesFluidCoolerLoad));
-                    ShowContinueError(state, format("Design Fluid Cooler Water Volume Flow Rate [m3/s]  = {:.6R}", this->DesignWaterFlowRate));
-                    ShowContinueError(state, format("Design Fluid Cooler Air Volume Flow Rate [m3/s]    = {:.2R}", tmpHighSpeedAirFlowRate));
-                    ShowContinueError(state, format("Design Fluid Cooler Air Inlet Dry-bulb Temp [C]    = {:.2R}", this->AirTemp));
+                    ShowContinueError(state, fmt::format("Design Fluid Cooler Load [W]                       = {:.2f}", DesFluidCoolerLoad));
+                    ShowContinueError(state, fmt::format("Design Fluid Cooler Water Volume Flow Rate [m3/s]  = {:.6f}", this->DesignWaterFlowRate));
+                    ShowContinueError(state, fmt::format("Design Fluid Cooler Air Volume Flow Rate [m3/s]    = {:.2f}", tmpHighSpeedAirFlowRate));
+                    ShowContinueError(state, fmt::format("Design Fluid Cooler Air Inlet Dry-bulb Temp [C]    = {:.2f}", this->AirTemp));
                     ShowContinueError(state, "Inputs to the plant sizing object:");
                     ShowContinueError(
                         state,
-                        format("Design Exit Water Temp [C]                         = {:.2R}", state.dataSize->PlantSizData(PltSizCondNum).ExitTemp));
+                        fmt::format("Design Exit Water Temp [C]                         = {:.2f}", state.dataSize->PlantSizData(PltSizCondNum).ExitTemp));
                     ShowContinueError(
                         state,
-                        format("Loop Design Temperature Difference [C]             = {:.2R}", state.dataSize->PlantSizData(PltSizCondNum).DeltaT));
-                    ShowContinueError(state, format("Design Fluid Cooler Water Inlet Temp [C]           = {:.2R}", this->WaterTemp));
-                    ShowContinueError(state, format("Calculated water outlet temp at low UA [C] (UA = {:.2R} W/K) = {:.2R}", UA0, OutWaterTempAtUA0));
-                    ShowContinueError(state, format("Calculated water outlet temp at high UA [C](UA = {:.2R} W/K) = {:.2R}", UA1, OutWaterTempAtUA1));
-                    ShowFatalError(state, format("Autosizing of Fluid Cooler UA failed for fluid cooler = {}", this->Name));
+                        fmt::format("Loop Design Temperature Difference [C]             = {:.2f}", state.dataSize->PlantSizData(PltSizCondNum).DeltaT));
+                    ShowContinueError(state, fmt::format("Design Fluid Cooler Water Inlet Temp [C]           = {:.2f}", this->WaterTemp));
+                    ShowContinueError(state, fmt::format("Calculated water outlet temp at low UA [C] (UA = {:.2f} W/K) = {:.2f}", UA0, OutWaterTempAtUA0));
+                    ShowContinueError(state, fmt::format("Calculated water outlet temp at high UA [C](UA = {:.2f} W/K) = {:.2f}", UA1, OutWaterTempAtUA1));
+                    ShowFatalError(state, fmt::format("Autosizing of Fluid Cooler UA failed for fluid cooler = {}", this->Name));
                 }
                 tmpHighSpeedEvapFluidCoolerUA = UA;
                 if (state.dataPlnt->PlantFirstSizesOkayToFinalize) this->HighSpeedFluidCoolerUA = tmpHighSpeedEvapFluidCoolerUA;
@@ -1264,7 +1264,7 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
             }
         } else {
             if (state.dataPlnt->PlantFirstSizesOkayToFinalize) {
-                ShowSevereError(state, format("Autosizing error for fluid cooler object = {}", this->Name));
+                ShowSevereError(state, fmt::format("Autosizing error for fluid cooler object = {}", this->Name));
                 ShowFatalError(state, "Autosizing of fluid cooler UA requires a loop Sizing:Plant object.");
             }
         }
@@ -1293,13 +1293,13 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
             if (SolFla == -1) {
                 ShowWarningError(state, "Iteration limit exceeded in calculating fluid cooler UA.");
                 if (PltSizCondNum > 0) {
-                    ShowContinueError(state, format("Autosizing of fluid cooler UA failed for fluid cooler = {}", this->Name));
+                    ShowContinueError(state, fmt::format("Autosizing of fluid cooler UA failed for fluid cooler = {}", this->Name));
                 }
-                ShowContinueError(state, format("The final UA value ={:.2R} W/K, and the simulation continues...", UA));
+                ShowContinueError(state, fmt::format("The final UA value ={:.2f} W/K, and the simulation continues...", UA));
             } else if (SolFla == -2) {
                 CalcFluidCoolerOutlet(state, this->indexInArray, rho * tmpDesignWaterFlowRate, tmpHighSpeedAirFlowRate, UA0, OutWaterTempAtUA0);
                 CalcFluidCoolerOutlet(state, this->indexInArray, rho * tmpDesignWaterFlowRate, tmpHighSpeedAirFlowRate, UA1, OutWaterTempAtUA1);
-                ShowSevereError(state, format("{}: The combination of design input values did not allow the calculation of a ", CalledFrom));
+                ShowSevereError(state, fmt::format("{}: The combination of design input values did not allow the calculation of a ", CalledFrom));
                 ShowContinueError(state, "reasonable UA value. Review and revise design input values as appropriate. Specifying hard");
                 ShowContinueError(state, R"(sizes for some "autosizable" fields while autosizing other "autosizable" fields may be )");
                 ShowContinueError(state, "contributing to this problem.");
@@ -1312,24 +1312,24 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
                 ShowContinueError(state, "on the autosized values shown below or to adjust design fluid cooler air inlet dry-bulb temperature.");
                 ShowContinueError(state, "Plant:Sizing object inputs also influence these results (e.g. DeltaT and ExitTemp).");
                 ShowContinueError(state, "Inputs to the fluid cooler object:");
-                ShowContinueError(state, format("Design Fluid Cooler Load [W]                       = {:.2R}", DesFluidCoolerLoad));
-                ShowContinueError(state, format("Design Fluid Cooler Water Volume Flow Rate [m3/s]  = {:.6R}", this->DesignWaterFlowRate));
-                ShowContinueError(state, format("Design Fluid Cooler Air Volume Flow Rate [m3/s]    = {:.2R}", tmpHighSpeedAirFlowRate));
-                ShowContinueError(state, format("Design Fluid Cooler Air Inlet Dry-bulb Temp [C]    = {:.2R}", this->AirTemp));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Load [W]                       = {:.2f}", DesFluidCoolerLoad));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Water Volume Flow Rate [m3/s]  = {:.6f}", this->DesignWaterFlowRate));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Air Volume Flow Rate [m3/s]    = {:.2f}", tmpHighSpeedAirFlowRate));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Air Inlet Dry-bulb Temp [C]    = {:.2f}", this->AirTemp));
                 if (PltSizCondNum > 0) {
                     ShowContinueError(state, "Inputs to the plant sizing object:");
                     ShowContinueError(
                         state,
-                        format("Design Exit Water Temp [C]                         = {:.2R}", state.dataSize->PlantSizData(PltSizCondNum).ExitTemp));
+                        fmt::format("Design Exit Water Temp [C]                         = {:.2f}", state.dataSize->PlantSizData(PltSizCondNum).ExitTemp));
                     ShowContinueError(
                         state,
-                        format("Loop Design Temperature Difference [C]             = {:.2R}", state.dataSize->PlantSizData(PltSizCondNum).DeltaT));
+                        fmt::format("Loop Design Temperature Difference [C]             = {:.2f}", state.dataSize->PlantSizData(PltSizCondNum).DeltaT));
                 }
-                ShowContinueError(state, format("Design Fluid Cooler Water Inlet Temp [C]           = {:.2R}", this->WaterTemp));
-                ShowContinueError(state, format("Calculated water outlet temp at low UA [C] (UA = {:.2R} W/K) = {:.2R}", UA0, OutWaterTempAtUA0));
-                ShowContinueError(state, format("Calculated water outlet temp at high UA [C] (UA = {:.2R} W/K) = {:.2R}", UA1, OutWaterTempAtUA1));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Water Inlet Temp [C]           = {:.2f}", this->WaterTemp));
+                ShowContinueError(state, fmt::format("Calculated water outlet temp at low UA [C] (UA = {:.2f} W/K) = {:.2f}", UA0, OutWaterTempAtUA0));
+                ShowContinueError(state, fmt::format("Calculated water outlet temp at high UA [C] (UA = {:.2f} W/K) = {:.2f}", UA1, OutWaterTempAtUA1));
                 if (PltSizCondNum > 0) {
-                    ShowFatalError(state, format("Autosizing of Fluid Cooler UA failed for fluid cooler = {}", this->Name));
+                    ShowFatalError(state, fmt::format("Autosizing of Fluid Cooler UA failed for fluid cooler = {}", this->Name));
                 }
             }
             if (state.dataPlnt->PlantFirstSizesOkayToFinalize) this->HighSpeedFluidCoolerUA = UA;
@@ -1468,12 +1468,12 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
             General::SolveRoot(state, Acc, MaxIte, SolFla, UA, f, UA0, UA1);
             if (SolFla == -1) {
                 ShowWarningError(state, "Iteration limit exceeded in calculating fluid cooler UA.");
-                ShowContinueError(state, format("Autosizing of fluid cooler UA failed for fluid cooler = {}", this->Name));
-                ShowContinueError(state, format("The final UA value at low fan speed ={:.2R} W/C, and the simulation continues...", UA));
+                ShowContinueError(state, fmt::format("Autosizing of fluid cooler UA failed for fluid cooler = {}", this->Name));
+                ShowContinueError(state, fmt::format("The final UA value at low fan speed ={:.2f} W/C, and the simulation continues...", UA));
             } else if (SolFla == -2) {
                 CalcFluidCoolerOutlet(state, this->indexInArray, rho * tmpDesignWaterFlowRate, this->LowSpeedAirFlowRate, UA0, OutWaterTempAtUA0);
                 CalcFluidCoolerOutlet(state, this->indexInArray, rho * tmpDesignWaterFlowRate, this->LowSpeedAirFlowRate, UA1, OutWaterTempAtUA1);
-                ShowSevereError(state, format("{}: The combination of design input values did not allow the calculation of a ", CalledFrom));
+                ShowSevereError(state, fmt::format("{}: The combination of design input values did not allow the calculation of a ", CalledFrom));
                 ShowContinueError(state, "reasonable low-speed UA value. Review and revise design input values as appropriate. ");
                 ShowContinueError(state, R"(Specifying hard sizes for some "autosizable" fields while autosizing other "autosizable" )");
                 ShowContinueError(state, "fields may be contributing to this problem.");
@@ -1486,21 +1486,21 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
                 ShowContinueError(state, "on the autosized values shown below or to adjust design fluid cooler air inlet dry-bulb temperature.");
                 ShowContinueError(state, "Plant:Sizing object inputs also influence these results (e.g. DeltaT and ExitTemp).");
                 ShowContinueError(state, "Inputs to the fluid cooler object:");
-                ShowContinueError(state, format("Design Fluid Cooler Load [W]                         = {:.2R}", DesFluidCoolerLoad));
-                ShowContinueError(state, format("Design Fluid Cooler Water Volume Flow Rate [m3/s]    = {:.6R}", this->DesignWaterFlowRate));
-                ShowContinueError(state, format("Design Fluid Cooler Air Volume Flow Rate [m3/s]      = {:.2R}", this->LowSpeedAirFlowRate));
-                ShowContinueError(state, format("Design Fluid Cooler Air Inlet Dry-bulb Temp [C]      = {:.2R}", this->AirTemp));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Load [W]                         = {:.2f}", DesFluidCoolerLoad));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Water Volume Flow Rate [m3/s]    = {:.6f}", this->DesignWaterFlowRate));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Air Volume Flow Rate [m3/s]      = {:.2f}", this->LowSpeedAirFlowRate));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Air Inlet Dry-bulb Temp [C]      = {:.2f}", this->AirTemp));
                 ShowContinueError(state, "Inputs to the plant sizing object:");
                 ShowContinueError(
                     state,
-                    format("Design Exit Water Temp [C]                           = {:.2R}", state.dataSize->PlantSizData(PltSizCondNum).ExitTemp));
+                    fmt::format("Design Exit Water Temp [C]                           = {:.2f}", state.dataSize->PlantSizData(PltSizCondNum).ExitTemp));
                 ShowContinueError(
                     state,
-                    format("Loop Design Temperature Difference [C]               = {:.2R}", state.dataSize->PlantSizData(PltSizCondNum).DeltaT));
-                ShowContinueError(state, format("Design Fluid Cooler Water Inlet Temp [C]             = {:.2R}", this->WaterTemp));
-                ShowContinueError(state, format("Calculated water outlet temp at low UA [C](UA = {:.2R} W/C) = {:.2R}", UA0, OutWaterTempAtUA0));
-                ShowContinueError(state, format("Calculated water outlet temp at high UA [C](UA = {:.2R} W/C) = {:.2R}", UA1, OutWaterTempAtUA1));
-                ShowFatalError(state, format("Autosizing of Fluid Cooler UA failed for fluid cooler = {}", this->Name));
+                    fmt::format("Loop Design Temperature Difference [C]               = {:.2f}", state.dataSize->PlantSizData(PltSizCondNum).DeltaT));
+                ShowContinueError(state, fmt::format("Design Fluid Cooler Water Inlet Temp [C]             = {:.2f}", this->WaterTemp));
+                ShowContinueError(state, fmt::format("Calculated water outlet temp at low UA [C](UA = {:.2f} W/C) = {:.2f}", UA0, OutWaterTempAtUA0));
+                ShowContinueError(state, fmt::format("Calculated water outlet temp at high UA [C](UA = {:.2f} W/C) = {:.2f}", UA1, OutWaterTempAtUA1));
+                ShowFatalError(state, fmt::format("Autosizing of Fluid Cooler UA failed for fluid cooler = {}", this->Name));
             }
             if (state.dataPlnt->PlantFirstSizesOkayToFinalize) this->LowSpeedFluidCoolerUA = UA;
         } else {
@@ -1581,13 +1581,13 @@ void FluidCoolerspecs::size(EnergyPlusData &state)
         if (this->DesignWaterFlowRate > 0.0) {
             if (this->HighSpeedAirFlowRate <= this->LowSpeedAirFlowRate) {
                 ShowSevereError(
-                    state, format("FluidCooler:TwoSpeed  \"{}\". Low speed air flow rate must be less than high speed air flow rate.", this->Name));
+                    state, fmt::format("FluidCooler:TwoSpeed  \"{}\". Low speed air flow rate must be less than high speed air flow rate.", this->Name));
                 ErrorsFound = true;
             }
             if (this->HighSpeedFluidCoolerUA <= this->LowSpeedFluidCoolerUA) {
                 ShowSevereError(
                     state,
-                    format("FluidCooler:TwoSpeed  \"{}\". Fluid cooler UA at low fan speed must be less than the fluid cooler UA at high fan speed.",
+                    fmt::format("FluidCooler:TwoSpeed  \"{}\". Fluid cooler UA at low fan speed must be less than the fluid cooler UA at high fan speed.",
                            this->Name));
                 ErrorsFound = true;
             }
@@ -1685,7 +1685,7 @@ void FluidCoolerspecs::calcSingleSpeed(EnergyPlusData &state)
         if (this->OutletWaterTemp != OutletWaterTempOFF) { // don't divide by zero
             FanModeFrac = (TempSetPoint - OutletWaterTempOFF) / (this->OutletWaterTemp - OutletWaterTempOFF);
         }
-        this->FanPower = max(FanModeFrac * FanPowerOn, 0.0); // BG change
+        this->FanPower = max(FanModeFrac * FanPowerOn, 0.0f); // BG change
         this->OutletWaterTemp = TempSetPoint;
     } else {
         //    Setpoint was not met, fluid cooler ran at full capacity
@@ -1900,15 +1900,15 @@ void FluidCoolerspecs::update(EnergyPlusData &state)
     if (state.dataLoopNodes->Node(waterOutletNode).MassFlowRate > this->DesWaterMassFlowRate * this->FluidCoolerMassFlowRateMultiplier) {
         ++this->HighMassFlowErrorCount;
         if (this->HighMassFlowErrorCount < 2) {
-            ShowWarningError(state, format("{} \"{}\"", DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)], this->Name));
+            ShowWarningError(state, fmt::format("{} \"{}\"", DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)], this->Name));
             ShowContinueError(state, " Condenser Loop Mass Flow Rate is much greater than the fluid coolers design mass flow rate.");
-            ShowContinueError(state, format(" Condenser Loop Mass Flow Rate = {:.6T}", state.dataLoopNodes->Node(waterOutletNode).MassFlowRate));
-            ShowContinueError(state, format(" Fluid Cooler Design Mass Flow Rate   = {:.6T}", this->DesWaterMassFlowRate));
+            ShowContinueError(state, fmt::format(" Condenser Loop Mass Flow Rate = {:.6f}", state.dataLoopNodes->Node(waterOutletNode).MassFlowRate));
+            ShowContinueError(state, fmt::format(" Fluid Cooler Design Mass Flow Rate   = {:.6f}", this->DesWaterMassFlowRate));
             ShowContinueErrorTimeStamp(state, "");
         } else {
             ShowRecurringWarningErrorAtEnd(
                 state,
-                format("{} \"{}\"  Condenser Loop Mass Flow Rate is much greater than the fluid coolers design mass flow rate. Error continues...",
+                fmt::format("{} \"{}\"  Condenser Loop Mass Flow Rate is much greater than the fluid coolers design mass flow rate. Error continues...",
                        DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)],
                        this->Name),
                 this->HighMassFlowErrorIndex,
@@ -1923,17 +1923,17 @@ void FluidCoolerspecs::update(EnergyPlusData &state)
         ++this->OutletWaterTempErrorCount;
 
         if (this->OutletWaterTempErrorCount < 2) {
-            ShowWarningError(state, format("{} \"{}\"", DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)], this->Name));
+            ShowWarningError(state, fmt::format("{} \"{}\"", DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)], this->Name));
             ShowContinueError(
                 state,
-                format(" Fluid cooler water outlet temperature ({:.2F} C) is below the specified minimum condenser loop temp of {:.2F} C",
+                fmt::format(" Fluid cooler water outlet temperature ({:.2F} C) is below the specified minimum condenser loop temp of {:.2F} C",
                        this->OutletWaterTemp,
                        LoopMinTemp));
             ShowContinueErrorTimeStamp(state, "");
         } else {
             ShowRecurringWarningErrorAtEnd(
                 state,
-                format("{} \"{}\"  Fluid cooler water outlet temperature is below the specified minimum condenser loop temp. Error continues...",
+                fmt::format("{} \"{}\"  Fluid cooler water outlet temperature is below the specified minimum condenser loop temp. Error continues...",
                        DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)],
                        this->Name),
                 this->OutletWaterTempErrorIndex,
@@ -1946,13 +1946,13 @@ void FluidCoolerspecs::update(EnergyPlusData &state)
     if (this->WaterMassFlowRate > 0.0 && this->WaterMassFlowRate <= DataBranchAirLoopPlant::MassFlowTolerance) {
         ++this->SmallWaterMassFlowErrorCount;
         if (this->SmallWaterMassFlowErrorCount < 2) {
-            ShowWarningError(state, format("{} \"{}\"", DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)], this->Name));
+            ShowWarningError(state, fmt::format("{} \"{}\"", DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)], this->Name));
             ShowContinueError(state, " Fluid cooler water mass flow rate near zero.");
             ShowContinueErrorTimeStamp(state, "");
-            ShowContinueError(state, format("Actual Mass flow = {:.2T}", this->WaterMassFlowRate));
+            ShowContinueError(state, fmt::format("Actual Mass flow = {:.2f}", this->WaterMassFlowRate));
         } else {
             ShowRecurringWarningErrorAtEnd(state,
-                                           format("{} \"{}\"  Fluid cooler water mass flow rate is near zero. Error continues...",
+                                           fmt::format("{} \"{}\"  Fluid cooler water mass flow rate is near zero. Error continues...",
                                                   DataPlant::PlantEquipTypeNames[static_cast<int>(this->FluidCoolerType)],
                                                   this->Name),
                                            this->SmallWaterMassFlowErrorIndex,

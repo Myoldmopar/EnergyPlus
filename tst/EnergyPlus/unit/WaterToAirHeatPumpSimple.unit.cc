@@ -217,7 +217,7 @@ TEST_F(EnergyPlusFixture, WaterToAirHeatPumpSimpleTest_SizeHVACWaterToAir)
 
     if (state->dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(HPNum).RatedCapCoolTotal != 0.0) {
         ShowMessage(*state,
-                    format("SizeHVACWaterToAir: Rated Sensible Heat Ratio = {:.2R} [-]",
+                    fmt::format("SizeHVACWaterToAir: Rated Sensible Heat Ratio = {:.2R} [-]",
                            state->dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(HPNum).RatedCapCoolSens /
                                state->dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(HPNum).RatedCapCoolTotal));
     }

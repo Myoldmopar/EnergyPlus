@@ -1022,7 +1022,7 @@ TEST_F(EnergyPlusFixture, HVACControllers_MaxFlowZero)
 
     Real64 expectedOffset = (0.001 / (2100.0 * HVAC::SmallWaterVolFlow)) * (DataConvergParams::HVACEnergyToler / 10.0);
     // do not let the controller tolerance exceed 1/10 of the loop temperature tolerance.
-    expectedOffset = min(0.1 * DataConvergParams::HVACTemperatureToler, expectedOffset);
+    expectedOffset = min(0.1f * DataConvergParams::HVACTemperatureToler, expectedOffset);
     EXPECT_EQ(expectedOffset, 0.1 * DataConvergParams::HVACTemperatureToler);
     EXPECT_EQ(state->dataHVACControllers->ControllerProps(1).Offset, expectedOffset);
 

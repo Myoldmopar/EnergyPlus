@@ -1840,7 +1840,7 @@ TEST_F(EnergyPlusFixture, MixedAir_ControllerTypeTest)
     state->dataMixedAir->OAController(OAControllerNum).OAMassFlow = 0.1;
     state->dataMixedAir->OAController(OAControllerNum).ExhMassFlow = 0.0;
     state->dataMixedAir->OAController(OAControllerNum).RelMassFlow =
-        max(state->dataMixedAir->OAController(OAControllerNum).OAMassFlow - state->dataMixedAir->OAController(OAControllerNum).ExhMassFlow, 0.0);
+        max(state->dataMixedAir->OAController(OAControllerNum).OAMassFlow - state->dataMixedAir->OAController(OAControllerNum).ExhMassFlow, 0.0f);
     state->dataLoopNodes->Node(state->dataMixedAir->OAController(OAControllerNum).RetNode).MassFlowRate = 0.2;
     state->dataLoopNodes->Node(state->dataMixedAir->OAController(OAControllerNum).RelNode).MassFlowRate =
         state->dataMixedAir->OAController(OAControllerNum).RelMassFlow;

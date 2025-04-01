@@ -3166,9 +3166,9 @@ namespace WindowComplexManager {
             tarcogErrorMessage = "message = \"" + tarcogErrorMessage + "\"";
             ShowContinueErrorTimeStamp(state, tarcogErrorMessage);
             if (CalcCondition == DataBSDFWindow::Condition::Invalid) {
-                ShowContinueError(state, format("surface name = {}", state.dataSurface->Surface(SurfNum).Name));
+                ShowContinueError(state, fmt::format("surface name = {}", state.dataSurface->Surface(SurfNum).Name));
             }
-            ShowContinueError(state, format("construction name = {}", state.dataConstruction->Construct(ConstrNum).Name));
+            ShowContinueError(state, fmt::format("construction name = {}", state.dataConstruction->Construct(ConstrNum).Name));
             ShowFatalError(state, "halting because of error in tarcog");
         } else if (CalcCondition == DataBSDFWindow::Condition::Winter) {
             state.dataHeatBal->NominalU(ConstrNum) = ufactor;
@@ -3231,8 +3231,8 @@ namespace WindowComplexManager {
                 EpsShIR1 = emis(nglface + 1);
                 EpsShIR2 = emis(nglface + 2);
                 TauShIR = tir(nglface + 1);
-                RhoShIR1 = max(0.0, 1.0 - TauShIR - EpsShIR1);
-                RhoShIR2 = max(0.0, 1.0 - TauShIR - EpsShIR2);
+                RhoShIR1 = max(0.0f, 1.0f - TauShIR - EpsShIR1);
+                RhoShIR2 = max(0.0f, 1.0f - TauShIR - EpsShIR2);
                 RhoGlIR2 = 1.0 - emis(2 * ngllayer);
                 ShGlReflFacIR = 1.0 - RhoGlIR2 * RhoShIR1;
                 NetIRHeatGainShade =

@@ -471,8 +471,8 @@ void CalcEQLWindowUvalue(EnergyPlusData &state,
         }
     }
     if (!CFSURated) {
-        ShowWarningMessage(state, format("{}Fenestration U-Value calculation failed for {}", RoutineName, FS.Name));
-        ShowContinueError(state, format("...Calculated U-value = {:.4T}", U));
+        ShowWarningMessage(state, fmt::format("{}Fenestration U-Value calculation failed for {}", RoutineName, FS.Name));
+        ShowContinueError(state, fmt::format("...Calculated U-value = {:.4f}", U));
         ShowContinueError(state, "...Check consistency of inputs");
     }
     UNFRC = U;
@@ -578,9 +578,9 @@ void CalcEQLWindowSHGCAndTransNormal(EnergyPlusData &state,
                                          true);
 
     if (!CFSSHGC) {
-        ShowWarningMessage(state, format("{}Solar heat gain coefficient calculation failed for {}", RoutineName, FS.Name));
-        ShowContinueError(state, format("...Calculated SHGC = {:.4T}", SHGC));
-        ShowContinueError(state, format("...Calculated U-Value = {:.4T}", UCG));
+        ShowWarningMessage(state, fmt::format("{}Solar heat gain coefficient calculation failed for {}", RoutineName, FS.Name));
+        ShowContinueError(state, fmt::format("...Calculated SHGC = {:.4f}", SHGC));
+        ShowContinueError(state, fmt::format("...Calculated U-Value = {:.4f}", UCG));
         ShowContinueError(state, "...Check consistency of inputs.");
         return;
     }
@@ -888,15 +888,15 @@ Real64 P01(EnergyPlusData &state,
     static constexpr std::string_view RoutineName("P01: ");
 
     if (P < -0.05 || P > 1.05) {
-        ShowWarningMessage(state, format("{}property value should have been between 0 and 1", RoutineName));
-        ShowContinueError(state, format("{}=:  property value is ={:.4T}", WHAT, P));
+        ShowWarningMessage(state, fmt::format("{}property value should have been between 0 and 1", RoutineName));
+        ShowContinueError(state, fmt::format("{}=:  property value is ={:.4f}", WHAT, P));
         if (P < 0.0) {
             ShowContinueError(state, "property value is reset to 0.0");
         } else if (P > 1.0) {
             ShowContinueError(state, "property value is reset to 1.0");
         }
     }
-    return max(0.0, min(1.0, P));
+    return max(0.0f, min(1.0f, P));
 }
 
 Real64
@@ -999,10 +999,10 @@ void RB_DIFF(EnergyPlusData &state,
 
     if (RHO_DD + TAU_DD > 1.0) {
         SumRefAndTran = RHO_DD + TAU_DD;
-        ShowWarningMessage(state, format("{}Roller blind diffuse-diffuse properties are inconsistent", RoutineName));
-        ShowContinueError(state, format("...The diffuse-diffuse reflectance = {:.4T}", RHO_DD));
-        ShowContinueError(state, format("...The diffuse-diffuse transmittance = {:.4T}", TAU_DD));
-        ShowContinueError(state, format("...Sum of diffuse reflectance and transmittance = {:.4T}", SumRefAndTran));
+        ShowWarningMessage(state, fmt::format("{}Roller blind diffuse-diffuse properties are inconsistent", RoutineName));
+        ShowContinueError(state, fmt::format("...The diffuse-diffuse reflectance = {:.4f}", RHO_DD));
+        ShowContinueError(state, fmt::format("...The diffuse-diffuse transmittance = {:.4f}", TAU_DD));
+        ShowContinueError(state, fmt::format("...Sum of diffuse reflectance and transmittance = {:.4f}", SumRefAndTran));
         ShowContinueError(state, "...This sum cannot be > 1.0. Transmittance will be reset to 1 minus reflectance");
         TAU_DD = 1.0 - RHO_DD;
     }
@@ -1068,14 +1068,14 @@ void RB_BEAM(EnergyPlusData &state,
     Real64 TAUBB_EXPO;   // exponent in the beam-beam transmittance model
     Real64 TAU_BT;       // beam-total transmittance
 
-    THETA = min(89.99 * Constant::DegToRad, xTHETA);
+    THETA = min(89.99f * Constant::DegToRad, xTHETA);
 
     if (TAU_BB0 > 0.9999) {
         TAU_BB = 1.0;
         TAU_BT = 1.0;
     } else {
         // beam total
-        TAUM0 = min(1.0, (TAU_BT0 - TAU_BB0) / (1.0 - TAU_BB0));
+        TAUM0 = min(1.0f, (TAU_BT0 - TAU_BB0) / (1.0f - TAU_BB0));
         if (TAUM0 <= 0.33) {
             TAUBT_EXPO = 0.133 * std::pow(TAUM0 + 0.003, -0.467);
         } else {
@@ -1133,10 +1133,10 @@ void IS_DIFF(EnergyPlusData &state,
 
     if (RHO_DD + TAU_DD > 1.0) {
         SumRefAndTran = RHO_DD + TAU_DD;
-        ShowWarningMessage(state, format("{}Calculated insect screen diffuse-diffuse properties are inconsistent", RoutineName));
-        ShowContinueError(state, format("...The diffuse-diffuse reflectance = {:.4T}", RHO_DD));
-        ShowContinueError(state, format("...The diffuse-diffuse transmittance = {:.4T}", TAU_DD));
-        ShowContinueError(state, format("...Sum of diffuse reflectance and transmittance = {:.4T}", SumRefAndTran));
+        ShowWarningMessage(state, fmt::format("{}Calculated insect screen diffuse-diffuse properties are inconsistent", RoutineName));
+        ShowContinueError(state, fmt::format("...The diffuse-diffuse reflectance = {:.4f}", RHO_DD));
+        ShowContinueError(state, fmt::format("...The diffuse-diffuse transmittance = {:.4f}", TAU_DD));
+        ShowContinueError(state, fmt::format("...Sum of diffuse reflectance and transmittance = {:.4f}", SumRefAndTran));
         ShowContinueError(state, "...This sum cannot be > 1.0. Transmittance will be reset to 1 minus reflectance");
         TAU_DD = 1.0 - RHO_DD;
     }
@@ -1210,11 +1210,11 @@ void IS_BEAM(EnergyPlusData &state,
     Real64 RHO_BT90;     // beam-total reflectance at 90 deg incidence
     Real64 TAU_BT;       // beam-total transmittance
 
-    Real64 const THETA(min(89.99 * Constant::DegToRad, xTHETA)); // working incident angle, radians
+    Real64 const THETA(min(89.99f * Constant::DegToRad, xTHETA)); // working incident angle, radians
     Real64 const COSTHETA(std::cos(THETA));
 
     RHO_W = RHO_BT0 / max(0.00001, 1.0 - TAU_BB0);
-    B = -0.45 * std::log(max(RHO_W, 0.01));
+    B = -0.45 * std::log(max(RHO_W, 0.01f));
 
     RHO_BT90 = RHO_BT0 + (1.0 - RHO_BT0) * (0.35 * RHO_W);
 
@@ -1229,11 +1229,11 @@ void IS_BEAM(EnergyPlusData &state,
         if (THETA >= THETA_CUTOFF) {
             TAU_BB = 0.0;
         } else {
-            B = -0.45 * std::log(max(TAU_BB0, 0.01)) + 0.1;
+            B = -0.45 * std::log(max(TAU_BB0, 0.01f)) + 0.1;
             TAU_BB = P01(state, TAU_BB0 * std::pow(std::cos(Constant::PiOvr2 * THETA / THETA_CUTOFF), B), TauBB_Name);
         }
 
-        B = -0.65 * std::log(max(TAU_BT0, 0.01)) + 0.1;
+        B = -0.65 * std::log(max(TAU_BT0, 0.01f)) + 0.1;
         TAU_BT = P01(state, TAU_BT0 * std::pow(COSTHETA, B), TauBT_Name);
     }
 
@@ -1250,7 +1250,7 @@ Real64 IS_OPENNESS(Real64 const D, // wire diameter
     //  Returns openness from wire geometry.
 
     if (S > 0.0) {
-        return pow_2(max(S - D, 0.0) / S);
+        return pow_2(max(S - D, 0.0f) / S);
     } else {
         return 0.0;
     }
@@ -1264,7 +1264,7 @@ Real64 IS_DSRATIO(Real64 const OPENNESS) // openness
     //  Returns ratio of diameter to spacing
 
     if (OPENNESS > 0.0) {
-        return 1.0 - min(std::sqrt(OPENNESS), 1.0);
+        return 1.0 - min(std::sqrt(OPENNESS), 1.0f);
     } else {
         return 0.0;
     }
@@ -1306,10 +1306,10 @@ void FM_DIFF(EnergyPlusData &state,
 
     if (RHO_DD + TAU_DD > 1.0) {
         SumRefAndTran = RHO_DD + TAU_DD;
-        ShowWarningMessage(state, format("{}Calculated drape fabric diffuse-diffuse properties are inconsistent", RoutineName));
-        ShowContinueError(state, format("...The diffuse-diffuse reflectance = {:.4T}", RHO_DD));
-        ShowContinueError(state, format("...The diffuse-diffuse transmittance = {:.4T}", TAU_DD));
-        ShowContinueError(state, format("...Sum of diffuse reflectance and transmittance = {:.4T}", SumRefAndTran));
+        ShowWarningMessage(state, fmt::format("{}Calculated drape fabric diffuse-diffuse properties are inconsistent", RoutineName));
+        ShowContinueError(state, fmt::format("...The diffuse-diffuse reflectance = {:.4f}", RHO_DD));
+        ShowContinueError(state, fmt::format("...The diffuse-diffuse transmittance = {:.4f}", TAU_DD));
+        ShowContinueError(state, fmt::format("...Sum of diffuse reflectance and transmittance = {:.4f}", SumRefAndTran));
         ShowContinueError(state, "...This sum cannot be > 1.0. Transmittance will be reset to 1 minus reflectance");
         TAU_DD = 1.0 - RHO_DD;
     }
@@ -1382,7 +1382,7 @@ void FM_BEAM(EnergyPlusData &state,
     Real64 RHO_BT90; // beam-total reflectance at 90 deg incidence
     Real64 TAU_BT;   // beam-total transmittance
 
-    THETA = std::abs(max(-89.99 * Constant::DegToRad, min(89.99 * Constant::DegToRad, xTHETA)));
+    THETA = std::abs(max(-89.99f * Constant::DegToRad, min(89.99f * Constant::DegToRad, xTHETA)));
     // limit -89.99 - +89.99
     // by symmetry, optical properties same at +/- theta
     Real64 const COSTHETA(std::cos(THETA));
@@ -1397,10 +1397,10 @@ void FM_BEAM(EnergyPlusData &state,
         TAU_BB = 0.0;
         TAU_BD = 0.0;
     } else {
-        B = max(-0.5 * std::log(max(TAU_BB0, 0.01)), 0.35);
+        B = max(-0.5 * std::log(max(TAU_BB0, 0.01f)), 0.35);
         TAU_BB = TAU_BB0 * std::pow(COSTHETA, B);
 
-        B = max(-0.5 * std::log(max(TAU_BT0, 0.01)), 0.35);
+        B = max(-0.5 * std::log(max(TAU_BT0, 0.01f)), 0.35);
         TAU_BT = TAU_BT0 * std::pow(COSTHETA, B);
 
         TAU_BD = P01(state, TAU_BT - TAU_BB, "FM_BEAM TauBD");
@@ -1665,8 +1665,8 @@ void PD_BEAM(EnergyPlusData &state,
     Real64 TAUBF_BB_PERP;
     Real64 TAUBF_BD_PERP;
 
-    OMEGA_V = std::abs(max(-89.5 * Constant::DegToRad, min(89.5 * Constant::DegToRad, OHM_V_RAD)));
-    OMEGA_H = std::abs(max(-89.5 * Constant::DegToRad, min(89.5 * Constant::DegToRad, OHM_H_RAD)));
+    OMEGA_V = std::abs(max(-89.5f * Constant::DegToRad, min(89.5f * Constant::DegToRad, OHM_V_RAD)));
+    OMEGA_H = std::abs(max(-89.5f * Constant::DegToRad, min(89.5f * Constant::DegToRad, OHM_H_RAD)));
     // limit profile angles -89.5 - +89.5
     // by symmetry, properties same for +/- profile angle
 
@@ -1695,7 +1695,7 @@ void PD_BEAM(EnergyPlusData &state,
     FM_BEAM(state, THETA_PARL, RHOBF_BT0, TAUBF_BT0, TAUBF_BB0, RHOBF_BT_PARL, TAUBF_BB_PARL, TAUBF_BD_PARL);
     FM_BEAM(state, THETA_PERP, RHOBF_BT0, TAUBF_BT0, TAUBF_BB0, RHOBF_BT_PERP, TAUBF_BB_PERP, TAUBF_BD_PERP);
 
-    DE = S * std::abs(cos_OMEGA_H / max(0.000001, sin_OMEGA_H));
+    DE = S * std::abs(cos_OMEGA_H / max(0.000001f, sin_OMEGA_H));
     EF = W - DE;
 
     // select geometric case
@@ -3593,7 +3593,7 @@ Real64 VB_SLAT_RADIUS_RATIO(Real64 const W, // slat tip-to-tip (chord) width (an
         // it is flat
         return 0.0;
     } else {
-        Real64 CX = min(C, W / 2.001);
+        Real64 CX = min(C, W / 2.001f);
         return 2.0 * W * CX / (CX * CX + W * W / 4);
     }
 }
@@ -3664,11 +3664,11 @@ void VB_SOL46_CURVE(EnergyPlusData const &state,
     CORR = 1;
 
     // limit slat angle to +/- 90 deg
-    PHI = max(-Constant::DegToRad * 90.0, min(Constant::DegToRad * 90.0, PHIx));
+    PHI = max(-Constant::DegToRad * 90.0f, min(Constant::DegToRad * 90.0f, PHIx));
     // limit profile angle to +/- 89.5 deg
-    OMEGA = max(-Constant::DegToRad * 89.5, min(Constant::DegToRad * 89.5, OMEGAx));
+    OMEGA = max(-Constant::DegToRad * 89.5f, min(Constant::DegToRad * 89.5f, OMEGAx));
 
-    SL_RAD = W / max(SL_WR, 0.0000001);
+    SL_RAD = W / max(SL_WR, 0.0000001f);
     SL_THETA = 2.0 * std::asin(0.5 * SL_WR);
 
     if (CORR > 0) { // CORRECT FOR SLAT CURVATURE BY SETTING CORR = 1
@@ -3720,7 +3720,7 @@ void VB_SOL46_CURVE(EnergyPlusData const &state,
             }
             //  CHECK TO SEE IF THERE IS DIRECT BEAM TRANSMISSION
             if ((DE / W) > (1.0 - state.dataWindowEquivalentLayer->SMALL_ERROR)) { // YES
-                TAU_BB = max(0.0, (DE - W) / DE);
+                TAU_BB = max(0.0f, (DE - W) / DE);
             } else { // NO
                 TAU_BB = 0.0;
             }
@@ -4563,7 +4563,7 @@ void ASHWAT_ThermalCalc(EnergyPlusData &state,
             J = 3 * I - 1;
             JF(I) = XSOL(J);
             ++J;
-            EB(I) = max(1.0, XSOL(J)); // prevent impossible temps
+            EB(I) = max(1.0f, XSOL(J)); // prevent impossible temps
             TNEW(I) = root_4(EB(I) / Constant::StefanBoltzmann);
             ++J;
             JB[I] = XSOL(J);
@@ -4599,10 +4599,10 @@ void ASHWAT_ThermalCalc(EnergyPlusData &state,
 
         if (FS.WEQLSolverErrorIndex < 1) {
             ++FS.WEQLSolverErrorIndex;
-            ShowSevereError(state, format("CONSTRUCTION:WINDOWEQUIVALENTLAYER = \"{}\"", FS.Name));
-            ShowContinueError(state, format("{}Net radiation analysis did not converge", RoutineName));
-            ShowContinueError(state, format("...Maximum error is = {:.6T}", MAXERR));
-            ShowContinueError(state, format("...Convergence tolerance is = {:.6T}", TOL));
+            ShowSevereError(state, fmt::format("CONSTRUCTION:WINDOWEQUIVALENTLAYER = \"{}\"", FS.Name));
+            ShowContinueError(state, fmt::format("{}Net radiation analysis did not converge", RoutineName));
+            ShowContinueError(state, fmt::format("...Maximum error is = {:.6f}", MAXERR));
+            ShowContinueError(state, fmt::format("...Convergence tolerance is = {:.6f}", TOL));
             ShowContinueErrorTimeStamp(state, "");
         } else {
             ShowRecurringWarningErrorAtEnd(state,
@@ -5036,7 +5036,7 @@ bool ASHWAT_ThermalRatings(EnergyPlusData &state,
             J = 3 * I - 1;
             JF(I) = XSOL(J);
             ++J;
-            EB(I) = max(1.0, XSOL(J)); // prevent impossible temps
+            EB(I) = max(1.0f, XSOL(J)); // prevent impossible temps
             TNEW(I) = root_4(EB(I) / Constant::StefanBoltzmann);
             ++J;
             JB[I] = XSOL(J);
@@ -5072,10 +5072,10 @@ bool ASHWAT_ThermalRatings(EnergyPlusData &state,
 
     //    if (FS.WEQLSolverErrorIndex < 1) {
     //        ++FS.WEQLSolverErrorIndex;
-    //        ShowSevereError(state, format("CONSTRUCTION:WINDOWEQUIVALENTLAYER = \"{}\"", FS.Name));
-    //        ShowContinueError(state, format("{}Net radiation analysis did not converge", RoutineName));
-    //        ShowContinueError(state, format("...Maximum error is = {:.6T}", MAXERR));
-    //        ShowContinueError(state, format("...Convergence tolerance is = {:.6T}", TOL));
+    //        ShowSevereError(state, fmt::format("CONSTRUCTION:WINDOWEQUIVALENTLAYER = \"{}\"", FS.Name));
+    //        ShowContinueError(state, fmt::format("{}Net radiation analysis did not converge", RoutineName));
+    //        ShowContinueError(state, fmt::format("...Maximum error is = {:.6f}", MAXERR));
+    //        ShowContinueError(state, fmt::format("...Convergence tolerance is = {:.6f}", TOL));
     //        ShowContinueErrorTimeStamp(state, "");
     //    } else {
     //        ShowRecurringWarningErrorAtEnd(state, "CONSTRUCTION:WINDOWEQUIVALENTLAYER = \"" + FS.Name + "\"; " + std::string{RoutineName} +
@@ -5833,7 +5833,7 @@ Real64 HIC_ASHRAE(Real64 const L,  // glazing height, m
     // Return value
     Real64 HIC_ASHRAE;
 
-    HIC_ASHRAE = 1.46 * root_4(std::abs(TG - TI) / max(L, 0.001));
+    HIC_ASHRAE = 1.46 * root_4(std::abs(TG - TI) / max(L, 0.001f));
     return HIC_ASHRAE;
 }
 
@@ -6116,7 +6116,7 @@ Real64 ConvectionFactor(CFSLAYER const &L) // window layer
 
     if (L.LTYPE == LayerType::VBHOR) {
         // horiz VB: enhanced convection at +/- 45 due to "pumping"
-        Real64 SlatADeg = min(90.0, std::abs(L.PHI_DEG));
+        Real64 SlatADeg = min(90.0f, std::abs(L.PHI_DEG));
         return 1.0 + 0.2 * std::sin(2.0 * SlatADeg);
     } else {
         return 1.0;
@@ -7518,7 +7518,7 @@ void BuildGap(EnergyPlusData &state,
     static constexpr std::string_view RoutineName("BuildGap: ");
 
     if (TAS < GapThickMin) {
-        ShowSevereError(state, format("{}{}", RoutineName, G.Name));
+        ShowSevereError(state, fmt::format("{}{}", RoutineName, G.Name));
         ShowContinueError(state, "...specified gap thickness is < 0.0001 m.  Reset to 0.00001 m");
         TAS = GapThickMin;
     }
@@ -7569,7 +7569,7 @@ float DensityCFSFillGas(CFSFILLGAS const &FG, // gas properties
     // METHODOLOGY EMPLOYED:
     // Uses ideal gas relations
 
-    return (P * FG.MHAT) / (Constant::UniversalGasConst * max(T, 1.0));
+    return (P * FG.MHAT) / (Constant::UniversalGasConst * max(T, 1.0f));
 }
 
 int CFSNGlz(CFSTY const &FS) // CFS
@@ -7664,7 +7664,7 @@ void FillDefaultsSWP(EnergyPlusData &state,
     } else if (L.LTYPE == LayerType::NONE || L.LTYPE == LayerType::ROOM) {
         // none or room: do nothing
     } else {
-        ShowSevereError(state, format("{}{}.", RoutineName, L.Name));
+        ShowSevereError(state, fmt::format("{}{}.", RoutineName, L.Name));
         ShowContinueError(state, "...invalid layer type specified.");
     }
 }
@@ -7689,7 +7689,7 @@ void FinalizeCFS(EnergyPlusData &state, CFSTY &FS)
         if (!IsVBLayer(FS.L(iL))) {
             LVBPREV = false;
         } else if (LVBPREV) {
-            ShowSevereError(state, format("{}=\"{}\", illegal.", CurrentModuleObject, FS.Name));
+            ShowSevereError(state, fmt::format("{}=\"{}\", illegal.", CurrentModuleObject, FS.Name));
             ShowContinueError(state, "...adjacent VB layers are specified.");
             ErrorsFound = true;
         } else {
@@ -7700,19 +7700,19 @@ void FinalizeCFS(EnergyPlusData &state, CFSTY &FS)
         if (iL < FS.NL) {
             int gType = FS.G(iL).GTYPE;
             if (gType == state.dataWindowEquivalentLayer->gtyOPENout && iL != 1) {
-                ShowSevereError(state, format("{}=\"{}", CurrentModuleObject, FS.Name));
-                ShowContinueError(state, format("...invalid EquivalentLayer window gap type specified ={}.", FS.G(iL).Name));
+                ShowSevereError(state, fmt::format("{}=\"{}", CurrentModuleObject, FS.Name));
+                ShowContinueError(state, fmt::format("...invalid EquivalentLayer window gap type specified ={}.", FS.G(iL).Name));
                 ShowContinueError(state, "...VentedOutDoor gap is not outermost.");
             }
             if (gType == state.dataWindowEquivalentLayer->gtyOPENin && iL != FS.NL - 1) {
-                ShowSevereError(state, format("{}=\"{}", CurrentModuleObject, FS.Name));
-                ShowContinueError(state, format("...invalid EquivalentLayer window gap type specified ={}.", FS.G(iL).Name));
+                ShowSevereError(state, fmt::format("{}=\"{}", CurrentModuleObject, FS.Name));
+                ShowContinueError(state, fmt::format("...invalid EquivalentLayer window gap type specified ={}.", FS.G(iL).Name));
                 ShowContinueError(state, "...VentedIndoor gap is not innermost.");
             }
         }
     }
     if (ErrorsFound) {
-        ShowFatalError(state, format("{}Program terminates for preceding reason(s).", RoutineName));
+        ShowFatalError(state, fmt::format("{}Program terminates for preceding reason(s).", RoutineName));
     }
 }
 
@@ -7774,7 +7774,7 @@ bool FEQX(Real64 const a, // values to compare, fractional tolerance
     // Returns true if the difference between two real numbers is within the
     // tolerance limit specified.
 
-    Real64 tolAbsX = max(tolAbs, 1.e-10);
+    Real64 tolAbsX = max(tolAbs, 1.e-10f);
 
     Real64 d = std::abs(a - b);
     if (d < tolAbsX) {
@@ -7793,7 +7793,7 @@ Real64 TRadC(Real64 const J,    // radiosity, W/m2
     // PURPOSE OF THIS FUNCTION:
     // Returns equivalent celsius scale temperature from radiosity
 
-    return root_4(J / (Constant::StefanBoltzmann * max(Emiss, 0.001))) - Constant::Kelvin;
+    return root_4(J / (Constant::StefanBoltzmann * max(Emiss, 0.001f))) - Constant::Kelvin;
 }
 
 void CalcEQLOpticalProperty(EnergyPlusData &state,

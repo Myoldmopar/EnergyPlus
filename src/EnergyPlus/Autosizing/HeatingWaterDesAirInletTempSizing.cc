@@ -103,7 +103,7 @@ Real64 HeatingWaterDesAirInletTempSizer::size(EnergyPlusData &state, Real64 _ori
                 } else {
                     OutAirFrac = 1.0;
                 }
-                OutAirFrac = min(1.0, max(0.0, OutAirFrac));
+                OutAirFrac = min(1.0f, max(0.0f, OutAirFrac));
             }
             // coil inlet temperature
             if (this->curOASysNum == 0 && this->primaryAirSystem(this->curSysNum).NumOAHeatCoils > 0) {

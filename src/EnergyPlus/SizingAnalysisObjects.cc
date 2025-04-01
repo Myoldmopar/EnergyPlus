@@ -113,7 +113,7 @@ ZoneTimestepObject::ZoneTimestepObject(
     subSteps.resize(numSubSteps);
 }
 
-SizingLog::SizingLog(double &rVariable) : p_rVariable(rVariable)
+SizingLog::SizingLog(Real64 &rVariable) : p_rVariable(rVariable)
 {
 }
 
@@ -546,7 +546,7 @@ void PlantCoinicidentAnalysis::ResolveDesignFlowRate(EnergyPlusData &state, int 
     }
 
     print(state.files.eio,
-          "Plant Coincident Sizing Algorithm,{},{},{:.7R},{:.2R},{:.7R},{},{:.6R},{:.6R},{},{:.4R},{:.6R},{:.4R},{:.4R}\n",
+          "Plant Coincident Sizing Algorithm,{},{},{:.7f},{:.2f},{:.7f},{},{:.6f},{:.6f},{},{:.4f},{:.6f},{:.4f},{:.4f}\n",
           name,
           chIteration,
           newFoundMassFlowRateTimeStamp.runningAvgDataValue,

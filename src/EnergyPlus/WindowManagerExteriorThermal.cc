@@ -105,7 +105,7 @@ namespace Window {
         aSystem->setTolerance(solutionTolerance);
 
         // get previous timestep temperatures solution for faster iterations
-        std::vector<Real64> Guess;
+        std::vector<double> Guess;
         int totSolidLayers = construction.TotSolidLayers;
 
         // Interior and exterior shading layers have gas between them and IGU but that gas
@@ -173,8 +173,8 @@ namespace Window {
             Real64 EpsShIR1 = frontSurface->getEmissivity();
             Real64 EpsShIR2 = backSurface->getEmissivity();
             Real64 TauShIR = frontSurface->getTransmittance();
-            Real64 RhoShIR1 = max(0.0, 1.0 - TauShIR - EpsShIR1);
-            Real64 RhoShIR2 = max(0.0, 1.0 - TauShIR - EpsShIR2);
+            Real64 RhoShIR1 = max(0.0f, 1.0f - TauShIR - EpsShIR1);
+            Real64 RhoShIR2 = max(0.0f, 1.0f - TauShIR - EpsShIR2);
             Real64 glassEmiss = aGlassLayer->getSurface(FenestrationCommon::Side::Back)->getEmissivity();
             Real64 RhoGlIR2 = 1.0 - glassEmiss;
             Real64 ShGlReflFacIR = 1.0 - RhoGlIR2 * RhoShIR1;
@@ -570,7 +570,7 @@ namespace Window {
             Real64 PermA = std::sin(slatAng) - matBlind->SlatThickness / matBlind->SlatSeparation;
             Real64 PermB =
                 1.0 - (std::abs(matBlind->SlatWidth * std::cos(slatAng)) + matBlind->SlatThickness * std::sin(slatAng)) / matBlind->SlatSeparation;
-            Afront = min(1.0, max(0.0, PermA, PermB));
+            Afront = min(1.0f, max(0.0f, PermA, PermB));
 
             int iSlatLo, iSlatHi;
             Real64 interpFac;
@@ -861,7 +861,7 @@ namespace Window {
         return {m_Surface.Width, m_Surface.Height, m_Surface.Tilt};
     }
 
-    Tarcog::ISO15099::CIGU CWCEHeatTransferFactory::getIGU(double width, double height, double tilt)
+    Tarcog::ISO15099::CIGU CWCEHeatTransferFactory::getIGU(Real64 width, Real64 height, Real64 tilt)
     {
         // SUBROUTINE INFORMATION:
         //       AUTHOR         Simon Vidanovic
@@ -966,10 +966,10 @@ namespace Window {
         return ShadeFlag;
     }
 
-    double CWCEHeatTransferFactory::overallUfactorFromFilmsAndCond(double conductance, double insideFilm, double outsideFilm)
+    Real64 CWCEHeatTransferFactory::overallUfactorFromFilmsAndCond(Real64 conductance, Real64 insideFilm, Real64 outsideFilm)
     {
-        double rOverall(0.);
-        double uFactor(0.);
+        Real64 rOverall(0.);
+        Real64 uFactor(0.);
         if (insideFilm != 0 && outsideFilm != 0. && conductance != 0.) {
             rOverall = 1 / insideFilm + 1 / conductance + 1 / outsideFilm;
         }

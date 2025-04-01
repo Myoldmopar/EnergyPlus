@@ -194,7 +194,7 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         for (jFld = 1; jFld <= NumAlphas; ++jFld) {
             if (hasi(AlphaArray(jFld), "LifeCycleCost:")) {
                 ShowWarningError(state,
-                                 format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
+                                 fmt::format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
                                         CurrentModuleObject,
                                         AlphaArray(1)));
             }
@@ -215,7 +215,7 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
             elcc->discountConvention = DiscConv::EndOfYear;
             ShowWarningError(
                 state,
-                format(
+                fmt::format(
                     "{}: Invalid {}=\"{}\". EndOfYear will be used.", CurrentModuleObject, state.dataIPShortCut->cAlphaFieldNames(2), AlphaArray(2)));
         }
         // A3,  \field Inflation Approach
@@ -227,7 +227,7 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         if (elcc->inflationApproach == InflAppr::Invalid) {
             elcc->inflationApproach = InflAppr::ConstantDollar;
             ShowWarningError(state,
-                             format("{}: Invalid {}=\"{}\". ConstantDollar will be used.",
+                             fmt::format("{}: Invalid {}=\"{}\". ConstantDollar will be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cAlphaFieldNames(3),
                                     AlphaArray(3)));
@@ -237,14 +237,14 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->realDiscountRate = NumArray(1);
         if ((elcc->inflationApproach == InflAppr::ConstantDollar) && state.dataIPShortCut->lNumericFieldBlanks(1)) {
             ShowWarningError(state,
-                             format("{}: Invalid for field {} to be blank when ConstantDollar analysis is be used.",
+                             fmt::format("{}: Invalid for field {} to be blank when ConstantDollar analysis is be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(1)));
         }
         if ((elcc->realDiscountRate > 0.30) || (elcc->realDiscountRate < -0.30)) {
             ShowWarningError(
                 state,
-                format("{}: Invalid value in field {}.  This value is the decimal value not a percentage so most values are between 0.02 and 0.15. ",
+                fmt::format("{}: Invalid value in field {}.  This value is the decimal value not a percentage so most values are between 0.02 and 0.15. ",
                        CurrentModuleObject,
                        state.dataIPShortCut->cNumericFieldNames(1)));
         }
@@ -253,14 +253,14 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->nominalDiscountRate = NumArray(2);
         if ((elcc->inflationApproach == InflAppr::CurrentDollar) && state.dataIPShortCut->lNumericFieldBlanks(2)) {
             ShowWarningError(state,
-                             format("{}: Invalid for field {} to be blank when CurrentDollar analysis is be used.",
+                             fmt::format("{}: Invalid for field {} to be blank when CurrentDollar analysis is be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(2)));
         }
         if ((elcc->nominalDiscountRate > 0.30) || (elcc->nominalDiscountRate < -0.30)) {
             ShowWarningError(
                 state,
-                format("{}: Invalid value in field {}.  This value is the decimal value not a percentage so most values are between 0.02 and 0.15. ",
+                fmt::format("{}: Invalid value in field {}.  This value is the decimal value not a percentage so most values are between 0.02 and 0.15. ",
                        CurrentModuleObject,
                        state.dataIPShortCut->cNumericFieldNames(2)));
         }
@@ -269,14 +269,14 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->inflation = NumArray(3);
         if ((elcc->inflationApproach == InflAppr::ConstantDollar) && (!state.dataIPShortCut->lNumericFieldBlanks(3))) {
             ShowWarningError(state,
-                             format("{}: Invalid for field {} contain a value when ConstantDollar analysis is be used.",
+                             fmt::format("{}: Invalid for field {} contain a value when ConstantDollar analysis is be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(3)));
         }
         if ((elcc->inflation > 0.30) || (elcc->inflation < -0.30)) {
             ShowWarningError(
                 state,
-                format("{}: Invalid value in field {}.  This value is the decimal value not a percentage so most values are between 0.02 and 0.15. ",
+                fmt::format("{}: Invalid value in field {}.  This value is the decimal value not a percentage so most values are between 0.02 and 0.15. ",
                        CurrentModuleObject,
                        state.dataIPShortCut->cNumericFieldNames(3)));
         }
@@ -299,7 +299,7 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         if (elcc->baseDateMonth == -1) {
             elcc->baseDateMonth = 0;
             ShowWarningError(state,
-                             format("{}: Invalid month entered in field {}. Using January instead of \"{}\"",
+                             fmt::format("{}: Invalid month entered in field {}. Using January instead of \"{}\"",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cAlphaFieldNames(4),
                                     AlphaArray(4)));
@@ -311,13 +311,13 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->baseDateYear = int(NumArray(4));
         if (elcc->baseDateYear > 2100) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  Value greater than 2100 yet it is representing a year. ",
+                             fmt::format("{}: Invalid value in field {}.  Value greater than 2100 yet it is representing a year. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(4)));
         }
         if (elcc->baseDateYear < 1900) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  Value less than 1900 yet it is representing a year. ",
+                             fmt::format("{}: Invalid value in field {}.  Value less than 1900 yet it is representing a year. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(4)));
         }
@@ -340,7 +340,7 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         if (elcc->serviceDateMonth == -1) {
             elcc->serviceDateMonth = 0;
             ShowWarningError(state,
-                             format("{}: Invalid month entered in field {}. Using January instead of \"{}\"",
+                             fmt::format("{}: Invalid month entered in field {}. Using January instead of \"{}\"",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cAlphaFieldNames(5),
                                     AlphaArray(5)));
@@ -352,13 +352,13 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->serviceDateYear = int(NumArray(5));
         if (elcc->serviceDateYear > 2100) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  Value greater than 2100 yet it is representing a year. ",
+                             fmt::format("{}: Invalid value in field {}.  Value greater than 2100 yet it is representing a year. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(5)));
         }
         if (elcc->serviceDateYear < 1900) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  Value less than 1900 yet it is representing a year. ",
+                             fmt::format("{}: Invalid value in field {}.  Value less than 1900 yet it is representing a year. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(5)));
         }
@@ -369,13 +369,13 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->lengthStudyYears = int(NumArray(6));
         if (elcc->lengthStudyYears > 100) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  A value greater than 100 is not reasonable for an economic evaluation. ",
+                             fmt::format("{}: Invalid value in field {}.  A value greater than 100 is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(6)));
         }
         if (elcc->lengthStudyYears < 1) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  A value less than 1 is not reasonable for an economic evaluation. ",
+                             fmt::format("{}: Invalid value in field {}.  A value less than 1 is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(6)));
         }
@@ -386,7 +386,7 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->taxRate = NumArray(7);
         if (elcc->taxRate < 0.0 && (!state.dataIPShortCut->lNumericFieldBlanks(7))) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  A value less than 0 is not reasonable for a tax rate. ",
+                             fmt::format("{}: Invalid value in field {}.  A value less than 0 is not reasonable for a tax rate. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(10)));
         }
@@ -410,10 +410,10 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
             if (state.dataIPShortCut->lAlphaFieldBlanks(6)) {
                 ShowWarningError(
                     state,
-                    format("{}: The input field {}is blank. \"None\" will be used.", CurrentModuleObject, state.dataIPShortCut->cAlphaFieldNames(6)));
+                    fmt::format("{}: The input field {}is blank. \"None\" will be used.", CurrentModuleObject, state.dataIPShortCut->cAlphaFieldNames(6)));
             } else {
                 ShowWarningError(state,
-                                 format("{}: Invalid {}=\"{}{}",
+                                 fmt::format("{}: Invalid {}=\"{}{}",
                                         CurrentModuleObject,
                                         state.dataIPShortCut->cAlphaFieldNames(6),
                                         AlphaArray(6),
@@ -424,7 +424,7 @@ void GetInputLifeCycleCostParameters(EnergyPlusData &state)
         elcc->lastDateYear = elcc->baseDateYear + elcc->lengthStudyYears - 1;
     } else {
         ShowWarningError(
-            state, format("{}: Only one instance of this object is allowed. No life-cycle cost reports will be generated.", CurrentModuleObject));
+            state, fmt::format("{}: Only one instance of this object is allowed. No life-cycle cost reports will be generated.", CurrentModuleObject));
         elcc->LCCparamPresent = false;
     }
 }
@@ -476,7 +476,7 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         for (jFld = 1; jFld <= NumAlphas; ++jFld) {
             if (hasi(AlphaArray(jFld), "LifeCycleCost:")) {
                 ShowWarningError(state,
-                                 format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
+                                 fmt::format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
                                         CurrentModuleObject,
                                         AlphaArray(1)));
             }
@@ -506,7 +506,7 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         if (isNotRecurringCost) {
             elcc->RecurringCosts[iInObj].category = CostCategory::Maintenance;
             ShowWarningError(state,
-                             format("{}: Invalid {}=\"{}\". The category of Maintenance will be used.",
+                             fmt::format("{}: Invalid {}=\"{}\". The category of Maintenance will be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cAlphaFieldNames(2),
                                     AlphaArray(2)));
@@ -523,7 +523,7 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         if (elcc->RecurringCosts[iInObj].startOfCosts == StartCosts::Invalid) {
             elcc->RecurringCosts[iInObj].startOfCosts = StartCosts::ServicePeriod;
             ShowWarningError(state,
-                             format("{}: Invalid {}=\"{}\". The start of the service period will be used.",
+                             fmt::format("{}: Invalid {}=\"{}\". The start of the service period will be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cAlphaFieldNames(3),
                                     AlphaArray(3)));
@@ -535,14 +535,14 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         elcc->RecurringCosts[iInObj].yearsFromStart = int(NumArray(2));
         if (elcc->RecurringCosts[iInObj].yearsFromStart > 100) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of years from the start so a value greater than 100 is "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of years from the start so a value greater than 100 is "
                                     "not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(2)));
         }
         if (elcc->RecurringCosts[iInObj].yearsFromStart < 0) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of years from the start so a value less than 0 is not "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of years from the start so a value less than 0 is not "
                                     "reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(2)));
@@ -554,14 +554,14 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         elcc->RecurringCosts[iInObj].monthsFromStart = int(NumArray(3));
         if (elcc->RecurringCosts[iInObj].monthsFromStart > 1200) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of months from the start so a value greater than 1200 "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of months from the start so a value greater than 1200 "
                                     "is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(3)));
         }
         if (elcc->RecurringCosts[iInObj].monthsFromStart < 0) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of months from the start so a value less than 0 is not "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of months from the start so a value less than 0 is not "
                                     "reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(3)));
@@ -573,14 +573,14 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         elcc->RecurringCosts[iInObj].repeatPeriodYears = int(NumArray(4));
         if (elcc->RecurringCosts[iInObj].repeatPeriodYears > 100) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of years between occurrences of the cost so a value "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of years between occurrences of the cost so a value "
                                     "greater than 100 is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(4)));
         }
         if (elcc->RecurringCosts[iInObj].repeatPeriodYears < 1) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of years between occurrences of the cost so a value "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of years between occurrences of the cost so a value "
                                     "less than 1 is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(4)));
@@ -592,21 +592,21 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         elcc->RecurringCosts[iInObj].repeatPeriodMonths = int(NumArray(5));
         if (elcc->RecurringCosts[iInObj].repeatPeriodMonths > 1200) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of months between occurrences of the cost so a value "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of months between occurrences of the cost so a value "
                                     "greater than 1200 is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(5)));
         }
         if (elcc->RecurringCosts[iInObj].repeatPeriodMonths < 0) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of months between occurrences of the cost so a value "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of months between occurrences of the cost so a value "
                                     "less than 0 is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(5)));
         }
         if ((elcc->RecurringCosts[iInObj].repeatPeriodMonths == 0) && (elcc->RecurringCosts[iInObj].repeatPeriodYears == 0)) {
             ShowWarningError(state,
-                             format("{}: Invalid value in fields {} and {}.  The repeat period must not be zero months and zero years. ",
+                             fmt::format("{}: Invalid value in fields {} and {}.  The repeat period must not be zero months and zero years. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(5),
                                     state.dataIPShortCut->cNumericFieldNames(4)));
@@ -616,14 +616,14 @@ void GetInputLifeCycleCostRecurringCosts(EnergyPlusData &state)
         elcc->RecurringCosts[iInObj].annualEscalationRate = int(NumArray(6));
         if (elcc->RecurringCosts[iInObj].annualEscalationRate > 0.30) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the decimal value for the annual escalation so most values are "
+                             fmt::format("{}: Invalid value in field {}.  This value is the decimal value for the annual escalation so most values are "
                                     "between 0.02 and 0.15. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(6)));
         }
         if (elcc->RecurringCosts[iInObj].annualEscalationRate < -0.30) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the decimal value for the annual escalation so most values are "
+                             fmt::format("{}: Invalid value in field {}.  This value is the decimal value for the annual escalation so most values are "
                                     "between 0.02 and 0.15. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(6)));
@@ -689,7 +689,7 @@ void GetInputLifeCycleCostNonrecurringCost(EnergyPlusData &state)
         for (jFld = 1; jFld <= NumAlphas; ++jFld) {
             if (hasi(AlphaArray(jFld), "LifeCycleCost:")) {
                 ShowWarningError(state,
-                                 format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
+                                 fmt::format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
                                         CurrentModuleObject,
                                         AlphaArray(1)));
             }
@@ -712,7 +712,7 @@ void GetInputLifeCycleCostNonrecurringCost(EnergyPlusData &state)
         if (isNotNonRecurringCost) {
             elcc->NonrecurringCost[iInObj].category = CostCategory::Construction;
             ShowWarningError(state,
-                             format("{}: Invalid {}=\"{}\". The category of Construction will be used.",
+                             fmt::format("{}: Invalid {}=\"{}\". The category of Construction will be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cAlphaFieldNames(2),
                                     AlphaArray(2)));
@@ -729,7 +729,7 @@ void GetInputLifeCycleCostNonrecurringCost(EnergyPlusData &state)
         if (elcc->NonrecurringCost[iInObj].startOfCosts == StartCosts::Invalid) {
             elcc->NonrecurringCost[iInObj].startOfCosts = StartCosts::ServicePeriod;
             ShowWarningError(state,
-                             format("{}: Invalid {}=\"{}\". The start of the service period will be used.",
+                             fmt::format("{}: Invalid {}=\"{}\". The start of the service period will be used.",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cAlphaFieldNames(3),
                                     AlphaArray(3)));
@@ -741,14 +741,14 @@ void GetInputLifeCycleCostNonrecurringCost(EnergyPlusData &state)
         elcc->NonrecurringCost[iInObj].yearsFromStart = int(NumArray(2));
         if (elcc->NonrecurringCost[iInObj].yearsFromStart > 100) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of years from the start so a value greater than 100 is "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of years from the start so a value greater than 100 is "
                                     "not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(2)));
         }
         if (elcc->NonrecurringCost[iInObj].yearsFromStart < 0) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of years from the start so a value less than 0 is not "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of years from the start so a value less than 0 is not "
                                     "reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(2)));
@@ -760,14 +760,14 @@ void GetInputLifeCycleCostNonrecurringCost(EnergyPlusData &state)
         elcc->NonrecurringCost[iInObj].monthsFromStart = int(NumArray(3));
         if (elcc->NonrecurringCost[iInObj].monthsFromStart > 1200) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of months from the start so a value greater than 1200 "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of months from the start so a value greater than 1200 "
                                     "is not reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(3)));
         }
         if (elcc->NonrecurringCost[iInObj].monthsFromStart < 0) {
             ShowWarningError(state,
-                             format("{}: Invalid value in field {}.  This value is the number of months from the start so a value less than 0 is not "
+                             fmt::format("{}: Invalid value in field {}.  This value is the number of months from the start so a value less than 0 is not "
                                     "reasonable for an economic evaluation. ",
                                     CurrentModuleObject,
                                     state.dataIPShortCut->cNumericFieldNames(3)));
@@ -828,7 +828,7 @@ void GetInputLifeCycleCostUsePriceEscalation(EnergyPlusData &state)
             for (int jFld = 1; jFld <= NumAlphas; ++jFld) {
                 if (hasi(AlphaArray(jFld), "LifeCycleCost:")) {
                     ShowWarningError(state,
-                                     format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
+                                     fmt::format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
                                             CurrentModuleObject,
                                             AlphaArray(1)));
                 }
@@ -855,7 +855,7 @@ void GetInputLifeCycleCostUsePriceEscalation(EnergyPlusData &state)
             //       \key OtherFuel2
             elcc->UsePriceEscalation(iInObj).resource = static_cast<Constant::eResource>(getEnumValue(Constant::eResourceNamesUC, AlphaArray(2)));
             if (NumAlphas > 3) {
-                ShowWarningError(state, format("In {} contains more alpha fields than expected.", CurrentModuleObject));
+                ShowWarningError(state, fmt::format("In {} contains more alpha fields than expected.", CurrentModuleObject));
             }
             // N1,  \field Escalation Start Year
             //      \type integer
@@ -864,13 +864,13 @@ void GetInputLifeCycleCostUsePriceEscalation(EnergyPlusData &state)
             elcc->UsePriceEscalation(iInObj).escalationStartYear = int(NumArray(1));
             if (elcc->UsePriceEscalation(iInObj).escalationStartYear > 2100) {
                 ShowWarningError(state,
-                                 format("{}: Invalid value in field {}.  Value greater than 2100 yet it is representing a year. ",
+                                 fmt::format("{}: Invalid value in field {}.  Value greater than 2100 yet it is representing a year. ",
                                         CurrentModuleObject,
                                         state.dataIPShortCut->cNumericFieldNames(1)));
             }
             if (elcc->UsePriceEscalation(iInObj).escalationStartYear < 1900) {
                 ShowWarningError(state,
-                                 format("{}: Invalid value in field {}.  Value less than 1900 yet it is representing a year. ",
+                                 fmt::format("{}: Invalid value in field {}.  Value less than 1900 yet it is representing a year. ",
                                         CurrentModuleObject,
                                         state.dataIPShortCut->cNumericFieldNames(1)));
             }
@@ -893,7 +893,7 @@ void GetInputLifeCycleCostUsePriceEscalation(EnergyPlusData &state)
             if (elcc->UsePriceEscalation(iInObj).escalationStartMonth == -1) {
                 elcc->UsePriceEscalation(iInObj).escalationStartMonth = 0;
                 ShowWarningError(state,
-                                 format("{}: Invalid month entered in field {}. Using January instead of \"{}\"",
+                                 fmt::format("{}: Invalid month entered in field {}. Using January instead of \"{}\"",
                                         CurrentModuleObject,
                                         state.dataIPShortCut->cAlphaFieldNames(3),
                                         AlphaArray(3)));
@@ -977,7 +977,7 @@ void GetInputLifeCycleCostUseAdjustment(EnergyPlusData &state)
             for (int jFld = 1; jFld <= NumAlphas; ++jFld) {
                 if (hasi(AlphaArray(jFld), "LifeCycleCost:")) {
                     ShowWarningError(state,
-                                     format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
+                                     fmt::format("In {} named {} a field was found containing LifeCycleCost: which may indicate a missing comma.",
                                             CurrentModuleObject,
                                             AlphaArray(1)));
                 }
@@ -1004,7 +1004,7 @@ void GetInputLifeCycleCostUseAdjustment(EnergyPlusData &state)
             //       \key OtherFuel2
             elcc->UseAdjustment(iInObj).resource = static_cast<Constant::eResource>(getEnumValue(Constant::eResourceNamesUC, AlphaArray(2)));
             if (NumAlphas > 2) {
-                ShowWarningError(state, format("In {} contains more alpha fields than expected.", CurrentModuleObject));
+                ShowWarningError(state, fmt::format("In {} contains more alpha fields than expected.", CurrentModuleObject));
             }
             //  N1,  \field Year 1 Multiplier
             //       \type real
@@ -1164,7 +1164,7 @@ void ExpressAsCashFlows(EnergyPlusData &state)
             elcc->CashFlow[offset + jCost].mnAmount(month) = elcc->NonrecurringCost[jCost].cost * monthlyInflationFactor(month);
         } else {
             ShowWarningError(state,
-                             format("For life cycle costing a nonrecurring cost named {} contains a cost which is not within the study period.",
+                             fmt::format("For life cycle costing a nonrecurring cost named {} contains a cost which is not within the study period.",
                                     elcc->NonrecurringCost[jCost].name));
         }
     }
@@ -1192,7 +1192,7 @@ void ExpressAsCashFlows(EnergyPlusData &state)
         } else {
             ShowWarningError(
                 state,
-                format("For life cycle costing the recurring cost named {} has the first year of the costs that is not within the study period.",
+                fmt::format("For life cycle costing the recurring cost named {} has the first year of the costs that is not within the study period.",
                        elcc->RecurringCosts[jCost].name));
         }
     }
@@ -1324,7 +1324,7 @@ void ExpressAsCashFlows(EnergyPlusData &state)
         Constant::eResource curResource = elcc->UsePriceEscalation(nUsePriceEsc).resource;
         if (!resourceCostNotZero[static_cast<int>(curResource)] && state.dataGlobal->DoWeathSim) {
             ShowWarningError(state,
-                             format("The resource referenced by LifeCycleCost:UsePriceEscalation= \"{}\" has no energy cost. ",
+                             fmt::format("The resource referenced by LifeCycleCost:UsePriceEscalation= \"{}\" has no energy cost. ",
                                     elcc->UsePriceEscalation(nUsePriceEsc).name));
             ShowContinueError(state, "... It is likely that the wrong resource is used. The resource should match the meter used in Utility:Tariff.");
         }
@@ -1708,8 +1708,8 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         } else {
             tableBody(1, 6) = "-- N/A --";
         }
-        tableBody(1, 7) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear);
-        tableBody(1, 8) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->serviceDateMonth)], elcc->serviceDateYear);
+        tableBody(1, 7) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear);
+        tableBody(1, 8) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->serviceDateMonth)], elcc->serviceDateYear);
         tableBody(1, 9) = fmt::to_string(elcc->lengthStudyYears);
         tableBody(1, 10) = OutputReportTabular::RealToStr(elcc->taxRate, 4);
         tableBody(1, 11) = DeprMethodNames[static_cast<int>(elcc->depreciationMethod)];
@@ -1746,7 +1746,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         for (int jObj = 1; jObj <= elcc->numUsePriceEscalation; ++jObj) { // loop through objects not columns to add names
             columnHead(jObj) = elcc->UsePriceEscalation(jObj).name;
             tableBody(jObj, 1) = Constant::eResourceNames[static_cast<int>(elcc->UsePriceEscalation(jObj).resource)];
-            tableBody(jObj, 2) = format("{} {}",
+            tableBody(jObj, 2) = fmt::format("{} {}",
                                         Util::MonthNamesCC[static_cast<int>(elcc->UsePriceEscalation(jObj).escalationStartMonth)],
                                         elcc->UsePriceEscalation(jObj).escalationStartYear);
         }
@@ -1781,7 +1781,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
             columnHead = "none";
             rowHead(1) = "";
             for (int iYear = 1; iYear <= numYears; ++iYear) {
-                rowHead(iYear + 1) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->serviceDateMonth)], elcc->serviceDateYear + iYear - 1);
+                rowHead(iYear + 1) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->serviceDateMonth)], elcc->serviceDateYear + iYear - 1);
             }
             for (int jObj = 1; jObj <= elcc->numUseAdjustment; ++jObj) { // loop through objects not columns to add names
                 columnHead(jObj) = elcc->UseAdjustment(jObj).name;
@@ -1816,7 +1816,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         tableBody = "";
         rowHead(1) = "";
         for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-            rowHead(iYear + 1) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+            rowHead(iYear + 1) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
         }
         for (int jObj = 0; jObj < (elcc->numRecurringCosts + elcc->numNonrecurringCost); ++jObj) {
             int curCashFlow = CostCategory::Num + jObj;
@@ -1859,7 +1859,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         tableBody.allocate(numColumns, elcc->lengthStudyYears);
         tableBody = "";
         for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-            rowHead(iYear) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+            rowHead(iYear) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
         }
         for (int jObj = 0; jObj < elcc->numResourcesUsed; ++jObj) {
             int curCashFlow = CostCategory::Num + elcc->numRecurringCosts + elcc->numNonrecurringCost + jObj;
@@ -1895,7 +1895,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         tableBody.allocate(numColumns, elcc->lengthStudyYears);
         tableBody = "";
         for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-            rowHead(iYear) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+            rowHead(iYear) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
         }
         for (int jObj = 0; jObj < elcc->numResourcesUsed; ++jObj) {
             int curCashFlow = CostCategory::Num + elcc->numRecurringCosts + elcc->numNonrecurringCost + jObj;
@@ -1944,7 +1944,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         }
         columnHead(4) = Total;
         for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-            rowHead(iYear) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+            rowHead(iYear) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
             for (int CostCategory = CostCategory::Construction, tableColumnIndex = 1; CostCategory <= CostCategory::TotCaptl;
                  ++tableColumnIndex, ++CostCategory) {
                 tableBody(tableColumnIndex, iYear) = OutputReportTabular::RealToStr(elcc->CashFlow[CostCategory].yrAmount(iYear), 2);
@@ -1978,7 +1978,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         columnHead(10) = Total;
 
         for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-            rowHead(iYear) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+            rowHead(iYear) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
             for (int CashFlowCostCategory = CostCategory::Maintenance; CashFlowCostCategory <= CostCategory::TotOper; ++CashFlowCostCategory) {
                 tableBody(CashFlowCostCategory + 1, iYear) = OutputReportTabular::RealToStr(elcc->CashFlow[CashFlowCostCategory].yrAmount(iYear), 2);
             }
@@ -2011,7 +2011,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         columnHead(10) = Total;
 
         for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-            rowHead(iYear) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+            rowHead(iYear) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
             for (int CashFlowCostCategory = CostCategory::Maintenance; CashFlowCostCategory <= CostCategory::Water; ++CashFlowCostCategory) {
                 tableBody(CashFlowCostCategory + 1, iYear) = OutputReportTabular::RealToStr(elcc->CashFlow[CashFlowCostCategory].yrAmount(iYear), 2);
             }
@@ -2062,7 +2062,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
         //        columnHead(jObj + 1) = elcc->CashFlow[jObj].name;
         //    }
         //    for (int kMonth = 1; kMonth <= elcc->lengthStudyTotalMonths; ++kMonth) {
-        //        rowHead(kMonth) = format("{} {}",
+        //        rowHead(kMonth) = fmt::format("{} {}",
         //                                 Util::MonthNamesCC[static_cast<int>(1 + (kMonth + elcc->baseDateMonth - 2) % 12) - 1],
         //                                 elcc->baseDateYear + int((kMonth - 1) / 12));
         //        for (int jObj = 0; jObj < elcc->numCashFlow; ++jObj) {
@@ -2250,7 +2250,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
 
         totalPV = 0.0;
         for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-            rowHead(iYear) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+            rowHead(iYear) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
             tableBody(1, iYear) = OutputReportTabular::RealToStr(elcc->CashFlow[CostCategory::TotGrand].yrAmount(iYear), 2);
             // adjust for escalated energy costs
             Real64 yearly_total_cost = elcc->CashFlow[CostCategory::TotGrand].yrAmount(iYear) + elcc->EscalatedTotEnergy(iYear) -
@@ -2293,7 +2293,7 @@ void WriteTabularLifeCycleCostReport(EnergyPlusData &state)
 
             totalPV = 0.0;
             for (int iYear = 1; iYear <= elcc->lengthStudyYears; ++iYear) {
-                rowHead(iYear) = format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
+                rowHead(iYear) = fmt::format("{} {}", Util::MonthNamesCC[static_cast<int>(elcc->baseDateMonth)], elcc->baseDateYear + iYear - 1);
                 tableBody(1, iYear) = OutputReportTabular::RealToStr(elcc->DepreciatedCapital(iYear), 2);
                 tableBody(2, iYear) = OutputReportTabular::RealToStr(elcc->TaxableIncome(iYear), 2);
                 tableBody(3, iYear) = OutputReportTabular::RealToStr(elcc->Taxes(iYear), 2);

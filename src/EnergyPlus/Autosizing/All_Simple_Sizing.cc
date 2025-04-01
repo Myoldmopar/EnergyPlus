@@ -167,10 +167,10 @@ Real64 ASHRAEMinSATCoolingSizer::size(EnergyPlusData &state, Real64 _originalVal
                     this->callingRoutine + ' ' + this->compType + ' ' + this->compName + ", Developer Error: Component sizing incomplete.";
                 this->addErrorMessage(msg);
                 ShowSevereError(state, msg);
-                msg = format("SizingString = {}, DataCapacityUsedForSizing = {:.1T}", this->sizingString, this->dataCapacityUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataCapacityUsedForSizing = {:.1f}", this->sizingString, this->dataCapacityUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
-                msg = format("SizingString = {}, DataFlowUsedForSizing = {:.1T}", this->sizingString, this->dataFlowUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataFlowUsedForSizing = {:.1f}", this->sizingString, this->dataFlowUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
             }
@@ -190,13 +190,13 @@ Real64 ASHRAEMinSATCoolingSizer::size(EnergyPlusData &state, Real64 _originalVal
                     this->callingRoutine + ' ' + this->compType + ' ' + this->compName + ", Developer Error: Component sizing incomplete.";
                 this->addErrorMessage(msg);
                 ShowSevereError(state, msg);
-                msg = format("SizingString = {}, DataCapacityUsedForSizing = {:.1T}", this->sizingString, this->dataCapacityUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataCapacityUsedForSizing = {:.1f}", this->sizingString, this->dataCapacityUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
-                msg = format("SizingString = {}, DataFlowUsedForSizing = {:.1T}", this->sizingString, this->dataFlowUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataFlowUsedForSizing = {:.1f}", this->sizingString, this->dataFlowUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
-                msg = format("SizingString = {}, DataZoneUsedForSizing = {:.0T}", this->sizingString, Real64(this->dataZoneUsedForSizing));
+                msg = fmt::format("SizingString = {}, DataZoneUsedForSizing = {:.0f}", this->sizingString, Real64(this->dataZoneUsedForSizing));
                 ShowContinueError(state, msg);
             }
         }
@@ -226,10 +226,10 @@ Real64 ASHRAEMaxSATHeatingSizer::size(EnergyPlusData &state, Real64 _originalVal
                     this->callingRoutine + ' ' + this->compType + ' ' + this->compName + ", Developer Error: Component sizing incomplete.";
                 this->addErrorMessage(msg);
                 ShowSevereError(state, msg);
-                msg = format("SizingString = {}, DataCapacityUsedForSizing = {:.1T}", this->sizingString, this->dataCapacityUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataCapacityUsedForSizing = {:.1f}", this->sizingString, this->dataCapacityUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
-                msg = format("SizingString = {}, DataFlowUsedForSizing = {:.1T}", this->sizingString, this->dataFlowUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataFlowUsedForSizing = {:.1f}", this->sizingString, this->dataFlowUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
             }
@@ -249,13 +249,13 @@ Real64 ASHRAEMaxSATHeatingSizer::size(EnergyPlusData &state, Real64 _originalVal
                     this->callingRoutine + ' ' + this->compType + ' ' + this->compName + ", Developer Error: Component sizing incomplete.";
                 this->addErrorMessage(msg);
                 ShowSevereError(state, msg);
-                msg = format("SizingString = {}, DataCapacityUsedForSizing = {:.1T}", this->sizingString, this->dataCapacityUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataCapacityUsedForSizing = {:.1f}", this->sizingString, this->dataCapacityUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
-                msg = format("SizingString = {}, DataFlowUsedForSizing = {:.1T}", this->sizingString, this->dataFlowUsedForSizing);
+                msg = fmt::format("SizingString = {}, DataFlowUsedForSizing = {:.1f}", this->sizingString, this->dataFlowUsedForSizing);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
-                msg = format("SizingString = {}, DataZoneUsedForSizing = {:.0T}", this->sizingString, Real64(this->dataZoneUsedForSizing));
+                msg = fmt::format("SizingString = {}, DataZoneUsedForSizing = {:.0f}", this->sizingString, Real64(this->dataZoneUsedForSizing));
                 ShowContinueError(state, msg);
             }
         }
@@ -274,7 +274,7 @@ Real64 DesiccantDehumidifierBFPerfDataFaceVelocitySizer::size(EnergyPlusData &st
         this->autoSizedValue = this->dataEMSOverride;
     } else {
         this->autoSizedValue = 4.30551 + 0.01969 * this->dataAirFlowUsedForSizing;
-        this->autoSizedValue = min(6.0, this->autoSizedValue);
+        this->autoSizedValue = min(6.0f, this->autoSizedValue);
     }
     if (this->isEpJSON) this->sizingString = "nominal_air_face_velocity [m/s]";
     this->selectSizerOutput(state, errorsFound);

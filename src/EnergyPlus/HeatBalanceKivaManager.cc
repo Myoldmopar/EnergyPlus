@@ -80,14 +80,14 @@ namespace EnergyPlus::HeatBalanceKivaManager {
 void kivaErrorCallback(const int messageType, const std::string message, void *contextPtr)
 {
     if (!contextPtr) {
-        throw FatalError(format("Unhandled Kiva Error: {}", message));
+        throw FatalError(fmt::format("Unhandled Kiva Error: {}", message));
     }
     std::string fullMessage;
     std::pair<EnergyPlusData *, std::string> contextPair = *(std::pair<EnergyPlusData *, std::string> *)contextPtr;
     if (contextPair.second.size() > 0) {
-        fullMessage = format("{}: {}", contextPair.second, message);
+        fullMessage = fmt::format("{}: {}", contextPair.second, message);
     } else {
-        fullMessage = format("Kiva: {}", message);
+        fullMessage = fmt::format("Kiva: {}", message);
     }
     if (messageType == Kiva::MSG_INFO) {
         ShowMessage(*contextPair.first, fullMessage);
@@ -146,7 +146,7 @@ void KivaInstanceMap::initGround(EnergyPlusData &state, const KivaWeatherData &k
         constructionName = state.dataConstruction->Construct(constructionNum).Name;
     }
 
-    ss.dir = format("{}/{} {:.2R} {}",
+    ss.dir = fmt::format("{}/{} {:.2f} {}",
                     FileSystem::getAbsolutePath(state.dataStrGlobals->outDirPath),
                     state.dataSurface->Surface(floorSurface).Name,
                     instance.ground->foundation.foundationDepth,
@@ -222,7 +222,7 @@ void KivaInstanceMap::setInitialBoundaryConditions(
 
     if (kivaWeather.intervalsPerHour == 1) {
         index = (date - 1) * 24 + (hour - 1);
-        weightNow = min(1.0, (double(timestep) / double(state.dataGlobal->TimeStepsInHour)));
+        weightNow = min(1.0f, (Real64(timestep) / Real64(state.dataGlobal->TimeStepsInHour)));
     } else {
         index = (date - 1) * 24 * state.dataGlobal->TimeStepsInHour + (hour - 1) * state.dataGlobal->TimeStepsInHour + (timestep - 1);
         weightNow = 1.0; // weather data interval must be the same as the timestep interval (i.e., no interpolation)
@@ -315,7 +315,7 @@ void KivaInstanceMap::setInitialBoundaryConditions(
             default: {
                 Tin = 0.0;
                 ShowSevereError(state,
-                                format("Illegal control type for Zone={}, Found value={}, in Schedule={}",
+                                fmt::format("Illegal control type for Zone={}, Found value={}, in Schedule={}",
                                        state.dataHeatBal->Zone(zoneNum).Name,
                                        controlType,
                                        state.dataZoneCtrls->TempControlledZone(zoneControlNum).setptTypeSched->Name));
@@ -477,7 +477,7 @@ void KivaManager::readWeatherData(EnergyPlusData &state)
         if (LineResult.eof) {
             ShowFatalError(
                 state,
-                format("Kiva::ReadWeatherFile: Unexpected End-of-File on EPW Weather file, while reading header information, looking for header={}",
+                fmt::format("Kiva::ReadWeatherFile: Unexpected End-of-File on EPW Weather file, while reading header information, looking for header={}",
                        Header(HdLine)));
         }
 
@@ -499,7 +499,7 @@ void KivaManager::readWeatherData(EnergyPlusData &state)
 
         if ((Pos == std::string::npos) && (!has_prefixi(Header(HdLine), "COMMENTS"))) {
             ShowSevereError(state, "Invalid Header line in in.epw -- no commas");
-            ShowContinueError(state, format("Line={}", LineResult.data));
+            ShowContinueError(state, fmt::format("Line={}", LineResult.data));
             ShowFatalError(state, "Previous conditions cause termination.");
         }
         if (Pos != std::string::npos) LineResult.data.erase(0, Pos + 1);
@@ -688,15 +688,15 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                         if (Surfaces(wl).Class == DataSurfaces::SurfaceClass::Floor) {
                             ErrorsFound = true;
                             ShowSevereError(state,
-                                            format("Foundation:Kiva=\"{}\", only one floor per Foundation:Kiva Object allowed.",
+                                            fmt::format("Foundation:Kiva=\"{}\", only one floor per Foundation:Kiva Object allowed.",
                                                    foundationInputs[surface.OSCPtr].name));
                         } else {
                             ErrorsFound = true;
                             ShowSevereError(state,
-                                            format("Foundation:Kiva=\"{}\", only floor and wall surfaces are allowed to reference Foundation Outside "
+                                            fmt::format("Foundation:Kiva=\"{}\", only floor and wall surfaces are allowed to reference Foundation Outside "
                                                    "Boundary Conditions.",
                                                    foundationInputs[surface.OSCPtr].name));
-                            ShowContinueError(state, format("Surface=\"{}\", is not a floor or wall.", Surfaces(wl).Name));
+                            ShowContinueError(state, fmt::format("Surface=\"{}\", is not a floor or wall.", Surfaces(wl).Name));
                         }
                     } else {
                         wallSurfaces.push_back(wl);
@@ -725,7 +725,7 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
             } else {
                 ErrorsFound = true;
                 ShowSevereError(state,
-                                format("Surface=\"{}\", references a Foundation Outside Boundary Condition but there is no corresponding "
+                                fmt::format("Surface=\"{}\", references a Foundation Outside Boundary Condition but there is no corresponding "
                                        "SURFACEPROPERTY:EXPOSEDFOUNDATIONPERIMETER object defined.",
                                        Surfaces(surfNum).Name));
             }
@@ -772,7 +772,7 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                         exposed2DPerimeter += 0.0;
                     }
                 }
-                exposedFraction = std::min(exposed2DPerimeter / total2DPerimeter, 1.0);
+                exposedFraction = std::min(exposed2DPerimeter / total2DPerimeter, 1.0f);
             }
 
             Real64 totalExposedPerimeter = exposedFraction * totalPerimeter;
@@ -794,11 +794,11 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                     // Enforce quadrilateralism
                     if (numVs > 4) {
                         ShowWarningError(state,
-                                         format("Foundation:Kiva=\"{}\", wall surfaces with more than four vertices referencing",
+                                         fmt::format("Foundation:Kiva=\"{}\", wall surfaces with more than four vertices referencing",
                                                 foundationInputs[surface.OSCPtr].name));
                         ShowContinueError(
                             state, "...Foundation Outside Boundary Conditions may not be interpreted correctly in the 2D finite difference model.");
-                        ShowContinueError(state, format("Surface=\"{}\", has {} vertices.", Surfaces(wl).Name, numVs));
+                        ShowContinueError(state, fmt::format("Surface=\"{}\", has {} vertices.", Surfaces(wl).Name, numVs));
                         ShowContinueError(state,
                                           "Consider separating the wall into separate surfaces, each spanning from the floor slab to the top of "
                                           "the foundation wall.");
@@ -823,9 +823,9 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                     }
 
                     if (perimeter == 0.0) {
-                        ShowWarningError(state, format("Foundation:Kiva=\"{}\".", foundationInputs[surface.OSCPtr].name));
-                        ShowContinueError(state, format("   Wall Surface=\"{}\", does not have any vertices that are", Surfaces(wl).Name));
-                        ShowContinueError(state, format("   coplanar with the corresponding Floor Surface=\"{}\".", Surfaces(surfNum).Name));
+                        ShowWarningError(state, fmt::format("Foundation:Kiva=\"{}\".", foundationInputs[surface.OSCPtr].name));
+                        ShowContinueError(state, fmt::format("   Wall Surface=\"{}\", does not have any vertices that are", Surfaces(wl).Name));
+                        ShowContinueError(state, fmt::format("   coplanar with the corresponding Floor Surface=\"{}\".", Surfaces(surfNum).Name));
                         ShowContinueError(state,
                                           "   Simulation will continue using the distance between the two lowest points in the wall for the "
                                           "interface distance.");
@@ -906,9 +906,9 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                         auto const *mat = materials(c.LayerPoint(layer));
                         if (mat->ROnly) {
                             ErrorsFound = true;
-                            ShowSevereError(state, format("Construction=\"{}\", constructions referenced by surfaces with a", c.Name));
+                            ShowSevereError(state, fmt::format("Construction=\"{}\", constructions referenced by surfaces with a", c.Name));
                             ShowContinueError(state, "\"Foundation\" Outside Boundary Condition must use only regular material objects");
-                            ShowContinueError(state, format("Material=\"{}\", is not a regular material object", mat->Name));
+                            ShowContinueError(state, fmt::format("Material=\"{}\", is not a regular material object", mat->Name));
                             return ErrorsFound;
                         }
 
@@ -931,9 +931,9 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                     if (mat->ROnly) {
                         ErrorsFound = true;
                         ShowSevereError(
-                            state, format("Construction=\"{}\", constructions referenced by surfaces with a", Constructs(surface.Construction).Name));
+                            state, fmt::format("Construction=\"{}\", constructions referenced by surfaces with a", Constructs(surface.Construction).Name));
                         ShowContinueError(state, "\"Foundation\" Outside Boundary Condition must use only regular material objects");
-                        ShowContinueError(state, format("Material=\"{}\", is not a regular material object", mat->Name));
+                        ShowContinueError(state, fmt::format("Material=\"{}\", is not a regular material object", mat->Name));
                         return ErrorsFound;
                     }
 
@@ -987,20 +987,20 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
 
                 if (fnd.deepGroundDepth > initDeepGroundDepth) {
                     ShowWarningError(state,
-                                     format("Foundation:Kiva=\"{}\", the autocalculated deep ground depth ({:.3T} m) is shallower than "
-                                            "foundation construction elements ({:.3T} m)",
+                                     fmt::format("Foundation:Kiva=\"{}\", the autocalculated deep ground depth ({:.3f} m) is shallower than "
+                                            "foundation construction elements ({:.3f} m)",
                                             foundationInputs[surface.OSCPtr].name,
                                             initDeepGroundDepth,
                                             fnd.deepGroundDepth - 1.0));
                     ShowContinueError(state,
-                                      format("The deep ground depth will be set one meter below the lowest element ({:.3T} m)", fnd.deepGroundDepth));
+                                      fmt::format("The deep ground depth will be set one meter below the lowest element ({:.3f} m)", fnd.deepGroundDepth));
                 }
 
                 // polygon
 
                 fnd.polygon = floorPolygon;
 
-                std::pair<EnergyPlusData *, std::string> contexPair2{&state, format("Foundation:Kiva=\"{}\"", foundationInputs[surface.OSCPtr].name)};
+                std::pair<EnergyPlusData *, std::string> contexPair2{&state, fmt::format("Foundation:Kiva=\"{}\"", foundationInputs[surface.OSCPtr].name)};
                 Kiva::setMessageCallback(kivaErrorCallback, &contexPair2);
 
                 // point surface to associated ground instance(s)
@@ -1037,8 +1037,8 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                     assignKivaInstances = false;
                     if (remainingExposedPerimeter < -0.1) {
                         ErrorsFound = true;
-                        ShowSevereError(state, format("For Floor Surface=\"{}\", the Wall surfaces referencing", Surfaces(surfNum).Name));
-                        ShowContinueError(state, format("  the same Foundation:Kiva=\"{}\" have", foundationInputs[Surfaces(surfNum).OSCPtr].name));
+                        ShowSevereError(state, fmt::format("For Floor Surface=\"{}\", the Wall surfaces referencing", Surfaces(surfNum).Name));
+                        ShowContinueError(state, fmt::format("  the same Foundation:Kiva=\"{}\" have", foundationInputs[Surfaces(surfNum).OSCPtr].name));
                         ShowContinueError(state, "  a combined length greater than the exposed perimeter of the foundation.");
                         ShowContinueError(state, "  Ensure that each Wall surface shares at least one edge with the corresponding");
                         ShowContinueError(state, "  Floor surface.");
@@ -1056,18 +1056,18 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
     for (int surfNum2 : state.dataSurface->AllHTKivaSurfaceList) {
         if (surfaceMap[surfNum2].size() == 0) {
             ErrorsFound = true;
-            ShowSevereError(state, format("Surface=\"{}\" has a 'Foundation' Outside Boundary Condition", Surfaces(surfNum).Name));
-            ShowContinueError(state, format("  referencing Foundation:Kiva=\"{}\".", foundationInputs[Surfaces(surfNum).OSCPtr].name));
+            ShowSevereError(state, fmt::format("Surface=\"{}\" has a 'Foundation' Outside Boundary Condition", Surfaces(surfNum).Name));
+            ShowContinueError(state, fmt::format("  referencing Foundation:Kiva=\"{}\".", foundationInputs[Surfaces(surfNum).OSCPtr].name));
             if (Surfaces(surfNum2).Class == DataSurfaces::SurfaceClass::Wall) {
-                ShowContinueError(state, format("  You must also reference Foundation:Kiva=\"{}\"", foundationInputs[Surfaces(surfNum).OSCPtr].name));
+                ShowContinueError(state, fmt::format("  You must also reference Foundation:Kiva=\"{}\"", foundationInputs[Surfaces(surfNum).OSCPtr].name));
                 ShowContinueError(state,
-                                  format("  in a floor surface within the same Zone=\"{}\".", state.dataHeatBal->Zone(Surfaces(surfNum).Zone).Name));
+                                  fmt::format("  in a floor surface within the same Zone=\"{}\".", state.dataHeatBal->Zone(Surfaces(surfNum).Zone).Name));
             } else if (Surfaces(surfNum2).Class == DataSurfaces::SurfaceClass::Floor) {
                 ShowContinueError(state, "  However, this floor was never assigned to a Kiva instance.");
                 ShowContinueError(state, "  This should not occur for floor surfaces. Please report to EnergyPlus Development Team.");
             } else {
                 ShowContinueError(state, "  Only floor and wall surfaces are allowed to reference 'Foundation' Outside Boundary Conditions.");
-                ShowContinueError(state, format("  Surface=\"{}\", is not a floor or wall.", Surfaces(surfNum).Name));
+                ShowContinueError(state, fmt::format("  Surface=\"{}\", is not a floor or wall.", Surfaces(surfNum).Name));
             }
         }
     }
@@ -1093,7 +1093,7 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
             wallSurfaceString += "," + state.dataSurface->Surface(wl).Name;
         }
 
-        static constexpr std::string_view fmt = "{},{},{},{},{:.2R},{:.2R},{:.2R},{},{}{}\n";
+        static constexpr std::string_view fmt = "{},{},{},{},{:.2f},{:.2f},{:.2f},{},{}{}\n";
         print(state.files.eio,
               fmt,
               foundationInputs[state.dataSurface->Surface(kv.floorSurface).OSCPtr].name,
@@ -1162,7 +1162,7 @@ void KivaManager::calcKivaInstances(EnergyPlusData &state)
 #ifdef GROUND_PLOT
 void KivaInstanceMap::plotDomain(EnergyPlusData &state)
 {
-    gp.createFrame(*instance.ground, format("{}/{} {}:00", state.dataEnvrn->Month, state.dataEnvrn->DayOfMonth, state.dataGlobal->HourOfDay));
+    gp.createFrame(*instance.ground, fmt::format("{}/{} {}:00", state.dataEnvrn->Month, state.dataEnvrn->DayOfMonth, state.dataGlobal->HourOfDay));
 
     instance.ground->writeCSV(format("{}/{}.csv", debugDir, plotNum));
 
@@ -1173,7 +1173,7 @@ void KivaInstanceMap::plotDomain(EnergyPlusData &state)
 void KivaManager::calcKivaSurfaceResults(EnergyPlusData &state)
 {
     for (int surfNum : state.dataSurface->AllHTKivaSurfaceList) {
-        std::pair<EnergyPlusData *, std::string> contextPair{&state, format("Surface=\"{}\"", state.dataSurface->Surface(surfNum).Name)};
+        std::pair<EnergyPlusData *, std::string> contextPair{&state, fmt::format("Surface=\"{}\"", state.dataSurface->Surface(surfNum).Name)};
         Kiva::setMessageCallback(kivaErrorCallback, &contextPair);
         surfaceMap[surfNum].calc_weighted_results();
         state.dataHeatBalSurf->SurfHConvInt(surfNum) = state.dataSurfaceGeometry->kivaManager.surfaceMap[surfNum].results.hconv;
@@ -1206,8 +1206,8 @@ void KivaManager::defineDefaultFoundation(EnergyPlusData &state)
         if (!settings.autocalculateDeepGroundDepth) {
             if (defFnd.deepGroundDepth != settings.deepGroundDepth) {
                 ShowWarningError(state, "Foundation:Kiva:Settings, when Deep-Ground Boundary Condition is Autoselect,");
-                ShowContinueError(state, format("the user-specified Deep-Ground Depth ({:.1R} m)", settings.deepGroundDepth));
-                ShowContinueError(state, format("will be overridden with the Autoselected depth ({:.1R} m)", defFnd.deepGroundDepth));
+                ShowContinueError(state, fmt::format("the user-specified Deep-Ground Depth ({:.1f} m)", settings.deepGroundDepth));
+                ShowContinueError(state, fmt::format("will be overridden with the Autoselected depth ({:.1f} m)", defFnd.deepGroundDepth));
             }
         }
     } else if (settings.deepGroundBoundary == Settings::ZERO_FLUX) {

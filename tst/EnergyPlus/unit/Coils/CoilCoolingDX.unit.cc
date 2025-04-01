@@ -631,7 +631,7 @@ TEST_F(CoilCoolingDXTest, CoilCoolingDXAlternateModePerformanceHitsSaturation)
 //     Real64 MultiSpeedElecPower6 = Coil.ElecCoolingPower;
 //
 //     Real64 ratedVolFlowRate = state->dataHVACGlobal->MSHPMassFlowRateHigh / ratedRhoAir;
-//     std::string volFlowRateStr = format("{:.4R}", ratedVolFlowRate);
+//     std::string volFlowRateStr = fmt::format("{:.4R}", ratedVolFlowRate);
 //
 //     std::string idf_objects = delimited_string({
 //         "  Coil:Cooling:DX,",
@@ -1049,7 +1049,7 @@ TEST_F(CoilCoolingDXTest, CoilCoolingDXAlternateModePerformanceHitsSaturation)
 //     Real64 MultiSpeedElecPower6 = Coil.ElecCoolingPower;
 //
 //     Real64 ratedVolFlowRate = state->dataHVACGlobal->MSHPMassFlowRateHigh / ratedRhoAir;
-//     std::string volFlowRateStr = format("{:.4R}", ratedVolFlowRate);
+//     std::string volFlowRateStr = fmt::format("{:.4R}", ratedVolFlowRate);
 //
 //     std::string idf_objects = delimited_string({
 //         "  Coil:Cooling:DX,",

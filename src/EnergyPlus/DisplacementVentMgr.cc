@@ -735,7 +735,7 @@ namespace RoomAir {
                     PsyRhoAirFnPbTdbW(state, state.dataEnvrn->OutBaroPress, state.dataRoomAir->MATFloor(ZoneNum), thisZoneHB.airHumRat) *
                     PsyCpAirFnW(thisZoneHB.airHumRat) / TimeStepSysSec;
                 state.dataRoomAir->AIRRATOC(ZoneNum) =
-                    zone.Volume * (state.dataRoomAir->HeightTransition(ZoneNum) - min(state.dataRoomAir->HeightTransition(ZoneNum), 0.2)) /
+                    zone.Volume * (state.dataRoomAir->HeightTransition(ZoneNum) - min(state.dataRoomAir->HeightTransition(ZoneNum), 0.2f)) /
                     CeilingHeight * zone.ZoneVolCapMultpSens *
                     PsyRhoAirFnPbTdbW(state, state.dataEnvrn->OutBaroPress, state.dataRoomAir->MATOC(ZoneNum), thisZoneHB.airHumRat) *
                     PsyCpAirFnW(thisZoneHB.airHumRat) / TimeStepSysSec;
@@ -793,7 +793,7 @@ namespace RoomAir {
                         state.dataRoomAir->ZTFloor(ZoneNum) = state.dataRoomAir->Zone1Floor(ZoneNum) + TempIndCoef / AirCap;
                     } else {
                         state.dataRoomAir->ZTFloor(ZoneNum) =
-                            (state.dataRoomAir->Zone1Floor(ZoneNum) - TempIndCoef / TempDepCoef) * std::exp(min(700.0, -TempDepCoef / AirCap)) +
+                            (state.dataRoomAir->Zone1Floor(ZoneNum) - TempIndCoef / TempDepCoef) * std::exp(min(700.0f, -TempDepCoef / AirCap)) +
                             TempIndCoef / TempDepCoef;
                     }
                 } break;
@@ -822,7 +822,7 @@ namespace RoomAir {
                             state.dataRoomAir->ZTOC(ZoneNum) = TempIndCoef / TempDepCoef;
                         } else {
                             state.dataRoomAir->ZTOC(ZoneNum) =
-                                (state.dataRoomAir->Zone1OC(ZoneNum) - TempIndCoef / TempDepCoef) * std::exp(min(700.0, -TempDepCoef / AirCap)) +
+                                (state.dataRoomAir->Zone1OC(ZoneNum) - TempIndCoef / TempDepCoef) * std::exp(min(700.0f, -TempDepCoef / AirCap)) +
                                 TempIndCoef / TempDepCoef;
                         }
                     }
@@ -853,7 +853,7 @@ namespace RoomAir {
                             state.dataRoomAir->ZTMX(ZoneNum) = TempIndCoef / TempDepCoef;
                         } else {
                             state.dataRoomAir->ZTMX(ZoneNum) =
-                                (state.dataRoomAir->Zone1MX(ZoneNum) - TempIndCoef / TempDepCoef) * std::exp(min(700.0, -TempDepCoef / AirCap)) +
+                                (state.dataRoomAir->Zone1MX(ZoneNum) - TempIndCoef / TempDepCoef) * std::exp(min(700.0f, -TempDepCoef / AirCap)) +
                                 TempIndCoef / TempDepCoef;
                         }
                     }
@@ -905,7 +905,7 @@ namespace RoomAir {
                         ZTAveraged = thisZoneT1 + TempIndCoef / AirCap;
                     } else {
                         ZTAveraged =
-                            (thisZoneT1 - TempIndCoef / TempDepCoef) * std::exp(min(700.0, -TempDepCoef / AirCap)) + TempIndCoef / TempDepCoef;
+                            (thisZoneT1 - TempIndCoef / TempDepCoef) * std::exp(min(700.0f, -TempDepCoef / AirCap)) + TempIndCoef / TempDepCoef;
                     }
                 } break;
                 case DataHeatBalance::SolutionAlgo::EulerMethod: {
@@ -933,7 +933,7 @@ namespace RoomAir {
                         ZTAveraged = thisZoneT1 + TempIndCoef / AirCap;
                     } else {
                         ZTAveraged =
-                            (thisZoneT1 - TempIndCoef / TempDepCoef) * std::exp(min(700.0, -TempDepCoef / AirCap)) + TempIndCoef / TempDepCoef;
+                            (thisZoneT1 - TempIndCoef / TempDepCoef) * std::exp(min(700.0f, -TempDepCoef / AirCap)) + TempIndCoef / TempDepCoef;
                     }
                 } break;
                 case DataHeatBalance::SolutionAlgo::EulerMethod: {
@@ -962,7 +962,7 @@ namespace RoomAir {
             state.dataRoomAir->TCMF(ZoneNum) = ZTAveraged;
         } else {
             if (HeightComfort >= 0.0 && HeightComfort < HeightFloorSubzoneAve) {
-                ShowWarningError(state, format("Displacement ventilation comfort height is in floor subzone in Zone: {}", zone.Name));
+                ShowWarningError(state, fmt::format("Displacement ventilation comfort height is in floor subzone in Zone: {}", zone.Name));
                 state.dataRoomAir->TCMF(ZoneNum) = state.dataRoomAir->ZTFloor(ZoneNum);
             } else if (HeightComfort >= HeightFloorSubzoneAve && HeightComfort < HeightOccupiedSubzoneAve) {
                 state.dataRoomAir->TCMF(ZoneNum) = (state.dataRoomAir->ZTFloor(ZoneNum) * (HeightOccupiedSubzoneAve - HeightComfort) +
@@ -978,7 +978,7 @@ namespace RoomAir {
             } else if (HeightComfort >= HeightMixedSubzoneAve && HeightComfort <= CeilingHeight) {
                 state.dataRoomAir->TCMF(ZoneNum) = state.dataRoomAir->ZTMX(ZoneNum);
             } else {
-                ShowFatalError(state, format("Displacement ventilation comfort height is above ceiling or below floor in Zone: {}", zone.Name));
+                ShowFatalError(state, fmt::format("Displacement ventilation comfort height is above ceiling or below floor in Zone: {}", zone.Name));
             }
         }
 
@@ -988,7 +988,7 @@ namespace RoomAir {
             state.dataHeatBalFanSys->TempTstatAir(ZoneNum) = ZTAveraged;
         } else {
             if (HeightThermostat >= 0.0 && HeightThermostat < HeightFloorSubzoneAve) {
-                ShowWarningError(state, format("Displacement thermostat is in floor subzone in Zone: {}", zone.Name));
+                ShowWarningError(state, fmt::format("Displacement thermostat is in floor subzone in Zone: {}", zone.Name));
                 state.dataHeatBalFanSys->TempTstatAir(ZoneNum) = state.dataRoomAir->ZTFloor(ZoneNum);
             } else if (HeightThermostat >= HeightFloorSubzoneAve && HeightThermostat < HeightOccupiedSubzoneAve) {
                 state.dataHeatBalFanSys->TempTstatAir(ZoneNum) =
@@ -1005,7 +1005,7 @@ namespace RoomAir {
             } else if (HeightThermostat >= HeightMixedSubzoneAve && HeightThermostat <= CeilingHeight) {
                 state.dataHeatBalFanSys->TempTstatAir(ZoneNum) = state.dataRoomAir->ZTMX(ZoneNum);
             } else {
-                ShowFatalError(state, format("Displacement ventilation thermostat height is above ceiling or below floor in Zone: {}", zone.Name));
+                ShowFatalError(state, fmt::format("Displacement ventilation thermostat height is above ceiling or below floor in Zone: {}", zone.Name));
             }
         }
 

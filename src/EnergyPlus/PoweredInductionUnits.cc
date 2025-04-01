@@ -148,14 +148,14 @@ void SimPIU(EnergyPlusData &state,
     if (CompIndex == 0) {
         PIUNum = Util::FindItemInList(CompName, state.dataPowerInductionUnits->PIU);
         if (PIUNum == 0) {
-            ShowFatalError(state, format("SimPIU: PIU Unit not found={}", CompName));
+            ShowFatalError(state, fmt::format("SimPIU: PIU Unit not found={}", CompName));
         }
         CompIndex = PIUNum;
     } else {
         PIUNum = CompIndex;
         if (PIUNum > state.dataPowerInductionUnits->NumPIUs || PIUNum < 1) {
             ShowFatalError(state,
-                           format("SimPIU: Invalid CompIndex passed={}, Number of PIU Units={}, PIU Unit name={}",
+                           fmt::format("SimPIU: Invalid CompIndex passed={}, Number of PIU Units={}, PIU Unit name={}",
                                   CompIndex,
                                   state.dataPowerInductionUnits->NumPIUs,
                                   CompName));
@@ -163,7 +163,7 @@ void SimPIU(EnergyPlusData &state,
         if (state.dataPowerInductionUnits->CheckEquipName(PIUNum)) {
             if (CompName != state.dataPowerInductionUnits->PIU(PIUNum).Name) {
                 ShowFatalError(state,
-                               format("SimPIU: Invalid CompIndex passed={}, PIU Unit name={}, stored PIU Unit Name for that index={}",
+                               fmt::format("SimPIU: Invalid CompIndex passed={}, PIU Unit name={}, stored PIU Unit Name for that index={}",
                                       CompIndex,
                                       CompName,
                                       state.dataPowerInductionUnits->PIU(PIUNum).Name));
@@ -193,8 +193,8 @@ void SimPIU(EnergyPlusData &state,
         break;
     }
     default:
-        ShowSevereError(state, format("Illegal PI Unit Type used={}", state.dataPowerInductionUnits->PIU(PIUNum).UnitType));
-        ShowContinueError(state, format("Occurs in PI Unit={}", state.dataPowerInductionUnits->PIU(PIUNum).Name));
+        ShowSevereError(state, fmt::format("Illegal PI Unit Type used={}", state.dataPowerInductionUnits->PIU(PIUNum).UnitType));
+        ShowContinueError(state, fmt::format("Occurs in PI Unit={}", state.dataPowerInductionUnits->PIU(PIUNum).Name));
         ShowFatalError(state, "Preceding condition causes termination.");
         break;
     }
@@ -320,7 +320,7 @@ void GetPIUs(EnergyPlusData &state)
                     thisPIU.HCoil_PlantType = DataPlant::PlantEquipmentType::CoilSteamAirHeating;
                     thisPIU.HCoil_fluid = Fluid::GetSteam(state);
                     if (thisPIU.HCoil_fluid == nullptr) {
-                        ShowSevereError(state, format("{} Steam Properties for {} not found.", RoutineName, thisPIU.Name));
+                        ShowSevereError(state, fmt::format("{} Steam Properties for {} not found.", RoutineName, thisPIU.Name));
                         if (SteamMessageNeeded) {
                             ShowContinueError(state, "Steam Fluid Properties should have been included in the input file.");
                         }
@@ -330,8 +330,8 @@ void GetPIUs(EnergyPlusData &state)
                     break;
                 }
                 default: {
-                    ShowSevereError(state, format("Illegal Reheat Coil Type = {}", thisPIU.HCoilType));
-                    ShowContinueError(state, format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
+                    ShowSevereError(state, fmt::format("Illegal Reheat Coil Type = {}", thisPIU.HCoilType));
+                    ShowContinueError(state, fmt::format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
                     ErrorsFound = true;
                 }
                 }
@@ -417,7 +417,7 @@ void GetPIUs(EnergyPlusData &state)
                 ValidateComponent(
                     state, HCoilNamesUC[static_cast<int>(thisPIU.HCoilType)], thisPIU.HCoil, IsNotOK, cCurrentModuleObject + " - Heating Coil");
                 if (IsNotOK) {
-                    ShowContinueError(state, format("In {} = {}", cCurrentModuleObject, thisPIU.Name));
+                    ShowContinueError(state, fmt::format("In {} = {}", cCurrentModuleObject, thisPIU.Name));
                     ErrorsFound = true;
                 }
                 thisPIU.MaxVolHotWaterFlow = ip->getRealFieldValue(fields, objectSchemaProps, "maximum_hot_water_or_steam_flow_rate");
@@ -436,14 +436,14 @@ void GetPIUs(EnergyPlusData &state)
                     thisPIU.fanControlType = FanCntrlType::VariableSpeedFan;
                     if (thisPIU.fanType != HVAC::FanType::SystemModel) {
                         ErrorsFound = true;
-                        ShowSevereError(state, format("Fan type must be Fan:SystemModel when Fan Control Type = {}", fan_control_type));
-                        ShowContinueError(state, format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
+                        ShowSevereError(state, fmt::format("Fan type must be Fan:SystemModel when Fan Control Type = {}", fan_control_type));
+                        ShowContinueError(state, fmt::format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
                     }
                 } else if (Util::SameString(fan_control_type, "ConstantSpeed")) {
                     thisPIU.fanControlType = FanCntrlType::ConstantSpeedFan;
                 } else {
-                    ShowSevereError(state, format("Illegal Fan Control Type = {}", fan_control_type));
-                    ShowContinueError(state, format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
+                    ShowSevereError(state, fmt::format("Illegal Fan Control Type = {}", fan_control_type));
+                    ShowContinueError(state, fmt::format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
                     ErrorsFound = true;
                 }
 
@@ -456,7 +456,7 @@ void GetPIUs(EnergyPlusData &state)
                         thisPIU.heatingControlType = HeatCntrlBehaviorType::ModulatedHeaterBehavior;
                     } else {
                         ShowSevereError(state, "Heating Control Type should either be Staged or Modulated");
-                        ShowContinueError(state, format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
+                        ShowContinueError(state, fmt::format("Occurs in {} = {}", cCurrentModuleObject, thisPIU.Name));
                         ErrorsFound = true;
                     }
                 }
@@ -510,8 +510,8 @@ void GetPIUs(EnergyPlusData &state)
                 // one assumes if there isn't one assigned, it's an error?
                 if (thisPIU.ADUNum == 0) {
                     ShowSevereError(state,
-                                    format("{}No matching Air Distribution Unit, for PIU = [{},{}].", RoutineName, thisPIU.UnitType, thisPIU.Name));
-                    ShowContinueError(state, format("...should have outlet node = {}", state.dataLoopNodes->NodeID(thisPIU.OutAirNode)));
+                                    fmt::format("{}No matching Air Distribution Unit, for PIU = [{},{}].", RoutineName, thisPIU.UnitType, thisPIU.Name));
+                    ShowContinueError(state, fmt::format("...should have outlet node = {}", state.dataLoopNodes->NodeID(thisPIU.OutAirNode)));
                     ErrorsFound = true;
                 } else {
 
@@ -536,9 +536,9 @@ void GetPIUs(EnergyPlusData &state)
                         }
                     }
                     if (!AirNodeFound) {
-                        ShowSevereError(state, format("The outlet air node from the {} Unit = {}", cCurrentModuleObject, thisPIU.Name));
+                        ShowSevereError(state, fmt::format("The outlet air node from the {} Unit = {}", cCurrentModuleObject, thisPIU.Name));
                         ShowContinueError(
-                            state, format("did not have a matching Zone Equipment Inlet Node, Node = {}", state.dataIPShortCut->cAlphaArgs(5)));
+                            state, fmt::format("did not have a matching Zone Equipment Inlet Node, Node = {}", state.dataIPShortCut->cAlphaArgs(5)));
                         ErrorsFound = true;
                     }
                 }
@@ -547,7 +547,7 @@ void GetPIUs(EnergyPlusData &state)
     }
 
     if (ErrorsFound) {
-        ShowFatalError(state, format("{} Errors found in getting input.  Preceding conditions cause termination.", RoutineName));
+        ShowFatalError(state, fmt::format("{} Errors found in getting input.  Preceding conditions cause termination.", RoutineName));
     }
 
     for (int PIURpt = 1; PIURpt <= state.dataPowerInductionUnits->NumPIUs; ++PIURpt) {
@@ -699,10 +699,10 @@ void InitPIU(EnergyPlusData &state,
                 continue;
             }
             ShowSevereError(state,
-                            format("InitPIU: ADU=[Air Distribution Unit,{}] is not on any ZoneHVAC:EquipmentList.",
+                            fmt::format("InitPIU: ADU=[Air Distribution Unit,{}] is not on any ZoneHVAC:EquipmentList.",
                                    state.dataDefineEquipment->AirDistUnit(state.dataPowerInductionUnits->PIU(Loop).ADUNum).Name));
             ShowContinueError(state,
-                              format("...PIU=[{},{}] will not be simulated.",
+                              fmt::format("...PIU=[{},{}] will not be simulated.",
                                      state.dataPowerInductionUnits->PIU(Loop).UnitType,
                                      state.dataPowerInductionUnits->PIU(Loop).Name));
         }
@@ -757,10 +757,10 @@ void InitPIU(EnergyPlusData &state,
                 thisPIU.MinTotAirMassFlow = thisPIU.MaxTotAirMassFlow * thisPIU.MinFanTurnDownRatio;
                 thisPIU.MaxSecAirVolFlow = thisPIU.MaxTotAirMassFlow - thisPIU.MinPriAirMassFlow;
                 thisPIU.MaxSecAirMassFlow = RhoAir * thisPIU.MaxSecAirVolFlow;
-                thisPIU.MinSecAirMassFlow = max(0.0, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
+                thisPIU.MinSecAirMassFlow = max(0.0f, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
             } else {
                 thisPIU.MaxSecAirMassFlow = RhoAir * thisPIU.MaxSecAirVolFlow;
-                thisPIU.MinSecAirMassFlow = max(0.0, thisPIU.MaxSecAirMassFlow * thisPIU.MinFanTurnDownRatio);
+                thisPIU.MinSecAirMassFlow = max(0.0f, thisPIU.MaxSecAirMassFlow * thisPIU.MinFanTurnDownRatio);
                 thisPIU.MinTotAirMassFlow = thisPIU.MinSecAirMassFlow + thisPIU.MinPriAirMassFlow;
             }
         }
@@ -790,7 +790,7 @@ void InitPIU(EnergyPlusData &state,
         if (thisPIU.availSched->getCurrentVal() > 0.0 && state.dataLoopNodes->Node(PriNode).MassFlowRate > 0.0) {
             if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
                 state.dataLoopNodes->Node(PriNode).MassFlowRate = thisPIU.MaxPriAirMassFlow;
-                state.dataLoopNodes->Node(SecNode).MassFlowRate = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.MaxPriAirMassFlow);
+                state.dataLoopNodes->Node(SecNode).MassFlowRate = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.MaxPriAirMassFlow);
             } else {
                 state.dataLoopNodes->Node(PriNode).MassFlowRate = thisPIU.MaxPriAirMassFlow;
                 state.dataLoopNodes->Node(SecNode).MassFlowRate = thisPIU.MaxSecAirMassFlow;
@@ -804,8 +804,8 @@ void InitPIU(EnergyPlusData &state,
             if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
                 state.dataLoopNodes->Node(PriNode).MassFlowRateMaxAvail = thisPIU.MaxPriAirMassFlow;
                 state.dataLoopNodes->Node(PriNode).MassFlowRateMinAvail = thisPIU.MinPriAirMassFlow;
-                state.dataLoopNodes->Node(SecNode).MassFlowRateMaxAvail = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.MinPriAirMassFlow);
-                state.dataLoopNodes->Node(SecNode).MassFlowRateMinAvail = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.MaxPriAirMassFlow);
+                state.dataLoopNodes->Node(SecNode).MassFlowRateMaxAvail = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.MinPriAirMassFlow);
+                state.dataLoopNodes->Node(SecNode).MassFlowRateMinAvail = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.MaxPriAirMassFlow);
             } else {
                 state.dataLoopNodes->Node(PriNode).MassFlowRateMaxAvail = thisPIU.MaxPriAirMassFlow;
                 state.dataLoopNodes->Node(PriNode).MassFlowRateMinAvail = thisPIU.MinPriAirMassFlow;
@@ -902,9 +902,9 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                     if (state.dataGlobal->DisplayExtraWarnings) {
                         if ((std::abs(MaxPriAirVolFlowDes - MaxPriAirVolFlowUser) / MaxPriAirVolFlowUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
-                            ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Primary Air Flow Rate of {:.5R} [m3/s]", MaxPriAirVolFlowUser));
-                            ShowContinueError(state, format("differs from Design Size Primary Air Flow Rate of {:.5R} [m3/s]", MaxPriAirVolFlowDes));
+                            ShowMessage(state, fmt::format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
+                            ShowContinueError(state, fmt::format("User-Specified Primary Air Flow Rate of {:.5f} [m3/s]", MaxPriAirVolFlowUser));
+                            ShowContinueError(state, fmt::format("differs from Design Size Primary Air Flow Rate of {:.5f} [m3/s]", MaxPriAirVolFlowDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -949,9 +949,9 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                     if (state.dataGlobal->DisplayExtraWarnings) {
                         if ((std::abs(MaxTotAirVolFlowDes - MaxTotAirVolFlowUser) / MaxTotAirVolFlowUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
-                            ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Maximum Air Flow Rate of {:.5R} [m3/s]", MaxTotAirVolFlowUser));
-                            ShowContinueError(state, format("differs from Design Size Maximum Air Flow Rate of {:.5R} [m3/s]", MaxTotAirVolFlowDes));
+                            ShowMessage(state, fmt::format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
+                            ShowContinueError(state, fmt::format("User-Specified Maximum Air Flow Rate of {:.5f} [m3/s]", MaxTotAirVolFlowUser));
+                            ShowContinueError(state, fmt::format("differs from Design Size Maximum Air Flow Rate of {:.5f} [m3/s]", MaxTotAirVolFlowDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1015,10 +1015,10 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                     if (state.dataGlobal->DisplayExtraWarnings) {
                         if ((std::abs(MaxSecAirVolFlowDes - MaxSecAirVolFlowUser) / MaxSecAirVolFlowUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
-                            ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Maximum Secondary Air Flow Rate of {:.5R} [m3/s]", MaxSecAirVolFlowUser));
+                            ShowMessage(state, fmt::format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
+                            ShowContinueError(state, fmt::format("User-Specified Maximum Secondary Air Flow Rate of {:.5f} [m3/s]", MaxSecAirVolFlowUser));
                             ShowContinueError(
-                                state, format("differs from Design Size Maximum Secondary Air Flow Rate of {:.5R} [m3/s]", MaxSecAirVolFlowDes));
+                                state, fmt::format("differs from Design Size Maximum Secondary Air Flow Rate of {:.5f} [m3/s]", MaxSecAirVolFlowDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1059,20 +1059,20 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                             thisPIU.MaxPriAirVolFlow *= MinPriAirFlowFracDes;
                             MinPriAirFlowFracDes = 1.0;
                             ShowWarningError(state,
-                                             format("SingleDuctSystem:SizeSys: Autosized maximum air flow rate for {} was increased to meet the zone "
+                                             fmt::format("SingleDuctSystem:SizeSys: Autosized maximum air flow rate for {} was increased to meet the zone "
                                                     "primary air flow determined according to the ASHRAE Standard 62.1 Simplified Procedure.",
                                                     thisPIU.Name));
                         } else if (MinPriAirFlowFracDes > 1.0) {
                             ShowWarningError(
                                 state,
-                                format("SingleDuctSystem:SizeSys: Maximum primary air flow rate for {} is potentially too low.", thisPIU.Name));
+                                fmt::format("SingleDuctSystem:SizeSys: Maximum primary air flow rate for {} is potentially too low.", thisPIU.Name));
                             ShowContinueError(state,
                                               "The flow is lower than the minimum primary air flow rate calculated following the ASHRAE Standard "
                                               "62.1 Simplified Procedure:");
-                            ShowContinueError(state, format(" User-specified maximum primary air flow rate: {:.3R} m3/s.", thisPIU.MaxPriAirVolFlow));
+                            ShowContinueError(state, fmt::format(" User-specified maximum primary air flow rate: {:.3f} m3/s.", thisPIU.MaxPriAirVolFlow));
                             ShowContinueError(
                                 state,
-                                format(" Calculated minimum primary air flow rate: {:.3R} m3/s.", thisPIU.MaxPriAirVolFlow * MinPriAirFlowFracDes));
+                                fmt::format(" Calculated minimum primary air flow rate: {:.3f} m3/s.", thisPIU.MaxPriAirVolFlow * MinPriAirFlowFracDes));
                             MinPriAirFlowFracDes = 1.0;
                         }
                     }
@@ -1101,10 +1101,10 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                     if (state.dataGlobal->DisplayExtraWarnings) {
                         if ((std::abs(MinPriAirFlowFracDes - MinPriAirFlowFracUser) / MinPriAirFlowFracUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
-                            ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Minimum Primary Air Flow Fraction of {:.1R}", MinPriAirFlowFracUser));
+                            ShowMessage(state, fmt::format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
+                            ShowContinueError(state, fmt::format("User-Specified Minimum Primary Air Flow Fraction of {:.1f}", MinPriAirFlowFracUser));
                             ShowContinueError(state,
-                                              format("differs from Design Size Minimum Primary Air Flow Fraction of {:.1R}", MinPriAirFlowFracDes));
+                                              fmt::format("differs from Design Size Minimum Primary Air Flow Fraction of {:.1f}", MinPriAirFlowFracDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1152,9 +1152,9 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                                                  FanOnFlowFracUser);
                     if (state.dataGlobal->DisplayExtraWarnings) {
                         if ((std::abs(FanOnFlowFracDes - FanOnFlowFracUser) / FanOnFlowFracUser) > state.dataSize->AutoVsHardSizingThreshold) {
-                            ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Fan On Flow Fraction of {:.1R}", FanOnFlowFracUser));
-                            ShowContinueError(state, format("differs from Design Size Fan On Flow Fraction of {:.1R}", FanOnFlowFracDes));
+                            ShowMessage(state, fmt::format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
+                            ShowContinueError(state, fmt::format("User-Specified Fan On Flow Fraction of {:.1f}", FanOnFlowFracUser));
+                            ShowContinueError(state, fmt::format("differs from Design Size Fan On Flow Fraction of {:.1f}", FanOnFlowFracDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1209,7 +1209,7 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                         }
                     } else {
                         ShowSevereError(state, "Autosizing of water flow requires a heating loop Sizing:Plant object");
-                        ShowContinueError(state, format("Occurs in{} Object={}", thisPIU.UnitType, thisPIU.Name));
+                        ShowContinueError(state, fmt::format("Occurs in{} Object={}", thisPIU.UnitType, thisPIU.Name));
                         ErrorsFound = true;
                     }
                     thisPIU.MaxVolHotWaterFlow = MaxVolHotWaterFlowDes;
@@ -1240,11 +1240,11 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                             if ((std::abs(MaxVolHotWaterFlowDes - MaxVolHotWaterFlowUser) / MaxVolHotWaterFlowUser) >
                                 state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state,
-                                            format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
+                                            fmt::format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Maximum Reheat Water Flow Rate of {:.5R} [m3/s]", MaxVolHotWaterFlowUser));
+                                                  fmt::format("User-Specified Maximum Reheat Water Flow Rate of {:.5f} [m3/s]", MaxVolHotWaterFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Maximum Reheat Water Flow Rate of {:.5R} [m3/s]", MaxVolHotWaterFlowDes));
+                                    state, fmt::format("differs from Design Size Maximum Reheat Water Flow Rate of {:.5f} [m3/s]", MaxVolHotWaterFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1300,7 +1300,7 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                         }
                     } else {
                         ShowSevereError(state, "Autosizing of Steam flow requires a heating loop Sizing:Plant object");
-                        ShowContinueError(state, format("Occurs in{} Object={}", thisPIU.UnitType, thisPIU.Name));
+                        ShowContinueError(state, fmt::format("Occurs in{} Object={}", thisPIU.UnitType, thisPIU.Name));
                         ErrorsFound = true;
                     }
                     thisPIU.MaxVolHotSteamFlow = MaxVolHotSteamFlowDes;
@@ -1320,10 +1320,10 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                             if ((std::abs(MaxVolHotSteamFlowDes - MaxVolHotSteamFlowUser) / MaxVolHotSteamFlowUser) >
                                 state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state,
-                                            format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                                ShowContinueError(state, format("User-Specified Maximum Reheat Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowUser));
+                                            fmt::format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
+                                ShowContinueError(state, fmt::format("User-Specified Maximum Reheat Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Maximum Reheat Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowDes));
+                                    state, fmt::format("differs from Design Size Maximum Reheat Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1484,9 +1484,9 @@ void CalcSeriesPIU(EnergyPlusData &state,
             thisPIU.PriAirMassFlow = PriAirMassFlowMin;
             if (thisPIU.fanControlType == FanCntrlType::ConstantSpeedFan) {
                 thisPIU.heatingOperatingMode = HeatOpModeType::ConstantVolumeHeat;
-                thisPIU.SecAirMassFlow = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.PriAirMassFlow);
+                thisPIU.SecAirMassFlow = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.PriAirMassFlow);
             } else if (thisPIU.fanControlType == FanCntrlType::VariableSpeedFan) {
-                thisPIU.SecAirMassFlow = max(0.0, thisPIU.MinTotAirMassFlow - thisPIU.PriAirMassFlow);
+                thisPIU.SecAirMassFlow = max(0.0f, thisPIU.MinTotAirMassFlow - thisPIU.PriAirMassFlow);
             }
         } else if (QZnReq > SmallLoad) {
             // heating: set primary air flow to the minimum
@@ -1500,7 +1500,7 @@ void CalcSeriesPIU(EnergyPlusData &state,
                 CalcVariableSpeedPIUModulatedHeatingBehavior(state, PIUNum, ZoneNode, QZnReq, PriOn, thisPIU.PriAirMassFlow);
             } else if (thisPIU.fanControlType == FanCntrlType::ConstantSpeedFan) {
                 thisPIU.heatingOperatingMode = HeatOpModeType::ConstantVolumeHeat;
-                thisPIU.SecAirMassFlow = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.PriAirMassFlow);
+                thisPIU.SecAirMassFlow = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.PriAirMassFlow);
             }
         } else {
             if (thisPIU.fanControlType == FanCntrlType::ConstantSpeedFan) {
@@ -1534,7 +1534,7 @@ void CalcSeriesPIU(EnergyPlusData &state,
                             state.dataLoopNodes->Node(thisPIU.SecAirInNode).Temp - state.dataLoopNodes->Node(thisPIU.PriAirInNode).Temp);
                     thisPIU.PriAirMassFlow = min(max(thisPIU.PriAirMassFlow, PriAirMassFlowMin), PriAirMassFlowMax);
                 }
-                thisPIU.SecAirMassFlow = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.PriAirMassFlow);
+                thisPIU.SecAirMassFlow = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.PriAirMassFlow);
                 if (QZnReq < 0) {
                     thisPIU.coolingOperatingMode = CoolOpModeType::ConstantVolumeCool;
                 }
@@ -1617,7 +1617,7 @@ void CalcSeriesPIU(EnergyPlusData &state,
         }
     } else {
         ShowSevereError(state, "Incorrect series PIU heating operation.");
-        ShowFatalError(state, format("Series PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
+        ShowFatalError(state, fmt::format("Series PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
     }
     if ((QCoilReq < SmallLoad) &&
         (thisPIU.heatingOperatingMode != HeatOpModeType::StagedHeatFirstStage)) { // reheat is off during the first stage of heating
@@ -1677,7 +1677,7 @@ void CalcSeriesPIU(EnergyPlusData &state,
     Real64 PowerMet = state.dataLoopNodes->Node(thisPIU.OutAirNode).MassFlowRate *
                       (PsyHFnTdbW(state.dataLoopNodes->Node(thisPIU.OutAirNode).Temp, state.dataLoopNodes->Node(ZoneNode).HumRat) -
                        PsyHFnTdbW(state.dataLoopNodes->Node(ZoneNode).Temp, state.dataLoopNodes->Node(ZoneNode).HumRat));
-    thisPIU.HeatingRate = max(0.0, PowerMet);
+    thisPIU.HeatingRate = max(0.0f, PowerMet);
     thisPIU.SensCoolRate = std::abs(min(DataPrecisionGlobals::constant_zero, PowerMet));
     thisPIU.TotMassFlowRate = state.dataLoopNodes->Node(thisPIU.OutAirNode).MassFlowRate;
     thisPIU.SecMassFlowRate = state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate;
@@ -1967,7 +1967,7 @@ void CalcParallelPIU(EnergyPlusData &state,
         }
     } else {
         ShowSevereError(state, "Incorrect parallel PIU heating operation.");
-        ShowFatalError(state, format("Parallel PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
+        ShowFatalError(state, fmt::format("Parallel PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
     }
     if ((QCoilReq < SmallLoad) &&
         (thisPIU.heatingOperatingMode != HeatOpModeType::StagedHeatFirstStage)) { // reheat is off during the first stage of heating
@@ -2025,7 +2025,7 @@ void CalcParallelPIU(EnergyPlusData &state,
     Real64 PowerMet = state.dataLoopNodes->Node(thisPIU.OutAirNode).MassFlowRate *
                       (PsyHFnTdbW(state.dataLoopNodes->Node(thisPIU.OutAirNode).Temp, state.dataLoopNodes->Node(ZoneNode).HumRat) -
                        PsyHFnTdbW(state.dataLoopNodes->Node(ZoneNode).Temp, state.dataLoopNodes->Node(ZoneNode).HumRat));
-    thisPIU.HeatingRate = max(0.0, PowerMet);
+    thisPIU.HeatingRate = max(0.0f, PowerMet);
     thisPIU.SensCoolRate = std::abs(min(DataPrecisionGlobals::constant_zero, PowerMet));
     thisPIU.TotMassFlowRate = state.dataLoopNodes->Node(thisPIU.OutAirNode).MassFlowRate;
     thisPIU.SecMassFlowRate = state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate;
@@ -2117,7 +2117,7 @@ void CalcVariableSpeedPIUCoolingBehavior(EnergyPlusData &state,
     // set min primary flow and low secondary
     state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = priAirMassFlowMin;
     Real64 TotAirMassFlow = thisPIU.MinTotAirMassFlow;
-    state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0, TotAirMassFlow - priAirMassFlowMin);
+    state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0f, TotAirMassFlow - priAirMassFlowMin);
 
     // calculate cooling provided to zone at minimum fan speed and minimum primary air mass flow
     Real64 qdotDelivMinPrim = CalcVariableSpeedPIUQdotDelivered(state, piuNum, zoneNode, false, TotAirMassFlow, thisPIU.MinFanTurnDownRatio);
@@ -2126,7 +2126,7 @@ void CalcVariableSpeedPIUCoolingBehavior(EnergyPlusData &state,
         thisPIU.PriAirMassFlow = priAirMassFlowMin;
         if (qdotDelivMinPrim >=
             loadToHeatSetPt) { // will provide more cooling than required but not enough to drop below the heating thermostat setpoint
-            thisPIU.SecAirMassFlow = max(0.0, thisPIU.MinTotAirMassFlow - thisPIU.PriAirMassFlow);
+            thisPIU.SecAirMassFlow = max(0.0f, thisPIU.MinTotAirMassFlow - thisPIU.PriAirMassFlow);
             thisPIU.heatingOperatingMode = HeatOpModeType::HeaterOff;
         } else {
             if (thisPIU.heatingControlType == HeatCntrlBehaviorType::StagedHeaterBehavior) {
@@ -2139,13 +2139,13 @@ void CalcVariableSpeedPIUCoolingBehavior(EnergyPlusData &state,
         // check how much cooling provided at max fan and primary air
         state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MaxPriAirMassFlow;
         TotAirMassFlow = thisPIU.MaxTotAirMassFlow;
-        state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0, TotAirMassFlow - thisPIU.MaxPriAirMassFlow);
+        state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0f, TotAirMassFlow - thisPIU.MaxPriAirMassFlow);
         Real64 qdotDelivMaxFan = CalcVariableSpeedPIUQdotDelivered(state, piuNum, zoneNode, false, TotAirMassFlow, 1.0);
 
         if (zoneLoad <= qdotDelivMaxFan) { // not going to make it just run at max
             thisPIU.PriAirMassFlow = thisPIU.PriAirMassFlow;
             TotAirMassFlow = thisPIU.MaxTotAirMassFlow;
-            thisPIU.SecAirMassFlow = max(0.0, TotAirMassFlow - thisPIU.PriAirMassFlow);
+            thisPIU.SecAirMassFlow = max(0.0f, TotAirMassFlow - thisPIU.PriAirMassFlow);
             thisPIU.heatingOperatingMode = HeatOpModeType::HeaterOff;
             thisPIU.coolingOperatingMode = CoolOpModeType::CoolSecondStage;
         } else {
@@ -2163,17 +2163,17 @@ void CalcVariableSpeedPIUCoolingBehavior(EnergyPlusData &state,
             if (SolFla == -1) {
                 ShowSevereError(state, "Iteration limit exceeded in calculating variable speed fan powered box cooling signal");
                 ShowContinueErrorTimeStamp(state, "");
-                ShowFatalError(state, format("Series PIU control failed for {}:{} ", thisPIU.UnitType, thisPIU.Name));
+                ShowFatalError(state, fmt::format("Series PIU control failed for {}:{} ", thisPIU.UnitType, thisPIU.Name));
             } else if (SolFla == -2) {
                 ShowSevereError(state, "Bad starting values for in calculating variable speed fan powered box cooling signal");
-                ShowContinueError(state, format("Zone Load to Cooling Setpoint = {:.2R} [W]", zoneLoad));
-                ShowContinueError(state, format("Load Delivered to Zone at Minimum Fan Speed  = {:.2R} [W]", qdotDelivMinPrim));
+                ShowContinueError(state, fmt::format("Zone Load to Cooling Setpoint = {:.2f} [W]", zoneLoad));
+                ShowContinueError(state, fmt::format("Load Delivered to Zone at Minimum Fan Speed  = {:.2f} [W]", qdotDelivMinPrim));
                 ShowContinueErrorTimeStamp(state, "");
-                ShowFatalError(state, format("Series PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
+                ShowFatalError(state, fmt::format("Series PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
             } else {
                 thisPIU.PriAirMassFlow = coolSignal * (thisPIU.MaxPriAirMassFlow - thisPIU.MinPriAirMassFlow) + thisPIU.MinPriAirMassFlow;
                 TotAirMassFlow = coolSignal * (thisPIU.MaxTotAirMassFlow - thisPIU.MinTotAirMassFlow) + thisPIU.MinTotAirMassFlow;
-                thisPIU.SecAirMassFlow = max(0.0, TotAirMassFlow - thisPIU.PriAirMassFlow);
+                thisPIU.SecAirMassFlow = max(0.0f, TotAirMassFlow - thisPIU.PriAirMassFlow);
                 thisPIU.heatingOperatingMode = HeatOpModeType::HeaterOff;
                 thisPIU.coolingOperatingMode = CoolOpModeType::CoolFirstStage;
             }
@@ -2194,7 +2194,7 @@ void CalcVariableSpeedPIUStagedHeatingBehavior(EnergyPlusData &state,
     if (pri) {
         if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
             state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
-            state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.MinPriAirMassFlow);
+            state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.MinPriAirMassFlow);
         } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
             state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
             state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = thisPIU.MaxSecAirMassFlow;
@@ -2216,7 +2216,7 @@ void CalcVariableSpeedPIUStagedHeatingBehavior(EnergyPlusData &state,
     if (pri) {
         if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
             state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
-            state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
+            state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0f, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
         } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
             state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
             state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = thisPIU.MinSecAirMassFlow;
@@ -2251,29 +2251,29 @@ void CalcVariableSpeedPIUStagedHeatingBehavior(EnergyPlusData &state,
         if (SolFla == -1) {
             ShowSevereError(state, "Iteration limit exceeded in calculating variable speed fan powered box 1st stage heating fan speed");
             ShowContinueErrorTimeStamp(state, "");
-            ShowFatalError(state, format("PIU control failed for {}:{} ", thisPIU.UnitType, thisPIU.Name));
+            ShowFatalError(state, fmt::format("PIU control failed for {}:{} ", thisPIU.UnitType, thisPIU.Name));
         } else if (SolFla == -2) {
             ShowSevereError(state, "Bad starting values in calculating variable speed fan powered box 1st stage heating fan speed");
             ShowContinueErrorTimeStamp(state, "");
-            ShowFatalError(state, format("PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
+            ShowFatalError(state, fmt::format("PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
         } else {
             if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
-                thisPIU.SecAirMassFlow = max(0.0, fanSignal * thisPIU.MaxTotAirMassFlow - primaryAirMassFlow);
+                thisPIU.SecAirMassFlow = max(0.0f, fanSignal * thisPIU.MaxTotAirMassFlow - primaryAirMassFlow);
             } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
-                thisPIU.SecAirMassFlow = max(0.0, fanSignal * thisPIU.MaxSecAirMassFlow);
+                thisPIU.SecAirMassFlow = max(0.0f, fanSignal * thisPIU.MaxSecAirMassFlow);
             }
         }
     } else if (qdotDelivered1stStageMaxFan < zoneLoad) {
         thisPIU.heatingOperatingMode = HeatOpModeType::StagedHeatSecondStage;
         if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
-            thisPIU.SecAirMassFlow = max(0.0, thisPIU.MaxTotAirMassFlow - primaryAirMassFlow);
+            thisPIU.SecAirMassFlow = max(0.0f, thisPIU.MaxTotAirMassFlow - primaryAirMassFlow);
         } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
             thisPIU.SecAirMassFlow = thisPIU.MaxSecAirMassFlow;
         }
     } else if (qdotDelivered1stStageMinFan > zoneLoad) {
         thisPIU.heatingOperatingMode = HeatOpModeType::HeaterOff;
         if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
-            thisPIU.SecAirMassFlow = max(0.0, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
+            thisPIU.SecAirMassFlow = max(0.0f, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
         } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
             thisPIU.SecAirMassFlow = 0.0;
         }
@@ -2321,7 +2321,7 @@ void CalcVariableSpeedPIUModulatedHeatingBehavior(EnergyPlusData &state,
     if (pri) {
         if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
             state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
-            state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
+            state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0f, thisPIU.MinTotAirMassFlow - thisPIU.MinPriAirMassFlow);
         } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
             state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
             state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = thisPIU.MinSecAirMassFlow;
@@ -2349,7 +2349,7 @@ void CalcVariableSpeedPIUModulatedHeatingBehavior(EnergyPlusData &state,
         if (pri) {
             if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
                 state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
-                state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0, thisPIU.MaxTotAirMassFlow - thisPIU.MinPriAirMassFlow);
+                state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0f, thisPIU.MaxTotAirMassFlow - thisPIU.MinPriAirMassFlow);
             } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
                 state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = thisPIU.MinPriAirMassFlow;
                 state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = thisPIU.MaxSecAirMassFlow;
@@ -2382,16 +2382,16 @@ void CalcVariableSpeedPIUModulatedHeatingBehavior(EnergyPlusData &state,
             if (SolFla == -1) {
                 ShowSevereError(state, "Iteration limit exceeded in calculating variable speed fan powered box 2nd stage heating fan speed");
                 ShowContinueErrorTimeStamp(state, "");
-                ShowFatalError(state, format("PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
+                ShowFatalError(state, fmt::format("PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
             } else if (SolFla == -2) {
                 ShowSevereError(state, "Bad starting values for in calculating variable speed fan powered box 2nd stage heating fan speed");
                 ShowContinueErrorTimeStamp(state, "");
-                ShowFatalError(state, format("PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
+                ShowFatalError(state, fmt::format("PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
             } else {
                 if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
-                    thisPIU.SecAirMassFlow = max(0.0, fanSignal * thisPIU.MaxTotAirMassFlow - primaryAirMassFlow);
+                    thisPIU.SecAirMassFlow = max(0.0f, fanSignal * thisPIU.MaxTotAirMassFlow - primaryAirMassFlow);
                 } else if (thisPIU.UnitType == "AirTerminal:SingleDuct:ParallelPIU:Reheat") {
-                    thisPIU.SecAirMassFlow = max(0.0, fanSignal * thisPIU.MaxSecAirMassFlow);
+                    thisPIU.SecAirMassFlow = max(0.0f, fanSignal * thisPIU.MaxSecAirMassFlow);
                 }
             }
         } else { // 3rd stage, full fan speed
@@ -2423,7 +2423,7 @@ Real64 CalcVariableSpeedPIUHeatingResidual(EnergyPlusData &state,
     Real64 TotAirMassFlow = 0.0;
     if (thisPIU.UnitType == "AirTerminal:SingleDuct:SeriesPIU:Reheat") {
         TotAirMassFlow = fanSignal * thisPIU.MaxTotAirMassFlow;
-        state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0, TotAirMassFlow - primaryMassFlow);
+        state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = max(0.0f, TotAirMassFlow - primaryMassFlow);
     } else {
         // parallel
         TotAirMassFlow = fanSignal * thisPIU.MaxSecAirMassFlow + primaryMassFlow;
@@ -2445,7 +2445,7 @@ Real64 CalcVariableSpeedPIUCoolingResidual(EnergyPlusData &state, Real64 const c
     auto &thisPIU = state.dataPowerInductionUnits->PIU(piuNum);
     Real64 PriAirMassFlow = coolSignal * (thisPIU.MaxPriAirMassFlow - thisPIU.MinPriAirMassFlow) + thisPIU.MinPriAirMassFlow;
     Real64 TotAirMassFlow = coolSignal * (thisPIU.MaxTotAirMassFlow - thisPIU.MinTotAirMassFlow) + thisPIU.MinTotAirMassFlow;
-    Real64 SecAirMassFlow = max(0.0, TotAirMassFlow - PriAirMassFlow);
+    Real64 SecAirMassFlow = max(0.0f, TotAirMassFlow - PriAirMassFlow);
     state.dataLoopNodes->Node(thisPIU.PriAirInNode).MassFlowRate = PriAirMassFlow;
     state.dataLoopNodes->Node(thisPIU.SecAirInNode).MassFlowRate = SecAirMassFlow;
 

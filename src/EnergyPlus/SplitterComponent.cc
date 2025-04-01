@@ -107,14 +107,14 @@ namespace SplitterComponent {
         if (CompIndex == 0) {
             SplitterNum = Util::FindItemInList(CompName, state.dataSplitterComponent->SplitterCond, &SplitterConditions::SplitterName);
             if (SplitterNum == 0) {
-                ShowFatalError(state, format("SimAirLoopSplitter: Splitter not found={}", CompName));
+                ShowFatalError(state, fmt::format("SimAirLoopSplitter: Splitter not found={}", CompName));
             }
             CompIndex = SplitterNum;
         } else {
             SplitterNum = CompIndex;
             if (SplitterNum > state.dataSplitterComponent->NumSplitters || SplitterNum < 1) {
                 ShowFatalError(state,
-                               format("SimAirLoopSplitter: Invalid CompIndex passed={}, Number of Splitters={}, Splitter name={}",
+                               fmt::format("SimAirLoopSplitter: Invalid CompIndex passed={}, Number of Splitters={}, Splitter name={}",
                                       SplitterNum,
                                       state.dataSplitterComponent->NumSplitters,
                                       CompName));
@@ -122,7 +122,7 @@ namespace SplitterComponent {
             if (state.dataSplitterComponent->CheckEquipName(SplitterNum)) {
                 if (CompName != state.dataSplitterComponent->SplitterCond(SplitterNum).SplitterName) {
                     ShowFatalError(state,
-                                   format("SimAirLoopSplitter: Invalid CompIndex passed={}, Splitter name={}, stored Splitter Name for that index={}",
+                                   fmt::format("SimAirLoopSplitter: Invalid CompIndex passed={}, Splitter name={}, stored Splitter Name for that index={}",
                                           SplitterNum,
                                           CompName,
                                           state.dataSplitterComponent->SplitterCond(SplitterNum).SplitterName));
@@ -268,7 +268,7 @@ namespace SplitterComponent {
                                       NodeInputManager::CompFluidStream::Primary,
                                       ObjectIsNotParent);
                 if (lAlphaBlanks(2 + NodeNum)) {
-                    ShowSevereError(state, format("{} is Blank, {} = {}", cAlphaFields(2 + NodeNum), CurrentModuleObject, AlphArray(1)));
+                    ShowSevereError(state, fmt::format("{} is Blank, {} = {}", cAlphaFields(2 + NodeNum), CurrentModuleObject, AlphArray(1)));
                     ErrorsFound = true;
                 }
             }
@@ -281,11 +281,11 @@ namespace SplitterComponent {
             for (OutNodeNum1 = 1; OutNodeNum1 <= state.dataSplitterComponent->SplitterCond(SplitterNum).NumOutletNodes; ++OutNodeNum1) {
                 if (NodeNum != state.dataSplitterComponent->SplitterCond(SplitterNum).OutletNode(OutNodeNum1)) continue;
                 ShowSevereError(state,
-                                format("{} = {} specifies an outlet node name the same as the inlet node.",
+                                fmt::format("{} = {} specifies an outlet node name the same as the inlet node.",
                                        CurrentModuleObject,
                                        state.dataSplitterComponent->SplitterCond(SplitterNum).SplitterName));
-                ShowContinueError(state, format("..{}={}", cAlphaFields(2), state.dataLoopNodes->NodeID(NodeNum)));
-                ShowContinueError(state, format("..Outlet Node #{} is duplicate.", OutNodeNum1));
+                ShowContinueError(state, fmt::format("..{}={}", cAlphaFields(2), state.dataLoopNodes->NodeID(NodeNum)));
+                ShowContinueError(state, fmt::format("..Outlet Node #{} is duplicate.", OutNodeNum1));
                 ErrorsFound = true;
             }
             for (OutNodeNum1 = 1; OutNodeNum1 <= state.dataSplitterComponent->SplitterCond(SplitterNum).NumOutletNodes; ++OutNodeNum1) {
@@ -295,11 +295,11 @@ namespace SplitterComponent {
                         state.dataSplitterComponent->SplitterCond(SplitterNum).OutletNode(OutNodeNum2))
                         continue;
                     ShowSevereError(state,
-                                    format("{} = {} specifies duplicate outlet nodes in its outlet node list.",
+                                    fmt::format("{} = {} specifies duplicate outlet nodes in its outlet node list.",
                                            CurrentModuleObject,
                                            state.dataSplitterComponent->SplitterCond(SplitterNum).SplitterName));
-                    ShowContinueError(state, format("..Outlet Node #{} Name={}", OutNodeNum1, state.dataLoopNodes->NodeID(OutNodeNum1)));
-                    ShowContinueError(state, format("..Outlet Node #{} is duplicate.", OutNodeNum2));
+                    ShowContinueError(state, fmt::format("..Outlet Node #{} Name={}", OutNodeNum1, state.dataLoopNodes->NodeID(OutNodeNum1)));
+                    ShowContinueError(state, fmt::format("..Outlet Node #{} is duplicate.", OutNodeNum2));
                     ErrorsFound = true;
                 }
             }
@@ -313,7 +313,7 @@ namespace SplitterComponent {
         lNumericBlanks.deallocate();
 
         if (ErrorsFound) {
-            ShowFatalError(state, format("{}Errors found in getting input.", RoutineName));
+            ShowFatalError(state, fmt::format("{}Errors found in getting input.", RoutineName));
         }
     }
 
@@ -623,7 +623,7 @@ namespace SplitterComponent {
         }
 
         if (WhichSplitter == 0) {
-            ShowSevereError(state, format("GetSplitterOuletNumber: Could not find Splitter = \"{}\"", SplitterName));
+            ShowSevereError(state, fmt::format("GetSplitterOuletNumber: Could not find Splitter = \"{}\"", SplitterName));
             ErrorsFound = true;
             SplitterOutletNumber = 0;
         }
@@ -678,7 +678,7 @@ namespace SplitterComponent {
         }
 
         if (WhichSplitter == 0) {
-            ShowSevereError(state, format("GetSplitterNodeNumbers: Could not find Splitter = \"{}\"", SplitterName));
+            ShowSevereError(state, fmt::format("GetSplitterNodeNumbers: Could not find Splitter = \"{}\"", SplitterName));
             ErrorsFound = true;
         }
 

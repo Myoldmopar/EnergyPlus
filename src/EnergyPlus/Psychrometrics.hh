@@ -537,7 +537,7 @@ namespace Psychrometrics {
         // Wylan & Sontag, Fundamentals of Classical Thermodynamics.
         // ASHRAE handbook 1985 Fundamentals, Ch. 6, eqn. (6),(26)
 
-        Real64 const rhoair(pb / (287.0 * (tdb + Constant::Kelvin) * (1.0 + 1.6077687 * max(dw, 1.0e-5))));
+        Real64 const rhoair(pb / (287.0 * (tdb + Constant::Kelvin) * (1.0 + 1.6077687 * max(dw, 1.0e-5f))));
 #ifdef EP_psych_errors
         if (rhoair < 0.0) PsyRhoAirFnPbTdbW_error(state, pb, tdb, dw, rhoair, CalledFrom);
 #endif
@@ -568,7 +568,7 @@ namespace Psychrometrics {
         // Wylan & Sontag, Fundamentals of Classical Thermodynamics.
         // ASHRAE handbook 1985 Fundamentals, Ch. 6, eqn. (6),(26)
 
-        return (pb / (287.0 * (tdb + Constant::Kelvin) * (1.0 + 1.6077687 * std::max(dw, 1.0e-5))));
+        return (pb / (287.0 * (tdb + Constant::Kelvin) * (1.0 + 1.6077687 * std::max(dw, 1.0e-5f))));
     }
 
     inline Real64 PsyRhoAirFnPbTdbW_fast([[maybe_unused]] EnergyPlusData &state,
@@ -612,7 +612,7 @@ namespace Psychrometrics {
         // This formulation currently does not use W since it returns results that are in J/kg and the
         //  amount of energy is on a per unit of moisture basis.
 
-        Real64 const Temperature(max(T, 0.0));                               // input temperature {Celsius} - corrected for >= 0C
+        Real64 const Temperature(max(T, 0.0f));                               // input temperature {Celsius} - corrected for >= 0C
         return (2500940.0 + 1858.95 * Temperature) - (4180.0 * Temperature); // enthalpy of the gas - enthalpy of the fluid
     }
 
@@ -658,7 +658,7 @@ namespace Psychrometrics {
         // ASHRAE HANDBOOK OF FUNDAMENTALS, 1972, P100, EQN 32
 
         // calculate enthalpy
-        return 1.00484e3 * TDB + max(dW, 1.0e-5) * (2.50094e6 + 1.85895e3 * TDB); // enthalpy {J/kg}
+        return 1.00484e3 * TDB + max(dW, 1.0e-5f) * (2.50094e6 + 1.85895e3 * TDB); // enthalpy {J/kg}
     }
 
     inline Real64 PsyHFnTdbW_fast(Real64 const TDB, // dry-bulb temperature {C}
@@ -699,7 +699,7 @@ namespace Psychrometrics {
         if (dwSave == dw) return cpaSave;
 
         // compute heat capacity of air
-        Real64 const w(max(dw, 1.0e-5));
+        Real64 const w(max(dw, 1.0e-5f));
         Real64 const cpa((1.00484e3 + w * 1.85895e3)); // result => heat capacity of moist air {J/kg-C}
 
         // save values for next call
@@ -749,7 +749,7 @@ namespace Psychrometrics {
         // ASHRAE HANDBOOK OF FUNDAMENTALS, 1972, P100, EQN 32
         //   by inverting function PsyHFnTdbW
 
-        Real64 const W(max(dW, 1.0e-5));                          // humidity ratio
+        Real64 const W(max(dW, 1.0e-5f));                          // humidity ratio
         return (H - 2.50094e6 * W) / (1.00484e3 + 1.85895e3 * W); // result=> dry-bulb temperature {C}
     }
 
@@ -800,7 +800,7 @@ namespace Psychrometrics {
         // REFERENCES:
         // ASHRAE handbook 1993 Fundamentals,
 
-        Real64 const W(max(dW, 1.0e-5)); // humidity ratio
+        Real64 const W(max(dW, 1.0e-5f)); // humidity ratio
         return W * PB / (461.52 * (Tdb + Constant::Kelvin) * (W + 0.62198));
     }
 
@@ -861,7 +861,7 @@ namespace Psychrometrics {
                 PsyRhFnTdbRhovLBnd0C_error(state, Tdb, Rhovapor, RHValue, CalledFrom);
             }
 #endif
-            return min(max(RHValue, 0.01), 1.0);
+            return min(max(RHValue, 0.01f), 1.0f);
         } else {
             return RHValue;
         }
@@ -928,7 +928,7 @@ namespace Psychrometrics {
         ++state.dataPsychCache->NumTimesCalled[static_cast<int>(PsychrometricFunction::VFnTdbWPb)];
 #endif
 
-        Real64 const w(max(dW, 1.0e-5));                                           // humidity ratio
+        Real64 const w(max(dW, 1.0e-5f));                                           // humidity ratio
         Real64 const V(1.59473e2 * (1.0 + 1.6078 * w) * (1.8 * TDB + 492.0) / PB); // specific volume {m3/kg}
 
         // Validity test
@@ -1197,7 +1197,7 @@ namespace Psychrometrics {
                 PsyRhFnTdbRhov_error(state, Tdb, Rhovapor, RHValue, CalledFrom);
             }
 #endif
-            return min(max(RHValue, 0.01), 1.0);
+            return min(max(RHValue, 0.01f), 1.0f);
         } else {
             return RHValue;
         }
@@ -1242,7 +1242,7 @@ namespace Psychrometrics {
                                                            : CalledFrom))); // Pressure -- saturated for pure water
 
         // Find Degree Of Saturation
-        Real64 const W(max(dW, 1.0e-5));                  // humidity ratio
+        Real64 const W(max(dW, 1.0e-5f));                  // humidity ratio
         Real64 const U(W / (0.62198 * PWS / (PB - PWS))); // Degree of Saturation
 
         // Calculate The Relative Humidity
@@ -1255,7 +1255,7 @@ namespace Psychrometrics {
                 PsyRhFnTdbWPb_error(state, TDB, W, RHValue, CalledFrom);
             }
 #endif
-            return min(max(RHValue, 0.01), 1.0);
+            return min(max(RHValue, 0.01f), 1.0f);
         } else {
             return RHValue;
         }
@@ -1365,7 +1365,7 @@ namespace Psychrometrics {
         // Numeric error check when the temperature and RH values cause Pdew to equal or exceed
         // barometric pressure which is physically impossible. An approach limit of 1000 pascals
         // was chosen to keep the numerics stable as the denominator approaches 0.
-        Real64 const W(PDEW * 0.62198 / max(PB - PDEW, 1000.0)); // humidity ratio
+        Real64 const W(PDEW * 0.62198 / max(PB - PDEW, 1000.0f)); // humidity ratio
         // THIS EQUATION IN SI UNIT IS FROM ASHRAE HANDBOOK OF FUNDAMENTALS PAGE 99  EQUATION 22
 
         // Validity test
@@ -1474,7 +1474,7 @@ namespace Psychrometrics {
         // ASHRAE HANDBOOK OF FUNDAMENTALS, 1972, P100, EQN 32
         //   by using functions PsyWFnTdbRhPb and PsyHFnTdbW
 
-        return PsyHFnTdbW(TDB, max(PsyWFnTdbRhPb(state, TDB, RH, PB, CalledFrom), 1.0e-5)); // enthalpy {J/kg}
+        return PsyHFnTdbW(TDB, max(PsyWFnTdbRhPb(state, TDB, RH, PB, CalledFrom), 1.0e-5f)); // enthalpy {J/kg}
     }
 
 #ifdef EP_cache_PsyTsatFnPb
@@ -1539,7 +1539,7 @@ namespace Psychrometrics {
         // REFERENCES:
         // ASHRAE HANDBOOK OF FUNDAMENTALS, 1972, P.99, EQN 22
 
-        Real64 const W0(max(W, 1.0e-5));             // limited humidity ratio
+        Real64 const W0(max(W, 1.0e-5f));             // limited humidity ratio
         Real64 const PDEW(PB * W0 / (0.62198 + W0)); // pressure at dew point temperature
         return PsyTsatFnPb(state, PDEW, CalledFrom);
     }
@@ -1575,7 +1575,7 @@ namespace Psychrometrics {
         ++state.dataPsychCache->NumTimesCalled[static_cast<int>(PsychrometricFunction::TdpFnTdbTwbPb)];
 #endif
 
-        Real64 const W(max(PsyWFnTdbTwbPb(state, TDB, TWB, PB, CalledFrom), 1.0e-5));
+        Real64 const W(max(PsyWFnTdbTwbPb(state, TDB, TWB, PB, CalledFrom), 1.0e-5f));
         Real64 const TDP(PsyTdpFnWPb(state, W, PB, CalledFrom));
 
         if (TDP > TWB) {
@@ -1664,7 +1664,7 @@ namespace Psychrometrics {
         // PsyDeltaHSenFnTdb2Tdb1W() function was derived by simplifying the expression above
         // The constant coefficients come from the equation for moist air enthalpy, PsyHFnTdbW()
 
-        return (1.00484e3 + max(1.0e-5, W) * 1.85895e3) * (TDB2 - TDB1);
+        return (1.00484e3 + max(1.0e-5f, W) * 1.85895e3) * (TDB2 - TDB1);
     }
 
     inline Real64 PsyDeltaHSenFnTdb2W2Tdb1W1(Real64 const TDB2, // dry-bulb temperature at state 2 {C}

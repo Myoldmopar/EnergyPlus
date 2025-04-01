@@ -111,24 +111,24 @@ namespace PVWatts {
         dcSystemCapacity_ = dcSystemCapacity;
 
         if (systemLosses > 1.0 || systemLosses < 0.0) {
-            ShowSevereError(state, format("PVWatts: Invalid system loss value {:.2R}", systemLosses));
+            ShowSevereError(state, fmt::format("PVWatts: Invalid system loss value {:.2f}", systemLosses));
             errorsFound = true;
         }
         systemLosses_ = systemLosses;
 
         if (geometryType_ == GeometryType::TILT_AZIMUTH) {
             if (tilt < 0 || tilt > 90) {
-                ShowSevereError(state, format("PVWatts: Invalid tilt: {:.2R}", tilt));
+                ShowSevereError(state, fmt::format("PVWatts: Invalid tilt: {:.2f}", tilt));
                 errorsFound = true;
             }
             tilt_ = tilt;
             if (azimuth < 0 || azimuth >= 360) {
-                ShowSevereError(state, format("PVWatts: Invalid azimuth: {:.2R}", azimuth));
+                ShowSevereError(state, fmt::format("PVWatts: Invalid azimuth: {:.2f}", azimuth));
             }
             azimuth_ = azimuth;
         } else if (geometryType_ == GeometryType::SURFACE) {
             if (surfaceNum == 0 || surfaceNum > state.dataSurface->Surface.size()) {
-                ShowSevereError(state, format("PVWatts: SurfaceNum not in Surfaces: {}", surfaceNum));
+                ShowSevereError(state, fmt::format("PVWatts: SurfaceNum not in Surfaces: {}", surfaceNum));
                 errorsFound = true;
             } else {
                 surfaceNum_ = surfaceNum;
@@ -141,7 +141,7 @@ namespace PVWatts {
         }
 
         if (groundCoverageRatio > 1.0 || groundCoverageRatio < 0.0) {
-            ShowSevereError(state, format("PVWatts: Invalid ground coverage ratio: {:.2R}", groundCoverageRatio));
+            ShowSevereError(state, fmt::format("PVWatts: Invalid ground coverage ratio: {:.2f}", groundCoverageRatio));
             errorsFound = true;
         }
         groundCoverageRatio_ = groundCoverageRatio;
@@ -254,7 +254,7 @@ namespace PVWatts {
         ModuleType moduleType;
         auto moduleTypeIt = moduleTypeMap.find(cAlphaArgs(AlphaFields::MODULE_TYPE));
         if (moduleTypeIt == moduleTypeMap.end()) {
-            ShowSevereError(state, format("PVWatts: Invalid Module Type: {}", cAlphaArgs(AlphaFields::MODULE_TYPE)));
+            ShowSevereError(state, fmt::format("PVWatts: Invalid Module Type: {}", cAlphaArgs(AlphaFields::MODULE_TYPE)));
             errorsFound = true;
         } else {
             moduleType = moduleTypeIt->second;
@@ -268,7 +268,7 @@ namespace PVWatts {
         ArrayType arrayType;
         auto arrayTypeIt = arrayTypeMap.find(cAlphaArgs(AlphaFields::ARRAY_TYPE));
         if (arrayTypeIt == arrayTypeMap.end()) {
-            ShowSevereError(state, format("PVWatts: Invalid Array Type: {}", cAlphaArgs(AlphaFields::ARRAY_TYPE)));
+            ShowSevereError(state, fmt::format("PVWatts: Invalid Array Type: {}", cAlphaArgs(AlphaFields::ARRAY_TYPE)));
             errorsFound = true;
         } else {
             arrayType = arrayTypeIt->second;
@@ -279,7 +279,7 @@ namespace PVWatts {
         GeometryType geometryType;
         auto geometryTypeIt = geometryTypeMap.find(cAlphaArgs(AlphaFields::GEOMETRY_TYPE));
         if (geometryTypeIt == geometryTypeMap.end()) {
-            ShowSevereError(state, format("PVWatts: Invalid Geometry Type: {}", cAlphaArgs(AlphaFields::GEOMETRY_TYPE)));
+            ShowSevereError(state, fmt::format("PVWatts: Invalid Geometry Type: {}", cAlphaArgs(AlphaFields::GEOMETRY_TYPE)));
             errorsFound = true;
         } else {
             geometryType = geometryTypeIt->second;
@@ -448,12 +448,17 @@ namespace PVWatts {
             }
         } else {
             // Report Out
-            ssc_data_get_number(pvwattsData_, "dc", &outputDCPower_);
+            ssc_number_t val;
+            ssc_data_get_number(pvwattsData_, "dc", &val);
+            outputDCPower_ = val;
             outputDCEnergy_ = outputDCPower_ * TimeStepSysSec;
-            ssc_data_get_number(pvwattsData_, "ac", &outputACPower_);
+            ssc_data_get_number(pvwattsData_, "ac", &val);
+            outputACPower_ = val;
             outputACEnergy_ = outputACPower_ * TimeStepSysSec;
-            ssc_data_get_number(pvwattsData_, "tcell", &cellTemperature_);
-            ssc_data_get_number(pvwattsData_, "poa", &planeOfArrayIrradiance_);
+            ssc_data_get_number(pvwattsData_, "tcell", &val);
+            cellTemperature_ = val;
+            ssc_data_get_number(pvwattsData_, "poa", &val);
+            planeOfArrayIrradiance_ = val;
         }
     }
 

@@ -1255,12 +1255,12 @@ void SQLite::initializeTabularDataTable()
 
     sqliteExecuteCommand(sql);
 
-    sqliteExecuteCommand(format("INSERT INTO StringTypes VALUES({},'ReportName');", ReportNameId));
-    sqliteExecuteCommand(format("INSERT INTO StringTypes VALUES({},'ReportForString');", ReportForStringId));
-    sqliteExecuteCommand(format("INSERT INTO StringTypes VALUES({},'TableName');", TableNameId));
-    sqliteExecuteCommand(format("INSERT INTO StringTypes VALUES({},'RowName');", RowNameId));
-    sqliteExecuteCommand(format("INSERT INTO StringTypes VALUES({},'ColumnName');", ColumnNameId));
-    sqliteExecuteCommand(format("INSERT INTO StringTypes VALUES({},'Units');", UnitsId));
+    sqliteExecuteCommand(fmt::format("INSERT INTO StringTypes VALUES({},'ReportName');", ReportNameId));
+    sqliteExecuteCommand(fmt::format("INSERT INTO StringTypes VALUES({},'ReportForString');", ReportForStringId));
+    sqliteExecuteCommand(fmt::format("INSERT INTO StringTypes VALUES({},'TableName');", TableNameId));
+    sqliteExecuteCommand(fmt::format("INSERT INTO StringTypes VALUES({},'RowName');", RowNameId));
+    sqliteExecuteCommand(fmt::format("INSERT INTO StringTypes VALUES({},'ColumnName');", ColumnNameId));
+    sqliteExecuteCommand(fmt::format("INSERT INTO StringTypes VALUES({},'Units');", UnitsId));
 
     constexpr std::string_view sql2 = "CREATE TABLE Strings ( "
                                       "StringIndex INTEGER PRIMARY KEY, "

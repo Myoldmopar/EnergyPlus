@@ -3974,7 +3974,7 @@ TEST_F(EnergyPlusFixture, VRFTest_SysCurve)
     Real64 outHR = state->dataLoopNodes->Node(state->dataHVACVarRefFlow->VRF(VRFCond).CondenserNodeNum).HumRat;
     // adjust for defrost factors
     Real64 outT = 0.82 * state->dataLoopNodes->Node(state->dataHVACVarRefFlow->VRF(VRFCond).CondenserNodeNum).Temp - 8.589;
-    Real64 OutdoorCoildw = max(1.0e-6, (outHR - PsyWFnTdpPb(*state, outT, state->dataEnvrn->OutBaroPress)));
+    Real64 OutdoorCoildw = max(1.0e-6f, (outHR - PsyWFnTdpPb(*state, outT, state->dataEnvrn->OutBaroPress)));
     Real64 FractionalDefrostTime = state->dataHVACVarRefFlow->VRF(VRFCond).DefrostFraction;
     Real64 LoadDueToDefrost = (0.01 * FractionalDefrostTime) *
                               (7.222 - state->dataLoopNodes->Node(state->dataHVACVarRefFlow->VRF(VRFCond).CondenserNodeNum).Temp) *

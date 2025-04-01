@@ -106,14 +106,14 @@ void SimAirMixer(EnergyPlusData &state, std::string_view CompName, int &CompInde
     if (CompIndex == 0) {
         MixerNum = Util::FindItemInList(CompName, state.dataMixerComponent->MixerCond, &MixerConditions::MixerName);
         if (MixerNum == 0) {
-            ShowFatalError(state, format("SimAirLoopMixer: Mixer not found={}", CompName));
+            ShowFatalError(state, fmt::format("SimAirLoopMixer: Mixer not found={}", CompName));
         }
         CompIndex = MixerNum;
     } else {
         MixerNum = CompIndex;
         if (MixerNum > state.dataMixerComponent->NumMixers || MixerNum < 1) {
             ShowFatalError(state,
-                           format("SimAirLoopMixer: Invalid CompIndex passed={}, Number of Mixers={}, Mixer name={}",
+                           fmt::format("SimAirLoopMixer: Invalid CompIndex passed={}, Number of Mixers={}, Mixer name={}",
                                   MixerNum,
                                   state.dataMixerComponent->NumMixers,
                                   CompName));
@@ -121,7 +121,7 @@ void SimAirMixer(EnergyPlusData &state, std::string_view CompName, int &CompInde
         if (state.dataMixerComponent->CheckEquipName(MixerNum)) {
             if (CompName != state.dataMixerComponent->MixerCond(MixerNum).MixerName) {
                 ShowFatalError(state,
-                               format("SimAirLoopMixer: Invalid CompIndex passed={}, Mixer name={}, stored Mixer Name for that index={}",
+                               fmt::format("SimAirLoopMixer: Invalid CompIndex passed={}, Mixer name={}, stored Mixer Name for that index={}",
                                       MixerNum,
                                       CompName,
                                       state.dataMixerComponent->MixerCond(MixerNum).MixerName));
@@ -267,7 +267,7 @@ void GetMixerInput(EnergyPlusData &state)
                                   NodeInputManager::CompFluidStream::Primary,
                                   ObjectIsNotParent);
             if (lAlphaBlanks(2 + NodeNum)) {
-                ShowSevereError(state, format("{} is Blank, {} = {}", cAlphaFields(2 + NodeNum), CurrentModuleObject, AlphArray(1)));
+                ShowSevereError(state, fmt::format("{} is Blank, {} = {}", cAlphaFields(2 + NodeNum), CurrentModuleObject, AlphArray(1)));
                 ErrorsFound = true;
             }
         }
@@ -280,11 +280,11 @@ void GetMixerInput(EnergyPlusData &state)
         for (InNodeNum1 = 1; InNodeNum1 <= state.dataMixerComponent->MixerCond(MixerNum).NumInletNodes; ++InNodeNum1) {
             if (NodeNum != state.dataMixerComponent->MixerCond(MixerNum).InletNode(InNodeNum1)) continue;
             ShowSevereError(state,
-                            format("{} = {} specifies an inlet node name the same as the outlet node.",
+                            fmt::format("{} = {} specifies an inlet node name the same as the outlet node.",
                                    CurrentModuleObject,
                                    state.dataMixerComponent->MixerCond(MixerNum).MixerName));
-            ShowContinueError(state, format("..{} = {}", cAlphaFields(2), state.dataLoopNodes->NodeID(NodeNum)));
-            ShowContinueError(state, format("..Inlet Node #{} is duplicate.", InNodeNum1));
+            ShowContinueError(state, fmt::format("..{} = {}", cAlphaFields(2), state.dataLoopNodes->NodeID(NodeNum)));
+            ShowContinueError(state, fmt::format("..Inlet Node #{} is duplicate.", InNodeNum1));
             ErrorsFound = true;
         }
         for (InNodeNum1 = 1; InNodeNum1 <= state.dataMixerComponent->MixerCond(MixerNum).NumInletNodes; ++InNodeNum1) {
@@ -293,11 +293,11 @@ void GetMixerInput(EnergyPlusData &state)
                     state.dataMixerComponent->MixerCond(MixerNum).InletNode(InNodeNum2))
                     continue;
                 ShowSevereError(state,
-                                format("{} = {} specifies duplicate inlet nodes in its inlet node list.",
+                                fmt::format("{} = {} specifies duplicate inlet nodes in its inlet node list.",
                                        CurrentModuleObject,
                                        state.dataMixerComponent->MixerCond(MixerNum).MixerName));
-                ShowContinueError(state, format("..Inlet Node #{} Name={}", InNodeNum1, state.dataLoopNodes->NodeID(InNodeNum1)));
-                ShowContinueError(state, format("..Inlet Node #{} is duplicate.", InNodeNum2));
+                ShowContinueError(state, fmt::format("..Inlet Node #{} Name={}", InNodeNum1, state.dataLoopNodes->NodeID(InNodeNum1)));
+                ShowContinueError(state, fmt::format("..Inlet Node #{} is duplicate.", InNodeNum2));
                 ErrorsFound = true;
             }
         }
@@ -311,7 +311,7 @@ void GetMixerInput(EnergyPlusData &state)
     lNumericBlanks.deallocate();
 
     if (ErrorsFound) {
-        ShowFatalError(state, format("{}Errors found in getting input.", RoutineName));
+        ShowFatalError(state, fmt::format("{}Errors found in getting input.", RoutineName));
     }
 }
 
@@ -620,9 +620,9 @@ void GetZoneMixerIndex(EnergyPlusData &state, std::string const &MixerName, int 
     MixerIndex = Util::FindItemInList(MixerName, state.dataMixerComponent->MixerCond, &MixerConditions::MixerName);
     if (MixerIndex == 0) {
         if (!ThisObjectType.empty()) {
-            ShowSevereError(state, format("{}, GetZoneMixerIndex: Zone Mixer not found={}", ThisObjectType, MixerName));
+            ShowSevereError(state, fmt::format("{}, GetZoneMixerIndex: Zone Mixer not found={}", ThisObjectType, MixerName));
         } else {
-            ShowSevereError(state, format("GetZoneMixerIndex: Zone Mixer not found={}", MixerName));
+            ShowSevereError(state, fmt::format("GetZoneMixerIndex: Zone Mixer not found={}", MixerName));
         }
         ErrorsFound = true;
     }

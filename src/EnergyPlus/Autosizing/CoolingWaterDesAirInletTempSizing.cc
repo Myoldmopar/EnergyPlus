@@ -104,7 +104,7 @@ Real64 CoolingWaterDesAirInletTempSizer::size(EnergyPlusData &state, Real64 _ori
                     if (this->dataFlowUsedForSizing > 0.0) {
                         OutAirFrac = this->finalSysSizing(this->curSysNum).DesOutAirVolFlow / this->dataFlowUsedForSizing;
                     }
-                    OutAirFrac = min(1.0, max(0.0, OutAirFrac));
+                    OutAirFrac = min(1.0f, max(0.0f, OutAirFrac));
                     this->autoSizedValue = OutAirFrac * this->finalSysSizing(this->curSysNum).PrecoolTemp +
                                            (1.0 - OutAirFrac) * this->finalSysSizing(this->curSysNum).RetTempAtCoolPeak;
                 }

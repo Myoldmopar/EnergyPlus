@@ -386,7 +386,7 @@ namespace ThermalEN673Calc {
                 //  2            form='formatted', iostat=nperr)
                 //    write(18,*) 'New calc'
                 for (i = 1; i <= nlayer - 1; ++i) {
-                    // 22222  format('Gas #', I3, ' : Dens=', F9.7, ' Visc=', F12.9, ' Cond=', F9.7, ' Cp=', F9.7)
+                    // 22222  fmt::format('Gas #', I3, ' : Dens=', F9.7, ' Visc=', F12.9, ' Cond=', F9.7, ' Cp=', F9.7)
                     //   write(18, 22222) iprop(i+1, j), tempDens, gvis(iprop(i+1,j), 1), gcon(iprop(i+1,j), 1), gcp(iprop(i+1,j), 1)
                     dT(i) = 15.0 / (nlayer - 1); // set initial temperature distribution
                     for (j = 1; j <= nmix(i + 1); ++j) {

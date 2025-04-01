@@ -101,7 +101,7 @@ PlantComponent *PlantProfileData::factory(EnergyPlusData &state, std::string con
                                 [&objectName](const PlantProfileData &plp) { return plp.Name == objectName; });
     if (thisObj != state.dataPlantLoadProfile->PlantProfile.end()) return thisObj;
     // If we didn't find it, fatal
-    ShowFatalError(state, format("PlantLoadProfile::factory: Error getting inputs for pipe named: {}", objectName));
+    ShowFatalError(state, fmt::format("PlantLoadProfile::factory: Error getting inputs for pipe named: {}", objectName));
     // Shut up the compiler
     return nullptr;
 }
@@ -534,7 +534,7 @@ void GetPlantProfileInput(EnergyPlusData &state)
                                     state.dataPlantLoadProfile->PlantProfile(ProfileNum).Name);
             }
 
-            if (ErrorsFound) ShowFatalError(state, format("Errors in {} input.", cCurrentModuleObject));
+            if (ErrorsFound) ShowFatalError(state, fmt::format("Errors in {} input.", cCurrentModuleObject));
 
         } // ProfileNum
     }

@@ -560,7 +560,7 @@ void GetCoilDesFlowT(EnergyPlusData &state,
     } else {
         if ((sysSizInput.CoolCapControl == CapacityControl::VT) || (sysSizInput.CoolCapControl == CapacityControl::Bypass)) {
             ShowWarningError(state,
-                             format("GetCoilDesFlow: AirLoopHVAC = {} has no time of peak cooling load for sizing.", sysSizInput.AirPriLoopName));
+                             fmt::format("GetCoilDesFlow: AirLoopHVAC = {} has no time of peak cooling load for sizing.", sysSizInput.AirPriLoopName));
             ShowContinueError(state, "Using Central Cooling Capacity Control Method=VAV instead of Bypass or VT.");
             sysSizInput.CoolCapControl = CapacityControl::VAV;
         }
@@ -588,7 +588,7 @@ void GetCoilDesFlowT(EnergyPlusData &state,
         if (calcSysSizing.MixTempAtCoolPeak > DesExitTemp) {
             Real64 AvgSupTemp = AvgZoneTemp - ZoneCoolLoadSum / (state.dataEnvrn->StdRhoAir * CpAir * finalSysSizing.DesCoolVolFlow);
             DesFlow = finalSysSizing.DesCoolVolFlow *
-                      max(0.0, min(1.0, ((calcSysSizing.MixTempAtCoolPeak - AvgSupTemp) / (calcSysSizing.MixTempAtCoolPeak - DesExitTemp))));
+                      max(0.0f, min(1.0f, ((calcSysSizing.MixTempAtCoolPeak - AvgSupTemp) / (calcSysSizing.MixTempAtCoolPeak - DesExitTemp))));
         } else {
             DesFlow = finalSysSizing.DesCoolVolFlow;
         }
@@ -791,7 +791,7 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
     if (this->OAFlowMethod == DataSizing::OAFlowCalcMethod::IAQProcedure && this->myEnvrnFlag) {
         if (!state.dataContaminantBalance->Contaminant.CO2Simulation) {
             ShowSevereError(state,
-                            format("DesignSpecification:OutdoorAir=\"{}{}",
+                            fmt::format("DesignSpecification:OutdoorAir=\"{}{}",
                                    this->Name,
                                    R"(" valid Outdoor Air Method =" IndoorAirQualityProcedure" requires CO2 simulation.)"));
             ShowContinueError(state, "The choice must be Yes for the field Carbon Dioxide Concentration in ZoneAirContaminantBalance");
@@ -802,7 +802,7 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
     if (this->OAFlowMethod == DataSizing::OAFlowCalcMethod::PCOccSch && this->myEnvrnFlag) {
         if (!state.dataContaminantBalance->Contaminant.CO2Simulation) {
             ShowSevereError(state,
-                            format("DesignSpecification:OutdoorAir=\"{}{}",
+                            fmt::format("DesignSpecification:OutdoorAir=\"{}{}",
                                    this->Name,
                                    R"(" valid Outdoor Air Method =" ProportionalControlBasedOnDesignOccupancy" requires CO2 simulation.)"));
             ShowContinueError(state, "The choice must be Yes for the field Carbon Dioxide Concentration in ZoneAirContaminantBalance");
@@ -813,7 +813,7 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
     if (this->OAFlowMethod == DataSizing::OAFlowCalcMethod::PCDesOcc && this->myEnvrnFlag) {
         if (!state.dataContaminantBalance->Contaminant.CO2Simulation) {
             ShowSevereError(state,
-                            format("DesignSpecification:OutdoorAir=\"{}{}",
+                            fmt::format("DesignSpecification:OutdoorAir=\"{}{}",
                                    this->Name,
                                    R"(" valid Outdoor Air Method =" ProportionalControlBasedOnOccupancySchedule" requires CO2 simulation.)"));
             ShowContinueError(state, "The choice must be Yes for the field Carbon Dioxide Concentration in ZoneAirContaminantBalance");
@@ -946,11 +946,11 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                             if (this->OAFlowMethod == DataSizing::OAFlowCalcMethod::PCOccSch) {
                                 if (this->CO2MaxMinLimitErrorCount < 2) {
                                     ShowSevereError(state,
-                                                    format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
+                                                    fmt::format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
                                     ShowContinueError(
                                         state,
-                                        format("For System Outdoor Air Method = ProportionalControlBasedOnOccupancySchedule, maximum target "
-                                               "CO2 concentration ({:.2R}), is not greater than minimum target CO2 concentration ({:.2R}).",
+                                        fmt::format("For System Outdoor Air Method = ProportionalControlBasedOnOccupancySchedule, maximum target "
+                                               "CO2 concentration ({:.2f}), is not greater than minimum target CO2 concentration ({:.2f}).",
                                                ZoneMaxCO2,
                                                ZoneMinCO2));
                                     ShowContinueError(state,
@@ -960,7 +960,7 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                                 } else {
                                     ShowRecurringWarningErrorAtEnd(
                                         state,
-                                        format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
+                                        fmt::format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
                                                "ProportionalControlBasedOnOccupancySchedule, maximum target CO2 concentration is not greater than "
                                                "minimum target CO2 concentration. Error continues...",
                                                this->Name),
@@ -970,11 +970,11 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                             if (this->OAFlowMethod == DataSizing::OAFlowCalcMethod::PCDesOcc) {
                                 if (this->CO2MaxMinLimitErrorCount < 2) {
                                     ShowSevereError(state,
-                                                    format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
+                                                    fmt::format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
                                     ShowContinueError(
                                         state,
-                                        format("For System Outdoor Air Method = ProportionalControlBasedOnDesignOccupancy, maximum target "
-                                               "CO2 concentration ({:.2R}), is not greater than minimum target CO2 concentration ({:.2R}).",
+                                        fmt::format("For System Outdoor Air Method = ProportionalControlBasedOnDesignOccupancy, maximum target "
+                                               "CO2 concentration ({:.2f}), is not greater than minimum target CO2 concentration ({:.2f}).",
                                                ZoneMaxCO2,
                                                ZoneMinCO2));
                                     ShowContinueError(state,
@@ -984,7 +984,7 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                                 } else {
                                     ShowRecurringWarningErrorAtEnd(
                                         state,
-                                        format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
+                                        fmt::format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
                                                "ProportionalControlBasedOnDesignOccupancy, maximum target CO2 concentration is not greater than "
                                                "minimum target CO2 concentration. Error continues...",
                                                this->Name),
@@ -1017,9 +1017,9 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                             if (this->OAFlowMethod == DataSizing::OAFlowCalcMethod::PCOccSch) {
                                 if (this->CO2GainErrorCount < 2) {
                                     ShowSevereError(state,
-                                                    format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
+                                                    fmt::format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
                                     ShowContinueError(state,
-                                                      format("For System Outdoor Air Method = ProportionalControlBasedOnOccupancySchedule, CO2 "
+                                                      fmt::format("For System Outdoor Air Method = ProportionalControlBasedOnOccupancySchedule, CO2 "
                                                              "generation from people is not greater than zero. Occurs in Zone =\"{}\". ",
                                                              thisZone.Name));
                                     ShowContinueError(state,
@@ -1028,7 +1028,7 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                                     ShowContinueErrorTimeStamp(state, "");
                                 } else {
                                     ShowRecurringWarningErrorAtEnd(state,
-                                                                   format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
+                                                                   fmt::format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
                                                                           "ProportionalControlBasedOnOccupancySchedule, CO2 generation from people "
                                                                           "is not greater than zero. Error continues...",
                                                                           this->Name),
@@ -1038,9 +1038,9 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                             if (this->OAFlowMethod == DataSizing::OAFlowCalcMethod::PCDesOcc) {
                                 if (this->CO2GainErrorCount < 2) {
                                     ShowSevereError(state,
-                                                    format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
+                                                    fmt::format("CalcDesignSpecificationOutdoorAir DesignSpecification:OutdoorAir = \"{}\".", this->Name));
                                     ShowContinueError(state,
-                                                      format("For System Outdoor Air Method = ProportionalControlBasedOnDesignOccupancy, CO2 "
+                                                      fmt::format("For System Outdoor Air Method = ProportionalControlBasedOnDesignOccupancy, CO2 "
                                                              "generation from people is not greater than zero. Occurs in Zone =\"{}\". ",
                                                              thisZone.Name));
                                     ShowContinueError(state,
@@ -1049,7 +1049,7 @@ Real64 OARequirementsData::calcOAFlowRate(EnergyPlusData &state,
                                     ShowContinueErrorTimeStamp(state, "");
                                 } else {
                                     ShowRecurringWarningErrorAtEnd(state,
-                                                                   format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
+                                                                   fmt::format("DesignSpecification:OutdoorAir = \"{}\", For System Outdoor Air Method = "
                                                                           "ProportionalControlBasedOnDesignOccupancy, CO2 generation from people is "
                                                                           "not greater than zero. Error continues...",
                                                                           this->Name),

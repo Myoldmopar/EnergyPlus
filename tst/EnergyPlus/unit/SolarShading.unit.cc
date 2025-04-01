@@ -4313,8 +4313,8 @@ TEST_F(EnergyPlusFixture, SolarShadingTest_PolygonOverlap)
     Real64 overhangShadowFrac = (1 - wallSunLitFracOverhangOnly);
     Real64 combinedShadowFrac = (1 - wallSunLitFracOverhangTree);
     Real64 overlapShdowFrac = treeShadowFrac + overhangShadowFrac - combinedShadowFrac;
-    Real64 treeOnlyShadowFrac = max(0.0, treeShadowFrac - overlapShdowFrac);
-    Real64 overhangOnlyShadowFrac = max(0.0, overhangShadowFrac - overlapShdowFrac);
+    Real64 treeOnlyShadowFrac = max(0.0f, treeShadowFrac - overlapShdowFrac);
+    Real64 overhangOnlyShadowFrac = max(0.0f, overhangShadowFrac - overlapShdowFrac);
     Real64 expWallSunlitFrac =
         1.0 - ((1.0 - 0.5) * overhangOnlyShadowFrac) - ((1.0 - 0.8) * treeOnlyShadowFrac) - ((1.0 - 0.5 * 0.8) * overlapShdowFrac);
     EXPECT_NEAR(expWallSunlitFrac, wallSunLitFracOverhangTreePartial, 0.0001);
@@ -4324,8 +4324,8 @@ TEST_F(EnergyPlusFixture, SolarShadingTest_PolygonOverlap)
     overhangShadowFrac = (1 - winSunLitFracOverhangOnly);
     combinedShadowFrac = (1 - winSunLitFracOverhangTree);
     overlapShdowFrac = treeShadowFrac + overhangShadowFrac - combinedShadowFrac;
-    treeOnlyShadowFrac = max(0.0, treeShadowFrac - overlapShdowFrac);
-    overhangOnlyShadowFrac = max(0.0, overhangShadowFrac - overlapShdowFrac);
+    treeOnlyShadowFrac = max(0.0f, treeShadowFrac - overlapShdowFrac);
+    overhangOnlyShadowFrac = max(0.0f, overhangShadowFrac - overlapShdowFrac);
     Real64 expWinSunlitFrac =
         1.0 - ((1.0 - 0.5) * overhangOnlyShadowFrac) - ((1.0 - 0.8) * treeOnlyShadowFrac) - ((1.0 - 0.5 * 0.8) * overlapShdowFrac);
     EXPECT_NEAR(expWinSunlitFrac, winSunLitFracOverhangTreePartial, 0.0001);
@@ -4404,8 +4404,8 @@ TEST_F(EnergyPlusFixture, SolarShadingTest_PolygonOverlap)
     overhangShadowFrac = (1 - wallSunLitFracOverhangOnly);
     combinedShadowFrac = (1 - wallSunLitFracOverhangTree);
     overlapShdowFrac = treeShadowFrac + overhangShadowFrac - combinedShadowFrac;
-    treeOnlyShadowFrac = max(0.0, treeShadowFrac - overlapShdowFrac);
-    overhangOnlyShadowFrac = max(0.0, overhangShadowFrac - overlapShdowFrac);
+    treeOnlyShadowFrac = max(0.0f, treeShadowFrac - overlapShdowFrac);
+    overhangOnlyShadowFrac = max(0.0f, overhangShadowFrac - overlapShdowFrac);
     expWallSunlitFrac = 1.0 - ((1.0 - 0.5) * overhangOnlyShadowFrac) - ((1.0 - 0.8) * treeOnlyShadowFrac) - ((1.0 - 0.5 * 0.8) * overlapShdowFrac);
     EXPECT_NEAR(expWallSunlitFrac, wallSunLitFracOverhangTreePartial, 0.0001);
 
@@ -4414,8 +4414,8 @@ TEST_F(EnergyPlusFixture, SolarShadingTest_PolygonOverlap)
     overhangShadowFrac = (1 - winSunLitFracOverhangOnly);
     combinedShadowFrac = (1 - winSunLitFracOverhangTree);
     overlapShdowFrac = treeShadowFrac + overhangShadowFrac - combinedShadowFrac;
-    treeOnlyShadowFrac = max(0.0, treeShadowFrac - overlapShdowFrac);
-    overhangOnlyShadowFrac = max(0.0, overhangShadowFrac - overlapShdowFrac);
+    treeOnlyShadowFrac = max(0.0f, treeShadowFrac - overlapShdowFrac);
+    overhangOnlyShadowFrac = max(0.0f, overhangShadowFrac - overlapShdowFrac);
     expWinSunlitFrac = 1.0 - ((1.0 - 0.5) * overhangOnlyShadowFrac) - ((1.0 - 0.8) * treeOnlyShadowFrac) - ((1.0 - 0.5 * 0.8) * overlapShdowFrac);
     EXPECT_NEAR(expWinSunlitFrac, winSunLitFracOverhangTreePartial, 0.0001);
 }
@@ -4741,8 +4741,8 @@ TEST_F(EnergyPlusFixture, SolarShadingTest_PolygonOverlap2)
     Real64 shade1ShadowFrac = (1 - wallSunLitFracShade1Only);
     Real64 combinedShadowFrac = (1 - wallSunLitFracShade1Shade2);
     Real64 overlapShdowFrac = shade2ShadowFrac + shade1ShadowFrac - combinedShadowFrac;
-    Real64 shade2OnlyShadowFrac = max(0.0, shade2ShadowFrac - overlapShdowFrac);
-    Real64 shade1OnlyShadowFrac = max(0.0, shade1ShadowFrac - overlapShdowFrac);
+    Real64 shade2OnlyShadowFrac = max(0.0f, shade2ShadowFrac - overlapShdowFrac);
+    Real64 shade1OnlyShadowFrac = max(0.0f, shade1ShadowFrac - overlapShdowFrac);
     Real64 expWallSunlitFrac =
         1.0 - ((1.0 - 0.5) * shade1OnlyShadowFrac) - ((1.0 - 0.8) * shade2OnlyShadowFrac) - ((1.0 - 0.5 * 0.8) * overlapShdowFrac);
     EXPECT_NEAR(expWallSunlitFrac, wallSunLitFracShade1Shade2Partial, 0.0001);
@@ -4754,8 +4754,8 @@ TEST_F(EnergyPlusFixture, SolarShadingTest_PolygonOverlap2)
     shade1ShadowFrac = (1 - winSunLitFracShade1Only);
     combinedShadowFrac = (1 - winSunLitFracShade1Shade2);
     overlapShdowFrac = shade2ShadowFrac + shade1ShadowFrac - combinedShadowFrac;
-    shade2OnlyShadowFrac = max(0.0, shade2ShadowFrac - overlapShdowFrac);
-    shade1OnlyShadowFrac = max(0.0, shade1ShadowFrac - overlapShdowFrac);
+    shade2OnlyShadowFrac = max(0.0f, shade2ShadowFrac - overlapShdowFrac);
+    shade1OnlyShadowFrac = max(0.0f, shade1ShadowFrac - overlapShdowFrac);
     Real64 expWinSunlitFrac =
         1.0 - ((1.0 - 0.5) * shade1OnlyShadowFrac) - ((1.0 - 0.8) * shade2OnlyShadowFrac) - ((1.0 - 0.5 * 0.8) * overlapShdowFrac);
     EXPECT_NEAR(expWinSunlitFrac, winSunLitFracShade1Shade2Partial, 0.0001);

@@ -526,7 +526,7 @@ namespace Sched {
         NumAlphas = 0;
         NumNumbers = 0;
         if (NumCommaFileShading > 1) {
-            ShowWarningError(state, format("{}: More than 1 occurrence of this object found, only first will be used.", CurrentModuleObject));
+            ShowWarningError(state, fmt::format("{}: More than 1 occurrence of this object found, only first will be used.", CurrentModuleObject));
         }
 
         std::map<fs::path, nlohmann::json>::iterator schedule_file_shading_result;
@@ -605,7 +605,7 @@ namespace Sched {
 
             if (schedule_file_shading_result->second["header"].back().get<std::string>() == "()") {
                 ShowWarningError(state,
-                                 format("{}: {}=\"{}\" Removing last column of the CSV since it has '()' for the surface name.",
+                                 fmt::format("{}: {}=\"{}\" Removing last column of the CSV since it has '()' for the surface name.",
                                         routineName,
                                         CurrentModuleObject,
                                         Alphas(1)));
@@ -617,13 +617,13 @@ namespace Sched {
 
             if (rowCnt != rowLimitCount) {
                 if (rowCnt < rowLimitCount) {
-                    ShowSevereError(state, format("{}: {}=\"{}\" {} data values read.", routineName, CurrentModuleObject, Alphas(1), rowCnt));
+                    ShowSevereError(state, fmt::format("{}: {}=\"{}\" {} data values read.", routineName, CurrentModuleObject, Alphas(1), rowCnt));
                 } else if (rowCnt > rowLimitCount) {
-                    ShowSevereError(state, format("{}: {}=\"{}\" too many data values read.", routineName, CurrentModuleObject, Alphas(1)));
+                    ShowSevereError(state, fmt::format("{}: {}=\"{}\" too many data values read.", routineName, CurrentModuleObject, Alphas(1)));
                 }
                 ShowContinueError(
                     state,
-                    format("Number of rows in the shading file must be a full year multiplied by the simulation TimeStep: {}.", rowLimitCount));
+                    fmt::format("Number of rows in the shading file must be a full year multiplied by the simulation TimeStep: {}.", rowLimitCount));
                 ShowFatalError(state, "Program terminates due to previous condition.");
             }
 
@@ -633,7 +633,7 @@ namespace Sched {
             if (numerrors > 0) {
                 ShowWarningError(
                     state,
-                    format(
+                    fmt::format(
                         "{}:{}=\"{}\" {} records had errors - these values are set to 0.", routineName, CurrentModuleObject, Alphas(1), numerrors));
             }
         }
@@ -708,10 +708,10 @@ namespace Sched {
             if (schedType->isLimited && schedType->minVal > schedType->maxVal) {
                 if (schedType->isReal) {
                     ShowSevereCustom(
-                        state, eoh, format("{} [{:.2R}] > {} [{:.2R}].", cNumericFields(1), schedType->minVal, cNumericFields(2), schedType->maxVal));
+                        state, eoh, fmt::format("{} [{:.2f}] > {} [{:.2f}].", cNumericFields(1), schedType->minVal, cNumericFields(2), schedType->maxVal));
                 } else {
                     ShowSevereCustom(
-                        state, eoh, format("{} [{:.0R}] > {} [{:.0R}].", cNumericFields(1), schedType->minVal, cNumericFields(2), schedType->maxVal));
+                        state, eoh, fmt::format("{} [{:.0f}] > {} [{:.0f}].", cNumericFields(1), schedType->minVal, cNumericFields(2), schedType->maxVal));
                 }
                 ShowContinueError(state, "  Other warning/severes about schedule values may appear.");
             }
@@ -766,11 +766,11 @@ namespace Sched {
             }
 
             if (daySched->checkValsForLimitViolations(state)) {
-                ShowWarningCustom(state, eoh, format("Values are outside of range for {}={}", cAlphaFields(2), Alphas(2)));
+                ShowWarningCustom(state, eoh, fmt::format("Values are outside of range for {}={}", cAlphaFields(2), Alphas(2)));
             }
 
             if (daySched->checkValsForBadIntegers(state)) {
-                ShowWarningCustom(state, eoh, format("One or more values are not integer in {}={}", cAlphaFields(2), Alphas(2)));
+                ShowWarningCustom(state, eoh, fmt::format("One or more values are not integer in {}={}", cAlphaFields(2), Alphas(2)));
             }
 
         } // for (Loop)
@@ -816,7 +816,7 @@ namespace Sched {
             if (NumFields == 0) {
                 ShowSevereCustom(state,
                                  eoh,
-                                 format("Insufficient data entered for a full schedule day."
+                                 fmt::format("Insufficient data entered for a full schedule day."
                                         "Number of interval fields == [{}].",
                                         NumFields));
                 ErrorsFound = true;
@@ -845,11 +845,11 @@ namespace Sched {
             daySched->populateFromMinuteVals(state, minuteVals);
 
             if (daySched->checkValsForLimitViolations(state)) {
-                ShowWarningCustom(state, eoh, format("Values are outside of range for {}={}", cAlphaFields(2), Alphas(2)));
+                ShowWarningCustom(state, eoh, fmt::format("Values are outside of range for {}={}", cAlphaFields(2), Alphas(2)));
             }
 
             if (daySched->checkValsForBadIntegers(state)) {
-                ShowWarningCustom(state, eoh, format("One or more values are not integer in {}={}", cAlphaFields(2), Alphas(2)));
+                ShowWarningCustom(state, eoh, fmt::format("One or more values are not integer in {}={}", cAlphaFields(2), Alphas(2)));
             }
         }
 
@@ -896,7 +896,7 @@ namespace Sched {
             if (Numbers(1) <= 0.0) {
                 ShowSevereCustom(state,
                                  eoh,
-                                 format("Insufficient data entered for a full schedule day."
+                                 fmt::format("Insufficient data entered for a full schedule day."
                                         "...Minutes per Item field = [{}].",
                                         Numbers(1)));
                 ErrorsFound = true;
@@ -905,7 +905,7 @@ namespace Sched {
             if (NumNumbers < 25) {
                 ShowSevereCustom(state,
                                  eoh,
-                                 format("Insufficient data entered for a full schedule day."
+                                 fmt::format("Insufficient data entered for a full schedule day."
                                         "...Minutes per Item field = [{}] and only [{}] to apply to list fields.",
                                         Numbers(1),
                                         NumNumbers - 1));
@@ -918,7 +918,7 @@ namespace Sched {
             if ((NumNumbers - 1) != NumExpectedItems) {
                 ShowSevereCustom(state,
                                  eoh,
-                                 format("Number of Entered Items={} not equal number of expected items={}"
+                                 fmt::format("Number of Entered Items={} not equal number of expected items={}"
                                         "based on {}={}",
                                         NumNumbers - 1,
                                         NumExpectedItems,
@@ -929,7 +929,7 @@ namespace Sched {
             }
 
             if (mod(Constant::iMinutesInHour, MinutesPerItem) != 0) {
-                ShowSevereCustom(state, eoh, format("{}={} not evenly divisible into 60", cNumericFields(1), MinutesPerItem));
+                ShowSevereCustom(state, eoh, fmt::format("{}={} not evenly divisible into 60", cNumericFields(1), MinutesPerItem));
                 ErrorsFound = true;
                 continue;
             }
@@ -955,11 +955,11 @@ namespace Sched {
             daySched->populateFromMinuteVals(state, minuteVals);
 
             if (daySched->checkValsForLimitViolations(state)) {
-                ShowWarningCustom(state, eoh, format("Values are outside of range for {}={}", cAlphaFields(2), Alphas(2)));
+                ShowWarningCustom(state, eoh, fmt::format("Values are outside of range for {}={}", cAlphaFields(2), Alphas(2)));
             }
 
             if (daySched->checkValsForBadIntegers(state)) {
-                ShowWarningCustom(state, eoh, format("One or more values are not integer for {}={}", cAlphaFields(2), Alphas(2)));
+                ShowWarningCustom(state, eoh, fmt::format("One or more values are not integer for {}={}", cAlphaFields(2), Alphas(2)));
             }
         }
 
@@ -1032,14 +1032,14 @@ namespace Sched {
                 auto *daySched = GetDaySchedule(state, Alphas(idx + 1));
                 if (daySched == nullptr) {
                     ShowSevereItemNotFoundAudit(state, eoh, cAlphaFields(idx + 1), Alphas(idx + 1));
-                    ShowContinueError(state, format("ref: {} \"{}\"", cAlphaFields(idx), Alphas(idx)));
+                    ShowContinueError(state, fmt::format("ref: {} \"{}\"", cAlphaFields(idx), Alphas(idx)));
                     ErrorsFound = true;
                 } else {
                     std::fill(theseDays.begin(), theseDays.end(), false);
                     ErrorHere = false;
                     ProcessForDayTypes(state, Alphas(idx), theseDays, allDays, ErrorHere);
                     if (ErrorHere) {
-                        ShowContinueError(state, format("{}: {}=\"{}", routineName, CurrentModuleObject, Alphas(1)));
+                        ShowContinueError(state, fmt::format("{}: {}=\"{}", routineName, CurrentModuleObject, Alphas(1)));
                         ErrorsFound = true;
                     } else {
                         for (int iDayType = 1; iDayType < (int)DayType::Num; ++iDayType) {
@@ -1054,7 +1054,7 @@ namespace Sched {
             //  Have processed all named days, check to make sure all given
             for (int iDayType = iDayType_Sun; iDayType < (int)DayType::Num; ++iDayType) {
                 if (allDays[iDayType] == true) continue;
-                ShowSevereError(state, format("{}: {}=\"{}\", Missing some day assignments", routineName, CurrentModuleObject, Alphas(1)));
+                ShowSevereError(state, fmt::format("{}: {}=\"{}\", Missing some day assignments", routineName, CurrentModuleObject, Alphas(1)));
                 ErrorsFound = true;
                 break;
             }
@@ -1233,7 +1233,7 @@ namespace Sched {
             while (NumField < NumAlphas) {
                 //   Process "Through"
                 if (!has_prefix(Alphas(NumField), "THROUGH:") && !has_prefix(Alphas(NumField), "THROUGH")) {
-                    ShowSevereCustom(state, eoh, format("Expecting \"Through:\" date, instead found entry={}", Alphas(NumField)));
+                    ShowSevereCustom(state, eoh, fmt::format("Expecting \"Through:\" date, instead found entry={}", Alphas(NumField)));
                     ErrorsFound = true;
                     goto Through_exit;
                 }
@@ -1246,7 +1246,7 @@ namespace Sched {
                 ErrorHere = false;
                 ProcessDateString(state, Alphas(NumField), EndMonth, EndDay, PWeekDay, PDateType, ErrorHere);
                 if (PDateType == Weather::DateType::NthDayInMonth || PDateType == Weather::DateType::LastDayInMonth) {
-                    ShowSevereCustom(state, eoh, format("Invalid \"Through:\" date, found entry={}", Alphas(NumField)));
+                    ShowSevereCustom(state, eoh, fmt::format("Invalid \"Through:\" date, found entry={}", Alphas(NumField)));
                     ErrorsFound = true;
                     goto Through_exit;
                 }
@@ -1261,7 +1261,7 @@ namespace Sched {
                 if (EndPointer == 366) {
                     if (FullYearSet) {
                         ShowSevereCustom(
-                            state, eoh, format("New \"Through\" entry when \"full year\" already set \"Through\" field={}", CurrentThrough));
+                            state, eoh, fmt::format("New \"Through\" entry when \"full year\" already set \"Through\" field={}", CurrentThrough));
                         ErrorsFound = true;
                     }
                     FullYearSet = true;
@@ -1269,7 +1269,7 @@ namespace Sched {
 
                 ++WkCount;
 
-                auto *weekSched = AddWeekSchedule(state, format("{}_wk_{}", Alphas(1), WkCount));
+                auto *weekSched = AddWeekSchedule(state, fmt::format("{}_wk_{}", Alphas(1), WkCount));
                 weekSched->isUsed = true;
 
                 for (int iDay = StartPointer; iDay <= EndPointer; ++iDay) {
@@ -1286,14 +1286,14 @@ namespace Sched {
                     if (has_prefix(Alphas(NumField), "THROUGH")) goto For_exit;
                     //   "For" must be next, adds to "# Day Schedules"
                     if (!has_prefix(Alphas(NumField), "FOR")) {
-                        ShowSevereCustom(state, eoh, format("Looking for \"For\" field, found={}", Alphas(NumField)));
+                        ShowSevereCustom(state, eoh, fmt::format("Looking for \"For\" field, found={}", Alphas(NumField)));
                         ErrorsFound = true;
                         goto Through_exit;
                     }
 
                     ++DyCount;
 
-                    auto *daySched = AddDaySchedule(state, format("{}_dy_{}", Alphas(1), DyCount));
+                    auto *daySched = AddDaySchedule(state, fmt::format("{}_dy_{}", Alphas(1), DyCount));
 
                     daySched->schedTypeNum = sched->schedTypeNum;
                     daySched->isUsed = true;
@@ -1303,8 +1303,8 @@ namespace Sched {
                     LastFor = Alphas(NumField);
                     ProcessForDayTypes(state, Alphas(NumField), theseDays, allDays, ErrorHere);
                     if (ErrorHere) {
-                        ShowContinueError(state, format("ref {}=\"{}\"", CurrentModuleObject, Alphas(1)));
-                        ShowContinueError(state, format("ref Through field={}", Alphas(ThruField)));
+                        ShowContinueError(state, fmt::format("ref {}=\"{}\"", CurrentModuleObject, Alphas(1)));
+                        ShowContinueError(state, fmt::format("ref Through field={}", Alphas(ThruField)));
                         ErrorsFound = true;
                     } else {
                         for (int iDayType = 1; iDayType < (int)DayType::Num; ++iDayType) {
@@ -1344,13 +1344,13 @@ namespace Sched {
                             Numbers(NumNumbers) = Util::ProcessNumber(Alphas(NumField), ErrorHere);
                             if (ErrorHere) {
                                 ShowSevereCustom(
-                                    state, eoh, format("Until field=[{}] has illegal value field=[{}].", Alphas(NumField - 1), Alphas(NumField)));
+                                    state, eoh, fmt::format("Until field=[{}] has illegal value field=[{}].", Alphas(NumField - 1), Alphas(NumField)));
                                 ErrorsFound = true;
                             }
                             ++NumField;
                             Alphas(UntilFld + xxcount) = Alphas(NumField); // In case next is "until"
                         } else {
-                            ShowSevereCustom(state, eoh, format("Looking for \"Until\" field, found={}", Alphas(NumField)));
+                            ShowSevereCustom(state, eoh, fmt::format("Looking for \"Until\" field, found={}", Alphas(NumField)));
                             ErrorsFound = true;
                             goto Through_exit;
                         }
@@ -1374,7 +1374,7 @@ namespace Sched {
                                               daySched->interpolation);
                         // Depending on value of "Interpolate" field, the value for each time step in each hour gets processed:
                         if (ErrorHere) {
-                            ShowContinueError(state, format("ref {}=\"{}\"", CurrentModuleObject, Alphas(1)));
+                            ShowContinueError(state, fmt::format("ref {}=\"{}\"", CurrentModuleObject, Alphas(1)));
                             ErrorsFound = true;
                         }
 
@@ -1386,13 +1386,13 @@ namespace Sched {
                 for (int iDayType = iDayType_Sun; iDayType < (int)DayType::Num; ++iDayType) {
                     if (allDays[iDayType] == true) continue;
 
-                    ShowWarningCustom(state, eoh, format("has missing day types in Through={}", CurrentThrough));
-                    ShowContinueError(state, format("Last \"For\" field={}", LastFor));
+                    ShowWarningCustom(state, eoh, fmt::format("has missing day types in Through={}", CurrentThrough));
+                    ShowContinueError(state, fmt::format("Last \"For\" field={}", LastFor));
                     std::string errmsg = "Missing day types=,";
                     for (int kDayType = iDayType_Sun; kDayType < (int)DayType::Num; ++kDayType) {
                         if (allDays[kDayType]) continue;
                         errmsg.erase(errmsg.length() - 1);
-                        errmsg = format("{} \"{}\",-", errmsg, dayTypeNames[kDayType]);
+                        errmsg = fmt::format("{} \"{}\",-", errmsg, dayTypeNames[kDayType]);
                     }
                     errmsg.erase(errmsg.length() - 2);
                     ShowContinueError(state, errmsg);
@@ -1515,7 +1515,7 @@ namespace Sched {
                 ShowSevereCustom(
                     state,
                     eoh,
-                    format("{} must = 8760 or 8784 (for a leap year).  Value = {:.0T}, Schedule not processed.", cNumericFields(3), Numbers(3)));
+                    fmt::format("{} must = 8760 or 8784 (for a leap year).  Value = {:.0f}, Schedule not processed.", cNumericFields(3), Numbers(3)));
                 ErrorsFound = true;
                 continue;
             }
@@ -1559,7 +1559,7 @@ namespace Sched {
                 // int NumExpectedItems = 1440 / MinutesPerItem;
                 if (mod(Constant::iMinutesInHour, MinutesPerItem) != 0) {
                     ShowSevereCustom(
-                        state, eoh, format("Requested {} field value ({}) not evenly divisible into 60", cNumericFields(4), MinutesPerItem));
+                        state, eoh, fmt::format("Requested {} field value ({}) not evenly divisible into 60", cNumericFields(4), MinutesPerItem));
                     ErrorsFound = true;
                     continue;
                 }
@@ -1569,7 +1569,7 @@ namespace Sched {
             int rowLimitCount = (Numbers(3) * Constant::rMinutesInHour) / MinutesPerItem;
             int hrLimitCount = Constant::iMinutesInHour / MinutesPerItem;
 
-            std::string contextString = format("{}=\"{}\", {}: ", CurrentModuleObject, Alphas(1), cAlphaFields(3));
+            std::string contextString = fmt::format("{}=\"{}\", {}: ", CurrentModuleObject, Alphas(1), cAlphaFields(3));
 
             state.files.TempFullFilePath.filePath = CheckForActualFilePath(state, Alphas(3), contextString);
             // Setup file reading parameters
@@ -1604,7 +1604,7 @@ namespace Sched {
                         ShowSevereCustom(
                             state,
                             eoh,
-                            format("{} = {} has an unknown file extension and cannot be read by this program.", cAlphaFields(3), Alphas(3)));
+                            fmt::format("{} = {} has an unknown file extension and cannot be read by this program.", cAlphaFields(3), Alphas(3)));
                         ShowFatalError(state, "Program terminates due to previous condition.");
                     }
                 }
@@ -1618,7 +1618,7 @@ namespace Sched {
                 if (numerrors > 0) {
                     ShowWarningCustom(state,
                                       eoh,
-                                      format("{} records had errors - these values are set to 0."
+                                      fmt::format("{} records had errors - these values are set to 0."
                                              "Use Output:Diagnostics,DisplayExtraWarnings; to see individual records in error.",
                                              numerrors));
                 }
@@ -1626,7 +1626,7 @@ namespace Sched {
                 if (rowCnt < rowLimitCount) {
                     ShowWarningCustom(state,
                                       eoh,
-                                      format("less than {} hourly values read from file."
+                                      fmt::format("less than {} hourly values read from file."
                                              "..Number read={}.",
                                              numHourlyValues,
                                              (rowCnt * Constant::iMinutesInHour) / MinutesPerItem));
@@ -1646,11 +1646,11 @@ namespace Sched {
                     // no matter what the day type that is used in a design day.
 
                     // define day schedule
-                    auto *daySched = AddDaySchedule(state, format("{}_dy_{}", Alphas(1), iDay));
+                    auto *daySched = AddDaySchedule(state, fmt::format("{}_dy_{}", Alphas(1), iDay));
                     daySched->schedTypeNum = sched->schedTypeNum;
 
                     // define week schedule
-                    auto *weekSched = AddWeekSchedule(state, format("{}_wk_{}", Alphas(1), iDay));
+                    auto *weekSched = AddWeekSchedule(state, fmt::format("{}_wk_{}", Alphas(1), iDay));
 
                     // for all day types point the week schedule to the newly defined day schedule
                     for (int kDayType = 1; kDayType < (int)DayType::Num; ++kDayType) {
@@ -1714,11 +1714,11 @@ namespace Sched {
                 if (column == 0) continue; // Skip timestamp column and any duplicate column, which will be 0 as well since it won't be found.
                 auto const column_values = values_json.at(column).get<std::vector<Real64>>(); // (AUTO_OK_OBJ)
 
-                std::string curName = format("{}_shading", header);
+                std::string curName = fmt::format("{}_shading", header);
                 std::string curNameUC = Util::makeUPPER(curName);
 
                 if (s_sched->scheduleMap.find(curNameUC) != s_sched->scheduleMap.end()) {
-                    ShowSevereError(state, format("Duplicate schedule name {}", curName));
+                    ShowSevereError(state, fmt::format("Duplicate schedule name {}", curName));
                     ErrorsFound = true;
                     continue;
                 }
@@ -1736,11 +1736,11 @@ namespace Sched {
                     }
 
                     // day schedule
-                    auto *daySched = AddDaySchedule(state, format("{}_dy_{}", curName, iDay));
+                    auto *daySched = AddDaySchedule(state, fmt::format("{}_dy_{}", curName, iDay));
                     daySched->schedTypeNum = schedShading->schedTypeNum;
 
                     // define week schedule
-                    auto *weekSched = AddWeekSchedule(state, format("{}_wk_{}", curName, iDay));
+                    auto *weekSched = AddWeekSchedule(state, fmt::format("{}_wk_{}", curName, iDay));
 
                     // for all day types point the week schedule to the newly defined day schedule
                     for (int kDayType = 1; kDayType < (int)DayType::Num; ++kDayType) {
@@ -1848,7 +1848,7 @@ namespace Sched {
 
             // TODO: I'm not sure this Jazz is necessary
             // Add day schedule
-            auto *daySched = AddDaySchedule(state, format("{}_xi_dy_", Alphas(1)));
+            auto *daySched = AddDaySchedule(state, fmt::format("{}_xi_dy_", Alphas(1)));
             daySched->isUsed = true;
             daySched->schedTypeNum = sched->schedTypeNum;
 
@@ -1860,7 +1860,7 @@ namespace Sched {
             }
             ExternalInterfaceSetSchedule(state, daySched->Num, Numbers(1));
 
-            auto *weekSched = AddWeekSchedule(state, format("{}_xi_wk_", Alphas(1)));
+            auto *weekSched = AddWeekSchedule(state, fmt::format("{}_xi_wk_", Alphas(1)));
             weekSched->isUsed = true;
             for (int iDayType = 1; iDayType < (int)DayType::Num; ++iDayType) {
                 weekSched->dayScheds[iDayType] = daySched;
@@ -1894,7 +1894,7 @@ namespace Sched {
                 if (NumExternalInterfaceSchedules >= 1) {
                     ShowContinueError(
                         state,
-                        format("{} defined as an ExternalInterface:Schedule and ExternalInterface:FunctionalMockupUnitImport:To:Schedule."
+                        fmt::format("{} defined as an ExternalInterface:Schedule and ExternalInterface:FunctionalMockupUnitImport:To:Schedule."
                                "This will cause the schedule to be overwritten by PtolemyServer and FunctionalMockUpUnitImport)",
                                cAlphaFields(1)));
                 }
@@ -1916,7 +1916,7 @@ namespace Sched {
 
             // TODO: I'm not sure this Jazz is necessary
             // Add day schedule
-            auto *daySched = AddDaySchedule(state, format("{}_xi_dy_", Alphas(1)));
+            auto *daySched = AddDaySchedule(state, fmt::format("{}_xi_dy_", Alphas(1)));
             daySched->isUsed = true;
             daySched->schedTypeNum = sched->schedTypeNum;
 
@@ -1928,7 +1928,7 @@ namespace Sched {
             }
             ExternalInterfaceSetSchedule(state, daySched->Num, Numbers(1));
 
-            auto *weekSched = AddWeekSchedule(state, format("{}_xi_wk_", Alphas(1)));
+            auto *weekSched = AddWeekSchedule(state, fmt::format("{}_xi_wk_", Alphas(1)));
             weekSched->isUsed = true;
             for (int iDayType = 1; iDayType < (int)DayType::Num; ++iDayType) {
                 weekSched->dayScheds[iDayType] = daySched;
@@ -1962,7 +1962,7 @@ namespace Sched {
                 if (NumExternalInterfaceSchedules >= 1) {
                     ShowContinueError(
                         state,
-                        format("{} defined as an ExternalInterface:Schedule and ExternalInterface:FunctionalMockupUnitImport:To:Schedule."
+                        fmt::format("{} defined as an ExternalInterface:Schedule and ExternalInterface:FunctionalMockupUnitImport:To:Schedule."
                                "This will cause the schedule to be overwritten by PtolemyServer and FunctionalMockUpUnitImport)",
                                cAlphaFields(1)));
                 }
@@ -1984,7 +1984,7 @@ namespace Sched {
 
             // TODO: I'm not sure this Jazz is necessary
             // Add day schedule
-            auto *daySched = AddDaySchedule(state, format("{}_xi_dy_", Alphas(1)));
+            auto *daySched = AddDaySchedule(state, fmt::format("{}_xi_dy_", Alphas(1)));
             daySched->isUsed = true;
             daySched->schedTypeNum = sched->schedTypeNum;
 
@@ -1996,7 +1996,7 @@ namespace Sched {
             }
             ExternalInterfaceSetSchedule(state, daySched->Num, Numbers(1));
 
-            auto *weekSched = AddWeekSchedule(state, format("{}_xi_wk_", Alphas(1)));
+            auto *weekSched = AddWeekSchedule(state, fmt::format("{}_xi_wk_", Alphas(1)));
             weekSched->isUsed = true;
             for (int iDayType = 1; iDayType < (int)DayType::Num; ++iDayType) {
                 weekSched->dayScheds[iDayType] = daySched;
@@ -2021,7 +2021,7 @@ namespace Sched {
         }
 
         if (ErrorsFound) {
-            ShowFatalError(state, format("{}: Preceding Errors cause termination.", routineName));
+            ShowFatalError(state, fmt::format("{}: Preceding Errors cause termination.", routineName));
         }
 
         if (s_sched->scheduleTypes.size() + s_sched->daySchedules.size() + s_sched->weekSchedules.size() + s_sched->schedules.size() > 0) {
@@ -2096,7 +2096,7 @@ namespace Sched {
 
         int CurMinute = s_glob->MinutesInTimeStep;
         for (int Count = 1; Count <= s_glob->TimeStepsInHour - 1; ++Count) {
-            ShowMinute(Count) = format("{:02}", CurMinute);
+            ShowMinute(Count) = fmt::format("{:02}", CurMinute);
             CurMinute += s_glob->MinutesInTimeStep;
         }
         ShowMinute(s_glob->TimeStepsInHour) = "00";
@@ -2108,11 +2108,11 @@ namespace Sched {
             for (int hr = 0; hr < Constant::iHoursInDay; ++hr) {
                 if (LevelOfDetail == ReportLevel::TimeStep) {
                     for (int ts = 1; ts <= s_glob->TimeStepsInHour - 1; ++ts) {
-                        TimeHHMM(NumF) = format("{}:{}", HrField[hr], ShowMinute(ts));
+                        TimeHHMM(NumF) = fmt::format("{}:{}", HrField[hr], ShowMinute(ts));
                         ++NumF;
                     }
                 }
-                TimeHHMM(NumF) = format("{}:{}", HrField[hr + 1], ShowMinute(s_glob->TimeStepsInHour));
+                TimeHHMM(NumF) = fmt::format("{}:{}", HrField[hr + 1], ShowMinute(s_glob->TimeStepsInHour));
                 ++NumF;
             }
             --NumF;
@@ -2134,7 +2134,7 @@ namespace Sched {
                 // SchWFmt Header (WeekSchedule)
                 std::string SchWFmt("! <WeekSchedule>,Name");
                 for (int Count = 1; Count < (int)DayType::Num; ++Count) {
-                    SchWFmt = format("{},{}", SchWFmt, dayTypeNames[Count]);
+                    SchWFmt = fmt::format("{},{}", SchWFmt, dayTypeNames[Count]);
                 }
                 print(state.files.eio, "{}\n", SchWFmt);
                 std::string_view constexpr SchSFmt("! <Schedule>,Name,ScheduleType,{Until Date,WeekSchedule}** Repeated until Dec 31");
@@ -2144,9 +2144,9 @@ namespace Sched {
             for (auto const *schedType : s_sched->scheduleTypes) {
                 if (schedType->isLimited) {
                     NoAverageLinear = "Average";
-                    Num1 = format("{:.2R}", schedType->minVal);
+                    Num1 = fmt::format("{:.2f}", schedType->minVal);
                     strip(Num1);
-                    Num2 = format("{:.2R}", schedType->maxVal);
+                    Num2 = fmt::format("{:.2f}", schedType->maxVal);
                     strip(Num2);
                     if (schedType->isReal) {
                         YesNo2 = "Yes";
@@ -2170,7 +2170,7 @@ namespace Sched {
                 NoAverageLinear = interpolationNames[(int)daySched->interpolation];
                 for (int hr = 0; hr < Constant::iHoursInDay; ++hr) {
                     for (int ts = 0; ts < s_glob->TimeStepsInHour; ++ts) {
-                        RoundTSValue(ts + 1, hr + 1) = format("{:.2R}", daySched->tsVals[hr * s_glob->TimeStepsInHour + ts]);
+                        RoundTSValue(ts + 1, hr + 1) = fmt::format("{:.2f}", daySched->tsVals[hr * s_glob->TimeStepsInHour + ts]);
                     }
                 }
                 std::string_view constexpr SchDFmtdata0("DaySchedule,{},{},{},{}");
@@ -2266,7 +2266,7 @@ namespace Sched {
         //                                if (iDay != iDayP) {
         //                                    for (Hr = 1; Hr <= 24; ++Hr) {
         //                                        print(state.files.debug,
-        //                                              "    Until: {}:{},{:.2R},\n",
+        //                                              "    Until: {}:{},{:.2f},\n",
         //                                              Hr,
         //                                              ShowMinute(s_glob->NumOfTimeStepInHour),
         //                                              s_sched->DaySchedule(iDay).TSValue(s_glob->NumOfTimeStepInHour, Hr));
@@ -2283,7 +2283,7 @@ namespace Sched {
         //                            if (iDay != iDayP) {
         //                                for (Hr = 1; Hr <= 24; ++Hr) {
         //                                    print(state.files.debug,
-        //                                          "    Until: {}:{},{:.2R},\n",
+        //                                          "    Until: {}:{},{:.2f},\n",
         //                                          Hr,
         //                                          ShowMinute(s_glob->NumOfTimeStepInHour),
         //                                          s_sched->DaySchedule(iDay).TSValue(s_glob->NumOfTimeStepInHour, Hr));
@@ -2299,7 +2299,7 @@ namespace Sched {
         //                                if (iDay != iDayP) {
         //                                    for (Hr = 1; Hr <= 24; ++Hr) {
         //                                        print(state.files.debug,
-        //                                              "    Until: {}:{},{:.2R},\n",
+        //                                              "    Until: {}:{},{:.2f},\n",
         //                                              Hr,
         //                                              ShowMinute(s_glob->NumOfTimeStepInHour),
         //                                              s_sched->DaySchedule(iDay).TSValue(s_glob->NumOfTimeStepInHour, Hr));
@@ -2324,7 +2324,7 @@ namespace Sched {
         //                            if (iDay != iDayP) {
         //                                for (Hr = 1; Hr <= 24; ++Hr) {
         //                                    print(state.files.debug,
-        //                                          "    Until: {}:{},{:.2R},\n",
+        //                                          "    Until: {}:{},{:.2f},\n",
         //                                          Hr,
         //                                          ShowMinute(s_glob->NumOfTimeStepInHour),
         //                                          s_sched->DaySchedule(iDay).TSValue(s_glob->NumOfTimeStepInHour, Hr));
@@ -2341,7 +2341,7 @@ namespace Sched {
         //                        if (iDay != iDayP) {
         //                            for (Hr = 1; Hr <= 24; ++Hr) {
         //                                print(state.files.debug,
-        //                                      "    Until: {}:{},{:.2R},\n",
+        //                                      "    Until: {}:{},{:.2f},\n",
         //                                      Hr,
         //                                      ShowMinute(s_glob->NumOfTimeStepInHour),
         //                                      s_sched->DaySchedule(iDay).TSValue(s_glob->NumOfTimeStepInHour, Hr));
@@ -2357,7 +2357,7 @@ namespace Sched {
         //                            if (iDay != iDayP) {
         //                                for (Hr = 1; Hr <= 24; ++Hr) {
         //                                    print(state.files.debug,
-        //                                          "    Until: {}:{},{:.2R},\n",
+        //                                          "    Until: {}:{},{:.2f},\n",
         //                                          Hr,
         //                                          ShowMinute(s_glob->NumOfTimeStepInHour),
         //                                          s_sched->DaySchedule(iDay).TSValue(s_glob->NumOfTimeStepInHour, Hr));
@@ -2426,7 +2426,7 @@ namespace Sched {
 
         // Hourly Value
         if (hr > Constant::iHoursInDay) {
-            ShowFatalError(state, format("LookUpScheduleValue called with thisHour={}", hr));
+            ShowFatalError(state, fmt::format("LookUpScheduleValue called with thisHour={}", hr));
         }
 
         int thisHr = hr + state.dataEnvrn->DSTIndicator * this->UseDaylightSaving;
@@ -2686,7 +2686,7 @@ namespace Sched {
 
         if (NumUntils != NumNumbers) {
             ShowSevereError(state,
-                            format("ProcessScheduleInput: ProcessIntervalFields, number of Time fields does not match number of value fields, {}={}",
+                            fmt::format("ProcessScheduleInput: ProcessIntervalFields, number of Time fields does not match number of value fields, {}={}",
                                    ErrContext,
                                    DayScheduleName));
             ErrorsFound = true;
@@ -2706,21 +2706,21 @@ namespace Sched {
             } else if (Pos == (int)std::string::npos) {
                 DecodeHHMMField(state, until, HHField, MMField, ErrorsFound, DayScheduleName, until, interpolation);
             } else { // Until found but wasn't first field
-                ShowSevereError(state, format("ProcessScheduleInput: ProcessIntervalFields, Invalid \"Until\" field encountered={}", until));
-                ShowContinueError(state, format("Occurred in Day Schedule={}", DayScheduleName));
+                ShowSevereError(state, fmt::format("ProcessScheduleInput: ProcessIntervalFields, Invalid \"Until\" field encountered={}", until));
+                ShowContinueError(state, fmt::format("Occurred in Day Schedule={}", DayScheduleName));
                 ErrorsFound = true;
                 continue;
             }
             // Field decoded
             if (HHField < 0 || HHField > Constant::iHoursInDay || MMField < 0 || MMField > Constant::iMinutesInHour) {
-                ShowSevereError(state, format("ProcessScheduleInput: ProcessIntervalFields, Invalid \"Until\" field encountered={}", until));
-                ShowContinueError(state, format("Occurred in Day Schedule={}", DayScheduleName));
+                ShowSevereError(state, fmt::format("ProcessScheduleInput: ProcessIntervalFields, Invalid \"Until\" field encountered={}", until));
+                ShowContinueError(state, fmt::format("Occurred in Day Schedule={}", DayScheduleName));
                 ErrorsFound = true;
                 continue;
             }
             if (HHField == Constant::iHoursInDay && MMField > 0 && MMField < Constant::iMinutesInHour) {
-                ShowWarningError(state, format("ProcessScheduleInput: ProcessIntervalFields, Invalid \"Until\" field encountered={}", Untils(Count)));
-                ShowContinueError(state, format("Occurred in Day Schedule={}", DayScheduleName));
+                ShowWarningError(state, fmt::format("ProcessScheduleInput: ProcessIntervalFields, Invalid \"Until\" field encountered={}", Untils(Count)));
+                ShowContinueError(state, fmt::format("Occurred in Day Schedule={}", DayScheduleName));
                 ShowContinueError(state, "Terminating the field at 24:00");
                 MMField = 0;
             }
@@ -2751,12 +2751,12 @@ namespace Sched {
             if (begHr > endHr) {
                 if (begHr == endHr + 1 && begMin == 0 && endMin == Constant::iMinutesInHour - 1) {
                     ShowWarningError(state,
-                                     format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, zero time interval detected, {}={}",
+                                     fmt::format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, zero time interval detected, {}={}",
                                             ErrContext,
                                             DayScheduleName));
                 } else {
                     ShowSevereError(state,
-                                    format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, overlapping times detected, {}={}",
+                                    fmt::format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, overlapping times detected, {}={}",
                                            ErrContext,
                                            DayScheduleName));
                     ErrorsFound = true;
@@ -2767,7 +2767,7 @@ namespace Sched {
                     if (setMinuteVals[begHr * Constant::iMinutesInHour + iMin] == true) {
                         ShowSevereError(
                             state,
-                            format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, overlapping times detected, {}={}",
+                            fmt::format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, overlapping times detected, {}={}",
                                    ErrContext,
                                    DayScheduleName));
                         ErrorsFound = true;
@@ -2854,7 +2854,7 @@ namespace Sched {
         for (int iMin = 0; iMin < Constant::iMinutesInDay; ++iMin) {
             if (setMinuteVals[iMin] == false) {
                 ShowSevereError(state,
-                                format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, incomplete day detected, {}={}",
+                                fmt::format("ProcessScheduleInput: ProcessIntervalFields, Processing time fields, incomplete day detected, {}={}",
                                        ErrContext,
                                        DayScheduleName));
                 ErrorsFound = true;
@@ -2893,9 +2893,9 @@ namespace Sched {
         auto const &s_glob = state.dataGlobal;
         if (Pos == std::string::npos) {
             ShowSevereError(state,
-                            format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (no : separator in hh:mm)={}",
+                            fmt::format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (no : separator in hh:mm)={}",
                                    stripped(FullFieldValue)));
-            ShowContinueError(state, format("Occurred in Day Schedule={}", DayScheduleName));
+            ShowContinueError(state, fmt::format("Occurred in Day Schedule={}", DayScheduleName));
             ErrorsFound = true;
             return;
         } else if (Pos == 0) {
@@ -2907,16 +2907,16 @@ namespace Sched {
             if (double(RetHH) != rRetHH || error || rRetHH < 0.0) {
                 if (double(RetHH) != rRetHH && rRetHH >= 0.0) {
                     ShowWarningError(state,
-                                     format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (non-integer numeric in HH)={}",
+                                     fmt::format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (non-integer numeric in HH)={}",
                                             stripped(FullFieldValue)));
-                    ShowContinueError(state, format("Other errors may result. Occurred in Day Schedule={}", DayScheduleName));
+                    ShowContinueError(state, fmt::format("Other errors may result. Occurred in Day Schedule={}", DayScheduleName));
                     nonIntegral = true;
                 } else {
                     ShowSevereError(state,
-                                    format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (invalid numeric in HH)={}",
+                                    fmt::format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (invalid numeric in HH)={}",
                                            stripped(FullFieldValue)));
                     ShowContinueError(
-                        state, format("Field values must be integer and represent hours:minutes. Occurred in Day Schedule={}", DayScheduleName));
+                        state, fmt::format("Field values must be integer and represent hours:minutes. Occurred in Day Schedule={}", DayScheduleName));
                     ErrorsFound = true;
                     return;
                 }
@@ -2930,16 +2930,16 @@ namespace Sched {
         if (double(RetMM) != rRetMM || error || rRetMM < 0.0) {
             if (double(RetMM) != rRetMM && rRetMM >= 0.0) {
                 ShowWarningError(state,
-                                 format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (non-integer numeric in MM)={}",
+                                 fmt::format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (non-integer numeric in MM)={}",
                                         stripped(FullFieldValue)));
-                ShowContinueError(state, format("Other errors may result. Occurred in Day Schedule={}", DayScheduleName));
+                ShowContinueError(state, fmt::format("Other errors may result. Occurred in Day Schedule={}", DayScheduleName));
                 nonIntegral = true;
             } else {
                 ShowSevereError(state,
-                                format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (invalid numeric in MM)={}",
+                                fmt::format("ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field submitted (invalid numeric in MM)={}",
                                        stripped(FullFieldValue)));
                 ShowContinueError(state,
-                                  format("Field values must be integer and represent hours:minutes. Occurred in Day Schedule={}", DayScheduleName));
+                                  fmt::format("Field values must be integer and represent hours:minutes. Occurred in Day Schedule={}", DayScheduleName));
                 ErrorsFound = true;
                 return;
             }
@@ -2948,16 +2948,16 @@ namespace Sched {
         if (nonIntegral) {
             std::string hHour; // these haven't been initialized?
             std::string mMinute;
-            ShowContinueError(state, format("Until value to be used will be: {:2.2F}:{:2.2F}", hHour, mMinute));
+            ShowContinueError(state, fmt::format("Until value to be used will be: {:2.2F}:{:2.2F}", hHour, mMinute));
         }
         if (interpolation == Interpolation::No) {
             if (!isMinuteMultipleOfTimestep(RetMM, s_glob->MinutesInTimeStep)) {
                 ShowWarningError(
                     state,
-                    format(
+                    fmt::format(
                         "ProcessScheduleInput: DecodeHHMMField, Invalid \"until\" field value is not a multiple of the minutes for each timestep: {}",
                         stripped(FullFieldValue)));
-                ShowContinueError(state, format("Other errors may result. Occurred in Day Schedule={}", DayScheduleName));
+                ShowContinueError(state, fmt::format("Other errors may result. Occurred in Day Schedule={}", DayScheduleName));
             }
         }
     }
@@ -3138,11 +3138,11 @@ namespace Sched {
         }
 
         if (DupAssignment) {
-            ShowSevereError(state, format("ProcessForDayTypes: Duplicate assignment attempted in \"for\" days field={}", ForDayField));
+            ShowSevereError(state, fmt::format("ProcessForDayTypes: Duplicate assignment attempted in \"for\" days field={}", ForDayField));
             ErrorsFound = true;
         }
         if (!OneValid) {
-            ShowSevereError(state, format("ProcessForDayTypes: No valid day assignments found in \"for\" days field={}", ForDayField));
+            ShowSevereError(state, fmt::format("ProcessForDayTypes: No valid day assignments found in \"for\" days field={}", ForDayField));
             ErrorsFound = true;
         }
     } // ProcessScheduleInput()
@@ -3514,14 +3514,14 @@ namespace Sched {
                 NeedOrphanMessage = false;
             }
             if (s_glob->DisplayUnusedSchedules) {
-                ShowMessage(state, format("Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant={}", sched->Name));
+                ShowMessage(state, fmt::format("Schedule:Year or Schedule:Compact or Schedule:File or Schedule:Constant={}", sched->Name));
             } else {
                 ++NumCount;
             }
         }
 
         if (NumCount > 0) {
-            ShowMessage(state, format("There are {} unused schedules in input.", NumCount));
+            ShowMessage(state, fmt::format("There are {} unused schedules in input.", NumCount));
             NeedUseMessage = true;
         }
 
@@ -3537,7 +3537,7 @@ namespace Sched {
                 NeedOrphanMessage = false;
             }
             if (s_glob->DisplayUnusedSchedules) {
-                ShowMessage(state, format("Schedule:Week:Daily or Schedule:Week:Compact={}", weekSched->Name));
+                ShowMessage(state, fmt::format("Schedule:Week:Daily or Schedule:Week:Compact={}", weekSched->Name));
             } else {
                 ++NumCount;
             }
@@ -3561,14 +3561,14 @@ namespace Sched {
             }
 
             if (s_glob->DisplayUnusedSchedules) {
-                ShowMessage(state, format("Schedule:Day:Hourly or Schedule:Day:Interval or Schedule:Day:List={}", daySched->Name));
+                ShowMessage(state, fmt::format("Schedule:Day:Hourly or Schedule:Day:Interval or Schedule:Day:List={}", daySched->Name));
             } else {
                 ++NumCount;
             }
         }
 
         if (NumCount > 0) {
-            ShowMessage(state, format("There are {} unused day schedules in input.", NumCount));
+            ShowMessage(state, fmt::format("There are {} unused day schedules in input.", NumCount));
             NeedUseMessage = true;
         }
 
@@ -3766,10 +3766,10 @@ namespace Sched {
                           Real64 minVal,
                           std::string_view msg)
     {
-        ShowSevereError(state, format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
+        ShowSevereError(state, fmt::format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
         ShowContinueError(
-            state, format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMin == Clusive::In ? "<" : "<=", minVal));
-        if (!msg.empty()) ShowContinueError(state, format("{}", msg));
+            state, fmt::format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMin == Clusive::In ? "<" : "<=", minVal));
+        if (!msg.empty()) ShowContinueError(state, fmt::format("{}", msg));
     }
 
     void ShowSevereBadMax(EnergyPlusData &state,
@@ -3780,10 +3780,10 @@ namespace Sched {
                           Real64 maxVal,
                           std::string_view msg)
     {
-        ShowSevereError(state, format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
+        ShowSevereError(state, fmt::format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
         ShowContinueError(
-            state, format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMax == Clusive::In ? ">" : ">=", maxVal));
-        if (!msg.empty()) ShowContinueError(state, format("{}", msg));
+            state, fmt::format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMax == Clusive::In ? ">" : ">=", maxVal));
+        if (!msg.empty()) ShowContinueError(state, fmt::format("{}", msg));
     }
 
     void ShowSevereBadMinMax(EnergyPlusData &state,
@@ -3796,16 +3796,16 @@ namespace Sched {
                              Real64 maxVal,
                              std::string_view msg)
     {
-        ShowSevereError(state, format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
+        ShowSevereError(state, fmt::format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
         ShowContinueError(state,
-                          format("{} = {}, schedule contains values that are {} {} and/or {} {}",
+                          fmt::format("{} = {}, schedule contains values that are {} {} and/or {} {}",
                                  fieldName,
                                  fieldVal,
                                  cluMin == Clusive::In ? "<" : "<=",
                                  minVal,
                                  cluMax == Clusive::In ? ">" : ">=",
                                  maxVal));
-        if (!msg.empty()) ShowContinueError(state, format("{}", msg));
+        if (!msg.empty()) ShowContinueError(state, fmt::format("{}", msg));
     }
 
     void ShowWarningBadMin(EnergyPlusData &state,
@@ -3816,10 +3816,10 @@ namespace Sched {
                            Real64 minVal,
                            std::string_view msg)
     {
-        ShowWarningError(state, format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
+        ShowWarningError(state, fmt::format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
         ShowContinueError(
-            state, format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMin == Clusive::In ? "<" : "<=", minVal));
-        if (!msg.empty()) ShowContinueError(state, format("{}", msg));
+            state, fmt::format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMin == Clusive::In ? "<" : "<=", minVal));
+        if (!msg.empty()) ShowContinueError(state, fmt::format("{}", msg));
     }
 
     void ShowWarningBadMax(EnergyPlusData &state,
@@ -3830,10 +3830,10 @@ namespace Sched {
                            Real64 maxVal,
                            std::string_view msg)
     {
-        ShowWarningError(state, format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
+        ShowWarningError(state, fmt::format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
         ShowContinueError(
-            state, format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMax == Clusive::In ? ">" : ">=", maxVal));
-        if (!msg.empty()) ShowContinueError(state, format("{}", msg));
+            state, fmt::format("{} = {}, schedule contains values that are {} {}", fieldName, fieldVal, cluMax == Clusive::In ? ">" : ">=", maxVal));
+        if (!msg.empty()) ShowContinueError(state, fmt::format("{}", msg));
     }
 
     void ShowWarningBadMinMax(EnergyPlusData &state,
@@ -3846,16 +3846,16 @@ namespace Sched {
                               Real64 maxVal,
                               std::string_view msg)
     {
-        ShowWarningError(state, format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
+        ShowWarningError(state, fmt::format("{}: {} = {}", eoh.routineName, eoh.objectType, eoh.objectName));
         ShowContinueError(state,
-                          format("{} = {}, schedule contains values that are {} {} and/or {} {}",
+                          fmt::format("{} = {}, schedule contains values that are {} {} and/or {} {}",
                                  fieldName,
                                  fieldVal,
                                  cluMin == Clusive::In ? "<" : "<=",
                                  minVal,
                                  cluMax == Clusive::In ? ">" : ">=",
                                  maxVal));
-        if (!msg.empty()) ShowContinueError(state, format("{}", msg));
+        if (!msg.empty()) ShowContinueError(state, fmt::format("{}", msg));
     }
 
 } // namespace Sched

@@ -1303,7 +1303,7 @@ TEST_F(EnergyPlusFixture, SingleDuct_ZeroFloorAreaTest)
 
     // This isn't relevant any more since the default is calculated differently
     Real64 MaxAirVolFractionDuringReheatDes =
-        min(1.0, (state->dataSize->FinalZoneSizing(1).DesHeatVolFlow / state->dataSingleDuct->sd_airterminal(1).MaxAirVolFlowRate));
+        min(1.0f, (state->dataSize->FinalZoneSizing(1).DesHeatVolFlow / state->dataSingleDuct->sd_airterminal(1).MaxAirVolFlowRate));
     // Real64 MaxAirVolFractionDuringReheatDes = min( 1.0, ( 0.002032 * state->dataSingleDuct->sd_airterminal( 1 ).ZoneFloorArea /
     // state->dataSingleDuct->sd_airterminal( 1 ).MaxAirVolFlowRate )
     // ); apply limit based on min stop
@@ -1323,7 +1323,7 @@ TEST_F(EnergyPlusFixture, SingleDuct_ZeroFloorAreaTest)
         max(MaxAirVolFlowRateDuringReheatDes,
             (state->dataSingleDuct->sd_airterminal(2).MaxAirVolFlowRate * state->dataSingleDuct->sd_airterminal(2).ZoneMinAirFrac));
     MaxAirVolFractionDuringReheatDes =
-        min(1.0, (state->dataSize->FinalZoneSizing(2).DesHeatVolFlow / state->dataSingleDuct->sd_airterminal(2).MaxAirVolFlowRate));
+        min(1.0f, (state->dataSize->FinalZoneSizing(2).DesHeatVolFlow / state->dataSingleDuct->sd_airterminal(2).MaxAirVolFlowRate));
     MaxAirVolFractionDuringReheatDes = max(MaxAirVolFractionDuringReheatDes, state->dataSingleDuct->sd_airterminal(2).ZoneMinAirFrac);
     MaxAirVolFlowRateDuringReheatDes =
         min(max(MaxAirVolFlowRateDuringReheatDes, MaxAirVolFractionDuringReheatDes * state->dataSingleDuct->sd_airterminal(2).MaxAirVolFlowRate),
@@ -2777,7 +2777,7 @@ TEST_F(EnergyPlusFixture, VAVReheatTerminal_SizeMinFrac)
     state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlow = 1.7;
     state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlowMax = 1.6;
     thisSys.SizeSys(*state);
-    Real64 expectedZoneMinAirFracDes = std::min(1.0, state->dataSize->TermUnitFinalZoneSizing(1).DesCoolVolFlowMin / thisSys.MaxAirVolFlowRate);
+    Real64 expectedZoneMinAirFracDes = std::min(1.0f, state->dataSize->TermUnitFinalZoneSizing(1).DesCoolVolFlowMin / thisSys.MaxAirVolFlowRate);
     // DesHeatVolFlowMax is limiting flow rate
     Real64 expectedMaxAirVolFractionDuringReheat = state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlowMax / thisSys.MaxAirVolFlowRate;
     EXPECT_EQ(expectedZoneMinAirFracDes, thisSys.ZoneMinAirFracDes);
@@ -2792,7 +2792,7 @@ TEST_F(EnergyPlusFixture, VAVReheatTerminal_SizeMinFrac)
     state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlow = 1.6;
     state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlowMax = 1.7;
     thisSys.SizeSys(*state);
-    expectedZoneMinAirFracDes = std::min(1.0, state->dataSize->TermUnitFinalZoneSizing(1).DesCoolVolFlowMin / thisSys.MaxAirVolFlowRate);
+    expectedZoneMinAirFracDes = std::min(1.0f, state->dataSize->TermUnitFinalZoneSizing(1).DesCoolVolFlowMin / thisSys.MaxAirVolFlowRate);
     // DesHeatVolFlowMax is NOT limiting flow rate
     expectedMaxAirVolFractionDuringReheat = state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlow / thisSys.MaxAirVolFlowRate;
     EXPECT_EQ(expectedZoneMinAirFracDes, thisSys.ZoneMinAirFracDes);
@@ -2807,7 +2807,7 @@ TEST_F(EnergyPlusFixture, VAVReheatTerminal_SizeMinFrac)
     state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlow = 1.4;
     state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlowMax = 1.3;
     thisSys.SizeSys(*state);
-    expectedZoneMinAirFracDes = std::min(1.0, state->dataSize->TermUnitFinalZoneSizing(1).DesCoolVolFlowMin / thisSys.MaxAirVolFlowRate);
+    expectedZoneMinAirFracDes = std::min(1.0f, state->dataSize->TermUnitFinalZoneSizing(1).DesCoolVolFlowMin / thisSys.MaxAirVolFlowRate);
     // DesHeatVolFlowMax is limiting flow rate
     expectedMaxAirVolFractionDuringReheat = state->dataSize->TermUnitFinalZoneSizing(1).DesHeatVolFlowMax / thisSys.MaxAirVolFlowRate;
     EXPECT_EQ(expectedZoneMinAirFracDes, thisSys.ZoneMinAirFracDes);

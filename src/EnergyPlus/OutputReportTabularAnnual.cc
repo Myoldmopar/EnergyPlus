@@ -109,7 +109,7 @@ void GetInputTabularAnnual(EnergyPlusData &state)
         if (!state.dataGlobal->DoWeathSim) {
             ShowWarningError(
                 state,
-                format("{} requested with SimulationControl Run Simulation for Weather File Run Periods set to No so {} will not be generated",
+                fmt::format("{} requested with SimulationControl Run Simulation for Weather File Run Periods set to No so {} will not be generated",
                        currentModuleObject,
                        currentModuleObject));
             return;
@@ -127,7 +127,7 @@ void GetInputTabularAnnual(EnergyPlusData &state)
                 std::string curVarMtr = alphArray(jAlpha);
                 if (curVarMtr.empty()) {
                     ShowWarningError(state,
-                                     format("{}: Blank column specified in '{}', need to provide a variable or meter or EMS variable name ",
+                                     fmt::format("{}: Blank column specified in '{}', need to provide a variable or meter or EMS variable name ",
                                             currentModuleObject,
                                             alphArray(1)));
                 }
@@ -149,7 +149,7 @@ void GetInputTabularAnnual(EnergyPlusData &state)
             }
             annualTables.back().setupGathering(state);
         } else {
-            ShowSevereError(state, format("{}: Must enter at least the first six fields.", currentModuleObject));
+            ShowSevereError(state, fmt::format("{}: Must enter at least the first six fields.", currentModuleObject));
         }
     }
 }
@@ -296,13 +296,13 @@ bool AnnualTable::invalidAggregationOrder(EnergyPlusData &state)
     }
     if (missingMaxOrMinError) {
         ShowSevereError(state,
-                        format("The Output:Table:Annual report named=\"{}\" has a valueWhenMaxMin aggregation type for a column without a previous "
+                        fmt::format("The Output:Table:Annual report named=\"{}\" has a valueWhenMaxMin aggregation type for a column without a previous "
                                "column that uses either the minimum or maximum aggregation types. The report will not be generated.",
                                m_name));
     }
     if (missingHourAggError) {
         ShowSevereError(state,
-                        format("The Output:Table:Annual report named=\"{}\" has a --DuringHoursShown aggregation type for a column without a "
+                        fmt::format("The Output:Table:Annual report named=\"{}\" has a --DuringHoursShown aggregation type for a column without a "
                                "previous field that uses one of the Hour-- aggregation types. The report will not be generated.",
                                m_name));
     }
@@ -717,7 +717,7 @@ void AnnualTable::writeTable(EnergyPlusData &state, OutputReportTabular::UnitsSt
         }
         // do the unit conversions
         if (unitsStyle == OutputReportTabular::UnitsStyle::InchPound || unitsStyle == OutputReportTabular::UnitsStyle::InchPoundExceptElectricity) {
-            varNameWithUnits = format("{} [{}]", fldStIt->m_variMeter, Constant::unitNames[(int)fldStIt->m_varUnits]);
+            varNameWithUnits = fmt::format("{} [{}]", fldStIt->m_variMeter, Constant::unitNames[(int)fldStIt->m_varUnits]);
             OutputReportTabular::LookupSItoIP(state, varNameWithUnits, indexUnitConv, curUnits);
             OutputReportTabular::GetUnitConversion(state, indexUnitConv, curConversionFactor, curConversionOffset, curUnits);
         } else { // just do the Joule conversion
@@ -1129,7 +1129,7 @@ AnnualFieldSet::AggregationKind stringToAggKind(EnergyPlusData &state, std::stri
         outAggType = AnnualFieldSet::AggregationKind::minimumDuringHoursShown;
     } else {
         outAggType = AnnualFieldSet::AggregationKind::sumOrAvg;
-        ShowWarningError(state, format("Invalid aggregation type=\"{}\"  Defaulting to SumOrAverage.", inString));
+        ShowWarningError(state, fmt::format("Invalid aggregation type=\"{}\"  Defaulting to SumOrAverage.", inString));
     }
     return outAggType;
 }
@@ -1295,7 +1295,7 @@ void AnnualTable::convertUnitForDeferredResults(EnergyPlusData &state,
     // do the unit conversions
     if (unitsStyle == OutputReportTabular::UnitsStyle::InchPound || unitsStyle == OutputReportTabular::UnitsStyle::InchPoundExceptElectricity) {
         int indexUnitConv;
-        std::string varNameWithUnits = format("{} [{}]", fldStIt->m_variMeter, Constant::unitNames[(int)fldStIt->m_varUnits]);
+        std::string varNameWithUnits = fmt::format("{} [{}]", fldStIt->m_variMeter, Constant::unitNames[(int)fldStIt->m_varUnits]);
         OutputReportTabular::LookupSItoIP(state, varNameWithUnits, indexUnitConv, curUnits);
         OutputReportTabular::GetUnitConversion(state, indexUnitConv, curConversionFactor, curConversionOffset, curUnits);
     } else { // just do the Joule conversion

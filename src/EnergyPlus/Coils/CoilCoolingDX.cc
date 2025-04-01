@@ -306,14 +306,14 @@ void CoilCoolingDX::oneTimeInit(EnergyPlusData &state)
     if (this->performance.compressorFuelType != Constant::eFuel::Electricity) {
         std::string_view const sFuelType = Constant::eFuelNames[(int)this->performance.compressorFuelType];
         SetupOutputVariable(state,
-                            format("Cooling Coil {} Rate", sFuelType),
+                            fmt::format("Cooling Coil {} Rate", sFuelType),
                             Constant::Units::W,
                             this->performance.compressorFuelRate,
                             OutputProcessor::TimeStepType::System,
                             OutputProcessor::StoreType::Average,
                             this->name);
         SetupOutputVariable(state,
-                            format("Cooling Coil {} Energy", sFuelType),
+                            fmt::format("Cooling Coil {} Energy", sFuelType),
                             Constant::Units::J,
                             this->performance.compressorFuelConsumption,
                             OutputProcessor::TimeStepType::System,
@@ -706,7 +706,7 @@ void CoilCoolingDX::simulate(EnergyPlusData &state,
             Real64 waterDensity = Psychrometrics::RhoH2O(averageTemp);
             Real64 inHumidityRatio = evapInletNode.HumRat;
             Real64 outHumidityRatio = evapOutletNode.HumRat;
-            this->condensateVolumeFlow = max(0.0, (evapInletNode.MassFlowRate * (inHumidityRatio - outHumidityRatio) / waterDensity));
+            this->condensateVolumeFlow = max(0.0f, (evapInletNode.MassFlowRate * (inHumidityRatio - outHumidityRatio) / waterDensity));
             this->condensateVolumeConsumption = this->condensateVolumeFlow * reportingConstant;
             state.dataWaterData->WaterStorage(this->condensateTankIndex).VdotAvailSupply(this->condensateTankSupplyARRID) =
                 this->condensateVolumeFlow;

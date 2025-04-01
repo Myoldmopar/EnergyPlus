@@ -126,7 +126,7 @@ void ExternalInterfaceExchangeVariables(EnergyPlusData &state)
         char *errorMessagePtr(errorMessage.data());
         const int retValErrMsg = checkOperatingSystem(errorMessagePtr);
         if (retValErrMsg != 0) {
-            ShowSevereError(state, format("ExternalInterface/ExternalInterfaceExchangeVariables:{}", errorMessagePtr));
+            ShowSevereError(state, fmt::format("ExternalInterface/ExternalInterfaceExchangeVariables:{}", errorMessagePtr));
             state.dataExternalInterface->ErrorsFound = true;
             StopExternalInterfaceIfError(state);
         }
@@ -401,11 +401,11 @@ void InitExternalInterface(EnergyPlusData &state)
             state.dataExternalInterface->socketFD = establishclientsocket(FileSystem::toString(state.dataExternalInterface->socCfgFilPath).c_str());
             if (state.dataExternalInterface->socketFD < 0) {
                 ShowSevereError(state,
-                                format("ExternalInterface: Could not open socket. File descriptor = {}.", state.dataExternalInterface->socketFD));
+                                fmt::format("ExternalInterface: Could not open socket. File descriptor = {}.", state.dataExternalInterface->socketFD));
                 state.dataExternalInterface->ErrorsFound = true;
             }
         } else {
-            ShowSevereError(state, format("ExternalInterface: Did not find file \"{}\".", state.dataExternalInterface->socCfgFilPath));
+            ShowSevereError(state, fmt::format("ExternalInterface: Did not find file \"{}\".", state.dataExternalInterface->socCfgFilPath));
             ShowContinueError(state, "This file needs to be in same directory as in.idf.");
             ShowContinueError(state, "Check the documentation for the ExternalInterface.");
             state.dataExternalInterface->ErrorsFound = true;
@@ -481,7 +481,7 @@ void InitExternalInterface(EnergyPlusData &state)
 
         } else {
 
-            ShowSevereError(state, format("ExternalInterface: Did not find file \"{}\".", simCfgFilNam));
+            ShowSevereError(state, fmt::format("ExternalInterface: Did not find file \"{}\".", simCfgFilNam));
             ShowContinueError(state, "This file needs to be in same directory as in.idf.");
             ShowContinueError(state, "Check the documentation for the ExternalInterface.");
             state.dataExternalInterface->ErrorsFound = true;
@@ -490,9 +490,9 @@ void InitExternalInterface(EnergyPlusData &state)
 
         if (state.dataExternalInterface->nOutVal + state.dataExternalInterface->nInpVar > maxVar) {
             ShowSevereError(state, "ExternalInterface: Too many variables to be exchanged.");
-            ShowContinueError(state, format("Attempted to exchange {} outputs", state.dataExternalInterface->nOutVal));
-            ShowContinueError(state, format("plus {} inputs.", state.dataExternalInterface->nOutVal));
-            ShowContinueError(state, format("Maximum allowed is sum is {}.", maxVar));
+            ShowContinueError(state, fmt::format("Attempted to exchange {} outputs", state.dataExternalInterface->nOutVal));
+            ShowContinueError(state, fmt::format("plus {} inputs.", state.dataExternalInterface->nOutVal));
+            ShowContinueError(state, fmt::format("Maximum allowed is sum is {}.", maxVar));
             ShowContinueError(state, "To fix, increase maxVar in ExternalInterface.cc");
             state.dataExternalInterface->ErrorsFound = true;
         }
@@ -515,8 +515,8 @@ void InitExternalInterface(EnergyPlusData &state)
         }
         StopExternalInterfaceIfError(state);
 
-        DisplayString(state, format("Number of outputs in ExternalInterface = {}", state.dataExternalInterface->nOutVal));
-        DisplayString(state, format("Number of inputs  in ExternalInterface = {}", state.dataExternalInterface->nInpVar));
+        DisplayString(state, fmt::format("Number of outputs in ExternalInterface = {}", state.dataExternalInterface->nOutVal));
+        DisplayString(state, fmt::format("Number of inputs  in ExternalInterface = {}", state.dataExternalInterface->nInpVar));
 
         state.dataExternalInterface->InitExternalInterfacefirstCall = false;
 
@@ -542,7 +542,7 @@ void InitExternalInterface(EnergyPlusData &state)
             }
             if (state.dataExternalInterface->varInd(i) <= 0) {
                 ShowSevereError(state,
-                                format("ExternalInterface: Error, xml file \"{}\" declares variable \"{}\",",
+                                fmt::format("ExternalInterface: Error, xml file \"{}\" declares variable \"{}\",",
                                        simCfgFilNam,
                                        state.dataExternalInterface->inpVarNames(i)));
                 ShowContinueError(state, "but variable was not found in idf file.");
@@ -556,7 +556,7 @@ void InitExternalInterface(EnergyPlusData &state)
                 state.dataExternalInterface->useEMS = true;
                 if (!RuntimeLanguageProcessor::isExternalInterfaceErlVariable(state, state.dataExternalInterface->varInd(i))) {
                     ShowSevereError(state,
-                                    format("ExternalInterface: Error, xml file \"{}\" declares variable \"{}\",",
+                                    fmt::format("ExternalInterface: Error, xml file \"{}\" declares variable \"{}\",",
                                            simCfgFilNam,
                                            state.dataExternalInterface->inpVarNames(i)));
                     ShowContinueError(state, "But this variable is an ordinary Erl variable, not an ExternalInterface variable.");
@@ -567,7 +567,7 @@ void InitExternalInterface(EnergyPlusData &state)
                 state.dataExternalInterface->useEMS = true;
                 if (!RuntimeLanguageProcessor::isExternalInterfaceErlVariable(state, state.dataExternalInterface->varInd(i))) {
                     ShowSevereError(state,
-                                    format("ExternalInterface: Error, xml file \"{}\" declares variable \"{}\",",
+                                    fmt::format("ExternalInterface: Error, xml file \"{}\" declares variable \"{}\",",
                                            simCfgFilNam,
                                            state.dataExternalInterface->inpVarNames(i)));
                     ShowContinueError(state, "But this variable is an ordinary Erl actuator, not an ExternalInterface actuator.");
@@ -620,7 +620,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                     // generate vectors here first
                     std::vector<unsigned int> valueReferenceVec;
-                    std::vector<Real64> realVarValueVec;
+                    std::vector<fmiReal> realVarValueVec;
                     for (unsigned long x = 1; x <= size(fmuInst.fmuOutputVariableSchedule); ++x) {
                         valueReferenceVec.push_back(fmuInst.fmuOutputVariableSchedule(x).ValueReference);
                         realVarValueVec.push_back(fmuInst.fmuOutputVariableSchedule(x).RealVarValue);
@@ -637,8 +637,8 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                     if (fmuInst.fmistatus != fmiOK) {
                         ShowSevereError(state, "ExternalInterface/GetSetVariablesAndDoStepFMUImport: Error when trying to get outputs");
-                        ShowContinueError(state, format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
-                        ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                        ShowContinueError(state, fmt::format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                        ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
                     }
@@ -648,7 +648,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
                 if (size(fmuInst.fmuOutputVariableVariable) > 0) {
 
                     std::vector<unsigned int> valueReferenceVec2;
-                    std::vector<Real64> realVarValueVec2;
+                    std::vector<fmiReal> realVarValueVec2;
                     for (unsigned long x = 1; x <= size(fmuInst.fmuOutputVariableVariable); ++x) {
                         valueReferenceVec2.push_back(fmuInst.fmuOutputVariableVariable(x).ValueReference);
                         realVarValueVec2.push_back(fmuInst.fmuOutputVariableVariable(x).RealVarValue);
@@ -665,8 +665,8 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                     if (fmuInst.fmistatus != fmiOK) {
                         ShowSevereError(state, "ExternalInterface/GetSetVariablesAndDoStepFMUImport: Error when trying to get outputs");
-                        ShowContinueError(state, format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
-                        ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                        ShowContinueError(state, fmt::format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                        ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
                     }
@@ -676,7 +676,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                     // generate vectors here first
                     std::vector<unsigned int> valueReferenceVec3;
-                    std::vector<Real64> realVarValueVec3;
+                    std::vector<fmiReal> realVarValueVec3;
                     for (unsigned long x = 1; x <= size(fmuInst.fmuOutputVariableActuator); ++x) {
                         valueReferenceVec3.push_back(fmuInst.fmuOutputVariableActuator(x).ValueReference);
                         realVarValueVec3.push_back(fmuInst.fmuOutputVariableActuator(x).RealVarValue);
@@ -693,8 +693,8 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                     if (fmuInst.fmistatus != fmiOK) {
                         ShowSevereError(state, "ExternalInterface/GetSetVariablesAndDoStepFMUImport: Error when trying to get outputs");
-                        ShowContinueError(state, format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
-                        ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                        ShowContinueError(state, fmt::format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                        ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
                     }
@@ -743,7 +743,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
                     valueReferenceVec4.push_back(fmuInst.fmuInputVariable(x).ValueReference);
                 }
 
-                std::vector<Real64> rtsValueVec4;
+                std::vector<double> rtsValueVec4;
                 for (unsigned long x = 1; x <= size(fmuInst.eplusOutputVariable); ++x) {
                     rtsValueVec4.push_back(fmuInst.eplusOutputVariable(x).RTSValue);
                 }
@@ -753,8 +753,8 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                 if (fmuInst.fmistatus != fmiOK) {
                     ShowSevereError(state, "ExternalInterface/GetSetVariablesAndDoStepFMUImport: Error when trying to set inputs");
-                    ShowContinueError(state, format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
-                    ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                    ShowContinueError(state, fmt::format("in instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                    ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                     state.dataExternalInterface->ErrorsFound = true;
                     StopExternalInterfaceIfError(state);
                 }
@@ -765,9 +765,9 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
                 &fmuInst.fmicomponent, &state.dataExternalInterface->tComm, &state.dataExternalInterface->hStep, &localfmitrue, &fmuInst.Index);
             if (fmuInst.fmistatus != fmiOK) {
                 ShowSevereError(state, "ExternalInterface/GetSetVariablesAndDoStepFMUImport: Error when trying to");
-                ShowContinueError(state, format("do the coSimulation with instance \"{}\"", fmuInst.Name));
-                ShowContinueError(state, format("of FMU \"{}\"", fmu.Name));
-                ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                ShowContinueError(state, fmt::format("do the coSimulation with instance \"{}\"", fmuInst.Name));
+                ShowContinueError(state, fmt::format("of FMU \"{}\"", fmu.Name));
+                ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                 state.dataExternalInterface->ErrorsFound = true;
                 StopExternalInterfaceIfError(state);
             }
@@ -803,7 +803,7 @@ void InstantiateInitializeFMUImport(EnergyPlusData &state)
             // TODO: This is doing a null pointer check; OK?
             if (!fmuInst.fmicomponent) {
                 ShowSevereError(state, "ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to instantiate");
-                ShowContinueError(state, format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                ShowContinueError(state, fmt::format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
                 state.dataExternalInterface->ErrorsFound = true;
                 StopExternalInterfaceIfError(state);
             }
@@ -820,8 +820,8 @@ void InstantiateInitializeFMUImport(EnergyPlusData &state)
                 &fmuInst.fmicomponent, &state.dataExternalInterface->tStart, &localfmiTrue, &state.dataExternalInterface->tStop, &fmuInst.Index);
             if (fmuInst.fmistatus != fmiOK) {
                 ShowSevereError(state, "ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to initialize");
-                ShowContinueError(state, format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
-                ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                ShowContinueError(state, fmt::format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                 state.dataExternalInterface->ErrorsFound = true;
                 StopExternalInterfaceIfError(state);
             }
@@ -850,8 +850,8 @@ void InitializeFMU(EnergyPlusData &state)
                 &fmuInst.fmicomponent, &state.dataExternalInterface->tStart, &localfmiTrue, &state.dataExternalInterface->tStop, &fmuInst.Index);
             if (fmuInst.fmistatus != fmiOK) {
                 ShowSevereError(state, "ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to initialize");
-                ShowContinueError(state, format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
-                ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                ShowContinueError(state, fmt::format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                 state.dataExternalInterface->ErrorsFound = true;
                 StopExternalInterfaceIfError(state);
             }
@@ -880,7 +880,7 @@ void TerminateResetFreeFMUImport(EnergyPlusData &state, int fmiEndSimulation)
             // check if fmiComponent has been freed
             if (!fmuInst.fmicomponent) {
                 ShowSevereError(state, "ExternalInterface/TerminateResetFreeFMUImport: Error when trying to terminate");
-                ShowContinueError(state, format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                ShowContinueError(state, fmt::format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
                 state.dataExternalInterface->ErrorsFound = true;
                 StopExternalInterfaceIfError(state);
             }
@@ -985,10 +985,10 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                 if (Util::SameString(fullFileName(j), fullFileName(k))) continue;
                 ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport:");
                 ShowContinueError(state, "duplicate file names (but not same file) entered.");
-                ShowContinueError(state, format("...entered file name=\"{}\"", state.dataExternalInterface->FMU(j).Name));
-                ShowContinueError(state, format("...   full file name=\"{}\"", fullFileName(j)));
-                ShowContinueError(state, format("...entered file name=\"{}\"", state.dataExternalInterface->FMU(k).Name));
-                ShowContinueError(state, format("...   full file name=\"{}\"", fullFileName(k)));
+                ShowContinueError(state, fmt::format("...entered file name=\"{}\"", state.dataExternalInterface->FMU(j).Name));
+                ShowContinueError(state, fmt::format("...   full file name=\"{}\"", fullFileName(j)));
+                ShowContinueError(state, fmt::format("...entered file name=\"{}\"", state.dataExternalInterface->FMU(k).Name));
+                ShowContinueError(state, fmt::format("...   full file name=\"{}\"", fullFileName(k)));
                 ShowContinueError(state, "...name collision but not same file name.");
                 state.dataExternalInterface->ErrorsFound = true;
             }
@@ -1048,14 +1048,14 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
         for (int i = 1; i <= state.dataExternalInterface->NumFMUObjects; ++i) {
             auto &fmu = state.dataExternalInterface->FMU(i);
             if (fmu.NumInstances == 0) {
-                ShowSevereError(state, format("ExternalInterface/InitExternalInterfaceFMUImport: The FMU \"{}\" does", fmu.Name));
+                ShowSevereError(state, fmt::format("ExternalInterface/InitExternalInterfaceFMUImport: The FMU \"{}\" does", fmu.Name));
                 ShowContinueError(state, "not have any instances or any input variable. An FMU should have at least one instance");
                 ShowContinueError(state, "or one input variable defined in input file. Check FMU object in the input file.");
                 state.dataExternalInterface->ErrorsFound = true;
                 StopExternalInterfaceIfError(state);
             }
             if (NumFMUInputVariables > 0 && fmu.TotNumInputVariablesInIDF == 0) {
-                ShowWarningError(state, format("InitExternalInterfaceFMUImport: The FMU \"{}\"", fmu.Name));
+                ShowWarningError(state, fmt::format("InitExternalInterfaceFMUImport: The FMU \"{}\"", fmu.Name));
                 ShowContinueError(state, "is defined but has no input variables.");
                 ShowContinueError(state, "Check the input field of the corresponding object");
                 ShowContinueError(state, "ExternalInterface:FunctionalMockupUnitImport:From:Variable.");
@@ -1091,7 +1091,7 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
 
                     if (retVal != 0) {
                         ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to");
-                        ShowContinueError(state, format("unpack the FMU \"{}\".", fmu.Name));
+                        ShowContinueError(state, fmt::format("unpack the FMU \"{}\".", fmu.Name));
                         ShowContinueError(state, "Check if the FMU exists. Also check if the FMU folder is not write protected.");
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
@@ -1113,7 +1113,7 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                     if (fmuInst.Index < 0) {
                         ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to");
                         ShowContinueError(state, "get the model ID and model GUID");
-                        ShowContinueError(state, format("of instance \"{}\" of FMU \"{}\".", fmuInst.Name, fmu.Name));
+                        ShowContinueError(state, fmt::format("of instance \"{}\" of FMU \"{}\".", fmuInst.Name, fmu.Name));
                         ShowContinueError(state, "Check if modelDescription.xml exists in the folder where the FMU has been unpacked.");
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
@@ -1141,7 +1141,7 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                     if (retValfmiPathLib != 0) {
                         ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to");
                         ShowContinueError(state, "get the path to the binaries of instance");
-                        ShowContinueError(state, format("\"{}\" of FMU \"{}\".", fmuInst.Name, fmu.Name));
+                        ShowContinueError(state, fmt::format("\"{}\" of FMU \"{}\".", fmuInst.Name, fmu.Name));
                         ShowContinueError(state, "Check if binaries folder exists where the FMU has been unpacked.");
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
@@ -1168,17 +1168,17 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                     if (retValfmiVersion != 0) {
                         ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to");
                         ShowContinueError(state, "load FMI functions library of instance");
-                        ShowContinueError(state, format("\"{}\" of FMU \"{}\".", fmuInst.Name, fmu.Name));
-                        ShowContinueError(state, format("\"{}\".", fmuInst.fmiVersionNumber));
+                        ShowContinueError(state, fmt::format("\"{}\" of FMU \"{}\".", fmuInst.Name, fmu.Name));
+                        ShowContinueError(state, fmt::format("\"{}\".", fmuInst.fmiVersionNumber));
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
                     }
 
                     if (fmuInst.fmiVersionNumber.substr(0, 3) != "1.0") {
                         ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport: Error when getting version");
-                        ShowContinueError(state, format("number of instance \"{}\"", fmuInst.Name));
-                        ShowContinueError(state, format("of FMU \"{}\".", fmu.Name));
-                        ShowContinueError(state, format("The version number found (\"{}\")", fmuInst.fmiVersionNumber.substr(0, 3)));
+                        ShowContinueError(state, fmt::format("number of instance \"{}\"", fmuInst.Name));
+                        ShowContinueError(state, fmt::format("of FMU \"{}\".", fmu.Name));
+                        ShowContinueError(state, fmt::format("The version number found (\"{}\")", fmuInst.fmiVersionNumber.substr(0, 3)));
                         ShowContinueError(state, "differs from version 1.0 which is currently supported.");
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
@@ -1257,8 +1257,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                         if (fmuInst.fmuInputVariable(k).ValueReference == -999) {
                             ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to");
                             ShowContinueError(state, "get the value reference of FMU input variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\" of FMU", fmuInst.fmuInputVariable(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\". Please check the name of input variable", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\" of FMU", fmuInst.fmuInputVariable(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\". Please check the name of input variable", fmu.Name));
                             ShowContinueError(state, "in the input file and in the modelDescription file.");
                             state.dataExternalInterface->ErrorsFound = true;
                             StopExternalInterfaceIfError(state);
@@ -1267,8 +1267,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                         if (fmuInst.fmuInputVariable(k).ValueReference == -1) {
                             ShowSevereError(state, "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to");
                             ShowContinueError(state, "get the value reference of FMU input variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\" of FMU", fmuInst.fmuInputVariable(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("\"{}\". This variable is not an FMU input variable.", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\" of FMU", fmuInst.fmuInputVariable(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("\"{}\". This variable is not an FMU input variable.", fmu.Name));
                             ShowContinueError(state, "Please check the causality of the variable in the modelDescription file.");
                             state.dataExternalInterface->ErrorsFound = true;
                             StopExternalInterfaceIfError(state);
@@ -1294,7 +1294,7 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                 }
 
                 if (NumFMUInputVariables > 0 && fmuInst.NumInputVariablesInIDF == 0) {
-                    ShowWarningError(state, format("InitExternalInterfaceFMUImport: The instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                    ShowWarningError(state, fmt::format("InitExternalInterfaceFMUImport: The instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
                     ShowContinueError(state, "is defined but has no input variables. Check the input field of the");
                     ShowContinueError(state, "corresponding object: ExternalInterface:FunctionalMockupUnitImport:From:Variable.");
                 }
@@ -1308,21 +1308,21 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                 // check whether the number of input variables in fmu is bigger than in the idf
                 if (fmuInst.NumInputVariablesInFMU > fmuInst.NumInputVariablesInIDF) {
                     ShowWarningError(state,
-                                     format("InitExternalInterfaceFMUImport: The number of input variables defined in input file ({})",
+                                     fmt::format("InitExternalInterfaceFMUImport: The number of input variables defined in input file ({})",
                                             fmuInst.NumInputVariablesInIDF));
                     ShowContinueError(state,
-                                      format("of instance \"{}\" of FMU \"{}\" is less than the number of input variables", fmuInst.Name, fmu.Name));
-                    ShowContinueError(state, format("in the modelDescription file ({}).", fmuInst.NumInputVariablesInFMU));
+                                      fmt::format("of instance \"{}\" of FMU \"{}\" is less than the number of input variables", fmuInst.Name, fmu.Name));
+                    ShowContinueError(state, fmt::format("in the modelDescription file ({}).", fmuInst.NumInputVariablesInFMU));
                     ShowContinueError(state, "Check the input file and the modelDescription file again.");
                 }
                 // check whether the number of input variables in fmu is less than in the idf
                 if (fmuInst.NumInputVariablesInFMU < fmuInst.NumInputVariablesInIDF) {
                     ShowWarningError(state,
-                                     format("InitExternalInterfaceFMUImport: The number of input variables defined in input file ({})",
+                                     fmt::format("InitExternalInterfaceFMUImport: The number of input variables defined in input file ({})",
                                             fmuInst.NumInputVariablesInIDF));
                     ShowContinueError(
-                        state, format("of instance \"{}\" of FMU \"{}\" is bigger than the number of input variables", fmuInst.Name, fmu.Name));
-                    ShowContinueError(state, format("in the modelDescription file ({}).", fmuInst.NumInputVariablesInFMU));
+                        state, fmt::format("of instance \"{}\" of FMU \"{}\" is bigger than the number of input variables", fmuInst.Name, fmu.Name));
+                    ShowContinueError(state, fmt::format("in the modelDescription file ({}).", fmuInst.NumInputVariablesInFMU));
                     ShowContinueError(state, "Check the input file and the modelDescription file again.");
                 }
             }
@@ -1399,8 +1399,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                             ShowSevereError(state,
                                             "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to get the value reference of "
                                             "the FMU output variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableSchedule(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\" that will be mapped to a schedule.", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableSchedule(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\" that will be mapped to a schedule.", fmu.Name));
                             ShowContinueError(state, "Please check the name of output variables in the input file and");
                             ShowContinueError(state, "in the modelDescription file.");
                             state.dataExternalInterface->ErrorsFound = true;
@@ -1411,8 +1411,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                             ShowSevereError(state,
                                             "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to get the value reference of "
                                             "the FMU output variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableSchedule(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\" that will be mapped to a schedule.", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableSchedule(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\" that will be mapped to a schedule.", fmu.Name));
                             ShowContinueError(state, "This variable is not an FMU output variable.");
                             ShowContinueError(state, "Please check the causality of the variable in the modelDescription file.");
                             state.dataExternalInterface->ErrorsFound = true;
@@ -1423,7 +1423,7 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                         fmuInst.NumOutputVariablesSchedule = k;
                         if (fmuInst.eplusInputVariableSchedule(k).VarIndex <= 0) {
                             ShowSevereError(state,
-                                            format("ExternalInterface/InitExternalInterfaceFMUImport:declares variable \"{}\",",
+                                            fmt::format("ExternalInterface/InitExternalInterfaceFMUImport:declares variable \"{}\",",
                                                    fmuInst.eplusInputVariableSchedule(k).Name));
                             ShowContinueError(state, "but variable is not a schedule variable.");
                             state.dataExternalInterface->ErrorsFound = true;
@@ -1500,8 +1500,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                             ShowSevereError(state,
                                             "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to get the value reference of "
                                             "the FMU output variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableVariable(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\" that will be mapped to a variable.", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableVariable(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\" that will be mapped to a variable.", fmu.Name));
                             ShowContinueError(state, "Please check the name of output variables in the input file and in the modelDescription file.");
                             state.dataExternalInterface->ErrorsFound = true;
                             StopExternalInterfaceIfError(state);
@@ -1511,8 +1511,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                             ShowSevereError(state,
                                             "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to get the value reference of "
                                             "the FMU output variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableVariable(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\" that will be mapped to a variable.", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableVariable(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\" that will be mapped to a variable.", fmu.Name));
                             ShowContinueError(state,
                                               "This variable is not an FMU output variable. Please check the causality of the variable in the "
                                               "modelDescription file.");
@@ -1525,7 +1525,7 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                         fmuInst.NumOutputVariablesVariable = k;
                         if (fmuInst.eplusInputVariableVariable(k).VarIndex <= 0) {
                             ShowSevereError(state,
-                                            format("ExternalInterface/InitExternalInterfaceFMUImport:declares variable \"{}\",",
+                                            fmt::format("ExternalInterface/InitExternalInterfaceFMUImport:declares variable \"{}\",",
                                                    fmuInst.eplusInputVariableVariable(k).Name));
                             ShowContinueError(state, "but variable is not an EMS variable.");
                             state.dataExternalInterface->ErrorsFound = true;
@@ -1605,8 +1605,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                             ShowSevereError(state,
                                             "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to get the value reference of "
                                             "the FMU output variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableActuator(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\" that will be mapped to an actuator.", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableActuator(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\" that will be mapped to an actuator.", fmu.Name));
                             ShowContinueError(state, "Please check the name of output variables in the input file and in the modelDescription file.");
                             state.dataExternalInterface->ErrorsFound = true;
                             StopExternalInterfaceIfError(state);
@@ -1616,8 +1616,8 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                             ShowSevereError(state,
                                             "ExternalInterface/InitExternalInterfaceFMUImport: Error when trying to get the value reference of "
                                             "the FMU output variable");
-                            ShowContinueError(state, format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableActuator(k).Name, fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\" that will be mapped to an actuator.", fmu.Name));
+                            ShowContinueError(state, fmt::format("\"{}\" of instance \"{}\"", fmuInst.fmuOutputVariableActuator(k).Name, fmuInst.Name));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\" that will be mapped to an actuator.", fmu.Name));
                             ShowContinueError(state,
                                               "This variable is not an FMU output variable. Please check the causality of the variable in the "
                                               "modelDescription file.");
@@ -1630,7 +1630,7 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                         fmuInst.NumOutputVariablesActuator = k;
                         if (fmuInst.eplusInputVariableActuator(k).VarIndex <= 0) {
                             ShowSevereError(state,
-                                            format("ExternalInterface/InitExternalInterfaceFMUImport:declares variable \"{}\",",
+                                            fmt::format("ExternalInterface/InitExternalInterfaceFMUImport:declares variable \"{}\",",
                                                    fmuInst.eplusInputVariableActuator(k).Name));
                             ShowContinueError(state, "but variable is not an EMS variable.");
                             state.dataExternalInterface->ErrorsFound = true;
@@ -1656,30 +1656,30 @@ void InitExternalInterfaceFMUImport(EnergyPlusData &state)
                 // check whether the number of output variables in fmu is bigger than in the idf
                 if (fmuInst.NumOutputVariablesInFMU > fmuInst.NumOutputVariablesInIDF) {
                     ShowWarningError(state,
-                                     format("InitExternalInterfaceFMUImport: The number of output variables defined in input file ({})",
+                                     fmt::format("InitExternalInterfaceFMUImport: The number of output variables defined in input file ({})",
                                             fmuInst.NumOutputVariablesInIDF));
                     ShowContinueError(state,
-                                      format("of instance \"{}\" of FMU \"{}\" is less than the number of output variables", fmuInst.Name, fmu.Name));
-                    ShowContinueError(state, format("in the modelDescription file ({}).", fmuInst.NumOutputVariablesInFMU));
+                                      fmt::format("of instance \"{}\" of FMU \"{}\" is less than the number of output variables", fmuInst.Name, fmu.Name));
+                    ShowContinueError(state, fmt::format("in the modelDescription file ({}).", fmuInst.NumOutputVariablesInFMU));
                     ShowContinueError(state, "Check the input file and the modelDescription file again.");
                 }
                 // check whether the number of output variables in fmu is less than in the idf
                 if (fmuInst.NumOutputVariablesInFMU < fmuInst.NumOutputVariablesInIDF) {
                     ShowWarningError(state,
-                                     format("InitExternalInterfaceFMUImport: The number of output variables defined in input file ({})",
+                                     fmt::format("InitExternalInterfaceFMUImport: The number of output variables defined in input file ({})",
                                             fmuInst.NumOutputVariablesInIDF));
                     ShowContinueError(
-                        state, format("of instance \"{}\" of FMU \"{}\" is bigger than the number of output variables", fmuInst.Name, fmu.Name));
-                    ShowContinueError(state, format("in the modelDescription file ({}).", fmuInst.NumOutputVariablesInFMU));
+                        state, fmt::format("of instance \"{}\" of FMU \"{}\" is bigger than the number of output variables", fmuInst.Name, fmu.Name));
+                    ShowContinueError(state, fmt::format("in the modelDescription file ({}).", fmuInst.NumOutputVariablesInFMU));
                     ShowContinueError(state, "Check the input file and the modelDescription file again.");
                 }
 
                 DisplayString(
                     state,
-                    format("Number of inputs in instance \"{}\" of FMU \"{}\" = \"{}\".", fmuInst.Name, fmu.Name, fmuInst.NumInputVariablesInIDF));
+                    fmt::format("Number of inputs in instance \"{}\" of FMU \"{}\" = \"{}\".", fmuInst.Name, fmu.Name, fmuInst.NumInputVariablesInIDF));
                 DisplayString(
                     state,
-                    format("Number of outputs in instance \"{}\" of FMU \"{}\" = \"{}\".", fmuInst.Name, fmu.Name, fmuInst.NumOutputVariablesInIDF));
+                    fmt::format("Number of outputs in instance \"{}\" of FMU \"{}\" = \"{}\".", fmuInst.Name, fmu.Name, fmuInst.NumOutputVariablesInIDF));
             }
         }
         StopExternalInterfaceIfError(state);
@@ -1923,7 +1923,7 @@ void CalcExternalInterfaceFMUImport(EnergyPlusData &state)
                             valRefVec.push_back(fmuInst.fmuInputVariable(x).ValueReference);
                         }
 
-                        std::vector<Real64> rtsValVec;
+                        std::vector<fmiReal> rtsValVec;
                         for (unsigned long x = 1; x <= size(fmuInst.eplusOutputVariable); ++x) {
                             rtsValVec.push_back(fmuInst.eplusOutputVariable(x).RTSValue);
                         }
@@ -1935,9 +1935,9 @@ void CalcExternalInterfaceFMUImport(EnergyPlusData &state)
                         if (fmuInst.fmistatus != fmiOK) {
                             ShowSevereError(
                                 state,
-                                format("ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to set an input value in instance \"{}\"",
+                                fmt::format("ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to set an input value in instance \"{}\"",
                                        fmuInst.Name));
-                            ShowContinueError(state, format("of FMU \"{}\"; Error Code = \"{}\"", fmu.Name, fmuInst.fmistatus));
+                            ShowContinueError(state, fmt::format("of FMU \"{}\"; Error Code = \"{}\"", fmu.Name, fmuInst.fmistatus));
                             state.dataExternalInterface->ErrorsFound = true;
                             StopExternalInterfaceIfError(state);
                         }
@@ -1983,7 +1983,7 @@ void CalcExternalInterfaceFMUImport(EnergyPlusData &state)
                     for (unsigned long x = 1; x <= size(fmuTempInst.fmuInputVariable); ++x) {
                         valRefVec.push_back(fmuTempInst.fmuInputVariable(x).ValueReference);
                     }
-                    std::vector<Real64> rtsValVec;
+                    std::vector<fmiReal> rtsValVec;
                     for (unsigned long x = 1; x <= size(fmuTempInst.eplusOutputVariable); ++x) {
                         rtsValVec.push_back(fmuTempInst.eplusOutputVariable(x).RTSValue);
                     }
@@ -1995,8 +1995,8 @@ void CalcExternalInterfaceFMUImport(EnergyPlusData &state)
                     if (fmuInst.fmistatus != fmiOK) {
                         ShowSevereError(state, "ExternalInterface/CalcExternalInterfaceFMUImport: ");
                         ShowContinueError(state, "Error when trying to set inputs in instance");
-                        ShowContinueError(state, format("\"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
-                        ShowContinueError(state, format("Error Code = \"{}\"", fmuInst.fmistatus));
+                        ShowContinueError(state, fmt::format("\"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
+                        ShowContinueError(state, fmt::format("Error Code = \"{}\"", fmuInst.fmistatus));
                         state.dataExternalInterface->ErrorsFound = true;
                         StopExternalInterfaceIfError(state);
                     }
@@ -2116,11 +2116,11 @@ void CalcExternalInterface(EnergyPlusData &state)
     int constexpr nDblMax(1024); // Maximum number of doubles
 
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
-    Real64 curSimTim; // current simulation time
-    Real64 preSimTim; // previous time step's simulation time
+    fmiReal curSimTim; // current simulation time
+    fmiReal preSimTim; // previous time step's simulation time
 
-    Array1D<Real64> dblValWri(nDblMax);
-    Array1D<Real64> dblValRea(nDblMax);
+    Array1D<fmiReal> dblValWri(nDblMax);
+    Array1D<fmiReal> dblValRea(nDblMax);
 
     if (state.dataExternalInterface->firstCall) {
         DisplayString(state, "ExternalInterface starts first data exchange.");
@@ -2134,7 +2134,7 @@ void CalcExternalInterface(EnergyPlusData &state)
     if (state.dataExternalInterface->noMoreValues && state.dataExternalInterface->showContinuationWithoutUpdate) {
         if (state.dataExternalInterface->haveExternalInterfaceBCVTB) {
             ShowWarningError(
-                state, format("ExternalInterface: Continue simulation without updated values from server at t ={:.2T} hours", preSimTim / 3600.0));
+                state, fmt::format("ExternalInterface: Continue simulation without updated values from server at t ={:.2f} hours", preSimTim / 3600.0));
         }
         state.dataExternalInterface->showContinuationWithoutUpdate = false;
     }
@@ -2193,10 +2193,10 @@ void CalcExternalInterface(EnergyPlusData &state)
             if (retVal != 0) {
                 continueSimulation = false;
                 ShowSevereError(state,
-                                format("ExternalInterface: Socket communication received error value \"{:2}\" at time = {:.2T} hours.",
+                                fmt::format("ExternalInterface: Socket communication received error value \"{:2}\" at time = {:.2f} hours.",
                                        retVal,
                                        preSimTim / 3600));
-                ShowContinueError(state, format("ExternalInterface: Flag from server \"{:2}\".", flaRea));
+                ShowContinueError(state, fmt::format("ExternalInterface: Flag from server \"{:2}\".", flaRea));
                 state.dataExternalInterface->ErrorsFound = true;
                 StopExternalInterfaceIfError(state);
             }
@@ -2208,7 +2208,7 @@ void CalcExternalInterface(EnergyPlusData &state)
             // Added a check since the FMUExport  is terminated with the flaRea set to 1.
             state.dataExternalInterface->noMoreValues = true;
             if (state.dataExternalInterface->haveExternalInterfaceBCVTB) {
-                ShowSevereError(state, format("ExternalInterface: Received end of simulation flag at time = {:.2T} hours.", preSimTim / 3600));
+                ShowSevereError(state, fmt::format("ExternalInterface: Received end of simulation flag at time = {:.2f} hours.", preSimTim / 3600));
                 StopExternalInterfaceIfError(state);
             }
         }
@@ -2218,7 +2218,7 @@ void CalcExternalInterface(EnergyPlusData &state)
             (nDblRea != isize(state.dataExternalInterface->varInd))) {
             ShowSevereError(
                 state,
-                format("ExternalInterface: Received \"{}\" double values, expected \"{}\".", nDblRea, size(state.dataExternalInterface->varInd)));
+                fmt::format("ExternalInterface: Received \"{}\" double values, expected \"{}\".", nDblRea, size(state.dataExternalInterface->varInd)));
             state.dataExternalInterface->ErrorsFound = true;
             StopExternalInterfaceIfError(state);
         }
@@ -2233,7 +2233,7 @@ void CalcExternalInterface(EnergyPlusData &state)
                     RuntimeLanguageProcessor::ExternalInterfaceSetErlVariable(state, state.dataExternalInterface->varInd(i), dblValRea(i));
                 } else {
                     ShowContinueError(state, "ExternalInterface: Error in finding the type of the input variable for EnergyPlus");
-                    ShowContinueError(state, format("variable index: {}. Variable will not be updated.", i));
+                    ShowContinueError(state, fmt::format("variable index: {}. Variable will not be updated.", i));
                 }
             }
         }
@@ -2295,7 +2295,7 @@ void GetReportVariableKey(
         }
         if ((varType == OutputProcessor::VariableType::Invalid) || (iKey > numKeys)) {
             ShowSevereError(state,
-                            format("ExternalInterface: Simulation model has no variable \"{}\" with key \"{}\".", VarNames(Loop), varKeys(Loop)));
+                            fmt::format("ExternalInterface: Simulation model has no variable \"{}\" with key \"{}\".", VarNames(Loop), varKeys(Loop)));
             state.dataExternalInterface->ErrorsFound = true;
         }
     }
@@ -2313,7 +2313,7 @@ void WarnIfExternalInterfaceObjectsAreUsed(EnergyPlusData &state, std::string co
 
     int const NumObjects = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, ObjectWord);
     if (NumObjects > 0) {
-        ShowWarningError(state, format("IDF file contains object \"{}\",", ObjectWord));
+        ShowWarningError(state, fmt::format("IDF file contains object \"{}\",", ObjectWord));
         ShowContinueError(state, "but object \"ExternalInterface\" with appropriate key entry is not specified. Values will not be updated.");
     }
 }
@@ -2351,7 +2351,7 @@ void VerifyExternalInterfaceObject(EnergyPlusData &state)
         (!Util::SameString(state.dataIPShortCut->cAlphaArgs(1), "FunctionalMockupUnitImport")) &&
         (!Util::SameString(state.dataIPShortCut->cAlphaArgs(1), "FunctionalMockupUnitExport"))) {
         ShowSevereError(state,
-                        format("VerifyExternalInterfaceObject: {}, invalid {}=\"{}\".",
+                        fmt::format("VerifyExternalInterfaceObject: {}, invalid {}=\"{}\".",
                                cCurrentModuleObject,
                                state.dataIPShortCut->cAlphaFieldNames(1),
                                state.dataIPShortCut->cAlphaArgs(1)));

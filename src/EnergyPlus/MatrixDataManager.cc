@@ -157,17 +157,17 @@ namespace MatrixDataManager {
 
             // test
             if (NumElements < 1) {
-                ShowSevereError(state, format("GetMatrixInput: for {}: {}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("GetMatrixInput: for {}: {}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("Check {} and {} total number of elements in matrix must be 1 or more",
+                                  fmt::format("Check {} and {} total number of elements in matrix must be 1 or more",
                                          state.dataIPShortCut->cNumericFieldNames(1),
                                          state.dataIPShortCut->cNumericFieldNames(2)));
                 ErrorsFound = true;
             }
             if ((NumNumbers - 2) < NumElements) {
-                ShowSevereError(state, format("GetMatrixInput: for {}: {}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("GetMatrixInput: for {}: {}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("Check input, total number of elements does not agree with {} and {}",
+                                  fmt::format("Check input, total number of elements does not agree with {} and {}",
                                          state.dataIPShortCut->cNumericFieldNames(1),
                                          state.dataIPShortCut->cNumericFieldNames(2)));
                 ErrorsFound = true;

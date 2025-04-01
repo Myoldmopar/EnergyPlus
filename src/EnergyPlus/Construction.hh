@@ -301,7 +301,7 @@ namespace Construction {
         Sched::Schedule *airBoundaryMixingSched = nullptr; // Air boundary simple mixing schedule index
 
         int rcmax = 0;              // Total number of nodes in the construct (<= MaxTotNodes)
-        Array2D<Real64> AExp;       // Exponential of AMat
+        Array2D<double> AExp;       // Exponential of AMat
         Array2D<Real64> AInv;       // Inverse of AMat
         Array2D<Real64> AMat;       // "A" matrix from Seem's dissertation (constant coefficients of linear system)
         Array1D<Real64> BMat;       // "B" matrix of state space method (non-zero elements)
@@ -312,7 +312,7 @@ namespace Construction {
         Array2D<Real64> Gamma2;     // Intermediate calculation array corresponding to a term in Seem's dissertation
         Array3D<Real64> s;          // Coefficients for the surface temperature history terms
         Array2D<Real64> s0;         // Coefficients for the current surface temperature terms
-        Array2D<Real64> IdenMatrix; // Identity Matrix
+        Array2D<double> IdenMatrix; // Identity Matrix
         int NumOfPerpendNodes = 7;  // Number of nodes in the direction
         // perpendicular to the main direction of heat transfer.  This is only used
         // when a two-dimensional solution has been requested for a construction

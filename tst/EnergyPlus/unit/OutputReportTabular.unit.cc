@@ -3540,7 +3540,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabular_ConfirmResetBEPSGathering)
     state->dataOutRptTab->displayTabularBEPS = true;
     // OutputProcessor::TimeValue.allocate(2);
 
-    auto timeStep = 1.0;
+    Real64 timeStep = 1.0;
 
     SetupTimePointers(*state, OutputProcessor::TimeStepType::Zone, timeStep);
     SetupTimePointers(*state, OutputProcessor::TimeStepType::System, timeStep);
@@ -7566,11 +7566,11 @@ TEST_F(EnergyPlusFixture, AzimuthToCardinal)
         if (i % 2 == 1) {
             // It's a wall
             state->dataSurface->Surface(i).Class = DataSurfaces::SurfaceClass::Wall;
-            state->dataSurface->Surface(i).Name = format("ExtWall_{}_{}", i, entryIndex);
+            state->dataSurface->Surface(i).Name = fmt::format("ExtWall_{}_{}", i, entryIndex);
         } else {
             // It's a window
             state->dataSurface->Surface(i).Class = DataSurfaces::SurfaceClass::Window;
-            state->dataSurface->Surface(i).Name = format("ExtWindow_{}_{}", i, entryIndex);
+            state->dataSurface->Surface(i).Name = fmt::format("ExtWindow_{}_{}", i, entryIndex);
             // Window references the previous wall
             state->dataSurface->Surface(i).BaseSurf = i - 1;
         }
@@ -7601,7 +7601,7 @@ TEST_F(EnergyPlusFixture, AzimuthToCardinal)
         std::string cardinalDir = expectedAzimuthToCard.second;
 
         // Internal: Just to ensure that we gets the same one with round
-        EXPECT_EQ(format("{:.2R}", round(oriAzimuth * 100.0) / 100.0), format("{:.2R}", oriAzimuth));
+        EXPECT_EQ(fmt::format("{:.2R}", round(oriAzimuth * 100.0) / 100.0), fmt::format("{:.2R}", oriAzimuth));
 
         // Wall (odd entries)
 
@@ -7611,7 +7611,7 @@ TEST_F(EnergyPlusFixture, AzimuthToCardinal)
         // Check that the azimuth entry is the rounded version indeed
         EXPECT_EQ(
             OutputReportPredefined::RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchOpAzimuth, state->dataSurface->Surface(i).Name),
-            format("{:.2R}", expectedAzimuthToCard.first))
+            fmt::format("{:.2R}", expectedAzimuthToCard.first))
             << "Surface Name = " << state->dataSurface->Surface(i).Name;
         // Check that we do get the expected cardinal direction
         EXPECT_EQ(
@@ -7626,7 +7626,7 @@ TEST_F(EnergyPlusFixture, AzimuthToCardinal)
         // Check that the azimuth entry is the rounded version indeed
         EXPECT_EQ(OutputReportPredefined::RetrievePreDefTableEntry(
                       *state, state->dataOutRptPredefined->pdchFenAzimuth, state->dataSurface->Surface(i + 1).Name),
-                  format("{:.2R}", expectedAzimuthToCard.first))
+                  fmt::format("{:.2R}", expectedAzimuthToCard.first))
             << "Surface Name = " << state->dataSurface->Surface(i + 1).Name;
         // Check that we do get the expected cardinal direction
         EXPECT_EQ(OutputReportPredefined::RetrievePreDefTableEntry(
@@ -8044,7 +8044,7 @@ TEST_F(SQLiteFixture, OutputReportTabular_EndUseBySubcategorySQL)
     state->dataOutRptTab->displayTabularBEPS = true;
     // OutputProcessor::TimeValue.allocate(2);
 
-    auto timeStep = 1.0;
+    Real64 timeStep = 1.0;
 
     SetupTimePointers(*state, OutputProcessor::TimeStepType::Zone, timeStep);
     SetupTimePointers(*state, OutputProcessor::TimeStepType::System, timeStep);
@@ -9586,7 +9586,7 @@ TEST_F(SQLiteFixture, ORT_EndUseBySubcategorySQL_DualUnits)
     state->dataOutRptTab->displayTabularBEPS = true;
     // OutputProcessor::TimeValue.allocate(2);
 
-    auto timeStep = 1.0;
+    Real64 timeStep = 1.0;
 
     SetupTimePointers(*state, OutputProcessor::TimeStepType::Zone, timeStep);
     SetupTimePointers(*state, OutputProcessor::TimeStepType::System, timeStep);
@@ -12949,7 +12949,7 @@ TEST_F(SQLiteFixture, OutputReportTabular_DistrictHeating)
     state->dataOutRptTab->displayTabularBEPS = true;
     // OutputProcessor::TimeValue.allocate(2);
 
-    auto timeStep = 1.0;
+    Real64 timeStep = 1.0;
 
     SetupTimePointers(*state, OutputProcessor::TimeStepType::Zone, timeStep);
     SetupTimePointers(*state, OutputProcessor::TimeStepType::System, timeStep);
@@ -13396,7 +13396,7 @@ TEST_F(SQLiteFixture, ORT_EndUseBySubcategorySQL_IPUnitExceptElec)
     state->dataOutRptTab->displayTabularBEPS = true;
     // OutputProcessor::TimeValue.allocate(2);
 
-    auto timeStep = 1.0;
+    Real64 timeStep = 1.0;
 
     SetupTimePointers(*state, OutputProcessor::TimeStepType::Zone, timeStep);
     SetupTimePointers(*state, OutputProcessor::TimeStepType::System, timeStep);

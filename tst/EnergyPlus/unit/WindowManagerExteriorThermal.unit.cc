@@ -731,9 +731,9 @@ TEST_F(EnergyPlusFixture, test_GetWindowAssemblyNfrcForReport_withIDF)
     SolarShading::SkyDifSolarShading(*state);
     state->dataSolarShading->CalcSkyDifShading = false;
 
-    double uValueRep{0.};
-    double shgcRep{0.};
-    double vtRep{0.};
+    Real64 uValueRep{0.};
+    Real64 shgcRep{0.};
+    Real64 vtRep{0.};
 
     int windowSurfNum = Util::FindItemInList("ZN001:WALL-SOUTH:WIN001", state->dataSurface->Surface);
     EXPECT_TRUE(windowSurfNum > 0);

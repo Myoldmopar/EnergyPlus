@@ -266,7 +266,7 @@ namespace ExternalInterface {
     {
 
         std::string Name;                  // FMU Filename
-        Real64 TimeOut;                    // Default TimeOut value
+        fmiReal TimeOut;                    // Default TimeOut value
         int Visible;                       // Default Visible value
         int Interactive;                   // Default Interactive value
         int LoggingOn;                     // Default LoggingOn value
@@ -337,10 +337,10 @@ namespace ExternalInterface {
 
 struct ExternalInterfaceData : BaseGlobalStruct
 {
-    Real64 tComm = 0.0;
-    Real64 tStop = 3600.0;
-    Real64 tStart = 0.0;
-    Real64 hStep = 15.0;
+    fmiReal tComm = 0.0;
+    fmiReal tStop = 3600.0;
+    fmiReal tStart = 0.0;
+    fmiReal hStep = 15.0;
     bool FlagReIni = false;
     fs::path FMURootWorkingFolder;
     int nInKeys = 3; // Number of input variables available in ExternalInterface (=highest index* number)

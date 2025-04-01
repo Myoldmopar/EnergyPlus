@@ -180,7 +180,7 @@ namespace HeatBalFiniteDiffManager {
                         static_cast<CondFDScheme>(getEnumValue(CondFDSchemeTypeNamesUC, Util::makeUPPER(s_ipsc->cAlphaArgs(1))));
                     if (s_hbfd->CondFDSchemeType == CondFDScheme::Invalid) {
                         ShowSevereError(state,
-                                        format("{}: invalid {} entered={}, must match CrankNicholsonSecondOrder or FullyImplicitFirstOrder.",
+                                        fmt::format("{}: invalid {} entered={}, must match CrankNicholsonSecondOrder or FullyImplicitFirstOrder.",
                                                s_ipsc->cCurrentModuleObject,
                                                s_ipsc->cAlphaFieldNames(1),
                                                s_ipsc->cAlphaArgs(1)));
@@ -243,7 +243,7 @@ namespace HeatBalFiniteDiffManager {
 
                 if (mat->group != Material::Group::Regular) {
                     ShowSevereError(state,
-                                    format("{}: Reference Material is not appropriate type for CondFD properties, material={}, must have regular "
+                                    fmt::format("{}: Reference Material is not appropriate type for CondFD properties, material={}, must have regular "
                                            "properties (L,Cp,K,D)",
                                            s_ipsc->cCurrentModuleObject,
                                            mat->Name));
@@ -256,8 +256,8 @@ namespace HeatBalFiniteDiffManager {
                 matFD.tk1 = MaterialProps(1);
                 matFD.numTempEnth = (MaterialNumProp - 1) / 2;
                 if (matFD.numTempEnth * 2 != (MaterialNumProp - 1)) {
-                    ShowSevereError(state, format("GetCondFDInput: {}=\"{}\", mismatched pairs", s_ipsc->cCurrentModuleObject, MaterialNames(1)));
-                    ShowContinueError(state, format("...expected {} pairs, but only entered {} numbers.", matFD.numTempEnth, MaterialNumProp - 1));
+                    ShowSevereError(state, fmt::format("GetCondFDInput: {}=\"{}\", mismatched pairs", s_ipsc->cCurrentModuleObject, MaterialNames(1)));
+                    ShowContinueError(state, fmt::format("...expected {} pairs, but only entered {} numbers.", matFD.numTempEnth, MaterialNumProp - 1));
                     ErrorsFound = true;
                 }
                 matFD.TempEnth.dimension(2, matFD.numTempEnth, 0.0);
@@ -283,11 +283,11 @@ namespace HeatBalFiniteDiffManager {
                 }
                 if (nonInc) {
                     ShowSevereError(state,
-                                    format("GetCondFDInput: {}=\"{}\", non increasing Temperatures. Temperatures must be strictly increasing.",
+                                    fmt::format("GetCondFDInput: {}=\"{}\", non increasing Temperatures. Temperatures must be strictly increasing.",
                                            s_ipsc->cCurrentModuleObject,
                                            MaterialNames(1)));
                     ShowContinueError(state,
-                                      format("...occurs first at item=[{}], value=[{:.2R}].", fmt::to_string(inegptr), matFD.TempEnth(1, inegptr)));
+                                      fmt::format("...occurs first at item=[{}], value=[{:.2f}].", fmt::to_string(inegptr), matFD.TempEnth(1, inegptr)));
                     ErrorsFound = true;
                 }
                 nonInc = false;
@@ -300,8 +300,8 @@ namespace HeatBalFiniteDiffManager {
                 }
                 if (nonInc) {
                     ShowSevereError(state,
-                                    format("GetCondFDInput: {}=\"{}\", non increasing Enthalpy.", s_ipsc->cCurrentModuleObject, MaterialNames(1)));
-                    ShowContinueError(state, format("...occurs first at item=[{}], value=[{:.2R}].", inegptr, matFD.TempEnth(2, inegptr)));
+                                    fmt::format("GetCondFDInput: {}=\"{}\", non increasing Enthalpy.", s_ipsc->cCurrentModuleObject, MaterialNames(1)));
+                    ShowContinueError(state, fmt::format("...occurs first at item=[{}], value=[{:.2f}].", inegptr, matFD.TempEnth(2, inegptr)));
                     ShowContinueError(state, "...These values may be Cp (Specific Heat) rather than Enthalpy.  Please correct.");
                     ErrorsFound = true;
                 }
@@ -341,7 +341,7 @@ namespace HeatBalFiniteDiffManager {
 
                 if (mat->group != Material::Group::Regular) {
                     ShowSevereError(state,
-                                    format("{}: Reference Material is not appropriate type for CondFD properties, material={}, must have regular "
+                                    fmt::format("{}: Reference Material is not appropriate type for CondFD properties, material={}, must have regular "
                                            "properties (L,Cp,K,D)",
                                            s_ipsc->cCurrentModuleObject,
                                            mat->Name));
@@ -354,8 +354,8 @@ namespace HeatBalFiniteDiffManager {
                 auto &matFD = s_hbfd->MaterialFD(matNum);
                 matFD.numTempCond = MaterialNumProp / 2;
                 if (matFD.numTempCond * 2 != MaterialNumProp) {
-                    ShowSevereError(state, format("GetCondFDInput: {}=\"{}\", mismatched pairs", s_ipsc->cCurrentModuleObject, MaterialNames(1)));
-                    ShowContinueError(state, format("...expected {} pairs, but only entered {} numbers.", matFD.numTempCond, MaterialNumProp));
+                    ShowSevereError(state, fmt::format("GetCondFDInput: {}=\"{}\", mismatched pairs", s_ipsc->cCurrentModuleObject, MaterialNames(1)));
+                    ShowContinueError(state, fmt::format("...expected {} pairs, but only entered {} numbers.", matFD.numTempCond, MaterialNumProp));
                     ErrorsFound = true;
                 }
                 matFD.TempCond.dimension(2, matFD.numTempCond, 0.0);
@@ -381,10 +381,10 @@ namespace HeatBalFiniteDiffManager {
                 }
                 if (nonInc) {
                     ShowSevereError(state,
-                                    format("GetCondFDInput: {}=\"{}\", non increasing Temperatures. Temperatures must be strictly increasing.",
+                                    fmt::format("GetCondFDInput: {}=\"{}\", non increasing Temperatures. Temperatures must be strictly increasing.",
                                            s_ipsc->cCurrentModuleObject,
                                            MaterialNames(1)));
-                    ShowContinueError(state, format("...occurs first at item=[{}], value=[{:.2R}].", inegptr, matFD.TempCond(1, inegptr)));
+                    ShowContinueError(state, fmt::format("...occurs first at item=[{}], value=[{:.2f}].", inegptr, matFD.TempCond(1, inegptr)));
                     ErrorsFound = true;
                 }
             }
@@ -681,7 +681,7 @@ namespace HeatBalFiniteDiffManager {
                     mAlpha = 0.0;
                 } else if (thisConstruct.TypeIsIRT) { // make similar to air? (that didn't seem to work well)
                     ShowSevereError(state,
-                                    format("InitHeatBalFiniteDiff: Construction =\"{}\" uses Material:InfraredTransparent. Cannot be used currently "
+                                    fmt::format("InitHeatBalFiniteDiff: Construction =\"{}\" uses Material:InfraredTransparent. Cannot be used currently "
                                            "with finite difference calculations.",
                                            thisConstruct.Name));
                     if (thisConstruct.IsUsed) {
@@ -713,21 +713,21 @@ namespace HeatBalFiniteDiffManager {
                         if (mat->Thickness < ThicknessThreshold) {
                             ShowSevereError(
                                 state,
-                                format(
+                                fmt::format(
                                     "InitialInitHeatBalFiniteDiff: Found Material that is too thin and/or too highly conductive, material name = {}",
                                     mat->Name));
                             ShowContinueError(state,
-                                              format("High conductivity Material layers are not well supported by Conduction Finite Difference, "
-                                                     "material conductivity = {:.3R} [W/m-K]",
+                                              fmt::format("High conductivity Material layers are not well supported by Conduction Finite Difference, "
+                                                     "material conductivity = {:.3f} [W/m-K]",
                                                      mat->Conductivity));
-                            ShowContinueError(state, format("Material thermal diffusivity = {:.3R} [m2/s]", Alpha));
+                            ShowContinueError(state, fmt::format("Material thermal diffusivity = {:.3f} [m2/s]", Alpha));
                             ShowContinueError(
-                                state, format("Material with this thermal diffusivity should have thickness > {:.5R} [m]", ThicknessThreshold));
+                                state, fmt::format("Material with this thermal diffusivity should have thickness > {:.5f} [m]", ThicknessThreshold));
                             if (mat->Thickness < DataHeatBalance::ThinMaterialLayerThreshold) {
                                 ShowContinueError(state,
-                                                  format("Material may be too thin to be modeled well, thickness = {:.5R} [m]", mat->Thickness));
+                                                  fmt::format("Material may be too thin to be modeled well, thickness = {:.5f} [m]", mat->Thickness));
                                 ShowContinueError(state,
-                                                  format("Material with this thermal diffusivity should have thickness > {:.5R} [m]",
+                                                  fmt::format("Material with this thermal diffusivity should have thickness > {:.5f} [m]",
                                                          DataHeatBalance::ThinMaterialLayerThreshold));
                             }
                             ShowFatalError(state, "Preceding conditions cause termination.");
@@ -917,14 +917,14 @@ namespace HeatBalFiniteDiffManager {
             // Only setup for layers 1 to N-1
             for (int lay = 1; lay < thisConstruct.TotLayers; ++lay) {
                 SetupOutputVariable(state,
-                                    format("CondFD Internal Heat Source Power After Layer {}", lay),
+                                    fmt::format("CondFD Internal Heat Source Power After Layer {}", lay),
                                     Constant::Units::W,
                                     SurfaceFD(SurfNum).heatSourceInternalFluxLayerReport(lay),
                                     OutputProcessor::TimeStepType::Zone,
                                     OutputProcessor::StoreType::Average,
                                     state.dataSurface->Surface(SurfNum).Name);
                 SetupOutputVariable(state,
-                                    format("CondFD Internal Heat Source Energy After Layer {}", lay),
+                                    fmt::format("CondFD Internal Heat Source Energy After Layer {}", lay),
                                     Constant::Units::J,
                                     SurfaceFD(SurfNum).heatSourceInternalFluxEnergyLayerReport(lay),
                                     OutputProcessor::TimeStepType::Zone,
@@ -961,14 +961,14 @@ namespace HeatBalFiniteDiffManager {
                                                  SurfaceFD(SurfNum).heatSourceFluxMaterialActuators(lay).isActuated,
                                                  SurfaceFD(SurfNum).heatSourceFluxMaterialActuators(lay).actuatedValue);
                     SetupOutputVariable(state,
-                                        format("CondFD EMS Heat Source Power After Layer {}", lay),
+                                        fmt::format("CondFD EMS Heat Source Power After Layer {}", lay),
                                         Constant::Units::W,
                                         SurfaceFD(SurfNum).heatSourceEMSFluxLayerReport(lay),
                                         OutputProcessor::TimeStepType::Zone,
                                         OutputProcessor::StoreType::Average,
                                         state.dataSurface->Surface(SurfNum).Name);
                     SetupOutputVariable(state,
-                                        format("CondFD EMS Heat Source Energy After Layer {}", lay),
+                                        fmt::format("CondFD EMS Heat Source Energy After Layer {}", lay),
                                         Constant::Units::J,
                                         SurfaceFD(SurfNum).heatSourceEMSFluxEnergyLayerReport(lay),
                                         OutputProcessor::TimeStepType::Zone,
@@ -983,49 +983,49 @@ namespace HeatBalFiniteDiffManager {
             int TotNodes = ConstructFD(state.dataSurface->Surface(SurfNum).Construction).TotNodes; // Full size nodes, start with outside face.
             for (int node = 1; node <= TotNodes + 1; ++node) {                                     // include inside face node
                 SetupOutputVariable(state,
-                                    format("CondFD Surface Temperature Node {}", node),
+                                    fmt::format("CondFD Surface Temperature Node {}", node),
                                     Constant::Units::C,
                                     SurfaceFD(SurfNum).TDreport(node),
                                     OutputProcessor::TimeStepType::Zone,
                                     OutputProcessor::StoreType::Average,
                                     state.dataSurface->Surface(SurfNum).Name);
                 SetupOutputVariable(state,
-                                    format("CondFD Surface Heat Flux Node {}", node),
+                                    fmt::format("CondFD Surface Heat Flux Node {}", node),
                                     Constant::Units::W_m2,
                                     SurfaceFD(SurfNum).QDreport(node),
                                     OutputProcessor::TimeStepType::Zone,
                                     OutputProcessor::StoreType::Average,
                                     state.dataSurface->Surface(SurfNum).Name);
                 SetupOutputVariable(state,
-                                    format("CondFD Phase Change State {}", node),
+                                    fmt::format("CondFD Phase Change State {}", node),
                                     Constant::Units::None,
                                     (int &)SurfaceFD(SurfNum).PhaseChangeStateRep(node),
                                     OutputProcessor::TimeStepType::Zone,
                                     OutputProcessor::StoreType::Average,
                                     state.dataSurface->Surface(SurfNum).Name);
                 SetupOutputVariable(state,
-                                    format("CondFD Phase Change Previous State {}", node),
+                                    fmt::format("CondFD Phase Change Previous State {}", node),
                                     Constant::Units::None,
                                     (int &)SurfaceFD(SurfNum).PhaseChangeStateOldRep(node),
                                     OutputProcessor::TimeStepType::Zone,
                                     OutputProcessor::StoreType::Average,
                                     state.dataSurface->Surface(SurfNum).Name);
                 SetupOutputVariable(state,
-                                    format("CondFD Phase Change Node Temperature {}", node),
+                                    fmt::format("CondFD Phase Change Node Temperature {}", node),
                                     Constant::Units::C,
                                     SurfaceFD(SurfNum).TDT(node),
                                     OutputProcessor::TimeStepType::Zone,
                                     OutputProcessor::StoreType::Average,
                                     state.dataSurface->Surface(SurfNum).Name);
                 SetupOutputVariable(state,
-                                    format("CondFD Phase Change Node Conductivity {}", node),
+                                    fmt::format("CondFD Phase Change Node Conductivity {}", node),
                                     Constant::Units::W_mK,
                                     SurfaceFD(SurfNum).condNodeReport(node),
                                     OutputProcessor::TimeStepType::Zone,
                                     OutputProcessor::StoreType::Average,
                                     state.dataSurface->Surface(SurfNum).Name);
                 SetupOutputVariable(state,
-                                    format("CondFD Phase Change Node Specific Heat {}", node),
+                                    fmt::format("CondFD Phase Change Node Specific Heat {}", node),
                                     Constant::Units::J_kgK,
                                     SurfaceFD(SurfNum).specHeatNodeReport(node),
                                     OutputProcessor::TimeStepType::Zone,
@@ -1033,14 +1033,14 @@ namespace HeatBalFiniteDiffManager {
                                     state.dataSurface->Surface(SurfNum).Name);
                 if (state.dataGlobal->DisplayAdvancedReportVariables) {
                     SetupOutputVariable(state,
-                                        format("CondFD Surface Heat Capacitance Outer Half Node {}", node),
+                                        fmt::format("CondFD Surface Heat Capacitance Outer Half Node {}", node),
                                         Constant::Units::W_m2K,
                                         SurfaceFD(SurfNum).CpDelXRhoS1(node),
                                         OutputProcessor::TimeStepType::Zone,
                                         OutputProcessor::StoreType::Average,
                                         state.dataSurface->Surface(SurfNum).Name);
                     SetupOutputVariable(state,
-                                        format("CondFD Surface Heat Capacitance Inner Half Node {}", node),
+                                        fmt::format("CondFD Surface Heat Capacitance Inner Half Node {}", node),
                                         Constant::Units::W_m2K,
                                         SurfaceFD(SurfNum).CpDelXRhoS2(node),
                                         OutputProcessor::TimeStepType::Zone,
@@ -1317,13 +1317,13 @@ namespace HeatBalFiniteDiffManager {
         auto &s_hbfd = state.dataHeatBalFiniteDiffMgr;
 
         // Formats
-        static constexpr std::string_view Format_702(" ConductionFiniteDifference Node,{},{:.8R},{},{},{}\n");
+        static constexpr std::string_view Format_702(" ConductionFiniteDifference Node,{},{:.8f},{},{},{}\n");
 
         print(state.files.eio,
               "! <ConductionFiniteDifference HeatBalanceSettings>,Scheme Type,Space Discretization Constant,Relaxation Factor,Inside Face Surface "
               "Temperature Convergence Criteria\n");
         print(state.files.eio,
-              " ConductionFiniteDifference HeatBalanceSettings,{},{:.2R},{:.2R},{:.4R}\n",
+              " ConductionFiniteDifference HeatBalanceSettings,{},{:.2f},{:.2f},{:.4f}\n",
               CondFDSchemeTypeNamesCC[static_cast<int>(s_hbfd->CondFDSchemeType)],
               s_hbfd->SpaceDescritConstant,
               state.dataHeatBal->CondFDRelaxFactorInput,
@@ -1358,7 +1358,7 @@ namespace HeatBalFiniteDiffManager {
                 if (!findAnySurfacesUsingConstructionAndCondFD(state, ThisNum)) continue;
 
                 auto &constructFD = s_hbfd->ConstructFD(ThisNum);
-                static constexpr std::string_view Format_700(" Construction CondFD,{},{},{},{},{:.6R}\n");
+                static constexpr std::string_view Format_700(" Construction CondFD,{},{},{},{},{:.6f}\n");
                 print(state.files.eio,
                       Format_700,
                       construct.Name,
@@ -1368,7 +1368,7 @@ namespace HeatBalFiniteDiffManager {
                       constructFD.DeltaTime / Constant::rSecsInHour);
 
                 for (int Layer = 1; Layer <= construct.TotLayers; ++Layer) {
-                    static constexpr std::string_view Format_701(" Material CondFD Summary,{},{:.4R},{},{:.8R},{:.8R},{:.8R}\n");
+                    static constexpr std::string_view Format_701(" Material CondFD Summary,{},{:.4f},{},{:.8f},{:.8f},{:.8f}\n");
                     print(state.files.eio,
                           Format_701,
                           constructFD.Name(Layer),
@@ -1389,7 +1389,7 @@ namespace HeatBalFiniteDiffManager {
                         if (Inodes == 1) {
                             print(state.files.eio,
                                   Format_702,
-                                  format("Node #{}", Inodes),
+                                  fmt::format("Node #{}", Inodes),
                                   constructFD.NodeXlocation(Inodes),
                                   construct.Name,
                                   "Surface Outside Face",
@@ -1400,7 +1400,7 @@ namespace HeatBalFiniteDiffManager {
                             if (OutwardMatLayerNum > 0 && OutwardMatLayerNum <= construct.TotLayers) {
                                 print(state.files.eio,
                                       Format_702,
-                                      format("Node #{}", Inodes),
+                                      fmt::format("Node #{}", Inodes),
                                       constructFD.NodeXlocation(Inodes),
                                       construct.Name,
                                       constructFD.Name(OutwardMatLayerNum),
@@ -1410,7 +1410,7 @@ namespace HeatBalFiniteDiffManager {
                             OutwardMatLayerNum = Layer;
                             print(state.files.eio,
                                   Format_702,
-                                  format("Node #{}", Inodes),
+                                  fmt::format("Node #{}", Inodes),
                                   constructFD.NodeXlocation(Inodes),
                                   construct.Name,
                                   constructFD.Name(OutwardMatLayerNum),
@@ -1423,7 +1423,7 @@ namespace HeatBalFiniteDiffManager {
                 ++Inodes;
                 print(state.files.eio,
                       Format_702,
-                      format("Node #{}", Inodes),
+                      fmt::format("Node #{}", Inodes),
                       constructFD.NodeXlocation(Inodes),
                       construct.Name,
                       constructFD.Name(Layer),
@@ -2466,26 +2466,26 @@ namespace HeatBalFiniteDiffManager {
             if (CheckTemperature < DataHeatBalSurface::MinSurfaceTempLimit) {
                 if (state.dataSurface->SurfLowTempErrCount(SurfNum) == 0) {
                     ShowSevereMessage(state,
-                                      format("Temperature (low) out of bounds [{:.2R}] for zone=\"{}\", for surface=\"{}\"",
+                                      fmt::format("Temperature (low) out of bounds [{:.2f}] for zone=\"{}\", for surface=\"{}\"",
                                              CheckTemperature,
                                              state.dataHeatBal->Zone(ZoneNum).Name,
                                              state.dataSurface->Surface(SurfNum).Name));
                     ShowContinueErrorTimeStamp(state, "");
                     if (!state.dataHeatBal->Zone(ZoneNum).TempOutOfBoundsReported) {
-                        ShowContinueError(state, format("Zone=\"{}\", Diagnostic Details:", state.dataHeatBal->Zone(ZoneNum).Name));
+                        ShowContinueError(state, fmt::format("Zone=\"{}\", Diagnostic Details:", state.dataHeatBal->Zone(ZoneNum).Name));
                         if (state.dataHeatBal->Zone(ZoneNum).FloorArea > 0.0) {
                             ShowContinueError(
                                 state,
-                                format("...Internal Heat Gain [{:.3R}] W/m2",
+                                fmt::format("...Internal Heat Gain [{:.3f}] W/m2",
                                        state.dataHeatBal->Zone(ZoneNum).InternalHeatGains / state.dataHeatBal->Zone(ZoneNum).FloorArea));
                         } else {
                             ShowContinueError(
-                                state, format("...Internal Heat Gain (no floor) [{:.3R}] W", state.dataHeatBal->Zone(ZoneNum).InternalHeatGains));
+                                state, fmt::format("...Internal Heat Gain (no floor) [{:.3f}] W", state.dataHeatBal->Zone(ZoneNum).InternalHeatGains));
                         }
                         if (state.afn->simulation_control.type == AirflowNetwork::ControlType::NoMultizoneOrDistribution) {
                             ShowContinueError(state,
-                                              format("...Infiltration/Ventilation [{:.3R}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalInfilVent));
-                            ShowContinueError(state, format("...Mixing/Cross Mixing [{:.3R}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalMixing));
+                                              fmt::format("...Infiltration/Ventilation [{:.3f}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalInfilVent));
+                            ShowContinueError(state, fmt::format("...Mixing/Cross Mixing [{:.3f}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalMixing));
                         } else {
                             ShowContinueError(state, "...Airflow Network Simulation: Nominal Infiltration/Ventilation/Mixing not available.");
                         }
@@ -2519,26 +2519,26 @@ namespace HeatBalFiniteDiffManager {
             } else {
                 if (state.dataSurface->SurfHighTempErrCount(SurfNum) == 0) {
                     ShowSevereMessage(state,
-                                      format("Temperature (high) out of bounds ({:.2R}] for zone=\"{}\", for surface=\"{}\"",
+                                      fmt::format("Temperature (high) out of bounds ({:.2f}] for zone=\"{}\", for surface=\"{}\"",
                                              CheckTemperature,
                                              state.dataHeatBal->Zone(ZoneNum).Name,
                                              state.dataSurface->Surface(SurfNum).Name));
                     ShowContinueErrorTimeStamp(state, "");
                     if (!state.dataHeatBal->Zone(ZoneNum).TempOutOfBoundsReported) {
-                        ShowContinueError(state, format("Zone=\"{}\", Diagnostic Details:", state.dataHeatBal->Zone(ZoneNum).Name));
+                        ShowContinueError(state, fmt::format("Zone=\"{}\", Diagnostic Details:", state.dataHeatBal->Zone(ZoneNum).Name));
                         if (state.dataHeatBal->Zone(ZoneNum).FloorArea > 0.0) {
                             ShowContinueError(
                                 state,
-                                format("...Internal Heat Gain [{:.3R}] W/m2",
+                                fmt::format("...Internal Heat Gain [{:.3f}] W/m2",
                                        state.dataHeatBal->Zone(ZoneNum).InternalHeatGains / state.dataHeatBal->Zone(ZoneNum).FloorArea));
                         } else {
                             ShowContinueError(
-                                state, format("...Internal Heat Gain (no floor) [{:.3R}] W", state.dataHeatBal->Zone(ZoneNum).InternalHeatGains));
+                                state, fmt::format("...Internal Heat Gain (no floor) [{:.3f}] W", state.dataHeatBal->Zone(ZoneNum).InternalHeatGains));
                         }
                         if (state.afn->simulation_control.type == AirflowNetwork::ControlType::NoMultizoneOrDistribution) {
                             ShowContinueError(state,
-                                              format("...Infiltration/Ventilation [{:.3R}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalInfilVent));
-                            ShowContinueError(state, format("...Mixing/Cross Mixing [{:.3R}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalMixing));
+                                              fmt::format("...Infiltration/Ventilation [{:.3f}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalInfilVent));
+                            ShowContinueError(state, fmt::format("...Mixing/Cross Mixing [{:.3f}] m3/s", state.dataHeatBal->Zone(ZoneNum).NominalMixing));
                         } else {
                             ShowContinueError(state, "...Airflow Network Simulation: Nominal Infiltration/Ventilation/Mixing not available.");
                         }
@@ -2588,9 +2588,9 @@ namespace HeatBalFiniteDiffManager {
         if (nodeTemp < minTempLimit) {
             if (surfFD.indexNodeMinTempLimit == 0) {
                 ShowSevereMessage(state,
-                                  format("Node temperature (low) out of bounds [{:.2R}] for surface={}, node={}", nodeTemp, surfName, nodeNum));
+                                  fmt::format("Node temperature (low) out of bounds [{:.2f}] for surface={}, node={}", nodeTemp, surfName, nodeNum));
                 ShowContinueErrorTimeStamp(state, "");
-                ShowContinueError(state, format("Value has been reset to the lower limit value of {:.2R}.", minTempLimit));
+                ShowContinueError(state, fmt::format("Value has been reset to the lower limit value of {:.2f}.", minTempLimit));
             }
             ShowRecurringSevereErrorAtEnd(
                 state, "Node temperature (low) out of bounds for surface=" + surfName, surfFD.indexNodeMinTempLimit, nodeTemp, nodeTemp, _, "C", "C");
@@ -2598,9 +2598,9 @@ namespace HeatBalFiniteDiffManager {
         } else if (nodeTemp > maxTempLimit) {
             if (surfFD.indexNodeMaxTempLimit == 0) {
                 ShowSevereMessage(state,
-                                  format("Node temperature (high) out of bounds [{:.2R}] for surface={}, node={}", nodeTemp, surfName, nodeNum));
+                                  fmt::format("Node temperature (high) out of bounds [{:.2f}] for surface={}, node={}", nodeTemp, surfName, nodeNum));
                 ShowContinueErrorTimeStamp(state, "");
-                ShowContinueError(state, format("Value has been reset to the upper limit value of {:.2R}.", maxTempLimit));
+                ShowContinueError(state, fmt::format("Value has been reset to the upper limit value of {:.2f}.", maxTempLimit));
             }
             ShowRecurringSevereErrorAtEnd(state,
                                           "Node temperature (high) out of bounds for surface=" + surfName,

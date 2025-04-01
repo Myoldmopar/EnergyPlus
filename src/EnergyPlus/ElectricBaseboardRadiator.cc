@@ -131,7 +131,7 @@ namespace ElectricBaseboardRadiator {
             BaseboardNum = CompIndex;
             if (BaseboardNum > NumElecBaseboards || BaseboardNum < 1) {
                 ShowFatalError(state,
-                               format("SimElectricBaseboard:  Invalid CompIndex passed={}, Number of Units={}, Entered Unit name={}",
+                               fmt::format("SimElectricBaseboard:  Invalid CompIndex passed={}, Number of Units={}, Entered Unit name={}",
                                       BaseboardNum,
                                       NumElecBaseboards,
                                       EquipName));
@@ -139,7 +139,7 @@ namespace ElectricBaseboardRadiator {
             if (state.dataElectBaseboardRad->ElecBaseboard(BaseboardNum).CheckEquipName) {
                 if (EquipName != state.dataElectBaseboardRad->ElecBaseboard(BaseboardNum).EquipName) {
                     ShowFatalError(state,
-                                   format("SimElectricBaseboard: Invalid CompIndex passed={}, Unit name={}, stored Unit Name for that index={}",
+                                   fmt::format("SimElectricBaseboard: Invalid CompIndex passed={}, Unit name={}, stored Unit Name for that index={}",
                                           BaseboardNum,
                                           EquipName,
                                           state.dataElectBaseboardRad->ElecBaseboard(BaseboardNum).EquipName));
@@ -244,15 +244,15 @@ namespace ElectricBaseboardRadiator {
                 if (!s_ipsc->lNumericFieldBlanks(iHeatDesignCapacityNumericNum)) {
                     elecBaseboard.ScaledHeatingCapacity = s_ipsc->rNumericArgs(iHeatDesignCapacityNumericNum);
                     if (elecBaseboard.ScaledHeatingCapacity < 0.0 && elecBaseboard.ScaledHeatingCapacity != DataSizing::AutoSize) {
-                        ShowSevereError(state, format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
+                        ShowSevereError(state, fmt::format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
                         ShowContinueError(state,
-                                          format("Illegal {} = {:.7T}",
+                                          fmt::format("Illegal {} = {:.7f}",
                                                  s_ipsc->cNumericFieldNames(iHeatDesignCapacityNumericNum),
                                                  s_ipsc->rNumericArgs(iHeatDesignCapacityNumericNum)));
                         ErrorsFound = true;
                     }
                 } else {
-                    ShowSevereError(state, format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
+                    ShowSevereError(state, fmt::format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
                     ShowContinueError(state,
                                       "Input for " + s_ipsc->cAlphaFieldNames(iHeatCAPMAlphaNum) + " = " + s_ipsc->cAlphaArgs(iHeatCAPMAlphaNum));
                     ShowContinueError(state, "Blank field not allowed for " + s_ipsc->cNumericFieldNames(iHeatDesignCapacityNumericNum));
@@ -263,23 +263,23 @@ namespace ElectricBaseboardRadiator {
                 if (!s_ipsc->lNumericFieldBlanks(iHeatCapacityPerFloorAreaNumericNum)) {
                     elecBaseboard.ScaledHeatingCapacity = s_ipsc->rNumericArgs(iHeatCapacityPerFloorAreaNumericNum);
                     if (elecBaseboard.ScaledHeatingCapacity <= 0.0) {
-                        ShowSevereError(state, format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
+                        ShowSevereError(state, fmt::format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
                         ShowContinueError(state,
                                           "Input for " + s_ipsc->cAlphaFieldNames(iHeatCAPMAlphaNum) + " = " + s_ipsc->cAlphaArgs(iHeatCAPMAlphaNum));
                         ShowContinueError(state,
-                                          format("Illegal {} = {:.7T}",
+                                          fmt::format("Illegal {} = {:.7f}",
                                                  s_ipsc->cNumericFieldNames(iHeatCapacityPerFloorAreaNumericNum),
                                                  s_ipsc->rNumericArgs(iHeatCapacityPerFloorAreaNumericNum)));
                         ErrorsFound = true;
                     } else if (elecBaseboard.ScaledHeatingCapacity == DataSizing::AutoSize) {
-                        ShowSevereError(state, format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
+                        ShowSevereError(state, fmt::format("{} = {}", s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
                         ShowContinueError(state,
                                           "Input for " + s_ipsc->cAlphaFieldNames(iHeatCAPMAlphaNum) + " = " + s_ipsc->cAlphaArgs(iHeatCAPMAlphaNum));
                         ShowContinueError(state, "Illegal " + s_ipsc->cNumericFieldNames(iHeatCapacityPerFloorAreaNumericNum) + " = Autosize");
                         ErrorsFound = true;
                     }
                 } else {
-                    ShowSevereError(state, format(s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
+                    ShowSevereError(state, fmt::format(s_ipsc->cCurrentModuleObject, elecBaseboard.EquipName));
                     ShowContinueError(state,
                                       "Input for " + s_ipsc->cAlphaFieldNames(iHeatCAPMAlphaNum) + " = " + s_ipsc->cAlphaArgs(iHeatCAPMAlphaNum));
                     ShowContinueError(state, "Blank field not allowed for " + s_ipsc->cNumericFieldNames(iHeatCapacityPerFloorAreaNumericNum));
@@ -292,7 +292,7 @@ namespace ElectricBaseboardRadiator {
                     if (elecBaseboard.ScaledHeatingCapacity < 0.0) {
                         ShowSevereError(state, s_ipsc->cCurrentModuleObject + " = " + elecBaseboard.EquipName);
                         ShowContinueError(state,
-                                          format("Illegal {} = {:.7T}",
+                                          fmt::format("Illegal {} = {:.7f}",
                                                  s_ipsc->cNumericFieldNames(iHeatFracOfAutosizedCapacityNumericNum),
                                                  s_ipsc->rNumericArgs(iHeatFracOfAutosizedCapacityNumericNum)));
                         ErrorsFound = true;
@@ -316,14 +316,14 @@ namespace ElectricBaseboardRadiator {
                 ShowWarningError(state,
                                  std::string{RoutineName} + s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", " +
                                      s_ipsc->cNumericFieldNames(5) + " was lower than the allowable minimum.");
-                ShowContinueError(state, format("...reset to minimum value=[{:.2R}].", MinFraction));
+                ShowContinueError(state, fmt::format("...reset to minimum value=[{:.2f}].", MinFraction));
                 elecBaseboard.FracRadiant = MinFraction;
             }
             if (elecBaseboard.FracRadiant > MaxFraction) {
                 ShowWarningError(state,
                                  std::string{RoutineName} + s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", " +
                                      s_ipsc->cNumericFieldNames(5) + " was higher than the allowable maximum.");
-                ShowContinueError(state, format("...reset to maximum value=[{:.2R}].", MaxFraction));
+                ShowContinueError(state, fmt::format("...reset to maximum value=[{:.2f}].", MaxFraction));
                 elecBaseboard.FracRadiant = MaxFraction;
             }
 
@@ -343,14 +343,14 @@ namespace ElectricBaseboardRadiator {
                 ShowWarningError(state,
                                  std::string{RoutineName} + s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", " +
                                      s_ipsc->cNumericFieldNames(6) + " was lower than the allowable minimum.");
-                ShowContinueError(state, format("...reset to minimum value=[{:.2R}].", MinFraction));
+                ShowContinueError(state, fmt::format("...reset to minimum value=[{:.2f}].", MinFraction));
                 elecBaseboard.FracDistribPerson = MinFraction;
             }
             if (elecBaseboard.FracDistribPerson > MaxFraction) {
                 ShowWarningError(state,
                                  std::string{RoutineName} + s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", " +
                                      s_ipsc->cNumericFieldNames(6) + " was higher than the allowable maximum.");
-                ShowContinueError(state, format("...reset to maximum value=[{:.2R}].", MaxFraction));
+                ShowContinueError(state, fmt::format("...reset to maximum value=[{:.2f}].", MaxFraction));
                 elecBaseboard.FracDistribPerson = MaxFraction;
             }
 
@@ -360,7 +360,7 @@ namespace ElectricBaseboardRadiator {
                 ShowSevereError(state,
                                 std::string{RoutineName} + s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) +
                                     "\", the number of surface/radiant fraction groups entered was less than the allowable minimum.");
-                ShowContinueError(state, format("...the minimum that must be entered=[{}].", MinDistribSurfaces));
+                ShowContinueError(state, fmt::format("...the minimum that must be entered=[{}].", MinDistribSurfaces));
                 ErrorsFound = true;
                 elecBaseboard.TotSurfToDistrib = 0; // error
             }
@@ -389,14 +389,14 @@ namespace ElectricBaseboardRadiator {
                     ShowWarningError(state,
                                      std::string{RoutineName} + s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", " +
                                          s_ipsc->cNumericFieldNames(SurfNum + 6) + "was greater than the allowable maximum.");
-                    ShowContinueError(state, format("...reset to maximum value=[{:.2R}].", MaxFraction));
+                    ShowContinueError(state, fmt::format("...reset to maximum value=[{:.2f}].", MaxFraction));
                     elecBaseboard.TotSurfToDistrib = MaxFraction;
                 }
                 if (elecBaseboard.FracDistribToSurf(SurfNum) < MinFraction) {
                     ShowWarningError(state,
                                      std::string{RoutineName} + s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", " +
                                          s_ipsc->cNumericFieldNames(SurfNum + 6) + "was less than the allowable minimum.");
-                    ShowContinueError(state, format("...reset to maximum value=[{:.2R}].", MinFraction));
+                    ShowContinueError(state, fmt::format("...reset to maximum value=[{:.2f}].", MinFraction));
                     elecBaseboard.TotSurfToDistrib = MinFraction;
                 }
                 if (elecBaseboard.SurfacePtr(SurfNum) != 0) {
@@ -594,7 +594,7 @@ namespace ElectricBaseboardRadiator {
             int SizingMethod = HVAC::HeatingCapacitySizing; // Integer representation of sizing method name (e.g., CoolingAirflowSizing)
             int FieldNum = 1;                               // IDD numeric field number where input field description is found
             std::string const SizingString =
-                format("{} [W]", state.dataElectBaseboardRad->ElecBaseboardNumericFields(BaseboardNum).FieldNames(FieldNum));
+                fmt::format("{} [W]", state.dataElectBaseboardRad->ElecBaseboardNumericFields(BaseboardNum).FieldNames(FieldNum));
             // capacity sizing methods (e.g., HeatingDesignCapacity, CapacityPerFloorArea, FractionOfAutosizedCoolingCapacity)
             int CapSizingMethod = elecBaseboard.HeatingCapMethod;
             zoneEqSizing.SizingMethod(SizingMethod) = CapSizingMethod;
@@ -916,10 +916,10 @@ namespace ElectricBaseboardRadiator {
                         if (ThisSurfIntensity > DataHeatBalFanSys::MaxRadHeatFlux) {
                             ShowSevereError(state, "DistributeBBElecRadGains:  excessive thermal radiation heat flux intensity detected");
                             ShowContinueError(state, "Surface = " + state.dataSurface->Surface(SurfNum).Name);
-                            ShowContinueError(state, format("Surface area = {:.3R} [m2]", state.dataSurface->Surface(SurfNum).Area));
+                            ShowContinueError(state, fmt::format("Surface area = {:.3f} [m2]", state.dataSurface->Surface(SurfNum).Area));
                             ShowContinueError(state,
                                               "Occurs in " + state.dataElectBaseboardRad->cCMO_BBRadiator_Electric + " = " + elecBaseboard.EquipName);
-                            ShowContinueError(state, format("Radiation intensity = {:.2R} [W/m2]", ThisSurfIntensity));
+                            ShowContinueError(state, fmt::format("Radiation intensity = {:.2f} [W/m2]", ThisSurfIntensity));
                             ShowContinueError(
                                 state, "Assign a larger surface area or more surfaces in " + state.dataElectBaseboardRad->cCMO_BBRadiator_Electric);
                             ShowFatalError(state, "DistributeBBElecRadGains:  excessive thermal radiation heat flux intensity detected");
@@ -927,7 +927,7 @@ namespace ElectricBaseboardRadiator {
                     } else {
                         ShowSevereError(state, "DistributeBBElecRadGains:  surface not large enough to receive thermal radiation heat flux");
                         ShowContinueError(state, "Surface = " + state.dataSurface->Surface(SurfNum).Name);
-                        ShowContinueError(state, format("Surface area = {:.3R} [m2]", state.dataSurface->Surface(SurfNum).Area));
+                        ShowContinueError(state, fmt::format("Surface area = {:.3f} [m2]", state.dataSurface->Surface(SurfNum).Area));
                         ShowContinueError(state,
                                           "Occurs in " + state.dataElectBaseboardRad->cCMO_BBRadiator_Electric + " = " + elecBaseboard.EquipName);
                         ShowContinueError(

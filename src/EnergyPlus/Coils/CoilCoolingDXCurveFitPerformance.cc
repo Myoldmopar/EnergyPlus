@@ -355,12 +355,12 @@ void CoilCoolingDXCurveFitPerformance::simulate(EnergyPlus::EnergyPlusData &stat
     if (this->evapCondBasinHeatSched != nullptr) {
         Real64 currentBasinHeaterAvail = this->evapCondBasinHeatSched->getCurrentVal();
         if (this->evapCondBasinHeatCap > 0.0 && currentBasinHeaterAvail > 0.0) {
-            this->basinHeaterPower = max(0.0, this->evapCondBasinHeatCap * (this->evapCondBasinHeatSetpoint - state.dataEnvrn->OutDryBulbTemp));
+            this->basinHeaterPower = max(0.0f, this->evapCondBasinHeatCap * (this->evapCondBasinHeatSetpoint - state.dataEnvrn->OutDryBulbTemp));
         }
     } else {
         // If schedule does not exist, basin heater operates anytime outdoor dry-bulb temp is below setpoint
         if (this->evapCondBasinHeatCap > 0.0) {
-            this->basinHeaterPower = max(0.0, this->evapCondBasinHeatCap * (this->evapCondBasinHeatSetpoint - state.dataEnvrn->OutDryBulbTemp));
+            this->basinHeaterPower = max(0.0f, this->evapCondBasinHeatCap * (this->evapCondBasinHeatSetpoint - state.dataEnvrn->OutDryBulbTemp));
         }
     }
     this->basinHeaterPower *= (1.0 - this->RTF);

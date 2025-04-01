@@ -820,7 +820,7 @@ void ReportCoilSelection::doFinalProcessingOfCoilData(EnergyPlusData &state)
                 Psychrometrics::PsyHFnTdbW(CoilADPTemp, CoilADPHumRat); // Enthalpy at apparatus dewpoint, with Tdb set at apparatus dewpoint
             Real64 SHRatIdealPeak(1.0);
             if ((c->coilDesEntEnth - CoilADPEnthalpy) > 1.e-10) {
-                SHRatIdealPeak = min((CoilTinwADPEnthalpy - CoilADPEnthalpy) / (c->coilDesEntEnth - CoilADPEnthalpy), 1.0); // calculate SHR
+                SHRatIdealPeak = min((CoilTinwADPEnthalpy - CoilADPEnthalpy) / (c->coilDesEntEnth - CoilADPEnthalpy), 1.0f); // calculate SHR
             } else {
                 SHRatIdealPeak = 1.0;
             }
@@ -843,7 +843,7 @@ int ReportCoilSelection::getIndexForOrCreateDataObjFromCoilName(EnergyPlusData &
                 } else {
                     // throw error  coil type does not match coil name, check for unique names across coil types
                     ShowWarningError(state,
-                                     format("check for unique coil names across different coil types: {} occurs in both {} and {}",
+                                     fmt::format("check for unique coil names across different coil types: {} occurs in both {} and {}",
                                             coilName,
                                             coilType,
                                             coilSelectionDataObjs[i]->coilObjName));
@@ -876,7 +876,7 @@ int ReportCoilSelection::getIndexForOrCreateDataObjFromCoilName(EnergyPlusData &
     }
 
     if (index == -1) {
-        ShowFatalError(state, format("getIndexForOrCreateDataObjFromCoilName: Developer error - not a coil: {} = {}", coilType, coilName));
+        ShowFatalError(state, fmt::format("getIndexForOrCreateDataObjFromCoilName: Developer error - not a coil: {} = {}", coilType, coilName));
     }
     return index;
 }
@@ -964,7 +964,7 @@ void ReportCoilSelection::associateZoneCoilWithParent(EnergyPlusData &state, std
     } // for (equipLoop)
 
     if (c->typeHVACname == "Unknown") {
-        ShowWarningError(state, format("Parent object not found for zone coil = {}", c->coilName_));
+        ShowWarningError(state, fmt::format("Parent object not found for zone coil = {}", c->coilName_));
     }
 }
 
@@ -1683,7 +1683,7 @@ void ReportCoilSelection::setCoilHeatingCapacity(
             if (c->coilDesEntTemp == -999.0) { // don't overwrite if already set directly by setCoilEntAirTemp
                 Real64 desOAFlowFrac = 0.0;
                 if (zoneEqSizing.OAVolFlow > 0.0 && finalZoneSizing.DesHeatMassFlow > 0.0) {
-                    desOAFlowFrac = std::min(state.dataEnvrn->StdRhoAir * zoneEqSizing.OAVolFlow / finalZoneSizing.DesHeatMassFlow, 1.0);
+                    desOAFlowFrac = std::min(state.dataEnvrn->StdRhoAir * zoneEqSizing.OAVolFlow / finalZoneSizing.DesHeatMassFlow, 1.0f);
                 } else {
                     desOAFlowFrac = finalZoneSizing.DesHeatOAFlowFrac;
                 }
@@ -1986,7 +1986,7 @@ std::string ReportCoilSelection::getTimeText(EnergyPlusData &state, int const ti
                 hourPrint = hourCounter - 1;
             }
             if (timeStepIndex == timeStepAtPeak) {
-                returnString = format(DataSizing::PeakHrMinFmt, hourPrint, minutes);
+                returnString = fmt::format(DataSizing::PeakHrMinFmt, hourPrint, minutes);
             }
         }
     }

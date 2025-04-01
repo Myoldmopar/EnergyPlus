@@ -232,7 +232,7 @@ namespace DXFEarClipping {
             generate_ears(state, nsides, vertex, ears, nears, r_angles, nrangles, c_vertices, ncverts, removed, earverts, rangles);
             if (!any_gt(ears, 0)) {
                 ShowWarningError(state,
-                                 format("DXFOut: Could not triangulate surface=\"{}\", type=\"{}\", check surface vertex order(entry)",
+                                 fmt::format("DXFOut: Could not triangulate surface=\"{}\", type=\"{}\", check surface vertex order(entry)",
                                         surfname,
                                         DataSurfaces::cSurfaceClass(surfclass)));
                 ++state.dataDXFEarClipping->errcount;
@@ -240,14 +240,14 @@ namespace DXFEarClipping {
                     ShowContinueError(state, "...use Output:Diagnostics,DisplayExtraWarnings; to show more details on individual surfaces.");
                 }
                 if (state.dataGlobal->DisplayExtraWarnings) {
-                    ShowMessage(state, format(" surface={} class={}", surfname, DataSurfaces::cSurfaceClass(surfclass)));
+                    ShowMessage(state, fmt::format(" surface={} class={}", surfname, DataSurfaces::cSurfaceClass(surfclass)));
 
                     for (int j = 1; j <= nsides; ++j) {
-                        ShowMessage(state, format(" side={} ({:.1R},{:.1R},{:.1R})", j, polygon(j).x, polygon(j).y, polygon(j).z));
+                        ShowMessage(state, fmt::format(" side={} ({:.1f},{:.1f},{:.1f})", j, polygon(j).x, polygon(j).y, polygon(j).z));
                     }
-                    ShowMessage(state, format(" number of triangles found={:12}", ncount));
+                    ShowMessage(state, fmt::format(" number of triangles found={:12}", ncount));
                     for (int j = 1; j <= nrangles; ++j) {
-                        ShowMessage(state, format(" r angle={} vert={} deg={:.1R}", j, r_angles(j), rangles(j) * Constant::RadToDeg));
+                        ShowMessage(state, fmt::format(" r angle={} vert={} deg={:.1f}", j, r_angles(j), rangles(j) * Constant::RadToDeg));
                     }
                 }
                 break; // while loop

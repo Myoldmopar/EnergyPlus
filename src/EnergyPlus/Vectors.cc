@@ -265,7 +265,7 @@ void DetermineAzimuthAndTilt(Array1D<Vector> const &Surf, // Surface Definition
     az = mod(450.0 - az, 360.0);
     az += 90.0;
     if (az < 0.0) az += 360.0;
-    az = mod(az, 360.0);
+    az = mod(az, 360.0f);
 
     // Clean up angle precision
     if (std::abs(az - 360.0) < Constant::OneThousandth) { // Bring small angles to zero

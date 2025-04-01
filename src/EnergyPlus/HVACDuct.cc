@@ -137,14 +137,14 @@ namespace HVACDuct {
         if (CompIndex == 0) {
             DuctNum = Util::FindItemInList(CompName, state.dataHVACDuct->Duct);
             if (DuctNum == 0) {
-                ShowFatalError(state, format("SimDuct: Component not found={}", CompName));
+                ShowFatalError(state, fmt::format("SimDuct: Component not found={}", CompName));
             }
             CompIndex = DuctNum;
         } else {
             DuctNum = CompIndex;
             if (DuctNum > state.dataHVACDuct->NumDucts || DuctNum < 1) {
                 ShowFatalError(state,
-                               format("SimDuct:  Invalid CompIndex passed={}, Number of Components={}, Entered Component name={}",
+                               fmt::format("SimDuct:  Invalid CompIndex passed={}, Number of Components={}, Entered Component name={}",
                                       DuctNum,
                                       state.dataHVACDuct->NumDucts,
                                       CompName));
@@ -152,7 +152,7 @@ namespace HVACDuct {
             if (state.dataHVACDuct->CheckEquipName(DuctNum)) {
                 if (CompName != state.dataHVACDuct->Duct(DuctNum).Name) {
                     ShowFatalError(state,
-                                   format("SimDuct: Invalid CompIndex passed={}, Component name={}, stored Component Name for that index={}",
+                                   fmt::format("SimDuct: Invalid CompIndex passed={}, Component name={}, stored Component Name for that index={}",
                                           DuctNum,
                                           CompName,
                                           state.dataHVACDuct->Duct(DuctNum).Name));
@@ -244,7 +244,7 @@ namespace HVACDuct {
         // No output variables
 
         if (ErrorsFound) {
-            ShowFatalError(state, format("{} Errors found in input", RoutineName));
+            ShowFatalError(state, fmt::format("{} Errors found in input", RoutineName));
         }
     }
 

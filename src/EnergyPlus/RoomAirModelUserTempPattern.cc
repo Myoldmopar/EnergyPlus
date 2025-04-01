@@ -222,7 +222,7 @@ void CalcTempDistModel(EnergyPlusData &state, int const ZoneNum) // index number
 
         if (CurPatrnID == 0) {
             // throw error here ? way to test schedules before getting to this point?
-            ShowFatalError(state, format("User defined room air pattern index not found: {}", CurntPatternKey));
+            ShowFatalError(state, fmt::format("User defined room air pattern index not found: {}", CurntPatternKey));
             return;
         }
 
@@ -573,9 +573,9 @@ Real64 FigureNDheightInZone(EnergyPlusData &state, int const thisHBsurf) // inde
     if (SurfMinZ < (ZoneZorig - TolValue)) {
         if (state.dataGlobal->DisplayExtraWarnings) {
             ShowWarningError(state, "RoomAirModelUserTempPattern: Problem in non-dimensional height calculation");
-            ShowContinueError(state, format("too low surface: {} in zone: {}", state.dataSurface->Surface(thisHBsurf).Name, zone.Name));
-            ShowContinueError(state, format("**** Average floor height of zone is: {:.3R}", ZoneZorig));
-            ShowContinueError(state, format("**** Surface minimum height is: {:.3R}", SurfMinZ));
+            ShowContinueError(state, fmt::format("too low surface: {} in zone: {}", state.dataSurface->Surface(thisHBsurf).Name, zone.Name));
+            ShowContinueError(state, fmt::format("**** Average floor height of zone is: {:.3f}", ZoneZorig));
+            ShowContinueError(state, fmt::format("**** Surface minimum height is: {:.3f}", SurfMinZ));
         } else {
             ++state.dataErrTracking->TotalRoomAirPatternTooLow;
         }
@@ -584,9 +584,9 @@ Real64 FigureNDheightInZone(EnergyPlusData &state, int const thisHBsurf) // inde
     if (SurfMaxZ > (ZoneZorig + ZoneCeilHeight + TolValue)) {
         if (state.dataGlobal->DisplayExtraWarnings) {
             ShowWarningError(state, "RoomAirModelUserTempPattern: Problem in non-dimensional height calculation");
-            ShowContinueError(state, format(" too high surface: {} in zone: {}", state.dataSurface->Surface(thisHBsurf).Name, zone.Name));
-            ShowContinueError(state, format("**** Average Ceiling height of zone is: {:.3R}", (ZoneZorig + ZoneCeilHeight)));
-            ShowContinueError(state, format("**** Surface Maximum height is: {:.3R}", SurfMaxZ));
+            ShowContinueError(state, fmt::format(" too high surface: {} in zone: {}", state.dataSurface->Surface(thisHBsurf).Name, zone.Name));
+            ShowContinueError(state, fmt::format("**** Average Ceiling height of zone is: {:.3f}", (ZoneZorig + ZoneCeilHeight)));
+            ShowContinueError(state, fmt::format("**** Surface Maximum height is: {:.3f}", SurfMaxZ));
         } else {
             ++state.dataErrTracking->TotalRoomAirPatternTooHigh;
         }

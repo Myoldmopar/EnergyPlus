@@ -759,7 +759,7 @@ namespace GeneratorDynamicsManager {
         Real64 MdotCW = Curve::CurveValue(state, thisMicroCHP.A42Model.WaterFlowCurveID, Pnetss, TcwIn);
 
         // now apply constraints
-        MdotCW = max(0.0, MdotCW);
+        MdotCW = max(0.0f, MdotCW);
 
         // make sure plant can provide, utility call may change flow
         if (thisMicroCHP.CWPlantLoc.loopNum > 0) { // protect early calls

@@ -245,7 +245,7 @@ namespace SolarReflectionManager {
                     if (state.dataSurface->Surface(SurfNum).Vertex(loop).z < state.dataSurface->GroundLevelZ) {
                         ShowWarningError(
                             state,
-                            format("Calculation of reflected solar onto surface={} may be inaccurate", state.dataSurface->Surface(SurfNum).Name));
+                            fmt::format("Calculation of reflected solar onto surface={} may be inaccurate", state.dataSurface->Surface(SurfNum).Name));
                         ShowContinueError(state, "because it has one or more vertices below ground level.");
                         break;
                     }
@@ -818,7 +818,7 @@ namespace SolarReflectionManager {
 
             // Do not allow SurfReflFacBmToDiffSolGnd to exceed the surface's unobstructed ground view factor
             state.dataSurface->SurfReflFacBmToDiffSolGnd(iHour, state.dataSolarReflectionManager->SurfNum) =
-                min(0.5 * (1.0 - state.dataSurface->Surface(state.dataSolarReflectionManager->SurfNum).CosTilt),
+                min(0.5f * (1.0f - state.dataSurface->Surface(state.dataSolarReflectionManager->SurfNum).CosTilt),
                     state.dataSurface->SurfReflFacBmToDiffSolGnd(iHour, state.dataSolarReflectionManager->SurfNum));
             // Note: the above factors are dimensionless; they are equal to
             // (W/m2 reflected solar incident on SurfNum)/(W/m2 beam normal solar)
@@ -1277,7 +1277,7 @@ namespace SolarReflectionManager {
             state.dataSurface->SurfReflFacSkySolGnd(state.dataSolarReflectionManager->iSurfNum) /= state.dataSolarReflectionManager->iNumRecPts;
             // Do not allow SurfReflFacBmToDiffSolGnd to exceed the surface's unobstructed ground view factor
             state.dataSurface->SurfReflFacSkySolGnd(state.dataSolarReflectionManager->iSurfNum) =
-                min(0.5 * (1.0 - state.dataSurface->Surface(state.dataSolarReflectionManager->iSurfNum).CosTilt),
+                min(0.5f * (1.0f - state.dataSurface->Surface(state.dataSolarReflectionManager->iSurfNum).CosTilt),
                     state.dataSurface->SurfReflFacSkySolGnd(state.dataSolarReflectionManager->iSurfNum));
             // Note: the above factors are dimensionless; they are equal to
             // (W/m2 reflected solar incident on SurfNum)/(W/m2 unobstructed horizontal sky diffuse irradiance)

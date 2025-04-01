@@ -309,7 +309,7 @@ void BaseSizer::reportSizerOutput(EnergyPlusData &state,
 
     static constexpr std::string_view Format_990(
         "! <Component Sizing Information>, Component Type, Component Name, Input Field Description, Value\n");
-    static constexpr std::string_view Format_991(" Component Sizing Information, {}, {}, {}, {:.5R}\n");
+    static constexpr std::string_view Format_991(" Component Sizing Information, {}, {}, {}, {:.5f}\n");
 
     // to do, make this a parameter. Unfortunately this function is used in MANY
     // places so it involves touching most of E+
@@ -393,10 +393,10 @@ void BaseSizer::selectSizerOutput(EnergyPlusData &state, bool &errorsFound)
                     std::string msg = this->callingRoutine + ": Potential issue with equipment sizing for " + this->compType + ' ' + this->compName;
                     this->addErrorMessage(msg);
                     ShowMessage(state, msg);
-                    msg = format("User-Specified {}{} = {:.5R}", this->sizingStringScalable, this->sizingString, this->originalValue);
+                    msg = fmt::format("User-Specified {}{} = {:.5f}", this->sizingStringScalable, this->sizingString, this->originalValue);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
-                    msg = format("differs from Design Size {} = {:.5R}", this->sizingString, this->autoSizedValue);
+                    msg = fmt::format("differs from Design Size {} = {:.5f}", this->sizingString, this->autoSizedValue);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
                     msg = "This may, or may not, indicate mismatched component sizes.";
@@ -415,7 +415,7 @@ void BaseSizer::selectSizerOutput(EnergyPlusData &state, bool &errorsFound)
             std::string msg = this->callingRoutine + ' ' + this->compType + ' ' + this->compName + ", Developer Error: Component sizing incomplete.";
             this->addErrorMessage(msg);
             ShowSevereError(state, msg);
-            msg = format("SizingString = {}, SizingResult = {:.1T}", this->sizingString, this->originalValue);
+            msg = fmt::format("SizingString = {}, SizingResult = {:.1f}", this->sizingString, this->originalValue);
             this->addErrorMessage(msg);
             ShowContinueError(state, msg);
             this->errorType = AutoSizingResultType::ErrorType1;
@@ -527,10 +527,10 @@ void BaseSizer::select2StgDXHumCtrlSizerOutput(EnergyPlusData &state, bool &erro
                     std::string msg = this->callingRoutine + ": Potential issue with equipment sizing for " + this->compType + ' ' + this->compName;
                     this->addErrorMessage(msg);
                     ShowMessage(state, msg);
-                    msg = format("User-Specified {}{} = {:.5R}", this->sizingStringScalable, this->sizingString, this->originalValue);
+                    msg = fmt::format("User-Specified {}{} = {:.5f}", this->sizingStringScalable, this->sizingString, this->originalValue);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
-                    msg = format("differs from Design Size {} = {:.5R}", this->sizingString, this->autoSizedValue);
+                    msg = fmt::format("differs from Design Size {} = {:.5f}", this->sizingString, this->autoSizedValue);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
                     msg = "This may, or may not, indicate mismatched component sizes.";
@@ -549,7 +549,7 @@ void BaseSizer::select2StgDXHumCtrlSizerOutput(EnergyPlusData &state, bool &erro
             std::string msg = this->callingRoutine + ' ' + this->compType + ' ' + this->compName + ", Developer Error: Component sizing incomplete.";
             this->addErrorMessage(msg);
             ShowSevereError(state, msg);
-            msg = format("SizingString = {}, SizingResult = {:.1T}", this->sizingString, this->originalValue);
+            msg = fmt::format("SizingString = {}, SizingResult = {:.1f}", this->sizingString, this->originalValue);
             this->addErrorMessage(msg);
             ShowContinueError(state, msg);
             this->errorType = AutoSizingResultType::ErrorType1;
@@ -633,9 +633,9 @@ Real64 BaseSizer::setOAFracForZoneEqSizing(const EnergyPlusData &state, Real64 c
 
     if (zoneEqSizing.ATMixerVolFlow > 0.0) {
         // set central DOAS AT mixer OA fraction
-        outAirFrac = min(state.dataEnvrn->StdRhoAir * zoneEqSizing.ATMixerVolFlow / desMassFlow, 1.0);
-    } else if (zoneEqSizing.OAVolFlow > 0.0) { // set zone equipment OA fraction
-        outAirFrac = min(state.dataEnvrn->StdRhoAir * zoneEqSizing.OAVolFlow / desMassFlow, 1.0);
+        outAirFrac = min(state.dataEnvrn->StdRhoAir * zoneEqSizing.ATMixerVolFlow / desMassFlow, 1.0f);
+    } else if (zoneEqSizing.OAVolFlow > 0.0f) { // set zone equipment OA fraction
+        outAirFrac = min(state.dataEnvrn->StdRhoAir * zoneEqSizing.OAVolFlow / desMassFlow, 1.0f);
     }
     return outAirFrac;
 }

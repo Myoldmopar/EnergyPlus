@@ -384,8 +384,8 @@ namespace AirflowNetwork {
         // Real64 rhoz_norm = AIRDENSITY(StandardP, StandardT, StandardW);
         // Real64 viscz_norm = 1.71432e-5 + 4.828e-8 * StandardT;
 
-        Real64 VisAve{0.5 * (propN.viscosity + propM.viscosity)};
-        Real64 Tave{0.5 * (propN.temperature + propM.temperature)};
+        Real64 VisAve{0.5f * (propN.viscosity + propM.viscosity)};
+        Real64 Tave{0.5f * (propN.temperature + propM.temperature)};
 
         Real64 sign{1.0};
         Real64 upwind_temperature{propN.temperature};
@@ -407,8 +407,8 @@ namespace AirflowNetwork {
 
         // Laminar calculation
         Real64 RhoCor{TOKELVIN(upwind_temperature) / TOKELVIN(Tave)};
-        Real64 Ctl{std::pow(reference_density / upwind_density / RhoCor, exponent - 1.0) *
-                   std::pow(reference_viscosity / VisAve, 2.0 * exponent - 1.0)};
+        Real64 Ctl{std::pow(reference_density / upwind_density / RhoCor, exponent - 1.0f) *
+                   std::pow(reference_viscosity / VisAve, 2.0f * exponent - 1.0f)};
         Real64 CDM{coef * upwind_density / upwind_viscosity * Ctl};
         Real64 FL{CDM * pdrop};
         Real64 abs_FT;
@@ -459,8 +459,8 @@ namespace AirflowNetwork {
         // Real64 rhoz_norm = AIRDENSITY(StandardP, StandardT, StandardW);
         // Real64 viscz_norm = 1.71432e-5 + 4.828e-8 * StandardT;
 
-        Real64 VisAve{0.5 * (propN.viscosity + propM.viscosity)};
-        Real64 Tave{0.5 * (propN.temperature + propM.temperature)};
+        Real64 VisAve{0.5f * (propN.viscosity + propM.viscosity)};
+        Real64 Tave{0.5f * (propN.temperature + propM.temperature)};
 
         Real64 sign{1.0};
         Real64 upwind_temperature{propN.temperature};
@@ -482,8 +482,8 @@ namespace AirflowNetwork {
 
         // Laminar calculation
         Real64 RhoCor{TOKELVIN(upwind_temperature) / TOKELVIN(Tave)};
-        Real64 Ctl{std::pow(reference_density / upwind_density / RhoCor, exponent - 1.0) *
-                   std::pow(reference_viscosity / VisAve, 2.0 * exponent - 1.0)};
+        Real64 Ctl{std::pow(reference_density / upwind_density / RhoCor, exponent - 1.0f) *
+                   std::pow(reference_viscosity / VisAve, 2.0f * exponent - 1.0f)};
         Real64 CDM{coef * upwind_density / upwind_viscosity * Ctl};
         Real64 FL{CDM * pdrop};
         Real64 abs_FT;
@@ -3510,8 +3510,8 @@ namespace AirflowNetwork {
         constexpr Real64 reference_density = AIRDENSITY_CONSTEXPR(101325.0, 20.0, 0.0);
         constexpr Real64 reference_viscosity = 1.71432e-5 + 4.828e-8 * 20.0;
 
-        Real64 VisAve{0.5 * (propN.viscosity + propM.viscosity)};
-        Real64 Tave{0.5 * (propN.temperature + propM.temperature)};
+        Real64 VisAve{0.5f * (propN.viscosity + propM.viscosity)};
+        Real64 Tave{0.5f * (propN.temperature + propM.temperature)};
 
         Real64 sign{1.0};
         Real64 upwind_temperature{propN.temperature};
@@ -3533,8 +3533,8 @@ namespace AirflowNetwork {
 
         // Laminar calculation
         Real64 RhoCor{TOKELVIN(upwind_temperature) / TOKELVIN(Tave)};
-        Real64 Ctl{std::pow(reference_density / upwind_density / RhoCor, exponent - 1.0) *
-                   std::pow(reference_viscosity / VisAve, 2.0 * exponent - 1.0)};
+        Real64 Ctl{std::pow(reference_density / upwind_density / RhoCor, exponent - 1.0f) *
+                   std::pow(reference_viscosity / VisAve, 2.0f * exponent - 1.0f)};
         Real64 CDM{coef * upwind_density / upwind_viscosity * Ctl};
         Real64 FL{CDM * pdrop};
 

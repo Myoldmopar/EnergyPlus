@@ -595,11 +595,11 @@ namespace ThermalComfort {
                 } else {
                     state.dataThermalComforts->CloUnit = people.clothingSched->getCurrentVal();
                     ShowWarningError(
-                        state, format("PEOPLE=\"{}\", Scheduled clothing value will be used rather than clothing calculation method.", people.Name));
+                        state, fmt::format("PEOPLE=\"{}\", Scheduled clothing value will be used rather than clothing calculation method.", people.Name));
                 }
                 break;
             default:
-                ShowSevereError(state, format("PEOPLE=\"{}\", Incorrect Clothing Type", people.Name));
+                ShowSevereError(state, fmt::format("PEOPLE=\"{}\", Incorrect Clothing Type", people.Name));
             }
 
             if (state.dataRoomAir->anyNonMixingRoomAirModel && state.dataRoomAir->IsZoneCrossVent(state.dataThermalComforts->ZoneNum)) {
@@ -617,7 +617,7 @@ namespace ThermalComfort {
                     if (people.AirVelErrIndex == 0) {
                         ShowWarningMessage(
                             state,
-                            format("PEOPLE=\"{}\", Air velocity is beyond the reasonable range (0.1,0.5) for thermal comfort control.", people.Name));
+                            fmt::format("PEOPLE=\"{}\", Air velocity is beyond the reasonable range (0.1,0.5) for thermal comfort control.", people.Name));
                         ShowContinueErrorTimeStamp(state, "");
                     }
                     ShowRecurringWarningErrorAtEnd(state,
@@ -1483,11 +1483,11 @@ namespace ThermalComfort {
                 } else {
                     state.dataThermalComforts->CloUnit = people.clothingSched->getCurrentVal();
                     ShowWarningError(
-                        state, format("PEOPLE=\"{}\", Scheduled clothing value will be used rather than clothing calculation method.", people.Name));
+                        state, fmt::format("PEOPLE=\"{}\", Scheduled clothing value will be used rather than clothing calculation method.", people.Name));
                 }
             } break;
             default:
-                ShowSevereError(state, format("PEOPLE=\"{}\", Incorrect Clothing Type", people.Name));
+                ShowSevereError(state, fmt::format("PEOPLE=\"{}\", Incorrect Clothing Type", people.Name));
             }
 
             state.dataThermalComforts->AirVel = people.airVelocitySched->getCurrentVal();
@@ -1519,7 +1519,7 @@ namespace ThermalComfort {
             state.dataThermalComforts->CloPermeatEff = 1.0 / (1.0 + 0.143 * state.dataThermalComforts->Hc * state.dataThermalComforts->CloUnit);
             //  BASIC INFORMATION FOR THERMAL SENSATION.
             IntHeatProdMet = state.dataThermalComforts->IntHeatProd / ActLevelConv;
-            IntHeatProdMetMax = max(1.0, IntHeatProdMet);
+            IntHeatProdMetMax = max(1.0f, IntHeatProdMet);
             ThermCndctNeut = 12.05 * std::exp(0.2266 * (IntHeatProdMetMax - 1.0));
             SkinWetNeut = 0.02 + 0.4 * (1.0 - std::exp(-0.6 * (IntHeatProdMetMax - 1.0)));
             ThermCndctMin = (ThermCndctNeut - 5.3) * 0.26074074 + 5.3;
@@ -1655,9 +1655,9 @@ namespace ThermalComfort {
         SkinSignalWarm = state.dataThermalComforts->SkinTemp - 33.8;
         SkinSignalCold = 32.1 - state.dataThermalComforts->SkinTemp;
         CoreSignalSkinSens = state.dataThermalComforts->CoreTemp - 35.15;
-        CoreSignalWarmMax = max(0.0, CoreSignalWarm);
-        SkinSignalWarmMax = max(0.0, SkinSignalWarm);
-        SkinSignalColdMax = max(0.0, SkinSignalCold);
+        CoreSignalWarmMax = max(0.0f, CoreSignalWarm);
+        SkinSignalWarmMax = max(0.0f, SkinSignalWarm);
+        SkinSignalColdMax = max(0.0f, SkinSignalCold);
 
         // SIGNALS FOR EvapHeatLossSweat.
         CoreTempSweat = state.dataThermalComforts->CoreTemp;
@@ -1666,18 +1666,18 @@ namespace ThermalComfort {
         SkinTempSweat = state.dataThermalComforts->SkinTemp;
         if (SkinTempSweat > 36.1) SkinTempSweat = 36.1;
         SkinSignalSweatWarm = SkinTempSweat - state.dataThermalComforts->SkinTempNeut;
-        CoreSignalSweatMax = max(0.0, CoreSignalSweatWarm);
-        SkinSignalSweatMax = max(0.0, SkinSignalSweatWarm);
+        CoreSignalSweatMax = max(0.0f, CoreSignalSweatWarm);
+        SkinSignalSweatMax = max(0.0f, SkinSignalSweatWarm);
         SkinSignalSweatCold = 33.37 - state.dataThermalComforts->SkinTemp;
         if (state.dataThermalComforts->SkinTempNeut < 33.37)
             SkinSignalSweatCold = state.dataThermalComforts->SkinTempNeut - state.dataThermalComforts->SkinTemp;
-        SkinSignalSweatColdMax = max(0.0, SkinSignalSweatCold);
+        SkinSignalSweatColdMax = max(0.0f, SkinSignalSweatCold);
 
         // SIGNALS FOR SHIVERING.
         CoreSignalShiv = 36.9 - state.dataThermalComforts->CoreTemp;
         SkinSignalShiv = 32.5 - state.dataThermalComforts->SkinTemp;
-        CoreSignalShivMax = max(0.0, CoreSignalShiv);
-        SkinSignalShivMax = max(0.0, SkinSignalShiv);
+        CoreSignalShivMax = max(0.0f, CoreSignalShiv);
+        SkinSignalShivMax = max(0.0f, SkinSignalShiv);
 
         // CONTROLLING FUNCTIONS :
         // SHIVERING RESPONSE IN W/M**2.
@@ -1727,7 +1727,7 @@ namespace ThermalComfort {
 
                     if (state.dataThermalComforts->SkinWetTot > 1.0) state.dataThermalComforts->SkinWetTot = 1.0;
 
-                    SkinWetSignal = max(0.0, state.dataThermalComforts->SkinWetTot - 0.4);
+                    SkinWetSignal = max(0.0f, state.dataThermalComforts->SkinWetTot - 0.4f);
                     SweatSuppFac = 0.5 + 0.5 * std::exp(-5.6 * SkinWetSignal);
                     EvapHeatLossSweatEstNew = SweatSuppFac * EvapHeatLossDrySweat;
 
@@ -1910,12 +1910,12 @@ namespace ThermalComfort {
                 // Error trap for surfaces that do not exist or surfaces not in the zone
                 if (thisAngFacList.SurfacePtr(SurfNum) == 0) {
                     ShowSevereError(state,
-                                    format("{}: invalid {}, entered value={}",
+                                    fmt::format("{}: invalid {}, entered value={}",
                                            cCurrentModuleObject,
                                            state.dataIPShortCut->cAlphaFieldNames(SurfNum + 1),
                                            state.dataIPShortCut->cAlphaArgs(SurfNum + 1)));
                     ShowContinueError(state,
-                                      format("ref {}={} not found in {}={}",
+                                      fmt::format("ref {}={} not found in {}={}",
                                              state.dataIPShortCut->cAlphaFieldNames(1),
                                              state.dataIPShortCut->cAlphaArgs(1),
                                              state.dataIPShortCut->cAlphaFieldNames(2),
@@ -1927,16 +1927,16 @@ namespace ThermalComfort {
                     if (SurfNum == 1) thisAngFacList.EnclosurePtr = thisSurf.RadEnclIndex; // Save enclosure num of first surface
                     if (thisAngFacList.EnclosurePtr != thisSurf.RadEnclIndex) {
                         ShowWarningError(state,
-                                         format("{}: For {}=\"{}\", surfaces are not all in the same radiant enclosure.",
+                                         fmt::format("{}: For {}=\"{}\", surfaces are not all in the same radiant enclosure.",
                                                 routineName,
                                                 cCurrentModuleObject,
                                                 thisAngFacList.Name));
                         ShowContinueError(state,
-                                          format("... Surface=\"{}\" is in enclosure=\"{}\"",
+                                          fmt::format("... Surface=\"{}\" is in enclosure=\"{}\"",
                                                  state.dataSurface->Surface(thisAngFacList.SurfacePtr(1)).Name,
                                                  state.dataViewFactor->EnclRadInfo(thisAngFacList.EnclosurePtr).Name));
                         ShowContinueError(state,
-                                          format("... Surface=\"{}\" is in enclosure=\"{}\"",
+                                          fmt::format("... Surface=\"{}\" is in enclosure=\"{}\"",
                                                  thisSurf.Name,
                                                  state.dataViewFactor->EnclRadInfo(thisSurf.RadEnclIndex).Name));
                     }
@@ -1946,9 +1946,9 @@ namespace ThermalComfort {
             }
 
             if (std::abs(AllAngleFacSummed - 1.0) > AngleFacLimit) {
-                ShowSevereError(state, format("{}=\"{}\", invalid - Sum[AngleFactors]", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("{}=\"{}\", invalid - Sum[AngleFactors]", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("...Sum of Angle Factors [{:.3R}] should not deviate from expected sum [1.0] by more than limit [{:.3R}].",
+                                  fmt::format("...Sum of Angle Factors [{:.3f}] should not deviate from expected sum [1.0] by more than limit [{:.3f}].",
                                          AllAngleFacSummed,
                                          AngleFacLimit));
                 ErrorsFound = true;
@@ -1965,18 +1965,18 @@ namespace ThermalComfort {
             thisPeople.AngleFactorListPtr = Util::FindItemInList(thisPeople.AngleFactorListName, state.dataThermalComforts->AngleFactorList);
             int WhichAFList = thisPeople.AngleFactorListPtr;
             if (WhichAFList == 0 && (thisPeople.Fanger || thisPeople.Pierce || thisPeople.KSU)) {
-                ShowSevereError(state, format("{}{}=\"{}\", invalid", routineName, cCurrentModuleObject, thisPeople.AngleFactorListName));
-                ShowContinueError(state, format("... Angle Factor List Name not found for PEOPLE=\"{}\"", thisPeople.Name));
+                ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid", routineName, cCurrentModuleObject, thisPeople.AngleFactorListName));
+                ShowContinueError(state, fmt::format("... Angle Factor List Name not found for PEOPLE=\"{}\"", thisPeople.Name));
                 ErrorsFound = true;
             } else {
                 auto &thisAngFacList = state.dataThermalComforts->AngleFactorList(WhichAFList);
                 if (state.dataHeatBal->space(thisPeople.spaceIndex).radiantEnclosureNum != thisAngFacList.EnclosurePtr &&
                     (thisPeople.Fanger || thisPeople.Pierce || thisPeople.KSU)) {
                     ShowWarningError(state,
-                                     format("{}{}=\"{}\", radiant enclosure mismatch.", routineName, cCurrentModuleObject, thisAngFacList.Name));
+                                     fmt::format("{}{}=\"{}\", radiant enclosure mismatch.", routineName, cCurrentModuleObject, thisAngFacList.Name));
                     ShowContinueError(
                         state,
-                        format("...Enclosure=\"{}\" doe not match enclosure=\"{}\" for PEOPLE=\"{}\"",
+                        fmt::format("...Enclosure=\"{}\" doe not match enclosure=\"{}\" for PEOPLE=\"{}\"",
                                state.dataViewFactor->EnclRadInfo(thisAngFacList.EnclosurePtr).Name,
                                state.dataViewFactor->EnclRadInfo(state.dataHeatBal->space(thisPeople.spaceIndex).radiantEnclosureNum).Name,
                                thisPeople.Name));
@@ -2090,12 +2090,12 @@ namespace ThermalComfort {
             if (state.dataThermalComforts->FirstTimeError) {
                 int spaceNum = thisSurface.spaceNum;
                 ShowWarningError(state,
-                                 format("CalcSurfaceWeightedMRT: Areas*Inside surface emissivities are summing to zero for Enclosure=\"{}\"",
+                                 fmt::format("CalcSurfaceWeightedMRT: Areas*Inside surface emissivities are summing to zero for Enclosure=\"{}\"",
                                         thisRadEnclosure.Name));
                 ShowContinueError(state,
-                                  format("As a result, the MAT for Space={} will be used for MRT when calculating the surface weighted MRT.",
+                                  fmt::format("As a result, the MAT for Space={} will be used for MRT when calculating the surface weighted MRT.",
                                          state.dataHeatBal->space(spaceNum).Name));
-                ShowContinueError(state, format("for Surface={}", thisSurface.Name));
+                ShowContinueError(state, fmt::format("for Surface={}", thisSurface.Name));
                 state.dataThermalComforts->FirstTimeError = false;
                 CalcSurfaceWeightedMRT = state.dataZoneTempPredictorCorrector->spaceHeatBalance(spaceNum).MAT;
                 if (AverageWithSurface) {
@@ -2346,21 +2346,21 @@ namespace ThermalComfort {
             }
             // if any zones should be warning print it out
             if (showWarning) {
-                ShowWarningError(state, format("More than 4% of time ({:.1R} hours) uncomfortable in one or more zones ", allowedHours));
+                ShowWarningError(state, fmt::format("More than 4% of time ({:.1f} hours) uncomfortable in one or more zones ", allowedHours));
                 ShowContinueError(state, "Based on ASHRAE 55-2004 graph (Section 5.2.1.1)");
                 if (state.dataEnvrn->RunPeriodEnvironment) {
                     ShowContinueError(state,
-                                      format("During Environment [{}]: {}", state.dataEnvrn->EnvironmentStartEnd, state.dataEnvrn->EnvironmentName));
+                                      fmt::format("During Environment [{}]: {}", state.dataEnvrn->EnvironmentStartEnd, state.dataEnvrn->EnvironmentName));
                 } else {
                     ShowContinueError(
                         state,
-                        format("During SizingPeriod Environment [{}]: {}", state.dataEnvrn->EnvironmentStartEnd, state.dataEnvrn->EnvironmentName));
+                        fmt::format("During SizingPeriod Environment [{}]: {}", state.dataEnvrn->EnvironmentStartEnd, state.dataEnvrn->EnvironmentName));
                 }
                 for (iZone = 1; iZone <= state.dataGlobal->NumOfZones; ++iZone) {
                     if (state.dataThermalComforts->ThermalComfortInASH55(iZone).Enable55Warning) {
                         if (state.dataThermalComforts->ThermalComfortInASH55(iZone).totalTimeNotEither > allowedHours) {
                             ShowContinueError(state,
-                                              format("{:.1R} hours were uncomfortable in zone: {}",
+                                              fmt::format("{:.1f} hours were uncomfortable in zone: {}",
                                                      state.dataThermalComforts->ThermalComfortInASH55(iZone).totalTimeNotEither,
                                                      state.dataHeatBal->Zone(iZone).Name));
                         }

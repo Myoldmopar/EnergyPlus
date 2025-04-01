@@ -515,7 +515,7 @@ std::string CreateCurrentDateTimeString()
 
     date_and_time(datestring, _, _, value);
     if (!datestring.empty()) {
-        return EnergyPlus::format(" YMD={:4}.{:02}.{:02} {:02}:{:02}", value(1), value(2), value(3), value(5), value(6));
+        return fmt::format(" YMD={:4}.{:02}.{:02} {:02}:{:02}", value(1), value(2), value(3), value(5), value(6));
     } else {
         return " unknown date/time";
     }

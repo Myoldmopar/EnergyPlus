@@ -641,13 +641,13 @@ namespace SimulationManager {
                 Which = static_cast<int>(index(Alphas(1), MatchVersion));
             }
             if (Which != 0) {
-                ShowWarningError(state, format("{}: in IDF=\"{}\" not the same as expected=\"{}\"", CurrentModuleObject, Alphas(1), MatchVersion));
+                ShowWarningError(state, fmt::format("{}: in IDF=\"{}\" not the same as expected=\"{}\"", CurrentModuleObject, Alphas(1), MatchVersion));
             }
             VersionID = Alphas(1);
         } else if (Num == 0) {
-            ShowWarningError(state, format("{}: missing in IDF, processing for EnergyPlus version=\"{}\"", CurrentModuleObject, MatchVersion));
+            ShowWarningError(state, fmt::format("{}: missing in IDF, processing for EnergyPlus version=\"{}\"", CurrentModuleObject, MatchVersion));
         } else {
-            ShowSevereError(state, format("Too many {} Objects found.", CurrentModuleObject));
+            ShowSevereError(state, fmt::format("Too many {} Objects found.", CurrentModuleObject));
             ErrorsFound = true;
         }
 
@@ -770,7 +770,7 @@ namespace SimulationManager {
             }
             if (state.dataGlobal->TimeStepsInHour <= 0 || state.dataGlobal->TimeStepsInHour > 60) {
                 Alphas(1) = fmt::to_string(state.dataGlobal->TimeStepsInHour);
-                ShowWarningError(state, format("{}: Requested number ({}) invalid, Defaulted to 4", CurrentModuleObject, Alphas(1)));
+                ShowWarningError(state, fmt::format("{}: Requested number ({}) invalid, Defaulted to 4", CurrentModuleObject, Alphas(1)));
                 state.dataGlobal->TimeStepsInHour = 4;
             } else if (mod(60, state.dataGlobal->TimeStepsInHour) != 0) {
                 MinInt = 9999;
@@ -780,7 +780,7 @@ namespace SimulationManager {
                     Which = Num;
                 }
                 ShowWarningError(state,
-                                 format("{}: Requested number ({}) not evenly divisible into 60, defaulted to nearest ({}).",
+                                 fmt::format("{}: Requested number ({}) not evenly divisible into 60, defaulted to nearest ({}).",
                                         CurrentModuleObject,
                                         state.dataGlobal->TimeStepsInHour,
                                         Div60[Which - 1]));
@@ -788,33 +788,33 @@ namespace SimulationManager {
             }
             if (CondFDAlgo && state.dataGlobal->TimeStepsInHour < 20) {
                 ShowWarningError(state,
-                                 format("{}: Requested number ({}) cannot be used when Conduction Finite Difference algorithm is selected.",
+                                 fmt::format("{}: Requested number ({}) cannot be used when Conduction Finite Difference algorithm is selected.",
                                         CurrentModuleObject,
                                         state.dataGlobal->TimeStepsInHour));
-                ShowContinueError(state, format("...{} is set to 20.", CurrentModuleObject));
+                ShowContinueError(state, fmt::format("...{} is set to 20.", CurrentModuleObject));
                 state.dataGlobal->TimeStepsInHour = 20;
             }
             if (state.dataGlobal->TimeStepsInHour < 4 && state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "Zone") > 0) {
                 ShowWarningError(state,
-                                 format("{}: Requested number ({}) is less than the suggested minimum of 4.",
+                                 fmt::format("{}: Requested number ({}) is less than the suggested minimum of 4.",
                                         CurrentModuleObject,
                                         state.dataGlobal->TimeStepsInHour));
                 ShowContinueError(state,
-                                  format("Please see entry for {} in Input/Output Reference for discussion of considerations.", CurrentModuleObject));
+                                  fmt::format("Please see entry for {} in Input/Output Reference for discussion of considerations.", CurrentModuleObject));
             }
         } else if (Num == 0 && state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "Zone") > 0 && !CondFDAlgo) {
-            ShowWarningError(state, format("No {} object found.  Number of TimeSteps in Hour defaulted to 4.", CurrentModuleObject));
+            ShowWarningError(state, fmt::format("No {} object found.  Number of TimeSteps in Hour defaulted to 4.", CurrentModuleObject));
             state.dataGlobal->TimeStepsInHour = 4;
         } else if (Num == 0 && !CondFDAlgo) {
             state.dataGlobal->TimeStepsInHour = 4;
         } else if (Num == 0 && state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "Zone") > 0 && CondFDAlgo) {
-            ShowWarningError(state, format("No {} object found.  Number of TimeSteps in Hour defaulted to 20.", CurrentModuleObject));
+            ShowWarningError(state, fmt::format("No {} object found.  Number of TimeSteps in Hour defaulted to 20.", CurrentModuleObject));
             ShowContinueError(state, "...Due to presence of Conduction Finite Difference Algorithm selection.");
             state.dataGlobal->TimeStepsInHour = 20;
         } else if (Num == 0 && CondFDAlgo) {
             state.dataGlobal->TimeStepsInHour = 20;
         } else {
-            ShowSevereError(state, format("Too many {} Objects found.", CurrentModuleObject));
+            ShowSevereError(state, fmt::format("Too many {} Objects found.", CurrentModuleObject));
             ErrorsFound = true;
         }
 
@@ -844,7 +844,7 @@ namespace SimulationManager {
             if (MinInt < 0 || MinInt > 60) {
                 ShowWarningError(
                     state,
-                    format(
+                    fmt::format(
                         "{}: Requested {} ({}) invalid. Set to 1 minute.", CurrentModuleObject, state.dataIPShortCut->cNumericFieldNames(1), MinInt));
                 state.dataConvergeParams->MinTimeStepSys = 1.0 / 60.0;
             } else if (MinInt == 0) { // Set to TimeStepZone
@@ -870,7 +870,7 @@ namespace SimulationManager {
             state.dataConvergeParams->MinPlantSubIterations = 2;
             state.dataConvergeParams->MaxPlantSubIterations = 8;
         } else {
-            ShowSevereError(state, format("Too many {} Objects found.", CurrentModuleObject));
+            ShowSevereError(state, fmt::format("Too many {} Objects found.", CurrentModuleObject));
             ErrorsFound = true;
         }
 
@@ -881,7 +881,7 @@ namespace SimulationManager {
         CurrentModuleObject = "Output:DebuggingData";
         NumDebugOut = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, CurrentModuleObject);
         if (NumDebugOut > 1) {
-            ShowWarningError(state, format("{}: More than 1 occurrence of this object found, only first will be used.", CurrentModuleObject));
+            ShowWarningError(state, fmt::format("{}: More than 1 occurrence of this object found, only first will be used.", CurrentModuleObject));
         }
         if (NumDebugOut > 0) {
             state.dataInputProcessing->inputProcessor->getObjectItem(state, CurrentModuleObject, 1, Alphas, NumAlpha, Number, NumNumber, IOStat);
@@ -899,7 +899,7 @@ namespace SimulationManager {
             if (Num > 1) {
                 // Let it slide, but warn
                 // ErrorsFound = true;
-                ShowWarningError(state, format("{}: More than 1 occurrence of this object found, only first will be used.", CurrentModuleObject));
+                ShowWarningError(state, fmt::format("{}: More than 1 occurrence of this object found, only first will be used.", CurrentModuleObject));
             }
             auto const instances = state.dataInputProcessing->inputProcessor->epJSON.find(CurrentModuleObject);
 
@@ -919,7 +919,7 @@ namespace SimulationManager {
                             auto it = diagnosticsExtensible.find("key");
                             if (it == diagnosticsExtensible.end()) {
                                 ShowWarningError(state,
-                                                 format("{}: empty key found, consider removing it to avoid this warning.", CurrentModuleObject));
+                                                 fmt::format("{}: empty key found, consider removing it to avoid this warning.", CurrentModuleObject));
                                 continue;
                             }
                             std::string diagnosticName = it->get<std::string>();
@@ -973,7 +973,7 @@ namespace SimulationManager {
                                 //        CreateMinimalSurfaceVariables=.FALSE.
                             } else if (!diagnosticName.empty()) {
                                 ShowWarningError(state,
-                                                 format("GetProjectData: {}=\"{}\", Invalid value for field, entered value ignored.",
+                                                 fmt::format("GetProjectData: {}=\"{}\", Invalid value for field, entered value ignored.",
                                                         CurrentModuleObject,
                                                         diagnosticName));
                             }
@@ -1064,7 +1064,7 @@ namespace SimulationManager {
         Num = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, CurrentModuleObject);
         if (Num > 1) {
             ErrorsFound = true;
-            ShowFatalError(state, format("GetProjectData: Only one (\"1\") {} object per simulation is allowed.", CurrentModuleObject));
+            ShowFatalError(state, fmt::format("GetProjectData: Only one (\"1\") {} object per simulation is allowed.", CurrentModuleObject));
         }
         state.dataGlobal->createPerfLog = Num > 0;
         std::string overrideModeValue = "Normal";
@@ -1155,7 +1155,7 @@ namespace SimulationManager {
                         if (fields.find("maxzonetempdiff") != fields.end()) { // not required field, has default value
                             state.dataConvergeParams->MaxZoneTempDiff = fields.at("maxzonetempdiff").get<Real64>();
                             ShowWarningError(state,
-                                             format("PerformancePrecisionTradeoffs using the Advanced Override Mode, MaxZoneTempDiff set to: {:.4R}",
+                                             fmt::format("PerformancePrecisionTradeoffs using the Advanced Override Mode, MaxZoneTempDiff set to: {:.4f}",
                                                     state.dataConvergeParams->MaxZoneTempDiff));
                             advancedModeUsed = true;
                         }
@@ -1163,7 +1163,7 @@ namespace SimulationManager {
                             state.dataHeatBal->MaxAllowedDelTemp = fields.at("maxalloweddeltemp").get<Real64>();
                             ShowWarningError(
                                 state,
-                                format("PerformancePrecisionTradeoffs using the Advanced Override Mode, MaxAllowedDelTemp set to: {:.4R}",
+                                fmt::format("PerformancePrecisionTradeoffs using the Advanced Override Mode, MaxAllowedDelTemp set to: {:.4f}",
                                        state.dataHeatBal->MaxAllowedDelTemp));
                             advancedModeUsed = true;
                         }
@@ -1177,7 +1177,7 @@ namespace SimulationManager {
                         }
                     } else {
                         ShowSevereError(state,
-                                        format("Invalid over ride mode specified in PerformancePrecisionTradeoffs object: {}", overrideModeValue));
+                                        fmt::format("Invalid over ride mode specified in PerformancePrecisionTradeoffs object: {}", overrideModeValue));
                     }
 
                     if (overrideTimestep) {
@@ -1333,9 +1333,9 @@ namespace SimulationManager {
         } else {
             Alphas(7) = "No";
         }
-        Alphas(8) = format("{:.1R}", state.dataConvergeParams->MinTimeStepSys * 60.0);
-        Alphas(9) = format("{:.3R}", state.dataConvergeParams->MaxZoneTempDiff);
-        Alphas(10) = format("{:.4R}", state.dataHeatBal->MaxAllowedDelTemp);
+        Alphas(8) = fmt::format("{:.1f}", state.dataConvergeParams->MinTimeStepSys * 60.0);
+        Alphas(9) = fmt::format("{:.3f}", state.dataConvergeParams->MaxZoneTempDiff);
+        Alphas(10) = fmt::format("{:.4f}", state.dataHeatBal->MaxAllowedDelTemp);
         std::string pptHeader = "! <Performance Precision Tradeoffs>, Use Coil Direct Simulation, "
                                 "Zone Radiant Exchange Algorithm, Override Mode, Number of Timestep In Hour, "
                                 "Force Euler Method, Minimum Number of Warmup Days, Force Suppress All Begin Environment Resets, "
@@ -1351,14 +1351,14 @@ namespace SimulationManager {
               "{}\n",
               "! <Output Reporting Tolerances>, Tolerance for Time Heating Setpoint Not Met, Tolerance for Zone Cooling Setpoint Not Met Time");
         // Formats
-        static constexpr std::string_view Format_751(" Output Reporting Tolerances, {:.3R}, {:.3R}, \n");
+        static constexpr std::string_view Format_751(" Output Reporting Tolerances, {:.3f}, {:.3f}, \n");
 
         print(state.files.eio, Format_751, std::abs(deviationFromSetPtThresholdHtg), deviationFromSetPtThresholdClg);
 
         //  IF (DisplayExtraWarnings) THEN
         //    Write(OutputFileInits,740)
         //    Write(OutputFileInits,741) (TRIM(Alphas(Num)),Num=1,5)
-        // 742 Format('! <Display Extra Warnings>, Display Advanced Report Variables, Do Not Mirror Detached Shading')
+        // 742 fmt::format('! <Display Extra Warnings>, Display Advanced Report Variables, Do Not Mirror Detached Shading')
         //    IF (DisplayAdvancedReportVariables) THEN
         //      NumOut1='Yes'
         //    ELSE
@@ -1369,7 +1369,7 @@ namespace SimulationManager {
         //    ELSE
         //      NumOut2='No'
         //    ENDIF
-        // unused0909743 Format(' Display Extra Warnings',2(', ',A))
+        // unused0909743 fmt::format(' Display Extra Warnings',2(', ',A))
         //  ENDIF
         if (state.dataGlobal->createPerfLog) {
             writeInitialPerfLogValues(state, overrideModeValue);
@@ -1393,9 +1393,9 @@ namespace SimulationManager {
         Util::appendPerfLog(state, "Number of Timesteps per Hour", fmt::to_string(state.dataGlobal->TimeStepsInHour));
         Util::appendPerfLog(state, "Minimum Number of Warmup Days", fmt::to_string(state.dataHeatBal->MinNumberOfWarmupDays));
         Util::appendPerfLog(state, "SuppressAllBeginEnvironmentResets", bool_to_string(state.dataEnvrn->forceBeginEnvResetSuppress));
-        Util::appendPerfLog(state, "Minimum System Timestep", format("{:.1R}", state.dataConvergeParams->MinTimeStepSys * 60.0));
-        Util::appendPerfLog(state, "MaxZoneTempDiff", format("{:.2R}", state.dataConvergeParams->MaxZoneTempDiff));
-        Util::appendPerfLog(state, "MaxAllowedDelTemp", format("{:.4R}", state.dataHeatBal->MaxAllowedDelTemp));
+        Util::appendPerfLog(state, "Minimum System Timestep", fmt::format("{:.1f}", state.dataConvergeParams->MinTimeStepSys * 60.0));
+        Util::appendPerfLog(state, "MaxZoneTempDiff", fmt::format("{:.2f}", state.dataConvergeParams->MaxZoneTempDiff));
+        Util::appendPerfLog(state, "MaxAllowedDelTemp", fmt::format("{:.4f}", state.dataHeatBal->MaxAllowedDelTemp));
     }
 
     std::string bool_to_string(bool logical)
@@ -1576,7 +1576,7 @@ namespace SimulationManager {
     {
         auto result = std::make_unique<std::ofstream>(filePath, mode); // (AUTO_OK_UPTR)
         if (!result->good()) {
-            ShowFatalError(state, format("OpenOutputFiles: Could not open file {} for output (write).", filePath));
+            ShowFatalError(state, fmt::format("OpenOutputFiles: Could not open file {} for output (write).", filePath));
         }
         return result;
     }
@@ -1595,7 +1595,7 @@ namespace SimulationManager {
             result = std::make_unique<fmt::ostream>(std::move(f));
         } catch (const std::system_error &error) {
             ShowSevereError(state, error.what());
-            ShowFatalError(state, format("OpenOutputFiles: Could not open file {} for output (write).", filePath));
+            ShowFatalError(state, fmt::format("OpenOutputFiles: Could not open file {} for output (write).", filePath));
         }
         return result;
     }
@@ -1738,7 +1738,7 @@ namespace SimulationManager {
             print(
                 state.files.eio, "{}\n", "! <ConductionFiniteDifference Numerical Parameters>, Starting Relaxation Factor, Final Relaxation Factor");
             print(state.files.eio,
-                  "ConductionFiniteDifference Numerical Parameters, {:.3R}, {:.3R}\n",
+                  "ConductionFiniteDifference Numerical Parameters, {:.3f}, {:.3f}\n",
                   state.dataHeatBal->CondFDRelaxFactorInput,
                   state.dataHeatBal->CondFDRelaxFactor);
         }
@@ -2126,11 +2126,11 @@ namespace SimulationManager {
                     state.dataSimulationManager->WarningOut = false;
                 }
                 ShowWarningError(state,
-                                 format("Node Connection Error for object {}={}", CType, state.dataBranchNodeConnections->CompSets(Count).CName));
+                                 fmt::format("Node Connection Error for object {}={}", CType, state.dataBranchNodeConnections->CompSets(Count).CName));
                 ShowContinueError(state,
-                                  format("  {} not on any Branch or Parent Object", state.dataBranchNodeConnections->CompSets(Count).Description));
-                ShowContinueError(state, format("  Inlet Node : {}", state.dataBranchNodeConnections->CompSets(Count).InletNodeName));
-                ShowContinueError(state, format("  Outlet Node: {}", state.dataBranchNodeConnections->CompSets(Count).OutletNodeName));
+                                  fmt::format("  {} not on any Branch or Parent Object", state.dataBranchNodeConnections->CompSets(Count).Description));
+                ShowContinueError(state, fmt::format("  Inlet Node : {}", state.dataBranchNodeConnections->CompSets(Count).InletNodeName));
+                ShowContinueError(state, fmt::format("  Outlet Node: {}", state.dataBranchNodeConnections->CompSets(Count).OutletNodeName));
                 ++state.dataBranchNodeConnections->NumNodeConnectionErrors;
                 if (state.dataBranchNodeConnections->CompSets(Count).ComponentObjectType ==
                     DataLoopNode::ConnectionObjectType::SolarCollectorUnglazedTranspired) {
@@ -2146,10 +2146,10 @@ namespace SimulationManager {
                 }
                 ShowWarningError(
                     state,
-                    format("Potential Node Connection Error for object {}, name={}", CType, state.dataBranchNodeConnections->CompSets(Count).CName));
+                    fmt::format("Potential Node Connection Error for object {}, name={}", CType, state.dataBranchNodeConnections->CompSets(Count).CName));
                 ShowContinueError(state, "  Node Types are still UNDEFINED -- See Branch/Node Details file for further information");
-                ShowContinueError(state, format("  Inlet Node : {}", state.dataBranchNodeConnections->CompSets(Count).InletNodeName));
-                ShowContinueError(state, format("  Outlet Node: {}", state.dataBranchNodeConnections->CompSets(Count).OutletNodeName));
+                ShowContinueError(state, fmt::format("  Inlet Node : {}", state.dataBranchNodeConnections->CompSets(Count).InletNodeName));
+                ShowContinueError(state, fmt::format("  Outlet Node: {}", state.dataBranchNodeConnections->CompSets(Count).OutletNodeName));
                 ++state.dataBranchNodeConnections->NumNodeConnectionErrors;
             }
         }
@@ -2178,11 +2178,11 @@ namespace SimulationManager {
                 std::string_view const ParentCType1 = BranchNodeConnections::ConnectionObjectTypeNamesUC[static_cast<int>(
                     state.dataBranchNodeConnections->CompSets(Count).ParentObjectType)];
                 ShowWarningError(state, "Component plus inlet/outlet node pair used more than once:");
-                ShowContinueError(state, format("  Component  : {}={}", CType, state.dataBranchNodeConnections->CompSets(Count).CName));
-                ShowContinueError(state, format("  Inlet Node : {}", state.dataBranchNodeConnections->CompSets(Count).InletNodeName));
-                ShowContinueError(state, format("  Outlet Node: {}", state.dataBranchNodeConnections->CompSets(Count).OutletNodeName));
-                ShowContinueError(state, format("  Used by    : {}={}", ParentCType, state.dataBranchNodeConnections->CompSets(Count).ParentCName));
-                ShowContinueError(state, format("  and  by    : {}={}", ParentCType1, state.dataBranchNodeConnections->CompSets(Count1).ParentCName));
+                ShowContinueError(state, fmt::format("  Component  : {}={}", CType, state.dataBranchNodeConnections->CompSets(Count).CName));
+                ShowContinueError(state, fmt::format("  Inlet Node : {}", state.dataBranchNodeConnections->CompSets(Count).InletNodeName));
+                ShowContinueError(state, fmt::format("  Outlet Node: {}", state.dataBranchNodeConnections->CompSets(Count).OutletNodeName));
+                ShowContinueError(state, fmt::format("  Used by    : {}={}", ParentCType, state.dataBranchNodeConnections->CompSets(Count).ParentCName));
+                ShowContinueError(state, fmt::format("  and  by    : {}={}", ParentCType1, state.dataBranchNodeConnections->CompSets(Count1).ParentCName));
                 ++state.dataBranchNodeConnections->NumNodeConnectionErrors;
             }
         }
@@ -2588,9 +2588,9 @@ namespace SimulationManager {
             ShowMessage(state, "No node connection errors were found.");
         } else {
             if (state.dataBranchNodeConnections->NumNodeConnectionErrors > 1) {
-                ShowMessage(state, format("There were {} node connection errors noted.", state.dataBranchNodeConnections->NumNodeConnectionErrors));
+                ShowMessage(state, fmt::format("There were {} node connection errors noted.", state.dataBranchNodeConnections->NumNodeConnectionErrors));
             } else {
-                ShowMessage(state, format("There was {} node connection error noted.", state.dataBranchNodeConnections->NumNodeConnectionErrors));
+                ShowMessage(state, fmt::format("There was {} node connection error noted.", state.dataBranchNodeConnections->NumNodeConnectionErrors));
             }
         }
 

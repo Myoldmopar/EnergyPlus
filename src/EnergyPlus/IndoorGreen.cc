@@ -91,7 +91,7 @@ namespace IndoorGreen {
             const char *RoutineName("IndoorLivingWall: "); // include trailing blank space
             GetIndoorGreenInput(state, ErrorsFound);
             if (ErrorsFound) {
-                ShowFatalError(state, format("{}Errors found in input.  Program terminates.", RoutineName));
+                ShowFatalError(state, fmt::format("{}Errors found in input.  Program terminates.", RoutineName));
             }
             SetIndoorGreenOutput(state);
             lw->getInputFlag = false;
@@ -145,7 +145,7 @@ namespace IndoorGreen {
             } else {
                 if (state.dataSurface->Surface(ig.SurfPtr).insideHeatSourceTermSched != nullptr) {
                     ShowSevereError(state,
-                                    format("The indoor green surface {} has an Inside Face Heat Source Term Schedule defined. This surface cannot "
+                                    fmt::format("The indoor green surface {} has an Inside Face Heat Source Term Schedule defined. This surface cannot "
                                            "also be used for indoor green.",
                                            s_ipsc->cAlphaArgs(2)));
                     ErrorsFound = true;
@@ -155,7 +155,7 @@ namespace IndoorGreen {
 
                 if (ig.ZonePtr <= 0 || ig.SpacePtr <= 0) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\", invalid {} entered={}, {} is not assoicated with a thermal zone or space",
+                                    fmt::format("{}=\"{}\", invalid {} entered={}, {} is not assoicated with a thermal zone or space",
                                            RoutineName,
                                            s_ipsc->cAlphaArgs(1),
                                            s_ipsc->cAlphaFieldNames(2),
@@ -165,7 +165,7 @@ namespace IndoorGreen {
                 } else if (state.dataSurface->Surface(ig.SurfPtr).ExtBoundCond < 0 ||
                            state.dataSurface->Surface(ig.SurfPtr).HeatTransferAlgorithm != DataSurfaces::HeatTransferModel::CTF) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\", invalid {} entered={}, not a valid surface for indoor green module",
+                                    fmt::format("{}=\"{}\", invalid {} entered={}, not a valid surface for indoor green module",
                                            RoutineName,
                                            s_ipsc->cAlphaArgs(1),
                                            s_ipsc->cAlphaFieldNames(2),
@@ -239,7 +239,7 @@ namespace IndoorGreen {
             ig.LeafArea = s_ipsc->rNumericArgs(1);
             if (ig.LeafArea < 0) {
                 ShowSevereError(state,
-                                format("{}=\"{}\", invalid {} entered={}",
+                                fmt::format("{}=\"{}\", invalid {} entered={}",
                                        RoutineName,
                                        s_ipsc->cAlphaArgs(1),
                                        s_ipsc->cNumericFieldNames(1),
@@ -249,7 +249,7 @@ namespace IndoorGreen {
             ig.LEDNominalPPFD = s_ipsc->rNumericArgs(2);
             if (ig.LEDNominalPPFD < 0) {
                 ShowSevereError(state,
-                                format("{}=\"{}\", invalid {} entered={}",
+                                fmt::format("{}=\"{}\", invalid {} entered={}",
                                        RoutineName,
                                        s_ipsc->cAlphaArgs(1),
                                        s_ipsc->cNumericFieldNames(2),
@@ -259,7 +259,7 @@ namespace IndoorGreen {
             ig.LEDNominalEleP = s_ipsc->rNumericArgs(3);
             if (ig.LEDNominalEleP < 0) {
                 ShowSevereError(state,
-                                format("{}=\"{}\", invalid {} entered={}",
+                                fmt::format("{}=\"{}\", invalid {} entered={}",
                                        RoutineName,
                                        s_ipsc->cAlphaArgs(1),
                                        s_ipsc->cNumericFieldNames(3),
@@ -269,7 +269,7 @@ namespace IndoorGreen {
             ig.LEDRadFraction = s_ipsc->rNumericArgs(4);
             if (ig.LEDRadFraction < 0 || ig.LEDRadFraction > 1.0) {
                 ShowSevereError(state,
-                                format("{}=\"{}\", invalid {} entered={}",
+                                fmt::format("{}=\"{}\", invalid {} entered={}",
                                        RoutineName,
                                        s_ipsc->cAlphaArgs(1),
                                        s_ipsc->cNumericFieldNames(4),
@@ -443,7 +443,7 @@ namespace IndoorGreen {
             LAI = LAI_Cal;
             if (LAI_Cal > 2.0) {
                 LAI = 2.0; // maximum LAI=2.0 in the surface heat balance
-                ShowSevereError(state, format("Maximum indoor living wall leaf area index (LAI) =2.0 is used,calculated LAI is {}", LAI_Cal));
+                ShowSevereError(state, fmt::format("Maximum indoor living wall leaf area index (LAI) =2.0 is used,calculated LAI is {}", LAI_Cal));
             }
             switch (ig.lightingMethod) {
             case LightingMethod::LED: {
@@ -470,7 +470,7 @@ namespace IndoorGreen {
                     b = state.dataDayltg->daylightControl(ig.LightControlPtr).refPts(1).lums[DataSurfaces::iLum_Illum] /
                         77; // To be updated currently only take one reference point; 77 conversion factor from Lux to PPFD
                 }
-                ig.LEDActualPPFD = max((a - b), 0.0);
+                ig.LEDActualPPFD = max((a - b), 0.0f);
                 if (ig.LEDActualPPFD >= ig.LEDNominalPPFD) {
                     ig.ZPPFD = ig.LEDNominalPPFD + b; // LED Nominal + Daylight
                     ig.LEDActualEleP = ig.LEDNominalEleP;

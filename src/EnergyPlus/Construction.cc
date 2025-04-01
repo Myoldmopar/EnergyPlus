@@ -225,25 +225,25 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                 Real64 Alpha = rk(Layer) / (rho(Layer) * cp(Layer));
                 if (Alpha > DataHeatBalance::HighDiffusivityThreshold) {
                     DeltaTimestep = state.dataGlobal->TimeStepZoneSec;
-                    Real64 const ThicknessThreshold = std::sqrt(Alpha * DeltaTimestep * 3.0);
+                    Real64 const ThicknessThreshold = std::sqrt(Alpha * DeltaTimestep * 3.0f);
                     if (thisMaterial->Thickness < ThicknessThreshold) {
                         ShowSevereError(
                             state,
-                            format(
+                            fmt::format(
                                 "InitConductionTransferFunctions: Found Material that is too thin and/or too highly conductive, material name = {}",
                                 thisMaterial->Name));
                         ShowContinueError(state,
-                                          format("High conductivity Material layers are not well supported for internal source constructions, "
-                                                 "material conductivity = {:.3R} [W/m-K]",
+                                          fmt::format("High conductivity Material layers are not well supported for internal source constructions, "
+                                                 "material conductivity = {:.3f} [W/m-K]",
                                                  thisMaterial->Conductivity));
-                        ShowContinueError(state, format("Material thermal diffusivity = {:.3R} [m2/s]", Alpha));
+                        ShowContinueError(state, fmt::format("Material thermal diffusivity = {:.3f} [m2/s]", Alpha));
                         ShowContinueError(state,
-                                          format("Material with this thermal diffusivity should have thickness > {:.5R} [m]", ThicknessThreshold));
+                                          fmt::format("Material with this thermal diffusivity should have thickness > {:.5f} [m]", ThicknessThreshold));
                         if (thisMaterial->Thickness < DataHeatBalance::ThinMaterialLayerThreshold) {
                             ShowContinueError(state,
-                                              format("Material may be too thin to be modeled well, thickness = {:.5R} [m]", thisMaterial->Thickness));
+                                              fmt::format("Material may be too thin to be modeled well, thickness = {:.5f} [m]", thisMaterial->Thickness));
                             ShowContinueError(state,
-                                              format("Material with this thermal diffusivity should have thickness > {:.5R} [m]",
+                                              fmt::format("Material with this thermal diffusivity should have thickness > {:.5f} [m]",
                                                      DataHeatBalance::ThinMaterialLayerThreshold));
                         }
                         thisMaterial->WarnedForHighDiffusivity = true;
@@ -253,7 +253,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
         }
         if (thisMaterial->Thickness > 3.0) {
             ShowSevereError(state, "InitConductionTransferFunctions: Material too thick for CTF calculation");
-            ShowContinueError(state, format("material name = {}", thisMaterial->Name));
+            ShowContinueError(state, fmt::format("material name = {}", thisMaterial->Name));
             ErrorsFound = true;
         }
 
@@ -275,8 +275,8 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                 // parameters to calculate CTFs for a building element
                 // containing this layer.
 
-                ShowSevereError(state, format("InitConductionTransferFunctions: Material={}R Value below lowest allowed value", thisMaterial->Name));
-                ShowContinueError(state, format("Lowest allowed value=[{:.3R}], Material R Value=[{:.3R}].", RValueLowLimit, lr(Layer)));
+                ShowSevereError(state, fmt::format("InitConductionTransferFunctions: Material={}R Value below lowest allowed value", thisMaterial->Name));
+                ShowContinueError(state, fmt::format("Lowest allowed value=[{:.3f}], Material R Value=[{:.3f}].", RValueLowLimit, lr(Layer)));
                 ErrorsFound = true;
 
             } else { // A valid user defined R-value is available.
@@ -359,7 +359,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                     --this->TempAfterLayer;
                 }
             } else { // These are not adjacent layers and there is a logic flaw here (should not happen)
-                ShowFatalError(state, format("Combining resistance layers failed for {}", this->Name));
+                ShowFatalError(state, fmt::format("Combining resistance layers failed for {}", this->Name));
                 ShowContinueError(state, "This should never happen.  Contact EnergyPlus Support for further assistance.");
             }
         }
@@ -383,7 +383,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
     if (this->SolutionDimensions == 1) {
         dyn = 0.0;
     } else {
-        dyn = (this->ThicknessPerpend / DataConversions::CFL) / double(NumOfPerpendNodes - 1);
+        dyn = (this->ThicknessPerpend / DataConversions::CFL) / Real64(NumOfPerpendNodes - 1);
     }
 
     // Compute total construct conductivity and resistivity.
@@ -392,7 +392,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
         rs += lr(Layer); // Resistances in series sum algebraically
     }
 
-    cnd = 1.0 / rs; // Conductivity is the inverse of resistivity
+    cnd = 1.0f / rs; // Conductivity is the inverse of resistivity
 
     bool RevConst = false;
 
@@ -489,7 +489,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                     Nodes(Layer) = 1;
                     dx(Layer) = dl(Layer);
                 } else {
-                    dxn = std::sqrt(2.0 * (rk(Layer) / rho(Layer) / cp(Layer)) * this->CTFTimeStep);
+                    dxn = std::sqrt(2.0f * (rk(Layer) / rho(Layer) / cp(Layer)) * this->CTFTimeStep);
 
                     int ipts1 = int(dl(Layer) / dxn); // number of nodes=thickness/spacing
 
@@ -504,7 +504,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                         Nodes(Layer) = ipts1;
                     }
 
-                    dx(Layer) = dl(Layer) / double(Nodes(Layer)); // calc node spacing
+                    dx(Layer) = dl(Layer) / Real64(Nodes(Layer)); // calc node spacing
                 }
 
             } // . .. end of layers in construction loop (calculating #nodes per layer)
@@ -590,8 +590,8 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
 
                     // CTFTimeStep larger than TimeStepZone:  Make sure TimeStepZone
                     // divides evenly into CTFTimeStep
-                    this->NumHistories = int((this->CTFTimeStep / state.dataGlobal->TimeStepZone) + 0.5);
-                    this->CTFTimeStep = state.dataGlobal->TimeStepZone * double(this->NumHistories);
+                    this->NumHistories = int((this->CTFTimeStep / state.dataGlobal->TimeStepZone) + 0.5f);
+                    this->CTFTimeStep = state.dataGlobal->TimeStepZone * Real64(this->NumHistories);
 
                 } else {
 
@@ -650,9 +650,9 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                     // half-node at the surface results in a "loss" of some
                     // thermal mass.  Therefore, for simplicity, include it
                     // at this node.  Same thing done at the last node...
-                    dxtmp = 1.0 / dx(1) / cap;
+                    dxtmp = 1.0f / dx(1) / cap;
 
-                    this->AMat(1, 1) = -2.0 * rk(1) * dxtmp; // Assign the matrix values for the
+                    this->AMat(1, 1) = -2.0f * rk(1) * dxtmp; // Assign the matrix values for the
                     this->AMat(2, 1) = rk(1) * dxtmp;        // first node.
                     this->BMat(1) = rk(1) * dxtmp;           // Assign non-zero value of BMat.
 
@@ -669,10 +669,10 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                             // capacitance of the node must be calculated from the 2
                             // halves which may be made up of 2 different materials.
 
-                            cap = (rho(Layer) * cp(Layer) * dx(Layer) + rho(Layer + 1) * cp(Layer + 1) * dx(Layer + 1)) * 0.5;
+                            cap = (rho(Layer) * cp(Layer) * dx(Layer) + rho(Layer + 1) * cp(Layer + 1) * dx(Layer + 1)) * 0.5f;
 
                             this->AMat(Node - 1, Node) = rk(Layer) / dx(Layer) / cap;                                      // Assign matrix
-                            this->AMat(Node, Node) = -1.0 * (rk(Layer) / dx(Layer) + rk(Layer + 1) / dx(Layer + 1)) / cap; // values for | the current
+                            this->AMat(Node, Node) = -1.0f * (rk(Layer) / dx(Layer) + rk(Layer + 1) / dx(Layer + 1)) / cap; // values for | the current
                             this->AMat(Node + 1, Node) = rk(Layer + 1) / dx(Layer + 1) / cap;                              // node.
 
                             NodeInLayer = 0; // At an interface, reset nodes in layer counter
@@ -681,14 +681,14 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                         } else { // Standard node within any layer
 
                             cap = rho(Layer) * cp(Layer) * dx(Layer);          // Intermediate
-                            dxtmp = 1.0 / dx(Layer) / cap;                     // calculations.
+                            dxtmp = 1.0f / dx(Layer) / cap;                     // calculations.
                             this->AMat(Node - 1, Node) = rk(Layer) * dxtmp;    // Assign matrix
-                            this->AMat(Node, Node) = -2.0 * rk(Layer) * dxtmp; // values for the
+                            this->AMat(Node, Node) = -2.0f * rk(Layer) * dxtmp; // values for the
                             this->AMat(Node + 1, Node) = rk(Layer) * dxtmp;    // current node.
                         }
 
                         ++NodeInLayer; // Increment nodes in layer counter
-                        if (Node == this->NodeSource) this->BMat(3) = 1.0 / cap;
+                        if (Node == this->NodeSource) this->BMat(3) = 1.0f / cap;
 
                     } // ... end of nodes loop.
 
@@ -698,9 +698,9 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                     // half-node at the surface results in a "loss" of some
                     // thermal mass.  Therefore, for simplicity, include it
                     // at this node.  Same thing done at the first node...
-                    dxtmp = 1.0 / dx(LayersInConstruct) / cap;
+                    dxtmp = 1.0f / dx(LayersInConstruct) / cap;
 
-                    this->AMat(this->rcmax, this->rcmax) = -2.0 * rk(LayersInConstruct) * dxtmp; // Assign matrix
+                    this->AMat(this->rcmax, this->rcmax) = -2.0f * rk(LayersInConstruct) * dxtmp; // Assign matrix
                     this->AMat(this->rcmax - 1, this->rcmax) = rk(LayersInConstruct) * dxtmp;    // values for the
                     this->BMat(2) = rk(LayersInConstruct) * dxtmp;                               // last node.
 
@@ -715,8 +715,8 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                     // of the half-node at the surface by adding it to the first row
                     // of interior nodes at both sides of the construction.  This is not
                     // exact, but it does take all of the thermal mass into account.
-                    amatx = rk(1) / (1.5 * rho(1) * cp(1) * dx(1) * dx(1));
-                    amaty = rk(1) / (1.5 * rho(1) * cp(1) * dyn * dyn);
+                    amatx = rk(1) / (1.5f * rho(1) * cp(1) * dx(1) * dx(1));
+                    amaty = rk(1) / (1.5f * rho(1) * cp(1) * dyn * dyn);
 
                     // FIRST ROW OF NODES: This first row within the first material layer
                     // is special in that it is exposed to a boundary condition.  Thus,
@@ -724,19 +724,19 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                     // Note also that the first and last nodes in a row are slightly
                     // different from the rest since they are on an adiabatic plane in
                     // the direction perpendicular to the main direction of heat transfer.
-                    this->AMat(1, 1) = -2.0 * (amatx + amaty);
-                    this->AMat(2, 1) = 2.0 * amaty;
+                    this->AMat(1, 1) = -2.0f * (amatx + amaty);
+                    this->AMat(2, 1) = 2.0f * amaty;
                     this->AMat(this->NumOfPerpendNodes + 1, 1) = amatx;
 
                     for (int Node = 2; Node <= this->NumOfPerpendNodes - 1; ++Node) {
                         this->AMat(Node - 1, Node) = amaty;
-                        this->AMat(Node, Node) = -2.0 * (amatx + amaty);
+                        this->AMat(Node, Node) = -2.0f * (amatx + amaty);
                         this->AMat(Node + 1, Node) = amaty;
                         this->AMat(Node + this->NumOfPerpendNodes, Node) = amatx;
                     }
 
-                    this->AMat(this->NumOfPerpendNodes, this->NumOfPerpendNodes) = -2.0 * (amatx + amaty);
-                    this->AMat(this->NumOfPerpendNodes - 1, this->NumOfPerpendNodes) = 2.0 * amaty;
+                    this->AMat(this->NumOfPerpendNodes, this->NumOfPerpendNodes) = -2.0f * (amatx + amaty);
+                    this->AMat(this->NumOfPerpendNodes - 1, this->NumOfPerpendNodes) = 2.0f * amaty;
                     this->AMat(this->NumOfPerpendNodes + this->NumOfPerpendNodes, this->NumOfPerpendNodes) = amatx;
 
                     BMat(1) = amatx;
@@ -763,54 +763,54 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                             // Note that the first and last layers in a row are slightly different
                             // from the rest since they are on an adiabatic plane in the direction
                             // perpendicular to the main direction of heat transfer.
-                            this->AMat(Node, Node) = -2.0 * (amatx + amaty);
-                            this->AMat(Node + 1, Node) = 2.0 * amaty;
+                            this->AMat(Node, Node) = -2.0f * (amatx + amaty);
+                            this->AMat(Node + 1, Node) = 2.0f * amaty;
                             this->AMat(Node - this->NumOfPerpendNodes, Node) = amatx;
                             this->AMat(Node + this->NumOfPerpendNodes, Node) = amatx;
 
                             for (int NodeInRow = 2; NodeInRow <= this->NumOfPerpendNodes - 1; ++NodeInRow) {
                                 int Node2 = Node + NodeInRow - 1;
                                 this->AMat(Node2 - 1, Node2) = amaty;
-                                this->AMat(Node2, Node2) = -2.0 * (amatx + amaty);
+                                this->AMat(Node2, Node2) = -2.0f * (amatx + amaty);
                                 this->AMat(Node2 + 1, Node2) = amaty;
                                 this->AMat(Node2 - this->NumOfPerpendNodes, Node2) = amatx;
                                 this->AMat(Node2 + this->NumOfPerpendNodes, Node2) = amatx;
                             }
 
                             int Node2 = Node - 1 + this->NumOfPerpendNodes;
-                            this->AMat(Node2, Node2) = -2.0 * (amatx + amaty);
-                            this->AMat(Node2 - 1, Node2) = 2.0 * amaty;
+                            this->AMat(Node2, Node2) = -2.0f * (amatx + amaty);
+                            this->AMat(Node2 - 1, Node2) = 2.0f * amaty;
                             this->AMat(Node2 - this->NumOfPerpendNodes, Node2) = amatx;
                             this->AMat(Node2 + this->NumOfPerpendNodes, Node2) = amatx;
 
                         } else { // Row at a two-layer interface (half of node consists of one layer's materials
                             // and the other half consist of the next layer's materials)
-                            capavg = 0.5 * (rho(Layer) * cp(Layer) * dx(Layer) + rho(Layer + 1) * cp(Layer + 1) * dx(Layer + 1));
+                            capavg = 0.5f * (rho(Layer) * cp(Layer) * dx(Layer) + rho(Layer + 1) * cp(Layer + 1) * dx(Layer + 1));
                             amatx = rk(Layer) / (capavg * dx(Layer));
                             amatxx = rk(Layer + 1) / (capavg * dx(Layer + 1));
                             amaty = (rk(Layer) * dx(Layer) + rk(Layer + 1) * dx(Layer + 1)) / (capavg * dyn * dyn);
 
-                            this->AMat(Node, Node) = -amatx - amatxx - 2.0 * amaty;
-                            this->AMat(Node + 1, Node) = 2.0 * amaty;
+                            this->AMat(Node, Node) = -amatx - amatxx - 2.0f * amaty;
+                            this->AMat(Node + 1, Node) = 2.0f * amaty;
                             this->AMat(Node - this->NumOfPerpendNodes, Node) = amatx;
                             this->AMat(Node + this->NumOfPerpendNodes, Node) = amatxx;
 
                             for (int NodeInRow = 2; NodeInRow <= this->NumOfPerpendNodes - 1; ++NodeInRow) {
                                 int Node2 = Node + NodeInRow - 1;
                                 this->AMat(Node2 - 1, Node2) = amaty;
-                                this->AMat(Node2, Node2) = -amatx - amatxx - 2.0 * amaty;
+                                this->AMat(Node2, Node2) = -amatx - amatxx - 2.0f * amaty;
                                 this->AMat(Node2 + 1, Node2) = amaty;
                                 this->AMat(Node2 - this->NumOfPerpendNodes, Node2) = amatx;
                                 this->AMat(Node2 + this->NumOfPerpendNodes, Node2) = amatxx;
                             }
 
                             int Node2 = Node - 1 + this->NumOfPerpendNodes;
-                            this->AMat(Node2, Node2) = -amatx - amatxx - 2.0 * amaty;
-                            this->AMat(Node2 - 1, Node2) = 2.0 * amaty;
+                            this->AMat(Node2, Node2) = -amatx - amatxx - 2.0f * amaty;
+                            this->AMat(Node2 - 1, Node2) = 2.0f * amaty;
                             this->AMat(Node2 - this->NumOfPerpendNodes, Node2) = amatx;
                             this->AMat(Node2 + this->NumOfPerpendNodes, Node2) = amatxx;
 
-                            if (Node == this->NodeSource) BMat(3) = 2.0 * double(this->NumOfPerpendNodes - 1) / capavg;
+                            if (Node == this->NodeSource) BMat(3) = 2.0f * Real64(this->NumOfPerpendNodes - 1) / capavg;
                             NodeInLayer = 0;
                             ++Layer;
                         }
@@ -828,28 +828,28 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                     amaty /= 1.5;
 
                     int Node = this->rcmax + 1 - this->NumOfPerpendNodes;
-                    this->AMat(Node, Node) = -2.0 * (amatx + amaty);
-                    this->AMat(Node + 1, Node) = 2.0 * amaty;
+                    this->AMat(Node, Node) = -2.0f * (amatx + amaty);
+                    this->AMat(Node + 1, Node) = 2.0f * amaty;
                     this->AMat(Node - this->NumOfPerpendNodes, Node) = amatx;
 
                     for (int thisNode = this->rcmax + 2 - this->NumOfPerpendNodes; thisNode <= this->rcmax - 1; ++thisNode) {
                         this->AMat(thisNode - 1, thisNode) = amaty;
-                        this->AMat(thisNode, thisNode) = -2.0 * (amatx + amaty);
+                        this->AMat(thisNode, thisNode) = -2.0f * (amatx + amaty);
                         this->AMat(thisNode + 1, thisNode) = amaty;
                         this->AMat(thisNode - this->NumOfPerpendNodes, thisNode) = amatx;
                     }
 
-                    this->AMat(this->rcmax, this->rcmax) = -2.0 * (amatx + amaty);
-                    this->AMat(this->rcmax - 1, this->rcmax) = 2.0 * amaty;
+                    this->AMat(this->rcmax, this->rcmax) = -2.0f * (amatx + amaty);
+                    this->AMat(this->rcmax - 1, this->rcmax) = 2.0f * amaty;
                     this->AMat(this->rcmax - this->NumOfPerpendNodes, this->rcmax) = amatx;
 
                     this->BMat(2) = amatx;
 
-                    this->CMat(1) = -rk(1) / dx(1) / double(this->NumOfPerpendNodes - 1);
-                    this->CMat(2) = rk(LayersInConstruct) / dx(LayersInConstruct) / double(this->NumOfPerpendNodes - 1);
+                    this->CMat(1) = -rk(1) / dx(1) / Real64(this->NumOfPerpendNodes - 1);
+                    this->CMat(2) = rk(LayersInConstruct) / dx(LayersInConstruct) / Real64(this->NumOfPerpendNodes - 1);
 
-                    this->DMat(1) = rk(1) / dx(1) / double(this->NumOfPerpendNodes - 1);
-                    this->DMat(2) = -rk(LayersInConstruct) / dx(LayersInConstruct) / double(this->NumOfPerpendNodes - 1);
+                    this->DMat(1) = rk(1) / dx(1) / Real64(this->NumOfPerpendNodes - 1);
+                    this->DMat(2) = -rk(LayersInConstruct) / dx(LayersInConstruct) / Real64(this->NumOfPerpendNodes - 1);
                 }
 
                 // Calculation of the CTFs based on the state space
@@ -916,7 +916,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                             CTFConvrg = false;
                         }
                     } else { // Something terribly wrong--the surface has no CTFs, not even an R-value
-                        ShowFatalError(state, format("Illegal construction definition, no CTFs calculated for {}", this->Name));
+                        ShowFatalError(state, fmt::format("Illegal construction definition, no CTFs calculated for {}", this->Name));
                     }
                 }
 
@@ -926,14 +926,14 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                 // Thus, if the time step reaches a certain point, error out and let the
                 // user know that something needs to be checked in the input file.
                 if (this->CTFTimeStep >= MaxAllowedTimeStep) {
-                    ShowSevereError(state, format("CTF calculation convergence problem for Construction=\"{}\".", this->Name));
+                    ShowSevereError(state, fmt::format("CTF calculation convergence problem for Construction=\"{}\".", this->Name));
                     ShowContinueError(state, "...with Materials (outside layer to inside)");
-                    ShowContinueError(state, format("(outside)=\"{}\"", state.dataMaterial->materials(this->LayerPoint(1))->Name));
+                    ShowContinueError(state, fmt::format("(outside)=\"{}\"", state.dataMaterial->materials(this->LayerPoint(1))->Name));
                     for (int Layer = 2; Layer <= this->TotLayers; ++Layer) {
                         if (Layer != this->TotLayers) {
-                            ShowContinueError(state, format("(next)=\"{}\"", state.dataMaterial->materials(this->LayerPoint(Layer))->Name));
+                            ShowContinueError(state, fmt::format("(next)=\"{}\"", state.dataMaterial->materials(this->LayerPoint(Layer))->Name));
                         } else {
-                            ShowContinueError(state, format("(inside)=\"{}\"", state.dataMaterial->materials(this->LayerPoint(Layer))->Name));
+                            ShowContinueError(state, fmt::format("(inside)=\"{}\"", state.dataMaterial->materials(this->LayerPoint(Layer))->Name));
                         }
                     }
                     ShowContinueError(state,
@@ -986,7 +986,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
         this->e(1) = 0.0;       // zero.
 
         if (this->SourceSinkPresent) {
-            ShowSevereError(state, format("Sources/sinks not allowed in purely resistive constructions --> {}", this->Name));
+            ShowSevereError(state, fmt::format("Sources/sinks not allowed in purely resistive constructions --> {}", this->Name));
             ErrorsFound = true;
         }
 
@@ -1117,9 +1117,9 @@ void ConstructionProps::calculateExponentialMatrix()
     // SUBROUTINE LOCAL VARIABLE DECLARATIONS:
     Real64 AMatRowNorm;    // Row norm for AMat
     Real64 AMatRowNormMax; // Largest row norm for AMat
-    Array2D<Real64> AMat1; // AMat factored by (delt/2^k)
-    Array2D<Real64> AMato; // AMat raised to the previous power (power of AMat1-1)
-    Array2D<Real64> AMatN; // Current value of AMat raised to power n (n = 1,2...)
+    Array2D<double> AMat1; // AMat factored by (delt/2^k)
+    Array2D<double> AMato; // AMat raised to the previous power (power of AMat1-1)
+    Array2D<double> AMatN; // Current value of AMat raised to power n (n = 1,2...)
     Real64 CheckVal;       // Used to avoid possible overflow from Double->REAL(r64)->Integer
     Real64 fact;           // Intermediate calculation variable (delt/2^k)
     int i;                 // Loop counter
@@ -1180,7 +1180,7 @@ void ConstructionProps::calculateExponentialMatrix()
     // takes advantage of the fact that AMat is tridiagonal.  Thus, it
     // only factors the elements of the AMat that are known to be non-zero.
 
-    fact = this->CTFTimeStep / std::pow(2.0, k); // Start of Step 3 ...
+    fact = this->CTFTimeStep / std::pow(2.0f, k); // Start of Step 3 ...
     AMat1 *= fact;                               // ... end of Step 3.
 
     // Step 4, page 128:  Calculate l, the highest power to which AMat
@@ -1205,7 +1205,7 @@ void ConstructionProps::calculateExponentialMatrix()
     // Also, if the new terms are too small, then as noted above the cut-off
     // criteria will not use them.
 
-    CheckVal = min(3.0 * AMatRowNormMax + 6.0, 100.0);
+    CheckVal = min(3.0f * AMatRowNormMax + 6.0f, 100.0f);
     l = int(CheckVal);
 
     // Step 5, page 128:  Calculate the exponential.  First, add the
@@ -1242,8 +1242,8 @@ void ConstructionProps::calculateExponentialMatrix()
                     // so small as to go below TinyLimit, then ignore it since it won't add anything
                     // to AMatN anyway.
                     if (std::abs(AMat1(ic, ict)) > Constant::rTinyValue) {
-                        if (std::abs(AMato(ict, ir)) > std::abs(double(i) * Constant::rTinyValue / AMat1(ic, ict)))
-                            AMatN(ic, ir) += AMato(ict, ir) * AMat1(ic, ict) / double(i);
+                        if (std::abs(AMato(ict, ir)) > std::abs(Real64(i) * Constant::rTinyValue / AMat1(ic, ict)))
+                            AMatN(ic, ir) += AMato(ict, ir) * AMat1(ic, ict) / Real64(i);
                     }
                 }
             }
@@ -1305,12 +1305,17 @@ void ConstructionProps::calculateExponentialMatrix()
         for (ir = 1; ir <= this->rcmax; ++ir) {
             for (ic = 1; ic <= this->rcmax; ++ic) {
                 for (idm = 1; idm <= this->rcmax; ++idm) {
-                    if (std::abs(AMato(idm, ir) * AMato(ic, idm)) > Constant::rTinyValue) {
-                        this->AExp(ic, ir) += AMato(idm, ir) * AMato(ic, idm);
+                    auto const aMatMult = AMato(idm, ir) * AMato(ic, idm);
+                    bool const bigEnough = std::abs(aMatMult) > Constant::rTinyValue;
+                    if (bigEnough) {
+                        this->AExp(ic, ir) += aMatMult;
                         Backup = false;
                     }
                 }
             }
+        }
+        if (this->Name == "FLOOR:LIVING") {
+            std::cout << this->Name << fmt::format("isq: {}; backup: {}", isq, Backup) << std::endl;
         }
         // Backup is true when every item of AExp didnt pass the TinyLimit test
         if (Backup) {
@@ -1631,8 +1636,8 @@ void ConstructionProps::calculateFinalCoefficients()
             this->s0(2, 2) += SurfNodeFac * this->CMat(2) * this->Gamma2(2, this->rcmax + 1 - SurfNode);
             this->s0(3, 2) += SurfNodeFac * this->CMat(2) * this->Gamma2(3, this->rcmax + 1 - SurfNode);
         }
-        this->s0(1, 1) += double(this->NumOfPerpendNodes - 1) * this->DMat(1);
-        this->s0(2, 2) += double(this->NumOfPerpendNodes - 1) * this->DMat(2);
+        this->s0(1, 1) += Real64(this->NumOfPerpendNodes - 1) * this->DMat(1);
+        this->s0(2, 2) += Real64(this->NumOfPerpendNodes - 1) * this->DMat(2);
     }
 
     if (this->NodeSource > 0) {
@@ -1648,7 +1653,7 @@ void ConstructionProps::calculateFinalCoefficients()
 
     // Check for and enforce symmetry in the cross term (Y)
     if (std::abs(this->s0(2, 1)) != std::abs(this->s0(1, 2))) {
-        avg = (std::abs(this->s0(2, 1)) + std::abs(this->s0(1, 2))) * 0.5;
+        avg = (std::abs(this->s0(2, 1)) + std::abs(this->s0(1, 2))) * 0.5f;
         this->s0(2, 1) *= avg / std::abs(this->s0(2, 1));
         this->s0(1, 2) *= avg / std::abs(this->s0(1, 2));
     }
@@ -1672,13 +1677,16 @@ void ConstructionProps::calculateFinalCoefficients()
         for (int ir = 1; ir <= this->rcmax; ++ir) {
 
             for (int ic = 1; ic <= this->rcmax; ++ic) {
-                PhiR0(ic, ir) = 0.0;
+                auto & thisPhiR0 = PhiR0(ic, ir);
+                thisPhiR0 = 0.0;
                 for (int is = 1; is <= this->rcmax; ++is) {
+                    auto & thisRnew = Rnew(ic, is);
+                    auto & thisAExp = this->AExp(is, ir);
                     // Make sure the next term won't cause an underflow.  If it will end up being so small
                     // as to go below TinyLimit, then ignore it since it won't add anything to PhiR0 anyway.
-                    if (std::abs(Rnew(ic, is)) > Constant::rTinyValue) {
-                        if (std::abs(this->AExp(is, ir)) > std::abs(Constant::rTinyValue / Rnew(ic, is)))
-                            PhiR0(ic, ir) += this->AExp(is, ir) * Rnew(ic, is);
+                    if (std::abs(thisRnew) > Constant::rTinyValue) {
+                        if (std::abs(thisAExp) > std::abs(Constant::rTinyValue / thisRnew))
+                            thisPhiR0 += thisAExp * thisRnew;
                     }
                 }
             }
@@ -1689,7 +1697,7 @@ void ConstructionProps::calculateFinalCoefficients()
         // Now calculate ej from the trace.  According to Appendix C:
         // e(j) = -Trace[AExp*R(j-1)]/j
 
-        this->e(inum) = -trace / double(inum);
+        this->e(inum) = -trace / Real64(inum);
 
         // Update Rold and compute Rnew.  Note:  PhiR0 = AExp*R(j-1) here.
         // According to Appendix C:  R(j) = AExp*R(j-1) + e(j-1)
@@ -1747,13 +1755,13 @@ void ConstructionProps::calculateFinalCoefficients()
                     }
                 }
             }
-            this->s(1, 1, inum) += this->e(inum) * this->DMat(1) * double(this->NumOfPerpendNodes - 1);
-            this->s(2, 2, inum) += this->e(inum) * this->DMat(2) * double(this->NumOfPerpendNodes - 1);
+            this->s(1, 1, inum) += this->e(inum) * this->DMat(1) * Real64(this->NumOfPerpendNodes - 1);
+            this->s(2, 2, inum) += this->e(inum) * this->DMat(2) * Real64(this->NumOfPerpendNodes - 1);
         }
 
         // Check for and enforce symmetry in the cross term (Y)
         if (std::abs(s(2, 1, inum)) != std::abs(s(1, 2, inum))) {
-            avg = (std::abs(s(2, 1, inum)) + std::abs(s(1, 2, inum))) * 0.5;
+            avg = (std::abs(s(2, 1, inum)) + std::abs(s(1, 2, inum))) * 0.5f;
             this->s(2, 1, inum) *= avg / std::abs(s(2, 1, inum));
             this->s(1, 2, inum) *= avg / std::abs(s(1, 2, inum));
         }
@@ -1795,7 +1803,7 @@ void ConstructionProps::calculateFinalCoefficients()
             }
         }
 
-        this->e(this->rcmax) = -trace / double(this->rcmax); // Now calculate ej from the trace.
+        this->e(this->rcmax) = -trace / Real64(this->rcmax); // Now calculate ej from the trace.
 
         // Compute S(inum) based on eq.(2.1.25) which states:
         //   S(last) = CMat*R(last-1)*(Gamma1-Gamma2)+e(last)*DMat
@@ -1836,14 +1844,14 @@ void ConstructionProps::calculateFinalCoefficients()
                     }
                 }
             }
-            this->s(1, 1, this->rcmax) += this->e(this->rcmax) * this->DMat(1) * double(this->NumOfPerpendNodes - 1);
-            this->s(2, 2, this->rcmax) += this->e(this->rcmax) * this->DMat(2) * double(this->NumOfPerpendNodes - 1);
+            this->s(1, 1, this->rcmax) += this->e(this->rcmax) * this->DMat(1) * Real64(this->NumOfPerpendNodes - 1);
+            this->s(2, 2, this->rcmax) += this->e(this->rcmax) * this->DMat(2) * Real64(this->NumOfPerpendNodes - 1);
         }
 
         // Check for and enforce symmetry in the cross term (Y)
 
         if (std::abs(s(2, 1, this->rcmax)) != std::abs(s(1, 2, this->rcmax))) {
-            avg = (std::abs(s(2, 1, this->rcmax)) + std::abs(s(1, 2, this->rcmax))) * 0.5;
+            avg = (std::abs(s(2, 1, this->rcmax)) + std::abs(s(1, 2, this->rcmax))) * 0.5f;
             this->s(2, 1, this->rcmax) *= avg / std::abs(s(2, 1, this->rcmax));
             this->s(1, 2, this->rcmax) *= avg / std::abs(s(1, 2, this->rcmax));
         }
@@ -1878,11 +1886,11 @@ void ConstructionProps::reportTransferFunction(EnergyPlusData &state, int const 
         auto const *thisMaterial = state.dataMaterial->materials(Layer);
         switch (thisMaterial->group) {
         case Material::Group::AirGap: {
-            static constexpr std::string_view Format_702(" Material:Air,{},{:12.4N}\n");
+            static constexpr std::string_view Format_702(" Material:Air,{},{:12.4f}\n");
             print(state.files.eio, Format_702, thisMaterial->Name, thisMaterial->Resistance);
         } break;
         default: {
-            static constexpr std::string_view Format_701(" Material CTF Summary,{},{:8.4F},{:14.3F},{:11.3F},{:13.3F},{:12.4N}\n");
+            static constexpr std::string_view Format_701(" Material CTF Summary,{},{:8.4F},{:14.3F},{:11.3F},{:13.3F},{:12.4f}\n");
             Material::MaterialBase const *mp = thisMaterial;
             print(state.files.eio, Format_701, mp->Name, mp->Thickness, mp->Conductivity, mp->Density, mp->SpecHeat, mp->Resistance);
         } break;
@@ -1891,10 +1899,10 @@ void ConstructionProps::reportTransferFunction(EnergyPlusData &state, int const 
 
     for (int I = this->NumCTFTerms; I >= 0; --I) {
         if (I != 0) {
-            static constexpr std::string_view Format_703(" CTF,{:4},{:20.8N},{:20.8N},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_703(" CTF,{:4},{:20.8f},{:20.8f},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_703, I, this->CTFOutside[I], this->CTFCross[I], this->CTFInside[I], this->CTFFlux[I]);
         } else {
-            static constexpr std::string_view Format_704(" CTF,{:4},{:20.8N},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_704(" CTF,{:4},{:20.8f},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_704, I, this->CTFOutside[I], this->CTFCross[I], this->CTFInside[I]);
         }
     }
@@ -1902,18 +1910,18 @@ void ConstructionProps::reportTransferFunction(EnergyPlusData &state, int const 
     if (this->SourceSinkPresent) {
         // QTFs...
         for (int I = this->NumCTFTerms; I >= 0; --I) {
-            static constexpr std::string_view Format_705(" QTF,{:4},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_705(" QTF,{:4},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_705, I, this->CTFSourceOut[I], this->CTFSourceIn[I]);
         }
         // QTFs for source/sink location temperature calculation...
         for (int I = this->NumCTFTerms; I >= 0; --I) {
-            static constexpr std::string_view Format_706(" Source/Sink Loc Internal Temp QTF,{:4},{:20.8N},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_706(" Source/Sink Loc Internal Temp QTF,{:4},{:20.8f},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_706, I, this->CTFTSourceOut[I], this->CTFTSourceIn[I], this->CTFTSourceQ[I]);
         }
         if (this->TempAfterLayer != 0) {
             // QTFs for user specified interior temperature calculation...
             for (int I = this->NumCTFTerms; I >= 0; --I) {
-                static constexpr std::string_view Format_707(" User Loc Internal Temp QTF,{:4},{:20.8N},{:20.8N},{:20.8N}\n");
+                static constexpr std::string_view Format_707(" User Loc Internal Temp QTF,{:4},{:20.8f},{:20.8f},{:20.8f}\n");
                 print(state.files.eio, Format_707, I, this->CTFTUserOut[I], this->CTFTUserIn[I], this->CTFTUserSource[I]);
             }
         }
@@ -1924,7 +1932,7 @@ void ConstructionProps::reportLayers(EnergyPlusData &state)
 {
     // Report the layers for each opaque construction in predefined tabular report
     // J. Glazer March 2024
-    if (state.dataOutRptPredefined->pdchOpqConsLayCol.size() > 0) {
+    if (!state.dataOutRptPredefined->pdchOpqConsLayCol.empty()) {
         for (int i = 1; i <= this->TotLayers; ++i) {
             int layerIndex = this->LayerPoint(i);
             auto const *mat = state.dataMaterial->materials(layerIndex);
@@ -1953,21 +1961,21 @@ Real64 ConstructionProps::setThicknessPerpendicular(EnergyPlusData &state, Real6
     // which is for autosizing tube length.  The limits are not as strictly enforced here because they are
     // not being used for autosizing so more latitude with the values is desired.  Warnings will still alert
     // the user if values seem outside of the ordinary range anticipated.
-    Real64 returnValue = userValue / 2.0; // Divide by two because internally the half distance will be used to calculate CTFs
+    Real64 returnValue = userValue / 2.0f; // Divide by two because internally the half distance will be used to calculate CTFs
     if (returnValue <= 0.001) {           // lowest reasonable value for "half" the tube spacing in meters
         ShowWarningError(state, "ConstructionProperty:InternalHeatSource has a tube spacing that is less than 2 mm.  This is not allowed.");
         ShowContinueError(
             state,
-            format("Construction={} has this problem.  The tube spacing has been reset to 0.15m (~6 inches) for this construction.", this->Name));
+            fmt::format("Construction={} has this problem.  The tube spacing has been reset to 0.15m (~6 inches) for this construction.", this->Name));
         ShowContinueError(state, "As per the Input Output Reference, tube spacing is only used for 2-D solutions and autosizing.");
         returnValue = 0.075;          // default "half" tube spacing in meters (roughly equivalent to 15cm or 6 inches of tube spacing)
     } else if (returnValue < 0.005) { // below this value for "half" the tube spacing in meters throw a warning
         ShowWarningError(state, "ConstructionProperty:InternalHeatSource has a tube spacing that is less than 1 cm (0.4 inch).");
-        ShowContinueError(state, format("Construction={} has this concern.  Please check this construction to make sure it is correct.", this->Name));
+        ShowContinueError(state, fmt::format("Construction={} has this concern.  Please check this construction to make sure it is correct.", this->Name));
         ShowContinueError(state, "As per the Input Output Reference, tube spacing is only used for 2-D solutions and autosizing.");
     } else if (returnValue > 0.5) { // above this value for "half" the tube spacing in meters throw a warning
         ShowWarningError(state, "ConstructionProperty:InternalHeatSource has a tube spacing that is greater than 1 meter (39.4 inches).");
-        ShowContinueError(state, format("Construction={} has this concern.  Please check this construction to make sure it is correct.", this->Name));
+        ShowContinueError(state, fmt::format("Construction={} has this concern.  Please check this construction to make sure it is correct.", this->Name));
         ShowContinueError(state, "As per the Input Output Reference, tube spacing is only used for 2-D solutions and autosizing.");
     }
     return returnValue;
@@ -1977,12 +1985,12 @@ Real64 ConstructionProps::setUserTemperatureLocationPerpendicular(EnergyPlusData
 {
     if (userValue < 0.0) {
         ShowWarningError(state, "ConstructionProperty:InternalHeatSource has a perpendicular temperature location parameter that is less than zero.");
-        ShowContinueError(state, format("Construction={} has this error.  The parameter has been reset to 0.", this->Name));
+        ShowContinueError(state, fmt::format("Construction={} has this error.  The parameter has been reset to 0.", this->Name));
         return 0.0;
     } else if (userValue > 1.0) {
         ShowWarningError(state,
                          "ConstructionProperty:InternalHeatSource has a perpendicular temperature location parameter that is greater than one.");
-        ShowContinueError(state, format("Construction={} has this error.  The parameter has been reset to 1.", this->Name));
+        ShowContinueError(state, fmt::format("Construction={} has this error.  The parameter has been reset to 1.", this->Name));
         return 1.0;
     } else { // Valid value between 0 and 1
         return userValue;

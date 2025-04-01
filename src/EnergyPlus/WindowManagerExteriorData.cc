@@ -193,10 +193,10 @@ namespace Window {
         std::shared_ptr<CMaterial> aVisMat = std::make_shared<CMaterialSingleBand>(Tvis, Tvis, Rfvis, Rbvis, 0.38, 0.78);
 
         CMaterialDualBand aMat = CMaterialDualBand(aVisMat, aSolMat, 0.49);
-        std::vector<Real64> aWl = aMat.getBandWavelengths();
-        std::vector<Real64> aTf = aMat.getBandProperties(Property::T, Side::Front);
-        std::vector<Real64> aRf = aMat.getBandProperties(Property::R, Side::Front);
-        std::vector<Real64> aRb = aMat.getBandProperties(Property::R, Side::Back);
+        std::vector<double> aWl = aMat.getBandWavelengths();
+        std::vector<double> aTf = aMat.getBandProperties(Property::T, Side::Front);
+        std::vector<double> aRf = aMat.getBandProperties(Property::R, Side::Front);
+        std::vector<double> aRb = aMat.getBandProperties(Property::R, Side::Back);
         std::shared_ptr<CSpectralSampleData> aSampleData = std::make_shared<CSpectralSampleData>();
         for (size_t i = 0; i < aWl.size(); ++i) {
             aSampleData->addRecord(aWl[i], aTf[i], aRf[i], aRb[i]);

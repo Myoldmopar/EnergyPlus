@@ -193,10 +193,10 @@ namespace DataSystemVariables {
         }
 
         // If we get here, we didn't find the file
-        ShowSevereError(state, format("{}\"{}\" not found.", contextString, originalInputFilePath));
+        ShowSevereError(state, fmt::format("{}\"{}\" not found.", contextString, originalInputFilePath));
         ShowContinueError(state, "  Paths searched:");
         for (auto &path : pathsChecked) {
-            ShowContinueError(state, format("    {}: \"{}\"", path.second, path.first));
+            ShowContinueError(state, fmt::format("    {}: \"{}\"", path.second, path.first));
         }
 
         return foundFilePath;

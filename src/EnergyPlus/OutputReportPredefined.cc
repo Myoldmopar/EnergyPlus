@@ -1632,7 +1632,7 @@ namespace OutputReportPredefined {
             // something changed in FMT 7.x and "{:#12.{}F}" now outputs 13. So changing it to 11.{}F to maintain existing functionality. Likely
             // related to https://github.com/fmtlib/fmt/issues/1893
             state.dataOutRptPredefined->tableEntry(state.dataOutRptPredefined->numTableEntry).charEntry =
-                format("{:#11.{}F}", tableEntryReal, sigDigitCount);
+                fmt::format("{:#11.{}F}", tableEntryReal, sigDigitCount);
         } else {
             // Formatting in scientific notation, zero sigDigits makes zero sense.
             // **for something greater than 1E+08**, one sigDigits is very unhelpful (you're having an accuracy of 0.5E+07 at best)
@@ -1640,7 +1640,7 @@ namespace OutputReportPredefined {
                 sigDigitCount = 2;
             }
             state.dataOutRptPredefined->tableEntry(state.dataOutRptPredefined->numTableEntry).charEntry =
-                format("{:12.{}Z}", tableEntryReal, sigDigitCount);
+                fmt::format("{:12.{}Z}", tableEntryReal, sigDigitCount);
         }
 
         if (state.dataOutRptPredefined->tableEntry(state.dataOutRptPredefined->numTableEntry).charEntry.size() > 12) {
@@ -1729,7 +1729,7 @@ namespace OutputReportPredefined {
 
         incrementTableEntry(state);
         // convert the integer to a string
-        state.dataOutRptPredefined->tableEntry(state.dataOutRptPredefined->numTableEntry).charEntry = format("{:12}", tableEntryInt);
+        state.dataOutRptPredefined->tableEntry(state.dataOutRptPredefined->numTableEntry).charEntry = fmt::format("{:12}", tableEntryInt);
         state.dataOutRptPredefined->tableEntry(state.dataOutRptPredefined->numTableEntry).objectName = objName;
         state.dataOutRptPredefined->tableEntry(state.dataOutRptPredefined->numTableEntry).indexColumn = columnIndex;
     }

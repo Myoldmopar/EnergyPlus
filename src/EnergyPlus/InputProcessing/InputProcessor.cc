@@ -897,7 +897,7 @@ const json &InputProcessor::getJSONObjectItem(EnergyPlusData &state, std::string
         auto tmp_umit = caseInsensitiveObjectMap.find(convertToUpper(objectInfo.objectType));
         if (tmp_umit == caseInsensitiveObjectMap.end()) {
             // indicates object type not found, see function GeneralRoutines::ValidateComponent
-            ShowFatalError(state, format(R"(ObjectType of type "{}" requested was not found in input)", objectInfo.objectType));
+            ShowFatalError(state, fmt::format(R"(ObjectType of type "{}" requested was not found in input)", objectInfo.objectType));
         }
         objectInfo.objectType = tmp_umit->second;
         obj_iter = epJSON.find(objectInfo.objectType);
@@ -917,7 +917,7 @@ const json &InputProcessor::getJSONObjectItem(EnergyPlusData &state, std::string
         }
     }
 
-    ShowFatalError(state, format(R"(Name "{}" requested was not found in input for ObjectType "{}")", objectInfo.objectType, objectInfo.objectName));
+    ShowFatalError(state, fmt::format(R"(Name "{}" requested was not found in input for ObjectType "{}")", objectInfo.objectType, objectInfo.objectName));
     throw;
 }
 

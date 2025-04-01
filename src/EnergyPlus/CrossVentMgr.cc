@@ -432,7 +432,7 @@ namespace RoomAir {
                 ShowSevereError(
                     state, "RoomAirModelCrossVent:EvolveParaUCSDCV: Illegal leakage component referenced in the cross ventilation room air model");
                 ShowContinueError(state,
-                                  format("Surface {} in zone {} uses leakage component {}",
+                                  fmt::format("Surface {} in zone {} uses leakage component {}",
                                          state.afn->AirflowNetworkLinkageData(Ctd).Name,
                                          state.dataHeatBal->Zone(ZoneNum).Name,
                                          state.afn->AirflowNetworkLinkageData(Ctd).CompName));

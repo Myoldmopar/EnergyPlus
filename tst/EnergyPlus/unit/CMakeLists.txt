@@ -6,6 +6,12 @@ if(USE_PSYCH_ERRORS)
   add_compile_definitions(EP_psych_errors)
 endif()
 
+if(USE_PSYCHROMETRICS_CACHING)
+  # Caching defaulted ON
+else()
+  add_compile_definitions(EP_nocache_Psychrometrics)
+endif()
+
 set(test_src
     TestHelpers/IdfParser.cc
     TestHelpers/IdfParser.hh

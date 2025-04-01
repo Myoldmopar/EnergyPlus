@@ -330,14 +330,14 @@ namespace DataPlant {
                         }
                         if (!foundit) {
                             ShowSevereError(state,
-                                            format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                            fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                    "component \"{}\" was not found on a cooling plant loop.",
                                                    this->Name,
                                                    this_equip.Name));
                         }
                     } else if (NumSearchResults == 0) {
                         ShowSevereError(state,
-                                        format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                        fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                "component \"{}\" was not found on a plant loop.",
                                                this->Name,
                                                this_equip.Name));
@@ -418,14 +418,14 @@ namespace DataPlant {
                         }
                         if (!foundit) {
                             ShowSevereError(state,
-                                            format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                            fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                    "component \"{}\" was not found on a heating plant loop.",
                                                    this->Name,
                                                    this_equip.Name));
                         }
                     } else if (NumSearchResults == 0) {
                         ShowSevereError(state,
-                                        format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                        fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                "component \"{}\" was not found on a plant loop.",
                                                this->Name,
                                                this_equip.Name));
@@ -506,14 +506,14 @@ namespace DataPlant {
                         }
                         if (!foundit) {
                             ShowSevereError(state,
-                                            format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                            fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                    "component \"{}\" was not found on a cooling plant loop.",
                                                    this->Name,
                                                    this_equip.Name));
                         }
                     } else if (NumSearchResults == 0) {
                         ShowSevereError(state,
-                                        format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                        fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                "component \"{}\" was not found on a plant loop.",
                                                this->Name,
                                                this_equip.Name));
@@ -594,14 +594,14 @@ namespace DataPlant {
                         }
                         if (!foundit) {
                             ShowSevereError(state,
-                                            format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                            fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                    "component \"{}\" was not found on a heating plant loop.",
                                                    this->Name,
                                                    this_equip.Name));
                         }
                     } else if (NumSearchResults == 0) {
                         ShowSevereError(state,
-                                        format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
+                                        fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" "
                                                "component \"{}\" was not found on a plant loop.",
                                                this->Name,
                                                this_equip.Name));
@@ -770,14 +770,14 @@ namespace DataPlant {
 
             if (!founditCooling) {
                 ShowSevereError(state,
-                                format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" component "
+                                fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" component "
                                        "\"{}\" was not found on a cooling plant loop.",
                                        this->Name,
                                        this->DedicatedHR_ChWRetControl_Name));
             }
             if (!founditHeating) {
                 ShowSevereError(state,
-                                format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" component "
+                                fmt::format("ChillerHeaterSupervisoryOperationData::OneTimeInitChillerHeaterChangeoverOpScheme problem=\"{}\" component "
                                        "\"{}\" was not found on a heating plant loop.",
                                        this->Name,
                                        this->DedicatedHR_ChWRetControl_Name));
@@ -834,10 +834,10 @@ namespace DataPlant {
             Real64 ZoneMult = state.dataHeatBal->Zone(thisZoneIndex).Multiplier * state.dataHeatBal->Zone(thisZoneIndex).ListMultiplier;
             // aggregate required outputs to setpoint, with zone multipliers included
             sumZonePredictedCoolingLoad +=
-                min(0.0,
+                min(0.0f,
                     state.dataZoneEnergyDemand->ZoneSysEnergyDemand(thisZoneIndex).OutputRequiredToCoolingSP * ZoneMult); // sum only negative values
             sumZonePredictedHeatingLoad +=
-                max(0.0,
+                max(0.0f,
                     state.dataZoneEnergyDemand->ZoneSysEnergyDemand(thisZoneIndex).OutputRequiredToHeatingSP * ZoneMult); // sum only positive values
         }
 
@@ -887,7 +887,7 @@ namespace DataPlant {
                                 .glycol->getSpecificHeat(
                                     state, state.dataLoopNodes->Node(this->PlantOps.PrimaryChWLoopSupInletNode).Temp, "DetermineCurrentPlantLoads");
         Real64 CW_Qdot =
-            min(0.0,
+            min(0.0f,
                 CW_RetMdot * CpCW *
                     (this->Setpoint.PrimCW -
                      state.dataLoopNodes->Node(this->PlantOps.PrimaryChWLoopSupInletNode).Temp)); // power = Mdot Cp Delta T, cooling load is negative
@@ -902,7 +902,7 @@ namespace DataPlant {
                                     state, state.dataLoopNodes->Node(this->PlantOps.PrimaryHWLoopSupInletNode).Temp, "DetermineCurrentPlantLoads");
 
         Real64 HW_Qdot =
-            max(0.0,
+            max(0.0f,
                 HW_RetMdot * CpHW *
                     (this->DetermineHWSetpointOARest(state) -
                      state.dataLoopNodes->Node(this->PlantOps.PrimaryHWLoopSupInletNode).Temp)); // power = Mdot Cp Delta T, heating load is positive
@@ -1596,7 +1596,7 @@ namespace DataPlant {
 
                 Real64 const CpHW = state.dataPlnt->PlantLoop(this->PlantBoilerComps(BoilerNum).loopNum)
                                         .glycol->getSpecificHeat(state, Tin, "ChillerHeaterSupervisoryOperationData::ProcessAndSetAuxilBoiler");
-                Real64 LoadToSetpoint = max(0.0, Mdot * CpHW * (HWsetpt - Tin));
+                Real64 LoadToSetpoint = max(0.0f, Mdot * CpHW * (HWsetpt - Tin));
                 int pltSizNum = state.dataPlnt->PlantLoop(this->PlantBoilerComps(BoilerNum).loopNum).PlantSizNum;
                 Real64 const thresholdPlantLoad =
                     0.001 * state.dataSize->PlantSizData(pltSizNum).DesCapacity; // model an operating threshold at 0.1% of loop capacity, only run if

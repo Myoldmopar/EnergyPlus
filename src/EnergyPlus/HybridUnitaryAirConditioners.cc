@@ -106,7 +106,7 @@ void SimZoneHybridUnitaryAirConditioners(EnergyPlusData &state,
         CompNum = CompIndex;
         if (CompNum < 1 || CompNum > state.dataHybridUnitaryAC->NumZoneHybridEvap) {
             ShowFatalError(state,
-                           format("SimZoneHybridUnitaryAirConditioners: Invalid CompIndex passed={}, Number of units ={}, Entered Unit name = {}",
+                           fmt::format("SimZoneHybridUnitaryAirConditioners: Invalid CompIndex passed={}, Number of units ={}, Entered Unit name = {}",
                                   CompNum,
                                   state.dataHybridUnitaryAC->NumZoneHybridEvap,
                                   CompName));
@@ -115,7 +115,7 @@ void SimZoneHybridUnitaryAirConditioners(EnergyPlusData &state,
             if (CompName != state.dataHybridUnitaryAC->ZoneHybridUnitaryAirConditioner(CompNum).Name) {
                 ShowFatalError(
                     state,
-                    format("SimZoneHybridUnitaryAirConditioners: Invalid CompIndex passed={}, Unit name={}, stored unit name for that index={}",
+                    fmt::format("SimZoneHybridUnitaryAirConditioners: Invalid CompIndex passed={}, Unit name={}, stored unit name for that index={}",
                            CompNum,
                            CompName,
                            state.dataHybridUnitaryAC->ZoneHybridUnitaryAirConditioner(CompNum).Name));
@@ -127,7 +127,7 @@ void SimZoneHybridUnitaryAirConditioners(EnergyPlusData &state,
         InitZoneHybridUnitaryAirConditioners(state, CompNum, ZoneNum);
     } catch (int e) {
         ShowFatalError(state,
-                       format("An exception occurred in InitZoneHybridUnitaryAirConditioners{}, Unit name={}, stored unit name for that "
+                       fmt::format("An exception occurred in InitZoneHybridUnitaryAirConditioners{}, Unit name={}, stored unit name for that "
                               "index={}. Please check idf.",
                               CompNum,
                               CompName,
@@ -138,7 +138,7 @@ void SimZoneHybridUnitaryAirConditioners(EnergyPlusData &state,
         CalcZoneHybridUnitaryAirConditioners(state, CompNum, ZoneNum, SensibleOutputProvided, LatentOutputProvided);
     } catch (int e) {
         ShowFatalError(state,
-                       format("An exception occurred in CalcZoneHybridUnitaryAirConditioners{}, Unit name={}, stored unit name for that "
+                       fmt::format("An exception occurred in CalcZoneHybridUnitaryAirConditioners{}, Unit name={}, stored unit name for that "
                               "index={}. Please check idf.",
                               CompNum,
                               CompName,
@@ -149,7 +149,7 @@ void SimZoneHybridUnitaryAirConditioners(EnergyPlusData &state,
         ReportZoneHybridUnitaryAirConditioners(state, CompNum);
     } catch (int e) {
         ShowFatalError(state,
-                       format("An exception occurred in ReportZoneHybridUnitaryAirConditioners{}, Unit name={}, stored unit name for that "
+                       fmt::format("An exception occurred in ReportZoneHybridUnitaryAirConditioners{}, Unit name={}, stored unit name for that "
                               "index={}. Please check idf.",
                               CompNum,
                               CompName,
@@ -235,7 +235,7 @@ void InitZoneHybridUnitaryAirConditioners(EnergyPlusData &state,
                 state.dataHybridUnitaryAC->ZoneHybridUnitaryAirConditioner(Loop).ZoneNodeNum = state.dataZoneEquip->ZoneEquipConfig(ZoneNum).ZoneNode;
             } else {
                 ShowSevereError(state,
-                                format("InitZoneHybridUnitaryAirConditioners: ZoneHVAC:HybridUnitaryHVAC = {}, is not on any ZoneHVAC:EquipmentList. "
+                                fmt::format("InitZoneHybridUnitaryAirConditioners: ZoneHVAC:HybridUnitaryHVAC = {}, is not on any ZoneHVAC:EquipmentList. "
                                        " It will not be simulated.",
                                        state.dataHybridUnitaryAC->ZoneHybridUnitaryAirConditioner(Loop).Name));
             }
@@ -608,8 +608,8 @@ void GetInputZoneHybridUnitaryAirConditioners(EnergyPlusData &state, bool &Error
                 } else if (Util::SameString(Alphas(13), "No")) {
                     hybridUnitaryAC.FanHeatGain = true;
                 } else {
-                    ShowSevereError(state, format("{} = {}", cCurrentModuleObject, hybridUnitaryAC.Name));
-                    ShowContinueError(state, format("Illegal {} = {}", cAlphaFields(13), Alphas(13)));
+                    ShowSevereError(state, fmt::format("{} = {}", cCurrentModuleObject, hybridUnitaryAC.Name));
+                    ShowContinueError(state, fmt::format("Illegal {} = {}", cAlphaFields(13), Alphas(13)));
                     ErrorsFound = true;
                 }
             }
@@ -665,8 +665,8 @@ void GetInputZoneHybridUnitaryAirConditioners(EnergyPlusData &state, bool &Error
             if (!lAlphaBlanks(19)) {
                 hybridUnitaryAC.OARequirementsPtr = Util::FindItemInList(Alphas(19), state.dataSize->OARequirements);
                 if (hybridUnitaryAC.OARequirementsPtr == 0) {
-                    ShowSevereError(state, format("{}: {} = {} invalid data", routineName, cCurrentModuleObject, Alphas(1)));
-                    ShowContinueError(state, format("Invalid-not found {}=\"{}\".", cAlphaFields(19), Alphas(19)));
+                    ShowSevereError(state, fmt::format("{}: {} = {} invalid data", routineName, cCurrentModuleObject, Alphas(1)));
+                    ShowContinueError(state, fmt::format("Invalid-not found {}=\"{}\".", cAlphaFields(19), Alphas(19)));
                     ErrorsFound = true;
                 } else {
                     hybridUnitaryAC.OutdoorAir = true;
@@ -687,7 +687,7 @@ void GetInputZoneHybridUnitaryAirConditioners(EnergyPlusData &state, bool &Error
             for (int modeIter = 0; modeIter <= Numberofoperatingmodes - 1; ++modeIter) {
                 ErrorsFound = hybridUnitaryAC.ParseMode(state, Alphas, cAlphaFields, Numbers, cNumericFields, lAlphaBlanks, cCurrentModuleObject);
                 if (ErrorsFound) {
-                    ShowFatalError(state, format("{}: Errors found parsing modes", routineName));
+                    ShowFatalError(state, fmt::format("{}: Errors found parsing modes", routineName));
                     ShowContinueError(state, "... Preceding condition causes termination.");
                     break;
                 }
@@ -1248,35 +1248,35 @@ void GetInputZoneHybridUnitaryAirConditioners(EnergyPlusData &state, bool &Error
 
         for (auto &thisSetting : hybridUnitaryAC.CurrentOperatingSettings) {
             SetupOutputVariable(state,
-                                format("Zone Hybrid Unitary HVAC Runtime Fraction in Setting {}", index),
+                                fmt::format("Zone Hybrid Unitary HVAC Runtime Fraction in Setting {}", index),
                                 Constant::Units::None,
                                 thisSetting.Runtime_Fraction,
                                 OutputProcessor::TimeStepType::Zone,
                                 OutputProcessor::StoreType::Average,
                                 hybridUnitaryAC.Name);
             SetupOutputVariable(state,
-                                format("Zone Hybrid Unitary HVAC Mode in Setting {}", index),
+                                fmt::format("Zone Hybrid Unitary HVAC Mode in Setting {}", index),
                                 Constant::Units::None,
                                 thisSetting.Mode,
                                 OutputProcessor::TimeStepType::Zone,
                                 OutputProcessor::StoreType::Average,
                                 hybridUnitaryAC.Name);
             SetupOutputVariable(state,
-                                format("Zone Hybrid Unitary HVAC Outdoor Air Fraction in Setting {}", index),
+                                fmt::format("Zone Hybrid Unitary HVAC Outdoor Air Fraction in Setting {}", index),
                                 Constant::Units::kg_s,
                                 thisSetting.Outdoor_Air_Fraction,
                                 OutputProcessor::TimeStepType::Zone,
                                 OutputProcessor::StoreType::Average,
                                 hybridUnitaryAC.Name);
             SetupOutputVariable(state,
-                                format("Zone Hybrid Unitary HVAC Supply Air Mass Flow Rate in Setting {}", index),
+                                fmt::format("Zone Hybrid Unitary HVAC Supply Air Mass Flow Rate in Setting {}", index),
                                 Constant::Units::kg_s,
                                 thisSetting.Unscaled_Supply_Air_Mass_Flow_Rate,
                                 OutputProcessor::TimeStepType::Zone,
                                 OutputProcessor::StoreType::Average,
                                 hybridUnitaryAC.Name);
             SetupOutputVariable(state,
-                                format("Zone Hybrid Unitary HVAC Supply Air Mass Flow Rate Ratio in Setting {}", index),
+                                fmt::format("Zone Hybrid Unitary HVAC Supply Air Mass Flow Rate Ratio in Setting {}", index),
                                 Constant::Units::None,
                                 thisSetting.Supply_Air_Mass_Flow_Rate_Ratio,
                                 OutputProcessor::TimeStepType::Zone,
@@ -1287,7 +1287,7 @@ void GetInputZoneHybridUnitaryAirConditioners(EnergyPlusData &state, bool &Error
     }
     Errors = ErrorsFound;
     if (ErrorsFound) {
-        ShowFatalError(state, format("{}: Errors found in getting input.", routineName));
+        ShowFatalError(state, fmt::format("{}: Errors found in getting input.", routineName));
         ShowContinueError(state, "... Preceding condition causes termination.");
     }
 }

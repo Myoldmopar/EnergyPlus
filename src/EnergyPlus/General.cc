@@ -336,7 +336,7 @@ void ProcessDateString(EnergyPlusData &state,
             PDay = 0;
             DateType = Weather::DateType::MonthDay;
         } else if (FstNum < 0 || FstNum > 366) {
-            ShowSevereError(state, format("Invalid Julian date Entered={}", String));
+            ShowSevereError(state, fmt::format("Invalid Julian date Entered={}", String));
             ErrorsFound = true;
         } else {
             InvOrdinalDay(FstNum, PMonth, PDay, 0);
@@ -433,7 +433,7 @@ void DetermineDateTokens(EnergyPlusData &state,
 
     strip(CurrentString);
     if (CurrentString == BlankString) {
-        ShowSevereError(state, format("Invalid date field={}", String));
+        ShowSevereError(state, fmt::format("Invalid date field={}", String));
         ErrorsFound = true;
     } else {
         int Loop = 0;
@@ -451,7 +451,7 @@ void DetermineDateTokens(EnergyPlusData &state,
             strip(CurrentString);
         }
         if (not_blank(CurrentString)) {
-            ShowSevereError(state, format("Invalid date field={}", String));
+            ShowSevereError(state, fmt::format("Invalid date field={}", String));
             ErrorsFound = true;
         } else if (Loop == 2) {
             // Field must be Day Month or Month Day (if both numeric, mon / day)
@@ -461,7 +461,7 @@ void DetermineDateTokens(EnergyPlusData &state,
                 // Month day, but first field is not numeric, 2nd must be
                 NumField2 = int(Util::ProcessNumber(Fields(2), errFlag));
                 if (errFlag) {
-                    ShowSevereError(state, format("Invalid date field={}", String));
+                    ShowSevereError(state, fmt::format("Invalid date field={}", String));
                     InternalError = true;
                 } else {
                     TokenDay = NumField2;
@@ -529,7 +529,7 @@ void DetermineDateTokens(EnergyPlusData &state,
                             if (TokenMonth == 0) InternalError = true;
                         }
                     } else { // error....
-                        ShowSevereError(state, format("First date field not numeric, field={}", String));
+                        ShowSevereError(state, fmt::format("First date field not numeric, field={}", String));
                     }
                 }
             } else { // mm/dd/yyyy or yyyy/mm/dd
@@ -554,7 +554,7 @@ void DetermineDateTokens(EnergyPlusData &state,
             }
         } else {
             // Not enough or too many fields
-            ShowSevereError(state, format("Invalid date field={}", String));
+            ShowSevereError(state, fmt::format("Invalid date field={}", String));
             ErrorsFound = true;
         }
     }
@@ -589,7 +589,7 @@ void ValidateMonthDay(EnergyPlusData &state,
         if (Day < 1 || Day > EndMonthDay[Month - 1]) InternalError = true;
     }
     if (InternalError) {
-        ShowSevereError(state, format("Invalid Month Day date format={}", String));
+        ShowSevereError(state, fmt::format("Invalid Month Day date format={}", String));
         ErrorsFound = true;
     } else {
         ErrorsFound = false;
@@ -746,10 +746,10 @@ std::string CreateSysTimeIntervalString(EnergyPlusData &state)
         ++ActualTimeHrS;
         ActualTimeMinS = 0;
     }
-    const std::string TimeStmpS = format("{:02}:{:02}", ActualTimeHrS, ActualTimeMinS);
+    const std::string TimeStmpS = fmt::format("{:02}:{:02}", ActualTimeHrS, ActualTimeMinS);
     Real64 minutes = ((ActualTimeE - static_cast<int>(ActualTimeE)) * FracToMin);
 
-    std::string TimeStmpE = format("{:02}:{:2.0F}", static_cast<int>(ActualTimeE), minutes);
+    std::string TimeStmpE = fmt::format("{:02}:{:2.0F}", static_cast<int>(ActualTimeE), minutes);
 
     if (TimeStmpE[3] == ' ') {
         TimeStmpE[3] = '0';
@@ -1099,13 +1099,13 @@ void ScanForReports(EnergyPlusData &state,
                     state.dataGlobal->ShowDecayCurvesInEIO = true;
                     break;
                 default: // including empty
-                    ShowWarningError(state, format("{}: No {} supplied.", cCurrentModuleObject, state.dataIPShortCut->cAlphaFieldNames(1)));
+                    ShowWarningError(state, fmt::format("{}: No {} supplied.", cCurrentModuleObject, state.dataIPShortCut->cAlphaFieldNames(1)));
                     ShowContinueError(state,
                                       R"( Legal values are: "Lines", "Vertices", "Details", "DetailsWithVertices", "CostInfo", "ViewFactorIinfo".)");
                 }
             } catch (int e) {
                 ShowWarningError(state,
-                                 format("{}: Invalid {}=\"{}\" supplied.",
+                                 fmt::format("{}: Invalid {}=\"{}\" supplied.",
                                         cCurrentModuleObject,
                                         state.dataIPShortCut->cAlphaFieldNames(1),
                                         state.dataIPShortCut->cAlphaArgs(1)));
@@ -1346,14 +1346,14 @@ void CheckCreatedZoneItemName(EnergyPlusData &state,
     bool TooLong = false;
     if (ItemLength > Constant::MaxNameLength) {
         ShowWarningError(state, fmt::format("{}{} Combination of ZoneList and Object Name generate a name too long.", calledFrom, CurrentObject));
-        ShowContinueError(state, format("Object Name=\"{}\".", ItemName));
-        ShowContinueError(state, format("ZoneList/Zone Name=\"{}\".", ZoneName));
+        ShowContinueError(state, fmt::format("Object Name=\"{}\".", ItemName));
+        ShowContinueError(state, fmt::format("ZoneList/Zone Name=\"{}\".", ZoneName));
         ShowContinueError(state,
-                          format("Item length=[{}] > Maximum Length=[{}]. You may need to shorten the names.", ItemLength, Constant::MaxNameLength));
+                          fmt::format("Item length=[{}] > Maximum Length=[{}]. You may need to shorten the names.", ItemLength, Constant::MaxNameLength));
         ShowContinueError(state,
-                          format("Shortening the Object Name by [{}] characters will assure uniqueness for this ZoneList.",
+                          fmt::format("Shortening the Object Name by [{}] characters will assure uniqueness for this ZoneList.",
                                  MaxZoneNameLength + 1 + ItemNameLength - Constant::MaxNameLength));
-        ShowContinueError(state, format("name that will be used (may be needed in reporting)=\"{}\".", ResultName));
+        ShowContinueError(state, fmt::format("name that will be used (may be needed in reporting)=\"{}\".", ResultName));
         TooLong = true;
     }
 
@@ -1361,7 +1361,7 @@ void CheckCreatedZoneItemName(EnergyPlusData &state,
 
     if (FoundItem != 0) {
         ShowSevereError(state, fmt::format("{}{}=\"{}\", Duplicate Generated name encountered.", calledFrom, CurrentObject, ItemName));
-        ShowContinueError(state, format("name=\"{}\" has already been generated or entered as {} item=[{}].", ResultName, CurrentObject, FoundItem));
+        ShowContinueError(state, fmt::format("name=\"{}\" has already been generated or entered as {} item=[{}].", ResultName, CurrentObject, FoundItem));
         if (TooLong) ShowContinueError(state, "Duplicate name likely caused by the previous \"too long\" warning.");
         ResultName = "xxxxxxx";
         errFlag = true;

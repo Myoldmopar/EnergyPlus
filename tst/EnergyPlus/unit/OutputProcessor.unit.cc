@@ -1134,13 +1134,13 @@ namespace OutputProcessor {
         WriteNumericData(*state, 1, -999);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-999"}, "\n")));
 
-        WriteNumericData(*state, 1, 999.9);
+        WriteNumericData(*state, 1, 999.9f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,999.9"}, "\n")));
 
-        WriteNumericData(*state, 1, 0.0);
+        WriteNumericData(*state, 1, 0.0f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.0"}, "\n")));
 
-        WriteNumericData(*state, 1, -999.9);
+        WriteNumericData(*state, 1, -999.9f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-999.9"}, "\n")));
 
         WriteNumericData(*state, 1, 0);
@@ -1825,203 +1825,203 @@ namespace OutputProcessor {
         WriteNumericData(*state, 1, 0);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0"}, "\n")));
 
-        WriteNumericData(*state, 1, 0.1);
+        WriteNumericData(*state, 1, 0.1f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.1"}, "\n")));
 
-        WriteNumericData(*state, 1, -0.1);
+        WriteNumericData(*state, 1, -0.1f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-0.1"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e-2);
+        WriteNumericData(*state, 1, 1.0e-2f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.01"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.01"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-3);
+        WriteNumericData(*state, 1, 1.0e-3f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.001"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.001"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-4);
+        WriteNumericData(*state, 1, 1.0e-4f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.0001"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.0001"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-5);
+        WriteNumericData(*state, 1, 1.0e-5f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.00001"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.00001"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-6);
+        WriteNumericData(*state, 1, 1.0e-6f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.000001"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.000001"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-7);
+        WriteNumericData(*state, 1, 1.0e-7f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-7"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-7"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-8);
+        WriteNumericData(*state, 1, 1.0e-8f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-8"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-8"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-9);
+        WriteNumericData(*state, 1, 1.0e-9f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-9"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-9"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-10);
+        WriteNumericData(*state, 1, 1.0e-10f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-10"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-10"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-11);
+        WriteNumericData(*state, 1, 1.0e-11f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-11"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-11"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-12);
+        WriteNumericData(*state, 1, 1.0e-12f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-12"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-12"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-13);
+        WriteNumericData(*state, 1, 1.0e-13f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-13"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-13"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-14);
+        WriteNumericData(*state, 1, 1.0e-14f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-14"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-14"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-15);
+        WriteNumericData(*state, 1, 1.0e-15f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-15"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-15"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-16);
+        WriteNumericData(*state, 1, 1.0e-16f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-16"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-16"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, -1.0e-16);
+        WriteNumericData(*state, 1, -1.0e-16f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-1e-16"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-1e-16"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e-19);
+        WriteNumericData(*state, 1, 1.0e-19f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-19"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e-19"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 0.5);
+        WriteNumericData(*state, 1, 0.5f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,0.5"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0);
+        WriteNumericData(*state, 1, 1.0f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 10.0);
+        WriteNumericData(*state, 1, 10.0f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,10.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e2);
+        WriteNumericData(*state, 1, 1.0e2f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,100.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e3);
+        WriteNumericData(*state, 1, 1.0e3f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e4);
+        WriteNumericData(*state, 1, 1.0e4f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,10000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e5);
+        WriteNumericData(*state, 1, 1.0e5f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,100000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e6);
+        WriteNumericData(*state, 1, 1.0e6f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e7);
+        WriteNumericData(*state, 1, 1.0e7f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,10000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e8);
+        WriteNumericData(*state, 1, 1.0e8f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,100000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e9);
+        WriteNumericData(*state, 1, 1.0e9f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e10);
+        WriteNumericData(*state, 1, 1.0e10f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,10000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e11);
+        WriteNumericData(*state, 1, 1.0e11f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,100000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e12);
+        WriteNumericData(*state, 1, 1.0e12f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1000000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e13);
+        WriteNumericData(*state, 1, 1.0e13f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,10000000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e14);
+        WriteNumericData(*state, 1, 1.0e14f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,100000000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e15);
+        WriteNumericData(*state, 1, 1.0e15f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1000000000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e16);
+        WriteNumericData(*state, 1, 1.0e16f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,10000000000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, 1.0e17);
+        WriteNumericData(*state, 1, 1.0e17f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,100000000000000000.0"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,100000000000000000.0"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, -1.0e16);
+        WriteNumericData(*state, 1, -1.0e16f);
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-10000000000000000.0"}, "\n")));
 
-        WriteNumericData(*state, 1, -1.0e17);
+        WriteNumericData(*state, 1, -1.0e17f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-100000000000000000.0"}, "\n")));
 #else
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,-100000000000000000.0"}, "\n")));
 #endif
 
-        WriteNumericData(*state, 1, 1.0e25);
+        WriteNumericData(*state, 1, 1.0e25f);
 #if defined(_WIN32) && _MSC_VER < 1900
         EXPECT_TRUE(compare_eso_stream(delimited_string({"1,1e25"}, "\n")));
 #else
@@ -3263,7 +3263,7 @@ namespace OutputProcessor {
                                 light_consumption,
                                 TimeStepType::Zone,
                                 StoreType::Sum,
-                                format("SPACE {} LIGHTS", i),
+                                fmt::format("SPACE {} LIGHTS", i),
                                 Constant::eResource::Electricity,
                                 Group::Building,
                                 EndUseCat::InteriorLights,
@@ -4052,7 +4052,7 @@ namespace OutputProcessor {
 
         // TimeValue.allocate(2);
 
-        auto timeStep = 1.0 / 6;
+        Real64 timeStep = 1.0 / 6;
 
         SetupTimePointers(*state, TimeStepType::Zone, timeStep);
         SetupTimePointers(*state, TimeStepType::System, timeStep);

@@ -127,7 +127,7 @@ GLHESlinky::GLHESlinky(EnergyPlusData &state, std::string const &objName, nlohma
     // Check for duplicates
     for (auto &existingObj : state.dataGroundHeatExchanger->singleBoreholesVector) {
         if (objName == existingObj->name) {
-            ShowFatalError(state, format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
+            ShowFatalError(state, fmt::format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
         }
     }
 
@@ -216,9 +216,9 @@ GLHESlinky::GLHESlinky(EnergyPlusData &state, std::string const &objName, nlohma
         // Vertical configuration
         if (this->trenchDepth - this->coilDiameter < 0.0) {
             // Error: part of the coil is above ground
-            ShowSevereError(state, format("{}=\"{}\", invalid value in field.", this->moduleName, this->name));
-            ShowContinueError(state, format("...{}=[{:.3R}].", "Trench Depth", this->trenchDepth));
-            ShowContinueError(state, format("...{}=[{:.3R}].", "Coil Depth", this->coilDepth));
+            ShowSevereError(state, fmt::format("{}=\"{}\", invalid value in field.", this->moduleName, this->name));
+            ShowContinueError(state, fmt::format("...{}=[{:.3f}].", "Trench Depth", this->trenchDepth));
+            ShowContinueError(state, fmt::format("...{}=[{:.3f}].", "Coil Depth", this->coilDepth));
             ShowContinueError(state, "...Part of coil will be above ground.");
             errorsFound = true;
 
@@ -239,9 +239,9 @@ GLHESlinky::GLHESlinky(EnergyPlusData &state, std::string const &objName, nlohma
     state.dataGroundHeatExchanger->prevTimeSteps = 0.0;
 
     if (this->pipe.thickness >= this->pipe.outDia / 2.0) {
-        ShowSevereError(state, format("{}=\"{}\", invalid value in field.", this->moduleName, this->name));
-        ShowContinueError(state, format("...{}=[{:.3R}].", "Pipe Thickness", this->pipe.thickness));
-        ShowContinueError(state, format("...{}=[{:.3R}].", "Pipe Outer Diameter", this->pipe.outDia));
+        ShowSevereError(state, fmt::format("{}=\"{}\", invalid value in field.", this->moduleName, this->name));
+        ShowContinueError(state, fmt::format("...{}=[{:.3f}].", "Pipe Thickness", this->pipe.thickness));
+        ShowContinueError(state, fmt::format("...{}=[{:.3f}].", "Pipe Outer Diameter", this->pipe.outDia));
         ShowContinueError(state, "...Radius will be <=0.");
         errorsFound = true;
     }
@@ -256,7 +256,7 @@ GLHESlinky::GLHESlinky(EnergyPlusData &state, std::string const &objName, nlohma
 
     // Check for Errors
     if (errorsFound) {
-        ShowFatalError(state, format("Errors found in processing input for {}", this->moduleName));
+        ShowFatalError(state, fmt::format("Errors found in processing input for {}", this->moduleName));
     }
 }
 
@@ -267,7 +267,7 @@ GLHEVert::GLHEVert(EnergyPlusData &state, std::string const &objName, nlohmann::
     // Check for duplicates
     for (auto &existingObj : state.dataGroundHeatExchanger->singleBoreholesVector) {
         if (objName == existingObj->name) {
-            ShowFatalError(state, format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
+            ShowFatalError(state, fmt::format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
         }
     }
 
@@ -342,7 +342,7 @@ GLHEVert::GLHEVert(EnergyPlusData &state, std::string const &objName, nlohmann::
             if (j.find("vertical_well_locations") == j.end()) {
                 // No ResponseFactors, GHEArray, or SingleBH object are referenced
                 ShowSevereError(state, "No GHE:ResponseFactors, GHE:Vertical:Array, or GHE:Vertical:Single objects found");
-                ShowFatalError(state, format("Check references to these objects for GHE:System object: {}", this->name));
+                ShowFatalError(state, fmt::format("Check references to these objects for GHE:System object: {}", this->name));
             }
 
             auto const &vars = j.at("vertical_well_locations");
@@ -425,7 +425,7 @@ GLHEVert::GLHEVert(EnergyPlusData &state, std::string const &objName, nlohmann::
 
     // Check for Errors
     if (errorsFound) {
-        ShowFatalError(state, format("Errors found in processing input for {}", this->moduleName));
+        ShowFatalError(state, fmt::format("Errors found in processing input for {}", this->moduleName));
     }
 }
 
@@ -436,7 +436,7 @@ GLHEVertSingle::GLHEVertSingle(EnergyPlusData &state, std::string const &objName
     // Check for duplicates
     for (auto &existingObj : state.dataGroundHeatExchanger->singleBoreholesVector) {
         if (objName == existingObj->name) {
-            ShowFatalError(state, format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
+            ShowFatalError(state, fmt::format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
         }
     }
 
@@ -456,7 +456,7 @@ GLHEVertArray::GLHEVertArray(EnergyPlusData &state, std::string const &objName, 
     // Check for duplicates
     for (auto &existingObj : state.dataGroundHeatExchanger->vertArraysVector) {
         if (objName == existingObj->name) {
-            ShowFatalError(state, format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
+            ShowFatalError(state, fmt::format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
         }
     }
 
@@ -475,7 +475,7 @@ GLHEResponseFactors::GLHEResponseFactors(EnergyPlusData &state, std::string cons
     // Check for duplicates
     for (auto &existingObj : state.dataGroundHeatExchanger->vertPropsVector) {
         if (objName == existingObj->name) {
-            ShowFatalError(state, format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
+            ShowFatalError(state, fmt::format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
         }
     }
 
@@ -509,7 +509,7 @@ GLHEVertProps::GLHEVertProps(EnergyPlusData &state, std::string const &objName, 
     // Check for duplicates
     for (auto &existingObj : state.dataGroundHeatExchanger->vertPropsVector) {
         if (objName == existingObj->name) {
-            ShowFatalError(state, format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
+            ShowFatalError(state, fmt::format("Invalid input for {} object: Duplicate name found: {}", this->moduleName, existingObj->name));
         }
     }
 
@@ -625,7 +625,7 @@ std::shared_ptr<GLHEResponseFactors> BuildAndGetResponseFactorObjectFromArray(En
         for (int yBH = 1; yBH <= arrayObjectPtr->numBHinYDirection; ++yBH) {
             bhCounter += 1;
             std::shared_ptr<GLHEVertSingle> thisBH(new GLHEVertSingle);
-            thisBH->name = format("{} BH {} loc: ({}, {})", thisRF->name, bhCounter, xLoc, yLoc);
+            thisBH->name = fmt::format("{} BH {} loc: ({}, {})", thisRF->name, bhCounter, xLoc, yLoc);
             thisBH->props = GetVertProps(state, arrayObjectPtr->props->name);
             thisBH->xLoc = xLoc;
             thisBH->yLoc = yLoc;
@@ -649,11 +649,11 @@ BuildAndGetResponseFactorsObjectFromSingleBHs(EnergyPlusData &state, std::vector
 {
     // Make new response factor object and store it for later use
     std::shared_ptr<GLHEResponseFactors> thisRF(new GLHEResponseFactors);
-    thisRF->name = format("Response Factor Object Auto Generated No: {}", state.dataGroundHeatExchanger->numAutoGeneratedResponseFactors + 1);
+    thisRF->name = fmt::format("Response Factor Object Auto Generated No: {}", state.dataGroundHeatExchanger->numAutoGeneratedResponseFactors + 1);
 
     // Make new props object which has the mean values of the other props objects referenced by the individual BH objects
     std::shared_ptr<GLHEVertProps> thisProps(new GLHEVertProps);
-    thisProps->name = format("Response Factor Auto Generated Mean Props No: {}", state.dataGroundHeatExchanger->numAutoGeneratedResponseFactors + 1);
+    thisProps->name = fmt::format("Response Factor Auto Generated Mean Props No: {}", state.dataGroundHeatExchanger->numAutoGeneratedResponseFactors + 1);
     for (auto &thisBH : singleBHsForRFVect) {
         thisProps->bhDiameter += thisBH->props->bhDiameter;
         thisProps->bhLength += thisBH->props->bhLength;
@@ -811,7 +811,7 @@ GLHEBase *GLHEBase::factory(EnergyPlusData &state, DataPlant::PlantEquipmentType
     }
 
     // If we didn't find it, fatal
-    ShowFatalError(state, format("Ground Heat Exchanger Factory: Error getting inputs for GHX named: {}", objectName));
+    ShowFatalError(state, fmt::format("Ground Heat Exchanger Factory: Error getting inputs for GHX named: {}", objectName));
     // Shut up the compiler
     return nullptr;
 }
@@ -971,8 +971,19 @@ void GLHEVert::calcUniformBHWallTempGFunctions(EnergyPlusData &state)
     gt::segments::adaptive adptDisc;
     int nSegments = adptDisc.discretize(this->bhLength, this->totalTubeLength);
 
-    this->myRespFactors->GFNC = gt::gfunction::uniform_borehole_wall_temperature(
-        boreholes, this->myRespFactors->time, this->soil.diffusivity, nSegments, true, state.dataGlobal->numThread);
+    // The g function library is wanting double precision.
+    // But we want to keep E+ in float precision for now.
+    // This process only occurs once during g function calculation,
+    //  so I'm just going to create a copy of the vectors.
+    std::vector<double> timeInDouble;
+    for (auto & t : this->myRespFactors->time) {
+        timeInDouble.push_back(t);
+    }
+    auto gfncInDouble = gt::gfunction::uniform_borehole_wall_temperature(
+        boreholes, timeInDouble, this->soil.diffusivity, nSegments, true, state.dataGlobal->numThread);
+    for (auto & g : gfncInDouble) {
+        this->myRespFactors->GFNC.push_back(g);
+    }
 }
 
 //******************************************************************************
@@ -2244,10 +2255,10 @@ void GLHEBase::updateGHX(EnergyPlusData &state)
         Real64 fluidDensity = state.dataPlnt->PlantLoop(this->plantLoc.loopNum).glycol->getDensity(state, this->inletTemp, RoutineName);
         this->designMassFlow = this->designFlow * fluidDensity;
         ShowWarningError(state, "Check GLHE design inputs & g-functions for consistency");
-        ShowContinueError(state, format("For GroundHeatExchanger: {}GLHE delta Temp > 100C.", this->name));
+        ShowContinueError(state, fmt::format("For GroundHeatExchanger: {}GLHE delta Temp > 100C.", this->name));
         ShowContinueError(state, "This can be encountered in cases where the GLHE mass flow rate is either significantly");
         ShowContinueError(state, " lower than the design value, or cases where the mass flow rate rapidly changes.");
-        ShowContinueError(state, format("GLHE Current Flow Rate={:.3T}; GLHE Design Flow Rate={:.3T}", this->massFlowRate, this->designMassFlow));
+        ShowContinueError(state, fmt::format("GLHE Current Flow Rate={:.3f}; GLHE Design Flow Rate={:.3f}", this->massFlowRate, this->designMassFlow));
         ++this->numErrorCalls;
     }
 }
@@ -2351,7 +2362,7 @@ void GetGroundHeatExchangerInput(EnergyPlusData &state)
 
         auto const instances = state.dataInputProcessing->inputProcessor->epJSON.find(currObj);
         if (instances == state.dataInputProcessing->inputProcessor->epJSON.end()) {
-            ShowSevereError(state, format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
+            ShowSevereError(state, fmt::format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
         }
 
         auto &instancesValue = instances.value();
@@ -2371,7 +2382,7 @@ void GetGroundHeatExchangerInput(EnergyPlusData &state)
 
         auto const instances = state.dataInputProcessing->inputProcessor->epJSON.find(currObj);
         if (instances == state.dataInputProcessing->inputProcessor->epJSON.end()) {
-            ShowSevereError(state, format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
+            ShowSevereError(state, fmt::format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
         }
 
         auto &instancesValue = instances.value();
@@ -2391,7 +2402,7 @@ void GetGroundHeatExchangerInput(EnergyPlusData &state)
 
         auto const instances = state.dataInputProcessing->inputProcessor->epJSON.find(currObj);
         if (instances == state.dataInputProcessing->inputProcessor->epJSON.end()) {
-            ShowSevereError(state, format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
+            ShowSevereError(state, fmt::format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
         }
 
         auto &instancesValue = instances.value();
@@ -2411,7 +2422,7 @@ void GetGroundHeatExchangerInput(EnergyPlusData &state)
 
         auto const instances = state.dataInputProcessing->inputProcessor->epJSON.find(currObj);
         if (instances == state.dataInputProcessing->inputProcessor->epJSON.end()) {
-            ShowSevereError(state, format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
+            ShowSevereError(state, fmt::format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
         }
 
         auto &instancesValue = instances.value();
@@ -2431,7 +2442,7 @@ void GetGroundHeatExchangerInput(EnergyPlusData &state)
 
         auto const instances = state.dataInputProcessing->inputProcessor->epJSON.find(currObj);
         if (instances == state.dataInputProcessing->inputProcessor->epJSON.end()) {
-            ShowSevereError(state, format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
+            ShowSevereError(state, fmt::format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
         }
 
         auto &instancesValue = instances.value();
@@ -2451,7 +2462,7 @@ void GetGroundHeatExchangerInput(EnergyPlusData &state)
 
         auto const instances = state.dataInputProcessing->inputProcessor->epJSON.find(currObj);
         if (instances == state.dataInputProcessing->inputProcessor->epJSON.end()) {
-            ShowSevereError(state, format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
+            ShowSevereError(state, fmt::format("{}: Somehow getNumObjectsFound was > 0 but epJSON.find found 0", currObj)); // LCOV_EXCL_LINE
         }
 
         auto &instancesValue = instances.value();

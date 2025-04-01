@@ -232,7 +232,7 @@ namespace Window {
                 Real64 RhoGlIR = 1 - EpsGlIR;
                 Real64 TauShIR = matShade->TransThermal;
                 Real64 EpsShIR = matShade->AbsorpThermal;
-                Real64 RhoShIR = max(0.0, 1.0 - TauShIR - EpsShIR);
+                Real64 RhoShIR = max(0.0f, 1.0f - TauShIR - EpsShIR);
                 surfShade.effShadeEmi = EpsShIR * (1.0 + RhoGlIR * TauShIR / (1.0 - RhoGlIR * RhoShIR));
                 surfShade.effGlassEmi = EpsGlIR * TauShIR / (1.0 - RhoGlIR * RhoShIR);
 
@@ -245,7 +245,7 @@ namespace Window {
                     auto const &btar = matBlind->TARs[iSlatAng];
                     Real64 TauShIR = btar.IR.Ft.Tra;
                     Real64 EpsShIR = btar.IR.Ft.Emi;
-                    Real64 RhoShIR = max(0.0, 1.0 - TauShIR - EpsShIR);
+                    Real64 RhoShIR = max(0.0f, 1.0f - TauShIR - EpsShIR);
                     constrSh.effShadeBlindEmi[iSlatAng] = EpsShIR * (1.0 + RhoGlIR * TauShIR / (1.0 - RhoGlIR * RhoShIR));
                     constrSh.effGlassEmi[iSlatAng] = EpsGlIR * TauShIR / (1.0 - RhoGlIR * RhoShIR);
                 }

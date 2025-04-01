@@ -2862,7 +2862,7 @@ TEST_F(EnergyPlusFixture, VariableSpeedCoils_Test_CalcTotCap_VSWSHP)
     Real64 tADP = Psychrometrics::PsyTsatFnHPb(*state, hADP, InletAirPressure); // Apparatus dew point temperature [C]
     Real64 wADP = Psychrometrics::PsyWFnTdbH(*state, tADP, hADP);               // Apparatus dew point humidity ratio [kg/kg]
     Real64 hTinwADP = Psychrometrics::PsyHFnTdbW(LSInletDBTemp, wADP);          // Enthalpy at inlet dry-bulb and wADP [J/kg]
-    Real64 SHRCalc = min((hTinwADP - hADP) / (LSInletEnth - hADP), 1.0);        // temporary calculated value of SHR
+    Real64 SHRCalc = min((hTinwADP - hADP) / (LSInletEnth - hADP), 1.0f);        // temporary calculated value of SHR
 
     // expect SHR to be < 1
     EXPECT_NEAR(SHR, 0.5275102, 0.000001);

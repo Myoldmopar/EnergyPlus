@@ -57,6 +57,7 @@
 using namespace EnergyPlus;
 using namespace EnergyPlus::Psychrometrics;
 
+#ifndef EP_nocache_Psychrometrics
 TEST_F(EnergyPlusFixture, Psychrometrics_PsyTsatFnHPb_Test)
 {
     state->init_state(*state);
@@ -185,6 +186,7 @@ TEST_F(EnergyPlusFixture, Psychrometrics_PsyTsatFnPb_Test)
     actual_result = 99.974;
     EXPECT_NEAR(actual_result, cache_result, 0.001);
 }
+#endif
 
 TEST_F(EnergyPlusFixture, Psychrometrics_PsyWFnTdpPb_Test)
 {
@@ -260,7 +262,7 @@ inline Real64 PsyCpAirFnWTdb(Real64 const dw, // humidity ratio {kgWater/kgDryAi
     if ((Tsave == T) && (dwSave == dw)) return cpaSave;
 
     // compute heat capacity of air
-    Real64 const w(max(dw, 1.0e-5));
+    Real64 const w(max(dw, 1.0e-5f));
     Real64 const cpa((PsyHFnTdbW(T + 0.1, w) - PsyHFnTdbW(T, w)) * 10.0); // result => heat capacity of air {J/kg-C}
 
     // save values for next call
@@ -459,6 +461,8 @@ TEST_F(EnergyPlusFixture, Psychrometrics_Interpolation_Sample_Test)
     // check error
     EXPECT_LE(error, 1E-7);
 }
+
+#ifndef EP_nocache_Psychrometrics
 TEST_F(EnergyPlusFixture, Psychrometrics_CSpline_Test)
 {
     // compare the results of Tsat between CSpline interpolation and original psychrometric function for PsychTsatFnPb
@@ -482,6 +486,7 @@ TEST_F(EnergyPlusFixture, Psychrometrics_CSpline_Test)
     // check error
     EXPECT_LE(error, 1E-5);
 }
+#endif
 
 TEST_F(EnergyPlusFixture, Psychrometrics_PsyTwbFnTdbWPb_Test_Discontinuity)
 {

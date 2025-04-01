@@ -246,7 +246,7 @@ TEST_F(EnergyPlusFixture, EvapCoolers_SizeIndEvapCoolerTest)
     state->dataSize->FinalSysSizing(state->dataSize->CurSysNum).DesMainVolFlow = 1.0;
     state->dataSize->FinalSysSizing(state->dataSize->CurSysNum).DesOutAirVolFlow = 0.2;
     PrimaryAirDesignFlow = state->dataSize->FinalSysSizing(state->dataSize->CurSysNum).DesOutAirVolFlow;
-    SecondaryAirDesignFlow = max(PrimaryAirDesignFlow, 0.5 * state->dataSize->FinalSysSizing(state->dataSize->CurSysNum).DesMainVolFlow);
+    SecondaryAirDesignFlow = max(PrimaryAirDesignFlow, 0.5f * state->dataSize->FinalSysSizing(state->dataSize->CurSysNum).DesMainVolFlow);
     SecondaryAirDesignFlow = SecondaryAirDesignFlow * EvapCond(EvapCoolNum).IndirectVolFlowScalingFactor;
 
     // Test Indirect Evaporative Cooler Primary/Secondary Air Design Flow Rate on OA System
@@ -875,7 +875,7 @@ TEST_F(EnergyPlusFixture, DirectEvapCoolerAutosizeWithoutSysSizingRunDone)
     ASSERT_THROW(EvaporativeCoolers::SizeEvapCooler(*state, 1), std::runtime_error);
 
     std::string const error_string = delimited_string({
-        format("   ** Warning ** Version: missing in IDF, processing for EnergyPlus version=\"{}\"", DataStringGlobals::MatchVersion),
+        fmt::format("   ** Warning ** Version: missing in IDF, processing for EnergyPlus version=\"{}\"", DataStringGlobals::MatchVersion),
         "   ** Severe  ** For autosizing of EvaporativeCooler:Direct:ResearchSpecial DIRECTEVAPCOOLER, a system sizing run must be done.",
         "   **   ~~~   ** The \"SimulationControl\" object did not have the field \"Do System Sizing Calculation\" set to Yes.",
         "   **  Fatal  ** Program terminates due to previously shown condition(s).",

@@ -155,21 +155,21 @@ namespace ZoneAirLoopEquipmentManager {
         if (CompIndex == 0) {
             AirDistUnitNum = Util::FindItemInList(ZoneAirLoopEquipName, state.dataDefineEquipment->AirDistUnit);
             if (AirDistUnitNum == 0) {
-                ShowFatalError(state, format("ManageZoneAirLoopEquipment: Unit not found={}", ZoneAirLoopEquipName));
+                ShowFatalError(state, fmt::format("ManageZoneAirLoopEquipment: Unit not found={}", ZoneAirLoopEquipName));
             }
             CompIndex = AirDistUnitNum;
         } else {
             AirDistUnitNum = CompIndex;
             if (AirDistUnitNum > (int)state.dataDefineEquipment->AirDistUnit.size() || AirDistUnitNum < 1) {
                 ShowFatalError(state,
-                               format("ManageZoneAirLoopEquipment:  Invalid CompIndex passed={}, Number of Units={}, Entered Unit name={}",
+                               fmt::format("ManageZoneAirLoopEquipment:  Invalid CompIndex passed={}, Number of Units={}, Entered Unit name={}",
                                       AirDistUnitNum,
                                       (int)state.dataDefineEquipment->AirDistUnit.size(),
                                       ZoneAirLoopEquipName));
             }
             if (ZoneAirLoopEquipName != state.dataDefineEquipment->AirDistUnit(AirDistUnitNum).Name) {
                 ShowFatalError(state,
-                               format("ManageZoneAirLoopEquipment: Invalid CompIndex passed={}, Unit name={}, stored Unit Name for that index={}",
+                               fmt::format("ManageZoneAirLoopEquipment: Invalid CompIndex passed={}, Unit name={}, stored Unit Name for that index={}",
                                       AirDistUnitNum,
                                       ZoneAirLoopEquipName,
                                       state.dataDefineEquipment->AirDistUnit(AirDistUnitNum).Name));
@@ -269,7 +269,7 @@ namespace ZoneAirLoopEquipmentManager {
                 airDistUnit.EquipName(AirDistCompUnitNum) = AlphArray(4);
                 ValidateComponent(state, AlphArray(3), AlphArray(4), IsNotOK, CurrentModuleObject);
                 if (IsNotOK) {
-                    ShowContinueError(state, format("In {} = {}", CurrentModuleObject, AlphArray(1)));
+                    ShowContinueError(state, fmt::format("In {} = {}", CurrentModuleObject, AlphArray(1)));
                     ErrorsFound = true;
                 }
                 airDistUnit.UpStreamLeakFrac = NumArray(1);
@@ -279,8 +279,8 @@ namespace ZoneAirLoopEquipmentManager {
                 } else if (airDistUnit.DownStreamLeakFrac < 1.0 && airDistUnit.DownStreamLeakFrac > 0.0) {
                     airDistUnit.LeakLoadMult = 1.0 / (1.0 - airDistUnit.DownStreamLeakFrac);
                 } else {
-                    ShowSevereError(state, format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
-                    ShowContinueError(state, format("{} must be less than 1.0", cNumericFields(2)));
+                    ShowSevereError(state, fmt::format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
+                    ShowContinueError(state, fmt::format("{} must be less than 1.0", cNumericFields(2)));
                     ErrorsFound = true;
                 }
                 if (airDistUnit.UpStreamLeakFrac > 0.0) {
@@ -299,8 +299,8 @@ namespace ZoneAirLoopEquipmentManager {
                 if (!lAlphaBlanks(5)) {
                     airDistUnit.AirTerminalSizingSpecIndex = Util::FindItemInList(AlphArray(5), state.dataSize->AirTerminalSizingSpec);
                     if (airDistUnit.AirTerminalSizingSpecIndex == 0) {
-                        ShowSevereError(state, format("{} = {} not found.", cAlphaFields(5), AlphArray(5)));
-                        ShowContinueError(state, format("Occurs in {} = {}", CurrentModuleObject, airDistUnit.Name));
+                        ShowSevereError(state, fmt::format("{} = {} not found.", cAlphaFields(5), AlphArray(5)));
+                        ShowContinueError(state, fmt::format("Occurs in {} = {}", CurrentModuleObject, airDistUnit.Name));
                         ErrorsFound = true;
                     }
                 }
@@ -320,9 +320,9 @@ namespace ZoneAirLoopEquipmentManager {
                 case DataDefineEquip::ZnAirLoopEquipType::SingleDuctUserDefined:
                 case DataDefineEquip::ZnAirLoopEquipType::SingleDuctATMixer:
                     if (airDistUnit.UpStreamLeak || airDistUnit.DownStreamLeak) {
-                        ShowSevereError(state, format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
+                        ShowSevereError(state, fmt::format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
                         ShowContinueError(state,
-                                          format("Simple duct leakage model not available for {} = {}",
+                                          fmt::format("Simple duct leakage model not available for {} = {}",
                                                  cAlphaFields(3),
                                                  airDistUnit.EquipType(AirDistCompUnitNum)));
                         ErrorsFound = true;
@@ -331,9 +331,9 @@ namespace ZoneAirLoopEquipmentManager {
                 case DataDefineEquip::ZnAirLoopEquipType::SingleDuctConstVolFourPipeBeam:
                     airDistUnit.airTerminalPtr = FourPipeBeam::HVACFourPipeBeam::fourPipeBeamFactory(state, airDistUnit.EquipName(1));
                     if (airDistUnit.UpStreamLeak || airDistUnit.DownStreamLeak) {
-                        ShowSevereError(state, format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
+                        ShowSevereError(state, fmt::format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
                         ShowContinueError(state,
-                                          format("Simple duct leakage model not available for {} = {}",
+                                          fmt::format("Simple duct leakage model not available for {} = {}",
                                                  cAlphaFields(3),
                                                  airDistUnit.EquipType(AirDistCompUnitNum)));
                         ErrorsFound = true;
@@ -349,8 +349,8 @@ namespace ZoneAirLoopEquipmentManager {
                     airDistUnit.IsConstLeakageRate = true;
                     break;
                 default:
-                    ShowSevereError(state, format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
-                    ShowContinueError(state, format("Invalid {} = {}", cAlphaFields(3), airDistUnit.EquipType(AirDistCompUnitNum)));
+                    ShowSevereError(state, fmt::format("Error found in {} = {}", CurrentModuleObject, airDistUnit.Name));
+                    ShowContinueError(state, fmt::format("Invalid {} = {}", cAlphaFields(3), airDistUnit.EquipType(AirDistCompUnitNum)));
                     ErrorsFound = true;
                     break;
                 } // end switch
@@ -439,7 +439,7 @@ namespace ZoneAirLoopEquipmentManager {
             }
         }
         if (ErrorsFound) {
-            ShowFatalError(state, format("{}Errors found in getting {} Input", RoutineName, CurrentModuleObject));
+            ShowFatalError(state, fmt::format("{}Errors found in getting {} Input", RoutineName, CurrentModuleObject));
         }
     }
 
@@ -587,9 +587,9 @@ namespace ZoneAirLoopEquipmentManager {
                             DesFlowRatio = 1.0;
                         }
                         MassFlowRateUpStreamLeakMax =
-                            max(airDistUnit.UpStreamLeakFrac * state.dataLoopNodes->Node(InNodeNum).MassFlowRateMax * DesFlowRatio, 0.0);
+                            max(airDistUnit.UpStreamLeakFrac * state.dataLoopNodes->Node(InNodeNum).MassFlowRateMax * DesFlowRatio, 0.0f);
                     } else {
-                        MassFlowRateUpStreamLeakMax = max(airDistUnit.UpStreamLeakFrac * MassFlowRateMaxAvail, 0.0);
+                        MassFlowRateUpStreamLeakMax = max(airDistUnit.UpStreamLeakFrac * MassFlowRateMaxAvail, 0.0f);
                     }
                     if (MassFlowRateMaxAvail > MassFlowRateUpStreamLeakMax) {
                         airDistUnit.MassFlowRateUpStrLk = MassFlowRateUpStreamLeakMax;
@@ -598,7 +598,7 @@ namespace ZoneAirLoopEquipmentManager {
                         airDistUnit.MassFlowRateUpStrLk = MassFlowRateMaxAvail;
                         state.dataLoopNodes->Node(InNodeNum).MassFlowRateMaxAvail = 0.0;
                     }
-                    state.dataLoopNodes->Node(InNodeNum).MassFlowRateMinAvail = max(0.0, MassFlowRateMinAvail - airDistUnit.MassFlowRateUpStrLk);
+                    state.dataLoopNodes->Node(InNodeNum).MassFlowRateMinAvail = max(0.0f, MassFlowRateMinAvail - airDistUnit.MassFlowRateUpStrLk);
                 }
             }
 
@@ -732,8 +732,8 @@ namespace ZoneAirLoopEquipmentManager {
                 ProvideSysOutput = false;
             } break;
             default: {
-                ShowSevereError(state, format("Error found in ZoneHVAC:AirDistributionUnit={}", airDistUnit.Name));
-                ShowContinueError(state, format("Invalid Component={}", airDistUnit.EquipType(AirDistCompNum)));
+                ShowSevereError(state, fmt::format("Error found in ZoneHVAC:AirDistributionUnit={}", airDistUnit.Name));
+                ShowContinueError(state, fmt::format("Invalid Component={}", airDistUnit.EquipType(AirDistCompNum)));
                 ShowFatalError(state, "Preceding condition causes termination.");
             } break;
             }
@@ -753,9 +753,9 @@ namespace ZoneAirLoopEquipmentManager {
                     state.dataLoopNodes->Node(InNodeNum).MassFlowRate = airDistUnit.MassFlowRateSup;
                     state.dataLoopNodes->Node(OutNodeNum).MassFlowRate = airDistUnit.MassFlowRateZSup;
                     state.dataLoopNodes->Node(OutNodeNum).MassFlowRateMaxAvail =
-                        max(0.0, MassFlowRateMaxAvail - airDistUnit.MassFlowRateDnStrLk - airDistUnit.MassFlowRateUpStrLk);
+                        max(0.0f, MassFlowRateMaxAvail - airDistUnit.MassFlowRateDnStrLk - airDistUnit.MassFlowRateUpStrLk);
                     state.dataLoopNodes->Node(OutNodeNum).MassFlowRateMinAvail =
-                        max(0.0, MassFlowRateMinAvail - airDistUnit.MassFlowRateDnStrLk - airDistUnit.MassFlowRateUpStrLk);
+                        max(0.0f, MassFlowRateMinAvail - airDistUnit.MassFlowRateDnStrLk - airDistUnit.MassFlowRateUpStrLk);
                     airDistUnit.MaxAvailDelta = MassFlowRateMaxAvail - state.dataLoopNodes->Node(OutNodeNum).MassFlowRateMaxAvail;
                     airDistUnit.MinAvailDelta = MassFlowRateMinAvail - state.dataLoopNodes->Node(OutNodeNum).MassFlowRateMinAvail;
                 } else {

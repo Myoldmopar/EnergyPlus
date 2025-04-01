@@ -807,7 +807,7 @@ namespace EcoRoofManager {
                     if (ceil(60 * index1 / state.dataGlobal->MinutesInTimeStep) <= 60) {
                         ShowContinueError(
                             state,
-                            format("...Entered Timesteps per hour=[{}], Change to some value greater than or equal to [{}] for assured stability.",
+                            fmt::format("...Entered Timesteps per hour=[{}], Change to some value greater than or equal to [{}] for assured stability.",
                                    state.dataGlobal->TimeStepsInHour,
                                    60 * index1 / state.dataGlobal->MinutesInTimeStep));
                         ShowContinueError(state, "...Note that EnergyPlus has a maximum of 60 timesteps per hour");
@@ -816,7 +816,7 @@ namespace EcoRoofManager {
                                           "here could be the reason.");
                     } else {
                         ShowContinueError(state,
-                                          format("...Entered Timesteps per hour=[{}], however the required frequency for stability [{}] is over the "
+                                          fmt::format("...Entered Timesteps per hour=[{}], however the required frequency for stability [{}] is over the "
                                                  "EnergyPlus maximum of 60.",
                                                  state.dataGlobal->TimeStepsInHour,
                                                  60 * index1 / state.dataGlobal->MinutesInTimeStep));
@@ -931,7 +931,7 @@ namespace EcoRoofManager {
                 // move moisture from top layer into root zone
                 MoistureDiffusion = min((MoistureMax - MeanRootMoisture) * state.dataEcoRoofMgr->RootDepth,
                                         (Moisture - MeanRootMoisture) * state.dataEcoRoofMgr->TopDepth);
-                MoistureDiffusion = max(0.0, MoistureDiffusion); // Safety net to keep positive (not needed?)
+                MoistureDiffusion = max(0.0f, MoistureDiffusion); // Safety net to keep positive (not needed?)
                 // at this point moistureDiffusion is in units of (m)/timestep
                 MoistureDiffusion *= 0.00005 * state.dataGlobal->MinutesInTimeStep * 60.0;
                 Moisture -= MoistureDiffusion / state.dataEcoRoofMgr->TopDepth;
@@ -940,7 +940,7 @@ namespace EcoRoofManager {
                 // move moisture to top layer from root zone
                 MoistureDiffusion =
                     min((MoistureMax - Moisture) * state.dataEcoRoofMgr->TopDepth, (MeanRootMoisture - Moisture) * state.dataEcoRoofMgr->RootDepth);
-                MoistureDiffusion = max(0.0, MoistureDiffusion); // Safety net (not needed?)
+                MoistureDiffusion = max(0.0f, MoistureDiffusion); // Safety net (not needed?)
                 // at this point moistureDiffusion is in units of (m)/timestep
                 MoistureDiffusion *= 0.00001 * state.dataGlobal->MinutesInTimeStep * 60.0;
                 Moisture += MoistureDiffusion / state.dataEcoRoofMgr->TopDepth;
@@ -968,7 +968,7 @@ namespace EcoRoofManager {
             if (state.dataEcoRoofMgr->RelativeSoilSaturationTop < 0.0001) {
                 if (state.dataEcoRoofMgr->ErrIndex == 0) {
                     ShowWarningMessage(state,
-                                       format("EcoRoof: UpdateSoilProps: Relative Soil Saturation Top Moisture <= 0.0001, Value=[{:.5R}].",
+                                       fmt::format("EcoRoof: UpdateSoilProps: Relative Soil Saturation Top Moisture <= 0.0001, Value=[{:.5f}].",
                                               state.dataEcoRoofMgr->RelativeSoilSaturationTop));
                     ShowContinueError(state, "Value is set to 0.0001 and simulation continues.");
                     ShowContinueError(state, "You may wish to increase the number of timesteps to attempt to alleviate the problem.");
@@ -1145,7 +1145,7 @@ namespace EcoRoofManager {
 
         //   write(unit,799) DayofYear, HourOfDay, Qsoil,Tg, Tf, Moisture, MeanRootMoisture,CumPrecip &
         //  ,CumET,CumRunoff, CumIrrigation, SoilDensity, SoilSpecHeat,SoilConductivity,Alphag
-        // 799 format(' ',I3,' ',I3,' ',' ',f9.3,' ',f6.2,' ',f6.2,' ',f5.3,' ',f5.3,' ',f6.4, '  '  &
+        // 799 fmt::format(' ',I3,' ',I3,' ',' ',f9.3,' ',f6.2,' ',f6.2,' ',f5.3,' ',f5.3,' ',f6.4, '  '  &
         //    f7.3, ' ', f7.3, ' ',f7.3, ' ',f6.1,' ',f7.1,'  ',f6.3,'  ',f6.2)
     }
 
@@ -1159,9 +1159,9 @@ namespace EcoRoofManager {
         // So, it is better to assume that the roof is flat until multiple surfaces can be handled.  Then, the next line can
         // use state.dataHeatBal->SurfCosIncAng(state.dataGlobal->HourOfDay, state.dataGlobal->TimeStep, SurfNum) instead of
         // SOLCOS(3).
-        RS = max(state.dataEnvrn->SOLCOS(3), 0.0) * state.dataEnvrn->BeamSolarRad +
+        RS = max(state.dataEnvrn->SOLCOS(3), 0.0f) * state.dataEnvrn->BeamSolarRad +
              state.dataSolarShading->SurfAnisoSkyMult(SurfNum) * state.dataEnvrn->DifSolarRad;
-        Real64 f1inv = min(1.0, (0.004 * RS + 0.005) / (0.81 * (0.004 * RS + 1.0)));
+        Real64 f1inv = min(1.0f, (0.004f * RS + 0.005f) / (0.81f * (0.004f * RS + 1.0f)));
         f1 = 1.0 / f1inv;
     }
 

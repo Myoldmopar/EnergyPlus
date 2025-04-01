@@ -132,14 +132,14 @@ namespace WaterToAirHeatPump {
         if (CompIndex == 0) {
             HPNum = Util::FindItemInList(CompName, state.dataWaterToAirHeatPump->WatertoAirHP);
             if (HPNum == 0) {
-                ShowFatalError(state, format("WaterToAir HP not found={}", CompName));
+                ShowFatalError(state, fmt::format("WaterToAir HP not found={}", CompName));
             }
             CompIndex = HPNum;
         } else {
             HPNum = CompIndex;
             if (HPNum > state.dataWaterToAirHeatPump->NumWatertoAirHPs || HPNum < 1) {
                 ShowFatalError(state,
-                               format("SimWatertoAirHP: Invalid CompIndex passed={}, Number of Water to Air HPs={}, WaterToAir HP name={}",
+                               fmt::format("SimWatertoAirHP: Invalid CompIndex passed={}, Number of Water to Air HPs={}, WaterToAir HP name={}",
                                       HPNum,
                                       state.dataWaterToAirHeatPump->NumWatertoAirHPs,
                                       CompName));
@@ -148,7 +148,7 @@ namespace WaterToAirHeatPump {
                 if (!CompName.empty() && CompName != state.dataWaterToAirHeatPump->WatertoAirHP(HPNum).Name) {
                     ShowFatalError(
                         state,
-                        format("SimWatertoAirHP: Invalid CompIndex passed={}, WaterToAir HP name={}, stored WaterToAir HP Name for that index={}",
+                        fmt::format("SimWatertoAirHP: Invalid CompIndex passed={}, WaterToAir HP name={}, stored WaterToAir HP Name for that index={}",
                                HPNum,
                                CompName,
                                state.dataWaterToAirHeatPump->WatertoAirHP(HPNum).Name));
@@ -344,7 +344,7 @@ namespace WaterToAirHeatPump {
             heatPump.LoadSideOutsideUACoeff = NumArray(8);
 
             if ((heatPump.LoadSideOutsideUACoeff < Constant::rTinyValue) || (heatPump.LoadSideTotalUACoeff < Constant::rTinyValue)) {
-                ShowSevereError(state, format("Input problem for {}={}", CurrentModuleObject, heatPump.Name));
+                ShowSevereError(state, fmt::format("Input problem for {}={}", CurrentModuleObject, heatPump.Name));
                 ShowContinueError(state, " One or both load side UA values entered are below tolerance, likely zero or blank.");
                 ShowContinueError(state, " Verify inputs, as the parameter syntax for this object went through a change with");
                 ShowContinueError(state, "  the release of EnergyPlus version 5.");
@@ -378,7 +378,7 @@ namespace WaterToAirHeatPump {
             default: {
                 ShowSevereError(
                     state,
-                    format("{}Invalid {} ({}) entered. {}={}", RoutineName, cAlphaFields(2), AlphArray(2), CurrentModuleObject, heatPump.Name));
+                    fmt::format("{}Invalid {} ({}) entered. {}={}", RoutineName, cAlphaFields(2), AlphArray(2), CurrentModuleObject, heatPump.Name));
                 ErrorsFound = true;
                 break;
             }
@@ -391,11 +391,11 @@ namespace WaterToAirHeatPump {
 
             if (heatPump.PLFCurveIndex == 0) {
                 if (lAlphaBlanks(8)) {
-                    ShowSevereError(state, format("{}{}=\"{}\", missing", RoutineName, CurrentModuleObject, heatPump.Name));
-                    ShowContinueError(state, format("...required {} is blank.", cAlphaFields(8)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\", missing", RoutineName, CurrentModuleObject, heatPump.Name));
+                    ShowContinueError(state, fmt::format("...required {} is blank.", cAlphaFields(8)));
                 } else {
-                    ShowSevereError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
-                    ShowContinueError(state, format("...not found {}=\"{}\".", cAlphaFields(8), AlphArray(8)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
+                    ShowContinueError(state, fmt::format("...not found {}=\"{}\".", cAlphaFields(8), AlphArray(8)));
                 }
                 ErrorsFound = true;
             } else {
@@ -429,19 +429,19 @@ namespace WaterToAirHeatPump {
                         CurveInput += 0.01;
                     }
                     if (MinCurveVal < 0.7) {
-                        ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
-                        ShowContinueError(state, format("...{}=\"{}\" has out of range values.", cAlphaFields(8), AlphArray(8)));
+                        ShowWarningError(state, fmt::format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
+                        ShowContinueError(state, fmt::format("...{}=\"{}\" has out of range values.", cAlphaFields(8), AlphArray(8)));
                         ShowContinueError(state,
-                                          format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2T} is {:.3T}", MinCurvePLR, MinCurveVal));
+                                          fmt::format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2f} is {:.3f}", MinCurvePLR, MinCurveVal));
                         ShowContinueError(state, "...Setting curve minimum to 0.7 and simulation continues.");
                         Curve::SetCurveOutputMinValue(state, heatPump.PLFCurveIndex, ErrorsFound, 0.7);
                     }
 
                     if (MaxCurveVal > 1.0) {
-                        ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
-                        ShowContinueError(state, format("...{} = {} has out of range value.", cAlphaFields(8), AlphArray(8)));
+                        ShowWarningError(state, fmt::format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
+                        ShowContinueError(state, fmt::format("...{} = {} has out of range value.", cAlphaFields(8), AlphArray(8)));
                         ShowContinueError(state,
-                                          format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2T} is {:.3T}", MaxCurvePLR, MaxCurveVal));
+                                          fmt::format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2f} is {:.3f}", MaxCurvePLR, MaxCurveVal));
                         ShowContinueError(state, "...Setting curve maximum to 1.0 and simulation continues.");
                         Curve::SetCurveOutputMaxValue(state, heatPump.PLFCurveIndex, ErrorsFound, 1.0);
                     }
@@ -595,7 +595,7 @@ namespace WaterToAirHeatPump {
 
             heatPump.LoadSideTotalUACoeff = NumArray(5);
             if (heatPump.LoadSideTotalUACoeff < Constant::rTinyValue) {
-                ShowSevereError(state, format("Input problem for {}={}", CurrentModuleObject, heatPump.Name));
+                ShowSevereError(state, fmt::format("Input problem for {}={}", CurrentModuleObject, heatPump.Name));
                 ShowContinueError(state, " Load side UA value is less than tolerance, likely zero or blank.");
                 ShowContinueError(state, " Verify inputs, as the parameter syntax for this object went through a change with");
                 ShowContinueError(state, "  the release of EnergyPlus version 5.");
@@ -629,7 +629,7 @@ namespace WaterToAirHeatPump {
             default: {
                 ShowSevereError(
                     state,
-                    format("{}Invalid {} ({}) entered. {}={}", RoutineName, cAlphaFields(2), AlphArray(2), CurrentModuleObject, heatPump.Name));
+                    fmt::format("{}Invalid {} ({}) entered. {}={}", RoutineName, cAlphaFields(2), AlphArray(2), CurrentModuleObject, heatPump.Name));
                 ErrorsFound = true;
                 break;
             }
@@ -643,11 +643,11 @@ namespace WaterToAirHeatPump {
 
             if (heatPump.PLFCurveIndex == 0) {
                 if (lAlphaBlanks(8)) {
-                    ShowSevereError(state, format("{}{}=\"{}\", missing", RoutineName, CurrentModuleObject, heatPump.Name));
-                    ShowContinueError(state, format("...required {} is blank.", cAlphaFields(8)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\", missing", RoutineName, CurrentModuleObject, heatPump.Name));
+                    ShowContinueError(state, fmt::format("...required {} is blank.", cAlphaFields(8)));
                 } else {
-                    ShowSevereError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
-                    ShowContinueError(state, format("...not found {}=\"{}\".", cAlphaFields(8), AlphArray(8)));
+                    ShowSevereError(state, fmt::format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
+                    ShowContinueError(state, fmt::format("...not found {}=\"{}\".", cAlphaFields(8), AlphArray(8)));
                 }
                 ErrorsFound = true;
             } else {
@@ -681,19 +681,19 @@ namespace WaterToAirHeatPump {
                         CurveInput += 0.01;
                     }
                     if (MinCurveVal < 0.7) {
-                        ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
-                        ShowContinueError(state, format("...{}=\"{}\" has out of range values.", cAlphaFields(9), AlphArray(9)));
+                        ShowWarningError(state, fmt::format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
+                        ShowContinueError(state, fmt::format("...{}=\"{}\" has out of range values.", cAlphaFields(9), AlphArray(9)));
                         ShowContinueError(state,
-                                          format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2T} is {:.3T}", MinCurvePLR, MinCurveVal));
+                                          fmt::format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2f} is {:.3f}", MinCurvePLR, MinCurveVal));
                         ShowContinueError(state, "...Setting curve minimum to 0.7 and simulation continues.");
                         Curve::SetCurveOutputMinValue(state, heatPump.PLFCurveIndex, ErrorsFound, 0.7);
                     }
 
                     if (MaxCurveVal > 1.0) {
-                        ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
-                        ShowContinueError(state, format("...{} = {} has out of range value.", cAlphaFields(9), AlphArray(9)));
+                        ShowWarningError(state, fmt::format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, heatPump.Name));
+                        ShowContinueError(state, fmt::format("...{} = {} has out of range value.", cAlphaFields(9), AlphArray(9)));
                         ShowContinueError(state,
-                                          format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2T} is {:.3T}", MaxCurvePLR, MaxCurveVal));
+                                          fmt::format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2f} is {:.3f}", MaxCurvePLR, MaxCurveVal));
                         ShowContinueError(state, "...Setting curve maximum to 1.0 and simulation continues.");
                         Curve::SetCurveOutputMaxValue(state, heatPump.PLFCurveIndex, ErrorsFound, 1.0);
                     }
@@ -752,7 +752,7 @@ namespace WaterToAirHeatPump {
         NumArray.deallocate();
 
         if (ErrorsFound) {
-            ShowFatalError(state, format("{}Errors found getting input. Program terminates.", RoutineName));
+            ShowFatalError(state, fmt::format("{}Errors found getting input. Program terminates.", RoutineName));
         }
 
         for (HPNum = 1; HPNum <= state.dataWaterToAirHeatPump->NumWatertoAirHPs; ++HPNum) {
@@ -1047,7 +1047,7 @@ namespace WaterToAirHeatPump {
 
             if (state.dataPlnt->PlantLoop(heatPump.plantLoc.loopNum).FluidName == "WATER") {
                 if (heatPump.SourceSideUACoeff < Constant::rTinyValue) {
-                    ShowSevereError(state, format("Input problem for water to air heat pump, \"{}\".", heatPump.Name));
+                    ShowSevereError(state, fmt::format("Input problem for water to air heat pump, \"{}\".", heatPump.Name));
                     ShowContinueError(state, " Source side UA value is less than tolerance, likely zero or blank.");
                     ShowContinueError(state, " Verify inputs, as the parameter syntax for this object went through a change with");
                     ShowContinueError(state, "  the release of EnergyPlus version 5.");
@@ -1055,7 +1055,7 @@ namespace WaterToAirHeatPump {
                 }
             } else {
                 if ((heatPump.SourceSideHTR1 < Constant::rTinyValue) || (heatPump.SourceSideHTR2 < Constant::rTinyValue)) {
-                    ShowSevereError(state, format("Input problem for water to air heat pump, \"{}\".", heatPump.Name));
+                    ShowSevereError(state, fmt::format("Input problem for water to air heat pump, \"{}\".", heatPump.Name));
                     ShowContinueError(state, " A source side heat transfer resistance value is less than tolerance, likely zero or blank.");
                     ShowContinueError(state, " Verify inputs, as the parameter syntax for this object went through a change with");
                     ShowContinueError(state, "  the release of EnergyPlus version 5.");
@@ -1496,7 +1496,7 @@ namespace WaterToAirHeatPump {
                         if (!state.dataGlobal->WarmupFlag) {
                             ShowRecurringWarningErrorAtEnd(
                                 state,
-                                format("WaterToAir Heat pump:cooling [{}] shut off on low pressure < {:.0R}", heatPump.Name, heatPump.LowPressCutoff),
+                                fmt::format("WaterToAir Heat pump:cooling [{}] shut off on low pressure < {:.0f}", heatPump.Name, heatPump.LowPressCutoff),
                                 heatPump.LowPressClgError,
                                 LoadSidePressure,
                                 LoadSidePressure,
@@ -1511,7 +1511,7 @@ namespace WaterToAirHeatPump {
                     if (SourceSidePressure > heatPump.HighPressCutoff && !FirstHVACIteration) {
                         if (!state.dataGlobal->WarmupFlag) {
                             ShowRecurringWarningErrorAtEnd(state,
-                                                           format("WaterToAir Heat pump:cooling [{}] shut off on high pressure > {:.0R}",
+                                                           fmt::format("WaterToAir Heat pump:cooling [{}] shut off on high pressure > {:.0f}",
                                                                   heatPump.Name,
                                                                   heatPump.HighPressCutoff),
                                                            heatPump.HighPressClgError,
@@ -1598,7 +1598,7 @@ namespace WaterToAirHeatPump {
                     default:
                         break;
                     }
-                    MassRef = max(0.0, MassRef);
+                    MassRef = max(0.0f, MassRef);
 
                     // Find the Load Side Heat Transfer
                     QLoadTotal = MassRef * (LoadSideOutletEnth - SourceSideOutletEnth);
@@ -1901,7 +1901,7 @@ namespace WaterToAirHeatPump {
                     if (!state.dataGlobal->WarmupFlag) {
                         ShowRecurringWarningErrorAtEnd(
                             state,
-                            format("WaterToAir Heat pump:heating [{}] shut off on low pressure < {:.0R}", heatPump.Name, heatPump.LowPressCutoff),
+                            fmt::format("WaterToAir Heat pump:heating [{}] shut off on low pressure < {:.0f}", heatPump.Name, heatPump.LowPressCutoff),
                             heatPump.LowPressHtgError,
                             SourceSidePressure,
                             SourceSidePressure,
@@ -1917,7 +1917,7 @@ namespace WaterToAirHeatPump {
                     if (!state.dataGlobal->WarmupFlag) {
                         ShowRecurringWarningErrorAtEnd(
                             state,
-                            format("WaterToAir Heat pump:heating [{}] shut off on high pressure > {:.0R}", heatPump.Name, heatPump.HighPressCutoff),
+                            fmt::format("WaterToAir Heat pump:heating [{}] shut off on high pressure > {:.0f}", heatPump.Name, heatPump.HighPressCutoff),
                             heatPump.HighPressHtgError,
                             heatPump.InletWaterTemp,
                             heatPump.InletWaterTemp,
@@ -2039,7 +2039,7 @@ namespace WaterToAirHeatPump {
                 default:
                     break;
                 }
-                MassRef = max(0.0, MassRef);
+                MassRef = max(0.0f, MassRef);
 
                 // Find the Source Side Heat Transfer
                 QSource = MassRef * (SourceSideOutletEnth - LoadSideOutletEnth);
@@ -2308,7 +2308,7 @@ namespace WaterToAirHeatPump {
         Twet_max = 9999.0; // high limit for Twet
 
         //  Calculate the model parameters at the actual operating conditions
-        Twet = min(heatPump.Twet_Rated * QLatRated / (QLatActual + 1.e-10), Twet_max);
+        Twet = min(heatPump.Twet_Rated * QLatRated / (QLatActual + 1.e-10f), Twet_max);
         Gamma = heatPump.Gamma_Rated * QLatRated * (EnteringDB - EnteringWB) / ((26.7 - 19.4) * QLatActual + 1.e-10);
 
         //  Calculate the compressor on and off times using a conventional thermostat curve
@@ -2326,7 +2326,7 @@ namespace WaterToAirHeatPump {
 
         //  Cap Toff to meet the equation restriction
         if (Gamma > 0.0) {
-            Toffa = min(Toff, 2.0 * Twet / Gamma);
+            Toffa = min(Toff, 2.0f * Twet / Gamma);
         } else {
             Toffa = Toff;
         }
@@ -2345,7 +2345,7 @@ namespace WaterToAirHeatPump {
         //  Adjust Sensible Heat Ratio (SHR) using Latent Heat Ratio (LHR) multiplier
         //  Floating underflow errors occur when -Ton/LatentCapacityTimeConstant is a large negative number.
         //  Cap lower limit at -700 to avoid the underflow errors.
-        aa = std::exp(max(-700.0, -Ton / heatPump.LatentCapacityTimeConstant));
+        aa = std::exp(max(-700.0f, -Ton / heatPump.LatentCapacityTimeConstant));
         //  Calculate latent heat ratio multiplier
         LHRmult = max(((Ton - To2) / (Ton + heatPump.LatentCapacityTimeConstant * (aa - 1.0))), 0.0);
 
@@ -2443,7 +2443,7 @@ namespace WaterToAirHeatPump {
         IndexNum = Util::FindItemInList(CoilName, state.dataWaterToAirHeatPump->WatertoAirHP);
 
         if (IndexNum == 0) {
-            ShowSevereError(state, format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
+            ShowSevereError(state, fmt::format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
             ErrorsFound = true;
         }
 
@@ -2495,7 +2495,7 @@ namespace WaterToAirHeatPump {
         }
 
         if (WhichCoil == 0) {
-            ShowSevereError(state, format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
+            ShowSevereError(state, fmt::format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
             ErrorsFound = true;
             CoilCapacity = -1000.0;
         }
@@ -2539,7 +2539,7 @@ namespace WaterToAirHeatPump {
         }
 
         if (WhichCoil == 0) {
-            ShowSevereError(state, format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
+            ShowSevereError(state, fmt::format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
             ErrorsFound = true;
             NodeNumber = 0;
         }
@@ -2583,7 +2583,7 @@ namespace WaterToAirHeatPump {
         }
 
         if (WhichCoil == 0) {
-            ShowSevereError(state, format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
+            ShowSevereError(state, fmt::format("Could not find CoilType=\"{}\" with Name=\"{}\"", CoilType, CoilName));
             ErrorsFound = true;
             NodeNumber = 0;
         }

@@ -127,19 +127,19 @@ namespace Window {
         std::shared_ptr<Tarcog::ISO15099::CEnvironment> getIndoor(EnergyPlusData &state) const;
         std::shared_ptr<Tarcog::ISO15099::CEnvironment> getOutdoor(EnergyPlusData &state, Real64 const t_Hext) const;
         Tarcog::ISO15099::CIGU getIGU() const;
-        Tarcog::ISO15099::CIGU getIGU(double width, double height, double tilt);
+        Tarcog::ISO15099::CIGU getIGU(Real64 width, Real64 height, Real64 tilt);
 
         static int getActiveConstructionNumber(EnergyPlusData &state, EnergyPlus::DataSurfaces::SurfaceData const &surface, int t_SurfNum);
 
         // for assembly windoww reporting
         std::shared_ptr<Tarcog::ISO15099::IIGUSystem> getTarcogSystemForReporting(
-            EnergyPlusData &state, bool const useSummerConditions, const double width, const double height, const double tilt);
+            EnergyPlusData &state, bool const useSummerConditions, const Real64 width, const Real64 height, const Real64 tilt);
 
         // This special case of interior shade is necessary only because of strange calculation of heat flow on interior side
         // It probably needs to be removed since calculation is no different from any other case. It is left over from
         // old EnergyPlus code and it needs to be checked.
         bool isInteriorShade() const;
-        double overallUfactorFromFilmsAndCond(double conductance, double insideFilm, double outsideFilm);
+        Real64 overallUfactorFromFilmsAndCond(Real64 conductance, Real64 insideFilm, Real64 outsideFilm);
 
         // methods specifically for helping in NFRC assembly calculations
         std::shared_ptr<Tarcog::ISO15099::CEnvironment> getOutdoorNfrc(bool const useSummerConditions);

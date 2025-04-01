@@ -899,7 +899,7 @@ namespace TarcogShading {
         //  write(*, *) Tup-Tdown
         //  write(*, 998) Tup - Tdown, qv1, qv2
 
-        // 998  format(f15.9, f15.9, f15.9)
+        // 998  fmt::format(f15.9, f15.9, f15.9)
 
         // bi..  testing - velocities output file
         // bi      open(unit = 33, file = 'velocities.out', status='unknown', form='formatted', iostat = er)
@@ -1165,7 +1165,7 @@ namespace TarcogShading {
 
         // bi...Test output:
         //  write(*,101) tenv, tgap, tgapout
-        // 101  format(f15.9, f15.9, f15.9)
+        // 101  fmt::format(f15.9, f15.9, f15.9)
 
         hcv = 2.0 * hc + 4.0 * speed;
 

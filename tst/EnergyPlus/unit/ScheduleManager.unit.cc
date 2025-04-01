@@ -1002,16 +1002,16 @@ TEST_F(EnergyPlusFixture, Schedule_GetCurrentScheduleValue_DST_RampUp_Leap)
     auto *sched1 = Sched::AddScheduleDetailed(*state, "SCHED-1");
 
     for (int i = 1; i <= 366; ++i) {
-        Sched::AddWeekSchedule(*state, format("WEEK_{}", i));
-        Sched::AddDaySchedule(*state, format("DAY_{}", i));
+        Sched::AddWeekSchedule(*state, fmt::format("WEEK_{}", i));
+        Sched::AddDaySchedule(*state, fmt::format("DAY_{}", i));
     }
 
     for (int day = 1; day <= 366; ++day) {
         // int DayOfWeek = ((day-1) % 7) + 1;
-        auto *weekSched = sched1->weekScheds[day] = Sched::GetWeekSchedule(*state, format("WEEK_{}", day));
+        auto *weekSched = sched1->weekScheds[day] = Sched::GetWeekSchedule(*state, fmt::format("WEEK_{}", day));
 
         for (int d = 1; d <= 7; ++d) {
-            auto *daySched = weekSched->dayScheds[d] = Sched::GetDaySchedule(*state, format("DAY_{}", day));
+            auto *daySched = weekSched->dayScheds[d] = Sched::GetDaySchedule(*state, fmt::format("DAY_{}", day));
 
             for (int hr = 0; hr < Constant::iHoursInDay; hr++) {
                 for (int ts = 0; ts < s_glob->TimeStepsInHour; ++ts) {
@@ -1022,8 +1022,8 @@ TEST_F(EnergyPlusFixture, Schedule_GetCurrentScheduleValue_DST_RampUp_Leap)
     }
 
     EXPECT_EQ(365, sched1->weekScheds[366]->Num);
-    EXPECT_EQ(365, Sched::GetWeekSchedule(*state, format("WEEK_{}", 366))->dayScheds[2]->Num);
-    EXPECT_EQ(8784.0, Sched::GetDaySchedule(*state, format("DAY_{}", 366))->tsVals[23 * s_glob->TimeStepsInHour + 3]);
+    EXPECT_EQ(365, Sched::GetWeekSchedule(*state, fmt::format("WEEK_{}", 366))->dayScheds[2]->Num);
+    EXPECT_EQ(8784.0, Sched::GetDaySchedule(*state, fmt::format("DAY_{}", 366))->tsVals[23 * s_glob->TimeStepsInHour + 3]);
 
     s_glob->TimeStepsInHour = s_glob->TimeStepsInHour; // must initialize this to get schedules initialized
     s_glob->MinutesInTimeStep = 15;                    // must initialize this to get schedules initialized
@@ -1176,9 +1176,9 @@ TEST_F(EnergyPlusFixture, Schedule_GetCurrentScheduleValue_DST_RampUp_NoLeap)
     auto *sched1 = Sched::AddScheduleDetailed(*state, "SCHED-1");
 
     for (int i = 1; i <= 366; ++i)
-        Sched::AddWeekSchedule(*state, format("WEEK_{}", i));
+        Sched::AddWeekSchedule(*state, fmt::format("WEEK_{}", i));
     for (int i = 1; i <= 365; ++i)
-        Sched::AddDaySchedule(*state, format("DAY_{}", i));
+        Sched::AddDaySchedule(*state, fmt::format("DAY_{}", i));
 
     Array1D_int EndDayOfMonth(12, {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31});
 
@@ -1193,8 +1193,8 @@ TEST_F(EnergyPlusFixture, Schedule_GetCurrentScheduleValue_DST_RampUp_NoLeap)
                 EXPECT_EQ(dayOfYear + 1, DayOfYear_Schedule);
             }
 
-            auto *weekSched = sched1->weekScheds[DayOfYear_Schedule] = Sched::GetWeekSchedule(*state, format("WEEK_{}", DayOfYear_Schedule));
-            auto *daySched = Sched::GetDaySchedule(*state, format("DAY_{}", dayOfYear));
+            auto *weekSched = sched1->weekScheds[DayOfYear_Schedule] = Sched::GetWeekSchedule(*state, fmt::format("WEEK_{}", DayOfYear_Schedule));
+            auto *daySched = Sched::GetDaySchedule(*state, fmt::format("DAY_{}", dayOfYear));
             for (int d = 1; d <= 7; ++d) {
                 weekSched->dayScheds[d] = daySched;
             }

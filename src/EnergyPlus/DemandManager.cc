@@ -353,15 +353,15 @@ void GetDemandManagerListInput(EnergyPlusData &state)
             thisDemandMgrList.Meter = GetMeterIndex(state, s_ipsc->cAlphaArgs(2));
 
             if (thisDemandMgrList.Meter == -1) {
-                ShowSevereError(state, format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(2), s_ipsc->cAlphaArgs(2)));
-                ShowContinueError(state, format("Entered in {} = {}", cCurrentModuleObject, thisDemandMgrList.Name));
+                ShowSevereError(state, fmt::format("Invalid {} = {}", s_ipsc->cAlphaFieldNames(2), s_ipsc->cAlphaArgs(2)));
+                ShowContinueError(state, fmt::format("Entered in {} = {}", cCurrentModuleObject, thisDemandMgrList.Name));
                 ErrorsFound = true;
 
             } else if ((state.dataOutputProcessor->meters[thisDemandMgrList.Meter]->resource == Constant::eResource::Electricity) ||
                        (state.dataOutputProcessor->meters[thisDemandMgrList.Meter]->resource == Constant::eResource::ElectricityNet)) {
             } else {
                 ShowSevereError(state,
-                                format("{} = \"{}\" invalid value {} = \"{}\".",
+                                fmt::format("{} = \"{}\" invalid value {} = \"{}\".",
                                        cCurrentModuleObject,
                                        thisDemandMgrList.Name,
                                        s_ipsc->cAlphaFieldNames(2),
@@ -419,7 +419,7 @@ void GetDemandManagerListInput(EnergyPlusData &state)
                         thisManager = Util::FindItemInList(s_ipsc->cAlphaArgs(MgrNum * 2 + 6), state.dataDemandManager->DemandMgr);
                         if (thisManager == 0) {
                             ShowSevereError(state,
-                                            format("{} = \"{}\" invalid {} = \"{}\" not found.",
+                                            fmt::format("{} = \"{}\" invalid {} = \"{}\" not found.",
                                                    cCurrentModuleObject,
                                                    thisDemandMgrList.Name,
                                                    s_ipsc->cAlphaFieldNames(MgrNum * 2 + 6),
@@ -428,7 +428,7 @@ void GetDemandManagerListInput(EnergyPlusData &state)
                         }
                     } else {
                         ShowSevereError(state,
-                                        format("{} = \"{}\" invalid value {} = \"{}\".",
+                                        fmt::format("{} = \"{}\" invalid value {} = \"{}\".",
                                                cCurrentModuleObject,
                                                thisDemandMgrList.Name,
                                                s_ipsc->cAlphaFieldNames(MgrNum * 2 + 5),
@@ -499,7 +499,7 @@ void GetDemandManagerListInput(EnergyPlusData &state)
                                 thisDemandMgrList.Name);
 
             if (ErrorsFound) {
-                ShowFatalError(state, format("Errors found in processing input for {}.", cCurrentModuleObject));
+                ShowFatalError(state, fmt::format("Errors found in processing input for {}.", cCurrentModuleObject));
             }
 
         } // ListNum
@@ -676,7 +676,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
 
                     } else {
                         ShowSevereError(state,
-                                        format("{}=\"{}\" invalid {}=\"{}\" not found.",
+                                        fmt::format("{}=\"{}\" invalid {}=\"{}\" not found.",
                                                CurrentModuleObject,
                                                s_ipsc->cAlphaArgs(1),
                                                s_ipsc->cAlphaFieldNames(LoadNum + 4),
@@ -685,7 +685,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                     }
                 } // LoadNum
             } else {
-                ShowSevereError(state, format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state, "Number of loads is calculated to be less than one. Demand manager must have at least one load assigned.");
                 ErrorsFound = true;
             }
@@ -760,7 +760,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                         ++demandMgr.NumOfLoads;
                     } else {
                         ShowSevereError(state,
-                                        format("{}=\"{}\" invalid {}=\"{}\" not found.",
+                                        fmt::format("{}=\"{}\" invalid {}=\"{}\" not found.",
                                                CurrentModuleObject,
                                                s_ipsc->cAlphaArgs(1),
                                                s_ipsc->cAlphaFieldNames(LoadNum + 4),
@@ -791,7 +791,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                     }
                 } // LoadNum
             } else {
-                ShowSevereError(state, format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state, "Number of loads is calculated to be less than one. Demand manager must have at least one load assigned.");
                 ErrorsFound = true;
             }
@@ -867,7 +867,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                         ++demandMgr.NumOfLoads;
                     } else {
                         ShowSevereError(state,
-                                        format("{}=\"{}\" invalid {}=\"{}\" not found.",
+                                        fmt::format("{}=\"{}\" invalid {}=\"{}\" not found.",
                                                CurrentModuleObject,
                                                s_ipsc->cAlphaArgs(1),
                                                s_ipsc->cAlphaFieldNames(LoadNum + 4),
@@ -898,7 +898,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                     }
                 } // LoadNum
             } else {
-                ShowSevereError(state, format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state, "Number of loads is calculated to be less than one. Demand manager must have at least one load assigned.");
                 ErrorsFound = true;
             }
@@ -955,11 +955,11 @@ void GetDemandManagerInput(EnergyPlusData &state)
             demandMgr.UpperLimit = NumArray(3);
 
             if (demandMgr.LowerLimit > demandMgr.UpperLimit) {
-                ShowSevereError(state, format("Invalid input for {} = {}", CurrentModuleObject, AlphArray(1)));
+                ShowSevereError(state, fmt::format("Invalid input for {} = {}", CurrentModuleObject, AlphArray(1)));
                 ShowContinueError(
                     state,
-                    format("{} [{:.2R}] > {} [{:.2R}]", s_ipsc->cNumericFieldNames(2), NumArray(2), s_ipsc->cNumericFieldNames(3), NumArray(3)));
-                ShowContinueError(state, format("{} cannot be greater than {}", s_ipsc->cNumericFieldNames(2), s_ipsc->cNumericFieldNames(3)));
+                    fmt::format("{} [{:.2f}] > {} [{:.2f}]", s_ipsc->cNumericFieldNames(2), NumArray(2), s_ipsc->cNumericFieldNames(3), NumArray(3)));
+                ShowContinueError(state, fmt::format("{} cannot be greater than {}", s_ipsc->cNumericFieldNames(2), s_ipsc->cNumericFieldNames(3)));
                 ErrorsFound = true;
             }
 
@@ -984,7 +984,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                         ++demandMgr.NumOfLoads;
                     } else {
                         ShowSevereError(state,
-                                        format("{}=\"{}\" invalid {}=\"{}\" not found.",
+                                        fmt::format("{}=\"{}\" invalid {}=\"{}\" not found.",
                                                CurrentModuleObject,
                                                s_ipsc->cAlphaArgs(1),
                                                s_ipsc->cAlphaFieldNames(LoadNum + 4),
@@ -1013,7 +1013,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                     }
                 } // LoadNum
             } else {
-                ShowSevereError(state, format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state, "Number of loads is calculated to be less than one. Demand manager must have at least one load assigned.");
                 ErrorsFound = true;
             }
@@ -1084,7 +1084,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                     ++demandMgr.NumOfLoads;
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=\"{}\" not found.",
+                                    fmt::format("{}=\"{}\" invalid {}=\"{}\" not found.",
                                            CurrentModuleObject,
                                            s_ipsc->cAlphaArgs(1),
                                            s_ipsc->cAlphaFieldNames(LoadNum + AlphaShift),
@@ -1102,7 +1102,7 @@ void GetDemandManagerInput(EnergyPlusData &state)
                     }
                 }
             } else {
-                ShowSevereError(state, format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
+                ShowSevereError(state, fmt::format("{}=\"{}\" invalid value for number of loads.", CurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state, "Number of loads is calculated to be less than one. Demand manager must have at least one load assigned.");
                 ErrorsFound = true;
             }

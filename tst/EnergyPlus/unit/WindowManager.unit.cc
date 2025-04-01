@@ -251,8 +251,8 @@ TEST_F(EnergyPlusFixture, WindowFrameTest)
 
     // initial guess temperatures
     int numTemps = 2 + 2 * state->dataConstruction->Construct(cNum).TotGlassLayers;
-    Real64 inSurfTemp = T_in - (1.0 / (numTemps - 1)) * (T_in - T_out);
-    Real64 outSurfTemp = T_out + (1.0 / (numTemps - 1)) * (T_in - T_out);
+    double inSurfTemp = T_in - (1.0 / (numTemps - 1)) * (T_in - T_out);
+    double outSurfTemp = T_out + (1.0 / (numTemps - 1)) * (T_in - T_out);
 
     Real64 h_exterior_f = 4 + v_ws * 4;
     Real64 h_exterior;
@@ -326,9 +326,9 @@ TEST_F(EnergyPlusFixture, WindowManager_TransAndReflAtPhi)
     Real64 rf0 = 0.0810; // Front reflectance at zero incidence angle
     Real64 rb0 = 0.0810; // Back reflectance at zero incidence angle
 
-    Real64 tfp = 0.; // Transmittance at cs
-    Real64 rfp = 0.; // Front reflectance at cs
-    Real64 rbp = 0.; // Back reflectance at cs
+    double tfp = 0.; // Transmittance at cs
+    double rfp = 0.; // Front reflectance at cs
+    double rbp = 0.; // Back reflectance at cs
 
     bool SimpleGlazingSystem = false; // .TRUE. if simple block model being used
     Real64 SimpleGlazingSHGC = 0.;    // SHGC value to use in alternate model for simple glazing system
@@ -566,8 +566,8 @@ TEST_F(EnergyPlusFixture, WindowManager_RefAirTempTest)
     state->dataSurface->SurfWinTransSolar = 0.0;
     state->dataHeatBal->EnclSolQSWRad = 0.0;
 
-    Real64 inSurfTemp;
-    Real64 outSurfTemp;
+    double inSurfTemp;
+    double outSurfTemp;
 
     // Calculate temperature based on supply flow rate
     Window::CalcWindowHeatBalance(*state, surfNum2, state->dataHeatBalSurf->SurfHConvInt(surfNum2), inSurfTemp, outSurfTemp);
@@ -2800,8 +2800,8 @@ TEST_F(EnergyPlusFixture, WindowManager_SrdLWRTest)
     state->dataSurface->SurfWinTransSolar = 0.0;
     state->dataHeatBal->EnclSolQSWRad = 0.0;
 
-    Real64 inSurfTemp;
-    Real64 outSurfTemp;
+    double inSurfTemp;
+    double outSurfTemp;
     Sched::GetSchedule(*state, "SURROUNDING TEMP SCH 1")->currentVal = 25.0; // Srd Srfs Temp
     // Calculate temperature based on supply flow rate
 
@@ -3007,14 +3007,14 @@ TEST_F(EnergyPlusFixture, WindowManager_CalcNominalWindowCondAdjRatioTest)
     state->dataHeatBalSurf->SurfWinCoeffAdjRatio.dimension(34, 1.0);
     Window::InitGlassOpticalCalculations(*state);
 
-    Real64 SHGC;         // Center-of-glass solar heat gain coefficient for ASHRAE
-    Real64 TransSolNorm; // Window construction solar transmittance at normal incidence
-    Real64 TransVisNorm; // Window construction visible transmittance at normal incidence
+    double SHGC;         // Center-of-glass solar heat gain coefficient for ASHRAE
+    double TransSolNorm; // Window construction solar transmittance at normal incidence
+    double TransVisNorm; // Window construction visible transmittance at normal incidence
     int errFlag = 0;     // Error flag
     int ConstrNum = 4;
     int MaterNum;
-    Real64 NominalConductanceWinter;
-    Real64 NominalConductanceSummer;
+    double NominalConductanceWinter;
+    double NominalConductanceSummer;
 
     MaterNum = state->dataConstruction->Construct(ConstrNum).LayerPoint(1);
     auto *thisMaterial = dynamic_cast<Material::MaterialGlass *>(state->dataMaterial->materials(MaterNum));

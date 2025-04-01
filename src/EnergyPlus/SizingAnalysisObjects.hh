@@ -104,7 +104,7 @@ public:
 class SizingLog
 {
 public:
-    SizingLog(double &rVariable);
+    explicit SizingLog(Real64 &rVariable);
 
     int NumOfEnvironmentsInLogSet;
     int NumOfDesignDaysInLogSet;
