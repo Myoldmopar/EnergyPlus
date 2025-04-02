@@ -337,7 +337,7 @@ namespace Photovoltaics {
                     ShowContinueError(state, format("Entered in {} = {}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                     ShowContinueError(state, "Surface used for solar collector faces down");
                     ShowContinueError(
-                        state, format("Surface tilt angle (degrees from ground outward normal) = {:.2R}", state.dataSurface->Surface(SurfNum).Tilt));
+                        state, format("Surface tilt angle (degrees from ground outward normal) = {:.2f}", state.dataSurface->Surface(SurfNum).Tilt));
                 }
             }
 
@@ -1653,8 +1653,8 @@ namespace Photovoltaics {
             ShowSevereError(state, "EquivalentOneDiode Photovoltaic model failed to find maximum power point");
             ShowContinueError(state, "Numerical solver failed trying to take exponential of too large a number");
             ShowContinueError(state, format("Check input data in {}", state.dataPhotovoltaic->cPVEquiv1DiodePerfObjectName));
-            ShowContinueError(state, format("VV (voltage) = {:.5R}", VV));
-            ShowContinueError(state, format("II (current) = {:.5R}", II));
+            ShowContinueError(state, format("VV (voltage) = {:.5f}", VV));
+            ShowContinueError(state, format("II (current) = {:.5f}", II));
             ShowFatalError(state, "FUN: EnergyPlus terminates because of numerical problem in EquivalentOne-Diode PV model");
         }
 
@@ -1686,8 +1686,8 @@ namespace Photovoltaics {
             ShowSevereError(state, "EquivalentOneDiode Photovoltaic model failed to find maximum power point");
             ShowContinueError(state, "Numerical solver failed trying to take exponential of too large a number");
             ShowContinueError(state, format("Check input data in {}", state.dataPhotovoltaic->cPVEquiv1DiodePerfObjectName));
-            ShowContinueError(state, format("VV (voltage) = {:.5R}", VV));
-            ShowContinueError(state, format("II (current) = {:.5R}", II));
+            ShowContinueError(state, format("VV (voltage) = {:.5f}", VV));
+            ShowContinueError(state, format("II (current) = {:.5f}", II));
             ShowFatalError(state, "FI: EnergyPlus terminates because of numerical problem in EquivalentOne-Diode PV model");
         }
 
@@ -1719,8 +1719,8 @@ namespace Photovoltaics {
             ShowSevereError(state, "EquivalentOneDiode Photovoltaic model failed to find maximum power point");
             ShowContinueError(state, "Numerical solver failed trying to take exponential of too large a number");
             ShowContinueError(state, format("Check input data in {}", state.dataPhotovoltaic->cPVEquiv1DiodePerfObjectName));
-            ShowContinueError(state, format("VV (voltage) = {:.5R}", VV));
-            ShowContinueError(state, format("II (current) = {:.5R}", II));
+            ShowContinueError(state, format("VV (voltage) = {:.5f}", VV));
+            ShowContinueError(state, format("II (current) = {:.5f}", II));
             ShowFatalError(state, "FI: EnergyPlus terminates because of numerical problem in EquivalentOne-Diode PV model");
         }
 

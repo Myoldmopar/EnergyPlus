@@ -358,7 +358,7 @@ namespace UnitHeater {
                     ShowSevereError(state, format("Specified in {} = {}", CurrentModuleObject, state.dataUnitHeaters->UnitHeat(UnitHeatNum).Name));
                     ShowContinueError(
                         state,
-                        format("...air flow rate ({:.7T}) in fan object {} is less than the unit heater maximum supply air flow rate ({:.7T}).",
+                        format("...air flow rate ({:.7f}) in fan object {} is less than the unit heater maximum supply air flow rate ({:.7f}).",
                                FanVolFlow,
                                state.dataUnitHeaters->UnitHeat(UnitHeatNum).FanName,
                                state.dataUnitHeaters->UnitHeat(UnitHeatNum).MaxAirVolFlow));
@@ -1180,9 +1180,9 @@ namespace UnitHeater {
                                                 format("SizeUnitHeater: Potential issue with equipment sizing for ZoneHVAC:UnitHeater {}",
                                                        state.dataUnitHeaters->UnitHeat(UnitHeatNum).Name));
                                     ShowContinueError(state,
-                                                      format("User-Specified Maximum Hot Water Flow of {:.5R} [m3/s]", MaxVolHotWaterFlowUser));
+                                                      format("User-Specified Maximum Hot Water Flow of {:.5f} [m3/s]", MaxVolHotWaterFlowUser));
                                     ShowContinueError(
-                                        state, format("differs from Design Size Maximum Hot Water Flow of {:.5R} [m3/s]", MaxVolHotWaterFlowDes));
+                                        state, format("differs from Design Size Maximum Hot Water Flow of {:.5f} [m3/s]", MaxVolHotWaterFlowDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1311,9 +1311,9 @@ namespace UnitHeater {
                                     ShowMessage(state,
                                                 format("SizeUnitHeater: Potential issue with equipment sizing for ZoneHVAC:UnitHeater {}",
                                                        state.dataUnitHeaters->UnitHeat(UnitHeatNum).Name));
-                                    ShowContinueError(state, format("User-Specified Maximum Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowUser));
+                                    ShowContinueError(state, format("User-Specified Maximum Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowUser));
                                     ShowContinueError(state,
-                                                      format("differs from Design Size Maximum Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowDes));
+                                                      format("differs from Design Size Maximum Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }

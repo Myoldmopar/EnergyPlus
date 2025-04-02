@@ -5281,24 +5281,23 @@ void WriteTabularReports(EnergyPlusData &state)
     }
 
     constexpr static std::string_view variable_fmt = " {}={:12}\n";
-    constexpr static auto variable_fmt_syntax = check_syntax(variable_fmt); // (AUTO_OK) not sure what this is
     state.files.audit.ensure_open(state, "WriteTabularReports", state.files.outputControl.audit);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "MonthlyInputCount", ort->MonthlyInputCount);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "sizeMonthlyInput", ort->sizeMonthlyInput);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "MonthlyFieldSetInputCount", ort->MonthlyFieldSetInputCount);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "sizeMonthlyFieldSetInput", ort->sizeMonthlyFieldSetInput);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "MonthlyTablesCount", ort->MonthlyTablesCount);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "MonthlyColumnsCount", ort->MonthlyColumnsCount);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "sizeReportName", state.dataOutRptPredefined->sizeReportName);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "numReportName", state.dataOutRptPredefined->numReportName);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "sizeSubTable", state.dataOutRptPredefined->sizeSubTable);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "numSubTable", state.dataOutRptPredefined->numSubTable);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "sizeColumnTag", state.dataOutRptPredefined->sizeColumnTag);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "numColumnTag", state.dataOutRptPredefined->numColumnTag);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "sizeTableEntry", state.dataOutRptPredefined->sizeTableEntry);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "numTableEntry", state.dataOutRptPredefined->numTableEntry);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "sizeCompSizeTableEntry", state.dataOutRptPredefined->sizeCompSizeTableEntry);
-    print<variable_fmt_syntax>(state.files.audit, variable_fmt, "numCompSizeTableEntry", state.dataOutRptPredefined->numCompSizeTableEntry);
+    print(state.files.audit, variable_fmt, "MonthlyInputCount", ort->MonthlyInputCount);
+    print(state.files.audit, variable_fmt, "sizeMonthlyInput", ort->sizeMonthlyInput);
+    print(state.files.audit, variable_fmt, "MonthlyFieldSetInputCount", ort->MonthlyFieldSetInputCount);
+    print(state.files.audit, variable_fmt, "sizeMonthlyFieldSetInput", ort->sizeMonthlyFieldSetInput);
+    print(state.files.audit, variable_fmt, "MonthlyTablesCount", ort->MonthlyTablesCount);
+    print(state.files.audit, variable_fmt, "MonthlyColumnsCount", ort->MonthlyColumnsCount);
+    print(state.files.audit, variable_fmt, "sizeReportName", state.dataOutRptPredefined->sizeReportName);
+    print(state.files.audit, variable_fmt, "numReportName", state.dataOutRptPredefined->numReportName);
+    print(state.files.audit, variable_fmt, "sizeSubTable", state.dataOutRptPredefined->sizeSubTable);
+    print(state.files.audit, variable_fmt, "numSubTable", state.dataOutRptPredefined->numSubTable);
+    print(state.files.audit, variable_fmt, "sizeColumnTag", state.dataOutRptPredefined->sizeColumnTag);
+    print(state.files.audit, variable_fmt, "numColumnTag", state.dataOutRptPredefined->numColumnTag);
+    print(state.files.audit, variable_fmt, "sizeTableEntry", state.dataOutRptPredefined->sizeTableEntry);
+    print(state.files.audit, variable_fmt, "numTableEntry", state.dataOutRptPredefined->numTableEntry);
+    print(state.files.audit, variable_fmt, "sizeCompSizeTableEntry", state.dataOutRptPredefined->sizeCompSizeTableEntry);
+    print(state.files.audit, variable_fmt, "numCompSizeTableEntry", state.dataOutRptPredefined->numCompSizeTableEntry);
 }
 
 bool produceDualUnitsFlags(const int iUnit_Sys,
@@ -7725,30 +7724,30 @@ void WriteBEPSTable(EnergyPlusData &state)
 
         if (produceTabular) {
             if (state.dataGlobal->createPerfLog) {
-                Util::appendPerfLog(state, "Electricity ABUPS Total [J]", format("{:.3R}", collapsedTotal(1)));
-                Util::appendPerfLog(state, "Natural Gas ABUPS Total [J]", format("{:.3R}", collapsedTotal(2)));
-                Util::appendPerfLog(state, "Gasoline ABUPS Total [J]", format("{:.3R}", collapsedTotal(3)));
-                Util::appendPerfLog(state, "Diesel ABUPS Total [J]", format("{:.3R}", collapsedTotal(4)));
-                Util::appendPerfLog(state, "Coal ABUPS Total [J]", format("{:.3R}", collapsedTotal(5)));
-                Util::appendPerfLog(state, "Fuel Oil No 1 ABUPS Total [J]", format("{:.3R}", collapsedTotal(6)));
-                Util::appendPerfLog(state, "Fuel Oil No 2 ABUPS Total [J]", format("{:.3R}", collapsedTotal(7)));
-                Util::appendPerfLog(state, "Propane ABUPS Total [J]", format("{:.3R}", collapsedTotal(8)));
-                Util::appendPerfLog(state, "Other Fuel 1 ABUPS Total [J]", format("{:.3R}", collapsedTotal(9)));
-                Util::appendPerfLog(state, "Other Fuel 2 ABUPS Total [J]", format("{:.3R}", collapsedTotal(10)));
-                Util::appendPerfLog(state, "District Cooling ABUPS Total [J]", format("{:.3R}", collapsedTotal(11)));
-                Util::appendPerfLog(state, "District Heating Water ABUPS Total [J]", format("{:.3R}", collapsedTotal(12)));
-                Util::appendPerfLog(state, "District Heating Steam ABUPS Total [J]", format("{:.3R}", collapsedTotal(13)));
-                Util::appendPerfLog(state, "Water ABUPS Total [m3]", format("{:.3R}", collapsedTotal(14)));
-                Util::appendPerfLog(state, "Values Gathered Over [hours]", format("{:.2R}", ort->gatherElapsedTimeBEPS));
+                Util::appendPerfLog(state, "Electricity ABUPS Total [J]", format("{:.3f}", collapsedTotal(1)));
+                Util::appendPerfLog(state, "Natural Gas ABUPS Total [J]", format("{:.3f}", collapsedTotal(2)));
+                Util::appendPerfLog(state, "Gasoline ABUPS Total [J]", format("{:.3f}", collapsedTotal(3)));
+                Util::appendPerfLog(state, "Diesel ABUPS Total [J]", format("{:.3f}", collapsedTotal(4)));
+                Util::appendPerfLog(state, "Coal ABUPS Total [J]", format("{:.3f}", collapsedTotal(5)));
+                Util::appendPerfLog(state, "Fuel Oil No 1 ABUPS Total [J]", format("{:.3f}", collapsedTotal(6)));
+                Util::appendPerfLog(state, "Fuel Oil No 2 ABUPS Total [J]", format("{:.3f}", collapsedTotal(7)));
+                Util::appendPerfLog(state, "Propane ABUPS Total [J]", format("{:.3f}", collapsedTotal(8)));
+                Util::appendPerfLog(state, "Other Fuel 1 ABUPS Total [J]", format("{:.3f}", collapsedTotal(9)));
+                Util::appendPerfLog(state, "Other Fuel 2 ABUPS Total [J]", format("{:.3f}", collapsedTotal(10)));
+                Util::appendPerfLog(state, "District Cooling ABUPS Total [J]", format("{:.3f}", collapsedTotal(11)));
+                Util::appendPerfLog(state, "District Heating Water ABUPS Total [J]", format("{:.3f}", collapsedTotal(12)));
+                Util::appendPerfLog(state, "District Heating Steam ABUPS Total [J]", format("{:.3f}", collapsedTotal(13)));
+                Util::appendPerfLog(state, "Water ABUPS Total [m3]", format("{:.3f}", collapsedTotal(14)));
+                Util::appendPerfLog(state, "Values Gathered Over [hours]", format("{:.2f}", ort->gatherElapsedTimeBEPS));
                 Util::appendPerfLog(state,
                                     "Facility Any Zone Oscillating Temperatures Time [hours]",
-                                    format("{:.2R}", state.dataZoneTempPredictorCorrector->AnnualAnyZoneTempOscillate));
+                                    format("{:.2f}", state.dataZoneTempPredictorCorrector->AnnualAnyZoneTempOscillate));
                 Util::appendPerfLog(state,
                                     "Facility Any Zone Oscillating Temperatures During Occupancy Time [hours]",
-                                    format("{:.2R}", state.dataZoneTempPredictorCorrector->AnnualAnyZoneTempOscillateDuringOccupancy));
+                                    format("{:.2f}", state.dataZoneTempPredictorCorrector->AnnualAnyZoneTempOscillateDuringOccupancy));
                 Util::appendPerfLog(state,
                                     "Facility Any Zone Oscillating Temperatures in Deadband Time [hours]",
-                                    format("{:.2R}", state.dataZoneTempPredictorCorrector->AnnualAnyZoneTempOscillateInDeadband));
+                                    format("{:.2f}", state.dataZoneTempPredictorCorrector->AnnualAnyZoneTempOscillateInDeadband));
             }
         }
         for (int jEndUse = 1; jEndUse <= static_cast<int>(Constant::EndUse::Num); ++jEndUse) {
@@ -11233,7 +11232,7 @@ void WriteVeriSumTable(EnergyPlusData &state)
                         }
                         if (DetailedWWR) {
                             if (produceTabular) {
-                                print(state.files.debug, "{},Wall,{:.1R},{:.1R}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
+                                print(state.files.debug, "{},Wall,{:.1f},{:.1f}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
                             }
                         }
                     } break;
@@ -11258,7 +11257,7 @@ void WriteVeriSumTable(EnergyPlusData &state)
                         zoneGlassArea(zonePt) += thisSurf.GrossArea * thisSurf.Multiplier;
                         if (DetailedWWR) {
                             if (produceTabular) {
-                                print(state.files.debug, "{},Window,{:.1R},{:.1R}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
+                                print(state.files.debug, "{},Window,{:.1f},{:.1f}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
                             }
                         }
                     } break;
@@ -11275,7 +11274,7 @@ void WriteVeriSumTable(EnergyPlusData &state)
                         roofArea += curArea * mult;
                         if (DetailedWWR) {
                             if (produceTabular) {
-                                print(state.files.debug, "{},Roof,{:.1R},{:.1R}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
+                                print(state.files.debug, "{},Roof,{:.1f},{:.1f}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
                             }
                         }
                     } break;
@@ -11286,7 +11285,7 @@ void WriteVeriSumTable(EnergyPlusData &state)
                         skylightArea += curArea * mult;
                         if (DetailedWWR) {
                             if (produceTabular) {
-                                print(state.files.debug, "{},Skylight,{:.1R},{:.1R}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
+                                print(state.files.debug, "{},Skylight,{:.1f},{:.1f}\n", thisSurf.Name, curArea * mult, thisSurf.Tilt);
                             }
                         }
                     } break;
@@ -11307,8 +11306,8 @@ void WriteVeriSumTable(EnergyPlusData &state)
                 print(state.files.debug, "{}\n", "========================");
                 print(state.files.debug, "{}\n", "TotalWallArea,WallAreaN,WallAreaS,WallAreaE,WallAreaW");
                 print(state.files.debug, "{}\n", "TotalWindowArea,WindowAreaN,WindowAreaS,WindowAreaE,WindowAreaW");
-                print(state.files.debug, "{:.2R},{:.2R},{:.2R},{:.2R},{:.2R}\n", TotalWallArea, wallAreaN, wallAreaS, wallAreaE, wallAreaW);
-                print(state.files.debug, "{:.2R},{:.2R},{:.2R},{:.2R},{:.2R}\n", TotalWindowArea, windowAreaN, windowAreaS, windowAreaE, windowAreaW);
+                print(state.files.debug, "{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n", TotalWallArea, wallAreaN, wallAreaS, wallAreaE, wallAreaW);
+                print(state.files.debug, "{:.2f},{:.2f},{:.2f},{:.2f},{:.2f}\n", TotalWindowArea, windowAreaN, windowAreaS, windowAreaE, windowAreaW);
             }
         }
 
@@ -11452,7 +11451,7 @@ void WriteVeriSumTable(EnergyPlusData &state)
             if (produceTabular) {
                 print(state.files.debug, "{}\n", "========================");
                 print(state.files.debug, "{}\n", "TotalRoofArea,SkylightArea");
-                print(state.files.debug, "{:.2R},{:.2R}\n", roofArea, skylightArea);
+                print(state.files.debug, "{:.2f},{:.2f}\n", roofArea, skylightArea);
             }
         }
 
@@ -11531,7 +11530,7 @@ void WriteVeriSumTable(EnergyPlusData &state)
                     ShowWarningError(
                         state, "WriteVeriSumTable: InputVerificationsAndResultsSummary: Wall area based on [>=60,<=120] degrees (tilt) as walls");
                     ShowContinueError(state,
-                                      format("differs ~{:.1R}% from user entered Wall class surfaces. Degree calculation based on ASHRAE "
+                                      format("differs ~{:.1f}% from user entered Wall class surfaces. Degree calculation based on ASHRAE "
                                              "90.1 wall definitions.",
                                              pdiff * 100.0));
                     //      CALL ShowContinueError(state, format("Calculated based on degrees=[{}{}{}{}{}{}] m2, Calculated from user entered Wall
@@ -12244,7 +12243,7 @@ void WriteReportHeaderReportingPeriod(EnergyPlusData &state,
         OutputProcessor::StoreType::Average);
 
     WriteSubtitle(state,
-                  format("Reporting period: {} -- {}, Total Electricity Usage: {:.2R} kWh",
+                  format("Reporting period: {} -- {}, Total Electricity Usage: {:.2f} kWh",
                          formatReportPeriodTimestamp(ReportPeriodInputData(periodIdx).startYear,
                                                      ReportPeriodInputData(periodIdx).startMonth,
                                                      ReportPeriodInputData(periodIdx).startDay,
@@ -14716,7 +14715,7 @@ void ComputeLoadComponentDecayCurve(EnergyPlusData &state)
                       thisZone.Name,
                       state.dataSurface->Surface(kSurf).Name);
                 for (int jTime = 1; jTime <= min(state.dataGlobal->NumOfTimeStepInHour * 24, 36); ++jTime) {
-                    print(state.files.eio, ",{:6.3F}", ort->decayCurveCool(jTime, kSurf));
+                    print(state.files.eio, ",{:6.3f}", ort->decayCurveCool(jTime, kSurf));
                 }
                 // put a line feed at the end of the line
                 print(state.files.eio, "\n");
@@ -14730,7 +14729,7 @@ void ComputeLoadComponentDecayCurve(EnergyPlusData &state)
                       thisZone.Name,
                       state.dataSurface->Surface(kSurf).Name);
                 for (int jTime = 1; jTime <= min(state.dataGlobal->NumOfTimeStepInHour * 24, 36); ++jTime) {
-                    print(state.files.eio, ",{:6.3F}", ort->decayCurveHeat(jTime, kSurf));
+                    print(state.files.eio, ",{:6.3f}", ort->decayCurveHeat(jTime, kSurf));
                 }
                 // put a line feed at the end of the line
                 print(state.files.eio, "\n");
@@ -18105,9 +18104,9 @@ std::string RealToStr(Real64 const RealIn, int const numDigits)
     if (nDigits < 0) nDigits = 0;
 
     if (std::abs(RealIn) > maxvalDigitsA.at(nDigits)) {
-        return format("{:12.6Z}", RealIn);
+        return format("{:12.6f}", RealIn);
     } else {
-        return format<FormatSyntax::FMT>(formDigitsA.at(nDigits), RealIn);
+        return format(formDigitsA.at(nDigits), RealIn);
     }
     //  WRITE(FMT=, UNIT=stringOut) RealIn
     // check if it did not fit

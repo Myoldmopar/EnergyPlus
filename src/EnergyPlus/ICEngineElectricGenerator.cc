@@ -162,7 +162,7 @@ namespace ICEngineElectricGenerator {
 
             state.dataICEngElectGen->ICEngineGenerator(genNum).RatedPowerOutput = NumArray(1);
             if (NumArray(1) == 0.0) {
-                ShowSevereError(state, format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(1), NumArray(1)));
+                ShowSevereError(state, format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(1), NumArray(1)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, AlphArray(1)));
                 ErrorsFound = true;
             }
@@ -227,9 +227,9 @@ namespace ICEngineElectricGenerator {
                 if (xValue < ReferenceTemp) {
                     ShowSevereError(state,
                                     format("GetICEngineGeneratorInput: {} output has very low value.", state.dataIPShortCut->cAlphaFieldNames(7)));
-                    ShowContinueError(state, format("...curve generates [{:.3R} C] at PLR=1.0", xValue));
+                    ShowContinueError(state, format("...curve generates [{:.3f} C] at PLR=1.0", xValue));
                     ShowContinueError(state,
-                                      format("...this is less than the Reference Temperature [{:.2R} C] and may cause errors.", ReferenceTemp));
+                                      format("...this is less than the Reference Temperature [{:.2f} C] and may cause errors.", ReferenceTemp));
                 }
             }
 
@@ -652,7 +652,7 @@ namespace ICEngineElectricGenerator {
                 if (this->ErrExhaustTempIndex == 0) {
                     ShowWarningMessage(
                         state, format("CalcICEngineGeneratorModel: {}=\"{}\" low Exhaust Temperature from Curve Value", this->TypeOf, this->Name));
-                    ShowContinueError(state, format("...curve generated temperature=[{:.3R} C], PLR=[{:.3R}].", exhaustTemp, PLR));
+                    ShowContinueError(state, format("...curve generated temperature=[{:.3f} C], PLR=[{:.3f}].", exhaustTemp, PLR));
                     ShowContinueError(state, "...simulation will continue with exhaust heat reclaim set to 0.");
                 }
                 ShowRecurringWarningErrorAtEnd(state,

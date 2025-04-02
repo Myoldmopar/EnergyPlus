@@ -636,7 +636,7 @@ namespace HeatBalanceIntRadExchange {
 
                     for (int SurfNum : thisEnclosure.SurfaceReportNums) {
                         print(state.files.eio,
-                              "Surface View Factor - Surface Information,{},{},{:.4R},{:.4R},{:.4R},{:.4R},{}",
+                              "Surface View Factor - Surface Information,{},{},{:.4f},{:.4f},{:.4f},{:.4f},{}",
                               state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Name,
                               cSurfaceClass(state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Class),
                               thisEnclosure.Area(SurfNum),
@@ -646,7 +646,7 @@ namespace HeatBalanceIntRadExchange {
                               state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Sides);
                         for (int Vindex = 1; Vindex <= state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Sides; ++Vindex) {
                             auto const &Vertex = state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Vertex(Vindex);
-                            print(state.files.eio, ",{:.4R},{:.4R},{:.4R}", Vertex.x, Vertex.y, Vertex.z);
+                            print(state.files.eio, ",{:.4f},{:.4f},{:.4f}", Vertex.x, Vertex.y, Vertex.z);
                         }
                         print(state.files.eio, "\n");
                     }
@@ -660,13 +660,13 @@ namespace HeatBalanceIntRadExchange {
                     for (int Findex : thisEnclosure.SurfaceReportNums) {
                         RowSum = sum(SaveApproximateViewFactors(_, Findex));
                         print(state.files.eio,
-                              "{},{},{},{:.4R}",
+                              "{},{},{},{:.4f}",
                               "View Factor",
                               state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                               cSurfaceClass(state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Class),
                               RowSum);
                         for (int SurfNum : thisEnclosure.SurfaceReportNums) {
-                            print(state.files.eio, ",{:.4R}", SaveApproximateViewFactors(SurfNum, Findex));
+                            print(state.files.eio, ",{:.4f}", SaveApproximateViewFactors(SurfNum, Findex));
                         }
                         print(state.files.eio, "\n");
                     }
@@ -680,13 +680,13 @@ namespace HeatBalanceIntRadExchange {
                     for (int Findex : thisEnclosure.SurfaceReportNums) {
                         RowSum = sum(thisEnclosure.F(_, Findex));
                         print(state.files.eio,
-                              "{},{},{},{:.4R}",
+                              "{},{},{},{:.4f}",
                               "View Factor",
                               state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                               cSurfaceClass(state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Class),
                               RowSum);
                         for (int SurfNum : thisEnclosure.SurfaceReportNums) {
-                            print(state.files.eio, ",{:.4R}", thisEnclosure.F(SurfNum, Findex));
+                            print(state.files.eio, ",{:.4f}", thisEnclosure.F(SurfNum, Findex));
                         }
                         print(state.files.eio, "\n");
                     }
@@ -701,7 +701,7 @@ namespace HeatBalanceIntRadExchange {
                         for (int SurfNum : thisEnclosure.SurfaceReportNums) {
                             for (int Findex : thisEnclosure.SurfaceReportNums) {
                                 print(state.files.debug,
-                                      "  {},{},{:.6R}",
+                                      "  {},{},{:.6f}",
                                       state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Name,
                                       state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                                       thisEnclosure.F(Findex, SurfNum));
@@ -719,7 +719,7 @@ namespace HeatBalanceIntRadExchange {
                         for (int SurfNum : thisEnclosure.SurfaceReportNums) {
                             for (int Findex : thisEnclosure.SurfaceReportNums) {
                                 print(state.files.debug,
-                                      "  {},{},{:.6R}",
+                                      "  {},{},{:.6f}",
                                       state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Name,
                                       state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                                       thisEnclosure.F(Findex, SurfNum));
@@ -741,7 +741,7 @@ namespace HeatBalanceIntRadExchange {
                     for (int Findex : thisEnclosure.SurfaceReportNums) {
                         print(state.files.eio, "{},{}", "Script F Factor", state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name);
                         for (int SurfNum : thisEnclosure.SurfaceReportNums) {
-                            print(state.files.eio, ",{:.4R}", thisEnclosure.ScriptF(Findex, SurfNum));
+                            print(state.files.eio, ",{:.4f}", thisEnclosure.ScriptF(Findex, SurfNum));
                         }
                         print(state.files.eio, "\n");
                     }
@@ -758,7 +758,7 @@ namespace HeatBalanceIntRadExchange {
                 FixedRowSum = std::abs(FixedRowSum - thisEnclosure.NumOfSurfaces);
                 if (state.dataGlobal->DisplayAdvancedReportVariables) {
                     print(state.files.eio,
-                          "Surface View Factor Check Values,{},{:.6R},{:.6R},{:.6R},{},{:.6R},{:.6R}\n",
+                          "Surface View Factor Check Values,{},{:.6f},{:.6f},{:.6f},{},{:.6f},{:.6f}\n",
                           thisEnclosure.Name,
                           CheckValue1,
                           CheckValue2,
@@ -938,7 +938,7 @@ namespace HeatBalanceIntRadExchange {
 
                 for (int SurfNum : thisEnclosure.SurfaceReportNums) {
                     print(state.files.eio,
-                          "Solar View Factor - Surface Information,{},{},{:.4R},{:.4R},{:.4R},{:.4R},{}",
+                          "Solar View Factor - Surface Information,{},{},{:.4f},{:.4f},{:.4f},{:.4f},{}",
                           state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Name,
                           cSurfaceClass(state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Class),
                           thisEnclosure.Area(SurfNum),
@@ -949,7 +949,7 @@ namespace HeatBalanceIntRadExchange {
 
                     for (int Vindex = 1; Vindex <= state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Sides; ++Vindex) {
                         auto const &Vertex = state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Vertex(Vindex);
-                        print(state.files.eio, ",{:.4R},{:.4R},{:.4R}", Vertex.x, Vertex.y, Vertex.z);
+                        print(state.files.eio, ",{:.4f},{:.4f},{:.4f}", Vertex.x, Vertex.y, Vertex.z);
                     }
                     print(state.files.eio, "\n");
                 }
@@ -963,12 +963,12 @@ namespace HeatBalanceIntRadExchange {
                 for (int Findex : thisEnclosure.SurfaceReportNums) {
                     Real64 RowSum = sum(SaveApproximateViewFactors(_, Findex));
                     print(state.files.eio,
-                          "Solar View Factor,{},{},{:.4R}",
+                          "Solar View Factor,{},{},{:.4f}",
                           state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                           cSurfaceClass(state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Class),
                           RowSum);
                     for (int SurfNum : thisEnclosure.SurfaceReportNums) {
-                        print(state.files.eio, ",{:.4R}", SaveApproximateViewFactors(SurfNum, Findex));
+                        print(state.files.eio, ",{:.4f}", SaveApproximateViewFactors(SurfNum, Findex));
                     }
                     print(state.files.eio, "\n");
                 }
@@ -982,13 +982,13 @@ namespace HeatBalanceIntRadExchange {
                 for (int Findex : thisEnclosure.SurfaceReportNums) {
                     Real64 RowSum = sum(thisEnclosure.F(_, Findex));
                     print(state.files.eio,
-                          "{},{},{},{:.4R}",
+                          "{},{},{},{:.4f}",
                           "Solar View Factor",
                           state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                           cSurfaceClass(state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Class),
                           RowSum);
                     for (int SurfNum : thisEnclosure.SurfaceReportNums) {
-                        print(state.files.eio, ",{:.4R}", thisEnclosure.F(SurfNum, Findex));
+                        print(state.files.eio, ",{:.4f}", thisEnclosure.F(SurfNum, Findex));
                     }
                     print(state.files.eio, "\n");
                 }
@@ -1002,7 +1002,7 @@ namespace HeatBalanceIntRadExchange {
                     for (int SurfNum : thisEnclosure.SurfaceReportNums) {
                         for (int Findex : thisEnclosure.SurfaceReportNums) {
                             print(state.files.debug,
-                                  "  {},{},{:.6R}",
+                                  "  {},{},{:.6f}",
                                   state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Name,
                                   state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                                   thisEnclosure.F(Findex, SurfNum));
@@ -1020,7 +1020,7 @@ namespace HeatBalanceIntRadExchange {
                     for (int SurfNum : thisEnclosure.SurfaceReportNums) {
                         for (int Findex : thisEnclosure.SurfaceReportNums) {
                             print(state.files.debug,
-                                  "  {},{},{:.6R}",
+                                  "  {},{},{:.6f}",
                                   state.dataSurface->Surface(thisEnclosure.SurfacePtr(SurfNum)).Name,
                                   state.dataSurface->Surface(thisEnclosure.SurfacePtr(Findex)).Name,
                                   thisEnclosure.F(Findex, SurfNum));
@@ -1044,7 +1044,7 @@ namespace HeatBalanceIntRadExchange {
             FixedRowSum = std::abs(FixedRowSum - thisEnclosure.NumOfSurfaces);
             if (state.dataGlobal->DisplayAdvancedReportVariables) {
                 print(state.files.eio,
-                      "Solar View Factor Check Values,{},{:.6R},{:.6R},{:.6R},{},{:.6R},{:.6R}\n",
+                      "Solar View Factor Check Values,{},{:.6f},{:.6f},{:.6f},{},{:.6f},{:.6f}\n",
                       thisEnclosure.Name,
                       CheckValue1,
                       CheckValue2,
@@ -1678,7 +1678,7 @@ namespace HeatBalanceIntRadExchange {
                         format("FixViewFactors: View factors not complete. Check for bad surface descriptions or unenclosed zone=\"{}\".", enclName));
                     ShowContinueError(state,
                                       format("Enforced reciprocity has tolerance (ideal is "
-                                             "0)=[{:.6R}], Row Sum (ideal is {})=[{:.2R}].",
+                                             "0)=[{:.6f}], Row Sum (ideal is {})=[{:.2f}].",
                                              CheckConvergeTolerance,
                                              N,
                                              RowSum));

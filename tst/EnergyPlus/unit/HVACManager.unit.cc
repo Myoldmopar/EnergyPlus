@@ -582,7 +582,7 @@ TEST_F(EnergyPlusFixture, AirloopFlowBalanceTest)
         delimited_string({"   ** Severe  ** CheckAirLoopFlowBalance: AirLoopHVAC System 2 is unbalanced. Supply is > return plus outdoor air.",
                           "   **   ~~~   **  Environment=, at Simulation time= 00:00 - 00:00",
                           "   **   ~~~   **   Flows [m3/s at standard density]: Supply=3.000000  Return=2.000000  Outdoor Air=0.990000",
-                          "   **   ~~~   **   Imbalance=1.000000E-002",
+                          "   **   ~~~   **   Imbalance=0.010000",
                           "   **   ~~~   **   This error will only be reported once per system."});
     EXPECT_TRUE(compare_err_stream(error_string, true));
 }

@@ -656,7 +656,7 @@ namespace ScheduleManager {
                 if (state.dataScheduleMgr->ScheduleType(LoopIndex).Minimum > state.dataScheduleMgr->ScheduleType(LoopIndex).Maximum) {
                     if (state.dataScheduleMgr->ScheduleType(LoopIndex).IsReal) {
                         ShowSevereError(state,
-                                        format("{}{}=\"{}\", {} [{:.2R}] > {} [{:.2R}].",
+                                        format("{}{}=\"{}\", {} [{:.2f}] > {} [{:.2f}].",
                                                RoutineName,
                                                CurrentModuleObject,
                                                Alphas(1),
@@ -667,7 +667,7 @@ namespace ScheduleManager {
                         ShowContinueError(state, "  Other warning/severes about schedule values may appear.");
                     } else {
                         ShowSevereError(state,
-                                        format("{}{}=\"{}\", {} [{:.0R}] > {} [{:.0R}].",
+                                        format("{}{}=\"{}\", {} [{:.0f}] > {} [{:.0f}].",
                                                RoutineName,
                                                CurrentModuleObject,
                                                Alphas(1),
@@ -1723,7 +1723,7 @@ namespace ScheduleManager {
                 ShowSevereError(
                     state,
                     format("{}{}=\"{}\", {} must = 8760 or 8784 (for a leap year)", RoutineName, CurrentModuleObject, Alphas(1), cNumericFields(3)));
-                ShowContinueError(state, format("..Value for field = {:.0T}, Schedule not processed.", Numbers(3)));
+                ShowContinueError(state, format("..Value for field = {:.0f}, Schedule not processed.", Numbers(3)));
                 ErrorsFound = true;
                 continue;
             }
@@ -2313,7 +2313,7 @@ namespace ScheduleManager {
                                    state.dataScheduleMgr->Schedule(SchNum).Name,
                                    state.dataScheduleMgr->ScheduleType(NumPointer).Name));
             ShowContinueError(state,
-                              format("  Minimum should be >={:.3R} and Maximum should be <={:.3R}",
+                              format("  Minimum should be >={:.3f} and Maximum should be <={:.3f}",
                                      state.dataScheduleMgr->ScheduleType(NumPointer).Minimum,
                                      state.dataScheduleMgr->ScheduleType(NumPointer).Maximum));
             ErrorsFound = true;
@@ -2445,9 +2445,9 @@ namespace ScheduleManager {
             for (int Count = 1; Count <= state.dataScheduleMgr->NumScheduleTypes; ++Count) {
                 if (state.dataScheduleMgr->ScheduleType(Count).Limited) {
                     NoAverageLinear = "Average";
-                    Num1 = format("{:.2R}", state.dataScheduleMgr->ScheduleType(Count).Minimum);
+                    Num1 = format("{:.2f}", state.dataScheduleMgr->ScheduleType(Count).Minimum);
                     strip(Num1);
-                    Num2 = format("{:.2R}", state.dataScheduleMgr->ScheduleType(Count).Maximum);
+                    Num2 = format("{:.2f}", state.dataScheduleMgr->ScheduleType(Count).Maximum);
                     strip(Num2);
                     if (state.dataScheduleMgr->ScheduleType(Count).IsReal) {
                         YesNo2 = "Yes";
@@ -2470,7 +2470,7 @@ namespace ScheduleManager {
                 NoAverageLinear = interpolationTypes[static_cast<int>(state.dataScheduleMgr->DaySchedule(Count).IntervalInterpolated)];
                 for (int Hr = 1; Hr <= 24; ++Hr) {
                     for (int TS = 1; TS <= state.dataGlobal->NumOfTimeStepInHour; ++TS) {
-                        RoundTSValue(TS, Hr) = format("{:.2R}", state.dataScheduleMgr->DaySchedule(Count).TSValue(TS, Hr));
+                        RoundTSValue(TS, Hr) = format("{:.2f}", state.dataScheduleMgr->DaySchedule(Count).TSValue(TS, Hr));
                     }
                 }
                 std::string_view constexpr SchDFmtdata0("DaySchedule,{},{},{},{}");
@@ -2563,7 +2563,7 @@ namespace ScheduleManager {
         //                                if (iDay != iDayP) {
         //                                    for (Hr = 1; Hr <= 24; ++Hr) {
         //                                        print(state.files.debug,
-        //                                              "    Until: {}:{},{:.2R},\n",
+        //                                              "    Until: {}:{},{:.2f},\n",
         //                                              Hr,
         //                                              ShowMinute(state.dataGlobal->NumOfTimeStepInHour),
         //                                              state.dataScheduleMgr->DaySchedule(iDay).TSValue(state.dataGlobal->NumOfTimeStepInHour, Hr));
@@ -2580,7 +2580,7 @@ namespace ScheduleManager {
         //                            if (iDay != iDayP) {
         //                                for (Hr = 1; Hr <= 24; ++Hr) {
         //                                    print(state.files.debug,
-        //                                          "    Until: {}:{},{:.2R},\n",
+        //                                          "    Until: {}:{},{:.2f},\n",
         //                                          Hr,
         //                                          ShowMinute(state.dataGlobal->NumOfTimeStepInHour),
         //                                          state.dataScheduleMgr->DaySchedule(iDay).TSValue(state.dataGlobal->NumOfTimeStepInHour, Hr));
@@ -2596,7 +2596,7 @@ namespace ScheduleManager {
         //                                if (iDay != iDayP) {
         //                                    for (Hr = 1; Hr <= 24; ++Hr) {
         //                                        print(state.files.debug,
-        //                                              "    Until: {}:{},{:.2R},\n",
+        //                                              "    Until: {}:{},{:.2f},\n",
         //                                              Hr,
         //                                              ShowMinute(state.dataGlobal->NumOfTimeStepInHour),
         //                                              state.dataScheduleMgr->DaySchedule(iDay).TSValue(state.dataGlobal->NumOfTimeStepInHour, Hr));
@@ -2621,7 +2621,7 @@ namespace ScheduleManager {
         //                            if (iDay != iDayP) {
         //                                for (Hr = 1; Hr <= 24; ++Hr) {
         //                                    print(state.files.debug,
-        //                                          "    Until: {}:{},{:.2R},\n",
+        //                                          "    Until: {}:{},{:.2f},\n",
         //                                          Hr,
         //                                          ShowMinute(state.dataGlobal->NumOfTimeStepInHour),
         //                                          state.dataScheduleMgr->DaySchedule(iDay).TSValue(state.dataGlobal->NumOfTimeStepInHour, Hr));
@@ -2638,7 +2638,7 @@ namespace ScheduleManager {
         //                        if (iDay != iDayP) {
         //                            for (Hr = 1; Hr <= 24; ++Hr) {
         //                                print(state.files.debug,
-        //                                      "    Until: {}:{},{:.2R},\n",
+        //                                      "    Until: {}:{},{:.2f},\n",
         //                                      Hr,
         //                                      ShowMinute(state.dataGlobal->NumOfTimeStepInHour),
         //                                      state.dataScheduleMgr->DaySchedule(iDay).TSValue(state.dataGlobal->NumOfTimeStepInHour, Hr));
@@ -2654,7 +2654,7 @@ namespace ScheduleManager {
         //                            if (iDay != iDayP) {
         //                                for (Hr = 1; Hr <= 24; ++Hr) {
         //                                    print(state.files.debug,
-        //                                          "    Until: {}:{},{:.2R},\n",
+        //                                          "    Until: {}:{},{:.2f},\n",
         //                                          Hr,
         //                                          ShowMinute(state.dataGlobal->NumOfTimeStepInHour),
         //                                          state.dataScheduleMgr->DaySchedule(iDay).TSValue(state.dataGlobal->NumOfTimeStepInHour, Hr));
@@ -3470,7 +3470,7 @@ namespace ScheduleManager {
         }
 
         if (nonIntegral) {
-            ShowContinueError(state, format("Until value to be used will be: {:2.2F}:{:2.2F}", hHour, mMinute));
+            ShowContinueError(state, format("Until value to be used will be: {:2.2f}:{:2.2f}", hHour, mMinute));
         }
         if (interpolationKind == ScheduleInterpolation::No) {
             if (!isMinuteMultipleOfTimestep(RetMM, state.dataGlobal->MinutesPerTimeStep)) {

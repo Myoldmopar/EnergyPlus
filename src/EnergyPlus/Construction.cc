@@ -234,16 +234,16 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                                 thisMaterial->Name));
                         ShowContinueError(state,
                                           format("High conductivity Material layers are not well supported for internal source constructions, "
-                                                 "material conductivity = {:.3R} [W/m-K]",
+                                                 "material conductivity = {:.3f} [W/m-K]",
                                                  thisMaterial->Conductivity));
-                        ShowContinueError(state, format("Material thermal diffusivity = {:.3R} [m2/s]", Alpha));
+                        ShowContinueError(state, format("Material thermal diffusivity = {:.3f} [m2/s]", Alpha));
                         ShowContinueError(state,
-                                          format("Material with this thermal diffusivity should have thickness > {:.5R} [m]", ThicknessThreshold));
+                                          format("Material with this thermal diffusivity should have thickness > {:.5f} [m]", ThicknessThreshold));
                         if (thisMaterial->Thickness < DataHeatBalance::ThinMaterialLayerThreshold) {
                             ShowContinueError(state,
-                                              format("Material may be too thin to be modeled well, thickness = {:.5R} [m]", thisMaterial->Thickness));
+                                              format("Material may be too thin to be modeled well, thickness = {:.5f} [m]", thisMaterial->Thickness));
                             ShowContinueError(state,
-                                              format("Material with this thermal diffusivity should have thickness > {:.5R} [m]",
+                                              format("Material with this thermal diffusivity should have thickness > {:.5f} [m]",
                                                      DataHeatBalance::ThinMaterialLayerThreshold));
                         }
                         thisMaterial->WarnedForHighDiffusivity = true;
@@ -276,7 +276,7 @@ void ConstructionProps::calculateTransferFunction(EnergyPlusData &state, bool &E
                 // containing this layer.
 
                 ShowSevereError(state, format("InitConductionTransferFunctions: Material={}R Value below lowest allowed value", thisMaterial->Name));
-                ShowContinueError(state, format("Lowest allowed value=[{:.3R}], Material R Value=[{:.3R}].", RValueLowLimit, lr(Layer)));
+                ShowContinueError(state, format("Lowest allowed value=[{:.3f}], Material R Value=[{:.3f}].", RValueLowLimit, lr(Layer)));
                 ErrorsFound = true;
 
             } else { // A valid user defined R-value is available.
@@ -1858,7 +1858,7 @@ void ConstructionProps::calculateFinalCoefficients()
 void ConstructionProps::reportTransferFunction(EnergyPlusData &state, int const cCounter)
 {
 
-    static constexpr std::string_view Format_700{" Construction CTF,{},{:4},{:4},{:4},{:8.3F},{:15.4N},{:8.3F},{:8.3F},{:8.3F},{:8.3F},{}\n"};
+    static constexpr std::string_view Format_700{" Construction CTF,{},{:4},{:4},{:4},{:8.3f},{:15.4f},{:8.3f},{:8.3f},{:8.3f},{:8.3f},{}\n"};
     print(state.files.eio,
           Format_700,
           this->Name,
@@ -1878,11 +1878,11 @@ void ConstructionProps::reportTransferFunction(EnergyPlusData &state, int const 
         auto const *thisMaterial = state.dataMaterial->materials(Layer);
         switch (thisMaterial->group) {
         case Material::Group::AirGap: {
-            static constexpr std::string_view Format_702(" Material:Air,{},{:12.4N}\n");
+            static constexpr std::string_view Format_702(" Material:Air,{},{:12.4f}\n");
             print(state.files.eio, Format_702, thisMaterial->Name, thisMaterial->Resistance);
         } break;
         default: {
-            static constexpr std::string_view Format_701(" Material CTF Summary,{},{:8.4F},{:14.3F},{:11.3F},{:13.3F},{:12.4N}\n");
+            static constexpr std::string_view Format_701(" Material CTF Summary,{},{:8.4f},{:14.3f},{:11.3f},{:13.3f},{:12.4f}\n");
             Material::MaterialBase const *mp = thisMaterial;
             print(state.files.eio, Format_701, mp->Name, mp->Thickness, mp->Conductivity, mp->Density, mp->SpecHeat, mp->Resistance);
         } break;
@@ -1891,10 +1891,10 @@ void ConstructionProps::reportTransferFunction(EnergyPlusData &state, int const 
 
     for (int I = this->NumCTFTerms; I >= 0; --I) {
         if (I != 0) {
-            static constexpr std::string_view Format_703(" CTF,{:4},{:20.8N},{:20.8N},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_703(" CTF,{:4},{:20.8f},{:20.8f},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_703, I, this->CTFOutside[I], this->CTFCross[I], this->CTFInside[I], this->CTFFlux[I]);
         } else {
-            static constexpr std::string_view Format_704(" CTF,{:4},{:20.8N},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_704(" CTF,{:4},{:20.8f},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_704, I, this->CTFOutside[I], this->CTFCross[I], this->CTFInside[I]);
         }
     }
@@ -1902,18 +1902,18 @@ void ConstructionProps::reportTransferFunction(EnergyPlusData &state, int const 
     if (this->SourceSinkPresent) {
         // QTFs...
         for (int I = this->NumCTFTerms; I >= 0; --I) {
-            static constexpr std::string_view Format_705(" QTF,{:4},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_705(" QTF,{:4},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_705, I, this->CTFSourceOut[I], this->CTFSourceIn[I]);
         }
         // QTFs for source/sink location temperature calculation...
         for (int I = this->NumCTFTerms; I >= 0; --I) {
-            static constexpr std::string_view Format_706(" Source/Sink Loc Internal Temp QTF,{:4},{:20.8N},{:20.8N},{:20.8N}\n");
+            static constexpr std::string_view Format_706(" Source/Sink Loc Internal Temp QTF,{:4},{:20.8f},{:20.8f},{:20.8f}\n");
             print(state.files.eio, Format_706, I, this->CTFTSourceOut[I], this->CTFTSourceIn[I], this->CTFTSourceQ[I]);
         }
         if (this->TempAfterLayer != 0) {
             // QTFs for user specified interior temperature calculation...
             for (int I = this->NumCTFTerms; I >= 0; --I) {
-                static constexpr std::string_view Format_707(" User Loc Internal Temp QTF,{:4},{:20.8N},{:20.8N},{:20.8N}\n");
+                static constexpr std::string_view Format_707(" User Loc Internal Temp QTF,{:4},{:20.8f},{:20.8f},{:20.8f}\n");
                 print(state.files.eio, Format_707, I, this->CTFTUserOut[I], this->CTFTUserIn[I], this->CTFTUserSource[I]);
             }
         }

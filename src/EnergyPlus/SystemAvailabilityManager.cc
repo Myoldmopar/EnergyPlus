@@ -3699,14 +3699,14 @@ namespace Avail {
                 ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                 ShowContinueError(
                     state, format("{}=\"{}\", the maximum schedule value should be 7. However, ", ipsc->cAlphaFieldNames(4), ipsc->cAlphaArgs(4)));
-                ShowContinueError(state, format("the maximum entered value in the schedule is {:.1T}", SchedMax));
+                ShowContinueError(state, format("the maximum entered value in the schedule is {:.1f}", SchedMax));
                 ErrorsFound = true;
             }
             if (SchedMin < 0.0) {
                 ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                 ShowContinueError(state,
                                   format("{}=\"{}the minimum schedule value should be 0. However, ", ipsc->cAlphaFieldNames(4), ipsc->cAlphaArgs(4)));
-                ShowContinueError(state, format("the minimum entered value in the schedule is {:.1T}", SchedMin));
+                ShowContinueError(state, format("the minimum entered value in the schedule is {:.1f}", SchedMin));
                 ErrorsFound = true;
             }
             if (SchedMax == 7.0 && !state.dataContaminantBalance->Contaminant.CO2Simulation) {
@@ -3734,7 +3734,7 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("{} is beyond the range.", ipsc->cNumericFieldNames(1)));
                     ShowContinueError(state,
-                                      format("The input value is {:.0T}. The allowed value must be >= 0 and <= 40 m/s", ipsc->rNumericArgs(1)));
+                                      format("The input value is {:.0f}. The allowed value must be >= 0 and <= 40 m/s", ipsc->rNumericArgs(1)));
                     ErrorsFound = true;
                 }
             }
@@ -3746,7 +3746,7 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("{} is beyond the range.", ipsc->cNumericFieldNames(2)));
                     ShowContinueError(
-                        state, format("The input value is {:.0T}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(2)));
+                        state, format("The input value is {:.0f}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(2)));
                     ErrorsFound = true;
                 }
             }
@@ -3756,7 +3756,7 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("{} is beyond the range.", ipsc->cNumericFieldNames(3)));
                     ShowContinueError(
-                        state, format("The input value is {:.0T}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(3)));
+                        state, format("The input value is {:.0f}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(3)));
                     ErrorsFound = true;
                 }
             }
@@ -3770,7 +3770,7 @@ namespace Avail {
                                        ipsc->cNumericFieldNames(2),
                                        ipsc->cNumericFieldNames(3)));
                 ShowContinueError(state,
-                                  format("The {} is {:.0T}. The {} is {:.0T}.",
+                                  format("The {} is {:.0f}. The {} is {:.0f}.",
                                          ipsc->cNumericFieldNames(2),
                                          ipsc->rNumericArgs(2),
                                          ipsc->cNumericFieldNames(3),
@@ -3785,7 +3785,7 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("{} is beyond the range.", ipsc->cNumericFieldNames(4)));
                     ShowContinueError(
-                        state, format("The input value is {:.0T}. The allowed value must be between 0 and 300000 J/kg", ipsc->rNumericArgs(4)));
+                        state, format("The input value is {:.0f}. The allowed value must be between 0 and 300000 J/kg", ipsc->rNumericArgs(4)));
                     ErrorsFound = true;
                 }
             }
@@ -3795,7 +3795,7 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("{} is beyond the range.", ipsc->cNumericFieldNames(5)));
                     ShowContinueError(
-                        state, format("The input value is {:.0T}. The allowed value must be between 0 and 300000 J/kg", ipsc->rNumericArgs(5)));
+                        state, format("The input value is {:.0f}. The allowed value must be between 0 and 300000 J/kg", ipsc->rNumericArgs(5)));
                     ErrorsFound = true;
                 }
             }
@@ -3809,7 +3809,7 @@ namespace Avail {
                                        ipsc->cNumericFieldNames(4),
                                        ipsc->cNumericFieldNames(5)));
                 ShowContinueError(state,
-                                  format("The {} is {:.0T}. The {} is {:.0T}.",
+                                  format("The {} is {:.0f}. The {} is {:.0f}.",
                                          ipsc->cNumericFieldNames(4),
                                          ipsc->rNumericArgs(4),
                                          ipsc->cNumericFieldNames(5),
@@ -3824,7 +3824,7 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("{} is beyond the range.", ipsc->cNumericFieldNames(6)));
                     ShowContinueError(
-                        state, format("The input value is {:.0T}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(6)));
+                        state, format("The input value is {:.0f}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(6)));
                     ErrorsFound = true;
                 }
             }
@@ -3834,7 +3834,7 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("{} is beyond the range.", ipsc->cNumericFieldNames(7)));
                     ShowContinueError(
-                        state, format("The input value is {:.0T}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(7)));
+                        state, format("The input value is {:.0f}. The allowed value must be between -100 C and +100 C", ipsc->rNumericArgs(7)));
                     ErrorsFound = true;
                 }
             }
@@ -3848,7 +3848,7 @@ namespace Avail {
                                        ipsc->cNumericFieldNames(6),
                                        ipsc->cNumericFieldNames(7)));
                 ShowContinueError(state,
-                                  format("The {} is {:.0T}. The {} is {:.0T}.",
+                                  format("The {} is {:.0f}. The {} is {:.0f}.",
                                          ipsc->cNumericFieldNames(6),
                                          ipsc->rNumericArgs(6),
                                          ipsc->cNumericFieldNames(7),
@@ -3871,7 +3871,7 @@ namespace Avail {
                                        ipsc->cAlphaArgs(1),
                                        ipsc->cAlphaFieldNames(6),
                                        ipsc->cAlphaArgs(6)));
-                ShowContinueError(state, format("The minimum schedule value is {:.1T}", SchedMin));
+                ShowContinueError(state, format("The minimum schedule value is {:.1f}", SchedMin));
                 ErrorsFound = true;
             }
 
@@ -3898,7 +3898,7 @@ namespace Avail {
                                           format("The minimum value of {} must be greater than or equal to 0.0 at the minimum value of wind speed.",
                                                  ipsc->cAlphaFieldNames(7)));
                         ShowContinueError(state, format("{}=\"{}\".", ipsc->cAlphaFieldNames(7), ipsc->cAlphaArgs(7)));
-                        ShowContinueError(state, format("Curve output at the minimum wind speed = {:.3T}", CurveVal));
+                        ShowContinueError(state, format("Curve output at the minimum wind speed = {:.3f}", CurveVal));
                         ErrorsFound = true;
                     }
                     CurveVal = CurveValue(state, hybridVentMgr.OpeningFactorFWS, CurveMax);
@@ -3908,7 +3908,7 @@ namespace Avail {
                                           format("The maximum value of {} must be less than or equal to 1.0 at the maximum value of wind speed.",
                                                  ipsc->cAlphaFieldNames(7)));
                         ShowContinueError(state, format("{}=\"{}\".", ipsc->cAlphaFieldNames(7), ipsc->cAlphaArgs(7)));
-                        ShowContinueError(state, format("Curve output at the maximum wind speed = {:.3T}", CurveVal));
+                        ShowContinueError(state, format("Curve output at the maximum wind speed = {:.3f}", CurveVal));
                         ErrorsFound = true;
                     }
                     // Check curve type
@@ -3933,14 +3933,14 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format(" For {}=\"{}\",", ipsc->cAlphaFieldNames(8), ipsc->cAlphaArgs(8)));
                     ShowContinueError(state, "the maximum schedule value should be 1. However, ");
-                    ShowContinueError(state, format("the maximum entered value in the schedule is {:.1T}", SchedMax));
+                    ShowContinueError(state, format("the maximum entered value in the schedule is {:.1f}", SchedMax));
                     ErrorsFound = true;
                 }
                 if (SchedMin < 0.0) {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("For {}=\"{}\",", ipsc->cAlphaFieldNames(8), ipsc->cAlphaArgs(8)));
                     ShowContinueError(state, "the minimum schedule value should be 0. However, ");
-                    ShowContinueError(state, format("the minimum entered value in the schedule is {:.1T}", SchedMin));
+                    ShowContinueError(state, format("the minimum entered value in the schedule is {:.1f}", SchedMin));
                     ErrorsFound = true;
                 }
             }
@@ -3959,14 +3959,14 @@ namespace Avail {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("For {}=\"{}\",", ipsc->cAlphaFieldNames(9), ipsc->cAlphaArgs(9)));
                     ShowContinueError(state, "the maximum schedule value should be 1. However, ");
-                    ShowContinueError(state, format("the maximum entered value in the schedule is {:.1T}", SchedMax));
+                    ShowContinueError(state, format("the maximum entered value in the schedule is {:.1f}", SchedMax));
                     ErrorsFound = true;
                 }
                 if (SchedMin < 0.0) {
                     ShowSevereError(state, format("{}{}=\"{}\"", RoutineName, cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                     ShowContinueError(state, format("For {}=\"{}\",", ipsc->cAlphaFieldNames(9), ipsc->cAlphaArgs(9)));
                     ShowContinueError(state, "the minimum schedule value should be 0. However, ");
-                    ShowContinueError(state, format("the minimum entered value in the schedule is {:.1T}", SchedMin));
+                    ShowContinueError(state, format("the minimum entered value in the schedule is {:.1f}", SchedMin));
                     ErrorsFound = true;
                 }
             }

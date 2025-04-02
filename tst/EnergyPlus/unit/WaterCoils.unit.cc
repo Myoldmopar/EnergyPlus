@@ -1191,10 +1191,10 @@ TEST_F(WaterCoilsTest, CoilCoolingWaterDetailed_WarningMath)
     std::string expected_error = delimited_string({
         "   ** Warning ** Coil:Cooling:Water:DetailedGeometry in Coil =Test Detailed Water Cooling Coil",
         "   **   ~~~   ** Air Flow Rate Velocity has greatly exceeded upper design guidelines of ~2.5 m/s",
-        format("   **   ~~~   ** Air Mass Flow Rate[kg/s]={:.6T}", state->dataWaterCoils->WaterCoil(CoilNum).InletAirMassFlowRate),
-        format("   **   ~~~   ** Air Face Velocity[m/s]={:.6T}",
+        format("   **   ~~~   ** Air Mass Flow Rate[kg/s]={:.6f}", state->dataWaterCoils->WaterCoil(CoilNum).InletAirMassFlowRate),
+        format("   **   ~~~   ** Air Face Velocity[m/s]={:.6f}",
                AirMassFlow / (state->dataWaterCoils->WaterCoil(CoilNum).MinAirFlowArea * AirDensity)),
-        format("   **   ~~~   ** Approximate Mass Flow Rate limit for Face Area[kg/s]={:.6T}",
+        format("   **   ~~~   ** Approximate Mass Flow Rate limit for Face Area[kg/s]={:.6f}",
                2.5 * state->dataWaterCoils->WaterCoil(CoilNum).MinAirFlowArea * AirDensity),
         "   **   ~~~   ** Coil:Cooling:Water:DetailedGeometry could be resized/autosized to handle capacity",
     });
@@ -1215,10 +1215,10 @@ TEST_F(WaterCoilsTest, CoilCoolingWaterDetailed_WarningMath)
     std::string expected_fatal_error = delimited_string({
         "   ** Severe  ** Coil:Cooling:Water:DetailedGeometry in Coil =Test Detailed Water Cooling Coil",
         "   **   ~~~   ** Air Flow Rate Velocity is > 100MPH (44.7m/s) and simulation cannot continue",
-        format("   **   ~~~   ** Air Mass Flow Rate[kg/s]={:.6T}", state->dataWaterCoils->WaterCoil(CoilNum).InletAirMassFlowRate),
-        format("   **   ~~~   ** Air Face Velocity[m/s]={:.6T}",
+        format("   **   ~~~   ** Air Mass Flow Rate[kg/s]={:.6f}", state->dataWaterCoils->WaterCoil(CoilNum).InletAirMassFlowRate),
+        format("   **   ~~~   ** Air Face Velocity[m/s]={:.6f}",
                AirMassFlow / (state->dataWaterCoils->WaterCoil(CoilNum).MinAirFlowArea * AirDensity)),
-        format("   **   ~~~   ** Approximate Mass Flow Rate limit for Face Area[kg/s]={:.6T}",
+        format("   **   ~~~   ** Approximate Mass Flow Rate limit for Face Area[kg/s]={:.6f}",
                44.7 * state->dataWaterCoils->WaterCoil(CoilNum).MinAirFlowArea * AirDensity),
         "   **  Fatal  ** Coil:Cooling:Water:DetailedGeometry needs to be resized/autosized to handle capacity",
         "   ...Summary of Errors that led to program termination:",

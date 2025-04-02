@@ -294,7 +294,7 @@ namespace HighTempRadiantSystem {
                     if (highTempRadSys.ScaledHeatingCapacity < 0.0 && highTempRadSys.ScaledHeatingCapacity != DataSizing::AutoSize) {
                         ShowSevereError(state, format("{} = {}", cCurrentModuleObject, highTempRadSys.Name));
                         ShowContinueError(state,
-                                          format("Illegal {} = {:.7T}",
+                                          format("Illegal {} = {:.7f}",
                                                  state.dataIPShortCut->cNumericFieldNames(iHeatDesignCapacityNumericNum),
                                                  state.dataIPShortCut->rNumericArgs(iHeatDesignCapacityNumericNum)));
                         ErrorsFound = true;
@@ -319,7 +319,7 @@ namespace HighTempRadiantSystem {
                                                  state.dataIPShortCut->cAlphaFieldNames(iHeatCAPMAlphaNum),
                                                  state.dataIPShortCut->cAlphaArgs(iHeatCAPMAlphaNum)));
                         ShowContinueError(state,
-                                          format("Illegal {} = {:.7T}",
+                                          format("Illegal {} = {:.7f}",
                                                  state.dataIPShortCut->cNumericFieldNames(iHeatCapacityPerFloorAreaNumericNum),
                                                  state.dataIPShortCut->rNumericArgs(iHeatCapacityPerFloorAreaNumericNum)));
                         ErrorsFound = true;
@@ -350,7 +350,7 @@ namespace HighTempRadiantSystem {
                     if (highTempRadSys.ScaledHeatingCapacity < 0.0) {
                         ShowSevereError(state, format("{} = {}", cCurrentModuleObject, highTempRadSys.Name));
                         ShowContinueError(state,
-                                          format("Illegal {} = {:.7T}",
+                                          format("Illegal {} = {:.7f}",
                                                  state.dataIPShortCut->cNumericFieldNames(iHeatFracOfAutosizedCapacityNumericNum),
                                                  state.dataIPShortCut->rNumericArgs(iHeatFracOfAutosizedCapacityNumericNum)));
                         ErrorsFound = true;
@@ -535,12 +535,12 @@ namespace HighTempRadiantSystem {
                                 format("Fraction of radiation distributed to surfaces and people sums up to less than 1 for {}",
                                        state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state, "This would result in some of the radiant energy delivered by the high temp radiant heater being lost.");
-                ShowContinueError(state, format("The sum of all radiation fractions to surfaces = {:.5T}", TotalFracToSurfs));
-                ShowContinueError(state, format("The radiant fraction to people = {:.5T}", highTempRadSys.FracDistribPerson));
-                ShowContinueError(state, format("So, all radiant fractions including surfaces and people = {:.5T}", AllFracsSummed));
+                ShowContinueError(state, format("The sum of all radiation fractions to surfaces = {:.5f}", TotalFracToSurfs));
+                ShowContinueError(state, format("The radiant fraction to people = {:.5f}", highTempRadSys.FracDistribPerson));
+                ShowContinueError(state, format("So, all radiant fractions including surfaces and people = {:.5f}", AllFracsSummed));
                 ShowContinueError(state,
                                   format("This means that the fraction of radiant energy that would be lost from the high temperature radiant heater "
-                                         "would be = {:.5T}",
+                                         "would be = {:.5f}",
                                          FracOfRadPotentiallyLost));
                 ShowContinueError(state,
                                   format("Please check and correct this so that all radiant energy is accounted for in {} = {}",
@@ -1159,16 +1159,16 @@ namespace HighTempRadiantSystem {
                     if (ThisSurfIntensity > DataHeatBalFanSys::MaxRadHeatFlux) { // CR 8074, trap excessive intensity (throws off surface balance )
                         ShowSevereError(state, "DistributeHTRadGains:  excessive thermal radiation heat flux intensity detected");
                         ShowContinueError(state, format("Surface = {}", state.dataSurface->Surface(SurfNum).Name));
-                        ShowContinueError(state, format("Surface area = {:.3R} [m2]", state.dataSurface->Surface(SurfNum).Area));
+                        ShowContinueError(state, format("Surface area = {:.3f} [m2]", state.dataSurface->Surface(SurfNum).Area));
                         ShowContinueError(state, format("Occurs in ZoneHVAC:HighTemperatureRadiant = {}", thisHTR.Name));
-                        ShowContinueError(state, format("Radiation intensity = {:.2R} [W/m2]", ThisSurfIntensity));
+                        ShowContinueError(state, format("Radiation intensity = {:.2f} [W/m2]", ThisSurfIntensity));
                         ShowContinueError(state, "Assign a larger surface area or more surfaces in ZoneHVAC:HighTemperatureRadiant");
                         ShowFatalError(state, "DistributeHTRadGains:  excessive thermal radiation heat flux intensity detected");
                     }
                 } else { // small surface
                     ShowSevereError(state, "DistributeHTRadGains:  surface not large enough to receive thermal radiation heat flux");
                     ShowContinueError(state, format("Surface = {}", state.dataSurface->Surface(SurfNum).Name));
-                    ShowContinueError(state, format("Surface area = {:.3R} [m2]", state.dataSurface->Surface(SurfNum).Area));
+                    ShowContinueError(state, format("Surface area = {:.3f} [m2]", state.dataSurface->Surface(SurfNum).Area));
                     ShowContinueError(state, format("Occurs in ZoneHVAC:HighTemperatureRadiant = {}", thisHTR.Name));
                     ShowContinueError(state, "Assign a larger surface area or more surfaces in ZoneHVAC:HighTemperatureRadiant");
                     ShowFatalError(state, "DistributeHTRadGains:  surface not large enough to receive thermal radiation heat flux");

@@ -1064,7 +1064,7 @@ namespace RoomAir {
                             ShowWarningError(state, format("Roomair model will not be applied for Zone={}.", ipsc->cAlphaArgs(1)));
                             ShowContinueError(
                                 state,
-                                format("AirflowNetwrok:Multizone:Surface crack object must have an air flow coefficient = 0.5, value was={:.2R}",
+                                format("AirflowNetwrok:Multizone:Surface crack object must have an air flow coefficient = 0.5, value was={:.2f}",
                                        state.afn->MultizoneSurfaceCrackData(typeNum).exponent));
                         }
                     }
@@ -1691,7 +1691,7 @@ namespace RoomAir {
                 ShowSevereError(state, "GetRoomAirflowNetworkData: Invalid, zone volume fractions do not sum to 1.0");
                 ShowContinueError(state, format("Entered in RoomAir:Node:AirflowNetwork with Zone Name = {}", state.dataHeatBal->Zone(iZone).Name));
                 ShowContinueError(state, "The Fraction of Zone Air Volume values across all the nodes needs to sum to 1.0.");
-                ShowContinueError(state, format("The sum of fractions entered = {:.3R}", SumFraction));
+                ShowContinueError(state, format("The sum of fractions entered = {:.3f}", SumFraction));
                 ErrorsFound = true;
             }
 
@@ -1722,7 +1722,7 @@ namespace RoomAir {
                                                  state.dataHeatBal->Zone(iZone).Name,
                                                  intGain.Name));
                         ShowContinueError(state, "The Fraction of internal gain across all the nodes needs to sum to 1.0.");
-                        ShowContinueError(state, format("The sum of fractions entered = {:.3R}", SumFraction));
+                        ShowContinueError(state, format("The sum of fractions entered = {:.3f}", SumFraction));
                         ErrorsFound = true;
                     }
                 } // for (iGain)
@@ -1927,9 +1927,9 @@ namespace RoomAir {
                 constexpr Real64 CeilingHeightDiffMaximum = 0.1;
                 if (std::abs((Z2ofZone - Z1ofZone) - state.dataHeatBal->Zone(ZNum).CeilingHeight) > CeilingHeightDiffMaximum) {
                     ShowWarningError(state, format("RoomAirManager: Inconsistent ceiling heights in Zone: {}", state.dataHeatBal->Zone(ZNum).Name));
-                    ShowContinueError(state, format("Lowest height=[{:.3R}].", Z1ofZone));
-                    ShowContinueError(state, format("Highest height=[{:.3R}].", Z2ofZone));
-                    ShowContinueError(state, format("Ceiling height=[{:.3R}].", state.dataHeatBal->Zone(ZNum).CeilingHeight));
+                    ShowContinueError(state, format("Lowest height=[{:.3f}].", Z1ofZone));
+                    ShowContinueError(state, format("Highest height=[{:.3f}].", Z2ofZone));
+                    ShowContinueError(state, format("Ceiling height=[{:.3f}].", state.dataHeatBal->Zone(ZNum).CeilingHeight));
                 }
             } // for (ZoneNum)
 

@@ -255,26 +255,26 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.MinTemperature = state.dataIPShortCut->rNumericArgs(2);
         if ((thisEarthTube.MinTemperature < -EarthTubeTempLimit) || (thisEarthTube.MinTemperature > EarthTubeTempLimit)) {
             ShowSevereError(state,
-                            format("{}: {}={} must have a minimum temperature between -{:.0R}C and {:.0R}C",
+                            format("{}: {}={} must have a minimum temperature between -{:.0f}C and {:.0f}C",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
                                    EarthTubeTempLimit,
                                    EarthTubeTempLimit));
-            ShowContinueError(state, format("Entered value={:.0R}", thisEarthTube.MinTemperature));
+            ShowContinueError(state, format("Entered value={:.0f}", thisEarthTube.MinTemperature));
             ErrorsFound = true;
         }
 
         thisEarthTube.MaxTemperature = state.dataIPShortCut->rNumericArgs(3);
         if ((thisEarthTube.MaxTemperature < -EarthTubeTempLimit) || (thisEarthTube.MaxTemperature > EarthTubeTempLimit)) {
             ShowSevereError(state,
-                            format("{}: {}={} must have a maximum temperature between -{:.0R}C and {:.0R}C",
+                            format("{}: {}={} must have a maximum temperature between -{:.0f}C and {:.0f}C",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
                                    EarthTubeTempLimit,
                                    EarthTubeTempLimit));
-            ShowContinueError(state, format("Entered value={:.0R}", thisEarthTube.MaxTemperature));
+            ShowContinueError(state, format("Entered value={:.0f}", thisEarthTube.MaxTemperature));
             ErrorsFound = true;
         }
 
@@ -300,7 +300,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.FanPressure = state.dataIPShortCut->rNumericArgs(5);
         if (thisEarthTube.FanPressure < 0.0) {
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be positive, entered value={:.2R}",
+                            format("{}: {}={}, {} must be positive, entered value={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
@@ -312,7 +312,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.FanEfficiency = state.dataIPShortCut->rNumericArgs(6);
         if ((thisEarthTube.FanEfficiency <= 0.0) || (thisEarthTube.FanEfficiency > 1.0)) {
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be greater than zero and less than or equal to one, entered value={:.2R}",
+                            format("{}: {}={}, {} must be greater than zero and less than or equal to one, entered value={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
@@ -324,7 +324,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.r1 = state.dataIPShortCut->rNumericArgs(7);
         if (thisEarthTube.r1 <= 0.0) {
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be positive, entered value={:.2R}",
+                            format("{}: {}={}, {} must be positive, entered value={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
@@ -336,7 +336,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.r2 = state.dataIPShortCut->rNumericArgs(8);
         if (thisEarthTube.r2 <= 0.0) {
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be positive, entered value={:.2R}",
+                            format("{}: {}={}, {} must be positive, entered value={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
@@ -350,7 +350,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.PipeLength = state.dataIPShortCut->rNumericArgs(9);
         if (thisEarthTube.PipeLength <= 0.0) {
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be positive, entered value={:.2R}",
+                            format("{}: {}={}, {} must be positive, entered value={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
@@ -362,7 +362,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.PipeThermCond = state.dataIPShortCut->rNumericArgs(10);
         if (thisEarthTube.PipeThermCond <= 0.0) {
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be positive, entered value={:.2R}",
+                            format("{}: {}={}, {} must be positive, entered value={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
@@ -374,7 +374,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
         thisEarthTube.z = state.dataIPShortCut->rNumericArgs(11);
         if (thisEarthTube.z <= 0.0) {
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be positive, entered value={:.2R}",
+                            format("{}: {}={}, {} must be positive, entered value={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),
@@ -386,7 +386,7 @@ void GetEarthTube(EnergyPlusData &state, bool &ErrorsFound) // If errors found i
             // Note that code in initEarthTubeVertical assumes that this check remains in place--if this ever gets changed,
             // code in initEarthTubeVertical must be modified
             ShowSevereError(state,
-                            format("{}: {}={}, {} must be greater than 3*{} + {} entered value={:.2R} ref sum={:.2R}",
+                            format("{}: {}={}, {} must be greater than 3*{} + {} entered value={:.2f} ref sum={:.2f}",
                                    cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaFieldNames(1),
                                    state.dataIPShortCut->cAlphaArgs(1),

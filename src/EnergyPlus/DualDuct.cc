@@ -677,11 +677,11 @@ namespace DualDuct {
                         } else {
                             if (thisDD.MaxAirVolFlowRate < thisDD.DesignOAFlowRate) {
                                 ShowSevereError(state,
-                                                format("The value {:.5R} in {}is lower than the outdoor air requirement.",
+                                                format("The value {:.5f} in {}is lower than the outdoor air requirement.",
                                                        thisDD.MaxAirVolFlowRate,
                                                        cNumericFields(1)));
                                 ShowContinueError(state, format("Occurs in {} = {}", cCMO_DDVarVolOA, thisDD.Name));
-                                ShowContinueError(state, format("The design outdoor air requirement is {:.5R}", thisDD.DesignOAFlowRate));
+                                ShowContinueError(state, format("The design outdoor air requirement is {:.5f}", thisDD.DesignOAFlowRate));
                                 ErrorsFound = true;
                             }
                         }

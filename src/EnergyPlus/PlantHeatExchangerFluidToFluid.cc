@@ -1772,7 +1772,7 @@ void HeatExchangerStruct::findDemandSideLoopFlow(EnergyPlusData &state, Real64 c
                         ShowWarningError(
                             state,
                             format("{} named {} - Iteration Limit exceeded calculating demand side loop flow rate", ComponentClassName, this->Name));
-                        ShowContinueError(state, format("Simulation continues with calculated demand side mass flow rate = {:.7R}", DmdSideMdot));
+                        ShowContinueError(state, format("Simulation continues with calculated demand side mass flow rate = {:.7f}", DmdSideMdot));
                     }
                     ShowRecurringWarningErrorAtEnd(state,
                                                    ComponentClassName + " named " + this->Name +
@@ -1789,7 +1789,7 @@ void HeatExchangerStruct::findDemandSideLoopFlow(EnergyPlusData &state, Real64 c
                         ++this->DmdSideModulatSolvFailErrorCount;
                         ShowWarningError(
                             state, format("{} named {} - Solver failed to calculate demand side loop flow rate", ComponentClassName, this->Name));
-                        ShowContinueError(state, format("Simulation continues with estimated demand side mass flow rate = {:.7R}", DmdSideMdot));
+                        ShowContinueError(state, format("Simulation continues with estimated demand side mass flow rate = {:.7f}", DmdSideMdot));
                     }
                     ShowRecurringWarningErrorAtEnd(state,
                                                    ComponentClassName + " named " + this->Name +
@@ -1834,7 +1834,7 @@ void HeatExchangerStruct::findDemandSideLoopFlow(EnergyPlusData &state, Real64 c
                         ShowWarningError(
                             state,
                             format("{} named {} - Iteration Limit exceeded calculating demand side loop flow rate", ComponentClassName, this->Name));
-                        ShowContinueError(state, format("Simulation continues with calculated demand side mass flow rate = {:.7R}", DmdSideMdot));
+                        ShowContinueError(state, format("Simulation continues with calculated demand side mass flow rate = {:.7f}", DmdSideMdot));
                     }
                     ShowRecurringWarningErrorAtEnd(state,
                                                    ComponentClassName + " named " + this->Name +
@@ -1851,7 +1851,7 @@ void HeatExchangerStruct::findDemandSideLoopFlow(EnergyPlusData &state, Real64 c
                         ++this->DmdSideModulatSolvFailErrorCount;
                         ShowWarningError(
                             state, format("{} named {} - Solver failed to calculate demand side loop flow rate", ComponentClassName, this->Name));
-                        ShowContinueError(state, format("Simulation continues with estimated demand side mass flow rate = {:.7R}", DmdSideMdot));
+                        ShowContinueError(state, format("Simulation continues with estimated demand side mass flow rate = {:.7f}", DmdSideMdot));
                     }
                     ShowRecurringWarningErrorAtEnd(state,
                                                    ComponentClassName + " named " + this->Name +

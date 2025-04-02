@@ -604,7 +604,7 @@ namespace DElightManagerF {
                                     ShowSevereError(state,
                                                     format("DElightInputGenerator:Reference point X Value outside Zone Min/Max X, Zone={}", zn.Name));
                                     ShowContinueError(state,
-                                                      format("...X Reference Point= {:.2R}, Zone Minimum X= {:.2R}, Zone Maximum X= {:.2R}",
+                                                      format("...X Reference Point= {:.2f}, Zone Minimum X= {:.2f}, Zone Maximum X= {:.2f}",
                                                              thisZone.MinimumX,
                                                              RefPt_WCS_Coord.x,
                                                              thisZone.MaximumX));
@@ -614,7 +614,7 @@ namespace DElightManagerF {
                                     ShowSevereError(state,
                                                     format("DElightInputGenerator:Reference point Y Value outside Zone Min/Max Y, Zone={}", zn.Name));
                                     ShowContinueError(state,
-                                                      format("...Y Reference Point= {:.2R}, Zone Minimum Y= {:.2R}, Zone Maximum Y= {:.2R}",
+                                                      format("...Y Reference Point= {:.2f}, Zone Minimum Y= {:.2f}, Zone Maximum Y= {:.2f}",
                                                              thisZone.MinimumY,
                                                              RefPt_WCS_Coord.y,
                                                              thisZone.MaximumY));
@@ -625,7 +625,7 @@ namespace DElightManagerF {
                                         state,
                                         format("DElightInputGenerator:Reference point Z Value outside Zone Min/Max Z, Zone={}", thisZone.Name));
                                     ShowContinueError(state,
-                                                      format("...Z Reference Point= {:.2R}, Zone Minimum Z= {:.2R}, Zone Maximum Z= {:.2R}",
+                                                      format("...Z Reference Point= {:.2f}, Zone Minimum Z= {:.2f}, Zone Maximum Z= {:.2f}",
                                                              thisZone.MinimumZ,
                                                              RefPt_WCS_Coord.z,
                                                              thisZone.MaximumZ));

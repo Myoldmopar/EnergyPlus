@@ -213,7 +213,7 @@ namespace GeneratorFuelSupply {
                     // check for molar fractions summing to 1.0.
                     if (std::abs(sum(state.dataGenerator->FuelSupply(FuelSupNum).ConstitMolalFract) - 1.0) > 0.0001) {
                         ShowSevereError(state, format("{} molar fractions do not sum to 1.0", cCurrentModuleObject));
-                        ShowContinueError(state, format("Sum was={:.5R}", sum(state.dataGenerator->FuelSupply(FuelSupNum).ConstitMolalFract)));
+                        ShowContinueError(state, format("Sum was={:.5f}", sum(state.dataGenerator->FuelSupply(FuelSupNum).ConstitMolalFract)));
                         ShowContinueError(state, format("Entered in {} = {}", cCurrentModuleObject, AlphArray(1)));
                         ErrorsFound = true;
                     }
@@ -662,7 +662,7 @@ namespace GeneratorFuelSupply {
         print(state.files.eio,
               "! <Fuel Supply>, Fuel Supply Name, Lower Heating Value [J/kmol], Lower Heating Value [kJ/kg], Higher "
               "Heating Value [KJ/kg],  Molecular Weight [g/mol] \n");
-        static constexpr std::string_view Format_501(" Fuel Supply, {},{:13.6N},{:13.6N},{:13.6N},{:13.6N}\n");
+        static constexpr std::string_view Format_501(" Fuel Supply, {},{:13.6f},{:13.6f},{:13.6f},{:13.6f}\n");
         print(state.files.eio,
               Format_501,
               state.dataGenerator->FuelSupply(FuelSupplyNum).Name,

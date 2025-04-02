@@ -276,10 +276,10 @@ void WrapperSpecs::SizeWrapper(EnergyPlusData &state)
                                                 format("SizeChillerHeaterPerformanceElectricEIR: Potential issue with equipment sizing for {}",
                                                        this->ChillerHeater(NumChillerHeater).Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Reference Chilled Water Flow Rate of {:.5R} [m3/s]", EvapVolFlowRateUser));
+                                        state, format("User-Specified Reference Chilled Water Flow Rate of {:.5f} [m3/s]", EvapVolFlowRateUser));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Reference Chilled Water Flow Rate of {:.5R} [m3/s]", tmpEvapVolFlowRate));
+                                        format("differs from Design Size Reference Chilled Water Flow Rate of {:.5f} [m3/s]", tmpEvapVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -377,8 +377,8 @@ void WrapperSpecs::SizeWrapper(EnergyPlusData &state)
                                     ShowMessage(state,
                                                 format("SizeChillerHeaterPerformanceElectricEIR: Potential issue with equipment sizing for {}",
                                                        this->ChillerHeater(NumChillerHeater).Name));
-                                    ShowContinueError(state, format("User-Specified Reference Capacity of {:.2R} [W]", NomCapUser));
-                                    ShowContinueError(state, format("differs from Design Size Reference Capacity of {:.2R} [W]", tmpNomCap));
+                                    ShowContinueError(state, format("User-Specified Reference Capacity of {:.2f} [W]", NomCapUser));
+                                    ShowContinueError(state, format("differs from Design Size Reference Capacity of {:.2f} [W]", tmpNomCap));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -472,10 +472,10 @@ void WrapperSpecs::SizeWrapper(EnergyPlusData &state)
                                                 format("SizeChillerHeaterPerformanceElectricEIR: Potential issue with equipment sizing for {}",
                                                        this->ChillerHeater(NumChillerHeater).Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Reference Condenser Water Flow Rate of {:.5R} [m3/s]", CondVolFlowRateUser));
+                                        state, format("User-Specified Reference Condenser Water Flow Rate of {:.5f} [m3/s]", CondVolFlowRateUser));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Reference Condenser Water Flow Rate of {:.5R} [m3/s]", tmpCondVolFlowRate));
+                                        format("differs from Design Size Reference Condenser Water Flow Rate of {:.5f} [m3/s]", tmpCondVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1309,14 +1309,14 @@ void GetChillerHeaterInput(EnergyPlusData &state)
         if (state.dataIPShortCut->rNumericArgs(1) == 0.0) {
             ShowSevereError(state, format("Invalid {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
             ShowContinueError(state,
-                              format("Entered in {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
+                              format("Entered in {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
             CHErrorsFound = true;
         }
         state.dataPlantCentralGSHP->ChillerHeater(ChillerHeaterNum).RefCOPCooling = state.dataIPShortCut->rNumericArgs(2);
         if (state.dataIPShortCut->rNumericArgs(2) == 0.0) {
             ShowSevereError(state, format("Invalid {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
             ShowContinueError(state,
-                              format("Entered in {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+                              format("Entered in {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
             CHErrorsFound = true;
         }
 
@@ -1329,7 +1329,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
         if (state.dataIPShortCut->rNumericArgs(6) == 0.0) {
             ShowSevereError(state, format("Invalid {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
             ShowContinueError(state,
-                              format("Entered in {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(6), state.dataIPShortCut->rNumericArgs(6)));
+                              format("Entered in {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(6), state.dataIPShortCut->rNumericArgs(6)));
             CHErrorsFound = true;
         }
 
@@ -1337,7 +1337,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
         if (state.dataIPShortCut->rNumericArgs(7) == 0.0) {
             ShowSevereError(state, format("Invalid {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
             ShowContinueError(state,
-                              format("Entered in {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(7), state.dataIPShortCut->rNumericArgs(7)));
+                              format("Entered in {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(7), state.dataIPShortCut->rNumericArgs(7)));
             CHErrorsFound = true;
         }
 
@@ -1379,7 +1379,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
             state.dataPlantCentralGSHP->ChillerHeater(ChillerHeaterNum).OpenMotorEff > 1.0) {
             ShowSevereError(state,
                             format("GetCurveInput: For {}: {}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.3R}", state.dataIPShortCut->cNumericFieldNames(14), state.dataIPShortCut->rNumericArgs(14)));
+            ShowContinueError(state, format("{} = {:.3f}", state.dataIPShortCut->cNumericFieldNames(14), state.dataIPShortCut->rNumericArgs(14)));
             ShowContinueError(state, format("{} must be greater than or equal to zero", state.dataIPShortCut->cNumericFieldNames(14)));
             ShowContinueError(state, format("{} must be less than or equal to one", state.dataIPShortCut->cNumericFieldNames(14)));
             CHErrorsFound = true;
@@ -1397,7 +1397,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                                   format("(+ or - 10%) at reference conditions for {}= {}",
                                          state.dataIPShortCut->cCurrentModuleObject,
                                          state.dataIPShortCut->cAlphaArgs(1)));
-                ShowContinueError(state, format("Curve output at reference conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("Curve output at reference conditions = {:.3f}", CurveVal));
             }
         }
 
@@ -1412,7 +1412,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                                   format("(+ or - 10%) at reference conditions for {}= {}",
                                          state.dataIPShortCut->cCurrentModuleObject,
                                          state.dataIPShortCut->cAlphaArgs(1)));
-                ShowContinueError(state, format("Curve output at reference conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("Curve output at reference conditions = {:.3f}", CurveVal));
             }
         }
 
@@ -1425,7 +1425,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                                   format("(+ or - 10%) at reference conditions for {}= {}",
                                          state.dataIPShortCut->cCurrentModuleObject,
                                          state.dataIPShortCut->cAlphaArgs(1)));
-                ShowContinueError(state, format("Curve output at reference conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("Curve output at reference conditions = {:.3f}", CurveVal));
             }
         }
 
@@ -1443,7 +1443,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                 ShowContinueError(state, "EIR as a function of PLR curve output at various part-load ratios shown below:");
                 ShowContinueError(state, "PLR   =  0.00   0.10   0.20   0.30   0.40   0.50   0.60   0.70   0.80   0.90   1.00");
 
-                ShowContinueError(state, fmt::format("Curve Output = {:7.2F}", fmt::join(CurveValArray, ",")));
+                ShowContinueError(state, fmt::format("Curve Output = {:7.2f}", fmt::join(CurveValArray, ",")));
 
                 CHErrorsFound = true;
             }
@@ -1460,7 +1460,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                                   format("(+ or - 10%) at reference conditions for {}= {}",
                                          state.dataIPShortCut->cCurrentModuleObject,
                                          state.dataIPShortCut->cAlphaArgs(1)));
-                ShowContinueError(state, format("Curve output at reference conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("Curve output at reference conditions = {:.3f}", CurveVal));
             }
         }
 
@@ -1475,7 +1475,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                                   format("(+ or - 10%) at reference conditions for {}= {}",
                                          state.dataIPShortCut->cCurrentModuleObject,
                                          state.dataIPShortCut->cAlphaArgs(1)));
-                ShowContinueError(state, format("Curve output at reference conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("Curve output at reference conditions = {:.3f}", CurveVal));
             }
         }
 
@@ -1488,7 +1488,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                                   format("(+ or - 10%) at reference conditions for {}= {}",
                                          state.dataIPShortCut->cCurrentModuleObject,
                                          state.dataIPShortCut->cAlphaArgs(1)));
-                ShowContinueError(state, format("Curve output at reference conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("Curve output at reference conditions = {:.3f}", CurveVal));
             }
         }
 
@@ -1506,7 +1506,7 @@ void GetChillerHeaterInput(EnergyPlusData &state)
                 ShowContinueError(state, "EIR as a function of PLR curve output at various part-load ratios shown below:");
                 ShowContinueError(state, "PLR          =    0.00   0.10   0.20   0.30   0.40   0.50   0.60   0.70   0.80   0.90   1.00");
 
-                std::string const curve_output = fmt::format("Curve Output = {:7.2F}", fmt::join(CurveValArray, ","));
+                std::string const curve_output = fmt::format("Curve Output = {:7.2f}", fmt::join(CurveValArray, ","));
                 ShowContinueError(state, curve_output);
 
                 CHErrorsFound = true;
@@ -2305,8 +2305,8 @@ void WrapperSpecs::CalcChillerHeaterModel(EnergyPlusData &state)
                                       format("CalcChillerHeaterModel: ChillerHeaterPerformance:Electric:EIR=\"{}\", DeltaTemp < 0",
                                              this->ChillerHeater(ChillerHeaterNum).Name));
                     ShowContinueError(
-                        state, format(" Reference Simultaneous Cooling-Heating Mode Leaving Condenser Water Temperature [{:.1R}]", CondOutletTemp));
-                    ShowContinueError(state, format("is below condenser inlet temperature of [{:.1R}].", CondInletTemp));
+                        state, format(" Reference Simultaneous Cooling-Heating Mode Leaving Condenser Water Temperature [{:.1f}]", CondOutletTemp));
+                    ShowContinueError(state, format("is below condenser inlet temperature of [{:.1f}].", CondInletTemp));
                     ShowContinueErrorTimeStamp(state, "");
                     ShowContinueError(state, " Reset reference temperature to one greater than the inlet temperature ");
                 }
@@ -2662,9 +2662,9 @@ Real64 WrapperSpecs::calcChillerCapFT(EnergyPlusData &state, int const numChille
         if (this->ChillerHeater(numChillerHeater).ChillerCapFTError < 1 && !state.dataGlobal->WarmupFlag) {
             ++this->ChillerHeater(numChillerHeater).ChillerCapFTError;
             ShowWarningError(state, format("ChillerHeaterPerformance:Electric:EIR \"{}\":", this->ChillerHeater(numChillerHeater).Name));
-            ShowContinueError(state, format(" ChillerHeater Capacity as a Function of Temperature curve output is negative ({:.3R}).", chillCapFT));
+            ShowContinueError(state, format(" ChillerHeater Capacity as a Function of Temperature curve output is negative ({:.3f}).", chillCapFT));
             ShowContinueError(state,
-                              format(" Negative value occurs using an Evaporator Outlet Temp of {:.1R} and a Condenser Inlet Temp of {:.1R}.",
+                              format(" Negative value occurs using an Evaporator Outlet Temp of {:.1f} and a Condenser Inlet Temp of {:.1f}.",
                                      evapOutletTemp,
                                      condTemp));
             ShowContinueErrorTimeStamp(state, " Resetting curve output to zero and continuing simulation.");

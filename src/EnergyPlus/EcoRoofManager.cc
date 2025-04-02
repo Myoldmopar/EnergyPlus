@@ -968,7 +968,7 @@ namespace EcoRoofManager {
             if (state.dataEcoRoofMgr->RelativeSoilSaturationTop < 0.0001) {
                 if (state.dataEcoRoofMgr->ErrIndex == 0) {
                     ShowWarningMessage(state,
-                                       format("EcoRoof: UpdateSoilProps: Relative Soil Saturation Top Moisture <= 0.0001, Value=[{:.5R}].",
+                                       format("EcoRoof: UpdateSoilProps: Relative Soil Saturation Top Moisture <= 0.0001, Value=[{:.5f}].",
                                               state.dataEcoRoofMgr->RelativeSoilSaturationTop));
                     ShowContinueError(state, "Value is set to 0.0001 and simulation continues.");
                     ShowContinueError(state, "You may wish to increase the number of timesteps to attempt to alleviate the problem.");

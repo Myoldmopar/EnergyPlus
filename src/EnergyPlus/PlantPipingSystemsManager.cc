@@ -465,7 +465,7 @@ namespace PlantPipingSystemsManager {
                         ShowContinueError(state, format("Pipe segment name:{}", thisSegment->Name));
                         ShowContinueError(
                             state,
-                            format("Corrected pipe location: ( x,y )=( {:.2T},{:.2T} )", thisSegment->PipeLocation.X, thisSegment->PipeLocation.Y));
+                            format("Corrected pipe location: ( x,y )=( {:.2f},{:.2f} )", thisSegment->PipeLocation.X, thisSegment->PipeLocation.Y));
                     }
                 } // segment loop
             }     // circuit loop
@@ -1626,7 +1626,7 @@ namespace PlantPipingSystemsManager {
             if (thisCircuit.PipeSize.InnerDia >= thisCircuit.PipeSize.OuterDia) {
                 ShowSevereError(state, format("{}: {}=\"{}\" has invalid pipe diameters.", routineName, ObjName_HorizTrench, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("Outer diameter [{:.3T}] must be greater than inner diameter [{:.3T}].",
+                                  format("Outer diameter [{:.3f}] must be greater than inner diameter [{:.3f}].",
                                          thisCircuit.PipeSize.OuterDia,
                                          thisCircuit.PipeSize.InnerDia));
                 ErrorsFound = true;
@@ -2219,7 +2219,7 @@ namespace PlantPipingSystemsManager {
 
         ShowSevereError(
             state,
-            format(R"({}:{}="{}", invalid {}="{:.3T}", Condition: {})", RoutineName, ObjectName, InstanceName, FieldName, FieldEntry, Condition));
+            format(R"({}:{}="{}", invalid {}="{:.3f}", Condition: {})", RoutineName, ObjectName, InstanceName, FieldName, FieldEntry, Condition));
         ErrorsFound = true;
     }
 

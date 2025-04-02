@@ -216,8 +216,8 @@ GLHESlinky::GLHESlinky(EnergyPlusData &state, std::string const &objName, nlohma
         if (this->trenchDepth - this->coilDiameter < 0.0) {
             // Error: part of the coil is above ground
             ShowSevereError(state, format("{}=\"{}\", invalid value in field.", this->moduleName, this->name));
-            ShowContinueError(state, format("...{}=[{:.3R}].", "Trench Depth", this->trenchDepth));
-            ShowContinueError(state, format("...{}=[{:.3R}].", "Coil Depth", this->coilDepth));
+            ShowContinueError(state, format("...{}=[{:.3f}].", "Trench Depth", this->trenchDepth));
+            ShowContinueError(state, format("...{}=[{:.3f}].", "Coil Depth", this->coilDepth));
             ShowContinueError(state, "...Part of coil will be above ground.");
             errorsFound = true;
 
@@ -239,8 +239,8 @@ GLHESlinky::GLHESlinky(EnergyPlusData &state, std::string const &objName, nlohma
 
     if (this->pipe.thickness >= this->pipe.outDia / 2.0) {
         ShowSevereError(state, format("{}=\"{}\", invalid value in field.", this->moduleName, this->name));
-        ShowContinueError(state, format("...{}=[{:.3R}].", "Pipe Thickness", this->pipe.thickness));
-        ShowContinueError(state, format("...{}=[{:.3R}].", "Pipe Outer Diameter", this->pipe.outDia));
+        ShowContinueError(state, format("...{}=[{:.3f}].", "Pipe Thickness", this->pipe.thickness));
+        ShowContinueError(state, format("...{}=[{:.3f}].", "Pipe Outer Diameter", this->pipe.outDia));
         ShowContinueError(state, "...Radius will be <=0.");
         errorsFound = true;
     }
@@ -2294,7 +2294,7 @@ void GLHEBase::updateGHX(EnergyPlusData &state)
         ShowContinueError(state, format("For GroundHeatExchanger: {}GLHE delta Temp > 100C.", this->name));
         ShowContinueError(state, "This can be encountered in cases where the GLHE mass flow rate is either significantly");
         ShowContinueError(state, " lower than the design value, or cases where the mass flow rate rapidly changes.");
-        ShowContinueError(state, format("GLHE Current Flow Rate={:.3T}; GLHE Design Flow Rate={:.3T}", this->massFlowRate, this->designMassFlow));
+        ShowContinueError(state, format("GLHE Current Flow Rate={:.3f}; GLHE Design Flow Rate={:.3f}", this->massFlowRate, this->designMassFlow));
         ++this->numErrorCalls;
     }
 }

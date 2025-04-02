@@ -1042,7 +1042,7 @@ namespace FluidProperties {
 
             if (Numbers(1) <= 0.0) {
                 ShowSevereError(state, format("{}: {} Name={}", routineName, CurrentModuleObject, refrig->Name));
-                ShowContinueError(state, format("Negative pressures not allowed in fluid property input data, Value =[{:.3R}].", Numbers(1)));
+                ShowContinueError(state, format("Negative pressures not allowed in fluid property input data, Value =[{:.3f}].", Numbers(1)));
                 ErrorsFound = true;
                 continue;
             }
@@ -1882,13 +1882,13 @@ namespace FluidProperties {
         // Then, interpolate if necessary.
         if (Concentration < RawConcData(1)) { // Concentration too low
             ShowWarningError(state,
-                             format("{}: Glycol concentration out of range for data (too low), concentration = {:.3R}", routineName, Concentration));
+                             format("{}: Glycol concentration out of range for data (too low), concentration = {:.3f}", routineName, Concentration));
             ShowContinueError(state, "Check your data or the definition of your glycols in the GlycolConcentrations input");
             ShowContinueError(state, "Property data set to data for lowest concentration entered");
             InterpData = RawPropData(1, _);
         } else if (Concentration > RawConcData(NumOfConcs)) { // Concentration too high
             ShowWarningError(state,
-                             format("{}: Glycol concentration out of range for data (too high), concentration = {:.3R}", routineName, Concentration));
+                             format("{}: Glycol concentration out of range for data (too high), concentration = {:.3f}", routineName, Concentration));
             ShowContinueError(state, "Check your data or the definition of your glycols in the GlycolConcentrations input");
             ShowContinueError(state, "Property data set to data for highest concentration entered");
             InterpData = RawPropData(NumOfConcs, _);
@@ -2192,76 +2192,76 @@ namespace FluidProperties {
             } else {
                 print(state.files.debug, "Glycol={}\n", glycol->Name);
             }
-            print(state.files.debug, "Concentration:,{:.2R}\n", glycol->Concentration);
+            print(state.files.debug, "Concentration:,{:.2f}\n", glycol->Concentration);
             if (glycol->CpDataPresent) {
                 print(state.files.debug,
-                      "Specific Heat Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Specific Heat Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       glycol->CpLowTempValue,
                       glycol->CpLowTempIndex,
                       glycol->CpHighTempValue,
                       glycol->CpHighTempIndex);
                 print(state.files.debug, "{}", "Temperatures:");
                 for (int Loop = 1; Loop <= glycol->NumCpTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->CpTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->CpTemps(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->CpTemps(glycol->NumCpTempPoints));
                 print(state.files.debug, "{}", "Specific Heat:");
                 for (int Loop = 1; Loop <= glycol->NumCpTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->CpValues(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->CpValues(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->CpValues(glycol->NumCpTempPoints));
             }
             if (glycol->RhoDataPresent) {
                 print(state.files.debug,
-                      "Density Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Density Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       glycol->RhoLowTempValue,
                       glycol->RhoLowTempIndex,
                       glycol->RhoHighTempValue,
                       glycol->RhoHighTempIndex);
                 print(state.files.debug, "{}", "Temperatures:");
                 for (int Loop = 1; Loop <= glycol->NumRhoTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->RhoTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->RhoTemps(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->RhoTemps(glycol->NumRhoTempPoints));
                 print(state.files.debug, "{}", "Density:");
                 for (int Loop = 1; Loop <= glycol->NumRhoTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->RhoValues(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->RhoValues(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->RhoTemps(glycol->NumRhoTempPoints));
             }
             if (glycol->CondDataPresent) {
                 print(state.files.debug,
-                      "Conductivity Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Conductivity Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       glycol->CondLowTempValue,
                       glycol->CondLowTempIndex,
                       glycol->CondHighTempValue,
                       glycol->CondHighTempIndex);
                 print(state.files.debug, "{}", "Temperatures:");
                 for (int Loop = 1; Loop <= glycol->NumCondTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->CondTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->CondTemps(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->CondTemps(glycol->NumCondTempPoints));
                 print(state.files.debug, "{}", "Conductivity:");
                 for (int Loop = 1; Loop <= glycol->NumCondTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->CondValues(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->CondValues(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->CondValues(glycol->NumCondTempPoints));
             }
             if (glycol->ViscDataPresent) {
                 print(state.files.debug,
-                      "Viscosity Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Viscosity Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       glycol->ViscLowTempValue,
                       glycol->ViscLowTempIndex,
                       glycol->ViscHighTempValue,
                       glycol->ViscHighTempIndex);
                 print(state.files.debug, "{}", "Temperatures:");
                 for (int Loop = 1; Loop <= glycol->NumViscTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->ViscTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->ViscTemps(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->ViscTemps(glycol->NumViscTempPoints));
                 print(state.files.debug, "{}", "Viscosity:");
                 for (int Loop = 1; Loop <= glycol->NumViscTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->ViscValues(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->ViscValues(Loop));
                 }
                 print(state.files.debug, ",{}\n", glycol->ViscValues(glycol->NumViscTempPoints));
             }
@@ -2273,126 +2273,126 @@ namespace FluidProperties {
             print(state.files.debug, "Glycol={} **** Results ****\n", glycol->Name);
             if (glycol->CpDataPresent) {
                 print(state.files.debug, "Specific Heat Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", glycol->CpTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", glycol->CpTemps(1) - incr);
 
                 for (int Loop = 1; Loop <= glycol->NumCpTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->CpTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->CpTemps(Loop));
                     Temperature = glycol->CpTemps(Loop) + (glycol->CpTemps(Loop + 1) - glycol->CpTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
-                print(state.files.debug, ",{:.2R}", glycol->CpTemps(glycol->NumCpTempPoints));
-                print(state.files.debug, ",{:.2R}\n", glycol->CpTemps(glycol->NumCpTempPoints) + incr);
+                print(state.files.debug, ",{:.2f}", glycol->CpTemps(glycol->NumCpTempPoints));
+                print(state.files.debug, ",{:.2f}\n", glycol->CpTemps(glycol->NumCpTempPoints) + incr);
                 print(state.files.debug, "Specific Heat:");
                 Temperature = glycol->CpTemps(1) - incr;
                 ReturnValue = GetSpecificHeatGlycol(state, glycol->Name, Temperature, GlycolIndex, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 for (int Loop = 1; Loop <= glycol->NumCpTempPoints - 1; ++Loop) {
                     Temperature = glycol->CpTemps(Loop);
                     ReturnValue = glycol->getSpecificHeat(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                     Temperature = glycol->CpTemps(Loop) + (glycol->CpTemps(Loop + 1) - glycol->CpTemps(Loop)) / 2.0;
                     ReturnValue = glycol->getSpecificHeat(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                 }
                 Temperature = glycol->CpTemps(glycol->NumCpTempPoints);
                 ReturnValue = glycol->getSpecificHeat(state, Temperature, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 Temperature = glycol->CpTemps(glycol->NumCpTempPoints) + incr;
                 ReturnValue = glycol->getSpecificHeat(state, Temperature, routineName);
-                print(state.files.debug, ",{:.2R}\n", ReturnValue);
+                print(state.files.debug, ",{:.2f}\n", ReturnValue);
             }
 
             // ========= Density from Temperatures
             if (glycol->RhoDataPresent) {
                 print(state.files.debug, "Density Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", glycol->RhoTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", glycol->RhoTemps(1) - incr);
                 for (int Loop = 1; Loop <= glycol->NumRhoTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->RhoTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->RhoTemps(Loop));
                     Temperature = glycol->RhoTemps(Loop) + (glycol->RhoTemps(Loop + 1) - glycol->RhoTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
                 print(state.files.debug, ",{}", glycol->RhoTemps(glycol->NumRhoTempPoints));
-                print(state.files.debug, ",{:.2R}\n", glycol->RhoTemps(glycol->NumRhoTempPoints) + incr);
+                print(state.files.debug, ",{:.2f}\n", glycol->RhoTemps(glycol->NumRhoTempPoints) + incr);
                 print(state.files.debug, "Density:");
                 Temperature = glycol->RhoTemps(1) - incr;
                 ReturnValue = GetDensityGlycol(state, glycol->Name, Temperature, GlycolIndex, routineName);
-                print(state.files.debug, ",{:.3R}", ReturnValue);
+                print(state.files.debug, ",{:.3f}", ReturnValue);
                 for (int Loop = 1; Loop <= glycol->NumRhoTempPoints - 1; ++Loop) {
                     Temperature = glycol->RhoTemps(Loop);
                     ReturnValue = glycol->getDensity(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.3R}", ReturnValue);
+                    print(state.files.debug, ",{:.3f}", ReturnValue);
                     Temperature = glycol->RhoTemps(Loop) + (glycol->RhoTemps(Loop + 1) - glycol->RhoTemps(Loop)) / 2.0;
                     ReturnValue = glycol->getDensity(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.3R}", ReturnValue);
+                    print(state.files.debug, ",{:.3f}", ReturnValue);
                 }
                 Temperature = glycol->RhoTemps(glycol->NumRhoTempPoints);
                 ReturnValue = glycol->getDensity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.3R}", ReturnValue);
+                print(state.files.debug, ",{:.3f}", ReturnValue);
                 Temperature = glycol->RhoTemps(glycol->NumRhoTempPoints) + incr;
                 ReturnValue = glycol->getDensity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.3R}\n", ReturnValue);
+                print(state.files.debug, ",{:.3f}\n", ReturnValue);
             }
 
             // ========= Conductivity from Temperatures
             if (glycol->CondDataPresent) {
                 print(state.files.debug, "Conductivity Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", glycol->CondTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", glycol->CondTemps(1) - incr);
                 for (int Loop = 1; Loop <= glycol->NumCondTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->CondTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->CondTemps(Loop));
                     Temperature = glycol->CondTemps(Loop) + (glycol->CondTemps(Loop + 1) - glycol->CondTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
-                print(state.files.debug, ",{:.2R}", glycol->CondTemps(glycol->NumCondTempPoints));
-                print(state.files.debug, ",{:.2R}\n", glycol->CondTemps(glycol->NumCondTempPoints) + incr);
+                print(state.files.debug, ",{:.2f}", glycol->CondTemps(glycol->NumCondTempPoints));
+                print(state.files.debug, ",{:.2f}\n", glycol->CondTemps(glycol->NumCondTempPoints) + incr);
                 print(state.files.debug, "Conductivity:");
                 Temperature = glycol->CondTemps(1) - incr;
                 ReturnValue = glycol->getConductivity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.3R}", ReturnValue);
+                print(state.files.debug, ",{:.3f}", ReturnValue);
                 for (int Loop = 1; Loop <= glycol->NumCondTempPoints - 1; ++Loop) {
                     Temperature = glycol->CondTemps(Loop);
                     ReturnValue = glycol->getConductivity(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.3R}", ReturnValue);
+                    print(state.files.debug, ",{:.3f}", ReturnValue);
                     Temperature = glycol->CondTemps(Loop) + (glycol->CondTemps(Loop + 1) - glycol->CondTemps(Loop)) / 2.0;
                     ReturnValue = glycol->getConductivity(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.3R}", ReturnValue);
+                    print(state.files.debug, ",{:.3f}", ReturnValue);
                 }
                 Temperature = glycol->CondTemps(glycol->NumCondTempPoints);
                 ReturnValue = glycol->getConductivity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.3R}", ReturnValue);
+                print(state.files.debug, ",{:.3f}", ReturnValue);
                 Temperature = glycol->CondTemps(glycol->NumCondTempPoints) + incr;
                 ReturnValue = glycol->getConductivity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.3R}\n", ReturnValue);
+                print(state.files.debug, ",{:.3f}\n", ReturnValue);
             }
 
             // ========= Viscosity from Temperatures
             if (glycol->ViscDataPresent) {
                 print(state.files.debug, "Viscosity Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", glycol->ViscTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", glycol->ViscTemps(1) - incr);
                 for (int Loop = 1; Loop <= glycol->NumViscTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", glycol->ViscTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", glycol->ViscTemps(Loop));
                     Temperature = glycol->ViscTemps(Loop) + (glycol->ViscTemps(Loop + 1) - glycol->ViscTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
-                print(state.files.debug, ",{:.2R}", glycol->ViscTemps(glycol->NumViscTempPoints));
-                print(state.files.debug, ",{:.2R}\n", glycol->ViscTemps(glycol->NumViscTempPoints) + incr);
+                print(state.files.debug, ",{:.2f}", glycol->ViscTemps(glycol->NumViscTempPoints));
+                print(state.files.debug, ",{:.2f}\n", glycol->ViscTemps(glycol->NumViscTempPoints) + incr);
                 print(state.files.debug, "Viscosity:");
                 Temperature = glycol->ViscTemps(1) - incr;
                 ReturnValue = glycol->getViscosity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.4R}", ReturnValue);
+                print(state.files.debug, ",{:.4f}", ReturnValue);
                 for (int Loop = 1; Loop <= glycol->NumViscTempPoints - 1; ++Loop) {
                     Temperature = glycol->ViscTemps(Loop);
                     ReturnValue = glycol->getViscosity(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.4R}", ReturnValue);
+                    print(state.files.debug, ",{:.4f}", ReturnValue);
                     Temperature = glycol->ViscTemps(Loop) + (glycol->ViscTemps(Loop + 1) - glycol->ViscTemps(Loop)) / 2.0;
                     ReturnValue = glycol->getViscosity(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.4R}", ReturnValue);
+                    print(state.files.debug, ",{:.4f}", ReturnValue);
                 }
                 Temperature = glycol->ViscTemps(glycol->NumViscTempPoints);
                 ReturnValue = glycol->getViscosity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.4R}", ReturnValue);
+                print(state.files.debug, ",{:.4f}", ReturnValue);
                 Temperature = glycol->ViscTemps(glycol->NumViscTempPoints) + incr;
                 ReturnValue = glycol->getViscosity(state, Temperature, routineName);
-                print(state.files.debug, ",{:.4R}\n", ReturnValue);
+                print(state.files.debug, ",{:.4f}\n", ReturnValue);
             }
         }
     }
@@ -2432,41 +2432,41 @@ namespace FluidProperties {
             }
             if (refrig->NumPsPoints > 0) {
                 print(state.files.debug,
-                      "Saturation Pressures Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Saturation Pressures Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       refrig->PsLowTempValue,
                       refrig->PsLowTempIndex,
                       refrig->PsHighTempValue,
                       refrig->PsHighTempIndex);
                 print(state.files.debug, "Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumPsPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->PsTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->PsTemps(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->PsTemps(refrig->NumPsPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->PsTemps(refrig->NumPsPoints));
                 print(state.files.debug, "Saturation Pressure:");
                 for (int Loop = 1; Loop <= refrig->NumPsPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->PsValues(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->PsValues(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->PsValues(refrig->NumPsPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->PsValues(refrig->NumPsPoints));
             }
             if (refrig->NumHPoints > 0) {
                 print(state.files.debug,
-                      "Enthalpy Saturated Fluid Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Enthalpy Saturated Fluid Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       refrig->HfLowTempValue,
                       refrig->HfLowTempIndex,
                       refrig->HfHighTempValue,
                       refrig->HfHighTempIndex);
                 print(state.files.debug, "Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumHPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->HTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->HTemps(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->HTemps(refrig->NumHPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->HTemps(refrig->NumHPoints));
                 print(state.files.debug, "Enthalpy Saturated Fluid:");
                 for (int Loop = 1; Loop <= refrig->NumHPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->HfValues(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->HfValues(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->HfValues(refrig->NumHPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->HfValues(refrig->NumHPoints));
                 print(state.files.debug,
-                      "Enthalpy Saturated Fluid/Gas Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Enthalpy Saturated Fluid/Gas Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       refrig->HfgLowTempValue,
                       refrig->HfgLowTempIndex,
                       refrig->HfgHighTempValue,
@@ -2474,82 +2474,82 @@ namespace FluidProperties {
 
                 print(state.files.debug, "Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumHPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->HTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->HTemps(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->HTemps(refrig->NumHPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->HTemps(refrig->NumHPoints));
                 print(state.files.debug, "Enthalpy Saturated Fluid/Gas:");
                 for (int Loop = 1; Loop <= refrig->NumHPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->HfgValues(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->HfgValues(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->HfgValues(refrig->NumHPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->HfgValues(refrig->NumHPoints));
             }
             if (refrig->NumCpPoints > 0) {
                 print(state.files.debug,
-                      "Specific Heat Saturated Fluid Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Specific Heat Saturated Fluid Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       refrig->CpfLowTempValue,
                       refrig->CpfLowTempIndex,
                       refrig->CpfHighTempValue,
                       refrig->CpfHighTempIndex);
                 print(state.files.debug, "Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumCpPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->CpTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->CpTemps(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->CpTemps(refrig->NumCpPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->CpTemps(refrig->NumCpPoints));
                 print(state.files.debug, "Specific Heat Saturated Fluid:");
                 for (int Loop = 1; Loop <= refrig->NumCpPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}\n", refrig->CpfValues(Loop));
+                    print(state.files.debug, ",{:.2f}\n", refrig->CpfValues(Loop));
                 }
-                print(state.files.debug, ",{:.2R}", refrig->CpfValues(refrig->NumCpPoints));
+                print(state.files.debug, ",{:.2f}", refrig->CpfValues(refrig->NumCpPoints));
                 print(state.files.debug,
-                      "Specific Heat Saturated Fluid/Gas Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Specific Heat Saturated Fluid/Gas Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       refrig->CpfgLowTempValue,
                       refrig->CpfgLowTempIndex,
                       refrig->CpfgHighTempValue,
                       refrig->CpfgHighTempIndex);
                 print(state.files.debug, "Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumCpPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->CpTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->CpTemps(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->CpTemps(refrig->NumCpPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->CpTemps(refrig->NumCpPoints));
                 print(state.files.debug, "Specific Heat Saturated Fluid/Gas:");
                 for (int Loop = 1; Loop <= refrig->NumCpPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->CpfgValues(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->CpfgValues(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->CpfgValues(refrig->NumCpPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->CpfgValues(refrig->NumCpPoints));
             }
             if (refrig->NumRhoPoints > 0) {
                 print(state.files.debug,
-                      "Density Saturated Fluid Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Density Saturated Fluid Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       refrig->RhofLowTempValue,
                       refrig->RhofLowTempIndex,
                       refrig->RhofHighTempValue,
                       refrig->RhofHighTempIndex);
                 print(state.files.debug, "Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumRhoPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->RhoTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->RhoTemps(Loop));
                 }
-                print(state.files.debug, ",{:.2R}", refrig->RhoTemps(refrig->NumRhoPoints));
+                print(state.files.debug, ",{:.2f}", refrig->RhoTemps(refrig->NumRhoPoints));
                 print(state.files.debug, "Density Saturated Fluid:");
                 for (int Loop = 1; Loop <= refrig->NumRhoPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->RhofValues(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->RhofValues(Loop));
                 }
-                print(state.files.debug, ",{:.2R}", refrig->RhofValues(refrig->NumRhoPoints));
+                print(state.files.debug, ",{:.2f}", refrig->RhofValues(refrig->NumRhoPoints));
                 print(state.files.debug,
-                      "Density Saturated Fluid/Gas Data points:,Low Temperature=,{:.2R},Index=,{},High Temperature=,{:.2R},Index=,{}\n",
+                      "Density Saturated Fluid/Gas Data points:,Low Temperature=,{:.2f},Index=,{},High Temperature=,{:.2f},Index=,{}\n",
                       refrig->RhofgLowTempValue,
                       refrig->RhofgLowTempIndex,
                       refrig->RhofgHighTempValue,
                       refrig->RhofgHighTempIndex);
                 print(state.files.debug, "Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumRhoPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->RhoTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->RhoTemps(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->RhoTemps(refrig->NumRhoPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->RhoTemps(refrig->NumRhoPoints));
                 print(state.files.debug, "Density Saturated Fluid/Gas:");
                 for (int Loop = 1; Loop <= refrig->NumRhoPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->RhofgValues(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->RhofgValues(Loop));
                 }
-                print(state.files.debug, ",{:.2R}\n", refrig->RhofgValues(refrig->NumRhoPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->RhofgValues(refrig->NumRhoPoints));
             }
 
             if (refrig->NumSupTempPoints > 0 && refrig->NumSupPressPoints > 0) {
@@ -2559,45 +2559,45 @@ namespace FluidProperties {
                       refrig->NumSupPressPoints);
                 print(state.files.debug, "Superheated Temperatures:");
                 for (int Loop = 1; Loop <= refrig->NumSupTempPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.3R}", refrig->SupTemps(Loop));
+                    print(state.files.debug, ",{:.3f}", refrig->SupTemps(Loop));
                 }
-                print(state.files.debug, ",{:.3R}\n", refrig->SupTemps(refrig->NumSupTempPoints));
+                print(state.files.debug, ",{:.3f}\n", refrig->SupTemps(refrig->NumSupTempPoints));
                 print(state.files.debug, "Superheated Pressures:");
                 for (int Loop = 1; Loop <= refrig->NumSupPressPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.3R}", refrig->SupPress(Loop));
+                    print(state.files.debug, ",{:.3f}", refrig->SupPress(Loop));
                 }
-                print(state.files.debug, ",{:.3R}\n", refrig->SupPress(refrig->NumSupPressPoints));
+                print(state.files.debug, ",{:.3f}\n", refrig->SupPress(refrig->NumSupPressPoints));
                 for (int Loop = 1; Loop <= refrig->NumSupPressPoints; ++Loop) {
-                    print(state.files.debug, "Superheated Pressure:#{}={:.2R}\n", Loop, refrig->SupPress(Loop));
+                    print(state.files.debug, "Superheated Pressure:#{}={:.2f}\n", Loop, refrig->SupPress(Loop));
                     print(state.files.debug, "Enthalpy Superheated Gas:");
                     for (int Loop1 = 1; Loop1 <= refrig->NumSupTempPoints - 1; ++Loop1) {
-                        print(state.files.debug, ",{:.3R}", refrig->HshValues(Loop, Loop1));
+                        print(state.files.debug, ",{:.3f}", refrig->HshValues(Loop, Loop1));
                     }
-                    print(state.files.debug, ",{:.3R}\n", refrig->HshValues(Loop, refrig->NumSupTempPoints));
+                    print(state.files.debug, ",{:.3f}\n", refrig->HshValues(Loop, refrig->NumSupTempPoints));
                 }
                 for (int Loop = 1; Loop <= refrig->NumSupPressPoints; ++Loop) {
-                    print(state.files.debug, "Superheated Pressure:#{}={:.2R}\n", Loop, refrig->SupPress(Loop));
+                    print(state.files.debug, "Superheated Pressure:#{}={:.2f}\n", Loop, refrig->SupPress(Loop));
                     print(state.files.debug, "Density Superheated Gas:");
                     for (int Loop1 = 1; Loop1 <= refrig->NumSupTempPoints - 1; ++Loop1) {
-                        print(state.files.debug, ",{:.3R}", refrig->RhoshValues(Loop, Loop1));
+                        print(state.files.debug, ",{:.3f}", refrig->RhoshValues(Loop, Loop1));
                     }
-                    print(state.files.debug, ",{:.3R}\n", refrig->RhoshValues(Loop, refrig->NumSupTempPoints));
+                    print(state.files.debug, ",{:.3f}\n", refrig->RhoshValues(Loop, refrig->NumSupTempPoints));
                 }
                 for (int Loop = 1; Loop <= refrig->NumSupTempPoints; ++Loop) {
-                    print(state.files.debug, "Superheated Temperature:#{}={:.2R}\n", Loop, refrig->SupTemps(Loop));
+                    print(state.files.debug, "Superheated Temperature:#{}={:.2f}\n", Loop, refrig->SupTemps(Loop));
                     print(state.files.debug, "Enthalpy Superheated Gas:");
                     for (int Loop1 = 1; Loop1 <= refrig->NumSupPressPoints - 1; ++Loop1) {
-                        print(state.files.debug, ",{:.3R}", refrig->HshValues(Loop1, Loop));
+                        print(state.files.debug, ",{:.3f}", refrig->HshValues(Loop1, Loop));
                     }
-                    print(state.files.debug, ",{:.3R}\n", refrig->HshValues(refrig->NumSupPressPoints, Loop));
+                    print(state.files.debug, ",{:.3f}\n", refrig->HshValues(refrig->NumSupPressPoints, Loop));
                 }
                 for (int Loop = 1; Loop <= refrig->NumSupTempPoints; ++Loop) {
-                    print(state.files.debug, "Superheated Temperature:#{}={:.2R}\n", Loop, refrig->SupTemps(Loop));
+                    print(state.files.debug, "Superheated Temperature:#{}={:.2f}\n", Loop, refrig->SupTemps(Loop));
                     print(state.files.debug, "Density Superheated Gas:");
                     for (int Loop1 = 1; Loop1 <= refrig->NumSupPressPoints - 1; ++Loop1) {
-                        print(state.files.debug, ",{:.3R}", refrig->RhoshValues(Loop1, Loop));
+                        print(state.files.debug, ",{:.3f}", refrig->RhoshValues(Loop1, Loop));
                     }
-                    print(state.files.debug, ",{:.3R}\n", refrig->RhoshValues(refrig->NumSupPressPoints, Loop));
+                    print(state.files.debug, ",{:.3f}\n", refrig->RhoshValues(refrig->NumSupPressPoints, Loop));
                 }
             }
 
@@ -2609,125 +2609,125 @@ namespace FluidProperties {
             print(state.files.debug, "Refrigerant={} **** Results ****\n", refrig->Name);
             if (refrig->NumPsPoints > 0) {
                 print(state.files.debug, "Pressure Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", refrig->PsTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", refrig->PsTemps(1) - incr);
                 for (int Loop = 1; Loop <= refrig->NumPsPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->PsTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->PsTemps(Loop));
                     Temperature = refrig->PsTemps(Loop) + (refrig->PsTemps(Loop + 1) - refrig->PsTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
-                print(state.files.debug, ",{:.2R}", refrig->PsTemps(refrig->NumPsPoints));
-                print(state.files.debug, ",{:.2R}\n", refrig->PsTemps(refrig->NumPsPoints) + incr);
+                print(state.files.debug, ",{:.2f}", refrig->PsTemps(refrig->NumPsPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->PsTemps(refrig->NumPsPoints) + incr);
                 print(state.files.debug, "Saturated Pressures:");
                 Temperature = refrig->PsTemps(1) - incr;
                 ReturnValue = refrig->getSatPressure(state, Temperature, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 for (int Loop = 1; Loop <= refrig->NumPsPoints - 1; ++Loop) {
                     Temperature = refrig->PsTemps(Loop);
                     ReturnValue = refrig->getSatPressure(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                     Temperature = refrig->PsTemps(Loop) + (refrig->PsTemps(Loop + 1) - refrig->PsTemps(Loop)) / 2.0;
                     ReturnValue = refrig->getSatPressure(state, Temperature, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                 }
                 Temperature = refrig->PsTemps(refrig->NumPsPoints);
                 ReturnValue = refrig->getSatPressure(state, Temperature, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 Temperature = refrig->PsTemps(refrig->NumPsPoints) + incr;
                 ReturnValue = refrig->getSatPressure(state, Temperature, routineName);
-                print(state.files.debug, ",{:.2R}\n", ReturnValue);
+                print(state.files.debug, ",{:.2f}\n", ReturnValue);
             }
 
             // ========= Enthalpy from Temperatures
             if (refrig->NumHPoints > 0) {
                 print(state.files.debug, "Enthalpy Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", refrig->HTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", refrig->HTemps(1) - incr);
                 for (int Loop = 1; Loop <= refrig->NumHPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->HTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->HTemps(Loop));
                     Temperature = refrig->HTemps(Loop) + (refrig->HTemps(Loop + 1) - refrig->HTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
-                print(state.files.debug, ",{:.2R}", refrig->HTemps(refrig->NumHPoints));
-                print(state.files.debug, ",{:.2R}\n", refrig->HTemps(refrig->NumHPoints) + incr);
+                print(state.files.debug, ",{:.2f}", refrig->HTemps(refrig->NumHPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->HTemps(refrig->NumHPoints) + incr);
                 print(state.files.debug, "Saturated Enthalpy:");
                 Temperature = refrig->HTemps(1) - incr;
                 ReturnValue = refrig->getSatEnthalpy(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 for (int Loop = 1; Loop <= refrig->NumHPoints - 1; ++Loop) {
                     Temperature = refrig->HTemps(Loop);
                     ReturnValue = refrig->getSatEnthalpy(state, Temperature, Quality, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                     Temperature = refrig->HTemps(Loop) + (refrig->HTemps(Loop + 1) - refrig->HTemps(Loop)) / 2.0;
                     ReturnValue = refrig->getSatEnthalpy(state, Temperature, Quality, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                 }
                 Temperature = refrig->HTemps(refrig->NumHPoints);
                 ReturnValue = refrig->getSatEnthalpy(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 Temperature = refrig->HTemps(refrig->NumHPoints) + incr;
                 ReturnValue = refrig->getSatEnthalpy(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}\n", ReturnValue);
+                print(state.files.debug, ",{:.2f}\n", ReturnValue);
             }
 
             // ========= Specific Heat from Temperatures
             if (refrig->NumCpPoints > 0) {
                 print(state.files.debug, "Specific Heat Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", refrig->CpTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", refrig->CpTemps(1) - incr);
                 for (int Loop = 1; Loop <= refrig->NumCpPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->CpTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->CpTemps(Loop));
                     Temperature = refrig->CpTemps(Loop) + (refrig->CpTemps(Loop + 1) - refrig->CpTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
-                print(state.files.debug, ",{:.2R}", refrig->CpTemps(refrig->NumCpPoints));
-                print(state.files.debug, ",{:.2R}\n", refrig->CpTemps(refrig->NumCpPoints) + incr);
+                print(state.files.debug, ",{:.2f}", refrig->CpTemps(refrig->NumCpPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->CpTemps(refrig->NumCpPoints) + incr);
                 print(state.files.debug, "Saturated Specific Heat:");
                 Temperature = refrig->CpTemps(1) - incr;
                 ReturnValue = refrig->getSatSpecificHeat(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 for (int Loop = 1; Loop <= refrig->NumCpPoints - 1; ++Loop) {
                     Temperature = refrig->CpTemps(Loop);
                     ReturnValue = refrig->getSatSpecificHeat(state, Temperature, Quality, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                     Temperature = refrig->CpTemps(Loop) + (refrig->CpTemps(Loop + 1) - refrig->CpTemps(Loop)) / 2.0;
                     ReturnValue = refrig->getSatSpecificHeat(state, Temperature, Quality, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                 }
                 Temperature = refrig->CpTemps(refrig->NumCpPoints);
                 ReturnValue = refrig->getSatSpecificHeat(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 Temperature = refrig->CpTemps(refrig->NumCpPoints) + incr;
                 ReturnValue = refrig->getSatSpecificHeat(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}\n", ReturnValue);
+                print(state.files.debug, ",{:.2f}\n", ReturnValue);
             }
 
             // ========= Density from Temperatures
             if (refrig->NumRhoPoints > 0) {
                 print(state.files.debug, "Density Results at Temperatures:");
-                print(state.files.debug, ",{:.2R}", refrig->RhoTemps(1) - incr);
+                print(state.files.debug, ",{:.2f}", refrig->RhoTemps(1) - incr);
                 for (int Loop = 1; Loop <= refrig->NumRhoPoints - 1; ++Loop) {
-                    print(state.files.debug, ",{:.2R}", refrig->RhoTemps(Loop));
+                    print(state.files.debug, ",{:.2f}", refrig->RhoTemps(Loop));
                     Temperature = refrig->RhoTemps(Loop) + (refrig->RhoTemps(Loop + 1) - refrig->RhoTemps(Loop)) / 2.0;
-                    print(state.files.debug, ",{:.2R}", Temperature);
+                    print(state.files.debug, ",{:.2f}", Temperature);
                 }
-                print(state.files.debug, ",{:.2R}", refrig->RhoTemps(refrig->NumRhoPoints));
-                print(state.files.debug, ",{:.2R}\n", refrig->RhoTemps(refrig->NumRhoPoints) + incr);
+                print(state.files.debug, ",{:.2f}", refrig->RhoTemps(refrig->NumRhoPoints));
+                print(state.files.debug, ",{:.2f}\n", refrig->RhoTemps(refrig->NumRhoPoints) + incr);
                 print(state.files.debug, "Saturated Density:");
                 Temperature = refrig->RhoTemps(1) - incr;
                 ReturnValue = refrig->getSatDensity(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 for (int Loop = 1; Loop <= refrig->NumRhoPoints - 1; ++Loop) {
                     Temperature = refrig->RhoTemps(Loop);
                     ReturnValue = refrig->getSatDensity(state, Temperature, Quality, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                     Temperature = refrig->RhoTemps(Loop) + (refrig->RhoTemps(Loop + 1) - refrig->RhoTemps(Loop)) / 2.0;
                     ReturnValue = refrig->getSatDensity(state, Temperature, Quality, routineName);
-                    print(state.files.debug, ",{:.2R}", ReturnValue);
+                    print(state.files.debug, ",{:.2f}", ReturnValue);
                 }
                 Temperature = refrig->RhoTemps(refrig->NumRhoPoints);
                 ReturnValue = refrig->getSatDensity(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}", ReturnValue);
+                print(state.files.debug, ",{:.2f}", ReturnValue);
                 Temperature = refrig->RhoTemps(refrig->NumRhoPoints) + incr;
                 ReturnValue = refrig->getSatDensity(state, Temperature, Quality, routineName);
-                print(state.files.debug, ",{:.2R}\n", ReturnValue);
+                print(state.files.debug, ",{:.2f}\n", ReturnValue);
             }
         }
     }
@@ -2783,12 +2783,12 @@ namespace FluidProperties {
                 ShowSevereMessage(
                     state, format("{}: Saturation temperature is out of range for refrigerant [{}] supplied data: **", routineName, this->Name));
                 ShowContinueError(state,
-                                  format("...Called From:{}, supplied data range=[{:.2R},{:.2R}]",
+                                  format("...Called From:{}, supplied data range=[{:.2f},{:.2f}]",
                                          CalledFrom,
                                          this->PsTemps(this->PsLowTempIndex),
                                          this->PsTemps(this->PsHighTempIndex)));
                 ShowContinueError(
-                    state, format("...Supplied Refrigerant Temperature={:.2R} Returned saturated pressure value = {:.0R}", Temperature, ReturnValue));
+                    state, format("...Supplied Refrigerant Temperature={:.2f} Returned saturated pressure value = {:.0f}", Temperature, ReturnValue));
                 ShowContinueErrorTimeStamp(state, "");
             }
             ShowRecurringSevereErrorAtEnd(
@@ -2878,12 +2878,12 @@ namespace FluidProperties {
                 ShowSevereMessage(state,
                                   format("{}: Saturation pressure is out of range for refrigerant [{}] supplied data: **", routineName, this->Name));
                 ShowContinueError(state,
-                                  format("...Called From:{}, supplied data range=[{:.0R},{:.0R}]",
+                                  format("...Called From:{}, supplied data range=[{:.0f},{:.0f}]",
                                          CalledFrom,
                                          this->PsValues(this->PsLowPresIndex),
                                          this->PsValues(this->PsHighPresIndex)));
                 ShowContinueError(
-                    state, format("...Supplied Refrigerant Pressure={:.0R} Returned saturated temperature value ={:.2R}", Pressure, ReturnValue));
+                    state, format("...Supplied Refrigerant Pressure={:.0f} Returned saturated temperature value ={:.2f}", Pressure, ReturnValue));
                 ShowContinueErrorTimeStamp(state, "");
             }
             ShowRecurringSevereErrorAtEnd(
@@ -2997,7 +2997,7 @@ namespace FluidProperties {
 
         if ((Quality < 0.0) || (Quality > 1.0)) {
             ShowSevereError(state, fmt::format("{}Refrigerant \"{}\", invalid quality, called from {}", routineName, this->Name, CalledFrom));
-            ShowContinueError(state, format("Saturated density quality must be between 0 and 1, entered value=[{:.4R}].", Quality));
+            ShowContinueError(state, format("Saturated density quality must be between 0 and 1, entered value=[{:.4f}].", Quality));
             ShowFatalError(state, "Program terminates due to preceding condition.");
         }
 
@@ -3050,12 +3050,12 @@ namespace FluidProperties {
                 ShowSevereMessage(
                     state, format("{}: Saturation temperature is out of range for refrigerant [{}] supplied data: **", routineName, this->Name));
                 ShowContinueError(state,
-                                  format("...Called From:{}, supplied data range=[{:.2R},{:.2R}]",
+                                  format("...Called From:{}, supplied data range=[{:.2f},{:.2f}]",
                                          CalledFrom,
                                          this->RhoTemps(this->RhofLowTempIndex),
                                          this->RhoTemps(this->RhofHighTempIndex)));
                 ShowContinueError(
-                    state, format("...Supplied Refrigerant Temperature={:.2R} Returned saturated density value ={:.2R}", Temperature, ReturnValue));
+                    state, format("...Supplied Refrigerant Temperature={:.2f} Returned saturated density value ={:.2f}", Temperature, ReturnValue));
                 ShowContinueErrorTimeStamp(state, "");
             }
             ShowRecurringSevereErrorAtEnd(
@@ -3118,7 +3118,7 @@ namespace FluidProperties {
 
         if ((Quality < 0.0) || (Quality > 1.0)) {
             ShowSevereError(state, fmt::format("{}: Refrigerant \"{}\", invalid quality, called from {}", routineName, this->Name, CalledFrom));
-            ShowContinueError(state, format("Saturated density quality must be between 0 and 1, entered value=[{:.4R}].", Quality));
+            ShowContinueError(state, format("Saturated density quality must be between 0 and 1, entered value=[{:.4f}].", Quality));
             ShowFatalError(state, "Program terminates due to preceding condition.");
         }
 
@@ -3288,9 +3288,9 @@ namespace FluidProperties {
                                routineName,
                                this->Name));
                     ShowContinueError(state, fmt::format("...Called From:{}", CalledFrom));
-                    ShowContinueError(state, format("Refrigerant temperature = {:.2R}", Temperature));
-                    ShowContinueError(state, format("Refrigerant pressure = {:.0R}", Pressure));
-                    ShowContinueError(state, format("Returned Enthalpy value = {:.3R}", ReturnValue));
+                    ShowContinueError(state, format("Refrigerant temperature = {:.2f}", Temperature));
+                    ShowContinueError(state, format("Refrigerant pressure = {:.0f}", Pressure));
+                    ShowContinueError(state, format("Returned Enthalpy value = {:.3f}", ReturnValue));
                     ShowContinueErrorTimeStamp(state, "");
                 }
                 ShowRecurringWarningErrorAtEnd(state,
@@ -3553,9 +3553,9 @@ namespace FluidProperties {
                                              routineName,
                                              this->Name));
                     ShowContinueError(state, fmt::format("...Called From:{}", CalledFrom));
-                    ShowContinueError(state, format("Refrigerant temperature = {:.2R}", Temperature));
-                    ShowContinueError(state, format("Refrigerant Enthalpy = {:.3R}", Enthalpy));
-                    ShowContinueError(state, format("Returned Pressure value = {:.0R}", ReturnValue));
+                    ShowContinueError(state, format("Refrigerant temperature = {:.2f}", Temperature));
+                    ShowContinueError(state, format("Refrigerant Enthalpy = {:.3f}", Enthalpy));
+                    ShowContinueError(state, format("Returned Pressure value = {:.0f}", ReturnValue));
                     ShowContinueErrorTimeStamp(state, "");
                 }
                 ShowRecurringSevereErrorAtEnd(
@@ -3895,9 +3895,9 @@ namespace FluidProperties {
                            routineName,
                            this->Name));
                 ShowContinueError(state, fmt::format("...Called From:{}", CalledFrom));
-                ShowContinueError(state, format("Refrigerant temperature = {:.2R}", Temperature));
-                ShowContinueError(state, format("Refrigerant pressure = {:.0R}", Pressure));
-                ShowContinueError(state, format("Returned Density value = {:.3R}", saturated_density));
+                ShowContinueError(state, format("Refrigerant temperature = {:.2f}", Temperature));
+                ShowContinueError(state, format("Refrigerant pressure = {:.0f}", Pressure));
+                ShowContinueError(state, format("Returned Density value = {:.3f}", saturated_density));
                 ShowContinueErrorTimeStamp(state, "");
             }
             if (df->SatErrCountGetSupHeatDensityRefrig > 0) {
@@ -4051,7 +4051,7 @@ namespace FluidProperties {
                         state,
                         format("{}: Temperature is out of range (too low) for fluid [{}] specific heat supplied values **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->CpLowTempValue,
@@ -4074,7 +4074,7 @@ namespace FluidProperties {
                     ShowWarningMessage(state,
                                        format("{}: Temperature is out of range (too high) for fluid [{}] specific heat **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->CpLowTempValue,
@@ -4199,7 +4199,7 @@ namespace FluidProperties {
                 if (df->glycolErrorLimits[(int)error] <= df->GlycolErrorLimitTest) {
                     ShowWarningMessage(state, format("{}: Temperature is out of range (too low) for fluid [{}] density **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->RhoLowTempValue,
@@ -4218,7 +4218,7 @@ namespace FluidProperties {
                     ShowWarningMessage(state,
                                        format("{}: Temperature is out of range (too high) for fluid [{}] density **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->RhoLowTempValue,
@@ -4331,7 +4331,7 @@ namespace FluidProperties {
                     ShowWarningMessage(state,
                                        format("{}: Temperature is out of range (too low) for fluid [{}] conductivity **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->CondLowTempValue,
@@ -4352,7 +4352,7 @@ namespace FluidProperties {
                     ShowWarningMessage(state,
                                        format("{}: Temperature is out of range (too high) for fluid [{}] conductivity **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->CondLowTempValue,
@@ -4468,7 +4468,7 @@ namespace FluidProperties {
                     ShowWarningMessage(state,
                                        format("{}: Temperature is out of range (too low) for fluid [{}] viscosity **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->ViscLowTempValue,
@@ -4488,7 +4488,7 @@ namespace FluidProperties {
                     ShowWarningMessage(state,
                                        format("{}: Temperature is out of range (too high) for fluid [{}] viscosity **", routineName, this->Name));
                     ShowContinueError(state,
-                                      format("..Called From:{},Temperature=[{:.2R}], supplied data range=[{:.2R},{:.2R}]",
+                                      format("..Called From:{},Temperature=[{:.2f}], supplied data range=[{:.2f},{:.2f}]",
                                              CalledFrom,
                                              Temp,
                                              this->ViscLowTempValue,
@@ -4816,8 +4816,8 @@ namespace FluidProperties {
             if (df->TempRangeErrCountGetInterpolatedSatProp <= df->RefrigErrorLimitTest) {
                 ShowWarningError(state, "GetInterpolatedSatProp: Saturation temperature for interpolation is out of range of data supplied: **");
                 ShowContinueErrorTimeStamp(state, fmt::format(" Called from:{}", CalledFrom));
-                ShowContinueError(state, format("Refrigerant temperature = {:.2R}", Temperature));
-                ShowContinueError(state, format("Returned saturated property value = {:.3R}", ReturnValue));
+                ShowContinueError(state, format("Refrigerant temperature = {:.2f}", Temperature));
+                ShowContinueError(state, format("Returned saturated property value = {:.3f}", ReturnValue));
             } else {
                 ShowRecurringWarningErrorAtEnd(state,
                                                "GetInterpolatedSatProp: Refrigerant temperature for interpolation out of range error",

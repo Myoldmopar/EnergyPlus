@@ -189,7 +189,7 @@ namespace IndoorGreen {
                                                state.dataIPShortCut->cAlphaFieldNames(3)));
                         ShowContinueError(
                             state,
-                            format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(3), SchMin));
+                            format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(3), SchMin));
                         ErrorsFound = true;
                     }
                     if (SchMax < 0.0) {
@@ -200,7 +200,7 @@ namespace IndoorGreen {
                                                state.dataIPShortCut->cAlphaFieldNames(3)));
                         ShowContinueError(
                             state,
-                            format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(3), SchMin));
+                            format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(3), SchMin));
                         ErrorsFound = true;
                     }
                 }
@@ -228,7 +228,7 @@ namespace IndoorGreen {
                                                    state.dataIPShortCut->cAlphaFieldNames(6)));
                             ShowContinueError(
                                 state,
-                                format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(6), SchMin));
+                                format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(6), SchMin));
                             ErrorsFound = true;
                         }
                         if (SchMax < 0.0) {
@@ -239,7 +239,7 @@ namespace IndoorGreen {
                                                    state.dataIPShortCut->cAlphaFieldNames(6)));
                             ShowContinueError(
                                 state,
-                                format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(6), SchMin));
+                                format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(6), SchMin));
                             ErrorsFound = true;
                         }
                     }
@@ -286,7 +286,7 @@ namespace IndoorGreen {
                                                    state.dataIPShortCut->cAlphaFieldNames(8)));
                             ShowContinueError(
                                 state,
-                                format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(8), SchMin));
+                                format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(8), SchMin));
                             ErrorsFound = true;
                         }
                         if (SchMax < 0.0) {
@@ -297,7 +297,7 @@ namespace IndoorGreen {
                                                    state.dataIPShortCut->cAlphaFieldNames(8)));
                             ShowContinueError(
                                 state,
-                                format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(8), SchMin));
+                                format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", state.dataIPShortCut->cAlphaArgs(8), SchMin));
                             ErrorsFound = true;
                         }
                     }

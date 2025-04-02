@@ -2384,49 +2384,49 @@ namespace Weather {
                     bool ErrorsFound = false;
                     if (DryBulb < 99.9 && (DryBulb < -90.0 || DryBulb > 70.0)) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("DryBulb Temperature ({:.2R}) is out of range [-90.0, 70.0]", DryBulb));
+                        ShowContinueError(state, format("DryBulb Temperature ({:.2f}) is out of range [-90.0, 70.0]", DryBulb));
                         ErrorsFound = true;
                     }
 
                     if (DewPoint < 99.9 && (DewPoint < -90.0 || DewPoint > 70.0)) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("DewPoint Temperature ({:.2R}) is out of range [-90.0, 70.0]", DewPoint));
+                        ShowContinueError(state, format("DewPoint Temperature ({:.2f}) is out of range [-90.0, 70.0]", DewPoint));
                         ErrorsFound = true;
                     }
 
                     if (RelHum < 999.0 && (RelHum < 0.0 || RelHum > 110.0)) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("Relative Humidity ({:.2R}) is out of range [0.0, 100.0]", RelHum));
+                        ShowContinueError(state, format("Relative Humidity ({:.2f}) is out of range [0.0, 100.0]", RelHum));
                         ErrorsFound = true;
                     }
 
                     if (AtmPress < 999999.0 && (AtmPress <= 31000.0 || AtmPress > 120000.0)) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("Atmospheric Pressure ({:.0R}) is out of range [31000, 120000]", AtmPress));
+                        ShowContinueError(state, format("Atmospheric Pressure ({:.0f}) is out of range [31000, 120000]", AtmPress));
                         ErrorsFound = true;
                     }
 
                     if (DirectRad < 9999.0 && DirectRad < 0.0) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("Direct Radiation ({:.2R}) is out of range [0.0, -]", DirectRad));
+                        ShowContinueError(state, format("Direct Radiation ({:.2f}) is out of range [0.0, -]", DirectRad));
                         ErrorsFound = true;
                     }
 
                     if (DiffuseRad < 9999.0 && DiffuseRad < 0.0) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("Diffuse Radiation ({:.2R}) is out of range [0.0, -]", DiffuseRad));
+                        ShowContinueError(state, format("Diffuse Radiation ({:.2f}) is out of range [0.0, -]", DiffuseRad));
                         ErrorsFound = true;
                     }
 
                     if (WindDir < 999.0 && (WindDir < 0.0 || WindDir > 360.0)) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("Wind Direction ({:.2R}) is out of range [0.0, 360.0]", WindDir));
+                        ShowContinueError(state, format("Wind Direction ({:.2f}) is out of range [0.0, 360.0]", WindDir));
                         ErrorsFound = true;
                     }
 
                     if (WindSpeed < 999.0 && (WindSpeed < 0.0 || WindSpeed > 40.0)) {
                         ShowSevereError(state, format("{}: {}", routineName, state.dataEnvrn->WeatherFileLocationTitle));
-                        ShowContinueError(state, format("Wind Speed ({:.2R}) is out of range [0.0, 40.0]", WindSpeed));
+                        ShowContinueError(state, format("Wind Speed ({:.2f}) is out of range [0.0, 40.0]", WindSpeed));
                         ErrorsFound = true;
                     }
 
@@ -3395,8 +3395,8 @@ namespace Weather {
         if (desDayInput.PressureEntered) {
             if (std::abs((desDayInput.PressBarom - state.dataEnvrn->StdBaroPress) / state.dataEnvrn->StdBaroPress) > 0.1) { // 10% off
                 ShowWarningError(state,
-                                 format("SetUpDesignDay: Entered DesignDay Barometric Pressure={:.0R} differs by more than 10% from Standard "
-                                        "Barometric Pressure={:.0R}.",
+                                 format("SetUpDesignDay: Entered DesignDay Barometric Pressure={:.0f} differs by more than 10% from Standard "
+                                        "Barometric Pressure={:.0f}.",
                                         desDayInput.PressBarom,
                                         state.dataEnvrn->StdBaroPress));
                 ShowContinueError(
@@ -3449,8 +3449,8 @@ namespace Weather {
             std::string_view const AlpUseRain = (desDayInput.RainInd == 1) ? "Yes" : "No";
             std::string_view const AlpUseSnow = (desDayInput.SnowInd == 1) ? "Yes" : "No";
             print(state.files.eio, "Environment:Design Day Data,");
-            print(state.files.eio, "{:.2R},", desDayInput.MaxDryBulb);
-            print(state.files.eio, "{:.2R},", desDayInput.DailyDBRange);
+            print(state.files.eio, "{:.2f},", desDayInput.MaxDryBulb);
+            print(state.files.eio, "{:.2f},", desDayInput.DailyDBRange);
 
             static constexpr std::array<std::string_view, (int)DesDayDryBulbRangeType::Num> DesDayDryBulbRangeTypeStrings = {
                 "DefaultMultipliers,", "MultiplierSchedule,", "DifferenceSchedule,", "TemperatureProfile,"};
@@ -3458,14 +3458,14 @@ namespace Weather {
             print(state.files.eio, "{}", DesDayDryBulbRangeTypeStrings[(int)desDayInput.dryBulbRangeType]);
 
             static constexpr std::array<std::string_view, (int)DesDayHumIndType::Num> DesDayHumIndTypeStrings = {
-                "Wetbulb,{:.2R},{{C}},",
-                "Dewpoint,{:.2R},{{C}},",
-                "Enthalpy,{:.2R},{{J/kgDryAir}},",
-                "HumidityRatio,{:.4R},{{kgWater/kgDryAir}},",
+                "Wetbulb,{:.2f},{{C}},",
+                "Dewpoint,{:.2f},{{C}},",
+                "Enthalpy,{:.2f},{{J/kgDryAir}},",
+                "HumidityRatio,{:.4f},{{kgWater/kgDryAir}},",
                 "Schedule,<schedule values from 0.0 to 100.0>,{{percent}},",
-                "WetBulbProfileDefaultMultipliers,{:.2R},{{C}},",
-                "WetBulbProfileDifferenceSchedule,{:.2R},{{C}},",
-                "WetBulbProfileMultiplierSchedule,{:.2R},{{C}},"};
+                "WetBulbProfileDefaultMultipliers,{:.2f},{{C}},",
+                "WetBulbProfileDifferenceSchedule,{:.2f},{{C}},",
+                "WetBulbProfileMultiplierSchedule,{:.2f},{{C}},"};
 
             // Hum Ind Type, Hum Ind Value at Max Temp, Hum Ind Units
             if (desDayInput.HumIndType == DesDayHumIndType::RelHumSch) {
@@ -3478,21 +3478,21 @@ namespace Weather {
                 print(state.files.eio, DesDayHumIndTypeStrings[(int)desDayInput.HumIndType], desDayInput.HumIndValue);
             }
 
-            print(state.files.eio, "{:.0R},", desDayInput.PressBarom);
-            print(state.files.eio, "{:.0R},", desDayInput.WindDir);
-            print(state.files.eio, "{:.1R},", desDayInput.WindSpeed);
-            print(state.files.eio, "{:.2R},", desDayInput.SkyClear);
+            print(state.files.eio, "{:.0f},", desDayInput.PressBarom);
+            print(state.files.eio, "{:.0f},", desDayInput.WindDir);
+            print(state.files.eio, "{:.1f},", desDayInput.WindSpeed);
+            print(state.files.eio, "{:.2f},", desDayInput.SkyClear);
 
             print(state.files.eio, "{},{}\n", AlpUseRain, AlpUseSnow);
 
             static constexpr std::string_view DDayMiscFormat("Environment:Design Day Misc,{:3},");
             print(state.files.eio, DDayMiscFormat, designDay.DayOfYear);
-            print(state.files.eio, "{:.1R},", A);
-            print(state.files.eio, "{:.4R},", B);
-            print(state.files.eio, "{:.4R},", C);
-            print(state.files.eio, "{:.1R},", AVSC);
-            print(state.files.eio, "{:.2R},", designDay.EquationOfTime * 60.0);
-            print(state.files.eio, "{:.1R},", std::asin(designDay.SinSolarDeclinAngle) / Constant::DegToRadians);
+            print(state.files.eio, "{:.1f},", A);
+            print(state.files.eio, "{:.4f},", B);
+            print(state.files.eio, "{:.4f},", C);
+            print(state.files.eio, "{:.1f},", AVSC);
+            print(state.files.eio, "{:.2f},", designDay.EquationOfTime * 60.0);
+            print(state.files.eio, "{:.1f},", std::asin(designDay.SinSolarDeclinAngle) / Constant::DegToRadians);
 
             // Why have a different string for "Schedule" here than the one used for input? Really, why?
             static constexpr std::array<std::string_view, (int)DesDaySolarModel::Num> DesDaySolarModelStrings = {
@@ -4243,11 +4243,11 @@ namespace Weather {
                         ShowContinueError(state, format("..Weather File Location={}", state.dataEnvrn->WeatherFileLocationTitle));
                         ShowContinueError(
                             state,
-                            format("..due to location differences, Latitude difference=[{:.2R}] degrees, Longitude difference=[{:.2R}] degrees.",
+                            format("..due to location differences, Latitude difference=[{:.2f}] degrees, Longitude difference=[{:.2f}] degrees.",
                                    std::abs(state.dataEnvrn->Latitude - state.dataWeather->WeatherFileLatitude),
                                    std::abs(state.dataEnvrn->Longitude - state.dataWeather->WeatherFileLongitude)));
                         ShowContinueError(state,
-                                          format("..Time Zone difference=[{:.1R}] hour(s), Elevation difference=[{:.2R}] percent, [{:.2R}] meters.",
+                                          format("..Time Zone difference=[{:.1f}] hour(s), Elevation difference=[{:.2f}] percent, [{:.2f}] meters.",
                                                  std::abs(state.dataEnvrn->TimeZoneNumber - state.dataWeather->WeatherFileTimeZone),
                                                  std::abs((state.dataEnvrn->Elevation - state.dataWeather->WeatherFileElevation) /
                                                           max(state.dataEnvrn->Elevation, 1.0) * 100.0),
@@ -4278,7 +4278,7 @@ namespace Weather {
                 "{GMT+/-}, Elevation {m},  Standard Pressure at Elevation {Pa}, Standard RhoAir at Elevation\n");
             print(state.files.eio, "{}", LocHdFormat);
 
-            static constexpr std::string_view LocFormat("Site:Location,{},{:.2R},{:.2R},{:.2R},{:.2R},{:.0R},{:.4R}\n");
+            static constexpr std::string_view LocFormat("Site:Location,{},{:.2f},{:.2f},{:.2f},{:.2f},{:.0f},{:.4f}\n");
             print(state.files.eio,
                   LocFormat,
                   state.dataWeather->LocationTitle,
@@ -4312,17 +4312,17 @@ namespace Weather {
         }
 
         if ((state.dataEnvrn->Latitude < -90.0) || (state.dataEnvrn->Latitude > 90.0)) {
-            ShowSevereError(state, format("Latitude must be between -90 and 90; Entered={:.2R}", state.dataEnvrn->Latitude));
+            ShowSevereError(state, format("Latitude must be between -90 and 90; Entered={:.2f}", state.dataEnvrn->Latitude));
             LocationError = true;
         }
 
         if ((state.dataEnvrn->Longitude < -180.0) || (state.dataEnvrn->Longitude > 180.0)) {
-            ShowSevereError(state, format("Longitude must be between -180 and 180; Entered={:.2R}", state.dataEnvrn->Longitude));
+            ShowSevereError(state, format("Longitude must be between -180 and 180; Entered={:.2f}", state.dataEnvrn->Longitude));
             LocationError = true;
         }
 
         if ((state.dataEnvrn->TimeZoneNumber < -12.00) || (state.dataEnvrn->TimeZoneNumber > 14.00)) {
-            ShowSevereError(state, format("Time Zone must be between -12 and +14; Entered={:.2R}", state.dataEnvrn->TimeZoneNumber));
+            ShowSevereError(state, format("Time Zone must be between -12 and +14; Entered={:.2f}", state.dataEnvrn->TimeZoneNumber));
             LocationError = true;
         }
 
@@ -4341,10 +4341,10 @@ namespace Weather {
                 if (DiffCalc > 1.0 && DiffCalc < 24.0) {
                     if (DiffCalc < 3.0) {
                         ShowWarningError(state,
-                                         format("Standard Time Meridian and Time Zone differ by more than 1, Difference=\"{:.1R}\"", DiffCalc));
+                                         format("Standard Time Meridian and Time Zone differ by more than 1, Difference=\"{:.1f}\"", DiffCalc));
                         ShowContinueError(state, "Solar Positions may be incorrect");
                     } else {
-                        ShowSevereError(state, format("Standard Time Meridian and Time Zone differ by more than 2, Difference=\"{:.1R}\"", DiffCalc));
+                        ShowSevereError(state, format("Standard Time Meridian and Time Zone differ by more than 2, Difference=\"{:.1f}\"", DiffCalc));
                         ShowContinueError(state, "Solar Positions will be incorrect");
                         //          LocationError=.TRUE.
                     }
@@ -4503,7 +4503,7 @@ namespace Weather {
                 if (state.dataGlobal->DoOutputReporting) {
                     std::string const &Title = state.dataWeather->Environment(state.dataWeather->Envrn).Title;
                     static constexpr std::string_view EnvironmentStampFormatStr(
-                        "{},{},{:7.2F},{:7.2F},{:7.2F},{:7.2F}\n"); // Format descriptor for environ stamp
+                        "{},{},{:7.2f},{:7.2f},{:7.2f},{:7.2f}\n"); // Format descriptor for environ stamp
                     print(state.files.eso,
                           EnvironmentStampFormatStr,
                           state.dataWeather->EnvironmentReportChr,
@@ -5579,7 +5579,7 @@ namespace Weather {
                 specialDay.Duration = int(Duration(1));
             } else {
                 ShowSevereError(
-                    state, format("{}: {} Invalid {}={:.0T}", ipsc->cCurrentModuleObject, AlphArray(1), ipsc->cNumericFieldNames(1), Duration(1)));
+                    state, format("{}: {} Invalid {}={:.0f}", ipsc->cCurrentModuleObject, AlphArray(1), ipsc->cNumericFieldNames(1), Duration(1)));
                 ErrorsFound = true;
             }
 
@@ -6018,9 +6018,9 @@ namespace Weather {
                 if (desDayInput.dryBulbRangeType == DesDayDryBulbRangeType::Profile) {
                     if (MaxDryBulbEntered) {
                         ShowWarningError(state, format("{}=\"{}\", data override.", ipsc->cCurrentModuleObject, desDayInput.Title));
-                        ShowContinueError(state, format("..{}=[{:.2R}] will be overwritten.", ipsc->cNumericFieldNames(3), desDayInput.MaxDryBulb));
+                        ShowContinueError(state, format("..{}=[{:.2f}] will be overwritten.", ipsc->cNumericFieldNames(3), desDayInput.MaxDryBulb));
                         ShowContinueError(state, format("..{}=\"{}\".", ipsc->cAlphaFieldNames(3), ipsc->cAlphaArgs(3)));
-                        ShowContinueError(state, format("..with max value=[{:.2R}].", testval));
+                        ShowContinueError(state, format("..with max value=[{:.2f}].", testval));
                     }
                     desDayInput.MaxDryBulb = testval;
                 }
@@ -6240,7 +6240,7 @@ namespace Weather {
                 if (desDayInput.HumIndValue > desDayInput.MaxDryBulb) {
                     ShowWarningError(state, format("{}=\"{}\", range check data.", ipsc->cCurrentModuleObject, desDayInput.Title));
                     ShowContinueError(state,
-                                      format("..Humidity Indicator Temperature at Max Temperature={:.1R} > Max DryBulb={:.1R}",
+                                      format("..Humidity Indicator Temperature at Max Temperature={:.1f} > Max DryBulb={:.1f}",
                                              desDayInput.HumIndValue,
                                              desDayInput.MaxDryBulb));
                     ShowContinueError(state, format("..{}=\"{}\".", ipsc->cAlphaFieldNames(5), ipsc->cAlphaArgs(5)));
@@ -6771,7 +6771,7 @@ namespace Weather {
 
         print(state.files.eio, " Site:GroundReflectance");
         for (int i = 1; i <= 12; ++i) {
-            print(state.files.eio, ", {:5.2F}", state.dataWeather->GroundReflectances(i));
+            print(state.files.eio, ", {:5.2f}", state.dataWeather->GroundReflectances(i));
         }
         print(state.files.eio, "\n");
     }
@@ -6813,7 +6813,7 @@ namespace Weather {
 
         // Write Final Ground Reflectance Modifier Information to the initialization output file
         print(state.files.eio, "{}\n", "! <Site:GroundReflectance:SnowModifier>, Normal, Daylighting {dimensionless}");
-        static constexpr std::string_view Format_720(" Site:GroundReflectance:SnowModifier, {:7.3F}, {:7.3F}\n");
+        static constexpr std::string_view Format_720(" Site:GroundReflectance:SnowModifier, {:7.3f}, {:7.3f}\n");
         print(state.files.eio, Format_720, state.dataWeather->SnowGndRefModifier, state.dataWeather->SnowGndRefModifierForDayltg);
 
         print(state.files.eio,
@@ -6824,7 +6824,7 @@ namespace Weather {
               "dimensionless},Oct{dimensionless},Nov{dimensionless},Dec{dimensionless}");
         print(state.files.eio, "{}", " Site:GroundReflectance:Snow");
         for (int i = 1; i <= 12; ++i) {
-            print(state.files.eio, ", {:5.2F}", max(min(state.dataWeather->GroundReflectances(i) * state.dataWeather->SnowGndRefModifier, 1.0), 0.0));
+            print(state.files.eio, ", {:5.2f}", max(min(state.dataWeather->GroundReflectances(i) * state.dataWeather->SnowGndRefModifier, 1.0), 0.0));
         }
         print(state.files.eio, "\n");
         print(state.files.eio,
@@ -6836,7 +6836,7 @@ namespace Weather {
         print(state.files.eio, " Site:GroundReflectance:Snow:Daylighting");
         for (nObjs = 1; nObjs <= 12; ++nObjs) {
             print(state.files.eio,
-                  ", {:5.2F}",
+                  ", {:5.2f}",
                   max(min(state.dataWeather->GroundReflectances(nObjs) * state.dataWeather->SnowGndRefModifierForDayltg, 1.0), 0.0));
         }
         print(state.files.eio, "\n");
@@ -7050,7 +7050,7 @@ namespace Weather {
               "Speed Modifier Coefficient-Internal,Temperature Modifier Coefficient-Internal");
 
         // Formats
-        static constexpr std::string_view Format_720("Environment:Weather Station,{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R}\n");
+        static constexpr std::string_view Format_720("Environment:Weather Station,{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f}\n");
         print(state.files.eio,
               Format_720,
               WeatherFileWindSensorHeight,
@@ -8573,8 +8573,8 @@ namespace Weather {
             *eiostream << "Site Water Mains Temperature Information,";
             *eiostream << waterMainsCalcMethodNames[static_cast<int>(state.dataWeather->WaterMainsTempsMethod)] << ","
                        << state.dataWeather->WaterMainsTempsScheduleName << ",";
-            *eiostream << format("{:.2R}", state.dataWeather->WaterMainsTempsAnnualAvgAirTemp) << ","
-                       << format("{:.2R}", state.dataWeather->WaterMainsTempsMaxDiffAirTemp) << ",";
+            *eiostream << format("{:.2f}", state.dataWeather->WaterMainsTempsAnnualAvgAirTemp) << ","
+                       << format("{:.2f}", state.dataWeather->WaterMainsTempsMaxDiffAirTemp) << ",";
             *eiostream << "NA\n";
             break;
         case WaterMainsTempCalcMethod::Correlation:
@@ -8582,8 +8582,8 @@ namespace Weather {
             *eiostream << waterMainsCalcMethodNames[static_cast<int>(state.dataWeather->WaterMainsTempsMethod)] << ","
                        << "NA"
                        << ",";
-            *eiostream << format("{:.2R}", state.dataWeather->WaterMainsTempsAnnualAvgAirTemp) << ","
-                       << format("{:.2R}", state.dataWeather->WaterMainsTempsMaxDiffAirTemp) << ",";
+            *eiostream << format("{:.2f}", state.dataWeather->WaterMainsTempsAnnualAvgAirTemp) << ","
+                       << format("{:.2f}", state.dataWeather->WaterMainsTempsMaxDiffAirTemp) << ",";
             *eiostream << "NA\n";
             break;
         case WaterMainsTempCalcMethod::CorrelationFromWeatherFile:
@@ -8592,8 +8592,8 @@ namespace Weather {
                 *eiostream << waterMainsCalcMethodNames[static_cast<int>(state.dataWeather->WaterMainsTempsMethod)] << ","
                            << "NA"
                            << ",";
-                *eiostream << format("{:.2R}", state.dataWeather->OADryBulbAverage.AnnualAvgOADryBulbTemp) << ","
-                           << format("{:.2R}", state.dataWeather->OADryBulbAverage.MonthlyAvgOADryBulbTempMaxDiff) << ","
+                *eiostream << format("{:.2f}", state.dataWeather->OADryBulbAverage.AnnualAvgOADryBulbTemp) << ","
+                           << format("{:.2f}", state.dataWeather->OADryBulbAverage.MonthlyAvgOADryBulbTempMaxDiff) << ","
                            << "NA\n";
             } else {
                 *eiostream << "Site Water Mains Temperature Information,";
@@ -8604,7 +8604,7 @@ namespace Weather {
                            << "NA"
                            << ","
                            << "NA"
-                           << "," << format("{:.1R}", 10.0) << '\n';
+                           << "," << format("{:.1f}", 10.0) << '\n';
             }
             break;
         default:
@@ -8616,7 +8616,7 @@ namespace Weather {
                        << "NA"
                        << ","
                        << "NA"
-                       << "," << format("{:.1R}", 10.0) << '\n';
+                       << "," << format("{:.1f}", 10.0) << '\n';
             break;
         }
 

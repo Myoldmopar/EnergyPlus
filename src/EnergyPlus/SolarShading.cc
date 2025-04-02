@@ -454,7 +454,7 @@ void GetShadowingInput(EnergyPlusData &state)
     }
     if (state.dataSolarShading->ShadowingCalcFrequency > 31) {
         ShowWarningError(state, format("{}: suspect {}", cCurrentModuleObject, state.dataIPShortCut->cNumericFieldNames(1)));
-        ShowContinueError(state, format("Value entered=[{:.0R}], Shadowing Calculations will be inaccurate.", state.dataIPShortCut->rNumericArgs(1)));
+        ShowContinueError(state, format("Value entered=[{:.0f}], Shadowing Calculations will be inaccurate.", state.dataIPShortCut->rNumericArgs(1)));
     }
 
     if (state.dataIPShortCut->rNumericArgs(2) > 199.0) {
@@ -3247,7 +3247,7 @@ void ComputeIntSolarAbsorpFactors(EnergyPlusData &state)
             thisEnclosure.FloorArea = HorizAreaSum;
             ShowWarningError(state, "ComputeIntSolarAbsorpFactors: Solar distribution model is set to place solar gains on the zone floor,");
             ShowContinueError(state, format("...Enclosure=\"{}\" has no floor, but has approximate horizontal surfaces.", thisEnclosure.Name));
-            ShowContinueError(state, format("...these Tilt > 120 degrees, (area=[{:.2R}] m2) will be used.", HorizAreaSum));
+            ShowContinueError(state, format("...these Tilt > 120 degrees, (area=[{:.2f}] m2) will be used.", HorizAreaSum));
         }
 
         // Compute ISABSF

@@ -699,11 +699,11 @@ namespace StandardRatings {
                     if (RefCap <= 0.0) {
                         ShowContinueError(
                             state,
-                            format(" Check the chiller autosized or user specified capacity. Autosized or specified chiller capacity = {:.2R}",
+                            format(" Check the chiller autosized or user specified capacity. Autosized or specified chiller capacity = {:.2f}",
                                    RefCap));
                     }
                     if (RefCOP <= 0.0) {
-                        ShowContinueError(state, format(" Check the chiller reference or rated COP specified. Specified COP = {:.2R}", RefCOP));
+                        ShowContinueError(state, format(" Check the chiller reference or rated COP specified. Specified COP = {:.2f}", RefCOP));
                     }
                     if (ChillerCapFT <= 0.0) {
                         ShowContinueError(
@@ -711,7 +711,7 @@ namespace StandardRatings {
                             format(" Check limits in Cooling Capacity Function of Temperature Curve, Curve Type = {}, Curve Name = {}.",
                                    Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(CapFTempCurveIndex)->curveType)],
                                    GetCurveName(state, CapFTempCurveIndex)));
-                        ShowContinueError(state, format(" ..ChillerCapFT value at standard test condition = {:.2R}", ChillerCapFT));
+                        ShowContinueError(state, format(" ..ChillerCapFT value at standard test condition = {:.2f}", ChillerCapFT));
                     }
                     if (ChillerEIRFT <= 0.0) {
                         ShowContinueError(
@@ -719,7 +719,7 @@ namespace StandardRatings {
                             format(" Check limits in EIR Function of Temperature Curve, Curve Type = {}, Curve Name = {}.",
                                    Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(EIRFTempCurveIndex)->curveType)],
                                    GetCurveName(state, EIRFTempCurveIndex)));
-                        ShowContinueError(state, format(" ..ChillerEIRFT value at standard test condition = {:.2R}", ChillerEIRFT));
+                        ShowContinueError(state, format(" ..ChillerEIRFT value at standard test condition = {:.2f}", ChillerEIRFT));
                     }
                     IPLV = 0.0;
                     break;
@@ -767,7 +767,7 @@ namespace StandardRatings {
         }
 
         {
-            static constexpr std::string_view Format_991(" Chiller Standard Rating Information, {}, {}, {:.2R}, {:.2R}\n");
+            static constexpr std::string_view Format_991(" Chiller Standard Rating Information, {}, {}, {:.2f}, {:.2f}\n");
             if (ChillerType == DataPlant::PlantEquipmentType::Chiller_ElectricEIR) {
 
                 print(state.files.eio, Format_991, "Chiller:Electric:EIR", ChillerName, IPLVValueSI, IPLVValueIP);
@@ -2155,7 +2155,7 @@ namespace StandardRatings {
             if (TotCapTempModFacRated < 0.0) {
                 ShowSevereError(
                     state,
-                    format(" Invalid Total Heating Capacity Function of Temperature Curve value = {:.2R}, Curve Type = {}, Curve Name = {}",
+                    format(" Invalid Total Heating Capacity Function of Temperature Curve value = {:.2f}, Curve Type = {}, Curve Name = {}",
                            TotCapTempModFacRated,
                            Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(CapFTempCurveIndex)->curveType)],
                            GetCurveName(state, CapFTempCurveIndex)));
@@ -2167,7 +2167,7 @@ namespace StandardRatings {
             if (CapTempModFacH3Test < 0.0) {
                 ShowSevereError(
                     state,
-                    format(" Invalid Total Heating Capacity Function of Temperature Curve value = {:.2R}, Curve Type = {}, Curve Name = {}",
+                    format(" Invalid Total Heating Capacity Function of Temperature Curve value = {:.2f}, Curve Type = {}, Curve Name = {}",
                            CapTempModFacH3Test,
                            Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(CapFTempCurveIndex)->curveType)],
                            GetCurveName(state, CapFTempCurveIndex)));
@@ -2178,7 +2178,7 @@ namespace StandardRatings {
             if (CapTempModFacH2Test < 0.0) {
                 ShowSevereError(
                     state,
-                    format(" Invalid Total Heating Capacity Function of Temperature Curve value = {:.2R}, Curve Type = {}, Curve Name = {}",
+                    format(" Invalid Total Heating Capacity Function of Temperature Curve value = {:.2f}, Curve Type = {}, Curve Name = {}",
                            CapTempModFacH2Test,
                            Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(CapFTempCurveIndex)->curveType)],
                            GetCurveName(state, CapFTempCurveIndex)));
@@ -2189,7 +2189,7 @@ namespace StandardRatings {
             // check EIR curve values
             if (EIRTempModFacRated < 0.0) {
                 ShowSevereError(state,
-                                format(" Invalid EIR Function of Temperature Curve value = {:.2R}, Curve Type = {}, Curve Name = {}",
+                                format(" Invalid EIR Function of Temperature Curve value = {:.2f}, Curve Type = {}, Curve Name = {}",
                                        EIRTempModFacRated,
                                        Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(EIRFTempCurveIndex)->curveType)],
                                        GetCurveName(state, EIRFTempCurveIndex)));
@@ -2197,7 +2197,7 @@ namespace StandardRatings {
             }
             if (EIRTempModFacH2Test < 0.0) {
                 ShowSevereError(state,
-                                format(" Invalid EIR Function of Temperature Curve value = {:.2R}, Curve Type = {}, Curve Name = {}",
+                                format(" Invalid EIR Function of Temperature Curve value = {:.2f}, Curve Type = {}, Curve Name = {}",
                                        EIRTempModFacH2Test,
                                        Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(EIRFTempCurveIndex)->curveType)],
                                        GetCurveName(state, EIRFTempCurveIndex)));
@@ -2205,7 +2205,7 @@ namespace StandardRatings {
             }
             if (EIRTempModFacH3Test < 0.0) {
                 ShowSevereError(state,
-                                format(" Invalid EIR Function of Temperature Curve value = {:.2R}, Curve Type = {}, Curve Name = {}",
+                                format(" Invalid EIR Function of Temperature Curve value = {:.2f}, Curve Type = {}, Curve Name = {}",
                                        EIRTempModFacH3Test,
                                        Curve::objectNames[static_cast<int>(state.dataCurveManager->PerfCurve(EIRFTempCurveIndex)->curveType)],
                                        GetCurveName(state, EIRFTempCurveIndex)));
@@ -6772,7 +6772,7 @@ namespace StandardRatings {
                 }
 
                 static constexpr std::string_view Format_991(
-                    " DX Cooling Coil Standard Rating Information, {}, {}, {:.1R}, {:.2R}, {:.2R}, {:.2R}, {:.2R}, {:.1R}\n");
+                    " DX Cooling Coil Standard Rating Information, {}, {}, {:.1f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.1f}\n");
                 print(state.files.eio, Format_991, CompType, CompName, CoolCapVal, EERValueSI, EERValueIP, SEERUserIP, SEERStandardIP, IEERValueIP);
 
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilType, CompName, CompType);
@@ -6830,7 +6830,7 @@ namespace StandardRatings {
                 }
 
                 static constexpr std::string_view Format_991_(
-                    " DX Cooling Coil AHRI 2023 Standard Rating Information, {}, {}, {:.1R}, {:.2R}, {:.2R}, {:.2R}, {:.2R}, {:.1R}\n");
+                    " DX Cooling Coil AHRI 2023 Standard Rating Information, {}, {}, {:.1f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.1f}\n");
                 print(state.files.eio, Format_991_, CompType, CompName, CoolCapVal, EERValueSI, EERValueIP, SEERUserIP, SEERStandardIP, IEERValueIP);
 
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilType_2023, CompName, CompType);
@@ -6890,7 +6890,7 @@ namespace StandardRatings {
                     state.dataHVACGlobal->StandardRatingsMyHeatOneTimeFlag = false;
                 }
 
-                static constexpr std::string_view Format_993(" DX Heating Coil Standard Rating Information, {}, {}, {:.1R}, {:.1R}, {:.2R}, {}\n");
+                static constexpr std::string_view Format_993(" DX Heating Coil Standard Rating Information, {}, {}, {:.1f}, {:.1f}, {:.2f}, {}\n");
                 print(state.files.eio, Format_993, CompType, CompName, HighHeatingCapVal, LowHeatingCapVal, HSPFValueIP, RegionNum);
 
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXHeatCoilType, CompName, CompType);
@@ -6913,7 +6913,7 @@ namespace StandardRatings {
                 }
 
                 static constexpr std::string_view Format_993_(
-                    " DX Heating Coil AHRI 2023 Standard Rating Information, {}, {}, {:.1R}, {:.1R}, {:.2R}, {}\n");
+                    " DX Heating Coil AHRI 2023 Standard Rating Information, {}, {}, {:.1f}, {:.1f}, {:.2f}, {}\n");
                 print(state.files.eio, Format_993_, CompType, CompName, HighHeatingCapVal, LowHeatingCapVal, HSPFValueIP, RegionNum);
 
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXHeatCoilType_2023, CompName, CompType);
@@ -6943,7 +6943,7 @@ namespace StandardRatings {
                 }
 
                 static constexpr std::string_view Format_995(
-                    " DX Cooling Coil Standard Rating Information, {}, {}, {:.1R}, {:.2R}, {:.2R}, {:.2R}, {:.2R}, {}\n");
+                    " DX Cooling Coil Standard Rating Information, {}, {}, {:.1f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {}\n");
                 print(state.files.eio, Format_995, CompType, CompName, CoolCapVal, EERValueSI, EERValueIP, SEERUserIP, SEERStandardIP, IEERValueIP);
 
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilType, CompName, CompType);
@@ -6999,7 +6999,7 @@ namespace StandardRatings {
                 }
 
                 static constexpr std::string_view Format_995_(
-                    " DX Cooling Coil AHRI 2023 Standard Rating Information, {}, {}, {:.1R}, {:.2R}, {:.2R}, {:.2R}, {:.2R}, {:.1R}\n");
+                    " DX Cooling Coil AHRI 2023 Standard Rating Information, {}, {}, {:.1f}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {:.1f}\n");
                 print(state.files.eio, Format_995_, CompType, CompName, CoolCapVal, EERValueSI, EERValueIP, SEERUserIP, SEERStandardIP, IEERValueIP);
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilType_2023, CompName, CompType);
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilNetCapSI_2023, CompName, CoolCapVal, 1);
@@ -7101,8 +7101,8 @@ namespace StandardRatings {
                 std::string ClassName = format("Class {}", ClassNum);
                 std::string CompNameNew = fmt::format("{}({})", CompName, ClassName);
                 static constexpr std::string_view Format_102(
-                    " DX Cooling Coil ASHRAE 127 Standard Ratings Information, {}, {}, {}, {:.1R}, {:.1R}, {:.1R}, "
-                    "{:.1R}, {:.1R}, {:.1R}, {:.1R}, {:.1R}\n");
+                    " DX Cooling Coil ASHRAE 127 Standard Ratings Information, {}, {}, {}, {:.1f}, {:.1f}, {:.1f}, "
+                    "{:.1f}, {:.1f}, {:.1f}, {:.1f}, {:.1f}\n");
                 print(state.files.eio,
                       Format_102,
                       CompType,
@@ -7117,10 +7117,10 @@ namespace StandardRatings {
                       NetCoolingCapRated(Num + 4),
                       TotElectricPowerRated(Num + 4));
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilType2, CompNameNew, CompType);
-                // Note: If you call format("{:.1R}", NetCoolingCapRated(Num + 1)),
+                // Note: If you call format("{:.1f}", NetCoolingCapRated(Num + 1)),
                 // Then it's not the OutputReportPredefined::PreDefTableEntry prototype with Real64 that is called.
                 // As a result, the entry isn't marked as being Real (origEntryIsReal) and unit conversion does not occur
-                // Bad: PreDefTableEntry(state, pdchDXCoolCoilNetCapSIA, CompNameNew, format("{:.1R}", NetCoolingCapRated(Num + 1)));
+                // Bad: PreDefTableEntry(state, pdchDXCoolCoilNetCapSIA, CompNameNew, format("{:.1f}", NetCoolingCapRated(Num + 1)));
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilNetCapSIA, CompNameNew, NetCoolingCapRated(Num + 1), 1);
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilNetCapSIB, CompNameNew, NetCoolingCapRated(Num + 2), 1);
                 PreDefTableEntry(state, state.dataOutRptPredefined->pdchDXCoolCoilNetCapSIC, CompNameNew, NetCoolingCapRated(Num + 3), 1);

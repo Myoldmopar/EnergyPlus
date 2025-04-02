@@ -1328,8 +1328,8 @@ void InitPurchasedAir(EnergyPlusData &state, int const PurchAirNum, int const Co
                                        PurchAir.Name,
                                        state.dataHeatBal->Zone(ControlledZoneNum).Name));
                 ShowContinueError(state,
-                                  format("..the minimum supply air temperature for cooling [{:.2R}] is greater than the zone cooling mean air "
-                                         "temperature (MAT) setpoint [{:.2R}].",
+                                  format("..the minimum supply air temperature for cooling [{:.2f}] is greater than the zone cooling mean air "
+                                         "temperature (MAT) setpoint [{:.2f}].",
                                          PurchAir.MinCoolSuppAirTemp,
                                          state.dataHeatBalFanSys->ZoneThermostatSetPointHi(ControlledZoneNum)));
                 ShowContinueError(state, "..For operative and comfort thermostat controls, the MAT setpoint is computed.");
@@ -1375,8 +1375,8 @@ void InitPurchasedAir(EnergyPlusData &state, int const PurchAirNum, int const Co
                                          PurchAir.Name,
                                          state.dataHeatBal->Zone(ControlledZoneNum).Name));
                 ShowContinueError(state,
-                                  format("..the maximum supply air temperature for heating [{:.2R}] is less than the zone mean air temperature "
-                                         "heating setpoint [{:.2R}].",
+                                  format("..the maximum supply air temperature for heating [{:.2f}] is less than the zone mean air temperature "
+                                         "heating setpoint [{:.2f}].",
                                          PurchAir.MaxHeatSuppAirTemp,
                                          state.dataHeatBalFanSys->ZoneThermostatSetPointLo(ControlledZoneNum)));
                 ShowContinueError(state, "..For operative and comfort thermostat controls, the MAT setpoint is computed.");
@@ -1609,9 +1609,9 @@ void SizePurchasedAir(EnergyPlusData &state, int const PurchAirNum)
                             ShowMessage(
                                 state,
                                 format("SizePurchasedAir: Potential issue with equipment sizing for {} {}", PurchAir.cObjectName, PurchAir.Name));
-                            ShowContinueError(state, format("...User-Specified Maximum Sensible Heating Capacity of {:.2R} [W]", MaxHeatSensCapUser));
+                            ShowContinueError(state, format("...User-Specified Maximum Sensible Heating Capacity of {:.2f} [W]", MaxHeatSensCapUser));
                             ShowContinueError(
-                                state, format("...differs from Design Size Maximum Sensible Heating Capacity of {:.2R} [W]", MaxHeatSensCapDes));
+                                state, format("...differs from Design Size Maximum Sensible Heating Capacity of {:.2f} [W]", MaxHeatSensCapDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1753,9 +1753,9 @@ void SizePurchasedAir(EnergyPlusData &state, int const PurchAirNum)
                             ShowMessage(
                                 state,
                                 format("SizePurchasedAir: Potential issue with equipment sizing for {} {}", PurchAir.cObjectName, PurchAir.Name));
-                            ShowContinueError(state, format("User-Specified Maximum Total Cooling Capacity of {:.2R} [W]", MaxCoolTotCapUser));
+                            ShowContinueError(state, format("User-Specified Maximum Total Cooling Capacity of {:.2f} [W]", MaxCoolTotCapUser));
                             ShowContinueError(state,
-                                              format("differs from Design Size Maximum Total Cooling Capacity of {:.2R} [W]", MaxCoolTotCapDes));
+                                              format("differs from Design Size Maximum Total Cooling Capacity of {:.2f} [W]", MaxCoolTotCapDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1852,9 +1852,9 @@ void SizePurchasedAir(EnergyPlusData &state, int const PurchAirNum)
                             ShowMessage(
                                 state,
                                 format("SizePurchasedAir: Potential issue with equipment sizing for {} {}", PurchAir.cObjectName, PurchAir.Name));
-                            ShowContinueError(state, format("...User-Specified Maximum Sensible Heating Capacity of {:.2R} [W]", MaxHeatSensCapUser));
+                            ShowContinueError(state, format("...User-Specified Maximum Sensible Heating Capacity of {:.2f} [W]", MaxHeatSensCapUser));
                             ShowContinueError(
-                                state, format("...differs from Design Size Maximum Sensible Heating Capacity of {:.2R} [W]", MaxHeatSensCapDes));
+                                state, format("...differs from Design Size Maximum Sensible Heating Capacity of {:.2f} [W]", MaxHeatSensCapDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1950,9 +1950,9 @@ void SizePurchasedAir(EnergyPlusData &state, int const PurchAirNum)
                             ShowMessage(
                                 state,
                                 format("SizePurchasedAir: Potential issue with equipment sizing for {} {}", PurchAir.cObjectName, PurchAir.Name));
-                            ShowContinueError(state, format("User-Specified Maximum Total Cooling Capacity of {:.2R} [W]", MaxCoolTotCapUser));
+                            ShowContinueError(state, format("User-Specified Maximum Total Cooling Capacity of {:.2f} [W]", MaxCoolTotCapUser));
                             ShowContinueError(state,
-                                              format("differs from Design Size Maximum Total Cooling Capacity of {:.2R} [W]", MaxCoolTotCapDes));
+                                              format("differs from Design Size Maximum Total Cooling Capacity of {:.2f} [W]", MaxCoolTotCapDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -2122,12 +2122,12 @@ void CalcPurchAirLoads(EnergyPlusData &state,
                 if (PurchAir.OAFlowMaxCoolOutputError < 1) {
                     ++PurchAir.OAFlowMaxCoolOutputError;
                     ShowWarningError(state,
-                                     format("{} \"{}\" Requested outdoor air flow rate = {:.5T} [m3/s] exceeds limit.",
+                                     format("{} \"{}\" Requested outdoor air flow rate = {:.5f} [m3/s] exceeds limit.",
                                             PurchAir.cObjectName,
                                             PurchAir.Name,
                                             OAVolFlowRate));
                     ShowContinueError(state,
-                                      format(" Will be reduced to the Maximum Cooling Air Flow Rate = {:.5T} [m3/s]", PurchAir.MaxCoolVolFlowRate));
+                                      format(" Will be reduced to the Maximum Cooling Air Flow Rate = {:.5f} [m3/s]", PurchAir.MaxCoolVolFlowRate));
                     ShowContinueErrorTimeStamp(state, "");
                 } else {
                     ShowRecurringWarningErrorAtEnd(
@@ -2426,12 +2426,12 @@ void CalcPurchAirLoads(EnergyPlusData &state,
                 if (PurchAir.OAFlowMaxHeatOutputError < 1) {
                     ++PurchAir.OAFlowMaxHeatOutputError;
                     ShowWarningError(state,
-                                     format("{} \"{}\" Requested outdoor air flow rate = {:.5T} [m3/s] exceeds limit.",
+                                     format("{} \"{}\" Requested outdoor air flow rate = {:.5f} [m3/s] exceeds limit.",
                                             PurchAir.cObjectName,
                                             PurchAir.Name,
                                             OAVolFlowRate));
                     ShowContinueError(state,
-                                      format(" Will be reduced to the Maximum Heating Air Flow Rate = {:.5T} [m3/s]", PurchAir.MaxHeatVolFlowRate));
+                                      format(" Will be reduced to the Maximum Heating Air Flow Rate = {:.5f} [m3/s]", PurchAir.MaxHeatVolFlowRate));
                     ShowContinueErrorTimeStamp(state, "");
                 } else {
                     ShowRecurringWarningErrorAtEnd(
@@ -2684,7 +2684,7 @@ void CalcPurchAirLoads(EnergyPlusData &state,
                 if (PurchAir.SaturationOutputError < 1) {
                     ++PurchAir.SaturationOutputError;
                     ShowWarningError(state,
-                                     format("{} \"{}\" Supply humidity ratio = {:.5T} exceeds saturation limit {:.5T} [kgWater/kgDryAir]",
+                                     format("{} \"{}\" Supply humidity ratio = {:.5f} exceeds saturation limit {:.5f} [kgWater/kgDryAir]",
                                             PurchAir.cObjectName,
                                             PurchAir.Name,
                                             SupplyHumRatOrig,

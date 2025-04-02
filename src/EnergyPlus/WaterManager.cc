@@ -288,11 +288,11 @@ namespace WaterManager {
                             ShowContinueError(state, format("Entered in {}={}", cCurrentModuleObject, cAlphaArgs(1)));
                             ShowContinueError(state, format("{} must be greater than {}", cNumericFieldNames(6), cNumericFieldNames(5)));
                             ShowContinueError(state,
-                                              format("Check value for {} = {:.5R}",
+                                              format("Check value for {} = {:.5f}",
                                                      cNumericFieldNames(5),
                                                      state.dataWaterData->WaterStorage(Item).ValveOnCapacity));
                             ShowContinueError(state,
-                                              format("which must be lower than {} = {:.5R}",
+                                              format("which must be lower than {} = {:.5f}",
                                                      cNumericFieldNames(6),
                                                      state.dataWaterData->WaterStorage(Item).ValveOffCapacity));
                             ErrorsFound = true;
@@ -425,12 +425,12 @@ namespace WaterManager {
                     }
                     state.dataWaterData->RainCollector(Item).LossFactor = rNumericArgs(1);
                     if (state.dataWaterData->RainCollector(Item).LossFactor > 1.0) {
-                        ShowWarningError(state, format("Invalid {}={:.2R}", cNumericFieldNames(1), rNumericArgs(1)));
+                        ShowWarningError(state, format("Invalid {}={:.2f}", cNumericFieldNames(1), rNumericArgs(1)));
                         ShowContinueError(state, format("Entered in {}={}", cCurrentModuleObject, cAlphaArgs(1)));
                         ShowContinueError(state, "found rain water collection loss factor greater than 1.0, simulation continues");
                     }
                     if (state.dataWaterData->RainCollector(Item).LossFactor < 0.0) {
-                        ShowSevereError(state, format("Invalid {}={:.2R}", cNumericFieldNames(1), rNumericArgs(1)));
+                        ShowSevereError(state, format("Invalid {}={:.2f}", cNumericFieldNames(1), rNumericArgs(1)));
                         ShowContinueError(state, format("Entered in {}={}", cCurrentModuleObject, cAlphaArgs(1)));
                         ShowContinueError(state, "found rain water collection loss factor less than 0.0");
                         ErrorsFound = true;

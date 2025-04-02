@@ -3646,7 +3646,7 @@ namespace Window {
                 // report out temperatures
                 for (int i = 1; i <= wm->nglfacep; ++i) {
                     ShowContinueError(state,
-                                      format("Glazing face index = {} ; new temperature ={:.4R}C  ; previous temperature = {:.4R}C",
+                                      format("Glazing face index = {} ; new temperature ={:.4f}C  ; previous temperature = {:.4f}C",
                                              i,
                                              wm->thetas[i - 1] - Constant::Kelvin,
                                              wm->thetasPrev[i - 1] - Constant::Kelvin));
@@ -6884,7 +6884,7 @@ namespace Window {
                     CalcComplexWindowThermal(state, 0, i, TempVar, TempVar, TempVar, TempVar, DataBSDFWindow::Condition::Winter);
                     CalcComplexWindowThermal(state, 0, i, TempVar, TempVar, TempVar, TempVar, DataBSDFWindow::Condition::Summer);
 
-                    static constexpr std::string_view Format_800(" WindowConstruction:Complex,{},{},{},{:.3R},{:.3R}\n");
+                    static constexpr std::string_view Format_800(" WindowConstruction:Complex,{},{},{},{:.3f},{:.3f}\n");
                     print(state.files.eio,
                           Format_800,
                           construct.Name,
@@ -6906,7 +6906,7 @@ namespace Window {
                         // Construct(ThisNum)%SummerSHGC = SHGCSummer
                         construct.VisTransNorm = 0.0; // TODO list
 
-                        static constexpr std::string_view Format_799(" Construction:WindowEquivalentLayer,{},{},{},{:.3R},{:.3R},{:.3R}\n");
+                        static constexpr std::string_view Format_799(" Construction:WindowEquivalentLayer,{},{},{},{:.3f},{:.3f},{:.3f}\n");
                         print(state.files.eio,
                               Format_799,
                               construct.Name,
@@ -6945,7 +6945,7 @@ namespace Window {
                         construct.VisTransNorm = TransVisNorm;
                         construct.SolTransNorm = TransSolNorm;
 
-                        static constexpr std::string_view Format_700(" WindowConstruction,{},{},{},{},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R}\n");
+                        static constexpr std::string_view Format_700(" WindowConstruction,{},{},{},{},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f}\n");
                         print(state.files.eio,
                               Format_700,
                               construct.Name,
@@ -6971,7 +6971,7 @@ namespace Window {
                         case Material::Group::Gas: {
                             auto const *matGas = dynamic_cast<Material::MaterialGasMix const *>(mat);
                             assert(matGas != nullptr);
-                            static constexpr std::string_view Format_702(" WindowMaterial:Gas,{},{},{:.3R}\n");
+                            static constexpr std::string_view Format_702(" WindowMaterial:Gas,{},{},{:.3f}\n");
                             print(state.files.eio, Format_702, matGas->Name, Material::gasTypeNames[(int)matGas->gases[0].type], matGas->Thickness);
                             //! fw CASE(WindowGasMixture)
                         } break;
@@ -6980,7 +6980,7 @@ namespace Window {
                             auto const *matShade = dynamic_cast<Material::MaterialShade const *>(mat);
                             assert(matShade != nullptr);
 
-                            static constexpr std::string_view Format_703(" WindowMaterial:Shade,,{},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R}\n");
+                            static constexpr std::string_view Format_703(" WindowMaterial:Shade,,{},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f}\n");
                             print(state.files.eio,
                                   Format_703,
                                   matShade->Name,
@@ -6996,7 +6996,7 @@ namespace Window {
                             auto const *matBlind = dynamic_cast<Material::MaterialBlind const *>(mat);
 
                             static constexpr std::string_view Format_704(
-                                " WindowMaterial:Blind,{},{:.4R},{:.4R},{:.4R},{:.3R},{:.3R},{:.3R},{:.3R}\n");
+                                " WindowMaterial:Blind,{},{:.4f},{:.4f},{:.4f},{:.3f},{:.3f},{:.3f},{:.3f}\n");
                             print(state.files.eio,
                                   Format_704,
                                   matBlind->Name,
@@ -7015,7 +7015,7 @@ namespace Window {
                             auto const &btar = matScreen->btars[0][0]; // AR: Going with normal incidence here
 
                             static constexpr std::string_view Format_706 =
-                                " WindowMaterial:Screen,{},{:.5R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R}\n";
+                                " WindowMaterial:Screen,{},{:.5f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f}\n";
 
                             // AR: assuming normal incidence
                             print(state.files.eio,
@@ -7051,8 +7051,8 @@ namespace Window {
                             }
 
                             static constexpr std::string_view Format_707(
-                                " WindowMaterial:Glazing,{},{},{},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{"
-                                ":.5R},{:.5R},{:.5R},{:.5R},{:.5R},{}\n");
+                                " WindowMaterial:Glazing,{},{},{},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{"
+                                ":.5f},{:.5f},{:.5f},{:.5f},{:.5f},{}\n");
                             print(state.files.eio,
                                   Format_707,
                                   matGlass->Name,
@@ -7079,8 +7079,8 @@ namespace Window {
                             std::string OpticalDataType = "SpectralAverage";
                             SpectralDataName = "";
                             static constexpr std::string_view Format_708(
-                                " WindowMaterial:Glazing:EquivalentLayer,{},{},{},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R}"
-                                ",{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R}\n");
+                                " WindowMaterial:Glazing:EquivalentLayer,{},{},{},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f}"
+                                ",{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f}\n");
                             print(state.files.eio,
                                   Format_708,
                                   matEQL->Name,
@@ -7106,7 +7106,7 @@ namespace Window {
                             auto const *matEQL = dynamic_cast<Material::MaterialShadeEQL const *>(mat);
                             assert(matEQL != nullptr);
                             static constexpr std::string_view Format_709(
-                                " WindowMaterial:Shade:EquivalentLayer,{},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R}\n");
+                                " WindowMaterial:Shade:EquivalentLayer,{},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f}\n");
                             print(state.files.eio,
                                   Format_709,
                                   matEQL->Name,
@@ -7125,8 +7125,8 @@ namespace Window {
                             auto const *matEQL = dynamic_cast<Material::MaterialDrapeEQL const *>(mat);
                             assert(matEQL != nullptr);
                             static constexpr std::string_view Format_710(
-                                " WindowMaterial:Drape:EquivalentLayer,{},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R},"
-                                "{:.4R},{:.4R},{:.5R},{:.5R}\n");
+                                " WindowMaterial:Drape:EquivalentLayer,{},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f},"
+                                "{:.4f},{:.4f},{:.5f},{:.5f}\n");
                             print(state.files.eio,
                                   Format_710,
                                   matEQL->Name,
@@ -7146,8 +7146,8 @@ namespace Window {
                             auto const *matEQL = dynamic_cast<Material::MaterialScreenEQL const *>(mat);
                             assert(matEQL != nullptr);
                             static constexpr std::string_view Format_711(
-                                " WindowMaterial:Screen:EquivalentLayer,{},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R},{:.4R}"
-                                ",{:.4R},{:.4R},{:.5R},{:.5R}\n");
+                                " WindowMaterial:Screen:EquivalentLayer,{},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f},{:.4f}"
+                                ",{:.4f},{:.4f},{:.5f},{:.5f}\n");
                             print(state.files.eio,
                                   Format_711,
                                   matEQL->Name,
@@ -7169,8 +7169,8 @@ namespace Window {
 
                             // Formats
                             static constexpr std::string_view Format_712(
-                                " WindowMaterial:Blind:EquivalentLayer,{},{},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:."
-                                "5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R},{:.5R}");
+                                " WindowMaterial:Blind:EquivalentLayer,{},{},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:."
+                                "5R},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f},{:.5f}");
                             print(state.files.eio,
                                   Format_712,
                                   matEQL->Name,
@@ -7194,7 +7194,7 @@ namespace Window {
                         case Material::Group::WindowGapEQL: {
                             auto const *matGas = dynamic_cast<Material::MaterialGasMix const *>(mat);
                             assert(matGas != nullptr);
-                            static constexpr std::string_view Format_713(" WindowMaterial:Gap:EquivalentLayer,{},{},{:.3R},{}\n");
+                            static constexpr std::string_view Format_713(" WindowMaterial:Gap:EquivalentLayer,{},{},{:.3f},{}\n");
                             print(state.files.eio,
                                   Format_713,
                                   matGas->Name,
@@ -7638,7 +7638,7 @@ namespace Window {
                                                         screen->btars[ip2][it2].BmTrans,
                                                         coeffs);
                         // bmTrans = screen->btars[ip][it].BmTrans;
-                        print(screenCsvFile, ",{:.6R}", bmTrans);
+                        print(screenCsvFile, ",{:.6f}", bmTrans);
                     }
                     print(screenCsvFile, "\n");
                 }
@@ -7671,7 +7671,7 @@ namespace Window {
                                                         coeffs);
 
                         // dfTrans = screen->btars[ip][it].DfTrans;
-                        print(screenCsvFile, ",{:.6R}", dfTrans);
+                        print(screenCsvFile, ",{:.6f}", dfTrans);
                     }
                     print(screenCsvFile, "\n");
                 }

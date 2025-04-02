@@ -296,14 +296,14 @@ namespace SurfaceGroundHeatExchanger {
 
             if (state.dataIPShortCut->rNumericArgs(2) == 0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
                 ShowContinueError(state, format("Entered in {}={}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state, "Value must be greater than 0.0");
                 ErrorsFound = true;
             }
             if (state.dataIPShortCut->rNumericArgs(3) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(3), state.dataIPShortCut->rNumericArgs(3)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(3), state.dataIPShortCut->rNumericArgs(3)));
                 ShowContinueError(state, format("Entered in {}={}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state, "Value must be greater than 0.0");
                 ErrorsFound = true;
@@ -314,14 +314,14 @@ namespace SurfaceGroundHeatExchanger {
             state.dataSurfaceGroundHeatExchangers->SurfaceGHE(Item).SurfaceWidth = state.dataIPShortCut->rNumericArgs(5);
             if (state.dataIPShortCut->rNumericArgs(4) <= 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(4), state.dataIPShortCut->rNumericArgs(4)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(4), state.dataIPShortCut->rNumericArgs(4)));
                 ShowContinueError(state, format("Entered in {}={}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state, "Value must be greater than 0.0");
                 ErrorsFound = true;
             }
             if (state.dataIPShortCut->rNumericArgs(5) <= 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(5), state.dataIPShortCut->rNumericArgs(5)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(5), state.dataIPShortCut->rNumericArgs(5)));
                 ShowContinueError(state, format("Entered in {}={}", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state, "Value must be greater than 0.0");
                 ErrorsFound = true;
@@ -438,7 +438,7 @@ namespace SurfaceGroundHeatExchanger {
             if (!state.dataEnvrn->GroundTempInputs[(int)DataEnvironment::GroundTempType::Shallow]) {
                 ShowWarningError(state, "GetSurfaceGroundHeatExchanger: No \"Site:GroundTemperature:Shallow\" were input.");
                 ShowContinueError(state,
-                                  format("Defaults, constant throughout the year of ({:.1R}) will be used.",
+                                  format("Defaults, constant throughout the year of ({:.1f}) will be used.",
                                          state.dataEnvrn->GroundTemp[(int)DataEnvironment::GroundTempType::Shallow]));
             }
             state.dataSurfaceGroundHeatExchangers->NoSurfaceGroundTempObjWarning = false;
@@ -1147,7 +1147,7 @@ namespace SurfaceGroundHeatExchanger {
                 if (this->FrozenErrIndex1 == 0) {
                     ShowWarningMessage(
                         state,
-                        format("GroundHeatExchanger:Surface=\"{}\", water is frozen; Model not valid. Calculated Water Temperature=[{:.2R}] C",
+                        format("GroundHeatExchanger:Surface=\"{}\", water is frozen; Model not valid. Calculated Water Temperature=[{:.2f}] C",
                                this->Name,
                                this->InletTemp));
                     ShowContinueErrorTimeStamp(state, "");

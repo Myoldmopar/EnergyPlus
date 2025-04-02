@@ -1014,12 +1014,12 @@ void SetUpZoneSizingArrays(EnergyPlusData &state)
     static constexpr std::string_view Format_891(" Load Timesteps in Zone Design Calculation Averaging Window, {:4}\n");
     print(state.files.eio, Format_891, state.dataSize->NumTimeStepsInAvg);
     print(state.files.eio, "! <Heating Sizing Factor Information>, Sizing Factor ID, Value\n");
-    static constexpr std::string_view Format_991(" Heating Sizing Factor Information, Global, {:12.5N}\n");
+    static constexpr std::string_view Format_991(" Heating Sizing Factor Information, Global, {:12.5f}\n");
     print(state.files.eio, Format_991, state.dataSize->GlobalHeatSizingFactor);
     for (int CtrlZoneNum = 1; CtrlZoneNum <= state.dataGlobal->NumOfZones; ++CtrlZoneNum) {
         if (!state.dataZoneEquip->ZoneEquipConfig(CtrlZoneNum).IsControlled) continue;
         if (state.dataSize->FinalZoneSizing(CtrlZoneNum).HeatSizingFactor != 1.0) {
-            static constexpr std::string_view Format_992(" Heating Sizing Factor Information, Zone {}, {:12.5N}\n");
+            static constexpr std::string_view Format_992(" Heating Sizing Factor Information, Zone {}, {:12.5f}\n");
             print(state.files.eio,
                   Format_992,
                   state.dataSize->FinalZoneSizing(CtrlZoneNum).ZoneName,
@@ -1027,12 +1027,12 @@ void SetUpZoneSizingArrays(EnergyPlusData &state)
         }
     }
     print(state.files.eio, "! <Cooling Sizing Factor Information>, Sizing Factor ID, Value\n");
-    static constexpr std::string_view Format_994(" Cooling Sizing Factor Information, Global, {:12.5N}\n");
+    static constexpr std::string_view Format_994(" Cooling Sizing Factor Information, Global, {:12.5f}\n");
     print(state.files.eio, Format_994, state.dataSize->GlobalCoolSizingFactor);
     for (int CtrlZoneNum = 1; CtrlZoneNum <= state.dataGlobal->NumOfZones; ++CtrlZoneNum) {
         if (!state.dataZoneEquip->ZoneEquipConfig(CtrlZoneNum).IsControlled) continue;
         if (state.dataSize->FinalZoneSizing(CtrlZoneNum).CoolSizingFactor != 1.0) {
-            static constexpr std::string_view Format_995(" Cooling Sizing Factor Information, Zone {}, {:12.5N}\n");
+            static constexpr std::string_view Format_995(" Cooling Sizing Factor Information, Zone {}, {:12.5f}\n");
             print(state.files.eio,
                   Format_995,
                   state.dataSize->FinalZoneSizing(CtrlZoneNum).ZoneName,
@@ -2259,22 +2259,22 @@ void updateZoneSizingEndZoneSizingCalc2(EnergyPlusData &state, DataSizing::ZoneS
             }
             ShowContinueError(state, "...check zone thermostat set point and design supply air temperatures");
             ShowContinueError(state, format("...zone name = {}", zsCalcSizing.ZoneName));
-            ShowContinueError(state, format("...design sensible cooling load = {:.2R} W", zsCalcSizing.DesCoolLoad));
-            ShowContinueError(state, format("...thermostat set point temp    = {:.3R} C", zsCalcSizing.CoolTstatTemp));
-            ShowContinueError(state, format("...zone temperature             = {:.3R} C", zsCalcSizing.ZoneTempAtCoolPeak));
-            ShowContinueError(state, format("...supply air temperature       = {:.3R} C", SupplyTemp));
-            ShowContinueError(state, format("...temperature difference       = {:.5R} C", DeltaTemp));
-            ShowContinueError(state, format("...calculated volume flow rate  = {:.5R} m3/s", (zsCalcSizing.DesCoolVolFlow)));
-            ShowContinueError(state, format("...calculated mass flow rate    = {:.5R} kg/s", (zsCalcSizing.DesCoolMassFlow)));
+            ShowContinueError(state, format("...design sensible cooling load = {:.2f} W", zsCalcSizing.DesCoolLoad));
+            ShowContinueError(state, format("...thermostat set point temp    = {:.3f} C", zsCalcSizing.CoolTstatTemp));
+            ShowContinueError(state, format("...zone temperature             = {:.3f} C", zsCalcSizing.ZoneTempAtCoolPeak));
+            ShowContinueError(state, format("...supply air temperature       = {:.3f} C", SupplyTemp));
+            ShowContinueError(state, format("...temperature difference       = {:.5f} C", DeltaTemp));
+            ShowContinueError(state, format("...calculated volume flow rate  = {:.5f} m3/s", (zsCalcSizing.DesCoolVolFlow)));
+            ShowContinueError(state, format("...calculated mass flow rate    = {:.5f} kg/s", (zsCalcSizing.DesCoolMassFlow)));
             if (SupplyTemp > zsCalcSizing.ZoneTempAtCoolPeak)
                 ShowContinueError(state, "...Note: supply air temperature should be less than zone temperature during cooling air flow calculations");
         } else if (std::abs(DeltaTemp) > HVAC::SmallTempDiff && SupplyTemp > zsCalcSizing.ZoneTempAtCoolPeak) {
             ShowSevereError(state, "UpdateZoneSizing: Supply air temperature is greater than zone temperature during cooling air flow calculations");
-            ShowContinueError(state, format("...calculated volume flow rate  = {:.5R} m3/s", (zsCalcSizing.DesCoolVolFlow)));
-            ShowContinueError(state, format("...calculated mass flow rate    = {:.5R} kg/s", (zsCalcSizing.DesCoolMassFlow)));
-            ShowContinueError(state, format("...thermostat set point temp    = {:.3R} C", zsCalcSizing.CoolTstatTemp));
-            ShowContinueError(state, format("...zone temperature            = {:.3R} C", zsCalcSizing.ZoneTempAtCoolPeak));
-            ShowContinueError(state, format("...supply air temperature      = {:.3R} C", SupplyTemp));
+            ShowContinueError(state, format("...calculated volume flow rate  = {:.5f} m3/s", (zsCalcSizing.DesCoolVolFlow)));
+            ShowContinueError(state, format("...calculated mass flow rate    = {:.5f} kg/s", (zsCalcSizing.DesCoolMassFlow)));
+            ShowContinueError(state, format("...thermostat set point temp    = {:.3f} C", zsCalcSizing.CoolTstatTemp));
+            ShowContinueError(state, format("...zone temperature            = {:.3f} C", zsCalcSizing.ZoneTempAtCoolPeak));
+            ShowContinueError(state, format("...supply air temperature      = {:.3f} C", SupplyTemp));
             ShowContinueError(state, format("...occurs in zone              = {}", zsCalcSizing.ZoneName));
             ShowContinueError(state, "...Note: supply air temperature should be less than zone temperature during cooling air flow calculations");
         }
@@ -2298,24 +2298,24 @@ void updateZoneSizingEndZoneSizingCalc2(EnergyPlusData &state, DataSizing::ZoneS
             }
             ShowContinueError(state, "...check zone thermostat set point and design supply air temperatures");
             ShowContinueError(state, format("...zone name = {}", zsCalcSizing.ZoneName));
-            ShowContinueError(state, format("...design heating load         = {:.2R} W", zsCalcSizing.DesHeatLoad));
-            ShowContinueError(state, format("...thermostat set point temp   = {:.3R} C", zsCalcSizing.HeatTstatTemp));
-            ShowContinueError(state, format("...zone temperature            = {:.3R} C", zsCalcSizing.ZoneTempAtHeatPeak));
-            ShowContinueError(state, format("...supply air temperature      = {:.3R} C", SupplyTemp));
-            ShowContinueError(state, format("...temperature difference      = {:.5R} C", DeltaTemp));
-            ShowContinueError(state, format("...calculated volume flow rate = {:.5R} m3/s", (zsCalcSizing.DesHeatVolFlow)));
-            ShowContinueError(state, format("...calculated mass flow rate   = {:.5R} kg/s", (zsCalcSizing.DesHeatMassFlow)));
+            ShowContinueError(state, format("...design heating load         = {:.2f} W", zsCalcSizing.DesHeatLoad));
+            ShowContinueError(state, format("...thermostat set point temp   = {:.3f} C", zsCalcSizing.HeatTstatTemp));
+            ShowContinueError(state, format("...zone temperature            = {:.3f} C", zsCalcSizing.ZoneTempAtHeatPeak));
+            ShowContinueError(state, format("...supply air temperature      = {:.3f} C", SupplyTemp));
+            ShowContinueError(state, format("...temperature difference      = {:.5f} C", DeltaTemp));
+            ShowContinueError(state, format("...calculated volume flow rate = {:.5f} m3/s", (zsCalcSizing.DesHeatVolFlow)));
+            ShowContinueError(state, format("...calculated mass flow rate   = {:.5f} kg/s", (zsCalcSizing.DesHeatMassFlow)));
             if (SupplyTemp < zsCalcSizing.ZoneTempAtHeatPeak)
                 ShowContinueError(state,
                                   "...Note: supply air temperature should be greater than zone temperature during heating air "
                                   "flow calculations");
         } else if (std::abs(DeltaTemp) > HVAC::SmallTempDiff && SupplyTemp < zsCalcSizing.ZoneTempAtHeatPeak) {
             ShowSevereError(state, "UpdateZoneSizing: Supply air temperature is less than zone temperature during heating air flow calculations");
-            ShowContinueError(state, format("...calculated design heating volume flow rate = {:.5R} m3/s", (zsCalcSizing.DesHeatVolFlow)));
-            ShowContinueError(state, format("...calculated design heating mass flow rate   = {:.5R} kg/s", (zsCalcSizing.DesHeatMassFlow)));
-            ShowContinueError(state, format("...thermostat set point temp   = {:.3R} C", zsCalcSizing.HeatTstatTemp));
-            ShowContinueError(state, format("...zone temperature            = {:.3R} C", zsCalcSizing.ZoneTempAtHeatPeak));
-            ShowContinueError(state, format("...supply air temperature      = {:.3R} C", SupplyTemp));
+            ShowContinueError(state, format("...calculated design heating volume flow rate = {:.5f} m3/s", (zsCalcSizing.DesHeatVolFlow)));
+            ShowContinueError(state, format("...calculated design heating mass flow rate   = {:.5f} kg/s", (zsCalcSizing.DesHeatMassFlow)));
+            ShowContinueError(state, format("...thermostat set point temp   = {:.3f} C", zsCalcSizing.HeatTstatTemp));
+            ShowContinueError(state, format("...zone temperature            = {:.3f} C", zsCalcSizing.ZoneTempAtHeatPeak));
+            ShowContinueError(state, format("...supply air temperature      = {:.3f} C", SupplyTemp));
             ShowContinueError(state, format("...occurs in zone              = {}", zsCalcSizing.ZoneName));
             ShowContinueError(state,
                               "...Note: supply air temperature should be greater than zone temperature during heating air "
@@ -5064,18 +5064,18 @@ void CalcZoneMassBalance(EnergyPlusData &state, bool const FirstHVACIteration)
                                                         thisZoneEquip.ZoneName));
                                 ShowContinueErrorTimeStamp(state, "");
                                 ShowContinueError(state,
-                                                  format("  Flows [m3/s]: Inlets: {:.6R}  Unbalanced exhausts: {:.6R}  Returns: {:.6R}",
+                                                  format("  Flows [m3/s]: Inlets: {:.6f}  Unbalanced exhausts: {:.6f}  Returns: {:.6f}",
                                                          thisZoneEquip.TotInletAirMassFlowRate / state.dataEnvrn->StdRhoAir,
                                                          sysUnbalExhaust / state.dataEnvrn->StdRhoAir,
                                                          totalZoneReturnMassFlow / state.dataEnvrn->StdRhoAir));
                                 ShowContinueError(state,
-                                                  format("  Infiltration: {:.6R}  Zone Ventilation: {:.6R}  Mixing (incoming): {:.6R}",
+                                                  format("  Infiltration: {:.6f}  Zone Ventilation: {:.6f}  Mixing (incoming): {:.6f}",
                                                          thisZoneHB.OAMFL / rhoZone,
                                                          thisZoneHB.VAMFL / rhoZone,
                                                          thisZoneHB.MixingMassFlowZone / rhoZone));
                                 ShowContinueError(
                                     state,
-                                    format("  Imbalance (excess outflow): {:.6R}  Total system OA flow (for all airloops serving this zone): {:.6R}",
+                                    format("  Imbalance (excess outflow): {:.6f}  Total system OA flow (for all airloops serving this zone): {:.6f}",
                                            unbalancedVolFlow,
                                            thisZoneEquip.TotAvailAirLoopOA / state.dataEnvrn->StdRhoAir));
                                 ShowContinueError(state, "  This error will only be reported once per zone.");
@@ -6769,7 +6769,7 @@ void ReportZoneSizingDOASInputs(EnergyPlusData &state,
         headerAlreadyPrinted = true;
     }
 
-    static constexpr std::string_view Format_991(" Zone Sizing DOAS Inputs, {}, {}, {:.3R}, {:.3R}\n");
+    static constexpr std::string_view Format_991(" Zone Sizing DOAS Inputs, {}, {}, {:.3f}, {:.3f}\n");
     print(state.files.eio, Format_991, ZoneName, DOASCtrlStrategy, DOASLowTemp, DOASHighTemp);
 
     // BSLLC Start

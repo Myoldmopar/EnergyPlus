@@ -2434,7 +2434,7 @@ void GeneratorController::simGeneratorGetPowerOutput(EnergyPlusData &state,
                                format("{} named {} is producing negative electric power, check generator inputs.",
                                       GeneratorTypeNames[static_cast<int>(generatorType)],
                                       name));
-            ShowContinueError(state, format("Electric power production rate ={:.4R}", electricPowerOutput));
+            ShowContinueError(state, format("Electric power production rate ={:.4f}", electricPowerOutput));
             ShowContinueError(state, "The power will be set to zero, and the simulation continues... ");
         }
         ShowRecurringWarningErrorAtEnd(
@@ -3515,7 +3515,7 @@ ElectricStorage::ElectricStorage( // main constructor
                 ShowContinueError(state, format("which must be greater than {}.", state.dataIPShortCut->cNumericFieldNames(12)));
                 for (int i = 10; i <= 12; ++i) {
                     ShowContinueError(state,
-                                      format("{} = {:.3R}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
+                                      format("{} = {:.3f}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
                 }
                 errorsFound = true;
             }
@@ -3536,7 +3536,7 @@ ElectricStorage::ElectricStorage( // main constructor
                                          state.dataIPShortCut->cNumericFieldNames(15)));
                 for (int i = 15; i <= 16; ++i) {
                     ShowContinueError(state,
-                                      format("{} = {:.3R}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
+                                      format("{} = {:.3f}", state.dataIPShortCut->cNumericFieldNames(i), state.dataIPShortCut->rNumericArgs(i)));
                 }
                 errorsFound = true;
             }
@@ -3830,7 +3830,7 @@ void checkChargeDischargeVoltageCurves(
             ShowContinueError(
                 state,
                 format(
-                    "Charged fraction = {:.1R}, Charging voltage = {:.3R} V, Discharging voltage = {:.3R} V", xfc, chargeVoltage, dischargeVoltage));
+                    "Charged fraction = {:.1f}, Charging voltage = {:.3f} V, Discharging voltage = {:.3f} V", xfc, chargeVoltage, dischargeVoltage));
         }
     }
 }
@@ -4500,15 +4500,15 @@ bool ElectricStorage::determineCurrentForBatteryDischarge(EnergyPlusData &state,
             // Issue #5301 need more diagnostics for this case
             ShowWarningError(
                 state, "ElectricStorage::determineCurrentForBatteryDischarge, iteration limit exceeded, failed to solve for discharge current.");
-            ShowContinueError(state, format("Last timestep charge available, q0 = {:.5R}", q0));
-            ShowContinueError(state, format("New Current, Inew = {:.5R} [Amps]", Inew));
-            ShowContinueError(state, format("Power discharge per module cell, Pw = {:.5R} ", Pw));
+            ShowContinueError(state, format("Last timestep charge available, q0 = {:.5f}", q0));
+            ShowContinueError(state, format("New Current, Inew = {:.5f} [Amps]", Inew));
+            ShowContinueError(state, format("Power discharge per module cell, Pw = {:.5f} ", Pw));
             ShowContinueError(
-                state, format("Charge Conversion Rate, [1/h] change rate from bound charge energy to available charge, parameter k = {:.5R}", k));
-            ShowContinueError(state, format("parameter c = {:.5R}", c));
-            ShowContinueError(state, format("parameter qmax = {:.5R}", qmax));
-            ShowContinueError(state, format("Fully charged open circuit voltage, parameter E0c  = {:.5R}", E0c));
-            ShowContinueError(state, format("parameter InternalR = {:.5R}", InternalR));
+                state, format("Charge Conversion Rate, [1/h] change rate from bound charge energy to available charge, parameter k = {:.5f}", k));
+            ShowContinueError(state, format("parameter c = {:.5f}", c));
+            ShowContinueError(state, format("parameter qmax = {:.5f}", qmax));
+            ShowContinueError(state, format("Fully charged open circuit voltage, parameter E0c  = {:.5f}", E0c));
+            ShowContinueError(state, format("parameter InternalR = {:.5f}", InternalR));
             if (qmaxf == 0.0) {
                 ShowContinueError(state, "qmaxf was zero, would have divided by zero.");
             }
@@ -4753,7 +4753,7 @@ ElectricTransformer::ElectricTransformer(EnergyPlusData &state, std::string cons
                 ShowWarningError(
                     state, format("{}{}=\"{}\".", routineName, state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state, format("Specified {} = {}", state.dataIPShortCut->cAlphaFieldNames(6), state.dataIPShortCut->cAlphaArgs(6)));
-                ShowContinueError(state, format("Specified {} = {:.1R}", state.dataIPShortCut->cNumericFieldNames(2), ratedCapacity_));
+                ShowContinueError(state, format("Specified {} = {:.1f}", state.dataIPShortCut->cNumericFieldNames(2), ratedCapacity_));
                 ShowContinueError(state, "Transformer load and no load losses cannot be calculated with 0.0 rated capacity.");
                 ShowContinueError(state, "Simulation continues but transformer losses will be set to zero.");
             }
@@ -4774,7 +4774,7 @@ ElectricTransformer::ElectricTransformer(EnergyPlusData &state, std::string cons
                     format(
                         "{}{}=\"{}\", invalid entry.", routineName, state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(
-                    state, format("Invalid {}=[{:.3R}].", state.dataIPShortCut->cNumericFieldNames(11), state.dataIPShortCut->rNumericArgs(11)));
+                    state, format("Invalid {}=[{:.3f}].", state.dataIPShortCut->cNumericFieldNames(11), state.dataIPShortCut->rNumericArgs(11)));
                 ShowContinueError(state, "Entered value must be > 0 and <= 1.");
                 errorsFound = true;
             }

@@ -339,7 +339,7 @@ namespace AirflowNetwork {
                     pressure = fields.at("reference_barometric_pressure").get<Real64>();
                     if (std::abs((pressure - m_state.dataEnvrn->StdBaroPress) / m_state.dataEnvrn->StdBaroPress) > 0.1) { // 10% off
                         ShowWarningError(m_state,
-                                         format("{}: {}: Pressure = {:.0R} differs by more than 10% from Standard Barometric Pressure = {:.0R}.",
+                                         format("{}: {}: Pressure = {:.0f} differs by more than 10% from Standard Barometric Pressure = {:.0f}.",
                                                 RoutineName,
                                                 CurrentModuleObject,
                                                 pressure,
@@ -882,7 +882,7 @@ namespace AirflowNetwork {
                         ShowContinueError(
                             m_state,
                             "..This object specifies that only 3 opening factors will be used. So, the value of Opening Factor #2 is set to 1.0.");
-                        ShowContinueError(m_state, format("..Input value was {:.2R}", MultizoneCompDetOpeningData(i).OpenFac2));
+                        ShowContinueError(m_state, format("..Input value was {:.2f}", MultizoneCompDetOpeningData(i).OpenFac2));
                         MultizoneCompDetOpeningData(i).OpenFac2 = 1.0;
                     }
                 } else if (N >= 3) {
@@ -898,7 +898,7 @@ namespace AirflowNetwork {
                             ShowContinueError(m_state,
                                               "..This object specifies that 4 opening factors will be used. So, the value of Opening Factor #4 "
                                               "is set to 1.0.");
-                            ShowContinueError(m_state, format("..Input value was {:.2R}", MultizoneCompDetOpeningData(i).OpenFac4));
+                            ShowContinueError(m_state, format("..Input value was {:.2f}", MultizoneCompDetOpeningData(i).OpenFac4));
                             MultizoneCompDetOpeningData(i).OpenFac4 = 1.0;
                         }
                         MultizoneCompDetOpeningData(i).DischCoeff4 = cds[3];                 // Discharge coefficient for opening factor #4
@@ -911,7 +911,7 @@ namespace AirflowNetwork {
                             ShowContinueError(m_state,
                                               "..This object specifies that only 3 opening factors will be used. So, the value of Opening Factor #3 "
                                               "is set to 1.0.");
-                            ShowContinueError(m_state, format("..Input value was {:.2R}", MultizoneCompDetOpeningData(i).OpenFac3));
+                            ShowContinueError(m_state, format("..Input value was {:.2f}", MultizoneCompDetOpeningData(i).OpenFac3));
                             MultizoneCompDetOpeningData(i).OpenFac3 = 1.0;
                         }
                     }
@@ -1769,7 +1769,7 @@ namespace AirflowNetwork {
                     // Code will never be executed, validation will catch invalid input
                     ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(1) + " < 0.0");
                     ShowContinueError(m_state,
-                                      format("..Input value = {:.1R}, Value will be reset to 0.0", OccupantVentilationControl(i).MinOpeningTime));
+                                      format("..Input value = {:.1f}, Value will be reset to 0.0", OccupantVentilationControl(i).MinOpeningTime));
                     ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + OccupantVentilationControl(i).Name);
                     OccupantVentilationControl(i).MinOpeningTime = 0.0;
                 }
@@ -1778,7 +1778,7 @@ namespace AirflowNetwork {
                     // Code will never be executed, validation will catch invalid input
                     ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(2) + " < 0.0");
                     ShowContinueError(m_state,
-                                      format("..Input value = {:.1R}, Value will be reset to 0.0", OccupantVentilationControl(i).MinClosingTime));
+                                      format("..Input value = {:.1f}, Value will be reset to 0.0", OccupantVentilationControl(i).MinClosingTime));
                     ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + OccupantVentilationControl(i).Name);
                     OccupantVentilationControl(i).MinClosingTime = 0.0;
                 }
@@ -1833,7 +1833,7 @@ namespace AirflowNetwork {
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(3) + " < 0.0");
                         ShowContinueError(
                             m_state,
-                            format("..Input value = {:.1R}, Value will be reset to 10.0 as default", OccupantVentilationControl(i).ComfortBouPoint));
+                            format("..Input value = {:.1f}, Value will be reset to 10.0 as default", OccupantVentilationControl(i).ComfortBouPoint));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + OccupantVentilationControl(i).Name);
                         OccupantVentilationControl(i).ComfortBouPoint = 10.0;
                     }
@@ -1847,7 +1847,7 @@ namespace AirflowNetwork {
                                             " object: The difference of both curve values at boundary point > 0.1");
                         ShowContinueError(m_state, "Both curve names are = " + cAlphaFields(2) + " and " + cAlphaFields(3));
                         ShowContinueError(m_state,
-                                          format("The input value of {} = {:.1R}", cNumericFields(3), OccupantVentilationControl(i).ComfortBouPoint));
+                                          format("The input value of {} = {:.1f}", cNumericFields(3), OccupantVentilationControl(i).ComfortBouPoint));
                         ErrorsFound = true;
                     }
                 }
@@ -1858,7 +1858,7 @@ namespace AirflowNetwork {
                         ShowWarningError(m_state,
                                          format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(4) + " beyond 0.0 and 100.0");
                         ShowContinueError(
-                            m_state, format("..Input value = {:.1R}, Value will be reset to 10.0 as default", OccupantVentilationControl(i).MaxPPD));
+                            m_state, format("..Input value = {:.1f}, Value will be reset to 10.0 as default", OccupantVentilationControl(i).MaxPPD));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + OccupantVentilationControl(i).Name);
                         OccupantVentilationControl(i).MaxPPD = 10.0;
                     }
@@ -2425,7 +2425,7 @@ namespace AirflowNetwork {
             if (MultizoneZoneData(i).OpenFactor > 1.0 || MultizoneZoneData(i).OpenFactor < 0.0) {
                 // Code will never be executed, validation will catch invalid input
                 ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(1) + " is out of range [0.0,1.0]");
-                ShowContinueError(m_state, format("..Input value = {:.2R}, Value will be set to 1.0", MultizoneZoneData(i).OpenFactor));
+                ShowContinueError(m_state, format("..Input value = {:.2f}, Value will be set to 1.0", MultizoneZoneData(i).OpenFactor));
                 MultizoneZoneData(i).OpenFactor = 1.0;
             }
 
@@ -2436,14 +2436,14 @@ namespace AirflowNetwork {
                     if (MultizoneZoneData(i).LowValueTemp < 0.0) {
                         // Code will never be executed, validation will catch invalid input
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(2) + " < 0.0");
-                        ShowContinueError(m_state, format("..Input value = {:.1R}, Value will be set to 0.0", MultizoneZoneData(i).LowValueTemp));
+                        ShowContinueError(m_state, format("..Input value = {:.1f}, Value will be set to 0.0", MultizoneZoneData(i).LowValueTemp));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + MultizoneZoneData(i).ZoneName);
                         MultizoneZoneData(i).LowValueTemp = 0.0;
                     }
                     if (MultizoneZoneData(i).LowValueTemp >= 100.0) {
                         // Code will never be executed, validation will catch invalid input
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(2) + " >= 100.0");
-                        ShowContinueError(m_state, format("..Input value = {:.1R}, Value will be reset to 0.0", MultizoneZoneData(i).LowValueTemp));
+                        ShowContinueError(m_state, format("..Input value = {:.1f}, Value will be reset to 0.0", MultizoneZoneData(i).LowValueTemp));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + MultizoneZoneData(i).ZoneName);
                         MultizoneZoneData(i).LowValueTemp = 0.0;
                     }
@@ -2451,7 +2451,7 @@ namespace AirflowNetwork {
                         ShowWarningError(m_state,
                                          format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(3) + " <= " + cNumericFields(2));
                         ShowContinueError(m_state,
-                                          format("..Input value for {} = {:.1R}, Value will be reset to 100.0",
+                                          format("..Input value for {} = {:.1f}, Value will be reset to 100.0",
                                                  cNumericFields(3),
                                                  MultizoneZoneData(i).UpValueTemp));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + MultizoneZoneData(i).ZoneName);
@@ -2462,14 +2462,14 @@ namespace AirflowNetwork {
                     if (MultizoneZoneData(i).LowValueEnth < 0.0) {
                         // Code will never be executed, validation will catch invalid input
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(4) + " < 0.0");
-                        ShowContinueError(m_state, format("..Input value = {:.1R}, Value will be reset to 0.0", MultizoneZoneData(i).LowValueEnth));
+                        ShowContinueError(m_state, format("..Input value = {:.1f}, Value will be reset to 0.0", MultizoneZoneData(i).LowValueEnth));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + MultizoneZoneData(i).ZoneName);
                         MultizoneZoneData(i).LowValueEnth = 0.0;
                     }
                     if (MultizoneZoneData(i).LowValueEnth >= 300000.0) {
                         // Code will never be executed, validation will catch invalid input
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, " + cNumericFields(4) + " >= 300000.0");
-                        ShowContinueError(m_state, format("..Input value = {:.1R}, Value will be reset to 0.0.", MultizoneZoneData(i).LowValueEnth));
+                        ShowContinueError(m_state, format("..Input value = {:.1f}, Value will be reset to 0.0.", MultizoneZoneData(i).LowValueEnth));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + MultizoneZoneData(i).ZoneName);
                         MultizoneZoneData(i).LowValueEnth = 0.0;
                     }
@@ -2477,7 +2477,7 @@ namespace AirflowNetwork {
                         ShowWarningError(m_state,
                                          format("{}{} object, {} <= {}", RoutineName, CurrentModuleObject, cNumericFields(5), cNumericFields(4)));
                         ShowContinueError(m_state,
-                                          format("..Input value for {}= {:.1R}, Value will be reset to 300000.0",
+                                          format("..Input value for {}= {:.1f}, Value will be reset to 300000.0",
                                                  cNumericFields(5),
                                                  MultizoneZoneData(i).UpValueEnth));
                         ShowContinueError(m_state, "..for " + cAlphaFields(1) + " = \"" + MultizoneZoneData(i).ZoneName);
@@ -2547,7 +2547,7 @@ namespace AirflowNetwork {
                         ShowWarningError(m_state,
                                          format(RoutineName) + CurrentModuleObject + " object =" + Alphas(1) + ". The input of " + cNumericFields(1) +
                                              " is required, but a blank is found.");
-                        ShowContinueError(m_state, format("The default value is assigned as {:.1R}", Numbers(1)));
+                        ShowContinueError(m_state, format("The default value is assigned as {:.1f}", Numbers(1)));
                     }
                     MultizoneExternalNodeData(i).ExtNum = AirflowNetworkNumOfZones + i;            // External node number
                     MultizoneExternalNodeData(i).curve = Curve::GetCurveIndex(m_state, Alphas(2)); // Wind pressure curve
@@ -2686,7 +2686,7 @@ namespace AirflowNetwork {
                     ShowWarningError(m_state,
                                      format(RoutineName) + CurrentModuleObject + " object=" + MultizoneSurfaceData(i).SurfName + ", " +
                                          cNumericFields(1) + " is out of range (0.0,1.0]");
-                    ShowContinueError(m_state, format("..Input value = {:.2R}, Value will be set to 1.0", MultizoneSurfaceData(i).Factor));
+                    ShowContinueError(m_state, format("..Input value = {:.2f}, Value will be set to 1.0", MultizoneSurfaceData(i).Factor));
                     MultizoneSurfaceData(i).Factor = 1.0;
                 }
                 // Get input of ventilation control and associated data
@@ -3115,7 +3115,7 @@ namespace AirflowNetwork {
                     found = false;
                 }
                 print(m_state.files.eio,
-                      "AirflowNetwork Model:Equivalent Rectangle Surface, {}, {:.2R},{:.2R}\n",
+                      "AirflowNetwork Model:Equivalent Rectangle Surface, {}, {:.2f},{:.2f}\n",
                       MultizoneSurfaceData(i).SurfName,
                       MultizoneSurfaceData(i).Height,
                       MultizoneSurfaceData(i).Width);
@@ -3255,14 +3255,14 @@ namespace AirflowNetwork {
                     }
                     if (MultizoneSurfaceData(i).LowValueTemp < 0.0) {
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, Low Temperature difference value < 0.0d0");
-                        ShowContinueError(m_state, format("..Input value={:.1R}, Value will be reset to 0.0.", MultizoneSurfaceData(i).LowValueTemp));
+                        ShowContinueError(m_state, format("..Input value={:.1f}, Value will be reset to 0.0.", MultizoneSurfaceData(i).LowValueTemp));
                         ShowContinueError(m_state, "..for Surface = \"" + MultizoneSurfaceData(i).SurfName + "\"");
                         MultizoneSurfaceData(i).LowValueTemp = 0.0;
                     }
                     if (MultizoneSurfaceData(i).LowValueTemp >= 100.0) {
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, Low Temperature difference value >= 100.0d0");
                         ShowContinueError(m_state,
-                                          format("..Input value = {:.1R}, Value will be reset to 0.0", MultizoneSurfaceData(i).LowValueTemp));
+                                          format("..Input value = {:.1f}, Value will be reset to 0.0", MultizoneSurfaceData(i).LowValueTemp));
                         ShowContinueError(m_state, "..for Surface = \"" + MultizoneSurfaceData(i).SurfName + "\"");
                         MultizoneZoneData(i).LowValueTemp = 0.0;
                     }
@@ -3270,7 +3270,7 @@ namespace AirflowNetwork {
                         ShowWarningError(
                             m_state, format(RoutineName) + CurrentModuleObject + " object, Upper Temperature <= Lower Temperature difference value.");
                         ShowContinueError(m_state,
-                                          format("..Input value = {:.1R}, Value will be reset to 100.0", MultizoneSurfaceData(i).UpValueTemp));
+                                          format("..Input value = {:.1f}, Value will be reset to 100.0", MultizoneSurfaceData(i).UpValueTemp));
                         ShowContinueError(m_state, "..for Surface = \"" + MultizoneSurfaceData(i).SurfName + "\"");
                         MultizoneSurfaceData(i).UpValueTemp = 100.0;
                     }
@@ -3296,14 +3296,14 @@ namespace AirflowNetwork {
                     if (MultizoneSurfaceData(i).LowValueEnth < 0.0) {
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, Low Enthalpy difference value < 0.0d0");
                         ShowContinueError(m_state,
-                                          format("..Input value = {:.1R}, Value will be reset to 0.0", MultizoneSurfaceData(i).LowValueEnth));
+                                          format("..Input value = {:.1f}, Value will be reset to 0.0", MultizoneSurfaceData(i).LowValueEnth));
                         ShowContinueError(m_state, "..for Surface = \"" + MultizoneSurfaceData(i).SurfName + "\"");
                         MultizoneSurfaceData(i).LowValueEnth = 0.0;
                     }
                     if (MultizoneSurfaceData(i).LowValueEnth >= 300000.0) {
                         ShowWarningError(m_state, format(RoutineName) + CurrentModuleObject + " object, Low Enthalpy difference value >= 300000.0");
                         ShowContinueError(m_state,
-                                          format("..Input value = {:.1R}, Value will be reset to 0.0", MultizoneSurfaceData(i).LowValueEnth));
+                                          format("..Input value = {:.1f}, Value will be reset to 0.0", MultizoneSurfaceData(i).LowValueEnth));
                         ShowContinueError(m_state, "..for Surface = \"" + MultizoneSurfaceData(i).SurfName + "\"");
                         MultizoneZoneData(i).LowValueEnth = 0.0;
                     }
@@ -3311,7 +3311,7 @@ namespace AirflowNetwork {
                         ShowWarningError(m_state,
                                          format(RoutineName) + CurrentModuleObject + " object, Upper Enthalpy <= Lower Enthalpy difference value.");
                         ShowContinueError(m_state,
-                                          format("..Input value = {:.1R}, Value will be set to 300000.0", MultizoneSurfaceData(i).UpValueEnth));
+                                          format("..Input value = {:.1f}, Value will be set to 300000.0", MultizoneSurfaceData(i).UpValueEnth));
                         ShowContinueError(m_state, "..for Surface = \"" + MultizoneSurfaceData(i).SurfName + "\"");
                         MultizoneSurfaceData(i).UpValueEnth = 300000.0;
                     }
@@ -3432,9 +3432,9 @@ namespace AirflowNetwork {
         }
 
         for (int i = 0; i < numWinDirs; ++i) {
-            print(m_state.files.eio, "{:.1R},", i * angleDelta);
+            print(m_state.files.eio, "{:.1f},", i * angleDelta);
         }
-        print(m_state.files.eio, "{:.1R}\n", numWinDirs * angleDelta);
+        print(m_state.files.eio, "{:.1f}\n", numWinDirs * angleDelta);
 
         print(m_state.files.eio, "! <AirflowNetwork Model:Wind Pressure Coefficients>, Name, Wind Pressure Coefficients #1 to n (dimensionless)\n");
 
@@ -3447,9 +3447,9 @@ namespace AirflowNetwork {
             print(m_state.files.eio, "AirflowNetwork Model:Wind Pressure Coefficients, {}, ", Curve::GetCurveName(m_state, index));
 
             for (int j = 0; j < numWinDirs; ++j) {
-                print(m_state.files.eio, "{:.2R},", Curve::CurveValue(m_state, index, j * angleDelta));
+                print(m_state.files.eio, "{:.2f},", Curve::CurveValue(m_state, index, j * angleDelta));
             }
-            print(m_state.files.eio, "{:.2R}\n", Curve::CurveValue(m_state, index, numWinDirs * angleDelta));
+            print(m_state.files.eio, "{:.2f}\n", Curve::CurveValue(m_state, index, numWinDirs * angleDelta));
         }
 
         if (AirflowNetworkNumOfSingleSideZones > 0) {
@@ -3459,9 +3459,9 @@ namespace AirflowNetwork {
                           "AirflowNetwork: Advanced Single-Sided Model: Difference in Opening Wind Pressure Coefficients (DeltaCP), ");
                     print(m_state.files.eio, "{}, ", MultizoneZoneData(i).ZoneName);
                     for (unsigned j = 1; j <= EPDeltaCP(i).WindDir.size() - 1; ++j) {
-                        print(m_state.files.eio, "{:.2R},", EPDeltaCP(i).WindDir(j));
+                        print(m_state.files.eio, "{:.2f},", EPDeltaCP(i).WindDir(j));
                     }
-                    print(m_state.files.eio, "{:.2R}\n", EPDeltaCP(i).WindDir(static_cast<int>(EPDeltaCP(i).WindDir.size())));
+                    print(m_state.files.eio, "{:.2f}\n", EPDeltaCP(i).WindDir(static_cast<int>(EPDeltaCP(i).WindDir.size())));
                 }
             }
         }
@@ -6440,7 +6440,7 @@ namespace AirflowNetwork {
                             ShowWarningError(m_state,
                                              "AirflowNetwork: The window or door is open during HVAC system operation " +
                                                  MultizoneSurfaceData(i).SurfName);
-                            ShowContinueError(m_state, format("The window or door opening factor is {:.2R}", MultizoneSurfaceData(i).OpenFactor));
+                            ShowContinueError(m_state, format("The window or door opening factor is {:.2f}", MultizoneSurfaceData(i).OpenFactor));
                             ShowContinueErrorTimeStamp(m_state, "");
                         } else {
                             ShowRecurringWarningErrorAtEnd(m_state,
@@ -6537,7 +6537,7 @@ namespace AirflowNetwork {
                                          "The calculated pressure with minimum exhaust fan rate is lower than the pressure setpoint. The pressure "
                                          "control is unable to perform.");
                         ShowContinueErrorTimeStamp(m_state,
-                                                   format("Calculated pressure = {:.2R}[Pa], Pressure setpoint ={:.2R}", ZonePressure1, PressureSet));
+                                                   format("Calculated pressure = {:.2f}[Pa], Pressure setpoint ={:.2f}", ZonePressure1, PressureSet));
                     } else {
                         ++ErrCountLowPre;
                         ShowRecurringWarningErrorAtEnd(m_state,
@@ -6561,7 +6561,7 @@ namespace AirflowNetwork {
                                              "The calculated pressure with maximum exhaust fan rate is higher than the pressure setpoint. The "
                                              "pressure control is unable to perform.");
                             ShowContinueErrorTimeStamp(
-                                m_state, format("Calculated pressure = {:.2R}[Pa], Pressure setpoint = {:.2R}", ZonePressure2, PressureSet));
+                                m_state, format("Calculated pressure = {:.2f}[Pa], Pressure setpoint = {:.2f}", ZonePressure2, PressureSet));
                         } else {
                             ++ErrCountHighPre;
                             ShowRecurringWarningErrorAtEnd(
@@ -6586,7 +6586,7 @@ namespace AirflowNetwork {
                             if (ErrCountVar == 0) {
                                 ++ErrCountVar;
                                 ShowWarningError(m_state, "Iteration limit exceeded pressure setpoint using an exhaust fan. Simulation continues.");
-                                ShowContinueErrorTimeStamp(m_state, format("Exhaust fan flow rate = {:.4R}", ExhaustFanMassFlowRate));
+                                ShowContinueErrorTimeStamp(m_state, format("Exhaust fan flow rate = {:.4f}", ExhaustFanMassFlowRate));
                             } else {
                                 ++ErrCountVar;
                                 ShowRecurringWarningErrorAtEnd(m_state,
@@ -6626,7 +6626,7 @@ namespace AirflowNetwork {
                                          "The calculated pressure with minimum relief air rate is lower than the pressure setpoint. The pressure "
                                          "control is unable to perform.");
                         ShowContinueErrorTimeStamp(m_state,
-                                                   format("Calculated pressure = {:.2R}[Pa], Pressure setpoint ={:.2R}", ZonePressure1, PressureSet));
+                                                   format("Calculated pressure = {:.2f}[Pa], Pressure setpoint ={:.2f}", ZonePressure1, PressureSet));
                     } else {
                         ++ErrCountLowPre;
                         ShowRecurringWarningErrorAtEnd(m_state,
@@ -6651,7 +6651,7 @@ namespace AirflowNetwork {
                                              "The calculated pressure with maximum relief air rate is higher than the pressure setpoint. The "
                                              "pressure control is unable to perform.");
                             ShowContinueErrorTimeStamp(
-                                m_state, format("Calculated pressure = {:.2R}[Pa], Pressure setpoint = {:.2R}", ZonePressure2, PressureSet));
+                                m_state, format("Calculated pressure = {:.2f}[Pa], Pressure setpoint = {:.2f}", ZonePressure2, PressureSet));
                         } else {
                             ++ErrCountHighPre;
                             ShowRecurringWarningErrorAtEnd(
@@ -6675,7 +6675,7 @@ namespace AirflowNetwork {
                             if (ErrCountVar == 0) {
                                 ++ErrCountVar;
                                 ShowWarningError(m_state, "Iteration limit exceeded pressure setpoint using relief air. Simulation continues.");
-                                ShowContinueErrorTimeStamp(m_state, format("Relief air flow rate = {:.4R}", ReliefMassFlowRate));
+                                ShowContinueErrorTimeStamp(m_state, format("Relief air flow rate = {:.4f}", ReliefMassFlowRate));
                             } else {
                                 ++ErrCountVar;
                                 ShowRecurringWarningErrorAtEnd(m_state,
@@ -9567,7 +9567,7 @@ namespace AirflowNetwork {
                                           "calculated based on the mass flow rate during HVAC operation.");
                         ShowContinueError(
                             m_state,
-                            format("The mass flow rate during HVAC operation = {:.2R} The mass flow rate during no HVAC operation = {:.2R}",
+                            format("The mass flow rate during HVAC operation = {:.2f} The mass flow rate during no HVAC operation = {:.2f}",
                                    m_state.dataAirLoop->AirLoopAFNInfo(AirLoopNum).LoopSystemOnMassFlowrate,
                                    m_state.dataAirLoop->AirLoopAFNInfo(AirLoopNum).LoopSystemOffMassFlowrate));
                         UpdateAirflowNetworkMyOneTimeFlag = false;
@@ -9603,7 +9603,7 @@ namespace AirflowNetwork {
                                                  m_state.dataLoopNodes->NodeID(AirflowNetworkNodeData(Node3).EPlusNodeNum) + "' and AFN Link = '" +
                                                  AirflowNetworkLinkageData(i).Name + "'.");
                             ShowContinueError(m_state,
-                                              format("The system node max mass flow rate = {:.3R} kg/s. The AFN node mass flow rate = {:.3R} kg.s.",
+                                              format("The system node max mass flow rate = {:.3f} kg/s. The AFN node mass flow rate = {:.3f} kg.s.",
                                                      NodeMass,
                                                      AFNMass));
                             WriteFlag = true;
@@ -12209,7 +12209,7 @@ namespace AirflowNetwork {
                                     ++ErrCountDuct; // TODO: Why is the error count shared among all heat pump units?
                                     ShowWarningError(m_state,
                                                      "AirflowNetwork Duct Autosizing: Iteration limit exceeded calculating Supply Duct Trunk size.");
-                                    ShowContinueErrorTimeStamp(m_state, format("Supply Duct Hydronic Diameter={:.2R}", hydraulicDiameter));
+                                    ShowContinueErrorTimeStamp(m_state, format("Supply Duct Hydronic Diameter={:.2f}", hydraulicDiameter));
                                 } else {
                                     ++ErrCountDuct;
                                     ShowRecurringWarningErrorAtEnd(
@@ -12243,7 +12243,7 @@ namespace AirflowNetwork {
                                 m_state, "AirflowNetwork Duct Sizing: Duct Sizing Method = PressureLossWithMaximumVelocity for Supply Trunk size");
                             ShowContinueError(
                                 m_state,
-                                format("The Maximum Airflow Velocity at {:.1R} is less than calculated velosity at {:.1R} using PressureLoss",
+                                format("The Maximum Airflow Velocity at {:.1f} is less than calculated velosity at {:.1f} using PressureLoss",
                                        simulation_control.ductSizing.max_velocity,
                                        Velocity));
                             ShowContinueError(m_state, "..The Maximum Airflow Velocity is used to calculate Supply Trunk Diameter");
@@ -12327,7 +12327,7 @@ namespace AirflowNetwork {
                                     ++ErrCountDuct; // TODO: Why is the error count shared among all heat pump units?
                                     ShowWarningError(m_state,
                                                      "AirflowNetwork Duct Autosizing: Iteration limit exceeded calculating Supply Duct Branch size.");
-                                    ShowContinueErrorTimeStamp(m_state, format("Supply Duct Hydronic Diameter={:.2R}", hydraulicDiameter));
+                                    ShowContinueErrorTimeStamp(m_state, format("Supply Duct Hydronic Diameter={:.2f}", hydraulicDiameter));
                                 } else {
                                     ++ErrCountDuct;
                                     ShowRecurringWarningErrorAtEnd(
@@ -12361,7 +12361,7 @@ namespace AirflowNetwork {
                                 m_state, "AirflowNetwork Duct Sizing: Duct Sizing Method = PressureLossWithMaximumVelocity for Supply Branch size");
                             ShowContinueError(
                                 m_state,
-                                format("The Maximum Airflow Velocity at {:.1R} is less than calculated velosity at {:.1R} using PressureLoss",
+                                format("The Maximum Airflow Velocity at {:.1f} is less than calculated velosity at {:.1f} using PressureLoss",
                                        simulation_control.ductSizing.max_velocity,
                                        Velocity));
                             ShowContinueError(m_state, "..The Maximum Airflow Velocity is used to calculate Supply Branch Diameter");
@@ -12450,7 +12450,7 @@ namespace AirflowNetwork {
                                     ++ErrCountDuct; // TODO: Why is the error count shared among all heat pump units?
                                     ShowWarningError(m_state,
                                                      "AirflowNetwork Duct Autosizing: Iteration limit exceeded calculating Return Duct Trunk size.");
-                                    ShowContinueErrorTimeStamp(m_state, format("Return Duct Hydronic Diameter={:.2R}", hydraulicDiameter));
+                                    ShowContinueErrorTimeStamp(m_state, format("Return Duct Hydronic Diameter={:.2f}", hydraulicDiameter));
                                 } else {
                                     ++ErrCountDuct;
                                     ShowRecurringWarningErrorAtEnd(
@@ -12484,7 +12484,7 @@ namespace AirflowNetwork {
                                 m_state, "AirflowNetwork Duct Sizing: Duct Sizing Method = PressureLossWithMaximumVelocity for Return Trunk size");
                             ShowContinueError(
                                 m_state,
-                                format("The Maximum Airflow Velocity at {:.1R} is less than calculated velosity at {:.1R} using PressureLoss",
+                                format("The Maximum Airflow Velocity at {:.1f} is less than calculated velosity at {:.1f} using PressureLoss",
                                        simulation_control.ductSizing.max_velocity,
                                        Velocity));
                             ShowContinueError(m_state, "..The Maximum Airflow Velocity is used to calculate Return Trunk Diameter");
@@ -12569,7 +12569,7 @@ namespace AirflowNetwork {
                                     ++ErrCountDuct; // TODO: Why is the error count shared among all heat pump units?
                                     ShowWarningError(m_state,
                                                      "AirflowNetwork Duct Autosizing: Iteration limit exceeded calculating Return Duct Branch size.");
-                                    ShowContinueErrorTimeStamp(m_state, format("Return Duct Hydronic Diameter={:.2R}", hydraulicDiameter));
+                                    ShowContinueErrorTimeStamp(m_state, format("Return Duct Hydronic Diameter={:.2f}", hydraulicDiameter));
                                 } else {
                                     ++ErrCountDuct;
                                     ShowRecurringWarningErrorAtEnd(
@@ -12603,7 +12603,7 @@ namespace AirflowNetwork {
                                 m_state, "AirflowNetwork Duct Sizing: Duct Sizing Method = PressureLossWithMaximumVelocity for Return Branch size");
                             ShowContinueError(
                                 m_state,
-                                format("The Maximum Airflow Velocity at {:.1R} is less than calculated velosity at {:.1R} using PressureLoss",
+                                format("The Maximum Airflow Velocity at {:.1f} is less than calculated velosity at {:.1f} using PressureLoss",
                                        simulation_control.ductSizing.max_velocity,
                                        Velocity));
                             ShowContinueError(m_state, "..The Maximum Airflow Velocity is used to calculate Return Branch Diameter");
@@ -12662,28 +12662,28 @@ namespace AirflowNetwork {
                       "AirflowNetwork Model:Duct Autosizing, {}, Supply Trunk, {}, ",
                       AirflowNetworkLinkageData(AFNLinkNum).Name,
                       disSysCompDuct.name);
-                print(m_state.files.eio, "{:.4R},{:.4R}\n", SupplyTrunkD, SupplyTrunkArea);
+                print(m_state.files.eio, "{:.4f},{:.4f}\n", SupplyTrunkD, SupplyTrunkArea);
             }
             if (AirflowNetworkLinkageData(AFNLinkNum).ductLineType == DuctLineType::SupplyBranch) {
                 print(m_state.files.eio,
                       "AirflowNetwork Model:Duct Autosizing, {}, Supply Branch, {}, ",
                       AirflowNetworkLinkageData(AFNLinkNum).Name,
                       disSysCompDuct.name);
-                print(m_state.files.eio, "{:.4R},{:.4R}\n", SupplyBranchD, SupplyBranchArea);
+                print(m_state.files.eio, "{:.4f},{:.4f}\n", SupplyBranchD, SupplyBranchArea);
             }
             if (AirflowNetworkLinkageData(AFNLinkNum).ductLineType == DuctLineType::ReturnTrunk) {
                 print(m_state.files.eio,
                       "AirflowNetwork Model:Duct Autosizing, {}, Return Trunk, {}, ",
                       AirflowNetworkLinkageData(AFNLinkNum).Name,
                       disSysCompDuct.name);
-                print(m_state.files.eio, "{:.4R},{:.4R}\n", ReturnTrunkD, ReturnTrunkArea);
+                print(m_state.files.eio, "{:.4f},{:.4f}\n", ReturnTrunkD, ReturnTrunkArea);
             }
             if (AirflowNetworkLinkageData(AFNLinkNum).ductLineType == DuctLineType::ReturnBranch) {
                 print(m_state.files.eio,
                       "AirflowNetwork Model:Duct Autosizing, {}, Return Branch, {}, ",
                       AirflowNetworkLinkageData(AFNLinkNum).Name,
                       disSysCompDuct.name);
-                print(m_state.files.eio, "{:.4R},{:.4R}\n", ReturnBranchD, ReturnBranchArea);
+                print(m_state.files.eio, "{:.4f},{:.4f}\n", ReturnBranchD, ReturnBranchArea);
             }
         }
     }
@@ -13564,7 +13564,7 @@ namespace AirflowNetwork {
             //            if (LIST >= 2) {
             //                for (n = 1; n <= NetworkNumOfNodes; ++n) {
             //                    if (state.afn->AirflowNetworkNodeData(n).NodeTypeNum == 0) {
-            //                        print(outputFile, "Rev: {:5}{:3}{:14.6E} {:8.4F}{:24.14F}", n, SUMF(n), CCF(n), CEF(n), PZ(n));
+            //                        print(outputFile, "Rev: {:5}{:3}{:14.6E} {:8.4f}{:24.14F}", n, SUMF(n), CCF(n), CEF(n), PZ(n));
             //                    }
             //                }
             //            }

@@ -394,7 +394,7 @@ namespace SurfaceGeometry {
                         thisZone.ExtWindowArea + thisSurface.GrossArea * thisSurface.Multiplier * thisZone.Multiplier * thisZone.ListMultiplier;
                     if (DetailedWWR) {
                         print(state.files.debug,
-                              "{},Window,{:.2R},{:.1R}\n",
+                              "{},Window,{:.2f},{:.1f}\n",
                               thisSurface.Name,
                               thisSurface.GrossArea * thisSurface.Multiplier * thisZone.Multiplier * thisZone.ListMultiplier,
                               thisSurface.Tilt);
@@ -413,7 +413,7 @@ namespace SurfaceGeometry {
                         thisSpace.extPerimeter += thisSurface.Width;
                         if (DetailedWWR) {
                             print(state.files.debug,
-                                  "{},Wall,{:.2R},{:.1R}\n",
+                                  "{},Wall,{:.2f},{:.1f}\n",
                                   thisSurface.Name,
                                   thisSurface.GrossArea * thisZone.Multiplier * thisZone.ListMultiplier,
                                   thisSurface.Tilt);
@@ -427,7 +427,7 @@ namespace SurfaceGeometry {
                         thisZone.ExtGrossGroundWallArea_Multiplied += thisSurface.GrossArea * thisZone.Multiplier * thisZone.ListMultiplier;
                         if (DetailedWWR) {
                             print(state.files.debug,
-                                  "{},Wall-GroundContact,{:.2R},{:.1R}\n",
+                                  "{},Wall-GroundContact,{:.2f},{:.1f}\n",
                                   thisSurface.Name,
                                   thisSurface.GrossArea * thisZone.Multiplier * thisZone.ListMultiplier,
                                   thisSurface.Tilt);
@@ -453,7 +453,7 @@ namespace SurfaceGeometry {
             Real64 ZCeilAvg = 0.0;
             Real64 ZFlrAvg = 0.0;
             if (DetailedWWR) {
-                print(state.files.debug, "{},{:.2R},{:.2R}\n", thisZone.Name, thisZone.ExtGrossWallArea, thisZone.ExtWindowArea);
+                print(state.files.debug, "{},{:.2f},{:.2f}\n", thisZone.Name, thisZone.ExtGrossWallArea, thisZone.ExtWindowArea);
             }
             for (int spaceNum : thisZone.spaceIndexes) {
                 auto &thisSpace = state.dataHeatBal->space(spaceNum);
@@ -624,7 +624,7 @@ namespace SurfaceGeometry {
             if (thisSurface.Construction > 0 && thisSurface.Construction <= state.dataHeatBal->TotConstructs) {
                 NominalUwithConvCoeffs = ComputeNominalUwithConvCoeffs(state, SurfNum, isWithConvCoefValid);
                 if (isWithConvCoefValid) {
-                    cNominalUwithConvCoeffs = format("{:.3R}", NominalUwithConvCoeffs);
+                    cNominalUwithConvCoeffs = format("{:.3f}", NominalUwithConvCoeffs);
                 } else {
                     cNominalUwithConvCoeffs = "[invalid]";
                 }
@@ -632,7 +632,7 @@ namespace SurfaceGeometry {
                     // SurfaceClass::Window also covers glass doors and TDD:Diffusers
                     cNominalU = "N/A";
                 } else {
-                    cNominalU = format("{:.3R}", state.dataHeatBal->NominalU(thisSurface.Construction));
+                    cNominalU = format("{:.3f}", state.dataHeatBal->NominalU(thisSurface.Construction));
                 }
             } else {
                 cNominalUwithConvCoeffs = "**";
@@ -749,8 +749,8 @@ namespace SurfaceGeometry {
 
             static constexpr std::string_view Format_720(
                 " Zone Information, "
-                "{},{:.1R},{:.2R},{:.2R},{:.2R},{:.2R},{:.2R},{:.2R},{},{},{},{:.2R},{:.2R},{:.2R},{:.2R},{:.2R},{:.2R},"
-                "{:.2R},{:.2R},{},{},{:.2R},{:.2R},{:.2R},{:.2R},{},{},{},{}\n");
+                "{},{:.1f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{},{},{},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},{:.2f},"
+                "{:.2f},{:.2f},{},{},{:.2f},{:.2f},{:.2f},{:.2f},{},{},{},{}\n");
 
             print(state.files.eio,
                   Format_720,
@@ -1873,7 +1873,7 @@ namespace SurfaceGeometry {
                                                       "back side values");
                                     ShowContinueError(
                                         state,
-                                        format("...but Nominal U values are similar, diff=[{:.4R}] ... simulation proceeds.",
+                                        format("...but Nominal U values are similar, diff=[{:.4f}] ... simulation proceeds.",
                                                std::abs(state.dataHeatBal->NominalU(ConstrNum) - state.dataHeatBal->NominalU(ConstrNumFound))));
                                     if (!izConstDiffMsg) {
                                         ShowContinueError(state,
@@ -1916,18 +1916,18 @@ namespace SurfaceGeometry {
 
                                         if (MultFound == 1 && MultSurfNum == 1) {
                                             ShowContinueError(state,
-                                                              format("  Area={:.1T} in Surface={}, Zone={}",
+                                                              format("  Area={:.1f} in Surface={}, Zone={}",
                                                                      state.dataSurface->Surface(SurfNum).Area,
                                                                      state.dataSurface->Surface(SurfNum).Name,
                                                                      state.dataSurface->Surface(SurfNum).ZoneName));
                                             ShowContinueError(state,
-                                                              format("  Area={:.1T} in Surface={}, Zone={}",
+                                                              format("  Area={:.1f} in Surface={}, Zone={}",
                                                                      state.dataSurface->Surface(Found).Area,
                                                                      state.dataSurface->Surface(Found).Name,
                                                                      state.dataSurface->Surface(Found).ZoneName));
                                         } else { // Show multiplier info
                                             ShowContinueError(state,
-                                                              format("  Area={:.1T}, Multipliers={}, Total Area={:.1T} in Surface={} Zone={}",
+                                                              format("  Area={:.1f}, Multipliers={}, Total Area={:.1f} in Surface={} Zone={}",
                                                                      state.dataSurface->Surface(SurfNum).Area,
                                                                      MultSurfNum,
                                                                      state.dataSurface->Surface(SurfNum).Area * MultSurfNum,
@@ -1935,7 +1935,7 @@ namespace SurfaceGeometry {
                                                                      state.dataSurface->Surface(SurfNum).ZoneName));
 
                                             ShowContinueError(state,
-                                                              format("  Area={:.1T}, Multipliers={}, Total Area={:.1T} in Surface={} Zone={}",
+                                                              format("  Area={:.1f}, Multipliers={}, Total Area={:.1f} in Surface={} Zone={}",
                                                                      state.dataSurface->Surface(Found).Area,
                                                                      MultFound,
                                                                      state.dataSurface->Surface(Found).Area * MultFound,
@@ -1950,12 +1950,12 @@ namespace SurfaceGeometry {
                             if (std::abs(std::abs(state.dataSurface->Surface(Found).Tilt + state.dataSurface->Surface(SurfNum).Tilt) - 180.0) > 1.0) {
                                 ShowWarningError(state, format("{}InterZone Surface Tilts do not match as expected.", RoutineName));
                                 ShowContinueError(state,
-                                                  format("  Tilt={:.1T} in Surface={}, Zone={}",
+                                                  format("  Tilt={:.1f} in Surface={}, Zone={}",
                                                          state.dataSurface->Surface(SurfNum).Tilt,
                                                          state.dataSurface->Surface(SurfNum).Name,
                                                          state.dataSurface->Surface(SurfNum).ZoneName));
                                 ShowContinueError(state,
-                                                  format("  Tilt={:.1T} in Surface={}, Zone={}",
+                                                  format("  Tilt={:.1f} in Surface={}, Zone={}",
                                                          state.dataSurface->Surface(Found).Tilt,
                                                          state.dataSurface->Surface(Found).Name,
                                                          state.dataSurface->Surface(Found).ZoneName));
@@ -2008,13 +2008,13 @@ namespace SurfaceGeometry {
                                         // if horizontal surfaces, then these are windows/doors/etc in those items.
                                         ShowWarningError(state, format("{}InterZone Surface Azimuths do not match as expected.", RoutineName));
                                         ShowContinueError(state,
-                                                          format("  Azimuth={:.1T}, Tilt={:.1T}, in Surface={}, Zone={}",
+                                                          format("  Azimuth={:.1f}, Tilt={:.1f}, in Surface={}, Zone={}",
                                                                  state.dataSurface->Surface(SurfNum).Azimuth,
                                                                  state.dataSurface->Surface(SurfNum).Tilt,
                                                                  state.dataSurface->Surface(SurfNum).Name,
                                                                  state.dataSurface->Surface(SurfNum).ZoneName));
                                         ShowContinueError(state,
-                                                          format("  Azimuth={:.1T}, Tilt={:.1T}, in Surface={}, Zone={}",
+                                                          format("  Azimuth={:.1f}, Tilt={:.1f}, in Surface={}, Zone={}",
                                                                  state.dataSurface->Surface(Found).Azimuth,
                                                                  state.dataSurface->Surface(Found).Tilt,
                                                                  state.dataSurface->Surface(Found).Name,
@@ -2271,7 +2271,7 @@ namespace SurfaceGeometry {
                                 if (ErrCount == 1 && !state.dataGlobal->DisplayExtraWarnings) {
                                     ShowWarningError(
                                         state,
-                                        format("{}Entered Space Floor Area(s) differ more than {:.0R}% from calculated Space Floor Area(s).",
+                                        format("{}Entered Space Floor Area(s) differ more than {:.0f}% from calculated Space Floor Area(s).",
                                                std::string(RoutineName),
                                                floorAreaPercentTolerance));
                                     ShowContinueError(state,
@@ -2281,12 +2281,12 @@ namespace SurfaceGeometry {
                                     // Warn user of using specified Space Floor Area
                                     ShowWarningError(
                                         state,
-                                        format("{}Entered Floor Area for Space=\"{}\" is {:.1R}% different from the calculated Floor Area.",
+                                        format("{}Entered Floor Area for Space=\"{}\" is {:.1f}% different from the calculated Floor Area.",
                                                std::string(RoutineName),
                                                thisSpace.Name,
                                                diffp * 100.0));
                                     ShowContinueError(state,
-                                                      format("Entered Space Floor Area={:.2R}, Calculated Space Floor Area={:.2R}, entered "
+                                                      format("Entered Space Floor Area={:.2f}, Calculated Space Floor Area={:.2f}, entered "
                                                              "Floor Area will be used.",
                                                              thisSpace.userEnteredFloorArea,
                                                              calcFloorArea));
@@ -2319,7 +2319,7 @@ namespace SurfaceGeometry {
                                 if (ErrCount == 1 && !state.dataGlobal->DisplayExtraWarnings) {
                                     ShowWarningError(
                                         state,
-                                        format("{}Entered Zone Floor Area(s) differ more than {:.0R}% from the sum of the Space Floor Area(s).",
+                                        format("{}Entered Zone Floor Area(s) differ more than {:.0f}% from the sum of the Space Floor Area(s).",
                                                std::string(RoutineName),
                                                floorAreaPercentTolerance));
                                     ShowContinueError(state,
@@ -2328,13 +2328,13 @@ namespace SurfaceGeometry {
                                 if (state.dataGlobal->DisplayExtraWarnings) {
                                     // Warn user of using specified Zone Floor Area
                                     ShowWarningError(state,
-                                                     format("{}Entered Floor Area for Zone=\"{}\" is {:.1R}% different from the sum of the "
+                                                     format("{}Entered Floor Area for Zone=\"{}\" is {:.1f}% different from the sum of the "
                                                             "Space Floor Area(s).",
                                                             std::string(RoutineName),
                                                             thisZone.Name,
                                                             diffp * 100.0));
                                     ShowContinueError(state,
-                                                      format("Entered Zone Floor Area={:.2R}, Sum of Space Floor Area(s)={:.2R}",
+                                                      format("Entered Zone Floor Area={:.2f}, Sum of Space Floor Area(s)={:.2f}",
                                                              thisZone.UserEnteredFloorArea,
                                                              zoneCalcFloorArea));
                                     ShowContinueError(
@@ -2390,7 +2390,7 @@ namespace SurfaceGeometry {
         for (int SurfNum = 1; SurfNum <= MovedSurfs; ++SurfNum) { // TotSurfaces
             if (state.dataSurface->Surface(SurfNum).Area < 1.e-06) {
                 ShowSevereError(state,
-                                format("{}Zero or negative surface area[{:.5R}], Surface={}",
+                                format("{}Zero or negative surface area[{:.5f}], Surface={}",
                                        RoutineName,
                                        state.dataSurface->Surface(SurfNum).Area,
                                        state.dataSurface->Surface(SurfNum).Name));
@@ -2398,7 +2398,7 @@ namespace SurfaceGeometry {
             }
             if (state.dataSurface->Surface(SurfNum).Area >= 1.e-06 && state.dataSurface->Surface(SurfNum).Area < 0.001) {
                 ShowWarningError(state,
-                                 format("{}Very small surface area[{:.5R}], Surface={}",
+                                 format("{}Very small surface area[{:.5f}], Surface={}",
                                         RoutineName,
                                         state.dataSurface->Surface(SurfNum).Area,
                                         state.dataSurface->Surface(SurfNum).Name));
@@ -2976,18 +2976,18 @@ namespace SurfaceGeometry {
                 surfaceError = true;
                 ShowSevereError(
                     state,
-                    format("checkSubSurfAzTiltNorm: Outward facing angle of subsurface differs more than {:.1R} degrees from base surface.",
+                    format("checkSubSurfAzTiltNorm: Outward facing angle of subsurface differs more than {:.1f} degrees from base surface.",
                            errorTolerance));
                 ShowContinueError(state,
-                                  format("Subsurface=\"{}\" Tilt = {:.1R}  Azimuth = {:.1R}", subSurface.Name, subSurface.Tilt, subSurface.Azimuth));
+                                  format("Subsurface=\"{}\" Tilt = {:.1f}  Azimuth = {:.1f}", subSurface.Name, subSurface.Tilt, subSurface.Azimuth));
                 ShowContinueError(
-                    state, format("Base surface=\"{}\" Tilt = {:.1R}  Azimuth = {:.1R}", baseSurface.Name, baseSurface.Tilt, baseSurface.Azimuth));
+                    state, format("Base surface=\"{}\" Tilt = {:.1f}  Azimuth = {:.1f}", baseSurface.Name, baseSurface.Tilt, baseSurface.Azimuth));
             } else if (((General::rotAzmDiffDeg(baseSurface.Azimuth, subSurface.Azimuth) > warningTolerance) && !baseSurfHoriz) ||
                        (std::abs(baseSurface.Tilt - subSurface.Tilt) > warningTolerance)) {
                 ++state.dataSurfaceGeometry->checkSubSurfAzTiltNormErrCount;
                 if (state.dataSurfaceGeometry->checkSubSurfAzTiltNormErrCount == 1 && !state.dataGlobal->DisplayExtraWarnings) {
                     ShowWarningError(state,
-                                     format("checkSubSurfAzTiltNorm: Some Outward Facing angles of subsurfaces differ more than {:.1R} "
+                                     format("checkSubSurfAzTiltNorm: Some Outward Facing angles of subsurfaces differ more than {:.1f} "
                                             "degrees from base surface.",
                                             warningTolerance));
                     ShowContinueError(state, "...use Output:Diagnostics,DisplayExtraWarnings; to show more details on individual surfaces.");
@@ -2995,13 +2995,13 @@ namespace SurfaceGeometry {
                 if (state.dataGlobal->DisplayExtraWarnings) {
                     ShowWarningError(
                         state,
-                        format("checkSubSurfAzTiltNorm: Outward facing angle of subsurface differs more than {:.1R} degrees from base surface.",
+                        format("checkSubSurfAzTiltNorm: Outward facing angle of subsurface differs more than {:.1f} degrees from base surface.",
                                warningTolerance));
                     ShowContinueError(
-                        state, format("Subsurface=\"{}\" Tilt = {:.1R}  Azimuth = {:.1R}", subSurface.Name, subSurface.Tilt, subSurface.Azimuth));
+                        state, format("Subsurface=\"{}\" Tilt = {:.1f}  Azimuth = {:.1f}", subSurface.Name, subSurface.Tilt, subSurface.Azimuth));
                     ShowContinueError(
                         state,
-                        format("Base surface=\"{}\" Tilt = {:.1R}  Azimuth = {:.1R}", baseSurface.Name, baseSurface.Tilt, baseSurface.Azimuth));
+                        format("Base surface=\"{}\" Tilt = {:.1f}  Azimuth = {:.1f}", baseSurface.Name, baseSurface.Tilt, baseSurface.Azimuth));
                 }
             }
         }
@@ -3559,7 +3559,7 @@ namespace SurfaceGeometry {
 
                 if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area <= 0.0) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2T}",
+                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2f}",
                                            s_ipsc->cCurrentModuleObject,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area));
@@ -3907,7 +3907,7 @@ namespace SurfaceGeometry {
                                              "GetHTSurfaceData: Surfaces with interface to Ground found but no \"Ground Temperatures\" were input.");
                             ShowContinueError(state, format("Found first in surface={}", s_ipsc->cAlphaArgs(1)));
                             ShowContinueError(state,
-                                              format("Defaults, constant throughout the year of ({:.1R}) will be used.",
+                                              format("Defaults, constant throughout the year of ({:.1f}) will be used.",
                                                      state.dataEnvrn->GroundTemp[(int)DataEnvironment::GroundTempType::BuildingSurface]));
                         }
                         state.dataSurfaceGeometry->NoGroundTempObjWarning = false;
@@ -4199,7 +4199,7 @@ namespace SurfaceGeometry {
                 GetVertices(state, SurfNum, state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Sides, s_ipsc->rNumericArgs({3, _}));
                 if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area <= 0.0) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2T}",
+                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2f}",
                                            s_ipsc->cCurrentModuleObject,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area));
@@ -4228,7 +4228,7 @@ namespace SurfaceGeometry {
                         if (std::abs(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Height -
                                      state.dataConstruction->Construct(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Construction).Height) > 0.05) {
                             ShowWarningError(state,
-                                             format("{}=\"{}\", underground Wall Height = {:.2T}",
+                                             format("{}=\"{}\", underground Wall Height = {:.2f}",
                                                     s_ipsc->cCurrentModuleObject,
                                                     state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                                     state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Height));
@@ -4242,7 +4242,7 @@ namespace SurfaceGeometry {
                         if (std::abs(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area -
                                      state.dataConstruction->Construct(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Construction).Area) > 0.1) {
                             ShowWarningError(state,
-                                             format("{}=\"{}\", underground Floor Area = {:.2T}",
+                                             format("{}=\"{}\", underground Floor Area = {:.2f}",
                                                     s_ipsc->cCurrentModuleObject,
                                                     state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                                     state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area));
@@ -4251,7 +4251,7 @@ namespace SurfaceGeometry {
                         if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Perimeter <
                             state.dataConstruction->Construct(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Construction).PerimeterExposed - 0.1) {
                             ShowWarningError(state,
-                                             format("{}=\"{}\", underground Floor Perimeter = {:.2T}",
+                                             format("{}=\"{}\", underground Floor Perimeter = {:.2f}",
                                                     s_ipsc->cCurrentModuleObject,
                                                     state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                                     state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Perimeter));
@@ -4574,7 +4574,7 @@ namespace SurfaceGeometry {
                                              "GetRectSurfaces: Surfaces with interface to Ground found but no \"Ground Temperatures\" were input.");
                             ShowContinueError(state, format("Found first in surface={}", s_ipsc->cAlphaArgs(1)));
                             ShowContinueError(state,
-                                              format("Defaults, constant throughout the year of ({:.1R}) will be used.",
+                                              format("Defaults, constant throughout the year of ({:.1f}) will be used.",
                                                      state.dataEnvrn->GroundTemp[(int)DataEnvironment::GroundTempType::BuildingSurface]));
                         }
                         state.dataSurfaceGeometry->NoGroundTempObjWarning = false;
@@ -4625,7 +4625,7 @@ namespace SurfaceGeometry {
 
                 if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area <= 0.0) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2T}",
+                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2f}",
                                            s_ipsc->cCurrentModuleObject,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area));
@@ -4638,7 +4638,7 @@ namespace SurfaceGeometry {
                     if (std::abs(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Height -
                                  state.dataConstruction->Construct(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Construction).Height) > 0.05) {
                         ShowWarningError(state,
-                                         format("{}=\"{}\", underground Wall Height = {:.2T}",
+                                         format("{}=\"{}\", underground Wall Height = {:.2f}",
                                                 s_ipsc->cCurrentModuleObject,
                                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Height));
@@ -4652,7 +4652,7 @@ namespace SurfaceGeometry {
                     if (std::abs(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area -
                                  state.dataConstruction->Construct(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Construction).Area) > 0.1) {
                         ShowWarningError(state,
-                                         format("{}=\"{}\", underground Floor Area = {:.2T}",
+                                         format("{}=\"{}\", underground Floor Area = {:.2f}",
                                                 s_ipsc->cCurrentModuleObject,
                                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area));
@@ -4661,7 +4661,7 @@ namespace SurfaceGeometry {
                     if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Perimeter <
                         state.dataConstruction->Construct(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Construction).PerimeterExposed - 0.1) {
                         ShowWarningError(state,
-                                         format("{}=\"{}\", underground Floor Perimeter = {:.2T}",
+                                         format("{}=\"{}\", underground Floor Perimeter = {:.2f}",
                                                 s_ipsc->cCurrentModuleObject,
                                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Perimeter));
@@ -5253,7 +5253,7 @@ namespace SurfaceGeometry {
                  state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Class != SurfaceClass::Door) &&
                 s_ipsc->rNumericArgs(2) > 1.0) {
                 ShowWarningError(state,
-                                 format("{}=\"{}\", invalid {}=[{:.1T}].",
+                                 format("{}=\"{}\", invalid {}=[{:.1f}].",
                                         s_ipsc->cCurrentModuleObject,
                                         state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                         s_ipsc->cNumericFieldNames(2),
@@ -5647,7 +5647,7 @@ namespace SurfaceGeometry {
                      state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Class != SurfaceClass::Door) &&
                     s_ipsc->rNumericArgs(1) > 1.0) {
                     ShowWarningError(state,
-                                     format("{}=\"{}\", invalid {}=[{:.1T}].",
+                                     format("{}=\"{}\", invalid {}=[{:.1f}].",
                                             s_ipsc->cCurrentModuleObject,
                                             state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                             s_ipsc->cNumericFieldNames(1),
@@ -5667,7 +5667,7 @@ namespace SurfaceGeometry {
 
                 if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area <= 0.0) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2T}",
+                                    format("{}=\"{}\", Surface Area <= 0.0; Entered Area={:.2f}",
                                            s_ipsc->cCurrentModuleObject,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Area));
@@ -5909,13 +5909,13 @@ namespace SurfaceGeometry {
                                                       ", which has a between-glass blind.");
                                 ShowContinueError(
                                     state,
-                                    format("..Material={} thickness={:.3R} -", s_mat->materials(MatGap)->Name, s_mat->materials(MatGap)->Thickness));
+                                    format("..Material={} thickness={:.3f} -", s_mat->materials(MatGap)->Name, s_mat->materials(MatGap)->Thickness));
                                 ShowContinueError(state,
-                                                  format("..( Material={} thickness={:.3R} +",
+                                                  format("..( Material={} thickness={:.3f} +",
                                                          s_mat->materials(MatGap1)->Name,
                                                          s_mat->materials(MatGap1)->Thickness));
                                 ShowContinueError(state,
-                                                  format("..Material={} thickness={:.3R} )=[{:.3R}] >.001",
+                                                  format("..Material={} thickness={:.3f} )=[{:.3f}] >.001",
                                                          s_mat->materials(MatGap2)->Name,
                                                          s_mat->materials(MatGap2)->Thickness,
                                                          MatGapCalc));
@@ -5938,17 +5938,17 @@ namespace SurfaceGeometry {
                                                       ", which has a between-glass shade.");
                                 ShowContinueError(
                                     state,
-                                    format("..Material={} thickness={:.3R} -", s_mat->materials(MatGap)->Name, s_mat->materials(MatGap)->Thickness));
+                                    format("..Material={} thickness={:.3f} -", s_mat->materials(MatGap)->Name, s_mat->materials(MatGap)->Thickness));
                                 ShowContinueError(state,
-                                                  format("...( Material={} thickness={:.3R} +",
+                                                  format("...( Material={} thickness={:.3f} +",
                                                          s_mat->materials(MatGap1)->Name,
                                                          s_mat->materials(MatGap1)->Thickness));
                                 ShowContinueError(state,
-                                                  format("..Material={} thickness={:.3R} +",
+                                                  format("..Material={} thickness={:.3f} +",
                                                          s_mat->materials(MatGap2)->Name,
                                                          s_mat->materials(MatGap2)->Thickness));
                                 ShowContinueError(state,
-                                                  format("..Material={} thickness={:.3R} )=[{:.3R}] >.001",
+                                                  format("..Material={} thickness={:.3f} )=[{:.3f}] >.001",
                                                          s_mat->materials(MatSh)->Name,
                                                          s_mat->materials(MatSh)->Thickness,
                                                          MatGapCalc));
@@ -6025,7 +6025,7 @@ namespace SurfaceGeometry {
                                         ShowContinueError(state, "Calculation will proceed without the divider for this window.");
                                         ShowContinueError(
                                             state,
-                                            format("Divider width = [{:.2R}].",
+                                            format("Divider width = [{:.2f}].",
                                                    state.dataSurface->FrameDivider(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).FrameDivider)
                                                        .DividerWidth));
                                         state.dataSurface->FrameDivider(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).FrameDivider).DividerWidth =
@@ -6765,7 +6765,7 @@ namespace SurfaceGeometry {
 
                     if (Length * Depth <= 0.0) {
                         ShowSevereError(state,
-                                        format("{}=\"{}\", illegal surface area=[{:.2R}]. Surface will NOT be entered.",
+                                        format("{}=\"{}\", illegal surface area=[{:.2f}]. Surface will NOT be entered.",
                                                s_ipsc->cCurrentModuleObject,
                                                s_ipsc->cAlphaArgs(1),
                                                Length * Depth));
@@ -6849,7 +6849,7 @@ namespace SurfaceGeometry {
                     MakeFin = true;
                     if (Length * Depth <= 0.0) {
                         ShowWarningError(state,
-                                         format("{}=Left Fin of \"{}\", illegal surface area=[{:.2R}]. Surface will NOT be entered.",
+                                         format("{}=Left Fin of \"{}\", illegal surface area=[{:.2f}]. Surface will NOT be entered.",
                                                 s_ipsc->cCurrentModuleObject,
                                                 s_ipsc->cAlphaArgs(1),
                                                 Length * Depth));
@@ -6958,7 +6958,7 @@ namespace SurfaceGeometry {
                     MakeFin = true;
                     if (Length * Depth <= 0.0) {
                         ShowWarningError(state,
-                                         format("{}=Right Fin of \"{}\", illegal surface area=[{:.2R}]. Surface will NOT be entered.",
+                                         format("{}=Right Fin of \"{}\", illegal surface area=[{:.2f}]. Surface will NOT be entered.",
                                                 s_ipsc->cCurrentModuleObject,
                                                 s_ipsc->cAlphaArgs(1),
                                                 Length * Depth));
@@ -7492,7 +7492,7 @@ namespace SurfaceGeometry {
                   surf.Class == SurfaceClass::Overhang || surf.Class == SurfaceClass::Fin))
                 continue;
 
-            constexpr std::string_view fmt = "ShadingProperty Reflectance,{},{},{:.2R},{:.2R},{:.2R}, {}\n";
+            constexpr std::string_view fmt = "ShadingProperty Reflectance,{},{},{:.2f},{:.2f},{:.2f}, {}\n";
             if (state.dataSurface->SurfShadowGlazingConstruct(SurfNum) != 0) {
                 print(state.files.eio,
                       fmt,
@@ -7799,7 +7799,7 @@ namespace SurfaceGeometry {
                 ErrorsFound = true;
                 ShowContinueError(
                     state,
-                    format("...because field \"{}\" must be greater than Zero=[{:.2T}].", s_ipsc->cNumericFieldNames(5), s_ipsc->rNumericArgs(5)));
+                    format("...because field \"{}\" must be greater than Zero=[{:.2f}].", s_ipsc->cNumericFieldNames(5), s_ipsc->rNumericArgs(5)));
                 continue;
             }
             state.dataHeatBal->ExtVentedCavity(Item).AreaRatio = s_ipsc->rNumericArgs(6);
@@ -7815,7 +7815,7 @@ namespace SurfaceGeometry {
                 ShowSevereError(state, format("{}=\"{}\", invalid .", s_ipsc->cCurrentModuleObject, state.dataHeatBal->ExtVentedCavity(Item).Name));
                 ErrorsFound = true;
                 ShowContinueError(state,
-                                  format("...because gross area of underlying surfaces must be greater than Zero=[{:.2T}].",
+                                  format("...because gross area of underlying surfaces must be greater than Zero=[{:.2f}].",
                                          state.dataHeatBal->ExtVentedCavity(Item).ProjArea));
                 continue;
             }
@@ -9033,7 +9033,7 @@ namespace SurfaceGeometry {
 
         int numberOfHeatTransferAlgosUsed = 0;
         // Formats
-        static constexpr std::string_view Format_725("Surface Heat Transfer Algorithm, {},{:.0R},{:.2R},{:.1R}\n");
+        static constexpr std::string_view Format_725("Surface Heat Transfer Algorithm, {},{:.0f},{:.2f},{:.1f}\n");
 
         if (state.dataHeatBal->AnyCTF) {
             constexpr std::string_view AlgoName = "CTF - ConductionTransferFunction";
@@ -9432,11 +9432,11 @@ namespace SurfaceGeometry {
                                                                                         : (poppedVertexIndex == nSides && keptVertexIndex == 1);
 
                     if (printPoppedFirst) {
-                        ShowContinueError(state, format("Vertex [{}]=({:.2R},{:.2R},{:.2R})", poppedVertexIndex, it->x, it->y, it->z));
-                        ShowContinueError(state, format("Vertex [{}]=({:.2R},{:.2R},{:.2R})", keptVertexIndex, itKept->x, itKept->y, itKept->z));
+                        ShowContinueError(state, format("Vertex [{}]=({:.2f},{:.2f},{:.2f})", poppedVertexIndex, it->x, it->y, it->z));
+                        ShowContinueError(state, format("Vertex [{}]=({:.2f},{:.2f},{:.2f})", keptVertexIndex, itKept->x, itKept->y, itKept->z));
                     } else {
-                        ShowContinueError(state, format("Vertex [{}]=({:.2R},{:.2R},{:.2R})", keptVertexIndex, itKept->x, itKept->y, itKept->z));
-                        ShowContinueError(state, format("Vertex [{}]=({:.2R},{:.2R},{:.2R})", poppedVertexIndex, it->x, it->y, it->z));
+                        ShowContinueError(state, format("Vertex [{}]=({:.2f},{:.2f},{:.2f})", keptVertexIndex, itKept->x, itKept->y, itKept->z));
+                        ShowContinueError(state, format("Vertex [{}]=({:.2f},{:.2f},{:.2f})", poppedVertexIndex, it->x, it->y, it->z));
                     }
                 }
                 ++state.dataErrTracking->TotalCoincidentVertices;
@@ -9483,7 +9483,7 @@ namespace SurfaceGeometry {
                                     state.dataSurfaceGeometry->SurfaceTmp(SurfNum).NewellSurfaceNormalVector);
             dotp = dot(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).NewellSurfaceNormalVector, TestVector);
             if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Class == SurfaceClass::Roof && dotp < -0.000001) {
-                TiltString = format("{:.1R}", SurfTilt);
+                TiltString = format("{:.1f}", SurfTilt);
                 ShowWarningError(state,
                                  format("{}Roof/Ceiling is upside down! Tilt angle=[{}], should be near 0, Surface=\"{}\", in Zone=\"{}\".",
                                         RoutineName,
@@ -9493,7 +9493,7 @@ namespace SurfaceGeometry {
                 ShowContinueError(state, "Automatic fix is attempted.");
                 ReverseAndRecalculate(state, SurfNum, state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Sides, SurfWorldAz, SurfTilt);
             } else if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Class == SurfaceClass::Roof && SurfTilt > 80.0) {
-                TiltString = format("{:.1R}", SurfTilt);
+                TiltString = format("{:.1f}", SurfTilt);
                 ShowWarningError(
                     state,
                     format("{}Roof/Ceiling is not oriented correctly! Tilt angle=[{}], should be near 0, Surface=\"{}\", in Zone=\"{}\".",
@@ -9503,7 +9503,7 @@ namespace SurfaceGeometry {
                            state.dataSurfaceGeometry->SurfaceTmp(SurfNum).ZoneName));
             }
             if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Class == SurfaceClass::Floor && dotp > 0.000001) {
-                TiltString = format("{:.1R}", SurfTilt);
+                TiltString = format("{:.1f}", SurfTilt);
                 ShowWarningError(state,
                                  format("{}Floor is upside down! Tilt angle=[{}], should be near 180, Surface=\"{}\", in Zone=\"{}\".",
                                         RoutineName,
@@ -9513,7 +9513,7 @@ namespace SurfaceGeometry {
                 ShowContinueError(state, "Automatic fix is attempted.");
                 ReverseAndRecalculate(state, SurfNum, state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Sides, SurfWorldAz, SurfTilt);
             } else if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Class == SurfaceClass::Floor && SurfTilt < 158.2) { // slope/grade = 40%!
-                TiltString = format("{:.1R}", SurfTilt);
+                TiltString = format("{:.1f}", SurfTilt);
                 ShowWarningError(state,
                                  format("{}Floor is not oriented correctly! Tilt angle=[{}], should be near 180, Surface=\"{}\", in Zone=\"{}\".",
                                         RoutineName,
@@ -9651,7 +9651,7 @@ namespace SurfaceGeometry {
                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).lcsz,
                                 state.dataSurfaceGeometry->SurfaceTmp(SurfNum).NewellSurfaceNormalVector);
         if (state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Class == SurfaceClass::Roof && SurfTilt > 80.0) {
-            TiltString = format("{:.1R}", SurfTilt);
+            TiltString = format("{:.1f}", SurfTilt);
             ShowWarningError(
                 state,
                 format("{}Roof/Ceiling is still upside down! Tilt angle=[{}], should be near 0, please fix manually.", RoutineName, TiltString));
@@ -10603,7 +10603,7 @@ namespace SurfaceGeometry {
                                              state.dataSurface->StormWindow(StormWinNum).DayOfMonthOn,
                                              state.dataSurface->StormWindow(StormWinNum).MonthOff,
                                              state.dataSurface->StormWindow(StormWinNum).DayOfMonthOff));
-                    ShowContinueError(state, format("these times may be reversed for your building latitude={:.2R} deg.", state.dataEnvrn->Latitude));
+                    ShowContinueError(state, format("these times may be reversed for your building latitude={:.2f} deg.", state.dataEnvrn->Latitude));
                 }
             }
         }
@@ -11714,14 +11714,14 @@ namespace SurfaceGeometry {
             if (!s_ipsc->lNumericFieldBlanks(10)) {
                 state.dataSurface->OSC(OSCNum).MinLimitPresent = true;
                 state.dataSurface->OSC(OSCNum).MinTempLimit = s_ipsc->rNumericArgs(10);
-                cOSCLimitsString = format("{:.3R}", s_ipsc->rNumericArgs(10));
+                cOSCLimitsString = format("{:.3f}", s_ipsc->rNumericArgs(10));
             } else {
                 cOSCLimitsString = "N/A";
             }
             if (!s_ipsc->lNumericFieldBlanks(11)) {
                 state.dataSurface->OSC(OSCNum).MaxLimitPresent = true;
                 state.dataSurface->OSC(OSCNum).MaxTempLimit = s_ipsc->rNumericArgs(11);
-                cOSCLimitsString += format(",{:.3R}", s_ipsc->rNumericArgs(10));
+                cOSCLimitsString += format(",{:.3f}", s_ipsc->rNumericArgs(10));
             } else {
                 cOSCLimitsString += ",N/A";
             }
@@ -11739,7 +11739,7 @@ namespace SurfaceGeometry {
                 print(state.files.eio, "{}\n", OSCFormat1);
             }
             if (state.dataSurface->OSC(Loop).SurfFilmCoef > 0.0) {
-                s_ipsc->cAlphaArgs(1) = format("{:.3R}", state.dataSurface->OSC(Loop).SurfFilmCoef);
+                s_ipsc->cAlphaArgs(1) = format("{:.3f}", state.dataSurface->OSC(Loop).SurfFilmCoef);
                 SetupOutputVariable(state,
                                     "Surface Other Side Coefficients Exterior Air Drybulb Temperature",
                                     Constant::Units::C,
@@ -11752,7 +11752,7 @@ namespace SurfaceGeometry {
             }
             if (state.dataSurface->OSC(Loop).ConstTempScheduleIndex != 0) {
                 s_ipsc->cAlphaArgs(2) = state.dataSurface->OSC(Loop).ConstTempScheduleName;
-                constexpr std::string_view format = "Other Side Coefficients,{},{},{},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{},{},{:.3R},{:.3R},{}\n";
+                constexpr std::string_view format = "Other Side Coefficients,{},{},{},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{},{},{:.3f},{:.3f},{}\n";
                 print(state.files.eio,
                       format,
                       state.dataSurface->OSC(Loop).Name,
@@ -11771,7 +11771,7 @@ namespace SurfaceGeometry {
             } else {
                 s_ipsc->cAlphaArgs(2) = "N/A";
                 constexpr std::string_view format =
-                    "Other Side Coefficients,{},{},{:.2R},{:.3R},{:.3R},{:.3R},{:.3R},{:.3R},{},{},{:.3R},{:.3R},{}\n";
+                    "Other Side Coefficients,{},{},{:.2f},{:.3f},{:.3f},{:.3f},{:.3f},{:.3f},{},{},{:.3f},{:.3f},{}\n";
                 print(state.files.eio,
                       format,
                       state.dataSurface->OSC(Loop).Name,
@@ -12097,7 +12097,7 @@ namespace SurfaceGeometry {
                                                                s_ipsc->cAlphaArgs(2)));
                                         ShowContinueError(state, "\"Outside\", invalid material for movable insulation.");
                                         ShowContinueError(state,
-                                                          format("Material=\"{}\",Resistance=[{:.3R}], must be > 0 for use in Movable Insulation.",
+                                                          format("Material=\"{}\",Resistance=[{:.3f}], must be > 0 for use in Movable Insulation.",
                                                                  thisMaterial->Name,
                                                                  thisMaterial->Resistance));
                                         ErrorsFound = true;
@@ -12114,7 +12114,7 @@ namespace SurfaceGeometry {
                                                                s_ipsc->cAlphaArgs(2)));
                                         ShowContinueError(state, "\"Outside\", invalid material for movable insulation.");
                                         ShowContinueError(state,
-                                                          format("Material=\"{}\",Conductivity=[{:.3R}], must be > 0 for use in Movable Insulation.",
+                                                          format("Material=\"{}\",Conductivity=[{:.3f}], must be > 0 for use in Movable Insulation.",
                                                                  thisMaterial->Name,
                                                                  thisMaterial->Conductivity));
                                         ErrorsFound = true;
@@ -12144,7 +12144,7 @@ namespace SurfaceGeometry {
                                                                s_ipsc->cAlphaArgs(2)));
                                         ShowContinueError(state, "\"Inside\", invalid material for movable insulation.");
                                         ShowContinueError(state,
-                                                          format("Material=\"{}\",Resistance=[{:.3R}], must be > 0 for use in Movable Insulation.",
+                                                          format("Material=\"{}\",Resistance=[{:.3f}], must be > 0 for use in Movable Insulation.",
                                                                  thisMaterial->Name,
                                                                  thisMaterial->Resistance));
                                         ErrorsFound = true;
@@ -12343,8 +12343,8 @@ namespace SurfaceGeometry {
                             }
                             ShowContinueError(state, surfaceNames);
                         }
-                        ShowContinueError(state, format("    Vertex start {{ {:.4R}, {:.4R}, {:.4R}}}", edge.start.x, edge.start.y, edge.start.z));
-                        ShowContinueError(state, format("    Vertex end   {{ {:.4R}, {:.4R}, {:.4R}}}", edge.end.x, edge.end.y, edge.end.z));
+                        ShowContinueError(state, format("    Vertex start {{ {:.4f}, {:.4f}, {:.4f}}}", edge.start.x, edge.start.y, edge.start.z));
+                        ShowContinueError(state, format("    Vertex end   {{ {:.4f}, {:.4f}, {:.4f}}}", edge.end.x, edge.end.y, edge.end.z));
                     }
                 }
             }
@@ -12372,7 +12372,7 @@ namespace SurfaceGeometry {
                                 state,
                                 format("Entered Volume entered for Zone=\"{}\" significantly different from calculated Volume", thisZone.Name));
                             ShowContinueError(state,
-                                              format("Entered Zone Volume value={:.2R}, Calculated Zone Volume value={:.2R}, entered volume will be "
+                                              format("Entered Zone Volume value={:.2f}, Calculated Zone Volume value={:.2f}, entered volume will be "
                                                      "used in calculations.",
                                                      thisZone.Volume,
                                                      CalcVolume));
@@ -12391,7 +12391,7 @@ namespace SurfaceGeometry {
 
             if (thisZone.Volume <= 0.0) {
                 ShowWarningError(state, format("Indicated Zone Volume <= 0.0 for Zone={}", thisZone.Name));
-                ShowContinueError(state, format("The calculated Zone Volume was={:.2R}", thisZone.Volume));
+                ShowContinueError(state, format("The calculated Zone Volume was={:.2f}", thisZone.Volume));
                 ShowContinueError(state, "The simulation will continue with the Zone Volume set to 10.0 m3. ");
                 ShowContinueError(state, "...use Output:Diagnostics,DisplayExtraWarnings; to show more details on individual zones.");
                 thisZone.Volume = 10.;
@@ -13101,14 +13101,14 @@ namespace SurfaceGeometry {
             if (!IsCoPlanar) {
                 if (OutOfLine > 0.01) {
                     ShowSevereError(state,
-                                    format("{}Suspected non-planar surface:\"{}\", Max \"out of line\"={:.5T} at Vertex # {}",
+                                    format("{}Suspected non-planar surface:\"{}\", Max \"out of line\"={:.5f} at Vertex # {}",
                                            RoutineName,
                                            surf.Name,
                                            OutOfLine,
                                            LastVertexInError));
                 } else {
                     ShowWarningError(state,
-                                     format("{}Possible non-planar surface:\"{}\", Max \"out of line\"={:.5T} at Vertex # {}",
+                                     format("{}Possible non-planar surface:\"{}\", Max \"out of line\"={:.5f} at Vertex # {}",
                                             RoutineName,
                                             surf.Name,
                                             OutOfLine,
@@ -13268,7 +13268,7 @@ namespace SurfaceGeometry {
                             ShowContinueError(state,
                                               format("Window Surface=\"{}\" area (with frame) is too large to fit on the surface.", surf.Name));
                             ShowContinueError(state,
-                                              format("Base surface area (-windows and doors)=[{:.2T}] m2, frame area=[{:.2T}] m2.",
+                                              format("Base surface area (-windows and doors)=[{:.2f}] m2, frame area=[{:.2f}] m2.",
                                                      state.dataSurface->Surface(surf.BaseSurf).Area,
                                                      state.dataSurface->SurfWinFrameArea(ThisSurf)));
                             ErrorInSurface = true;
@@ -13286,7 +13286,7 @@ namespace SurfaceGeometry {
                         if ((surf.Area - state.dataSurface->SurfWinDividerArea(ThisSurf)) <= 0.0) {
                             ShowSevereError(state, format("{}Divider area exceeds glazed opening for window {}", RoutineName, surf.Name));
                             ShowContinueError(state,
-                                              format("Window surface area=[{:.2T}] m2, divider area=[{:.2T}] m2.",
+                                              format("Window surface area=[{:.2f}] m2, divider area=[{:.2f}] m2.",
                                                      surf.Area,
                                                      state.dataSurface->SurfWinDividerArea(ThisSurf)));
                             ErrorInSurface = true;
@@ -13596,7 +13596,7 @@ namespace SurfaceGeometry {
             ShowSevereError(state, format("CalcCoordinateTransformation: Invalid dot product, surface=\"{}\":", surf.Name));
             for (I = 1; I <= surf.Sides; ++I) {
                 auto const &point = surf.Vertex(I);
-                ShowContinueError(state, format(" ({:8.3F},{:8.3F},{:8.3F})", point.x, point.y, point.z));
+                ShowContinueError(state, format(" ({:8.3f},{:8.3f},{:8.3f})", point.x, point.y, point.z));
             }
             ShowFatalError(
                 state, "CalcCoordinateTransformation: Program terminates due to preceding condition.", OptionalOutputFileRef{state.files.eso});
@@ -14059,9 +14059,9 @@ namespace SurfaceGeometry {
                                      format("SurfaceGeometry: ModifyWindow: Window {} uses the Window5 Data File Construction {}",
                                             state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name,
                                             state.dataConstruction->Construct(IConst).Name));
-                    ShowContinueError(state, format("The height {:.3R}(m) or width  (m) of this window differs by more than 10%{:.3R}", H, W));
+                    ShowContinueError(state, format("The height {:.3f}(m) or width  (m) of this window differs by more than 10%{:.3f}", H, W));
                     ShowContinueError(state,
-                                      format("from the corresponding height {:.3R} (m) or width  (m) on the Window5 Data file.{:.3R}", h1, w1));
+                                      format("from the corresponding height {:.3f} (m) or width  (m) on the Window5 Data file.{:.3f}", h1, w1));
                     ShowContinueError(state, "This will affect the frame heat transfer calculation if the frame in the Data File entry");
                     ShowContinueError(state, "is not uniform, i.e., has sections with different geometry and/or thermal properties.");
                 } else {
@@ -14335,7 +14335,7 @@ namespace SurfaceGeometry {
                                    state.dataSurfaceGeometry->SurfaceTmp(state.dataSurfaceGeometry->SurfaceTmp(SurfNum).BaseSurf).Name));
             ShowContinueError(state, format("Subsurface (window) creating error={}", state.dataSurfaceGeometry->SurfaceTmp(SurfNum).Name));
             ShowContinueError(state,
-                              format("This window has been replaced by two windows from the Window5 Data File of total area {:.2R} m2", AreaNew));
+                              format("This window has been replaced by two windows from the Window5 Data File of total area {:.2f} m2", AreaNew));
             ErrorsFound = true;
         }
 
@@ -14842,7 +14842,7 @@ namespace SurfaceGeometry {
             ShowWarningError(state, format("CalcSurfaceCentroid: {} Surfaces have the Z coordinate < 0.", negZcount));
             ShowContinueError(state, "...in any calculations, Wind Speed will be 0.0 for these surfaces.");
             ShowContinueError(state,
-                              format("...in any calculations, Outside temperatures will be the outside temperature + {:.3R} for these surfaces.",
+                              format("...in any calculations, Outside temperatures will be the outside temperature + {:.3f} for these surfaces.",
                                      state.dataEnvrn->WeatherFileTempModCoeff));
             ShowContinueError(state, "...that is, these surfaces will have conditions as though at ground level.");
         }
@@ -15448,7 +15448,7 @@ namespace SurfaceGeometry {
                     ShowContinueError(state, "Coincident Vertices will be removed as possible.");
                     for (int n = 1; n <= surfaceTmp.Sides; ++n) {
                         auto const &point = vertices(n);
-                        static constexpr std::string_view ErrFmt = " ({:8.3F},{:8.3F},{:8.3F})";
+                        static constexpr std::string_view ErrFmt = " ({:8.3f},{:8.3f},{:8.3f})";
                         ShowContinueError(state, format(ErrFmt, point.x, point.y, point.z));
                     }
                 }
@@ -15523,11 +15523,11 @@ namespace SurfaceGeometry {
                         Np2 -= NSides;
                     }
                     ShowContinueError(state, format("...vertex {} to vertex {} to vertex {}", n, Np1, Np2));
-                    ShowContinueError(state, format("...vertex {}=[{:.2R},{:.2R},{:.2R}]", n, X(n), Y(n), Z(n)));
-                    ShowContinueError(state, format("...vertex {}=[{:.2R},{:.2R},{:.2R}]", Np1, X(n + 1), Y(n + 1), Z(n + 1)));
-                    ShowContinueError(state, format("...vertex {}=[{:.2R},{:.2R},{:.2R}]", Np2, X(n + 2), Y(n + 2), Z(n + 2)));
-                    // ShowContinueError(state, format("...theta angle=[{:.6R}]", Theta));
-                    // ShowContinueError(state, format("...last theta angle=[{:.6R}]", LastTheta));
+                    ShowContinueError(state, format("...vertex {}=[{:.2f},{:.2f},{:.2f}]", n, X(n), Y(n), Z(n)));
+                    ShowContinueError(state, format("...vertex {}=[{:.2f},{:.2f},{:.2f}]", Np1, X(n + 1), Y(n + 1), Z(n + 1)));
+                    ShowContinueError(state, format("...vertex {}=[{:.2f},{:.2f},{:.2f}]", Np2, X(n + 2), Y(n + 2), Z(n + 2)));
+                    // ShowContinueError(state, format("...theta angle=[{:.6f}]", Theta));
+                    // ShowContinueError(state, format("...last theta angle=[{:.6f}]", LastTheta));
                 }
                 surfaceTmp.IsConvex = false;
                 // #10103 - We do not want to break early, because we do want to consistently remove colinear vertices

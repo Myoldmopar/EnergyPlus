@@ -111,19 +111,19 @@ namespace PVWatts {
         dcSystemCapacity_ = dcSystemCapacity;
 
         if (systemLosses > 1.0 || systemLosses < 0.0) {
-            ShowSevereError(state, format("PVWatts: Invalid system loss value {:.2R}", systemLosses));
+            ShowSevereError(state, format("PVWatts: Invalid system loss value {:.2f}", systemLosses));
             errorsFound = true;
         }
         systemLosses_ = systemLosses;
 
         if (geometryType_ == GeometryType::TILT_AZIMUTH) {
             if (tilt < 0 || tilt > 90) {
-                ShowSevereError(state, format("PVWatts: Invalid tilt: {:.2R}", tilt));
+                ShowSevereError(state, format("PVWatts: Invalid tilt: {:.2f}", tilt));
                 errorsFound = true;
             }
             tilt_ = tilt;
             if (azimuth < 0 || azimuth >= 360) {
-                ShowSevereError(state, format("PVWatts: Invalid azimuth: {:.2R}", azimuth));
+                ShowSevereError(state, format("PVWatts: Invalid azimuth: {:.2f}", azimuth));
             }
             azimuth_ = azimuth;
         } else if (geometryType_ == GeometryType::SURFACE) {
@@ -141,7 +141,7 @@ namespace PVWatts {
         }
 
         if (groundCoverageRatio > 1.0 || groundCoverageRatio < 0.0) {
-            ShowSevereError(state, format("PVWatts: Invalid ground coverage ratio: {:.2R}", groundCoverageRatio));
+            ShowSevereError(state, format("PVWatts: Invalid ground coverage ratio: {:.2f}", groundCoverageRatio));
             errorsFound = true;
         }
         groundCoverageRatio_ = groundCoverageRatio;

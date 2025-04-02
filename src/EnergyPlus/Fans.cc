@@ -1423,7 +1423,7 @@ void FanComponent::set_size(EnergyPlusData &state)
                              format("Drive ratio for {}: {} is too low at design conditions -- check motor speed and drive ratio inputs",
                                     HVAC::fanTypeNames[(int)type],
                                     Name));
-            ShowContinueError(state, format("...Design fan speed [rev/min]: {:.2R}", fanSpeed));
+            ShowContinueError(state, format("...Design fan speed [rev/min]: {:.2f}", fanSpeed));
         }
 
         fanTorque = shaftPower / _speedRadS; //[N-m]
@@ -1439,7 +1439,7 @@ void FanComponent::set_size(EnergyPlusData &state)
         if (fanTorque > (beltMaxTorque + 1.e-5)) {
             ShowWarningError(state,
                              format("Belt for {}: {} is undersized at design conditions -- check belt inputs", HVAC::fanTypeNames[(int)type], Name));
-            ShowContinueError(state, format("...Design belt output torque (without oversizing) [Nm]: {:.2R}", fanTorque));
+            ShowContinueError(state, format("...Design belt output torque (without oversizing) [Nm]: {:.2f}", fanTorque));
         }
 
         // Calculate belt max efficiency using correlations and coefficients based on AMCA data
@@ -1474,7 +1474,7 @@ void FanComponent::set_size(EnergyPlusData &state)
         if (beltInputPower > (motorMaxOutPower + 1.e-5)) {
             ShowWarningError(
                 state, format("Motor for {}: {} is undersized at design conditions -- check motor inputs", HVAC::fanTypeNames[(int)type], Name));
-            ShowContinueError(state, format("...Design motor output power (without oversizing) [W]: {:.2R}", beltInputPower));
+            ShowContinueError(state, format("...Design motor output power (without oversizing) [W]: {:.2f}", beltInputPower));
         }
 
         // Calculate motor max efficiency using correlations and coefficients based on MotorMaster+ data
@@ -1507,7 +1507,7 @@ void FanComponent::set_size(EnergyPlusData &state)
             if (motorInputPower > (vfdMaxOutPower + 1.e-5)) {
                 ShowWarningError(
                     state, format("VFD for {}: {} is undersized at design conditions -- check VFD inputs", HVAC::fanTypeNames[(int)type], Name));
-                ShowContinueError(state, format("...Design VFD output power (without oversizing) [W]: {:.2R}", motorInputPower));
+                ShowContinueError(state, format("...Design VFD output power (without oversizing) [W]: {:.2f}", motorInputPower));
             }
 
             Real64 _vfdOutPowerRatio = motorInputPower / vfdMaxOutPower; // Ratio of VFD output power to max VFD output power [-]
@@ -1983,7 +1983,7 @@ void FanComponent::simulateOnOff(EnergyPlusData &state, ObjexxFCL::Optional<Real
                     if (oneTimePowerRatioCheck && !state.dataGlobal->WarmupFlag) {
                         ShowSevereError(state, format("{} = {}\"", HVAC::fanTypeNames[(int)type], Name));
                         ShowContinueError(state, "Error in Fan Power Ratio curve. Curve output less than 0.0.");
-                        ShowContinueError(state, format("Curve output = {:.5T}, fan speed ratio = {:.5T}", _speedRaisedToPower, _speedRatio));
+                        ShowContinueError(state, format("Curve output = {:.5f}, fan speed ratio = {:.5f}", _speedRaisedToPower, _speedRatio));
                         ShowContinueError(state, "Check curve coefficients to ensure proper power ratio as a function of fan speed ratio.");
                         ShowContinueError(state, "Resetting Fan Power Ratio curve output to 0.0 and the simulation continues.");
                         ShowContinueErrorTimeStamp(state, "Occurrence info:");
@@ -1997,7 +1997,7 @@ void FanComponent::simulateOnOff(EnergyPlusData &state, ObjexxFCL::Optional<Real
                         if (oneTimeEffRatioCheck && !state.dataGlobal->WarmupFlag) {
                             ShowSevereError(state, format("{} = {}\"", HVAC::fanTypeNames[(int)type], Name));
                             ShowContinueError(state, "Error in Fan Efficiency Ratio curve. Curve output less than 0.01.");
-                            ShowContinueError(state, format("Curve output = {:.5T}, fan speed ratio = {:.5T}", _effRatioAtSpeedRatio, _speedRatio));
+                            ShowContinueError(state, format("Curve output = {:.5f}, fan speed ratio = {:.5f}", _effRatioAtSpeedRatio, _speedRatio));
                             ShowContinueError(state, "Check curve coefficients to ensure proper efficiency ratio as a function of fan speed ratio.");
                             ShowContinueError(state, "Resetting Fan Efficiency Ratio curve output to 0.01 and the simulation continues.");
                             ShowContinueErrorTimeStamp(state, "Occurrence info:");

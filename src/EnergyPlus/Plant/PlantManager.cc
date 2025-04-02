@@ -3157,7 +3157,7 @@ void SizePlantLoop(EnergyPlusData &state,
                 state.dataPlnt->PlantLoop(LoopNum).MaxVolFlowRate = 0.0;
                 if (state.dataPlnt->PlantFinalSizesOkayToReport) {
                     ShowWarningError(state,
-                                     format("SizePlantLoop: Calculated Plant Sizing Design Volume Flow Rate=[{:.2R}] is too small. Set to 0.0",
+                                     format("SizePlantLoop: Calculated Plant Sizing Design Volume Flow Rate=[{:.2f}] is too small. Set to 0.0",
                                             state.dataSize->PlantSizData(PlantSizNum).DesVolFlowRate));
                     ShowContinueError(state, "..occurs for PlantLoop=" + state.dataPlnt->PlantLoop(LoopNum).Name);
                 }
@@ -3433,7 +3433,7 @@ void ResizePlantLoopLevelSizes(EnergyPlusData &state, int const LoopNum // Suppl
                 state.dataPlnt->PlantLoop(LoopNum).MaxVolFlowRate = 0.0;
                 if (state.dataPlnt->PlantFinalSizesOkayToReport) {
                     ShowWarningError(state,
-                                     format("SizePlantLoop: Calculated Plant Sizing Design Volume Flow Rate=[{:.2R}] is too small. Set to 0.0",
+                                     format("SizePlantLoop: Calculated Plant Sizing Design Volume Flow Rate=[{:.2f}] is too small. Set to 0.0",
                                             state.dataSize->PlantSizData(PlantSizNum).DesVolFlowRate));
                     ShowContinueError(state, "..occurs for PlantLoop=" + state.dataPlnt->PlantLoop(LoopNum).Name);
                 }
@@ -4540,7 +4540,7 @@ void CheckOngoingPlantWarnings(EnergyPlusData &state)
             ShowWarningError(
                 state, "Plant Loop: " + state.dataPlnt->PlantLoop(LoopNum).Name + " Demand Side is storing excess heat the majority of the time.");
             ShowContinueError(state,
-                              format("Excesss Storage Time={:.2R}[hr], Total Loop Active Time={:.2R}[hr]",
+                              format("Excesss Storage Time={:.2f}[hr], Total Loop Active Time={:.2f}[hr]",
                                      state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideLocation::Supply).LoopSideInlet_CapExcessStorageTime,
                                      state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideLocation::Demand).LoopSideInlet_TotalTime));
         }
@@ -4549,7 +4549,7 @@ void CheckOngoingPlantWarnings(EnergyPlusData &state)
             ShowWarningError(
                 state, "Plant Loop: " + state.dataPlnt->PlantLoop(LoopNum).Name + " Supply Side is storing excess heat the majority of the time.");
             ShowContinueError(state,
-                              format("Excesss Storage Time={:.2R}[hr], Total Loop Active Time={:.2R}[hr]",
+                              format("Excesss Storage Time={:.2f}[hr], Total Loop Active Time={:.2f}[hr]",
                                      state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideLocation::Supply).LoopSideInlet_CapExcessStorageTime,
                                      state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideLocation::Demand).LoopSideInlet_TotalTime));
         }

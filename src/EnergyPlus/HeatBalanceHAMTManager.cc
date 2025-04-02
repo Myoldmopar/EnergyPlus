@@ -1044,7 +1044,7 @@ namespace HeatBalanceHAMTManager {
             print(state.files.eio, Format_108);
 
             for (auto const *mat : s_mat->materials) {
-                static constexpr std::string_view Format_111("Material Nominal Resistance,{},{:.4R}\n");
+                static constexpr std::string_view Format_111("Material Nominal Resistance,{},{:.4f}\n");
                 print(state.files.eio, Format_111, mat->Name, mat->NominalR);
             }
         }
@@ -1345,7 +1345,7 @@ namespace HeatBalanceHAMTManager {
                     if (state.dataSurface->SurfHighTempErrCount(sid) == 0) {
                         ShowSevereMessage(
                             state,
-                            format("HAMT: Temperature (high) out of bounds ({:.2R}) for surface={}", tempmax, state.dataSurface->Surface(sid).Name));
+                            format("HAMT: Temperature (high) out of bounds ({:.2f}) for surface={}", tempmax, state.dataSurface->Surface(sid).Name));
                         ShowContinueErrorTimeStamp(state, "");
                     }
                     ShowRecurringWarningErrorAtEnd(state,
@@ -1362,7 +1362,7 @@ namespace HeatBalanceHAMTManager {
             if (tempmax > state.dataHeatBalSurf->MaxSurfaceTempLimitBeforeFatal) {
                 if (!state.dataGlobal->WarmupFlag) {
                     ShowSevereError(state,
-                                    format("HAMT: HAMT: Temperature (high) out of bounds ( {:.2R}) for surface={}",
+                                    format("HAMT: HAMT: Temperature (high) out of bounds ( {:.2f}) for surface={}",
                                            tempmax,
                                            state.dataSurface->Surface(sid).Name));
                     ShowContinueErrorTimeStamp(state, "");
@@ -1374,7 +1374,7 @@ namespace HeatBalanceHAMTManager {
                     if (state.dataSurface->SurfHighTempErrCount(sid) == 0) {
                         ShowSevereMessage(
                             state,
-                            format("HAMT: Temperature (low) out of bounds ({:.2R}) for surface={}", tempmin, state.dataSurface->Surface(sid).Name));
+                            format("HAMT: Temperature (low) out of bounds ({:.2f}) for surface={}", tempmin, state.dataSurface->Surface(sid).Name));
                         ShowContinueErrorTimeStamp(state, "");
                     }
                     ShowRecurringWarningErrorAtEnd(state,
@@ -1391,7 +1391,7 @@ namespace HeatBalanceHAMTManager {
             if (tempmin < MinSurfaceTempLimitBeforeFatal) {
                 if (!state.dataGlobal->WarmupFlag) {
                     ShowSevereError(state,
-                                    format("HAMT: HAMT: Temperature (low) out of bounds ( {:.2R}) for surface={}",
+                                    format("HAMT: HAMT: Temperature (low) out of bounds ( {:.2f}) for surface={}",
                                            tempmin,
                                            state.dataSurface->Surface(sid).Name));
                     ShowContinueErrorTimeStamp(state, "");

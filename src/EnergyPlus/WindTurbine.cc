@@ -324,7 +324,7 @@ namespace WindTurbine {
                                            cNumericFields(1)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(1),
@@ -343,7 +343,7 @@ namespace WindTurbine {
                                            cNumericFields(2)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.1R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.1f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(2),
@@ -362,7 +362,7 @@ namespace WindTurbine {
                                            cNumericFields(3)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.1R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.1f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(3),
@@ -374,7 +374,7 @@ namespace WindTurbine {
             windTurbine.NumOfBlade = state.dataIPShortCut->rNumericArgs(4); // Total number of blade
             if (windTurbine.NumOfBlade == 0) {
                 ShowSevereError(state,
-                                format("{}=\"{}\" invalid {}=[{:.0R}] must be greater than zero.",
+                                format("{}=\"{}\" invalid {}=[{:.0f}] must be greater than zero.",
                                        CurrentModuleObject,
                                        state.dataIPShortCut->cAlphaArgs(1),
                                        cNumericFields(4),
@@ -392,7 +392,7 @@ namespace WindTurbine {
                                            cNumericFields(5)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(5),
@@ -411,7 +411,7 @@ namespace WindTurbine {
                                            cNumericFields(6)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(6),
@@ -430,7 +430,7 @@ namespace WindTurbine {
                                            cNumericFields(7)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(7),
@@ -449,7 +449,7 @@ namespace WindTurbine {
                                            cNumericFields(8)));
                 } else if (windTurbine.CutOutSpeed <= windTurbine.RatedWindSpeed) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than {}=[{:.2R}].",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than {}=[{:.2f}].",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(8),
@@ -458,7 +458,7 @@ namespace WindTurbine {
                                            rNumericArgs(6)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(8),
@@ -471,12 +471,12 @@ namespace WindTurbine {
             if (lNumericBlanks(9) || windTurbine.SysEfficiency == 0.0 || windTurbine.SysEfficiency > 1.0) {
                 windTurbine.SysEfficiency = SysEffDefault;
                 ShowWarningError(state,
-                                 format("{}=\"{}\" invalid {}=[{:.2R}].",
+                                 format("{}=\"{}\" invalid {}=[{:.2f}].",
                                         CurrentModuleObject,
                                         state.dataIPShortCut->cAlphaArgs(1),
                                         cNumericFields(9),
                                         state.dataIPShortCut->rNumericArgs(9)));
-                ShowContinueError(state, format("...The default value of {:.3R} was assumed. for {}", SysEffDefault, cNumericFields(9)));
+                ShowContinueError(state, format("...The default value of {:.3f} was assumed. for {}", SysEffDefault, cNumericFields(9)));
             }
 
             windTurbine.MaxTipSpeedRatio = state.dataIPShortCut->rNumericArgs(10); // Maximum tip speed ratio
@@ -489,7 +489,7 @@ namespace WindTurbine {
                                            cNumericFields(10)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(10),
@@ -500,12 +500,12 @@ namespace WindTurbine {
             if (windTurbine.SysEfficiency > MaxTSR) {
                 windTurbine.SysEfficiency = MaxTSR;
                 ShowWarningError(state,
-                                 format("{}=\"{}\" invalid {}=[{:.2R}].",
+                                 format("{}=\"{}\" invalid {}=[{:.2f}].",
                                         CurrentModuleObject,
                                         state.dataIPShortCut->cAlphaArgs(1),
                                         cNumericFields(10),
                                         state.dataIPShortCut->rNumericArgs(10)));
-                ShowContinueError(state, format("...The default value of {:.1R} was assumed. for {}", MaxTSR, cNumericFields(10)));
+                ShowContinueError(state, format("...The default value of {:.1f} was assumed. for {}", MaxTSR, cNumericFields(10)));
             }
 
             windTurbine.MaxPowerCoeff = state.dataIPShortCut->rNumericArgs(11); // Maximum power coefficient
@@ -518,7 +518,7 @@ namespace WindTurbine {
                                            cNumericFields(11)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(11),
@@ -529,12 +529,12 @@ namespace WindTurbine {
             if (windTurbine.MaxPowerCoeff > MaxPowerCoeff) {
                 windTurbine.MaxPowerCoeff = DefaultPC;
                 ShowWarningError(state,
-                                 format("{}=\"{}\" invalid {}=[{:.2R}].",
+                                 format("{}=\"{}\" invalid {}=[{:.2f}].",
                                         CurrentModuleObject,
                                         state.dataIPShortCut->cAlphaArgs(1),
                                         cNumericFields(11),
                                         state.dataIPShortCut->rNumericArgs(11)));
-                ShowContinueError(state, format("...The default value of {:.2R} will be used. for {}", DefaultPC, cNumericFields(11)));
+                ShowContinueError(state, format("...The default value of {:.2f} will be used. for {}", DefaultPC, cNumericFields(11)));
             }
 
             windTurbine.LocalAnnualAvgWS = state.dataIPShortCut->rNumericArgs(12); // Local wind speed annually averaged
@@ -547,7 +547,7 @@ namespace WindTurbine {
                                             cNumericFields(12)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(12),
@@ -568,10 +568,10 @@ namespace WindTurbine {
                                                 CurrentModuleObject,
                                                 state.dataIPShortCut->cAlphaArgs(1),
                                                 cNumericFields(13)));
-                        ShowContinueError(state, format("...The default value of {:.2R} will be used. for {}", DefaultH, cNumericFields(13)));
+                        ShowContinueError(state, format("...The default value of {:.2f} will be used. for {}", DefaultH, cNumericFields(13)));
                     } else {
                         ShowSevereError(state,
-                                        format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                        format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                                CurrentModuleObject,
                                                state.dataIPShortCut->cAlphaArgs(1),
                                                cNumericFields(13),
@@ -591,7 +591,7 @@ namespace WindTurbine {
                                            cNumericFields(14)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(14),
@@ -610,7 +610,7 @@ namespace WindTurbine {
                                            cNumericFields(15)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(15),
@@ -629,7 +629,7 @@ namespace WindTurbine {
                                            cNumericFields(16)));
                 } else {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" invalid {}=[{:.2R}] must be greater than zero.",
+                                    format("{}=\"{}\" invalid {}=[{:.2f}] must be greater than zero.",
                                            CurrentModuleObject,
                                            state.dataIPShortCut->cAlphaArgs(1),
                                            cNumericFields(16),

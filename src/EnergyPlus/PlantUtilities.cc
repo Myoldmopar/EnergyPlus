@@ -177,7 +177,7 @@ void SetComponentFlowRate(EnergyPlusData &state,
                 ShowSevereError(state,
                                 format("SetComponentFlowRate: check component model implementation for component with inlet node named={}",
                                        state.dataLoopNodes->NodeID(InletNode)));
-                ShowContinueError(state, format("Inlet node MassFlowRatMax = {:.8R}", state.dataLoopNodes->Node(InletNode).MassFlowRateMax));
+                ShowContinueError(state, format("Inlet node MassFlowRatMax = {:.8f}", state.dataLoopNodes->Node(InletNode).MassFlowRateMax));
                 state.dataLoopNodes->Node(InletNode).plantNodeErrorMsgIssued = true;
             }
         }
@@ -377,9 +377,9 @@ void SetActuatedBranchFlowRate(EnergyPlusData &state,
                 (a_node.MassFlowRateMinAvail - CompFlow > DataBranchAirLoopPlant::MassFlowTolerance)) {
                 ShowSevereError(state, "SetActuatedBranchFlowRate: Flow rate is out of range"); // DEBUG error...should never get here
                 ShowContinueErrorTimeStamp(state, "");
-                ShowContinueError(state, format("Component flow rate [kg/s] = {:.8R}", CompFlow));
-                ShowContinueError(state, format("Node maximum flow rate available [kg/s] = {:.8R}", a_node.MassFlowRateMaxAvail));
-                ShowContinueError(state, format("Node minimum flow rate available [kg/s] = {:.8R}", a_node.MassFlowRateMinAvail));
+                ShowContinueError(state, format("Component flow rate [kg/s] = {:.8f}", CompFlow));
+                ShowContinueError(state, format("Node maximum flow rate available [kg/s] = {:.8f}", a_node.MassFlowRateMaxAvail));
+                ShowContinueError(state, format("Node minimum flow rate available [kg/s] = {:.8f}", a_node.MassFlowRateMinAvail));
             }
         } else {
             ShowFatalError(state,
@@ -546,12 +546,12 @@ void CheckPlantMixerSplitterConsistency(EnergyPlusData &state,
                     ShowContinueError(state,
                                       format("Plant Connector:Mixer name= {}", state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).Mixer.Name));
                     ShowContinueError(
-                        state, format("Mixer outlet mass flow rate= {:.6R} {{kg/s}}", state.dataLoopNodes->Node(MixerOutletNode).MassFlowRate));
+                        state, format("Mixer outlet mass flow rate= {:.6f} {{kg/s}}", state.dataLoopNodes->Node(MixerOutletNode).MassFlowRate));
                     ShowContinueError(
                         state, format("Plant Connector:Splitter name= {}", state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).Splitter.Name));
                     ShowContinueError(
-                        state, format("Splitter inlet mass flow rate= {:.6R} {{kg/s}}", state.dataLoopNodes->Node(SplitterInletNode).MassFlowRate));
-                    ShowContinueError(state, format("Difference in two mass flow rates= {:.6R} {{kg/s}}", AbsDifference));
+                        state, format("Splitter inlet mass flow rate= {:.6f} {{kg/s}}", state.dataLoopNodes->Node(SplitterInletNode).MassFlowRate));
+                    ShowContinueError(state, format("Difference in two mass flow rates= {:.6f} {{kg/s}}", AbsDifference));
                 }
                 ShowRecurringSevereErrorAtEnd(state,
                                               "Plant Flows (Loop=" + state.dataPlnt->PlantLoop(LoopNum).Name +
@@ -569,12 +569,12 @@ void CheckPlantMixerSplitterConsistency(EnergyPlusData &state,
                     ShowContinueError(state,
                                       format("Plant Connector:Mixer name= {}", state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).Mixer.Name));
                     ShowContinueError(
-                        state, format("Mixer outlet mass flow rate= {:.6R} {{kg/s}}", state.dataLoopNodes->Node(MixerOutletNode).MassFlowRate));
+                        state, format("Mixer outlet mass flow rate= {:.6f} {{kg/s}}", state.dataLoopNodes->Node(MixerOutletNode).MassFlowRate));
                     ShowContinueError(
                         state, format("Plant Connector:Splitter name= {}", state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).Splitter.Name));
                     ShowContinueError(
-                        state, format("Splitter inlet mass flow rate= {:.6R} {{kg/s}}", state.dataLoopNodes->Node(SplitterInletNode).MassFlowRate));
-                    ShowContinueError(state, format("Difference in two mass flow rates= {:.6R} {{kg/s}}", AbsDifference));
+                        state, format("Splitter inlet mass flow rate= {:.6f} {{kg/s}}", state.dataLoopNodes->Node(SplitterInletNode).MassFlowRate));
+                    ShowContinueError(state, format("Difference in two mass flow rates= {:.6f} {{kg/s}}", AbsDifference));
                     ShowFatalError(state, "CheckPlantMixerSplitterConsistency: Simulation terminated because of problems in plant flow resolver");
                 }
             }
@@ -600,12 +600,12 @@ void CheckPlantMixerSplitterConsistency(EnergyPlusData &state,
                     ShowContinueError(state, format("PlantLoop name= {}", state.dataPlnt->PlantLoop(LoopNum).Name));
                     ShowContinueError(state,
                                       format("Plant Connector:Mixer name= {}", state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).Mixer.Name));
-                    ShowContinueError(state, format("Sum of Branch outlet mass flow rates= {:.6R} {{kg/s}}", SumOutletFlow));
+                    ShowContinueError(state, format("Sum of Branch outlet mass flow rates= {:.6f} {{kg/s}}", SumOutletFlow));
                     ShowContinueError(
                         state, format("Plant Connector:Splitter name= {}", state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).Splitter.Name));
                     ShowContinueError(
-                        state, format("Splitter inlet mass flow rate= {:.6R} {{kg/s}}", state.dataLoopNodes->Node(SplitterInletNode).MassFlowRate));
-                    ShowContinueError(state, format("Difference in two mass flow rates= {:.6R} {{kg/s}}", AbsDifference));
+                        state, format("Splitter inlet mass flow rate= {:.6f} {{kg/s}}", state.dataLoopNodes->Node(SplitterInletNode).MassFlowRate));
+                    ShowContinueError(state, format("Difference in two mass flow rates= {:.6f} {{kg/s}}", AbsDifference));
                 }
                 ShowRecurringSevereErrorAtEnd(state,
                                               "Plant Flows (Loop=" + state.dataPlnt->PlantLoop(LoopNum).Name +
@@ -710,7 +710,7 @@ void CheckForRunawayPlantTemps(EnergyPlusData &state, int const LoopNum, const D
                                  DataPlant::DemandSupplyNames[static_cast<int>(LoopSideNum)],
                                  state.dataPlnt->PlantLoop(LoopNum).Name));
         ShowContinueError(state,
-                          format("PlantLoop Setpoint Temperature={:.1R} {{C}}",
+                          format("PlantLoop Setpoint Temperature={:.1f} {{C}}",
                                  state.dataLoopNodes->Node(state.dataPlnt->PlantLoop(LoopNum).TempSetPointNodeNum).TempSetPoint));
         if (state.dataPlnt->PlantLoop(LoopNum).LoopSide(DataPlant::LoopSideLocation::Supply).InletNodeSetPt) {
             ShowContinueError(state, "PlantLoop Inlet Node (LoopSideLocation::Supply) has a Setpoint.");
@@ -733,38 +733,38 @@ void CheckForRunawayPlantTemps(EnergyPlusData &state, int const LoopNum, const D
             ShowContinueError(state, "PlantLoop Outlet Node (LoopSideLocation::Demand) does not have a Setpoint.");
         }
         ShowContinueError(state,
-                          format("PlantLoop Outlet Node ({}Side) \"{}\" has temperature={:.1R} {{C}}",
+                          format("PlantLoop Outlet Node ({}Side) \"{}\" has temperature={:.1f} {{C}}",
                                  DataPlant::DemandSupplyNames[static_cast<int>(LoopSideNum)],
                                  state.dataLoopNodes->NodeID(state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).NodeNumOut),
                                  state.dataLoopNodes->Node(state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).NodeNumOut).Temp));
         ShowContinueError(state,
-                          format("PlantLoop Inlet Node ({}Side) \"{}\" has temperature={:.1R} {{C}}",
+                          format("PlantLoop Inlet Node ({}Side) \"{}\" has temperature={:.1f} {{C}}",
                                  DataPlant::DemandSupplyNames[static_cast<int>(LoopSideNum)],
                                  state.dataLoopNodes->NodeID(state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).NodeNumIn),
                                  state.dataLoopNodes->Node(state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).NodeNumIn).Temp));
-        ShowContinueError(state, format("PlantLoop Minimum Temperature={:.1R} {{C}}", state.dataPlnt->PlantLoop(LoopNum).MinTemp));
-        ShowContinueError(state, format("PlantLoop Maximum Temperature={:.1R} {{C}}", state.dataPlnt->PlantLoop(LoopNum).MaxTemp));
+        ShowContinueError(state, format("PlantLoop Minimum Temperature={:.1f} {{C}}", state.dataPlnt->PlantLoop(LoopNum).MinTemp));
+        ShowContinueError(state, format("PlantLoop Maximum Temperature={:.1f} {{C}}", state.dataPlnt->PlantLoop(LoopNum).MaxTemp));
         ShowContinueError(state,
-                          format("PlantLoop Flow Request (LoopSideLocation::Supply)={:.1R} {{kg/s}}",
+                          format("PlantLoop Flow Request (LoopSideLocation::Supply)={:.1f} {{kg/s}}",
                                  state.dataPlnt->PlantLoop(LoopNum).LoopSide(DataPlant::LoopSideLocation::Supply).FlowRequest));
         ShowContinueError(state,
-                          format("PlantLoop Flow Request (LoopSideLocation::Demand)={:.1R} {{kg/s}}",
+                          format("PlantLoop Flow Request (LoopSideLocation::Demand)={:.1f} {{kg/s}}",
                                  state.dataPlnt->PlantLoop(LoopNum).LoopSide(DataPlant::LoopSideLocation::Demand).FlowRequest));
         ShowContinueError(state,
-                          format("PlantLoop Node ({}Side) \"{}\" has mass flow rate ={:.1R} {{kg/s}}",
+                          format("PlantLoop Node ({}Side) \"{}\" has mass flow rate ={:.1f} {{kg/s}}",
                                  DataPlant::DemandSupplyNames[static_cast<int>(LoopSideNum)],
                                  state.dataLoopNodes->NodeID(state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).NodeNumOut),
                                  state.dataLoopNodes->Node(state.dataPlnt->PlantLoop(LoopNum).LoopSide(LoopSideNum).NodeNumOut).MassFlowRate));
         ShowContinueError(state,
-                          format("PlantLoop PumpHeat (LoopSideLocation::Supply)={:.1R} {{W}}",
+                          format("PlantLoop PumpHeat (LoopSideLocation::Supply)={:.1f} {{W}}",
                                  state.dataPlnt->PlantLoop(LoopNum).LoopSide(DataPlant::LoopSideLocation::Supply).TotalPumpHeat));
         ShowContinueError(state,
-                          format("PlantLoop PumpHeat (LoopSideLocation::Demand)={:.1R} {{W}}",
+                          format("PlantLoop PumpHeat (LoopSideLocation::Demand)={:.1f} {{W}}",
                                  state.dataPlnt->PlantLoop(LoopNum).LoopSide(DataPlant::LoopSideLocation::Demand).TotalPumpHeat));
-        ShowContinueError(state, format("PlantLoop Cooling Demand={:.1R} {{W}}", state.dataPlnt->PlantLoop(LoopNum).CoolingDemand));
-        ShowContinueError(state, format("PlantLoop Heating Demand={:.1R} {{W}}", state.dataPlnt->PlantLoop(LoopNum).HeatingDemand));
-        ShowContinueError(state, format("PlantLoop Demand not Dispatched={:.1R} {{W}}", state.dataPlnt->PlantLoop(LoopNum).DemandNotDispatched));
-        ShowContinueError(state, format("PlantLoop Unmet Demand={:.1R} {{W}}", state.dataPlnt->PlantLoop(LoopNum).UnmetDemand));
+        ShowContinueError(state, format("PlantLoop Cooling Demand={:.1f} {{W}}", state.dataPlnt->PlantLoop(LoopNum).CoolingDemand));
+        ShowContinueError(state, format("PlantLoop Heating Demand={:.1f} {{W}}", state.dataPlnt->PlantLoop(LoopNum).HeatingDemand));
+        ShowContinueError(state, format("PlantLoop Demand not Dispatched={:.1f} {{W}}", state.dataPlnt->PlantLoop(LoopNum).DemandNotDispatched));
+        ShowContinueError(state, format("PlantLoop Unmet Demand={:.1f} {{W}}", state.dataPlnt->PlantLoop(LoopNum).UnmetDemand));
 
         LoopCapacity = 0.0;
         DispatchedCapacity = 0.0;
@@ -783,15 +783,15 @@ void CheckForRunawayPlantTemps(EnergyPlusData &state, int const LoopNum, const D
                 LoopSupplySideDispatchedCapacity = DispatchedCapacity - LoopDemandSideDispatchedCapacity;
             }
         }
-        ShowContinueError(state, format("PlantLoop Capacity={:.1R} {{W}}", LoopCapacity));
-        ShowContinueError(state, format("PlantLoop Capacity (LoopSideLocation::Supply)={:.1R} {{W}}", LoopSupplySideCapacity));
-        ShowContinueError(state, format("PlantLoop Capacity (LoopSideLocation::Demand)={:.1R} {{W}}", LoopDemandSideCapacity));
+        ShowContinueError(state, format("PlantLoop Capacity={:.1f} {{W}}", LoopCapacity));
+        ShowContinueError(state, format("PlantLoop Capacity (LoopSideLocation::Supply)={:.1f} {{W}}", LoopSupplySideCapacity));
+        ShowContinueError(state, format("PlantLoop Capacity (LoopSideLocation::Demand)={:.1f} {{W}}", LoopDemandSideCapacity));
         ShowContinueError(state, format("PlantLoop Operation Scheme={}", state.dataPlnt->PlantLoop(LoopNum).OperationScheme));
-        ShowContinueError(state, format("PlantLoop Operation Dispatched Load = {:.1R} {{W}}", DispatchedCapacity));
+        ShowContinueError(state, format("PlantLoop Operation Dispatched Load = {:.1f} {{W}}", DispatchedCapacity));
         ShowContinueError(state,
-                          format("PlantLoop Operation Dispatched Load (LoopSideLocation::Supply)= {:.1R} {{W}}", LoopSupplySideDispatchedCapacity));
+                          format("PlantLoop Operation Dispatched Load (LoopSideLocation::Supply)= {:.1f} {{W}}", LoopSupplySideDispatchedCapacity));
         ShowContinueError(state,
-                          format("PlantLoop Operation Dispatched Load (LoopSideLocation::Demand)= {:.1R} {{W}}", LoopDemandSideDispatchedCapacity));
+                          format("PlantLoop Operation Dispatched Load (LoopSideLocation::Demand)= {:.1f} {{W}}", LoopDemandSideDispatchedCapacity));
         ShowContinueError(state, "Branches on the Loop.");
         ShowBranchesOnLoop(state, LoopNum);
         ShowContinueError(state, "*************************");

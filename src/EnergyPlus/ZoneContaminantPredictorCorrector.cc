@@ -280,7 +280,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -290,7 +290,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -327,7 +327,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(4)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(4), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(4), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -337,7 +337,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(4)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(4), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(4), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -454,7 +454,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -464,7 +464,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -478,7 +478,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(1),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(1)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(1)));
             ErrorsFound = true;
         }
 
@@ -490,7 +490,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(2),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(2)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(2)));
             ErrorsFound = true;
         }
         if (IHGNumbers(2) > 1.0) {
@@ -500,7 +500,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(2),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(2)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(2)));
             ErrorsFound = true;
         }
 
@@ -608,7 +608,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -618,7 +618,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -634,7 +634,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(1),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(1)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(1)));
             ErrorsFound = true;
         }
         if (IHGNumbers(2) <= 0.0) {
@@ -644,7 +644,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(2),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(2)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(2)));
             ErrorsFound = true;
         }
 
@@ -745,7 +745,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -755,7 +755,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -771,7 +771,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(1),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(1)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(1)));
             ErrorsFound = true;
         }
         if (IHGNumbers(2) <= 0.0) {
@@ -781,7 +781,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(2),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(2)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(2)));
             ErrorsFound = true;
         }
 
@@ -889,7 +889,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -899,7 +899,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -914,7 +914,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(1),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(1)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(1)));
             ErrorsFound = true;
         }
         if (IHGNumbers(2) <= 0.0) {
@@ -924,7 +924,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(2),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(2)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(2)));
             ErrorsFound = true;
         }
 
@@ -1034,7 +1034,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -1044,7 +1044,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -1058,7 +1058,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(1),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(1)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(1)));
             ErrorsFound = true;
         }
 
@@ -1159,7 +1159,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMin));
+                    ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMin));
                     ErrorsFound = true;
                 }
                 if (SchMax < 0.0) {
@@ -1169,7 +1169,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                            CurrentModuleObject,
                                            AlphaName(1),
                                            state.dataIPShortCut->cAlphaFieldNames(3)));
-                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", AlphaName(3), SchMax));
+                    ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", AlphaName(3), SchMax));
                     ErrorsFound = true;
                 }
             }
@@ -1184,7 +1184,7 @@ void GetZoneContaminanInputs(EnergyPlusData &state)
                                    state.dataIPShortCut->cNumericFieldNames(1),
                                    CurrentModuleObject,
                                    AlphaName(1)));
-            ShowContinueError(state, format("The input value is {:.2R}", IHGNumbers(1)));
+            ShowContinueError(state, format("The input value is {:.2f}", IHGNumbers(1)));
             ErrorsFound = true;
         }
 

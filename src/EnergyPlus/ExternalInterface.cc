@@ -2267,7 +2267,7 @@ void CalcExternalInterface(EnergyPlusData &state)
     if (state.dataExternalInterface->noMoreValues && state.dataExternalInterface->showContinuationWithoutUpdate) {
         if (state.dataExternalInterface->haveExternalInterfaceBCVTB) {
             ShowWarningError(
-                state, format("ExternalInterface: Continue simulation without updated values from server at t ={:.2T} hours", preSimTim / 3600.0));
+                state, format("ExternalInterface: Continue simulation without updated values from server at t ={:.2f} hours", preSimTim / 3600.0));
         }
         state.dataExternalInterface->showContinuationWithoutUpdate = false;
     }
@@ -2326,7 +2326,7 @@ void CalcExternalInterface(EnergyPlusData &state)
             if (retVal != 0) {
                 continueSimulation = false;
                 ShowSevereError(state,
-                                format("ExternalInterface: Socket communication received error value \"{:2}\" at time = {:.2T} hours.",
+                                format("ExternalInterface: Socket communication received error value \"{:2}\" at time = {:.2f} hours.",
                                        retVal,
                                        preSimTim / 3600));
                 ShowContinueError(state, format("ExternalInterface: Flag from server \"{:2}\".", flaRea));
@@ -2341,7 +2341,7 @@ void CalcExternalInterface(EnergyPlusData &state)
             // Added a check since the FMUExport  is terminated with the flaRea set to 1.
             state.dataExternalInterface->noMoreValues = true;
             if (state.dataExternalInterface->haveExternalInterfaceBCVTB) {
-                ShowSevereError(state, format("ExternalInterface: Received end of simulation flag at time = {:.2T} hours.", preSimTim / 3600));
+                ShowSevereError(state, format("ExternalInterface: Received end of simulation flag at time = {:.2f} hours.", preSimTim / 3600));
                 StopExternalInterfaceIfError(state);
             }
         }

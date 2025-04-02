@@ -708,8 +708,8 @@ namespace HVACDXHeatPumpSystem {
                                                     format("{} - Iteration limit exceeded calculating DX unit sensible part-load ratio for unit = {}",
                                                            DXHeatPumpSystem.DXHeatPumpSystemType,
                                                            DXHeatPumpSystem.Name));
-                                                ShowContinueError(state, format("Estimated part-load ratio  = {:.3R}", (ReqOutput / FullOutput)));
-                                                ShowContinueError(state, format("Calculated part-load ratio = {:.3R}", PartLoadFrac));
+                                                ShowContinueError(state, format("Estimated part-load ratio  = {:.3f}", (ReqOutput / FullOutput)));
+                                                ShowContinueError(state, format("Calculated part-load ratio = {:.3f}", PartLoadFrac));
                                                 ShowContinueErrorTimeStamp(
                                                     state,
                                                     "The calculated part-load ratio will be used and the simulation continues. Occurrence info:");
@@ -734,7 +734,7 @@ namespace HVACDXHeatPumpSystem {
                                                                         "limits exceeded, for unit = {}",
                                                                         DXHeatPumpSystem.DXHeatPumpSystemType,
                                                                         DXHeatPumpSystem.Name));
-                                                ShowContinueError(state, format("Estimated part-load ratio = {:.3R}", PartLoadFrac));
+                                                ShowContinueError(state, format("Estimated part-load ratio = {:.3f}", PartLoadFrac));
                                                 ShowContinueErrorTimeStamp(
                                                     state,
                                                     "The estimated part-load ratio will be used and the simulation continues. Occurrence info:");
@@ -910,8 +910,8 @@ namespace HVACDXHeatPumpSystem {
                                                                             "ratio for unit = {}",
                                                                             DXHeatPumpSystem.DXHeatPumpSystemType,
                                                                             DXHeatPumpSystem.Name));
-                                                    ShowContinueError(state, format("Estimated part-load ratio  = {:.3R}", (ReqOutput / FullOutput)));
-                                                    ShowContinueError(state, format("Calculated part-load ratio = {:.3R}", PartLoadFrac));
+                                                    ShowContinueError(state, format("Estimated part-load ratio  = {:.3f}", (ReqOutput / FullOutput)));
+                                                    ShowContinueError(state, format("Calculated part-load ratio = {:.3f}", PartLoadFrac));
                                                     ShowContinueErrorTimeStamp(
                                                         state,
                                                         "The calculated part-load ratio will be used and the simulation continues. Occurrence info:");
@@ -936,7 +936,7 @@ namespace HVACDXHeatPumpSystem {
                                                                             "ratio limits exceeded, for unit = {}",
                                                                             DXHeatPumpSystem.DXHeatPumpSystemType,
                                                                             DXHeatPumpSystem.Name));
-                                                    ShowContinueError(state, format("Estimated part-load ratio = {:.3R}", PartLoadFrac));
+                                                    ShowContinueError(state, format("Estimated part-load ratio = {:.3f}", PartLoadFrac));
                                                     ShowContinueErrorTimeStamp(
                                                         state,
                                                         "The estimated part-load ratio will be used and the simulation continues. Occurrence info:");
@@ -983,8 +983,8 @@ namespace HVACDXHeatPumpSystem {
                                                                             "ratio for unit = {}",
                                                                             DXHeatPumpSystem.DXHeatPumpSystemType,
                                                                             DXHeatPumpSystem.Name));
-                                                    ShowContinueError(state, format("Estimated part-load ratio  = {:.3R}", (ReqOutput / FullOutput)));
-                                                    ShowContinueError(state, format("Calculated part-load ratio = {:.3R}", PartLoadFrac));
+                                                    ShowContinueError(state, format("Estimated part-load ratio  = {:.3f}", (ReqOutput / FullOutput)));
+                                                    ShowContinueError(state, format("Calculated part-load ratio = {:.3f}", PartLoadFrac));
                                                     ShowContinueErrorTimeStamp(
                                                         state,
                                                         "The calculated part-load ratio will be used and the simulation continues. Occurrence info:");
@@ -1009,7 +1009,7 @@ namespace HVACDXHeatPumpSystem {
                                                                             "ratio limits exceeded, for unit = {}",
                                                                             DXHeatPumpSystem.DXHeatPumpSystemType,
                                                                             DXHeatPumpSystem.Name));
-                                                    ShowContinueError(state, format("Estimated part-load ratio = {:.3R}", PartLoadFrac));
+                                                    ShowContinueError(state, format("Estimated part-load ratio = {:.3f}", PartLoadFrac));
                                                     ShowContinueErrorTimeStamp(
                                                         state,
                                                         "The estimated part-load ratio will be used and the simulation continues. Occurrence info:");

@@ -245,7 +245,7 @@ namespace BaseboardElectric {
                         if (thisBaseboard.ScaledHeatingCapacity < 0.0 && thisBaseboard.ScaledHeatingCapacity != AutoSize) {
                             ShowSevereError(state, format("{} = {}", cCurrentModuleObject, thisBaseboard.EquipName));
                             ShowContinueError(state,
-                                              format("Illegal {} = {:.7T}",
+                                              format("Illegal {} = {:.7f}",
                                                      state.dataIPShortCut->cNumericFieldNames(iHeatDesignCapacityNumericNum),
                                                      state.dataIPShortCut->rNumericArgs(iHeatDesignCapacityNumericNum)));
                             ErrorsFound = true;
@@ -271,7 +271,7 @@ namespace BaseboardElectric {
                                                      state.dataIPShortCut->cAlphaFieldNames(iHeatCAPMAlphaNum),
                                                      state.dataIPShortCut->cAlphaArgs(iHeatCAPMAlphaNum)));
                             ShowContinueError(state,
-                                              format("Illegal {} = {:.7T}",
+                                              format("Illegal {} = {:.7f}",
                                                      state.dataIPShortCut->cNumericFieldNames(iHeatCapacityPerFloorAreaNumericNum),
                                                      state.dataIPShortCut->rNumericArgs(iHeatCapacityPerFloorAreaNumericNum)));
                             ErrorsFound = true;
@@ -304,7 +304,7 @@ namespace BaseboardElectric {
                         if (thisBaseboard.ScaledHeatingCapacity < 0.0) {
                             ShowSevereError(state, format("{} = {}", cCurrentModuleObject, thisBaseboard.EquipName));
                             ShowContinueError(state,
-                                              format("Illegal {} = {:.7T}",
+                                              format("Illegal {} = {:.7f}",
                                                      state.dataIPShortCut->cNumericFieldNames(iHeatFracOfAutosizedCapacityNumericNum),
                                                      state.dataIPShortCut->rNumericArgs(iHeatFracOfAutosizedCapacityNumericNum)));
                             ErrorsFound = true;

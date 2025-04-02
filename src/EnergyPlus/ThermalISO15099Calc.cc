@@ -2955,20 +2955,20 @@ void storeIterationResults(EnergyPlusData &state,
     print(files.TarcogIterationsFile, "*************************************************************************************************\n");
     print(files.TarcogIterationsFile, "Iteration number: {:5}\n", index);
 
-    print(files.TarcogIterationsFile, "Trmin = {:8.4F}\n", trmin - Constant::Kelvin);
+    print(files.TarcogIterationsFile, "Trmin = {:8.4f}\n", trmin - Constant::Kelvin);
     print(files.TarcogIterationsFile, "Troom = {:12.6F}\n", troom - Constant::Kelvin);
-    print(files.TarcogIterationsFile, "Trmout = {:8.4F}\n", trmout - Constant::Kelvin);
+    print(files.TarcogIterationsFile, "Trmout = {:8.4f}\n", trmout - Constant::Kelvin);
     print(files.TarcogIterationsFile, "Tamb = {:12.6F}\n", tamb - Constant::Kelvin);
 
-    print(files.TarcogIterationsFile, "Ebsky = {:8.4F}\n", ebsky);
-    print(files.TarcogIterationsFile, "Ebroom = {:8.4F}\n", ebroom);
+    print(files.TarcogIterationsFile, "Ebsky = {:8.4f}\n", ebsky);
+    print(files.TarcogIterationsFile, "Ebroom = {:8.4f}\n", ebroom);
 
-    print(files.TarcogIterationsFile, "hcin = {:8.4F}\n", hcin);
-    print(files.TarcogIterationsFile, "hcout = {:8.4F}\n", hcout);
-    print(files.TarcogIterationsFile, "hrin = {:8.4F}\n", hrin);
-    print(files.TarcogIterationsFile, "hrout = {:8.4F}\n", hrout);
-    print(files.TarcogIterationsFile, "hin = {:8.4F}\n", hin);
-    print(files.TarcogIterationsFile, "hout = {:8.4F}\n", hout);
+    print(files.TarcogIterationsFile, "hcin = {:8.4f}\n", hcin);
+    print(files.TarcogIterationsFile, "hcout = {:8.4f}\n", hcout);
+    print(files.TarcogIterationsFile, "hrin = {:8.4f}\n", hrin);
+    print(files.TarcogIterationsFile, "hrout = {:8.4f}\n", hrout);
+    print(files.TarcogIterationsFile, "hin = {:8.4f}\n", hin);
+    print(files.TarcogIterationsFile, "hout = {:8.4f}\n", hout);
 
     // Write headers for Ebb and Ebf
     for (i = 1; i <= 2 * nlayer; ++i) {

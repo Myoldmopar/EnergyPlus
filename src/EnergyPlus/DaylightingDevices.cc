@@ -398,7 +398,7 @@ namespace Dayltg {
                     state.dataDaylightingDevices->ShelfReported = true;
                 }
                 print(state.files.eio,
-                      "{},{:.2R},{},{:.2R},{:.2R}\n",
+                      "{},{:.2f},{},{:.2f},{:.2f}\n",
                       state.dataDaylightingDevicesData->Shelf(ShelfNum).Name,
                       state.dataDaylightingDevicesData->Shelf(ShelfNum).ViewFactor,
                       state.dataSurface->Surface(WinSurf).Name,
@@ -580,7 +580,7 @@ namespace Dayltg {
                                                ipsc->cAlphaArgs(3),
                                                state.dataConstruction->Construct(state.dataSurface->Surface(SurfNum).Construction).Name));
                         ShowContinueError(state,
-                                          format("Diffuse solar transmittance of construction [{:.4R}] too small for calculations.",
+                                          format("Diffuse solar transmittance of construction [{:.4f}] too small for calculations.",
                                                  state.dataConstruction->Construct(state.dataSurface->Surface(SurfNum).Construction).TransDiff));
                         state.dataDaylightingDevices->GetTDDInputErrorsFound = true;
                     }
@@ -597,7 +597,7 @@ namespace Dayltg {
                                                    cCurrentModuleObject,
                                                    ipsc->cAlphaArgs(1)));
                             ShowContinueError(state,
-                                              format("...Diffuser Area=[{:.4R}]; Dome Area=[{:.4R}].",
+                                              format("...Diffuser Area=[{:.4f}]; Dome Area=[{:.4f}].",
                                                      state.dataSurface->Surface(SurfNum).Area,
                                                      state.dataSurface->Surface(state.dataDaylightingDevicesData->TDDPipe(PipeNum).Dome).Area));
                             state.dataDaylightingDevices->GetTDDInputErrorsFound = true;
@@ -605,7 +605,7 @@ namespace Dayltg {
                             ShowWarningError(
                                 state, format("{} = {}:  Dome and diffuser areas differ by > .1 m2.", cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                             ShowContinueError(state,
-                                              format("...Diffuser Area=[{:.4R}]; Dome Area=[{:.4R}].",
+                                              format("...Diffuser Area=[{:.4f}]; Dome Area=[{:.4f}].",
                                                      state.dataSurface->Surface(SurfNum).Area,
                                                      state.dataSurface->Surface(state.dataDaylightingDevicesData->TDDPipe(PipeNum).Dome).Area));
                         }
@@ -674,7 +674,7 @@ namespace Dayltg {
                                                cCurrentModuleObject,
                                                ipsc->cAlphaArgs(1)));
                         ShowContinueError(state,
-                                          format("...Pipe Area=[{:.4R}]; Dome/Diffuser Area=[{:.4R}].",
+                                          format("...Pipe Area=[{:.4f}]; Dome/Diffuser Area=[{:.4f}].",
                                                  PipeArea,
                                                  state.dataSurface->Surface(state.dataDaylightingDevicesData->TDDPipe(PipeNum).Dome).Area));
                         state.dataDaylightingDevices->GetTDDInputErrorsFound = true;
@@ -682,7 +682,7 @@ namespace Dayltg {
                         ShowWarningError(
                             state, format("{} = {}:  Pipe and dome/diffuser areas differ by > .1 m2.", cCurrentModuleObject, ipsc->cAlphaArgs(1)));
                         ShowContinueError(state,
-                                          format("...Pipe Area=[{:.4R}]; Dome/Diffuser Area=[{:.4R}].",
+                                          format("...Pipe Area=[{:.4f}]; Dome/Diffuser Area=[{:.4f}].",
                                                  PipeArea,
                                                  state.dataSurface->Surface(state.dataDaylightingDevicesData->TDDPipe(PipeNum).Dome).Area));
                     }
@@ -1674,7 +1674,7 @@ namespace Dayltg {
         // Now correct the view factors based on the location of the shelf with respect to the window
         ShowWarningError(
             state,
-            format("DaylightingDevice:Shelf = {}:  Window view factor to shelf [{:.2R}] results in a sum of view factors greater than 1.",
+            format("DaylightingDevice:Shelf = {}:  Window view factor to shelf [{:.2f}] results in a sum of view factors greater than 1.",
                    state.dataDaylightingDevicesData->Shelf(ShelfNum).Name,
                    state.dataDaylightingDevicesData->Shelf(ShelfNum).ViewFactor));
         if (zWinMin >= zShelfMax) { // Shelf is fully below window, reduce view to ground first based on view to shelf

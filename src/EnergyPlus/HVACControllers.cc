@@ -1480,40 +1480,40 @@ void FindRootSimpleController(EnergyPlusData &state,
             ShowContinueError(state, "  Actuator will be set to maximum action");
             ShowContinueError(state, format("Controller control type={}", ControlVariableTypes(controllerProps.ControlVar)));
             if (controllerProps.ControlVar == CtrlVarType::Temperature) {
-                ShowContinueError(state, format("Controller temperature setpoint = {:.2T} [C]", controllerProps.SetPointValue));
-                ShowContinueError(state, format("Controller sensed temperature = {:.2T} [C]", controllerProps.SensedValue));
+                ShowContinueError(state, format("Controller temperature setpoint = {:.2f} [C]", controllerProps.SetPointValue));
+                ShowContinueError(state, format("Controller sensed temperature = {:.2f} [C]", controllerProps.SensedValue));
             } else if (controllerProps.ControlVar == CtrlVarType::HumidityRatio) {
-                ShowContinueError(state, format("Controller humidity ratio setpoint = {:.2T} [kgWater/kgDryAir]", controllerProps.SetPointValue));
-                ShowContinueError(state, format("Controller sensed humidity ratio = {:.2T} [kgWater/kgDryAir]", controllerProps.SensedValue));
+                ShowContinueError(state, format("Controller humidity ratio setpoint = {:.2f} [kgWater/kgDryAir]", controllerProps.SetPointValue));
+                ShowContinueError(state, format("Controller sensed humidity ratio = {:.2f} [kgWater/kgDryAir]", controllerProps.SensedValue));
             } else if (controllerProps.ControlVar == CtrlVarType::TemperatureAndHumidityRatio) {
                 if (controllerProps.HumRatCtrlOverride) {
                     ShowContinueError(state, "Humidity control is active.");
-                    ShowContinueError(state, format("Controller humidity ratio setpoint = {:.2T} [kgWater/kgDryAir]", controllerProps.SetPointValue));
-                    ShowContinueError(state, format("Controller sensed humidity ratio = {:.2T} [kgWater/kgDryAir]", controllerProps.SensedValue));
+                    ShowContinueError(state, format("Controller humidity ratio setpoint = {:.2f} [kgWater/kgDryAir]", controllerProps.SetPointValue));
+                    ShowContinueError(state, format("Controller sensed humidity ratio = {:.2f} [kgWater/kgDryAir]", controllerProps.SensedValue));
                     ShowContinueError(state,
-                                      format("Controller humidity ratio setpoint dew-point temperature = {:.2T} [C]",
+                                      format("Controller humidity ratio setpoint dew-point temperature = {:.2f} [C]",
                                              Psychrometrics::PsyTdpFnWPb(state, controllerProps.SetPointValue, state.dataEnvrn->OutBaroPress)));
                     ShowContinueError(
                         state,
-                        format("Controller temperature setpoint = {:.2T} [C]", state.dataLoopNodes->Node(controllerProps.SensedNode).TempSetPoint));
+                        format("Controller temperature setpoint = {:.2f} [C]", state.dataLoopNodes->Node(controllerProps.SensedNode).TempSetPoint));
                     ShowContinueError(
-                        state, format("Controller sensed temperature = {:.2T} [C]", state.dataLoopNodes->Node(controllerProps.SensedNode).Temp));
+                        state, format("Controller sensed temperature = {:.2f} [C]", state.dataLoopNodes->Node(controllerProps.SensedNode).Temp));
                 } else {
-                    ShowContinueError(state, format("Controller temperature setpoint = {:.2T} [C]", controllerProps.SetPointValue));
-                    ShowContinueError(state, format("Controller sensed temperature = {:.2T} [C]", controllerProps.SensedValue));
+                    ShowContinueError(state, format("Controller temperature setpoint = {:.2f} [C]", controllerProps.SetPointValue));
+                    ShowContinueError(state, format("Controller sensed temperature = {:.2f} [C]", controllerProps.SensedValue));
                 }
             } else if (controllerProps.ControlVar == CtrlVarType::Flow) {
-                ShowContinueError(state, format("Controller mass flow rate setpoint = {:.2T} [kg/s]", controllerProps.SetPointValue));
-                ShowContinueError(state, format("Controller sensed mass flow rate = {:.2T} [kg/s]", controllerProps.SensedValue));
+                ShowContinueError(state, format("Controller mass flow rate setpoint = {:.2f} [kg/s]", controllerProps.SetPointValue));
+                ShowContinueError(state, format("Controller sensed mass flow rate = {:.2f} [kg/s]", controllerProps.SensedValue));
             } else {
                 // bad control variable input checked in input routine
             }
             if (controllerProps.ActuatorVar == CtrlVarType::Flow) {
-                ShowContinueError(state, format("Controller actuator mass flow rate set to {:.2T} [kg/s]", controllerProps.MaxAvailActuated));
+                ShowContinueError(state, format("Controller actuator mass flow rate set to {:.2f} [kg/s]", controllerProps.MaxAvailActuated));
                 if (controllerProps.ControlVar == CtrlVarType::Temperature ||
                     controllerProps.ControlVar == CtrlVarType::TemperatureAndHumidityRatio) {
                     ShowContinueError(
-                        state, format("Controller actuator temperature = {:.2T} [C]", state.dataLoopNodes->Node(controllerProps.ActuatedNode).Temp));
+                        state, format("Controller actuator temperature = {:.2f} [C]", state.dataLoopNodes->Node(controllerProps.ActuatedNode).Temp));
                     if (controllerProps.WaterCoilType == DataPlant::PlantEquipmentType::CoilWaterCooling ||
                         controllerProps.WaterCoilType == DataPlant::PlantEquipmentType::CoilWaterDetailedFlatCooling) {
                         if (controllerProps.HumRatCtrlOverride) {

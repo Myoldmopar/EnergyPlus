@@ -697,7 +697,7 @@ void GshpPeCoolingSpecs::calculate(EnergyPlusData &state, Real64 &MyLoad)
         if (SourceSidePressure < this->LowPressCutoff) {
             ShowSevereError(state, format("{}=\"{}\" Cooling Source Side Pressure Less than the Design Minimum", ModuleCompName, this->Name));
             ShowContinueError(state,
-                              format("Cooling Source Side Pressure={:.2T} and user specified Design Minimum Pressure={:.2T}",
+                              format("Cooling Source Side Pressure={:.2f} and user specified Design Minimum Pressure={:.2f}",
                                      SourceSidePressure,
                                      this->LowPressCutoff));
             ShowContinueErrorTimeStamp(state, "");
@@ -707,7 +707,7 @@ void GshpPeCoolingSpecs::calculate(EnergyPlusData &state, Real64 &MyLoad)
         if (LoadSidePressure > this->HighPressCutoff) {
             ShowSevereError(state, format("{}=\"{}\" Cooling Load Side Pressure greater than the Design Maximum", ModuleCompName, this->Name));
             ShowContinueError(state,
-                              format("Cooling Load Side Pressure={:.2T} and user specified Design Maximum Pressure={:.2T}",
+                              format("Cooling Load Side Pressure={:.2f} and user specified Design Maximum Pressure={:.2f}",
                                      LoadSidePressure,
                                      this->HighPressCutoff));
             ShowContinueErrorTimeStamp(state, "");
@@ -721,7 +721,7 @@ void GshpPeCoolingSpecs::calculate(EnergyPlusData &state, Real64 &MyLoad)
         if (SuctionPr < this->LowPressCutoff) {
             ShowSevereError(state, format("{}=\"{}\" Cooling Suction Pressure Less than the Design Minimum", ModuleCompName, this->Name));
             ShowContinueError(
-                state, format("Cooling Suction Pressure={:.2T} and user specified Design Minimum Pressure={:.2T}", SuctionPr, this->LowPressCutoff));
+                state, format("Cooling Suction Pressure={:.2f} and user specified Design Minimum Pressure={:.2f}", SuctionPr, this->LowPressCutoff));
             ShowContinueErrorTimeStamp(state, "");
             ShowFatalError(state, "Preceding Conditions cause termination.");
         }
@@ -730,7 +730,7 @@ void GshpPeCoolingSpecs::calculate(EnergyPlusData &state, Real64 &MyLoad)
             ShowSevereError(state, format("{}=\"{}\" Cooling Discharge Pressure greater than the Design Maximum", ModuleCompName, this->Name));
             ShowContinueError(
                 state,
-                format("Cooling Discharge Pressure={:.2T} and user specified Design Maximum Pressure={:.2T}", DischargePr, this->HighPressCutoff));
+                format("Cooling Discharge Pressure={:.2f} and user specified Design Maximum Pressure={:.2f}", DischargePr, this->HighPressCutoff));
             ShowContinueErrorTimeStamp(state, "");
             ShowFatalError(state, "Preceding Conditions cause termination.");
         }

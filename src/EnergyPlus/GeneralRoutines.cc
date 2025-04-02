@@ -228,7 +228,7 @@ void ControlCompOutput(EnergyPlusData &state,
             if (MinFlow > MaxFlow) {
                 ShowSevereError(state, format("ControlCompOutput:{}:{}, Min Control Flow is > Max Control Flow", CompType, CompName));
                 ShowContinueError(
-                    state, format("Acuated Node={} MinFlow=[{:.3T}], Max Flow={:.3T}", state.dataLoopNodes->NodeID(ActuatedNode), MinFlow, MaxFlow));
+                    state, format("Acuated Node={} MinFlow=[{:.3f}], Max Flow={:.3f}", state.dataLoopNodes->NodeID(ActuatedNode), MinFlow, MaxFlow));
                 ShowContinueErrorTimeStamp(state, "");
                 ShowFatalError(state, "Program terminates due to preceding condition.");
             }
@@ -547,12 +547,12 @@ void ControlCompOutput(EnergyPlusData &state,
         if ((Iter > MaxIter) && (!state.dataGlobal->WarmupFlag)) {
             // if ( CompErrIndex == 0 ) {
             ShowWarningMessage(state, format("ControlCompOutput: Maximum iterations exceeded for {} = {}", CompType, CompName));
-            ShowContinueError(state, format("... Load met       = {:.5T} W.", LoadMet));
-            ShowContinueError(state, format("... Load requested = {:.5T} W.", QZnReq));
-            ShowContinueError(state, format("... Error          = {:.8T} %.", std::abs((LoadMet - QZnReq) * 100.0 / Denom)));
-            ShowContinueError(state, format("... Tolerance      = {:.8T} %.", ControlOffset * 100.0));
+            ShowContinueError(state, format("... Load met       = {:.5f} W.", LoadMet));
+            ShowContinueError(state, format("... Load requested = {:.5f} W.", QZnReq));
+            ShowContinueError(state, format("... Error          = {:.8f} %.", std::abs((LoadMet - QZnReq) * 100.0 / Denom)));
+            ShowContinueError(state, format("... Tolerance      = {:.8f} %.", ControlOffset * 100.0));
             ShowContinueError(state, "... Error          = (Load met - Load requested) / MAXIMUM(Load requested, 100)");
-            ShowContinueError(state, format("... Actuated Node Mass Flow Rate ={:.9R} kg/s", state.dataLoopNodes->Node(ActuatedNode).MassFlowRate));
+            ShowContinueError(state, format("... Actuated Node Mass Flow Rate ={:.9f} kg/s", state.dataLoopNodes->Node(ActuatedNode).MassFlowRate));
             ShowContinueErrorTimeStamp(state, "");
             ShowRecurringWarningErrorAtEnd(state,
                                            "ControlCompOutput: Maximum iterations error for " + CompType + " = " + CompName,

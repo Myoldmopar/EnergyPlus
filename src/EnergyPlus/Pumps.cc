@@ -360,7 +360,7 @@ void GetPumpInput(EnergyPlusData &state)
             ShowWarningError(
                 state, format("{}{}=\"{}\", Invalid '{}'", RoutineName, cCurrentModuleObject, thisPump.Name, thisInput->cNumericFieldNames(10)));
             ShowContinueError(state,
-                              format("Entered Value=[{:.5T}] is above or too close (equal) to the {}=[{:.5T}].",
+                              format("Entered Value=[{:.5f}] is above or too close (equal) to the {}=[{:.5f}].",
                                      thisPump.MinVolFlowRate,
                                      thisInput->cNumericFieldNames(1),
                                      thisPump.NomVolFlowRate));
@@ -1429,46 +1429,46 @@ void InitializePumps(EnergyPlusData &state, int const PumpNum)
             thisPump.PumpEffic = TotalEffic / thisPump.MotorEffic;
             if (thisPump.PumpEffic < 0.50) {
                 ShowWarningError(state,
-                                 format("Check input. Calculated Pump Efficiency={:.2R}% which is less than 50%, for pump={}",
+                                 format("Check input. Calculated Pump Efficiency={:.2f}% which is less than 50%, for pump={}",
                                         thisPump.PumpEffic * 100.0,
                                         thisPump.Name));
                 ShowContinueError(state,
-                                  format("Calculated Pump_Efficiency % =Total_Efficiency % [{:.1R}] / Motor_Efficiency % [{:.1R}]",
+                                  format("Calculated Pump_Efficiency % =Total_Efficiency % [{:.1f}] / Motor_Efficiency % [{:.1f}]",
                                          TotalEffic * 100.0,
                                          thisPump.MotorEffic * 100.0));
                 ShowContinueError(
                     state,
-                    format("Total_Efficiency % =(Rated_Volume_Flow_Rate [{:.3R}] * Rated_Pump_Head [{:.1R}] / Rated_Power_Use [{:.1R}]) * 100.",
+                    format("Total_Efficiency % =(Rated_Volume_Flow_Rate [{:.3f}] * Rated_Pump_Head [{:.1f}] / Rated_Power_Use [{:.1f}]) * 100.",
                            thisPump.NomVolFlowRate,
                            thisPump.NomPumpHead,
                            thisPump.NomPowerUse));
             } else if ((thisPump.PumpEffic > 0.95) && (thisPump.PumpEffic <= 1.0)) {
                 ShowWarningError(state,
-                                 format("Check input.  Calculated Pump Efficiency={:.2R}% is approaching 100%, for pump={}",
+                                 format("Check input.  Calculated Pump Efficiency={:.2f}% is approaching 100%, for pump={}",
                                         thisPump.PumpEffic * 100.0,
                                         thisPump.Name));
                 ShowContinueError(state,
-                                  format("Calculated Pump_Efficiency % =Total_Efficiency % [{:.1R}] / Motor_Efficiency % [{:.1R}]",
+                                  format("Calculated Pump_Efficiency % =Total_Efficiency % [{:.1f}] / Motor_Efficiency % [{:.1f}]",
                                          TotalEffic * 100.0,
                                          thisPump.MotorEffic * 100.0));
                 ShowContinueError(
                     state,
-                    format("Total_Efficiency % =(Rated_Volume_Flow_Rate [{:.3R}] * Rated_Pump_Head [{:.1R}] / Rated_Power_Use [{:.1R}]) * 100.",
+                    format("Total_Efficiency % =(Rated_Volume_Flow_Rate [{:.3f}] * Rated_Pump_Head [{:.1f}] / Rated_Power_Use [{:.1f}]) * 100.",
                            thisPump.NomVolFlowRate,
                            thisPump.NomPumpHead,
                            thisPump.NomPowerUse));
             } else if (thisPump.PumpEffic > 1.0) {
                 ShowSevereError(state,
-                                format("Check input.  Calculated Pump Efficiency={:.3R}% which is bigger than 100%, for pump={}",
+                                format("Check input.  Calculated Pump Efficiency={:.3f}% which is bigger than 100%, for pump={}",
                                        thisPump.PumpEffic * 100.0,
                                        thisPump.Name));
                 ShowContinueError(state,
-                                  format("Calculated Pump_Efficiency % =Total_Efficiency % [{:.1R}] / Motor_Efficiency % [{:.1R}]",
+                                  format("Calculated Pump_Efficiency % =Total_Efficiency % [{:.1f}] / Motor_Efficiency % [{:.1f}]",
                                          TotalEffic * 100.0,
                                          thisPump.MotorEffic * 100.0));
                 ShowContinueError(
                     state,
-                    format("Total_Efficiency % =(Rated_Volume_Flow_Rate [{:.3R}] * Rated_Pump_Head [{:.1R}] / Rated_Power_Use [{:.1R}]) * 100.",
+                    format("Total_Efficiency % =(Rated_Volume_Flow_Rate [{:.3f}] * Rated_Pump_Head [{:.1f}] / Rated_Power_Use [{:.1f}]) * 100.",
                            thisPump.NomVolFlowRate,
                            thisPump.NomPumpHead,
                            thisPump.NomPowerUse));
@@ -1935,7 +1935,7 @@ void CalcPumps(EnergyPlusData &state, int const PumpNum, Real64 const FlowReques
                 state,
                 format("{} Calculated Pump Power < 0, Type={}, Name={}", RoutineName, pumpTypeIDFNames[static_cast<int>(pumpType)], thisPump.Name));
             ShowContinueErrorTimeStamp(state, "");
-            ShowContinueError(state, format("...PartLoadRatio=[{:.4R}], Fraction Full Load Power={:.4R}]", PartLoadRatio, FracFullLoadPower));
+            ShowContinueError(state, format("...PartLoadRatio=[{:.4f}], Fraction Full Load Power={:.4f}]", PartLoadRatio, FracFullLoadPower));
             ShowContinueError(state, "...Power is set to 0 for continuing the simulation.");
             ShowContinueError(state, "...Pump coefficients should be checked for producing this negative value.");
         }
@@ -2115,7 +2115,7 @@ void SizePump(EnergyPlusData &state, int const PumpNum)
                     thisPump.NomVolFlowRate = 0.0;
                     ShowWarningError(
                         state,
-                        format("SizePump: Calculated Pump Nominal Volume Flow Rate=[{:.2R}] is too small. Set to 0.0", thisPlantSize.DesVolFlowRate));
+                        format("SizePump: Calculated Pump Nominal Volume Flow Rate=[{:.2f}] is too small. Set to 0.0", thisPlantSize.DesVolFlowRate));
                     ShowContinueError(state, format("..occurs for Pump={}", thisPump.Name));
                 }
             }

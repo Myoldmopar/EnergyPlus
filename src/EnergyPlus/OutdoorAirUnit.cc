@@ -429,7 +429,7 @@ namespace OutdoorAirUnit {
                                             state.dataIPShortCut->cAlphaArgs(1),
                                             cNumericFields(1),
                                             cNumericFields(2)));
-                    ShowContinueError(state, format("{}={:.3R}= and {}{:.3R}", cNumericFields(1), NumArray(1), cNumericFields(2), NumArray(2)));
+                    ShowContinueError(state, format("{}={:.3f}= and {}{:.3f}", cNumericFields(1), NumArray(1), cNumericFields(2), NumArray(2)));
                 }
             }
             // A8
@@ -1465,8 +1465,8 @@ namespace OutdoorAirUnit {
                                 ShowMessage(state,
                                             format("SizeOutdoorAirUnit: Potential issue with equipment sizing for ZoneHVAC:OutdoorAirUnit {}",
                                                    thisOutAirUnit.Name));
-                                ShowContinueError(state, format("User-Specified Outdoor Air Flow Rate of {:.5R} [m3/s]", OutAirVolFlowUser));
-                                ShowContinueError(state, format("differs from Design Size Outdoor Air Flow Rate of {:.5R} [m3/s]", OutAirVolFlowDes));
+                                ShowContinueError(state, format("User-Specified Outdoor Air Flow Rate of {:.5f} [m3/s]", OutAirVolFlowUser));
+                                ShowContinueError(state, format("differs from Design Size Outdoor Air Flow Rate of {:.5f} [m3/s]", OutAirVolFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1505,8 +1505,8 @@ namespace OutdoorAirUnit {
                                 ShowMessage(state,
                                             format("SizeOutdoorAirUnit: Potential issue with equipment sizing for ZoneHVAC:OutdoorAirUnit {}",
                                                    thisOutAirUnit.Name));
-                                ShowContinueError(state, format("User-Specified Exhaust Air Flow Rate of {:.5R} [m3/s]", ExtAirVolFlowUser));
-                                ShowContinueError(state, format("differs from Design Size Exhaust Air Flow Rate of {:.5R} [m3/s]", ExtAirVolFlowDes));
+                                ShowContinueError(state, format("User-Specified Exhaust Air Flow Rate of {:.5f} [m3/s]", ExtAirVolFlowUser));
+                                ShowContinueError(state, format("differs from Design Size Exhaust Air Flow Rate of {:.5f} [m3/s]", ExtAirVolFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1712,7 +1712,7 @@ namespace OutdoorAirUnit {
                                       "Air mass balance is required by other outdoor air units: Fan:ZoneExhaust, ZoneMixing, ZoneCrossMixing, or "
                                       "other air flow control inputs.");
                     ShowContinueErrorTimeStamp(state,
-                                               format("The outdoor mass flow rate = {:.3R} and the exhaust mass flow rate = {:.3R}.",
+                                               format("The outdoor mass flow rate = {:.3f} and the exhaust mass flow rate = {:.3f}.",
                                                       thisOutAirUnit.OutAirMassFlow,
                                                       thisOutAirUnit.ExtAirMassFlow));
                     thisOutAirUnit.FlowError = true;

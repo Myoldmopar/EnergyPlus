@@ -191,39 +191,39 @@ void WriteInputArguments(EnergyPlusData &state,
     static constexpr std::string_view Format_1006("     IGUID:   {:8}  - Not specified\n");
     static constexpr std::string_view Format_1007("     IGUID:   {:8} \n");
     static constexpr std::string_view Format_1005("Simulation parameters:\n");
-    static constexpr std::string_view Format_1010("  Tout       =  {:10.6F} K ( {:7.3F} deg C) - Outdoor temperature\n");
-    static constexpr std::string_view Format_1015("  Tint       =  {:10.6F} K ( {:7.3F} deg C) - Indoor temperature\n");
-    static constexpr std::string_view Format_1020("  Trmin      =  {:10.6F} K ( {:7.3F} deg C) - Indoor mean radiant temp.\n");
-    static constexpr std::string_view Format_1030("  wso        =  {:7.3F}    - Outdoor wind speed [m/s]\n");
+    static constexpr std::string_view Format_1010("  Tout       =  {:10.6F} K ( {:7.3f} deg C) - Outdoor temperature\n");
+    static constexpr std::string_view Format_1015("  Tint       =  {:10.6F} K ( {:7.3f} deg C) - Indoor temperature\n");
+    static constexpr std::string_view Format_1020("  Trmin      =  {:10.6F} K ( {:7.3f} deg C) - Indoor mean radiant temp.\n");
+    static constexpr std::string_view Format_1030("  wso        =  {:7.3f}    - Outdoor wind speed [m/s]\n");
     static constexpr std::string_view Format_1032("  iwd        =    0        - Wind direction - windward\n");
     static constexpr std::string_view Format_1033("  iwd        =    1        - Wind direction - leeward\n");
-    static constexpr std::string_view Format_1035("  wsi        =  {:7.3F}    - Indoor forced air speed [m/s]\n");
-    static constexpr std::string_view Format_1040("  dir        = {:8.3F}    - Direct solar radiation [W/m^2]\n");
-    static constexpr std::string_view Format_1041("  outir       = {:8.3F}    - IR radiation [W/m^2]\n");
+    static constexpr std::string_view Format_1035("  wsi        =  {:7.3f}    - Indoor forced air speed [m/s]\n");
+    static constexpr std::string_view Format_1040("  dir        = {:8.3f}    - Direct solar radiation [W/m^2]\n");
+    static constexpr std::string_view Format_1041("  outir       = {:8.3f}    - IR radiation [W/m^2]\n");
     static constexpr std::string_view Format_1045("  isky       =  {:3}        - Flag for handling tsky, esky\n");
-    static constexpr std::string_view Format_1050("  tsky           =  {:10.6F} K ( {:7.3F} deg C) - Night sky temperature\n");
-    static constexpr std::string_view Format_1055("  esky           =  {:7.3F}    - Effective night sky emmitance\n");
-    static constexpr std::string_view Format_1060("  fclr           =  {:7.3F}    - Fraction of sky that is clear\n");
-    static constexpr std::string_view Format_1061("  VacuumPressure =  {:7.3F}    - maximum allowed gas pressure to be considered as vacuum\n");
+    static constexpr std::string_view Format_1050("  tsky           =  {:10.6F} K ( {:7.3f} deg C) - Night sky temperature\n");
+    static constexpr std::string_view Format_1055("  esky           =  {:7.3f}    - Effective night sky emmitance\n");
+    static constexpr std::string_view Format_1060("  fclr           =  {:7.3f}    - Fraction of sky that is clear\n");
+    static constexpr std::string_view Format_1061("  VacuumPressure =  {:7.3f}    - maximum allowed gas pressure to be considered as vacuum\n");
     static constexpr std::string_view Format_1062(
-        "  VacuumMaxGapThickness =  {:7.3F}    - maximum allowed vacuum gap thickness with support pillar\n");
+        "  VacuumMaxGapThickness =  {:7.3f}    - maximum allowed vacuum gap thickness with support pillar\n");
     static constexpr std::string_view Format_1063("  ibc(1)         =  {:3}        - Outdoor BC switch\n");
-    static constexpr std::string_view Format_1065("  hout           =  {:9.5F}  - Outdoor film coeff. [W/m^2-K]\n");
+    static constexpr std::string_view Format_1065("  hout           =  {:9.5f}  - Outdoor film coeff. [W/m^2-K]\n");
     static constexpr std::string_view Format_1066("  ibc(2)         =  {:3}        - Indoor BC switch\n");
-    static constexpr std::string_view Format_1068("  hin            =  {:9.5F}  - Indoor film coeff. [W/m^2-K]\n");
+    static constexpr std::string_view Format_1068("  hin            =  {:9.5f}  - Indoor film coeff. [W/m^2-K]\n");
     static constexpr std::string_view Format_1070("  standard   =  {:3}        - ISO 15099 calc. standard\n");
     static constexpr std::string_view Format_1071("  standard   =  {:3}        - EN 673/ISO 10292 Declared calc. standard\n");
     static constexpr std::string_view Format_1072("  standard   =  {:3}        - EN 673/ISO 10292 Design calc. standard\n");
     static constexpr std::string_view Format_10731("  ThermalMod =  {:3}        - ISO15099 thermal model\n");
     static constexpr std::string_view Format_10732("  ThermalMod =  {:3}        - Scaled Cavity Width (SCW) thermal model\n");
     static constexpr std::string_view Format_10733("  ThermalMod =  {:3}        - Convective Scalar Model (CSM) thermal model\n");
-    static constexpr std::string_view Format_10740("  SDScalar =  {:7.5F}      - Factor of Venetian SD layer contribution to convection\n\n (only if "
+    static constexpr std::string_view Format_10740("  SDScalar =  {:7.5f}      - Factor of Venetian SD layer contribution to convection\n\n (only if "
                                                    "ThermalModel = 2, otherwise ignored)\n");
     static constexpr std::string_view Format_1075("IGU parameters:\n");
     static constexpr std::string_view Format_1076("  height     =  {:10.6F} - IGU cavity height [m]\n");
     static constexpr std::string_view Format_1077("  heightt    =  {:10.6F} - Total window height [m]\n");
     static constexpr std::string_view Format_1078("  width      =  {:10.6F} - Window width [m]\n");
-    static constexpr std::string_view Format_1079("  tilt       =  {:7.3F}    - Window tilt [deg]\n");
+    static constexpr std::string_view Format_1079("  tilt       =  {:7.3f}    - Window tilt [deg]\n");
     static constexpr std::string_view Format_1080("  totsol     =  {:10.6F} - Total solar transmittance of IGU\n");
     static constexpr std::string_view Format_1081("  nlayer     =  {:3}        - Number of glazing layers\n");
     static constexpr std::string_view Format_1089("IGU layers list:\n");
@@ -259,10 +259,10 @@ void WriteInputArguments(EnergyPlusData &state,
     static constexpr std::string_view Format_1112("    gap        = {:12.5F} - Gap width [m]\n");
     static constexpr std::string_view Format_1113("    presure    = {:12.5F} - Gas pressure [N/m^2]\n");
     static constexpr std::string_view Format_1114("    nmix       = {:6}       - Num. of gasses in a gas mix\n");
-    static constexpr std::string_view Format_1115("      Gas {:1}:     {}     {:6.2F} %\n");
+    static constexpr std::string_view Format_1115("      Gas {:1}:     {}     {:6.2f} %\n");
     static constexpr std::string_view Format_1120("    vvent      = {:12.5F} - Forced ventilation speed [m/s]\n");
     static constexpr std::string_view Format_1121("    tvent      = {:12.5F} - Temperature in connected gap [K]\n");
-    static constexpr std::string_view Format_1130("      Gas mix coefficients - gas {:1}, {:6.2F} %\n");
+    static constexpr std::string_view Format_1130("      Gas mix coefficients - gas {:1}, {:6.2f} %\n");
     static constexpr std::string_view Format_1131("        gcon   = {:11.6F}, {:11.6F}, {:11.6F} - Conductivity\n");
     static constexpr std::string_view Format_1132("        gvis   = {:11.6F}, {:11.6F}, {:11.6F} - Dynamic viscosity\n");
     static constexpr std::string_view Format_1133("        gcp    = {:11.6F}, {:11.6F}, {:11.6F} - Spec.heat @ const.P\n");
@@ -483,17 +483,17 @@ void WriteModifiedArguments(InputOutputFile &InArgumentsFile,
     // Formats
     static constexpr std::string_view Format_1014("Adjusted input arguments:\n");
     static constexpr std::string_view Format_1013(" Gass coefficients:\n");
-    static constexpr std::string_view Format_1016("  Trmout     =  {:10.6F} K ( {:7.3F} deg C) - Outdoor mean radiant temp.\n");
+    static constexpr std::string_view Format_1016("  Trmout     =  {:10.6F} K ( {:7.3f} deg C) - Outdoor mean radiant temp.\n");
     static constexpr std::string_view Format_1017("  Gout       =  {:10.6F} \n");
     static constexpr std::string_view Format_1018("  Gin        =  {:10.6F} \n");
     static constexpr std::string_view Format_1019("  Ebsky      =  {:10.6F} \n");
     static constexpr std::string_view Format_10191("  Ebroom     =  {:10.6F} \n");
-    static constexpr std::string_view Format_1020("  Trmin      =  {:10.6F} K ( {:7.3F} deg C) - Indoor mean radiant temp.\n");
-    static constexpr std::string_view Format_1055("  esky       =  {:7.3F}    - Effective night sky emmitance\n");
+    static constexpr std::string_view Format_1020("  Trmin      =  {:10.6F} K ( {:7.3f} deg C) - Indoor mean radiant temp.\n");
+    static constexpr std::string_view Format_1055("  esky       =  {:7.3f}    - Effective night sky emmitance\n");
     static constexpr std::string_view Format_1084(" Layer{:3} : {:1}              - Venetian Blind\n");
     static constexpr std::string_view Format_1090("    thick   = {:10.6F}   - Thickness [m]\n");
     static constexpr std::string_view Format_1091("    scon    = {:10.6F}   - Thermal conductivity [W/m-K]\n");
-    static constexpr std::string_view Format_1130("      Gas mix coefficients - gas {:1}, {:6.2F} %\n");
+    static constexpr std::string_view Format_1130("      Gas mix coefficients - gas {:1}, {:6.2f} %\n");
     static constexpr std::string_view Format_1131("        gcon   = {:11.6F}, {:11.6F}, {:11.6F} - Conductivity\n");
     static constexpr std::string_view Format_1132("        gvis   = {:11.6F}, {:11.6F}, {:11.6F} - Dynamic viscosity\n");
     static constexpr std::string_view Format_1133("        gcp    = {:11.6F}, {:11.6F}, {:11.6F} - Spec.heat @ const.P\n");
@@ -628,14 +628,14 @@ void WriteOutputArguments(InputOutputFile &OutArgumentsFile,
     static constexpr std::string_view Format_2155("  Ra({:1}) ={:15.6F}        Nu({:1}) ={:12.6F}\n");
     static constexpr std::string_view Format_2160("  hcgas({:1}) ={:15.6F}      hrgas({:1}) ={:24.6F}\n");
     static constexpr std::string_view Format_2170("  hflux    = {:12.6F}\n");
-    static constexpr std::string_view Format_2105("                                            Tamb ={:11.6F} K ( {:7.3F} deg C)\n");
-    static constexpr std::string_view Format_2110("  ----------------- ------------------   Theta{:2} ={:11.6F} K ( {:7.3F} deg C)\n");
+    static constexpr std::string_view Format_2105("                                            Tamb ={:11.6F} K ( {:7.3f} deg C)\n");
+    static constexpr std::string_view Format_2110("  ----------------- ------------------   Theta{:2} ={:11.6F} K ( {:7.3f} deg C)\n");
     static constexpr std::string_view Format_2111(
         "  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ "
-        "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\   Theta{:2} ={:11.6F} K ( {:7.3F} "
+        "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\   Theta{:2} ={:11.6F} K ( {:7.3f} "
         "deg C)\n");
-    static constexpr std::string_view Format_2112("  +++++++++++++++++ ++++++++++++++++++   Theta{:2} ={:11.6F} K ( {:7.3F} deg C)\n");
-    static constexpr std::string_view Format_2115("                                           Troom ={:11.6F} K ( {:7.3F} deg C)\n");
+    static constexpr std::string_view Format_2112("  +++++++++++++++++ ++++++++++++++++++   Theta{:2} ={:11.6F} K ( {:7.3f} deg C)\n");
+    static constexpr std::string_view Format_2115("                                           Troom ={:11.6F} K ( {:7.3f} deg C)\n");
     static constexpr std::string_view Format_2180("           qout ={:12.5F}\n");
     static constexpr std::string_view Format_2190("  |     qpane{:2} ={:12.5F}        |\n");
     static constexpr std::string_view Format_2195("  |     qpane{:2} ={:12.5F}        |         keffc{:2} ={:11.6F}\n");
@@ -850,7 +850,7 @@ void WriteOutputEN673(InputOutputFile &OutArgumentsFile,
     static constexpr std::string_view Format_2000("TARCOG calculation results - {:4}-{:02}-{:02}, {:02}:{:02}:{:02}\n");
     static constexpr std::string_view Format_2351("Basic IGU properties:\n");
     static constexpr std::string_view Format_2120("  Ufactor  = {:12.6F}\n");
-    static constexpr std::string_view Format_2220("  he = {:8.4F},   hi = {:8.4F}\n");
+    static constexpr std::string_view Format_2220("  he = {:8.4f},   hi = {:8.4f}\n");
     static constexpr std::string_view Format_2155("  Ra({:1}) ={:15.6F}        Nu({:1}) ={:12.6F}\n");
     static constexpr std::string_view Format_2230("  hg{:2} ={:15.6E}      hr{:2} ={:15.6E}      hs{:2} ={:15.6E}\n");
 

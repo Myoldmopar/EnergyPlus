@@ -788,9 +788,9 @@ namespace HVACSingleDuctInduc {
                                             format("SizeHVACSingleDuctInduction: Potential issue with equipment sizing for {} = \"{}\".",
                                                    state.dataHVACSingleDuctInduc->IndUnit(IUNum).UnitType,
                                                    state.dataHVACSingleDuctInduc->IndUnit(IUNum).Name));
-                                ShowContinueError(state, format("User-Specified Maximum Total Air Flow Rate of {:.5R} [m3/s]", MaxTotAirVolFlowUser));
+                                ShowContinueError(state, format("User-Specified Maximum Total Air Flow Rate of {:.5f} [m3/s]", MaxTotAirVolFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Maximum Total Air Flow Rate of {:.5R} [m3/s]", MaxTotAirVolFlowDes));
+                                    state, format("differs from Design Size Maximum Total Air Flow Rate of {:.5f} [m3/s]", MaxTotAirVolFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -914,10 +914,10 @@ namespace HVACSingleDuctInduc {
                                                        state.dataHVACSingleDuctInduc->IndUnit(IUNum).UnitType,
                                                        state.dataHVACSingleDuctInduc->IndUnit(IUNum).Name));
                                     ShowContinueError(state,
-                                                      format("User-Specified Maximum Hot Water Flow Rate of {:.5R} [m3/s]", MaxVolHotWaterFlowUser));
+                                                      format("User-Specified Maximum Hot Water Flow Rate of {:.5f} [m3/s]", MaxVolHotWaterFlowUser));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Maximum Hot Water Flow Rate of {:.5R} [m3/s]", MaxVolHotWaterFlowDes));
+                                        format("differs from Design Size Maximum Hot Water Flow Rate of {:.5f} [m3/s]", MaxVolHotWaterFlowDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1037,10 +1037,10 @@ namespace HVACSingleDuctInduc {
                                                        state.dataHVACSingleDuctInduc->IndUnit(IUNum).UnitType,
                                                        state.dataHVACSingleDuctInduc->IndUnit(IUNum).Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Maximum Cold Water Flow Rate of {:.5R} [m3/s]", MaxVolColdWaterFlowUser));
+                                        state, format("User-Specified Maximum Cold Water Flow Rate of {:.5f} [m3/s]", MaxVolColdWaterFlowUser));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Maximum Cold Water Flow Rate of {:.5R} [m3/s]", MaxVolColdWaterFlowDes));
+                                        format("differs from Design Size Maximum Cold Water Flow Rate of {:.5f} [m3/s]", MaxVolColdWaterFlowDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1202,8 +1202,8 @@ namespace HVACSingleDuctInduc {
                                                       state.dataHVACSingleDuctInduc->IndUnit(IUNum).Name));
                             ShowContinueErrorTimeStamp(state, "");
                             ShowContinueError(state, "...Bad hot water maximum flow rate limits");
-                            ShowContinueError(state, format("...Given minimum water flow rate={:.3R} kg/s", MinHotWaterFlow));
-                            ShowContinueError(state, format("...Given maximum water flow rate={:.3R} kg/s", MaxHotWaterFlow));
+                            ShowContinueError(state, format("...Given minimum water flow rate={:.3f} kg/s", MinHotWaterFlow));
+                            ShowContinueError(state, format("...Given maximum water flow rate={:.3f} kg/s", MaxHotWaterFlow));
                         }
                         ShowRecurringWarningErrorAtEnd(state,
                                                        "SimFourPipeIndUnit: Hot water coil control failed (flow limits) for " +
@@ -1254,8 +1254,8 @@ namespace HVACSingleDuctInduc {
                                                       state.dataHVACSingleDuctInduc->IndUnit(IUNum).Name));
                             ShowContinueErrorTimeStamp(state, "");
                             ShowContinueError(state, "...Bad cold water maximum flow rate limits");
-                            ShowContinueError(state, format("...Given minimum water flow rate={:.3R} kg/s", MinColdWaterFlow));
-                            ShowContinueError(state, format("...Given maximum water flow rate={:.3R} kg/s", MaxColdWaterFlow));
+                            ShowContinueError(state, format("...Given minimum water flow rate={:.3f} kg/s", MinColdWaterFlow));
+                            ShowContinueError(state, format("...Given maximum water flow rate={:.3f} kg/s", MaxColdWaterFlow));
                         }
                         ShowRecurringWarningErrorAtEnd(state,
                                                        "SimFourPipeIndUnit: Cold water coil control failed (flow limits) for " +

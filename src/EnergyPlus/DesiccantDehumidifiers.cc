@@ -603,12 +603,12 @@ namespace DesiccantDehumidifiers {
                 }
                 if (desicDehum.NomProcAirVel > 4.064) {
                     ShowWarningError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                    ShowContinueError(state, format("{} > 4.064 m/s.; Value in input={:.3R}", cNumericFields(3), desicDehum.NomProcAirVel));
+                    ShowContinueError(state, format("{} > 4.064 m/s.; Value in input={:.3f}", cNumericFields(3), desicDehum.NomProcAirVel));
                     ShowContinueError(state, "DEFAULT performance curves not valid outside 2.032 to 4.064 m/s (400 to 800 fpm).");
                 }
                 if (desicDehum.NomProcAirVel < 2.032) {
                     ShowWarningError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                    ShowContinueError(state, format("{} < 2.032 m/s.; Value in input={:.3R}", cNumericFields(3), desicDehum.NomProcAirVel));
+                    ShowContinueError(state, format("{} < 2.032 m/s.; Value in input={:.3f}", cNumericFields(3), desicDehum.NomProcAirVel));
                     ShowContinueError(state, "DEFAULT performance curves not valid outside 2.032 to 4.064 m/s (400 to 800 fpm).");
                 }
                 // Validate regen fan type, for default curves, can only variable volume
@@ -871,7 +871,7 @@ namespace DesiccantDehumidifiers {
                     if (RegenCoilControlNodeNum > 0) {
                         ShowSevereError(state, format("{} \"{}\"", desicDehum.DehumType, desicDehum.Name));
                         ShowContinueError(state,
-                                          format("{} is specified as {:.3R} C in this object.", cNumericFields(1), desicDehum.RegenSetPointTemp));
+                                          format("{} is specified as {:.3f} C in this object.", cNumericFields(1), desicDehum.RegenSetPointTemp));
                         ShowContinueError(state, " Do not specify a coil temperature setpoint node name in the regeneration air heater object.");
                         ShowContinueError(state, format("...{} = {}", cAlphaFields(9), desicDehum.RegenCoilType));
                         ShowContinueError(state, format("...{} = {}", cAlphaFields(10), desicDehum.RegenCoilName));
@@ -1018,7 +1018,7 @@ namespace DesiccantDehumidifiers {
                     if (RegenCoilControlNodeNum > 0) {
                         ShowSevereError(state, format("{} \"{}\"", desicDehum.DehumType, desicDehum.Name));
                         ShowContinueError(state,
-                                          format("{} is specified as {:.3R} C in this object.", cNumericFields(1), desicDehum.RegenSetPointTemp));
+                                          format("{} is specified as {:.3f} C in this object.", cNumericFields(1), desicDehum.RegenSetPointTemp));
                         ShowContinueError(state, " Do not specify a coil temperature setpoint node name in the regeneration air heater object.");
                         ShowContinueError(state, format("...{} = {}", cAlphaFields(9), desicDehum.RegenCoilType));
                         ShowContinueError(state, format("...{} = {}", cAlphaFields(10), desicDehum.RegenCoilName));
@@ -1906,7 +1906,7 @@ namespace DesiccantDehumidifiers {
                     HumRatNeeded = desicDehum.HumRatSet;
                     if (HumRatNeeded <= 0.0) {
                         ShowSevereError(state, format("Dehumidifier:Desiccant:NoFans: {}", desicDehum.Name));
-                        ShowContinueError(state, format("Invalid Leaving Max Humidity Ratio Setpoint={:.8T}", HumRatNeeded));
+                        ShowContinueError(state, format("Invalid Leaving Max Humidity Ratio Setpoint={:.8f}", HumRatNeeded));
                         ShowFatalError(state, "must be > 0.0");
                     }
                 } break;
@@ -2791,13 +2791,13 @@ namespace DesiccantDehumidifiers {
                 if (desicDehum.ErrCount < 2) {
                     ShowWarningError(state,
                                      format("{} \"{}\" - Air volume flow rate per watt of total condenser waste heat is below the minimum "
-                                            "recommended at {:N} m3/s/W.",
+                                            "recommended at {} m3/s/W.",
                                             desicDehum.DehumType,
                                             desicDehum.Name,
                                             VolFlowPerRatedTotQ));
                     ShowContinueErrorTimeStamp(state, "");
                     ShowContinueError(state,
-                                      format("Expected minimum for VolumeFlowperRatedTotalCondenserWasteHeat = [{:N}]", MinVolFlowPerRatedTotQ));
+                                      format("Expected minimum for VolumeFlowperRatedTotalCondenserWasteHeat = [{}]", MinVolFlowPerRatedTotQ));
                     ShowContinueError(state, "Possible causes include inconsistent air flow rates in system components ");
                     ShowContinueError(state, "on the regeneration side of the desiccant dehumidifier.");
                 } else {
@@ -3005,8 +3005,8 @@ namespace DesiccantDehumidifiers {
                                                       desicDehum.Name));
                             ShowContinueErrorTimeStamp(state, "");
                             ShowContinueError(state, "...Bad hot water maximum flow rate limits");
-                            ShowContinueError(state, format("...Given minimum water flow rate={:.3R} kg/s", MinWaterFlow));
-                            ShowContinueError(state, format("...Given maximum water flow rate={:.3R} kg/s", MaxHotWaterFlow));
+                            ShowContinueError(state, format("...Given minimum water flow rate={:.3f} kg/s", MinWaterFlow));
+                            ShowContinueError(state, format("...Given maximum water flow rate={:.3f} kg/s", MaxHotWaterFlow));
                         }
                         ShowRecurringWarningErrorAtEnd(state,
                                                        "CalcNonDXHeatingCoils: Hot water coil control failed (flow limits) for " +

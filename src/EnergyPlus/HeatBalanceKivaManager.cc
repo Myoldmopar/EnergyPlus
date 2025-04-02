@@ -146,7 +146,7 @@ void KivaInstanceMap::initGround(EnergyPlusData &state, const KivaWeatherData &k
         constructionName = state.dataConstruction->Construct(constructionNum).Name;
     }
 
-    ss.dir = format("{}/{} {:.2R} {}",
+    ss.dir = format("{}/{} {:.2f} {}",
                     FileSystem::getAbsolutePath(state.dataStrGlobals->outDirPath),
                     state.dataSurface->Surface(floorSurface).Name,
                     instance.ground->foundation.foundationDepth,
@@ -985,13 +985,13 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
 
                 if (fnd.deepGroundDepth > initDeepGroundDepth) {
                     ShowWarningError(state,
-                                     format("Foundation:Kiva=\"{}\", the autocalculated deep ground depth ({:.3T} m) is shallower than "
-                                            "foundation construction elements ({:.3T} m)",
+                                     format("Foundation:Kiva=\"{}\", the autocalculated deep ground depth ({:.3f} m) is shallower than "
+                                            "foundation construction elements ({:.3f} m)",
                                             foundationInputs[surface.OSCPtr].name,
                                             initDeepGroundDepth,
                                             fnd.deepGroundDepth - 1.0));
                     ShowContinueError(state,
-                                      format("The deep ground depth will be set one meter below the lowest element ({:.3T} m)", fnd.deepGroundDepth));
+                                      format("The deep ground depth will be set one meter below the lowest element ({:.3f} m)", fnd.deepGroundDepth));
                 }
 
                 // polygon
@@ -1091,7 +1091,7 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
             wallSurfaceString += "," + state.dataSurface->Surface(wl).Name;
         }
 
-        static constexpr std::string_view fmt = "{},{},{},{},{:.2R},{:.2R},{:.2R},{},{}{}\n";
+        static constexpr std::string_view fmt = "{},{},{},{},{:.2f},{:.2f},{:.2f},{},{}{}\n";
         print(state.files.eio,
               fmt,
               foundationInputs[state.dataSurface->Surface(kv.floorSurface).OSCPtr].name,
@@ -1204,8 +1204,8 @@ void KivaManager::defineDefaultFoundation(EnergyPlusData &state)
         if (!settings.autocalculateDeepGroundDepth) {
             if (defFnd.deepGroundDepth != settings.deepGroundDepth) {
                 ShowWarningError(state, "Foundation:Kiva:Settings, when Deep-Ground Boundary Condition is Autoselect,");
-                ShowContinueError(state, format("the user-specified Deep-Ground Depth ({:.1R} m)", settings.deepGroundDepth));
-                ShowContinueError(state, format("will be overridden with the Autoselected depth ({:.1R} m)", defFnd.deepGroundDepth));
+                ShowContinueError(state, format("the user-specified Deep-Ground Depth ({:.1f} m)", settings.deepGroundDepth));
+                ShowContinueError(state, format("will be overridden with the Autoselected depth ({:.1f} m)", defFnd.deepGroundDepth));
             }
         }
     } else if (settings.deepGroundBoundary == Settings::ZERO_FLUX) {

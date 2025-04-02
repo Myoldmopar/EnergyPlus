@@ -1109,8 +1109,8 @@ void ExhaustAbsorberSpecs::size(EnergyPlusData &state)
                                 ShowMessage(
                                     state,
                                     format("SizeChillerHeaterAbsorptionDoubleEffect: Potential issue with equipment sizing for {}", this->Name));
-                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", NomCapUser));
-                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpNomCap));
+                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", NomCapUser));
+                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpNomCap));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1180,9 +1180,9 @@ void ExhaustAbsorberSpecs::size(EnergyPlusData &state)
                                 ShowMessage(state,
                                             format("SizeChillerAbsorptionDoubleEffect: Potential issue with equipment sizing for {}", this->Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Design Chilled Water Flow Rate of {:.5R} [m3/s]", EvapVolFlowRateUser));
+                                                  format("User-Specified Design Chilled Water Flow Rate of {:.5f} [m3/s]", EvapVolFlowRateUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Design Chilled Water Flow Rate of {:.5R} [m3/s]", tmpEvapVolFlowRate));
+                                    state, format("differs from Design Size Design Chilled Water Flow Rate of {:.5f} [m3/s]", tmpEvapVolFlowRate));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1258,9 +1258,9 @@ void ExhaustAbsorberSpecs::size(EnergyPlusData &state)
                                     state,
                                     format("SizeChillerHeaterAbsorptionDoubleEffect: Potential issue with equipment sizing for {}", this->Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Design Hot Water Flow Rate of {:.5R} [m3/s]", HeatRecVolFlowRateUser));
+                                                  format("User-Specified Design Hot Water Flow Rate of {:.5f} [m3/s]", HeatRecVolFlowRateUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Design Hot Water Flow Rate of {:.5R} [m3/s]", tmpHeatRecVolFlowRate));
+                                    state, format("differs from Design Size Design Hot Water Flow Rate of {:.5f} [m3/s]", tmpHeatRecVolFlowRate));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1346,9 +1346,9 @@ void ExhaustAbsorberSpecs::size(EnergyPlusData &state)
                                 ShowMessage(state,
                                             format("SizeChillerAbsorptionDoubleEffect: Potential issue with equipment sizing for {}", this->Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Design Condenser Water Flow Rate of {:.5R} [m3/s]", CondVolFlowRateUser));
+                                                  format("User-Specified Design Condenser Water Flow Rate of {:.5f} [m3/s]", CondVolFlowRateUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Design Condenser Water Flow Rate of {:.5R} [m3/s]", tmpCondVolFlowRate));
+                                    state, format("differs from Design Size Design Condenser Water Flow Rate of {:.5f} [m3/s]", tmpCondVolFlowRate));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1739,9 +1739,9 @@ void ExhaustAbsorberSpecs::calcChiller(EnergyPlusData &state, Real64 &MyLoad)
                 ShowWarningError(state, format("ChillerHeater:Absorption:DoubleEffect \"{}\"", this->Name));
                 ShowContinueError(state,
                                   "...Exhaust temperature and flow input from Micro Turbine is not sufficient during cooling to run the chiller ");
-                ShowContinueError(state, format("...Value of Exhaust air inlet temp ={:.4T} C.", lExhaustInTemp));
-                ShowContinueError(state, format("... and Exhaust air flow rate of {:.2T} kg/s.", lExhaustInFlow));
-                ShowContinueError(state, format("...Value of minimum absorber leaving temp ={:.4T} C.", AbsLeavingTemp));
+                ShowContinueError(state, format("...Value of Exhaust air inlet temp ={:.4f} C.", lExhaustInTemp));
+                ShowContinueError(state, format("... and Exhaust air flow rate of {:.2f} kg/s.", lExhaustInFlow));
+                ShowContinueError(state, format("...Value of minimum absorber leaving temp ={:.4f} C.", AbsLeavingTemp));
                 ShowContinueError(state,
                                   "...Either increase the Exhaust temperature (min required = 350 C )  or flow or both of Micro Turbine to meet "
                                   "the min available potential criteria.");
@@ -1982,9 +1982,9 @@ void ExhaustAbsorberSpecs::calcHeater(EnergyPlusData &state, Real64 &MyLoad, boo
                 ShowWarningError(state, format("ChillerHeater:Absorption:DoubleEffect \"{}\"", this->Name));
                 ShowContinueError(state,
                                   "...Exhaust temperature and flow input from Micro Turbine is not sufficient to run the chiller during heating .");
-                ShowContinueError(state, format("...Value of Exhaust air inlet temp ={:.4T} C.", lExhaustInTemp));
-                ShowContinueError(state, format("... and Exhaust air flow rate of {:.2T} kg/s.", lExhaustInFlow));
-                ShowContinueError(state, format("...Value of minimum absorber leaving temp ={:.4T} C.", AbsLeavingTemp));
+                ShowContinueError(state, format("...Value of Exhaust air inlet temp ={:.4f} C.", lExhaustInTemp));
+                ShowContinueError(state, format("... and Exhaust air flow rate of {:.2f} kg/s.", lExhaustInFlow));
+                ShowContinueError(state, format("...Value of minimum absorber leaving temp ={:.4f} C.", AbsLeavingTemp));
                 ShowContinueError(state,
                                   "...Either increase the Exhaust temperature (min required = 350 C) or flow or both of Micro Turbine to meet "
                                   "the min available potential criteria.");

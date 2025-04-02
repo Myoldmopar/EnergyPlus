@@ -1790,7 +1790,7 @@ void GetOAControllerInputs(EnergyPlusData &state)
                 print(state.files.eio, "Invalid/Unknown,");
             }
 
-            print(state.files.eio, "{:.2R},", thisVentilationMechanical.ZoneMaxOAFraction);
+            print(state.files.eio, "{:.2f},", thisVentilationMechanical.ZoneMaxOAFraction);
             print(state.files.eio, "{},", thisVentilationMechanical.NumofVentMechZones);
 
             for (int jZone = 1; jZone <= thisVentilationMechanical.NumofVentMechZones; ++jZone) {
@@ -2323,12 +2323,12 @@ void ProcessOAControllerInputs(EnergyPlusData &state,
                         format("... The {} is less than the ratio of the outside air controllers minimum to maximum outside air flow rate.",
                                cNumericFields(7)));
                     ShowContinueError(
-                        state, format("... Controller {} = {:.4T} m3/s.", cNumericFields(1), state.dataMixedAir->OAController(OutAirNum).MinOA));
+                        state, format("... Controller {} = {:.4f} m3/s.", cNumericFields(1), state.dataMixedAir->OAController(OutAirNum).MinOA));
                     ShowContinueError(
-                        state, format("... Controller {} = {:.4T} m3/s.", cNumericFields(2), state.dataMixedAir->OAController(OutAirNum).MaxOA));
-                    ShowContinueError(state, format("... Controller minimum to maximum flow ratio = {:.4T}.", OAFlowRatio));
+                        state, format("... Controller {} = {:.4f} m3/s.", cNumericFields(2), state.dataMixedAir->OAController(OutAirNum).MaxOA));
+                    ShowContinueError(state, format("... Controller minimum to maximum flow ratio = {:.4f}.", OAFlowRatio));
                     ShowContinueError(state,
-                                      format("... {} = {:.4T}.", cNumericFields(7), state.dataMixedAir->OAController(OutAirNum).HighRHOAFlowRatio));
+                                      format("... {} = {:.4f}.", cNumericFields(7), state.dataMixedAir->OAController(OutAirNum).HighRHOAFlowRatio));
                 }
             }
         }
@@ -2583,7 +2583,7 @@ void InitOAController(EnergyPlusData &state, int const OAControllerNum, bool con
         if ((thisOAController.MaxOA - thisOAController.MinOA) < -HVAC::SmallAirVolFlow) {
             ShowSevereError(state, format("For Controller:OutdoorAir: {}", thisOAController.Name));
             ShowContinueError(state,
-                              format("  maximum outdoor air flow rate ({:.4R}) < minimum outdoor air flow rate ({:.4R})",
+                              format("  maximum outdoor air flow rate ({:.4f}) < minimum outdoor air flow rate ({:.4f})",
                                      thisOAController.MaxOA,
                                      thisOAController.MinOA));
             ShowContinueError(state,
@@ -2601,7 +2601,7 @@ void InitOAController(EnergyPlusData &state, int const OAControllerNum, bool con
                                         thisOAController.Name,
                                         state.dataAirSystemsData->PrimaryAirSystems(AirLoopNum).Name));
                 ShowContinueError(state,
-                                  format("...Minimum Outdoor Air Flow Rate={:.6R} will be reset to loop Design Supply Air Flow Rate={:.6R}",
+                                  format("...Minimum Outdoor Air Flow Rate={:.6f} will be reset to loop Design Supply Air Flow Rate={:.6f}",
                                          thisOAController.MinOA,
                                          DesSupplyVolFlowRate));
                 thisOAController.MinOA = DesSupplyVolFlowRate;
@@ -2616,7 +2616,7 @@ void InitOAController(EnergyPlusData &state, int const OAControllerNum, bool con
                                         thisOAController.Name,
                                         state.dataAirSystemsData->PrimaryAirSystems(AirLoopNum).Name));
                 ShowContinueError(state,
-                                  format("...Maximum Outdoor Air Flow Rate={:.6R} will be reset to loop Design Supply Air Flow Rate={:.6R}",
+                                  format("...Maximum Outdoor Air Flow Rate={:.6f} will be reset to loop Design Supply Air Flow Rate={:.6f}",
                                          thisOAController.MaxOA,
                                          DesSupplyVolFlowRate));
                 thisOAController.MaxOA = DesSupplyVolFlowRate;
@@ -3446,7 +3446,7 @@ void OAControllerProps::CalcOAController(EnergyPlusData &state, int const AirLoo
                                   "This may be overriding desired ventilation controls. Check inputs for Minimum Outdoor Air Flow Rate, Minimum "
                                   "Outdoor Air Schedule Name and Controller:MechanicalVentilation");
                 ShowContinueErrorTimeStamp(
-                    state, format("Minimum OA fraction = {:.4R}, Mech Vent OA fraction = {:.4R}", OutAirMinFrac, MechVentOutsideAirMinFrac));
+                    state, format("Minimum OA fraction = {:.4f}, Mech Vent OA fraction = {:.4f}", OutAirMinFrac, MechVentOutsideAirMinFrac));
             } else {
                 ShowRecurringWarningErrorAtEnd(state,
                                                "Controller:OutdoorAir=\"" + this->Name +
@@ -3898,7 +3898,7 @@ Real64 VentilationMechanicalProps::CalcMechVentController(EnergyPlusData &state,
                                             ShowContinueError(
                                                 state,
                                                 format("For System Outdoor Air Method = ProportionalControlBasedOnDesignOARate, maximum zone "
-                                                       "outdoor air rate ({:.4R}), is not greater than minimum zone outdoor air rate ({:.4R}).",
+                                                       "outdoor air rate ({:.4f}), is not greater than minimum zone outdoor air rate ({:.4f}).",
                                                        ZoneOAMax,
                                                        ZoneOAMin));
                                             ShowContinueError(state,
@@ -3956,8 +3956,8 @@ Real64 VentilationMechanicalProps::CalcMechVentController(EnergyPlusData &state,
                                                     ShowContinueError(
                                                         state,
                                                         format("For System Outdoor Air Method = ProportionalControlBasedOnOccupancySchedule, "
-                                                               "maximum target CO2 concentration ({:.2R}), is not greater than minimum target "
-                                                               "CO2 concentration ({:.2R}).",
+                                                               "maximum target CO2 concentration ({:.2f}), is not greater than minimum target "
+                                                               "CO2 concentration ({:.2f}).",
                                                                ZoneMaxCO2,
                                                                ZoneMinCO2));
                                                     ShowContinueError(state,
@@ -3982,8 +3982,8 @@ Real64 VentilationMechanicalProps::CalcMechVentController(EnergyPlusData &state,
                                                     ShowContinueError(
                                                         state,
                                                         format("For System Outdoor Air Method = ProportionalControlBasedOnDesignOccupancy, "
-                                                               "maximum target CO2 concentration ({:.2R}), is not greater than minimum target "
-                                                               "CO2 concentration ({:.2R}).",
+                                                               "maximum target CO2 concentration ({:.2f}), is not greater than minimum target "
+                                                               "CO2 concentration ({:.2f}).",
                                                                ZoneMaxCO2,
                                                                ZoneMinCO2));
                                                     ShowContinueError(state,
@@ -4008,8 +4008,8 @@ Real64 VentilationMechanicalProps::CalcMechVentController(EnergyPlusData &state,
                                                     ShowContinueError(
                                                         state,
                                                         format("For System Outdoor Air Method = ProportionalControlBasedOnDesignOARate, maximum "
-                                                               "target CO2 concentration ({:.2R}), is not greater than minimum target CO2 "
-                                                               "concentration ({:.2R}).",
+                                                               "target CO2 concentration ({:.2f}), is not greater than minimum target CO2 "
+                                                               "concentration ({:.2f}).",
                                                                ZoneMaxCO2,
                                                                ZoneMinCO2));
                                                     ShowContinueError(
@@ -4774,10 +4774,10 @@ void OAControllerProps::SizeOAController(EnergyPlusData &state)
                     ShowContinueError(state,
                                       "... The High Humidity Outdoor Air Flow Ratio is less than the ratio of the outdoor air controllers "
                                       "minimum to maximum outside air flow rate.");
-                    ShowContinueError(state, format("... Controller minimum flow rate = {:.4T} m3/s.", this->MinOA));
-                    ShowContinueError(state, format("... Controller maximum flow rate = {:.4T} m3/s.", this->MaxOA));
-                    ShowContinueError(state, format("... Controller minimum to maximum flow ratio = {:.4T}.", OAFlowRatio));
-                    ShowContinueError(state, format("... High humidity control flow ratio = {:.4T}.", this->HighRHOAFlowRatio));
+                    ShowContinueError(state, format("... Controller minimum flow rate = {:.4f} m3/s.", this->MinOA));
+                    ShowContinueError(state, format("... Controller maximum flow rate = {:.4f} m3/s.", this->MaxOA));
+                    ShowContinueError(state, format("... Controller minimum to maximum flow ratio = {:.4f}.", OAFlowRatio));
+                    ShowContinueError(state, format("... High humidity control flow ratio = {:.4f}.", this->HighRHOAFlowRatio));
                 }
             }
         }

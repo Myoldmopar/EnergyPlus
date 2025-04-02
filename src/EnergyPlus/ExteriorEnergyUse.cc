@@ -188,7 +188,7 @@ namespace ExteriorEnergyUse {
                                                ipsc->cAlphaFieldNames(2),
                                                ipsc->cAlphaFieldNames(1),
                                                ipsc->cAlphaArgs(1)));
-                        ShowContinueError(state, format("{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", ipsc->cAlphaArgs(2), SchMin));
+                        ShowContinueError(state, format("{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", ipsc->cAlphaArgs(2), SchMin));
                         ErrorsFound = true;
                     }
                     if (SchMax < 0.0) {
@@ -199,7 +199,7 @@ namespace ExteriorEnergyUse {
                                                ipsc->cAlphaFieldNames(2),
                                                ipsc->cAlphaFieldNames(1),
                                                ipsc->cAlphaArgs(1)));
-                        ShowContinueError(state, format("{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", ipsc->cAlphaArgs(2), SchMax));
+                        ShowContinueError(state, format("{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", ipsc->cAlphaArgs(2), SchMax));
                         ErrorsFound = true;
                     }
                 }
@@ -398,7 +398,7 @@ namespace ExteriorEnergyUse {
                                                ipsc->cAlphaFieldNames(3),
                                                ipsc->cAlphaFieldNames(1),
                                                ipsc->cAlphaArgs(1)));
-                        ShowContinueError(state, format("{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMin));
+                        ShowContinueError(state, format("{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMin));
                         ErrorsFound = true;
                     }
                     if (SchMax < 0.0) {
@@ -409,7 +409,7 @@ namespace ExteriorEnergyUse {
                                                ipsc->cAlphaFieldNames(3),
                                                ipsc->cAlphaFieldNames(1),
                                                ipsc->cAlphaArgs(1)));
-                        ShowContinueError(state, format("{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMax));
+                        ShowContinueError(state, format("{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMax));
                         ErrorsFound = true;
                     }
                 }
@@ -478,7 +478,7 @@ namespace ExteriorEnergyUse {
                                                ipsc->cAlphaFieldNames(3),
                                                ipsc->cAlphaFieldNames(1),
                                                ipsc->cAlphaArgs(1)));
-                        ShowContinueError(state, format("{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMin));
+                        ShowContinueError(state, format("{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMin));
                         ErrorsFound = true;
                     }
                     if (SchMax < 0.0) {
@@ -489,7 +489,7 @@ namespace ExteriorEnergyUse {
                                                ipsc->cAlphaFieldNames(3),
                                                ipsc->cAlphaFieldNames(1),
                                                ipsc->cAlphaArgs(1)));
-                        ShowContinueError(state, format("{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMax));
+                        ShowContinueError(state, format("{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", ipsc->cAlphaArgs(3), SchMax));
                         ErrorsFound = true;
                     }
                 }

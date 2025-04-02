@@ -2139,7 +2139,7 @@ namespace Curve {
                                               "a higher wind direction value.");
                             ShowContinueError(state, "Wind direction values must be entered in ascending order.");
                             ShowContinueError(state,
-                                              format("{} = {:.2R} {} = {:.2R}",
+                                              format("{} = {:.2f} {} = {:.2f}",
                                                      state.dataIPShortCut->cNumericFieldNames(j),
                                                      windDirs[j - 2],
                                                      state.dataIPShortCut->cNumericFieldNames[j + 1],
@@ -2151,7 +2151,7 @@ namespace Curve {
                 // Check that the first table value is zero
                 if (dirMin != 0.0) {
                     ShowSevereError(state, format("GetCurveInput: An {} object ", CurrentModuleObject));
-                    ShowContinueError(state, format("has a nonzero minimum value of {:.2R}", dirMin));
+                    ShowContinueError(state, format("has a nonzero minimum value of {:.2f}", dirMin));
                     ShowContinueError(state, "Wind direction values must begin at zero.");
                     ErrorsFound = true;
                 }
@@ -3580,7 +3580,7 @@ namespace Curve {
             if (!state.dataCurveManager->FrictionFactorErrorHasOccurred) {
                 ShowSevereError(state, "Plant Pressure System: Error in moody friction factor calculation");
                 ShowContinueError(state,
-                                  format("Current Conditions: Roughness Ratio={:.7R}; Reynolds Number={:.1R}", RoughnessRatio, ReynoldsNumber));
+                                  format("Current Conditions: Roughness Ratio={:.7f}; Reynolds Number={:.1f}", RoughnessRatio, ReynoldsNumber));
                 ShowContinueError(state, "These conditions resulted in an unhandled numeric issue.");
                 ShowContinueError(state, "Please contact EnergyPlus support/development team to raise an alert about this issue");
                 ShowContinueError(state, "This issue will occur only one time.  The friction factor has been reset to 0.04 for calculations");
@@ -3610,7 +3610,7 @@ namespace Curve {
             if (CurveVal > 1.10 || CurveVal < 0.90) {
                 ShowWarningError(state, format("{}=\"{}\" curve values", callingRoutineObj, objectName));
                 ShowContinueError(state, format("... {} = {} output is not equal to 1.0 (+ or - 10%) at rated conditions.", cFieldName, cFieldValue));
-                ShowContinueError(state, format("... Curve output at rated conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("... Curve output at rated conditions = {:.3f}", CurveVal));
             }
         }
     }
@@ -3636,7 +3636,7 @@ namespace Curve {
             if (CurveVal > 1.10 || CurveVal < 0.90) {
                 ShowWarningError(state, format("{}=\"{}\" curve values", callingRoutineObj, objectName));
                 ShowContinueError(state, format("... {} = {} output is not equal to 1.0 (+ or - 10%) at rated conditions.", cFieldName, cFieldValue));
-                ShowContinueError(state, format("... Curve output at rated conditions = {:.3T}", CurveVal));
+                ShowContinueError(state, format("... Curve output at rated conditions = {:.3f}", CurveVal));
             }
         }
     }

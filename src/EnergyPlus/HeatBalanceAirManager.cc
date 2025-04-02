@@ -277,7 +277,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
     int ZoneNumB;
 
     // Formats
-    static constexpr std::string_view Format_720(" {} Airflow Stats Nominal, {},{},{},{:.2R},{:.1R},");
+    static constexpr std::string_view Format_720(" {} Airflow Stats Nominal, {},{},{},{:.2f},{:.1f},");
     static constexpr std::string_view Format_721(
         "! <{} Airflow Stats Nominal>,Name,Schedule Name,Zone Name, Zone Floor Area {{m2}}, # Zone Occupants,{}\n");
     static constexpr std::string_view Format_722(" {}, {}\n");
@@ -491,7 +491,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
         thisZoneAirBalance.InducedAirRate = rNumericArgs(1);
         if (rNumericArgs(1) < 0.0) {
             ShowSevereError(state,
-                            format("{}{}=\"{}\", invalid Induced Outdoor Air Due to Duct Leakage Unbalance specification [<0.0]={:.3R}",
+                            format("{}{}=\"{}\", invalid Induced Outdoor Air Due to Duct Leakage Unbalance specification [<0.0]={:.3f}",
                                    RoutineName,
                                    cCurrentModuleObject,
                                    cAlphaArgs(1),
@@ -780,7 +780,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisInfiltration.Name,
@@ -814,7 +814,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{} = \"{}\", invalid flow/exteriorarea specification [<0.0]={:.3R}",
+                                            format("{}{} = \"{}\", invalid flow/exteriorarea specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisInfiltration.Name,
@@ -848,7 +848,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{} = \"{}\", invalid flow/exteriorwallarea specification [<0.0]={:.3R}",
+                                            format("{}{} = \"{}\", invalid flow/exteriorwallarea specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisInfiltration.Name,
@@ -882,7 +882,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}In {} = \"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3R}",
+                                            format("{}In {} = \"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisInfiltration.Name,
@@ -1414,7 +1414,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisVentilation.Name,
@@ -1448,7 +1448,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid flow/person specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid flow/person specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisVentilation.Name,
@@ -1482,7 +1482,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisVentilation.Name,
@@ -1585,7 +1585,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                                                cCurrentModuleObject,
                                                cAlphaArgs(1),
                                                cNumericFieldNames(11)));
-                        ShowContinueError(state, format("...value entered=[{:.2R}].", rNumericArgs(11)));
+                        ShowContinueError(state, format("...value entered=[{:.2f}].", rNumericArgs(11)));
                         ErrorsFound = true;
                     }
                 }
@@ -1619,7 +1619,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     if (Item1 == 1) {
                         ShowWarningError(
                             state,
-                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                    RoutineName,
                                    cNumericFieldNames(11),
                                    -VentilTempLimit));
@@ -1631,7 +1631,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 if (!lNumericFieldBlanks(11) && (!cAlphaArgs(6).empty() && thisVentilation.MinIndoorTempSchedPtr == 0)) {
                     if (Item1 == 1) {
                         ShowWarningError(state,
-                                         format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                         format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                                 RoutineName,
                                                 cAlphaFieldNames(6),
                                                 cAlphaArgs(6),
@@ -1680,7 +1680,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     if (Item1 == 1) {
                         ShowWarningError(
                             state,
-                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                    RoutineName,
                                    cNumericFieldNames(12),
                                    VentilTempLimit));
@@ -1692,7 +1692,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 if (!lNumericFieldBlanks(12) && ((!lAlphaFieldBlanks(7)) && thisVentilation.MaxIndoorTempSchedPtr == 0)) {
                     if (Item1 == 1) {
                         ShowWarningError(state,
-                                         format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                         format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                                 RoutineName,
                                                 cAlphaFieldNames(7),
                                                 cAlphaArgs(7),
@@ -1732,7 +1732,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     if (Item1 == 1) {
                         ShowWarningError(
                             state,
-                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                    RoutineName,
                                    cNumericFieldNames(13),
                                    VentilTempLimit));
@@ -1744,7 +1744,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 if (!lNumericFieldBlanks(13) && ((!lAlphaFieldBlanks(8)) && thisVentilation.DeltaTempSchedPtr == 0)) {
                     if (Item1 == 1) {
                         ShowWarningError(state,
-                                         format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                         format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                                 RoutineName,
                                                 cAlphaFieldNames(8),
                                                 cAlphaArgs(8),
@@ -1794,7 +1794,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     if (thisVentilation.MinOutdoorTempSchedPtr == 0 && lNumericFieldBlanks(14) && (!lAlphaFieldBlanks(9))) {
                         ShowWarningError(state,
                                          format("{}Minimum Outdoor Temperature: the value field is blank and schedule field is invalid. The "
-                                                "default value will be used ({:.1R}) ",
+                                                "default value will be used ({:.1f}) ",
                                                 RoutineName,
                                                 -VentilTempLimit));
                         ShowContinueError(state,
@@ -1803,7 +1803,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     // Check Minimum outdoor temperature value and schedule fields
                     if (!lNumericFieldBlanks(14) && ((!lAlphaFieldBlanks(9)) && thisVentilation.MinOutdoorTempSchedPtr == 0)) {
                         ShowWarningError(state,
-                                         format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                         format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                                 RoutineName,
                                                 cAlphaFieldNames(9),
                                                 cAlphaArgs(9),
@@ -1852,7 +1852,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     if (thisVentilation.MaxOutdoorTempSchedPtr == 0 && lNumericFieldBlanks(15) && (!lAlphaFieldBlanks(10))) {
                         ShowWarningError(
                             state,
-                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                            format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                    RoutineName,
                                    cNumericFieldNames(15),
                                    VentilTempLimit));
@@ -1862,7 +1862,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     // Check Maximum outdoor temperature value and schedule fields
                     if (!lNumericFieldBlanks(15) && ((!lAlphaFieldBlanks(10)) && thisVentilation.MaxOutdoorTempSchedPtr == 0)) {
                         ShowWarningError(state,
-                                         format("{}{} = {}is invalid. The constant value will be used at {:.1R} degrees C ",
+                                         format("{}{} = {}is invalid. The constant value will be used at {:.1f} degrees C ",
                                                 RoutineName,
                                                 cAlphaFieldNames(10),
                                                 cAlphaArgs(10),
@@ -2138,7 +2138,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (thisVentilation.MinIndoorTempSchedPtr == 0 && lNumericFieldBlanks(6) && (!lAlphaFieldBlanks(4))) {
                     ShowWarningError(state,
-                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                             RoutineName,
                                             cNumericFieldNames(6),
                                             -VentilTempLimit));
@@ -2147,7 +2147,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 // Check Minimum indoor temperature value and schedule fields
                 if (!lNumericFieldBlanks(6) && (!cAlphaArgs(4).empty() && thisVentilation.MinIndoorTempSchedPtr == 0)) {
                     ShowWarningError(state,
-                                     format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                     format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                             RoutineName,
                                             cAlphaFieldNames(4),
                                             cAlphaArgs(4),
@@ -2191,7 +2191,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (thisVentilation.MaxIndoorTempSchedPtr == 0 && lNumericFieldBlanks(7) && (!lAlphaFieldBlanks(5))) {
                     ShowWarningError(state,
-                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                             RoutineName,
                                             cNumericFieldNames(7),
                                             VentilTempLimit));
@@ -2200,7 +2200,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 // Check Maximum indoor temperature value and schedule fields
                 if (!lNumericFieldBlanks(7) && ((!lAlphaFieldBlanks(5)) && thisVentilation.MaxIndoorTempSchedPtr == 0)) {
                     ShowWarningError(state,
-                                     format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                     format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                             RoutineName,
                                             cAlphaFieldNames(7),
                                             cAlphaArgs(5),
@@ -2237,7 +2237,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (thisVentilation.DeltaTempSchedPtr == 0 && lNumericFieldBlanks(8) && (!lAlphaFieldBlanks(6))) {
                     ShowWarningError(state,
-                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                             RoutineName,
                                             cNumericFieldNames(8),
                                             VentilTempLimit));
@@ -2245,7 +2245,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (!lNumericFieldBlanks(8) && ((!lAlphaFieldBlanks(6)) && thisVentilation.DeltaTempSchedPtr == 0)) {
                     ShowWarningError(state,
-                                     format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                     format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                             RoutineName,
                                             cAlphaFieldNames(6),
                                             cAlphaArgs(6),
@@ -2290,7 +2290,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                     ShowWarningError(
                         state,
                         format("{}Minimum Outdoor Temperature: the value field is blank and schedule field is invalid. The default value "
-                               "will be used ({:.1R}) ",
+                               "will be used ({:.1f}) ",
                                RoutineName,
                                -VentilTempLimit));
                     ShowContinueError(state, format("in the {} object = {} and the simulation continues...", cCurrentModuleObject, cAlphaArgs(1)));
@@ -2298,7 +2298,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 // Check Minimum outdoor temperature value and schedule fields
                 if (!lNumericFieldBlanks(9) && ((!lAlphaFieldBlanks(7)) && thisVentilation.MinOutdoorTempSchedPtr == 0)) {
                     ShowWarningError(state,
-                                     format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                     format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                             RoutineName,
                                             cAlphaFieldNames(7),
                                             cAlphaArgs(7),
@@ -2340,7 +2340,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (thisVentilation.MaxOutdoorTempSchedPtr == 0 && lNumericFieldBlanks(10) && (!lAlphaFieldBlanks(8))) {
                     ShowWarningError(state,
-                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                             RoutineName,
                                             cNumericFieldNames(10),
                                             VentilTempLimit));
@@ -2349,7 +2349,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 // Check Maximum outdoor temperature value and schedule fields
                 if (!lNumericFieldBlanks(10) && ((!lAlphaFieldBlanks(8)) && thisVentilation.MaxOutdoorTempSchedPtr == 0)) {
                     ShowWarningError(state,
-                                     format("{}{} = {}is invalid. The constant value will be used at {:.1R} degrees C ",
+                                     format("{}{} = {}is invalid. The constant value will be used at {:.1f} degrees C ",
                                             RoutineName,
                                             cAlphaFieldNames(8),
                                             cAlphaArgs(8),
@@ -2607,7 +2607,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisMixingInput.Name,
@@ -2641,7 +2641,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid flow/person specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid flow/person specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisMixingInput.Name,
@@ -2675,7 +2675,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisMixingInput.Name,
@@ -2738,7 +2738,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (thisMixing.DeltaTempSchedPtr == 0 && lNumericFieldBlanks(5) && (!lAlphaFieldBlanks(6))) {
                     ShowWarningError(state,
-                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                             RoutineName,
                                             cNumericFieldNames(5),
                                             rNumericArgs(5)));
@@ -2746,7 +2746,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (!lNumericFieldBlanks(5) && ((!lAlphaFieldBlanks(6)) && thisMixing.DeltaTempSchedPtr == 0)) {
                     ShowWarningError(state,
-                                     format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                     format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                             RoutineName,
                                             cAlphaFieldNames(6),
                                             cAlphaArgs(6),
@@ -3226,7 +3226,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid flow/area specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisMixingInput.Name,
@@ -3260,7 +3260,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid flow/person specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid flow/person specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisMixingInput.Name,
@@ -3294,7 +3294,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                             }
                         } else {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3R}",
+                                            format("{}{}=\"{}\", invalid ACH (air changes per hour) specification [<0.0]={:.3f}",
                                                    RoutineName,
                                                    cCurrentModuleObject,
                                                    thisMixingInput.Name,
@@ -3360,7 +3360,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (thisMixing.DeltaTempSchedPtr == 0 && lNumericFieldBlanks(5) && (!lAlphaFieldBlanks(6))) {
                     ShowWarningError(state,
-                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1R}) ",
+                                     format("{}{}: the value field is blank and schedule field is invalid. The default value will be used ({:.1f}) ",
                                             RoutineName,
                                             cNumericFieldNames(5),
                                             rNumericArgs(5)));
@@ -3368,7 +3368,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                 }
                 if (!lNumericFieldBlanks(5) && ((!lAlphaFieldBlanks(6)) && thisMixing.DeltaTempSchedPtr == 0)) {
                     ShowWarningError(state,
-                                     format("{}{} = {} is invalid. The constant value will be used at {:.1R} degrees C ",
+                                     format("{}{} = {} is invalid. The constant value will be used at {:.1f} degrees C ",
                                             RoutineName,
                                             cAlphaFieldNames(6),
                                             cAlphaArgs(6),
@@ -4226,7 +4226,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
 
     auto divide_and_print_if_greater_than_zero = [&](const Real64 denominator, const Real64 numerator) {
         if (denominator > 0.0) {
-            print(state.files.eio, "{:.3R},", numerator / denominator);
+            print(state.files.eio, "{:.3f},", numerator / denominator);
         } else {
             print(state.files.eio, "N/A,");
         }
@@ -4255,7 +4255,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
               state.dataHeatBal->Zone(ZoneNum).Name,
               state.dataHeatBal->Zone(ZoneNum).FloorArea,
               state.dataHeatBal->Zone(ZoneNum).TotOccupants);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Infiltration(Loop).DesignLevel);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Infiltration(Loop).DesignLevel);
 
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).FloorArea, state.dataHeatBal->Infiltration(Loop).DesignLevel);
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).ExteriorTotalSurfArea,
@@ -4263,10 +4263,10 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).Volume,
                                               state.dataHeatBal->Infiltration(Loop).DesignLevel * Constant::SecInHour);
 
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Infiltration(Loop).ConstantTermCoef);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Infiltration(Loop).TemperatureTermCoef);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Infiltration(Loop).VelocityTermCoef);
-        print(state.files.eio, "{:.3R}\n", state.dataHeatBal->Infiltration(Loop).VelocitySQTermCoef);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Infiltration(Loop).ConstantTermCoef);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Infiltration(Loop).TemperatureTermCoef);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Infiltration(Loop).VelocityTermCoef);
+        print(state.files.eio, "{:.3f}\n", state.dataHeatBal->Infiltration(Loop).VelocitySQTermCoef);
     }
 
     if (state.dataHeatBal->ZoneAirMassFlow.EnforceZoneMassBalance) {
@@ -4304,7 +4304,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
               state.dataHeatBal->Zone(ZoneNum).FloorArea,
               state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Ventilation(Loop).DesignLevel);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Ventilation(Loop).DesignLevel);
 
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).FloorArea, state.dataHeatBal->Ventilation(Loop).DesignLevel);
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).TotOccupants, state.dataHeatBal->Ventilation(Loop).DesignLevel);
@@ -4322,25 +4322,25 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
         } else {
             print(state.files.eio, "UNKNOWN,");
         }
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Ventilation(Loop).FanPressure);
-        print(state.files.eio, "{:.1R},", state.dataHeatBal->Ventilation(Loop).FanEfficiency);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Ventilation(Loop).ConstantTermCoef);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Ventilation(Loop).TemperatureTermCoef);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Ventilation(Loop).VelocityTermCoef);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Ventilation(Loop).VelocitySQTermCoef);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Ventilation(Loop).FanPressure);
+        print(state.files.eio, "{:.1f},", state.dataHeatBal->Ventilation(Loop).FanEfficiency);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Ventilation(Loop).ConstantTermCoef);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Ventilation(Loop).TemperatureTermCoef);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Ventilation(Loop).VelocityTermCoef);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Ventilation(Loop).VelocitySQTermCoef);
 
         // TODO Should this also be prefixed with "Schedule: " like the following ones are?
         if (state.dataHeatBal->Ventilation(Loop).MinIndoorTempSchedPtr > 0) {
             print(state.files.eio, "{},", ScheduleManager::GetScheduleName(state, state.dataHeatBal->Ventilation(Loop).MinIndoorTempSchedPtr));
         } else {
-            print(state.files.eio, "{:.2R},", state.dataHeatBal->Ventilation(Loop).MinIndoorTemperature);
+            print(state.files.eio, "{:.2f},", state.dataHeatBal->Ventilation(Loop).MinIndoorTemperature);
         }
 
         const auto print_temperature = [&](const int ptr, const Real64 value) {
             if (ptr > 0) {
                 print(state.files.eio, "Schedule: {},", ScheduleManager::GetScheduleName(state, ptr));
             } else {
-                print(state.files.eio, "{:.2R},", value);
+                print(state.files.eio, "{:.2f},", value);
             }
         };
 
@@ -4349,7 +4349,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
         print_temperature(state.dataHeatBal->Ventilation(Loop).MinOutdoorTempSchedPtr, state.dataHeatBal->Ventilation(Loop).MinOutdoorTemperature);
         print_temperature(state.dataHeatBal->Ventilation(Loop).MaxOutdoorTempSchedPtr, state.dataHeatBal->Ventilation(Loop).MaxOutdoorTemperature);
 
-        print(state.files.eio, "{:.2R}\n", state.dataHeatBal->Ventilation(Loop).MaxWindSpeed);
+        print(state.files.eio, "{:.2f}\n", state.dataHeatBal->Ventilation(Loop).MaxWindSpeed);
     }
 
     TotMixingFlow.dimension(state.dataGlobal->NumOfZones, 0.0);
@@ -4375,14 +4375,14 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
               state.dataHeatBal->Zone(ZoneNum).Name,
               state.dataHeatBal->Zone(ZoneNum).FloorArea,
               state.dataHeatBal->Zone(ZoneNum).TotOccupants);
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->Mixing(Loop).DesignLevel);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->Mixing(Loop).DesignLevel);
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).FloorArea, state.dataHeatBal->Mixing(Loop).DesignLevel);
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).TotOccupants, state.dataHeatBal->Mixing(Loop).DesignLevel);
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).Volume,
                                               state.dataHeatBal->Mixing(Loop).DesignLevel * Constant::SecInHour);
 
         print(state.files.eio, "{},", state.dataHeatBal->Zone(state.dataHeatBal->Mixing(Loop).FromZone).Name);
-        print(state.files.eio, "{:.2R}\n", state.dataHeatBal->Mixing(Loop).DeltaTemperature);
+        print(state.files.eio, "{:.2f}\n", state.dataHeatBal->Mixing(Loop).DeltaTemperature);
     }
 
     for (int Loop = 1; Loop <= state.dataHeatBal->TotCrossMixing; ++Loop) {
@@ -4409,7 +4409,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
               state.dataHeatBal->Zone(ZoneNum).FloorArea,
               state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-        print(state.files.eio, "{:.3R},", state.dataHeatBal->CrossMixing(Loop).DesignLevel);
+        print(state.files.eio, "{:.3f},", state.dataHeatBal->CrossMixing(Loop).DesignLevel);
 
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).FloorArea, state.dataHeatBal->CrossMixing(Loop).DesignLevel);
         divide_and_print_if_greater_than_zero(state.dataHeatBal->Zone(ZoneNum).TotOccupants, state.dataHeatBal->CrossMixing(Loop).DesignLevel);
@@ -4417,7 +4417,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
                                               state.dataHeatBal->CrossMixing(Loop).DesignLevel * Constant::SecInHour);
 
         print(state.files.eio, "{},", state.dataHeatBal->Zone(state.dataHeatBal->CrossMixing(Loop).FromZone).Name);
-        print(state.files.eio, "{:.2R}\n", state.dataHeatBal->CrossMixing(Loop).DeltaTemperature);
+        print(state.files.eio, "{:.2f}\n", state.dataHeatBal->CrossMixing(Loop).DeltaTemperature);
     }
 
     if (state.dataHeatBal->TotRefDoorMixing > 0) {
@@ -4431,7 +4431,7 @@ void GetSimpleAirModelInputs(EnergyPlusData &state, bool &ErrorsFound) // IF err
             for (ConnectionNumber = 1; ConnectionNumber <= state.dataHeatBal->RefDoorMixing(ZoneNumA).NumRefDoorConnections; ++ConnectionNumber) {
                 ZoneNumB = state.dataHeatBal->RefDoorMixing(ZoneNumA).MateZonePtr(ConnectionNumber);
                 // TotMixingFlow(ZoneNum)=TotMixingFlow(ZoneNum)+RefDoorMixing(Loop)%!DesignLevel
-                static constexpr std::string_view Format_723(" {} Airflow Stats Nominal, {},{},{},{},{:.3R},{:.3R},{}\n");
+                static constexpr std::string_view Format_723(" {} Airflow Stats Nominal, {},{},{},{},{:.3f},{:.3f},{}\n");
                 print(state.files.eio,
                       Format_723,
                       "RefrigerationDoorMixing",

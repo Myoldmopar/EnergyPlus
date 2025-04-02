@@ -394,7 +394,7 @@ namespace RoomAir {
                                 state, format("Entered in {} defined in RoomAir:Node:AirflowNetwork:HVACEquipment", zoneEquipList.EquipName(I)));
                             ShowContinueError(state,
                                               "The Fraction of supply fraction values across all the roomair nodes in a zone needs to sum to 1.0.");
-                            ShowContinueError(state, format("The sum of fractions entered = {:.3R}", SupplyFrac(I)));
+                            ShowContinueError(state, format("The sum of fractions entered = {:.3f}", SupplyFrac(I)));
                             ErrorsFound = true;
                         }
                         if (std::abs(ReturnFrac(I) - 1.0) > 0.001) {
@@ -403,7 +403,7 @@ namespace RoomAir {
                                 state, format("Entered in {} defined in RoomAir:Node:AirflowNetwork:HVACEquipment", zoneEquipList.EquipName(I)));
                             ShowContinueError(state,
                                               "The Fraction of return fraction values across all the roomair nodes in a zone needs to sum to 1.0.");
-                            ShowContinueError(state, format("The sum of fractions entered = {:.3R}", ReturnFrac(I)));
+                            ShowContinueError(state, format("The sum of fractions entered = {:.3f}", ReturnFrac(I)));
                             ErrorsFound = true;
                         }
                     }

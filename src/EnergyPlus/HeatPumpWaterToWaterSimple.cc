@@ -943,8 +943,8 @@ void GshpSpecs::sizeCoolingWaterToWaterHP(EnergyPlusData &state)
                         if (state.dataGlobal->DisplayExtraWarnings) {
                             if ((std::abs(tmpCoolingCap - nomCoolingCapUser) / nomCoolingCapUser) > state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state, format("sizeCoolingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
-                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", nomCoolingCapUser));
-                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpCoolingCap));
+                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", nomCoolingCapUser));
+                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpCoolingCap));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -993,9 +993,9 @@ void GshpSpecs::sizeCoolingWaterToWaterHP(EnergyPlusData &state)
                                 state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state, format("sizeCoolingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Load Side Volume Flow Rate of {:.2R} [m3/s]", nomLoadSideVolFlowUser));
+                                                  format("User-Specified Load Side Volume Flow Rate of {:.2f} [m3/s]", nomLoadSideVolFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Load Side Volume Flow Rate of {:.2R} [m3/s]", tmpLoadSideVolFlowRate));
+                                    state, format("differs from Design Size Load Side Volume Flow Rate of {:.2f} [m3/s]", tmpLoadSideVolFlowRate));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1123,9 +1123,9 @@ void GshpSpecs::sizeCoolingWaterToWaterHP(EnergyPlusData &state)
                     if ((std::abs(tmpSourceSideVolFlowRate - nomSourceSideVolFlowUser) / nomSourceSideVolFlowUser) >
                         state.dataSize->AutoVsHardSizingThreshold) {
                         ShowMessage(state, format("sizeCoolingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
-                        ShowContinueError(state, format("User-Specified Source Side Volume Flow Rate of {:.2R} [m3/s]", nomSourceSideVolFlowUser));
+                        ShowContinueError(state, format("User-Specified Source Side Volume Flow Rate of {:.2f} [m3/s]", nomSourceSideVolFlowUser));
                         ShowContinueError(state,
-                                          format("differs from Design Size Source Side Volume Flow Rate of {:.2R} [m3/s]", tmpSourceSideVolFlowRate));
+                                          format("differs from Design Size Source Side Volume Flow Rate of {:.2f} [m3/s]", tmpSourceSideVolFlowRate));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -1169,8 +1169,8 @@ void GshpSpecs::sizeCoolingWaterToWaterHP(EnergyPlusData &state)
                 if (state.dataGlobal->DisplayExtraWarnings) {
                     if ((std::abs(tmpPowerDraw - nomPowerDrawUser) / nomPowerDrawUser) > state.dataSize->AutoVsHardSizingThreshold) {
                         ShowMessage(state, format("sizeCoolingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
-                        ShowContinueError(state, format("User-Specified Cooling Power Consumption of {:.2R} [W]", nomPowerDrawUser));
-                        ShowContinueError(state, format("differs from Design Size Cooling Power Consumption of {:.2R} [W]", tmpPowerDraw));
+                        ShowContinueError(state, format("User-Specified Cooling Power Consumption of {:.2f} [W]", nomPowerDrawUser));
+                        ShowContinueError(state, format("differs from Design Size Cooling Power Consumption of {:.2f} [W]", tmpPowerDraw));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -1298,8 +1298,8 @@ void GshpSpecs::sizeHeatingWaterToWaterHP(EnergyPlusData &state)
                         if (state.dataGlobal->DisplayExtraWarnings) {
                             if ((std::abs(tmpHeatingCap - nomHeatingCapUser) / nomHeatingCapUser) > state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state, format("sizeHeatingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
-                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", nomHeatingCapUser));
-                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpHeatingCap));
+                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", nomHeatingCapUser));
+                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpHeatingCap));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1348,9 +1348,9 @@ void GshpSpecs::sizeHeatingWaterToWaterHP(EnergyPlusData &state)
                                 state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state, format("sizeHeatingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Load Side Volume Flow Rate of {:.2R} [m3/s]", nomLoadSideVolFlowUser));
+                                                  format("User-Specified Load Side Volume Flow Rate of {:.2f} [m3/s]", nomLoadSideVolFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Load Side Volume Flow Rate of {:.2R} [m3/s]", tmpLoadSideVolFlowRate));
+                                    state, format("differs from Design Size Load Side Volume Flow Rate of {:.2f} [m3/s]", tmpLoadSideVolFlowRate));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1477,9 +1477,9 @@ void GshpSpecs::sizeHeatingWaterToWaterHP(EnergyPlusData &state)
                     if ((std::abs(tmpSourceSideVolFlowRate - nomSourceSideVolFlowUser) / nomSourceSideVolFlowUser) >
                         state.dataSize->AutoVsHardSizingThreshold) {
                         ShowMessage(state, format("sizeHeatingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
-                        ShowContinueError(state, format("User-Specified Source Side Volume Flow Rate of {:.2R} [m3/s]", nomSourceSideVolFlowUser));
+                        ShowContinueError(state, format("User-Specified Source Side Volume Flow Rate of {:.2f} [m3/s]", nomSourceSideVolFlowUser));
                         ShowContinueError(state,
-                                          format("differs from Design Size Source Side Volume Flow Rate of {:.2R} [m3/s]", tmpSourceSideVolFlowRate));
+                                          format("differs from Design Size Source Side Volume Flow Rate of {:.2f} [m3/s]", tmpSourceSideVolFlowRate));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -1523,8 +1523,8 @@ void GshpSpecs::sizeHeatingWaterToWaterHP(EnergyPlusData &state)
                 if (state.dataGlobal->DisplayExtraWarnings) {
                     if ((std::abs(tmpPowerDraw - nomPowerDrawUser) / nomPowerDrawUser) > state.dataSize->AutoVsHardSizingThreshold) {
                         ShowMessage(state, format("sizeHeatingWaterToWaterHP: Potential issue with equipment sizing for {}", this->Name));
-                        ShowContinueError(state, format("User-Specified Heating Power Consumption of {:.2R} [W]", nomPowerDrawUser));
-                        ShowContinueError(state, format("differs from Design Size Heating Power Consumption of {:.2R} [W]", tmpPowerDraw));
+                        ShowContinueError(state, format("User-Specified Heating Power Consumption of {:.2f} [W]", nomPowerDrawUser));
+                        ShowContinueError(state, format("differs from Design Size Heating Power Consumption of {:.2f} [W]", tmpPowerDraw));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -1648,11 +1648,11 @@ void GshpSpecs::CalcWatertoWaterHPCooling(EnergyPlusData &state, Real64 const My
             if (this->CoolCapNegativeCounter < 1) {
                 ++this->CoolCapNegativeCounter;
                 ShowWarningError(state, format("{} \"{}\":", HPEqFitCooling, this->Name));
-                ShowContinueError(state, format(" Cooling capacity curve output is <= 0.0 ({:.4T}).", QLoad));
-                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2T} C,", LoadSideInletTemp));
-                ShowContinueError(state, format(" a source-side inlet temperature of {:.2T} C,", SourceSideInletTemp));
-                ShowContinueError(state, format(" a load-side mass flow rate of {:.3T} kg/s,", LoadSideMassFlowRate));
-                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3T} kg/s.", SourceSideMassFlowRate));
+                ShowContinueError(state, format(" Cooling capacity curve output is <= 0.0 ({:.4f}).", QLoad));
+                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2f} C,", LoadSideInletTemp));
+                ShowContinueError(state, format(" a source-side inlet temperature of {:.2f} C,", SourceSideInletTemp));
+                ShowContinueError(state, format(" a load-side mass flow rate of {:.3f} kg/s,", LoadSideMassFlowRate));
+                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3f} kg/s.", SourceSideMassFlowRate));
                 ShowContinueErrorTimeStamp(state, " The heat pump is turned off for this time step but simulation continues.");
             } else {
                 ShowRecurringWarningErrorAtEnd(state,
@@ -1667,11 +1667,11 @@ void GshpSpecs::CalcWatertoWaterHPCooling(EnergyPlusData &state, Real64 const My
             if (this->CoolPowerNegativeCounter < 1) {
                 ++this->CoolPowerNegativeCounter;
                 ShowWarningError(state, format("{} \"{}\":", HPEqFitCooling, this->Name));
-                ShowContinueError(state, format(" Cooling compressor power curve output is <= 0.0 ({:.4T}).", Power));
-                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2T} C,", LoadSideInletTemp));
-                ShowContinueError(state, format(" a source-side inlet temperature of {:.2T} C,", SourceSideInletTemp));
-                ShowContinueError(state, format(" a load-side mass flow rate of {:.3T} kg/s,", LoadSideMassFlowRate));
-                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3T} kg/s.", SourceSideMassFlowRate));
+                ShowContinueError(state, format(" Cooling compressor power curve output is <= 0.0 ({:.4f}).", Power));
+                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2f} C,", LoadSideInletTemp));
+                ShowContinueError(state, format(" a source-side inlet temperature of {:.2f} C,", SourceSideInletTemp));
+                ShowContinueError(state, format(" a load-side mass flow rate of {:.3f} kg/s,", LoadSideMassFlowRate));
+                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3f} kg/s.", SourceSideMassFlowRate));
                 ShowContinueErrorTimeStamp(state, " The heat pump is turned off for this time step but simulation continues.");
             } else {
                 ShowRecurringWarningErrorAtEnd(state,
@@ -1811,11 +1811,11 @@ void GshpSpecs::CalcWatertoWaterHPHeating(EnergyPlusData &state, Real64 const My
             if (this->HeatCapNegativeCounter < 1) {
                 ++this->HeatCapNegativeCounter;
                 ShowWarningError(state, format("{} \"{}\":", HPEqFitHeating, this->Name));
-                ShowContinueError(state, format(" Heating capacity curve output is <= 0.0 ({:.4T}).", QLoad));
-                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2T} C,", LoadSideInletTemp));
-                ShowContinueError(state, format(" a source-side inlet temperature of {:.2T} C,", SourceSideInletTemp));
-                ShowContinueError(state, format(" a load-side mass flow rate of {:.3T} kg/s,", LoadSideMassFlowRate));
-                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3T} kg/s.", SourceSideMassFlowRate));
+                ShowContinueError(state, format(" Heating capacity curve output is <= 0.0 ({:.4f}).", QLoad));
+                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2f} C,", LoadSideInletTemp));
+                ShowContinueError(state, format(" a source-side inlet temperature of {:.2f} C,", SourceSideInletTemp));
+                ShowContinueError(state, format(" a load-side mass flow rate of {:.3f} kg/s,", LoadSideMassFlowRate));
+                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3f} kg/s.", SourceSideMassFlowRate));
                 ShowContinueErrorTimeStamp(state, " The heat pump is turned off for this time step but simulation continues.");
             } else {
                 ShowRecurringWarningErrorAtEnd(state,
@@ -1830,11 +1830,11 @@ void GshpSpecs::CalcWatertoWaterHPHeating(EnergyPlusData &state, Real64 const My
             if (this->HeatPowerNegativeCounter < 1) {
                 ++this->HeatPowerNegativeCounter;
                 ShowWarningError(state, format("{} \"{}\":", HPEqFitHeating, this->Name));
-                ShowContinueError(state, format(" Heating compressor power curve output is <= 0.0 ({:.4T}).", Power));
-                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2T} C,", LoadSideInletTemp));
-                ShowContinueError(state, format(" a source-side inlet temperature of {:.2T} C,", SourceSideInletTemp));
-                ShowContinueError(state, format(" a load-side mass flow rate of {:.3T} kg/s,", LoadSideMassFlowRate));
-                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3T} kg/s.", SourceSideMassFlowRate));
+                ShowContinueError(state, format(" Heating compressor power curve output is <= 0.0 ({:.4f}).", Power));
+                ShowContinueError(state, format(" Zero or negative value occurs with a load-side inlet temperature of {:.2f} C,", LoadSideInletTemp));
+                ShowContinueError(state, format(" a source-side inlet temperature of {:.2f} C,", SourceSideInletTemp));
+                ShowContinueError(state, format(" a load-side mass flow rate of {:.3f} kg/s,", LoadSideMassFlowRate));
+                ShowContinueError(state, format(" and a source-side mass flow rate of {:.3f} kg/s.", SourceSideMassFlowRate));
                 ShowContinueErrorTimeStamp(state, " The heat pump is turned off for this time step but simulation continues.");
             } else {
                 ShowRecurringWarningErrorAtEnd(state,

@@ -215,7 +215,7 @@ TEST_F(EnergyPlusFixture, WaterToAirHeatPumpSimpleTest_SizeHVACWaterToAir)
 
     if (state->dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(HPNum).RatedCapCoolTotal != 0.0) {
         ShowMessage(*state,
-                    format("SizeHVACWaterToAir: Rated Sensible Heat Ratio = {:.2R} [-]",
+                    format("SizeHVACWaterToAir: Rated Sensible Heat Ratio = {:.2f} [-]",
                            state->dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(HPNum).RatedCapCoolSens /
                                state->dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(HPNum).RatedCapCoolTotal));
     }
@@ -1065,10 +1065,10 @@ TEST_F(EnergyPlusFixture, WaterToAirHeatPumpSimpleTest_CheckSimpleWAHPRatedCurve
          "rated conditions = 0.404\n   ** Warning ** CheckSimpleWAHPRatedCurvesOutputs: Coil:Cooling:WaterToAirHeatPump:EquationFit=\"WAHP 2\"\n   "
          "**  "
          " ~~~   ** Cooling power consumption as a function of temperature curve output is not equal to 1.0 (+ or - 2%) at rated conditions.\n   **  "
-         " ~~~   ** Curve output at rated conditions = 0.742\n   ** Warning ** "
+         " ~~~   ** Curve output at rated conditions = 0.743\n   ** Warning ** "
          "CheckSimpleWAHPRatedCurvesOutputs: Coil:Cooling:WaterToAirHeatPump:EquationFit=\"WAHP 2\"\n   **   ~~~   ** Sensible cooling capacity as a "
          "function of temperature curve output is not equal to 1.0 (+ or - 2%) at rated conditions.\n   **   ~~~   ** Curve output at rated "
-         "conditions = 0.454"});
+         "conditions = 0.455"});
 
     EXPECT_TRUE(compare_err_stream(error_string, true));
 }

@@ -734,7 +734,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
         DesupHtr.DeadBandTempDiff = rNumericArgs(1);
         if (DesupHtr.DeadBandTempDiff <= 0.0 || DesupHtr.DeadBandTempDiff > 20.0) {
             ShowSevereError(state,
-                            format("{} = {}: {} must be > 0 and <= 20. {} = {:.1T}",
+                            format("{} = {}: {} must be > 0 and <= 20. {} = {:.1f}",
                                    cCurrentModuleObject,
                                    DesupHtr.Name,
                                    cNumericFieldNames(1),
@@ -770,7 +770,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
                         if (std::abs(HEffFTemp - 1.0) > 0.05) {
                             ShowWarningError(state, format("{}, \"{}\":", cCurrentModuleObject, DesupHtr.Name));
                             ShowContinueError(state, format("The {} should be normalized ", cAlphaFieldNames(4)));
-                            ShowContinueError(state, format(" to 1.0 at the rating point. Curve output at the rating point = {:.3T}", HEffFTemp));
+                            ShowContinueError(state, format(" to 1.0 at the rating point. Curve output at the rating point = {:.3f}", HEffFTemp));
                             ShowContinueError(state, " The simulation continues using the user-specified curve.");
                         }
                     }
@@ -826,7 +826,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
                 DesupHtr.HeatReclaimRecoveryEff = rNumericArgs(2);
                 if (DesupHtr.HeatReclaimRecoveryEff <= 0.0 || DesupHtr.HeatReclaimRecoveryEff > 0.9) {
                     ShowSevereError(state,
-                                    format("{} = {}: {} must be > 0.0 and <= 0.9, Efficiency = {:.3T}",
+                                    format("{} = {}: {} must be > 0.0 and <= 0.9, Efficiency = {:.3f}",
                                            cCurrentModuleObject,
                                            DesupHtr.Name,
                                            cNumericFieldNames(2),
@@ -841,7 +841,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
                 DesupHtr.HeatReclaimRecoveryEff = rNumericArgs(2);
                 if (DesupHtr.HeatReclaimRecoveryEff <= 0.0 || DesupHtr.HeatReclaimRecoveryEff > 0.3) {
                     ShowSevereError(state,
-                                    format("{} = {}: {} must be > 0.0 and <= 0.3, {} = {:.3T}",
+                                    format("{} = {}: {} must be > 0.0 and <= 0.3, {} = {:.3f}",
                                            cCurrentModuleObject,
                                            DesupHtr.Name,
                                            cNumericFieldNames(2),
@@ -1044,7 +1044,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
         DesupHtr.OperatingWaterFlowRate = rNumericArgs(6);
         if (DesupHtr.OperatingWaterFlowRate <= 0.0) {
             ShowSevereError(state,
-                            format("{} = {}: {} must be greater than 0. {} = {:.6T}",
+                            format("{} = {}: {} must be greater than 0. {} = {:.6f}",
                                    cCurrentModuleObject,
                                    DesupHtr.Name,
                                    cNumericFieldNames(6),
@@ -1056,7 +1056,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
         DesupHtr.PumpElecPower = rNumericArgs(7);
         if (DesupHtr.PumpElecPower < 0.0) {
             ShowSevereError(state,
-                            format("{} = {}: {} must be >= 0. {} = {:.2T}",
+                            format("{} = {}: {} must be >= 0. {} = {:.2f}",
                                    cCurrentModuleObject,
                                    DesupHtr.Name,
                                    cNumericFieldNames(7),
@@ -1067,7 +1067,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
 
         if ((DesupHtr.PumpElecPower / DesupHtr.OperatingWaterFlowRate) > 7.9264e6) {
             ShowWarningError(state,
-                             format("{} = {}: {} to {} ratio > 7.9264E6. {} to {} = {:.3T}",
+                             format("{} = {}: {} to {} ratio > 7.9264E6. {} to {} = {:.3f}",
                                     cCurrentModuleObject,
                                     DesupHtr.Name,
                                     cNumericFieldNames(7),
@@ -1082,7 +1082,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
         DesupHtr.PumpFracToWater = rNumericArgs(8);
         if (DesupHtr.PumpFracToWater < 0.0 || DesupHtr.PumpFracToWater > 1.0) {
             ShowSevereError(state,
-                            format("{} = {}: {} must be >= 0 or <= 1. {} = {:.3T}",
+                            format("{} = {}: {} must be >= 0 or <= 1. {} = {:.3f}",
                                    cCurrentModuleObject,
                                    DesupHtr.Name,
                                    cNumericFieldNames(8),
@@ -1094,7 +1094,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
         DesupHtr.OnCycParaLoad = rNumericArgs(9);
         if (DesupHtr.OnCycParaLoad < 0.0) {
             ShowSevereError(state,
-                            format("{} = {}: {} must be >= 0. {} = {:.2T}",
+                            format("{} = {}: {} must be >= 0. {} = {:.2f}",
                                    cCurrentModuleObject,
                                    DesupHtr.Name,
                                    cNumericFieldNames(9),
@@ -1106,7 +1106,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
         DesupHtr.OffCycParaLoad = rNumericArgs(10);
         if (DesupHtr.OffCycParaLoad < 0.0) {
             ShowSevereError(state,
-                            format("{} = {}: {} must be >= 0. {} = {:.2T}",
+                            format("{} = {}: {} must be >= 0. {} = {:.2f}",
                                    cCurrentModuleObject,
                                    DesupHtr.Name,
                                    cNumericFieldNames(10),
@@ -1253,7 +1253,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
             ShowContinueError(state,
                               format("{}{}",
                                      hpwhNumericFieldNames[1 + nNumericOffset],
-                                     format(" difference must be > 0 and <= 20. Dead band = {:.1T}", hpwhNumeric[1 + nNumericOffset])));
+                                     format(" difference must be > 0 and <= 20. Dead band = {:.1f}", hpwhNumeric[1 + nNumericOffset])));
             ErrorsFound = true;
         }
 
@@ -1286,7 +1286,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
             if (HPWH.OperatingWaterFlowRate <= 0.0 && hpwhNumeric[2] != Constant::AutoCalculate) {
                 ShowSevereError(state, format("{}=\"{}\", ", state.dataIPShortCut->cCurrentModuleObject, HPWH.Name));
                 ShowContinueError(state,
-                                  format("{} must be greater than 0. Condenser water flow rate = {:.6T}", hpwhNumericFieldNames[2], hpwhNumeric[2]));
+                                  format("{} must be greater than 0. Condenser water flow rate = {:.6f}", hpwhNumericFieldNames[2], hpwhNumeric[2]));
                 ErrorsFound = true;
             }
 
@@ -1299,7 +1299,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
             if (HPWH.WrappedCondenserBottomLocation < 0.0) {
                 ShowSevereError(state, format("{}=\"{}\", ", state.dataIPShortCut->cCurrentModuleObject, HPWH.Name));
                 ShowContinueError(state,
-                                  format("{} must be greater than 0. Condenser bottom location = {:.6T}",
+                                  format("{} must be greater than 0. Condenser bottom location = {:.6f}",
                                          hpwhNumericFieldNames[2],
                                          HPWH.WrappedCondenserBottomLocation));
                 ErrorsFound = true;
@@ -1308,7 +1308,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
             if (HPWH.WrappedCondenserBottomLocation >= HPWH.WrappedCondenserTopLocation) {
                 ShowSevereError(state, format("{}=\"{}\", ", state.dataIPShortCut->cCurrentModuleObject, HPWH.Name));
                 ShowContinueError(state,
-                                  format("{} ({:.6T}) must be greater than {} ({:.6T}).",
+                                  format("{} ({:.6f}) must be greater than {} ({:.6f}).",
                                          HPWH.WrappedCondenserTopLocation,
                                          hpwhNumericFieldNames[2],
                                          hpwhNumericFieldNames[3],
@@ -1331,7 +1331,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
             ShowContinueError(state,
                               format("{}{}",
                                      hpwhNumericFieldNames[3 + nNumericOffset],
-                                     format(" must be greater than 0. Evaporator air flow rate = {:.6T}", hpwhNumeric[3 + nNumericOffset])));
+                                     format(" must be greater than 0. Evaporator air flow rate = {:.6f}", hpwhNumeric[3 + nNumericOffset])));
             ErrorsFound = true;
         }
 
@@ -1556,8 +1556,8 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
                                     state.dataIPShortCut->cCurrentModuleObject,
                                     HPWH.Name));
             ShowContinueError(state, "must be greater than the minimum inlet air temperature for heat pump compressor operation.");
-            ShowContinueError(state, format("...Minimum inlet air temperature = {:.1T}", HPWH.MinAirTempForHPOperation));
-            ShowContinueError(state, format("...Maximum inlet air temperature = {:.1T}", HPWH.MaxAirTempForHPOperation));
+            ShowContinueError(state, format("...Minimum inlet air temperature = {:.1f}", HPWH.MinAirTempForHPOperation));
+            ShowContinueError(state, format("...Maximum inlet air temperature = {:.1f}", HPWH.MaxAirTempForHPOperation));
         }
 
         // Compressor Location
@@ -1662,7 +1662,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
         if (FanVolFlow != DataSizing::AutoSize && !errFlag) {
             if (FanVolFlow < HPWH.OperatingAirFlowRate) {
                 ShowSevereError(state,
-                                format("{} - air flow rate = {:.7T} in fan object {} is less than the  HPWHs evaporator air flow rate.",
+                                format("{} - air flow rate = {:.7f} in fan object {} is less than the  HPWHs evaporator air flow rate.",
                                        state.dataIPShortCut->cCurrentModuleObject,
                                        FanVolFlow,
                                        HPWH.FanName));
@@ -1693,7 +1693,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
                            state.dataDXCoils->DXCoil(HPWH.DXCoilNum).DXCoilType,
                            state.dataDXCoils->DXCoil(HPWH.DXCoilNum).Name,
                            format(": Rated condenser pump power per watt of rated heating capacity has exceeded the recommended maximum of 0.1422 "
-                                  "W/W (41.67 watt/MBH). Condenser pump power per watt = {:.4T}",
+                                  "W/W (41.67 watt/MBH). Condenser pump power per watt = {:.4f}",
                                   (state.dataDXCoils->DXCoil(HPWH.DXCoilNum).HPWHCondPumpElecNomPower /
                                    state.dataDXCoils->DXCoil(HPWH.DXCoilNum).RatedTotCap2))));
             }
@@ -1731,7 +1731,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
                               format("{} must be >= 0. {}{}",
                                      hpwhNumericFieldNames[6 + nNumericOffset],
                                      hpwhNumericFieldNames[6 + nNumericOffset],
-                                     format(" = {:.2T}", hpwhNumeric[6 + nNumericOffset])));
+                                     format(" = {:.2f}", hpwhNumeric[6 + nNumericOffset])));
             ErrorsFound = true;
         }
 
@@ -1743,7 +1743,7 @@ bool getHPWaterHeaterInput(EnergyPlusData &state)
                               format("{} must be >= 0. {}{}",
                                      hpwhNumericFieldNames[7 + nNumericOffset],
                                      hpwhNumericFieldNames[2 + nNumericOffset],
-                                     format(" = {:.2T}", hpwhNumeric[7 + nNumericOffset])));
+                                     format(" = {:.2f}", hpwhNumeric[7 + nNumericOffset])));
             ErrorsFound = true;
         }
 
@@ -2931,8 +2931,8 @@ bool getWaterHeaterStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Heater 1 is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(7), state.dataIPShortCut->rNumericArgs(7)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(7), state.dataIPShortCut->rNumericArgs(7)));
             ErrorsFound = true;
         }
 
@@ -2969,8 +2969,8 @@ bool getWaterHeaterStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Heater 2 is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
             ErrorsFound = true;
         }
 
@@ -3179,8 +3179,8 @@ bool getWaterHeaterStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Use inlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(24), state.dataIPShortCut->rNumericArgs(24)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(24), state.dataIPShortCut->rNumericArgs(24)));
             ErrorsFound = true;
         }
 
@@ -3198,8 +3198,8 @@ bool getWaterHeaterStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Use outlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(25), state.dataIPShortCut->rNumericArgs(25)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(25), state.dataIPShortCut->rNumericArgs(25)));
             ErrorsFound = true;
         }
 
@@ -3230,8 +3230,8 @@ bool getWaterHeaterStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Source inlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(27), state.dataIPShortCut->rNumericArgs(27)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(27), state.dataIPShortCut->rNumericArgs(27)));
             ErrorsFound = true;
         }
 
@@ -3246,8 +3246,8 @@ bool getWaterHeaterStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Source outlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(28), state.dataIPShortCut->rNumericArgs(28)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(28), state.dataIPShortCut->rNumericArgs(28)));
             ErrorsFound = true;
         }
 
@@ -3939,8 +3939,8 @@ bool getWaterTankStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Use inlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
             ErrorsFound = true;
         }
 
@@ -3950,8 +3950,8 @@ bool getWaterTankStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Use outlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(11), state.dataIPShortCut->rNumericArgs(11)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(11), state.dataIPShortCut->rNumericArgs(11)));
             ErrorsFound = true;
         }
 
@@ -3970,8 +3970,8 @@ bool getWaterTankStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Source inlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(14), state.dataIPShortCut->rNumericArgs(14)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(14), state.dataIPShortCut->rNumericArgs(14)));
             ErrorsFound = true;
         }
 
@@ -3984,8 +3984,8 @@ bool getWaterTankStratifiedInput(EnergyPlusData &state)
                             format("{} = {}: Source outlet is located higher than overall tank height.",
                                    state.dataIPShortCut->cCurrentModuleObject,
                                    state.dataIPShortCut->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
-            ShowContinueError(state, format("{} = {:.4R}", state.dataIPShortCut->cNumericFieldNames(15), state.dataIPShortCut->rNumericArgs(15)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+            ShowContinueError(state, format("{} = {:.4f}", state.dataIPShortCut->cNumericFieldNames(15), state.dataIPShortCut->rNumericArgs(15)));
             ErrorsFound = true;
         }
 
@@ -4365,7 +4365,7 @@ bool GetWaterThermalTankInput(EnergyPlusData &state)
                     // check that water heater source side effectiveness is greater than 0
                     if (Tank.SourceEffectiveness <= 0.0) {
                         ShowSevereError(state,
-                                        format("{} = {}:  Invalid source side effectiveness for heat pump water heater = {:.3T}",
+                                        format("{} = {}:  Invalid source side effectiveness for heat pump water heater = {:.3f}",
                                                state.dataIPShortCut->cCurrentModuleObject,
                                                HPWH.Name,
                                                Tank.SourceEffectiveness));
@@ -5118,7 +5118,7 @@ void WaterThermalTankData::setupChilledWaterTankOutputVars(EnergyPlusData &state
     if (this->WaterThermalTankType == DataPlant::PlantEquipmentType::ChilledWaterTankStratified) {
 
         for (int NodeNum = 1; NodeNum <= this->Nodes; ++NodeNum) {
-            static constexpr std::string_view Format_724("Chilled Water Tank Stratified Node Information,{},{:.4T},{:.4T},{:.4T},{},{}\n");
+            static constexpr std::string_view Format_724("Chilled Water Tank Stratified Node Information,{},{:.4f},{:.4f},{:.4f},{},{}\n");
 
             print(state.files.eio,
                   Format_724,
@@ -5734,7 +5734,7 @@ void WaterThermalTankData::setupWaterHeaterOutputVars(EnergyPlusData &state)
     if (this->WaterThermalTankType == DataPlant::PlantEquipmentType::WtrHeaterStratified) {
 
         for (int NodeNum = 1; NodeNum <= this->Nodes; ++NodeNum) {
-            static constexpr std::string_view Format_723("Water Heater Stratified Node Information,{},{:.4T},{:.4T},{:.3T},{:.4T},{:.4T},{},{}\n");
+            static constexpr std::string_view Format_723("Water Heater Stratified Node Information,{},{:.4f},{:.4f},{:.3f},{:.4f},{:.4f},{},{}\n");
             print(state.files.eio,
                   Format_723,
                   NodeNum,
@@ -6138,10 +6138,10 @@ void WaterThermalTankData::initialize(EnergyPlusData &state, bool const FirstHVA
                     if (TankChangeRateScale < 60.0) { // nominal change over in less than one minute
                         ShowSevereError(state, "InitWaterThermalTank: Detected problem for stratified tank model.  Model cannot be applied.");
                         ShowContinueError(state, format("Occurs for stratified tank name = {}", this->Name));
-                        ShowContinueError(state, format("Tank volume = {:.4R} [m3]", this->Volume));
-                        ShowContinueError(state, format("Tank use side volume flow rate = {:.4R} [m3/s]", this->UseDesignVolFlowRate));
-                        ShowContinueError(state, format("Tank source side volume flow rate = {:.4R} [m3/s]", this->SourceDesignVolFlowRate));
-                        ShowContinueError(state, format("Nominal tank change over rate = {:.2R} [s]", TankChangeRateScale));
+                        ShowContinueError(state, format("Tank volume = {:.4f} [m3]", this->Volume));
+                        ShowContinueError(state, format("Tank use side volume flow rate = {:.4f} [m3/s]", this->UseDesignVolFlowRate));
+                        ShowContinueError(state, format("Tank source side volume flow rate = {:.4f} [m3/s]", this->SourceDesignVolFlowRate));
+                        ShowContinueError(state, format("Nominal tank change over rate = {:.2f} [s]", TankChangeRateScale));
                         ShowContinueError(
                             state, "Change over rate is too fast, increase tank volume, decrease connection flow rates or use mixed tank model");
 
@@ -6326,7 +6326,7 @@ void WaterThermalTankData::initialize(EnergyPlusData &state, bool const FirstHVA
                                this->Name));
                     ShowContinueErrorTimeStamp(state,
                                                format("Water heater tank set point temperature is reset to Tank Temperature Limit minus 1 C "
-                                                      "({:.2T}) and simulation continues.",
+                                                      "({:.2f}) and simulation continues.",
                                                       this->SetPointTemp));
                     this->ShowSetPointWarning = false;
                 }
@@ -6343,7 +6343,7 @@ void WaterThermalTankData::initialize(EnergyPlusData &state, bool const FirstHVA
                                this->Name));
                     ShowContinueErrorTimeStamp(state,
                                                format("Chilled water tank set point temperature is reset to Tank Temperature Limit plus 1 C "
-                                                      "({:.2T}) and simulation continues.",
+                                                      "({:.2f}) and simulation continues.",
                                                       this->SetPointTemp));
                     this->ShowSetPointWarning = false;
                 }
@@ -6409,7 +6409,7 @@ void WaterThermalTankData::initialize(EnergyPlusData &state, bool const FirstHVA
                                            state.dataWaterThermalTanks->HPWaterHeater(this->HeatPumpNum).Name));
                     ShowContinueErrorTimeStamp(state,
                                                format("Heat Pump water heater tank set point temperature is reset to Tank Temperature Limit "
-                                                      "minus 1 C ({:.2T}) and simulation continues.",
+                                                      "minus 1 C ({:.2f}) and simulation continues.",
                                                       state.dataWaterThermalTanks->HPWaterHeater(this->HeatPumpNum).SetPointTemp));
                     state.dataWaterThermalTanks->HPWaterHeater(this->HeatPumpNum).ShowSetPointWarning = false;
                 }
@@ -6702,8 +6702,8 @@ void WaterThermalTankData::initialize(EnergyPlusData &state, bool const FirstHVA
                 // if ( FanVolFlow  < HPWaterHeater( HPNum ).HPWHAirVolFlowRate( HPWaterHeater( HPNum ).NumofSpeed ) ) {
 
                 ShowWarningError(state,
-                                 format("InitWaterThermalTank: -air flow rate = {:.7T} in fan object  is less than the MSHP system air flow rate "
-                                        "when waterheating is required({:.7T}).",
+                                 format("InitWaterThermalTank: -air flow rate = {:.7f} in fan object  is less than the MSHP system air flow rate "
+                                        "when waterheating is required({:.7f}).",
                                         FanVolFlow,
                                         state.dataWaterThermalTanks->HPWaterHeater(HPNum).HPWHAirVolFlowRate(
                                             state.dataWaterThermalTanks->HPWaterHeater(HPNum).NumofSpeed)));
@@ -7337,7 +7337,7 @@ void WaterThermalTankData::CalcWaterThermalTankMixed(EnergyPlusData &state) // W
         if (this->TankTemp < 2) {
             if (this->FreezingErrorIndex == 0) {
                 ShowWarningError(state,
-                                 format("{}: {} = '{}':  Temperature of tank < 2C indicates of possibility of freeze. Tank Temperature = {:.2R} C.",
+                                 format("{}: {} = '{}':  Temperature of tank < 2C indicates of possibility of freeze. Tank Temperature = {:.2f} C.",
                                         RoutineName,
                                         this->Type,
                                         this->Name,
@@ -8208,7 +8208,7 @@ void WaterThermalTankData::CalcWaterThermalTankStratified(EnergyPlusData &state)
         if (this->TankTemp < 2) {
             if (this->FreezingErrorIndex == 0) {
                 ShowWarningError(state,
-                                 format("{}: {} = '{}':  Temperature of tank < 2C indicates of possibility of freeze. Tank Temperature = {:.2R} C.",
+                                 format("{}: {} = '{}':  Temperature of tank < 2C indicates of possibility of freeze. Tank Temperature = {:.2f} C.",
                                         RoutineName,
                                         this->Type,
                                         this->Name,
@@ -8541,7 +8541,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                                         "the desuperheater. Desuperheater will be disabled.",
                                         DesupHtr.Type,
                                         DesupHtr.Name));
-                ShowContinueErrorTimeStamp(state, format(" ...Desuperheater cut-in temperature = {:.2R}", MinTemp));
+                ShowContinueErrorTimeStamp(state, format(" ...Desuperheater cut-in temperature = {:.2f}", MinTemp));
             } else {
                 ShowRecurringWarningErrorAtEnd(state,
                                                DesupHtr.Type + " \"" + DesupHtr.Name +
@@ -8708,7 +8708,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                                     ShowWarningError(state, format("{} \"{}\"", DesupHtr.Type, DesupHtr.Name));
                                     ShowContinueError(state,
                                                       format("Iteration limit exceeded calculating desuperheater unit part-load ratio, "
-                                                             "maximum iterations = {}. Part-load ratio returned = {:.3R}",
+                                                             "maximum iterations = {}. Part-load ratio returned = {:.3f}",
                                                              IterNum,
                                                              partLoadRatio));
                                     ShowContinueErrorTimeStamp(state, "This error occurred in heating mode.");
@@ -8733,7 +8733,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                                     ShowWarningError(state, format("{} \"{}\"", DesupHtr.Type, DesupHtr.Name));
                                     ShowContinueError(state,
                                                       format("Desuperheater unit part-load ratio calculation failed: PLR limits of 0 to 1 "
-                                                             "exceeded. Part-load ratio used = {:.3R}",
+                                                             "exceeded. Part-load ratio used = {:.3f}",
                                                              partLoadRatio));
                                     ShowContinueError(state, "Please send this information to the EnergyPlus support group.");
                                     ShowContinueErrorTimeStamp(state, "This error occurred in heating mode.");
@@ -8834,7 +8834,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                                         ShowWarningError(state, format("{} \"{}\"", DesupHtr.Type, DesupHtr.Name));
                                         ShowContinueError(state,
                                                           format("Iteration limit exceeded calculating desuperheater unit part-load ratio, "
-                                                                 "maximum iterations = {}. Part-load ratio returned = {:.3R}",
+                                                                 "maximum iterations = {}. Part-load ratio returned = {:.3f}",
                                                                  IterNum,
                                                                  partLoadRatio));
                                         ShowContinueErrorTimeStamp(state, "This error occurred in float mode.");
@@ -8857,7 +8857,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                                         ShowWarningError(state, format("{} \"{}\"", DesupHtr.Type, DesupHtr.Name));
                                         ShowContinueError(state,
                                                           format("Desuperheater unit part-load ratio calculation failed: PLR limits of 0 to "
-                                                                 "1 exceeded. Part-load ratio used = {:.3R}",
+                                                                 "1 exceeded. Part-load ratio used = {:.3f}",
                                                                  partLoadRatio));
                                         ShowContinueError(state, "Please send this information to the EnergyPlus support group.");
                                         ShowContinueErrorTimeStamp(state, "This error occurred in float mode.");
@@ -9510,7 +9510,7 @@ void WaterThermalTankData::CalcHeatPumpWaterHeater(EnergyPlusData &state, bool c
                             ShowWarningError(state, format("{} \"{}\"", HeatPump.Type, HeatPump.Name));
                             ShowContinueError(state,
                                               format("Iteration limit exceeded calculating heat pump water heater compressor part-load ratio, "
-                                                     "maximum iterations = {}. Part-load ratio returned = {:.3R}",
+                                                     "maximum iterations = {}. Part-load ratio returned = {:.3f}",
                                                      IterNum,
                                                      state.dataWaterThermalTanks->hpPartLoadRatio));
                             ShowContinueErrorTimeStamp(state, "This error occurred in float mode.");
@@ -9533,7 +9533,7 @@ void WaterThermalTankData::CalcHeatPumpWaterHeater(EnergyPlusData &state, bool c
                             ShowWarningError(state, format("{} \"{}\"", HeatPump.Type, HeatPump.Name));
                             ShowContinueError(state,
                                               format("Heat pump water heater compressor part-load ratio calculation failed: PLR limits of 0 to 1 "
-                                                     "exceeded. Part-load ratio used = {:.3R}",
+                                                     "exceeded. Part-load ratio used = {:.3f}",
                                                      state.dataWaterThermalTanks->hpPartLoadRatio));
                             ShowContinueError(state, "Please send this information to the EnergyPlus support group.");
                             ShowContinueErrorTimeStamp(state, "This error occurred in float mode.");
@@ -9686,7 +9686,7 @@ void WaterThermalTankData::CalcHeatPumpWaterHeater(EnergyPlusData &state, bool c
                                 ShowWarningError(state, format("{} \"{}\"", HeatPump.Type, HeatPump.Name));
                                 ShowContinueError(state,
                                                   format("Iteration limit exceeded calculating heat pump water heater speed speed ratio ratio, "
-                                                         "maximum iterations = {}. speed ratio returned = {:.3R}",
+                                                         "maximum iterations = {}. speed ratio returned = {:.3f}",
                                                          IterNum,
                                                          SpeedRatio));
                                 ShowContinueErrorTimeStamp(state, "This error occurred in heating mode.");
@@ -9708,7 +9708,7 @@ void WaterThermalTankData::CalcHeatPumpWaterHeater(EnergyPlusData &state, bool c
                                 ShowWarningError(state, format("{} \"{}\"", HeatPump.Type, HeatPump.Name));
                                 ShowContinueError(state,
                                                   format("Heat pump water heater speed ratio calculation failed: speed ratio limits of 0 to 1 "
-                                                         "exceeded. speed ratio used = {:.3R}",
+                                                         "exceeded. speed ratio used = {:.3f}",
                                                          SpeedRatio));
                                 ShowContinueError(state, "Please send this information to the EnergyPlus support group.");
                                 ShowContinueErrorTimeStamp(state, "This error occurred in heating mode.");
@@ -12329,10 +12329,10 @@ void WaterThermalTankData::CalcStandardRatings(EnergyPlusData &state)
             MaxCapacity_loc = this->MaxCapacity;
         }
 
-        static constexpr std::string_view Format_720("Water Heater Information,{},{},{:.4T},{:.1T},{:.3T},{:.4T}\n");
+        static constexpr std::string_view Format_720("Water Heater Information,{},{},{:.4f},{:.1f},{:.3f},{:.4f}\n");
         print(state.files.eio, Format_720, this->Type, this->Name, this->Volume, MaxCapacity_loc, RecoveryEfficiency, EnergyFactor);
     } else {
-        static constexpr std::string_view Format_721("Heat Pump Water Heater Information,{},{},{:.4T},{:.1T},{:.3T},{:.4T},{:.0T}\n");
+        static constexpr std::string_view Format_721("Heat Pump Water Heater Information,{},{},{:.4f},{:.1f},{:.3f},{:.4f},{:.0f}\n");
         print(state.files.eio,
               Format_721,
               state.dataWaterThermalTanks->HPWaterHeater(this->HeatPumpNum).Type,
@@ -12368,7 +12368,7 @@ void WaterThermalTankData::ReportCWTankInits(EnergyPlusData &state)
         return;
     }
 
-    static constexpr std::string_view Format_728("Chilled Water Tank Information,{},{},{:.4T},{:.4T},{:.4T}\n");
+    static constexpr std::string_view Format_728("Chilled Water Tank Information,{},{},{:.4f},{:.4f},{:.4f}\n");
     print(state.files.eio, Format_728, this->Type, this->Name, this->Volume, this->UseDesignVolFlowRate, this->SourceDesignVolFlowRate);
 
     this->AlreadyReported = true;

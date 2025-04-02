@@ -270,7 +270,7 @@ void GetIndirectAbsorberInput(EnergyPlusData &state)
             thisChiller.NomPumpPowerWasAutoSized = true;
         }
         if (state.dataIPShortCut->rNumericArgs(1) == 0.0) {
-            ShowSevereError(state, format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
+            ShowSevereError(state, format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
             ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
             ErrorsFound = true;
         }
@@ -1093,8 +1093,8 @@ void IndirectAbsorberSpecs::sizeChiller(EnergyPlusData &state)
                         if (state.dataGlobal->DisplayExtraWarnings) {
                             if ((std::abs(tmpNomCap - NomCapUser) / NomCapUser) > state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state, format("SizeChillerAbsorptionIndirect: Potential issue with equipment sizing for {}", this->Name));
-                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", NomCapUser));
-                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpNomCap));
+                                ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", NomCapUser));
+                                ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpNomCap));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1149,8 +1149,8 @@ void IndirectAbsorberSpecs::sizeChiller(EnergyPlusData &state)
                     if (state.dataGlobal->DisplayExtraWarnings) {
                         if ((std::abs(tmpNomPumpPower - NomPumpPowerUser) / NomPumpPowerUser) > state.dataSize->AutoVsHardSizingThreshold) {
                             ShowMessage(state, format("SizeChillerAbsorptionIndirect: Potential issue with equipment sizing for {}", this->Name));
-                            ShowContinueError(state, format("User-Specified Nominal Pumping Power of {:.2R} [W]", NomPumpPowerUser));
-                            ShowContinueError(state, format("differs from Design Size Nominal Pumping Power of {:.2R} [W]", tmpNomPumpPower));
+                            ShowContinueError(state, format("User-Specified Nominal Pumping Power of {:.2f} [W]", NomPumpPowerUser));
+                            ShowContinueError(state, format("differs from Design Size Nominal Pumping Power of {:.2f} [W]", tmpNomPumpPower));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1198,9 +1198,9 @@ void IndirectAbsorberSpecs::sizeChiller(EnergyPlusData &state)
                                 state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state, format("SizeChillerElectricIndirect: Potential issue with equipment sizing for {}", this->Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Design Chilled Water Flow Rate of {:.5R} [m3/s]", EvapVolFlowRateUser));
+                                                  format("User-Specified Design Chilled Water Flow Rate of {:.5f} [m3/s]", EvapVolFlowRateUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Design Chilled Water Flow Rate of {:.5R} [m3/s]", tmpEvapVolFlowRate));
+                                    state, format("differs from Design Size Design Chilled Water Flow Rate of {:.5f} [m3/s]", tmpEvapVolFlowRate));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1287,9 +1287,9 @@ void IndirectAbsorberSpecs::sizeChiller(EnergyPlusData &state)
                                 state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state, format("SizeChillerAbsorptionIndirect: Potential issue with equipment sizing for {}", this->Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Design Condenser Water Flow Rate of {:.5R} [m3/s]", CondVolFlowRateUser));
+                                                  format("User-Specified Design Condenser Water Flow Rate of {:.5f} [m3/s]", CondVolFlowRateUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Design Condenser Water Flow Rate of {:.5R} [m3/s]", tmpCondVolFlowRate));
+                                    state, format("differs from Design Size Design Condenser Water Flow Rate of {:.5f} [m3/s]", tmpCondVolFlowRate));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1380,9 +1380,9 @@ void IndirectAbsorberSpecs::sizeChiller(EnergyPlusData &state)
                                             state, format("SizeChillerAbsorptionIndirect: Potential issue with equipment sizing for {}", this->Name));
                                         ShowContinueError(
                                             state,
-                                            format("User-Specified Design Generator Fluid Flow Rate of {:.5R} [m3/s]", GeneratorVolFlowRateUser));
+                                            format("User-Specified Design Generator Fluid Flow Rate of {:.5f} [m3/s]", GeneratorVolFlowRateUser));
                                         ShowContinueError(state,
-                                                          format("differs from Design Size Design Generator Fluid Flow Rate of {:.5R} [m3/s]",
+                                                          format("differs from Design Size Design Generator Fluid Flow Rate of {:.5f} [m3/s]",
                                                                  tmpGeneratorVolFlowRate));
                                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                         ShowContinueError(state,
@@ -1462,9 +1462,9 @@ void IndirectAbsorberSpecs::sizeChiller(EnergyPlusData &state)
                                             state, format("SizeChillerAbsorptionIndirect: Potential issue with equipment sizing for {}", this->Name));
                                         ShowContinueError(
                                             state,
-                                            format("User-Specified Design Generator Fluid Flow Rate of {:.5R} [m3/s]", GeneratorVolFlowRateUser));
+                                            format("User-Specified Design Generator Fluid Flow Rate of {:.5f} [m3/s]", GeneratorVolFlowRateUser));
                                         ShowContinueError(state,
-                                                          format("differs from Design Size Design Generator Fluid Flow Rate of {:.5R} [m3/s]",
+                                                          format("differs from Design Size Design Generator Fluid Flow Rate of {:.5f} [m3/s]",
                                                                  tmpGeneratorVolFlowRate));
                                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                         ShowContinueError(state,
@@ -1657,9 +1657,9 @@ void IndirectAbsorberSpecs::calculate(EnergyPlusData &state, Real64 const MyLoad
                 ++this->MinCondInletTempCtr;
                 ShowWarningError(state, format("Chiller:Absorption:Indirect \"{}\"", this->Name));
                 ShowContinueError(state,
-                                  format("...Entering condenser water temperature below specified minimum ({:.3R} C).", this->MinCondInletTemp));
+                                  format("...Entering condenser water temperature below specified minimum ({:.3f} C).", this->MinCondInletTemp));
                 ShowContinueError(
-                    state, format("...Entering condenser water temperature = {:.3R} C.", state.dataLoopNodes->Node(this->CondInletNodeNum).Temp));
+                    state, format("...Entering condenser water temperature = {:.3f} C.", state.dataLoopNodes->Node(this->CondInletNodeNum).Temp));
                 ShowContinueErrorTimeStamp(state, "...simulation continues.");
             } else {
                 ShowRecurringWarningErrorAtEnd(state,
@@ -1679,10 +1679,10 @@ void IndirectAbsorberSpecs::calculate(EnergyPlusData &state, Real64 const MyLoad
                     ++this->MinGenInletTempCtr;
                     ShowWarningError(state, format("Chiller:Absorption:Indirect \"{}\"", this->Name));
                     ShowContinueError(
-                        state, format("...Entering generator fluid temperature below specified minimum ({:.3R} C).", this->MinGeneratorInletTemp));
+                        state, format("...Entering generator fluid temperature below specified minimum ({:.3f} C).", this->MinGeneratorInletTemp));
                     ShowContinueError(
                         state,
-                        format("...Entering generator fluid temperature = {:.3R} C.", state.dataLoopNodes->Node(this->GeneratorInletNodeNum).Temp));
+                        format("...Entering generator fluid temperature = {:.3f} C.", state.dataLoopNodes->Node(this->GeneratorInletNodeNum).Temp));
                     ShowContinueErrorTimeStamp(state, "...simulation continues.");
                 } else {
                     ShowRecurringWarningErrorAtEnd(state,

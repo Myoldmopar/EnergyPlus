@@ -1910,7 +1910,7 @@ ErlValueType EvaluateExpression(EnergyPlusData &state, int const ExpressionNum, 
                         // throw Error
                         ReturnValue.Type = Value::Error;
                         ReturnValue.Error =
-                            format("EvaluateExpression: Attempted to raise to power with incompatible numbers: {:.6T} raised to {:.6T}",
+                            format("EvaluateExpression: Attempted to raise to power with incompatible numbers: {:.6f} raised to {:.6f}",
                                    Operand(1).Number,
                                    Operand(2).Number);
                         if (!state.dataGlobal->DoingSizing && !state.dataGlobal->KickOffSimulation && !state.dataEMSMgr->FinishProcessingUserInput) {
@@ -1982,7 +1982,7 @@ ErlValueType EvaluateExpression(EnergyPlusData &state, int const ExpressionNum, 
                 } else {
                     // throw Error
                     ReturnValue.Error =
-                        format("EvaluateExpression: Attempted to calculate exponential value of too large a number: {:.4T}", Operand(1).Number);
+                        format("EvaluateExpression: Attempted to calculate exponential value of too large a number: {:.4f}", Operand(1).Number);
                     ReturnValue.Type = Value::Error;
                     if (!state.dataGlobal->DoingSizing && !state.dataGlobal->KickOffSimulation && !state.dataEMSMgr->FinishProcessingUserInput) {
                         seriousErrorFound = true;
@@ -1996,7 +1996,7 @@ ErlValueType EvaluateExpression(EnergyPlusData &state, int const ExpressionNum, 
                 } else {
                     // throw error,
                     ReturnValue.Type = Value::Error;
-                    ReturnValue.Error = format("EvaluateExpression: Natural Log of zero or less! ln of value = {:.4T}", Operand(1).Number);
+                    ReturnValue.Error = format("EvaluateExpression: Natural Log of zero or less! ln of value = {:.4f}", Operand(1).Number);
                     if (!state.dataGlobal->DoingSizing && !state.dataGlobal->KickOffSimulation && !state.dataEMSMgr->FinishProcessingUserInput) {
                         seriousErrorFound = true;
                     }
@@ -2261,18 +2261,18 @@ ErlValueType EvaluateExpression(EnergyPlusData &state, int const ExpressionNum, 
             case ErlFunc::FatalHaltEp:
                 ShowSevereError(state, "EMS user program found serious problem and is halting simulation");
                 ShowContinueErrorTimeStamp(state, "");
-                ShowFatalError(state, format("EMS user program halted simulation with error code = {:.2T}", Operand(1).Number));
+                ShowFatalError(state, format("EMS user program halted simulation with error code = {:.2f}", Operand(1).Number));
                 ReturnValue = SetErlValueNumber(Operand(1).Number); // returns back the error code
                 break;
 
             case ErlFunc::SevereWarnEp:
-                ShowSevereError(state, format("EMS user program issued severe warning with error code = {:.2T}", Operand(1).Number));
+                ShowSevereError(state, format("EMS user program issued severe warning with error code = {:.2f}", Operand(1).Number));
                 ShowContinueErrorTimeStamp(state, "");
                 ReturnValue = SetErlValueNumber(Operand(1).Number); // returns back the error code
                 break;
 
             case ErlFunc::WarnEp:
-                ShowWarningError(state, format("EMS user program issued warning with error code = {:.2T}", Operand(1).Number));
+                ShowWarningError(state, format("EMS user program issued warning with error code = {:.2f}", Operand(1).Number));
                 ShowContinueErrorTimeStamp(state, "");
                 ReturnValue = SetErlValueNumber(Operand(1).Number); // returns back the error code
                 break;
@@ -2598,7 +2598,7 @@ ErlValueType EvaluateExpression(EnergyPlusData &state, int const ExpressionNum, 
                     }
                 } else {
                     ReturnValue.Type = DataRuntimeLanguage::Value::Error;
-                    ReturnValue.Error = format("{} function called with invalid arguments: Hour={:.1R}, Timestep={:.1R}",
+                    ReturnValue.Error = format("{} function called with invalid arguments: Hour={:.1f}, Timestep={:.1f}",
                                                ErlFuncNamesUC[(int)thisErlExpression.Operator],
                                                Operand(1).Number,
                                                Operand(2).Number);
@@ -2674,7 +2674,7 @@ ErlValueType EvaluateExpression(EnergyPlusData &state, int const ExpressionNum, 
                     }
                 } else {
                     ReturnValue.Type = DataRuntimeLanguage::Value::Error;
-                    ReturnValue.Error = format("{} function called with invalid arguments: Hour={:.1R}, Timestep={:.1R}",
+                    ReturnValue.Error = format("{} function called with invalid arguments: Hour={:.1f}, Timestep={:.1f}",
                                                ErlFuncNamesUC[(int)thisErlExpression.Operator],
                                                Operand(1).Number,
                                                Operand(2).Number);
@@ -3220,7 +3220,7 @@ void GetRuntimeLanguageUserInput(EnergyPlusData &state)
                     }
                 } else {
                     ShowSevereError(state, format("{}{}=\"{} invalid field.", RoutineName, cCurrentModuleObject, cAlphaArgs(1)));
-                    ShowContinueError(state, format("Invalid {}={:.2T}", cNumericFieldNames(1), rNumericArgs(1)));
+                    ShowContinueError(state, format("Invalid {}={:.2f}", cNumericFieldNames(1), rNumericArgs(1)));
                     ShowContinueError(state, "must be greater than zero");
                     ErrorsFound = true;
                 }
@@ -3822,7 +3822,7 @@ std::string ValueToString(ErlValueType const &Value)
         if (Value.Number == 0.0) {
             String = "0.0";
         } else {
-            String = format("{:.6T}", Value.Number); //(String)
+            String = format("{:.6f}", Value.Number); //(String)
         }
         break;
 

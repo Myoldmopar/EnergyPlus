@@ -200,7 +200,7 @@ void GetSurfaceListsInputs(EnergyPlusData &state)
                                            SurfList(Item).SurfName(SurfNum),
                                            SurfList(Item).Name));
                     ShowContinueError(state,
-                                      format("Flow fraction of {:.6R} is less than minimum criteria = {:.6R}",
+                                      format("Flow fraction of {:.6f} is less than minimum criteria = {:.6f}",
                                              SurfList(Item).SurfFlowFrac(SurfNum),
                                              SurfListMinFlowFrac));
                     ShowContinueError(state,

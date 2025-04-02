@@ -1744,8 +1744,8 @@ namespace HeatingCoils {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state,
                                                 format("SizeHeatingCoil: Potential issue with equipment sizing for {}, {}", CompType, CompName));
-                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", NominalCapacityUser));
-                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", NominalCapacityDes));
+                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", NominalCapacityUser));
+                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", NominalCapacityDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1766,8 +1766,8 @@ namespace HeatingCoils {
             for (int StageNum = 1; StageNum <= heatingCoil.NumOfStages - 1; ++StageNum) {
                 if (heatingCoil.MSNominalCapacity(StageNum) > heatingCoil.MSNominalCapacity(StageNum + 1)) {
                     ShowSevereError(state,
-                                    format("SizeHeatingCoil: {} {}, Stage {} Nominal Capacity ({:.2R} W) must be less than or equal to Stage {} "
-                                           "Nominal Capacity ({:.2R} W).",
+                                    format("SizeHeatingCoil: {} {}, Stage {} Nominal Capacity ({:.2f} W) must be less than or equal to Stage {} "
+                                           "Nominal Capacity ({:.2f} W).",
                                            heatingCoil.HeatingCoilType,
                                            heatingCoil.Name,
                                            StageNum,
@@ -2283,7 +2283,7 @@ namespace HeatingCoils {
                                          format("CalcFuelHeatingCoil: {}=\"{}\", PLF curve values",
                                                 HVAC::cAllCoilTypes(heatingCoil.HCoilType_Num),
                                                 heatingCoil.Name));
-                        ShowContinueError(state, format("The PLF curve value = {:.5T} for part-load ratio = {:.5T}", PLF, PartLoadRat));
+                        ShowContinueError(state, format("The PLF curve value = {:.5f} for part-load ratio = {:.5f}", PLF, PartLoadRat));
                         ShowContinueError(state, "PLF curve values must be >= 0.7. PLF has been reset to 0.7 and the simulation continues...");
                         ShowContinueError(state, "Check the IO reference manual for PLF curve guidance [Coil:Heating:Fuel].");
                     } else {
@@ -2301,7 +2301,7 @@ namespace HeatingCoils {
                                          format("CalcFuelHeatingCoil: {}=\"{}\", runtime fraction",
                                                 HVAC::cAllCoilTypes(heatingCoil.HCoilType_Num),
                                                 heatingCoil.Name));
-                        ShowContinueError(state, format("The runtime fraction exceeded 1.0. [{:.4T}].", heatingCoil.RTF));
+                        ShowContinueError(state, format("The runtime fraction exceeded 1.0. [{:.4f}].", heatingCoil.RTF));
                         ShowContinueError(state, "Runtime fraction is set to 1.0 and the simulation continues...");
                         ShowContinueError(state, "Check the IO reference manual for PLF curve guidance [Coil:Heating:Fuel].");
                     } else {
@@ -2556,7 +2556,7 @@ namespace HeatingCoils {
                                          format("CalcFuelHeatingCoil: {}=\"{}\", PLF curve values",
                                                 HVAC::cAllCoilTypes(heatingCoil.HCoilType_Num),
                                                 heatingCoil.Name));
-                        ShowContinueError(state, format("The PLF curve value = {:.5T} for part-load ratio = {:.5T}", PLF, PartLoadRat));
+                        ShowContinueError(state, format("The PLF curve value = {:.5f} for part-load ratio = {:.5f}", PLF, PartLoadRat));
                         ShowContinueError(state, "PLF curve values must be >= 0.7. PLF has been reset to 0.7 and the simulation continues...");
                         ShowContinueError(state, "Check the IO reference manual for PLF curve guidance [Coil:Heating:Fuel].");
                     } else {
@@ -2577,7 +2577,7 @@ namespace HeatingCoils {
                                          format("CalcFuelHeatingCoil: {}=\"{}\", runtime fraction",
                                                 HVAC::cAllCoilTypes(heatingCoil.HCoilType_Num),
                                                 heatingCoil.Name));
-                        ShowContinueError(state, format("The runtime fraction exceeded 1.0. [{:.4T}].", heatingCoil.RTF));
+                        ShowContinueError(state, format("The runtime fraction exceeded 1.0. [{:.4f}].", heatingCoil.RTF));
                         ShowContinueError(state, "Runtime fraction is set to 1.0 and the simulation continues...");
                         ShowContinueError(state, "Check the IO reference manual for PLF curve guidance [Coil:Heating:Fuel].");
                     } else {

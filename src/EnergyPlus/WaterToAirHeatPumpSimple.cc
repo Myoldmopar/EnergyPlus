@@ -406,7 +406,7 @@ namespace WaterToAirHeatPumpSimple {
                         ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, simpleWAHP.Name));
                         ShowContinueError(state, format("...{}=\"{}\" has out of range values.", cAlphaFields(9), AlphArray(9)));
                         ShowContinueError(state,
-                                          format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2T} is {:.3T}", MinCurvePLR, MinCurveVal));
+                                          format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2f} is {:.3f}", MinCurvePLR, MinCurveVal));
                         ShowContinueError(state, "...Setting curve minimum to 0.7 and simulation continues.");
                         Curve::SetCurveOutputMinValue(state, simpleWAHP.PLFCurveIndex, ErrorsFound, 0.7);
                     }
@@ -415,7 +415,7 @@ namespace WaterToAirHeatPumpSimple {
                         ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, simpleWAHP.Name));
                         ShowContinueError(state, format("...{} = {} has out of range value.", cAlphaFields(9), AlphArray(9)));
                         ShowContinueError(state,
-                                          format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2T} is {:.3T}", MaxCurvePLR, MaxCurveVal));
+                                          format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2f} is {:.3f}", MaxCurvePLR, MaxCurveVal));
                         ShowContinueError(state, "...Setting curve maximum to 1.0 and simulation continues.");
                         Curve::SetCurveOutputMaxValue(state, simpleWAHP.PLFCurveIndex, ErrorsFound, 1.0);
                     }
@@ -645,7 +645,7 @@ namespace WaterToAirHeatPumpSimple {
                         ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, simpleWAHP.Name));
                         ShowContinueError(state, format("...{}=\"{}\" has out of range values.", cAlphaFields(8), AlphArray(8)));
                         ShowContinueError(state,
-                                          format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2T} is {:.3T}", MinCurvePLR, MinCurveVal));
+                                          format("...Curve minimum must be >= 0.7, curve min at PLR = {:.2f} is {:.3f}", MinCurvePLR, MinCurveVal));
                         ShowContinueError(state, "...Setting curve minimum to 0.7 and simulation continues.");
                         Curve::SetCurveOutputMinValue(state, simpleWAHP.PLFCurveIndex, ErrorsFound, 0.7);
                     }
@@ -654,7 +654,7 @@ namespace WaterToAirHeatPumpSimple {
                         ShowWarningError(state, format("{}{}=\"{}\", invalid", RoutineName, CurrentModuleObject, simpleWAHP.Name));
                         ShowContinueError(state, format("...{} = {} has out of range value.", cAlphaFields(8), AlphArray(8)));
                         ShowContinueError(state,
-                                          format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2T} is {:.3T}", MaxCurvePLR, MaxCurveVal));
+                                          format("...Curve maximum must be <= 1.0, curve max at PLR = {:.2f} is {:.3f}", MaxCurvePLR, MaxCurveVal));
                         ShowContinueError(state, "...Setting curve maximum to 1.0 and simulation continues.");
                         Curve::SetCurveOutputMaxValue(state, simpleWAHP.PLFCurveIndex, ErrorsFound, 1.0);
                     }
@@ -1478,9 +1478,9 @@ namespace WaterToAirHeatPumpSimple {
                                 format("SizeHVACWaterToAir: Potential issue with equipment sizing for coil {}:WATERTOAIRHEATPUMP:EQUATIONFIT \"{}\"",
                                        WatertoAirHPNamesUC[static_cast<int>(simpleWatertoAirHP.WAHPType)],
                                        simpleWatertoAirHP.Name));
-                            ShowContinueError(state, format("User-Specified Rated Air Volume Flow Rate of {:.5R} [m3/s]", RatedAirVolFlowRateUser));
+                            ShowContinueError(state, format("User-Specified Rated Air Volume Flow Rate of {:.5f} [m3/s]", RatedAirVolFlowRateUser));
                             ShowContinueError(state,
-                                              format("differs from Design Size Rated Air Volume Flow Rate of {:.5R} [m3/s]", RatedAirVolFlowRateDes));
+                                              format("differs from Design Size Rated Air Volume Flow Rate of {:.5f} [m3/s]", RatedAirVolFlowRateDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -2118,9 +2118,9 @@ namespace WaterToAirHeatPumpSimple {
                                     format("SizeHVACWaterToAir: Potential issue with equipment sizing for coil {}:WATERTOAIRHEATPUMP:EQUATIONFIT {}",
                                            WatertoAirHPNamesUC[static_cast<int>(simpleWatertoAirHP.WAHPType)],
                                            simpleWatertoAirHP.Name));
-                                ShowContinueError(state, format("User-Specified Rated Total Cooling Capacity of {:.2R} [W]", RatedCapCoolTotalUser));
+                                ShowContinueError(state, format("User-Specified Rated Total Cooling Capacity of {:.2f} [W]", RatedCapCoolTotalUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Rated Total Cooling Capacity of {:.2R} [W]", RatedCapCoolTotalDes));
+                                    state, format("differs from Design Size Rated Total Cooling Capacity of {:.2f} [W]", RatedCapCoolTotalDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -2214,9 +2214,9 @@ namespace WaterToAirHeatPumpSimple {
                                            WatertoAirHPNamesUC[static_cast<int>(simpleWatertoAirHP.WAHPType)],
                                            simpleWatertoAirHP.Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Rated Sensible Cooling Capacity of {:.2R} [W]", RatedCapCoolSensUser));
+                                                  format("User-Specified Rated Sensible Cooling Capacity of {:.2f} [W]", RatedCapCoolSensUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Rated Sensible Cooling Capacity of {:.2R} [W]", RatedCapCoolSensDes));
+                                    state, format("differs from Design Size Rated Sensible Cooling Capacity of {:.2f} [W]", RatedCapCoolSensDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -2256,29 +2256,29 @@ namespace WaterToAirHeatPumpSimple {
                     ShowContinueError(state, "Both of these capacity inputs have been autosized.");
                     ShowContinueError(
                         state,
-                        format("Rated Sensible Cooling Capacity at Rated Conditions = {:.2T} W", simpleWatertoAirHP.RatedCapCoolSensDesAtRatedCdts));
+                        format("Rated Sensible Cooling Capacity at Rated Conditions = {:.2f} W", simpleWatertoAirHP.RatedCapCoolSensDesAtRatedCdts));
                     ShowContinueError(
-                        state, format("Rated Total Cooling Capacity at Rated Conditions    = {:.2T} W", simpleWatertoAirHP.RatedCapCoolAtRatedCdts));
+                        state, format("Rated Total Cooling Capacity at Rated Conditions    = {:.2f} W", simpleWatertoAirHP.RatedCapCoolAtRatedCdts));
                     ShowContinueError(state, "See eio file for further details.");
                     ShowContinueError(state, "Check Total and Sensible Cooling Capacity coefficients in curves to ensure they are accurate.");
                     ShowContinueError(state, "Check Zone and System Sizing objects to verify sizing inputs.");
                     ShowContinueError(state, "Sizing statistics:");
-                    ShowContinueError(state, format("Rated entering Air Wet-Bulb Temperature = {:.3T} C", RatedMixWetBulb));
-                    ShowContinueError(state, format("Peak entering Air Wet-Bulb Temperature = {:.3T} C", MixWetBulb));
-                    ShowContinueError(state, format("Entering Water Temperature used = {:.3T} C", simpleWatertoAirHP.RatedEntWaterTemp));
+                    ShowContinueError(state, format("Rated entering Air Wet-Bulb Temperature = {:.3f} C", RatedMixWetBulb));
+                    ShowContinueError(state, format("Peak entering Air Wet-Bulb Temperature = {:.3f} C", MixWetBulb));
+                    ShowContinueError(state, format("Entering Water Temperature used = {:.3f} C", simpleWatertoAirHP.RatedEntWaterTemp));
                     ShowContinueError(state, "Design air and water flow rates = 1.0");
                     ShowContinueError(
-                        state, format("Rated ratio of load-side air wet-bulb temperature to 283.15 C (Rated ratioTWB) = {:.3T}", RatedratioTWB));
+                        state, format("Rated ratio of load-side air wet-bulb temperature to 283.15 C (Rated ratioTWB) = {:.3f}", RatedratioTWB));
                     ShowContinueError(
-                        state, format("Rated ratio of source-side inlet water temperature to 283.15 C (Rated ratioTS)  = {:.3T}", RatedratioTS));
+                        state, format("Rated ratio of source-side inlet water temperature to 283.15 C (Rated ratioTS)  = {:.3f}", RatedratioTS));
                     ShowContinueError(state,
-                                      format("Peak ratio of load-side air wet-bulb temperature to 283.15 C (Peak ratioTWB) = {:.3T}", ratioTWB));
+                                      format("Peak ratio of load-side air wet-bulb temperature to 283.15 C (Peak ratioTWB) = {:.3f}", ratioTWB));
                     ShowContinueError(state,
-                                      format("Peak ratio of source-side inlet water temperature to 283.15 C (Peak ratioTS)  = {:.3T}", ratioTS));
-                    ShowContinueError(state, format("Rated Total Cooling Capacity Modifier = {:.5T}", RatedTotCapTempModFac));
-                    ShowContinueError(state, format("Peak Design Total Cooling Capacity Modifier = {:.5T}", PeakTotCapTempModFac));
-                    ShowContinueError(state, format("Rated Sensible Cooling Capacity Modifier = {:.5T}", RatedSensCapTempModFac));
-                    ShowContinueError(state, format("Peak Design Sensible Cooling Capacity Modifier = {:.5T}", PeakSensCapTempModFac));
+                                      format("Peak ratio of source-side inlet water temperature to 283.15 C (Peak ratioTS)  = {:.3f}", ratioTS));
+                    ShowContinueError(state, format("Rated Total Cooling Capacity Modifier = {:.5f}", RatedTotCapTempModFac));
+                    ShowContinueError(state, format("Peak Design Total Cooling Capacity Modifier = {:.5f}", PeakTotCapTempModFac));
+                    ShowContinueError(state, format("Rated Sensible Cooling Capacity Modifier = {:.5f}", RatedSensCapTempModFac));
+                    ShowContinueError(state, format("Peak Design Sensible Cooling Capacity Modifier = {:.5f}", PeakSensCapTempModFac));
                     ShowContinueError(state,
                                       "...Rated Total Cooling Capacity at Rated Conditions = Total Peak Design Load * Rated Total "
                                       "Cooling Capacity Modifier  / "
@@ -2298,26 +2298,26 @@ namespace WaterToAirHeatPumpSimple {
                                             simpleWatertoAirHP.Name));
                     ShowContinueError(state, format("{}: Rated Sensible Cooling Capacity > Rated Total Cooling Capacity", RoutineName));
                     ShowContinueError(state, "Only the Rated total capacity input is autosized, consider autosizing both inputs.");
-                    ShowContinueError(state, format("Rated Sensible Cooling Capacity = {:.2T} W", simpleWatertoAirHP.RatedCapCoolSensDesAtRatedCdts));
-                    ShowContinueError(state, format("Rated Total Cooling Capacity    = {:.2T} W", simpleWatertoAirHP.RatedCapCoolAtRatedCdts));
+                    ShowContinueError(state, format("Rated Sensible Cooling Capacity = {:.2f} W", simpleWatertoAirHP.RatedCapCoolSensDesAtRatedCdts));
+                    ShowContinueError(state, format("Rated Total Cooling Capacity    = {:.2f} W", simpleWatertoAirHP.RatedCapCoolAtRatedCdts));
                     ShowContinueError(state, "See eio file for further details.");
                     ShowContinueError(state, "Check Total and Sensible Cooling Capacity coefficients in curves to ensure they are accurate.");
                     ShowContinueError(state, "Check Zone and System Sizing objects to verify sizing inputs.");
                     ShowContinueError(state, "Sizing statistics for Total Cooling Capacity:");
-                    ShowContinueError(state, format("Rated entering Air Wet-Bulb Temperature = {:.3T} C", RatedMixWetBulb));
-                    ShowContinueError(state, format("Peak entering Air Wet-Bulb Temperature = {:.3T} C", MixWetBulb));
-                    ShowContinueError(state, format("Entering Water Temperature used = {:.3T} C", simpleWatertoAirHP.RatedEntWaterTemp));
+                    ShowContinueError(state, format("Rated entering Air Wet-Bulb Temperature = {:.3f} C", RatedMixWetBulb));
+                    ShowContinueError(state, format("Peak entering Air Wet-Bulb Temperature = {:.3f} C", MixWetBulb));
+                    ShowContinueError(state, format("Entering Water Temperature used = {:.3f} C", simpleWatertoAirHP.RatedEntWaterTemp));
                     ShowContinueError(state, "Design air and water flow rates = 1.0");
                     ShowContinueError(
-                        state, format("Rated ratio of load-side air wet-bulb temperature to 283.15 C (Rated ratioTWB) = {:.3T}", RatedratioTWB));
+                        state, format("Rated ratio of load-side air wet-bulb temperature to 283.15 C (Rated ratioTWB) = {:.3f}", RatedratioTWB));
                     ShowContinueError(
-                        state, format("Rated ratio of source-side inlet water temperature to 283.15 C (Rated ratioTS)  = {:.3T}", RatedratioTS));
+                        state, format("Rated ratio of source-side inlet water temperature to 283.15 C (Rated ratioTS)  = {:.3f}", RatedratioTS));
                     ShowContinueError(state,
-                                      format("Peak ratio of load-side air wet-bulb temperature to 283.15 C (Peak ratioTWB) = {:.3T}", ratioTWB));
+                                      format("Peak ratio of load-side air wet-bulb temperature to 283.15 C (Peak ratioTWB) = {:.3f}", ratioTWB));
                     ShowContinueError(state,
-                                      format("Peak ratio of source-side inlet water temperature to 283.15 C (Peak ratioTS)  = {:.3T}", ratioTS));
-                    ShowContinueError(state, format("Rated Total Cooling Capacity Modifier = {:.5T}", RatedTotCapTempModFac));
-                    ShowContinueError(state, format("Peak Design Total Cooling Capacity Modifier = {:.5T}", PeakTotCapTempModFac));
+                                      format("Peak ratio of source-side inlet water temperature to 283.15 C (Peak ratioTS)  = {:.3f}", ratioTS));
+                    ShowContinueError(state, format("Rated Total Cooling Capacity Modifier = {:.5f}", RatedTotCapTempModFac));
+                    ShowContinueError(state, format("Peak Design Total Cooling Capacity Modifier = {:.5f}", PeakTotCapTempModFac));
                     ShowContinueError(state,
                                       "...Rated Total Cooling Capacity at Rated Conditions = Total Peak Design Load * Rated Total "
                                       "Cooling Capacity Modifier  / "
@@ -2447,7 +2447,7 @@ namespace WaterToAirHeatPumpSimple {
                                 ShowContinueError(state,
                                                   "Heating capacity as a function of temperature curve output is not equal to 1.0 (+ or - 2%) "
                                                   "at rated conditions.");
-                                ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedHeatCapTempModFac));
+                                ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedHeatCapTempModFac));
                             }
                         }
                         // calculate the rated capacity based on peak conditions
@@ -2554,7 +2554,7 @@ namespace WaterToAirHeatPumpSimple {
                                 ShowContinueError(state,
                                                   "Heating capacity as a function of temperature curve output is not equal to 1.0 (+ or - 2%) "
                                                   "at rated conditions.");
-                                ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedHeatCapTempModFac));
+                                ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedHeatCapTempModFac));
                             }
                             if (RatedHeatPowerTempModFac > 1.02 || RatedHeatPowerTempModFac < 0.98) {
                                 ShowWarningError(state,
@@ -2562,7 +2562,7 @@ namespace WaterToAirHeatPumpSimple {
                                 ShowContinueError(state,
                                                   "Heating power consumption as a function of temperature curve output is not equal to "
                                                   "1.0 (+ or - 2%) at rated conditions.");
-                                ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedHeatPowerTempModFac));
+                                ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedHeatPowerTempModFac));
                             }
                         }
                         // calculate the rated capacity based on peak conditions
@@ -2714,8 +2714,8 @@ namespace WaterToAirHeatPumpSimple {
                                 format("SizeHVACWaterToAir: Potential issue with equipment sizing for coil {}:WATERTOAIRHEATPUMP:EQUATIONFIT {}",
                                        WatertoAirHPNamesUC[static_cast<int>(simpleWatertoAirHP.WAHPType)],
                                        simpleWatertoAirHP.Name));
-                            ShowContinueError(state, format("User-Specified Rated Heating Capacity of {:.2R} [W]", RatedCapHeatUser));
-                            ShowContinueError(state, format("differs from Design Size Rated Heating Capacity of {:.2R} [W]", RatedCapHeatDes));
+                            ShowContinueError(state, format("User-Specified Rated Heating Capacity of {:.2f} [W]", RatedCapHeatUser));
+                            ShowContinueError(state, format("differs from Design Size Rated Heating Capacity of {:.2f} [W]", RatedCapHeatDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -2754,8 +2754,8 @@ namespace WaterToAirHeatPumpSimple {
                                                  companionCoolingCoil.WAHPType,
                                                  companionCoolingCoil.Name));
                         ShowContinueError(state, "...heating capacity is disproportionate (> 20% different) to total cooling capacity");
-                        ShowContinueError(state, format("...heating capacity = {:.3T} W", simpleWatertoAirHP.RatedCapHeat));
-                        ShowContinueError(state, format("...cooling capacity = {:.3T} W", companionCoolingCoil.RatedCapCoolTotal));
+                        ShowContinueError(state, format("...heating capacity = {:.3f} W", simpleWatertoAirHP.RatedCapHeat));
+                        ShowContinueError(state, format("...cooling capacity = {:.3f} W", companionCoolingCoil.RatedCapCoolTotal));
                     }
                 }
             }
@@ -2951,8 +2951,8 @@ namespace WaterToAirHeatPumpSimple {
                                     format("SizeHVACWaterToAir: Potential issue with equipment sizing for coil {}:WATERTOAIRHEATPUMP:EQUATIONFIT {}",
                                            simpleWatertoAirHP.WAHPType,
                                            simpleWatertoAirHP.Name));
-                        ShowContinueError(state, format("User-Specified Rated Water Flow Rate of {:.5R} [m3/s]", RatedWaterVolFlowRateUser));
-                        ShowContinueError(state, format("differs from Design Size Rated Water Flow Rate of {:.5R} [m3/s]", RatedWaterVolFlowRateDes));
+                        ShowContinueError(state, format("User-Specified Rated Water Flow Rate of {:.5f} [m3/s]", RatedWaterVolFlowRateUser));
+                        ShowContinueError(state, format("differs from Design Size Rated Water Flow Rate of {:.5f} [m3/s]", RatedWaterVolFlowRateDes));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -4089,7 +4089,7 @@ namespace WaterToAirHeatPumpSimple {
                         ShowContinueError(state,
                                           "Total cooling capacity as a function of temperature curve output is not equal to 1.0 (+ or - 2%) "
                                           "at rated conditions.");
-                        ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedTotCapTempModFac));
+                        ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedTotCapTempModFac));
                     }
                     if (RatedCoolPowerTempModFac > 1.02 || RatedCoolPowerTempModFac < 0.98) {
                         ShowWarningError(state,
@@ -4099,7 +4099,7 @@ namespace WaterToAirHeatPumpSimple {
                         ShowContinueError(state,
                                           "Cooling power consumption as a function of temperature curve output is not equal to 1.0 (+ or - 2%) "
                                           "at rated conditions.");
-                        ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedCoolPowerTempModFac));
+                        ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedCoolPowerTempModFac));
                     }
                     if (state.dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(WhichCoil).RatedEntAirDrybulbTemp != DataSizing::AutoSize) {
                         Real64 RatedratioTDB = (state.dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(WhichCoil).RatedEntAirDrybulbTemp +
@@ -4115,7 +4115,7 @@ namespace WaterToAirHeatPumpSimple {
                             ShowContinueError(state,
                                               "Sensible cooling capacity as a function of temperature curve output is not equal to 1.0 (+ or - 2%) "
                                               "at rated conditions.");
-                            ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedSensCapTempModFac));
+                            ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedSensCapTempModFac));
                         }
                     }
                 }
@@ -4138,7 +4138,7 @@ namespace WaterToAirHeatPumpSimple {
                                                 state.dataWaterToAirHeatPumpSimple->SimpleWatertoAirHP(WhichCoil).Name));
                         ShowContinueError(
                             state, "Heating capacity as a function of temperature curve output is not equal to 1.0 (+ or - 2%) at rated conditions.");
-                        ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedHeatCapTempModFac));
+                        ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedHeatCapTempModFac));
                     }
                     if (RatedHeatPowerTempModFac > 1.02 || RatedHeatPowerTempModFac < 0.98) {
                         ShowWarningError(state,
@@ -4148,7 +4148,7 @@ namespace WaterToAirHeatPumpSimple {
                         ShowContinueError(state,
                                           "Heating power consumption as a function of temperature curve output is not equal to 1.0 (+ or - 2%) at "
                                           "rated conditions.");
-                        ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", RatedHeatPowerTempModFac));
+                        ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", RatedHeatPowerTempModFac));
                     }
                 }
             }

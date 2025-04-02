@@ -585,7 +585,7 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                 if (spm->maxSetTemp < spm->minSetTemp) {
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spm->Name));
                     ShowContinueError(state,
-                                      format("...maximum_supply_air_temperature=[{:.1R}] is less than minimum_supply_air_temperature=[{:.1R}].",
+                                      format("...maximum_supply_air_temperature=[{:.1f}] is less than minimum_supply_air_temperature=[{:.1f}].",
                                              spm->maxSetTemp,
                                              spm->minSetTemp));
                 }
@@ -599,7 +599,7 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                 if (spm->maxSetTemp < spm->minSetTemp) {
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spm->Name));
                     ShowContinueError(state,
-                                      format("...maximum_supply_air_temperature=[{:.1R}] is less than minimum_supply_air_temperature=[{:.1R}].",
+                                      format("...maximum_supply_air_temperature=[{:.1f}] is less than minimum_supply_air_temperature=[{:.1f}].",
                                              spm->maxSetTemp,
                                              spm->minSetTemp));
                 }
@@ -611,7 +611,7 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                 if (spm->maxSetTemp < spm->minSetTemp) {
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spm->Name));
                     ShowContinueError(state,
-                                      format("...maximum_supply_air_temperature=[{:.1R}] is less than minimum_supply_air_temperature=[{:.1R}].",
+                                      format("...maximum_supply_air_temperature=[{:.1f}] is less than minimum_supply_air_temperature=[{:.1f}].",
                                              spm->maxSetTemp,
                                              spm->minSetTemp));
                 }
@@ -634,7 +634,7 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                 if (spm->maxSetHum < spm->minSetHum) {
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spm->Name));
                     ShowContinueError(state,
-                                      format("...maximum_setpoint_humidity_ratio=[{:.1R}] is less than minimum_setpoint_humidity_ratio=[{:.1R}].",
+                                      format("...maximum_setpoint_humidity_ratio=[{:.1f}] is less than minimum_setpoint_humidity_ratio=[{:.1f}].",
                                              spm->maxSetHum,
                                              spm->minSetHum));
                 }
@@ -767,7 +767,7 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                     if (spmOA->high2 < spmOA->low2) {
                         ShowWarningError(state, format("{}: {}=\"{}\", invalid field.", routineName, cCurrentModuleObject, spmOA->Name));
                         ShowContinueError(state,
-                                          format("...{}=[{:.1R}] is less than {}=[{:.1R}].",
+                                          format("...{}=[{:.1f}] is less than {}=[{:.1f}].",
                                                  "outdoor_high_temperature_2",
                                                  spmOA->high2,
                                                  "outdoor_low_temperature_2",
@@ -1029,7 +1029,7 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                 spmWTF->minTurndown = ip->getRealFieldValue(fields, props, "minimum_turndown_ratio");
                 if (spmWTF->minTurndown >= 0.8) {
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spmWTF->Name));
-                    ShowContinueError(state, format("...minimum_turndown_ratio=[{:.2R}] is greater than 0.8;", spmWTF->minTurndown));
+                    ShowContinueError(state, format("...minimum_turndown_ratio=[{:.2f}] is greater than 0.8;", spmWTF->minTurndown));
                     ShowContinueError(state, "...typical values for minimum_turndown_ratio are less than 0.8.");
                 }
 
@@ -1131,7 +1131,7 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                                                 cCurrentModuleObject,
                                                 spmFGT->Name));
                         ShowContinueError(state,
-                                          format("Defaults, constant throughout the year of ({:.1R}) will be used.",
+                                          format("Defaults, constant throughout the year of ({:.1f}) will be used.",
                                                  state.dataEnvrn->GroundTemp[(int)spmFGT->refTempType]));
                     }
                     state.dataSetPointManager->NoGroundTempObjWarning[(int)spmFGT->refTempType] = false;
@@ -1176,8 +1176,8 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                 if (spmCET->maxCondenserEnteringTemp < spmCET->towerDesignInletAirWetBulbTemp) {
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spmCET->Name));
                     ShowContinueError(state,
-                                      format("...maximum_condenser_entering_water_temperature=[{:.1R}] is less than "
-                                             "cooling_tower_design_inlet_air_wet-bulb_temperature=[{:.1R}].",
+                                      format("...maximum_condenser_entering_water_temperature=[{:.1f}] is less than "
+                                             "cooling_tower_design_inlet_air_wet-bulb_temperature=[{:.1f}].",
                                              spmCET->maxCondenserEnteringTemp,
                                              spmCET->towerDesignInletAirWetBulbTemp));
                 }
@@ -1211,8 +1211,8 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                     // throw warning, off must be warmer than on
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spmSZOSC->Name));
                     ShowContinueError(state,
-                                      format("...cooling_stage_off_supply_air_setpoint_temperature=[{:.1R}] is less than "
-                                             "cooling_stage_on_supply_air_setpoint_temperature=[{:.1R}].",
+                                      format("...cooling_stage_off_supply_air_setpoint_temperature=[{:.1f}] is less than "
+                                             "cooling_stage_on_supply_air_setpoint_temperature=[{:.1f}].",
                                              spmSZOSC->coolingOffSetPt,
                                              spmSZOSC->coolingOnSetPt));
                 }
@@ -1248,8 +1248,8 @@ void GetSetPointManagerInputData(EnergyPlusData &state, bool &ErrorsFound)
                     // throw warning, off must be warmer than on
                     ShowWarningError(state, format("{}: {}=\"{}\",", routineName, cCurrentModuleObject, spmSZOSH->Name));
                     ShowContinueError(state,
-                                      format("...heating_stage_off_supply_air_setpoint_temperature=[{:.1R}] is less than "
-                                             "heating_stage_on_supply_air_setpoint_temperature=[{:.1R}].",
+                                      format("...heating_stage_off_supply_air_setpoint_temperature=[{:.1f}] is less than "
+                                             "heating_stage_on_supply_air_setpoint_temperature=[{:.1f}].",
                                              spmSZOSH->heatingOffSetPt,
                                              spmSZOSH->heatingOnSetPt));
                 }

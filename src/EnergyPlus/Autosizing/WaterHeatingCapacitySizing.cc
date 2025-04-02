@@ -122,27 +122,27 @@ Real64 WaterHeatingCapacitySizer::size(EnergyPlusData &state, Real64 _originalVa
                 std::string msg = this->callingRoutine + ": Potential issue with equipment sizing for " + this->compType + ' ' + this->compName;
                 this->addErrorMessage(msg);
                 ShowWarningMessage(state, msg);
-                msg = format("...Rated Total Heating Capacity = {:.2T} [W]", this->autoSizedValue);
+                msg = format("...Rated Total Heating Capacity = {:.2f} [W]", this->autoSizedValue);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
-                msg = format("...Air flow rate used for sizing = {:.5T} [m3/s]", DesMassFlow / state.dataEnvrn->StdRhoAir);
+                msg = format("...Air flow rate used for sizing = {:.5f} [m3/s]", DesMassFlow / state.dataEnvrn->StdRhoAir);
                 this->addErrorMessage(msg);
                 ShowContinueError(state, msg);
                 if (this->termUnitSingDuct || this->termUnitPIU || this->termUnitIU || this->zoneEqFanCoil || this->zoneEqUnitHeater) {
-                    msg = format("...Air flow rate used for sizing = {:.5T} [m3/s]", DesMassFlow / state.dataEnvrn->StdRhoAir);
+                    msg = format("...Air flow rate used for sizing = {:.5f} [m3/s]", DesMassFlow / state.dataEnvrn->StdRhoAir);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
-                    msg = format("...Plant loop temperature difference = {:.2T} [C]", this->dataWaterCoilSizHeatDeltaT);
+                    msg = format("...Plant loop temperature difference = {:.2f} [C]", this->dataWaterCoilSizHeatDeltaT);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
                 } else {
-                    msg = format("...Coil inlet air temperature used for sizing = {:.2T} [C]", CoilInTemp);
+                    msg = format("...Coil inlet air temperature used for sizing = {:.2f} [C]", CoilInTemp);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
-                    msg = format("...Coil outlet air temperature used for sizing = {:.2T} [C]", CoilOutTemp);
+                    msg = format("...Coil outlet air temperature used for sizing = {:.2f} [C]", CoilOutTemp);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
-                    msg = format("...Coil outlet air humidity ratio used for sizing = {:.2T} [kgWater/kgDryAir]", CoilOutHumRat);
+                    msg = format("...Coil outlet air humidity ratio used for sizing = {:.2f} [kgWater/kgDryAir]", CoilOutHumRat);
                     this->addErrorMessage(msg);
                     ShowContinueError(state, msg);
                 }

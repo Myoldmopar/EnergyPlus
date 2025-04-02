@@ -416,8 +416,8 @@ namespace UnitVentilator {
                 if (FanVolFlow != DataSizing::AutoSize && unitVent.MaxAirVolFlow != DataSizing::AutoSize && FanVolFlow < unitVent.MaxAirVolFlow) {
                     ShowSevereError(state, format("{}{}=\"{}\".", RoutineName, CurrentModuleObject, unitVent.Name));
                     ShowContinueError(state,
-                                      format("...air flow rate [{:.7T}] in fan object {} is less than the unit ventilator maximum "
-                                             "supply air flow rate [{:.7T}].",
+                                      format("...air flow rate [{:.7f}] in fan object {} is less than the unit ventilator maximum "
+                                             "supply air flow rate [{:.7f}].",
                                              FanVolFlow,
                                              unitVent.FanName,
                                              unitVent.MaxAirVolFlow));
@@ -1710,9 +1710,9 @@ namespace UnitVentilator {
                                             format("SizeUnitVentilator: Potential issue with equipment sizing for {} {}",
                                                    state.dataUnitVentilators->cMO_UnitVentilator,
                                                    unitVent.Name));
-                                ShowContinueError(state, format("User-Specified Maximum Outdoor Air Flow Rate of {:.5R} [m3/s]", OutAirVolFlowUser));
+                                ShowContinueError(state, format("User-Specified Maximum Outdoor Air Flow Rate of {:.5f} [m3/s]", OutAirVolFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Maximum Outdoor Air Flow Rate of {:.5R} [m3/s]", OutAirVolFlowDes));
+                                    state, format("differs from Design Size Maximum Outdoor Air Flow Rate of {:.5f} [m3/s]", OutAirVolFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1772,9 +1772,9 @@ namespace UnitVentilator {
                                                    state.dataUnitVentilators->cMO_UnitVentilator,
                                                    unitVent.Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Minimum Outdoor Air Flow Rate of {:.5R} [m3/s]", MinOutAirVolFlowUser));
+                                                  format("User-Specified Minimum Outdoor Air Flow Rate of {:.5f} [m3/s]", MinOutAirVolFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Minimum Outdoor Air Flow Rate of {:.5R} [m3/s]", MinOutAirVolFlowDes));
+                                    state, format("differs from Design Size Minimum Outdoor Air Flow Rate of {:.5f} [m3/s]", MinOutAirVolFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1923,9 +1923,9 @@ namespace UnitVentilator {
                                                        state.dataUnitVentilators->cMO_UnitVentilator,
                                                        unitVent.Name));
                                     ShowContinueError(state,
-                                                      format("User-Specified Maximum Hot Water Flow of {:.5R} [m3/s]", MaxVolHotWaterFlowUser));
+                                                      format("User-Specified Maximum Hot Water Flow of {:.5f} [m3/s]", MaxVolHotWaterFlowUser));
                                     ShowContinueError(
-                                        state, format("differs from Design Size Maximum Hot Water Flow of {:.5R} [m3/s]", MaxVolHotWaterFlowDes));
+                                        state, format("differs from Design Size Maximum Hot Water Flow of {:.5f} [m3/s]", MaxVolHotWaterFlowDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -2059,9 +2059,9 @@ namespace UnitVentilator {
                                                 format("SizeUnitVentilator: Potential issue with equipment sizing for {} = \"{}\"",
                                                        state.dataUnitVentilators->cMO_UnitVentilator,
                                                        unitVent.Name));
-                                    ShowContinueError(state, format("User-Specified Maximum Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowUser));
+                                    ShowContinueError(state, format("User-Specified Maximum Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowUser));
                                     ShowContinueError(state,
-                                                      format("differs from Design Size Maximum Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowDes));
+                                                      format("differs from Design Size Maximum Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -2187,8 +2187,8 @@ namespace UnitVentilator {
                                     ShowContinueError(state,
                                                       format("Occurs in {} = \"{}\"", state.dataUnitVentilators->cMO_UnitVentilator, unitVent.Name));
                                     ShowContinueError(state, "...Sizing information found during sizing simulation:");
-                                    ShowContinueError(state, format("...Calculated coil design load = {:.3T} W", DesCoolingLoad));
-                                    ShowContinueError(state, format("...Calculated water flow rate  = {:.3T} m3/s", MaxVolColdWaterFlowDes));
+                                    ShowContinueError(state, format("...Calculated coil design load = {:.3f} W", DesCoolingLoad));
+                                    ShowContinueError(state, format("...Calculated water flow rate  = {:.3f} m3/s", MaxVolColdWaterFlowDes));
                                     ShowContinueError(state,
                                                       "...Water flow rate will be set to 0. Check sizing inputs for zone and plant, inputs for water "
                                                       "cooling coil object, and design day specifications.");
@@ -2225,9 +2225,9 @@ namespace UnitVentilator {
                                                        state.dataUnitVentilators->cMO_UnitVentilator,
                                                        unitVent.Name));
                                     ShowContinueError(state,
-                                                      format("User-Specified Maximum Cold Water Flow of {:.5R} [m3/s]", MaxVolColdWaterFlowUser));
+                                                      format("User-Specified Maximum Cold Water Flow of {:.5f} [m3/s]", MaxVolColdWaterFlowUser));
                                     ShowContinueError(
-                                        state, format("differs from Design Size Maximum Cold Water Flow of {:.5R} [m3/s]", MaxVolColdWaterFlowDes));
+                                        state, format("differs from Design Size Maximum Cold Water Flow of {:.5f} [m3/s]", MaxVolColdWaterFlowDes));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }

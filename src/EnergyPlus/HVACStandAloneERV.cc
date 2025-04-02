@@ -493,7 +493,7 @@ void GetStandAloneERV(EnergyPlusData &state)
                                         standAloneERV.Name,
                                         cNumericFields(1)));
                 ShowContinueError(state,
-                                  format("... Entered value={:.2R}... Fan [{} \"{}\"] Max Value = {:.2R}",
+                                  format("... Entered value={:.2f}... Fan [{} \"{}\"] Max Value = {:.2f}",
                                          standAloneERV.SupplyAirVolFlow,
                                          HVAC::fanTypeNames[(int)standAloneERV.supplyAirFanType],
                                          standAloneERV.SupplyAirFanName,
@@ -507,7 +507,7 @@ void GetStandAloneERV(EnergyPlusData &state)
             if (standAloneERV.SupplyAirVolFlow <= 0.0) {
                 ShowSevereError(state,
                                 format("{} = {} has a {} <= 0.0, it must be >0.0", CurrentModuleObject, standAloneERV.Name, cNumericFields(1)));
-                ShowContinueError(state, format("... Entered value={:.2R}", standAloneERV.SupplyAirVolFlow));
+                ShowContinueError(state, format("... Entered value={:.2f}", standAloneERV.SupplyAirVolFlow));
                 ErrorsFound = true;
             }
         } else {
@@ -535,7 +535,7 @@ void GetStandAloneERV(EnergyPlusData &state)
                                         standAloneERV.Name,
                                         cNumericFields(2)));
                 ShowContinueError(state,
-                                  format("... Entered value={:.2R}... Fan [{}:{}] Max Value = {:.2R}",
+                                  format("... Entered value={:.2f}... Fan [{}:{}] Max Value = {:.2f}",
                                          standAloneERV.ExhaustAirVolFlow,
                                          HVAC::fanTypeNames[(int)standAloneERV.exhaustAirFanType],
                                          standAloneERV.ExhaustAirFanName,
@@ -549,7 +549,7 @@ void GetStandAloneERV(EnergyPlusData &state)
             if (standAloneERV.ExhaustAirVolFlow <= 0.0) {
                 ShowSevereError(state,
                                 format("{} = {} has an {} <= 0.0, it must be >0.0", CurrentModuleObject, standAloneERV.Name, cNumericFields(2)));
-                ShowContinueError(state, format("... Entered value={:.2R}", standAloneERV.ExhaustAirVolFlow));
+                ShowContinueError(state, format("... Entered value={:.2f}", standAloneERV.ExhaustAirVolFlow));
                 ErrorsFound = true;
             }
         } else {
@@ -873,7 +873,7 @@ void GetStandAloneERV(EnergyPlusData &state)
                 if (state.dataHVACStandAloneERV->StandAloneERV(WhichERV).SupplyAirVolFlow * HighRHOARatio >
                     state.dataHVACStandAloneERV->StandAloneERV(WhichERV).DesignSAFanVolFlowRate) {
                     ShowWarningError(state, format("{} \"{}\"", CurrentModuleObject, Alphas(1)));
-                    ShowContinueError(state, format("... A {} was entered as {:.4R}", cNumericFields(5), HighRHOARatio));
+                    ShowContinueError(state, format("... A {} was entered as {:.4f}", cNumericFields(5), HighRHOARatio));
                     ShowContinueError(state,
                                       "... This flow ratio results in a Supply Air Volume Flow Rate through the ERV which is greater than the "
                                       "Max Volume specified in the supply air fan object.");
@@ -882,10 +882,10 @@ void GetStandAloneERV(EnergyPlusData &state)
                                              HVAC::fanTypeNames[(int)state.dataHVACStandAloneERV->StandAloneERV(WhichERV).supplyAirFanType],
                                              state.dataHVACStandAloneERV->StandAloneERV(WhichERV).SupplyAirFanName));
                     ShowContinueError(state,
-                                      format("... Modified value                   = {:.2R}",
+                                      format("... Modified value                   = {:.2f}",
                                              state.dataHVACStandAloneERV->StandAloneERV(WhichERV).SupplyAirVolFlow * HighRHOARatio));
                     ShowContinueError(state,
-                                      format(" ... Supply Fan Max Volume Flow Rate = {:.2R}",
+                                      format(" ... Supply Fan Max Volume Flow Rate = {:.2f}",
                                              state.dataHVACStandAloneERV->StandAloneERV(WhichERV).DesignSAFanVolFlowRate));
                     ShowContinueError(state, "... The ERV supply air fan will limit the air flow through the ERV and the simulation continues.");
                 }
@@ -897,7 +897,7 @@ void GetStandAloneERV(EnergyPlusData &state)
                 if (state.dataHVACStandAloneERV->StandAloneERV(WhichERV).ExhaustAirVolFlow * HighRHOARatio >
                     state.dataHVACStandAloneERV->StandAloneERV(WhichERV).DesignEAFanVolFlowRate) {
                     ShowWarningError(state, format("ZoneHVAC:EnergyRecoveryVentilator:Controller \"{}\"", Alphas(1)));
-                    ShowContinueError(state, format("... A {} was entered as {:.4R}", cNumericFields(5), HighRHOARatio));
+                    ShowContinueError(state, format("... A {} was entered as {:.4f}", cNumericFields(5), HighRHOARatio));
                     ShowContinueError(state,
                                       "... This flow ratio results in an Exhaust Air Volume Flow Rate through the ERV which is greater than the "
                                       "Max Volume specified in the exhaust air fan object.");
@@ -906,10 +906,10 @@ void GetStandAloneERV(EnergyPlusData &state)
                                              HVAC::fanTypeNames[(int)state.dataHVACStandAloneERV->StandAloneERV(WhichERV).exhaustAirFanType],
                                              state.dataHVACStandAloneERV->StandAloneERV(WhichERV).ExhaustAirFanName));
                     ShowContinueError(state,
-                                      format("... Modified value                    = {:.2R}",
+                                      format("... Modified value                    = {:.2f}",
                                              state.dataHVACStandAloneERV->StandAloneERV(WhichERV).ExhaustAirVolFlow * HighRHOARatio));
                     ShowContinueError(state,
-                                      format(" ... Exhaust Fan Max Volume Flow Rate = {:.2R}",
+                                      format(" ... Exhaust Fan Max Volume Flow Rate = {:.2f}",
                                              state.dataHVACStandAloneERV->StandAloneERV(WhichERV).DesignEAFanVolFlowRate));
                     ShowContinueError(state, "... The ERV exhaust air fan will limit the air flow through the ERV and the simulation continues.");
                 }
@@ -1362,8 +1362,8 @@ void SizeStandAloneERV(EnergyPlusData &state, int const StandAloneERVNum)
                                 format("SizeStandAloneERV: Potential issue with equipment sizing for ZoneHVAC:EnergyRecoveryVentilator {} {}",
                                        HVAC::fanTypeNames[(int)state.dataHVACStandAloneERV->StandAloneERV(StandAloneERVNum).supplyAirFanType],
                                        state.dataHVACStandAloneERV->StandAloneERV(StandAloneERVNum).SupplyAirFanName));
-                    ShowContinueError(state, format("User-Specified Supply Fan Maximum Flow Rate of {:.5R} [m3/s]", DesignSAFanVolFlowRateUser));
-                    ShowContinueError(state, format("differs from the ERV Supply Air Flow Rate of {:.5R} [m3/s]", DesignSAFanVolFlowRateDes));
+                    ShowContinueError(state, format("User-Specified Supply Fan Maximum Flow Rate of {:.5f} [m3/s]", DesignSAFanVolFlowRateUser));
+                    ShowContinueError(state, format("differs from the ERV Supply Air Flow Rate of {:.5f} [m3/s]", DesignSAFanVolFlowRateDes));
                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                 }
@@ -1490,8 +1490,8 @@ void CalcStandAloneERV(EnergyPlusData &state,
                              format("For {} \"{}\" there is unbalanced exhaust air flow.",
                                     state.dataHVACStandAloneERV->StandAloneERV(StandAloneERVNum).UnitType,
                                     state.dataHVACStandAloneERV->StandAloneERV(StandAloneERVNum).Name));
-            ShowContinueError(state, format("... The exhaust air mass flow rate = {:.6R}", state.dataLoopNodes->Node(ExhaustInletNode).MassFlowRate));
-            ShowContinueError(state, format("... The  supply air mass flow rate = {:.6R}", state.dataLoopNodes->Node(SupInletNode).MassFlowRate));
+            ShowContinueError(state, format("... The exhaust air mass flow rate = {:.6f}", state.dataLoopNodes->Node(ExhaustInletNode).MassFlowRate));
+            ShowContinueError(state, format("... The  supply air mass flow rate = {:.6f}", state.dataLoopNodes->Node(SupInletNode).MassFlowRate));
             ShowContinueErrorTimeStamp(state, "");
             ShowContinueError(state, "... Unless there is balancing infiltration / ventilation air flow, this will result in");
             ShowContinueError(state, "... load due to induced outside air being neglected in the simulation.");

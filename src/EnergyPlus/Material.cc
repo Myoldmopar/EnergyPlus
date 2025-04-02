@@ -1045,7 +1045,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
             } else {
                 ShowSevereError(state, s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", Illegal value.");
                 ShowContinueError(state,
-                                  format("Nominal resistance of gap at room temperature calculated at a negative Conductivity=[{:.3R}].", DenomRGas));
+                                  format("Nominal resistance of gap at room temperature calculated at a negative Conductivity=[{:.3f}].", DenomRGas));
                 ErrorsFound = true;
             }
         }
@@ -1149,7 +1149,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
             } else {
                 ShowSevereError(state, format("{}=\"{}\", Illegal value.", s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("Nominal resistance of gap at room temperature calculated at a negative Conductivity=[{:.3R}].", DenomRGas));
+                                  format("Nominal resistance of gap at room temperature calculated at a negative Conductivity=[{:.3f}].", DenomRGas));
                 ErrorsFound = true;
             }
         }
@@ -1776,7 +1776,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
                     ShowContinueError(state, " ...the screen diameter is recalculated from the material openness specified ");
                     ShowContinueError(state, " ...and wire spacing using the formula = wire spacing * (1.0 - SQRT(Opennes))");
                     matScreen->wireDiameter = matScreen->wireSpacing * (1.0 - std::sqrt(matScreen->TAR.Sol.Ft.Bm[0].BmTra));
-                    ShowContinueError(state, format(" ...Recalculated {}={:.4R} m", s_ipsc->cNumericFieldNames(10), matScreen->wireDiameter));
+                    ShowContinueError(state, format(" ...Recalculated {}={:.4f} m", s_ipsc->cNumericFieldNames(10), matScreen->wireDiameter));
                 }
             }
         }
@@ -1878,7 +1878,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
         if (matBlind->SlatWidth < matBlind->SlatSeparation) {
             ShowWarningError(state, s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", Slat Angles/Widths");
             ShowContinueError(state,
-                              format("{} [{:.2R}] is less than {} [{:.2R}].",
+                              format("{} [{:.2f}] is less than {} [{:.2f}].",
                                      s_ipsc->cNumericFieldNames(1),
                                      matBlind->SlatWidth,
                                      s_ipsc->cNumericFieldNames(2),
@@ -2005,7 +2005,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
                 ErrorsFound = true;
                 ShowSevereError(state, s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", Illegal value combination.");
                 ShowContinueError(state,
-                                  format("{}=[{:.1R}], is less than smallest allowed by slat dimensions and spacing, [{:.1R}] deg.",
+                                  format("{}=[{:.1f}], is less than smallest allowed by slat dimensions and spacing, [{:.1f}] deg.",
                                          s_ipsc->cNumericFieldNames(4),
                                          matBlind->SlatAngle,
                                          MinSlatAngGeom));
@@ -2013,7 +2013,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
                 ErrorsFound = true;
                 ShowSevereError(state, s_ipsc->cCurrentModuleObject + "=\"" + s_ipsc->cAlphaArgs(1) + "\", Illegal value combination.");
                 ShowContinueError(state,
-                                  format("{}=[{:.1R}], is greater than largest allowed by slat dimensions and spacing, [{:.1R}] deg.",
+                                  format("{}=[{:.1f}], is greater than largest allowed by slat dimensions and spacing, [{:.1f}] deg.",
                                          s_ipsc->cNumericFieldNames(4),
                                          matBlind->SlatAngle,
                                          MinSlatAngGeom));
@@ -2159,7 +2159,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
         if (mat->SlatWidth < mat->SlatSeparation) {
             ShowWarningError(state, format("{}=\"{}\", Slat Seperation/Width", s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
             ShowContinueError(state,
-                              format("{} [{:.2R}] is less than {} [{:.2R}].",
+                              format("{} [{:.2f}] is less than {} [{:.2f}].",
                                      s_ipsc->cNumericFieldNames(1),
                                      mat->SlatWidth,
                                      s_ipsc->cNumericFieldNames(2),
@@ -2168,7 +2168,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
         }
         if (mat->SlatSeparation < 0.001) {
             ShowWarningError(state, format("{}=\"{}\", Slat Seperation", s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} [{:.2R}]. Slate spacing must be > 0.0", s_ipsc->cNumericFieldNames(2), mat->SlatSeparation));
+            ShowContinueError(state, format("{} [{:.2f}]. Slate spacing must be > 0.0", s_ipsc->cNumericFieldNames(2), mat->SlatSeparation));
             ShowContinueError(state,
                               "...Setting slate spacing to default value of 0.025 m and "
                               "simulation continues.");
@@ -2177,20 +2177,20 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
         if (mat->SlatWidth < 0.001 || mat->SlatWidth >= 2.0 * mat->SlatSeparation) {
             ShowWarningError(state, format("{}=\"{}\", Slat Width", s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
             ShowContinueError(state,
-                              format("{} [{:.2R}]. Slat width range is 0 < Width <= 2*Spacing", s_ipsc->cNumericFieldNames(1), mat->SlatWidth));
+                              format("{} [{:.2f}]. Slat width range is 0 < Width <= 2*Spacing", s_ipsc->cNumericFieldNames(1), mat->SlatWidth));
             ShowContinueError(state, "...Setting slate width equal to slate spacing and simulation continues.");
             mat->SlatWidth = mat->SlatSeparation;
         }
         if (mat->SlatCrown < 0.0 || mat->SlatCrown >= 0.5 * mat->SlatWidth) {
             ShowWarningError(state, format("{}=\"{}\", Slat Crown", s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
             ShowContinueError(state,
-                              format("{} [{:.2R}]. Slat crwon range is 0 <= crown < 0.5*Width", s_ipsc->cNumericFieldNames(3), mat->SlatCrown));
+                              format("{} [{:.2f}]. Slat crwon range is 0 <= crown < 0.5*Width", s_ipsc->cNumericFieldNames(3), mat->SlatCrown));
             ShowContinueError(state, "...Setting slate crown to 0.0 and simulation continues.");
             mat->SlatCrown = 0.0;
         }
         if (mat->SlatAngle < -90.0 || mat->SlatAngle > 90.0) {
             ShowWarningError(state, format("{}=\"{}\", Slat Angle", s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-            ShowContinueError(state, format("{} [{:.2R}]. Slat angle range is -90.0 <= Angle < 90.0", s_ipsc->cNumericFieldNames(4), mat->SlatAngle));
+            ShowContinueError(state, format("{} [{:.2f}]. Slat angle range is -90.0 <= Angle < 90.0", s_ipsc->cNumericFieldNames(4), mat->SlatAngle));
             ShowContinueError(state, "...Setting slate angle to 0.0 and simulation continues.");
             mat->SlatAngle = 0.0;
         }
@@ -2295,10 +2295,10 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
             ShowWarningError(state, format("{}=\"{}\", Illegal value combination.", s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
             ShowContinueError(
                 state, format("{} is greater than {}. It must be less or equal.", s_ipsc->cNumericFieldNames(15), s_ipsc->cNumericFieldNames(13)));
-            ShowContinueError(state, format("{} = {:.3T}.", s_ipsc->cNumericFieldNames(13), mat->Porosity));
-            ShowContinueError(state, format("{} = {:.3T}.", s_ipsc->cNumericFieldNames(15), mat->InitMoisture));
+            ShowContinueError(state, format("{} = {:.3f}.", s_ipsc->cNumericFieldNames(13), mat->Porosity));
+            ShowContinueError(state, format("{} = {:.3f}.", s_ipsc->cNumericFieldNames(15), mat->InitMoisture));
             ShowContinueError(state,
-                              format("{} is reset to the maximum (saturation) value = {:.3T}.", s_ipsc->cNumericFieldNames(15), mat->Porosity));
+                              format("{} is reset to the maximum (saturation) value = {:.3f}.", s_ipsc->cNumericFieldNames(15), mat->Porosity));
             ShowContinueError(state, "Simulation continues.");
             mat->InitMoisture = mat->Porosity;
         }
@@ -2462,13 +2462,13 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
         mat->Thickness = s_ipsc->rNumericArgs(1);
         if (s_ipsc->rNumericArgs(1) <= 0.0) {
             ErrorsFound = true;
-            ShowSevereCustomMessage(state, eoh, format("{} must be > 0, entered {:.2R}", s_ipsc->cNumericFieldNames(1), s_ipsc->rNumericArgs(1)));
+            ShowSevereCustomMessage(state, eoh, format("{} must be > 0, entered {:.2f}", s_ipsc->cNumericFieldNames(1), s_ipsc->rNumericArgs(1)));
         }
 
         mat->Pressure = s_ipsc->rNumericArgs(2);
         if (s_ipsc->rNumericArgs(2) <= 0.0) {
             ErrorsFound = true;
-            ShowSevereCustomMessage(state, eoh, format("{} must be > 0, entered {:.2R}", s_ipsc->cNumericFieldNames(2), s_ipsc->rNumericArgs(2)));
+            ShowSevereCustomMessage(state, eoh, format("{} must be > 0, entered {:.2f}", s_ipsc->cNumericFieldNames(2), s_ipsc->rNumericArgs(2)));
         }
 
         if (!s_ipsc->lAlphaFieldBlanks(2)) {
@@ -2610,61 +2610,61 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
         if (s_ipsc->rNumericArgs(1) <= 0.0) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} must be > 0, entered value = {:.2R}", s_ipsc->cNumericFieldNames(1), s_ipsc->rNumericArgs(1)));
+                state, eoh, format("{} must be > 0, entered value = {:.2f}", s_ipsc->cNumericFieldNames(1), s_ipsc->rNumericArgs(1)));
         }
 
         if (s_ipsc->rNumericArgs(2) <= 0.0) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} must be > 0, entered value = {:.2R}", s_ipsc->cNumericFieldNames(2), s_ipsc->rNumericArgs(2)));
+                state, eoh, format("{} must be > 0, entered value = {:.2f}", s_ipsc->cNumericFieldNames(2), s_ipsc->rNumericArgs(2)));
         }
 
         if ((s_ipsc->rNumericArgs(3) < 0.0) || (s_ipsc->rNumericArgs(3) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} value must be >= 0 and <= 1, entered value = {:.2R}", s_ipsc->cNumericFieldNames(3), s_ipsc->rNumericArgs(3)));
+                state, eoh, format("{} value must be >= 0 and <= 1, entered value = {:.2f}", s_ipsc->cNumericFieldNames(3), s_ipsc->rNumericArgs(3)));
         }
 
         if ((s_ipsc->rNumericArgs(4) <= 0.0) || (s_ipsc->rNumericArgs(4) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} value must be >= 0 and <= 1, entered value = {:.2R}", s_ipsc->cNumericFieldNames(4), s_ipsc->rNumericArgs(4)));
+                state, eoh, format("{} value must be >= 0 and <= 1, entered value = {:.2f}", s_ipsc->cNumericFieldNames(4), s_ipsc->rNumericArgs(4)));
         }
 
         if ((s_ipsc->rNumericArgs(5) <= 0.0) || (s_ipsc->rNumericArgs(5) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} value must be >= 0 and <= 1, entered value = {:.2R}", s_ipsc->cNumericFieldNames(5), s_ipsc->rNumericArgs(5)));
+                state, eoh, format("{} value must be >= 0 and <= 1, entered value = {:.2f}", s_ipsc->cNumericFieldNames(5), s_ipsc->rNumericArgs(5)));
         }
 
         if ((s_ipsc->rNumericArgs(6) < 0.0) || (s_ipsc->rNumericArgs(6) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} must be >= 0 or <= 1, entered value = {:.2R}", s_ipsc->cNumericFieldNames(6), s_ipsc->rNumericArgs(6)));
+                state, eoh, format("{} must be >= 0 or <= 1, entered value = {:.2f}", s_ipsc->cNumericFieldNames(6), s_ipsc->rNumericArgs(6)));
         }
 
         if ((s_ipsc->rNumericArgs(7) < 0.0) || (s_ipsc->rNumericArgs(7) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} must be >=0 or <=1, entered {:.2R}", s_ipsc->cNumericFieldNames(7), s_ipsc->rNumericArgs(7)));
+                state, eoh, format("{} must be >=0 or <=1, entered {:.2f}", s_ipsc->cNumericFieldNames(7), s_ipsc->rNumericArgs(7)));
         }
 
         if ((s_ipsc->rNumericArgs(8) < 0.0) || (s_ipsc->rNumericArgs(8) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} must be >=0 or <=1, entered value = {:.2R}", s_ipsc->cNumericFieldNames(8), s_ipsc->rNumericArgs(8)));
+                state, eoh, format("{} must be >=0 or <=1, entered value = {:.2f}", s_ipsc->cNumericFieldNames(8), s_ipsc->rNumericArgs(8)));
         }
 
         if ((s_ipsc->rNumericArgs(9) < 0.0) || (s_ipsc->rNumericArgs(9) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} must be >=0 or <=1, entered value = {:.2R}", s_ipsc->cNumericFieldNames(9), s_ipsc->rNumericArgs(9)));
+                state, eoh, format("{} must be >=0 or <=1, entered value = {:.2f}", s_ipsc->cNumericFieldNames(9), s_ipsc->rNumericArgs(9)));
         }
 
         if ((s_ipsc->rNumericArgs(10) < 0.0) || (s_ipsc->rNumericArgs(10) > 1.0)) {
             ErrorsFound = true;
             ShowSevereCustomMessage(
-                state, eoh, format("{} must be >=0 or <=1, entered value = {:.2R}", s_ipsc->cNumericFieldNames(10), s_ipsc->rNumericArgs(10)));
+                state, eoh, format("{} must be >=0 or <=1, entered value = {:.2f}", s_ipsc->cNumericFieldNames(10), s_ipsc->rNumericArgs(10)));
         }
 
         if ((mat->LayerType == TARCOGParams::TARCOGLayerType::VENETBLIND_HORIZ) ||
@@ -2673,7 +2673,7 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
                 ErrorsFound = true;
                 ShowSevereCustomMessage(state,
                                         eoh,
-                                        format("{} must be = 0 or greater than SlatWidth/2, entered value = {:.2R}",
+                                        format("{} must be = 0 or greater than SlatWidth/2, entered value = {:.2f}",
                                                s_ipsc->cNumericFieldNames(16),
                                                s_ipsc->rNumericArgs(16)));
             }
@@ -2696,8 +2696,8 @@ void GetMaterialData(EnergyPlusData &state, bool &ErrorsFound) // set to true if
         print(state.files.eio, "! <Material:Air>,Material Name,ThermalResistance {{m2-K/w}}\n");
 
         // Formats
-        constexpr std::string_view Format_701(" Material Details,{},{:.4R},{},{:.4R},{:.3R},{:.3R},{:.3R},{:.4R},{:.4R},{:.4R}\n");
-        constexpr std::string_view Format_702(" Material:Air,{},{:.4R}\n");
+        constexpr std::string_view Format_701(" Material Details,{},{:.4f},{},{:.4f},{:.3f},{:.3f},{:.3f},{:.4f},{:.4f},{:.4f}\n");
+        constexpr std::string_view Format_702(" Material:Air,{},{:.4f}\n");
 
         for (auto const *mat : s_mat->materials) {
 
@@ -2961,7 +2961,7 @@ void GetWindowGlassSpectralData(EnergyPlusData &state, bool &ErrorsFound) // set
                 ErrorsFound = true;
                 ShowSevereError(state, format("{}{}=\"{}\" invalid set.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("... Wavelengths not in increasing order. at wavelength#={}, value=[{:.4T}], next is [{:.4T}].",
+                                  format("... Wavelengths not in increasing order. at wavelength#={}, value=[{:.4f}], next is [{:.4f}].",
                                          LamNum,
                                          Lam,
                                          specData.WaveLength(LamNum + 1)));
@@ -2971,7 +2971,7 @@ void GetWindowGlassSpectralData(EnergyPlusData &state, bool &ErrorsFound) // set
                 ErrorsFound = true;
                 ShowSevereError(state, format("{}{}=\"{}\" invalid value.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("... A wavelength is not in the range 0.1 to 4.0 microns; at wavelength#={}, value=[{:.4T}].", LamNum, Lam));
+                                  format("... A wavelength is not in the range 0.1 to 4.0 microns; at wavelength#={}, value=[{:.4f}].", LamNum, Lam));
             }
 
             // TH 2/15/2011. CR 8343
@@ -2980,14 +2980,14 @@ void GetWindowGlassSpectralData(EnergyPlusData &state, bool &ErrorsFound) // set
             if (Tau > 1.01) {
                 ErrorsFound = true;
                 ShowSevereError(state, format("{}: {}=\"{}\" invalid value.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("... A transmittance is > 1.0; at wavelength#={}, value=[{:.4T}].", LamNum, Tau));
+                ShowContinueError(state, format("... A transmittance is > 1.0; at wavelength#={}, value=[{:.4f}].", LamNum, Tau));
             }
 
             if (RhoF < 0.0 || RhoF > 1.02 || RhoB < 0.0 || RhoB > 1.02) {
                 ErrorsFound = true;
                 ShowSevereError(state, format("{}: {}=\"{}\" invalid value.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
-                ShowContinueError(state, format("... A reflectance is < 0.0 or > 1.0; at wavelength#={}, RhoF value=[{:.4T}].", LamNum, RhoF));
-                ShowContinueError(state, format("... A reflectance is < 0.0 or > 1.0; at wavelength#={}, RhoB value=[{:.4T}].", LamNum, RhoB));
+                ShowContinueError(state, format("... A reflectance is < 0.0 or > 1.0; at wavelength#={}, RhoF value=[{:.4f}].", LamNum, RhoF));
+                ShowContinueError(state, format("... A reflectance is < 0.0 or > 1.0; at wavelength#={}, RhoB value=[{:.4f}].", LamNum, RhoB));
             }
 
             if ((Tau + RhoF) > 1.03 || (Tau + RhoB) > 1.03) {
@@ -2995,7 +2995,7 @@ void GetWindowGlassSpectralData(EnergyPlusData &state, bool &ErrorsFound) // set
                 ShowSevereError(state, format("{}: {}=\"{}\" invalid value.", routineName, s_ipsc->cCurrentModuleObject, s_ipsc->cAlphaArgs(1)));
                 ShowContinueError(state,
                                   format("... Transmittance + reflectance) > 1.0 for an entry; at wavelength#={}",
-                                         format("{}, value(Tau+RhoF)=[{:.4T}], value(Tau+RhoB)=[{:.4T}].", LamNum, (Tau + RhoF), (Tau + RhoB))));
+                                         format("{}, value(Tau+RhoF)=[{:.4f}], value(Tau+RhoB)=[{:.4f}].", LamNum, (Tau + RhoF), (Tau + RhoB))));
             }
         }
     }

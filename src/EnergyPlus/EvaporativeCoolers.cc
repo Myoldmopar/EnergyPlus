@@ -1298,8 +1298,8 @@ void SizeEvapCooler(EnergyPlusData &state, int const EvapCoolNum)
                         ShowMessage(state,
                                     format("SizeEvaporativeCooler:Indirect:ResearchSpecial: Potential issue with equipment sizing for {}",
                                            thisEvapCond.Name));
-                        ShowContinueError(state, format("User-Specified Secondary Fan Flow Rate of {:.5R} [m3/s]", IndirectVolFlowRateUser));
-                        ShowContinueError(state, format("differs from Design Size Secondary Fan Flow Rate of {:.5R} [m3/s]", IndirectVolFlowRateDes));
+                        ShowContinueError(state, format("User-Specified Secondary Fan Flow Rate of {:.5f} [m3/s]", IndirectVolFlowRateUser));
+                        ShowContinueError(state, format("differs from Design Size Secondary Fan Flow Rate of {:.5f} [m3/s]", IndirectVolFlowRateDes));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -1384,7 +1384,7 @@ void SizeEvapCooler(EnergyPlusData &state, int const EvapCoolNum)
             // EvapCoolNum
             // ).Name));  ShowContinueError(state, format("User-Specified Secondary Fan Flow Rate of {} [m3/s]", RoundSigDigits(
             // IndirectVolFlowRateUser, 5 ))); ShowContinueError(state,  format("differs from Design Size Secondary Fan Flow Rate of
-            // {:.5R}", IndirectVolFlowRateDes) + " [m3/s]" ); ShowContinueError(state,  "This may, or may not, indicate mismatched component
+            // {:.5f}", IndirectVolFlowRateDes) + " [m3/s]" ); ShowContinueError(state,  "This may, or may not, indicate mismatched component
             // sizes." ); ShowContinueError(state,  "Verify that the value entered is intended and is consistent with other components." );
             //}
             //}
@@ -1459,8 +1459,8 @@ void SizeEvapCooler(EnergyPlusData &state, int const EvapCoolNum)
                             ShowMessage(
                                 state,
                                 format("SizeEvaporativeCooler:Direct:CelDekPad: Potential issue with equipment sizing for {}", thisEvapCond.Name));
-                            ShowContinueError(state, format("User-Specified Celdek Pad Area of{:.2R} [m2]", PadAreaUser));
-                            ShowContinueError(state, format("differs from Design Size Celdek Pad Area of {:.2R} [m2]", PadAreaDes));
+                            ShowContinueError(state, format("User-Specified Celdek Pad Area of{:.2f} [m2]", PadAreaUser));
+                            ShowContinueError(state, format("differs from Design Size Celdek Pad Area of {:.2f} [m2]", PadAreaDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1499,8 +1499,8 @@ void SizeEvapCooler(EnergyPlusData &state, int const EvapCoolNum)
                     if ((std::abs(PadDepthDes - PadDepthUser) / PadDepthUser) > state.dataSize->AutoVsHardSizingThreshold) {
                         ShowMessage(
                             state, format("SizeEvaporativeCooler:Direct:CelDekPad: Potential issue with equipment sizing for {}", thisEvapCond.Name));
-                        ShowContinueError(state, format("User-Specified Celdek Pad Depth of {:.2R} [m]", PadDepthUser));
-                        ShowContinueError(state, format("differs from Design Size Celdek Pad Depth of {:.2R} [m]", PadDepthDes));
+                        ShowContinueError(state, format("User-Specified Celdek Pad Depth of {:.2f} [m]", PadDepthUser));
+                        ShowContinueError(state, format("differs from Design Size Celdek Pad Depth of {:.2f} [m]", PadDepthDes));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -1598,8 +1598,8 @@ void SizeEvapCooler(EnergyPlusData &state, int const EvapCoolNum)
                             ShowMessage(
                                 state,
                                 format("SizeEvaporativeCooler:Indirect:CelDekPad: Potential issue with equipment sizing for {}", thisEvapCond.Name));
-                            ShowContinueError(state, format("User-Specified Celdek Pad Area {:.2R} [m2]", PadAreaUser));
-                            ShowContinueError(state, format("differs from Design Size Celdek Pad Area of {:.2R} [m2]", PadAreaDes));
+                            ShowContinueError(state, format("User-Specified Celdek Pad Area {:.2f} [m2]", PadAreaUser));
+                            ShowContinueError(state, format("differs from Design Size Celdek Pad Area of {:.2f} [m2]", PadAreaDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1634,8 +1634,8 @@ void SizeEvapCooler(EnergyPlusData &state, int const EvapCoolNum)
                         ShowMessage(
                             state,
                             format("SizeEvaporativeCooler:Indirect:CelDekPad: Potential issue with equipment sizing for {}", thisEvapCond.Name));
-                        ShowContinueError(state, format("User-Specified Celdek Pad Depth of {:.2R} [m]", PadDepthUser));
-                        ShowContinueError(state, format("differs from Design Size Celdek Pad Depth of {:.2R} [m]", PadDepthDes));
+                        ShowContinueError(state, format("User-Specified Celdek Pad Depth of {:.2f} [m]", PadDepthUser));
+                        ShowContinueError(state, format("differs from Design Size Celdek Pad Depth of {:.2f} [m]", PadDepthDes));
                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                         ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                     }
@@ -1713,8 +1713,8 @@ void CalcDirectEvapCooler(EnergyPlusData &state, int EvapCoolNum, Real64 const P
         if (SatEff < 0.0) { // we have a serious problem.  Pad Area and/or depth not suitable for system air flow rates
             ShowSevereError(state, format("EVAPCOOLER:DIRECT:CELDEKPAD: {} has a problem", thisEvapCond.Name));
             ShowContinueError(state, "Check size of Pad Area and/or Pad Depth in input");
-            ShowContinueError(state, format("Cooler Effectiveness calculated as: {:.2R}", SatEff));
-            ShowContinueError(state, format("Air velocity (m/s) through pads calculated as: {:.2R}", AirVel));
+            ShowContinueError(state, format("Cooler Effectiveness calculated as: {:.2f}", SatEff));
+            ShowContinueError(state, format("Air velocity (m/s) through pads calculated as: {:.2f}", AirVel));
             ShowFatalError(state, "Program Terminates due to previous error condition");
         }
         thisEvapCond.SatEff = SatEff;
@@ -2454,8 +2454,8 @@ void CalcIndirectResearchSpecialEvapCoolerAdvanced(EnergyPlusData &state,
                                                thisEvapCond.Name));
                         ShowContinueErrorTimeStamp(state, "");
                         ShowContinueError(state, "...Bad secondary air mass flow rate limits");
-                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMin));
-                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMax));
+                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMin));
+                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMax));
                         ShowContinueError(state, " Simulation continues");
                     }
                     ShowRecurringWarningErrorAtEnd(state,
@@ -2520,8 +2520,8 @@ void CalcIndirectResearchSpecialEvapCoolerAdvanced(EnergyPlusData &state,
                                                thisEvapCond.Name));
                         ShowContinueErrorTimeStamp(state, "");
                         ShowContinueError(state, "...Bad secondary air mass flow rate limits");
-                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMin));
-                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMax));
+                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMin));
+                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMax));
                         ShowContinueError(state, " Simulation continues");
                     }
                     ShowRecurringWarningErrorAtEnd(state,
@@ -2578,8 +2578,8 @@ void CalcIndirectResearchSpecialEvapCoolerAdvanced(EnergyPlusData &state,
                                                thisEvapCond.Name));
                         ShowContinueErrorTimeStamp(state, "");
                         ShowContinueError(state, "...Bad secondary air mass flow rate limits");
-                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMin));
-                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMax));
+                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMin));
+                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMax));
                         ShowContinueError(state, " Simulation continues");
                     }
                     ShowRecurringWarningErrorAtEnd(state,
@@ -2655,8 +2655,8 @@ void CalcIndirectResearchSpecialEvapCoolerAdvanced(EnergyPlusData &state,
                                                thisEvapCond.Name));
                         ShowContinueErrorTimeStamp(state, "");
                         ShowContinueError(state, "...Bad secondary air mass flow rate limits");
-                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMin));
-                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3R} kg/s", MassFlowRateSecMax));
+                        ShowContinueError(state, format("...Given minimum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMin));
+                        ShowContinueError(state, format("...Given maximum secondary air mass flow rate={:.3f} kg/s", MassFlowRateSecMax));
                         ShowContinueError(state, " Simulation continues");
                     }
                     ShowRecurringWarningErrorAtEnd(state,
@@ -3771,8 +3771,8 @@ void InitZoneEvaporativeCoolerUnit(EnergyPlusData &state,
             if (zoneEvapUnit.ActualFanVolFlowRate < zoneEvapUnit.DesignAirVolumeFlowRate) {
                 ShowSevereError(state, format("InitZoneEvaporativeCoolerUnit: ZoneHVAC:EvaporativeCoolerUnit = {}", zoneEvapUnit.Name));
                 ShowContinueError(state, "...unit fan volumetric flow rate less than evaporative cooler unit design supply air flow rate.");
-                ShowContinueError(state, format("...fan volumetric flow rate = {:.5T} m3/s.", zoneEvapUnit.ActualFanVolFlowRate));
-                ShowContinueError(state, format("...evap cooler unit volumetric flow rate = {:.5T} m3/s.", zoneEvapUnit.DesignAirVolumeFlowRate));
+                ShowContinueError(state, format("...fan volumetric flow rate = {:.5f} m3/s.", zoneEvapUnit.ActualFanVolFlowRate));
+                ShowContinueError(state, format("...evap cooler unit volumetric flow rate = {:.5f} m3/s.", zoneEvapUnit.DesignAirVolumeFlowRate));
                 zoneEvapUnit.DesignAirVolumeFlowRate = zoneEvapUnit.ActualFanVolFlowRate;
                 ShowContinueError(state, "...evaporative cooler unit design supply air flow rate will match fan flow rate and simulation continues.");
                 zoneEvapUnit.MyEnvrn = true; // re-initialize to set mass flow rate and max mass flow rate
@@ -4220,7 +4220,7 @@ void ControlZoneEvapUnitOutput(EnergyPlusData &state,
             if (zoneEvapUnit.UnitLoadControlMaxIterErrorIndex == 0) {
                 ShowWarningError(state, format("Iteration limit exceeded calculating evap unit part load ratio, for unit={}", zoneEvapUnit.Name));
                 ShowContinueErrorTimeStamp(state, "");
-                ShowContinueError(state, format("Unit part load ratio returned={:.2R}", PartLoadRatio));
+                ShowContinueError(state, format("Unit part load ratio returned={:.2f}", PartLoadRatio));
                 ShowContinueError(state, "Check input for Fan Placement.");
             }
             ShowRecurringWarningErrorAtEnd(
@@ -4346,7 +4346,7 @@ void ControlVSEvapUnitToMeetLoad(EnergyPlusData &state,
                 ShowWarningError(
                     state, format("Iteration limit exceeded calculating variable speed evap unit fan speed ratio, for unit={}", zoneEvapUnit.Name));
                 ShowContinueErrorTimeStamp(state, "");
-                ShowContinueError(state, format("Fan speed ratio returned={:.2R}", FanSpeedRatio));
+                ShowContinueError(state, format("Fan speed ratio returned={:.2f}", FanSpeedRatio));
                 ShowContinueError(state, "Check input for Fan Placement.");
             }
             ShowRecurringWarningErrorAtEnd(

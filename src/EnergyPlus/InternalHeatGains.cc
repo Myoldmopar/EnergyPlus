@@ -214,15 +214,15 @@ namespace InternalHeatGains {
         Real64 SchMax;
 
         // Formats
-        static constexpr std::string_view Format_720(" Zone Internal Gains Nominal, {},{:.2R},{:.1R},");
-        static constexpr std::string_view Format_722(" {} Internal Gains Nominal, {},{},{},{:.2R},{:.1R},");
+        static constexpr std::string_view Format_720(" Zone Internal Gains Nominal, {},{:.2f},{:.1f},");
+        static constexpr std::string_view Format_722(" {} Internal Gains Nominal, {},{},{},{:.2f},{:.1f},");
         static constexpr std::string_view Format_723(
             "! <{} Internal Gains Nominal>,Name,Schedule Name,Zone Name,Zone Floor Area {{m2}},# Zone Occupants,{}");
         static constexpr std::string_view Format_724(" {}, {}\n");
 
         auto print_and_divide_if_greater_than_zero = [&](const Real64 numerator, const Real64 denominator) {
             if (denominator > 0.0) {
-                print(state.files.eio, "{:.3R},", numerator / denominator);
+                print(state.files.eio, "{:.3f},", numerator / denominator);
             } else {
                 print(state.files.eio, "N/A,");
             }
@@ -362,7 +362,7 @@ namespace InternalHeatGains {
                                                            IHGAlphas(1),
                                                            IHGAlphaFieldNames(3)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                                                      format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                                     ErrorsFound = true;
                                 }
                                 if (SchMax < 0.0) {
@@ -373,7 +373,7 @@ namespace InternalHeatGains {
                                                            IHGAlphas(1),
                                                            IHGAlphaFieldNames(3)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                                                      format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                                     ErrorsFound = true;
                                 }
                             }
@@ -424,7 +424,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            peopleModuleObject,
                                                            thisPeople.Name,
@@ -457,7 +457,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            peopleModuleObject,
                                                            thisPeople.Name,
@@ -512,7 +512,7 @@ namespace InternalHeatGains {
                     if (Item1 == 1) {
                         if (thisPeople.FractionConvected < 0.0) {
                             ShowSevereError(state,
-                                            format("{}{}=\"{}\", {} < 0.0, value ={:.2R}",
+                                            format("{}{}=\"{}\", {} < 0.0, value ={:.2f}",
                                                    RoutineName,
                                                    peopleModuleObject,
                                                    IHGAlphas(1),
@@ -548,7 +548,7 @@ namespace InternalHeatGains {
 
                     if (thisPeople.CO2RateFactor < 0.0) {
                         ShowSevereError(state,
-                                        format("{}{}=\"{}\", {} < 0.0, value ={:.2R}",
+                                        format("{}{}=\"{}\", {} < 0.0, value ={:.2f}",
                                                RoutineName,
                                                peopleModuleObject,
                                                IHGAlphas(1),
@@ -588,7 +588,7 @@ namespace InternalHeatGains {
                                                            IHGAlphas(1),
                                                            IHGAlphaFieldNames(5)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(5), SchMin));
+                                                      format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(5), SchMin));
                                     ErrorsFound = true;
                                 }
                                 if (SchMax < 0.0) {
@@ -599,7 +599,7 @@ namespace InternalHeatGains {
                                                            IHGAlphas(1),
                                                            IHGAlphaFieldNames(5)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(5), SchMax));
+                                                      format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(5), SchMax));
                                     ErrorsFound = true;
                                 }
                             }
@@ -609,7 +609,7 @@ namespace InternalHeatGains {
                                     state, format("{}{}=\"{}\", {} values", RoutineName, peopleModuleObject, IHGAlphas(1), IHGAlphaFieldNames(5)));
                                 ShowContinueError(state, "fall outside typical range [70,1000] W/person for Thermal Comfort Reporting.");
                                 ShowContinueError(state, format("Odd comfort values may result; Schedule=\"{}\".", IHGAlphas(5)));
-                                ShowContinueError(state, format("Entered min/max range=[{:.1R},] W/person.{:.1R}", SchMin, SchMax));
+                                ShowContinueError(state, format("Entered min/max range=[{:.1f},] W/person.{:.1f}", SchMin, SchMax));
                             }
                         }
                     }
@@ -820,7 +820,7 @@ namespace InternalHeatGains {
                                                                        IHGAlphaFieldNames(9)));
                                                 ShowContinueError(
                                                     state,
-                                                    format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(9), SchMin));
+                                                    format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(9), SchMin));
                                                 ErrorsFound = true;
                                             }
                                         }
@@ -834,7 +834,7 @@ namespace InternalHeatGains {
                                                                        IHGAlphaFieldNames(9)));
                                                 ShowContinueError(
                                                     state,
-                                                    format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(9), SchMax));
+                                                    format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(9), SchMax));
                                                 ErrorsFound = true;
                                             }
                                         }
@@ -848,7 +848,7 @@ namespace InternalHeatGains {
                                                                     IHGAlphas(1),
                                                                     IHGAlphaFieldNames(9)));
                                             ShowContinueError(state,
-                                                              format("Schedule=\"{}\"; Entered min/max range=[{:.1R},{:.1R}] Work Efficiency.",
+                                                              format("Schedule=\"{}\"; Entered min/max range=[{:.1f},{:.1f}] Work Efficiency.",
                                                                      IHGAlphas(9),
                                                                      SchMin,
                                                                      SchMax));
@@ -914,7 +914,7 @@ namespace InternalHeatGains {
                                                                            IHGAlphas(1),
                                                                            IHGAlphaFieldNames(12)));
                                                     ShowContinueError(state,
-                                                                      format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.",
+                                                                      format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.",
                                                                              IHGAlphas(12),
                                                                              SchMin));
                                                     ErrorsFound = true;
@@ -929,7 +929,7 @@ namespace InternalHeatGains {
                                                                            IHGAlphas(1),
                                                                            IHGAlphaFieldNames(12)));
                                                     ShowContinueError(state,
-                                                                      format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.",
+                                                                      format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.",
                                                                              IHGAlphas(12),
                                                                              SchMax));
                                                     ErrorsFound = true;
@@ -945,7 +945,7 @@ namespace InternalHeatGains {
                                                                         IHGAlphas(1),
                                                                         IHGAlphaFieldNames(12)));
                                                 ShowContinueError(state,
-                                                                  format("Schedule=\"{}\"; Entered min/max range=[{:.1R},{:.1R}] Clothing.",
+                                                                  format("Schedule=\"{}\"; Entered min/max range=[{:.1f},{:.1f}] Clothing.",
                                                                          IHGAlphas(12),
                                                                          SchMin,
                                                                          SchMax));
@@ -1019,7 +1019,7 @@ namespace InternalHeatGains {
                                                                        IHGAlphaFieldNames(13)));
                                                 ShowContinueError(
                                                     state,
-                                                    format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(13), SchMin));
+                                                    format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(13), SchMin));
                                                 ErrorsFound = true;
                                             }
                                         }
@@ -1033,7 +1033,7 @@ namespace InternalHeatGains {
                                                                        IHGAlphaFieldNames(13)));
                                                 ShowContinueError(
                                                     state,
-                                                    format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(13), SchMax));
+                                                    format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(13), SchMax));
                                                 ErrorsFound = true;
                                             }
                                         }
@@ -1131,11 +1131,11 @@ namespace InternalHeatGains {
                             state, format("{}Zone=\"{}\" occupant density is extremely high.", RoutineName, state.dataHeatBal->Zone(Loop).Name));
                         if (state.dataHeatBal->Zone(Loop).FloorArea > 0.0) {
                             ShowContinueError(state,
-                                              format("Occupant Density=[{:.0R}] person/m2.",
+                                              format("Occupant Density=[{:.0f}] person/m2.",
                                                      state.dataHeatBal->Zone(Loop).TotOccupants / state.dataHeatBal->Zone(Loop).FloorArea));
                         }
                         ShowContinueError(state,
-                                          format("Occupant Density=[{:.3R}] m2/person. Problems in Temperature Out of Bounds may result.",
+                                          format("Occupant Density=[{:.3f}] m2/person. Problems in Temperature Out of Bounds may result.",
                                                  state.dataHeatBal->Zone(Loop).FloorArea / state.dataHeatBal->Zone(Loop).TotOccupants));
                     }
                     Real64 maxOccupLoad = 0.0;
@@ -1157,10 +1157,10 @@ namespace InternalHeatGains {
                                                     state.dataHeatBal->Zone(Loop).Name));
                             if (state.dataHeatBal->Zone(Loop).FloorArea > 0.0) {
                                 ShowContinueError(
-                                    state, format("Occupant Density=[{:.0R}] person/m2.", maxOccupLoad / state.dataHeatBal->Zone(Loop).FloorArea));
+                                    state, format("Occupant Density=[{:.0f}] person/m2.", maxOccupLoad / state.dataHeatBal->Zone(Loop).FloorArea));
                             }
                             ShowContinueError(state,
-                                              format("Occupant Density=[{:.3R}] m2/person. Problems in Temperature Out of Bounds may result.",
+                                              format("Occupant Density=[{:.3f}] m2/person. Problems in Temperature Out of Bounds may result.",
                                                      state.dataHeatBal->Zone(Loop).FloorArea / maxOccupLoad));
                             ShowContinueError(state,
                                               format("Check values in People={}, Number of People Schedule={}",
@@ -1255,7 +1255,7 @@ namespace InternalHeatGains {
                                                            IHGAlphas(1),
                                                            IHGAlphaFieldNames(3)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                                                      format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                                     ErrorsFound = true;
                                 }
                                 if (SchMax < 0.0) {
@@ -1266,7 +1266,7 @@ namespace InternalHeatGains {
                                                            IHGAlphas(1),
                                                            IHGAlphaFieldNames(3)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                                                      format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                                     ErrorsFound = true;
                                 }
                             }
@@ -1316,7 +1316,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            lightsModuleObject,
                                                            thisLights.Name,
@@ -1347,7 +1347,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            lightsModuleObject,
                                                            thisLights.Name,
@@ -1701,7 +1701,7 @@ namespace InternalHeatGains {
                                     format(
                                         "{}{}=\"{}\", {}, minimum is < 0.0", RoutineName, elecEqModuleObject, IHGAlphas(1), IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                                                  format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                                 ErrorsFound = true;
                             }
                             if (SchMax < 0.0) {
@@ -1710,7 +1710,7 @@ namespace InternalHeatGains {
                                     format(
                                         "{}{}=\"{}\", {}, maximum is < 0.0", RoutineName, elecEqModuleObject, IHGAlphas(1), IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                                                  format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                                 ErrorsFound = true;
                             }
                         }
@@ -1760,7 +1760,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            elecEqModuleObject,
                                                            thisZoneElectric.Name,
@@ -1793,7 +1793,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            elecEqModuleObject,
                                                            thisZoneElectric.Name,
@@ -1940,7 +1940,7 @@ namespace InternalHeatGains {
                                                            thisGasEqInput.Name,
                                                            IHGAlphaFieldNames(3)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                                                      format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                                     ErrorsFound = true;
                                 }
                                 if (SchMax < 0.0) {
@@ -1951,7 +1951,7 @@ namespace InternalHeatGains {
                                                            thisGasEqInput.Name,
                                                            IHGAlphaFieldNames(3)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                                                      format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                                     ErrorsFound = true;
                                 }
                             }
@@ -2001,7 +2001,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            gasEqModuleObject,
                                                            thisGasEqInput.Name,
@@ -2033,7 +2033,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            gasEqModuleObject,
                                                            thisGasEqInput.Name,
@@ -2079,7 +2079,7 @@ namespace InternalHeatGains {
                     }
                     if (thisZoneGas.CO2RateFactor < 0.0) {
                         ShowSevereError(state,
-                                        format("{}{}=\"{}\", {} < 0.0, value ={:.2R}",
+                                        format("{}{}=\"{}\", {} < 0.0, value ={:.2f}",
                                                RoutineName,
                                                gasEqModuleObject,
                                                thisGasEqInput.Name,
@@ -2089,7 +2089,7 @@ namespace InternalHeatGains {
                     }
                     if (thisZoneGas.CO2RateFactor > 4.0e-7) {
                         ShowSevereError(state,
-                                        format("{}{}=\"{}\", {} > 4.0E-7, value ={:.2R}",
+                                        format("{}{}=\"{}\", {} > 4.0E-7, value ={:.2f}",
                                                RoutineName,
                                                gasEqModuleObject,
                                                thisGasEqInput.Name,
@@ -2205,7 +2205,7 @@ namespace InternalHeatGains {
                                                        thisHWEqInput.Name,
                                                        IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                                                  format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                                 ErrorsFound = true;
                             }
                             if (SchMax < 0.0) {
@@ -2216,7 +2216,7 @@ namespace InternalHeatGains {
                                                        thisHWEqInput.Name,
                                                        IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                                                  format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                                 ErrorsFound = true;
                             }
                         }
@@ -2266,7 +2266,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            hwEqModuleObject,
                                                            thisHWEqInput.Name,
@@ -2299,7 +2299,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            hwEqModuleObject,
                                                            thisHWEqInput.Name,
@@ -2441,7 +2441,7 @@ namespace InternalHeatGains {
                                                        thisStmEqInput.Name,
                                                        IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                                                  format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                                 ErrorsFound = true;
                             }
                             if (SchMax < 0.0) {
@@ -2452,7 +2452,7 @@ namespace InternalHeatGains {
                                                        thisStmEqInput.Name,
                                                        IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                                                  format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                                 ErrorsFound = true;
                             }
                         }
@@ -2502,7 +2502,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            stmEqModuleObject,
                                                            IHGAlphas(1),
@@ -2534,7 +2534,7 @@ namespace InternalHeatGains {
                                     }
                                 } else {
                                     ShowSevereError(state,
-                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                    format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                            RoutineName,
                                                            stmEqModuleObject,
                                                            IHGAlphas(1),
@@ -2834,7 +2834,7 @@ namespace InternalHeatGains {
                     }
                     if (thisZoneOthEq.CO2RateFactor < 0.0) {
                         ShowSevereError(state,
-                                        format("{}{}=\"{}\", {} < 0.0, value ={:.2R}",
+                                        format("{}{}=\"{}\", {} < 0.0, value ={:.2f}",
                                                RoutineName,
                                                othEqModuleObject,
                                                thisOthEqInput.Name,
@@ -2844,7 +2844,7 @@ namespace InternalHeatGains {
                     }
                     if (thisZoneOthEq.CO2RateFactor > 4.0e-7) {
                         ShowSevereError(state,
-                                        format("{}{}=\"{}\", {} > 4.0E-7, value ={:.2R}",
+                                        format("{}{}=\"{}\", {} > 4.0E-7, value ={:.2f}",
                                                RoutineName,
                                                othEqModuleObject,
                                                thisOthEqInput.Name,
@@ -3003,7 +3003,7 @@ namespace InternalHeatGains {
                                         }
                                     } else {
                                         ShowSevereError(state,
-                                                        format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3R}",
+                                                        format("{}{}=\"{}\", invalid {}, value  [<0.0]={:.3f}",
                                                                RoutineName,
                                                                itEqModuleObject,
                                                                IHGAlphas(1),
@@ -3060,7 +3060,7 @@ namespace InternalHeatGains {
                                         format(
                                             "{}{}=\"{}\", {}, minimum is < 0.0", RoutineName, itEqModuleObject, IHGAlphas(1), IHGAlphaFieldNames(5)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(5), SchMin));
+                                                      format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(5), SchMin));
                                     ErrorsFound = true;
                                 }
                                 if (SchMax < 0.0) {
@@ -3069,7 +3069,7 @@ namespace InternalHeatGains {
                                         format(
                                             "{}{}=\"{}\", {}, maximum is < 0.0", RoutineName, itEqModuleObject, IHGAlphas(1), IHGAlphaFieldNames(5)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(5), SchMax));
+                                                      format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(5), SchMax));
                                     ErrorsFound = true;
                                 }
                             }
@@ -3101,7 +3101,7 @@ namespace InternalHeatGains {
                                         format(
                                             "{}{}=\"{}\", {}, minimum is < 0.0", RoutineName, itEqModuleObject, IHGAlphas(1), IHGAlphaFieldNames(6)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(6), SchMin));
+                                                      format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(6), SchMin));
                                     ErrorsFound = true;
                                 }
                                 if (SchMax < 0.0) {
@@ -3110,7 +3110,7 @@ namespace InternalHeatGains {
                                         format(
                                             "{}{}=\"{}\", {}, maximum is < 0.0", RoutineName, itEqModuleObject, IHGAlphas(1), IHGAlphaFieldNames(6)));
                                     ShowContinueError(state,
-                                                      format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(6), SchMax));
+                                                      format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(6), SchMax));
                                     ErrorsFound = true;
                                 }
                             }
@@ -3441,7 +3441,7 @@ namespace InternalHeatGains {
                                                        thisBBHeatInput.Name,
                                                        IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                                                  format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                                 ErrorsFound = true;
                             }
                             if (SchMax < 0.0) {
@@ -3452,7 +3452,7 @@ namespace InternalHeatGains {
                                                        thisBBHeatInput.Name,
                                                        IHGAlphaFieldNames(3)));
                                 ShowContinueError(state,
-                                                  format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                                                  format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                                 ErrorsFound = true;
                             }
                         }
@@ -3580,14 +3580,14 @@ namespace InternalHeatGains {
                         ShowSevereError(
                             state,
                             format("{}{}=\"{}\", {}, minimum is < 0.0", RoutineName, contamSSModuleObject, IHGAlphas(1), IHGAlphaFieldNames(3)));
-                        ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
+                        ShowContinueError(state, format("Schedule=\"{}\". Minimum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMin));
                         ErrorsFound = true;
                     }
                     if (SchMax < 0.0) {
                         ShowSevereError(
                             state,
                             format("{}{}=\"{}\", {}, maximum is < 0.0", RoutineName, contamSSModuleObject, IHGAlphas(1), IHGAlphaFieldNames(3)));
-                        ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1R}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
+                        ShowContinueError(state, format("Schedule=\"{}\". Maximum is [{:.1f}]. Values must be >= 0.0.", IHGAlphas(3), SchMax));
                         ErrorsFound = true;
                     }
                 }
@@ -3694,15 +3694,15 @@ namespace InternalHeatGains {
                       state.dataHeatBal->Zone(Loop).FloorArea,
                       state.dataHeatBal->Zone(Loop).TotOccupants);
                 print_and_divide_if_greater_than_zero(state.dataHeatBal->Zone(Loop).FloorArea, state.dataHeatBal->Zone(Loop).TotOccupants);
-                print(state.files.eio, "{:.3R},", state.dataHeatBal->Zone(Loop).TotOccupants / state.dataHeatBal->Zone(Loop).FloorArea);
-                print(state.files.eio, "{:.3R},", LightTot / state.dataHeatBal->Zone(Loop).FloorArea);
-                print(state.files.eio, "{:.3R},", ElecTot / state.dataHeatBal->Zone(Loop).FloorArea);
-                print(state.files.eio, "{:.3R},", GasTot / state.dataHeatBal->Zone(Loop).FloorArea);
-                print(state.files.eio, "{:.3R},", OthTot / state.dataHeatBal->Zone(Loop).FloorArea);
-                print(state.files.eio, "{:.3R},", HWETot / state.dataHeatBal->Zone(Loop).FloorArea);
-                print(state.files.eio, "{:.3R},", StmTot / state.dataHeatBal->Zone(Loop).FloorArea);
+                print(state.files.eio, "{:.3f},", state.dataHeatBal->Zone(Loop).TotOccupants / state.dataHeatBal->Zone(Loop).FloorArea);
+                print(state.files.eio, "{:.3f},", LightTot / state.dataHeatBal->Zone(Loop).FloorArea);
+                print(state.files.eio, "{:.3f},", ElecTot / state.dataHeatBal->Zone(Loop).FloorArea);
+                print(state.files.eio, "{:.3f},", GasTot / state.dataHeatBal->Zone(Loop).FloorArea);
+                print(state.files.eio, "{:.3f},", OthTot / state.dataHeatBal->Zone(Loop).FloorArea);
+                print(state.files.eio, "{:.3f},", HWETot / state.dataHeatBal->Zone(Loop).FloorArea);
+                print(state.files.eio, "{:.3f},", StmTot / state.dataHeatBal->Zone(Loop).FloorArea);
                 print(state.files.eio,
-                      "{:.3R},{}\n",
+                      "{:.3f},{}\n",
                       state.dataHeatBal->Zone(Loop).InternalHeatGains / state.dataHeatBal->Zone(Loop).FloorArea,
                       BBHeatInd);
             } else {
@@ -3753,7 +3753,7 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.1R},", state.dataHeatBal->People(Loop).NumberOfPeople);
+            print(state.files.eio, "{:.1f},", state.dataHeatBal->People(Loop).NumberOfPeople);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->People(Loop).NumberOfPeople, state.dataHeatBal->Zone(ZoneNum).FloorArea);
 
@@ -3763,12 +3763,12 @@ namespace InternalHeatGains {
                 print(state.files.eio, "N/A,");
             }
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->People(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->People(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->People(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->People(Loop).FractionConvected);
             if (state.dataHeatBal->People(Loop).UserSpecSensFrac == Constant::AutoCalculate) {
                 print(state.files.eio, "AutoCalculate,");
             } else {
-                print(state.files.eio, "{:.3R},", state.dataHeatBal->People(Loop).UserSpecSensFrac);
+                print(state.files.eio, "{:.3f},", state.dataHeatBal->People(Loop).UserSpecSensFrac);
             }
             print(state.files.eio, "{},", GetScheduleName(state, state.dataHeatBal->People(Loop).ActivityLevelPtr));
 
@@ -3777,30 +3777,30 @@ namespace InternalHeatGains {
             } else {
                 print(state.files.eio, "No,");
             }
-            print(state.files.eio, "{:.4R},", state.dataHeatBal->People(Loop).CO2RateFactor);
-            print(state.files.eio, "{:.1R},", state.dataHeatBal->People(Loop).NomMinNumberPeople);
-            print(state.files.eio, "{:.1R},", state.dataHeatBal->People(Loop).NomMaxNumberPeople);
+            print(state.files.eio, "{:.4f},", state.dataHeatBal->People(Loop).CO2RateFactor);
+            print(state.files.eio, "{:.1f},", state.dataHeatBal->People(Loop).NomMinNumberPeople);
+            print(state.files.eio, "{:.1f},", state.dataHeatBal->People(Loop).NomMaxNumberPeople);
 
             auto &thisPeople = state.dataHeatBal->People(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, thisPeople.NumberOfPeoplePtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMin);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMax);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMin);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, thisPeople.NumberOfPeoplePtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMin);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMax);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMin);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, thisPeople.NumberOfPeoplePtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMin);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMax);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMin);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, thisPeople.NumberOfPeoplePtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMin);
-            print(state.files.eio, "{:.1R},", thisPeople.NumberOfPeople * SchMax);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMin);
+            print(state.files.eio, "{:.1f},", thisPeople.NumberOfPeople * SchMax);
 
             if (state.dataHeatBal->People(Loop).Fanger || state.dataHeatBal->People(Loop).Pierce || state.dataHeatBal->People(Loop).KSU ||
                 state.dataHeatBal->People(Loop).CoolingEffectASH55 || state.dataHeatBal->People(Loop).AnkleDraftASH55) {
@@ -3885,40 +3885,40 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).DesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).DesignLevel);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->Lights(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).FloorArea);
             print_and_divide_if_greater_than_zero(state.dataHeatBal->Lights(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).FractionReturnAir);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).FractionShortWave);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).FractionConvected);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).FractionReplaceable);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).FractionReturnAir);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).FractionShortWave);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).FractionReplaceable);
             print(state.files.eio, "{},", state.dataHeatBal->Lights(Loop).EndUseSubcategory);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).NomMinDesignLevel);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->Lights(Loop).NomMaxDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).NomMinDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->Lights(Loop).NomMaxDesignLevel);
 
             auto &light = state.dataHeatBal->Lights(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, light.SchedPtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.3R},", light.DesignLevel * SchMin);
-            print(state.files.eio, "{:.1R},", light.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", light.DesignLevel * SchMin);
+            print(state.files.eio, "{:.1f},", light.DesignLevel * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, light.SchedPtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.3R},", light.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", light.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", light.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", light.DesignLevel * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, light.SchedPtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.3R},", light.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", light.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", light.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", light.DesignLevel * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, light.SchedPtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.3R},", light.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R}\n", light.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", light.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f}\n", light.DesignLevel * SchMax);
         }
         for (int Loop = 1; Loop <= state.dataHeatBal->TotElecEquip; ++Loop) {
             if (Loop == 1) {
@@ -3949,39 +3949,39 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneElectric(Loop).DesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneElectric(Loop).DesignLevel);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneElectric(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).FloorArea);
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneElectric(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneElectric(Loop).FractionLatent);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneElectric(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneElectric(Loop).FractionLost);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneElectric(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneElectric(Loop).FractionLatent);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneElectric(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneElectric(Loop).FractionLost);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneElectric(Loop).FractionConvected);
             print(state.files.eio, "{},", state.dataHeatBal->ZoneElectric(Loop).EndUseSubcategory);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneElectric(Loop).NomMinDesignLevel);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneElectric(Loop).NomMaxDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneElectric(Loop).NomMinDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneElectric(Loop).NomMaxDesignLevel);
 
             auto &electric = state.dataHeatBal->ZoneElectric(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, electric.SchedPtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.3R},", electric.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", electric.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", electric.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", electric.DesignLevel * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, electric.SchedPtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.3R},", electric.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", electric.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", electric.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", electric.DesignLevel * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, electric.SchedPtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.3R},", electric.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", electric.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", electric.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", electric.DesignLevel * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, electric.SchedPtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.3R},", electric.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R}\n", electric.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", electric.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f}\n", electric.DesignLevel * SchMax);
         }
         for (int Loop = 1; Loop <= state.dataHeatBal->TotGasEquip; ++Loop) {
             if (Loop == 1) {
@@ -4013,39 +4013,39 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneGas(Loop).DesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneGas(Loop).DesignLevel);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneGas(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).FloorArea);
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneGas(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneGas(Loop).FractionLatent);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneGas(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneGas(Loop).FractionLost);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneGas(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneGas(Loop).FractionLatent);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneGas(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneGas(Loop).FractionLost);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneGas(Loop).FractionConvected);
             print(state.files.eio, "{},", state.dataHeatBal->ZoneGas(Loop).EndUseSubcategory);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneGas(Loop).NomMinDesignLevel);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneGas(Loop).NomMaxDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneGas(Loop).NomMinDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneGas(Loop).NomMaxDesignLevel);
 
             auto &gas = state.dataHeatBal->ZoneGas(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, gas.SchedPtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.3R},", gas.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", gas.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", gas.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", gas.DesignLevel * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, gas.SchedPtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.3R},", gas.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", gas.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", gas.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", gas.DesignLevel * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, gas.SchedPtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.3R},", gas.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", gas.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", gas.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", gas.DesignLevel * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, gas.SchedPtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.3R},", gas.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R}\n", gas.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", gas.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f}\n", gas.DesignLevel * SchMax);
         }
 
         for (int Loop = 1; Loop <= state.dataHeatBal->TotHWEquip; ++Loop) {
@@ -4078,39 +4078,39 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneHWEq(Loop).DesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneHWEq(Loop).DesignLevel);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneHWEq(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).FloorArea);
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneHWEq(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneHWEq(Loop).FractionLatent);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneHWEq(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneHWEq(Loop).FractionLost);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneHWEq(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneHWEq(Loop).FractionLatent);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneHWEq(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneHWEq(Loop).FractionLost);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneHWEq(Loop).FractionConvected);
             print(state.files.eio, "{},", state.dataHeatBal->ZoneHWEq(Loop).EndUseSubcategory);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneHWEq(Loop).NomMinDesignLevel);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneHWEq(Loop).NomMaxDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneHWEq(Loop).NomMinDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneHWEq(Loop).NomMaxDesignLevel);
 
             auto &hweq = state.dataHeatBal->ZoneHWEq(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, hweq.SchedPtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.3R},", hweq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", hweq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", hweq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", hweq.DesignLevel * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, hweq.SchedPtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.3R},", hweq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", hweq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", hweq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", hweq.DesignLevel * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, hweq.SchedPtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.3R},", hweq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", hweq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", hweq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", hweq.DesignLevel * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, hweq.SchedPtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.3R},", hweq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R}\n", hweq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", hweq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f}\n", hweq.DesignLevel * SchMax);
         }
 
         for (int Loop = 1; Loop <= state.dataHeatBal->TotStmEquip; ++Loop) {
@@ -4143,39 +4143,39 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneSteamEq(Loop).DesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneSteamEq(Loop).DesignLevel);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneSteamEq(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).FloorArea);
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneSteamEq(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneSteamEq(Loop).FractionLatent);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneSteamEq(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneSteamEq(Loop).FractionLost);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneSteamEq(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneSteamEq(Loop).FractionLatent);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneSteamEq(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneSteamEq(Loop).FractionLost);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneSteamEq(Loop).FractionConvected);
             print(state.files.eio, "{},", state.dataHeatBal->ZoneSteamEq(Loop).EndUseSubcategory);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneSteamEq(Loop).NomMinDesignLevel);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneSteamEq(Loop).NomMaxDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneSteamEq(Loop).NomMinDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneSteamEq(Loop).NomMaxDesignLevel);
 
             auto &stmeq = state.dataHeatBal->ZoneSteamEq(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, stmeq.SchedPtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.3R},", stmeq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", stmeq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", stmeq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", stmeq.DesignLevel * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, stmeq.SchedPtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.3R},", stmeq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", stmeq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", stmeq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", stmeq.DesignLevel * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, stmeq.SchedPtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.3R},", stmeq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", stmeq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", stmeq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", stmeq.DesignLevel * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, stmeq.SchedPtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.3R},", stmeq.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R}\n", stmeq.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", stmeq.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f}\n", stmeq.DesignLevel * SchMax);
         }
 
         for (int Loop = 1; Loop <= state.dataHeatBal->TotOthEquip; ++Loop) {
@@ -4208,38 +4208,38 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneOtherEq(Loop).DesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneOtherEq(Loop).DesignLevel);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneOtherEq(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).FloorArea);
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneOtherEq(Loop).DesignLevel, state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneOtherEq(Loop).FractionLatent);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneOtherEq(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneOtherEq(Loop).FractionLost);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneOtherEq(Loop).FractionConvected);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneOtherEq(Loop).NomMinDesignLevel);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneOtherEq(Loop).NomMaxDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneOtherEq(Loop).FractionLatent);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneOtherEq(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneOtherEq(Loop).FractionLost);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneOtherEq(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneOtherEq(Loop).NomMinDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneOtherEq(Loop).NomMaxDesignLevel);
 
             auto &other = state.dataHeatBal->ZoneOtherEq(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, other.SchedPtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.3R},", other.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", other.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", other.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", other.DesignLevel * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, other.SchedPtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.3R},", other.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", other.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", other.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", other.DesignLevel * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, other.SchedPtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.3R},", other.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R},", other.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", other.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f},", other.DesignLevel * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, other.SchedPtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.3R},", other.DesignLevel * SchMin);
-            print(state.files.eio, "{:.3R}\n", other.DesignLevel * SchMax);
+            print(state.files.eio, "{:.3f},", other.DesignLevel * SchMin);
+            print(state.files.eio, "{:.3f}\n", other.DesignLevel * SchMax);
         }
 
         for (int Loop = 1; Loop <= state.dataHeatBal->TotITEquip; ++Loop) {
@@ -4273,7 +4273,7 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneITEq(Loop).DesignTotalPower);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneITEq(Loop).DesignTotalPower);
 
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneITEq(Loop).DesignTotalPower, state.dataHeatBal->Zone(ZoneNum).FloorArea);
             print_and_divide_if_greater_than_zero(state.dataHeatBal->ZoneITEq(Loop).DesignTotalPower, state.dataHeatBal->Zone(ZoneNum).TotOccupants);
@@ -4284,31 +4284,31 @@ namespace InternalHeatGains {
             print(state.files.eio, "{},", state.dataHeatBal->ZoneITEq(Loop).EndUseSubcategoryCPU);
             print(state.files.eio, "{},", state.dataHeatBal->ZoneITEq(Loop).EndUseSubcategoryFan);
             print(state.files.eio, "{},", state.dataHeatBal->ZoneITEq(Loop).EndUseSubcategoryUPS);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneITEq(Loop).NomMinDesignLevel);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneITEq(Loop).NomMaxDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneITEq(Loop).NomMinDesignLevel);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneITEq(Loop).NomMaxDesignLevel);
 
             auto &iteq = state.dataHeatBal->ZoneITEq(Loop);
             // weekdays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, iteq.OperSchedPtr, DayTypeGroup::Weekday);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMin);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMax);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMin);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMax);
 
             // weekends/holidays
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, iteq.OperSchedPtr, DayTypeGroup::WeekEndHoliday);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMin);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMax);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMin);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMax);
 
             // summer design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, iteq.OperSchedPtr, DayTypeGroup::SummerDesignDay);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMin);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMax);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMin);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMax);
 
             // winter design days
             std::tie(SchMin, SchMax) = getScheduleMinMaxByDayType(state, iteq.OperSchedPtr, DayTypeGroup::WinterDesignDay);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMin);
-            print(state.files.eio, "{:.3R},", iteq.DesignTotalPower * SchMax);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMin);
+            print(state.files.eio, "{:.3f},", iteq.DesignTotalPower * SchMax);
 
-            print(state.files.eio, "{:.10R}\n", state.dataHeatBal->ZoneITEq(Loop).DesignAirVolFlowRate);
+            print(state.files.eio, "{:.10f}\n", state.dataHeatBal->ZoneITEq(Loop).DesignAirVolFlowRate);
         }
 
         for (int Loop = 1; Loop <= state.dataHeatBal->TotBBHeat; ++Loop) {
@@ -4338,12 +4338,12 @@ namespace InternalHeatGains {
                   state.dataHeatBal->Zone(ZoneNum).FloorArea,
                   state.dataHeatBal->Zone(ZoneNum).TotOccupants);
 
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneBBHeat(Loop).CapatLowTemperature);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneBBHeat(Loop).LowTemperature);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneBBHeat(Loop).CapatHighTemperature);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneBBHeat(Loop).HighTemperature);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneBBHeat(Loop).FractionRadiant);
-            print(state.files.eio, "{:.3R},", state.dataHeatBal->ZoneBBHeat(Loop).FractionConvected);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneBBHeat(Loop).CapatLowTemperature);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneBBHeat(Loop).LowTemperature);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneBBHeat(Loop).CapatHighTemperature);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneBBHeat(Loop).HighTemperature);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneBBHeat(Loop).FractionRadiant);
+            print(state.files.eio, "{:.3f},", state.dataHeatBal->ZoneBBHeat(Loop).FractionConvected);
             print(state.files.eio, "{}\n", state.dataHeatBal->ZoneBBHeat(Loop).EndUseSubcategory);
         }
     }

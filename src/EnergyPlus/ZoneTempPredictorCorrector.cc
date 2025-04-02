@@ -320,7 +320,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
     static constexpr std::string_view Header(
         "! <Zone Volume Capacitance Multiplier>, Sensible Heat Capacity Multiplier, Moisture Capacity Multiplier, Carbon "
         "Dioxide Capacity Multiplier, Generic Contaminant Capacity Multiplier\n");
-    static constexpr std::string_view Format_701("Zone Volume Capacitance Multiplier,{:8.3F} ,{:8.3F},{:8.3F},{:8.3F}\n");
+    static constexpr std::string_view Format_701("Zone Volume Capacitance Multiplier,{:8.3f} ,{:8.3f},{:8.3f},{:8.3f}\n");
 
     auto &cCurrentModuleObject = state.dataIPShortCut->cCurrentModuleObject;
     int NumOfZones = state.dataGlobal->NumOfZones;
@@ -528,7 +528,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     } else {
                         ShowSevereError(
                             state,
-                            format("{}=\"{} invalid {}=[{:.0T}].", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(1), rNumericArgs(1)));
+                            format("{}=\"{} invalid {}=[{:.0f}].", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(1), rNumericArgs(1)));
                         ShowContinueError(state, "..Allowable values must be greater or equal to 0");
                         ErrorsFound = true;
                     }
@@ -1184,7 +1184,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     if (rNumericArgs(1) > 50 || rNumericArgs(1) < 0) {
                         ShowSevereError(
                             state,
-                            format("{}=\"{} invalid {}=[{:.0T}].", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(1), rNumericArgs(1)));
+                            format("{}=\"{} invalid {}=[{:.0f}].", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(1), rNumericArgs(1)));
                         ShowContinueError(state, "..Allowable values must be between 0 C and 50 C");
                         ErrorsFound = true;
                     }
@@ -1194,7 +1194,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     if (rNumericArgs(2) > 50 || rNumericArgs(2) < 0) {
                         ShowSevereError(
                             state,
-                            format("{}=\"{} invalid {}=[{:.0T}].", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(2), rNumericArgs(2)));
+                            format("{}=\"{} invalid {}=[{:.0f}].", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(2), rNumericArgs(2)));
                         ShowContinueError(state, "..Allowable values must be between 0 C and 50 C");
                         ErrorsFound = true;
                     }
@@ -1203,7 +1203,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                 if (ComfortControlledZone.TdbMinSetPoint > ComfortControlledZone.TdbMaxSetPoint) {
                     ShowSevereError(state, format("{}=\"{}", cCurrentModuleObject, cAlphaArgs(1)));
                     ShowContinueError(state, format("..{} > {}", cNumericFieldNames(1), cNumericFieldNames(2)));
-                    ShowContinueError(state, format("..[{:.0T}] > [{:.0T}].", rNumericArgs(1), rNumericArgs(2)));
+                    ShowContinueError(state, format("..[{:.0f}] > [{:.0f}].", rNumericArgs(1), rNumericArgs(2)));
                     ErrorsFound = true;
                 }
                 // If MaxTemp = MinTemp, no thermal comfort control
@@ -1884,7 +1884,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     // check validity of fixed radiative fraction
                     if ((TempControlledZone.FixedRadiativeFraction < 0.0) && (!(TempControlledZone.OpTempCntrlModeScheduled))) {
                         ShowSevereError(state,
-                                        format("{}={} invalid {}=[{:.2T}\" cannot be negative.",
+                                        format("{}={} invalid {}=[{:.2f}\" cannot be negative.",
                                                cCurrentModuleObject,
                                                cAlphaArgs(1),
                                                cNumericFieldNames(1),
@@ -1893,7 +1893,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     }
                     if ((TempControlledZone.FixedRadiativeFraction >= 0.9) && (!(TempControlledZone.OpTempCntrlModeScheduled))) {
                         ShowSevereError(state,
-                                        format("{}={} invalid {}=[{:.2T}\" cannot >= .9.",
+                                        format("{}={} invalid {}=[{:.2f}\" cannot >= .9.",
                                                cCurrentModuleObject,
                                                cAlphaArgs(1),
                                                cNumericFieldNames(1),
@@ -1982,7 +1982,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                         // check validity of fixed radiative fraction
                         if ((TempControlledZone.FixedRadiativeFraction < 0.0) && (!(TempControlledZone.OpTempCntrlModeScheduled))) {
                             ShowSevereError(state,
-                                            format("{}={} invalid {}=[{:.2T}\" cannot be negative.",
+                                            format("{}={} invalid {}=[{:.2f}\" cannot be negative.",
                                                    cCurrentModuleObject,
                                                    cAlphaArgs(1),
                                                    cNumericFieldNames(1),
@@ -1991,7 +1991,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                         }
                         if ((TempControlledZone.FixedRadiativeFraction >= 0.9) && (!(TempControlledZone.OpTempCntrlModeScheduled))) {
                             ShowSevereError(state,
-                                            format("{}={} invalid {}=[{:.2T}\" cannot >= .9.",
+                                            format("{}={} invalid {}=[{:.2f}\" cannot >= .9.",
                                                    cCurrentModuleObject,
                                                    cAlphaArgs(1),
                                                    cNumericFieldNames(1),
@@ -2122,7 +2122,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     // check validity of zone Overcool constant range
                     if ((TempControlledZone.ZoneOvercoolConstRange < 0.0) && (!(TempControlledZone.OvercoolCntrlModeScheduled))) {
                         ShowSevereError(state,
-                                        format("{}={} invalid {}=[{:.2T}\" cannot be negative.",
+                                        format("{}={} invalid {}=[{:.2f}\" cannot be negative.",
                                                cCurrentModuleObject,
                                                cAlphaArgs(1),
                                                cNumericFieldNames(1),
@@ -2131,7 +2131,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     }
                     if ((TempControlledZone.ZoneOvercoolConstRange > 3.0) && (!(TempControlledZone.OvercoolCntrlModeScheduled))) {
                         ShowSevereError(state,
-                                        format("{}={} invalid {}=[{:.2T}\" cannot be > 3.0",
+                                        format("{}={} invalid {}=[{:.2f}\" cannot be > 3.0",
                                                cCurrentModuleObject,
                                                cAlphaArgs(1),
                                                cNumericFieldNames(1),
@@ -2155,7 +2155,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     TempControlledZone.ZoneOvercoolControlRatio = rNumericArgs(2);
                     if (TempControlledZone.ZoneOvercoolControlRatio < 0.0) {
                         ShowSevereError(state,
-                                        format("{}={} invalid {}=[{:.2T}\" cannot be negative.",
+                                        format("{}={} invalid {}=[{:.2f}\" cannot be negative.",
                                                cCurrentModuleObject,
                                                cAlphaArgs(2),
                                                cNumericFieldNames(2),
@@ -2203,7 +2203,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                         // check validity of zone Overcool constant range
                         if ((TempControlledZone.ZoneOvercoolConstRange < 0.0) && (!(TempControlledZone.OvercoolCntrlModeScheduled))) {
                             ShowSevereError(state,
-                                            format("{}={} invalid {}=[{:.2T}\" cannot be negative.",
+                                            format("{}={} invalid {}=[{:.2f}\" cannot be negative.",
                                                    cCurrentModuleObject,
                                                    cAlphaArgs(1),
                                                    cNumericFieldNames(1),
@@ -2212,7 +2212,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                         }
                         if ((TempControlledZone.ZoneOvercoolConstRange > 3.0) && (!(TempControlledZone.OvercoolCntrlModeScheduled))) {
                             ShowSevereError(state,
-                                            format("{}={} invalid {}=[{:.2T}\" cannot > 3.0",
+                                            format("{}={} invalid {}=[{:.2f}\" cannot > 3.0",
                                                    cCurrentModuleObject,
                                                    cAlphaArgs(1),
                                                    cNumericFieldNames(1),
@@ -2238,7 +2238,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                     if (Item == 1) {
                         if (TempControlledZone.ZoneOvercoolControlRatio < 0.0) {
                             ShowSevereError(state,
-                                            format("{}={} invalid {}=[{:.2T}\" cannot be negative.",
+                                            format("{}={} invalid {}=[{:.2f}\" cannot be negative.",
                                                    cCurrentModuleObject,
                                                    cAlphaArgs(2),
                                                    cNumericFieldNames(2),
@@ -2383,7 +2383,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                 if (rNumericArgs(1) < 1 || rNumericArgs(1) > 4) {
                     ShowSevereError(
                         state,
-                        format("{}=\"{}\" invalid range {}=\"{:.0R}\"", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(1), rNumericArgs(1)));
+                        format("{}=\"{}\" invalid range {}=\"{:.0f}\"", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(1), rNumericArgs(1)));
                     ShowContinueError(state, "..contains values outside of range [1,4].");
                     ErrorsFound = true;
                 }
@@ -2403,7 +2403,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                 stageControlledZone.HeatThroRange = rNumericArgs(2);
                 if (rNumericArgs(1) < 0.0) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" negative value is found at {}=\"{:.1R}\"",
+                                    format("{}=\"{}\" negative value is found at {}=\"{:.1f}\"",
                                            cAlphaArgs(1),
                                            cCurrentModuleObject,
                                            cNumericFieldNames(2),
@@ -2421,7 +2421,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                                             format("{}=\"{}\" positive value is found at {}",
                                                    cCurrentModuleObject,
                                                    cAlphaArgs(1),
-                                                   format("{}=\"{:.1R}\"", cNumericFieldNames(2 + i), rNumericArgs(2 + i))));
+                                                   format("{}=\"{:.1f}\"", cNumericFieldNames(2 + i), rNumericArgs(2 + i))));
                             ShowContinueError(state, ".. The maximum value is 0.");
                             ErrorsFound = true;
                         }
@@ -2436,12 +2436,12 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                         if (i > 1) {
                             if (rNumericArgs(2 + i) >= rNumericArgs(1 + i)) {
                                 ShowSevereError(state,
-                                                format(R"({}="{}" The value at {}="{:.1R}" has to be less than )",
+                                                format(R"({}="{}" The value at {}="{:.1f}" has to be less than )",
                                                        cCurrentModuleObject,
                                                        cAlphaArgs(1),
                                                        cNumericFieldNames(2 + i),
                                                        rNumericArgs(2 + i)));
-                                ShowContinueError(state, format("{}=\"{:.1R}", cNumericFieldNames(1 + i), rNumericArgs(1 + i)));
+                                ShowContinueError(state, format("{}=\"{:.1f}", cNumericFieldNames(1 + i), rNumericArgs(1 + i)));
                                 ErrorsFound = true;
                             }
                         }
@@ -2452,7 +2452,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                 if (rNumericArgs(7) < 1 || rNumericArgs(7) > 4) {
                     ShowSevereError(
                         state,
-                        format("{}=\"{}\" invalid range {}=\"{:.0R}\"", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(7), rNumericArgs(7)));
+                        format("{}=\"{}\" invalid range {}=\"{:.0f}\"", cCurrentModuleObject, cAlphaArgs(1), cNumericFieldNames(7), rNumericArgs(7)));
                     ShowContinueError(state, "..contains values outside of range [1,4].");
                     ErrorsFound = true;
                 }
@@ -2472,7 +2472,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                 stageControlledZone.CoolThroRange = rNumericArgs(8);
                 if (rNumericArgs(8) < 0.0) {
                     ShowSevereError(state,
-                                    format("{}=\"{}\" negative value is found at {}=\"{:.1R}\"",
+                                    format("{}=\"{}\" negative value is found at {}=\"{:.1f}\"",
                                            cCurrentModuleObject,
                                            cAlphaArgs(1),
                                            cNumericFieldNames(8),
@@ -2487,7 +2487,7 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                         stageControlledZone.CoolTOffset(i) = rNumericArgs(8 + i);
                         if (rNumericArgs(8 + i) < 0.0) {
                             ShowSevereError(state,
-                                            format("{}=\"{}\" negative value is found at {}=\"{:.1R}\"",
+                                            format("{}=\"{}\" negative value is found at {}=\"{:.1f}\"",
                                                    cCurrentModuleObject,
                                                    cAlphaArgs(1),
                                                    cNumericFieldNames(8 + i),
@@ -2506,12 +2506,12 @@ void GetZoneAirSetPoints(EnergyPlusData &state)
                         if (i > 1) {
                             if (rNumericArgs(8 + i) <= rNumericArgs(7 + i)) {
                                 ShowSevereError(state,
-                                                format("{}=\"{}\" The value at {}=\"{:.1R}\" has to be greater than ",
+                                                format("{}=\"{}\" The value at {}=\"{:.1f}\" has to be greater than ",
                                                        cCurrentModuleObject,
                                                        cAlphaArgs(1),
                                                        cNumericFieldNames(8 + i),
                                                        rNumericArgs(8 + i)));
-                                ShowContinueError(state, format("{}=\"{:.1R}", cNumericFieldNames(7 + i), rNumericArgs(7 + i)));
+                                ShowContinueError(state, format("{}=\"{:.1f}", cNumericFieldNames(7 + i), rNumericArgs(7 + i)));
                                 ErrorsFound = true;
                             }
                         }
@@ -3443,8 +3443,8 @@ void PredictSystemLoads(EnergyPlusData &state,
                                         "setpoint is greater than the cooling setpoint. ");
                         ShowContinueErrorTimeStamp(state,
                                                    format("occurs in Zone={}", state.dataHeatBal->Zone(thisTempControlledZone.ActualZoneNum).Name));
-                        ShowContinueError(state, format("Zone Heating ThermostatSetPoint={:.2R}", thisZoneThermostatSetPointLo));
-                        ShowContinueError(state, format("Zone Cooling ThermostatSetPoint={:.2R}", thisZoneThermostatSetPointHi));
+                        ShowContinueError(state, format("Zone Heating ThermostatSetPoint={:.2f}", thisZoneThermostatSetPointLo));
+                        ShowContinueError(state, format("Zone Cooling ThermostatSetPoint={:.2f}", thisZoneThermostatSetPointHi));
                         ShowFatalError(state, "Program terminates due to above conditions.");
                     }
                     break;
@@ -4119,9 +4119,9 @@ void ZoneSpaceHeatBalanceData::calcPredictedHumidityRatio(EnergyPlusData &state,
                 ShowContinueErrorTimeStamp(state, format("occurs in Zone = {}", thisZone.Name));
                 ShowContinueError(
                     state,
-                    format("LoadToHumidifySetPoint={:.5R}, LoadToDehumidifySetPoint={:.5R}", LoadToHumidifySetPoint, LoadToDehumidifySetPoint));
-                ShowContinueError(state, format("Zone RH Humidifying Set-point={:.1R}", ZoneRHHumidifyingSetPoint));
-                ShowContinueError(state, format("Zone RH Dehumidifying Set-point={:.2R}", ZoneRHDehumidifyingSetPoint));
+                    format("LoadToHumidifySetPoint={:.5f}, LoadToDehumidifySetPoint={:.5f}", LoadToHumidifySetPoint, LoadToDehumidifySetPoint));
+                ShowContinueError(state, format("Zone RH Humidifying Set-point={:.1f}", ZoneRHHumidifyingSetPoint));
+                ShowContinueError(state, format("Zone RH Dehumidifying Set-point={:.2f}", ZoneRHDehumidifyingSetPoint));
                 ShowFatalError(state, "Program terminates due to above conditions.");
             }
         }
@@ -5289,7 +5289,7 @@ void processInverseModelMultpHM(EnergyPlusData &state,
         if (thisZoneHB.hmThermalMassMultErrIndex == 0) {
             ShowWarningMessage(state, format("Hybrid model thermal mass multiplier higher than the limit for {}", zone.Name));
             ShowContinueError(state, "This means that the ratio of the zone air heat capacity for the current time step to the");
-            ShowContinueError(state, format("zone air heat storage is higher than the maximum limit of {:.1R}.", maxHMMultValue));
+            ShowContinueError(state, format("zone air heat storage is higher than the maximum limit of {:.1f}.", maxHMMultValue));
         }
         ShowRecurringWarningErrorAtEnd(
             state, "Hybrid model thermal mass multiplier limit exceeded in zone " + zone.Name, thisZoneHB.hmThermalMassMultErrIndex);
@@ -5941,7 +5941,7 @@ void CalcZoneComponentLoadSums(EnergyPlusData &state,
             (!state.dataGlobal->DoingSizing)) { // air balance is out by more than threshold
             if (thisZone.AirHBimBalanceErrIndex == 0) {
                 ShowWarningMessage(state, format("Zone Air Heat Balance is out of balance for zone named {}", thisZone.Name));
-                ShowContinueError(state, format("Zone Air Heat Balance Deviation Rate is more than {:.1R} {{W}}", Threshold));
+                ShowContinueError(state, format("Zone Air Heat Balance Deviation Rate is more than {:.1f} {{W}}", Threshold));
                 if (state.dataHVACGlobal->TurnFansOn) {
                     ShowContinueError(state, "Night cycle fan operation may be causing above error");
                 }
@@ -7277,10 +7277,10 @@ void ZoneSpaceHeatBalanceData::calcPredictedSystemLoad(EnergyPlusData &state, Re
                             "DualSetPointWithDeadBand if using unmixed air model");
             ShowContinueErrorTimeStamp(state, format("occurs in Zone={}", thisZone.Name));
             ShowContinueError(state,
-                              format("LoadToHeatingSetPoint={:.3R}, LoadToCoolingSetPoint={:.3R}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
-            ShowContinueError(state, format("Zone TempDepZnLd={:.2R}", this->tempDepLoad));
-            ShowContinueError(state, format("Zone TempIndZnLd={:.2R}", this->tempIndLoad));
-            ShowContinueError(state, format("Zone ThermostatSetPoint={:.2R}", thisTempZoneThermostatSetPoint));
+                              format("LoadToHeatingSetPoint={:.3f}, LoadToCoolingSetPoint={:.3f}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
+            ShowContinueError(state, format("Zone TempDepZnLd={:.2f}", this->tempDepLoad));
+            ShowContinueError(state, format("Zone TempIndZnLd={:.2f}", this->tempIndLoad));
+            ShowContinueError(state, format("Zone ThermostatSetPoint={:.2f}", thisTempZoneThermostatSetPoint));
             ShowFatalError(state, "Program terminates due to above conditions.");
         }
 
@@ -7301,10 +7301,10 @@ void ZoneSpaceHeatBalanceData::calcPredictedSystemLoad(EnergyPlusData &state, Re
                             "SingleHeatCoolSetPoint: Unanticipated combination of heating and cooling loads - report to EnergyPlus Development Team");
             ShowContinueErrorTimeStamp(state, format("occurs in Zone={}", thisZone.Name));
             ShowContinueError(state,
-                              format("LoadToHeatingSetPoint={:.3R}, LoadToCoolingSetPoint={:.3R}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
-            ShowContinueError(state, format("Zone TempDepZnLd={:.2R}", this->tempDepLoad));
-            ShowContinueError(state, format("Zone TempIndZnLd={:.2R}", this->tempIndLoad));
-            ShowContinueError(state, format("Zone ThermostatSetPoint={:.2R}", thisTempZoneThermostatSetPoint));
+                              format("LoadToHeatingSetPoint={:.3f}, LoadToCoolingSetPoint={:.3f}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
+            ShowContinueError(state, format("Zone TempDepZnLd={:.2f}", this->tempDepLoad));
+            ShowContinueError(state, format("Zone TempIndZnLd={:.2f}", this->tempIndLoad));
+            ShowContinueError(state, format("Zone ThermostatSetPoint={:.2f}", thisTempZoneThermostatSetPoint));
             ShowFatalError(state, "Program terminates due to above conditions.");
         }
         break;
@@ -7361,11 +7361,11 @@ void ZoneSpaceHeatBalanceData::calcPredictedSystemLoad(EnergyPlusData &state, Re
                             "deadband if using unmixed air model");
             ShowContinueErrorTimeStamp(state, format("occurs in Zone={}", thisZone.Name));
             ShowContinueError(state,
-                              format("LoadToHeatingSetPoint={:.3R}, LoadToCoolingSetPoint={:.3R}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
-            ShowContinueError(state, format("Zone TempDepZnLd={:.2R}", this->tempDepLoad));
-            ShowContinueError(state, format("Zone TempIndZnLd={:.2R}", this->tempIndLoad));
-            ShowContinueError(state, format("Zone Heating ThermostatSetPoint={:.2R}", thisZoneThermostatSetPointLo));
-            ShowContinueError(state, format("Zone Cooling ThermostatSetPoint={:.2R}", thisZoneThermostatSetPointHi));
+                              format("LoadToHeatingSetPoint={:.3f}, LoadToCoolingSetPoint={:.3f}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
+            ShowContinueError(state, format("Zone TempDepZnLd={:.2f}", this->tempDepLoad));
+            ShowContinueError(state, format("Zone TempIndZnLd={:.2f}", this->tempIndLoad));
+            ShowContinueError(state, format("Zone Heating ThermostatSetPoint={:.2f}", thisZoneThermostatSetPointLo));
+            ShowContinueError(state, format("Zone Cooling ThermostatSetPoint={:.2f}", thisZoneThermostatSetPointHi));
             ShowFatalError(state, "Program terminates due to above conditions.");
         }
 
@@ -7389,12 +7389,12 @@ void ZoneSpaceHeatBalanceData::calcPredictedSystemLoad(EnergyPlusData &state, Re
                 state, "DualSetPointWithDeadBand: Unanticipated combination of heating and cooling loads - report to EnergyPlus Development Team");
             ShowContinueErrorTimeStamp(state, format("occurs in Zone={}", thisZone.Name));
             ShowContinueError(state,
-                              format("LoadToHeatingSetPoint={:.3R}, LoadToCoolingSetPoint={:.3R}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
-            ShowContinueError(state, format("Zone Heating Set-point={:.2R}", thisZoneThermostatSetPointLo));
-            ShowContinueError(state, format("Zone Cooling Set-point={:.2R}", thisZoneThermostatSetPointHi));
-            ShowContinueError(state, format("Zone TempDepZnLd={:.2R}", this->tempDepLoad));
-            ShowContinueError(state, format("Zone TempIndZnLd={:.2R}", this->tempIndLoad));
-            ShowContinueError(state, format("Zone ThermostatSetPoint={:.2R}", thisTempZoneThermostatSetPoint));
+                              format("LoadToHeatingSetPoint={:.3f}, LoadToCoolingSetPoint={:.3f}", LoadToHeatingSetPoint, LoadToCoolingSetPoint));
+            ShowContinueError(state, format("Zone Heating Set-point={:.2f}", thisZoneThermostatSetPointLo));
+            ShowContinueError(state, format("Zone Cooling Set-point={:.2f}", thisZoneThermostatSetPointHi));
+            ShowContinueError(state, format("Zone TempDepZnLd={:.2f}", this->tempDepLoad));
+            ShowContinueError(state, format("Zone TempIndZnLd={:.2f}", this->tempIndLoad));
+            ShowContinueError(state, format("Zone ThermostatSetPoint={:.2f}", thisTempZoneThermostatSetPoint));
 
             ShowFatalError(state, "Program terminates due to above conditions.");
         }

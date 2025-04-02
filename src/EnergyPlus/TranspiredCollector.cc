@@ -626,7 +626,7 @@ namespace TranspiredCollector {
                         format("Entered in {} = {}", state.dataIPShortCut->cCurrentModuleObject, state.dataTranspiredCollector->UTSC(Item).Name));
                     ShowContinueError(state, "Surface used for solar collector faces down");
                     ShowContinueError(
-                        state, format("Surface tilt angle (degrees from ground outward normal) = {:.2R}", state.dataSurface->Surface(Found).Tilt));
+                        state, format("Surface tilt angle (degrees from ground outward normal) = {:.2f}", state.dataSurface->Surface(Found).Tilt));
                 }
 
                 state.dataTranspiredCollector->UTSC(Item).SurfPtrs(ThisSurf) = Found;
@@ -1118,7 +1118,7 @@ namespace TranspiredCollector {
                 ShowWarningMessage(state,
                                    format("Solar Collector:Unglazed Transpired=\"{}\", Suction velocity is outside of range for a good design",
                                           state.dataTranspiredCollector->UTSC(UTSCNum).Name));
-                ShowContinueErrorTimeStamp(state, format("Suction velocity ={:.4R}", Vsuction));
+                ShowContinueErrorTimeStamp(state, format("Suction velocity ={:.4f}", Vsuction));
                 if (Vsuction < 0.003) {
                     ShowContinueError(state, "Velocity is low -- suggest decreasing area of transpired collector");
                 }

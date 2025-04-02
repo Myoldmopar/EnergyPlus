@@ -152,7 +152,7 @@ TEST_F(EnergyPlusFixture, OutputReportTabularTest_RealToStr)
     EXPECT_EQ("  123456.789", RealToStr(123456.789, 3));
     EXPECT_EQ(" 123456.7890", RealToStr(123456.789, 4));
 
-    EXPECT_EQ("0.123457E+06", RealToStr(123456.789, 5));
+    EXPECT_EQ("123456.789000", RealToStr(123456.789, 5));
 }
 
 TEST_F(EnergyPlusFixture, OutputReportTabularTest_isNumber)
@@ -7703,7 +7703,7 @@ TEST_F(EnergyPlusFixture, AzimuthToCardinal)
         std::string cardinalDir = expectedAzimuthToCard.second;
 
         // Internal: Just to ensure that we gets the same one with round
-        EXPECT_EQ(format("{:.2R}", round(oriAzimuth * 100.0) / 100.0), format("{:.2R}", oriAzimuth));
+        EXPECT_EQ(format("{:.2f}", round(oriAzimuth * 100.0) / 100.0), format("{:.2f}", oriAzimuth));
 
         // Wall (odd entries)
 
@@ -7713,7 +7713,7 @@ TEST_F(EnergyPlusFixture, AzimuthToCardinal)
         // Check that the azimuth entry is the rounded version indeed
         EXPECT_EQ(
             OutputReportPredefined::RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchOpAzimuth, state->dataSurface->Surface(i).Name),
-            format("{:.2R}", expectedAzimuthToCard.first))
+            format("{:.2f}", expectedAzimuthToCard.first))
             << "Surface Name = " << state->dataSurface->Surface(i).Name;
         // Check that we do get the expected cardinal direction
         EXPECT_EQ(
@@ -7728,7 +7728,7 @@ TEST_F(EnergyPlusFixture, AzimuthToCardinal)
         // Check that the azimuth entry is the rounded version indeed
         EXPECT_EQ(OutputReportPredefined::RetrievePreDefTableEntry(
                       *state, state->dataOutRptPredefined->pdchFenAzimuth, state->dataSurface->Surface(i + 1).Name),
-                  format("{:.2R}", expectedAzimuthToCard.first))
+                  format("{:.2f}", expectedAzimuthToCard.first))
             << "Surface Name = " << state->dataSurface->Surface(i + 1).Name;
         // Check that we do get the expected cardinal direction
         EXPECT_EQ(OutputReportPredefined::RetrievePreDefTableEntry(
@@ -9982,18 +9982,18 @@ TEST_F(EnergyPlusFixture, OutputReportTabularTest_PredefinedTable_SigDigits_Forc
     value = 123456789.1;
 
     PreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizDesDay, "MyPlant Sizing Pass 1", value, 3);
-    EXPECT_EQ("0.123E+09", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizDesDay, "MyPlant Sizing Pass 1"));
+    EXPECT_EQ("123456789.100", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizDesDay, "MyPlant Sizing Pass 1"));
 
     PreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizPrevVdot, "MyPlant Sizing Pass 1", value, 2);
-    EXPECT_EQ("0.12E+09", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizPrevVdot, "MyPlant Sizing Pass 1"));
+    EXPECT_EQ("123456789.10", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizPrevVdot, "MyPlant Sizing Pass 1"));
 
     // Force reset to numSigDigits = 2 since we switch to scientific notation
 
     PreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizMeasVdot, "MyPlant Sizing Pass 1", value, 1);
-    EXPECT_EQ("0.12E+09", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizMeasVdot, "MyPlant Sizing Pass 1"));
+    EXPECT_EQ("123456789.10", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizMeasVdot, "MyPlant Sizing Pass 1"));
 
     PreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizCalcVdot, "MyPlant Sizing Pass 1", value, 0);
-    EXPECT_EQ("0.12E+09", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizCalcVdot, "MyPlant Sizing Pass 1"));
+    EXPECT_EQ("123456789.10", RetrievePreDefTableEntry(*state, state->dataOutRptPredefined->pdchPlantSizCalcVdot, "MyPlant Sizing Pass 1"));
 }
 
 TEST_F(EnergyPlusFixture, OutputReportTabularTest_PredefinedTable_Standard62_1_NoSizing)

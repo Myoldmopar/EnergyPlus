@@ -101,7 +101,7 @@ std::string Timer::formatAsHourMinSecs() const
     if (Seconds < 0.0) {
         Seconds = 0.0;
     }
-    return fmt::format("{:02}hr {:02}min {:5.2F}sec", Hours, Minutes, Seconds);
+    return fmt::format("{:02}hr {:02}min {:5.2f}sec", Hours, Minutes, Seconds);
 }
 
 Real64 Timer::elapsedSeconds() const

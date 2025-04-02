@@ -963,7 +963,7 @@ void GetRefrigerationInput(EnergyPlusData &state)
                                        RefrigCase(CaseNum).Name,
                                        cNumericFieldNames(NumNum),
                                        cAlphaFieldNames(7)));
-                ShowContinueError(state, format("..given {} was: {:.3R}", cNumericFieldNames(NumNum), RefrigCase(CaseNum).Height));
+                ShowContinueError(state, format("..given {} was: {:.3f}", cNumericFieldNames(NumNum), RefrigCase(CaseNum).Height));
                 ErrorsFound = true;
             }
 
@@ -4680,7 +4680,7 @@ void GetRefrigerationInput(EnergyPlusData &state)
                             ShowWarningError(state,
                                              format("{}=\"{} You may wish to check the system definition. Based upon the design flow rate and "
                                                     "range temperature difference,  The nominal secondary loop heat exchanger capacity is, "
-                                                    "{:.0R} but the specified design capacity is,  {:.0R}",
+                                                    "{:.0f} but the specified design capacity is,  {:.0f}",
                                                     CurrentModuleObject,
                                                     Secondary(SecondaryNum).Name,
                                                     NominalSecondaryCapacity,
@@ -4716,7 +4716,7 @@ void GetRefrigerationInput(EnergyPlusData &state)
                         if (Secondary(SecondaryNum).HeatExchangeEta > 0.99) {
                             ShowWarningError(
                                 state,
-                                format("{}=\"{} You may wish to check the system definition.  The heat exchanger effectiveness is, {:.2R}",
+                                format("{}=\"{} You may wish to check the system definition.  The heat exchanger effectiveness is, {:.2f}",
                                        CurrentModuleObject,
                                        Secondary(SecondaryNum).Name,
                                        Secondary(SecondaryNum).HeatExchangeEta));
@@ -4771,8 +4771,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
                         Real64 DiffCircRates = (CalcCircRate - Secondary(SecondaryNum).CircRate) / Secondary(SecondaryNum).CircRate;
                         if (std::abs(DiffCircRates) > 0.3) {
                             ShowWarningError(state,
-                                             format("{}=\"{} {} Produces a circulating rate of {:.2R} ;  A circulating rate of {:.2R} would need "
-                                                    "a {} of {:.2R} m3/s",
+                                             format("{}=\"{} {} Produces a circulating rate of {:.2f} ;  A circulating rate of {:.2f} would need "
+                                                    "a {} of {:.2f} m3/s",
                                                     CurrentModuleObject,
                                                     Secondary(SecondaryNum).Name,
                                                     cNumericFieldNames(7),
@@ -4898,7 +4898,7 @@ void GetRefrigerationInput(EnergyPlusData &state)
                         Secondary(SecondaryNum).PumpPowerToHeat = Numbers(NumNum);
                     } else {
                         ShowWarningError(state,
-                                         format("{}{}=\"{}\" {} must be between 0.5 and 1.0. Default value of : {:.3R} will be used",
+                                         format("{}{}=\"{}\" {} must be between 0.5 and 1.0. Default value of : {:.3f} will be used",
                                                 RoutineName,
                                                 CurrentModuleObject,
                                                 Secondary(SecondaryNum).Name,
@@ -5055,12 +5055,12 @@ void GetRefrigerationInput(EnergyPlusData &state)
                 if (Secondary(SecondaryNum).FluidType == SecFluidType::AlwaysLiquid) {
                     if (TBrineOutRated > (Secondary(SecondaryNum).TMinNeeded + 0.5)) {
                         ShowWarningError(state,
-                                         format("{}=\"{} The design brine temperature to the refrigeration loads: {:.1R} ;",
+                                         format("{}=\"{} The design brine temperature to the refrigeration loads: {:.1f} ;",
                                                 CurrentModuleObject,
                                                 Secondary(SecondaryNum).Name,
                                                 TBrineOutRated));
                         ShowContinueError(state,
-                                          format(" is greater than the design inlet temperature for at least one of the cases or walkins: {:.1R}",
+                                          format(" is greater than the design inlet temperature for at least one of the cases or walkins: {:.1f}",
                                                  Secondary(SecondaryNum).TMinNeeded));
                         ShowContinueError(
                             state, " Compare your Approach and Evaporating Temperature to the design inlet temperatures needed for the loads.");
@@ -5074,7 +5074,7 @@ void GetRefrigerationInput(EnergyPlusData &state)
                     if (DeltaCap1 > (0.3)) { // diff between chiller rating and capacity at max flow > 30%
                         ShowWarningError(state,
                                          format("{}=\"{}\" You may wish to check the system sizing.  The nominal secondary loop heat exchanger "
-                                                "capacity is {:.0R} But the capacity based upon the maximum flow rate is {:.0R}",
+                                                "capacity is {:.0f} But the capacity based upon the maximum flow rate is {:.0f}",
                                                 CurrentModuleObject,
                                                 Secondary(SecondaryNum).Name,
                                                 Secondary(SecondaryNum).CoolingLoadRated,
@@ -5107,8 +5107,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
                 if (DeltaCap2 > (0.3)) { // diff between chiller rating and sum of nominal loads > 30%
                     ShowWarningError(
                         state,
-                        format("{}=\"{}\" You may wish to check the system sizing. Total nominal refrigerating load is {:.0R} (Including cases, "
-                               "walk-ins, and pump heat).  The nominal secondary loop heat exchanger capacity is {:.0R}",
+                        format("{}=\"{}\" You may wish to check the system sizing. Total nominal refrigerating load is {:.0f} (Including cases, "
+                               "walk-ins, and pump heat).  The nominal secondary loop heat exchanger capacity is {:.0f}",
                                CurrentModuleObject,
                                Secondary(SecondaryNum).Name,
                                NominalSecondaryRefLoad,
@@ -5117,8 +5117,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
                 // compare rated xt xchanger brine flow to the total rated pump flow
                 if (SecondaryFlowVolRated > (1.1 * PumpTotRatedFlowVol)) {
                     ShowWarningError(state,
-                                     format("{}=\"{}\" You may wish to check the pump sizing. Total nominal brine flow is {:.0R} m3/s, but the "
-                                            "total nominal pump flow rate is:  {:.0R} m3/s. ",
+                                     format("{}=\"{}\" You may wish to check the pump sizing. Total nominal brine flow is {:.0f} m3/s, but the "
+                                            "total nominal pump flow rate is:  {:.0f} m3/s. ",
                                             CurrentModuleObject,
                                             Secondary(SecondaryNum).Name,
                                             SecondaryFlowVolRated,
@@ -6169,7 +6169,7 @@ void GetRefrigerationInput(EnergyPlusData &state)
                                      format("{}{}=\"{}\", The specified value for the", RoutineName, CurrentModuleObject, System(RefrigSysNum).Name));
                     ShowContinueError(
                         state,
-                        format("{} = {:.2R} is invalid.  This value must be", cNumericFieldNames(4), System(RefrigSysNum).IntercoolerEffectiveness));
+                        format("{} = {:.2f} is invalid.  This value must be", cNumericFieldNames(4), System(RefrigSysNum).IntercoolerEffectiveness));
                     ShowContinueError(state, "between 0.0 and 1.0.  The default value of 0.8 will be used.");
                     System(RefrigSysNum).IntercoolerEffectiveness = 0.8;
                 }
@@ -6305,8 +6305,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
             if (System(RefrigSysNum).NumStages == 1) { // Single-stage system
                 if ((NominalTotalCompCap < (0.7 * NominalTotalCoolingCap)) || (NominalCondCap < (1.3 * NominalTotalCoolingCap))) {
                     ShowWarningError(state,
-                                     format("{}=\"{}\", You may wish to check the system sizing. Total nominal cooling capacity is {:.0R}W. "
-                                            "Condenser capacity is {:.0R}W. Nominal compressor capacity is {:.0R}W.",
+                                     format("{}=\"{}\", You may wish to check the system sizing. Total nominal cooling capacity is {:.0f}W. "
+                                            "Condenser capacity is {:.0f}W. Nominal compressor capacity is {:.0f}W.",
                                             CurrentModuleObject,
                                             System(RefrigSysNum).Name,
                                             NominalTotalCoolingCap,
@@ -6316,8 +6316,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
             } else if (System(RefrigSysNum).NumStages == 2) { // Two-stage system
                 if ((NominalTotalHiStageCompCap < (0.7 * NominalTotalCoolingCap)) || (NominalCondCap < (1.3 * NominalTotalCoolingCap))) {
                     ShowWarningError(state,
-                                     format("{}=\"{}\", You may wish to check the system sizing. Total nominal cooling capacity is {:.0R}W. "
-                                            "Condenser capacity is {:.0R}W. Nominal compressor capacity is {:.0R}W.",
+                                     format("{}=\"{}\", You may wish to check the system sizing. Total nominal cooling capacity is {:.0f}W. "
+                                            "Condenser capacity is {:.0f}W. Nominal compressor capacity is {:.0f}W.",
                                             CurrentModuleObject,
                                             System(RefrigSysNum).Name,
                                             NominalTotalCoolingCap,
@@ -6952,8 +6952,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
                 state, TransSystem(TransRefrigSysNum).RefrigerantName, TransSystem(TransRefrigSysNum).PReceiver, RefrigIndex, RoutineNameNoColon);
             if (TransSystem(TransRefrigSysNum).TReceiver > GasCooler(TransSystem(TransRefrigSysNum).GasCoolerNum(NumGasCoolers)).MinCondTemp) {
                 ShowWarningError(state,
-                                 format("{}{}=\"{}: The receiver temperature ({:.2R}C) is greater than the minimum condensing temperature "
-                                        "specified for subcritical operation ({:.2R}C).",
+                                 format("{}{}=\"{}: The receiver temperature ({:.2f}C) is greater than the minimum condensing temperature "
+                                        "specified for subcritical operation ({:.2f}C).",
                                         RoutineName,
                                         CurrentModuleObject,
                                         TransSystem(TransRefrigSysNum).Name,
@@ -6965,8 +6965,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
             if (NominalTotalCompCapLP > 0.0) {
                 if (TransSystem(TransRefrigSysNum).TReceiver <= TransSystem(TransRefrigSysNum).TEvapDesignLT) {
                     ShowSevereError(state,
-                                    format("{}{}=\"{}: The receiver temperature ({:.2R}C) is less than the design evaporator temperature for the "
-                                           "low temperature loads ({:.2R}C).",
+                                    format("{}{}=\"{}: The receiver temperature ({:.2f}C) is less than the design evaporator temperature for the "
+                                           "low temperature loads ({:.2f}C).",
                                            RoutineName,
                                            CurrentModuleObject,
                                            TransSystem(TransRefrigSysNum).Name,
@@ -6983,8 +6983,8 @@ void GetRefrigerationInput(EnergyPlusData &state)
             if (NominalTotalCompCapHP > 0.0) {
                 if (TransSystem(TransRefrigSysNum).TReceiver <= TransSystem(TransRefrigSysNum).TEvapDesignMT) {
                     ShowSevereError(state,
-                                    format("{}{}=\"{}: The receiver temperature ({:.2R}C) is less than the design evaporator temperature for the "
-                                           "medium temperature loads ({:.2R}C).",
+                                    format("{}{}=\"{}: The receiver temperature ({:.2f}C) is less than the design evaporator temperature for the "
+                                           "medium temperature loads ({:.2f}C).",
                                            RoutineName,
                                            CurrentModuleObject,
                                            TransSystem(TransRefrigSysNum).Name,
@@ -7122,7 +7122,7 @@ void GetRefrigerationInput(EnergyPlusData &state)
                     state, format("{}=\"{}\", You may wish to check the system sizing.", CurrentModuleObject, TransSystem(TransRefrigSysNum).Name));
                 ShowContinueError(
                     state,
-                    format("Total nominal cooling capacity is {:.0R}W. Condenser capacity is {:.0R}W. Nominal compressor capacity is {:.0R}W.",
+                    format("Total nominal cooling capacity is {:.0f}W. Condenser capacity is {:.0f}W. Nominal compressor capacity is {:.0f}W.",
                            NominalTotalCoolingCap,
                            NominalCondCap,
                            NominalTotalCompCap));
@@ -12670,7 +12670,7 @@ void TransRefrigSystemData::CalcDetailedTransSystem(EnergyPlusData &state, int c
         if ((this->RefMassFlowReceiverBypass == 0.0) || (MassFlowStart == 0.0)) {
             ShowSevereError(state,
                             format("Refrigeration:TranscriticalSystem: {} showing zero refrigerant flow through receiver bypass.", this->Name));
-            ShowContinueError(state, format("Receiver Bypass Flow = {:.6R}", this->RefMassFlowReceiverBypass));
+            ShowContinueError(state, format("Receiver Bypass Flow = {:.6f}", this->RefMassFlowReceiverBypass));
             ShowContinueError(state, "Check input file to ensure that refrigeration loads on this system are not zero.");
         } else {
             ErrorMassFlow = std::abs(MassFlowStart - this->RefMassFlowReceiverBypass) / MassFlowStart;
@@ -14422,7 +14422,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 break;
             }
             print(state.files.eio,
-                  " Refrigeration Compressor Rack,{},{},{},{},{},{:.3R}\n",
+                  " Refrigeration Compressor Rack,{},{},{},{},{},{:.3f}\n",
                   RefrigRack(RackNum).Name,
                   RefrigRack(RackNum).NumCases,
                   RefrigRack(RackNum).NumWalkIns,
@@ -14433,7 +14433,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 int CaseID = RefrigRack(RackNum).CaseNum(CaseNum);
                 if (RefrigCase(CaseID).ZoneNodeNum > 0) {
                     print(state.files.eio,
-                          "   Refrigeration Case,{},{},{},{},{},{:.1R},{:.2R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                          "   Refrigeration Case,{},{},{},{},{},{:.1f},{:.2f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                           CaseID,
                           RefrigCase(CaseID).Name,
                           RefrigCase(CaseID).ZoneName,
@@ -14453,7 +14453,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int WalkInNum = 1; WalkInNum <= RefrigRack(RackNum).NumWalkIns; ++WalkInNum) {
                 int WalkInID = RefrigRack(RackNum).WalkInNum(WalkInNum);
                 print(state.files.eio,
-                      "   Refrigeration Walk In Cooler,  {},{},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{}\n",
+                      "   Refrigeration Walk In Cooler,  {},{},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{}\n",
                       WalkInID,
                       WalkIn(WalkInID).Name,
                       WalkIn(WalkInID).DesignRatedCap,
@@ -14467,7 +14467,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                       WalkIn(WalkInID).NumZones);
                 for (int ZoneID = 1; ZoneID <= WalkIn(WalkInID).NumZones; ++ZoneID) {
                     print(state.files.eio,
-                          "      Walk-In Surfaces Facing Zone, {},{:.1R},{:.4R},{:.2R},{:.2R},{:.4R},{:.2R},{:.2R},{:.4R}\n",
+                          "      Walk-In Surfaces Facing Zone, {},{:.1f},{:.4f},{:.2f},{:.2f},{:.4f},{:.2f},{:.2f},{:.4f}\n",
                           WalkIn(WalkInID).ZoneName(ZoneID),
                           WalkIn(WalkInID).SurfaceArea(ZoneID),
                           WalkIn(WalkInID).UValue(ZoneID),
@@ -14491,7 +14491,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
         print(state.files.eio, "#Detailed Refrigeration Systems,{}\n", state.dataRefrigCase->NumRefrigSystems);
         for (int SystemNum = 1; SystemNum <= state.dataRefrigCase->NumRefrigSystems; ++SystemNum) {
             print(state.files.eio,
-                  " Detailed Refrigeration System,{},{},{},{},{},{},{},{},{},{},{},{:.2R},{},{:.1R}\n",
+                  " Detailed Refrigeration System,{},{},{},{},{},{},{},{},{},{},{},{:.2f},{},{:.1f}\n",
                   System(SystemNum).Name,
                   System(SystemNum).RefrigerantName,
                   System(SystemNum).NumCases,
@@ -14511,7 +14511,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 int CaseID = System(SystemNum).CaseNum(CaseNum);
                 if (RefrigCase(CaseID).ZoneNodeNum > 0) {
                     print(state.files.eio,
-                          "   Refrigeration Case,{},{},{},{},{},{:.1R},{:.2R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                          "   Refrigeration Case,{},{},{},{},{},{:.1f},{:.2f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                           CaseID,
                           RefrigCase(CaseID).Name,
                           RefrigCase(CaseID).ZoneName,
@@ -14530,7 +14530,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int WalkInNum = 1; WalkInNum <= System(SystemNum).NumWalkIns; ++WalkInNum) {
                 int WalkInID = System(SystemNum).WalkInNum(WalkInNum);
                 print(state.files.eio,
-                      "   Refrigeration Walk In Cooler,{},{},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{}\n",
+                      "   Refrigeration Walk In Cooler,{},{},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{}\n",
                       WalkInID,
                       WalkIn(WalkInID).Name,
                       WalkIn(WalkInID).DesignRatedCap,
@@ -14543,7 +14543,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                       WalkIn(WalkInID).NumZones);
                 for (int ZoneID = 1; ZoneID <= WalkIn(WalkInID).NumZones; ++ZoneID) {
                     print(state.files.eio,
-                          "      Walk-In Surfaces Facing Zone, {},{:.1R},{:.4R},{:.2R},{:.2R},{:.4R},{:.2R},{:.2R},{:.4R}\n",
+                          "      Walk-In Surfaces Facing Zone, {},{:.1f},{:.4f},{:.2f},{:.2f},{:.4f},{:.2f},{:.2f},{:.4f}\n",
                           WalkIn(WalkInID).ZoneName(ZoneID),
                           WalkIn(WalkInID).SurfaceArea(ZoneID),
                           WalkIn(WalkInID).UValue(ZoneID),
@@ -14583,14 +14583,14 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             if (System(SystemNum).NumStages == 1) { // Single-stage compression system
                 for (int CompressorNum = 1; CompressorNum <= System(SystemNum).NumCompressors; ++CompressorNum) {
                     int CompID = System(SystemNum).CompressorNum(CompressorNum);
-                    print(state.files.eio, "   Refrigeration Compressor,{},{},{:.0R}\n", CompID, Compressor(CompID).Name, Compressor(CompID).NomCap);
+                    print(state.files.eio, "   Refrigeration Compressor,{},{},{:.0f}\n", CompID, Compressor(CompID).Name, Compressor(CompID).NomCap);
                 }                                          // NumCompressors
             } else if (System(SystemNum).NumStages == 2) { // Two-stage compression system
                 // Low-stage compressors
                 for (int CompressorNum = 1; CompressorNum <= System(SystemNum).NumCompressors; ++CompressorNum) {
                     int CompID = System(SystemNum).CompressorNum(CompressorNum);
                     print(state.files.eio,
-                          "   Refrigeration Low-Stage Compressor,{},{},{:.0R}\n",
+                          "   Refrigeration Low-Stage Compressor,{},{},{:.0f}\n",
                           CompID,
                           Compressor(CompID).Name,
                           Compressor(CompID).NomCap);
@@ -14599,7 +14599,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 for (int CompressorNum = 1; CompressorNum <= System(SystemNum).NumHiStageCompressors; ++CompressorNum) {
                     int CompID = System(SystemNum).HiStageCompressorNum(CompressorNum);
                     print(state.files.eio,
-                          "   Refrigeration High-Stage Compressor,{},{},{:.0R}\n",
+                          "   Refrigeration High-Stage Compressor,{},{},{:.0f}\n",
                           CompID,
                           Compressor(CompID).Name,
                           Compressor(CompID).NomCap);
@@ -14610,7 +14610,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             switch (Condenser(CondID).CondenserType) {
             case DataHeatBalance::RefrigCondenserType::Air: {
                 print(state.files.eio,
-                      "   Refrigeration Condenser:Air-Cooled,{},{},{:.1R},{:.1R},{:.1R}\n",
+                      "   Refrigeration Condenser:Air-Cooled,{},{},{:.1f},{:.1f},{:.1f}\n",
                       CondID,
                       Condenser(CondID).Name,
                       Condenser(CondID).RatedTCondense,
@@ -14619,7 +14619,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             } break;
             case DataHeatBalance::RefrigCondenserType::Evap: {
                 print(state.files.eio,
-                      "   Refrigeration Condenser:Evaporative-Cooled,{},{},{:.1R},{:.1R}\n",
+                      "   Refrigeration Condenser:Evaporative-Cooled,{},{},{:.1f},{:.1f}\n",
                       CondID,
                       Condenser(CondID).Name,
                       Condenser(CondID).RatedCapacity,
@@ -14627,7 +14627,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             } break;
             case DataHeatBalance::RefrigCondenserType::Water: {
                 print(state.files.eio,
-                      "   Refrigeration Condenser:Water-Cooled,{},{},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                      "   Refrigeration Condenser:Water-Cooled,{},{},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                       CondID,
                       Condenser(CondID).Name,
                       Condenser(CondID).RatedTCondense,
@@ -14648,7 +14648,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                     break;
                 } // cascade temperature control
                 print(state.files.eio,
-                      "   Refrigeration Condenser:Cascade,{},{},{},{:.1R},{:.1R},{:.1R}\n",
+                      "   Refrigeration Condenser:Cascade,{},{},{},{:.1f},{:.1f},{:.1f}\n",
                       CondID,
                       Condenser(CondID).Name,
                       ChrOut,
@@ -14665,7 +14665,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 switch (Subcooler(SubcoolerID).subcoolerType) {
                 case SubcoolerType::LiquidSuction: {
                     print(state.files.eio,
-                          "   Refrigeration Liquid Suction Subcooler,{},{},{:.1R},{:.1R},{:.1R}\n",
+                          "   Refrigeration Liquid Suction Subcooler,{},{},{:.1f},{:.1f},{:.1f}\n",
                           SubcoolerID,
                           Subcooler(SubcoolerID).Name,
                           Subcooler(SubcoolerID).LiqSuctDesignDelT,
@@ -14674,7 +14674,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 } break;
                 case SubcoolerType::Mechanical: {
                     print(state.files.eio,
-                          "   Refrigeration Mechanical Subcooler,{},{},{},{:.1R}\n",
+                          "   Refrigeration Mechanical Subcooler,{},{},{},{:.1f}\n",
                           SubcoolerID,
                           Subcooler(SubcoolerID).Name,
                           Subcooler(SubcoolerID).MechSourceSys,
@@ -14692,7 +14692,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
         print(state.files.eio, "#Detailed Transcritical Refrigeration Systems,{}\n", state.dataRefrigCase->NumTransRefrigSystems);
         for (int TransSystemNum = 1; TransSystemNum <= state.dataRefrigCase->NumTransRefrigSystems; ++TransSystemNum) {
             print(state.files.eio,
-                  " Detailed Transcritical Refrigeration System,{},{},{},{},{},{},{},{},{:.1R}\n",
+                  " Detailed Transcritical Refrigeration System,{},{},{},{},{},{},{},{},{:.1f}\n",
                   TransSystem(TransSystemNum).Name,
                   TransSystem(TransSystemNum).RefrigerantName,
                   TransSystem(TransSystemNum).NumCasesMT,
@@ -14707,7 +14707,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 int CaseID = TransSystem(TransSystemNum).CaseNumMT(CaseNum);
                 if (RefrigCase(CaseID).ZoneNodeNum > 0) {
                     print(state.files.eio,
-                          "   Medium Temperature Refrigeration Case,{},{},{},{},{},{:.1R},{:.2R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                          "   Medium Temperature Refrigeration Case,{},{},{},{},{},{:.1f},{:.2f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                           CaseID,
                           RefrigCase(CaseID).Name,
                           RefrigCase(CaseID).ZoneName,
@@ -14727,7 +14727,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 int CaseID = TransSystem(TransSystemNum).CaseNumLT(CaseNum);
                 if (RefrigCase(CaseID).ZoneNodeNum > 0) {
                     print(state.files.eio,
-                          "   Low Temperature Refrigeration Case,{},{},{},{},{},{:.1R},{:.2R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                          "   Low Temperature Refrigeration Case,{},{},{},{},{},{:.1f},{:.2f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                           CaseID,
                           RefrigCase(CaseID).Name,
                           RefrigCase(CaseID).ZoneName,
@@ -14746,7 +14746,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int WalkInNum = 1; WalkInNum <= TransSystem(TransSystemNum).NumWalkInsMT; ++WalkInNum) {
                 int WalkInID = TransSystem(TransSystemNum).WalkInNumMT(WalkInNum);
                 print(state.files.eio,
-                      "   Medium Temperature Refrigeration Walk In Cooler,{},{},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{}\n",
+                      "   Medium Temperature Refrigeration Walk In Cooler,{},{},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{}\n",
                       WalkInID,
                       WalkIn(WalkInID).Name,
                       WalkIn(WalkInID).DesignRatedCap,
@@ -14759,7 +14759,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                       WalkIn(WalkInID).NumZones);
                 for (int ZoneID = 1; ZoneID <= WalkIn(WalkInID).NumZones; ++ZoneID) {
                     print(state.files.eio,
-                          "      Walk-In Surfaces Facing Zone,{},{:.1R},{:.4R},{:.2R},{:.2R},{:.4R},{:.2R},{:.2R},{:.4R}\n",
+                          "      Walk-In Surfaces Facing Zone,{},{:.1f},{:.4f},{:.2f},{:.2f},{:.4f},{:.2f},{:.2f},{:.4f}\n",
                           WalkIn(WalkInID).ZoneName(ZoneID),
                           WalkIn(WalkInID).SurfaceArea(ZoneID),
                           WalkIn(WalkInID).UValue(ZoneID),
@@ -14774,7 +14774,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int WalkInNum = 1; WalkInNum <= TransSystem(TransSystemNum).NumWalkInsLT; ++WalkInNum) {
                 int WalkInID = TransSystem(TransSystemNum).WalkInNumLT(WalkInNum);
                 print(state.files.eio,
-                      "   Low Temperature Refrigeration Walk In Cooler,{},{},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{}\n",
+                      "   Low Temperature Refrigeration Walk In Cooler,{},{},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{}\n",
                       WalkInID,
                       WalkIn(WalkInID).Name,
                       WalkIn(WalkInID).DesignRatedCap,
@@ -14787,7 +14787,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                       WalkIn(WalkInID).NumZones);
                 for (int ZoneID = 1; ZoneID <= WalkIn(WalkInID).NumZones; ++ZoneID) {
                     print(state.files.eio,
-                          "      Walk-In Surfaces Facing Zone,{},{:.1R},{:.4R},{:.2R},{:.2R},{:.4R},{:.2R},{:.2R},{:.4R}\n",
+                          "      Walk-In Surfaces Facing Zone,{},{:.1f},{:.4f},{:.2f},{:.2f},{:.4f},{:.2f},{:.2f},{:.4f}\n",
                           WalkIn(WalkInID).ZoneName(ZoneID),
                           WalkIn(WalkInID).SurfaceArea(ZoneID),
                           WalkIn(WalkInID).UValue(ZoneID),
@@ -14803,7 +14803,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int CompressorNum = 1; CompressorNum <= TransSystem(TransSystemNum).NumCompressorsHP; ++CompressorNum) {
                 int CompID = TransSystem(TransSystemNum).CompressorNumHP(CompressorNum);
                 print(state.files.eio,
-                      "   High Pressure Refrigeration Compressor,{},{},{:.0R}\n",
+                      "   High Pressure Refrigeration Compressor,{},{},{:.0f}\n",
                       CompID,
                       Compressor(CompID).Name,
                       Compressor(CompID).NomCap);
@@ -14811,7 +14811,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int CompressorNum = 1; CompressorNum <= TransSystem(TransSystemNum).NumCompressorsLP; ++CompressorNum) {
                 int CompID = TransSystem(TransSystemNum).CompressorNumLP(CompressorNum);
                 print(state.files.eio,
-                      "   Low Pressure Refrigeration Compressor,{},{},{:.0R}\n",
+                      "   Low Pressure Refrigeration Compressor,{},{},{:.0f}\n",
                       CompID,
                       Compressor(CompID).Name,
                       Compressor(CompID).NomCap);
@@ -14820,7 +14820,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             if (TransSystem(TransSystemNum).NumGasCoolers >= 1) {
                 int GasCoolerID = TransSystem(TransSystemNum).GasCoolerNum(1);
                 print(state.files.eio,
-                      "   Refrigeration GasCooler:Air-Cooled,{},{},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                      "   Refrigeration GasCooler:Air-Cooled,{},{},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                       GasCoolerID,
                       GasCooler(GasCoolerID).Name,
                       GasCooler(GasCoolerID).RatedOutletP,
@@ -14839,7 +14839,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             switch (Secondary(SecondaryID).FluidType) {
             case SecFluidType::AlwaysLiquid: {
                 print(state.files.eio,
-                      "Secondary Refrigeration System: Fluid Always Liquid,{},{},{},{},{},{:.1R},{:.2R},{:.2R},{:.3R},{:.3R}\n",
+                      "Secondary Refrigeration System: Fluid Always Liquid,{},{},{},{},{},{:.1f},{:.2f},{:.2f},{:.3f},{:.3f}\n",
                       SecondaryID,
                       Secondary(SecondaryID).Name,
                       Secondary(SecondaryID).NumCases,
@@ -14853,7 +14853,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             } break;
             case SecFluidType::PhaseChange: {
                 print(state.files.eio,
-                      "Secondary Refrigeration System: Liquid Overfeed,{},{},{},{},{},{:.1R},{:.2R},{:.2R},{:.3R},{:.3R}\n",
+                      "Secondary Refrigeration System: Liquid Overfeed,{},{},{},{},{},{:.1f},{:.2f},{:.2f},{:.3f},{:.3f}\n",
                       SecondaryID,
                       Secondary(SecondaryID).Name,
                       Secondary(SecondaryID).NumCases,
@@ -14872,7 +14872,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                 int CaseID = Secondary(SecondaryID).CaseNum(CaseNum);
                 if (RefrigCase(CaseID).ZoneNodeNum > 0) {
                     print(state.files.eio,
-                          "  Refrigeration Case,{},{},{},{},{},{:.1R},{:.2R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                          "  Refrigeration Case,{},{},{},{},{},{:.1f},{:.2f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                           CaseID,
                           RefrigCase(CaseID).Name,
                           RefrigCase(CaseID).ZoneName,
@@ -14892,7 +14892,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int WalkInNum = 1; WalkInNum <= Secondary(SecondaryID).NumWalkIns; ++WalkInNum) {
                 int WalkInID = Secondary(SecondaryID).WalkInNum(WalkInNum);
                 print(state.files.eio,
-                      "  Walk In,{},{},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                      "  Walk In,{},{},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                       WalkInID,
                       WalkIn(WalkInID).Name,
                       WalkIn(WalkInID).DesignRatedCap,
@@ -14904,7 +14904,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
                       WalkIn(WalkInID).DefrostCapacity);
                 for (int ZoneID = 1; ZoneID <= WalkIn(WalkInID).NumZones; ++ZoneID) {
                     print(state.files.eio,
-                          "    Walk In Surfaces Facing Zone,{},{:.1R},{:.4R},{:.2R},{:.2R},{:.4R},{:.2R},{:.2R},{:.4R}\n",
+                          "    Walk In Surfaces Facing Zone,{},{:.1f},{:.4f},{:.2f},{:.2f},{:.4f},{:.2f},{:.2f},{:.4f}\n",
                           WalkIn(WalkInID).ZoneName(ZoneID),
                           WalkIn(WalkInID).SurfaceArea(ZoneID),
                           WalkIn(WalkInID).UValue(ZoneID),
@@ -14937,7 +14937,7 @@ void ReportRefrigerationComponents(EnergyPlusData &state)
             for (int CoilNum = 1; CoilNum <= AirChillerSet(ChillerSetNum).NumCoils; ++CoilNum) {
                 int CoilID = AirChillerSet(ChillerSetNum).CoilNum(CoilNum);
                 print(state.files.eio,
-                      "   Refrigeration Air Chiller,{},{},{},{},{},{:.1R},{:.2R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R},{:.1R}\n",
+                      "   Refrigeration Air Chiller,{},{},{},{},{},{:.1f},{:.2f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f},{:.1f}\n",
                       CoilID,
                       WarehouseCoil(CoilID).Name,
                       WarehouseCoil(CoilID).ZoneName,

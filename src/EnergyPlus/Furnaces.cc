@@ -1294,7 +1294,7 @@ namespace Furnaces {
                     ShowContinueError(
                         state, format("... The {} > Max Volume Flow Rate defined in the associated fan object, should be <=.", cNumericFields(2)));
                     ShowContinueError(state,
-                                      format("... Entered value = {:.4R}... Fan [{} = {}] Max Value = {:.4R}",
+                                      format("... Entered value = {:.4f}... Fan [{} = {}] Max Value = {:.4f}",
                                              thisFurnace.DesignFanVolFlowRate,
                                              HVAC::fanTypeNames[(int)thisFurnace.fanType],
                                              FanName,
@@ -1307,7 +1307,7 @@ namespace Furnaces {
                 if (thisFurnace.DesignFanVolFlowRate <= 0.0) {
                     ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
                     ShowContinueError(state, format("... The {} <= 0.0, it must be > 0.0.", cNumericFields(2)));
-                    ShowContinueError(state, format("... Entered value = {:.2R}", thisFurnace.DesignFanVolFlowRate));
+                    ShowContinueError(state, format("... Entered value = {:.2f}", thisFurnace.DesignFanVolFlowRate));
                     ErrorsFound = true;
                 }
             }
@@ -2509,21 +2509,21 @@ namespace Furnaces {
             thisFurnace.MaxCoolAirVolFlow = Numbers(2);
             if (thisFurnace.MaxCoolAirVolFlow <= 0 && thisFurnace.MaxCoolAirVolFlow != DataSizing::AutoSize) {
                 ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                ShowContinueError(state, format("Illegal {} = {:.7T}", cNumericFields(2), Numbers(2)));
+                ShowContinueError(state, format("Illegal {} = {:.7f}", cNumericFields(2), Numbers(2)));
                 ErrorsFound = true;
             }
 
             thisFurnace.MaxHeatAirVolFlow = Numbers(3);
             if (thisFurnace.MaxHeatAirVolFlow <= 0 && thisFurnace.MaxHeatAirVolFlow != DataSizing::AutoSize) {
                 ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                ShowContinueError(state, format("Illegal {} = {:.7T}", cNumericFields(3), Numbers(3)));
+                ShowContinueError(state, format("Illegal {} = {:.7f}", cNumericFields(3), Numbers(3)));
                 ErrorsFound = true;
             }
 
             thisFurnace.MaxNoCoolHeatAirVolFlow = Numbers(4);
             if (thisFurnace.MaxNoCoolHeatAirVolFlow < 0 && thisFurnace.MaxNoCoolHeatAirVolFlow != DataSizing::AutoSize) {
                 ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                ShowContinueError(state, format("Illegal {} = {:.7T}", cNumericFields(4), Numbers(4)));
+                ShowContinueError(state, format("Illegal {} = {:.7f}", cNumericFields(4), Numbers(4)));
                 ErrorsFound = true;
             }
 
@@ -2563,7 +2563,7 @@ namespace Furnaces {
                     ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
                     ShowContinueError(
                         state,
-                        format("... air flow rate = {:.7T} in fan object {} is less than the maximum HVAC system air flow rate in cooling mode.",
+                        format("... air flow rate = {:.7f} in fan object {} is less than the maximum HVAC system air flow rate in cooling mode.",
                                thisFurnace.ActualFanVolFlowRate,
                                FanName));
                     ShowContinueError(state, format(" The {} is reset to the fan flow rate and the simulation continues.", cNumericFields(2)));
@@ -2574,7 +2574,7 @@ namespace Furnaces {
                     ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
                     ShowContinueError(
                         state,
-                        format("... air flow rate = {:.7T} in fan object {} is less than the maximum HVAC system air flow rate in heating mode.",
+                        format("... air flow rate = {:.7f} in fan object {} is less than the maximum HVAC system air flow rate in heating mode.",
                                thisFurnace.ActualFanVolFlowRate,
                                FanName));
                     ShowContinueError(state, format(" The {} is reset to the fan flow rate and the simulation continues.", cNumericFields(3)));
@@ -3375,21 +3375,21 @@ namespace Furnaces {
             thisFurnace.MaxCoolAirVolFlow = Numbers(1);
             if (thisFurnace.MaxCoolAirVolFlow <= 0 && thisFurnace.MaxCoolAirVolFlow != DataSizing::AutoSize) {
                 ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                ShowContinueError(state, format("Illegal {} = {:.7T}", cNumericFields(1), Numbers(1)));
+                ShowContinueError(state, format("Illegal {} = {:.7f}", cNumericFields(1), Numbers(1)));
                 ErrorsFound = true;
             }
 
             thisFurnace.MaxHeatAirVolFlow = Numbers(2);
             if (thisFurnace.MaxHeatAirVolFlow <= 0 && thisFurnace.MaxHeatAirVolFlow != DataSizing::AutoSize) {
                 ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                ShowContinueError(state, format("Illegal {} = {:.7T}", cNumericFields(2), Numbers(2)));
+                ShowContinueError(state, format("Illegal {} = {:.7f}", cNumericFields(2), Numbers(2)));
                 ErrorsFound = true;
             }
 
             thisFurnace.MaxNoCoolHeatAirVolFlow = Numbers(3);
             if (thisFurnace.MaxNoCoolHeatAirVolFlow < 0 && thisFurnace.MaxNoCoolHeatAirVolFlow != DataSizing::AutoSize) {
                 ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
-                ShowContinueError(state, format("Illegal {} = {:.7T}", cNumericFields(3), Numbers(3)));
+                ShowContinueError(state, format("Illegal {} = {:.7f}", cNumericFields(3), Numbers(3)));
                 ErrorsFound = true;
             }
 
@@ -3449,7 +3449,7 @@ namespace Furnaces {
                     ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
                     ShowContinueError(
                         state,
-                        format("... air flow rate = {:.7T} in fan object {} is less than the maximum HVAC system air flow rate in cooling mode.",
+                        format("... air flow rate = {:.7f} in fan object {} is less than the maximum HVAC system air flow rate in cooling mode.",
                                thisFurnace.ActualFanVolFlowRate,
                                FanName));
                     ShowContinueError(state, format(" The {} is reset to the fan flow rate and the simulation continues.", cNumericFields(1)));
@@ -3460,7 +3460,7 @@ namespace Furnaces {
                     ShowSevereError(state, format("{} = {}", CurrentModuleObject, Alphas(1)));
                     ShowContinueError(
                         state,
-                        format("... air flow rate = {:.7T} in fan object {} is less than the maximum HVAC system air flow rate in heating mode.",
+                        format("... air flow rate = {:.7f} in fan object {} is less than the maximum HVAC system air flow rate in heating mode.",
                                thisFurnace.ActualFanVolFlowRate,
                                FanName));
                     ShowContinueError(state, format(" The {} is reset to the fan flow rate and the simulation continues.", cNumericFields(2)));
@@ -4241,7 +4241,7 @@ namespace Furnaces {
                     ShowContinueError(state, format("...occurs in {} = {}", CurrentModuleObject, Alphas(1)));
                     ShowContinueError(state, "... has a Cooling or Heating Air Flow Rate > Max Fan Volume Flow Rate, should be <=.");
                     ShowContinueError(state,
-                                      format("... Entered value={:.2R}... Fan [{}:{}] Max Value={:.2R}",
+                                      format("... Entered value={:.2f}... Fan [{}:{}] Max Value={:.2f}",
                                              thisFurnace.DesignFanVolFlowRate,
                                              HVAC::fanTypeNames[(int)thisFurnace.fanType],
                                              FanName,
@@ -4252,7 +4252,7 @@ namespace Furnaces {
                 if (thisFurnace.DesignFanVolFlowRate <= 0.0) {
                     ShowContinueError(state, format("...occurs in {} = {}", CurrentModuleObject, Alphas(1)));
                     ShowContinueError(state, "... has a Design Fan Flow Rate <= 0.0, it must be >0.0");
-                    ShowContinueError(state, format("... Entered value={:.2R}", thisFurnace.DesignFanVolFlowRate));
+                    ShowContinueError(state, format("... Entered value={:.2f}", thisFurnace.DesignFanVolFlowRate));
                     ErrorsFound = true;
                 }
             }
@@ -4745,7 +4745,7 @@ namespace Furnaces {
                                             HVAC::unitarySysTypeNames[(int)thisFurnace.type],
                                             thisFurnace.Name));
                     ShowContinueError(state,
-                                      format("... Entered value={:.2R}... Fan [{}] Max Value={:.2R}",
+                                      format("... Entered value={:.2f}... Fan [{}] Max Value={:.2f}",
                                              thisFurnace.DesignFanVolFlowRate,
                                              HVAC::fanTypeNames[(int)thisFurnace.fanType],
                                              thisFurnace.ActualFanVolFlowRate));
@@ -4755,7 +4755,7 @@ namespace Furnaces {
                                     format("{}={} has a Design Fan Volume Flow Rate <= 0.0, it must be >0.0",
                                            HVAC::unitarySysTypeNames[(int)thisFurnace.type],
                                            thisFurnace.Name));
-                    ShowContinueError(state, format("... Entered value={:.2R}", thisFurnace.DesignFanVolFlowRate));
+                    ShowContinueError(state, format("... Entered value={:.2f}", thisFurnace.DesignFanVolFlowRate));
                 }
 
                 state.dataFurnaces->MySecondOneTimeFlag(FurnaceNum) = false;
@@ -5006,8 +5006,8 @@ namespace Furnaces {
                         ShowContinueError(state,
                                           "...Fan power ratio function of speed ratio curve has no impact if fan volumetric flow rate is the same as "
                                           "the unitary system volumetric flow rate.");
-                        ShowContinueError(state, format("...Fan volumetric flow rate            = {:.5R} m3/s.", thisFurnace.ActualFanVolFlowRate));
-                        ShowContinueError(state, format("...Unitary system volumetric flow rate = {:.5R} m3/s.", thisFurnace.MaxHeatAirVolFlow));
+                        ShowContinueError(state, format("...Fan volumetric flow rate            = {:.5f} m3/s.", thisFurnace.ActualFanVolFlowRate));
+                        ShowContinueError(state, format("...Unitary system volumetric flow rate = {:.5f} m3/s.", thisFurnace.MaxHeatAirVolFlow));
                     }
                 }
                 state.dataFurnaces->MyFanFlag(FurnaceNum) = false;
@@ -5280,8 +5280,8 @@ namespace Furnaces {
                     //     Check fan versus system supply air flow rates
                     if (thisFurnace.FanVolFlow + 1e-10 < thisFurnace.CoolVolumeFlowRate(NumOfSpeedCooling)) {
                         ShowWarningError(state,
-                                         format("{} - air flow rate = {:.7T} in fan object is less than the MSHP system air flow rate when cooling "
-                                                "is required ({:.7T}).",
+                                         format("{} - air flow rate = {:.7f} in fan object is less than the MSHP system air flow rate when cooling "
+                                                "is required ({:.7f}).",
                                                 state.dataFurnaces->CurrentModuleObject,
                                                 thisFurnace.FanVolFlow,
                                                 thisFurnace.CoolVolumeFlowRate(NumOfSpeedCooling)));
@@ -5312,8 +5312,8 @@ namespace Furnaces {
                     if (NumOfSpeedHeating > 0) {
                         if (thisFurnace.FanVolFlow + 1e-10 < thisFurnace.HeatVolumeFlowRate(NumOfSpeedHeating)) {
                             ShowWarningError(state,
-                                             format("{} - air flow rate = {:.7T} in fan object is less than the MSHP system air flow rate when "
-                                                    "heating is required ({:.7T}).",
+                                             format("{} - air flow rate = {:.7f} in fan object is less than the MSHP system air flow rate when "
+                                                    "heating is required ({:.7f}).",
                                                     state.dataFurnaces->CurrentModuleObject,
                                                     thisFurnace.FanVolFlow,
                                                     thisFurnace.HeatVolumeFlowRate(NumOfSpeedHeating)));
@@ -5345,8 +5345,8 @@ namespace Furnaces {
                     }
                     if (thisFurnace.FanVolFlow < thisFurnace.IdleVolumeAirRate && thisFurnace.IdleVolumeAirRate != 0.0) {
                         ShowWarningError(state,
-                                         format("{} - air flow rate = {:.7T} in fan object is less than the MSHP system air flow rate when no "
-                                                "heating or cooling is needed ({:.7T}).",
+                                         format("{} - air flow rate = {:.7f} in fan object is less than the MSHP system air flow rate when no "
+                                                "heating or cooling is needed ({:.7f}).",
                                                 state.dataFurnaces->CurrentModuleObject,
                                                 thisFurnace.FanVolFlow,
                                                 thisFurnace.IdleVolumeAirRate));
@@ -6759,8 +6759,8 @@ namespace Furnaces {
                                                           "  Iteration limit exceeded in calculating DX heating coil sensible part-load ratio.");
                                         ShowContinueErrorTimeStamp(
                                             state,
-                                            format("Sensible load to be met by DX heating coil = {:.2T} (watts), sensible output of DX heating "
-                                                   "coil = {:.2T} (watts), and the simulation continues.",
+                                            format("Sensible load to be met by DX heating coil = {:.2f} (watts), sensible output of DX heating "
+                                                   "coil = {:.2f} (watts), and the simulation continues.",
                                                    SystemSensibleLoad,
                                                    TempHeatOutput));
                                     }
@@ -6783,7 +6783,7 @@ namespace Furnaces {
                                     ShowContinueError(state, "  DX sensible heating part-load ratio determined to be outside the range of 0-1.");
                                     ShowContinueErrorTimeStamp(
                                         state,
-                                        format("Sensible load to be met by DX heating coil = {:.2T} (watts), and the simulation continues.",
+                                        format("Sensible load to be met by DX heating coil = {:.2f} (watts), and the simulation continues.",
                                                SystemSensibleLoad));
                                 }
                                 ShowRecurringWarningErrorAtEnd(
@@ -7053,8 +7053,8 @@ namespace Furnaces {
                                                                   thisFurnace.Name));
                                         ShowContinueError(state, "  Iteration limit exceeded in calculating heating coil sensible part-load ratio.");
                                         ShowContinueErrorTimeStamp(state,
-                                                                   format("Sensible load to be met by heating coil = {:.2T} (watts), sensible output "
-                                                                          "of heating coil = {:.2T} (watts), and the simulation continues.",
+                                                                   format("Sensible load to be met by heating coil = {:.2f} (watts), sensible output "
+                                                                          "of heating coil = {:.2f} (watts), and the simulation continues.",
                                                                           SystemSensibleLoad,
                                                                           TempHeatOutput));
                                     }
@@ -7077,7 +7077,7 @@ namespace Furnaces {
                                     ShowContinueError(state, "  Sensible heating part-load ratio determined to be outside the range of 0-1.");
                                     ShowContinueErrorTimeStamp(
                                         state,
-                                        format("Sensible load to be met by heating coil = {:.2T} (watts), and the simulation continues.",
+                                        format("Sensible load to be met by heating coil = {:.2f} (watts), and the simulation continues.",
                                                SystemSensibleLoad));
                                 }
                                 ShowRecurringWarningErrorAtEnd(
@@ -7280,8 +7280,8 @@ namespace Furnaces {
                                                 ShowContinueError(
                                                     state, "  Iteration limit exceeded in calculating DX cooling coil sensible part-load ratio.");
                                                 ShowContinueErrorTimeStamp(state,
-                                                                           format("Sensible load to be met by DX coil = {:.2T} (watts), sensible "
-                                                                                  "output of DX coil = {:.2T} (watts), and the simulation continues.",
+                                                                           format("Sensible load to be met by DX coil = {:.2f} (watts), sensible "
+                                                                                  "output of DX coil = {:.2f} (watts), and the simulation continues.",
                                                                                   CoolCoilLoad,
                                                                                   TempCoolOutput));
                                             }
@@ -7304,7 +7304,7 @@ namespace Furnaces {
                                                                       HVAC::unitarySysTypeNames[(int)thisFurnace.type],
                                                                       thisFurnace.Name));
                                             ShowContinueError(state, "  Cooling sensible part-load ratio determined to be outside the range of 0-1.");
-                                            ShowContinueErrorTimeStamp(state, format("  Cooling sensible load = {:.2T}", CoolCoilLoad));
+                                            ShowContinueErrorTimeStamp(state, format("  Cooling sensible load = {:.2f}", CoolCoilLoad));
                                         }
                                         ShowRecurringWarningErrorAtEnd(
                                             state,
@@ -7598,11 +7598,11 @@ namespace Furnaces {
                                                                   "  Iteration limit exceeded in calculating cooling coil latent part-load ratio.");
                                                 ShowContinueError(
                                                     state,
-                                                    format("  Latent load convergence error (percent) = {:.2T}",
+                                                    format("  Latent load convergence error (percent) = {:.2f}",
                                                            100.0 * std::abs((SystemMoistureLoad - TempLatentOutput) / SystemMoistureLoad)));
                                                 ShowContinueErrorTimeStamp(state,
-                                                                           format("Moisture load to be met by DX coil = {:.2T} (watts), Latent "
-                                                                                  "output of DX coil = {:.2T} (watts), and the simulation continues.",
+                                                                           format("Moisture load to be met by DX coil = {:.2f} (watts), Latent "
+                                                                                  "output of DX coil = {:.2f} (watts), and the simulation continues.",
                                                                                   SystemMoistureLoad,
                                                                                   TempLatentOutput));
                                             }
@@ -7625,11 +7625,11 @@ namespace Furnaces {
                                                                   HVAC::unitarySysTypeNames[(int)thisFurnace.type],
                                                                   thisFurnace.Name));
                                         ShowContinueError(state,
-                                                          format("  Latent part-load ratio determined to be outside the range of {:.3T} to {:.3T}.",
+                                                          format("  Latent part-load ratio determined to be outside the range of {:.3f} to {:.3f}.",
                                                                  TempMinPLR,
                                                                  TempMaxPLR));
                                         ShowContinueErrorTimeStamp(state,
-                                                                   format("A PLR of {:.3T} will be used and the simulation continues.", TempMinPLR));
+                                                                   format("A PLR of {:.3f} will be used and the simulation continues.", TempMinPLR));
                                     }
                                     ShowRecurringWarningErrorAtEnd(state,
                                                                    format("{} \"{}\" - Cooling sensible part-load ratio out of range error "
@@ -8058,8 +8058,8 @@ namespace Furnaces {
                                                       thisFurnace.Name));
                             ShowContinueError(state, "  Iteration limit exceeded in calculating DX cooling coil sensible part-load ratio.");
                             ShowContinueErrorTimeStamp(state,
-                                                       format("Sensible load to be met by DX coil = {:.2T} (watts), sensible output of DX coil = "
-                                                              "{:.2T} (watts), and the simulation continues.",
+                                                       format("Sensible load to be met by DX coil = {:.2f} (watts), sensible output of DX coil = "
+                                                              "{:.2f} (watts), and the simulation continues.",
                                                               TotalZoneSensLoad,
                                                               ZoneSensLoadMet));
                         }
@@ -8097,10 +8097,10 @@ namespace Furnaces {
                             ShowContinueError(state, "  Cooling sensible part-load ratio determined to be outside the range of 0-1.");
                             ShowContinueError(
                                 state,
-                                format("  An estimated part-load ratio = {:.2T} will be used and the simulation continues.", CoolPartLoadRatio));
+                                format("  An estimated part-load ratio = {:.2f} will be used and the simulation continues.", CoolPartLoadRatio));
                             ShowContinueError(
-                                state, format("  The estimated part-load ratio provides a cooling sensible capacity = {:.2T}", ZoneSensLoadMet));
-                            ShowContinueErrorTimeStamp(state, format("  Cooling sensible load required = {:.2T}", TotalZoneSensLoad));
+                                state, format("  The estimated part-load ratio provides a cooling sensible capacity = {:.2f}", ZoneSensLoadMet));
+                            ShowContinueErrorTimeStamp(state, format("  Cooling sensible load required = {:.2f}", TotalZoneSensLoad));
                         }
                         ShowRecurringWarningErrorAtEnd(
                             state,
@@ -8261,8 +8261,8 @@ namespace Furnaces {
                                                       thisFurnace.Name));
                             ShowContinueError(state, "  Iteration limit exceeded in calculating DX heating coil sensible part-load ratio.");
                             ShowContinueErrorTimeStamp(state,
-                                                       format("Sensible load to be met by DX coil = {:.2T} (watts), sensible output of DX coil = "
-                                                              "{:.2T} (watts), and the simulation continues.",
+                                                       format("Sensible load to be met by DX coil = {:.2f} (watts), sensible output of DX coil = "
+                                                              "{:.2f} (watts), and the simulation continues.",
                                                               TotalZoneSensLoad,
                                                               ZoneSensLoadMet));
                         }
@@ -8298,10 +8298,10 @@ namespace Furnaces {
                             ShowContinueError(state, "  Heating sensible part-load ratio determined to be outside the range of 0-1.");
                             ShowContinueError(
                                 state,
-                                format("  An estimated part-load ratio = {:.2T} will be used and the simulation continues.", HeatPartLoadRatio));
+                                format("  An estimated part-load ratio = {:.2f} will be used and the simulation continues.", HeatPartLoadRatio));
                             ShowContinueError(
-                                state, format("  The estimated part-load ratio provides a heating sensible capacity = {:.2T}", ZoneSensLoadMet));
-                            ShowContinueErrorTimeStamp(state, format("  Heating sensible load required = {:.2T}", TotalZoneSensLoad));
+                                state, format("  The estimated part-load ratio provides a heating sensible capacity = {:.2f}", ZoneSensLoadMet));
+                            ShowContinueErrorTimeStamp(state, format("  Heating sensible load required = {:.2f}", TotalZoneSensLoad));
                         }
                         ShowRecurringWarningErrorAtEnd(state,
                                                        format("{} \"{}\" - Heating sensible part-load ratio out of range error continues.",
@@ -9267,8 +9267,8 @@ namespace Furnaces {
                                                       thisFurnace.Name));
                             ShowContinueErrorTimeStamp(state, "");
                             ShowContinueError(state, "...Bad hot water maximum flow rate limits");
-                            ShowContinueError(state, format("...Given minimum water flow rate={:.3R} kg/s", MinWaterFlow));
-                            ShowContinueError(state, format("...Given maximum water flow rate={:.3R} kg/s", MaxHotWaterFlow));
+                            ShowContinueError(state, format("...Given minimum water flow rate={:.3f} kg/s", MinWaterFlow));
+                            ShowContinueError(state, format("...Given maximum water flow rate={:.3f} kg/s", MaxHotWaterFlow));
                         }
                         ShowRecurringWarningErrorAtEnd(state,
                                                        format("CalcNonDXHeatingCoils: Hot water coil control failed (flow limits) for {}=\"{}\"",
@@ -9802,7 +9802,7 @@ namespace Furnaces {
                                 ++thisFurnace.ErrCountCyc;
                                 ShowWarningError(
                                     state, format("Iteration limit exceeded calculating VS WSHP unit cycling ratio, for unit={}", thisFurnace.Name));
-                                ShowContinueErrorTimeStamp(state, format("Cycling ratio returned={:.2R}", PartLoadFrac));
+                                ShowContinueErrorTimeStamp(state, format("Cycling ratio returned={:.2f}", PartLoadFrac));
                             } else {
                                 ShowRecurringWarningErrorAtEnd(
                                     state,
@@ -9874,7 +9874,7 @@ namespace Furnaces {
                                 ++thisFurnace.ErrCountVar;
                                 ShowWarningError(
                                     state, format("Iteration limit exceeded calculating VS WSHP unit speed ratio, for unit={}", thisFurnace.Name));
-                                ShowContinueErrorTimeStamp(state, format("Speed ratio returned=[{:.2R}], Speed number ={}", SpeedRatio, SpeedNum));
+                                ShowContinueErrorTimeStamp(state, format("Speed ratio returned=[{:.2f}], Speed number ={}", SpeedRatio, SpeedNum));
                             } else {
                                 ShowRecurringWarningErrorAtEnd(
                                     state,
@@ -9951,7 +9951,7 @@ namespace Furnaces {
                             ++thisFurnace.ErrCountVar2;
                             ShowWarningError(state,
                                              format("Iteration limit exceeded calculating VS WSHP unit speed ratio, for unit={}", thisFurnace.Name));
-                            ShowContinueErrorTimeStamp(state, format("Speed ratio returned=[{:.2R}], Speed number ={}", SpeedRatio, SpeedNum));
+                            ShowContinueErrorTimeStamp(state, format("Speed ratio returned=[{:.2f}], Speed number ={}", SpeedRatio, SpeedNum));
                         } else {
                             ShowRecurringWarningErrorAtEnd(state,
                                                            thisFurnace.Name +

@@ -225,7 +225,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_TestSurfTempCalcHeatBalanceI
         delimited_string({"   ** Severe  ** Temperature (high) out of bounds (201.00] for zone=\"TestZone\", for surface=\"TestSurface\"",
                           "   **   ~~~   **  Environment=, at Simulation time= 00:00 - 00:00",
                           "   **   ~~~   ** Zone=\"TestZone\", Diagnostic Details:",
-                          "   **   ~~~   ** ...Internal Heat Gain [2.500E-003] W/m2",
+                          "   **   ~~~   ** ...Internal Heat Gain [0.003] W/m2",
                           "   **   ~~~   ** ...Infiltration/Ventilation [0.500] m3/s",
                           "   **   ~~~   ** ...Mixing/Cross Mixing [0.700] m3/s",
                           "   **   ~~~   ** ...Zone is part of HVAC controlled system."});
@@ -261,7 +261,7 @@ TEST_F(EnergyPlusFixture, HeatBalanceSurfaceManager_TestSurfTempCalcHeatBalanceI
         delimited_string({"   ** Severe  ** Temperature (low) out of bounds [-101.00] for zone=\"TestZone\", for surface=\"TestSurface\"",
                           "   **   ~~~   **  Environment=, at Simulation time= 00:00 - 00:00",
                           "   **   ~~~   ** Zone=\"TestZone\", Diagnostic Details:",
-                          "   **   ~~~   ** ...Internal Heat Gain [2.500E-003] W/m2",
+                          "   **   ~~~   ** ...Internal Heat Gain [0.003] W/m2",
                           "   **   ~~~   ** ...Infiltration/Ventilation [0.500] m3/s",
                           "   **   ~~~   ** ...Mixing/Cross Mixing [0.700] m3/s",
                           "   **   ~~~   ** ...Zone is part of HVAC controlled system."});

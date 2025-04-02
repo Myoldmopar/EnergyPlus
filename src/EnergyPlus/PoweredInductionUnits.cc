@@ -915,8 +915,8 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                         if ((std::abs(MaxPriAirVolFlowDes - MaxPriAirVolFlowUser) / MaxPriAirVolFlowUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
                             ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Primary Air Flow Rate of {:.5R} [m3/s]", MaxPriAirVolFlowUser));
-                            ShowContinueError(state, format("differs from Design Size Primary Air Flow Rate of {:.5R} [m3/s]", MaxPriAirVolFlowDes));
+                            ShowContinueError(state, format("User-Specified Primary Air Flow Rate of {:.5f} [m3/s]", MaxPriAirVolFlowUser));
+                            ShowContinueError(state, format("differs from Design Size Primary Air Flow Rate of {:.5f} [m3/s]", MaxPriAirVolFlowDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -962,8 +962,8 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                         if ((std::abs(MaxTotAirVolFlowDes - MaxTotAirVolFlowUser) / MaxTotAirVolFlowUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
                             ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Maximum Air Flow Rate of {:.5R} [m3/s]", MaxTotAirVolFlowUser));
-                            ShowContinueError(state, format("differs from Design Size Maximum Air Flow Rate of {:.5R} [m3/s]", MaxTotAirVolFlowDes));
+                            ShowContinueError(state, format("User-Specified Maximum Air Flow Rate of {:.5f} [m3/s]", MaxTotAirVolFlowUser));
+                            ShowContinueError(state, format("differs from Design Size Maximum Air Flow Rate of {:.5f} [m3/s]", MaxTotAirVolFlowDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1028,9 +1028,9 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                         if ((std::abs(MaxSecAirVolFlowDes - MaxSecAirVolFlowUser) / MaxSecAirVolFlowUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
                             ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Maximum Secondary Air Flow Rate of {:.5R} [m3/s]", MaxSecAirVolFlowUser));
+                            ShowContinueError(state, format("User-Specified Maximum Secondary Air Flow Rate of {:.5f} [m3/s]", MaxSecAirVolFlowUser));
                             ShowContinueError(
-                                state, format("differs from Design Size Maximum Secondary Air Flow Rate of {:.5R} [m3/s]", MaxSecAirVolFlowDes));
+                                state, format("differs from Design Size Maximum Secondary Air Flow Rate of {:.5f} [m3/s]", MaxSecAirVolFlowDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1081,10 +1081,10 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                             ShowContinueError(state,
                                               "The flow is lower than the minimum primary air flow rate calculated following the ASHRAE Standard "
                                               "62.1 Simplified Procedure:");
-                            ShowContinueError(state, format(" User-specified maximum primary air flow rate: {:.3R} m3/s.", thisPIU.MaxPriAirVolFlow));
+                            ShowContinueError(state, format(" User-specified maximum primary air flow rate: {:.3f} m3/s.", thisPIU.MaxPriAirVolFlow));
                             ShowContinueError(
                                 state,
-                                format(" Calculated minimum primary air flow rate: {:.3R} m3/s.", thisPIU.MaxPriAirVolFlow * MinPriAirFlowFracDes));
+                                format(" Calculated minimum primary air flow rate: {:.3f} m3/s.", thisPIU.MaxPriAirVolFlow * MinPriAirFlowFracDes));
                             MinPriAirFlowFracDes = 1.0;
                         }
                     }
@@ -1114,9 +1114,9 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                         if ((std::abs(MinPriAirFlowFracDes - MinPriAirFlowFracUser) / MinPriAirFlowFracUser) >
                             state.dataSize->AutoVsHardSizingThreshold) {
                             ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Minimum Primary Air Flow Fraction of {:.1R}", MinPriAirFlowFracUser));
+                            ShowContinueError(state, format("User-Specified Minimum Primary Air Flow Fraction of {:.1f}", MinPriAirFlowFracUser));
                             ShowContinueError(state,
-                                              format("differs from Design Size Minimum Primary Air Flow Fraction of {:.1R}", MinPriAirFlowFracDes));
+                                              format("differs from Design Size Minimum Primary Air Flow Fraction of {:.1f}", MinPriAirFlowFracDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1165,8 +1165,8 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                     if (state.dataGlobal->DisplayExtraWarnings) {
                         if ((std::abs(FanOnFlowFracDes - FanOnFlowFracUser) / FanOnFlowFracUser) > state.dataSize->AutoVsHardSizingThreshold) {
                             ShowMessage(state, format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                            ShowContinueError(state, format("User-Specified Fan On Flow Fraction of {:.1R}", FanOnFlowFracUser));
-                            ShowContinueError(state, format("differs from Design Size Fan On Flow Fraction of {:.1R}", FanOnFlowFracDes));
+                            ShowContinueError(state, format("User-Specified Fan On Flow Fraction of {:.1f}", FanOnFlowFracUser));
+                            ShowContinueError(state, format("differs from Design Size Fan On Flow Fraction of {:.1f}", FanOnFlowFracDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -1262,9 +1262,9 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                                 ShowMessage(state,
                                             format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
                                 ShowContinueError(state,
-                                                  format("User-Specified Maximum Reheat Water Flow Rate of {:.5R} [m3/s]", MaxVolHotWaterFlowUser));
+                                                  format("User-Specified Maximum Reheat Water Flow Rate of {:.5f} [m3/s]", MaxVolHotWaterFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Maximum Reheat Water Flow Rate of {:.5R} [m3/s]", MaxVolHotWaterFlowDes));
+                                    state, format("differs from Design Size Maximum Reheat Water Flow Rate of {:.5f} [m3/s]", MaxVolHotWaterFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -1347,9 +1347,9 @@ void SizePIU(EnergyPlusData &state, int const PIUNum)
                                 state.dataSize->AutoVsHardSizingThreshold) {
                                 ShowMessage(state,
                                             format("SizePIU: Potential issue with equipment sizing for {} {}", thisPIU.UnitType, thisPIU.Name));
-                                ShowContinueError(state, format("User-Specified Maximum Reheat Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowUser));
+                                ShowContinueError(state, format("User-Specified Maximum Reheat Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowUser));
                                 ShowContinueError(
-                                    state, format("differs from Design Size Maximum Reheat Steam Flow of {:.5R} [m3/s]", MaxVolHotSteamFlowDes));
+                                    state, format("differs from Design Size Maximum Reheat Steam Flow of {:.5f} [m3/s]", MaxVolHotSteamFlowDes));
                                 ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                 ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                             }
@@ -2194,8 +2194,8 @@ void CalcVariableSpeedPIUCoolingBehavior(EnergyPlusData &state,
                 ShowFatalError(state, format("Series PIU control failed for {}:{} ", thisPIU.UnitType, thisPIU.Name));
             } else if (SolFla == -2) {
                 ShowSevereError(state, "Bad starting values for in calculating variable speed fan powered box cooling signal");
-                ShowContinueError(state, format("Zone Load to Cooling Setpoint = {:.2R} [W]", zoneLoad));
-                ShowContinueError(state, format("Load Delivered to Zone at Minimum Fan Speed  = {:.2R} [W]", qdotDelivMinPrim));
+                ShowContinueError(state, format("Zone Load to Cooling Setpoint = {:.2f} [W]", zoneLoad));
+                ShowContinueError(state, format("Load Delivered to Zone at Minimum Fan Speed  = {:.2f} [W]", qdotDelivMinPrim));
                 ShowContinueErrorTimeStamp(state, "");
                 ShowFatalError(state, format("Series PIU control failed for {}:{}", thisPIU.UnitType, thisPIU.Name));
             } else {

@@ -386,8 +386,8 @@ namespace WindowAC {
                 if (FanVolFlow != AutoSize) {
                     if (FanVolFlow < windAC.MaxAirVolFlow) {
                         ShowWarningError(state,
-                                         format("Air flow rate = {:.7T} in fan object {} is less than the maximum supply air flow "
-                                                "rate ({:.7T}) in the {} object.",
+                                         format("Air flow rate = {:.7f} in fan object {} is less than the maximum supply air flow "
+                                                "rate ({:.7f}) in the {} object.",
                                                 FanVolFlow,
                                                 windAC.FanName,
                                                 windAC.MaxAirVolFlow,

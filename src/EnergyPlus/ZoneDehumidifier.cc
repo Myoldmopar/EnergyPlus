@@ -299,7 +299,7 @@ namespace ZoneDehumidifier {
             state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).RatedWaterRemoval = Numbers(1);
             if (state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).RatedWaterRemoval <= 0.0) {
                 ShowSevereError(state, format("{} must be greater than zero.", cNumericFields(1)));
-                ShowContinueError(state, format("Value specified = {:.5T}", Numbers(1)));
+                ShowContinueError(state, format("Value specified = {:.5f}", Numbers(1)));
                 ShowContinueError(state,
                                   format("Occurs in {} = {}", CurrentModuleObject, state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).Name));
                 ErrorsFound = true;
@@ -309,7 +309,7 @@ namespace ZoneDehumidifier {
             state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).RatedEnergyFactor = Numbers(2);
             if (state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).RatedEnergyFactor <= 0.0) {
                 ShowSevereError(state, format("{} must be greater than zero.", cNumericFields(2)));
-                ShowContinueError(state, format("Value specified = {:.5T}", Numbers(2)));
+                ShowContinueError(state, format("Value specified = {:.5f}", Numbers(2)));
                 ShowContinueError(state,
                                   format("Occurs in {} = {}", CurrentModuleObject, state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).Name));
                 ErrorsFound = true;
@@ -319,7 +319,7 @@ namespace ZoneDehumidifier {
             state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).RatedAirVolFlow = Numbers(3);
             if (state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).RatedAirVolFlow <= 0.0) {
                 ShowSevereError(state, format("{} must be greater than zero.", cNumericFields(3)));
-                ShowContinueError(state, format("Value specified = {:.5T}", Numbers(3)));
+                ShowContinueError(state, format("Value specified = {:.5f}", Numbers(3)));
                 ShowContinueError(state,
                                   format("Occurs in {} = {}", CurrentModuleObject, state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).Name));
                 ErrorsFound = true;
@@ -359,7 +359,7 @@ namespace ZoneDehumidifier {
                     if (CurveVal > 1.10 || CurveVal < 0.90) {
                         ShowWarningError(state, format("{} output is not equal to 1.0", cAlphaFields(5)));
                         ShowContinueError(state, format("(+ or -10%) at rated conditions for {} = {}", CurrentModuleObject, Alphas(1)));
-                        ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", CurveVal));
+                        ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", CurveVal));
                     }
                 }
             }
@@ -398,7 +398,7 @@ namespace ZoneDehumidifier {
                     if (CurveVal > 1.10 || CurveVal < 0.90) {
                         ShowWarningError(state, format("{} output is not equal to 1.0", cAlphaFields(6)));
                         ShowContinueError(state, format("(+ or -10%) at rated conditions for {} = {}", CurrentModuleObject, Alphas(1)));
-                        ShowContinueError(state, format("Curve output at rated conditions = {:.3T}", CurveVal));
+                        ShowContinueError(state, format("Curve output at rated conditions = {:.3f}", CurveVal));
                     }
                 }
             }
@@ -440,8 +440,8 @@ namespace ZoneDehumidifier {
             if (state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).MinInletAirTemp >=
                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).MaxInletAirTemp) {
                 ShowSevereError(state, format("{} must be greater than {}", cNumericFields(5), cNumericFields(4)));
-                ShowContinueError(state, format("{} specified = {:.1T}", cNumericFields(5), Numbers(5)));
-                ShowContinueError(state, format("{} specified = {:.1T}", cNumericFields(4), Numbers(4)));
+                ShowContinueError(state, format("{} specified = {:.1f}", cNumericFields(5), Numbers(5)));
+                ShowContinueError(state, format("{} specified = {:.1f}", cNumericFields(4), Numbers(4)));
                 ShowContinueError(state,
                                   format("Occurs in {} = {}", CurrentModuleObject, state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).Name));
                 ErrorsFound = true;
@@ -452,7 +452,7 @@ namespace ZoneDehumidifier {
 
             if (state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).OffCycleParasiticLoad < 0.0) {
                 ShowSevereError(state, format("{} must be >= zero.", cNumericFields(6)));
-                ShowContinueError(state, format("Value specified = {:.2T}", Numbers(6)));
+                ShowContinueError(state, format("Value specified = {:.2f}", Numbers(6)));
                 ShowContinueError(state,
                                   format("Occurs in {} = {}", CurrentModuleObject, state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumidIndex).Name));
                 ErrorsFound = true;
@@ -783,11 +783,11 @@ namespace ZoneDehumidifier {
                                      format("{} \"{}\":",
                                             state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).UnitType,
                                             state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).Name));
-                    ShowContinueError(state, format(" Water Removal Rate Curve output is <= 0.0 ({:.5T}).", WaterRemovalRateFactor));
+                    ShowContinueError(state, format(" Water Removal Rate Curve output is <= 0.0 ({:.5f}).", WaterRemovalRateFactor));
                     ShowContinueError(
                         state,
                         format(
-                            " Negative value occurs using an inlet air dry-bulb temperature of {:.2T} and an inlet air relative humidity of {:.1T}.",
+                            " Negative value occurs using an inlet air dry-bulb temperature of {:.2f} and an inlet air relative humidity of {:.1f}.",
                             InletAirTemp,
                             InletAirRH));
                     ShowContinueErrorTimeStamp(state, " Dehumidifier turned off for this time step but simulation continues.");
@@ -827,11 +827,11 @@ namespace ZoneDehumidifier {
                                      format("{} \"{}\":",
                                             state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).UnitType,
                                             state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).Name));
-                    ShowContinueError(state, format(" Energy Factor Curve output is <= 0.0 ({:.5T}).", EnergyFactorAdjFactor));
+                    ShowContinueError(state, format(" Energy Factor Curve output is <= 0.0 ({:.5f}).", EnergyFactorAdjFactor));
                     ShowContinueError(
                         state,
                         format(
-                            " Negative value occurs using an inlet air dry-bulb temperature of {:.2T} and an inlet air relative humidity of {:.1T}.",
+                            " Negative value occurs using an inlet air dry-bulb temperature of {:.2f} and an inlet air relative humidity of {:.1f}.",
                             InletAirTemp,
                             InletAirRH));
                     ShowContinueErrorTimeStamp(state, " Dehumidifier turned off for this time step but simulation continues.");
@@ -866,7 +866,7 @@ namespace ZoneDehumidifier {
                                                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).UnitType,
                                                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).Name));
                         ShowContinueError(
-                            state, format(" The Part Load Fraction Correlation Curve output is ({:.2T}) at a part-load ratio ={:.3T}", PLF, PLR));
+                            state, format(" The Part Load Fraction Correlation Curve output is ({:.2f}) at a part-load ratio ={:.3f}", PLF, PLR));
                         ShowContinueErrorTimeStamp(state,
                                                    " PLF curve values must be >= 0.7.  PLF has been reset to 0.7 and simulation is continuing.");
                     } else {
@@ -889,7 +889,7 @@ namespace ZoneDehumidifier {
                                                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).UnitType,
                                                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).Name));
                         ShowContinueError(
-                            state, format(" The Part Load Fraction Correlation Curve output is ({:.2T}) at a part-load ratio ={:.3T}", PLF, PLR));
+                            state, format(" The Part Load Fraction Correlation Curve output is ({:.2f}) at a part-load ratio ={:.3f}", PLF, PLR));
                         ShowContinueErrorTimeStamp(state,
                                                    " PLF curve values must be < 1.0.  PLF has been reset to 1.0 and simulation is continuing.");
                     } else {
@@ -915,7 +915,7 @@ namespace ZoneDehumidifier {
                                                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).Name));
                         ShowContinueError(
                             state,
-                            format("The part load fraction was less than the part load ratio calculated for this time step [PLR={:.4T}, PLF={:.4T}].",
+                            format("The part load fraction was less than the part load ratio calculated for this time step [PLR={:.4f}, PLF={:.4f}].",
                                    PLR,
                                    PLF));
                         ShowContinueError(state, "Runtime fraction reset to 1 and the simulation will continue.");
@@ -937,7 +937,7 @@ namespace ZoneDehumidifier {
                                          format("{} \"{}\":",
                                                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).UnitType,
                                                 state.dataZoneDehumidifier->ZoneDehumid(ZoneDehumNum).Name));
-                        ShowContinueError(state, format("The runtime fraction for this zone dehumidifier exceeded 1.0 [{:.4T}].", RunTimeFraction));
+                        ShowContinueError(state, format("The runtime fraction for this zone dehumidifier exceeded 1.0 [{:.4f}].", RunTimeFraction));
                         ShowContinueError(state, "Runtime fraction reset to 1 and the simulation will continue.");
                         ShowContinueErrorTimeStamp(state, "");
                     } else {

@@ -318,7 +318,7 @@ void InitializeRootFinder(EnergyPlusData &state,
         if (XMax == 0.0) {
             XMinReset = XMax;
         } else {
-            ShowFatalError(state, format("InitializeRootFinder: Invalid min/max bounds XMin={:.6T} must be smaller than XMax={:.6T}", XMin, XMax));
+            ShowFatalError(state, format("InitializeRootFinder: Invalid min/max bounds XMin={:.6f} must be smaller than XMax={:.6f}", XMin, XMax));
         }
     }
 

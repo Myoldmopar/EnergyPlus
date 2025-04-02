@@ -451,8 +451,8 @@ namespace RoomAir {
             if (std::abs(ZInfSurf - ZSupSurf) < 1.e-10) {
                 ShowSevereError(state, "RoomAirModelUFAD:HcUCSDUF: Surface values will cause divide by zero.");
                 ShowContinueError(state, format("Zone=\"{}\", Surface=\"{}\".", state.dataHeatBal->Zone(surf.Zone).Name, surf.Name));
-                ShowContinueError(state, format("ZInfSurf=[{:.4R}], LayH=[{:.4R}].", ZInfSurf, LayH));
-                ShowContinueError(state, format("ZSupSurf=[{:.4R}], LayH=[{:.4R}].", ZSupSurf, LayH));
+                ShowContinueError(state, format("ZInfSurf=[{:.4f}], LayH=[{:.4f}].", ZInfSurf, LayH));
+                ShowContinueError(state, format("ZSupSurf=[{:.4f}], LayH=[{:.4f}].", ZSupSurf, LayH));
                 ShowFatalError(state, "...Previous condition causes termination.");
             }
 

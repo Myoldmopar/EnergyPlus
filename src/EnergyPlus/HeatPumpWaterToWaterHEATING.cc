@@ -650,14 +650,14 @@ void GshpPeHeatingSpecs::calculate(EnergyPlusData &state, Real64 &MyLoad)
             ShowSevereError(state, format("{}=\"{}\" Heating Source Side Pressure Less than the Design Minimum", ModuleCompName, this->Name));
             ShowContinueError(
                 state,
-                format("Source Side Pressure={:.2T} and user specified Design Minimum Pressure={:.2T}", SourceSidePressure, this->LowPressCutoff));
+                format("Source Side Pressure={:.2f} and user specified Design Minimum Pressure={:.2f}", SourceSidePressure, this->LowPressCutoff));
             ShowFatalError(state, "Preceding Conditions cause termination.");
         }
         if (LoadSidePressure > this->HighPressCutoff) {
             ShowSevereError(state, format("{}=\"{}\" Heating Load Side Pressure greater than the Design Maximum", ModuleCompName, this->Name));
             ShowContinueError(
                 state,
-                format("Load Side Pressure={:.2T} and user specified Design Maximum Pressure={:.2T}", LoadSidePressure, this->HighPressCutoff));
+                format("Load Side Pressure={:.2f} and user specified Design Maximum Pressure={:.2f}", LoadSidePressure, this->HighPressCutoff));
             ShowFatalError(state, "Preceding Conditions cause termination.");
         }
 
@@ -669,14 +669,14 @@ void GshpPeHeatingSpecs::calculate(EnergyPlusData &state, Real64 &MyLoad)
         if (SuctionPr < this->LowPressCutoff) {
             ShowSevereError(state, format("{}=\"{}\" Heating Suction Pressure Less than the Design Minimum", ModuleCompName, this->Name));
             ShowContinueError(
-                state, format("Heating Suction Pressure={:.2T} and user specified Design Minimum Pressure={:.2T}", SuctionPr, this->LowPressCutoff));
+                state, format("Heating Suction Pressure={:.2f} and user specified Design Minimum Pressure={:.2f}", SuctionPr, this->LowPressCutoff));
             ShowFatalError(state, "Preceding Conditions cause termination.");
         }
         if (DischargePr > this->HighPressCutoff) {
             ShowSevereError(state, format("{}=\"{}\" Heating Discharge Pressure greater than the Design Maximum", ModuleCompName, this->Name));
             ShowContinueError(
                 state,
-                format("Heating Discharge Pressure={:.2T} and user specified Design Maximum Pressure={:.2T}", DischargePr, this->HighPressCutoff));
+                format("Heating Discharge Pressure={:.2f} and user specified Design Maximum Pressure={:.2f}", DischargePr, this->HighPressCutoff));
             ShowFatalError(state, "Preceding Conditions cause termination.");
         }
 

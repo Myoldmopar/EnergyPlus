@@ -681,7 +681,7 @@ int EndEnergyPlus(EnergyPlusData &state)
 
     state.dataSysVars->runtimeTimer.tock();
     if (state.dataGlobal->createPerfLog) {
-        Util::appendPerfLog(state, "Run Time [seconds]", format("{:.2R}", state.dataSysVars->runtimeTimer.elapsedSeconds()));
+        Util::appendPerfLog(state, "Run Time [seconds]", format("{:.2f}", state.dataSysVars->runtimeTimer.elapsedSeconds()));
     }
     const std::string Elapsed = state.dataSysVars->runtimeTimer.formatAsHourMinSecs();
     state.dataResultsFramework->resultsFramework->SimulationInformation.setRunTime(Elapsed);

@@ -2010,7 +2010,7 @@ void InitTESCoil(EnergyPlusData &state, int &TESCoilNum)
                 if (thisTESCoil.ControlModeErrorIndex == 0) {
                     ShowSevereMessage(state, "InitTESCoil: Invalid control schedule value for operating mode");
                     ShowContinueError(state, format("Occurs for Coil:Cooling:DX:SingleSpeed:ThermalStorage name = {}", thisTESCoil.Name));
-                    ShowContinueError(state, format("Value returned from schedule ={:.8R}", tmpSchedValue));
+                    ShowContinueError(state, format("Value returned from schedule ={:.8f}", tmpSchedValue));
                     ShowContinueError(state, "Operating mode will be set to Off, and the simulation continues");
                 }
                 ShowRecurringSevereErrorAtEnd(state,
@@ -2030,7 +2030,7 @@ void InitTESCoil(EnergyPlusData &state, int &TESCoilNum)
                     if (thisTESCoil.ControlModeErrorIndex == 0) {
                         ShowSevereMessage(state, "InitTESCoil: Invalid control value for operating mode");
                         ShowContinueError(state, format("Occurs for Coil:Cooling:DX:SingleSpeed:ThermalStorage name = {}", thisTESCoil.Name));
-                        ShowContinueError(state, format("Value returned from EMS ={:.8R}", thisTESCoil.EMSControlModeValue));
+                        ShowContinueError(state, format("Value returned from EMS ={:.8f}", thisTESCoil.EMSControlModeValue));
                         ShowContinueError(state, "Operating mode will be set to Off, and the simulation continues");
                     }
                     ShowRecurringSevereErrorAtEnd(state,

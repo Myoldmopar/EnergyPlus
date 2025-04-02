@@ -4059,11 +4059,11 @@ void SizeAirLoopBranches(EnergyPlusData &state, int const AirLoopNum, int const 
         }
         if (PrimaryAirSystems(AirLoopNum).DesignVolFlowRate < HVAC::SmallAirVolFlow) {
             ShowSevereError(state,
-                            format("SizeAirLoopBranches: AirLoopHVAC {} has air flow less than {:.4R} m3/s.",
+                            format("SizeAirLoopBranches: AirLoopHVAC {} has air flow less than {:.4f} m3/s.",
                                    PrimaryAirSystems(AirLoopNum).Name,
                                    HVAC::SmallAirVolFlow));
             ShowContinueError(state,
-                              format("Primary air system volumetric flow rate = {:.4R} m3/s.", PrimaryAirSystems(AirLoopNum).DesignVolFlowRate));
+                              format("Primary air system volumetric flow rate = {:.4f} m3/s.", PrimaryAirSystems(AirLoopNum).DesignVolFlowRate));
             ShowContinueError(state, "Check flow rate inputs for components in this air loop and,");
             ShowContinueError(state, "if autosized, check Sizing:Zone and Sizing:System objects and related inputs.");
         }

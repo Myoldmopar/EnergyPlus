@@ -237,14 +237,14 @@ namespace PlantChillers {
             }
             if (state.dataIPShortCut->rNumericArgs(1) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
             thisChiller.COP = state.dataIPShortCut->rNumericArgs(2);
             if (state.dataIPShortCut->rNumericArgs(2) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.3R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+                                format("Invalid {}={:.3f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
@@ -495,7 +495,7 @@ namespace PlantChillers {
                     thisChiller.CondenserType == DataPlant::CondenserType::EvapCooled) {
                     if (thisChiller.CondVolFlowRate <= 0.0) {
                         ShowSevereError(
-                            state, format("Invalid {}={:.6R}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
+                            state, format("Invalid {}={:.6f}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
                         ShowContinueError(state, "Condenser fluid flow rate must be specified for Heat Reclaim applications.");
                         ShowContinueError(
                             state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
@@ -1085,8 +1085,8 @@ namespace PlantChillers {
                             if (state.dataGlobal->DisplayExtraWarnings) {
                                 if ((std::abs(tmpNomCap - this->NomCap) / this->NomCap) > state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerElectric: Potential issue with equipment sizing for {}", this->Name));
-                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", this->NomCap));
-                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpNomCap));
+                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", this->NomCap));
+                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpNomCap));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1140,10 +1140,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerElectric: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Design Chilled Water Flow Rate of {:.5R} [m3/s]", this->EvapVolFlowRate));
+                                        state, format("User-Specified Design Chilled Water Flow Rate of {:.5f} [m3/s]", this->EvapVolFlowRate));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5R} [m3/s]", tmpEvapVolFlowRate));
+                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5f} [m3/s]", tmpEvapVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1210,10 +1210,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerElectric: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Design Condenser Water Flow Rate of {:.5R} [m3/s]", this->CondVolFlowRate));
+                                        state, format("User-Specified Design Condenser Water Flow Rate of {:.5f} [m3/s]", this->CondVolFlowRate));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Design Condenser Water Flow Rate of {:.5R} [m3/s]", tmpCondVolFlowRate));
+                                        format("differs from Design Size Design Condenser Water Flow Rate of {:.5f} [m3/s]", tmpCondVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -1276,10 +1276,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerElectric: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(state,
-                                                      format("User-Specified Design Heat Recovery Fluid Flow Rate of {:.5R} [m3/s]",
+                                                      format("User-Specified Design Heat Recovery Fluid Flow Rate of {:.5f} [m3/s]",
                                                              this->DesignHeatRecVolFlowRate));
                                     ShowContinueError(state,
-                                                      format("differs from Design Size Design Heat Recovery Fluid Flow Rate of {:.5R} [m3/s]",
+                                                      format("differs from Design Size Design Heat Recovery Fluid Flow Rate of {:.5f} [m3/s]",
                                                              tmpHeatRecVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
@@ -1501,7 +1501,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 =
                     format("CalcElectricChillerModel - Chiller:Electric \"{}\" - Air Cooled Condenser Inlet Temperature below 0C", this->Name);
-                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -1522,7 +1522,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 =
                     format("CalcElectricChillerModel - Chiller:Electric \"{}\" - Evap Cooled Condenser Inlet Temperature below 10C", this->Name);
-                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -1885,9 +1885,9 @@ namespace PlantChillers {
                     ShowSevereError(
                         state, format("CalcElectricChillerModel: Condenser loop inlet temperatures over 70.0 C for ElectricChiller={}", this->Name));
                     ShowContinueErrorTimeStamp(state, "");
-                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2R}", condInletTemp));
+                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2f}", condInletTemp));
                     ShowContinueError(state, "Check input for condenser plant loop, especially cooling tower");
-                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2R}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
+                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2f}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
 
                     ShowFatalError(state, "Program Terminates due to previous error condition");
                 }
@@ -1897,8 +1897,8 @@ namespace PlantChillers {
                     ShowSevereError(state, format("CalcElectricChillerModel: Capacity ratio below zero for ElectricChiller={}", this->Name));
                     ShowContinueErrorTimeStamp(state, "");
                     ShowContinueError(state, "Check input for Capacity Ratio Curve");
-                    ShowContinueError(state, format("Condenser inlet temperature: {:.2R}", condInletTemp));
-                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2R}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
+                    ShowContinueError(state, format("Condenser inlet temperature: {:.2f}", condInletTemp));
+                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2f}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
                     ShowFatalError(state, "Program Terminates due to previous error condition");
                 }
             }
@@ -2284,7 +2284,7 @@ namespace PlantChillers {
             }
             if (state.dataIPShortCut->rNumericArgs(1) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
@@ -2292,7 +2292,7 @@ namespace PlantChillers {
             thisChiller.COP = state.dataIPShortCut->rNumericArgs(2);
             if (state.dataIPShortCut->rNumericArgs(2) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
@@ -2590,7 +2590,7 @@ namespace PlantChillers {
                     thisChiller.CondenserType == DataPlant::CondenserType::EvapCooled) {
                     if (thisChiller.CondVolFlowRate <= 0.0) {
                         ShowSevereError(
-                            state, format("Invalid {}={:.6R}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
+                            state, format("Invalid {}={:.6f}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
                         ShowContinueError(state, "Condenser fluid flow rate must be specified for Heat Reclaim applications.");
                         ShowContinueError(
                             state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
@@ -3137,8 +3137,8 @@ namespace PlantChillers {
                             if (state.dataGlobal->DisplayExtraWarnings) {
                                 if ((std::abs(tmpNomCap - this->NomCap) / this->NomCap) > state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerEngineDriven: Potential issue with equipment sizing for {}", this->Name));
-                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", this->NomCap));
-                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpNomCap));
+                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", this->NomCap));
+                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpNomCap));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -3191,10 +3191,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerEngineDriven: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Design Chilled Water Flow Rate of {:.5R} [m3/s]", this->EvapVolFlowRate));
+                                        state, format("User-Specified Design Chilled Water Flow Rate of {:.5f} [m3/s]", this->EvapVolFlowRate));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5R} [m3/s]", tmpEvapVolFlowRate));
+                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5f} [m3/s]", tmpEvapVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -3264,10 +3264,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerEngineDriven: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Design Condenser Water Flow Rate of {:.5R} [m3/s]", this->CondVolFlowRate));
+                                        state, format("User-Specified Design Condenser Water Flow Rate of {:.5f} [m3/s]", this->CondVolFlowRate));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Design Condenser Water Flow Rate of {:.5R} [m3/s]", tmpCondVolFlowRate));
+                                        format("differs from Design Size Design Condenser Water Flow Rate of {:.5f} [m3/s]", tmpCondVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -3340,9 +3340,9 @@ namespace PlantChillers {
                                     ShowMessage(state, format("SizeEngineDrivenChiller: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
                                         state,
-                                        format("User-Specified Design Heat Recovery Fluid Flow Rate of {:.5R} [m3/s]", DesignHeatRecVolFlowRateUser));
+                                        format("User-Specified Design Heat Recovery Fluid Flow Rate of {:.5f} [m3/s]", DesignHeatRecVolFlowRateUser));
                                     ShowContinueError(state,
-                                                      format("differs from Design Size Design Heat Recovery Fluid Flow Rate of {:.5R} [m3/s]",
+                                                      format("differs from Design Size Design Heat Recovery Fluid Flow Rate of {:.5f} [m3/s]",
                                                              tmpHeatRecVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
@@ -3557,7 +3557,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 = format(
                     "CalcEngineDrivenChillerModel - Chiller:EngineDriven \"{}\" - Air Cooled Condenser Inlet Temperature below 0C", this->Name);
-                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -3573,7 +3573,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 = format(
                     "CalcEngineDrivenChillerModel - Chiller:EngineDriven \"{}\" - Evap Cooled Condenser Inlet Temperature below 10C", this->Name);
-                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -4008,9 +4008,9 @@ namespace PlantChillers {
                         state,
                         format("CalcEngineDrivenChillerModel: Condenser loop inlet temperatures > 70.0 C for EngineDrivenChiller={}", this->Name));
                     ShowContinueErrorTimeStamp(state, "");
-                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2R}", this->CondInletTemp));
+                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2f}", this->CondInletTemp));
                     ShowContinueError(state, "Check input for condenser plant loop, especially cooling tower");
-                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2R}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
+                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2f}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
 
                     ShowFatalError(state, "Program Terminates due to previous error condition");
                 }
@@ -4020,8 +4020,8 @@ namespace PlantChillers {
                     ShowSevereError(state, format("CalcEngineDrivenChillerModel: Capacity ratio below zero for EngineDrivenChiller={}", this->Name));
                     ShowContinueErrorTimeStamp(state, "");
                     ShowContinueError(state, "Check input for Capacity Ratio Curve");
-                    ShowContinueError(state, format("Condenser inlet temperature: {:.2R}", this->CondInletTemp));
-                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2R}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
+                    ShowContinueError(state, format("Condenser inlet temperature: {:.2f}", this->CondInletTemp));
+                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2f}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
                     ShowFatalError(state, "Program Terminates due to previous error condition");
                 }
             }
@@ -4342,7 +4342,7 @@ namespace PlantChillers {
             }
             if (state.dataIPShortCut->rNumericArgs(1) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
@@ -4350,7 +4350,7 @@ namespace PlantChillers {
             thisChiller.COP = state.dataIPShortCut->rNumericArgs(2);
             if (state.dataIPShortCut->rNumericArgs(2) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
@@ -4602,7 +4602,7 @@ namespace PlantChillers {
                     thisChiller.CondenserType == DataPlant::CondenserType::EvapCooled) {
                     if (thisChiller.CondVolFlowRate <= 0.0) {
                         ShowSevereError(
-                            state, format("Invalid {}={:.6R}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
+                            state, format("Invalid {}={:.6f}", state.dataIPShortCut->cNumericFieldNames(10), state.dataIPShortCut->rNumericArgs(10)));
                         ShowContinueError(state, "Condenser fluid flow rate must be specified for Heat Reclaim applications.");
                         ShowContinueError(
                             state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
@@ -5121,8 +5121,8 @@ namespace PlantChillers {
                             if (state.dataGlobal->DisplayExtraWarnings) {
                                 if ((std::abs(tmpNomCap - this->NomCap) / this->NomCap) > state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeGTChiller: Potential issue with equipment sizing for {}", this->Name));
-                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", this->NomCap));
-                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpNomCap));
+                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", this->NomCap));
+                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpNomCap));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -5179,10 +5179,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeGTChiller: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Design Chilled Water Flow Rate of {:.5R} [m3/s]", this->EvapVolFlowRate));
+                                        state, format("User-Specified Design Chilled Water Flow Rate of {:.5f} [m3/s]", this->EvapVolFlowRate));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5R} [m3/s]", tmpEvapVolFlowRate));
+                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5f} [m3/s]", tmpEvapVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -5254,10 +5254,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeGTChiller: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
-                                        state, format("User-Specified Design Condenser Water Flow Rate of {:.5R} [m3/s]", this->CondVolFlowRate));
+                                        state, format("User-Specified Design Condenser Water Flow Rate of {:.5f} [m3/s]", this->CondVolFlowRate));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Design Condenser Water Flow Rate of {:.5R} [m3/s]", tmpCondVolFlowRate));
+                                        format("differs from Design Size Design Condenser Water Flow Rate of {:.5f} [m3/s]", tmpCondVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -5310,9 +5310,9 @@ namespace PlantChillers {
                         if ((std::abs(GTEngineCapacityDes - this->GTEngineCapacity) / this->GTEngineCapacity) >
                             state.dataSize->AutoVsHardSizingThreshold) {
                             ShowMessage(state, format("SizeGTChiller: Potential issue with equipment sizing for {}", this->Name));
-                            ShowContinueError(state, format("User-Specified Gas Turbine Engine Capacity of {:.2R} [W]", this->GTEngineCapacity));
+                            ShowContinueError(state, format("User-Specified Gas Turbine Engine Capacity of {:.2f} [W]", this->GTEngineCapacity));
                             ShowContinueError(state,
-                                              format("differs from Design Size Gas Turbine Engine Capacity of {:.2R} [W]", GTEngineCapacityDes));
+                                              format("differs from Design Size Gas Turbine Engine Capacity of {:.2f} [W]", GTEngineCapacityDes));
                             ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                             ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                         }
@@ -5366,9 +5366,9 @@ namespace PlantChillers {
                                     ShowMessage(state, format("SizeGasTurbineChiller: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(
                                         state,
-                                        format("User-Specified Design Heat Recovery Fluid Flow Rate of {:.5R} [m3/s]", DesignHeatRecVolFlowRateUser));
+                                        format("User-Specified Design Heat Recovery Fluid Flow Rate of {:.5f} [m3/s]", DesignHeatRecVolFlowRateUser));
                                     ShowContinueError(state,
-                                                      format("differs from Design Size Design Heat Recovery Fluid Flow Rate of {:.5R} [m3/s]",
+                                                      format("differs from Design Size Design Heat Recovery Fluid Flow Rate of {:.5f} [m3/s]",
                                                              tmpHeatRecVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
@@ -5568,7 +5568,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 =
                     "CalcGasTurbineChillerModel - Chiller:CombustionTurbine \"" + this->Name + "\" - Air Cooled Condenser Inlet Temperature below 0C";
-                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -5584,7 +5584,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 = "CalcGasTurbineChillerModel - Chiller:CombustionTurbine \"" + this->Name +
                                    "\" - Evap Cooled Condenser Inlet Temperature below 10C";
-                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -6033,9 +6033,9 @@ namespace PlantChillers {
                 if (condInletTemp > 70.0) {
                     ShowSevereError(state, format("CalcGTChillerModel: Condenser loop inlet temperatures over 70.0 C for GTChiller={}", this->Name));
                     ShowContinueErrorTimeStamp(state, "");
-                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2R}", condInletTemp));
+                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2f}", condInletTemp));
                     ShowContinueError(state, "Check input for condenser plant loop, especially cooling tower");
-                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2R}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
+                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2f}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
 
                     ShowFatalError(state, "Program Terminates due to previous error condition");
                 }
@@ -6045,8 +6045,8 @@ namespace PlantChillers {
                     ShowSevereError(state, format("CalcGTChillerModel: Capacity ratio below zero for GTChiller={}", this->Name));
                     ShowContinueErrorTimeStamp(state, "");
                     ShowContinueError(state, "Check input for Capacity Ratio Curve");
-                    ShowContinueError(state, format("Condenser inlet temperature: {:.2R}", condInletTemp));
-                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2R}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
+                    ShowContinueError(state, format("Condenser inlet temperature: {:.2f}", condInletTemp));
+                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2f}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
                     ShowFatalError(state, "Program Terminates due to previous error condition");
                 }
             }
@@ -6314,14 +6314,14 @@ namespace PlantChillers {
             }
             if (state.dataIPShortCut->rNumericArgs(1) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(1), state.dataIPShortCut->rNumericArgs(1)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
             thisChiller.COP = state.dataIPShortCut->rNumericArgs(2);
             if (state.dataIPShortCut->rNumericArgs(2) == 0.0) {
                 ShowSevereError(state,
-                                format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
+                                format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(2), state.dataIPShortCut->rNumericArgs(2)));
                 ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ErrorsFound = true;
             }
@@ -6897,8 +6897,8 @@ namespace PlantChillers {
                             if (state.dataGlobal->DisplayExtraWarnings) {
                                 if ((std::abs(tmpNomCap - NomCapUser) / NomCapUser) > state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerConstantCOP: Potential issue with equipment sizing for {}", this->Name));
-                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2R} [W]", NomCapUser));
-                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2R} [W]", tmpNomCap));
+                                    ShowContinueError(state, format("User-Specified Nominal Capacity of {:.2f} [W]", NomCapUser));
+                                    ShowContinueError(state, format("differs from Design Size Nominal Capacity of {:.2f} [W]", tmpNomCap));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -6956,10 +6956,10 @@ namespace PlantChillers {
                                     state.dataSize->AutoVsHardSizingThreshold) {
                                     ShowMessage(state, format("SizeChillerConstantCOP: Potential issue with equipment sizing for {}", this->Name));
                                     ShowContinueError(state,
-                                                      format("User-Specified Design Chilled Water Flow Rate of {:.5R} [m3/s]", EvapVolFlowRateUser));
+                                                      format("User-Specified Design Chilled Water Flow Rate of {:.5f} [m3/s]", EvapVolFlowRateUser));
                                     ShowContinueError(
                                         state,
-                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5R} [m3/s]", tmpEvapVolFlowRate));
+                                        format("differs from Design Size Design Chilled Water Flow Rate of {:.5f} [m3/s]", tmpEvapVolFlowRate));
                                     ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                     ShowContinueError(state, "Verify that the value entered is intended and is consistent with other components.");
                                 }
@@ -7031,10 +7031,10 @@ namespace PlantChillers {
                                         ShowMessage(state,
                                                     format("SizeChillerConstantCOP: Potential issue with equipment sizing for {}", this->Name));
                                         ShowContinueError(
-                                            state, format("User-Specified Design Condenser Water Flow Rate of {:.5R} [m3/s]", CondVolFlowRateUser));
+                                            state, format("User-Specified Design Condenser Water Flow Rate of {:.5f} [m3/s]", CondVolFlowRateUser));
                                         ShowContinueError(
                                             state,
-                                            format("differs from Design Size Design Condenser Water Flow Rate of {:.5R} [m3/s]", tmpCondVolFlowRate));
+                                            format("differs from Design Size Design Condenser Water Flow Rate of {:.5f} [m3/s]", tmpCondVolFlowRate));
                                         ShowContinueError(state, "This may, or may not, indicate mismatched component sizes.");
                                         ShowContinueError(state,
                                                           "Verify that the value entered is intended and is consistent with other components.");
@@ -7279,7 +7279,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 =
                     "CalcConstCOPChillerModel - Chiller:ConstantCOP \"" + this->Name + "\" - Air Cooled Condenser Inlet Temperature below 0C";
-                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Dry-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -7295,7 +7295,7 @@ namespace PlantChillers {
                 this->PrintMessage = true;
                 this->MsgBuffer1 =
                     "CalcConstCOPChillerModel - Chiller:ConstantCOP \"" + this->Name + "\" - Evap Cooled Condenser Inlet Temperature below 10C";
-                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2F} C. Occurrence info = {}, {} {}",
+                this->MsgBuffer2 = format("... Outdoor Wet-bulb Condition = {:6.2f} C. Occurrence info = {}, {} {}",
                                           state.dataLoopNodes->Node(this->CondInletNodeNum).Temp,
                                           state.dataEnvrn->EnvironmentName,
                                           state.dataEnvrn->CurMnDy,
@@ -7546,9 +7546,9 @@ namespace PlantChillers {
                     ShowSevereError(
                         state, format("CalcConstCOPChillerModel: Condenser loop inlet temperatures over 70.0 C for ConstCOPChiller={}", this->Name));
                     ShowContinueErrorTimeStamp(state, "");
-                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2R}", CondInletTemp));
+                    ShowContinueError(state, format("Condenser loop water temperatures are too high at{:.2f}", CondInletTemp));
                     ShowContinueError(state, "Check input for condenser plant loop, especially cooling tower");
-                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2R}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
+                    ShowContinueError(state, format("Evaporator inlet temperature: {:.2f}", state.dataLoopNodes->Node(this->EvapInletNodeNum).Temp));
 
                     ShowFatalError(state, "Program Terminates due to previous error condition");
                 }

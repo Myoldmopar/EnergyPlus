@@ -1995,7 +1995,7 @@ namespace ThermalComfort {
             if (std::abs(AllAngleFacSummed - 1.0) > AngleFacLimit) {
                 ShowSevereError(state, format("{}=\"{}\", invalid - Sum[AngleFactors]", cCurrentModuleObject, state.dataIPShortCut->cAlphaArgs(1)));
                 ShowContinueError(state,
-                                  format("...Sum of Angle Factors [{:.3R}] should not deviate from expected sum [1.0] by more than limit [{:.3R}].",
+                                  format("...Sum of Angle Factors [{:.3f}] should not deviate from expected sum [1.0] by more than limit [{:.3f}].",
                                          AllAngleFacSummed,
                                          AngleFacLimit));
                 ErrorsFound = true;
@@ -2394,7 +2394,7 @@ namespace ThermalComfort {
             }
             // if any zones should be warning print it out
             if (showWarning) {
-                ShowWarningError(state, format("More than 4% of time ({:.1R} hours) uncomfortable in one or more zones ", allowedHours));
+                ShowWarningError(state, format("More than 4% of time ({:.1f} hours) uncomfortable in one or more zones ", allowedHours));
                 ShowContinueError(state, "Based on ASHRAE 55-2004 graph (Section 5.2.1.1)");
                 if (state.dataEnvrn->RunPeriodEnvironment) {
                     ShowContinueError(state,
@@ -2408,7 +2408,7 @@ namespace ThermalComfort {
                     if (state.dataThermalComforts->ThermalComfortInASH55(iZone).Enable55Warning) {
                         if (state.dataThermalComforts->ThermalComfortInASH55(iZone).totalTimeNotEither > allowedHours) {
                             ShowContinueError(state,
-                                              format("{:.1R} hours were uncomfortable in zone: {}",
+                                              format("{:.1f} hours were uncomfortable in zone: {}",
                                                      state.dataThermalComforts->ThermalComfortInASH55(iZone).totalTimeNotEither,
                                                      state.dataHeatBal->Zone(iZone).Name));
                         }

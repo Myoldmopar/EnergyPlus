@@ -58,7 +58,6 @@
 #include <algorithm>
 #include <fmt/format.h>
 #include <memory>
-#include <stdexcept>
 
 namespace EnergyPlus {
 
@@ -100,9 +99,8 @@ InputFile::ReadResult<std::string> InputFile::readLine() noexcept
         }
         // Use operator bool, see ReadResult::good() docstring
         return {std::move(line), is->eof(), bool(is)};
-    } else {
-        return {"", is->eof(), false};
     }
+    return {"", is->eof(), false};
 }
 
 std::string InputFile::readFile()
@@ -184,12 +182,10 @@ bool InputFile::is_open() const noexcept
         auto *ss = dynamic_cast<std::ifstream *>(is.get());
         if (ss) {
             return ss->is_open();
-        } else {
-            return true;
         }
-    } else {
-        return false;
+        return true;
     }
+    return false;
 }
 
 void InputFile::backspace() noexcept
@@ -226,11 +222,11 @@ bool InputOutputFile::good() const
 {
     if (os && print_to_dev_null && os->bad()) { // badbit is set
         return true;
-    } else if (os) {
-        return os->good();
-    } else {
-        return false;
     }
+    if (os) {
+        return os->good();
+    }
+    return false;
 }
 
 void InputOutputFile::close()
@@ -263,9 +259,8 @@ std::string InputOutputFile::get_output()
     auto *ss = dynamic_cast<std::stringstream *>(os.get());
     if (ss) {
         return ss->str();
-    } else {
-        return "";
     }
+    return "";
 }
 
 InputOutputFile::InputOutputFile(fs::path FilePath, const bool DefaultToStdout) : filePath{std::move(FilePath)}, defaultToStdOut{DefaultToStdout}
@@ -507,49 +502,3 @@ void IOFiles::flushAll()
 }
 
 } // namespace EnergyPlus
-
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int>(std::string_view, int &&);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const char *const &>(std::string_view, const char *const &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, std::string &>(std::string_view, int &, std::string &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, std::string &, double &>(
-    std::string_view, std::string &, std::string &, std::string &, double &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const std::string_view &>(std::string_view, const std::string_view &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const std::string_view &, std::string &>(std::string_view,
-                                                                                                                    const std::string_view &,
-                                                                                                                    std::string &);
-template std::string
-EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, double &, double &>(std::string_view, std::string &, double &, double &);
-template std::string
-EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, int &>(std::string_view, std::string &, std::string &, int &);
-template std::string
-EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &, double &, double &>(std::string_view, double &, double &, double &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &, std::string &>(std::string_view, double &, std::string &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &>(std::string_view, std::string &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const int &, int &>(std::string_view, const int &, int &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double>(std::string_view, double &&);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, int &>(std::string_view, int &, int &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const double &>(std::string_view, const double &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, int &>(std::string_view, std::string &, int &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, double &>(std::string_view,
-                                                                                                                   std::string &,
-                                                                                                                   std::string &,
-                                                                                                                   double &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, double &, std::string &, double &>(
-    std::string_view, std::string &, double &, std::string &, double &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const int &>(std::string_view, const int &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, const std::string &, std::string &>(std::string_view,
-                                                                                                                      int &,
-                                                                                                                      const std::string &,
-                                                                                                                      std::string &);
-template std::string
-EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, int &, const std::string &>(std::string_view, int &, int &, const std::string &);
-template std::string
-EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, int &, std::string_view &>(std::string_view, int &, int &, std::string_view &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, std::string_view &, std::string &>(std::string_view,
-                                                                                                                     int &,
-                                                                                                                     std::string_view &,
-                                                                                                                     std::string &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &, double &>(std::string_view, double &, double &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &>(std::string_view, int &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, double &>(std::string_view, std::string &, double &);
-template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &>(std::string_view, double &);

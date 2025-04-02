@@ -502,7 +502,7 @@ namespace FuelCellElectricGenerator {
                     state.dataFuelCellElectGen->FuelCell(thisFuelCell).AirSup.NumConstituents = NumAirConstit;
 
                     if (NumAirConstit > 5) {
-                        ShowSevereError(state, format("Invalid {}={:.2R}", state.dataIPShortCut->cNumericFieldNames(4), NumArray(4)));
+                        ShowSevereError(state, format("Invalid {}={:.2f}", state.dataIPShortCut->cNumericFieldNames(4), NumArray(4)));
                         ShowContinueError(state, format("Entered in {}={}", state.dataIPShortCut->cCurrentModuleObject, AlphArray(1)));
                         ShowContinueError(state, "Fuel Cell model not set up for more than 5 air constituents");
                         ErrorsFound = true;
@@ -539,7 +539,7 @@ namespace FuelCellElectricGenerator {
 
                     ShowSevereError(state, format("{} molar fractions do not sum to 1.0", state.dataIPShortCut->cCurrentModuleObject));
                     ShowContinueError(state,
-                                      format("..Sum was={:.1R}", sum(state.dataFuelCellElectGen->FuelCell(thisFuelCell).AirSup.ConstitMolalFract)));
+                                      format("..Sum was={:.1f}", sum(state.dataFuelCellElectGen->FuelCell(thisFuelCell).AirSup.ConstitMolalFract)));
                     ShowContinueError(state, format("Entered in {} = {}", state.dataIPShortCut->cCurrentModuleObject, AlphArray(1)));
                     ErrorsFound = true;
                 }
@@ -1792,7 +1792,7 @@ namespace FuelCellElectricGenerator {
 
             if (state.dataGenerator->FuelSupply(this->FuelSupNum).QskinLoss < 0.0) {
                 ShowWarningError(state,
-                                 format("problem in FuelSupply.QskinLoss {:.3R}", state.dataGenerator->FuelSupply(this->FuelSupNum).QskinLoss));
+                                 format("problem in FuelSupply.QskinLoss {:.3f}", state.dataGenerator->FuelSupply(this->FuelSupNum).QskinLoss));
                 state.dataGenerator->FuelSupply(this->FuelSupNum).QskinLoss = 0.0;
             }
 
@@ -1912,7 +1912,7 @@ namespace FuelCellElectricGenerator {
             this->AirSup.QskinLoss = this->AirSup.BlowerHeatLossFactor * this->AirSup.PairCompEl;
 
             if (this->AirSup.QskinLoss < 0.0) {
-                ShowWarningError(state, format("problem in AirSup.QskinLoss {:.3R}", this->AirSup.QskinLoss));
+                ShowWarningError(state, format("problem in AirSup.QskinLoss {:.3f}", this->AirSup.QskinLoss));
                 this->AirSup.QskinLoss = 0.0;
             }
 
