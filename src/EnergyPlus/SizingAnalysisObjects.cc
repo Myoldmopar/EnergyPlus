@@ -113,7 +113,7 @@ ZoneTimestepObject::ZoneTimestepObject(
     subSteps.resize(numSubSteps);
 }
 
-SizingLog::SizingLog(double &rVariable) : p_rVariable(rVariable)
+SizingLog::SizingLog(Real64 &rVariable) : p_rVariable(rVariable)
 {
 }
 

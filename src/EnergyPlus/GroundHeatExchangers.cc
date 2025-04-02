@@ -971,8 +971,10 @@ void GLHEVert::calcUniformBHWallTempGFunctions(EnergyPlusData &state)
     gt::segments::adaptive adptDisc;
     int nSegments = adptDisc.discretize(this->bhLength, this->totalTubeLength);
 
-    this->myRespFactors->GFNC = gt::gfunction::uniform_borehole_wall_temperature(
-        boreholes, this->myRespFactors->time, this->soil.diffusivity, nSegments, true, state.dataGlobal->numThread);
+    std::vector<double> d_time = std::vector<double>(this->myRespFactors->time.begin(), this->myRespFactors->time.end());
+    std::vector<double> d_gfnc = gt::gfunction::uniform_borehole_wall_temperature(
+        boreholes, d_time, this->soil.diffusivity, nSegments, true, state.dataGlobal->numThread);
+    this->myRespFactors->GFNC = std::vector<Real64>(d_gfnc.begin(), d_gfnc.end());
 }
 
 //******************************************************************************

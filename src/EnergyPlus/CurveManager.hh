@@ -215,9 +215,9 @@ namespace Curve {
     public:
         fs::path filePath;
         std::vector<std::vector<std::string>> contents;
-        std::map<std::pair<std::size_t, std::size_t>, std::vector<double>> arrays;
+        std::map<std::pair<std::size_t, std::size_t>, std::vector<Real64>> arrays;
         bool load(EnergyPlusData &state, fs::path const &path); // Note: this returns 'True' if ErrorsFound
-        std::vector<double> &getArray(EnergyPlusData &state, std::pair<std::size_t, std::size_t> colAndRow);
+        std::vector<Real64> &getArray(EnergyPlusData &state, std::pair<std::size_t, std::size_t> colAndRow);
 
     private:
         std::size_t numRows = 0u;
@@ -241,11 +241,11 @@ namespace Curve {
                 btwxt.get_logger()->set_message_context(context); // TODO: set_context can be its own function
             }
         }
-        double normalizeGridValues(int gridIndex, int outputIndex, const std::vector<double> &target, double scalar = 1.0);
-        int addOutputValues(int gridIndex, std::vector<double> values);
+        double normalizeGridValues(int gridIndex, int outputIndex, const std::vector<Real64> &target, Real64 scalar = 1.0);
+        int addOutputValues(int gridIndex, std::vector<Real64> values);
         int getGridIndex(EnergyPlusData &state, std::string &indVarListName, bool &ErrorsFound);
         int getNumGridDims(int gridIndex);
-        double getGridValue(int gridIndex, int outputIndex, const std::vector<double> &target);
+        double getGridValue(int gridIndex, int outputIndex, const std::vector<Real64> &target);
         std::map<std::string, const nlohmann::json &> independentVarRefs;
         std::map<fs::path, TableFile> tableFiles;
         static std::shared_ptr<EnergyPlusLogger> btwxt_logger;

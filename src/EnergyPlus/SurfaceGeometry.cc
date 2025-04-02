@@ -8670,8 +8670,8 @@ namespace SurfaceGeometry {
         // Pass one: Vector of distance from this vertex to the next one
         std::vector<Real64> distances(nSides);
         size_t index = 0;
-        double min_distance = std::numeric_limits<Real64>::max();
-        double perimeter = 0.0;
+        Real64 min_distance = std::numeric_limits<Real64>::max();
+        Real64 perimeter = 0.0;
         for (auto it = vertices.begin(); it != vertices.end(); ++it) {
             auto itnext = std::next(it);
             if (itnext == std::end(vertices)) {

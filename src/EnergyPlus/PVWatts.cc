@@ -448,12 +448,21 @@ namespace PVWatts {
             }
         } else {
             // Report Out
-            ssc_data_get_number(pvwattsData_, "dc", &outputDCPower_);
+            double d_outputDCPower = outputDCPower_;
+            double d_outputACPower = outputACPower_;
+            double d_cellTemperature = cellTemperature_;
+            double d_planeOfArrayIrradiance = planeOfArrayIrradiance_;
+            ssc_data_get_number(pvwattsData_, "dc", &d_outputDCPower);
+            ssc_data_get_number(pvwattsData_, "ac", &d_outputACPower);
+            ssc_data_get_number(pvwattsData_, "tcell", &d_cellTemperature);
+            ssc_data_get_number(pvwattsData_, "poa", &d_planeOfArrayIrradiance);
+            outputDCPower_ = d_outputDCPower;
+            outputACPower_ = d_outputACPower;
+            cellTemperature_ = d_cellTemperature;
+            planeOfArrayIrradiance_ = d_planeOfArrayIrradiance;
             outputDCEnergy_ = outputDCPower_ * TimeStepSysSec;
-            ssc_data_get_number(pvwattsData_, "ac", &outputACPower_);
             outputACEnergy_ = outputACPower_ * TimeStepSysSec;
-            ssc_data_get_number(pvwattsData_, "tcell", &cellTemperature_);
-            ssc_data_get_number(pvwattsData_, "poa", &planeOfArrayIrradiance_);
+
         }
     }
 

@@ -6865,7 +6865,8 @@ namespace AirflowNetwork {
 
         std::vector<Real64> dirs30 = {0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360};
         std::vector<Btwxt::GridAxis> dirs30Axes;
-        dirs30Axes.emplace_back(dirs30,
+        std::vector<double> d_dirs30 = std::vector<double>(dirs30.begin(), dirs30.end());
+        dirs30Axes.emplace_back(d_dirs30,
                                 "30 Degree Increment",
                                 Btwxt::InterpolationMethod::linear,
                                 Btwxt::ExtrapolationMethod::linear,
@@ -6893,7 +6894,7 @@ namespace AirflowNetwork {
                     IncAng = std::abs(WindAng - FacadeAng(FacadeNum));
                     if (IncAng > 180.0) IncAng = 360.0 - IncAng;
                     IAng = int(IncAng / 30.0) + 1;
-                    DelAng = mod(IncAng, 30.0);
+                    DelAng = mod(IncAng, 30.0f);
                     WtAng = 1.0 - DelAng / 30.0;
 
                     // Wind-pressure coefficients for vertical facades, low-rise building
@@ -6909,7 +6910,7 @@ namespace AirflowNetwork {
                     // Wind-pressure coefficients for vertical facades, high-rise building
 
                     else if (Util::SameString(simulation_control.BldgType, "HighRise") && FacadeNum <= 4) {
-                        SR = min(max(SideRatio, 0.25), 4.0);
+                        SR = min(max(SideRatio, 0.25f), 4.0f);
                         if (SR >= 0.25 && SR < 1.0) {
                             ISR = 1;
                             WtSR = (1.0 - SR) / 0.75;
@@ -6926,7 +6927,7 @@ namespace AirflowNetwork {
                     else if ((Util::SameString(simulation_control.BldgType, "HighRise") ||
                               Util::SameString(simulation_control.BldgType, "LowRise")) &&
                              FacadeNum == 5) {
-                        SR = min(max(SideRatio, 0.25), 1.0);
+                        SR = min(max(SideRatio, 0.25f), 1.0f);
                         if (SR >= 0.25 && SR < 0.5) {
                             ISR = 1;
                             WtSR = (0.5 - SR) / 0.25;
@@ -6972,7 +6973,7 @@ namespace AirflowNetwork {
                     IncAng = std::abs(WindAng - FacadeAng(FacadeNum));
                     if (IncAng > 180.0) IncAng = 360.0 - IncAng;
                     // IAng = int(IncAng / 10.0) + 1;
-                    DelAng = mod(IncAng, 10.0);
+                    DelAng = mod(IncAng, 10.0f);
                     WtAng = 1.0 - DelAng / 10.0;
                     // Wind-pressure coefficients for vertical facades, low-rise building
                     IncRad = IncAng * Constant::DegToRad;
@@ -6984,7 +6985,7 @@ namespace AirflowNetwork {
             }     // End of facade number loop
             // Add a roof
             FacadeNum = 5;
-            SR = min(max(SideRatio, 0.25), 1.0);
+            SR = min(max(SideRatio, 0.25f), 1.0f);
             if (SR >= 0.25 && SR < 0.5) {
                 ISR = 1;
                 WtSR = (0.5 - SR) / 0.25;
@@ -6997,7 +6998,7 @@ namespace AirflowNetwork {
                 IncAng = std::abs(WindAng - FacadeAng(FacadeNum));
                 if (IncAng > 180.0) IncAng = 360.0 - IncAng;
                 IAng = int(IncAng / 30.0) + 1;
-                DelAng = mod(IncAng, 30.0);
+                DelAng = mod(IncAng, 30.0f);
                 WtAng = 1.0 - DelAng / 30.0;
                 // Wind-pressure coefficients for roof (assumed same for low-rise and high-rise buildings)
                 valsByFacade[FacadeNum - 1][windDirNum - 1] =
@@ -7013,7 +7014,8 @@ namespace AirflowNetwork {
                                           190, 200, 210, 220, 230, 240, 250, 260, 270, 280, 290, 300, 310, 320, 330, 340, 350, 360};
 
             std::vector<Btwxt::GridAxis> dirs10Axes;
-            dirs10Axes.emplace_back(dirs10,
+            std::vector<double> d_dirs10 = std::vector<double>(dirs10.begin(), dirs10.end());
+            dirs10Axes.emplace_back(d_dirs10,
                                     "10 Degree Increments",
                                     Btwxt::InterpolationMethod::linear,
                                     Btwxt::ExtrapolationMethod::linear,

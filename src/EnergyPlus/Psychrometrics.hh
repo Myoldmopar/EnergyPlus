@@ -568,7 +568,7 @@ namespace Psychrometrics {
         // Wylan & Sontag, Fundamentals of Classical Thermodynamics.
         // ASHRAE handbook 1985 Fundamentals, Ch. 6, eqn. (6),(26)
 
-        return (pb / (287.0 * (tdb + Constant::Kelvin) * (1.0 + 1.6077687 * std::max(dw, 1.0e-5))));
+        return (pb / (287.0 * (tdb + Constant::Kelvin) * (1.0 + 1.6077687 * std::max(dw, 1.0e-5f))));
     }
 
     inline Real64 PsyRhoAirFnPbTdbW_fast([[maybe_unused]] EnergyPlusData &state,

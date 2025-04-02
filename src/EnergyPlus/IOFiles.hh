@@ -75,19 +75,19 @@ struct DoubleWrapper
 {
     // this cannot be marked explicit
     // we need the implicit conversion for it to work
-    DoubleWrapper(double val) : value(val){};
-    operator double() const
+    explicit DoubleWrapper(Real64 val) : value(val){};
+    operator Real64() const
     {
         return value;
     };
-    DoubleWrapper &operator=(const double &other)
+    DoubleWrapper &operator=(const Real64 &other)
     {
         value = other;
         return *this;
     }
 
 private:
-    double value;
+    Real64 value;
 };
 } // namespace
 
@@ -112,12 +112,12 @@ private:
         }
     };
 
-    static constexpr bool should_be_fixed_output(const double value)
+    static constexpr bool should_be_fixed_output(const Real64 value)
     {
         return (value >= 0.099999999999999995 || value <= -0.099999999999999995) || (value == 0.0) || (value == -0.0);
     }
 
-    static constexpr bool fixed_will_fit(const double value, const int places)
+    static constexpr bool fixed_will_fit(const Real64 value, const int places)
     {
         if (value < 1.0 && value > -1.0) {
             return true;
@@ -237,7 +237,7 @@ public:
 
     template <typename FormatContext> auto format(const DoubleWrapper &doubleWrapper, FormatContext &ctx)
     {
-        const auto next_float = [](const double value) {
+        const auto next_float = [](const Real64 value) {
             if (std::signbit(value)) {
                 if (value == -0.0) {
                     return value;
@@ -253,10 +253,10 @@ public:
             }
         };
 
-        double val = doubleWrapper;
+        Real64 val = doubleWrapper;
 
         handle_specs(ctx);
-        detail::specs_checker<null_handler> checker(null_handler(), detail::mapped_type_constant<double, FormatContext>::value);
+        detail::specs_checker<null_handler> checker(null_handler(), detail::mapped_type_constant<Real64, FormatContext>::value);
         checker.on_align(specs_.align);
         if (specs_.sign != sign::none) checker.on_sign(specs_.sign);
         if (specs_.alt) checker.on_hash();
@@ -857,12 +857,12 @@ template <typename... Args> std::string vprint(std::string_view format_str, cons
 namespace {
     template <typename... Args> void print_fortran_syntax(std::ostream &os, std::string_view format_str, const Args &... args)
     {
-        EnergyPlus::vprint<std::conditional_t<std::is_same_v<double, Args>, DoubleWrapper, Args>...>(os, format_str, args...);
+        EnergyPlus::vprint<std::conditional_t<std::is_same_v<Real64, Args>, DoubleWrapper, Args>...>(os, format_str, args...);
     }
 
     template <typename... Args> std::string format_fortran_syntax(std::string_view format_str, const Args &... args)
     {
-        return EnergyPlus::vprint<std::conditional_t<std::is_same_v<double, Args>, DoubleWrapper, Args>...>(format_str, args...);
+        return EnergyPlus::vprint<std::conditional_t<std::is_same_v<Real64, Args>, DoubleWrapper, Args>...>(format_str, args...);
     }
 } // namespace
 
@@ -920,32 +920,32 @@ template <FormatSyntax formatSyntax = FormatSyntax::Fortran, typename... Args> s
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int>(std::string_view, int &&);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const char *const &>(std::string_view, const char *const &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, std::string &>(std::string_view, int &, std::string &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, std::string &, double &>(
-    std::string_view, std::string &, std::string &, std::string &, double &);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, std::string &, Real64 &>(
+    std::string_view, std::string &, std::string &, std::string &, Real64 &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const std::string_view &>(std::string_view,
                                                                                                             const std::string_view &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const std::string_view &, std::string &>(std::string_view,
                                                                                                                            const std::string_view &,
                                                                                                                            std::string &);
 extern template std::string
-EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, double &, double &>(std::string_view, std::string &, double &, double &);
+EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, Real64 &, Real64 &>(std::string_view, std::string &, Real64 &, Real64 &);
 extern template std::string
 EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, int &>(std::string_view, std::string &, std::string &, int &);
 extern template std::string
-EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &, double &, double &>(std::string_view, double &, double &, double &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &, std::string &>(std::string_view, double &, std::string &);
+EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, Real64 &, Real64 &, Real64 &>(std::string_view, Real64 &, Real64 &, Real64 &);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, Real64 &, std::string &>(std::string_view, Real64 &, std::string &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &>(std::string_view, std::string &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const int &, int &>(std::string_view, const int &, int &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double>(std::string_view, double &&);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, Real64>(std::string_view, Real64 &&);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, int &>(std::string_view, int &, int &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const double &>(std::string_view, const double &);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const Real64 &>(std::string_view, const Real64 &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, int &>(std::string_view, std::string &, int &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, double &>(std::string_view,
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, std::string &, Real64 &>(std::string_view,
                                                                                                                           std::string &,
                                                                                                                           std::string &,
-                                                                                                                          double &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, double &, std::string &, double &>(
-    std::string_view, std::string &, double &, std::string &, double &);
+                                                                                                                          Real64 &);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, Real64 &, std::string &, Real64 &>(
+    std::string_view, std::string &, Real64 &, std::string &, Real64 &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, const int &>(std::string_view, const int &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &, const std::string &, std::string &>(std::string_view,
                                                                                                                              int &,
@@ -959,9 +959,9 @@ extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran
                                                                                                                             int &,
                                                                                                                             std::string_view &,
                                                                                                                             std::string &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &, double &>(std::string_view, double &, double &);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, Real64 &, Real64 &>(std::string_view, Real64 &, Real64 &);
 extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, int &>(std::string_view, int &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, double &>(std::string_view, std::string &, double &);
-extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, double &>(std::string_view, double &);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, std::string &, Real64 &>(std::string_view, std::string &, Real64 &);
+extern template std::string EnergyPlus::format<EnergyPlus::FormatSyntax::Fortran, Real64 &>(std::string_view, Real64 &);
 
 #endif

@@ -313,7 +313,7 @@ namespace Weather {
 
         CheckLocationValidity(state);
         if (state.dataEnvrn->varyingOrientationSched != nullptr) {
-            state.dataHeatBal->BuildingAzimuth = mod(state.dataEnvrn->varyingOrientationSched->getCurrentVal(), 360.0);
+            state.dataHeatBal->BuildingAzimuth = mod(state.dataEnvrn->varyingOrientationSched->getCurrentVal(), 360.0f);
             state.dataSurfaceGeometry->CosBldgRelNorth =
                 std::cos(-(state.dataHeatBal->BuildingAzimuth + state.dataHeatBal->BuildingRotationAppendixG) * Constant::DegToRad);
             state.dataSurfaceGeometry->SinBldgRelNorth =
@@ -2154,13 +2154,13 @@ namespace Weather {
         }
 
         if (state.dataEnvrn->IsSnow) {
-            state.dataEnvrn->GndReflectance = max(min(state.dataEnvrn->GndReflectance * state.dataWeather->SnowGndRefModifier, 1.0), 0.0);
+            state.dataEnvrn->GndReflectance = max(min(state.dataEnvrn->GndReflectance * state.dataWeather->SnowGndRefModifier, 1.0f), 0.0f);
             state.dataEnvrn->GndReflectanceForDayltg =
-                max(min(state.dataEnvrn->GndReflectanceForDayltg * state.dataWeather->SnowGndRefModifierForDayltg, 1.0), 0.0);
+                max(min(state.dataEnvrn->GndReflectanceForDayltg * state.dataWeather->SnowGndRefModifierForDayltg, 1.0f), 0.0f);
         }
 
         state.dataEnvrn->GndSolarRad =
-            max((state.dataEnvrn->BeamSolarRad * state.dataEnvrn->SOLCOS.z + state.dataEnvrn->DifSolarRad) * state.dataEnvrn->GndReflectance, 0.0);
+            max((state.dataEnvrn->BeamSolarRad * state.dataEnvrn->SOLCOS.z + state.dataEnvrn->DifSolarRad) * state.dataEnvrn->GndReflectance, 0.0f);
 
         if (!state.dataEnvrn->SunIsUp) {
             state.dataEnvrn->DifSolarRad = 0.0;
@@ -3727,12 +3727,12 @@ namespace Weather {
                             // Radiation on an extraterrestial horizontal surface
                             Real64 HO = GlobalSolarConstant * AVSC * CosZenith;
                             Real64 KT = TotHoriz / HO; // Radiation ratio
-                            KT = min(KT, 0.75);
+                            KT = min(KT, 0.75f);
                             DiffRad = TotHoriz * (1.0045 + KT * (0.04349 + KT * (-3.5227 + 2.6313 * KT)));
                             if (desDayInput.SkyClear > 0.70) DiffRad = TotHoriz * C / (C + CosZenith);
                             BeamRad = (TotHoriz - DiffRad) / CosZenith;
-                            DiffRad = max(0.0, DiffRad);
-                            BeamRad = max(0.0, BeamRad);
+                            DiffRad = max(0.0f, DiffRad);
+                            BeamRad = max(0.0f, BeamRad);
 
                         } break;
                         case DesDaySolarModel::ASHRAE_Tau:
@@ -3752,7 +3752,7 @@ namespace Weather {
                                                       ZhangHuang_C4 * tomorrowTs.OutRelHum + ZhangHuang_C5 * tomorrowTs.WindSpeed) +
                                                  ZhangHuang_D) /
                                                 ZhangHuang_K;
-                            GloHorzRad = max(GloHorzRad, 0.0);
+                            GloHorzRad = max(GloHorzRad, 0.0f);
                             Real64 ClearnessIndex_kt = GloHorzRad / (GlobalSolarConstant * SinSolarAltitude);
                             //          ClearnessIndex_kt=DesDayInput(EnvrnNum)%SkyClear
                             Real64 ClearnessIndex_ktc = 0.4268 + 0.1934 * SinSolarAltitude;
@@ -4140,8 +4140,8 @@ namespace Weather {
         Real64 CosAzimuth = -(state.dataEnvrn->SinLatitude * CosZenith - state.dataWeather->TodayVariables.SinSolarDeclinAngle) /
                             (state.dataEnvrn->CosLatitude * std::sin(SolarZenith));
         // Following because above can yield invalid cos value.  (e.g. at south pole)
-        CosAzimuth = max(CosAzimuth, -1.0);
-        CosAzimuth = min(1.0, CosAzimuth);
+        CosAzimuth = max(CosAzimuth, -1.0f);
+        CosAzimuth = min(1.0f, CosAzimuth);
         Real64 SolarAzimuth = std::acos(CosAzimuth);
 
         state.dataWeather->SolarAltitudeAngle = SolarAltitude / Constant::DegToRad;
@@ -4266,7 +4266,7 @@ namespace Weather {
                     if (std::abs(state.dataEnvrn->Latitude - state.dataWeather->WeatherFileLatitude) > 1.0 ||
                         std::abs(state.dataEnvrn->Longitude - state.dataWeather->WeatherFileLongitude) > 1.0 ||
                         std::abs(state.dataEnvrn->TimeZoneNumber - state.dataWeather->WeatherFileTimeZone) > 0.0 ||
-                        std::abs(state.dataEnvrn->Elevation - state.dataWeather->WeatherFileElevation) / max(state.dataEnvrn->Elevation, 1.0) >
+                        std::abs(state.dataEnvrn->Elevation - state.dataWeather->WeatherFileElevation) / max(state.dataEnvrn->Elevation, 1.0f) >
                             0.10) {
                         ShowWarningError(state, "Weather file location will be used rather than entered (IDF) Location object.");
                         ShowContinueError(state, format("..Location object={}", state.dataWeather->LocationTitle));
@@ -4280,7 +4280,7 @@ namespace Weather {
                                           format("..Time Zone difference=[{:.1R}] hour(s), Elevation difference=[{:.2R}] percent, [{:.2R}] meters.",
                                                  std::abs(state.dataEnvrn->TimeZoneNumber - state.dataWeather->WeatherFileTimeZone),
                                                  std::abs((state.dataEnvrn->Elevation - state.dataWeather->WeatherFileElevation) /
-                                                          max(state.dataEnvrn->Elevation, 1.0) * 100.0),
+                                                          max(state.dataEnvrn->Elevation, 1.0f) * 100.0),
                                                  std::abs(state.dataEnvrn->Elevation - state.dataWeather->WeatherFileElevation)));
                     }
                 }
@@ -5877,7 +5877,7 @@ namespace Weather {
             PressureEntered = !ipsc->lNumericFieldBlanks(9);
             desDayInput.PressureEntered = PressureEntered;
             desDayInput.WindSpeed = ipsc->rNumericArgs(10);           // Wind Speed (m/s)
-            desDayInput.WindDir = mod(ipsc->rNumericArgs(11), 360.0); // Wind Direction
+            desDayInput.WindDir = mod(ipsc->rNumericArgs(11), 360.0f); // Wind Direction
             // (degrees clockwise from North, N=0, E=90, S=180, W=270)
             //   N1,  \field Month
             //   N2,  \field Day of Month
@@ -6831,7 +6831,7 @@ namespace Weather {
               "dimensionless},Oct{dimensionless},Nov{dimensionless},Dec{dimensionless}");
         print(state.files.eio, "{}", " Site:GroundReflectance:Snow");
         for (int i = 1; i <= 12; ++i) {
-            print(state.files.eio, ", {:5.2F}", max(min(state.dataWeather->GroundReflectances(i) * state.dataWeather->SnowGndRefModifier, 1.0), 0.0));
+            print(state.files.eio, ", {:5.2F}", max(min(state.dataWeather->GroundReflectances(i) * state.dataWeather->SnowGndRefModifier, 1.0f), 0.0f));
         }
         print(state.files.eio, "\n");
         print(state.files.eio,
@@ -6844,7 +6844,7 @@ namespace Weather {
         for (nObjs = 1; nObjs <= 12; ++nObjs) {
             print(state.files.eio,
                   ", {:5.2F}",
-                  max(min(state.dataWeather->GroundReflectances(nObjs) * state.dataWeather->SnowGndRefModifierForDayltg, 1.0), 0.0));
+                  max(min(state.dataWeather->GroundReflectances(nObjs) * state.dataWeather->SnowGndRefModifierForDayltg, 1.0f), 0.0f));
         }
         print(state.files.eio, "\n");
     }
@@ -7238,7 +7238,7 @@ namespace Weather {
             longl(-i) = longl(-i + 1) - 15.0;
             longh(-i) = longh(-i + 1) - 15.0;
         }
-        Real64 temp = mod(Longitude, 360.0);
+        Real64 temp = mod(Longitude, 360.0f);
         if (temp > 180.0) temp -= 180.0;
         Real64 tz; // resultant tz meridian
         for (int i = -12; i <= 12; ++i) {
@@ -8093,7 +8093,7 @@ namespace Weather {
 
         for (int tloop = 1; tloop <= state.dataGlobal->TimeStepsInHour; ++tloop) {
             state.dataWeather->Interpolation(tloop) =
-                (state.dataGlobal->TimeStepsInHour == 1) ? 1.0 : min(1.0, (double(tloop) / double(state.dataGlobal->TimeStepsInHour)));
+                (state.dataGlobal->TimeStepsInHour == 1) ? 1.0 : min(double(1.0), (double(tloop) / double(state.dataGlobal->TimeStepsInHour)));
         }
 
         if (mod(state.dataGlobal->TimeStepsInHour, 2) == 0) {

@@ -755,6 +755,10 @@ endif()
 # statically to create the DLL and also the unit tests
 add_library(energypluslib STATIC ${SRC})
 
+if(NOT MSVC)
+  target_compile_options(energypluslib PRIVATE -fsingle-precision-constant)
+endif()
+
 if(ENABLE_UNITY)
   set_target_properties(energypluslib PROPERTIES UNITY_BUILD ON)
 endif()
@@ -838,6 +842,9 @@ else() # windows
   add_library(energyplusapi ${API_LIBRARY_TYPE} CommandLineInterface.hh CommandLineInterface.cc ${API_CORE_SRC}
                             "${CMAKE_CURRENT_BINARY_DIR}/energyplusapi.rc")
 endif()
+if(NOT MSVC)
+  target_compile_options(energyplusapi PRIVATE -fsingle-precision-constant)
+endif()
 target_link_libraries(energyplusapi PRIVATE energypluslib)
 target_link_libraries(energyplusapi PRIVATE project_options project_fp_options project_warnings)
 
@@ -852,6 +859,9 @@ if(APPLE OR UNIX)
   add_executable(energyplus main.cc)
 else() # windows
   add_executable(energyplus main.cc "${CMAKE_CURRENT_BINARY_DIR}/energyplus.rc")
+endif()
+if(NOT MSVC)
+  target_compile_options(energyplus PRIVATE -fsingle-precision-constant)
 endif()
 target_link_libraries(energyplus PRIVATE energyplusapi project_options project_fp_options project_warnings)
 

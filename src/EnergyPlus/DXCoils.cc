@@ -544,15 +544,15 @@ void SimDXCoilMultiMode(EnergyPlusData &state,
             } else {
                 S1PLR = 0.0;
             }
-            S1PLR = min(1.0, S1PLR);
-            S1PLR = max(0.0, S1PLR);
+            S1PLR = min(1.0f, S1PLR);
+            S1PLR = max(0.0f, S1PLR);
             if ((S12SensCoolingEnergyRate - S1SensCoolingEnergyRate) > 0.0) {
                 S2PLR = (PartLoadRatio * S12SensCoolingEnergyRate - S1SensCoolingEnergyRate) / (S12SensCoolingEnergyRate - S1SensCoolingEnergyRate);
             } else {
                 S2PLR = 0.0;
             }
-            S2PLR = min(1.0, S2PLR);
-            S2PLR = max(0.0, S2PLR);
+            S2PLR = min(1.0f, S2PLR);
+            S2PLR = max(0.0f, S2PLR);
 
             // Run stage 1 at its part load
             PerfMode = (int)DehumidMode * 2 + 1;
@@ -8954,12 +8954,12 @@ void CalcHPWHDXCoil(EnergyPlusData &state,
 
     // find part load fraction to calculate RTF
     if (Coil.PLFFPLR(1) > 0) {
-        PartLoadFraction = max(0.7, CurveValue(state, Coil.PLFFPLR(1), PartLoadRatio));
+        PartLoadFraction = max(0.7f, CurveValue(state, Coil.PLFFPLR(1), PartLoadRatio));
     } else {
         PartLoadFraction = 1.0;
     }
 
-    HPRTF = min(1.0, (PartLoadRatio / PartLoadFraction));
+    HPRTF = min(1.0f, (PartLoadRatio / PartLoadFraction));
 
     Real64 locFanElecPower = state.dataFans->fans(Coil.SupplyFanIndex)->totalPower;
 
@@ -9575,7 +9575,7 @@ void CalcDoe2DXCoil(EnergyPlusData &state,
                 wADP = PsyWFnTdbH(state, tADP, hADP, calcDoe2DXCoil);
                 hTinwADP = PsyHFnTdbW(InletAirDryBulbTemp, wADP);
                 if ((InletAirEnthalpy - hADP) > 1.e-10) {
-                    SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0);
+                    SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0f);
                 } else {
                     SHR = 1.0;
                 }
@@ -10531,7 +10531,7 @@ void CalcVRFCoolingCoil(EnergyPlusData &state,
         wADP = min(InletAirHumRat, PsyWFnTdbH(state, tADP, hADP, RoutineName));
         hTinwADP = PsyHFnTdbW(InletAirDryBulbTemp, wADP);
         if ((InletAirEnthalpy - hADP) > 1.e-10) {
-            SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0);
+            SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0f);
         } else {
             SHR = 1.0;
         }
@@ -11018,7 +11018,7 @@ void CalcDXHeatingCoil(EnergyPlusData &state,
         // Calculating adjustment factors for defrost
         // Calculate delta w through outdoor coil by assuming a coil temp of 0.82*DBT-9.7(F) per DOE2.1E
         OutdoorCoilT = 0.82 * OutdoorDryBulb - 8.589;
-        OutdoorCoildw = max(1.0e-6, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure)));
+        OutdoorCoildw = max(1.0e-6f, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure)));
 
         // Initializing defrost adjustment factors
         LoadDueToDefrost = 0.0;
@@ -11069,7 +11069,7 @@ void CalcDXHeatingCoil(EnergyPlusData &state,
                 // Calculate defrost adjustment factors depending on defrost control strategy
                 if (thisDXCoil.DefrostStrategy == StandardRatings::DefrostStrat::ReverseCycle) {
                     LoadDueToDefrost = (0.01 * FractionalDefrostTime) * (7.222 - OutdoorDryBulb) * (thisDXCoil.RatedTotCap(Mode) / 1.01667);
-                    DefrostEIRTempModFac = CurveValue(state, thisDXCoil.DefrostEIRFT, max(15.555, InletAirWetBulbC), max(15.555, OutdoorDryBulb));
+                    DefrostEIRTempModFac = CurveValue(state, thisDXCoil.DefrostEIRFT, max(15.555f, InletAirWetBulbC), max(15.555f, OutdoorDryBulb));
                     thisDXCoil.DefrostPower = DefrostEIRTempModFac * (thisDXCoil.RatedTotCap(Mode) / 1.01667) * FractionalDefrostTime;
                 } else { // Defrost strategy is resistive
                     thisDXCoil.DefrostPower = thisDXCoil.DefrostCapacity * FractionalDefrostTime;
@@ -11150,7 +11150,7 @@ void CalcDXHeatingCoil(EnergyPlusData &state,
         EIR = thisDXCoil.RatedEIR(Mode) * EIRTempModFac * EIRFlowModFac;
         // Calculate modified PartLoadRatio due to defrost (reverse-cycle defrost only)
         if (TotCapAdj > 0.0) {
-            PLRHeating = min(1.0, (PartLoadRatio + (LoadDueToDefrost * PartLoadRatio) / TotCapAdj));
+            PLRHeating = min(1.0f, (PartLoadRatio + (LoadDueToDefrost * PartLoadRatio) / TotCapAdj));
         } else {
             PLRHeating = 0.0;
         }
@@ -11550,7 +11550,7 @@ void CalcMultiSpeedDXCoil(EnergyPlusData &state,
                 hTinwADP = PsyHFnTdbW(InletAirDryBulbTemp, wADP);
                 // get corresponding SHR
                 if ((InletAirEnthalpy - hADP) > 1.e-10) {
-                    SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0);
+                    SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0f);
                 } else {
                     SHR = 1.0;
                 }
@@ -11654,7 +11654,7 @@ void CalcMultiSpeedDXCoil(EnergyPlusData &state,
                 hTinwADP = PsyHFnTdbW(InletAirDryBulbTemp, wADP);
                 // get corresponding SHR
                 if ((InletAirEnthalpy - hADP) > 1.e-10) {
-                    SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0);
+                    SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0f);
                 } else {
                     SHR = 1.0;
                 }
@@ -12050,7 +12050,7 @@ Real64 CalcCBF(EnergyPlusData &state,
             //  Eventually inlet air conditions will be used in DX Coil, these lines are commented out and marked with this comment line
             //  Pressure will have to be pass into this subroutine to fix this one
             ADPHumRat = min(OutletAirHumRat, PsyWFnTdpPb(state, ADPTemp, DataEnvironment::StdPressureSeaLevel));
-            Slope = (InletAirHumRat - ADPHumRat) / max(0.001, (InletAirTemp - ADPTemp));
+            Slope = (InletAirHumRat - ADPHumRat) / max(0.001f, (InletAirTemp - ADPTemp));
 
             //     check for convergence (slopes are equal to within error tolerance)
 
@@ -12072,7 +12072,7 @@ Real64 CalcCBF(EnergyPlusData &state,
         InletAirEnthalpy = PsyHFnTdbW(InletAirTemp, InletAirHumRat);
         OutletAirEnthalpy = PsyHFnTdbW(OutletAirTemp, OutletAirHumRat);
         ADPEnthalpy = PsyHFnTdbW(ADPTemp, ADPHumRat);
-        CBF = min(1.0, (OutletAirEnthalpy - ADPEnthalpy) / (InletAirEnthalpy - ADPEnthalpy));
+        CBF = min(1.0f, (OutletAirEnthalpy - ADPEnthalpy) / (InletAirEnthalpy - ADPEnthalpy));
         if (Iter > IterMax && PrintFlag) {
             ShowSevereError(state, format("{} \"{}\" -- coil bypass factor calculation did not converge after max iterations.", UnitType, UnitName));
             ShowContinueError(state, format("The RatedSHR of [{:.3R}], entered by the user or autosized (see *.eio file),", SHR));
@@ -12157,7 +12157,7 @@ Real64 ValidateADP(EnergyPlusData &state,
     AirMassFlow =
         AirVolFlowRate * PsyRhoAirFnPbTdbW(state, DataEnvironment::StdPressureSeaLevel, RatedInletAirTemp, RatedInletAirHumRat, CallingRoutine);
     while (bStillValidating) {
-        CBF_calculated = max(0.0, CalcCBF(state, UnitType, UnitName, RatedInletAirTemp, RatedInletAirHumRat, TotCap, AirMassFlow, SHR, bNoReporting));
+        CBF_calculated = max(0.0f, CalcCBF(state, UnitType, UnitName, RatedInletAirTemp, RatedInletAirHumRat, TotCap, AirMassFlow, SHR, bNoReporting));
         DeltaH = TotCap / AirMassFlow;
         InletAirEnthalpy = PsyHFnTdbW(RatedInletAirTemp, RatedInletAirHumRat);
         HTinHumRatOut = InletAirEnthalpy - (1.0 - SHR) * DeltaH;
@@ -12287,7 +12287,7 @@ Real64 CalcEffectiveSHR(EnergyPlusData &state,
     Twet_max = 9999.0; // high limit for Twet
 
     //  Calculate the model parameters at the actual operating conditions
-    Twet = min(Twet_Rated * QLatRated / (QLatActual + 1.e-10), Twet_max);
+    Twet = min(Twet_Rated * QLatRated / (QLatActual + 1.e-10f), Twet_max);
     Gamma = Gamma_Rated * QLatRated * (EnteringDB - EnteringWB) / ((26.7 - 19.4) * QLatActual + 1.e-10);
 
     //  Calculate the compressor on and off times using a conventional thermostat curve
@@ -12296,7 +12296,7 @@ Real64 CalcEffectiveSHR(EnergyPlusData &state,
 
     //  Cap Toff to meet the equation restriction
     if (Gamma > 0.0) {
-        Toffa = min(Toff, 2.0 * Twet / Gamma);
+        Toffa = min(Toff, 2.0f * Twet / Gamma);
     } else {
         Toffa = Toff;
     }
@@ -12314,7 +12314,7 @@ Real64 CalcEffectiveSHR(EnergyPlusData &state,
             Ton_heating = 3600.0 / (4.0 * Nmax * (1.0 - HeatingRTF));
             Toff_heating = 3600.0 / (4.0 * Nmax * HeatingRTF);
             //    add additional heating coil operation during cooling coil off cycle (due to cycling rate difference of coils)
-            Ton_heating += max(0.0, min(Ton_heating, (Ton + Toffa) - (Ton_heating + Toff_heating)));
+            Ton_heating += max(0.0f, min(Ton_heating, (Ton + Toffa) - (Ton_heating + Toff_heating)));
             Toffa = min(Toffa, Ton_heating - Ton);
         }
     }
@@ -12332,7 +12332,7 @@ Real64 CalcEffectiveSHR(EnergyPlusData &state,
     //  Adjust Sensible Heat Ratio (SHR) using Latent Heat Ratio (LHR) multiplier
     //  Floating underflow errors occur when -Ton/Tcl is a large negative number.
     //  Cap lower limit at -700 to avoid the underflow errors.
-    aa = std::exp(max(-700.0, -Ton / Tcl));
+    aa = std::exp(max(-700.0f, -Ton / Tcl));
     //  Calculate latent heat ratio multiplier
     LHRmult = max(((Ton - To2) / (Ton + Tcl * (aa - 1.0))), 0.0);
 
@@ -12449,7 +12449,7 @@ void CalcTotCapSHR(EnergyPlusData &state,
         wADP = PsyWFnTdbH(state, tADP, hADP);
         hTinwADP = PsyHFnTdbW(InletDryBulb, wADP);
         if ((InletEnthalpy - hADP) > 1.e-10) {
-            SHRCalc = min((hTinwADP - hADP) / (InletEnthalpy - hADP), 1.0);
+            SHRCalc = min((hTinwADP - hADP) / (InletEnthalpy - hADP), 1.0f);
         } else {
             SHRCalc = 1.0;
         }
@@ -12657,7 +12657,7 @@ void CalcMultiSpeedDXCoilCooling(EnergyPlusData &state,
             ShowContinueError(state,
                               format("AirMassFlow={:.3R},CycRatio={:.3R},SpeedNum={:.0R}, MSHPMassFlowRateLow={:.3R}, MSHPMassFlowRateHigh={:.3R}",
                                      AirMassFlow,
-                                     double(SpeedNum),
+                                     Real64(SpeedNum),
                                      CycRatio,
                                      MSHPMassFlowRateLow,
                                      MSHPMassFlowRateHigh));
@@ -12814,7 +12814,7 @@ void CalcMultiSpeedDXCoilCooling(EnergyPlusData &state,
             hTinwADP = PsyHFnTdbW(InletAirDryBulbTemp, wADP);
             // get corresponding SHR
             if ((InletAirEnthalpy - hADP) > 1.e-10) {
-                SHRLS = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0);
+                SHRLS = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0f);
             } else {
                 SHRLS = 1.0;
             }
@@ -12858,7 +12858,7 @@ void CalcMultiSpeedDXCoilCooling(EnergyPlusData &state,
             hTinwADP = PsyHFnTdbW(InletAirDryBulbTemp, wADP);
             // get corresponding SHR
             if ((InletAirEnthalpy - hADP) > 1.e-10) {
-                SHRHS = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0);
+                SHRHS = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0f);
             } else {
                 SHRHS = 1.0;
             }
@@ -13126,7 +13126,7 @@ void CalcMultiSpeedDXCoilCooling(EnergyPlusData &state,
             hTinwADP = PsyHFnTdbW(InletAirDryBulbTemp, wADP);
             // get corresponding SHR
             if ((InletAirEnthalpy - hADP) > 1.e-10) {
-                SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0);
+                SHR = min((hTinwADP - hADP) / (InletAirEnthalpy - hADP), 1.0f);
             } else {
                 SHR = 1.0;
             }
@@ -13467,7 +13467,7 @@ void CalcMultiSpeedDXCoilHeating(EnergyPlusData &state,
             ShowContinueError(state,
                               format("AirMassFlow={:.3R},CycRatio={:.3R},SpeedNum={:.0R}, MSHPMassFlowRateLow={:.3R}, MSHPMassFlowRateHigh={:.3R}",
                                      AirMassFlow,
-                                     double(SpeedNum),
+                                     Real64(SpeedNum),
                                      CycRatio,
                                      MSHPMassFlowRateLow,
                                      MSHPMassFlowRateHigh));
@@ -13665,7 +13665,7 @@ void CalcMultiSpeedDXCoilHeating(EnergyPlusData &state,
             // Calculating adjustment factors for defrost
             // Calculate delta w through outdoor coil by assuming a coil temp of 0.82*DBT-9.7(F) per DOE2.1E
             OutdoorCoilT = 0.82 * OutdoorDryBulb - 8.589;
-            OutdoorCoildw = max(1.0e-6, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure, RoutineName)));
+            OutdoorCoildw = max(1.0e-6f, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure, RoutineName)));
 
             // Initializing defrost adjustment factors
             LoadDueToDefrostLS = 0.0;
@@ -13719,7 +13719,7 @@ void CalcMultiSpeedDXCoilHeating(EnergyPlusData &state,
                 if (FractionalDefrostTime > 0.0) {
                     // Calculate defrost adjustment factors depending on defrost control strategy
                     if (thisDXCoil.DefrostStrategy == StandardRatings::DefrostStrat::ReverseCycle) {
-                        DefrostEIRTempModFac = CurveValue(state, thisDXCoil.DefrostEIRFT, max(15.555, InletAirWetBulbC), max(15.555, OutdoorDryBulb));
+                        DefrostEIRTempModFac = CurveValue(state, thisDXCoil.DefrostEIRFT, max(15.555f, InletAirWetBulbC), max(15.555f, OutdoorDryBulb));
                         LoadDueToDefrostLS =
                             (0.01 * FractionalDefrostTime) * (7.222 - OutdoorDryBulb) * (thisDXCoil.MSRatedTotCap(SpeedNumLS) / 1.01667);
                         DefrostPowerLS = DefrostEIRTempModFac * (thisDXCoil.MSRatedTotCap(SpeedNumLS) / 1.01667) * FractionalDefrostTime;
@@ -13738,7 +13738,7 @@ void CalcMultiSpeedDXCoilHeating(EnergyPlusData &state,
             TotCapHSAdj = TotCapHS * HeatingCapacityMultiplier;
 
             // Calculate modified PartLoadRatio due to defrost (reverse-cycle defrost only)
-            PLRHeating = min(1.0, (SpeedRatio + LoadDueToDefrostHS / TotCapHSAdj));
+            PLRHeating = min(1.0f, (SpeedRatio + LoadDueToDefrostHS / TotCapHSAdj));
             PLF = CurveValue(state, thisDXCoil.MSPLFFPLR(SpeedNumHS), PLRHeating); // Calculate part-load factor
 
             if (PLF < 0.7) {
@@ -13907,7 +13907,7 @@ void CalcMultiSpeedDXCoilHeating(EnergyPlusData &state,
             // Calculating adjustment factors for defrost
             // Calculate delta w through outdoor coil by assuming a coil temp of 0.82*DBT-9.7(F) per DOE2.1E
             OutdoorCoilT = 0.82 * OutdoorDryBulb - 8.589;
-            OutdoorCoildw = max(1.0e-6, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure, RoutineName)));
+            OutdoorCoildw = max(1.0e-6f, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure, RoutineName)));
 
             // Initializing defrost adjustment factors
             LoadDueToDefrost = 0.0;
@@ -13959,7 +13959,7 @@ void CalcMultiSpeedDXCoilHeating(EnergyPlusData &state,
                     // Calculate defrost adjustment factors depending on defrost control strategy
                     if (thisDXCoil.DefrostStrategy == StandardRatings::DefrostStrat::ReverseCycle) {
                         LoadDueToDefrost = (0.01 * FractionalDefrostTime) * (7.222 - OutdoorDryBulb) * (thisDXCoil.MSRatedTotCap(1) / 1.01667);
-                        DefrostEIRTempModFac = CurveValue(state, thisDXCoil.DefrostEIRFT, max(15.555, InletAirWetBulbC), max(15.555, OutdoorDryBulb));
+                        DefrostEIRTempModFac = CurveValue(state, thisDXCoil.DefrostEIRFT, max(15.555f, InletAirWetBulbC), max(15.555f, OutdoorDryBulb));
                         thisDXCoil.DefrostPower = DefrostEIRTempModFac * (thisDXCoil.MSRatedTotCap(1) / 1.01667) * FractionalDefrostTime;
                     } else { // Defrost strategy is resistive
                         thisDXCoil.DefrostPower = thisDXCoil.DefrostCapacity * FractionalDefrostTime;
@@ -14002,7 +14002,7 @@ void CalcMultiSpeedDXCoilHeating(EnergyPlusData &state,
             EIRFlowModFac = CurveValue(state, thisDXCoil.MSEIRFFlow(1), AirMassFlowRatioLS);
             EIR = 1.0 / thisDXCoil.MSRatedCOP(1) * EIRTempModFac * EIRFlowModFac;
             // Calculate modified PartLoadRatio due to defrost (reverse-cycle defrost only)
-            PLRHeating = min(1.0, (CycRatio + LoadDueToDefrost / TotCapAdj));
+            PLRHeating = min(1.0f, (CycRatio + LoadDueToDefrost / TotCapAdj));
             PLF = CurveValue(state, thisDXCoil.MSPLFFPLR(1), PLRHeating); // Calculate part-load factor
             if (fanOp == HVAC::FanOp::Cycling && CycRatio == 1.0 && PLF != 1.0) {
                 if (thisDXCoil.PLFErrIndex == 0) {
@@ -14285,7 +14285,7 @@ void ReportDXCoil(EnergyPlusData &state, int const DXCoilNum) // number of the c
         // CR9155 Remove specific humidity calculations
         //  mdot * del HumRat / rho water
         thisDXCoil.CondensateVdot =
-            max(0.0, (thisDXCoil.InletAirMassFlowRate * (thisDXCoil.InletAirHumRat - thisDXCoil.OutletAirHumRat) / Psychrometrics::RhoH2O(Tavg)));
+            max(0.0f, (thisDXCoil.InletAirMassFlowRate * (thisDXCoil.InletAirHumRat - thisDXCoil.OutletAirHumRat) / Psychrometrics::RhoH2O(Tavg)));
         thisDXCoil.CondensateVol = thisDXCoil.CondensateVdot * ReportingConstant;
 
         state.dataWaterData->WaterStorage(thisDXCoil.CondensateTankID).VdotAvailSupply(thisDXCoil.CondensateTankSupplyARRID) =
@@ -14795,7 +14795,7 @@ void CalcTwoSpeedDXCoilStandardRating(EnergyPlusData &state, int const DXCoilNum
                     PLF = 0.7;
                 }
                 RunTimeFraction = CycRatio / PLF;
-                RunTimeFraction = min(RunTimeFraction, 1.0);
+                RunTimeFraction = min(RunTimeFraction, 1.0f);
                 TotCoolingCap = LowSpeedTotCoolingCap * RunTimeFraction;
                 NetCoolingCap = TotCoolingCap - FanHeatCorrection;
                 TotalElecPowerRated = LowSpeedTotCoolingCap * EIR_LowSpeed * RunTimeFraction + FanPowerCorrection;
@@ -16217,7 +16217,7 @@ void CalcSecondaryDXCoils(EnergyPlusData &state, int const DXCoilNum)
         case HVAC::CoilDX_HeatingEmpirical: {
             // evaporator coil in the secondary zone
             if (thisDXCoil.ElecHeatingPower > 0.0) {
-                TotalHeatRemovalRate = max(0.0, thisDXCoil.TotalHeatingEnergyRate - thisDXCoil.ElecHeatingPower);
+                TotalHeatRemovalRate = max(0.0f, thisDXCoil.TotalHeatingEnergyRate - thisDXCoil.ElecHeatingPower);
             } else {
                 TotalHeatRemovalRate = 0.0;
                 thisDXCoil.SecCoilSHR = 0.0;
@@ -16266,7 +16266,7 @@ void CalcSecondaryDXCoils(EnergyPlusData &state, int const DXCoilNum)
                     // Adjust SHR for the new outlet condition that balances energy
                     hTinwout = PsyHFnTdbW(EvapInletDryBulb, FullLoadOutAirHumRat);
                     SHR = 1.0 - (EvapInletEnthalpy - hTinwout) / ((TotalHeatRemovalRate / PartLoadRatio) / EvapAirMassFlow);
-                    SHR = min(SHR, 1.0);
+                    SHR = min(SHR, 1.0f);
                 }
                 // calculate the sensible and latent zone heat removal (extraction) rate by the secondary coil
                 thisDXCoil.SecCoilSensibleHeatRemovalRate = thisDXCoil.SecCoilTotalHeatRemovalRate * SHR;
@@ -16295,7 +16295,7 @@ void CalcSecondaryDXCoils(EnergyPlusData &state, int const DXCoilNum)
                 EvapAirMassFlow = RhoAir * thisDXCoil.MSSecCoilAirFlow(MSSpeedNumLS);
             }
             if (thisDXCoil.ElecHeatingPower > 0.0) {
-                TotalHeatRemovalRate = max(0.0, thisDXCoil.TotalHeatingEnergyRate - thisDXCoil.ElecHeatingPower);
+                TotalHeatRemovalRate = max(0.0f, thisDXCoil.TotalHeatingEnergyRate - thisDXCoil.ElecHeatingPower);
             } else {
                 TotalHeatRemovalRate = 0.0;
                 return;
@@ -16384,7 +16384,7 @@ void CalcSecondaryDXCoils(EnergyPlusData &state, int const DXCoilNum)
                     // Adjust SHR for the new outlet condition that balances energy
                     hTinwout = PsyHFnTdbW(EvapInletDryBulb, FullLoadOutAirHumRat);
                     SHR = 1.0 - (EvapInletEnthalpy - hTinwout) / (TotalHeatRemovalRate / PartLoadRatio) / EvapAirMassFlow;
-                    SHR = min(SHR, 1.0);
+                    SHR = min(SHR, 1.0f);
                 }
                 // calculate the sensible and latent zone heat removal (extraction) rate by the secondary coil
                 thisDXCoil.SecCoilSensibleHeatRemovalRate = thisDXCoil.SecCoilTotalHeatRemovalRate * SHR;
@@ -16484,7 +16484,7 @@ Real64 CalcSecondaryDXCoilsSHR(EnergyPlusData &state,
             wADP = min(EvapInletHumRat, PsyWFnTdbH(state, tADP, hADP, RoutineName));
             hTinwADP = PsyHFnTdbW(EvapInletDryBulb, wADP);
             if ((EvapInletEnthalpy - hADP) > 1.e-10) {
-                SHRadp = min((hTinwADP - hADP) / (EvapInletEnthalpy - hADP), 1.0);
+                SHRadp = min((hTinwADP - hADP) / (EvapInletEnthalpy - hADP), 1.0f);
             } else {
                 SHRadp = 1.0;
             }
@@ -17137,7 +17137,7 @@ void CalcVRFHeatingCoil_FluidTCtrl(EnergyPlusData &state,
         // Calculating adjustment factors for defrost
         // Calculate delta w through outdoor coil by assuming a coil temp of 0.82*DBT-9.7(F) per DOE2.1E
         OutdoorCoilT = 0.82 * OutdoorDryBulb - 8.589;
-        OutdoorCoildw = max(1.0e-6, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure)));
+        OutdoorCoildw = max(1.0e-6f, (OutdoorHumRat - PsyWFnTdpPb(state, OutdoorCoilT, OutdoorPressure)));
 
         // Initializing defrost adjustment factors
         LoadDueToDefrost = 0.0;
@@ -17177,9 +17177,9 @@ void CalcVRFHeatingCoil_FluidTCtrl(EnergyPlusData &state,
 
         // Calculate PLRHeating: modified PartLoadRatio due to defrost ( reverse-cycle defrost only )
         if (TotCap > 0.0) {
-            PLRHeating = min(1.0, (PartLoadRatio + LoadDueToDefrost / TotCap));
+            PLRHeating = min(1.0f, (PartLoadRatio + LoadDueToDefrost / TotCap));
         } else {
-            PLRHeating = min(1.0, PartLoadRatio);
+            PLRHeating = min(1.0f, PartLoadRatio);
         }
 
         if (thisDXCoil.DXCoilType_Num != HVAC::CoilVRF_Heating && thisDXCoil.DXCoilType_Num != HVAC::CoilVRF_FluidTCtrl_Heating) {
@@ -17353,7 +17353,7 @@ void ControlVRFIUCoil(EnergyPlusData &state,
     MaxSH = 15;
     MaxSC = 20;
     Garate = state.dataDXCoils->DXCoil(CoilIndex).RatedAirMassFlowRate(1);
-    FanSpdRatioMin = min(OAMassFlow / Garate, 1.0); // ensure that coil flow rate is higher than OA flow rate
+    FanSpdRatioMin = min(OAMassFlow / Garate, 1.0f); // ensure that coil flow rate is higher than OA flow rate
 
     if (QCoil == 0) {
         // No Heating or Cooling
@@ -17594,7 +17594,7 @@ void CalcVRFCoilSenCap(EnergyPlusData &state,
         T_coil_out = T_coil_in - (T_coil_in - T_coil_surf) * (1 - BF);
 
         // Coil sensilbe heat transfer per mass flow rate
-        Q_sen = max(1005 * (T_coil_in - T_coil_out), 0.0);
+        Q_sen = max(1005 * (T_coil_in - T_coil_out), 0.0f);
 
     } else if (OperationMode == FlagHeatMode) {
         // Heating: OperationMode 1
@@ -17613,7 +17613,7 @@ void CalcVRFCoilSenCap(EnergyPlusData &state,
         T_coil_out = T_coil_in + (T_coil_surf - T_coil_in) * (1 - BF);
 
         // Coil sensilbe heat transfer_minimum value
-        Q_sen = max(1005 * (T_coil_out - T_coil_in), 0.0);
+        Q_sen = max(1005 * (T_coil_out - T_coil_in), 0.0f);
     }
 }
 

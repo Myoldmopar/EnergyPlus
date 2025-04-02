@@ -865,8 +865,10 @@ namespace DElightManagerF {
                             int piErrorFlag)
     {
         std::vector<char> zoneNameArr(getCharArrayFromString(cZoneName));
+        double d_pdPowerReducFac = pdPowerReducFac;
         delightelecltgctrl(
-            iNameLength, &zoneNameArr[0], dBldgLat, dHISKF, dHISUNF, dCloudFraction, dSOLCOSX, dSOLCOSY, dSOLCOSZ, &pdPowerReducFac, &piErrorFlag);
+            iNameLength, &zoneNameArr[0], dBldgLat, dHISKF, dHISUNF, dCloudFraction, dSOLCOSX, dSOLCOSY, dSOLCOSZ, &d_pdPowerReducFac, &piErrorFlag);
+        pdPowerReducFac = d_pdPowerReducFac;
     }
 
     std::vector<char> getCharArrayFromString(std::string const &originalString)

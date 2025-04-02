@@ -2277,7 +2277,7 @@ namespace Curve {
                         ErrorsFound = true;
                     } else {
                         std::vector<double> axis;
-                        std::vector<double> lookupValues;
+                        std::vector<Real64> lookupValues;
 
                         for (int TableDataIndex = 1; TableDataIndex <= MaxTableNums; ++TableDataIndex) {
                             axis.push_back(windDirs[TableDataIndex - 1]);
@@ -2326,7 +2326,7 @@ namespace Curve {
         int numIndVarLists = state.dataInputProcessing->inputProcessor->getNumObjectsFound(state, "Table:IndependentVariableList");
         std::map<std::string, std::vector<std::pair<double, double>>>
             varListLimits; // ugly, but this is needed for legacy behavior (otherwise limits are reset by Btwxt if they are within bounds).
-        std::map<std::string, std::vector<double>> varListNormalizeTargets;
+        std::map<std::string, std::vector<Real64>> varListNormalizeTargets;
         if (numIndVarLists > 0) {
             auto const &indVarListInstances = state.dataInputProcessing->inputProcessor->getObjectInstances("Table:IndependentVariableList");
             for (auto &instance : indVarListInstances.items()) {
@@ -2358,7 +2358,7 @@ namespace Curve {
                             }
                         }
 
-                        std::vector<double> axis;
+                        std::vector<Real64> axis;
 
                         if (indVarInstance.count("external_file_name")) {
                             std::string tmp = indVarInstance.at("external_file_name").get<std::string>();
@@ -2424,8 +2424,8 @@ namespace Curve {
                             }
                         }
 
-                        double min_grid_value = *std::min_element(axis.begin(), axis.end());
-                        double max_grid_value = *std::max_element(axis.begin(), axis.end());
+                        Real64 min_grid_value = *std::min_element(axis.begin(), axis.end());
+                        Real64 max_grid_value = *std::max_element(axis.begin(), axis.end());
 
                         auto minValIterator = indVarInstance.find("minimum_value");
                         Real64 min_val = (minValIterator != indVarInstance.end()) ? minValIterator->get<Real64>() : min_grid_value;
@@ -2443,8 +2443,9 @@ namespace Curve {
                         min_val = min(min_val, min_grid_value);
                         max_val = max(max_val, max_grid_value);
 
+                        std::vector<double> dAxis = std::vector<double>(axis.begin(), axis.end());
                         gridAxes.emplace_back(
-                            axis, "", interpMethod, extrapMethod, std::pair<double, double>{min_val, max_val}, BtwxtManager::btwxt_logger);
+                            dAxis, "", interpMethod, extrapMethod, std::pair<double, double>{min_val, max_val}, BtwxtManager::btwxt_logger);
 
                     } else {
                         // Independent variable does not exist
@@ -2491,7 +2492,7 @@ namespace Curve {
                 thisCurve->numDims = numDims;
 
                 for (int i = 1; i <= std::min(6, numDims); ++i) {
-                    double vMin, vMax;
+                    Real64 vMin, vMax;
                     std::tie(vMin, vMax) = varListLimits.at(indVarListName)[i - 1];
                     if (i == 1) {
                         thisCurve->inputLimits[0].min = vMin;
@@ -2557,7 +2558,7 @@ namespace Curve {
                     }
                 }
 
-                std::vector<double> lookupValues;
+                std::vector<Real64> lookupValues;
                 if (fields.count("external_file_name")) {
                     std::string tmp = fields.at("external_file_name").get<std::string>();
                     fs::path filePath(tmp);
@@ -2656,9 +2657,10 @@ namespace Curve {
         return gridIndex;
     }
 
-    int BtwxtManager::addOutputValues(int gridIndex, std::vector<double> values)
+    int BtwxtManager::addOutputValues(int gridIndex, std::vector<Real64> values)
     {
-        return (int)grids[gridIndex].add_grid_point_data_set(values);
+        std::vector<double> dVals = std::vector<double>(values.begin(), values.end());
+        return (int)grids[gridIndex].add_grid_point_data_set(dVals);
     }
 
     int BtwxtManager::getNumGridDims(int gridIndex)
@@ -2666,14 +2668,16 @@ namespace Curve {
         return (int)grids[gridIndex].get_number_of_dimensions();
     }
 
-    double BtwxtManager::getGridValue(int gridIndex, int outputIndex, const std::vector<double> &target)
+    double BtwxtManager::getGridValue(int gridIndex, int outputIndex, const std::vector<Real64> &target)
     {
-        return grids[gridIndex](target)[outputIndex];
+        std::vector<double> dTarget = std::vector<double>(target.begin(), target.end());
+        return grids[gridIndex](dTarget)[outputIndex];
     }
 
-    double BtwxtManager::normalizeGridValues(int gridIndex, int outputIndex, const std::vector<double> &target, const double scalar)
+    double BtwxtManager::normalizeGridValues(int gridIndex, int outputIndex, const std::vector<Real64> &target, const Real64 scalar)
     {
-        return grids[gridIndex].normalize_grid_point_data_set_at_target(outputIndex, target, scalar);
+        std::vector<double> dTarget = std::vector<double>(target.begin(), target.end());
+        return grids[gridIndex].normalize_grid_point_data_set_at_target(outputIndex, dTarget, scalar);
     }
 
     void BtwxtManager::clear()
@@ -2728,7 +2732,7 @@ namespace Curve {
         return false;
     }
 
-    std::vector<double> &TableFile::getArray(EnergyPlusData &state, std::pair<std::size_t, std::size_t> colAndRow)
+    std::vector<Real64> &TableFile::getArray(EnergyPlusData &state, std::pair<std::size_t, std::size_t> colAndRow)
     {
         if (!arrays.count(colAndRow)) {
             // create the column from the data if it doesn't exist already
@@ -2743,17 +2747,17 @@ namespace Curve {
                 ShowFatalError(state,
                                format("File \"{}\" : Requested starting row ({}) exceeds the number of rows ({}).", filePath, row + 1, numRows));
             }
-            std::vector<double> array(numRows - row);
+            std::vector<Real64> array(numRows - row);
             std::transform(content.begin() + row, content.end(), array.begin(), [](std::string_view str) {
                 // Convert strings to double
                 size_t first_char = str.find_first_not_of(' ');
                 if (first_char != std::string_view::npos) {
                     str.remove_prefix(first_char);
                 }
-                double result = 0;
+                Real64 result = 0;
                 auto answer = fast_float::from_chars(str.data(), str.data() + str.size(), result); // (AUTO_OK_OBJ)
                 if (answer.ec != std::errc()) {
-                    return std::numeric_limits<double>::quiet_NaN();
+                    return std::numeric_limits<Real64>::quiet_NaN();
                 }
                 return result;
             });
@@ -2852,7 +2856,7 @@ namespace Curve {
     )
     {
         // TODO: Generalize for N-dims
-        std::vector<double> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min)};
+        std::vector<Real64> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min)};
 
         std::string contextString = format("Table:Lookup \"{}\"", this->Name);
         std::pair<EnergyPlusData *, std::string> callbackPair{&state, contextString};
@@ -2871,7 +2875,7 @@ namespace Curve {
     )
     {
         // TODO: Generalize for N-dims
-        std::vector<double> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
+        std::vector<Real64> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
                                    max(min(Var2, this->inputLimits[1].max), this->inputLimits[1].min)};
 
         std::string contextString = format("Table:Lookup \"{}\"", this->Name);
@@ -2892,7 +2896,7 @@ namespace Curve {
     )
     {
         // TODO: Generalize for N-dims
-        std::vector<double> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
+        std::vector<Real64> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
                                    max(min(Var2, this->inputLimits[1].max), this->inputLimits[1].min),
                                    max(min(Var3, this->inputLimits[2].max), this->inputLimits[2].min)};
 
@@ -2915,7 +2919,7 @@ namespace Curve {
     )
     {
         // TODO: Generalize for N-dims
-        std::vector<double> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
+        std::vector<Real64> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
                                    max(min(Var2, this->inputLimits[1].max), this->inputLimits[1].min),
                                    max(min(Var3, this->inputLimits[2].max), this->inputLimits[2].min),
                                    max(min(Var4, this->inputLimits[3].max), this->inputLimits[3].min)};
@@ -2940,7 +2944,7 @@ namespace Curve {
     )
     {
         // TODO: Generalize for N-dims
-        std::vector<double> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
+        std::vector<Real64> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
                                    max(min(Var2, this->inputLimits[1].max), this->inputLimits[1].min),
                                    max(min(Var3, this->inputLimits[2].max), this->inputLimits[2].min),
                                    max(min(Var4, this->inputLimits[3].max), this->inputLimits[3].min),
@@ -2967,7 +2971,7 @@ namespace Curve {
     )
     {
         // TODO: Generalize for N-dims
-        std::vector<double> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
+        std::vector<Real64> target{max(min(Var1, this->inputLimits[0].max), this->inputLimits[0].min),
                                    max(min(Var2, this->inputLimits[1].max), this->inputLimits[1].min),
                                    max(min(Var3, this->inputLimits[2].max), this->inputLimits[2].min),
                                    max(min(Var4, this->inputLimits[3].max), this->inputLimits[3].min),

@@ -222,7 +222,7 @@ void KivaInstanceMap::setInitialBoundaryConditions(
 
     if (kivaWeather.intervalsPerHour == 1) {
         index = (date - 1) * 24 + (hour - 1);
-        weightNow = min(1.0, (double(timestep) / double(state.dataGlobal->TimeStepsInHour)));
+        weightNow = min(double(1.0), (double(timestep) / double(state.dataGlobal->TimeStepsInHour)));
     } else {
         index = (date - 1) * 24 * state.dataGlobal->TimeStepsInHour + (hour - 1) * state.dataGlobal->TimeStepsInHour + (timestep - 1);
         weightNow = 1.0; // weather data interval must be the same as the timestep interval (i.e., no interpolation)
@@ -772,7 +772,7 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                         exposed2DPerimeter += 0.0;
                     }
                 }
-                exposedFraction = std::min(exposed2DPerimeter / total2DPerimeter, 1.0);
+                exposedFraction = std::min(exposed2DPerimeter / total2DPerimeter, 1.0f);
             }
 
             Real64 totalExposedPerimeter = exposedFraction * totalPerimeter;
@@ -991,9 +991,9 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
                                             "foundation construction elements ({:.3T} m)",
                                             foundationInputs[surface.OSCPtr].name,
                                             initDeepGroundDepth,
-                                            fnd.deepGroundDepth - 1.0));
+                                            Real64(fnd.deepGroundDepth) - 1.0f));
                     ShowContinueError(state,
-                                      format("The deep ground depth will be set one meter below the lowest element ({:.3T} m)", fnd.deepGroundDepth));
+                                      format("The deep ground depth will be set one meter below the lowest element ({:.3T} m)", Real64(fnd.deepGroundDepth)));
                 }
 
                 // polygon
@@ -1100,9 +1100,9 @@ bool KivaManager::setupKivaInstances(EnergyPlusData &state)
               grnd->nX,
               grnd->nZ,
               grnd->nX * grnd->nZ,
-              grnd->foundation.netPerimeter,
+              Real64(grnd->foundation.netPerimeter),
               kv.floorWeight,
-              grnd->foundation.foundationDepth,
+              Real64(grnd->foundation.foundationDepth),
               constructionName,
               state.dataSurface->Surface(kv.floorSurface).Name,
               wallSurfaceString);
@@ -1207,7 +1207,7 @@ void KivaManager::defineDefaultFoundation(EnergyPlusData &state)
             if (defFnd.deepGroundDepth != settings.deepGroundDepth) {
                 ShowWarningError(state, "Foundation:Kiva:Settings, when Deep-Ground Boundary Condition is Autoselect,");
                 ShowContinueError(state, format("the user-specified Deep-Ground Depth ({:.1R} m)", settings.deepGroundDepth));
-                ShowContinueError(state, format("will be overridden with the Autoselected depth ({:.1R} m)", defFnd.deepGroundDepth));
+                ShowContinueError(state, format("will be overridden with the Autoselected depth ({:.1R} m)", Real64(defFnd.deepGroundDepth)));
             }
         }
     } else if (settings.deepGroundBoundary == Settings::ZERO_FLUX) {

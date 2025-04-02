@@ -2732,10 +2732,10 @@ void ComputeTariff(EnergyPlusData &state)
                         pushStack(state, ObjexxFCL::abs(a), noVar);
                     } else if (SELECT_CASE_var == opINTEGER) {
                         popStack(state, a, aPt);
-                        pushStack(state, Array1D_double(Array1D_int(a)), noVar);
+                        pushStack(state, Array1D<Real64>(Array1D_int(a)), noVar);
                     } else if (SELECT_CASE_var == opSIGN) {
                         popStack(state, a, aPt);
-                        pushStack(state, sign(1.0, a), noVar);
+                        pushStack(state, sign(1.0f, a), noVar);
                         //        CASE (opROUND)
                         //          CALL popStack(b,bPt)
                         //          CALL popStack(a,aPt)

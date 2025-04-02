@@ -105,7 +105,7 @@ namespace Window {
         aSystem->setTolerance(solutionTolerance);
 
         // get previous timestep temperatures solution for faster iterations
-        std::vector<Real64> Guess;
+        std::vector<double> Guess;
         int totSolidLayers = construction.TotSolidLayers;
 
         // Interior and exterior shading layers have gas between them and IGU but that gas
@@ -966,7 +966,7 @@ namespace Window {
         return ShadeFlag;
     }
 
-    double CWCEHeatTransferFactory::overallUfactorFromFilmsAndCond(double conductance, double insideFilm, double outsideFilm)
+    double CWCEHeatTransferFactory::overallUfactorFromFilmsAndCond(Real64 conductance, Real64 insideFilm, Real64 outsideFilm)
     {
         double rOverall(0.);
         double uFactor(0.);

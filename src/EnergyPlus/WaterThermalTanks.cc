@@ -759,7 +759,7 @@ bool getDesuperHtrInput(EnergyPlusData &state)
                 if (!ErrorsFound) {
                     if (DesupHtr.HEffFTemp > 0) {
                         Real64 HEffFTemp = min(
-                            1.0, max(0.0, Curve::CurveValue(state, DesupHtr.HEffFTemp, DesupHtr.RatedInletWaterTemp, DesupHtr.RatedOutdoorAirTemp)));
+                            1.0f, max(0.0f, Curve::CurveValue(state, DesupHtr.HEffFTemp, DesupHtr.RatedInletWaterTemp, DesupHtr.RatedOutdoorAirTemp)));
                         if (std::abs(HEffFTemp - 1.0) > 0.05) {
                             ShowWarningError(state, format("{}, \"{}\":", cCurrentModuleObject, DesupHtr.Name));
                             ShowContinueError(state, format("The {} should be normalized ", cAlphaFieldNames(4)));
@@ -2353,7 +2353,7 @@ bool getWaterHeaterMixedInputs(EnergyPlusData &state)
         }
 
         Tank.VolFlowRateMin = state.dataIPShortCut->rNumericArgs(6);
-        Tank.VolFlowRateMin = max(0.0, Tank.VolFlowRateMin);
+        Tank.VolFlowRateMin = max(0.0f, Tank.VolFlowRateMin);
         Tank.IgnitionDelay = state.dataIPShortCut->rNumericArgs(7); // Not yet implemented
 
         // Validate Heater Fuel Type
@@ -6790,7 +6790,7 @@ void WaterThermalTankData::CalcWaterThermalTankMixed(EnergyPlusData &state) // W
                 // Qneeded is calculated above
                 // Qneeded does not account for the extra energy needed to recover to the setpoint
                 Qheater = Qmaxcap;
-                Qunmet = max(Qneeded - Qheater, 0.0);
+                Qunmet = max(Qneeded - Qheater, 0.0f);
                 Qheat = Qoncycheat + Qheater + Qheatpump;
 
                 // Calculate time needed to recover to the setpoint at maximum heater capacity
@@ -7496,7 +7496,7 @@ Real64 WaterThermalTankData::PartLoadFactor(EnergyPlusData &state, Real64 const 
     // is MODULATE, or correlated to Runtime Fraction, if Heater Control Type is CYCLE.
 
     if (this->PLFCurve > 0) {
-        return max(Curve::CurveValue(state, this->PLFCurve, PartLoadRatio_loc), 0.1);
+        return max(Curve::CurveValue(state, this->PLFCurve, PartLoadRatio_loc), 0.1f);
     } else {
         return 1.0;
     }
@@ -7876,7 +7876,7 @@ void WaterThermalTankData::CalcWaterThermalTankStratified(EnergyPlusData &state)
                 Tavg[i] = (Tstart + b_a) * (e_a_dt - 1.0) / (A[i] * dt) - b_a;
                 const Real64 Tfinal_old = Tfinal[i];
                 Tfinal[i] = (Tstart + b_a) * e_a_dt - b_a;
-                TfinalDiff = max(fabs(Tfinal[i] - Tfinal_old), TfinalDiff);
+                TfinalDiff = max(fabs(double(Tfinal[i]) - double(Tfinal_old)), double(TfinalDiff));
             }
 
             if (TfinalDiff < TemperatureConvergenceCriteria) break;
@@ -7994,8 +7994,8 @@ void WaterThermalTankData::CalcWaterThermalTankStratified(EnergyPlusData &state)
                 Qheat_node = node.OffCycParaLoad * this->OffCycParaFracToTank;
             }
             Qloss += Qloss_node;
-            const Real64 Qneeded_node = max(-Quse_node - Qsource_node - Qloss_node - Qheat_node, 0.0);
-            const Real64 Qunmet_node = max(Qneeded_node - Qheater1 - Qheater2, 0.0);
+            const Real64 Qneeded_node = max(-Quse_node - Qsource_node - Qloss_node - Qheat_node, 0.0f);
+            const Real64 Qunmet_node = max(Qneeded_node - Qheater1 - Qheater2, 0.0f);
             Eunmet += Qunmet_node * dt;
         }
         SourceInletTempSum += this->SourceInletTemp * dt;
@@ -8283,8 +8283,8 @@ void WaterThermalTankData::CalcNodeMassFlows(InletPositionMode inletMode)
 
     // Cancel out any up and down flows
     for (int NodeNum = 1; NodeNum <= this->Nodes; ++NodeNum) {
-        this->Node(NodeNum).MassFlowFromUpper = max((this->Node(NodeNum).MassFlowFromUpper - this->Node(NodeNum).MassFlowToUpper), 0.0);
-        this->Node(NodeNum).MassFlowFromLower = max((this->Node(NodeNum).MassFlowFromLower - this->Node(NodeNum).MassFlowToLower), 0.0);
+        this->Node(NodeNum).MassFlowFromUpper = max((this->Node(NodeNum).MassFlowFromUpper - this->Node(NodeNum).MassFlowToUpper), 0.0f);
+        this->Node(NodeNum).MassFlowFromLower = max((this->Node(NodeNum).MassFlowFromLower - this->Node(NodeNum).MassFlowToLower), 0.0f);
     }
 }
 
@@ -8412,7 +8412,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
 
     Real64 HEffFTemp;
     if (DesupHtr.HEffFTemp > 0) {
-        HEffFTemp = max(0.0, Curve::CurveValue(state, DesupHtr.HEffFTemp, this->SavedTankTemp, state.dataEnvrn->OutDryBulbTemp));
+        HEffFTemp = max(0.0f, Curve::CurveValue(state, DesupHtr.HEffFTemp, this->SavedTankTemp, state.dataEnvrn->OutDryBulbTemp));
     } else {
         HEffFTemp = 1.0;
     }
@@ -8473,7 +8473,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
     if (desupHtrSetPointTemp > DesupHtr.MaxInletWaterTemp) {
         Real64 CutInTemp = desupHtrSetPointTemp - DeadBandTempDiff;
         desupHtrSetPointTemp = DesupHtr.MaxInletWaterTemp;
-        DeadBandTempDiff = max(0.0, (desupHtrSetPointTemp - CutInTemp));
+        DeadBandTempDiff = max(0.0f, (desupHtrSetPointTemp - CutInTemp));
     }
 
     Real64 Acc; // Accuracy of result from RegulaFalsi
@@ -8572,7 +8572,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                             }
                         } else if (SolFla == -2) {
                             partLoadRatio =
-                                max(0.0, min(DesupHtr.DXSysPLR, (desupHtrSetPointTemp - this->SavedTankTemp) / (NewTankTemp - this->SavedTankTemp)));
+                                max(0.0f, min(DesupHtr.DXSysPLR, (desupHtrSetPointTemp - this->SavedTankTemp) / (NewTankTemp - this->SavedTankTemp)));
                             this->SourceMassFlowRate = MdotWater * partLoadRatio;
                             this->CalcWaterThermalTank(state);
                             if (!state.dataGlobal->WarmupFlag) {
@@ -8631,7 +8631,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                     if ((this->SavedTankTemp - NewTankTemp) != 0.0) {
                         partLoadRatio =
                             min(DesupHtr.DXSysPLR,
-                                max(0.0, ((desupHtrSetPointTemp - DeadBandTempDiff) - NewTankTemp) / (this->SavedTankTemp - NewTankTemp)));
+                                max(0.0f, ((desupHtrSetPointTemp - DeadBandTempDiff) - NewTankTemp) / (this->SavedTankTemp - NewTankTemp)));
                     } else {
                         partLoadRatio = DesupHtr.DXSysPLR;
                     }
@@ -8698,7 +8698,7 @@ void WaterThermalTankData::CalcDesuperheaterWaterHeater(EnergyPlusData &state, b
                                 }
                             } else if (SolFla == -2) {
                                 partLoadRatio = max(
-                                    0.0, min(DesupHtr.DXSysPLR, (desupHtrSetPointTemp - this->SavedTankTemp) / (NewTankTemp - this->SavedTankTemp)));
+                                    0.0f, min(DesupHtr.DXSysPLR, (desupHtrSetPointTemp - this->SavedTankTemp) / (NewTankTemp - this->SavedTankTemp)));
                                 if (!state.dataGlobal->WarmupFlag) {
                                     ++DesupHtr.RegulaFalsiFailedNum2;
                                     if (DesupHtr.RegulaFalsiFailedNum2 == 1) {
@@ -9375,7 +9375,7 @@ void WaterThermalTankData::CalcHeatPumpWaterHeater(EnergyPlusData &state, bool c
                     }
                 } else if (SolFla == -2) {
                     state.dataWaterThermalTanks->hpPartLoadRatio =
-                        max(0.0, min(1.0, (HPSetPointTemp - savedTankTemp) / (NewTankTemp - savedTankTemp)));
+                        max(0.0f, min(1.0f, (HPSetPointTemp - savedTankTemp) / (NewTankTemp - savedTankTemp)));
                     if (!state.dataGlobal->WarmupFlag) {
                         ++HeatPump.RegulaFalsiFailedNum2;
                         if (HeatPump.RegulaFalsiFailedNum2 == 1) {
@@ -9550,7 +9550,7 @@ void WaterThermalTankData::CalcHeatPumpWaterHeater(EnergyPlusData &state, bool c
                             }
                         }
                     } else if (SolFla == -2) {
-                        SpeedRatio = max(0.0, min(1.0, (HPSetPointTemp - LowSpeedTankTemp) / (NewTankTemp - LowSpeedTankTemp)));
+                        SpeedRatio = max(0.0f, min(1.0f, (HPSetPointTemp - LowSpeedTankTemp) / (NewTankTemp - LowSpeedTankTemp)));
                         if (!state.dataGlobal->WarmupFlag) {
                             ++HeatPump.RegulaFalsiFailedNum1;
                             if (HeatPump.RegulaFalsiFailedNum1 == 1) {

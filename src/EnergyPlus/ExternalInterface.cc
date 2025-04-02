@@ -620,13 +620,14 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                     // generate vectors here first
                     std::vector<unsigned int> valueReferenceVec;
-                    std::vector<Real64> realVarValueVec;
+                    std::vector<double> realVarValueVec;
                     for (unsigned long x = 1; x <= size(fmuInst.fmuOutputVariableSchedule); ++x) {
                         valueReferenceVec.push_back(fmuInst.fmuOutputVariableSchedule(x).ValueReference);
                         realVarValueVec.push_back(fmuInst.fmuOutputVariableSchedule(x).RealVarValue);
                     }
 
                     // pass in the vectors as pointers to the first member of the vector
+
                     fmuInst.fmistatus = fmiEPlusGetReal(
                         &fmuInst.fmicomponent, &valueReferenceVec[0], &realVarValueVec[0], &fmuInst.NumOutputVariablesSchedule, &fmuInst.Index);
 
@@ -648,7 +649,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
                 if (size(fmuInst.fmuOutputVariableVariable) > 0) {
 
                     std::vector<unsigned int> valueReferenceVec2;
-                    std::vector<Real64> realVarValueVec2;
+                    std::vector<double> realVarValueVec2;
                     for (unsigned long x = 1; x <= size(fmuInst.fmuOutputVariableVariable); ++x) {
                         valueReferenceVec2.push_back(fmuInst.fmuOutputVariableVariable(x).ValueReference);
                         realVarValueVec2.push_back(fmuInst.fmuOutputVariableVariable(x).RealVarValue);
@@ -676,7 +677,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
 
                     // generate vectors here first
                     std::vector<unsigned int> valueReferenceVec3;
-                    std::vector<Real64> realVarValueVec3;
+                    std::vector<double> realVarValueVec3;
                     for (unsigned long x = 1; x <= size(fmuInst.fmuOutputVariableActuator); ++x) {
                         valueReferenceVec3.push_back(fmuInst.fmuOutputVariableActuator(x).ValueReference);
                         realVarValueVec3.push_back(fmuInst.fmuOutputVariableActuator(x).RealVarValue);
@@ -743,7 +744,7 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
                     valueReferenceVec4.push_back(fmuInst.fmuInputVariable(x).ValueReference);
                 }
 
-                std::vector<Real64> rtsValueVec4;
+                std::vector<double> rtsValueVec4;
                 for (unsigned long x = 1; x <= size(fmuInst.eplusOutputVariable); ++x) {
                     rtsValueVec4.push_back(fmuInst.eplusOutputVariable(x).RTSValue);
                 }
@@ -761,8 +762,12 @@ void GetSetVariablesAndDoStepFMUImport(EnergyPlusData &state)
             }
             int localfmitrue(fmiTrue);
             // Call and simulate the FMUs to get values at the corresponding timestep.
+            double d_tComm = state.dataExternalInterface->tComm;
+            double d_hStep = state.dataExternalInterface->hStep;
             fmuInst.fmistatus = fmiEPlusDoStep(
-                &fmuInst.fmicomponent, &state.dataExternalInterface->tComm, &state.dataExternalInterface->hStep, &localfmitrue, &fmuInst.Index);
+                &fmuInst.fmicomponent, &d_tComm, &d_hStep, &localfmitrue, &fmuInst.Index);
+            state.dataExternalInterface->tComm = d_tComm;
+            state.dataExternalInterface->hStep = d_hStep;
             if (fmuInst.fmistatus != fmiOK) {
                 ShowSevereError(state, "ExternalInterface/GetSetVariablesAndDoStepFMUImport: Error when trying to");
                 ShowContinueError(state, format("do the coSimulation with instance \"{}\"", fmuInst.Name));
@@ -798,8 +803,10 @@ void InstantiateInitializeFMUImport(EnergyPlusData &state)
         for (int j = 1; j <= fmu.NumInstances; ++j) {
             auto &fmuInst = fmu.Instance(j);
             std::string const folderStr = FileSystem::toString(fmuInst.WorkingFolder);
+            double d_timeOut = fmu.TimeOut;
             fmuInst.fmicomponent = fmiEPlusInstantiateSlave(
-                (char *)folderStr.c_str(), &fmuInst.LenWorkingFolder, &fmu.TimeOut, &fmu.Visible, &fmu.Interactive, &fmu.LoggingOn, &fmuInst.Index);
+                (char *)folderStr.c_str(), &fmuInst.LenWorkingFolder, &d_timeOut, &fmu.Visible, &fmu.Interactive, &fmu.LoggingOn, &fmuInst.Index);
+            fmu.TimeOut = d_timeOut;
             // TODO: This is doing a null pointer check; OK?
             if (!fmuInst.fmicomponent) {
                 ShowSevereError(state, "ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to instantiate");
@@ -816,8 +823,12 @@ void InstantiateInitializeFMUImport(EnergyPlusData &state)
         auto &fmu = state.dataExternalInterface->FMU(i);
         for (int j = 1; j <= fmu.NumInstances; ++j) {
             auto &fmuInst = fmu.Instance(j);
+            double d_tStart = state.dataExternalInterface->tStart;
+            double d_tEnd = state.dataExternalInterface->tStop;
             fmuInst.fmistatus = fmiEPlusInitializeSlave(
-                &fmuInst.fmicomponent, &state.dataExternalInterface->tStart, &localfmiTrue, &state.dataExternalInterface->tStop, &fmuInst.Index);
+                &fmuInst.fmicomponent, &d_tStart, &localfmiTrue, &d_tEnd, &fmuInst.Index);
+            state.dataExternalInterface->tStart = d_tStart;
+            state.dataExternalInterface->tStop = d_tEnd;
             if (fmuInst.fmistatus != fmiOK) {
                 ShowSevereError(state, "ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to initialize");
                 ShowContinueError(state, format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
@@ -846,8 +857,12 @@ void InitializeFMU(EnergyPlusData &state)
         auto &fmu = state.dataExternalInterface->FMU(i);
         for (int j = 1; j <= fmu.NumInstances; ++j) {
             auto &fmuInst = fmu.Instance(j);
+            double d_tStart = state.dataExternalInterface->tStart;
+            double d_tEnd = state.dataExternalInterface->tStop;
             fmuInst.fmistatus = fmiEPlusInitializeSlave(
-                &fmuInst.fmicomponent, &state.dataExternalInterface->tStart, &localfmiTrue, &state.dataExternalInterface->tStop, &fmuInst.Index);
+                &fmuInst.fmicomponent, &d_tStart, &localfmiTrue, &d_tEnd, &fmuInst.Index);
+            state.dataExternalInterface->tStart = d_tStart;
+            state.dataExternalInterface->tStop = d_tEnd;
             if (fmuInst.fmistatus != fmiOK) {
                 ShowSevereError(state, "ExternalInterface/CalcExternalInterfaceFMUImport: Error when trying to initialize");
                 ShowContinueError(state, format("instance \"{}\" of FMU \"{}\"", fmuInst.Name, fmu.Name));
@@ -1923,12 +1938,13 @@ void CalcExternalInterfaceFMUImport(EnergyPlusData &state)
                             valRefVec.push_back(fmuInst.fmuInputVariable(x).ValueReference);
                         }
 
-                        std::vector<Real64> rtsValVec;
+                        std::vector<double> rtsValVec;
                         for (unsigned long x = 1; x <= size(fmuInst.eplusOutputVariable); ++x) {
                             rtsValVec.push_back(fmuInst.eplusOutputVariable(x).RTSValue);
                         }
 
                         // make the library call
+
                         fmuInst.fmistatus =
                             fmiEPlusSetReal(&fmuInst.fmicomponent, &valRefVec[0], &rtsValVec[0], &fmuTempInst.NumInputVariablesInIDF, &fmuInst.Index);
 
@@ -1983,7 +1999,7 @@ void CalcExternalInterfaceFMUImport(EnergyPlusData &state)
                     for (unsigned long x = 1; x <= size(fmuTempInst.fmuInputVariable); ++x) {
                         valRefVec.push_back(fmuTempInst.fmuInputVariable(x).ValueReference);
                     }
-                    std::vector<Real64> rtsValVec;
+                    std::vector<double> rtsValVec;
                     for (unsigned long x = 1; x <= size(fmuTempInst.eplusOutputVariable); ++x) {
                         rtsValVec.push_back(fmuTempInst.eplusOutputVariable(x).RTSValue);
                     }
@@ -2119,8 +2135,8 @@ void CalcExternalInterface(EnergyPlusData &state)
     Real64 curSimTim; // current simulation time
     Real64 preSimTim; // previous time step's simulation time
 
-    Array1D<Real64> dblValWri(nDblMax);
-    Array1D<Real64> dblValRea(nDblMax);
+    Array1D<double> dblValWri(nDblMax);
+    Array1D<double> dblValRea(nDblMax);
 
     if (state.dataExternalInterface->firstCall) {
         DisplayString(state, "ExternalInterface starts first data exchange.");
@@ -2163,26 +2179,34 @@ void CalcExternalInterface(EnergyPlusData &state)
         int retVal = 0;
         int flaRea = 0; // flag read from the socket
         if (state.dataExternalInterface->haveExternalInterfaceBCVTB) {
+            double d_preSimTim = preSimTim;
+            double d_curSimTim = curSimTim;
             retVal = exchangedoubleswithsocket(&state.dataExternalInterface->socketFD,
                                                &flaWri,
                                                &flaRea,
                                                &nDblWri,
                                                &nDblRea,
-                                               &preSimTim,
+                                               &d_preSimTim,
                                                dblValWri.data(),
-                                               &curSimTim,
+                                               &d_curSimTim,
                                                dblValRea.data());
+            preSimTim = d_preSimTim;
+            curSimTim = d_curSimTim;
         } else if (state.dataExternalInterface->haveExternalInterfaceFMUExport) {
+            double d_preSimTim = preSimTim;
+            double d_curSimTim = curSimTim;
             retVal = exchangedoubleswithsocketFMU(&state.dataExternalInterface->socketFD,
                                                   &flaWri,
                                                   &flaRea,
                                                   &nDblWri,
                                                   &nDblRea,
-                                                  &preSimTim,
+                                                  &d_preSimTim,
                                                   dblValWri.data(),
-                                                  &curSimTim,
+                                                  &d_curSimTim,
                                                   dblValRea.data(),
                                                   &state.dataExternalInterface->FMUExportActivate);
+            preSimTim = d_preSimTim;
+            curSimTim = d_curSimTim;
         }
         bool continueSimulation = true;
 
